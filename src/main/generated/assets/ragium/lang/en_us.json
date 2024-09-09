@@ -1,0 +1,15 @@
+{
+  "block.ragium.creative_source": "Creative Power Source",
+  "block.ragium.deepslate_raginite_ore": "Deepslate Raginite Ore",
+  "block.ragium.manual_grinder": "Manual Grinder",
+  "block.ragium.raginite_ore": "Raginite Ore",
+  "item.ragium.power_meter": "Power Meter",
+  "item.ragium.ragi_alloy_compound": "Ragi-Alloy Compound ",
+  "item.ragium.ragi_alloy_ingot": "Ragi-Alloy Ingot",
+  "item.ragium.ragi_steel_ingot": "Ragi-Steel Ingot",
+  "item.ragium.raw_raginite": "Raw Raginite",
+  "item.ragium.raw_raginite_dust": "Raw Raginite Dust",
+  "item.ragium.refined_ragi_steel_ingot": "Refined Ragi-Steel Ingot",
+  "machine_type.alloy_furnace": "Alloy Furnace",
+  "machine_type.grinder": "Grinder"
+}

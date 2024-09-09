@@ -1,0 +1,15 @@
+{
+  "block.ragium.creative_source": "クリエイティブ用エネルギー源",
+  "block.ragium.deepslate_raginite_ore": "深層ラギナイト鉱石",
+  "block.ragium.manual_grinder": "石臼",
+  "block.ragium.raginite_ore": "ラギナイト鉱石",
+  "item.ragium.power_meter": "パワー測定器",
+  "item.ragium.ragi_alloy_compound": "ラギ合金混合物",
+  "item.ragium.ragi_alloy_ingot": "ラギ合金インゴット",
+  "item.ragium.ragi_steel_ingot": "ラギスチールインゴット",
+  "item.ragium.raw_raginite": "ラギナイトの原石",
+  "item.ragium.raw_raginite_dust": "ラギナイトの原石の粉",
+  "item.ragium.refined_ragi_steel_ingot": "精製ラギスチールインゴット",
+  "machine_type.alloy_furnace": "合金かまど",
+  "machine_type.grinder": "粉砕機"
+}

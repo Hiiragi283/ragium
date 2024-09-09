@@ -1,0 +1,18 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "minecraft:redstone_ores"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:redstone"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "minecraft:diamond_ores"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:diamond"
+    }
+  ]
+}

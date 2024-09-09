@@ -1,0 +1,18 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:gravel"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "minecraft:sand"
+    }
+  ]
+}

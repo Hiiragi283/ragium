@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ragium:block/deepslate_raginite_ore"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:sandstone/blocks"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:sand"
+    }
+  ]
+}

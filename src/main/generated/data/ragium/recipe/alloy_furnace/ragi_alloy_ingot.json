@@ -1,0 +1,24 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/copper"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "ragium:raw_raginite_dust"
+      }
+    }
+  ],
+  "machine_type": "alloy_furnace",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:ragi_alloy_ingot"
+    }
+  ]
+}
