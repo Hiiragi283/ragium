@@ -1,41 +1,53 @@
 {
-	"schemaVersion": 1,
-	"id": "ragium",
-	"version": "${version}",
-	"name": "Ragium",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Hiiragi283"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "MPL-2.0",
-	"icon": "assets/ragium/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			{
-				"value": "hiiragi283.ragium.Ragium",
-				"adapter": "kotlin"
-			}
-		],
-		"fabric-datagen": [
-			{
-				"value": "hiiragi283.ragium.RagiumDataGenerator",
-				"adapter": "kotlin"
-			}
-		]
-	},
-	"mixins": [
-		"ragium.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.16.4",
-		"minecraft": "~1.21.1",
-		"java": ">=21",
-		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
-	}
+  "schemaVersion": 1,
+  "id": "ragium",
+  "version": "${version}",
+  "name": "Ragium",
+  "description": "This is an example description! Tell everyone what your mod is about!",
+  "authors": [
+    "Hiiragi283"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "MPL-2.0",
+  "icon": "assets/ragium/textures/item/refined_ragi_steel_ingot.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "value": "hiiragi283.ragium.common.Ragium",
+        "adapter": "kotlin"
+      }
+    ],
+    "client": [
+      {
+        "value": "hiiragi283.ragium.client.RagiumClient",
+        "adapter": "kotlin"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "value": "hiiragi283.ragium.datagen.RagiumDataGenerator",
+        "adapter": "kotlin"
+      }
+    ],
+    "rei_client": [
+      {
+        "value": "hiiragi283.ragium.integration.rei.RagiumREIClient",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "mixins": [
+    "ragium.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.4",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*"
+  }
 }
