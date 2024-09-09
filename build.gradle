@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
 	id 'fabric-loom' version '1.7-SNAPSHOT'
 	id 'maven-publish'
@@ -17,6 +19,22 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+
+	maven {
+		url = "https://api.modrinth.com/maven"
+		content { includeGroup("maven.modrinth") }
+	}
+	maven {
+		url = "https://maven.terraformersmc.com/"
+	} // Mod Menu
+	maven {
+		url = "https://maven.shedaniel.me"
+	} // REI
+	maven {
+		name = "CottonMC"
+		url = "https://server.bbkr.space/artifactory/libs-release"
+	} // LibGui
+	mavenCentral()
 }
 
 fabricApi {
@@ -32,6 +50,20 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
+
+	String libGui = "io.github.cottonmc:LibGui:11.1.0+1.21"
+	modImplementation(libGui)
+	include(libGui) { transitive = false }
+
+	modImplementation("com.terraformersmc:modmenu:11.0.2") {
+		exclude module: "fabric-api"
+		exclude module: "fabric-loader"
+	}
+
+	modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:16.0.754") {
+		exclude module: "fabric-api"
+		exclude module: "fabric-loader"
+	}
 }
 
 processResources {
@@ -46,7 +78,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+tasks.withType(KotlinCompile).configureEach {
 	kotlinOptions {
 		jvmTarget = 21
 	}
