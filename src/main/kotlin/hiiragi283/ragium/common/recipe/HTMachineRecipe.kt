@@ -2,15 +2,12 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.common.Ragium
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.world.World
 
@@ -59,10 +56,6 @@ class HTMachineRecipe(
     override fun getType(): RecipeType<*> = type
 
     object Serializer : RecipeSerializer<HTMachineRecipe> {
-        init {
-            Registry.register(Registries.RECIPE_SERIALIZER, Ragium.id("generic"), this)
-        }
-
         override fun codec(): MapCodec<HTMachineRecipe> = CODEC
 
         override fun packetCodec(): PacketCodec<RegistryByteBuf, HTMachineRecipe> = PACKET_CODEC

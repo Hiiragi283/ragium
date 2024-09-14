@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_input0": {
       "conditions": {
         "items": [
           {
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:gravel"
+        "recipe": "minecraft:grinder/gravel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_input0"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:gravel"
+      "minecraft:grinder/gravel"
     ]
   }
 }

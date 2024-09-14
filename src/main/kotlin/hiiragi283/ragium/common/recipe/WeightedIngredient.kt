@@ -2,11 +2,14 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.recipe.Ingredient
+import net.minecraft.registry.tag.TagKey
 import java.util.function.Predicate
 
 class WeightedIngredient private constructor(
@@ -40,6 +43,12 @@ class WeightedIngredient private constructor(
             PACKET_CODEC.collect(PacketCodecs.toCollection(::ArrayList))
 
         @JvmStatic
+        fun of(item: ItemConvertible, count: Int = 1): WeightedIngredient = of(Ingredient.ofItems(item), count)
+
+        @JvmStatic
+        fun of(tagKey: TagKey<Item>, count: Int = 1): WeightedIngredient = of(Ingredient.fromTag(tagKey), count)
+
+        @JvmStatic
         fun of(ingredient: Ingredient, count: Int = 1): WeightedIngredient {
             check(count > 0) { "Ingredient weight must be larger than 0!" }
             return when (ingredient) {
@@ -50,10 +59,14 @@ class WeightedIngredient private constructor(
     }
 
     val matchingStacks: Array<out ItemStack>
-        get() = ingredient.matchingStacks.onEach { stack -> stack.count = count }
+        get() = ingredient.matchingStacks.onEach { stack: ItemStack -> stack.count = count }
 
     //    Predicate    //
 
     override fun test(stack: ItemStack): Boolean = ingredient.test(stack) && stack.count >= this.count
 
+    //    Any    //
+
+    override fun toString(): String =
+        "weightedIngredient[count=$count, ingredient=${ingredient.matchingStacks.joinToString(", ")}]"
 }

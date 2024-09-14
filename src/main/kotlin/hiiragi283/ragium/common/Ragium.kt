@@ -1,23 +1,14 @@
 package hiiragi283.ragium.common
 
-import hiiragi283.ragium.common.energy.HTRagiPower
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.item.HTPortableScreenType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
+import me.shedaniel.autoconfig.AutoConfig
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.event.player.UseBlockCallback
-import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.text.Text
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.world.World
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -37,21 +28,34 @@ object Ragium : ModInitializer {
         logger.action()
     }
 
+    @JvmStatic
+    var config: RagiumConfig = RagiumConfig()
+        private set
+
     override fun onInitialize() {
         log { info("Registering game objects...") }
+
+        AutoConfig.register(RagiumConfig::class.java, ::GsonConfigSerializer)
+        config = AutoConfig.getConfigHolder(RagiumConfig::class.java).get()
 
         RagiumComponentTypes
         RagiumBlockEntityTypes
         RagiumBlocks
         HTMachineType.init()
         RagiumItems
+        RagiumFluids.init()
 
-        RagiumItemGroup.init()
-
+        HTPortableScreenType.init()
         HTMachineRecipe.Serializer
         RagiumGenerations
 
-        UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, hitResult: BlockHitResult ->
+        RagiumMetalItemFamilies
+
+        RagiumItemGroup.init()
+        RagiumCauldronBehaviors.init()
+        HTHardModeResourceCondition.init()
+
+        /*UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, hitResult: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
             if (!stack.isEmpty) {
                 if (stack.isOf(RagiumItems.POWER_METER)) {
@@ -60,9 +64,9 @@ object Ragium : ModInitializer {
                         val state: BlockState = world.getBlockState(pos)
                         val blockEntity: BlockEntity? = world.getBlockEntity(pos)
                         val side: Direction = hitResult.side
-                        val power: HTRagiPower? = HTRagiPower.SIDED_LOOKUP.find(world, pos, state, blockEntity, side)
+                        val tier: HTMachineTier? = HTMachineTier.SIDED_LOOKUP.find(world, pos, state, blockEntity, side)
                         player.sendMessage(
-                            Text.literal("Current Power - $power"),
+                            Text.literal("Current Tier - $tier"),
                             true
                         )
                     }
@@ -70,7 +74,7 @@ object Ragium : ModInitializer {
                 }
             }
             ActionResult.PASS
-        }
+        }*/
 
         log { info("Ragium initialized!") }
     }

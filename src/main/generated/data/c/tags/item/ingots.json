@@ -1,7 +1,9 @@
 {
   "values": [
-    "ragium:ragi_alloy_ingot",
-    "ragium:ragi_steel_ingot",
-    "ragium:refined_ragi_steel_ingot"
+    "minecraft:iron_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:netherite_ingot",
+    "ragium:ragi_alloy_ingot"
   ]
 }

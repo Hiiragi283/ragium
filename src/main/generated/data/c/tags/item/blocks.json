@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:iron_block",
+    "minecraft:gold_block",
+    "minecraft:copper_block",
+    "minecraft:netherite_block",
+    "ragium:ragi_alloy_block"
+  ]
+}

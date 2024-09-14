@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/hull",
+  "textures": {
+    "bottom": "minecraft:block/deepslate_tiles",
+    "top": "ragium:block/ragi_steel_block"
+  }
+}

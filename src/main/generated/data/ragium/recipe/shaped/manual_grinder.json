@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:rods/wooden"
+    },
+    "B": {
+      "item": "ragium:ragi_alloy_ingot"
+    },
+    "C": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "A  ",
+    "BBB",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:manual_grinder"
+  }
+}

@@ -33,6 +33,18 @@
         "adapter": "kotlin"
       }
     ],
+    "modmenu": [
+      {
+        "value": "hiiragi283.ragium.integration.modmenu.RagiumModMenu",
+        "adapter": "kotlin"
+      }
+    ],
+    "jade": [
+      {
+        "value": "hiiragi283.ragium.integration.jade.RagiumJadePlugin",
+        "adapter": "kotlin"
+      }
+    ],
     "rei_client": [
       {
         "value": "hiiragi283.ragium.integration.rei.RagiumREIClient",
@@ -45,9 +57,14 @@
   ],
   "depends": {
     "fabricloader": ">=0.16.4",
-    "minecraft": "~1.21.1",
+    "minecraft": ">=1.21- <1.22-",
     "java": ">=21",
     "fabric-api": "*",
-    "fabric-language-kotlin": "*"
+    "fabric-language-kotlin": "*",
+    "cloth-config": "*"
+  },
+  "recommends": {
+    "modmenu": "*",
+    "roughlyenoughitems": "*"
   }
 }

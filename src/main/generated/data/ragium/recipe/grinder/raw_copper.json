@@ -4,14 +4,18 @@
     {
       "count": 1,
       "ingredient": {
-        "tag": "minecraft:copper_ores"
+        "item": "minecraft:copper_ore"
       }
     }
   ],
   "machine_type": "grinder",
   "outputs": [
     {
-      "count": 4,
+      "count": 1,
+      "item": "minecraft:raw_copper"
+    },
+    {
+      "count": 2,
       "item": "minecraft:raw_copper"
     }
   ]

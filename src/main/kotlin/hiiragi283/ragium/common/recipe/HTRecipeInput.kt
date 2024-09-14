@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.ragium.common.Ragium
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
@@ -12,8 +13,14 @@ class HTRecipeInput(private val list: List<ItemStack>) : RecipeInput {
 
     fun matches(vararg pairs: Pair<Int, WeightedIngredient>): Boolean = matches(mapOf(*pairs))
 
-    fun matches(list: List<WeightedIngredient>): Boolean =
-        list.filterIndexed { index: Int, ing: WeightedIngredient -> !ing.test(getStackInSlot(index)) }.isEmpty()
+    fun matches(list: List<WeightedIngredient>): Boolean {
+        Ragium.log {
+            info("===")
+            list.forEach { info("Input; $it") }
+        }
+        return list
+            .filterIndexed { index: Int, ing: WeightedIngredient -> !ing.test(getStackInSlot(index)) }.isEmpty()
+    }
 
     //    RecipeInput    //
 

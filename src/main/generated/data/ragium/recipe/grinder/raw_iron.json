@@ -4,12 +4,16 @@
     {
       "count": 1,
       "ingredient": {
-        "tag": "minecraft:iron_ores"
+        "item": "minecraft:iron_ore"
       }
     }
   ],
   "machine_type": "grinder",
   "outputs": [
+    {
+      "count": 1,
+      "item": "minecraft:raw_iron"
+    },
     {
       "count": 2,
       "item": "minecraft:raw_iron"

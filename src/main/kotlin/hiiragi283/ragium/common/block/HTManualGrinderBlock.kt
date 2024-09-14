@@ -2,35 +2,24 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.common.block.entity.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlocks.Properties.LEVEL_7
-import hiiragi283.ragium.common.uti.modifyBlockState
+import hiiragi283.ragium.common.util.modifyBlockState
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.StateManager
 import net.minecraft.util.ActionResult
-import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object HTManualGrinderBlock : HTBlockWithEntity(Settings.create()) {
+object HTManualGrinderBlock : HTBlockWithEntity(Settings.copy(Blocks.SMOOTH_STONE)) {
 
     init {
         defaultState = stateManager.defaultState.with(LEVEL_7, 0)
-    }
-
-    override fun onStateReplaced(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        newState: BlockState,
-        moved: Boolean,
-    ) {
-        ItemScatterer.onStateReplaced(state, newState, world, pos)
-        super.onStateReplaced(state, world, pos, newState, moved)
     }
 
     override fun onUse(
@@ -67,6 +56,8 @@ object HTManualGrinderBlock : HTBlockWithEntity(Settings.create()) {
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(LEVEL_7)
     }
+
+    override fun hasSidedTransparency(state: BlockState): Boolean = true
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity =
         HTManualGrinderBlockEntity(pos, state)

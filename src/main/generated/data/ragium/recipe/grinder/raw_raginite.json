@@ -1,0 +1,22 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:raginite_ore"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:raw_raginite"
+    },
+    {
+      "count": 2,
+      "item": "ragium:raw_raginite"
+    }
+  ]
+}

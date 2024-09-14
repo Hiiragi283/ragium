@@ -10,7 +10,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
 
         pack.addProvider(::RagiumLootProvider)
         pack.addProvider(::RagiumRecipeProvider)
-        pack.addProvider(::RagiumEnchantmentProvider)
+        pack.addProvider(::RagiumDynamicRegistryProvider)
         RagiumTagProviders.init(pack)
 
         pack.addProvider(::RagiumModelProvider)

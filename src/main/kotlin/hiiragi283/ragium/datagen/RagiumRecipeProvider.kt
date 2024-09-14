@@ -1,13 +1,17 @@
 package hiiragi283.ragium.datagen
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.data.HTRecipeJsonBuilder
+import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.common.data.HTMetalItemFamily
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -24,13 +28,25 @@ class RagiumRecipeProvider(
     output: FabricDataOutput,
     registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>,
 ) : FabricRecipeProvider(output, registriesFuture) {
+    // override fun getRecipeIdentifier(identifier: Identifier): Identifier = identifier
+
     override fun generate(exporter: RecipeExporter) {
         craftingRecipes(exporter)
         cookingRecipes(exporter)
 
         grinderRecipes(exporter)
         alloyFurnaceRecipes(exporter)
+        blastFurnace(exporter)
+
+        HTMetalItemFamily.registry.forEach { (name: String, family: HTMetalItemFamily) ->
+            family.generateRecipes(exporter, ::exporterWrapper)
+        }
     }
+
+    private fun exporterWrapper(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
+        exporter.conditions(HTHardModeResourceCondition.fromBool((bool)))
+
+    //    Crafting    //
 
     private fun <T : CraftingRecipeJsonBuilder> T.itemCriterion(item: ItemConvertible): T = apply {
         criterion("has_input", RecipeProvider.conditionsFromItem(item))
@@ -43,8 +59,12 @@ class RagiumRecipeProvider(
     private fun RecipeExporter.conditions(vararg conditions: ResourceCondition): RecipeExporter =
         withConditions(this, *conditions)
 
+    private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter =
+        conditions(HTHardModeResourceCondition.fromBool(isHard))
+
     private fun craftingRecipes(exporter: RecipeExporter) {
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, RagiumItems.RAGI_ALLOY_COMPOUND)
+        // ingredients
+        createShaped(RagiumItems.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .pattern("AAA")
             .pattern("ABA")
@@ -54,7 +74,8 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.RAW_RAGINITE)
             .offerTo(exporter, Ragium.id("shaped/ragi_alloy_compound"))
 
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, RagiumItems.RAGI_ALLOY_COMPOUND)
+        // hulls
+        createShaped(RagiumItems.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .pattern(" A ")
             .pattern("ABA")
@@ -62,8 +83,124 @@ class RagiumRecipeProvider(
             .input('A', RagiumItems.RAW_RAGINITE_DUST)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
             .itemCriterion(RagiumItems.RAW_RAGINITE_DUST)
-            .offerTo(exporter, Ragium.id("shaped/ragi_alloy_compound_1"))
+            .offerTo(
+                exporter.hardMode(false),
+                Ragium.id("shaped/ragi_alloy_compound_1")
+            )
+
+        createShaped(RagiumBlocks.RAGI_ALLOY_HULL)
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .input('A', RagiumItems.RAGI_ALLOY_INGOT)
+            .input('B', Blocks.BRICKS)
+            .itemCriterion(RagiumItems.RAGI_ALLOY_INGOT)
+            .offerTo(
+                exporter.hardMode(false),
+                Ragium.id("shaped/ragi_alloy_hull")
+            )
+
+        createShaped(RagiumBlocks.RAGI_ALLOY_HULL)
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .input('A', RagiumItems.RAGI_ALLOY_PLATE)
+            .input('B', Blocks.BRICKS)
+            .itemCriterion(RagiumItems.RAGI_ALLOY_PLATE)
+            .offerTo(
+                exporter.hardMode(true),
+                Ragium.id("shaped/ragi_alloy_hull_1")
+            )
+
+        createShaped(RagiumBlocks.RAGI_STEEL_HULL)
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .input('A', RagiumItems.RAGI_STEEL_INGOT)
+            .input('B', Blocks.DEEPSLATE_TILES)
+            .itemCriterion(RagiumItems.RAGI_STEEL_INGOT)
+            .offerTo(
+                exporter.hardMode(false),
+                Ragium.id("shaped/ragi_steel_hull")
+            )
+
+        createShaped(RagiumBlocks.RAGI_STEEL_HULL)
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .input('A', RagiumItems.RAGI_STEEL_PLATE)
+            .input('B', Blocks.DEEPSLATE_TILES)
+            .itemCriterion(RagiumItems.RAGI_STEEL_PLATE)
+            .offerTo(
+                exporter.hardMode(false),
+                Ragium.id("shaped/ragi_steel_hull_1")
+            )
+
+        createShaped(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .input('A', RagiumItems.REFINED_RAGI_STEEL_INGOT)
+            .input('B', Blocks.CHISELED_QUARTZ_BLOCK)
+            .itemCriterion(RagiumItems.REFINED_RAGI_STEEL_INGOT)
+            .offerTo(
+                exporter.hardMode(false),
+                Ragium.id("shaped/refined_ragi_steel_hull")
+            )
+
+        createShaped(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
+            .pattern("AAA")
+            .pattern("A A")
+            .pattern("BBB")
+            .input('A', RagiumItems.REFINED_RAGI_STEEL_PLATE)
+            .input('B', Blocks.CHISELED_QUARTZ_BLOCK)
+            .itemCriterion(RagiumItems.REFINED_RAGI_STEEL_PLATE)
+            .offerTo(
+                exporter.hardMode(false),
+                Ragium.id("shaped/refined_ragi_steel_hull_1")
+            )
+
+        // machines
+        createShaped(RagiumBlocks.MANUAL_GRINDER)
+            .pattern("A  ")
+            .pattern("BBB")
+            .pattern("CCC")
+            .input('A', ConventionalItemTags.WOODEN_RODS)
+            .input('B', RagiumItems.RAGI_ALLOY_INGOT)
+            .input('C', Items.SMOOTH_STONE)
+            .itemCriterion(RagiumItems.RAGI_ALLOY_INGOT)
+            .offerTo(exporter, Ragium.id("shaped/manual_grinder"))
+
+        createShaped(HTMachineType.Single.ALLOY_FURNACE)
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .input('A', RagiumItems.RAGI_ALLOY_INGOT)
+            .input('B', Items.FURNACE)
+            .input('C', RagiumBlocks.RAGI_ALLOY_HULL)
+            .input('D', Items.SMOOTH_STONE)
+            .itemCriterion(RagiumBlocks.RAGI_ALLOY_HULL)
+            .offerTo(exporter, Ragium.id("shaped/alloy_furnace"))
+
+        createShaped(HTMachineType.Multi.BRICK_BLAST_FURNACE)
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .input('A', RagiumItems.RAGI_ALLOY_INGOT)
+            .input('B', Items.BLAST_FURNACE)
+            .input('C', RagiumBlocks.RAGI_ALLOY_HULL)
+            .input('D', Items.BRICKS)
+            .itemCriterion(RagiumBlocks.RAGI_ALLOY_HULL)
+            .offerTo(exporter, Ragium.id("shaped/brick_blast_furnace"))
     }
+
+    private fun createShaped(output: ItemConvertible): ShapedRecipeJsonBuilder =
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, output)
+
+    private fun createShapeless(output: ItemConvertible): ShapelessRecipeJsonBuilder =
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, output)
+
+    //    Cooking   //
 
     private fun cookingRecipes(exporter: RecipeExporter) {
         CookingRecipeJsonBuilder.createSmelting(
@@ -74,29 +211,26 @@ class RagiumRecipeProvider(
             200
         )
             .itemCriterion(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .offerTo(exporter, Ragium.id("smelting/ragi_alloy_ingot"))
+            .offerTo(exporter, Ragium.id("smelting/ragi_alloy_ingot_1"))
     }
+
+    //    Grinder    //
 
     private fun grinderRecipes(exporter: RecipeExporter) {
         grinderRecipe(exporter, ConventionalItemTags.QUARTZ_ORES, Items.QUARTZ, 2)
         grinderRecipe(exporter, ConventionalItemTags.RED_SANDSTONE_BLOCKS, Items.RED_SAND, 4)
-        grinderRecipe(exporter, ConventionalItemTags.SANDSTONE_BLOCKS, Items.SAND, 4)
+        grinderRecipe(exporter, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS, Items.SAND, 4)
         grinderRecipe(exporter, Items.COARSE_DIRT, Items.DIRT)
         grinderRecipe(exporter, Items.COBBLESTONE, Items.GRAVEL)
         grinderRecipe(exporter, Items.DEEPSLATE, Items.DEEPSLATE)
-        grinderRecipe(exporter, Items.GRAVEL, Items.SAND, id = Identifier.of("gravel_to_sand"))
+        grinderRecipe(exporter, Items.GRAVEL, Items.SAND, id = Identifier.ofVanilla("gravel_to_sand"))
         grinderRecipe(exporter, Items.STONE, Items.COBBLESTONE)
         grinderRecipe(exporter, ItemTags.COAL_ORES, Items.COAL, 2)
-        grinderRecipe(exporter, ItemTags.COPPER_ORES, Items.RAW_COPPER, 4)
         grinderRecipe(exporter, ItemTags.DIAMOND_ORES, Items.DIAMOND, 2)
         grinderRecipe(exporter, ItemTags.EMERALD_ORES, Items.EMERALD, 2)
-        grinderRecipe(exporter, ItemTags.GOLD_ORES, Items.RAW_GOLD, 2)
-        grinderRecipe(exporter, ItemTags.IRON_ORES, Items.RAW_IRON, 2)
         grinderRecipe(exporter, ItemTags.LAPIS_ORES, Items.LAPIS_LAZULI, 8)
         grinderRecipe(exporter, ItemTags.REDSTONE_ORES, Items.REDSTONE, 8)
         grinderRecipe(exporter, ItemTags.WOOL, Items.STRING, 4)
-
-        grinderRecipe(exporter, RagiumItems.RAW_RAGINITE, RagiumItems.RAW_RAGINITE_DUST)
     }
 
     private fun grinderRecipe(
@@ -106,10 +240,9 @@ class RagiumRecipeProvider(
         count: Int = 1,
         id: Identifier = CraftingRecipeJsonBuilder.getItemId(output),
     ) {
-        HTRecipeJsonBuilder(HTMachineType.GRINDER)
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
             .addInput(input)
             .addOutput(output, count)
-            .hasInput(input)
             .offerTo(exporter, id)
     }
 
@@ -120,20 +253,31 @@ class RagiumRecipeProvider(
         count: Int = 1,
         id: Identifier = CraftingRecipeJsonBuilder.getItemId(output),
     ) {
-        HTRecipeJsonBuilder(HTMachineType.GRINDER)
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
             .addInput(input)
             .addOutput(output, count)
-            .hasInput(input)
             .offerTo(exporter, id)
     }
 
+    //    Alloy Furnace    //
+
     private fun alloyFurnaceRecipes(exporter: RecipeExporter) {
-        HTRecipeJsonBuilder(HTMachineType.ALLOY_FURNACE)
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.ALLOY_FURNACE)
             .addInput(ConventionalItemTags.COPPER_INGOTS)
             .addInput(RagiumItems.RAW_RAGINITE_DUST, 4)
             .addOutput(RagiumItems.RAGI_ALLOY_INGOT)
-            .hasInput(RagiumItems.RAW_RAGINITE_DUST)
             .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(RagiumItems.RAGI_ALLOY_INGOT))
+    }
+
+    //    Blast Furnace    //
+
+    private fun blastFurnace(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Multi.BRICK_BLAST_FURNACE)
+            .addInput(ConventionalItemTags.IRON_INGOTS)
+            .addInput(RagiumItems.RAGINITE_DUST, 4)
+            .addInput(ItemTags.COALS)
+            .addOutput(RagiumItems.RAGI_STEEL_INGOT)
+            .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(RagiumItems.RAGI_STEEL_INGOT))
     }
 
 }

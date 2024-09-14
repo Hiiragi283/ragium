@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
+import net.minecraft.loot.LootTable
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LeafEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
@@ -31,22 +32,33 @@ class RagiumLootProvider(
         this.registryLookup.getWrapperOrThrow(registryKey)
 
     override fun generate() {
-        // Raginite Ore
-        dropRaginiteOre(RagiumBlocks.RAGINITE_ORE)
-        dropRaginiteOre(RagiumBlocks.DEEPSLATE_RAGINITE_ORE)
+        addDrop(RagiumBlocks.RAGINITE_ORE, ::dropRaginiteOre)
+        addDrop(RagiumBlocks.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
+        addDrop(RagiumBlocks.CREATIVE_SOURCE)
+        // tier1
+        addDrop(RagiumBlocks.RAGI_ALLOY_BLOCK)
+        addDrop(RagiumBlocks.RAGI_ALLOY_HULL)
+        addDrop(RagiumBlocks.MANUAL_GRINDER)
+        addDrop(RagiumBlocks.WATER_COLLECTOR)
+        addDrop(RagiumBlocks.BURNING_BOX)
+        // tier2
+        addDrop(RagiumBlocks.RAGI_STEEL_BLOCK)
+        addDrop(RagiumBlocks.RAGI_STEEL_HULL)
+        // tier3
+        addDrop(RagiumBlocks.REFINED_RAGI_STEEL_BLOCK)
+        addDrop(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
+
     }
 
-    private fun dropRaginiteOre(ore: Block) {
-        dropsWithSilkTouch(
-            ore,
-            applyExplosionDecay(
-                RagiumBlocks.RAGINITE_ORE,
-                ItemEntry.builder(RagiumItems.RAW_RAGINITE)
-                    .applyDropRange(2, 5)
-                    .applyFortune()
-            )
+    private fun dropRaginiteOre(ore: Block): LootTable.Builder = dropsWithSilkTouch(
+        ore,
+        applyExplosionDecay(
+            RagiumBlocks.RAGINITE_ORE,
+            ItemEntry.builder(RagiumItems.RAW_RAGINITE)
+                .applyDropRange(2, 5)
+                .applyFortune()
         )
-    }
+    )
 
     fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyDropRange(min: Number, max: Number): T =
         apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(min.toFloat(), max.toFloat())))

@@ -14,7 +14,7 @@ object HTBlockEntityTicker {
     fun <E : BlockEntity, A : BlockEntity> validateTicker(
         givenType: BlockEntityType<A>,
         expectedType: BlockEntityType<E>,
-        ticker: BlockEntityTicker<*>,
+        ticker: BlockEntityTicker<*>?,
     ): BlockEntityTicker<A>? = when (expectedType == givenType) {
         true -> ticker
         false -> null

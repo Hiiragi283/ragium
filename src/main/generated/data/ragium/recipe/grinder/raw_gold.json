@@ -4,12 +4,16 @@
     {
       "count": 1,
       "ingredient": {
-        "tag": "minecraft:gold_ores"
+        "item": "minecraft:gold_ore"
       }
     }
   ],
   "machine_type": "grinder",
   "outputs": [
+    {
+      "count": 1,
+      "item": "minecraft:raw_gold"
+    },
     {
       "count": 2,
       "item": "minecraft:raw_gold"

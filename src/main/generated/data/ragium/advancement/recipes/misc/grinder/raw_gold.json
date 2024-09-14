@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_input0": {
       "conditions": {
         "items": [
           {
-            "items": "#minecraft:gold_ores"
+            "items": "minecraft:gold_ore"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:raw_gold"
+        "recipe": "minecraft:grinder/raw_gold"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_input0"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:raw_gold"
+      "minecraft:grinder/raw_gold"
     ]
   }
 }

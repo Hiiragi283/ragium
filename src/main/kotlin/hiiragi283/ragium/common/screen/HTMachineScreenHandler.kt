@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.screen
 
-import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.widget.WGridPanel
 import io.github.cottonmc.cotton.gui.widget.WItemSlot
@@ -8,8 +8,12 @@ import io.github.cottonmc.cotton.gui.widget.data.Insets
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext) : SyncedGuiDescription(
-    HTMachineType.SCREEN_HANDLER_TYPE,
+class HTMachineScreenHandler(
+    syncId: Int,
+    playerInv: PlayerInventory,
+    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
+) : SyncedGuiDescription(
+    RagiumScreenHandlerTypes.MACHINE,
     syncId,
     playerInv,
     getBlockInventory(ctx, 7),
@@ -25,11 +29,11 @@ class HTMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scree
         root.add(WItemSlot.of(blockInventory, 1), 2, 1)
         root.add(WItemSlot.of(blockInventory, 2), 3, 1)
         // catalyst slot
-        root.add(WItemSlot.of(blockInventory, 3), 4, 0)
+        root.add(WItemSlot.of(blockInventory, 3), 4, 2)
         // output slots
-        root.add(WItemSlot.of(blockInventory, 4).setModifiable(false), 5, 1)
-        root.add(WItemSlot.of(blockInventory, 5).setModifiable(false), 6, 1)
-        root.add(WItemSlot.of(blockInventory, 6).setModifiable(false), 7, 1)
+        root.add(WItemSlot.of(blockInventory, 4).setInsertingAllowed(false), 5, 1)
+        root.add(WItemSlot.of(blockInventory, 5).setInsertingAllowed(false), 6, 1)
+        root.add(WItemSlot.of(blockInventory, 6).setInsertingAllowed(false), 7, 1)
         // player inventory
         root.add(createPlayerInventoryPanel(), 0, 3)
         // right arrow

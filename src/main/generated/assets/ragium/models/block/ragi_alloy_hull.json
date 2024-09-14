@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/hull",
+  "textures": {
+    "bottom": "minecraft:block/bricks",
+    "top": "ragium:block/ragi_alloy_block"
+  }
+}

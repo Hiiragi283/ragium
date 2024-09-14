@@ -1,0 +1,30 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "ragium:raginite_dust"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "minecraft:coals"
+      }
+    }
+  ],
+  "machine_type": "brick_blast_furnace",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:ragi_steel_ingot"
+    }
+  ]
+}

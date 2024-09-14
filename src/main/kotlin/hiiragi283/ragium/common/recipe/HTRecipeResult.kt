@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.common.util.mapCast
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -15,7 +16,6 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import java.util.function.Function
 
 sealed class HTRecipeResult(val count: Int) {
 
@@ -48,15 +48,12 @@ sealed class HTRecipeResult(val count: Int) {
     companion object {
         @JvmField
         val CODEC: Codec<HTRecipeResult> = Codec.xor(ItemImpl.CODEC, TagImpl.CODEC)
-            .xmap(
-                { either: Either<ItemImpl, TagImpl> -> either.map(Function.identity(), Function.identity()) },
-                { result: HTRecipeResult ->
-                    when (result) {
-                        is ItemImpl -> Either.left(result)
-                        is TagImpl -> Either.right(result)
-                    }
+            .xmap(Either<ItemImpl, TagImpl>::mapCast) { result: HTRecipeResult ->
+                when (result) {
+                    is ItemImpl -> Either.left(result)
+                    is TagImpl -> Either.right(result)
                 }
-            )
+            }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult> =

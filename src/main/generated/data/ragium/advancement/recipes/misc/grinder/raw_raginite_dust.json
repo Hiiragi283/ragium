@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_input0": {
       "conditions": {
         "items": [
           {
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:raw_raginite_dust"
+        "recipe": "ragium:grinder/raw_raginite_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_input0"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:raw_raginite_dust"
+      "ragium:grinder/raw_raginite_dust"
     ]
   }
 }

@@ -2,9 +2,7 @@
 	"required": true,
 	"package": "hiiragi283.ragium.mixin",
 	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
+	"mixins": [],
 	"injectors": {
 		"defaultRequire": 1
 	}

@@ -24,7 +24,7 @@ class HTSidedInventory(
         Inventories.readNbt(nbt, stacks, lookup)
     }
 
-    fun modifyStack(slot:Int, mapping: (ItemStack) -> ItemStack) {
+    fun modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
         val stackIn: ItemStack = getStack(slot)
         setStack(slot, mapping(stackIn))
     }
