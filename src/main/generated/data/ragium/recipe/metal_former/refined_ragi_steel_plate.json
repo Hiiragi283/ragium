@@ -1,21 +1,21 @@
 {
   "type": "ragium:generic",
   "catalyst": {
-    "item": "ragium:rod_shape"
+    "item": "ragium:plate_shape"
   },
   "inputs": [
     {
       "count": 1,
       "ingredient": {
-        "item": "ragium:ragi_alloy_ingot"
+        "item": "ragium:refined_ragi_steel_ingot"
       }
     }
   ],
   "machine_type": "metal_former",
   "outputs": [
     {
-      "count": 2,
-      "item": "ragium:ragi_alloy_rod"
+      "count": 1,
+      "item": "ragium:refined_ragi_steel_plate"
     }
   ]
 }

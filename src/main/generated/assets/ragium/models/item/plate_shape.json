@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/oil_bucket"
+    "layer0": "ragium:item/plate_shape"
   }
 }
