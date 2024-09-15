@@ -11,26 +11,20 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.util.function.BiPredicate
 
-class HTMultiMachineShape private constructor(private val posMap: Map<BlockPos, HTBlockPredicate>) :
-    BiPredicate<World, BlockPos> {
-
+class HTMultiMachineShape private constructor(private val posMap: Map<BlockPos, HTBlockPredicate>) : BiPredicate<World, BlockPos> {
     companion object {
         // https://github.com/AztechMC/Modern-Industrialization/blob/1.20.x/src/main/java/aztech/modern_industrialization/machines/multiblocks/ShapeMatcher.java#L63
         @JvmStatic
-        fun toAbsolutePos(originPos: BlockPos, originDirection: Direction?, relativePos: BlockPos): BlockPos =
-            when (originDirection) {
-                Direction.SOUTH -> BlockPos(-relativePos.x, relativePos.y, -relativePos.z)
-                Direction.WEST -> BlockPos(relativePos.z, relativePos.y, -relativePos.x)
-                Direction.EAST -> BlockPos(-relativePos.z, relativePos.y, relativePos.x)
-                else -> relativePos
-            }.add(originPos)
+        fun toAbsolutePos(originPos: BlockPos, originDirection: Direction?, relativePos: BlockPos): BlockPos = when (originDirection) {
+            Direction.SOUTH -> BlockPos(-relativePos.x, relativePos.y, -relativePos.z)
+            Direction.WEST -> BlockPos(relativePos.z, relativePos.y, -relativePos.x)
+            Direction.EAST -> BlockPos(-relativePos.z, relativePos.y, relativePos.x)
+            else -> relativePos
+        }.add(originPos)
     }
 
-    fun getAbsolutePattern(
-        originPos: BlockPos,
-        originDirection: Direction? = null,
-    ): Map<BlockPos, HTBlockPredicate> =
-        posMap.map { (pos: BlockPos, predicate: HTBlockPredicate) ->
+    fun getAbsolutePattern(originPos: BlockPos, originDirection: Direction? = null): Map<BlockPos, HTBlockPredicate> = posMap
+        .map { (pos: BlockPos, predicate: HTBlockPredicate) ->
             toAbsolutePos(
                 originPos,
                 originDirection,
@@ -43,16 +37,17 @@ class HTMultiMachineShape private constructor(private val posMap: Map<BlockPos, 
     fun test(world: World, originPos: BlockPos, player: PlayerEntity?): Boolean {
         if (world.isClient || world !is ServerWorld) return false
         val state: BlockState = world.getBlockState(originPos)
-        val direction: Direction? = when (state.contains(Properties.HORIZONTAL_FACING)) {
-            true -> state.get(Properties.HORIZONTAL_FACING)
-            false -> null
-        }
+        val direction: Direction? =
+            when (state.contains(Properties.HORIZONTAL_FACING)) {
+                true -> state.get(Properties.HORIZONTAL_FACING)
+                false -> null
+            }
         val absolutePattern: Map<BlockPos, HTBlockPredicate> = getAbsolutePattern(originPos, direction)
         for ((pos: BlockPos, predicate: HTBlockPredicate) in absolutePattern) {
             if (!predicate.test(world, pos)) {
                 player?.sendMessage(
                     Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, predicate, pos),
-                    false
+                    false,
                 )
                 return false
             }
@@ -127,5 +122,4 @@ class HTMultiMachineShape private constructor(private val posMap: Map<BlockPos, 
             return HTMultiMachineShape(posMap)
         }
     }
-
 }

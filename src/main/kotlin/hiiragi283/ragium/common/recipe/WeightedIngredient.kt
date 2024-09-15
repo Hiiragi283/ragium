@@ -12,31 +12,33 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.tag.TagKey
 import java.util.function.Predicate
 
-class WeightedIngredient private constructor(
-    val ingredient: Ingredient,
-    val count: Int = 1,
-) : Predicate<ItemStack> {
-
+class WeightedIngredient private constructor(val ingredient: Ingredient, val count: Int = 1) : Predicate<ItemStack> {
     companion object {
         @JvmField
         val EMPTY = WeightedIngredient(Ingredient.EMPTY, 0)
 
         @JvmField
-        val CODEC: Codec<WeightedIngredient> = RecordCodecBuilder.create { instance ->
-            instance.group(
-                Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(WeightedIngredient::ingredient),
-                Codec.INT.orElse(1).fieldOf("count").forGetter(WeightedIngredient::count)
-            ).apply(instance, Companion::of)
-        }
+        val CODEC: Codec<WeightedIngredient> =
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(WeightedIngredient::ingredient),
+                        Codec.INT
+                            .orElse(1)
+                            .fieldOf("count")
+                            .forGetter(WeightedIngredient::count),
+                    ).apply(instance, Companion::of)
+            }
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, WeightedIngredient> = PacketCodec.tuple(
-            Ingredient.PACKET_CODEC,
-            WeightedIngredient::ingredient,
-            PacketCodecs.INTEGER,
-            WeightedIngredient::count,
-            Companion::of
-        )
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, WeightedIngredient> =
+            PacketCodec.tuple(
+                Ingredient.PACKET_CODEC,
+                WeightedIngredient::ingredient,
+                PacketCodecs.INTEGER,
+                WeightedIngredient::count,
+                Companion::of,
+            )
 
         @JvmField
         val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<WeightedIngredient>> =
@@ -67,6 +69,5 @@ class WeightedIngredient private constructor(
 
     //    Any    //
 
-    override fun toString(): String =
-        "weightedIngredient[count=$count, ingredient=${ingredient.matchingStacks.joinToString(", ")}]"
+    override fun toString(): String = "weightedIngredient[count=$count, ingredient=${ingredient.matchingStacks.joinToString(", ")}]"
 }

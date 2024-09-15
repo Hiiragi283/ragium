@@ -21,9 +21,7 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
-class HTMachineBlockEntityRenderer(
-    context: BlockEntityRendererFactory.Context,
-) : BlockEntityRenderer<HTMachineBlockEntity> {
+class HTMachineBlockEntityRenderer(context: BlockEntityRendererFactory.Context) : BlockEntityRenderer<HTMachineBlockEntity> {
     override fun render(
         entity: HTMachineBlockEntity,
         tickDelta: Float,
@@ -38,7 +36,8 @@ class HTMachineBlockEntityRenderer(
         val multiShape: HTMultiMachineShape = entity.multiShape ?: return
         val dummyPos = BlockPos(0, 260, 0)
         val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
-        multiShape.getAbsolutePattern(BlockPos.ORIGIN, direction)
+        multiShape
+            .getAbsolutePattern(BlockPos.ORIGIN, direction)
             .forEach { (pos: BlockPos, predicate: HTBlockPredicate) ->
                 predicate.getPreviewState(world)?.let { state ->
                     matrices.push()
@@ -50,6 +49,5 @@ class HTMachineBlockEntityRenderer(
                     matrices.pop()
                 }
             }
-
     }
 }

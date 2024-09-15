@@ -5,8 +5,6 @@ import me.shedaniel.autoconfig.annotation.Config
 
 @Config(name = Ragium.MOD_ID)
 class RagiumConfig : ConfigData {
-
     @JvmField
     var isHardMode: Boolean = false
-
 }

@@ -24,10 +24,8 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
 
-class RagiumRecipeProvider(
-    output: FabricDataOutput,
-    registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>,
-) : FabricRecipeProvider(output, registriesFuture) {
+class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    FabricRecipeProvider(output, registriesFuture) {
     // override fun getRecipeIdentifier(identifier: Identifier): Identifier = identifier
 
     override fun generate(exporter: RecipeExporter) {
@@ -56,11 +54,9 @@ class RagiumRecipeProvider(
         criterion("has_input", RecipeProvider.conditionsFromTag(tagKey))
     }
 
-    private fun RecipeExporter.conditions(vararg conditions: ResourceCondition): RecipeExporter =
-        withConditions(this, *conditions)
+    private fun RecipeExporter.conditions(vararg conditions: ResourceCondition): RecipeExporter = withConditions(this, *conditions)
 
-    private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter =
-        conditions(HTHardModeResourceCondition.fromBool(isHard))
+    private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter = conditions(HTHardModeResourceCondition.fromBool(isHard))
 
     private fun craftingRecipes(exporter: RecipeExporter) {
         // ingredients
@@ -85,7 +81,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.RAW_RAGINITE_DUST)
             .offerTo(
                 exporter.hardMode(false),
-                Ragium.id("shaped/ragi_alloy_compound_1")
+                Ragium.id("shaped/ragi_alloy_compound_1"),
             )
 
         createShaped(RagiumBlocks.RAGI_ALLOY_HULL)
@@ -97,7 +93,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.RAGI_ALLOY_INGOT)
             .offerTo(
                 exporter.hardMode(false),
-                Ragium.id("shaped/ragi_alloy_hull")
+                Ragium.id("shaped/ragi_alloy_hull"),
             )
 
         createShaped(RagiumBlocks.RAGI_ALLOY_HULL)
@@ -109,7 +105,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.RAGI_ALLOY_PLATE)
             .offerTo(
                 exporter.hardMode(true),
-                Ragium.id("shaped/ragi_alloy_hull_1")
+                Ragium.id("shaped/ragi_alloy_hull_1"),
             )
 
         createShaped(RagiumBlocks.RAGI_STEEL_HULL)
@@ -121,7 +117,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.RAGI_STEEL_INGOT)
             .offerTo(
                 exporter.hardMode(false),
-                Ragium.id("shaped/ragi_steel_hull")
+                Ragium.id("shaped/ragi_steel_hull"),
             )
 
         createShaped(RagiumBlocks.RAGI_STEEL_HULL)
@@ -133,7 +129,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.RAGI_STEEL_PLATE)
             .offerTo(
                 exporter.hardMode(false),
-                Ragium.id("shaped/ragi_steel_hull_1")
+                Ragium.id("shaped/ragi_steel_hull_1"),
             )
 
         createShaped(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
@@ -145,7 +141,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.REFINED_RAGI_STEEL_INGOT)
             .offerTo(
                 exporter.hardMode(false),
-                Ragium.id("shaped/refined_ragi_steel_hull")
+                Ragium.id("shaped/refined_ragi_steel_hull"),
             )
 
         createShaped(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
@@ -157,7 +153,7 @@ class RagiumRecipeProvider(
             .itemCriterion(RagiumItems.REFINED_RAGI_STEEL_PLATE)
             .offerTo(
                 exporter.hardMode(false),
-                Ragium.id("shaped/refined_ragi_steel_hull_1")
+                Ragium.id("shaped/refined_ragi_steel_hull_1"),
             )
 
         // machines
@@ -194,8 +190,7 @@ class RagiumRecipeProvider(
             .offerTo(exporter, Ragium.id("shaped/brick_blast_furnace"))
     }
 
-    private fun createShaped(output: ItemConvertible): ShapedRecipeJsonBuilder =
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, output)
+    private fun createShaped(output: ItemConvertible): ShapedRecipeJsonBuilder = ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, output)
 
     private fun createShapeless(output: ItemConvertible): ShapelessRecipeJsonBuilder =
         ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, output)
@@ -203,14 +198,14 @@ class RagiumRecipeProvider(
     //    Cooking   //
 
     private fun cookingRecipes(exporter: RecipeExporter) {
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItems(RagiumItems.RAGI_ALLOY_COMPOUND),
-            RecipeCategory.MISC,
-            RagiumItems.RAGI_ALLOY_INGOT,
-            0.0f,
-            200
-        )
-            .itemCriterion(RagiumItems.RAGI_ALLOY_COMPOUND)
+        CookingRecipeJsonBuilder
+            .createSmelting(
+                Ingredient.ofItems(RagiumItems.RAGI_ALLOY_COMPOUND),
+                RecipeCategory.MISC,
+                RagiumItems.RAGI_ALLOY_INGOT,
+                0.0f,
+                200,
+            ).itemCriterion(RagiumItems.RAGI_ALLOY_COMPOUND)
             .offerTo(exporter, Ragium.id("smelting/ragi_alloy_ingot_1"))
     }
 
@@ -279,5 +274,4 @@ class RagiumRecipeProvider(
             .addOutput(RagiumItems.RAGI_STEEL_INGOT)
             .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(RagiumItems.RAGI_STEEL_INGOT))
     }
-
 }

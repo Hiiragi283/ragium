@@ -11,25 +11,23 @@ import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 class HTFluidVariantAttributeHandler private constructor(fluid: Fluid) {
-
     companion object {
         @JvmStatic
-        fun create(
-            fluid: Fluid,
-            builderAction: HTFluidVariantAttributeHandler.() -> Unit,
-        ): FluidVariantAttributeHandler =
+        fun create(fluid: Fluid, builderAction: HTFluidVariantAttributeHandler.() -> Unit): FluidVariantAttributeHandler =
             HTFluidVariantAttributeHandler(fluid).apply(builderAction).let { builder: HTFluidVariantAttributeHandler ->
                 object : FluidVariantAttributeHandler {
                     override fun getName(fluidVariant: FluidVariant): Text = builder.name
-                    override fun getFillSound(variant: FluidVariant): Optional<SoundEvent> =
-                        Optional.ofNullable(builder.fillSound)
 
-                    override fun getEmptySound(variant: FluidVariant): Optional<SoundEvent> =
-                        Optional.ofNullable(builder.emptySound)
+                    override fun getFillSound(variant: FluidVariant): Optional<SoundEvent> = Optional.ofNullable(builder.fillSound)
+
+                    override fun getEmptySound(variant: FluidVariant): Optional<SoundEvent> = Optional.ofNullable(builder.emptySound)
 
                     override fun getLuminance(variant: FluidVariant): Int = builder.luminance
+
                     override fun getTemperature(variant: FluidVariant): Int = builder.temperature
+
                     override fun getViscosity(variant: FluidVariant, world: World?): Int = builder.viscosity
+
                     override fun isLighterThanAir(variant: FluidVariant): Boolean = builder.isLighterThanAir
                 }
             }
@@ -45,5 +43,4 @@ class HTFluidVariantAttributeHandler private constructor(fluid: Fluid) {
     var temperature: Int = defaultHandler.getTemperature(variant)
     var viscosity: Int = defaultHandler.getViscosity(variant, null)
     var isLighterThanAir: Boolean = defaultHandler.isLighterThanAir(variant)
-
 }

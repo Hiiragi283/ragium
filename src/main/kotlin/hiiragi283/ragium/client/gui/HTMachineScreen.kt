@@ -9,13 +9,8 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 
 @Environment(EnvType.CLIENT)
-class HTMachineScreen(
-    gui: SyncedGuiDescription,
-    player: PlayerEntity,
-    title: Text,
-) : CottonInventoryScreen<SyncedGuiDescription>(gui, player, title) {
-
+class HTMachineScreen(gui: SyncedGuiDescription, player: PlayerEntity, title: Text) :
+    CottonInventoryScreen<SyncedGuiDescription>(gui, player, title) {
     constructor(gui: SyncedGuiDescription, inventory: PlayerInventory, title: Text) :
-            this(gui, inventory.player, title)
-
+        this(gui, inventory.player, title)
 }

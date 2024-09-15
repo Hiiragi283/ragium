@@ -4,7 +4,6 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 
 class HTFluidCellItem(fluid: Fluid, settings: Settings) : Item(settings) {
-
     companion object {
         val instances: Map<Fluid, HTFluidCellItem>
             get() = instances1
@@ -21,5 +20,4 @@ class HTFluidCellItem(fluid: Fluid, settings: Settings) : Item(settings) {
         check(fluid !in instances) { "Cell with fluid; $fluid is already registered!" }
         instances1[fluid] = this
     }
-
 }

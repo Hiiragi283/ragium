@@ -13,7 +13,6 @@ fun IWailaClientRegistration.registerBlock(provider: IBlockComponentProvider, bl
     registerBlockComponent(provider, block::class.java)
 }
 
-
 //    BlockAccessor    //
 
 fun BlockAccessor.ifPresent(key: String, action: BlockAccessor.() -> Unit) {

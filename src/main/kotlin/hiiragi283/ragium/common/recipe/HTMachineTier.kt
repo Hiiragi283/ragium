@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.block.entity.HTBurningBoxBlockEntity
 import hiiragi283.ragium.common.util.getOrNull
 import io.netty.buffer.ByteBuf
@@ -26,12 +27,15 @@ enum class HTMachineTier(private val condition: BiPredicate<World, BlockPos> = C
         val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.of("tier", HTMachineTier::class.java)
 
         @JvmField
-        val CODEC: StringIdentifiable.EnumCodec<HTMachineTier> = StringIdentifiable.createCodec(HTMachineTier::values)
+        val CODEC: Codec<HTMachineTier> = StringIdentifiable.createCodec(HTMachineTier::values)
 
         @JvmField
-        val INT_FUNCTION: IntFunction<HTMachineTier> = ValueLists.createIdToValueFunction(
-            HTMachineTier::ordinal, entries.toTypedArray(), ValueLists.OutOfBoundsHandling.WRAP
-        )
+        val INT_FUNCTION: IntFunction<HTMachineTier> =
+            ValueLists.createIdToValueFunction(
+                HTMachineTier::ordinal,
+                entries.toTypedArray(),
+                ValueLists.OutOfBoundsHandling.WRAP,
+            )
 
         @JvmField
         val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineTier> =
@@ -52,22 +56,24 @@ enum class HTMachineTier(private val condition: BiPredicate<World, BlockPos> = C
                 HTMachineTier::class.java,
                 ContainerItemContext::class.java
             )
-        */
+         */
     }
 
     val tier: Int = ordinal
 
     val back: HTMachineTier
-        get() = when (this) {
-            NONE -> NONE
-            else -> entries[ordinal - 1]
-        }
+        get() =
+            when (this) {
+                NONE -> NONE
+                else -> entries[ordinal - 1]
+            }
 
     val next: HTMachineTier
-        get() = when (this) {
-            ATOMIC -> ATOMIC
-            else -> entries[ordinal + 1]
-        }
+        get() =
+            when (this) {
+                ATOMIC -> ATOMIC
+                else -> entries[ordinal + 1]
+            }
 
     fun canProcess(world: World, pos: BlockPos): Boolean = condition
         .or { world1: World, pos1: BlockPos -> world1.getBlockState(pos1).getOrNull(PROPERTY) == this }
@@ -84,9 +90,9 @@ enum class HTMachineTier(private val condition: BiPredicate<World, BlockPos> = C
         val NONE: BiPredicate<World, BlockPos> = BiPredicate { _: World, _: BlockPos -> false }
 
         @JvmField
-        val HEAT: BiPredicate<World, BlockPos> = BiPredicate { world: World, pos: BlockPos ->
-            (world.getBlockEntity(pos.down()) as? HTBurningBoxBlockEntity)?.isBurning ?: false
-        }
+        val HEAT: BiPredicate<World, BlockPos> =
+            BiPredicate { world: World, pos: BlockPos ->
+                (world.getBlockEntity(pos.down()) as? HTBurningBoxBlockEntity)?.isBurning ?: false
+            }
     }
-
 }

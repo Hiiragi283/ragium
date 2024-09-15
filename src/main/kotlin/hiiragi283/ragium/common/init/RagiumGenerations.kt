@@ -9,7 +9,6 @@ import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.PlacedFeature
 
 object RagiumGenerations {
-
     @JvmField
     val ORE_RAGINITE: RegistryKey<PlacedFeature> =
         RegistryKey.of(RegistryKeys.PLACED_FEATURE, Ragium.id("ore_raginite"))
@@ -18,8 +17,7 @@ object RagiumGenerations {
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,
-            ORE_RAGINITE
+            ORE_RAGINITE,
         )
     }
-
 }

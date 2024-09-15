@@ -21,11 +21,10 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class HTBurningBoxBlockEntity(
-    pos: BlockPos,
-    state: BlockState,
-) : BlockEntity(RagiumBlockEntityTypes.BURNING_BOX, pos, state), HTDelegatedInventory, NamedScreenHandlerFactory {
-
+class HTBurningBoxBlockEntity(pos: BlockPos, state: BlockState) :
+    BlockEntity(RagiumBlockEntityTypes.BURNING_BOX, pos, state),
+    HTDelegatedInventory,
+    NamedScreenHandlerFactory {
     companion object {
         @JvmField
         val TICKER: BlockEntityTicker<HTBurningBoxBlockEntity> =
@@ -62,9 +61,10 @@ class HTBurningBoxBlockEntity(
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory = HTSidedStorageBuilder(1)
-        .set(0, HTStorageIO.GENERIC, HTStorageSides.ANY)
-        .buildInventory()
+    override val parent: HTSidedInventory =
+        HTSidedStorageBuilder(1)
+            .set(0, HTStorageIO.GENERIC, HTStorageSides.ANY)
+            .buildInventory()
 
     override fun markDirty() {
         super<BlockEntity>.markDirty()
@@ -76,5 +76,4 @@ class HTBurningBoxBlockEntity(
         HTBurningBoxScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos))
 
     override fun getDisplayName(): Text = RagiumBlocks.BURNING_BOX.name
-
 }

@@ -15,9 +15,11 @@ import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry
 import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandler
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.util.EntryStacks
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 
+@Environment(EnvType.CLIENT)
 object RagiumREIClient : REIClientPlugin {
-
     init {
         Ragium.log { info("REI Integration enabled!") }
     }
@@ -41,7 +43,7 @@ object RagiumREIClient : REIClientPlugin {
         }
         registry.addWorkstations(
             HTMachineType.Single.GRINDER.categoryId,
-            EntryStacks.of(RagiumBlocks.MANUAL_GRINDER)
+            EntryStacks.of(RagiumBlocks.MANUAL_GRINDER),
         )
     }
 
@@ -55,7 +57,7 @@ object RagiumREIClient : REIClientPlugin {
         registry.registerContainerClickArea(
             Rectangle(5 + 18 * 4, 5 + 18 * 1, 18, 18),
             HTMachineScreen::class.java,
-            *IDENTIFIERS.values.toTypedArray()
+            *IDENTIFIERS.values.toTypedArray(),
         )
     }
 
@@ -66,10 +68,9 @@ object RagiumREIClient : REIClientPlugin {
                 SimpleTransferHandler.create(
                     HTMachineScreenHandler::class.java,
                     id,
-                    SimpleTransferHandler.IntRange(0, 3)
-                )
+                    SimpleTransferHandler.IntRange(0, 3),
+                ),
             )
         }
     }
-
 }

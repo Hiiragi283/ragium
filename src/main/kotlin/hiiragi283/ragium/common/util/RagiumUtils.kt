@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.util
 
+import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.common.item.HTFluidCellItem
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -62,11 +63,7 @@ fun Fluid.getCellOrThrow(): Item = HTFluidCellItem.getOrThrow(this)
 
 //    ItemStack    //
 
-fun buildItemStack(
-    item: ItemConvertible?,
-    count: Int = 1,
-    builderAction: ComponentChanges.Builder.() -> Unit = {},
-): ItemStack {
+fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
     if (item == null) return ItemStack.EMPTY
     val item1: Item = item.asItem()
     if (item1 == Items.AIR) return ItemStack.EMPTY
@@ -75,19 +72,24 @@ fun buildItemStack(
     return ItemStack(entry, count, changes)
 }
 
+//    Table    //
+
+fun <R : Any, C : Any, V : Any> Table<R, C, V>.forEach(action: (R, C, V) -> Unit) {
+    cellSet().forEach { action(it.rowKey, it.columnKey, it.value) }
+}
+
 //    Transaction    //
 
 inline fun <R : Any> useTransaction(action: (Transaction) -> R): R = Transaction.openOuter().use(action)
 
 //    Recipe    //
 
-
 //    Reflection    //
 
-inline fun <reified T : Any> Any.getFilteredInstances(): List<T> = this::class.java.declaredFields
+/*inline fun <reified T : Any> Any.getFilteredInstances(): List<T> = this::class.java.declaredFields
     .onEach { it.isAccessible = true }
     .map { it.get(this) }
-    .filterIsInstance<T>()
+    .filterIsInstance<T>()*/
 
 //    World    //
 

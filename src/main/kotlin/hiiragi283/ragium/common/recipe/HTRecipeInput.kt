@@ -5,7 +5,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
 class HTRecipeInput(private val list: List<ItemStack>) : RecipeInput {
-
     constructor(builderAction: MutableList<ItemStack>.() -> Unit) : this(buildList(builderAction))
 
     fun matches(maps: Map<Int, WeightedIngredient>): Boolean =
@@ -19,7 +18,8 @@ class HTRecipeInput(private val list: List<ItemStack>) : RecipeInput {
             list.forEach { info("Input; $it") }
         }
         return list
-            .filterIndexed { index: Int, ing: WeightedIngredient -> !ing.test(getStackInSlot(index)) }.isEmpty()
+            .filterIndexed { index: Int, ing: WeightedIngredient -> !ing.test(getStackInSlot(index)) }
+            .isEmpty()
     }
 
     //    RecipeInput    //

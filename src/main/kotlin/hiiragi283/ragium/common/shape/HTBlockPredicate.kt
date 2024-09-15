@@ -52,9 +52,11 @@ sealed class HTBlockPredicate : BiPredicate<World, BlockPos> {
 
     private data class Group(private val tagKey: TagKey<Block>) : HTBlockPredicate() {
         override val previewStates: List<BlockState>
-            get() = Registries.BLOCK.iterateEntries(tagKey)
-                .map(RegistryEntry<Block>::value)
-                .map(Block::getDefaultState)
+            get() =
+                Registries.BLOCK
+                    .iterateEntries(tagKey)
+                    .map(RegistryEntry<Block>::value)
+                    .map(Block::getDefaultState)
 
         override fun test(world: World, pos: BlockPos): Boolean = world.getBlockState(pos).isIn(tagKey)
     }

@@ -18,7 +18,6 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 sealed class HTRecipeResult(val count: Int) {
-
     abstract val value: Item
 
     init {
@@ -47,13 +46,15 @@ sealed class HTRecipeResult(val count: Int) {
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTRecipeResult> = Codec.xor(ItemImpl.CODEC, TagImpl.CODEC)
-            .xmap(Either<ItemImpl, TagImpl>::mapCast) { result: HTRecipeResult ->
-                when (result) {
-                    is ItemImpl -> Either.left(result)
-                    is TagImpl -> Either.right(result)
+        val CODEC: Codec<HTRecipeResult> =
+            Codec
+                .xor(ItemImpl.CODEC, TagImpl.CODEC)
+                .xmap(Either<ItemImpl, TagImpl>::mapCast) { result: HTRecipeResult ->
+                    when (result) {
+                        is ItemImpl -> Either.left(result)
+                        is TagImpl -> Either.right(result)
+                    }
                 }
-            }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult> =
@@ -86,15 +87,24 @@ sealed class HTRecipeResult(val count: Int) {
 
     //    Item    //
 
-    private class ItemImpl(item: ItemConvertible, count: Int) : HTRecipeResult(count), ItemConvertible by item {
+    private class ItemImpl(item: ItemConvertible, count: Int) :
+        HTRecipeResult(count),
+        ItemConvertible by item {
         companion object {
             @JvmField
-            val CODEC: Codec<ItemImpl> = RecordCodecBuilder.create { instance ->
-                instance.group(
-                    Registries.ITEM.codec.fieldOf("item").forGetter(ItemImpl::asItem),
-                    Codec.INT.orElse(1).fieldOf("count").forGetter(ItemImpl::count)
-                ).apply(instance, ::ItemImpl)
-            }
+            val CODEC: Codec<ItemImpl> =
+                RecordCodecBuilder.create { instance ->
+                    instance
+                        .group(
+                            Registries.ITEM.codec
+                                .fieldOf("item")
+                                .forGetter(ItemImpl::asItem),
+                            Codec.INT
+                                .orElse(1)
+                                .fieldOf("count")
+                                .forGetter(ItemImpl::count),
+                        ).apply(instance, ::ItemImpl)
+                }
         }
 
         override val value: Item
@@ -115,17 +125,26 @@ sealed class HTRecipeResult(val count: Int) {
     private class TagImpl(private val tagKey: TagKey<Item>, count: Int) : HTRecipeResult(count) {
         companion object {
             @JvmField
-            val CODEC: Codec<TagImpl> = RecordCodecBuilder.create { instance ->
-                instance.group(
-                    TagKey.unprefixedCodec(RegistryKeys.ITEM).fieldOf("tag").forGetter(TagImpl::tagKey),
-                    Codec.INT.orElse(1).fieldOf("count").forGetter(TagImpl::count)
-                ).apply(instance, ::TagImpl)
-            }
+            val CODEC: Codec<TagImpl> =
+                RecordCodecBuilder.create { instance ->
+                    instance
+                        .group(
+                            TagKey.unprefixedCodec(RegistryKeys.ITEM).fieldOf("tag").forGetter(TagImpl::tagKey),
+                            Codec.INT
+                                .orElse(1)
+                                .fieldOf("count")
+                                .forGetter(TagImpl::count),
+                        ).apply(instance, ::TagImpl)
+                }
         }
 
         override val value: Item
             get() {
-                val item: Item? = Registries.ITEM.iterateEntries(tagKey).map(RegistryEntry<Item>::value).getOrNull(0)
+                val item: Item? =
+                    Registries.ITEM
+                        .iterateEntries(tagKey)
+                        .map(RegistryEntry<Item>::value)
+                        .getOrNull(0)
                 return checkNotNull(item) { "TagKey; $tagKey has no elements!" }
             }
 
@@ -135,5 +154,4 @@ sealed class HTRecipeResult(val count: Int) {
             buf.writeBoolean(false)
         }
     }
-
 }

@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTMultiMachineBlock(machineType: HTMachineType.Multi) : HTAbstractMachineBlock(machineType) {
-
     private val multiShape: HTMultiMachineShape = machineType.multiShape
 
     override fun onUse(

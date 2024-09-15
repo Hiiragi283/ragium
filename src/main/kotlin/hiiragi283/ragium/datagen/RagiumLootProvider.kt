@@ -19,11 +19,8 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import java.util.concurrent.CompletableFuture
 
-class RagiumLootProvider(
-    dataOutput: FabricDataOutput,
-    registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>,
-) : FabricBlockLootTableProvider(dataOutput, registryLookup) {
-
+class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    FabricBlockLootTableProvider(dataOutput, registryLookup) {
     private val enchantmentRegistry: RegistryWrapper.Impl<Enchantment> by lazy {
         getWrapperOrThrow(RegistryKeys.ENCHANTMENT)
     }
@@ -32,32 +29,34 @@ class RagiumLootProvider(
         this.registryLookup.getWrapperOrThrow(registryKey)
 
     override fun generate() {
+        RagiumBlocks.REGISTER.generateLootTable(this)
+
         addDrop(RagiumBlocks.RAGINITE_ORE, ::dropRaginiteOre)
         addDrop(RagiumBlocks.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
-        addDrop(RagiumBlocks.CREATIVE_SOURCE)
+        // addDrop(RagiumBlocks.CREATIVE_SOURCE)
         // tier1
-        addDrop(RagiumBlocks.RAGI_ALLOY_BLOCK)
-        addDrop(RagiumBlocks.RAGI_ALLOY_HULL)
-        addDrop(RagiumBlocks.MANUAL_GRINDER)
-        addDrop(RagiumBlocks.WATER_COLLECTOR)
-        addDrop(RagiumBlocks.BURNING_BOX)
+        // addDrop(RagiumBlocks.RAGI_ALLOY_BLOCK)
+        // addDrop(RagiumBlocks.RAGI_ALLOY_HULL)
+        // addDrop(RagiumBlocks.MANUAL_GRINDER)
+        // addDrop(RagiumBlocks.WATER_COLLECTOR)
+        // addDrop(RagiumBlocks.BURNING_BOX)
         // tier2
-        addDrop(RagiumBlocks.RAGI_STEEL_BLOCK)
-        addDrop(RagiumBlocks.RAGI_STEEL_HULL)
+        // addDrop(RagiumBlocks.RAGI_STEEL_BLOCK)
+        // addDrop(RagiumBlocks.RAGI_STEEL_HULL)
         // tier3
-        addDrop(RagiumBlocks.REFINED_RAGI_STEEL_BLOCK)
-        addDrop(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
-
+        // addDrop(RagiumBlocks.REFINED_RAGI_STEEL_BLOCK)
+        // addDrop(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
     }
 
     private fun dropRaginiteOre(ore: Block): LootTable.Builder = dropsWithSilkTouch(
         ore,
         applyExplosionDecay(
-            RagiumBlocks.RAGINITE_ORE,
-            ItemEntry.builder(RagiumItems.RAW_RAGINITE)
+            ore,
+            ItemEntry
+                .builder(RagiumItems.RAW_RAGINITE)
                 .applyDropRange(2, 5)
-                .applyFortune()
-        )
+                .applyFortune(),
+        ),
     )
 
     fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyDropRange(min: Number, max: Number): T =
@@ -65,5 +64,4 @@ class RagiumLootProvider(
 
     fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyFortune(): T =
         apply(ApplyBonusLootFunction.oreDrops(enchantmentRegistry.getOrThrow(Enchantments.FORTUNE)))
-
 }

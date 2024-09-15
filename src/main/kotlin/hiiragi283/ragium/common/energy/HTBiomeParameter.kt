@@ -14,13 +14,12 @@ data class HTBiomeParameter(
     val humidity: Level,
     val eldritch: Level,
 ) {
-
     constructor(temp: Int, height: Int, terra: Int, humidity: Int, eldritch: Int) : this(
         Level.entries[temp],
         Level.entries[height],
         Level.entries[terra],
         Level.entries[humidity],
-        Level.entries[eldritch]
+        Level.entries[eldritch],
     )
 
     enum class Level {
@@ -29,6 +28,5 @@ data class HTBiomeParameter(
         MIDDLE,
         HIGH,
         HIGHEST,
-        ;
     }
 }

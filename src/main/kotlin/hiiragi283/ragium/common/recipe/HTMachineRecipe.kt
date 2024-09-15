@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
@@ -15,28 +16,42 @@ class HTMachineRecipe(
     val type: HTMachineType,
     val inputs: List<WeightedIngredient>,
     val outputs: List<HTRecipeResult>,
+    val catalyst: Ingredient,
 ) : Recipe<HTRecipeInput> {
-
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTMachineRecipe> = RecordCodecBuilder.mapCodec { instance ->
-            instance.group(
-                HTMachineType.CODEC.fieldOf("machine_type").forGetter(HTMachineRecipe::type),
-                WeightedIngredient.CODEC.listOf().fieldOf("inputs").forGetter(HTMachineRecipe::inputs),
-                HTRecipeResult.CODEC.listOf().fieldOf("outputs").forGetter(HTMachineRecipe::outputs)
-            ).apply(instance, ::HTMachineRecipe)
-        }
+        val CODEC: MapCodec<HTMachineRecipe> =
+            RecordCodecBuilder.mapCodec { instance ->
+                instance
+                    .group(
+                        HTMachineType.CODEC.fieldOf("machine_type").forGetter(HTMachineRecipe::type),
+                        WeightedIngredient.CODEC
+                            .listOf()
+                            .fieldOf("inputs")
+                            .forGetter(HTMachineRecipe::inputs),
+                        HTRecipeResult.CODEC
+                            .listOf()
+                            .fieldOf("outputs")
+                            .forGetter(HTMachineRecipe::outputs),
+                        Ingredient.ALLOW_EMPTY_CODEC
+                            .optionalFieldOf("catalyst", Ingredient.EMPTY)
+                            .forGetter(HTMachineRecipe::catalyst),
+                    ).apply(instance, ::HTMachineRecipe)
+            }
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineRecipe> = PacketCodec.tuple(
-            HTMachineType.PACKET_CODEC,
-            HTMachineRecipe::type,
-            WeightedIngredient.LIST_PACKET_CODEC,
-            HTMachineRecipe::inputs,
-            HTRecipeResult.LIST_PACKET_CODEC,
-            HTMachineRecipe::outputs,
-            ::HTMachineRecipe
-        )
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineRecipe> =
+            PacketCodec.tuple(
+                HTMachineType.PACKET_CODEC,
+                HTMachineRecipe::type,
+                WeightedIngredient.LIST_PACKET_CODEC,
+                HTMachineRecipe::inputs,
+                HTRecipeResult.LIST_PACKET_CODEC,
+                HTMachineRecipe::outputs,
+                Ingredient.PACKET_CODEC,
+                HTMachineRecipe::catalyst,
+                ::HTMachineRecipe,
+            )
     }
 
     override fun matches(input: HTRecipeInput, world: World): Boolean = input.matches(inputs)

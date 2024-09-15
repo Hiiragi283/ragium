@@ -13,7 +13,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 object Ragium : ModInitializer {
-
     const val MOD_ID = "ragium"
     const val MOD_NAME = "Ragium"
 
@@ -43,7 +42,7 @@ object Ragium : ModInitializer {
         RagiumBlocks
         HTMachineType.init()
         RagiumItems
-        RagiumFluids.init()
+        // RagiumFluids.init()
 
         HTPortableScreenType.init()
         HTMachineRecipe.Serializer
@@ -54,27 +53,6 @@ object Ragium : ModInitializer {
         RagiumItemGroup.init()
         RagiumCauldronBehaviors.init()
         HTHardModeResourceCondition.init()
-
-        /*UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, hitResult: BlockHitResult ->
-            val stack: ItemStack = player.getStackInHand(hand)
-            if (!stack.isEmpty) {
-                if (stack.isOf(RagiumItems.POWER_METER)) {
-                    if (!world.isClient) {
-                        val pos: BlockPos = hitResult.blockPos
-                        val state: BlockState = world.getBlockState(pos)
-                        val blockEntity: BlockEntity? = world.getBlockEntity(pos)
-                        val side: Direction = hitResult.side
-                        val tier: HTMachineTier? = HTMachineTier.SIDED_LOOKUP.find(world, pos, state, blockEntity, side)
-                        player.sendMessage(
-                            Text.literal("Current Tier - $tier"),
-                            true
-                        )
-                    }
-                    ActionResult.success(world.isClient)
-                }
-            }
-            ActionResult.PASS
-        }*/
 
         log { info("Ragium initialized!") }
     }

@@ -14,13 +14,11 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class HTBlockWithEntity(settings: Settings) : Block(settings), BlockEntityProvider {
-
-    override fun createScreenHandlerFactory(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-    ): NamedScreenHandlerFactory? = world.getBlockEntity(pos) as? NamedScreenHandlerFactory
+abstract class HTBlockWithEntity(settings: Settings) :
+    Block(settings),
+    BlockEntityProvider {
+    override fun createScreenHandlerFactory(state: BlockState, world: World, pos: BlockPos): NamedScreenHandlerFactory? =
+        world.getBlockEntity(pos) as? NamedScreenHandlerFactory
 
     override fun onUse(
         state: BlockState,
@@ -59,15 +57,10 @@ abstract class HTBlockWithEntity(settings: Settings) : Block(settings), BlockEnt
         fun ticker(ticker: BlockEntityTicker<B>): Builder<B> = apply { this.ticker = ticker }
 
         fun build(settings: Settings = Settings.create()): HTBlockWithEntity = object : HTBlockWithEntity(settings) {
-            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
-                type.instantiate(pos, state)
+            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
 
-            override fun <T : BlockEntity> getTicker(
-                world: World,
-                state: BlockState,
-                type: BlockEntityType<T>,
-            ): BlockEntityTicker<T>? = HTBlockEntityTicker.validateTicker(type, type, ticker)
+            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+                HTBlockEntityTicker.validateTicker(type, type, ticker)
         }
     }
-
 }

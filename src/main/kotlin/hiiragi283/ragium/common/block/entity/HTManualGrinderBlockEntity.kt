@@ -15,11 +15,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-class HTManualGrinderBlockEntity(
-    pos: BlockPos,
-    state: BlockState,
-) : BlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state), HTDelegatedInventory {
-
+class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
+    BlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
+    HTDelegatedInventory {
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         parent.writeNbt(nbt, registryLookup)
     }
@@ -30,19 +28,23 @@ class HTManualGrinderBlockEntity(
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory = HTSidedStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSides.SIDE)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSides.DOWN)
-        .buildInventory()
+    override val parent: HTSidedInventory =
+        HTSidedStorageBuilder(2)
+            .set(0, HTStorageIO.INPUT, HTStorageSides.SIDE)
+            .set(1, HTStorageIO.OUTPUT, HTStorageSides.DOWN)
+            .buildInventory()
     private val matchGetter: RecipeManager.MatchGetter<HTRecipeInput, HTMachineRecipe> =
         RecipeManager.createCachedMatchGetter(HTMachineType.Single.GRINDER)
 
     fun process() {
         val world: World = world ?: return
-        val recipe: HTMachineRecipe = matchGetter.getFirstMatch(
-            HTRecipeInput { add(getStack(0)) },
-            world
-        ).map { it.value }.getOrNull() ?: return
+        val recipe: HTMachineRecipe =
+            matchGetter
+                .getFirstMatch(
+                    HTRecipeInput { add(getStack(0)) },
+                    world,
+                ).map { it.value }
+                .getOrNull() ?: return
         val output: ItemStack = recipe.getResult(world.registryManager)
         if (canAcceptOutput(output)) {
             parent.modifyStack(1) { stackIn: ItemStack ->
@@ -68,5 +70,4 @@ class HTManualGrinderBlockEntity(
     override fun markDirty() {
         super<BlockEntity>.markDirty()
     }
-
 }

@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 object HTManualGrinderBlock : HTBlockWithEntity(Settings.copy(Blocks.SMOOTH_STONE)) {
-
     init {
         defaultState = stateManager.defaultState.with(LEVEL_7, 0)
     }
@@ -44,7 +43,7 @@ object HTManualGrinderBlock : HTBlockWithEntity(Settings.copy(Blocks.SMOOTH_STON
             SoundCategory.BLOCKS,
             1.0f,
             1.0f,
-            false
+            false,
         )
         return ActionResult.success(world.isClient)
     }
@@ -59,7 +58,5 @@ object HTManualGrinderBlock : HTBlockWithEntity(Settings.copy(Blocks.SMOOTH_STON
 
     override fun hasSidedTransparency(state: BlockState): Boolean = true
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity =
-        HTManualGrinderBlockEntity(pos, state)
-
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTManualGrinderBlockEntity(pos, state)
 }

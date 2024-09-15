@@ -10,8 +10,6 @@ import net.minecraft.client.gui.screen.Screen
 
 @Environment(EnvType.CLIENT)
 object RagiumModMenu : ModMenuApi {
-
     override fun getModConfigScreenFactory(): ConfigScreenFactory<*> =
         ConfigScreenFactory { parent: Screen -> AutoConfig.getConfigScreen(RagiumConfig::class.java, parent).get() }
-
 }

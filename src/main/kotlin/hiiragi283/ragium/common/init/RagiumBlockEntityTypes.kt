@@ -11,7 +11,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
-
     @JvmField
     val MACHINE: BlockEntityType<HTMachineBlockEntity> =
         register("machine", ::HTMachineBlockEntity)
@@ -28,13 +27,10 @@ object RagiumBlockEntityTypes {
     val BURNING_BOX: BlockEntityType<HTBurningBoxBlockEntity> =
         register("burning_box", ::HTBurningBoxBlockEntity)
 
-    private fun <T : BlockEntity> register(
-        name: String,
-        factory: BlockEntityType.BlockEntityFactory<T>,
-    ): BlockEntityType<T> = Registry.register(
-        Registries.BLOCK_ENTITY_TYPE,
-        Ragium.id(name),
-        BlockEntityType.Builder.create(factory).build()
-    )
-
+    private fun <T : BlockEntity> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
+        Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Ragium.id(name),
+            BlockEntityType.Builder.create(factory).build(),
+        )
 }

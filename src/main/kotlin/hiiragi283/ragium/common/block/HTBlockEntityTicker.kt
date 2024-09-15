@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 object HTBlockEntityTicker {
-
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
     fun <E : BlockEntity, A : BlockEntity> validateTicker(
@@ -21,7 +20,5 @@ object HTBlockEntityTicker {
     } as? BlockEntityTicker<A>
 
     @JvmStatic
-    private fun <T : BlockEntity> ticker(action: (World, BlockPos, BlockState, T) -> Unit): BlockEntityTicker<T> =
-        BlockEntityTicker(action)
-
+    private fun <T : BlockEntity> ticker(action: (World, BlockPos, BlockState, T) -> Unit): BlockEntityTicker<T> = BlockEntityTicker(action)
 }

@@ -8,18 +8,14 @@ import io.github.cottonmc.cotton.gui.widget.data.Insets
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTBurningBoxScreenHandler(
-    syncId: Int,
-    playerInv: PlayerInventory,
-    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
-) : SyncedGuiDescription(
-    RagiumScreenHandlerTypes.BURNING_BOX,
-    syncId,
-    playerInv,
-    getBlockInventory(ctx, 1),
-    getBlockPropertyDelegate(ctx)
-) {
-
+class HTBurningBoxScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
+    SyncedGuiDescription(
+        RagiumScreenHandlerTypes.BURNING_BOX,
+        syncId,
+        playerInv,
+        getBlockInventory(ctx, 1),
+        getBlockPropertyDelegate(ctx),
+    ) {
     init {
         val root = WGridPanel()
         setRootPanel(root)
@@ -32,5 +28,4 @@ class HTBurningBoxScreenHandler(
         root.add(createPlayerInventoryPanel(), 0, 3)
         root.validate(this)
     }
-
 }

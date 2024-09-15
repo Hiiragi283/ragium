@@ -9,8 +9,11 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.util.EntryStacks
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.text.Text
 
+@Environment(EnvType.CLIENT)
 class HTMachineRecipeCategory(val type: HTMachineType) : DisplayCategory<HTMachineRecipeDisplay> {
     override fun getCategoryIdentifier(): CategoryIdentifier<out HTMachineRecipeDisplay> = type.categoryId
 
@@ -24,25 +27,37 @@ class HTMachineRecipeCategory(val type: HTMachineType) : DisplayCategory<HTMachi
         this += Widgets.createArrow(Point(startPoint.x + 27, startPoint.y + 4))
         // this += Widgets.createResultSlotBackground(Point(startPoint.x + 61, startPoint.y + 5))
         // outputs
-        this += Widgets.createSlot(Point(startPoint.x + 61, startPoint.y + 5))
-            .entries(display.outputEntries.getOrNull(0) ?: listOf())
-            .markOutput()
-        this += Widgets.createSlot(Point(startPoint.x + 79, startPoint.y + 5))
-            .entries(display.outputEntries.getOrNull(1) ?: listOf())
-            .markOutput()
-        this += Widgets.createSlot(Point(startPoint.x + 97, startPoint.y + 5))
-            .entries(display.outputEntries.getOrNull(2) ?: listOf())
-            .markOutput()
+        this +=
+            Widgets
+                .createSlot(Point(startPoint.x + 61, startPoint.y + 5))
+                .entries(display.outputEntries.getOrNull(0) ?: listOf())
+                .markOutput()
+        this +=
+            Widgets
+                .createSlot(Point(startPoint.x + 79, startPoint.y + 5))
+                .entries(display.outputEntries.getOrNull(1) ?: listOf())
+                .markOutput()
+        this +=
+            Widgets
+                .createSlot(Point(startPoint.x + 97, startPoint.y + 5))
+                .entries(display.outputEntries.getOrNull(2) ?: listOf())
+                .markOutput()
         // inputs
-        this += Widgets.createSlot(Point(startPoint.x - 32, startPoint.y + 5))
-            .entries(display.inputEntries.getOrNull(0) ?: listOf())
-            .markInput()
-        this += Widgets.createSlot(Point(startPoint.x - 14, startPoint.y + 5))
-            .entries(display.inputEntries.getOrNull(1) ?: listOf())
-            .markInput()
-        this += Widgets.createSlot(Point(startPoint.x + 4, startPoint.y + 5))
-            .entries(display.inputEntries.getOrNull(2) ?: listOf())
-            .markInput()
+        this +=
+            Widgets
+                .createSlot(Point(startPoint.x - 32, startPoint.y + 5))
+                .entries(display.inputEntries.getOrNull(0) ?: listOf())
+                .markInput()
+        this +=
+            Widgets
+                .createSlot(Point(startPoint.x - 14, startPoint.y + 5))
+                .entries(display.inputEntries.getOrNull(1) ?: listOf())
+                .markInput()
+        this +=
+            Widgets
+                .createSlot(Point(startPoint.x + 4, startPoint.y + 5))
+                .entries(display.inputEntries.getOrNull(2) ?: listOf())
+                .markInput()
     }
 
     override fun getDisplayHeight(): Int = 36

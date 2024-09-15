@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.init
 
 object RagiumTranslationKeys {
-
     //    Block    //
-
 
     //    Item Group    //
 
-    const val ITEM_GROUP_BLOCK = "itemGroup.ragium.block"
+    // const val ITEM_GROUP_BLOCK = "itemGroup.ragium.block"
     const val ITEM_GROUP_ITEM = "itemGroup.ragium.item"
 
     //    Machine    //
@@ -27,5 +25,4 @@ object RagiumTranslationKeys {
     const val CONFIG_JADE_BURNING_BOX = "config.jade.plugin_ragium.burning_box"
 
     //    REI    //
-
 }

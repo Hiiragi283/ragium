@@ -17,40 +17,51 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 class HTMachineRecipeJsonBuilder(private val type: HTMachineType) {
-
     private val inputs: MutableList<WeightedIngredient> = mutableListOf()
     private val outputs: MutableList<HTRecipeResult> = mutableListOf()
+    private var catalyst: Ingredient = Ingredient.EMPTY
     private val criteria: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var suffixCache: Int = 0
+
+    //    Input    //
 
     private fun addInput(ingredient: WeightedIngredient): HTMachineRecipeJsonBuilder = apply {
         inputs.add(ingredient)
     }
 
-    fun addInput(ingredient: Ingredient, count: Int = 1): HTMachineRecipeJsonBuilder =
-        addInput(WeightedIngredient.of(ingredient, count))
+    fun addInput(ingredient: Ingredient, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(WeightedIngredient.of(ingredient, count))
 
-    fun addInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder =
-        addInput(Ingredient.ofItems(item), count).apply {
-            hasInput(item, suffixCache.toString())
-            suffixCache++
-        }
+    fun addInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(Ingredient.ofItems(item), count).apply {
+        hasInput(item, suffixCache.toString())
+        suffixCache++
+    }
 
-    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder =
-        addInput(Ingredient.fromTag(tagKey), count).apply {
-            hasInput(tagKey, suffixCache.toString())
-            suffixCache++
-        }
+    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(Ingredient.fromTag(tagKey), count).apply {
+        hasInput(tagKey, suffixCache.toString())
+        suffixCache++
+    }
+
+    //    Output    //
 
     private fun addOutput(result: HTRecipeResult): HTMachineRecipeJsonBuilder = apply {
         outputs.add(result)
     }
 
-    fun addOutput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder =
-        addOutput(HTRecipeResult.item(item, count))
+    fun addOutput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.item(item, count))
 
-    fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder =
-        addOutput(HTRecipeResult.tag(tagKey, count))
+    fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.tag(tagKey, count))
+
+    //    Catalyst    //
+
+    fun setCatalyst(catalyst: Ingredient): HTMachineRecipeJsonBuilder = apply {
+        this.catalyst = catalyst
+    }
+
+    fun setCatalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = setCatalyst(Ingredient.ofItems(item))
+
+    fun setCatalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = setCatalyst(Ingredient.fromTag(tagKey))
+
+    //    Criterion    //
 
     fun criterion(name: String, criterion: AdvancementCriterion<*>): HTMachineRecipeJsonBuilder = apply {
         criteria[name] = criterion
@@ -69,18 +80,15 @@ class HTMachineRecipeJsonBuilder(private val type: HTMachineType) {
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         exporter.accept(
             prefixedId,
-            HTMachineRecipe(type, inputs, outputs),
+            HTMachineRecipe(type, inputs, outputs, catalyst),
             exporter.advancementBuilder
                 .criterion("has_the_recipe", RecipeUnlockedCriterion.create(prefixedId))
                 .rewards(AdvancementRewards.Builder.recipe(prefixedId))
                 .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
                 .apply { criteria.forEach(this::criterion) }
                 .build(
-                    recipeId.withPrefixedPath("recipes/misc/$prefix")
-                )
+                    recipeId.withPrefixedPath("recipes/misc/$prefix"),
+                ),
         )
     }
-
-
 }
-

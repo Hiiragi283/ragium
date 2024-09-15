@@ -10,20 +10,15 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
-
     @JvmField
     val MACHINE: ScreenHandlerType<HTMachineScreenHandler> = register("machine", ::HTMachineScreenHandler)
 
     @JvmField
     val BURNING_BOX: ScreenHandlerType<HTBurningBoxScreenHandler> = register("burning_box", ::HTBurningBoxScreenHandler)
 
-    private fun <T : ScreenHandler> register(
-        name: String,
-        factory: ScreenHandlerType.Factory<T>,
-    ): ScreenHandlerType<T> = Registry.register(
+    private fun <T : ScreenHandler> register(name: String, factory: ScreenHandlerType.Factory<T>): ScreenHandlerType<T> = Registry.register(
         Registries.SCREEN_HANDLER,
         Ragium.id(name),
-        ScreenHandlerType(factory, FeatureFlags.VANILLA_FEATURES)
+        ScreenHandlerType(factory, FeatureFlags.VANILLA_FEATURES),
     )
-
 }

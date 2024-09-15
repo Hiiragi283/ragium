@@ -18,7 +18,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 abstract class HTAbstractMachineBlock(protected val machineType: HTMachineType) : HTBlockWithEntity(Settings.create()) {
-
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }
@@ -40,17 +39,12 @@ abstract class HTAbstractMachineBlock(protected val machineType: HTMachineType) 
 
     //    BlockEntityProvider    //
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity =
-        HTMachineBlockEntity(pos, state, machineType)
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTMachineBlockEntity(pos, state, machineType)
 
-    override fun <T : BlockEntity> getTicker(
-        world: World,
-        state: BlockState,
-        type: BlockEntityType<T>,
-    ): BlockEntityTicker<T>? = HTBlockEntityTicker.validateTicker(
-        type,
-        RagiumBlockEntityTypes.MACHINE,
-        HTMachineBlockEntity.TICKER
-    )
-
+    override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+        HTBlockEntityTicker.validateTicker(
+            type,
+            RagiumBlockEntityTypes.MACHINE,
+            HTMachineBlockEntity.TICKER,
+        )
 }

@@ -5,7 +5,6 @@ import hiiragi283.ragium.common.fluid.HTFlowableFluid
 import hiiragi283.ragium.common.fluid.HTFluidContent
 
 object RagiumFluids {
-
     @JvmField
     val OIL: HTFluidContent = register("oil")
 
@@ -18,5 +17,4 @@ object RagiumFluids {
 
     private fun register(name: String, builderAction: HTFlowableFluid.Settings.() -> Unit = {}): HTFluidContent =
         HTFluidContent.create(Ragium.id(name), builderAction)
-
 }

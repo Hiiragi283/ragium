@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
 import io.netty.buffer.ByteBuf
 import net.minecraft.entity.player.PlayerEntity
@@ -20,19 +21,15 @@ import net.minecraft.util.function.ValueLists
 import net.minecraft.world.World
 import java.util.function.IntFunction
 
-private fun openEnderChest(
-    syncId: Int,
-    playerInventory: PlayerInventory,
-): ScreenHandler = GenericContainerScreenHandler.createGeneric9x3(
+private fun openEnderChest(syncId: Int, playerInventory: PlayerInventory): ScreenHandler = GenericContainerScreenHandler.createGeneric9x3(
     syncId,
     playerInventory,
-    playerInventory.player.enderChestInventory
+    playerInventory.player.enderChestInventory,
 )
 
-enum class HTPortableScreenType(
-    private val factory: (Int, PlayerInventory) -> ScreenHandler,
-    translationKey: String,
-) : ItemConvertible, StringIdentifiable {
+enum class HTPortableScreenType(private val factory: (Int, PlayerInventory) -> ScreenHandler, translationKey: String) :
+    ItemConvertible,
+    StringIdentifiable {
     ENDER_CHEST(::openEnderChest, "container.enderchest"),
     CRAFTING(::CraftingScreenHandler, "container.crafting"),
     GRINDER(::GrindstoneScreenHandler, "container.grindstone_title"),
@@ -43,15 +40,16 @@ enum class HTPortableScreenType(
 
     companion object {
         @JvmField
-        val CODEC: StringIdentifiable.EnumCodec<HTPortableScreenType> =
+        val CODEC: Codec<HTPortableScreenType> =
             StringIdentifiable.createCodec(HTPortableScreenType::values)
 
         @JvmField
-        val INT_FUNCTION: IntFunction<HTPortableScreenType> = ValueLists.createIdToValueFunction(
-            HTPortableScreenType::ordinal,
-            HTPortableScreenType.entries.toTypedArray(),
-            ValueLists.OutOfBoundsHandling.WRAP
-        )
+        val INT_FUNCTION: IntFunction<HTPortableScreenType> =
+            ValueLists.createIdToValueFunction(
+                HTPortableScreenType::ordinal,
+                HTPortableScreenType.entries.toTypedArray(),
+                ValueLists.OutOfBoundsHandling.WRAP,
+            )
 
         @JvmField
         val PACKET_CODEC: PacketCodec<ByteBuf, HTPortableScreenType> =
@@ -63,7 +61,7 @@ enum class HTPortableScreenType(
                 Registry.register(
                     Registries.ITEM,
                     Ragium.id("portable_${type.asString()}"),
-                    type.asItem()
+                    type.asItem(),
                 )
             }
         }
@@ -85,18 +83,14 @@ enum class HTPortableScreenType(
 
     override fun asString(): String = name.lowercase()
 
-
     //    PortableScreenItem    //
 
     private class PortableScreenItem(private val type: HTPortableScreenType) : Item(Settings()) {
-
         override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
             if (!world.isClient) {
                 user.openHandledScreen(type.screenHandlerFactory)
             }
             return TypedActionResult.success(user.getStackInHand(hand), world.isClient)
         }
-
     }
-
 }

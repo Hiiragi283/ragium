@@ -11,7 +11,6 @@ import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
 
 object HTBurningBoxProvider : IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
-
     private const val BURN_TIME: String = "BurnTime"
 
     //    IBlockComponentProvider    //

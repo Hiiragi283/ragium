@@ -8,18 +8,14 @@ import io.github.cottonmc.cotton.gui.widget.data.Insets
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTMachineScreenHandler(
-    syncId: Int,
-    playerInv: PlayerInventory,
-    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
-) : SyncedGuiDescription(
-    RagiumScreenHandlerTypes.MACHINE,
-    syncId,
-    playerInv,
-    getBlockInventory(ctx, 7),
-    getBlockPropertyDelegate(ctx)
-) {
-
+class HTMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
+    SyncedGuiDescription(
+        RagiumScreenHandlerTypes.MACHINE,
+        syncId,
+        playerInv,
+        getBlockInventory(ctx, 7),
+        getBlockPropertyDelegate(ctx),
+    ) {
     init {
         val root = WGridPanel()
         setRootPanel(root)
@@ -50,5 +46,4 @@ class HTMachineScreenHandler(
         )*/
         root.validate(this)
     }
-
 }

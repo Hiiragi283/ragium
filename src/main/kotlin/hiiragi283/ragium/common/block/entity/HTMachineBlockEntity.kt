@@ -25,25 +25,27 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-class HTMachineBlockEntity(
-    pos: BlockPos,
-    state: BlockState,
-) : BlockEntity(RagiumBlockEntityTypes.MACHINE, pos, state), HTDelegatedInventory, NamedScreenHandlerFactory {
-
+class HTMachineBlockEntity(pos: BlockPos, state: BlockState) :
+    BlockEntity(RagiumBlockEntityTypes.MACHINE, pos, state),
+    HTDelegatedInventory,
+    NamedScreenHandlerFactory {
     companion object {
         @JvmField
         val TICKER: BlockEntityTicker<HTMachineBlockEntity> =
             BlockEntityTicker { world: World, pos: BlockPos, _: BlockState, blockEntity: HTMachineBlockEntity ->
                 if (blockEntity.ticks >= 200) {
                     blockEntity.ticks = 0
-                    val input = HTRecipeInput {
-                        add(blockEntity.getStack(0))
-                        add(blockEntity.getStack(1))
-                        add(blockEntity.getStack(2))
-                    }
-                    val recipe: HTMachineRecipe = world.recipeManager.getFirstMatch(blockEntity.type, input, world)
-                        .map(RecipeEntry<HTMachineRecipe>::value)
-                        .getOrNull() ?: return@BlockEntityTicker
+                    val input =
+                        HTRecipeInput {
+                            add(blockEntity.getStack(0))
+                            add(blockEntity.getStack(1))
+                            add(blockEntity.getStack(2))
+                        }
+                    val recipe: HTMachineRecipe =
+                        world.recipeManager
+                            .getFirstMatch(blockEntity.type, input, world)
+                            .map(RecipeEntry<HTMachineRecipe>::value)
+                            .getOrNull() ?: return@BlockEntityTicker
                     if (!canAcceptOutputs(blockEntity, recipe)) return@BlockEntityTicker
                     if (!recipe.type.tier.canProcess(world, pos)) {
                         blockEntity.isActive = false
@@ -112,15 +114,16 @@ class HTMachineBlockEntity(
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory = HTSidedStorageBuilder(7)
-        .set(0, HTStorageIO.INPUT, HTStorageSides.ANY)
-        .set(1, HTStorageIO.INPUT, HTStorageSides.ANY)
-        .set(2, HTStorageIO.INPUT, HTStorageSides.ANY)
-        .set(3, HTStorageIO.INTERNAL, HTStorageSides.NONE)
-        .set(4, HTStorageIO.OUTPUT, HTStorageSides.ANY)
-        .set(5, HTStorageIO.OUTPUT, HTStorageSides.ANY)
-        .set(6, HTStorageIO.OUTPUT, HTStorageSides.ANY)
-        .buildInventory()
+    override val parent: HTSidedInventory =
+        HTSidedStorageBuilder(7)
+            .set(0, HTStorageIO.INPUT, HTStorageSides.ANY)
+            .set(1, HTStorageIO.INPUT, HTStorageSides.ANY)
+            .set(2, HTStorageIO.INPUT, HTStorageSides.ANY)
+            .set(3, HTStorageIO.INTERNAL, HTStorageSides.NONE)
+            .set(4, HTStorageIO.OUTPUT, HTStorageSides.ANY)
+            .set(5, HTStorageIO.OUTPUT, HTStorageSides.ANY)
+            .set(6, HTStorageIO.OUTPUT, HTStorageSides.ANY)
+            .buildInventory()
 
     override fun markDirty() {
         super<BlockEntity>.markDirty()
@@ -132,5 +135,4 @@ class HTMachineBlockEntity(
         HTMachineScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos))
 
     override fun getDisplayName(): Text = type.text
-
 }

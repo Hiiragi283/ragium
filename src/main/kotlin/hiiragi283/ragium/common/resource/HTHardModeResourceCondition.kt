@@ -10,7 +10,6 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.registry.RegistryWrapper
 
 class HTHardModeResourceCondition private constructor(private val isHardMode: Boolean) : ResourceCondition {
-
     companion object {
         @JvmField
         val TRUE = HTHardModeResourceCondition(true)
@@ -25,13 +24,15 @@ class HTHardModeResourceCondition private constructor(private val isHardMode: Bo
         }
 
         @JvmField
-        val TYPE: ResourceConditionType<HTHardModeResourceCondition> = ResourceConditionType.create(
-            Ragium.id("hard_mode"),
-            RecordCodecBuilder.mapCodec { instance ->
-                instance.group(Codec.BOOL.fieldOf("value").forGetter { it.isHardMode })
-                    .apply(instance, Companion::fromBool)
-            }
-        )
+        val TYPE: ResourceConditionType<HTHardModeResourceCondition> =
+            ResourceConditionType.create(
+                Ragium.id("hard_mode"),
+                RecordCodecBuilder.mapCodec { instance ->
+                    instance
+                        .group(Codec.BOOL.fieldOf("value").forGetter { it.isHardMode })
+                        .apply(instance, Companion::fromBool)
+                },
+            )
 
         @JvmStatic
         fun init() {

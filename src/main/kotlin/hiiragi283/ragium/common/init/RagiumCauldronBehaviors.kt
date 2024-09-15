@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 object RagiumCauldronBehaviors {
-
     @JvmField
     val WASH_RAW_RAGINITE =
         CauldronBehavior { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
@@ -34,5 +33,4 @@ object RagiumCauldronBehaviors {
     fun init() {
         CauldronBehavior.WATER_CAULDRON_BEHAVIOR.register(RagiumItems.RAW_RAGINITE_DUST, WASH_RAW_RAGINITE)
     }
-
 }

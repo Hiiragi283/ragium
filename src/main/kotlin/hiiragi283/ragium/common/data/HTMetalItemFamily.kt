@@ -13,12 +13,8 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-class HTMetalItemFamily(
-    val name: String,
-    variants: Map<Variant, Item>,
-    private val excludeVariants: Set<Variant>,
-) : Map<HTMetalItemFamily.Variant, Item> by variants {
-
+class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private val excludeVariants: Set<Variant>) :
+    Map<HTMetalItemFamily.Variant, Item> by variants {
     companion object {
         val registry: Map<String, HTMetalItemFamily>
             get() = instances
@@ -54,7 +50,8 @@ class HTMetalItemFamily(
         val block: Item = get(Variant.BLOCK) ?: return
         val ingot: Item = get(Variant.INGOT) ?: return
         // Shaped Crafting
-        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, block)
+        ShapedRecipeJsonBuilder
+            .create(RecipeCategory.MISC, block)
             .pattern("AAA")
             .pattern("AAA")
             .pattern("AAA")
@@ -68,7 +65,8 @@ class HTMetalItemFamily(
         val ingot: Item = get(Variant.INGOT) ?: return
         val block: Item = get(Variant.BLOCK) ?: return
         // Shapeless Crafting
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ingot, 9)
+        ShapelessRecipeJsonBuilder
+            .create(RecipeCategory.MISC, ingot, 9)
             .input(block)
             .criterion("has_block", RecipeProvider.conditionsFromItem(block))
             .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(ingot).withPrefixedPath("shapeless/"))
@@ -79,19 +77,20 @@ class HTMetalItemFamily(
         val plateId: Identifier = CraftingRecipeJsonBuilder.getItemId(plate)
         val ingot: Item = get(Variant.INGOT) ?: return
         // Smithing Recipe (only hard mode)
-        SmithingTransformRecipeJsonBuilder.create(
-            Ingredient.ofItems(RagiumItems.FORGE_HAMMER),
-            Ingredient.ofItems(ingot),
-            Ingredient.ofItems(ingot),
-            RecipeCategory.MISC,
-            plate
-        )
-            .criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
+        SmithingTransformRecipeJsonBuilder
+            .create(
+                Ingredient.ofItems(RagiumItems.FORGE_HAMMER),
+                Ingredient.ofItems(ingot),
+                Ingredient.ofItems(ingot),
+                RecipeCategory.MISC,
+                plate,
+            ).criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), plateId.withPrefixedPath("smithing/"))
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
             .addInput(ingot)
             .addOutput(plate)
+            .setCatalyst(RagiumItems.PLATE_SHAPE)
             .offerTo(exporter, plateId)
     }
 
@@ -100,19 +99,20 @@ class HTMetalItemFamily(
         val rodId: Identifier = CraftingRecipeJsonBuilder.getItemId(rod)
         val ingot: Item = get(Variant.INGOT) ?: return
         // Smithing Recipe (only hard mode)
-        SmithingTransformRecipeJsonBuilder.create(
-            Ingredient.ofItems(RagiumItems.FORGE_HAMMER),
-            Ingredient.ofItems(ingot),
-            Ingredient.EMPTY,
-            RecipeCategory.MISC,
-            rod
-        )
-            .criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
+        SmithingTransformRecipeJsonBuilder
+            .create(
+                Ingredient.ofItems(RagiumItems.FORGE_HAMMER),
+                Ingredient.ofItems(ingot),
+                Ingredient.EMPTY,
+                RecipeCategory.MISC,
+                rod,
+            ).criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), rodId.withPrefixedPath("smithing/"))
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
             .addInput(ingot)
             .addOutput(rod, 2)
+            .setCatalyst(RagiumItems.ROD_SHAPE)
             .offerTo(exporter, rodId)
     }
 
@@ -145,24 +145,24 @@ class HTMetalItemFamily(
         val ingotId: Identifier = CraftingRecipeJsonBuilder.getItemId(ingot)
         val dust: Item = get(Variant.DUST) ?: return
         // Furnace Recipe
-        CookingRecipeJsonBuilder.createSmelting(
-            Ingredient.ofItems(dust),
-            RecipeCategory.MISC,
-            ingot,
-            0.0f,
-            200
-        )
-            .criterion("has_dust", RecipeProvider.conditionsFromItem(dust))
+        CookingRecipeJsonBuilder
+            .createSmelting(
+                Ingredient.ofItems(dust),
+                RecipeCategory.MISC,
+                ingot,
+                0.0f,
+                200,
+            ).criterion("has_dust", RecipeProvider.conditionsFromItem(dust))
             .offerTo(exporter, ingotId.withPrefixedPath("smelting/"))
         // Blast Furnace Recipe
-        CookingRecipeJsonBuilder.createBlasting(
-            Ingredient.ofItems(dust),
-            RecipeCategory.MISC,
-            ingot,
-            0.0f,
-            100
-        )
-            .criterion("has_dust", RecipeProvider.conditionsFromItem(dust))
+        CookingRecipeJsonBuilder
+            .createBlasting(
+                Ingredient.ofItems(dust),
+                RecipeCategory.MISC,
+                ingot,
+                0.0f,
+                100,
+            ).criterion("has_dust", RecipeProvider.conditionsFromItem(dust))
             .offerTo(exporter, ingotId.withPrefixedPath("blasting/"))
     }
 
@@ -172,29 +172,21 @@ class HTMetalItemFamily(
         private val variants: MutableMap<Variant, Item> = mutableMapOf()
         private val excludeVariants: MutableSet<Variant> = mutableSetOf()
 
-        fun block(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.BLOCK, item, exclude)
+        fun block(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.BLOCK, item, exclude)
 
-        fun dust(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.DUST, item, exclude)
+        fun dust(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.DUST, item, exclude)
 
-        fun gear(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.GEAR, item, exclude)
+        fun gear(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.GEAR, item, exclude)
 
-        fun ingot(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.INGOT, item, exclude)
+        fun ingot(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.INGOT, item, exclude)
 
-        fun ore(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.ORE, item, exclude)
+        fun ore(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.ORE, item, exclude)
 
-        fun plate(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.PLATE, item, exclude)
+        fun plate(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.PLATE, item, exclude)
 
-        fun rawMaterial(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.RAW_MATERIAL, item, exclude)
+        fun rawMaterial(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.RAW_MATERIAL, item, exclude)
 
-        fun rod(item: ItemConvertible, exclude: Boolean = false): Builder =
-            add(Variant.ROD, item, exclude)
+        fun rod(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.ROD, item, exclude)
 
         private fun add(variant: Variant, item: ItemConvertible, exclude: Boolean): Builder = apply {
             val item1: Item = item.asItem()
@@ -221,10 +213,10 @@ class HTMetalItemFamily(
         ;
 
         // val tagPrefix = "${name.lowercase()}s/"
-        val allTagKey: TagKey<Item> = TagKey.of(
-            RegistryKeys.ITEM,
-            Identifier.of(TagUtil.C_TAG_NAMESPACE, "${name.lowercase()}s")
-        )
+        val allTagKey: TagKey<Item> =
+            TagKey.of(
+                RegistryKeys.ITEM,
+                Identifier.of(TagUtil.C_TAG_NAMESPACE, "${name.lowercase()}s"),
+            )
     }
-
 }

@@ -9,11 +9,7 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.Direction
 
-class HTSidedInventory(
-    private val ioTypes: Array<HTStorageIO>,
-    private val slotsMapper: (Direction) -> IntArray,
-) : SidedInventory {
-
+class HTSidedInventory(private val ioTypes: Array<HTStorageIO>, private val slotsMapper: (Direction) -> IntArray) : SidedInventory {
     private val stacks: DefaultedList<ItemStack> = DefaultedList.ofSize(ioTypes.size, ItemStack.EMPTY)
 
     fun writeNbt(nbt: NbtCompound, lookup: RegistryWrapper.WrapperLookup) {
@@ -58,6 +54,5 @@ class HTSidedInventory(
     override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean =
         dir?.let { ioTypes[slot].canInsert && slot in slotsMapper(it) } ?: false
 
-    override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean =
-        ioTypes[slot].canExtract && slot in slotsMapper(dir)
+    override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean = ioTypes[slot].canExtract && slot in slotsMapper(dir)
 }

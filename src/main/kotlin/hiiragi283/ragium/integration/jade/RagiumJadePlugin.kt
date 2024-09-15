@@ -8,7 +8,6 @@ import snownee.jade.api.IWailaCommonRegistration
 import snownee.jade.api.IWailaPlugin
 
 object RagiumJadePlugin : IWailaPlugin {
-
     @JvmField
     val BURNING_BOX: Identifier = Ragium.id("burning_box")
 
@@ -22,5 +21,4 @@ object RagiumJadePlugin : IWailaPlugin {
     override fun registerClient(registration: IWailaClientRegistration) {
         registration.registerBlock(HTBurningBoxProvider, RagiumBlocks.BURNING_BOX)
     }
-
 }

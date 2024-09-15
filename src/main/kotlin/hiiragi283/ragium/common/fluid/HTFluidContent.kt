@@ -25,7 +25,6 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 
 class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings) {
-
     companion object {
         @JvmStatic
         fun create(id: Identifier, builderAction: HTFlowableFluid.Settings.() -> Unit = {}): HTFluidContent =
@@ -43,9 +42,6 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
     lateinit var bucketItem: Item
         private set
 
-    private var generateBlockState: Boolean = false
-    private var generateBucketModel: Boolean = false
-
     fun register(settings: HTFlowableFluid.Settings, id: Identifier) {
         // still
         still = Registry.register(Registries.FLUID, id, Still(settings))
@@ -55,40 +51,42 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
         settings.flowing = this.flowing
         // block if absent
         if (!settings.hasBlock) {
-            block = Registry.register(
-                Registries.BLOCK,
-                id,
-                FluidBlock(
-                    still,
-                    AbstractBlock.Settings.create()
-                        .replaceable()
-                        .noCollision()
-                        .strength(100.0f)
-                        .pistonBehavior(PistonBehavior.DESTROY)
-                        .dropsNothing()
-                        .liquid()
-                        .sounds(BlockSoundGroup.INTENTIONALLY_EMPTY)
+            block =
+                Registry.register(
+                    Registries.BLOCK,
+                    id,
+                    FluidBlock(
+                        still,
+                        AbstractBlock.Settings
+                            .create()
+                            .replaceable()
+                            .noCollision()
+                            .strength(100.0f)
+                            .pistonBehavior(PistonBehavior.DESTROY)
+                            .dropsNothing()
+                            .liquid()
+                            .sounds(BlockSoundGroup.INTENTIONALLY_EMPTY),
+                    ),
                 )
-            )
             settings.block = this.block
-            generateBlockState = true
         } else {
             this.block = settings.block
         }
         // bucket if absent
         if (!settings.hasBucket) {
-            bucketItem = Registry.register(
-                Registries.ITEM,
-                id.withSuffixedPath("_bucket"),
-                BucketItem(
-                    still,
-                    Item.Settings()
-                        .recipeRemainder(Items.BUCKET)
-                        .maxCount(1)
+            bucketItem =
+                Registry.register(
+                    Registries.ITEM,
+                    id.withSuffixedPath("_bucket"),
+                    BucketItem(
+                        still,
+                        Item
+                            .Settings()
+                            .recipeRemainder(Items.BUCKET)
+                            .maxCount(1),
+                    ),
                 )
-            )
             settings.bucketItem = this.bucketItem
-            generateBucketModel = true
         } else {
             this.bucketItem = settings.bucketItem
         }
@@ -119,10 +117,10 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
     //    Data Gen    //
 
     fun generateBlockState(generator: BlockStateModelGenerator) {
-        if (generateBlockState) generator.registerSimpleState(block)
+        generator.registerSimpleState(block)
     }
 
     fun generateBucketModel(generator: ItemModelGenerator) {
-        if (generateBucketModel) generator.register(bucketItem, Models.GENERATED)
+        generator.register(bucketItem, Models.GENERATED)
     }
 }

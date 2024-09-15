@@ -10,7 +10,6 @@ import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
 
 object HTMachineProvider : IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
-
     private const val PROGRESS = "MachineProgress"
     private const val IS_ACTIVE = "MachineActive"
     private const val SHOW_PREVIEW = "ShowPreview"
@@ -41,5 +40,4 @@ object HTMachineProvider : IBlockComponentProvider, IServerDataProvider<BlockAcc
             nbt.putBoolean(SHOW_PREVIEW, it.showPreview)
         }
     }
-
 }

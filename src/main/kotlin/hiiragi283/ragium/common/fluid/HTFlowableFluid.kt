@@ -16,7 +16,6 @@ import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
 sealed class HTFlowableFluid(settings: Settings) : FlowableFluid() {
-
     private val still: () -> Fluid = settings::still
     private val flowing: () -> Fluid = settings::flowing
     private val block: () -> Block = settings::block
@@ -31,7 +30,6 @@ sealed class HTFlowableFluid(settings: Settings) : FlowableFluid() {
     //    Settings    //
 
     class Settings {
-
         lateinit var still: Fluid
         lateinit var flowing: Fluid
         lateinit var block: Block
@@ -47,7 +45,6 @@ sealed class HTFlowableFluid(settings: Settings) : FlowableFluid() {
         var isInfinite: Boolean = false
         var maxFlowDistance: Int = 4
         var decreasePerBlock: Int = 1
-
     }
 
     //    FlowableFluid    //
@@ -66,8 +63,7 @@ sealed class HTFlowableFluid(settings: Settings) : FlowableFluid() {
 
     override fun getBlastResistance(): Float = blastResistance
 
-    override fun toBlockState(state: FluidState): BlockState =
-        block().defaultState.with(FluidBlock.LEVEL, getBlockStateLevel(state))
+    override fun toBlockState(state: FluidState): BlockState = block().defaultState.with(FluidBlock.LEVEL, getBlockStateLevel(state))
 
     override fun getFlowing(): Fluid = flowing()
 
@@ -105,5 +101,4 @@ sealed class HTFlowableFluid(settings: Settings) : FlowableFluid() {
 
         override fun isStill(state: FluidState): Boolean = true
     }
-
 }

@@ -24,8 +24,10 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
-sealed interface HTMachineType : RecipeType<HTMachineRecipe>, ItemConvertible, StringIdentifiable {
-
+sealed interface HTMachineType :
+    RecipeType<HTMachineRecipe>,
+    ItemConvertible,
+    StringIdentifiable {
     val tier: HTMachineTier
     val block: HTAbstractMachineBlock
 
@@ -48,13 +50,15 @@ sealed interface HTMachineType : RecipeType<HTMachineRecipe>, ItemConvertible, S
         }
 
         @JvmField
-        val CODEC: Codec<HTMachineType> = Codec.xor(Single.CODEC, Multi.CODEC)
-            .xmap(Either<Single, Multi>::mapCast) {
-                when (it) {
-                    is Single -> Either.left(it)
-                    is Multi -> Either.right(it)
+        val CODEC: Codec<HTMachineType> =
+            Codec
+                .xor(Single.CODEC, Multi.CODEC)
+                .xmap(Either<Single, Multi>::mapCast) {
+                    when (it) {
+                        is Single -> Either.left(it)
+                        is Multi -> Either.right(it)
+                    }
                 }
-            }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType> = PacketCodecs.codec(CODEC)
@@ -100,7 +104,7 @@ sealed interface HTMachineType : RecipeType<HTMachineRecipe>, ItemConvertible, S
 
         companion object {
             @JvmField
-            val CODEC: StringIdentifiable.EnumCodec<Single> = StringIdentifiable.createCodec(Single::values)
+            val CODEC: Codec<Single> = StringIdentifiable.createCodec(Single::values)
         }
     }
 
@@ -120,9 +124,7 @@ sealed interface HTMachineType : RecipeType<HTMachineRecipe>, ItemConvertible, S
 
         companion object {
             @JvmField
-            val CODEC: StringIdentifiable.EnumCodec<Multi> = StringIdentifiable.createCodec(Multi::values)
+            val CODEC: Codec<Multi> = StringIdentifiable.createCodec(Multi::values)
         }
-
     }
-
 }
