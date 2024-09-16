@@ -1,7 +1,8 @@
-package hiiragi283.ragium.common.data
+package hiiragi283.ragium.data.group
 
+import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.machine.HTMachineType
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
@@ -13,12 +14,12 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private val excludeVariants: Set<Variant>) :
-    Map<HTMetalItemFamily.Variant, Item> by variants {
+class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, private val excludeVariants: Set<Variant>) :
+    Map<HTMetalItemRecipeGroup.Variant, Item> by variants {
     companion object {
-        val registry: Map<String, HTMetalItemFamily>
+        val registry: Map<String, HTMetalItemRecipeGroup>
             get() = instances
-        private val instances: MutableMap<String, HTMetalItemFamily> = mutableMapOf()
+        private val instances: MutableMap<String, HTMetalItemRecipeGroup> = mutableMapOf()
     }
 
     init {
@@ -38,7 +39,7 @@ class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private 
         blockToIngotRecipe(exporter)
 
         ingotToPlateRecipe(exporter, wrapper)
-        ingotToRodRecipe(exporter, wrapper)
+        // ingotToRodRecipe(exporter, wrapper)
 
         oreToRawRecipe(exporter)
         rawToDustRecipe(exporter)
@@ -74,29 +75,27 @@ class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private 
 
     private fun ingotToPlateRecipe(exporter: RecipeExporter, wrapper: (RecipeExporter, Boolean) -> RecipeExporter) {
         val plate: Item = get(Variant.PLATE) ?: return
-        val plateId: Identifier = CraftingRecipeJsonBuilder.getItemId(plate)
         val ingot: Item = get(Variant.INGOT) ?: return
-        // Smithing Recipe (only hard mode)
-        SmithingTransformRecipeJsonBuilder
-            .create(
-                Ingredient.ofItems(RagiumItems.FORGE_HAMMER),
-                Ingredient.ofItems(ingot),
-                Ingredient.ofItems(ingot),
-                RecipeCategory.MISC,
-                plate,
-            ).criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
-            .offerTo(wrapper(exporter, true), plateId.withPrefixedPath("smithing/"))
+        // Shaped Crafting (only hard mode)
+        ShapedRecipeJsonBuilder
+            .create(RecipeCategory.MISC, plate)
+            .pattern("A")
+            .pattern("B")
+            .pattern("B")
+            .input('A', RagiumItems.FORGE_HAMMER)
+            .input('B', ingot)
+            .criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
+            .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(plate).withPrefixedPath("shaped/"))
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
             .addInput(ingot)
             .addOutput(plate)
-            .setCatalyst(RagiumItems.PLATE_SHAPE)
-            .offerTo(exporter, plateId)
+            // .setCatalyst(RagiumItems.PLATE_SHAPE)
+            .offerTo(exporter)
     }
 
     private fun ingotToRodRecipe(exporter: RecipeExporter, wrapper: (RecipeExporter, Boolean) -> RecipeExporter) {
         val rod: Item = get(Variant.ROD) ?: return
-        val rodId: Identifier = CraftingRecipeJsonBuilder.getItemId(rod)
         val ingot: Item = get(Variant.INGOT) ?: return
         // Smithing Recipe (only hard mode)
         SmithingTransformRecipeJsonBuilder
@@ -107,37 +106,35 @@ class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private 
                 RecipeCategory.MISC,
                 rod,
             ).criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
-            .offerTo(wrapper(exporter, true), rodId.withPrefixedPath("smithing/"))
+            .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(rod).withPrefixedPath("smithing/"))
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
             .addInput(ingot)
             .addOutput(rod, 2)
-            .setCatalyst(RagiumItems.ROD_SHAPE)
-            .offerTo(exporter, rodId)
+            // .setCatalyst(RagiumItems.ROD_SHAPE)
+            .offerTo(exporter)
     }
 
     private fun oreToRawRecipe(exporter: RecipeExporter) {
         val rawMaterial: Item = get(Variant.RAW_MATERIAL) ?: return
-        val rawId: Identifier = CraftingRecipeJsonBuilder.getItemId(rawMaterial)
         val ore: Item = get(Variant.ORE) ?: return
         // Grinder Recipe
         HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
             .addInput(ore)
             .addOutput(rawMaterial)
             .addOutput(rawMaterial, 2)
-            .offerTo(exporter, rawId)
+            .offerTo(exporter)
     }
 
     private fun rawToDustRecipe(exporter: RecipeExporter) {
         val dust: Item = get(Variant.DUST) ?: return
-        val dustId: Identifier = CraftingRecipeJsonBuilder.getItemId(dust)
         val rawMaterial: Item = get(Variant.RAW_MATERIAL) ?: return
         // Grinder Recipe
         HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
             .addInput(rawMaterial)
             .addOutput(dust)
             .addOutput(dust)
-            .offerTo(exporter, dustId)
+            .offerTo(exporter)
     }
 
     private fun dustToIngotRecipe(exporter: RecipeExporter) {
@@ -186,7 +183,7 @@ class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private 
 
         fun rawMaterial(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.RAW_MATERIAL, item, exclude)
 
-        fun rod(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.ROD, item, exclude)
+        // fun rod(item: ItemConvertible, exclude: Boolean = false): Builder = add(Variant.ROD, item, exclude)
 
         private fun add(variant: Variant, item: ItemConvertible, exclude: Boolean): Builder = apply {
             val item1: Item = item.asItem()
@@ -196,7 +193,7 @@ class HTMetalItemFamily(val name: String, variants: Map<Variant, Item>, private 
             if (exclude) excludeVariants.add(variant)
         }
 
-        fun build(name: String): HTMetalItemFamily = HTMetalItemFamily(name, variants, excludeVariants)
+        fun build(name: String): HTMetalItemRecipeGroup = HTMetalItemRecipeGroup(name, variants, excludeVariants)
     }
 
     //    Variant    //

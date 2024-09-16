@@ -1,4 +1,4 @@
-package hiiragi283.ragium.datagen
+package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
@@ -18,4 +18,6 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
 
         Ragium.log { info("Ragium data generation is done!") }
     }
+
+    override fun getEffectiveModId(): String = Ragium.MOD_ID
 }

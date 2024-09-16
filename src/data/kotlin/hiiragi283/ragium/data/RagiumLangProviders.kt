@@ -1,10 +1,10 @@
-package hiiragi283.ragium.datagen
+package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.machine.HTMachineType
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -15,8 +15,8 @@ import java.util.concurrent.CompletableFuture
 object RagiumLangProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
-        pack.addProvider(::EnglishLang)
-        pack.addProvider(::JapaneseLang)
+        pack.addProvider(RagiumLangProviders::EnglishLang)
+        pack.addProvider(RagiumLangProviders::JapaneseLang)
     }
 
     fun TranslationBuilder.add(type: HTMachineType, value: String) {
@@ -33,7 +33,7 @@ object RagiumLangProviders {
             // Item Group
             builder.add(RagiumTranslationKeys.ITEM_GROUP_ITEM, "Ragium Items")
             // Machine
-            builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %s")
+            builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
             // Machine Type
             builder.add(HTMachineType.Single.ALLOY_FURNACE, "Alloy Furnace")
@@ -44,7 +44,12 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Single.GRINDER, "Grinder")
             builder.add(HTMachineType.Single.METAL_FORMER, "Metal Former")
             builder.add(HTMachineType.Single.MIXER, "Mixer")
-            builder.add(HTMachineType.Single.WASHER, "Washer")
+
+            builder.add(HTMachineType.Single.CENTRIFUGE, "Centrifuge")
+            builder.add(HTMachineType.Single.CHEMICAL_REACTOR, "Chemical Reactor")
+            builder.add(HTMachineType.Single.ELECTROLYZER, "Electrolyzer")
+
+            builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode")
             // Jade
@@ -74,8 +79,12 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Single.GRINDER, "粉砕機")
             builder.add(HTMachineType.Single.METAL_FORMER, "金属加工機")
             builder.add(HTMachineType.Single.MIXER, "ミキサー")
-            builder.add(HTMachineType.Single.WASHER, "洗浄機")
 
+            builder.add(HTMachineType.Single.CENTRIFUGE, "遠心分離機")
+            builder.add(HTMachineType.Single.CHEMICAL_REACTOR, "化学反応槽")
+            builder.add(HTMachineType.Single.ELECTROLYZER, "電解槽")
+
+            builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "錬金注入機")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードを有効")
             // Jade

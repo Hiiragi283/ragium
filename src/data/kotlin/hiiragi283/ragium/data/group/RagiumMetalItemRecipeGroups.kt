@@ -1,12 +1,13 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.data.group
 
-import hiiragi283.ragium.common.data.HTMetalItemFamily
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.item.Items
 
-object RagiumMetalItemFamilies {
+object RagiumMetalItemRecipeGroups {
     @JvmField
-    val IRON: HTMetalItemFamily =
-        HTMetalItemFamily
+    val IRON: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(Items.IRON_BLOCK, true)
             .ingot(Items.IRON_INGOT, true)
@@ -15,8 +16,8 @@ object RagiumMetalItemFamilies {
             .build("iron")
 
     @JvmField
-    val GOLD: HTMetalItemFamily =
-        HTMetalItemFamily
+    val GOLD: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(Items.GOLD_BLOCK, true)
             .ingot(Items.GOLD_INGOT, true)
@@ -25,8 +26,8 @@ object RagiumMetalItemFamilies {
             .build("gold")
 
     @JvmField
-    val COPPER: HTMetalItemFamily =
-        HTMetalItemFamily
+    val COPPER: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(Items.COPPER_BLOCK, true)
             .ingot(Items.COPPER_INGOT, true)
@@ -35,16 +36,16 @@ object RagiumMetalItemFamilies {
             .build("copper")
 
     @JvmField
-    val NETHERITE: HTMetalItemFamily =
-        HTMetalItemFamily
+    val NETHERITE: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(Items::NETHERITE_BLOCK, true)
             .ingot(Items::NETHERITE_INGOT, true)
             .build("netherite")
 
     @JvmField
-    val RAGINITE: HTMetalItemFamily =
-        HTMetalItemFamily
+    val RAGINITE: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .dust(RagiumItems.RAW_RAGINITE_DUST)
             .ore(RagiumBlocks.RAGINITE_ORE)
@@ -52,18 +53,17 @@ object RagiumMetalItemFamilies {
             .build("raginite")
 
     @JvmField
-    val RAGI_ALLOY: HTMetalItemFamily =
-        HTMetalItemFamily
+    val RAGI_ALLOY: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(RagiumBlocks.RAGI_ALLOY_BLOCK)
             .ingot(RagiumItems.RAGI_ALLOY_INGOT)
             .plate(RagiumItems.RAGI_ALLOY_PLATE)
-            .rod(RagiumItems.RAGI_ALLOY_ROD)
             .build("ragi_alloy")
 
     @JvmField
-    val RAGI_STEEL: HTMetalItemFamily =
-        HTMetalItemFamily
+    val RAGI_STEEL: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(RagiumBlocks.RAGI_STEEL_BLOCK)
             .ingot(RagiumItems.RAGI_STEEL_INGOT)
@@ -71,11 +71,25 @@ object RagiumMetalItemFamilies {
             .build("ragi_steel")
 
     @JvmField
-    val REFINED_RAGI_STEEL: HTMetalItemFamily =
-        HTMetalItemFamily
+    val REFINED_RAGI_STEEL: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
             .Builder()
             .block(RagiumBlocks.REFINED_RAGI_STEEL_BLOCK)
             .ingot(RagiumItems.REFINED_RAGI_STEEL_INGOT)
             .plate(RagiumItems.REFINED_RAGI_STEEL_PLATE)
             .build("refined_ragi_steel")
+
+    @JvmField
+    val STEEL: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
+            .Builder()
+            .ingot(RagiumItems.STEEL_INGOT)
+            .build("steel")
+
+    @JvmField
+    val TWILIGHT_METAL: HTMetalItemRecipeGroup =
+        HTMetalItemRecipeGroup
+            .Builder()
+            .ingot(RagiumItems.TWILIGHT_METAL_INGOT)
+            .build("twilight_metal")
 }

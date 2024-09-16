@@ -1,4 +1,4 @@
-package hiiragi283.ragium.datagen
+package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
