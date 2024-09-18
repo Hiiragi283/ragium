@@ -10,18 +10,23 @@ plugins {
 group = "hiiragi283.ragium"
 version = "0.0.1+121x"
 
-/*sourceSets {
-    create("api")
+sourceSets {
     main {
-        // compileClasspath.forEach { print("$it\n") }
-        compileClasspath += getByName("api").output
-        runtimeClasspath += getByName("api").output
+        resources {
+            srcDir("src/main/generated")
+        }
+    }
+    create("data") {
+        compileClasspath += main.get().compileClasspath
+        runtimeClasspath += main.get().runtimeClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
     }
 }
 
-configurations {
+/*configurations {
     // names.forEach { print("$it\n") }
-    getByName("apiCompileClasspath").extendsFrom(getByName("compileClasspath"))
+    getByName("compileClasspath").extendsFrom(getByName("dataCompileClasspath"))
 }*/
 
 repositories {
@@ -74,6 +79,11 @@ dependencies {
 
 loom {
     // accessWidenerPath = file("src/main/resources/ht_materials.accesswidener")
+    mods {
+        create("ragium-data") {
+            sourceSet(project(":").sourceSets.getByName("data"))
+        }
+    }
     runs {
         getByName("client") {
             programArg("--username=Developer")
@@ -81,6 +91,15 @@ loom {
         }
         getByName("server") {
             runDir = "run/server"
+        }
+        create("datagen") {
+            server()
+            name = "Data Generation"
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.modid=ragium-data")
+            runDir("build/datagen")
+            source(sourceSets.getByName("data"))
         }
         /*create("test") {
             inherit(getByName("client"))
@@ -93,10 +112,6 @@ loom {
             }
         }*/
     }
-}
-
-fabricApi {
-    configureDataGeneration()
 }
 
 kotlin {
@@ -139,6 +154,7 @@ tasks {
         filesMatching("fabric.mod.json") {
             expand("version" to project.version)
         }
+        // include("src/main/generated")
         exclude(".cache")
     }
     jar {
