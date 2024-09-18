@@ -69,6 +69,7 @@ dependencies {
         exclude(module = "fabric-api")
         exclude(module = "fabric-loader")
     }
+    include(libs.bundles.mods.include)
     modLocalRuntime(libs.bundles.mods.debug) {
         exclude(module = "fabric-api")
         exclude(module = "fabric-loader")
