@@ -51,7 +51,7 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "Brick Blast Furnace")
             builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "Blazing Blast Furnace")
             builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "Distillation Tower")
-            
+
             // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode")
@@ -89,7 +89,7 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "レンガ高炉")
             builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "ブレイズ高炉")
             builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "蒸留塔")
-            
+
             // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "錬金注入機")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードを有効")
