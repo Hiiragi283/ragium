@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.screen
 
+import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
+import io.github.cottonmc.cotton.gui.widget.WBar
 import io.github.cottonmc.cotton.gui.widget.WGridPanel
 import io.github.cottonmc.cotton.gui.widget.WItemSlot
 import io.github.cottonmc.cotton.gui.widget.data.Insets
@@ -14,7 +16,7 @@ class HTMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scree
         syncId,
         playerInv,
         getBlockInventory(ctx, 7),
-        getBlockPropertyDelegate(ctx),
+        getBlockPropertyDelegate(ctx, 2),
     ) {
     init {
         val root = WGridPanel()
@@ -33,17 +35,17 @@ class HTMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scree
         // player inventory
         root.add(createPlayerInventoryPanel(), 0, 3)
         // right arrow
-        /*root.add(
+        root.add(
             WBar(
-                Identifier.of("textures/block/white_wool.png"),
-                Identifier.of("textures/block/red_wool.png"),
+                Ragium.id("textures/gui/progress_base.png"),
+                Ragium.id("textures/gui/progress_bar.png"),
                 0,
                 1,
                 WBar.Direction.RIGHT,
             ),
             4,
             1,
-        )*/
+        )
         root.validate(this)
     }
 }

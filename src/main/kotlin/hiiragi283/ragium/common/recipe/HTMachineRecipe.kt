@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.common.machine.HTMachineType
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -17,7 +18,7 @@ class HTMachineRecipe(
     val inputs: List<WeightedIngredient>,
     val outputs: List<HTRecipeResult>,
     val catalyst: Ingredient,
-) : Recipe<HTRecipeInput> {
+) : Recipe<HTMachineRecipeInput> {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMachineRecipe> =
@@ -54,9 +55,14 @@ class HTMachineRecipe(
             )
     }
 
-    override fun matches(input: HTRecipeInput, world: World): Boolean = input.matches(inputs)
+    override fun matches(input: HTMachineRecipeInput, world: World): Boolean = input.matches(
+        inputs.getOrNull(0),
+        inputs.getOrNull(1),
+        inputs.getOrNull(2),
+        catalyst,
+    )
 
-    override fun craft(input: HTRecipeInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)
+    override fun craft(input: HTMachineRecipeInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)
 
     override fun fits(width: Int, height: Int): Boolean = true
 

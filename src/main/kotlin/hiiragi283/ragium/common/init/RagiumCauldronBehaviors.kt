@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.util.dropStackAt
-import hiiragi283.ragium.common.util.register
 import net.minecraft.block.BlockState
 import net.minecraft.block.LeveledCauldronBlock
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemActionResult
@@ -31,6 +31,11 @@ object RagiumCauldronBehaviors {
 
     @JvmStatic
     fun init() {
-        CauldronBehavior.WATER_CAULDRON_BEHAVIOR.register(RagiumItems.RAW_RAGINITE_DUST, WASH_RAW_RAGINITE)
+        register(CauldronBehavior.WATER_CAULDRON_BEHAVIOR, RagiumItems.RAW_RAGINITE_DUST, WASH_RAW_RAGINITE)
+    }
+
+    @JvmStatic
+    private fun register(map: CauldronBehavior.CauldronBehaviorMap, item: Item, behavior: CauldronBehavior) {
+        map.map[item] = behavior
     }
 }

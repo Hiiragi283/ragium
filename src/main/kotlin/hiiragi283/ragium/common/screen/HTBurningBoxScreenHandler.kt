@@ -13,17 +13,17 @@ class HTBurningBoxScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Sc
         RagiumScreenHandlerTypes.BURNING_BOX,
         syncId,
         playerInv,
-        getBlockInventory(ctx, 1),
+        getBlockInventory(ctx, 2),
         getBlockPropertyDelegate(ctx),
     ) {
     init {
         val root = WGridPanel()
         setRootPanel(root)
         root.setInsets(Insets.ROOT_PANEL)
-        // burning animation
-        //
         // fuel slot
-        root.add(WItemSlot.of(blockInventory, 0), 4, 2)
+        root.add(WItemSlot.of(blockInventory, 0), 4, 1)
+        // ash slot
+        root.add(WItemSlot.of(blockInventory, 1), 4, 2)
         // player inventory
         root.add(createPlayerInventoryPanel(), 0, 3)
         root.validate(this)

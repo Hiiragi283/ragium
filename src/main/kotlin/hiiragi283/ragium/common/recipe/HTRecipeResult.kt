@@ -4,13 +4,13 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.common.util.mapCast
+import hiiragi283.ragium.common.util.toList
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
@@ -75,8 +75,7 @@ sealed class HTRecipeResult(val count: Int) {
             }
 
         @JvmField
-        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<HTRecipeResult>> =
-            PACKET_CODEC.collect(PacketCodecs.toCollection(::ArrayList))
+        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<HTRecipeResult>> = PACKET_CODEC.toList()
 
         @JvmStatic
         fun item(item: ItemConvertible, count: Int = 1): HTRecipeResult = ItemImpl(item, count)

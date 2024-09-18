@@ -1,20 +1,18 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.entity.HTBurningBoxBlockEntity
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
 import hiiragi283.ragium.common.block.entity.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.entity.HTWaterCollectorBlockEntity
-import net.minecraft.block.entity.BlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTBlazingBoxBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTBurningBoxBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTWaterGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTWindGeneratorBlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
-    @JvmField
-    val MACHINE: BlockEntityType<HTMachineBlockEntity> =
-        register("machine", ::HTMachineBlockEntity)
-
     @JvmField
     val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
         register("manual_grinder", ::HTManualGrinderBlockEntity)
@@ -27,7 +25,19 @@ object RagiumBlockEntityTypes {
     val BURNING_BOX: BlockEntityType<HTBurningBoxBlockEntity> =
         register("burning_box", ::HTBurningBoxBlockEntity)
 
-    private fun <T : BlockEntity> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
+    @JvmField
+    val WATER_GENERATOR: BlockEntityType<HTWaterGeneratorBlockEntity> =
+        register("water_generator", ::HTWaterGeneratorBlockEntity)
+
+    @JvmField
+    val WIND_GENERATOR: BlockEntityType<HTWindGeneratorBlockEntity> =
+        register("wind_generator", ::HTWindGeneratorBlockEntity)
+
+    @JvmField
+    val BLAZING_BOX: BlockEntityType<HTBlazingBoxBlockEntity> =
+        register("blazing_box", ::HTBlazingBoxBlockEntity)
+
+    private fun <T : HTBaseBlockEntity> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Ragium.id(name),

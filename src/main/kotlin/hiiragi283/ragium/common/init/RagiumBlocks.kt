@@ -4,62 +4,152 @@ import hiiragi283.ragium.client.data.RagiumModels
 import hiiragi283.ragium.client.util.*
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.block.HTBlockWithEntity
-import hiiragi283.ragium.common.block.HTCreativePowerSourceBlock
+import hiiragi283.ragium.common.block.HTGearBoxBlock
 import hiiragi283.ragium.common.block.HTManualGrinderBlock
-import hiiragi283.ragium.common.block.entity.HTBurningBoxBlockEntity
+import hiiragi283.ragium.common.block.HTShaftBlock
 import hiiragi283.ragium.common.block.entity.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.recipe.HTMachineTier
+import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTKineticGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.registry.HTBlockRegister
-import hiiragi283.ragium.datagen.RagiumModelProvider
-import net.minecraft.block.AbstractBlock
+import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.block.ExperienceDroppingBlock
 import net.minecraft.data.client.*
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.state.property.IntProperty
-import net.minecraft.util.math.intprovider.ConstantIntProvider
+import net.minecraft.util.Identifier
 
 object RagiumBlocks {
     @JvmField
-    val REGISTER: HTBlockRegister = HTBlockRegister(Ragium.MOD_ID)
+    val REGISTER: HTBlockRegister = HTBlockRegister(Ragium.MOD_ID).apply(::registerMachines)
+
+    //    Ores    //
 
     @JvmField
     val RAGINITE_ORE: Block =
-        REGISTER.register(
-            "raginite_ore",
-            ExperienceDroppingBlock(
-                ConstantIntProvider.create(0),
-                AbstractBlock.Settings.copy(Blocks.IRON_ORE),
-            ),
-        ) {
-            putEnglishLang("Raginite Ore")
-            putJapaneseLang("ラギナイト鉱石")
+        REGISTER.registerCopy("raginite_ore", Blocks.IRON_ORE) {
+            putEnglish("Raginite Ore")
+            putEnglishTips("Found in Overworld between y=112 to -16")
+            putJapanese("ラギナイト鉱石")
+            putJapaneseTips("オーバーワールドのy=112から-16の範囲で見つかる")
+            generateState {
+                it.registerSingleton(
+                    block,
+                    TexturedModel.makeFactory({
+                        TextureMap()
+                            .put(TextureKey.LAYER0, Identifier.of("block/stone"))
+                            .put(TextureKey.LAYER1, prefixedId)
+                    }, RagiumModels.LAYERED),
+                )
+            }
             setCustomLootTable()
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
     @JvmField
     val DEEPSLATE_RAGINITE_ORE: Block =
-        REGISTER.register(
-            "deepslate_raginite_ore",
-            ExperienceDroppingBlock(
-                ConstantIntProvider.create(0),
-                AbstractBlock.Settings.copy(Blocks.DEEPSLATE_IRON_ORE),
-            ),
-        ) {
-            putEnglishLang("Deep Raginite Ore")
-            putJapaneseLang("深層ラギナイト鉱石")
+        REGISTER.registerCopy("deepslate_raginite_ore", Blocks.DEEPSLATE_IRON_ORE) {
+            putEnglish("Deep Raginite Ore")
+            putEnglishTips("Found in Overworld between 112 to -16")
+            putJapanese("深層ラギナイト鉱石")
+            putJapaneseTips("オーバーワールドのy=112から-16の範囲で見つかる")
+            generateState {
+                it.registerSingleton(
+                    block,
+                    TexturedModel.makeFactory({
+                        TextureMap()
+                            .put(TextureKey.LAYER0, Identifier.of("block/deepslate"))
+                            .put(TextureKey.LAYER1, Ragium.id("block/raginite_ore"))
+                    }, RagiumModels.LAYERED),
+                )
+            }
+
             setCustomLootTable()
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
+    //    Blocks    //
+
+    @JvmField
+    val RAGI_ALLOY_BLOCK: Block =
+        REGISTER.registerCopy("ragi_alloy_block", Blocks.IRON_BLOCK) {
+            putEnglish("Block of Ragi-Alloy")
+            putEnglishTips("Just a compressed block.")
+            putJapanese("ラギ合金ブロック")
+            putJapaneseTips("ただの圧縮ブロック。")
+            registerTags(BlockTags.PICKAXE_MINEABLE)
+        }
+
+    @JvmField
+    val RAGI_STEEL_BLOCK: Block =
+        REGISTER.registerCopy("ragi_steel_block", Blocks.IRON_BLOCK) {
+            putEnglish("Block of Ragi-Steel")
+            putEnglishTips("Just a compressed block?")
+            putJapanese("ラギスチールブロック")
+            putJapaneseTips("ただの圧縮ブロック？")
+            registerTags(BlockTags.PICKAXE_MINEABLE)
+        }
+
+    @JvmField
+    val REFINED_RAGI_STEEL_BLOCK: Block =
+        REGISTER.registerCopy("refined_ragi_steel_block", Blocks.IRON_BLOCK) {
+            putEnglish("Block of Refined Ragi-Steel")
+            putEnglishTips("Just a compressed block!")
+            putJapanese("精製ラギスチールブロック")
+            putJapaneseTips("ただの圧縮ブロック！")
+            registerTags(BlockTags.PICKAXE_MINEABLE)
+        }
+
+    //    Hulls    //
+
+    @JvmField
+    val RAGI_ALLOY_HULL: Block =
+        REGISTER.registerCopy("ragi_alloy_hull", HTMachineTier.HEAT.base) {
+            putEnglish("Ragi-Alloy Hull")
+            putEnglishTips("Tier 1 - Machine Hull")
+            putJapanese("ラギ合金筐体")
+            putJapaneseTips("Tier 1 - マシン筐体")
+            generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
+            registerTags(BlockTags.PICKAXE_MINEABLE)
+        }
+
+    @JvmField
+    val RAGI_STEEL_HULL: Block =
+        REGISTER.registerCopy("ragi_steel_hull", HTMachineTier.KINETIC.base) {
+            putEnglish("Ragi-Steel Hull")
+            putEnglishTips("Tier 2 - Machine Hull")
+            putJapanese("ラギスチール筐体")
+            putJapaneseTips("Tier 2 - マシン筐体")
+            generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
+            registerTags(BlockTags.PICKAXE_MINEABLE)
+        }
+
+    @JvmField
+    val REFINED_RAGI_STEEL_HULL: Block =
+        REGISTER.registerCopy("refined_ragi_steel_hull", HTMachineTier.ELECTRIC.base) {
+            putEnglish("Refined Ragi-Steel Hull")
+            putEnglishTips("Tier 3 - Machine Hull")
+            putJapanese("精製ラギスチール筐体")
+            putJapaneseTips("Tier 3 - マシン筐体")
+            generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
+            registerTags(BlockTags.PICKAXE_MINEABLE)
+        }
+
+    //    Machines    //
+
     @JvmField
     val CREATIVE_SOURCE: Block =
-        REGISTER.register("creative_source", HTCreativePowerSourceBlock) {
-            putEnglishLang("Creative Power Source")
-            putJapaneseLang("クリエイティブ用エネルギー源")
-            generateState {
+        REGISTER.registerCopy("creative_source", Blocks.COMMAND_BLOCK) {
+            putEnglish("Creative Power Source")
+            // putEnglishTips("(L-Shift +) Right-Click to change power level")
+            putJapanese("クリエイティブ用エネルギー源")
+            // putJapaneseTips("右クリック（＋左シフト）で出力を変更")
+            /*generateState {
                 it.blockStateCollector.accept(
                     VariantsBlockStateSupplier
                         .create(block, buildModelVariant(Ragium.MOD_ID, name))
@@ -67,37 +157,19 @@ object RagiumBlocks {
                             BlockStateVariantMap.create(HTMachineTier.PROPERTY),
                         ),
                 )
-            }
-            setCustomBlockState()
-        }
-
-    // tier1
-    @JvmField
-    val RAGI_ALLOY_BLOCK: Block =
-        REGISTER.registerCopy("ragi_alloy_block", Blocks.IRON_BLOCK) {
-            putEnglishLang("Block of Ragi-Alloy")
-            putJapaneseLang("ラギ合金ブロック")
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    @JvmField
-    val RAGI_ALLOY_HULL: Block =
-        REGISTER.registerCopy("ragi_alloy_hull", Blocks.BRICKS) {
-            putEnglishLang("Ragi-Alloy Hull")
-            putJapaneseLang("ラギ合金筐体")
-            generateState { it.registerSingleton(block, RagiumModelProvider.HULL_TEXTURE_FACTORY) }
-            registerTags(BlockTags.PICKAXE_MINEABLE)
+            }*/
         }
 
     @JvmField
     val MANUAL_GRINDER: Block =
         REGISTER.register("manual_grinder", HTManualGrinderBlock) {
-            putEnglishLang("Manual Grinder")
-            putJapaneseLang("石臼")
+            putEnglish("Manual Grinder")
+            putEnglishTips("Right-Click to rotate, input to side, output from down")
+            putJapanese("石臼")
+            putJapaneseTips("右クリックで回転，側面から搬入，底面から搬出")
             generateState {
                 it.blockStateCollector.accept(
                     buildMultipartState(block) {
-                        with(buildModelVariant("block/smooth_stone_slab"))
                         Properties.LEVEL_7.values.forEach { level: Int ->
                             with(
                                 buildWhen(Properties.LEVEL_7, level),
@@ -106,7 +178,7 @@ object RagiumBlocks {
                                         Ragium.id(
                                             when (level % 2 == 0) {
                                                 true -> "block/manual_grinder"
-                                                else -> "block/manual_grinder_diagonal"
+                                                false -> "block/manual_grinder_diagonal"
                                             },
                                         ),
                                     )
@@ -136,10 +208,12 @@ object RagiumBlocks {
                 .Builder<HTWaterCollectorBlockEntity>()
                 .type(RagiumBlockEntityTypes.WATER_COLLECTOR)
                 .ticker(HTWaterCollectorBlockEntity.TICKER)
-                .build(),
+                .build(blockSettings(Blocks.BRICKS)),
         ) {
-            putEnglishLang("Water Collector")
-            putJapaneseLang("水収集器")
+            putEnglish("Water Collector")
+            putEnglishTips("Adjacent to two or more Water Source")
+            putJapanese("水収集器")
+            putJapaneseTips("二か所以上の水源と隣接させる")
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
@@ -148,15 +222,17 @@ object RagiumBlocks {
         REGISTER.register(
             "burning_box",
             HTBlockWithEntity
-                .Builder<HTBurningBoxBlockEntity>()
+                .Builder<HTHeatGeneratorBlockEntity>()
                 .type(RagiumBlockEntityTypes.BURNING_BOX)
-                .ticker(HTBurningBoxBlockEntity.TICKER)
-                .build(),
+                .ticker(HTHeatGeneratorBlockEntity.TICKER)
+                .buildHorizontal(blockSettings(Blocks.BRICKS)),
         ) {
-            putEnglishLang("Burning Box")
-            putJapaneseLang("燃焼室")
+            putEnglish("Burning Box")
+            putEnglishTips("Provides heat to top by burning fuel")
+            putJapanese("燃焼室")
+            putJapaneseTips("燃料を燃やして上面に熱を供給する")
             generateState {
-                it.registerSingleton(
+                it.registerNorthDefaultHorizontalRotated(
                     block,
                     TexturedModel.makeFactory(
                         { block: Block ->
@@ -172,63 +248,135 @@ object RagiumBlocks {
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
-    // tier2
     @JvmField
-    val RAGI_STEEL_BLOCK: Block =
-        REGISTER.registerCopy("ragi_steel_block", Blocks.IRON_BLOCK) {
-            putEnglishLang("Block of Ragi-Steel")
-            putJapaneseLang("ラギスチールブロック")
-            registerTags(BlockTags.PICKAXE_MINEABLE)
+    val WATER_GENERATOR: HTBlockWithEntity =
+        REGISTER.register(
+            "water_generator",
+            HTBlockWithEntity
+                .Builder<HTKineticGeneratorBlockEntity>()
+                .type(RagiumBlockEntityTypes.WATER_GENERATOR)
+                .ticker(HTKineticGeneratorBlockEntity.TICKER)
+                .buildHorizontal(),
+        ) {
+            putEnglish("Water Generator")
+            putEnglishTips("Power when adjacent to two or more Flowing Water")
+            putJapanese("水力発動機")
+            putJapaneseTips("二か所以上の水流と隣接すると動力を供給")
         }
 
     @JvmField
-    val RAGI_STEEL_HULL: Block =
-        REGISTER.registerCopy("ragi_steel_hull", Blocks.DEEPSLATE_TILES) {
-            putEnglishLang("Ragi-Steel Hull")
-            putJapaneseLang("ラギスチール筐体")
-            generateState { it.registerSingleton(block, RagiumModelProvider.HULL_TEXTURE_FACTORY) }
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    // tier3
-    @JvmField
-    val REFINED_RAGI_STEEL_BLOCK: Block =
-        REGISTER.registerCopy("refined_ragi_steel_block", Blocks.IRON_BLOCK) {
-            putEnglishLang("Block of Refined Ragi-Steel")
-            putJapaneseLang("精製ラギスチールブロック")
-            registerTags(BlockTags.PICKAXE_MINEABLE)
+    val WIND_GENERATOR: HTBlockWithEntity =
+        REGISTER.register(
+            "wind_generator",
+            HTBlockWithEntity
+                .Builder<HTKineticGeneratorBlockEntity>()
+                .type(RagiumBlockEntityTypes.WIND_GENERATOR)
+                .ticker(HTKineticGeneratorBlockEntity.TICKER)
+                .buildHorizontal(),
+        ) {
+            putEnglish("Wind Generator")
+            putEnglishTips("Power at y=128 or more")
+            putJapanese("風力発動機")
+            putJapaneseTips("y=128以上の時に動力を供給")
         }
 
     @JvmField
-    val REFINED_RAGI_STEEL_HULL: Block =
-        REGISTER.registerCopy("refined_ragi_steel_hull", Blocks.CHISELED_QUARTZ_BLOCK) {
-            putEnglishLang("Refined Ragi-Steel Hull")
-            putJapaneseLang("精製ラギスチール筐体")
-            generateState { it.registerSingleton(block, RagiumModelProvider.HULL_TEXTURE_FACTORY) }
+    val SHAFT: Block = REGISTER.register("shaft", HTShaftBlock) {
+        putEnglish("Shaft")
+        putEnglishTips("Transmits rotation in the opposite direction of the input")
+        putJapanese("シャフト")
+        putJapaneseTips("入力面と反対の向きに回転を伝える")
+        generateState {
+            it.registerAxisRotated(block, prefixedId)
+        }
+    }
+
+    @JvmField
+    val GEAR_BOX: Block = REGISTER.register("gear_box", HTGearBoxBlock) {
+        putEnglish("Gear Box")
+        putEnglishTips("Transmits rotation in the facing direction")
+        putJapanese("ギアボックス")
+        putJapaneseTips("出力面の向きに回転を伝える")
+        generateState {
+            it.blockStateCollector.accept(
+                VariantsBlockStateSupplier
+                    .create(
+                        block,
+                        buildModelVariant(prefixedId),
+                    ).coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
+            )
+        }
+    }
+
+    @JvmField
+    val BLAZING_BOX: Block =
+        REGISTER.register(
+            "blazing_box",
+            HTBlockWithEntity
+                .Builder<HTHeatGeneratorBlockEntity>()
+                .type(RagiumBlockEntityTypes.BLAZING_BOX)
+                .ticker(HTHeatGeneratorBlockEntity.TICKER)
+                .buildHorizontal(blockSettings(Blocks.POLISHED_BLACKSTONE_BRICKS)),
+        ) {
+            putEnglish("Blazing Box")
+            putEnglishTips("Provides more heat to top by burning fuel")
+            putJapanese("豪炎室")
+            putJapaneseTips("燃料を燃やして上面に更なる熱を供給する")
+            generateState {
+                it.registerNorthDefaultHorizontalRotated(
+                    block,
+                    TexturedModel.makeFactory(
+                        { block: Block ->
+                            TextureMap()
+                                .put(TextureKey.TOP, TextureMap.getId(Blocks.POLISHED_BLACKSTONE_BRICKS))
+                                .put(TextureKey.BOTTOM, TextureMap.getId(Blocks.POLISHED_BLACKSTONE_BRICKS))
+                                .put(TextureKey.FRONT, TextureMap.getSubId(BURNING_BOX, "_front"))
+                        },
+                        RagiumModels.MACHINE,
+                    ),
+                )
+            }
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
-    // tier4
-    // tier5
-
-    init {
+    @JvmStatic
+    fun addSupportedBlocks() {
         RagiumBlockEntityTypes.MANUAL_GRINDER.addSupportedBlock(MANUAL_GRINDER)
         RagiumBlockEntityTypes.WATER_COLLECTOR.addSupportedBlock(WATER_COLLECTOR)
         RagiumBlockEntityTypes.BURNING_BOX.addSupportedBlock(BURNING_BOX)
-
-        // RagiumBlocks.getFilteredInstances<Block>().forEach(::registerItem)
+        RagiumBlockEntityTypes.WATER_GENERATOR.addSupportedBlock(WATER_GENERATOR)
+        RagiumBlockEntityTypes.WIND_GENERATOR.addSupportedBlock(WIND_GENERATOR)
+        RagiumBlockEntityTypes.BLAZING_BOX.addSupportedBlock(BLAZING_BOX)
     }
 
-    /*private fun <T : Block> register(name: String, block: T): T =
-        Registry.register(Registries.BLOCK, Ragium.id(name), block)
-
-    private fun register(name: String, settings: AbstractBlock.Settings = AbstractBlock.Settings.create()): Block =
-        register(name, Block(settings))
-
-    private fun registerItem(block: Block, builder: Item.Settings.() -> Unit = {}): Item =
-        Registries.BLOCK.getKey(block).map {
-            Registry.register(Registries.ITEM, it.value, BlockItem(block, Item.Settings().apply(builder)))
-        }.orElseThrow()*/
+    @JvmStatic
+    private fun registerMachines(register: HTBlockRegister) {
+        // Recipe Serializer
+        Registry.register(Registries.RECIPE_SERIALIZER, Ragium.id("generic"), HTMachineRecipe.Serializer)
+        // for each type
+        HTMachineType.getEntries().forEach { type: HTMachineType ->
+            val id: Identifier = type.id
+            val block: Block = type.block
+            // Machine Block
+            register.register(id.path, block) {
+                generateState {
+                    it.registerNorthDefaultHorizontalRotated(
+                        type.block,
+                        TexturedModel.makeFactory({
+                            TextureMap()
+                                .put(TextureKey.TOP, type.tier.casingTex)
+                                .put(TextureKey.BOTTOM, type.tier.baseTex)
+                                .put(TextureKey.FRONT, TextureMap.getSubId(type.block, "_front"))
+                        }, RagiumModels.MACHINE),
+                    )
+                }
+            }
+            // BlockEntityType
+            Registry.register(Registries.BLOCK_ENTITY_TYPE, id, type.blockEntityType)
+            // RecipeType
+            Registry.register(Registries.RECIPE_TYPE, id, type)
+        }
+    }
 
     //    Properties    //
 

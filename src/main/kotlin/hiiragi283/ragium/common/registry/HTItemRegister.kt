@@ -1,41 +1,136 @@
 package hiiragi283.ragium.common.registry
 
 import com.google.common.collect.HashBasedTable
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import com.google.common.collect.Table
 import hiiragi283.ragium.common.data.HTLangType
+import hiiragi283.ragium.common.init.RagiumToolMaterials
+import hiiragi283.ragium.common.item.HTBaseBlockItem
+import hiiragi283.ragium.common.item.HTBaseItem
 import hiiragi283.ragium.common.util.forEach
+import hiiragi283.ragium.common.util.itemSettings
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.block.Block
+import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.Models
-import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import java.awt.Color
 
 class HTItemRegister(private val modId: String) : Iterable<Item> {
     private val itemCache: MutableMap<Identifier, Item> = mutableMapOf()
 
-    private val langCache: Table<Item, HTLangType, String> = HashBasedTable.create()
+    private val colorCache: MutableMap<Item, Color> = mutableMapOf()
+    private val groupCache: Multimap<RegistryKey<ItemGroup>, Item> = HashMultimap.create()
+    private val langCache: Table<String, HTLangType, String> = HashBasedTable.create()
     private val modelCache: MutableMap<Item, (ItemModelGenerator) -> Unit> = mutableMapOf()
     private val tagCache: MutableMap<Item, List<TagKey<Item>>> = mutableMapOf()
 
-    fun registerSimple(name: String, settings: Item.Settings = Item.Settings(), action: Builder<Item>.() -> Unit): Item =
-        register(name, Item(settings), action)
+    fun registerSimple(name: String, settings: Item.Settings = itemSettings(), action: Builder<Item>.() -> Unit): Item =
+        register(name, HTBaseItem(settings), action)
 
     fun registerBlockItem(
         name: String,
         block: Block,
-        settings: Item.Settings = Item.Settings(),
-        action: Builder<BlockItem>.() -> Unit = {},
-    ): BlockItem = register(name, BlockItem(block, settings)) {
+        settings: Item.Settings = itemSettings(),
+        action: Builder<HTBaseBlockItem>.() -> Unit = {},
+    ): Item = register(name, HTBaseBlockItem(block, settings)) {
         action()
         setCustomModel()
     }
+
+    private fun <T : ToolItem> registerTool(
+        name: String,
+        material: ToolMaterial,
+        builder: (ToolMaterial, Item.Settings) -> T,
+        attributeComponent: AttributeModifiersComponent,
+        settings: Item.Settings = itemSettings(),
+        action: Builder<T>.() -> Unit = {},
+    ): T = register(
+        name,
+        builder(material, settings.attributeModifiers(attributeComponent)),
+        action,
+    )
+
+    fun registerSword(
+        name: String,
+        material: ToolMaterial,
+        settings: Item.Settings = itemSettings(),
+        action: Builder<SwordItem>.() -> Unit = {},
+    ): Item = registerTool(
+        name,
+        material,
+        ::SwordItem,
+        RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.0),
+        settings,
+        action,
+    )
+
+    fun registerShovel(
+        name: String,
+        material: ToolMaterial,
+        settings: Item.Settings = itemSettings(),
+        action: Builder<ShovelItem>.() -> Unit = {},
+    ): Item = registerTool(
+        name,
+        material,
+        ::ShovelItem,
+        RagiumToolMaterials.createAttributeComponent(material, -2.0, -3.0),
+        settings,
+        action,
+    )
+
+    fun registerPickaxe(
+        name: String,
+        material: ToolMaterial,
+        settings: Item.Settings = itemSettings(),
+        action: Builder<PickaxeItem>.() -> Unit = {},
+    ): Item = registerTool(
+        name,
+        material,
+        ::PickaxeItem,
+        RagiumToolMaterials.createAttributeComponent(material, -2.0, -2.8),
+        settings,
+        action,
+    )
+
+    fun registerAxe(
+        name: String,
+        material: ToolMaterial,
+        settings: Item.Settings = itemSettings(),
+        action: Builder<AxeItem>.() -> Unit = {},
+    ): Item = registerTool(
+        name,
+        material,
+        ::AxeItem,
+        RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.9),
+        settings,
+        action,
+    )
+
+    fun registerHoe(
+        name: String,
+        material: ToolMaterial,
+        settings: Item.Settings = itemSettings(),
+        action: Builder<HoeItem>.() -> Unit = {},
+    ): Item = registerTool(
+        name,
+        material,
+        ::HoeItem,
+        RagiumToolMaterials.createAttributeComponent(material, -4.0, 0.0),
+        settings,
+        action,
+    )
 
     fun <T : Item> register(name: String, item: T, action: Builder<T>.() -> Unit): T {
         val id: Identifier = Identifier.of(modId, name)
@@ -48,11 +143,27 @@ class HTItemRegister(private val modId: String) : Iterable<Item> {
         return item
     }
 
+    //    Init    //
+
+    fun registerItemGroups() {
+        groupCache.keys().forEach { key: RegistryKey<ItemGroup> ->
+            ItemGroupEvents.modifyEntriesEvent(key).register { entries: FabricItemGroupEntries ->
+                groupCache.get(key).forEach(entries::add)
+            }
+        }
+    }
+
+    //    Client Init    //
+
+    fun registerColors(action: (Item, Color) -> Unit) {
+        colorCache.forEach(action)
+    }
+
     //    Data Gen    //
 
     fun generateLang(type: HTLangType, builder: TranslationBuilder) {
-        langCache.forEach { item: Item, type1: HTLangType, value: String ->
-            if (type == type1) builder.add(item, value)
+        langCache.forEach { key: String, type1: HTLangType, value: String ->
+            if (type == type1) builder.add(key, value)
         }
     }
 
@@ -73,15 +184,35 @@ class HTItemRegister(private val modId: String) : Iterable<Item> {
     //    Builder    //
 
     class Builder<T : Item> internal constructor(val name: String, val item: T, val register: HTItemRegister) {
-        //    Lang    //
+        //    Color    //
 
-        fun putLang(type: HTLangType, value: String): Builder<T> = apply {
-            register.langCache.put(item, type, value)
+        fun setColor(color: Color): Builder<T> = apply {
+            register.colorCache[item] = color
         }
 
-        fun putEnglishLang(value: String): Builder<T> = putLang(HTLangType.EN_US, value)
+        //    ItemGroup    //
 
-        fun putJapaneseLang(value: String): Builder<T> = putLang(HTLangType.JA_JP, value)
+        fun setItemGroup(key: RegistryKey<ItemGroup>): Builder<T> = apply {
+            register.groupCache.put(key, item)
+        }
+
+        //    Translation    //
+
+        fun putTranslation(type: HTLangType, value: String): Builder<T> = apply {
+            register.langCache.put(item.translationKey, type, value)
+        }
+
+        fun putEnglish(value: String): Builder<T> = putTranslation(HTLangType.EN_US, value)
+
+        fun putJapanese(value: String): Builder<T> = putTranslation(HTLangType.JA_JP, value)
+
+        fun putTooltip(type: HTLangType, value: String): Builder<T> = apply {
+            register.langCache.put("${item.translationKey}.tooltip", type, value)
+        }
+
+        fun putEnglishTips(value: String): Builder<T> = putTooltip(HTLangType.EN_US, value)
+
+        fun putJapaneseTips(value: String): Builder<T> = putTooltip(HTLangType.JA_JP, value)
 
         //    Model    //
 

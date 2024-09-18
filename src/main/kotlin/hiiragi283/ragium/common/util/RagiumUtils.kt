@@ -2,36 +2,39 @@ package hiiragi283.ragium.common.util
 
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.common.item.HTFluidCellItem
+import io.netty.buffer.ByteBuf
+import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
+import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.minecraft.block.AbstractBlock
 import net.minecraft.block.BlockState
-import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.component.ComponentChanges
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.State
 import net.minecraft.state.property.Property
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.Function
-import kotlin.enums.EnumEntries
-
-fun <T : Enum<T>> nextEnum(entry: T, values: Array<T>): T = values[(entry.ordinal + 1) % values.size]
-
-fun <T : Enum<T>> nextEnum(entry: T, values: EnumEntries<T>): T = values[(entry.ordinal + 1) % values.size]
 
 //    Either    //
 
 fun <T : Any> Either<out T, out T>.mapCast(): T = map(Function.identity(), Function.identity())
 
-//    BlockState    //
+//    Block    //
+
+fun blockSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create()
+
+fun blockSettings(block: AbstractBlock): AbstractBlock.Settings = AbstractBlock.Settings.copy(block)
 
 fun World.modifyBlockState(pos: BlockPos, mapping: (BlockState) -> BlockState): Boolean {
     val stateIn: BlockState = getBlockState(pos)
@@ -43,25 +46,32 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrNull(property: Proper
     false -> null
 }
 
+fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrDefault(property: Property<T>, defaultValue: T): T = when (contains(property)) {
+    true -> get(property)
+    false -> defaultValue
+}
+
 operator fun <O : Any, S : Any> State<O, S>.contains(property: Property<*>): Boolean = contains(property)
 
 operator fun <O : Any, S : Any, T : Comparable<T>, U : State<O, S>> U.set(property: Property<T>, value: T): U = apply {
     with(property, value)
 }
 
-//    CauldronBehavior    //
+//    BlockApiLookup    //
 
-fun CauldronBehavior.CauldronBehaviorMap.register(item: Item, behavior: CauldronBehavior) {
-    map[item] = behavior
-}
+fun <A, C> BlockApiLookup<A, C>.createCache(world: ServerWorld, pos: BlockPos): BlockApiCache<A, C> = BlockApiCache.create(this, world, pos)
+
+fun <A, C> BlockApiLookup<A, C>.createCacheOrNull(world: World, pos: BlockPos): BlockApiCache<A, C>? =
+    (world as? ServerWorld)?.let { createCache(it, pos) }
+
+fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state: BlockState? = null): A =
+    find(state, context) ?: defaultValue
 
 //    Fluid    //
 
-fun Fluid.getCell(): Item? = HTFluidCellItem.get(this)
+//    Item    //
 
-fun Fluid.getCellOrThrow(): Item = HTFluidCellItem.getOrThrow(this)
-
-//    ItemStack    //
+fun itemSettings(): Item.Settings = Item.Settings()
 
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
     if (item == null) return ItemStack.EMPTY
@@ -71,6 +81,10 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     val changes: ComponentChanges = ComponentChanges.builder().apply(builderAction).build()
     return ItemStack(entry, count, changes)
 }
+
+//    PacketCodec    //
+
+fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> = collect(PacketCodecs.toList())
 
 //    Table    //
 

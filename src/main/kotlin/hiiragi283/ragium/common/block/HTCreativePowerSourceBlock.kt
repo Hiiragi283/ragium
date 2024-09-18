@@ -1,25 +1,15 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.recipe.HTMachineTier
+import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.state.StateManager
-import net.minecraft.util.ActionResult
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 
 object HTCreativePowerSourceBlock : Block(
-    Settings
-        .create()
+    blockSettings()
         .requiresTool()
         .strength(-1.0F, 3600000.0F)
         .dropsNothing(),
 ) {
-    init {
+    /*init {
         defaultState = stateManager.defaultState.with(HTMachineTier.PROPERTY, HTMachineTier.NONE)
     }
 
@@ -51,7 +41,7 @@ object HTCreativePowerSourceBlock : Block(
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(HTMachineTier.PROPERTY)
-    }
+    }*/
 
     //    RagiPowerProvider    //
 

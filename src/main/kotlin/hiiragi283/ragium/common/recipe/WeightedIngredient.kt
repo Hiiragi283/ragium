@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.common.util.toList
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -41,8 +42,7 @@ class WeightedIngredient private constructor(val ingredient: Ingredient, val cou
             )
 
         @JvmField
-        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<WeightedIngredient>> =
-            PACKET_CODEC.collect(PacketCodecs.toCollection(::ArrayList))
+        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<WeightedIngredient>> = PACKET_CODEC.toList()
 
         @JvmStatic
         fun of(item: ItemConvertible, count: Int = 1): WeightedIngredient = of(Ingredient.ofItems(item), count)
@@ -65,7 +65,10 @@ class WeightedIngredient private constructor(val ingredient: Ingredient, val cou
 
     //    Predicate    //
 
-    override fun test(stack: ItemStack): Boolean = ingredient.test(stack) && stack.count >= this.count
+    override fun test(stack: ItemStack): Boolean = when {
+        stack.isEmpty -> this == EMPTY
+        else -> ingredient.test(stack) && stack.count >= this.count
+    }
 
     //    Any    //
 

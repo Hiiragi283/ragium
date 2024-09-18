@@ -1,13 +1,14 @@
 package hiiragi283.ragium.common.data
 
+import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.recipe.HTMachineType
 import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.recipe.WeightedIngredient
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
 import net.minecraft.advancement.AdvancementRewards
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion
+import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
 import net.minecraft.item.Item
@@ -72,6 +73,10 @@ class HTMachineRecipeJsonBuilder(private val type: HTMachineType) {
 
     fun hasInput(tagKey: TagKey<Item>, suffix: String = ""): HTMachineRecipeJsonBuilder =
         criterion("has_input$suffix", RecipeProvider.conditionsFromTag(tagKey))
+
+    fun offerTo(exporter: RecipeExporter, suffix: String = "") {
+        offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputs[0].value).withSuffixedPath(suffix))
+    }
 
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         check(inputs.size in 0..3) { "Invalid input count; ${inputs.size}!" }

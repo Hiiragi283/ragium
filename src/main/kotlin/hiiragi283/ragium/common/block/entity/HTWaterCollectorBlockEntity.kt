@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.fluid.Fluids
 import net.minecraft.nbt.NbtCompound
@@ -20,7 +19,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    BlockEntity(RagiumBlockEntityTypes.WATER_COLLECTOR, pos, state),
+    HTBaseBlockEntity(RagiumBlockEntityTypes.WATER_COLLECTOR, pos, state),
     SidedStorageBlockEntity {
     companion object {
         @JvmField

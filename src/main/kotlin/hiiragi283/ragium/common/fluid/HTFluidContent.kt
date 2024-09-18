@@ -2,13 +2,14 @@ package hiiragi283.ragium.common.fluid
 
 import hiiragi283.ragium.common.fluid.HTFlowableFluid.Flowing
 import hiiragi283.ragium.common.fluid.HTFlowableFluid.Still
+import hiiragi283.ragium.common.util.blockSettings
+import hiiragi283.ragium.common.util.itemSettings
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
-import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.FluidBlock
 import net.minecraft.block.piston.PistonBehavior
@@ -57,8 +58,7 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
                     id,
                     FluidBlock(
                         still,
-                        AbstractBlock.Settings
-                            .create()
+                        blockSettings()
                             .replaceable()
                             .noCollision()
                             .strength(100.0f)
@@ -80,8 +80,7 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
                     id.withSuffixedPath("_bucket"),
                     BucketItem(
                         still,
-                        Item
-                            .Settings()
+                        itemSettings()
                             .recipeRemainder(Items.BUCKET)
                             .maxCount(1),
                     ),

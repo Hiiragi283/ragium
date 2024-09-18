@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.registry
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import hiiragi283.ragium.common.data.HTLangType
+import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.forEach
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -17,19 +18,16 @@ import net.minecraft.util.Identifier
 
 class HTBlockRegister(val modId: String) : Iterable<Block> {
     private val blockCache: MutableMap<Identifier, Block> = mutableMapOf()
-    private val langCache: Table<Block, HTLangType, String> = HashBasedTable.create()
+    private val langCache: Table<String, HTLangType, String> = HashBasedTable.create()
     private val lootCache: MutableMap<Block, (BlockLootTableGenerator) -> Unit> = mutableMapOf()
     private val stateCache: MutableMap<Block, (BlockStateModelGenerator) -> Unit> = mutableMapOf()
     private val tagCache: MutableMap<Block, List<TagKey<Block>>> = mutableMapOf()
 
     fun registerCopy(name: String, parent: Block, action: Builder<Block>.() -> Unit): Block =
-        register(name, Block(AbstractBlock.Settings.copy(parent)), action)
+        register(name, Block(blockSettings(parent)), action)
 
-    fun registerSimple(
-        name: String,
-        settings: AbstractBlock.Settings = AbstractBlock.Settings.create(),
-        action: Builder<Block>.() -> Unit,
-    ): Block = register(name, Block(settings), action)
+    fun registerSimple(name: String, settings: AbstractBlock.Settings = blockSettings(), action: Builder<Block>.() -> Unit): Block =
+        register(name, Block(settings), action)
 
     fun <T : Block> register(name: String, block: T, action: Builder<T>.() -> Unit): T {
         val id: Identifier = Identifier.of(modId, name)
@@ -46,8 +44,8 @@ class HTBlockRegister(val modId: String) : Iterable<Block> {
     //    Data Gen    //
 
     fun generateLang(type: HTLangType, builder: TranslationBuilder) {
-        langCache.forEach { block: Block, type1: HTLangType, value: String ->
-            if (type == type1) builder.add(block, value)
+        langCache.forEach { key: String, type1: HTLangType, value: String ->
+            if (type == type1) builder.add(key, value)
         }
     }
 
@@ -72,15 +70,26 @@ class HTBlockRegister(val modId: String) : Iterable<Block> {
     //    Builder    //
 
     class Builder<T : Block> internal constructor(val name: String, val block: T, val register: HTBlockRegister) {
+        val id: Identifier = Registries.BLOCK.getId(block)
+        val prefixedId: Identifier = id.withPrefixedPath("block/")
+
         //    Lang    //
 
-        fun putLang(type: HTLangType, value: String): Builder<T> = apply {
-            register.langCache.put(block, type, value)
+        fun putTranslation(type: HTLangType, value: String): Builder<T> = apply {
+            register.langCache.put(block.translationKey, type, value)
         }
 
-        fun putEnglishLang(value: String): Builder<T> = putLang(HTLangType.EN_US, value)
+        fun putEnglish(value: String): Builder<T> = putTranslation(HTLangType.EN_US, value)
 
-        fun putJapaneseLang(value: String): Builder<T> = putLang(HTLangType.JA_JP, value)
+        fun putJapanese(value: String): Builder<T> = putTranslation(HTLangType.JA_JP, value)
+
+        fun putTooltip(type: HTLangType, value: String): Builder<T> = apply {
+            register.langCache.put("${block.translationKey}.tooltip", type, value)
+        }
+
+        fun putEnglishTips(value: String): Builder<T> = putTooltip(HTLangType.EN_US, value)
+
+        fun putJapaneseTips(value: String): Builder<T> = putTooltip(HTLangType.JA_JP, value)
 
         //    LootTable    //
 
