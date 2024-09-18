@@ -27,12 +27,6 @@
         "adapter": "kotlin"
       }
     ],
-    "fabric-datagen": [
-      {
-        "value": "hiiragi283.ragium.datagen.RagiumDataGenerator",
-        "adapter": "kotlin"
-      }
-    ],
     "modmenu": [
       {
         "value": "hiiragi283.ragium.integration.modmenu.RagiumModMenu",

@@ -1,80 +1,49 @@
 {
-  "textures": {
-    "0": "block/smooth_stone",
-    "1": "block/smooth_stone_slab_side",
-    "2": "block/oak_planks",
-    "particle": "block/smooth_stone"
-  },
-  "elements": [
-    {
-      "name": "upper",
-      "from": [0, 8, 0],
-      "to": [16, 16, 16],
-      "rotation": {"angle": -45, "axis": "y", "origin": [8, 0, 8]},
-      "faces": {
-        "north": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "east": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "south": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "west": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "up": {"uv": [0, 0, 16, 16], "texture": "#0"},
-        "down": {"uv": [0, 0, 16, 16], "texture": "#0"}
-      }
-    },
-    {
-      "name": "bottom",
-      "from": [0, 0, 0],
-      "to": [16, 8, 16],
-      "faces": {
-        "north": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "east": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "south": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "west": {"uv": [0, 0, 16, 8], "texture": "#1"},
-        "down": {"uv": [0, 0, 16, 16], "texture": "#0"}
-      }
-    },
-    {
-      "name": "handle",
-      "from": [2, 16, 2],
-      "to": [4, 24, 4],
-      "rotation": {"angle": -45, "axis": "y", "origin": [8, 0, 8]},
-      "faces": {
-        "north": {"uv": [6, 5, 8, 13], "texture": "#2"},
-        "east": {"uv": [8, 5, 10, 13], "texture": "#2"},
-        "south": {"uv": [10, 5, 12, 13], "texture": "#2"},
-        "west": {"uv": [4, 5, 6, 13], "texture": "#2"},
-        "up": {"uv": [6, 3, 8, 5], "texture": "#2"}
-      }
-    }
-  ],
-  "display": {
-    "thirdperson_righthand": {
-      "rotation": [75, 45, 0],
-      "translation": [0, 2.5, 0],
-      "scale": [0.375, 0.375, 0.375]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [75, 45, 0],
-      "translation": [0, 2.5, 0],
-      "scale": [0.375, 0.375, 0.375]
-    },
-    "firstperson_righthand": {
-      "rotation": [0, 45, 0],
-      "scale": [0.4, 0.4, 0.4]
-    },
-    "firstperson_lefthand": {
-      "rotation": [0, 225, 0],
-      "scale": [0.4, 0.4, 0.4]
-    },
-    "ground": {
-      "translation": [0, 3, 0],
-      "scale": [0.25, 0.25, 0.25]
-    },
-    "gui": {
-      "rotation": [30, 225, 0],
-      "scale": [0.625, 0.625, 0.625]
-    },
-    "fixed": {
-      "scale": [0.5, 0.5, 0.5]
-    }
-  }
+	"credit": "Made by Hiiragi Russell Tsubasa",
+	"textures": {
+		"particle": "block/smooth_stone",
+		"bottom": "block/smooth_stone",
+		"top": "ragium:block/ragi_alloy_block",
+		"hand": "block/oak_planks"
+	},
+	"elements": [
+		{
+			"name": "top",
+			"from": [0, 8, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [5, 0, 5]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"east": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"south": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"west": {"uv": [0, 0, 16, 8], "texture": "#top"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#top"}
+			}
+		},
+		{
+			"name": "bottom",
+			"from": [0, 0, 0],
+			"to": [16, 8, 16],
+			"faces": {
+				"north": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"east": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"south": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"west": {"uv": [0, 8, 16, 16], "texture": "#bottom"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bottom"}
+			}
+		},
+		{
+			"name": "hand",
+			"from": [7, 16, 2],
+			"to": [9, 22, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2, 16, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"east": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"south": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"west": {"uv": [0, 0, 2, 6], "texture": "#hand"},
+				"up": {"uv": [0, 0, 2, 2], "texture": "#hand"}
+			}
+		}
+	]
 }
