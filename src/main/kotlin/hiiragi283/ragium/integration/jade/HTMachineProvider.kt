@@ -1,6 +1,6 @@
 package hiiragi283.ragium.integration.jade
 
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.Identifier
 import snownee.jade.api.BlockAccessor
@@ -34,10 +34,10 @@ object HTMachineProvider : IBlockComponentProvider, IServerDataProvider<BlockAcc
     //    IServerDataProvider    //
 
     override fun appendServerData(nbt: NbtCompound, accessor: BlockAccessor) {
-        (accessor.blockEntity as HTMachineBlockEntity).let {
+        (accessor.blockEntity as HTMachineBlockEntity<*>).let {
             nbt.putInt(PROGRESS, it.ticks)
             nbt.putBoolean(IS_ACTIVE, it.isActive)
-            nbt.putBoolean(SHOW_PREVIEW, it.showPreview)
+            // nbt.putBoolean(SHOW_PREVIEW, it.showPreview)
         }
     }
 }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.recipe.WeightedIngredient
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.display.Display
 import me.shedaniel.rei.api.common.entry.EntryIngredient
+import me.shedaniel.rei.api.common.util.EntryIngredients
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.recipe.RecipeEntry
@@ -16,7 +17,10 @@ import java.util.*
 class HTMachineRecipeDisplay(val recipe: HTMachineRecipe, val id: Identifier) : Display {
     constructor(entry: RecipeEntry<HTMachineRecipe>) : this(entry.value, entry.id)
 
-    override fun getInputEntries(): List<EntryIngredient> = recipe.inputs.map(WeightedIngredient::entryIngredient)
+    override fun getInputEntries(): List<EntryIngredient> = buildList {
+        addAll(recipe.inputs.map(WeightedIngredient::entryIngredient))
+        add(EntryIngredients.ofIngredient(recipe.catalyst))
+    }
 
     override fun getOutputEntries(): List<EntryIngredient> = recipe.outputs.map(HTRecipeResult::entryIngredient)
 

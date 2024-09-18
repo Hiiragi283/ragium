@@ -1,6 +1,6 @@
 package hiiragi283.ragium.integration.rei
 
-import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.recipe.WeightedIngredient
 import me.shedaniel.rei.api.common.category.CategoryIdentifier

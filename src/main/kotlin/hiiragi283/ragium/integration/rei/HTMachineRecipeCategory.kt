@@ -1,6 +1,6 @@
 package hiiragi283.ragium.integration.rei
 
-import hiiragi283.ragium.common.recipe.HTMachineType
+import hiiragi283.ragium.common.machine.HTMachineType
 import me.shedaniel.math.Point
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
@@ -8,6 +8,7 @@ import me.shedaniel.rei.api.client.gui.widgets.Widget
 import me.shedaniel.rei.api.client.gui.widgets.Widgets
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
+import me.shedaniel.rei.api.common.util.EntryIngredients
 import me.shedaniel.rei.api.common.util.EntryStacks
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -22,43 +23,53 @@ class HTMachineRecipeCategory(val type: HTMachineType) : DisplayCategory<HTMachi
     override fun getIcon(): Renderer = EntryStacks.of(type)
 
     override fun setupDisplay(display: HTMachineRecipeDisplay, bounds: Rectangle): List<Widget> = buildList {
-        val startPoint = Point(bounds.centerX - 41, bounds.centerY - 13)
         this += Widgets.createRecipeBase(bounds)
-        this += Widgets.createArrow(Point(startPoint.x + 27, startPoint.y + 4))
-        // this += Widgets.createResultSlotBackground(Point(startPoint.x + 61, startPoint.y + 5))
-        // outputs
-        this +=
-            Widgets
-                .createSlot(Point(startPoint.x + 61, startPoint.y + 5))
-                .entries(display.outputEntries.getOrNull(0) ?: listOf())
-                .markOutput()
-        this +=
-            Widgets
-                .createSlot(Point(startPoint.x + 79, startPoint.y + 5))
-                .entries(display.outputEntries.getOrNull(1) ?: listOf())
-                .markOutput()
-        this +=
-            Widgets
-                .createSlot(Point(startPoint.x + 97, startPoint.y + 5))
-                .entries(display.outputEntries.getOrNull(2) ?: listOf())
-                .markOutput()
+        this += Widgets.createArrow(getPoint(bounds, 3.25, 0.0)).animationDurationTicks(200.0)
         // inputs
         this +=
             Widgets
-                .createSlot(Point(startPoint.x - 32, startPoint.y + 5))
+                .createSlot(getPoint(bounds, 0, 0))
                 .entries(display.inputEntries.getOrNull(0) ?: listOf())
                 .markInput()
         this +=
             Widgets
-                .createSlot(Point(startPoint.x - 14, startPoint.y + 5))
+                .createSlot(getPoint(bounds, 1, 0))
                 .entries(display.inputEntries.getOrNull(1) ?: listOf())
                 .markInput()
         this +=
             Widgets
-                .createSlot(Point(startPoint.x + 4, startPoint.y + 5))
+                .createSlot(getPoint(bounds, 2, 0))
                 .entries(display.inputEntries.getOrNull(2) ?: listOf())
                 .markInput()
+        // catalyst
+        this +=
+            Widgets
+                .createSlot(getPoint(bounds, 3.5, 1.0))
+                .entries(EntryIngredients.ofIngredient(display.recipe.catalyst))
+                .markInput()
+        // outputs
+        this +=
+            Widgets
+                .createSlot(getPoint(bounds, 5, 0))
+                .entries(display.outputEntries.getOrNull(0) ?: listOf())
+                .markOutput()
+        this +=
+            Widgets
+                .createSlot(getPoint(bounds, 6, 0))
+                .entries(display.outputEntries.getOrNull(1) ?: listOf())
+                .markOutput()
+        this +=
+            Widgets
+                .createSlot(getPoint(bounds, 7, 0))
+                .entries(display.outputEntries.getOrNull(2) ?: listOf())
+                .markOutput()
     }
 
-    override fun getDisplayHeight(): Int = 36
+    private fun getPoint(bounds: Rectangle, x: Int, y: Int): Point = Point(bounds.x + 5 + x * 18, bounds.y + 5 + y * 18)
+
+    private fun getPoint(bounds: Rectangle, x: Double, y: Double): Point = Point(bounds.x + 5 + x * 18, bounds.y + 5 + y * 18)
+
+    override fun getDisplayHeight(): Int = 18 * 2 + 8
+
+    override fun getDisplayWidth(display: HTMachineRecipeDisplay): Int = 18 * 8 + 8
 }
