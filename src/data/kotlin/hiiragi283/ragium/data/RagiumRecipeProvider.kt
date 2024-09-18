@@ -5,15 +5,17 @@ import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import hiiragi283.ragium.data.group.HTMetalItemRecipeGroup
 import hiiragi283.ragium.data.group.RagiumMetalItemRecipeGroups
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.block.Blocks
+import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -40,12 +42,16 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         // tier2
         compressor(exporter)
         extractor(exporter)
+        metalFormer(exporter)
         mixer(exporter)
         blazingBlastFurnace(exporter)
         // tier3
         centrifuge(exporter)
+        chemicalReactor(exporter)
+        electrolyzer(exporter)
+        distillation(exporter)
         // tier4
-        // tier5
+
         RagiumMetalItemRecipeGroups
         HTMetalItemRecipeGroup.registry.forEach { (name: String, family: HTMetalItemRecipeGroup) ->
             family.generateRecipes(exporter, ::exporterWrapper)
@@ -94,6 +100,9 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
                 Ragium.id("shaped/ragi_alloy_compound_1"),
             )
 
+        createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
+        
+        // tools
         createShaped(RagiumItems.FORGE_HAMMER)
             .pattern(" AA")
             .pattern("BBA")
@@ -103,81 +112,97 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .itemCriterion(RagiumItems.RAGI_ALLOY_INGOT)
             .offerTo(exporter, Ragium.id("shaped/forge_hammer"))
 
-        createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
+        createShaped(RagiumItems.STEEL_SWORD)
+            .pattern("B")
+            .pattern("A")
+            .pattern("A")
+            .input('A', RagiumItemTags.STEEL_INGOTS)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .tagCriterion(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter, Ragium.id("shaped/steel_sword"))
+
+        createShaped(RagiumItems.STEEL_SHOVEL)
+            .pattern("B")
+            .pattern("B")
+            .pattern("A")
+            .input('A', RagiumItemTags.STEEL_INGOTS)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .tagCriterion(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter, Ragium.id("shaped/steel_shovel"))
+
+        createShaped(RagiumItems.STEEL_PICKAXE)
+            .pattern(" B ")
+            .pattern(" B ")
+            .pattern("AAA")
+            .input('A', RagiumItemTags.STEEL_INGOTS)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .tagCriterion(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter, Ragium.id("shaped/steel_pickaxe"))
+
+        createShaped(RagiumItems.STEEL_AXE)
+            .pattern("B ")
+            .pattern("BA")
+            .pattern("AA")
+            .input('A', RagiumItemTags.STEEL_INGOTS)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .tagCriterion(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter, Ragium.id("shaped/steel_axe"))
+
+        createShaped(RagiumItems.STEEL_HOE)
+            .pattern("B ")
+            .pattern("B ")
+            .pattern("AA")
+            .input('A', RagiumItemTags.STEEL_INGOTS)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .tagCriterion(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter, Ragium.id("shaped/steel_hoe"))
+
 
         // hulls
-        createShaped(RagiumBlocks.RAGI_ALLOY_HULL)
-            .pattern("AAA")
-            .pattern("A A")
-            .pattern("BBB")
-            .input('A', RagiumItems.RAGI_ALLOY_INGOT)
-            .input('B', Blocks.BRICKS)
-            .itemCriterion(RagiumItems.RAGI_ALLOY_INGOT)
-            .offerTo(
-                exporter.hardMode(false),
-                Ragium.id("shaped/ragi_alloy_hull"),
-            )
+        val hullMap: Map<HTMachineTier, Block> = mapOf(
+            HTMachineTier.HEAT to RagiumBlocks.RAGI_ALLOY_HULL,
+            HTMachineTier.KINETIC to RagiumBlocks.RAGI_STEEL_HULL,
+            HTMachineTier.ELECTRIC to RagiumBlocks.REFINED_RAGI_STEEL_HULL
+        )
+        val ingotMap: Map<HTMachineTier, Item> = mapOf(
+            HTMachineTier.HEAT to RagiumItems.RAGI_ALLOY_INGOT,
+            HTMachineTier.KINETIC to RagiumItems.RAGI_STEEL_INGOT,
+            HTMachineTier.ELECTRIC to RagiumItems.REFINED_RAGI_STEEL_INGOT
+        )
+        val plateMap: Map<HTMachineTier, Item> = mapOf(
+            HTMachineTier.HEAT to RagiumItems.RAGI_ALLOY_PLATE,
+            HTMachineTier.KINETIC to RagiumItems.RAGI_STEEL_PLATE,
+            HTMachineTier.ELECTRIC to RagiumItems.REFINED_RAGI_STEEL_PLATE
+        )
 
-        createShaped(RagiumBlocks.RAGI_ALLOY_HULL)
-            .pattern("AAA")
-            .pattern("A A")
-            .pattern("BBB")
-            .input('A', RagiumItems.RAGI_ALLOY_PLATE)
-            .input('B', Blocks.BRICKS)
-            .itemCriterion(RagiumItems.RAGI_ALLOY_PLATE)
-            .offerTo(
-                exporter.hardMode(true),
-                Ragium.id("shaped/hard/ragi_alloy_hull"),
-            )
-
-        createShaped(RagiumBlocks.RAGI_STEEL_HULL)
-            .pattern("AAA")
-            .pattern("A A")
-            .pattern("BBB")
-            .input('A', RagiumItems.RAGI_STEEL_INGOT)
-            .input('B', Blocks.DEEPSLATE_TILES)
-            .itemCriterion(RagiumItems.RAGI_STEEL_INGOT)
-            .offerTo(
-                exporter.hardMode(false),
-                Ragium.id("shaped/ragi_steel_hull"),
-            )
-
-        createShaped(RagiumBlocks.RAGI_STEEL_HULL)
-            .pattern("AAA")
-            .pattern("A A")
-            .pattern("BBB")
-            .input('A', RagiumItems.RAGI_STEEL_PLATE)
-            .input('B', Blocks.DEEPSLATE_TILES)
-            .itemCriterion(RagiumItems.RAGI_STEEL_PLATE)
-            .offerTo(
-                exporter.hardMode(false),
-                Ragium.id("shaped/hard/ragi_steel_hull"),
-            )
-
-        createShaped(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
-            .pattern("AAA")
-            .pattern("A A")
-            .pattern("BBB")
-            .input('A', RagiumItems.REFINED_RAGI_STEEL_INGOT)
-            .input('B', Blocks.CHISELED_QUARTZ_BLOCK)
-            .itemCriterion(RagiumItems.REFINED_RAGI_STEEL_INGOT)
-            .offerTo(
-                exporter.hardMode(false),
-                Ragium.id("shaped/refined_ragi_steel_hull"),
-            )
-
-        createShaped(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
-            .pattern("AAA")
-            .pattern("A A")
-            .pattern("BBB")
-            .input('A', RagiumItems.REFINED_RAGI_STEEL_PLATE)
-            .input('B', Blocks.CHISELED_QUARTZ_BLOCK)
-            .itemCriterion(RagiumItems.REFINED_RAGI_STEEL_PLATE)
-            .offerTo(
-                exporter.hardMode(false),
-                Ragium.id("shaped/hard/refined_ragi_steel_hull"),
-            )
-
+        ingotMap.forEach { (tier: HTMachineTier, ingot: Item) ->
+            val hull: Block = hullMap[tier]!!
+            createShaped(hull)
+                .pattern("AAA")
+                .pattern("A A")
+                .pattern("BBB")
+                .input('A', ingot)
+                .input('B', tier.base)
+                .itemCriterion(ingot)
+                .offerTo(
+                    exporter.hardMode(false),
+                    CraftingRecipeJsonBuilder.getItemId(hull).withPrefixedPath("shaped/"),
+                )
+        }
+        plateMap.forEach { (tier: HTMachineTier, plate: Item) ->
+            val hull: Block = hullMap[tier]!!
+            createShaped(hull)
+                .pattern("AAA")
+                .pattern("A A")
+                .pattern("BBB")
+                .input('A', plate)
+                .input('B', tier.base)
+                .itemCriterion(plate)
+                .offerTo(
+                    exporter.hardMode(true),
+                    CraftingRecipeJsonBuilder.getItemId(hull).withPrefixedPath("shaped/hard/"),
+                )
+        }
         // machines
         createShaped(RagiumBlocks.MANUAL_GRINDER)
             .pattern("A  ")
@@ -199,27 +224,126 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .itemCriterion(RagiumItems.RAGI_ALLOY_PLATE)
             .offerTo(exporter, Ragium.id("shaped/hard/manual_grinder"))
 
-        createShaped(HTMachineType.Single.ALLOY_FURNACE)
+        createShaped(RagiumBlocks.BURNING_BOX)
             .pattern("AAA")
-            .pattern("BCB")
-            .pattern("DDD")
-            .input('A', RagiumItems.RAGI_ALLOY_INGOT)
+            .pattern("A A")
+            .pattern("ABA")
+            .input('A', Items.BRICKS)
             .input('B', Items.FURNACE)
-            .input('C', RagiumBlocks.RAGI_ALLOY_HULL)
-            .input('D', Items.SMOOTH_STONE)
-            .itemCriterion(RagiumBlocks.RAGI_ALLOY_HULL)
-            .offerTo(exporter, Ragium.id("shaped/alloy_furnace"))
+            .itemCriterion(Items.BRICKS)
+            .offerTo(exporter, Ragium.id("shaped/burning_box"))
 
-        createShaped(HTMachineType.Multi.BRICK_BLAST_FURNACE)
+        createShaped(RagiumBlocks.GEAR_BOX)
             .pattern("AAA")
             .pattern("BCB")
-            .pattern("DDD")
-            .input('A', RagiumItems.RAGI_ALLOY_INGOT)
-            .input('B', Items.BLAST_FURNACE)
-            .input('C', RagiumBlocks.RAGI_ALLOY_HULL)
-            .input('D', Items.BRICKS)
-            .itemCriterion(RagiumBlocks.RAGI_ALLOY_HULL)
-            .offerTo(exporter, Ragium.id("shaped/brick_blast_furnace"))
+            .pattern("BDB")
+            .input('A', RagiumItems.RAGI_STEEL_INGOT)
+            .input('B', HTMachineTier.KINETIC.base)
+            .input('C', RagiumBlocks.SHAFT)
+            .input('D', ConventionalItemTags.REDSTONE_DUSTS)
+            .itemCriterion(RagiumBlocks.SHAFT)
+            .offerTo(exporter, Ragium.id("shaped/gear_box"))
+
+        // tiered machines
+        // tier1
+        createMachine(
+            exporter,
+            HTMachineType.Single.ALLOY_FURNACE,
+            RagiumItems.RAGI_ALLOY_INGOT,
+            Items.FURNACE,
+            RagiumBlocks.RAGI_ALLOY_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Multi.BRICK_BLAST_FURNACE,
+            RagiumItems.RAGI_ALLOY_INGOT,
+            Items.BLAST_FURNACE,
+            RagiumBlocks.RAGI_ALLOY_HULL
+        )
+        
+        // tier2
+        createMachine(
+            exporter,
+            HTMachineType.Single.COMPRESSOR,
+            RagiumItems.RAGI_STEEL_INGOT,
+            Items.PISTON,
+            RagiumBlocks.RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Single.EXTRACTOR,
+            RagiumItems.RAGI_STEEL_INGOT,
+            Items.BUCKET, // TODO
+            RagiumBlocks.RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Single.GRINDER,
+            RagiumItems.RAGI_STEEL_INGOT,
+            Items.FLINT,
+            RagiumBlocks.RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Single.METAL_FORMER,
+            RagiumItems.RAGI_STEEL_INGOT,
+            RagiumItems.FORGE_HAMMER,
+            RagiumBlocks.RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Single.MIXER,
+            RagiumItems.RAGI_STEEL_INGOT,
+            Items.CAULDRON, // TODO
+            RagiumBlocks.RAGI_STEEL_HULL
+        )
+        
+        createMachine(
+            exporter,
+            HTMachineType.Multi.BLAZING_BLAST_FURNACE,
+            RagiumItems.RAGI_STEEL_INGOT,
+            HTMachineType.Multi.BRICK_BLAST_FURNACE,
+            RagiumBlocks.RAGI_STEEL_HULL
+        )
+        
+        // tier3
+        createMachine(
+            exporter,
+            HTMachineType.Single.CENTRIFUGE,
+            RagiumItems.REFINED_RAGI_STEEL_INGOT,
+            Items.COPPER_GRATE, // TODO
+            RagiumBlocks.REFINED_RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Single.CHEMICAL_REACTOR,
+            RagiumItems.REFINED_RAGI_STEEL_INGOT,
+            Items.CRAFTING_TABLE, // TODO
+            RagiumBlocks.REFINED_RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Single.ELECTROLYZER,
+            RagiumItems.REFINED_RAGI_STEEL_INGOT,
+            Items.HOPPER, // TODO
+            RagiumBlocks.REFINED_RAGI_STEEL_HULL
+        )
+
+        createMachine(
+            exporter,
+            HTMachineType.Multi.DISTILLATION_TOWER,
+            RagiumItems.REFINED_RAGI_STEEL_INGOT,
+            Items.COPPER_GRATE,
+            RagiumBlocks.REFINED_RAGI_STEEL_HULL
+        )
+        // tier4
     }
 
     private fun createShaped(output: ItemConvertible, count: Int = 1): ShapedRecipeJsonBuilder =
@@ -243,6 +367,25 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .offerTo(exporter, Ragium.id("shaped/empty_fluid_cube$suffix"))
     }
 
+    private fun createMachine(
+        exporter: RecipeExporter,
+        type: HTMachineType,
+        ingot: ItemConvertible,
+        side: ItemConvertible,
+        hull: ItemConvertible,
+    ) {
+        createShaped(type)
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .input('A', ingot)
+            .input('B', side)
+            .input('C', hull)
+            .input('D', type.tier.base)
+            .itemCriterion(hull)
+            .offerTo(exporter, type.id.withPrefixedPath("shaped/"))
+    }
+    
     //    Cooking   //
 
     private fun cookingRecipes(exporter: RecipeExporter) {
@@ -372,11 +515,20 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .offerTo(exporter)
     }
 
+    //    Metal Former    //
+
+    private fun metalFormer(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
+            .addInput(RagiumItemTags.STEEL_INGOTS, 2)
+            .addOutput(RagiumBlocks.SHAFT)
+            .offerTo(exporter)
+    }
+
     //    Mixer    //
 
     private fun mixer(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder(HTMachineType.Single.MIXER)
-            .addInput(RagiumItems.RAW_RAGINITE, 4)
+            .addInput(RagiumItems.RAW_RAGINITE_DUST, 4)
             .addInput(RagiumItems.WATER_FLUID_CUBE)
             .addOutput(RagiumItems.RAGINITE_DUST, 4)
             .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
@@ -394,6 +546,35 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addInput(RagiumItems.SOAP_INGOT)
             .addInput(RagiumItems.WATER_FLUID_CUBE)
             .addOutput(RagiumItems.REFINED_RAGINITE_DUST, 2)
+            .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        registerBreaching(exporter, ConventionalItemTags.CONCRETE_POWDERS, Items.WHITE_CONCRETE_POWDER)
+        registerBreaching(exporter, ConventionalItemTags.CONCRETES, Items.WHITE_CONCRETE)
+        registerBreaching(exporter, ConventionalItemTags.GLASS_BLOCKS, Items.WHITE_STAINED_GLASS)
+        registerBreaching(exporter, ConventionalItemTags.GLASS_PANES, Items.WHITE_STAINED_GLASS_PANE)
+        registerBreaching(exporter, ConventionalItemTags.GLAZED_TERRACOTTAS, Items.WHITE_GLAZED_TERRACOTTA)
+        registerBreaching(exporter, ItemTags.BANNERS, Items.WHITE_BANNER)
+        registerBreaching(exporter, ItemTags.BEDS, Items.WHITE_BED)
+        registerBreaching(exporter, ItemTags.CANDLES, Items.WHITE_CANDLE)
+        registerBreaching(exporter, ItemTags.TERRACOTTA, Items.WHITE_TERRACOTTA)
+        registerBreaching(exporter, ItemTags.WOOL, Items.WHITE_WOOL)
+        registerBreaching(exporter, ItemTags.WOOL_CARPETS, Items.WHITE_CARPET)
+    }
+
+    private fun registerBreaching(exporter: RecipeExporter, input: TagKey<Item>, output: Item) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.MIXER)
+            .addInput(input)
+            .addInput(RagiumItems.SOAP_INGOT)
+            .addInput(RagiumItems.WATER_FLUID_CUBE)
+            .addOutput(output)
+            .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(input)
+            .addInput(RagiumItems.CHLORINE_FLUID_CUBE)
+            .addOutput(output)
             .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
     }
@@ -414,6 +595,94 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addOutput(Items.CLAY)
             .addOutput(RagiumItems.OIL_FLUID_CUBE)
             .offerTo(exporter)
+    }
+    
+    //    Chemical Reactor    //
+    
+    private fun chemicalReactor(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(RagiumItems.WATER_FLUID_CUBE)
+            .addInput(RagiumItems.METHANE_FLUID_CUBE)
+            .setCatalyst(Items.HEART_OF_THE_SEA)
+            .addOutput(RagiumItems.HYDROGEN_FLUID_CUBE)
+            .addOutput(RagiumItems.METHANOL_FLUID_CUBE)
+            .offerTo(exporter)
+
+        // PE
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(RagiumItems.ETHYLENE_FLUID_CUBE)
+            .addInput(RagiumItems.OXYGEN_FLUID_CUBE)
+            .addOutput(RagiumItems.PE_PLATE)
+            .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+        
+        // PVC
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(RagiumItems.ETHYLENE_FLUID_CUBE)
+            .addInput(RagiumItems.CHLORINE_FLUID_CUBE)
+            .addOutput(RagiumItems.VC_FLUID_CUBE)
+            .addOutput(RagiumItems.HYDROGEN_FLUID_CUBE)
+            .offerTo(exporter)
+        
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(RagiumItems.VC_FLUID_CUBE)
+            .addInput(RagiumItems.OXYGEN_FLUID_CUBE)
+            .addOutput(RagiumItems.PVC_PLATE)
+            .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        // PTFE
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(RagiumItems.ETHYLENE_FLUID_CUBE)
+            .addInput(RagiumItems.FLUORINE_FLUID_CUBE, 2)
+            .addOutput(RagiumItems.TFE_FLUID_CUBE)
+            .addOutput(RagiumItems.HYDROGEN_FLUID_CUBE, 2)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(RagiumItems.TFE_FLUID_CUBE)
+            .addInput(RagiumItems.OXYGEN_FLUID_CUBE)
+            .addOutput(RagiumItems.PTFE_PLATE)
+            .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        registerOxidize(exporter, Items.CHISELED_COPPER, Items.OXIDIZED_CHISELED_COPPER)
+        registerOxidize(exporter, Items.COPPER_BLOCK, Items.OXIDIZED_COPPER)
+        registerOxidize(exporter, Items.COPPER_BULB, Items.OXIDIZED_COPPER_BULB)
+        registerOxidize(exporter, Items.COPPER_DOOR, Items.OXIDIZED_COPPER_DOOR)
+        registerOxidize(exporter, Items.COPPER_GRATE, Items.OXIDIZED_COPPER_GRATE)
+        registerOxidize(exporter, Items.COPPER_TRAPDOOR, Items.OXIDIZED_COPPER_TRAPDOOR)
+        registerOxidize(exporter, Items.CUT_COPPER, Items.OXIDIZED_CUT_COPPER)
+        registerOxidize(exporter, Items.CUT_COPPER_SLAB, Items.OXIDIZED_CUT_COPPER_SLAB)
+        registerOxidize(exporter, Items.CUT_COPPER_STAIRS, Items.OXIDIZED_CUT_COPPER_STAIRS)
+    }
+    
+    private fun registerOxidize(exporter: RecipeExporter, before: ItemConvertible, after: ItemConvertible) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.CHEMICAL_REACTOR)
+            .addInput(before)
+            .addInput(RagiumItems.OXYGEN_FLUID_CUBE)
+            .addOutput(after)
+            .addOutput(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+    }
+    
+    //    Electrolyzer    //
+    
+    private fun electrolyzer(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.ELECTROLYZER)
+            .addInput(RagiumItems.WATER_FLUID_CUBE)
+            .addInput(RagiumItems.EMPTY_FLUID_CUBE, 2)
+            .addOutput(RagiumItems.HYDROGEN_FLUID_CUBE, 2)
+            .addOutput(RagiumItems.OXYGEN_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.ELECTROLYZER)
+            .addInput(RagiumItems.SALT_WATER_FLUID_CUBE)
+            .addInput(RagiumItems.EMPTY_FLUID_CUBE)
+            .addOutput(RagiumItems.HYDROGEN_FLUID_CUBE)
+            .addOutput(RagiumItems.CHLORINE_FLUID_CUBE)
+            .addOutput(RagiumItems.ASH_DUST)
+            .offerTo(exporter, suffix = "_salty")
     }
 
     //    Blast Furnace    //
@@ -444,4 +713,33 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
     }
 
     //    Distillation Tower    //
+
+    private fun distillation(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Multi.DISTILLATION_TOWER)
+            .addInput(RagiumItems.OIL_FLUID_CUBE, 4)
+            .addOutput(RagiumItems.REFINED_GAS_FLUID_CUBE)
+            .addOutput(RagiumItems.NAPHTHA_FLUID_CUBE, 2)
+            .addOutput(RagiumItems.TAR_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Multi.DISTILLATION_TOWER)
+            .addInput(RagiumItems.REFINED_GAS_FLUID_CUBE, 4)
+            .addOutput(RagiumItems.METHANE_FLUID_CUBE, 2)
+            .addOutput(RagiumItems.LPG_FLUID_CUBE)
+            .addOutput(RagiumItems.HELIUM_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Multi.DISTILLATION_TOWER)
+            .addInput(RagiumItems.NAPHTHA_FLUID_CUBE, 2)
+            .addOutput(RagiumItems.ETHYLENE_FLUID_CUBE)
+            .addOutput(RagiumItems.DIESEL_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Multi.DISTILLATION_TOWER)
+            .addInput(RagiumItems.TAR_FLUID_CUBE, 3)
+            .addOutput(RagiumItems.BENZENE_FLUID_CUBE)
+            .addOutput(RagiumItems.TOLUENE_FLUID_CUBE)
+            .addOutput(RagiumItems.PHENOL_FLUID_CUBE)
+            .offerTo(exporter)
+    }
 }

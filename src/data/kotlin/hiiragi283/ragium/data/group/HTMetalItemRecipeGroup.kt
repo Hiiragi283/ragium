@@ -122,7 +122,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
             .addInput(ore)
             .addOutput(rawMaterial)
-            .addOutput(rawMaterial, 2)
+            .addOutput(rawMaterial, 4)
             .offerTo(exporter)
     }
 

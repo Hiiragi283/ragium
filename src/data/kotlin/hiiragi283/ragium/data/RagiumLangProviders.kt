@@ -37,7 +37,6 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
             // Machine Type
             builder.add(HTMachineType.Single.ALLOY_FURNACE, "Alloy Furnace")
-            builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "Steam Blast Furnace")
 
             builder.add(HTMachineType.Single.COMPRESSOR, "Compressor")
             builder.add(HTMachineType.Single.EXTRACTOR, "Extractor")
@@ -49,7 +48,11 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Single.CHEMICAL_REACTOR, "Chemical Reactor")
             builder.add(HTMachineType.Single.ELECTROLYZER, "Electrolyzer")
 
-            builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "Alchemical Infuser")
+            builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "Brick Blast Furnace")
+            builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "Blazing Blast Furnace")
+            builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "Distillation Tower")
+            
+            // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode")
             // Jade
@@ -72,7 +75,6 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")
             // Machine Type
             builder.add(HTMachineType.Single.ALLOY_FURNACE, "合金かまど")
-            builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "蒸気高炉")
 
             builder.add(HTMachineType.Single.COMPRESSOR, "圧縮機")
             builder.add(HTMachineType.Single.EXTRACTOR, "抽出器")
@@ -84,7 +86,11 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Single.CHEMICAL_REACTOR, "化学反応槽")
             builder.add(HTMachineType.Single.ELECTROLYZER, "電解槽")
 
-            builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "錬金注入機")
+            builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "レンガ高炉")
+            builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "ブレイズ高炉")
+            builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "蒸留塔")
+            
+            // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "錬金注入機")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードを有効")
             // Jade
