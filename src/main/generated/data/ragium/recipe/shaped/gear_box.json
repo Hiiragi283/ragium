@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:polished_blackstone_bricks"
+    },
+    "C": {
+      "item": "ragium:shaft"
+    },
+    "D": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "BDB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:gear_box"
+  }
+}

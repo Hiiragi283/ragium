@@ -12,12 +12,6 @@
       "ingredient": {
         "item": "ragium:raginite_dust"
       }
-    },
-    {
-      "count": 1,
-      "ingredient": {
-        "tag": "minecraft:coals"
-      }
     }
   ],
   "machine_type": "brick_blast_furnace",

@@ -2,11 +2,6 @@
   "multipart": [
     {
       "apply": {
-        "model": "minecraft:block/smooth_stone_slab"
-      }
-    },
-    {
-      "apply": {
         "model": "ragium:block/manual_grinder",
         "y": 0
       },

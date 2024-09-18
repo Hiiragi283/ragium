@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "ragium:block/burning_box",
+      "y": 90
+    },
+    "facing=north": {
       "model": "ragium:block/burning_box"
+    },
+    "facing=south": {
+      "model": "ragium:block/burning_box",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/burning_box",
+      "y": 270
     }
   }
 }

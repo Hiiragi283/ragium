@@ -3,13 +3,14 @@
     "ragium:raginite_ore",
     "ragium:deepslate_raginite_ore",
     "ragium:ragi_alloy_block",
+    "ragium:ragi_steel_block",
+    "ragium:refined_ragi_steel_block",
     "ragium:ragi_alloy_hull",
+    "ragium:ragi_steel_hull",
+    "ragium:refined_ragi_steel_hull",
     "ragium:manual_grinder",
     "ragium:water_collector",
     "ragium:burning_box",
-    "ragium:ragi_steel_block",
-    "ragium:ragi_steel_hull",
-    "ragium:refined_ragi_steel_block",
-    "ragium:refined_ragi_steel_hull"
+    "ragium:blazing_box"
   ]
 }

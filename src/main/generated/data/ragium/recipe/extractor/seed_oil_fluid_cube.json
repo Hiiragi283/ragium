@@ -1,0 +1,24 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": {
+        "tag": "minecraft:villager_plantable_seeds"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:empty_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "extractor",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:seed_oil_fluid_cube"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/hull",
   "textures": {
-    "bottom": "minecraft:block/deepslate_tiles",
+    "bottom": "minecraft:block/polished_blackstone_bricks",
     "top": "ragium:block/ragi_steel_block"
   }
 }

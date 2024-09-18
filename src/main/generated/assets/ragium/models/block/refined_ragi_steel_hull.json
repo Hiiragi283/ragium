@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/hull",
   "textures": {
-    "bottom": "minecraft:block/chiseled_quartz_block",
+    "bottom": "minecraft:block/end_stone_bricks",
     "top": "ragium:block/refined_ragi_steel_block"
   }
 }

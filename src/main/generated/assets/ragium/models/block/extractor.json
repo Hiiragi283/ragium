@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/machine",
   "textures": {
-    "bottom": "minecraft:block/deepslate_tiles",
+    "bottom": "minecraft:block/polished_blackstone_bricks",
     "front": "ragium:block/extractor_front",
     "top": "ragium:block/ragi_steel_block"
   }

@@ -1,0 +1,30 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "ragium:refined_raginite_dust"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      }
+    }
+  ],
+  "machine_type": "blazing_blast_furnace",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:refined_ragi_steel_ingot"
+    }
+  ]
+}

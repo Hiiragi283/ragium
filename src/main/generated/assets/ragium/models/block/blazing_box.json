@@ -1,0 +1,8 @@
+{
+  "parent": "ragium:block/machine",
+  "textures": {
+    "bottom": "minecraft:block/polished_blackstone_bricks",
+    "front": "ragium:block/burning_box_front",
+    "top": "minecraft:block/polished_blackstone_bricks"
+  }
+}

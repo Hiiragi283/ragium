@@ -1,0 +1,28 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:glass_blocks"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:chlorine_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "chemical_reactor",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "minecraft:white_stained_glass"
+    },
+    {
+      "count": 1,
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

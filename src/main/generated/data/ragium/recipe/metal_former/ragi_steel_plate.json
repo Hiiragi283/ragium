@@ -1,8 +1,5 @@
 {
   "type": "ragium:generic",
-  "catalyst": {
-    "item": "ragium:plate_shape"
-  },
   "inputs": [
     {
       "count": 1,

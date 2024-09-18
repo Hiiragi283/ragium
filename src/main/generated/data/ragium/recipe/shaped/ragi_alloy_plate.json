@@ -1,0 +1,27 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:forge_hammer"
+    },
+    "B": {
+      "item": "ragium:ragi_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "A",
+    "B",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_plate"
+  }
+}

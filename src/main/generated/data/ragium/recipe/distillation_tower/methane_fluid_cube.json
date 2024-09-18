@@ -1,0 +1,26 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "ragium:refined_gas_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "distillation_tower",
+  "outputs": [
+    {
+      "count": 2,
+      "item": "ragium:methane_fluid_cube"
+    },
+    {
+      "count": 1,
+      "item": "ragium:lpg_fluid_cube"
+    },
+    {
+      "count": 1,
+      "item": "ragium:helium_fluid_cube"
+    }
+  ]
+}

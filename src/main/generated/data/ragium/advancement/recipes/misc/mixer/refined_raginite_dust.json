@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_input0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:raginite_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:soap_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input2": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:water_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:mixer/refined_raginite_dust"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_input0",
+      "has_input1",
+      "has_input2"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:mixer/refined_raginite_dust"
+    ]
+  }
+}

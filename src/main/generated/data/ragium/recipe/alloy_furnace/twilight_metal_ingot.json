@@ -1,0 +1,24 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/copper"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "c:ingots/gold"
+      }
+    }
+  ],
+  "machine_type": "alloy_furnace",
+  "outputs": [
+    {
+      "count": 2,
+      "item": "ragium:twilight_metal_ingot"
+    }
+  ]
+}

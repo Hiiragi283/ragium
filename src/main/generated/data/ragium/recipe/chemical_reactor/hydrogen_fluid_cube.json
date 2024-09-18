@@ -1,0 +1,31 @@
+{
+  "type": "ragium:generic",
+  "catalyst": {
+    "item": "minecraft:heart_of_the_sea"
+  },
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:methane_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "chemical_reactor",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:hydrogen_fluid_cube"
+    },
+    {
+      "count": 1,
+      "item": "ragium:methanol_fluid_cube"
+    }
+  ]
+}

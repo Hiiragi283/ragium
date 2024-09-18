@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ragium:block/wind_generator"
+    }
+  }
+}

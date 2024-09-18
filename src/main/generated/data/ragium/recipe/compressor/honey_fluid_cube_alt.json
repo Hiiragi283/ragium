@@ -1,0 +1,24 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:empty_fluid_cube"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:honey_block"
+      }
+    }
+  ],
+  "machine_type": "compressor",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:honey_fluid_cube"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "tag": "minecraft:wool_carpets"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:soap_ingot"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "mixer",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "minecraft:white_carpet"
+    },
+    {
+      "count": 1,
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "ragium:raw_raginite_dust"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "mixer",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "ragium:raginite_dust"
+    },
+    {
+      "count": 1,
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

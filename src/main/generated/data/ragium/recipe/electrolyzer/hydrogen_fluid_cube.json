@@ -1,0 +1,28 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "ragium:empty_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "electrolyzer",
+  "outputs": [
+    {
+      "count": 2,
+      "item": "ragium:hydrogen_fluid_cube"
+    },
+    {
+      "count": 1,
+      "item": "ragium:oxygen_fluid_cube"
+    }
+  ]
+}

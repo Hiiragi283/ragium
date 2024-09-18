@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "ragium:block/layered",
   "textures": {
-    "all": "ragium:block/raginite_ore"
+    "layer0": "minecraft:block/stone",
+    "layer1": "ragium:block/raginite_ore"
   }
 }

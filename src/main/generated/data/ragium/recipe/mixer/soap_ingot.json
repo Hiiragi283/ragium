@@ -1,0 +1,28 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:seed_oil_fluid_cube"
+      }
+    },
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:ash_dust"
+      }
+    }
+  ],
+  "machine_type": "mixer",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:soap_ingot"
+    },
+    {
+      "count": 1,
+      "item": "ragium:glycerol_fluid_cube"
+    }
+  ]
+}
