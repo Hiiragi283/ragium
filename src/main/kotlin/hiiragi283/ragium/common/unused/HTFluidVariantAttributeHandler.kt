@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.fluid
+package hiiragi283.ragium.common.unused
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler

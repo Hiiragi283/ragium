@@ -1,7 +1,7 @@
-package hiiragi283.ragium.common.fluid
+package hiiragi283.ragium.common.unused
 
-import hiiragi283.ragium.common.fluid.HTFlowableFluid.Flowing
-import hiiragi283.ragium.common.fluid.HTFlowableFluid.Still
+import hiiragi283.ragium.common.unused.HTFlowableFluid.Flowing
+import hiiragi283.ragium.common.unused.HTFlowableFluid.Still
 import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.itemSettings
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap

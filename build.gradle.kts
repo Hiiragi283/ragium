@@ -172,5 +172,6 @@ tasks {
             rename { "${it}_${project.base.archivesName.get()}" }
         }
         exclude("**/datagen/**")
+        exclude("**/unused/**")
     }
 }
