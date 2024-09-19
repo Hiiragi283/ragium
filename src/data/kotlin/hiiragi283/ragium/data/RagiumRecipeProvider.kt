@@ -52,7 +52,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         // tier4
 
         RagiumMetalItemRecipeGroups
-        HTMetalItemRecipeGroup.registry.forEach { (name: String, family: HTMetalItemRecipeGroup) ->
+        HTMetalItemRecipeGroup.registry.forEach { (_: String, family: HTMetalItemRecipeGroup) ->
             family.generateRecipes(exporter, ::exporterWrapper)
         }
     }

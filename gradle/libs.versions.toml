@@ -30,10 +30,10 @@ tech-reborn = { group = "TechReborn", name = "TechReborn-1.21", version = "5.11.
 
 [bundles]
 mods-fabric = [
-    "cloth-config",
     "fabric-api",
     "fabric-kotlin",
     "fabric-loader",
+    "cloth-config",
     "jade",
     "mod-modmenu",
     "rei",

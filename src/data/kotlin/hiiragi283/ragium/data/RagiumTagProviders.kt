@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.group.HTMetalItemRecipeGroup
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -52,8 +51,6 @@ object RagiumTagProviders {
     private class ItemProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.ItemTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            getOrCreateTagBuilder(RagiumItemTags.STEEL_INGOTS).add(RagiumItems.STEEL_INGOT)
-
             RagiumItems.REGISTER.generateTag(::getOrCreateTagBuilder)
 
             HTMetalItemRecipeGroup.registry.forEach { (name: String, family: HTMetalItemRecipeGroup) ->

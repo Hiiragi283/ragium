@@ -193,6 +193,7 @@ object RagiumItems {
             putEnglishTips("Harder than Iron")
             putJapanese("鋼鉄インゴット")
             putJapaneseTips("鉄より固い鋼鉄の仮面")
+            registerTags(RagiumItemTags.STEEL_INGOTS)
         }
 
     @JvmField
@@ -407,8 +408,12 @@ object RagiumItems {
     @JvmStatic
     private fun registerBlockItems(register: HTItemRegister) {
         // ores
-        register.registerBlockItem("raginite_ore", RagiumBlocks.RAGINITE_ORE)
-        register.registerBlockItem("deepslate_raginite_ore", RagiumBlocks.DEEPSLATE_RAGINITE_ORE)
+        register.registerBlockItem("raginite_ore", RagiumBlocks.RAGINITE_ORE) {
+            registerTags(RagiumItemTags.RAGINITE_ORES)
+        }
+        register.registerBlockItem("deepslate_raginite_ore", RagiumBlocks.DEEPSLATE_RAGINITE_ORE) {
+            registerTags(RagiumItemTags.RAGINITE_ORES)
+        }
         // blocks
         register.registerBlockItem(
             "ragi_alloy_block",

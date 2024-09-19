@@ -8,6 +8,9 @@ import net.minecraft.util.Identifier
 
 object RagiumItemTags {
     @JvmField
+    val RAGINITE_ORES: TagKey<Item> = create("ores/raginite")
+
+    @JvmField
     val STEEL_INGOTS: TagKey<Item> = create("ingots/steel")
 
     @JvmStatic
