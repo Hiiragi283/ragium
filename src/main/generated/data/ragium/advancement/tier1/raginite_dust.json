@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier1/manual_grinder",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:raginite_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier1.raginite_dust.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:raginite_dust"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier1.raginite_dust"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier3/root",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:refined_ragi_steel_hull"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier3.refined_steel_hull.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:refined_ragi_steel_hull"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier3.refined_steel_hull"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,29 @@
+{
+  "parent": "ragium:tier1/ragi_alloy_hull",
+  "criteria": {
+    "build_multiblock": {
+      "conditions": {
+        "machine_type": "brick_blast_furnace"
+      },
+      "trigger": "ragium:build_multiblock"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier1.brick_blast_furnace.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:brick_blast_furnace"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier1.brick_blast_furnace"
+    }
+  },
+  "requirements": [
+    [
+      "build_multiblock"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

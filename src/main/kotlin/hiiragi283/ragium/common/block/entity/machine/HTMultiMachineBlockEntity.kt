@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
@@ -40,6 +41,7 @@ abstract class HTMultiMachineBlockEntity(machineType: HTMachineType.Multi, pos: 
                 if (validator.isValid) {
                     player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
                     player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), false)
+                    RagiumAdvancementCriteria.BUILD_MULTIBLOCK.trigger(player, machineType)
                 }
                 ActionResult.CONSUME
             }

@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier1/ragi_alloy",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragi_alloy_hull"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier1.ragi_alloy_hull.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_alloy_ingot"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier1.ragi_alloy_hull"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

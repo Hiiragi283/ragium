@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:tier2/ragi_steel_hull",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:blazing_blast_furnace"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "desc",
+    "icon": {
+      "count": 1,
+      "id": "ragium:blazing_blast_furnace"
+    },
+    "title": {
+      "translate": "machine_type.blazing_blast_furnace"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

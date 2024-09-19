@@ -1,0 +1,35 @@
+{
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:raw_raginite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/bricks.png",
+    "description": {
+      "translate": "advancement.ragium.tier1.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:raginite_ore"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.ragium.tier1.root"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

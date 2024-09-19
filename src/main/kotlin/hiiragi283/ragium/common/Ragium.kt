@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common
 
+import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import me.shedaniel.autoconfig.AutoConfig
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer
 import net.fabricmc.api.ModInitializer
@@ -45,6 +45,7 @@ object Ragium : ModInitializer {
         RagiumBlocks
         RagiumItems
 
+        RagiumAdvancementCriteria
         HTMachineRecipe.Serializer
 
         registerModifications()

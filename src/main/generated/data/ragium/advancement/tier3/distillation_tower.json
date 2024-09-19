@@ -1,0 +1,29 @@
+{
+  "parent": "ragium:tier3/refined_steel_hull",
+  "criteria": {
+    "build_multiblock": {
+      "conditions": {
+        "machine_type": "distillation_tower"
+      },
+      "trigger": "ragium:build_multiblock"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier3.distillation_tower.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:distillation_tower"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier3.distillation_tower"
+    }
+  },
+  "requirements": [
+    [
+      "build_multiblock"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

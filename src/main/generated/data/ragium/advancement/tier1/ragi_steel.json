@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier1/raginite_dust",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragi_steel_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier1.ragi_steel.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_steel_ingot"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier1.ragi_steel"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier1/ragi_alloy",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:manual_grinder"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier1.manual_grinder.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:manual_grinder"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier1.manual_grinder"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
