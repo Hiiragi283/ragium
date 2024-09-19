@@ -4,16 +4,11 @@ import hiiragi283.ragium.common.unused.HTFlowableFluid.Flowing
 import hiiragi283.ragium.common.unused.HTFlowableFluid.Still
 import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.itemSettings
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.minecraft.block.Block
 import net.minecraft.block.FluidBlock
 import net.minecraft.block.piston.PistonBehavior
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.data.client.BlockStateModelGenerator
 import net.minecraft.data.client.ItemModelGenerator
 import net.minecraft.data.client.Models
@@ -102,7 +97,7 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
 
     //    Client    //
 
-    fun registerClient(stillTex: Identifier, flowingTex: Identifier = stillTex, color: Int = -1) {
+    /*fun registerClient(stillTex: Identifier, flowingTex: Identifier = stillTex, color: Int = -1) {
         registerClient(SimpleFluidRenderHandler(stillTex, flowingTex, color))
     }
 
@@ -111,7 +106,7 @@ class HTFluidContent private constructor(val settings: HTFlowableFluid.Settings)
         FluidRenderHandlerRegistry.INSTANCE.register(still, flowing, renderHandler)
         // register render layers
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), still, flowing)
-    }
+    }*/
 
     //    Data Gen    //
 
