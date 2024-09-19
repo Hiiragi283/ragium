@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.machine.HTMachineType
@@ -26,12 +27,14 @@ object RagiumLangProviders {
     private class EnglishLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
+            // Advancements
+            RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
             // Blocks
             RagiumBlocks.REGISTER.generateLang(HTLangType.EN_US, builder)
             // Items
             RagiumItems.REGISTER.generateLang(HTLangType.EN_US, builder)
             // Item Group
-            builder.add(RagiumTranslationKeys.ITEM_GROUP_ITEM, "Ragium Items")
+            builder.add(RagiumItemGroup.ITEM, "Ragium Items")
             // Machine
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
@@ -64,12 +67,14 @@ object RagiumLangProviders {
     class JapaneseLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, "ja_jp", registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
+            // Advancements
+            RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
             RagiumBlocks.REGISTER.generateLang(HTLangType.JA_JP, builder)
             // Items
             RagiumItems.REGISTER.generateLang(HTLangType.JA_JP, builder)
             // Item Group
-            builder.add(RagiumTranslationKeys.ITEM_GROUP_ITEM, "Ragium - アイテム")
+            builder.add(RagiumItemGroup.ITEM, "Ragium - アイテム")
             // Machine
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")

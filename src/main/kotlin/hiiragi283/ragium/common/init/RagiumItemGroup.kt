@@ -16,7 +16,7 @@ object RagiumItemGroup {
     @JvmStatic
     fun init() {
         register(ITEM) {
-            displayName(Text.translatable(RagiumTranslationKeys.ITEM_GROUP_ITEM))
+            displayName(Text.translatable("itemGroup.ragium.item"))
             icon { RagiumItems.RAGI_ALLOY_INGOT.defaultStack }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 RagiumItems.REGISTER.forEach(entries::add)

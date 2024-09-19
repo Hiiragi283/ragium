@@ -3,11 +3,6 @@ package hiiragi283.ragium.common.init
 object RagiumTranslationKeys {
     //    Block    //
 
-    //    Item Group    //
-
-    // const val ITEM_GROUP_BLOCK = "itemGroup.ragium.block"
-    const val ITEM_GROUP_ITEM = "itemGroup.ragium.item"
-
     //    Machine    //
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
