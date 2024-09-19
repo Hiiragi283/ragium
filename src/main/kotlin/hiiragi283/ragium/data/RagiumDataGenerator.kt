@@ -8,6 +8,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         val pack: FabricDataGenerator.Pack = fabricDataGenerator.createPack()
 
+        pack.addProvider(::RagiumAdvancementProvider)
         pack.addProvider(::RagiumLootProvider)
         pack.addProvider(::RagiumRecipeProvider)
         pack.addProvider(::RagiumDynamicRegistryProvider)

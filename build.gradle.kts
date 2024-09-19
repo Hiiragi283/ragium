@@ -11,18 +11,6 @@ group = "hiiragi283.ragium"
 version = "0.0.1+121x"
 
 sourceSets {
-    /*create("client") {
-        compileClasspath += main.get().compileClasspath
-        runtimeClasspath += main.get().runtimeClasspath
-        compileClasspath += main.get().output
-        runtimeClasspath += main.get().output
-    }*/
-    create("data") {
-        compileClasspath += main.get().compileClasspath
-        runtimeClasspath += main.get().runtimeClasspath
-        compileClasspath += main.get().output
-        runtimeClasspath += main.get().output
-    }
     main {
         resources {
             srcDir("src/main/generated")
@@ -67,9 +55,6 @@ loom {
             sourceSet(sourceSets.main.get())
             sourceSet(sourceSets.getByName("client"))
         }
-        create("ragium-data") {
-            sourceSet(sourceSets.getByName("data"))
-        }
     }
     runs {
         getByName("client") {
@@ -84,9 +69,9 @@ loom {
             name = "Data Generation"
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=ragium-data")
+            vmArg("-Dfabric-api.datagen.modid=ragium")
             runDir("build/datagen")
-            source(sourceSets.getByName("data"))
+            source(sourceSets.getByName("client"))
         }
         /*create("test") {
             inherit(getByName("client"))
@@ -114,7 +99,7 @@ dependencies {
         exclude(module = "fabric-api")
         exclude(module = "fabric-loader")
     }
-    include(libs.bundles.mods.include)
+    include(libs.bundles.mods.include) { isTransitive = false }
 
     modLocalRuntime(libs.bundles.mods.runtime) {
         exclude(module = "fabric-api")
