@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 
-class HTFluidCubeItem private constructor(val name: String) :
+class HTFluidCubeItem private constructor(val fluidName: String) :
     HTBaseItem(Settings().component(RagiumComponentTypes.DISABLE_TOOLTIPS, Unit)) {
         companion object {
             val registry: Map<String, HTFluidCubeItem>

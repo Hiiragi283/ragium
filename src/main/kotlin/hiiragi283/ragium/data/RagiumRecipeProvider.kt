@@ -1,15 +1,15 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
-import hiiragi283.ragium.data.group.HTMetalItemRecipeGroup
-import hiiragi283.ragium.data.group.RagiumMetalItemRecipeGroups
+import hiiragi283.ragium.data.util.HTMetalItemRecipeGroup
+import hiiragi283.ragium.data.util.RagiumMetalItemRecipeGroups
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition

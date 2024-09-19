@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.group
+package hiiragi283.ragium.data.util
 
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumItems
