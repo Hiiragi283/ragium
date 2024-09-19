@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.fluid.HTFlowableFluid
-import hiiragi283.ragium.common.fluid.HTFluidContent
+import hiiragi283.ragium.common.unused.HTFlowableFluid
+import hiiragi283.ragium.common.unused.HTFluidContent
 
 object RagiumFluids {
     @JvmField

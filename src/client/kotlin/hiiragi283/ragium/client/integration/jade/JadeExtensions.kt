@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.jade
+package hiiragi283.ragium.client.integration.jade
 
 import net.minecraft.block.Block
 import snownee.jade.api.*

@@ -29,19 +29,19 @@
     ],
     "modmenu": [
       {
-        "value": "hiiragi283.ragium.integration.modmenu.RagiumModMenu",
+        "value": "hiiragi283.ragium.client.integration.modmenu.RagiumModMenu",
         "adapter": "kotlin"
       }
     ],
     "jade": [
       {
-        "value": "hiiragi283.ragium.integration.jade.RagiumJadePlugin",
+        "value": "hiiragi283.ragium.client.integration.jade.RagiumJadePlugin",
         "adapter": "kotlin"
       }
     ],
     "rei_client": [
       {
-        "value": "hiiragi283.ragium.integration.rei.RagiumREIClient",
+        "value": "hiiragi283.ragium.client.integration.rei.RagiumREIClient",
         "adapter": "kotlin"
       }
     ]

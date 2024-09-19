@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.modmenu
+package hiiragi283.ragium.client.integration.modmenu
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory
 import com.terraformersmc.modmenu.api.ModMenuApi

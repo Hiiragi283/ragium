@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.jade
+package hiiragi283.ragium.client.integration.jade
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.init.RagiumBlocks

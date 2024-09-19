@@ -1,7 +1,6 @@
-package hiiragi283.ragium.client.data
+package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.machine.HTMachineTier
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
@@ -60,5 +59,5 @@ object RagiumModels {
             TextureMap()
                 .put(TextureKey.TOP, tier.casingTex)
                 .put(TextureKey.BOTTOM, tier.baseTex)
-        }, RagiumModels.HULL)
+        }, HULL)
 }

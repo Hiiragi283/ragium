@@ -11,23 +11,24 @@ group = "hiiragi283.ragium"
 version = "0.0.1+121x"
 
 sourceSets {
-    main {
-        resources {
-            srcDir("src/main/generated")
-        }
-    }
+    /*create("client") {
+        compileClasspath += main.get().compileClasspath
+        runtimeClasspath += main.get().runtimeClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
+    }*/
     create("data") {
         compileClasspath += main.get().compileClasspath
         runtimeClasspath += main.get().runtimeClasspath
         compileClasspath += main.get().output
         runtimeClasspath += main.get().output
     }
+    main {
+        resources {
+            srcDir("src/main/generated")
+        }
+    }
 }
-
-/*configurations {
-    // names.forEach { print("$it\n") }
-    getByName("compileClasspath").extendsFrom(getByName("dataCompileClasspath"))
-}*/
 
 repositories {
     mavenCentral()
@@ -58,31 +59,16 @@ repositories {
     maven(url = "https://server.bbkr.space/artifactory/libs-release") // LibGui
 }
 
-dependencies {
-    minecraft(libs.minecraft)
-    mappings("net.fabricmc:yarn:${libs.versions.fabric.yarn.get()}:v2")
-    modImplementation(libs.bundles.mods.fabric) {
-        exclude(module = "fabric-api")
-        exclude(module = "fabric-loader")
-    }
-    modImplementation(libs.bundles.mods.include) {
-        exclude(module = "fabric-api")
-        exclude(module = "fabric-loader")
-    }
-    include(libs.bundles.mods.include)
-    modLocalRuntime(libs.bundles.mods.debug) {
-        exclude(module = "fabric-api")
-        exclude(module = "fabric-loader")
-    }
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-}
-
 loom {
     // accessWidenerPath = file("src/main/resources/ht_materials.accesswidener")
+    splitEnvironmentSourceSets()
     mods {
+        create("ragium") {
+            sourceSet(sourceSets.main.get())
+            sourceSet(sourceSets.getByName("client"))
+        }
         create("ragium-data") {
-            sourceSet(project(":").sourceSets.getByName("data"))
+            sourceSet(sourceSets.getByName("data"))
         }
     }
     runs {
@@ -113,6 +99,30 @@ loom {
             }
         }*/
     }
+}
+
+dependencies {
+    minecraft(libs.minecraft)
+    mappings("net.fabricmc:yarn:${libs.versions.fabric.yarn.get()}:v2")
+
+    modImplementation(libs.bundles.mods.fabric) {
+        exclude(module = "fabric-api")
+        exclude(module = "fabric-loader")
+    }
+
+    modImplementation(libs.bundles.mods.include) {
+        exclude(module = "fabric-api")
+        exclude(module = "fabric-loader")
+    }
+    include(libs.bundles.mods.include)
+
+    modLocalRuntime(libs.bundles.mods.runtime) {
+        exclude(module = "fabric-api")
+        exclude(module = "fabric-loader")
+    }
+
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
 kotlin {
@@ -151,13 +161,12 @@ tasks {
     }
 
     processResources {
-        inputs.property("version", project.version)
         filesMatching("fabric.mod.json") {
             expand("version" to project.version)
         }
-        // include("src/main/generated")
         exclude(".cache")
     }
+
     jar {
         from("LICENSE") {
             rename { "${it}_${project.base.archivesName.get()}" }

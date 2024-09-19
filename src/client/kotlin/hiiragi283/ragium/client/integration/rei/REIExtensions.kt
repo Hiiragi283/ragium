@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.rei
+package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTRecipeResult

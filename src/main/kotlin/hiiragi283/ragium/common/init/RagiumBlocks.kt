@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.client.data.RagiumModels
-import hiiragi283.ragium.client.util.*
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.block.HTGearBoxBlock
@@ -14,7 +12,7 @@ import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.registry.HTBlockRegister
-import hiiragi283.ragium.common.util.blockSettings
+import hiiragi283.ragium.common.util.*
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.*

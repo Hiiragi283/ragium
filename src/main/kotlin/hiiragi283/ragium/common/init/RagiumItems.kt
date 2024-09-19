@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.client.data.RagiumModels
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.component.HTTooltipsComponent
 import hiiragi283.ragium.common.item.HTEnderBundleItem

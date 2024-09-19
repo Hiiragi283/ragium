@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.rei
+package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.item.HTFluidCubeItem

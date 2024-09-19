@@ -50,7 +50,7 @@ object RagiumClient : ClientModInitializer {
         HTMachineType
             .getEntries()
             .map(HTMachineType::block)
-            .forEach(::registerCutoutMipped)
+            .forEach(RagiumClient::registerCutoutMipped)
 
         HTMachineType.Multi.entries.forEach { type: HTMachineType.Multi ->
             BlockEntityRendererFactories.register(type.blockEntityType) { HTMultiMachineBlockEntityRenderer }
