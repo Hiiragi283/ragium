@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier1/raginite_dust",
+  "parent": "ragium:tier2/ragi_steel_hull",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_steel_ingot"
+            "items": "ragium:extractor"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier1.ragi_steel.description"
+      "translate": "advancement.ragium.tier2.mixer.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_steel_ingot"
+      "id": "ragium:mixer"
     },
     "title": {
-      "translate": "advancement.ragium.tier1.ragi_steel"
+      "translate": "advancement.ragium.tier2.mixer"
     }
   },
   "requirements": [

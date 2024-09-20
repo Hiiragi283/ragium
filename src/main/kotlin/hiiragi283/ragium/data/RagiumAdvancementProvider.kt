@@ -137,6 +137,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 "tier1/raginite_dust",
                 manualGrinder,
                 RagiumItems.RAGINITE_DUST,
+                AdvancementFrame.GOAL,
             ) {
                 hasItems(RagiumItems.RAGINITE_DUST)
             }.putEnglish("")
@@ -144,24 +145,140 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapanese("")
             .putJapaneseDesc("ラギナイトの原石の粉を大釜で洗う")
             .build()
-
-        val ragiSteel: AdvancementEntry = register
-            .createChild(
-                "tier1/ragi_steel",
-                raginiteDust,
-                RagiumItems.RAGI_STEEL_INGOT,
-            ) {
-                hasItems(RagiumItems.RAGI_STEEL_INGOT)
-            }.putEnglish("The Red Comet")
-            .putEnglishDesc("Craft Ragi-Steel")
-            .putJapanese("赤い彗星")
-            .putJapaneseDesc("ラギスチールを作る")
-            .build()
     }
 
     //    Tier 2    //
 
     private fun registerTier2(register: HTAdvancementRegister) {
+        val root: AdvancementEntry = register
+            .createRoot(
+                "tier2/root",
+                RagiumItems.RAGI_STEEL_INGOT,
+                Identifier.of("textures/block/polished_blackstone_bricks.png"),
+            ) {
+                hasItems(RagiumItems.RAGI_STEEL_INGOT)
+            }.putEnglish("Ragium - Tier 2")
+            .putEnglishDesc("The Industrial Revolution")
+            .putJapaneseDesc("産業革命")
+            .build()
+
+        val ragiSteelHull: AdvancementEntry = register
+            .createChild(
+                "tier2/ragi_steel_hull",
+                root,
+                RagiumBlocks.RAGI_STEEL_HULL,
+            ) {
+                hasItems(RagiumBlocks.RAGI_STEEL_HULL)
+            }.putEnglish("Not made of steel...")
+            .putEnglishDesc("Craft Ragi-Steel Hull")
+            .putJapanese("スチール製ではない...")
+            .putJapaneseDesc("ラギスチール筐体を作る")
+            .build()
+
+        val compressor: AdvancementEntry = register
+            .createChild(
+                "tier2/compressor",
+                ragiSteelHull,
+                HTMachineType.Single.COMPRESSOR,
+            ) {
+                hasItems(HTMachineType.Single.COMPRESSOR)
+            }.putEnglish("saves.zip.zip.zip")
+            .putEnglishDesc("Craft Compressor")
+            .putJapanese("saves.zip.zip.zip")
+            .putJapaneseDesc("圧縮機を作る")
+            .build()
+
+        val extractor: AdvancementEntry = register
+            .createChild(
+                "tier2/extractor",
+                ragiSteelHull,
+                HTMachineType.Single.EXTRACTOR,
+            ) {
+                hasItems(HTMachineType.Single.EXTRACTOR)
+            }.putEnglish("")
+            .putEnglishDesc("Craft Extractor")
+            .putJapanese("")
+            .putJapaneseDesc("抽出器を作る")
+            .build()
+
+        val grinder: AdvancementEntry = register
+            .createChild(
+                "tier2/grinder",
+                ragiSteelHull,
+                HTMachineType.Single.GRINDER,
+            ) {
+                hasItems(HTMachineType.Single.EXTRACTOR)
+            }.putEnglish("True Grinder")
+            .putEnglishDesc("Craft Grinder")
+            .putJapanese("本物の粉砕機")
+            .putJapaneseDesc("粉砕機を作る")
+            .build()
+
+        val metalFormer: AdvancementEntry = register
+            .createChild(
+                "tier2/metal_former",
+                ragiSteelHull,
+                HTMachineType.Single.METAL_FORMER,
+            ) {
+                hasItems(HTMachineType.Single.EXTRACTOR)
+            }.putEnglish("")
+            .putEnglishDesc("Craft Metal Former")
+            .putJapanese("")
+            .putJapaneseDesc("金属加工機を作る")
+            .build()
+
+        val mixer: AdvancementEntry = register
+            .createChild(
+                "tier2/mixer",
+                ragiSteelHull,
+                HTMachineType.Single.MIXER,
+            ) {
+                hasItems(HTMachineType.Single.EXTRACTOR)
+            }.putEnglish("")
+            .putEnglishDesc("Craft Mixer")
+            .putJapanese("")
+            .putJapaneseDesc("ミキサーを作る")
+            .build()
+
+        val soap: AdvancementEntry = register
+            .createChild(
+                "tier2/soap",
+                mixer,
+                RagiumItems.SOAP_INGOT,
+            ) {
+                hasItems(RagiumItems.SOAP_INGOT)
+            }.putEnglish("")
+            .putEnglishDesc("Craft Soap Ingot")
+            .putJapanese("")
+            .putJapaneseDesc("石鹸を作る")
+            .build()
+
+        val refinedRaginiteDust: AdvancementEntry = register
+            .createChild(
+                "tier2/refined_raginite_dust",
+                soap,
+                RagiumItems.REFINED_RAGINITE_DUST,
+                AdvancementFrame.GOAL,
+            ) {
+                hasItems(RagiumItems.REFINED_RAGINITE_DUST)
+            }.putEnglish("")
+            .putEnglishDesc("Craft Refined Raginite Dust")
+            .putJapanese("")
+            .putJapaneseDesc("精製ラギナイト粉末を作る")
+            .build()
+
+        val blazingBlastFurnace: AdvancementEntry = register
+            .createChild(
+                "tier2/blazing_blast_furnace",
+                ragiSteelHull,
+                HTMachineType.Multi.BLAZING_BLAST_FURNACE,
+            ) {
+                buildMultiblock(HTMachineType.Multi.BLAZING_BLAST_FURNACE)
+            }.putEnglish("Blazing Poweeer!")
+            .putEnglishDesc("Build Blazing Blast Furnace")
+            .putJapanese("ブレイズパワーーー！")
+            .putJapaneseDesc("ブレイズ高炉を建てる")
+            .build()
     }
 
     //    Tier 3    //
@@ -242,6 +359,19 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putEnglishDesc("Build Distillation Tower")
             .putJapanese("")
             .putJapaneseDesc("蒸留塔を建てる")
+            .build()
+
+        val oil: AdvancementEntry = register
+            .createChild(
+                "tier3/oil",
+                distillationTower,
+                RagiumItems.OIL_FLUID_CUBE,
+            ) {
+                hasItems(RagiumItems.OIL_FLUID_CUBE)
+            }.putEnglish("")
+            .putEnglishDesc("Get Oil")
+            .putJapanese("")
+            .putJapaneseDesc("石油を手に入れる")
             .build()
     }
 

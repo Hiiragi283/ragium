@@ -13,13 +13,15 @@
     }
   },
   "display": {
-    "description": "desc",
+    "description": {
+      "translate": "advancement.ragium.tier2.ragi_steel_hull.description"
+    },
     "icon": {
       "count": 1,
       "id": "ragium:ragi_steel_hull"
     },
     "title": {
-      "translate": "block.ragium.ragi_steel_hull"
+      "translate": "advancement.ragium.tier2.ragi_steel_hull"
     }
   },
   "requirements": [

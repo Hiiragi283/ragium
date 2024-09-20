@@ -1,10 +1,11 @@
 {
+  "parent": "ragium:tier2/soap",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_steel_ingot"
+            "items": "ragium:refined_raginite_dust"
           }
         ]
       },
@@ -12,18 +13,16 @@
     }
   },
   "display": {
-    "announce_to_chat": false,
-    "background": "minecraft:textures/block/polished_blackstone_bricks.png",
     "description": {
-      "translate": "advancement.ragium.tier2.root.description"
+      "translate": "advancement.ragium.tier2.refined_raginite_dust.description"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_steel_ingot"
+      "id": "ragium:refined_raginite_dust"
     },
-    "show_toast": false,
     "title": {
-      "translate": "advancement.ragium.tier2.root"
+      "translate": "advancement.ragium.tier2.refined_raginite_dust"
     }
   },
   "requirements": [

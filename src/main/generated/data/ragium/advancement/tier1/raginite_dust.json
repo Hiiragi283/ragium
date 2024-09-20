@@ -16,6 +16,7 @@
     "description": {
       "translate": "advancement.ragium.tier1.raginite_dust.description"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
       "id": "ragium:raginite_dust"
