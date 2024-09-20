@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntity
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
@@ -54,9 +53,9 @@ class HTMachineBlock(private val machineType: HTMachineType) : HTBlockWithEntity
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = machineType.blockEntityType.instantiate(pos, state)
 
     override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-        HTBlockEntityTickers.validateTicker(
+        validateTicker(
             type,
             machineType.blockEntityType,
-            HTMachineBlockEntity.TICKER,
+            TICKER,
         )
 }

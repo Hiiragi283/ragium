@@ -25,6 +25,25 @@ import net.minecraft.world.World
 abstract class HTBlockWithEntity(settings: Settings) :
     Block(settings),
     BlockEntityProvider {
+    companion object {
+        @JvmField
+        val TICKER: BlockEntityTicker<out HTBaseBlockEntity> =
+            BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, blockEntity: HTBaseBlockEntity ->
+                blockEntity.tick(world, pos, state)
+            }
+
+        @Suppress("UNCHECKED_CAST")
+        @JvmStatic
+        fun <E : BlockEntity, A : BlockEntity> validateTicker(
+            givenType: BlockEntityType<A>,
+            expectedType: BlockEntityType<E>,
+            ticker: BlockEntityTicker<*>?,
+        ): BlockEntityTicker<A>? = when (expectedType == givenType) {
+            true -> ticker
+            false -> null
+        } as? BlockEntityTicker<A>
+    }
+    
     override fun createScreenHandlerFactory(state: BlockState, world: World, pos: BlockPos): NamedScreenHandlerFactory? =
         world.getBlockEntity(pos) as? NamedScreenHandlerFactory
 
@@ -52,17 +71,17 @@ abstract class HTBlockWithEntity(settings: Settings) :
     class Builder<B : HTBaseBlockEntity> {
         lateinit var type: BlockEntityType<out B>
             private set
-        private var ticker: BlockEntityTicker<out B>? = null
+        // private var ticker: BlockEntityTicker<out B>? = null
 
         fun type(type: BlockEntityType<out B>): Builder<B> = apply { this.type = type }
 
-        fun ticker(ticker: BlockEntityTicker<out B>): Builder<B> = apply { this.ticker = ticker }
+        // fun ticker(ticker: BlockEntityTicker<out B>): Builder<B> = apply { this.ticker = ticker }
 
         fun build(settings: Settings = blockSettings()): HTBlockWithEntity = object : HTBlockWithEntity(settings) {
             override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
 
             override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-                HTBlockEntityTickers.validateTicker(type, type, ticker)
+                validateTicker(type, this@Builder.type, TICKER)
         }
 
         fun buildHorizontal(settings: Settings = blockSettings()): HTBlockWithEntity = object : HTBlockWithEntity(settings) {
@@ -91,7 +110,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
             override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
 
             override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-                HTBlockEntityTickers.validateTicker(type, type, ticker)
+                validateTicker(type, this@Builder.type, TICKER)
         }
     }
 }

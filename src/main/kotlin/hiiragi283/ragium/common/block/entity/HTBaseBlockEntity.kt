@@ -25,4 +25,6 @@ open class HTBaseBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
     }
 
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
+    
+    open fun tick(world: World, pos: BlockPos, state: BlockState) {}
 }

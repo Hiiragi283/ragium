@@ -6,7 +6,6 @@ import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.screen.HTBurningBoxScreenHandler
 import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -24,30 +23,6 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
     HTBaseBlockEntity(type, pos, state),
     HTDelegatedInventory,
     NamedScreenHandlerFactory {
-    companion object {
-        @JvmField
-        val TICKER: BlockEntityTicker<HTHeatGeneratorBlockEntity> =
-            BlockEntityTicker { _: World, _: BlockPos, _: BlockState, blockEntity: HTHeatGeneratorBlockEntity ->
-                when {
-                    blockEntity.isBurning -> blockEntity.burningTime--
-                    else -> {
-                        val ashStack: ItemStack = blockEntity.getStack(1)
-                        if (ashStack.count == ashStack.maxCount) return@BlockEntityTicker
-                        val fuelStack: ItemStack = blockEntity.getStack(0)
-                        if (!fuelStack.isEmpty) {
-                            val fuel: Item = fuelStack.item
-                            val fuelTime: Int = FuelRegistry.INSTANCE.get(fuel)
-                            blockEntity.burningTime = fuelTime
-                            fuelStack.decrement(1)
-                            when {
-                                ashStack.isEmpty -> blockEntity.setStack(1, RagiumItems.ASH_DUST.defaultStack)
-                                else -> ashStack.increment(1)
-                            }
-                        }
-                    }
-                }
-            }
-    }
 
     var burningTime: Int = 0
         private set
@@ -67,6 +42,27 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = when (isBurning) {
         true -> 15
         false -> 0
+    }
+
+    override fun tick(world: World, pos: BlockPos, state: BlockState) {
+        when {
+            isBurning -> burningTime--
+            else -> {
+                val ashStack: ItemStack = getStack(1)
+                if (ashStack.count == ashStack.maxCount) return
+                val fuelStack: ItemStack = getStack(0)
+                if (!fuelStack.isEmpty) {
+                    val fuel: Item = fuelStack.item
+                    val fuelTime: Int = FuelRegistry.INSTANCE.get(fuel)
+                    burningTime = fuelTime
+                    fuelStack.decrement(1)
+                    when {
+                        ashStack.isEmpty -> setStack(1, RagiumItems.ASH_DUST.defaultStack)
+                        else -> ashStack.increment(1)
+                    }
+                }
+            }
+        }
     }
 
     //    HTDelegatedInventory    //

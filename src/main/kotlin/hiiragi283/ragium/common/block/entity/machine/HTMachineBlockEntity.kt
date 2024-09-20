@@ -9,7 +9,6 @@ import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
@@ -31,40 +30,6 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
     companion object {
-        @JvmField
-        val TICKER: BlockEntityTicker<HTMachineBlockEntity<*>> =
-            BlockEntityTicker { world: World, pos: BlockPos, _: BlockState, blockEntity: HTMachineBlockEntity<*> ->
-                if (blockEntity.ticks >= 200) {
-                    blockEntity.ticks = 0
-                    val input =
-                        HTMachineRecipeInput(
-                            blockEntity.getStack(0),
-                            blockEntity.getStack(1),
-                            blockEntity.getStack(2),
-                            blockEntity.getStack(3),
-                        )
-                    val recipe: HTMachineRecipe =
-                        world.recipeManager
-                            .getFirstMatch(blockEntity.machineType, input, world)
-                            .map(RecipeEntry<HTMachineRecipe>::value)
-                            .getOrNull() ?: return@BlockEntityTicker
-                    if (!canAcceptOutputs(blockEntity, recipe)) return@BlockEntityTicker
-                    if (!blockEntity.canProcessRecipe(world, pos, recipe)) {
-                        blockEntity.isActive = false
-                        return@BlockEntityTicker
-                    }
-                    blockEntity.isActive = true
-                    decrementInput(blockEntity, 0, recipe)
-                    decrementInput(blockEntity, 1, recipe)
-                    decrementInput(blockEntity, 2, recipe)
-                    modifyOutput(blockEntity, 0, recipe)
-                    modifyOutput(blockEntity, 1, recipe)
-                    modifyOutput(blockEntity, 2, recipe)
-                } else {
-                    blockEntity.ticks++
-                }
-            }
-
         @JvmStatic
         private fun canAcceptOutputs(tile: HTMachineBlockEntity<*>, recipe: HTMachineRecipe): Boolean {
             recipe.outputs.forEachIndexed { index: Int, result: HTRecipeResult ->
@@ -78,14 +43,14 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
 
         @JvmStatic
         private fun decrementInput(tile: HTMachineBlockEntity<*>, slot: Int, recipe: HTMachineRecipe) {
-            val delCount: Int = recipe.inputs.getOrNull(slot)?.count ?: return
+            val delCount: Int = recipe.getInput(slot)?.count ?: return
             tile.getStack(slot).count -= delCount
         }
 
         @JvmStatic
         private fun modifyOutput(tile: HTMachineBlockEntity<*>, slot: Int, recipe: HTMachineRecipe) {
             tile.parent.modifyStack(slot + 4) { stackIn: ItemStack ->
-                recipe.outputs.getOrNull(slot)?.modifyStack(stackIn) ?: stackIn
+                recipe.getOutput(slot)?.modifyStack(stackIn) ?: stackIn
             }
         }
     }
@@ -108,6 +73,38 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
         false -> 0
     }
 
+    override fun tick(world: World, pos: BlockPos, state: BlockState) {
+        if (ticks >= 200) {
+            ticks = 0
+            val input =
+                HTMachineRecipeInput(
+                    getStack(0),
+                    getStack(1),
+                    getStack(2),
+                    getStack(3),
+                )
+            val recipe: HTMachineRecipe =
+                world.recipeManager
+                    .getFirstMatch(machineType, input, world)
+                    .map(RecipeEntry<HTMachineRecipe>::value)
+                    .getOrNull() ?: return
+            if (!canAcceptOutputs(this, recipe)) return
+            if (!canProcessRecipe(world, pos, recipe)) {
+                isActive = false
+                return
+            }
+            isActive = true
+            decrementInput(this, 0, recipe)
+            decrementInput(this, 1, recipe)
+            decrementInput(this, 2, recipe)
+            modifyOutput(this, 0, recipe)
+            modifyOutput(this, 1, recipe)
+            modifyOutput(this, 2, recipe)
+        } else {
+            ticks++
+        }
+    }
+    
     protected abstract fun canProcessRecipe(world: World, pos: BlockPos, recipe: HTMachineRecipe): Boolean
 
     //    HTDelegatedInventory    //

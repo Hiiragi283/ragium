@@ -205,7 +205,6 @@ object RagiumBlocks {
             HTBlockWithEntity
                 .Builder<HTWaterCollectorBlockEntity>()
                 .type(RagiumBlockEntityTypes.WATER_COLLECTOR)
-                .ticker(HTWaterCollectorBlockEntity.TICKER)
                 .build(blockSettings(Blocks.BRICKS)),
         ) {
             putEnglish("Water Collector")
@@ -222,7 +221,6 @@ object RagiumBlocks {
             HTBlockWithEntity
                 .Builder<HTHeatGeneratorBlockEntity>()
                 .type(RagiumBlockEntityTypes.BURNING_BOX)
-                .ticker(HTHeatGeneratorBlockEntity.TICKER)
                 .buildHorizontal(blockSettings(Blocks.BRICKS)),
         ) {
             putEnglish("Burning Box")
@@ -253,7 +251,6 @@ object RagiumBlocks {
             HTBlockWithEntity
                 .Builder<HTKineticGeneratorBlockEntity>()
                 .type(RagiumBlockEntityTypes.WATER_GENERATOR)
-                .ticker(HTKineticGeneratorBlockEntity.TICKER)
                 .buildHorizontal(),
         ) {
             putEnglish("Water Generator")
@@ -269,7 +266,6 @@ object RagiumBlocks {
             HTBlockWithEntity
                 .Builder<HTKineticGeneratorBlockEntity>()
                 .type(RagiumBlockEntityTypes.WIND_GENERATOR)
-                .ticker(HTKineticGeneratorBlockEntity.TICKER)
                 .buildHorizontal(),
         ) {
             putEnglish("Wind Generator")
@@ -313,7 +309,6 @@ object RagiumBlocks {
             HTBlockWithEntity
                 .Builder<HTHeatGeneratorBlockEntity>()
                 .type(RagiumBlockEntityTypes.BLAZING_BOX)
-                .ticker(HTHeatGeneratorBlockEntity.TICKER)
                 .buildHorizontal(blockSettings(Blocks.POLISHED_BLACKSTONE_BRICKS)),
         ) {
             putEnglish("Blazing Box")
