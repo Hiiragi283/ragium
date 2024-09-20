@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.component.HTTooltipsComponent
+import hiiragi283.ragium.common.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.machine.HTMachineTier
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
@@ -26,6 +27,10 @@ object RagiumComponentTypes {
     @JvmField
     val DISABLE_TOOLTIPS: ComponentType<Unit> =
         register("disable_tooltips", Codec.unit(Unit), PacketCodec.unit(Unit))
+
+    @JvmField
+    val INVENTORY: ComponentType<HTSimpleInventory> =
+        register("inventory", HTSimpleInventory.CODEC, HTSimpleInventory.PACKET_CODEC)
 
     private fun <T : Any> register(name: String, codec: Codec<T>, packetCodec: PacketCodec<in RegistryByteBuf, T>): ComponentType<T> =
         Registry.register(

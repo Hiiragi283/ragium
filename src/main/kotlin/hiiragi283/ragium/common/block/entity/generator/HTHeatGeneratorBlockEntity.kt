@@ -75,7 +75,7 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
         HTSidedStorageBuilder(2)
             .set(0, HTStorageIO.INPUT, HTStorageSides.ANY)
             .set(1, HTStorageIO.OUTPUT, HTStorageSides.DOWN)
-            .buildInventory()
+            .buildSided()
 
     override fun markDirty() {
         super<HTBaseBlockEntity>.markDirty()

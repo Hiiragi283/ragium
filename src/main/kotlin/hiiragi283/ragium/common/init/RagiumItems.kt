@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.component.HTTooltipsComponent
+import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTEnderBundleItem
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
@@ -41,6 +42,24 @@ object RagiumItems {
             putEnglishTips("Used to make Ingot to Plate")
             putJapanese("鍛造ハンマー")
             putJapaneseTips("インゴットを板に加工するための道具")
+        }
+
+    @JvmField
+    val BACKPACK: Item =
+        REGISTER.register("backpack", HTBackpackItem.NORMAL) {
+            putEnglish("Backpack")
+            putEnglishTips("Same size as Chest")
+            putJapanese("バックパック")
+            putJapaneseTips("チェストと同じ容量")
+        }
+
+    @JvmField
+    val LARGE_BACKPACK: Item =
+        REGISTER.register("large_backpack", HTBackpackItem.LARGE) {
+            putEnglish("Large Backpack")
+            putEnglishTips("Same size as Large Chest")
+            putJapanese("大型パックパック")
+            putJapaneseTips("ラージチェストと同じ容量")
         }
 
     @JvmField
@@ -404,6 +423,47 @@ object RagiumItems {
     @JvmField
     val PHENOL_FLUID_CUBE: HTFluidCubeItem =
         registerFluidCube("phenol", "Phenol", "フェノール", Color(0x996633))
+
+    @JvmField
+    val RAGINITE_SLUDGE_FLUID_CUBE: HTFluidCubeItem =
+        registerFluidCube("raginite_sludge", "Raginite Sludge", "ラギナイト汚泥", Color(0xff003f))
+
+    //    Alchemy    //
+
+    @JvmField
+    val RAGIUM_DUST: Item =
+        REGISTER.registerSimple("ragium_dust") {
+            putEnglish("Ragium Dust")
+            putJapanese("ラギウムの粉")
+        }
+
+    @JvmField
+    val RIGIUM_DUST: Item =
+        REGISTER.registerSimple("rigium_dust") {
+            putEnglish("Rigium Dust")
+            putJapanese("リギウムの粉")
+        }
+
+    @JvmField
+    val RUGIUM_DUST: Item =
+        REGISTER.registerSimple("rugium_dust") {
+            putEnglish("Rugium Dust")
+            putJapanese("ルギウムの粉")
+        }
+
+    @JvmField
+    val REGIUM_DUST: Item =
+        REGISTER.registerSimple("regium_dust") {
+            putEnglish("Regium Dust")
+            putJapanese("レギウムの粉")
+        }
+
+    @JvmField
+    val ROGIUM_DUST: Item =
+        REGISTER.registerSimple("rogium_dust") {
+            putEnglish("Rogium Dust")
+            putJapanese("ロギウムの粉")
+        }
 
     @JvmStatic
     private fun registerBlockItems(register: HTItemRegister) {

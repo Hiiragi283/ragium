@@ -65,7 +65,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         HTSidedStorageBuilder(2)
             .set(0, HTStorageIO.INPUT, HTStorageSides.SIDE)
             .set(1, HTStorageIO.OUTPUT, HTStorageSides.DOWN)
-            .buildInventory()
+            .buildSided()
     private val matchGetter: RecipeManager.MatchGetter<HTMachineRecipeInput, HTMachineRecipe> =
         RecipeManager.createCachedMatchGetter(HTMachineType.Single.GRINDER)
 

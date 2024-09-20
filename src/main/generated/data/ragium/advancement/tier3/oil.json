@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier3/distillation_tower",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:oil_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier3.oil.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:oil_fluid_cube"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier3.oil"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

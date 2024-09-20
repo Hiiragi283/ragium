@@ -121,7 +121,7 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
             .set(4, HTStorageIO.OUTPUT, HTStorageSides.ANY)
             .set(5, HTStorageIO.OUTPUT, HTStorageSides.ANY)
             .set(6, HTStorageIO.OUTPUT, HTStorageSides.ANY)
-            .buildInventory()
+            .buildSided()
 
     override fun markDirty() {
         super<HTBaseBlockEntity>.markDirty()

@@ -19,5 +19,8 @@ class HTSidedStorageBuilder(size: Int) {
 
     fun <T : Any> build(builder: (Array<HTStorageIO>, (Direction) -> IntArray) -> T): T = builder(ioTypes, ::getSideSlotArray)
 
-    fun buildInventory(): HTSidedInventory = build(::HTSidedInventory)
+    fun buildSimple(): HTSimpleInventory =
+        build { ioTypes: Array<HTStorageIO>, _: (Direction) -> IntArray -> HTSimpleInventory(ioTypes.size) }
+
+    fun buildSided(): HTSidedInventory = build(::HTSidedInventory)
 }
