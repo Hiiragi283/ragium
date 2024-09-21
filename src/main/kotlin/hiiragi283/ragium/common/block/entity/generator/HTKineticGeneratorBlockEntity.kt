@@ -26,39 +26,32 @@ abstract class HTKineticGeneratorBlockEntity(type: BlockEntityType<*>, pos: Bloc
         }
     }
 
-    var ticks: Int = 0
-        protected set
     private var processorCache: HTKineticProcessor? = null
 
     abstract fun canProvidePower(world: World, pos: BlockPos, state: BlockState): Boolean
 
-    override fun tick(world: World, pos: BlockPos, state: BlockState) {
-        if (ticks >= 20) {
-            ticks = 0
-            if (canProvidePower(world, pos, state)) {
-                // try to load processorCache if not null
-                val endPos: BlockPos? = findProcessor(world, pos, state)
-                processorCache?.let { cache: HTKineticProcessor ->
-                    val cachedPos: BlockPos = cache.getPos()
-                    if (cache == world.getBlockEntity(cachedPos) && cachedPos == endPos) {
-                        cache.onActive(world, cachedPos)
-                    } else {
-                        cache.onInactive(world, cachedPos)
-                    }
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
+        if (canProvidePower(world, pos, state)) {
+            // try to load processorCache if not null
+            val endPos: BlockPos? = findProcessor(world, pos, state)
+            processorCache?.let { cache: HTKineticProcessor ->
+                val cachedPos: BlockPos = cache.getPos()
+                if (cache == world.getBlockEntity(cachedPos) && cachedPos == endPos) {
+                    cache.onActive(world, cachedPos)
+                } else {
+                    cache.onInactive(world, cachedPos)
+                }
+                return
+            }
+            // try to find new processorCache
+            endPos?.let { processorPos: BlockPos ->
+                (world.getBlockEntity(processorPos) as? HTKineticProcessor)?.let {
+                    processorCache = it
+                    it.onActive(world, processorPos)
                     return
                 }
-                // try to find new processorCache
-                endPos?.let { processorPos: BlockPos ->
-                    (world.getBlockEntity(processorPos) as? HTKineticProcessor)?.let {
-                        processorCache = it
-                        it.onActive(world, processorPos)
-                        return
-                    }
-                }
-                processorCache = null
             }
-        } else {
-            ticks++
+            processorCache = null
         }
-    } 
+    }
 }

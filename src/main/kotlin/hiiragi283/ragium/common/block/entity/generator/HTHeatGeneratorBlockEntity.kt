@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.screen.HTBurningBoxScreenHandler
 import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.BlockState
+import net.minecraft.block.entity.AbstractFurnaceBlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -23,19 +24,18 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
     HTBaseBlockEntity(type, pos, state),
     HTDelegatedInventory,
     NamedScreenHandlerFactory {
-
     var burningTime: Int = 0
         private set
     val isBurning: Boolean
         get() = burningTime > 0
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        parent.writeNbt(nbt, registryLookup)
+        super.writeNbt(nbt, registryLookup)
         nbt.putInt("BurningTime", burningTime)
     }
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        parent.readNbt(nbt, registryLookup)
+        super.readNbt(nbt, registryLookup)
         burningTime = nbt.getInt("BurningTime")
     }
 
@@ -44,7 +44,12 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
         false -> 0
     }
 
-    override fun tick(world: World, pos: BlockPos, state: BlockState) {
+    override fun tickEach(
+        world: World,
+        pos: BlockPos,
+        state: BlockState,
+        ticks: Int,
+    ) {
         when {
             isBurning -> burningTime--
             else -> {
@@ -69,9 +74,14 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
 
     override val parent: HTSidedInventory =
         HTSidedStorageBuilder(2)
-            .set(0, HTStorageIO.INPUT, HTStorageSides.ANY)
-            .set(1, HTStorageIO.OUTPUT, HTStorageSides.DOWN)
-            .buildSided()
+            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(1, HTStorageIO.OUTPUT, HTStorageSide.DOWN)
+            .filter { slot: Int, stack: ItemStack ->
+                when (slot) {
+                    0 -> AbstractFurnaceBlockEntity.canUseAsFuel(stack)
+                    else -> true
+                }
+            }.buildSided()
 
     override fun markDirty() {
         super<HTBaseBlockEntity>.markDirty()

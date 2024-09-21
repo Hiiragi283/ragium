@@ -1,13 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.block.HTGearBoxBlock
 import hiiragi283.ragium.common.block.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.HTShaftBlock
-import hiiragi283.ragium.common.block.entity.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTKineticGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
@@ -200,12 +196,10 @@ object RagiumBlocks {
 
     @JvmField
     val WATER_COLLECTOR: Block =
-        REGISTER.register(
+        REGISTER.registerWithBE(
             "water_collector",
-            HTBlockWithEntity
-                .Builder<HTWaterCollectorBlockEntity>()
-                .type(RagiumBlockEntityTypes.WATER_COLLECTOR)
-                .build(blockSettings(Blocks.BRICKS)),
+            RagiumBlockEntityTypes.WATER_COLLECTOR,
+            blockSettings(Blocks.BRICKS),
         ) {
             putEnglish("Water Collector")
             putEnglishTips("Adjacent to two or more Water Source")
@@ -216,12 +210,10 @@ object RagiumBlocks {
 
     @JvmField
     val BURNING_BOX: Block =
-        REGISTER.register(
+        REGISTER.registerHorizontalWithBE(
             "burning_box",
-            HTBlockWithEntity
-                .Builder<HTHeatGeneratorBlockEntity>()
-                .type(RagiumBlockEntityTypes.BURNING_BOX)
-                .buildHorizontal(blockSettings(Blocks.BRICKS)),
+            RagiumBlockEntityTypes.BURNING_BOX,
+            blockSettings(Blocks.BRICKS),
         ) {
             putEnglish("Burning Box")
             putEnglishTips("Provides heat to top by burning fuel")
@@ -245,13 +237,10 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val WATER_GENERATOR: HTBlockWithEntity =
-        REGISTER.register(
+    val WATER_GENERATOR: Block =
+        REGISTER.registerHorizontalWithBE(
             "water_generator",
-            HTBlockWithEntity
-                .Builder<HTKineticGeneratorBlockEntity>()
-                .type(RagiumBlockEntityTypes.WATER_GENERATOR)
-                .buildHorizontal(),
+            RagiumBlockEntityTypes.WATER_GENERATOR,
         ) {
             putEnglish("Water Generator")
             putEnglishTips("Power when adjacent to two or more Flowing Water")
@@ -260,13 +249,10 @@ object RagiumBlocks {
         }
 
     @JvmField
-    val WIND_GENERATOR: HTBlockWithEntity =
-        REGISTER.register(
+    val WIND_GENERATOR: Block =
+        REGISTER.registerHorizontalWithBE(
             "wind_generator",
-            HTBlockWithEntity
-                .Builder<HTKineticGeneratorBlockEntity>()
-                .type(RagiumBlockEntityTypes.WIND_GENERATOR)
-                .buildHorizontal(),
+            RagiumBlockEntityTypes.WIND_GENERATOR,
         ) {
             putEnglish("Wind Generator")
             putEnglishTips("Power at y=128 or more")
@@ -304,12 +290,10 @@ object RagiumBlocks {
 
     @JvmField
     val BLAZING_BOX: Block =
-        REGISTER.register(
+        REGISTER.registerHorizontalWithBE(
             "blazing_box",
-            HTBlockWithEntity
-                .Builder<HTHeatGeneratorBlockEntity>()
-                .type(RagiumBlockEntityTypes.BLAZING_BOX)
-                .buildHorizontal(blockSettings(Blocks.POLISHED_BLACKSTONE_BRICKS)),
+            RagiumBlockEntityTypes.BLAZING_BOX,
+            blockSettings(Blocks.POLISHED_BLACKSTONE_BRICKS),
         ) {
             putEnglish("Blazing Box")
             putEnglishTips("Provides more heat to top by burning fuel")
@@ -332,15 +316,13 @@ object RagiumBlocks {
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
-    @JvmStatic
-    fun addSupportedBlocks() {
-        RagiumBlockEntityTypes.MANUAL_GRINDER.addSupportedBlock(MANUAL_GRINDER)
-        RagiumBlockEntityTypes.WATER_COLLECTOR.addSupportedBlock(WATER_COLLECTOR)
-        RagiumBlockEntityTypes.BURNING_BOX.addSupportedBlock(BURNING_BOX)
-        RagiumBlockEntityTypes.WATER_GENERATOR.addSupportedBlock(WATER_GENERATOR)
-        RagiumBlockEntityTypes.WIND_GENERATOR.addSupportedBlock(WIND_GENERATOR)
-        RagiumBlockEntityTypes.BLAZING_BOX.addSupportedBlock(BLAZING_BOX)
-    }
+    @JvmField
+    val ALCHEMICAL_INFUSER: Block =
+        REGISTER.registerHorizontalWithBE(
+            "alchemical_infuser",
+            RagiumBlockEntityTypes.ALCHEMICAL_INFUSER,
+        ) {
+        }
 
     @JvmStatic
     private fun registerMachines(register: HTBlockRegister) {

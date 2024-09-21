@@ -26,6 +26,7 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.awt.Color
+import kotlin.jvm.optionals.getOrNull
 
 class HTItemRegister(private val modId: String) : Iterable<Item> {
     private val itemCache: MutableMap<Identifier, Item> = mutableMapOf()
@@ -39,7 +40,7 @@ class HTItemRegister(private val modId: String) : Iterable<Item> {
     fun registerSimple(name: String, settings: Item.Settings = itemSettings(), action: Builder<Item>.() -> Unit): Item =
         register(name, HTBaseItem(settings), action)
 
-    fun registerBlockItem(
+    private fun registerBlockItem(
         name: String,
         block: Block,
         settings: Item.Settings = itemSettings(),
@@ -47,6 +48,15 @@ class HTItemRegister(private val modId: String) : Iterable<Item> {
     ): Item = register(name, HTBaseBlockItem(block, settings)) {
         action()
         setCustomModel()
+    }
+
+    fun registerBlockItem(block: Block, settings: Item.Settings = itemSettings(), action: Builder<HTBaseBlockItem>.() -> Unit = {}) {
+        val name: String = Registries.BLOCK
+            .getKey(block)
+            .map(RegistryKey<Block>::getValue)
+            .map(Identifier::getPath)
+            .getOrNull() ?: return
+        registerBlockItem(name, block, settings, action)
     }
 
     private fun <T : ToolItem> registerTool(

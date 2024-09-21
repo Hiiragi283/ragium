@@ -12,9 +12,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.recipe.RecipeEntry
-import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandler
@@ -29,95 +27,77 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
     HTDelegatedInventory,
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
-    companion object {
-        @JvmStatic
-        private fun canAcceptOutputs(tile: HTMachineBlockEntity<*>, recipe: HTMachineRecipe): Boolean {
-            recipe.outputs.forEachIndexed { index: Int, result: HTRecipeResult ->
-                val stackIn: ItemStack = tile.getStack(index + 3)
-                if (!result.canAccept(stackIn)) {
-                    return false
-                }
-            }
-            return true
-        }
-
-        @JvmStatic
-        private fun decrementInput(tile: HTMachineBlockEntity<*>, slot: Int, recipe: HTMachineRecipe) {
-            val delCount: Int = recipe.getInput(slot)?.count ?: return
-            tile.getStack(slot).count -= delCount
-        }
-
-        @JvmStatic
-        private fun modifyOutput(tile: HTMachineBlockEntity<*>, slot: Int, recipe: HTMachineRecipe) {
-            tile.parent.modifyStack(slot + 4) { stackIn: ItemStack ->
-                recipe.getOutput(slot)?.modifyStack(stackIn) ?: stackIn
-            }
-        }
-    }
-
-    var ticks: Int = 0
-        protected set
     var isActive: Boolean = false
         protected set
-
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        parent.writeNbt(nbt, registryLookup)
-    }
-
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        parent.readNbt(nbt, registryLookup)
-    }
 
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = when (isActive) {
         true -> 15
         false -> 0
     }
 
-    override fun tick(world: World, pos: BlockPos, state: BlockState) {
-        if (ticks >= 200) {
-            ticks = 0
-            val input =
-                HTMachineRecipeInput(
-                    getStack(0),
-                    getStack(1),
-                    getStack(2),
-                    getStack(3),
-                )
-            val recipe: HTMachineRecipe =
-                world.recipeManager
-                    .getFirstMatch(machineType, input, world)
-                    .map(RecipeEntry<HTMachineRecipe>::value)
-                    .getOrNull() ?: return
-            if (!canAcceptOutputs(this, recipe)) return
-            if (!canProcessRecipe(world, pos, recipe)) {
-                isActive = false
-                return
+    override val tickRate: Int = 200
+
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
+        val input =
+            HTMachineRecipeInput(
+                getStack(0),
+                getStack(1),
+                getStack(2),
+                getStack(3),
+            )
+        val recipe: HTMachineRecipe =
+            world.recipeManager
+                .getFirstMatch(machineType, input, world)
+                .map(RecipeEntry<HTMachineRecipe>::value)
+                .getOrNull() ?: return
+        if (!canAcceptOutputs(recipe)) return
+        if (!canProcessRecipe(world, pos, recipe)) {
+            isActive = false
+            return
+        }
+        isActive = true
+        decrementInput(0, recipe)
+        decrementInput(1, recipe)
+        decrementInput(2, recipe)
+        modifyOutput(0, recipe)
+        modifyOutput(1, recipe)
+        modifyOutput(2, recipe)
+    }
+
+    private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
+        recipe.outputs.forEachIndexed { index: Int, result: HTRecipeResult ->
+            val stackIn: ItemStack = getStack(index + 3)
+            if (!result.canAccept(stackIn)) {
+                return false
             }
-            isActive = true
-            decrementInput(this, 0, recipe)
-            decrementInput(this, 1, recipe)
-            decrementInput(this, 2, recipe)
-            modifyOutput(this, 0, recipe)
-            modifyOutput(this, 1, recipe)
-            modifyOutput(this, 2, recipe)
-        } else {
-            ticks++
+        }
+        return true
+    }
+
+    private fun decrementInput(slot: Int, recipe: HTMachineRecipe) {
+        val delCount: Int = recipe.getInput(slot)?.count ?: return
+        getStack(slot).count -= delCount
+    }
+
+    private fun modifyOutput(slot: Int, recipe: HTMachineRecipe) {
+        parent.modifyStack(slot + 4) { stackIn: ItemStack ->
+            recipe.getOutput(slot)?.modifyStack(stackIn) ?: stackIn
         }
     }
-    
+
     protected abstract fun canProcessRecipe(world: World, pos: BlockPos, recipe: HTMachineRecipe): Boolean
 
     //    HTDelegatedInventory    //
 
     override val parent: HTSidedInventory =
         HTSidedStorageBuilder(7)
-            .set(0, HTStorageIO.INPUT, HTStorageSides.ANY)
-            .set(1, HTStorageIO.INPUT, HTStorageSides.ANY)
-            .set(2, HTStorageIO.INPUT, HTStorageSides.ANY)
-            .set(3, HTStorageIO.INTERNAL, HTStorageSides.NONE)
-            .set(4, HTStorageIO.OUTPUT, HTStorageSides.ANY)
-            .set(5, HTStorageIO.OUTPUT, HTStorageSides.ANY)
-            .set(6, HTStorageIO.OUTPUT, HTStorageSides.ANY)
+            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(3, HTStorageIO.INTERNAL, HTStorageSide.NONE)
+            .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+            .set(5, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+            .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildSided()
 
     override fun markDirty() {

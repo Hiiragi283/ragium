@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
-import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
@@ -42,8 +41,46 @@ abstract class HTBlockWithEntity(settings: Settings) :
             true -> ticker
             false -> null
         } as? BlockEntityTicker<A>
+
+        @JvmStatic
+        fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
+            init {
+                type.addSupportedBlock(this)
+            }
+
+            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
+
+            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+                validateTicker(type, type, TICKER)
+        }
+
+        @JvmStatic
+        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
+            init {
+                type.addSupportedBlock(this)
+                defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
+            }
+
+            override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
+                defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
+
+            override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+                builder.add(Properties.HORIZONTAL_FACING)
+            }
+
+            override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
+                state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)))
+
+            override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
+                state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
+
+            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
+
+            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+                validateTicker(type, type, TICKER)
+        }
     }
-    
+
     override fun createScreenHandlerFactory(state: BlockState, world: World, pos: BlockPos): NamedScreenHandlerFactory? =
         world.getBlockEntity(pos) as? NamedScreenHandlerFactory
 
@@ -66,51 +103,8 @@ abstract class HTBlockWithEntity(settings: Settings) :
         super.onStateReplaced(state, world, pos, newState, moved)
     }
 
-    //    Builder    //
+    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
+        (world.getBlockEntity(pos) as? HTBaseBlockEntity)?.getComparatorOutput(state, world, pos) ?: 0
 
-    class Builder<B : HTBaseBlockEntity> {
-        lateinit var type: BlockEntityType<out B>
-            private set
-        // private var ticker: BlockEntityTicker<out B>? = null
-
-        fun type(type: BlockEntityType<out B>): Builder<B> = apply { this.type = type }
-
-        // fun ticker(ticker: BlockEntityTicker<out B>): Builder<B> = apply { this.ticker = ticker }
-
-        fun build(settings: Settings = blockSettings()): HTBlockWithEntity = object : HTBlockWithEntity(settings) {
-            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
-
-            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-                validateTicker(type, this@Builder.type, TICKER)
-        }
-
-        fun buildHorizontal(settings: Settings = blockSettings()): HTBlockWithEntity = object : HTBlockWithEntity(settings) {
-            init {
-                defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
-            }
-
-            override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
-                defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
-
-            override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-                builder.add(Properties.HORIZONTAL_FACING)
-            }
-
-            override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
-                state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)))
-
-            override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
-                state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
-
-            override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
-                (world.getBlockEntity(pos) as? HTBaseBlockEntity)?.getComparatorOutput(state, world, pos) ?: 0
-
-            override fun hasComparatorOutput(state: BlockState): Boolean = true
-
-            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
-
-            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-                validateTicker(type, this@Builder.type, TICKER)
-        }
-    }
+    override fun hasComparatorOutput(state: BlockState): Boolean = true
 }

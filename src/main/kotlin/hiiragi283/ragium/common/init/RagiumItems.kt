@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.component.HTTooltipsComponent
 import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTEnderBundleItem
 import hiiragi283.ragium.common.item.HTFluidCubeItem
@@ -9,14 +8,13 @@ import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.registry.HTItemRegister
+import hiiragi283.ragium.common.util.disableTooltips
 import hiiragi283.ragium.common.util.itemSettings
-import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
-import net.minecraft.component.ComponentMap
+import hiiragi283.ragium.common.util.tier
 import net.minecraft.data.client.ModelIds
 import net.minecraft.data.client.TextureMap
 import net.minecraft.item.Item
 import net.minecraft.registry.tag.ItemTags
-import net.minecraft.util.Formatting
 import java.awt.Color
 
 object RagiumItems {
@@ -24,16 +22,6 @@ object RagiumItems {
     val REGISTER: HTItemRegister = HTItemRegister(Ragium.MOD_ID).apply(::registerBlockItems)
 
     //    Tools    //
-
-    /*@JvmField
-    val POWER_METER: Item =
-        REGISTER.registerSimple(
-            "power_meter",
-            itemSettings().component(RagiumComponentTypes.DISABLE_CYCLE_POWER, Unit),
-        ) {
-            putEnglish("Power Meter")
-            putJapanese("パワー測定器")
-        }*/
 
     @JvmField
     val FORGE_HAMMER: Item =
@@ -468,54 +456,49 @@ object RagiumItems {
     @JvmStatic
     private fun registerBlockItems(register: HTItemRegister) {
         // ores
-        register.registerBlockItem("raginite_ore", RagiumBlocks.RAGINITE_ORE) {
+        register.registerBlockItem(RagiumBlocks.RAGINITE_ORE) {
             registerTags(RagiumItemTags.RAGINITE_ORES)
         }
-        register.registerBlockItem("deepslate_raginite_ore", RagiumBlocks.DEEPSLATE_RAGINITE_ORE) {
+        register.registerBlockItem(RagiumBlocks.DEEPSLATE_RAGINITE_ORE) {
             registerTags(RagiumItemTags.RAGINITE_ORES)
         }
         // blocks
         register.registerBlockItem(
-            "ragi_alloy_block",
             RagiumBlocks.RAGI_ALLOY_BLOCK,
-            itemSettings().component(RagiumComponentTypes.TIER, HTMachineTier.HEAT),
+            itemSettings().tier(HTMachineTier.HEAT),
         )
         register.registerBlockItem(
-            "ragi_steel_block",
             RagiumBlocks.RAGI_STEEL_BLOCK,
-            itemSettings().component(RagiumComponentTypes.TIER, HTMachineTier.KINETIC),
+            itemSettings().tier(HTMachineTier.KINETIC),
         )
         register.registerBlockItem(
-            "refined_ragi_steel_block",
             RagiumBlocks.REFINED_RAGI_STEEL_BLOCK,
-            itemSettings().component(RagiumComponentTypes.TIER, HTMachineTier.ELECTRIC),
+            itemSettings().tier(HTMachineTier.ELECTRIC),
         )
         // hulls
         register.registerBlockItem(
-            "ragi_alloy_hull",
             RagiumBlocks.RAGI_ALLOY_HULL,
-            itemSettings().component(RagiumComponentTypes.TIER, HTMachineTier.HEAT),
+            itemSettings().tier(HTMachineTier.HEAT),
         )
         register.registerBlockItem(
-            "ragi_steel_hull",
             RagiumBlocks.RAGI_STEEL_HULL,
-            itemSettings().component(RagiumComponentTypes.TIER, HTMachineTier.KINETIC),
+            itemSettings().tier(HTMachineTier.KINETIC),
         )
         register.registerBlockItem(
-            "refined_ragi_steel_hull",
             RagiumBlocks.REFINED_RAGI_STEEL_HULL,
-            itemSettings().component(RagiumComponentTypes.TIER, HTMachineTier.ELECTRIC),
+            itemSettings().tier(HTMachineTier.ELECTRIC),
         )
         // machines
-        register.registerBlockItem("creative_source", RagiumBlocks.CREATIVE_SOURCE)
-        register.registerBlockItem("manual_grinder", RagiumBlocks.MANUAL_GRINDER)
-        register.registerBlockItem("water_collector", RagiumBlocks.WATER_COLLECTOR)
-        register.registerBlockItem("burning_box", RagiumBlocks.BURNING_BOX)
-        register.registerBlockItem("water_generator", RagiumBlocks.WATER_GENERATOR)
-        register.registerBlockItem("wind_generator", RagiumBlocks.WIND_GENERATOR)
-        register.registerBlockItem("shaft", RagiumBlocks.SHAFT)
-        register.registerBlockItem("gear_box", RagiumBlocks.GEAR_BOX)
-        register.registerBlockItem("blazing_box", RagiumBlocks.BLAZING_BOX)
+        register.registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        register.registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
+        register.registerBlockItem(RagiumBlocks.WATER_COLLECTOR)
+        register.registerBlockItem(RagiumBlocks.BURNING_BOX)
+        register.registerBlockItem(RagiumBlocks.WATER_GENERATOR)
+        register.registerBlockItem(RagiumBlocks.WIND_GENERATOR)
+        register.registerBlockItem(RagiumBlocks.SHAFT)
+        register.registerBlockItem(RagiumBlocks.GEAR_BOX)
+        register.registerBlockItem(RagiumBlocks.BLAZING_BOX)
+        register.registerBlockItem(RagiumBlocks.ALCHEMICAL_INFUSER)
 
         registerMachines(register)
     }
@@ -525,38 +508,11 @@ object RagiumItems {
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             // BlockItem
             register.registerBlockItem(
-                type.id.path,
                 type.block,
-                itemSettings().component(RagiumComponentTypes.DISABLE_TOOLTIPS, Unit),
+                itemSettings().disableTooltips(),
             )
         }
     }
-
-    /*@JvmStatic
-    private fun registerFluidCube(
-        name: String,
-        englishName: String,
-        japaneseName: String,
-        texBlock: Block,
-    ): HTFluidCubeItem = registerFluidCube(name, englishName, japaneseName, TextureMap.getId(texBlock))
-
-    @JvmStatic
-    private fun registerFluidCube(
-        name: String,
-        englishName: String,
-        japaneseName: String,
-        texId: Identifier,
-    ): HTFluidCubeItem = REGISTER.register("${name}_fluid_cube", HTFluidCubeItem.create(name)) {
-        putEnglish("Fluid Cube ($englishName)")
-        putJapanese("液体キューブ（$japaneseName）")
-        generateModel {
-            RagiumModels.FILLED_FLUID_CUBE.upload(
-                ModelIds.getItemModelId(item),
-                TextureMap().put(TextureKey.INSIDE, texId),
-                it.writer,
-            )
-        }
-    }*/
 
     @JvmStatic
     private fun registerFluidCube(
@@ -575,41 +531,5 @@ object RagiumItems {
                 it.writer,
             )
         }
-    }
-
-    //    Event    //
-
-    @JvmStatic
-    fun registerEvents() {
-        DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
-            customTooltip(context, TWILIGHT_METAL_INGOT, Formatting.GRAY, Formatting.ITALIC)
-            customTooltip(context, SOAP_INGOT, Formatting.GRAY, Formatting.ITALIC)
-            customTooltip(context, RAW_RAGINITE, Formatting.GRAY, Formatting.OBFUSCATED)
-            // auto setting
-            context.modify(::canSetTooltip) { builder: ComponentMap.Builder, item: Item ->
-                builder.add(
-                    RagiumComponentTypes.TOOLTIPS,
-                    HTTooltipsComponent.fromItem(item, Formatting.GRAY),
-                )
-            }
-        }
-    }
-
-    @JvmStatic
-    private fun customTooltip(context: DefaultItemComponentEvents.ModifyContext, item: Item, vararg formattings: Formatting) {
-        context.modify(item) { builder: ComponentMap.Builder ->
-            builder.add(
-                RagiumComponentTypes.TOOLTIPS,
-                HTTooltipsComponent.fromItem(item, *formattings),
-            )
-        }
-    }
-
-    @JvmStatic
-    private fun canSetTooltip(item: Item): Boolean = when {
-        item !in REGISTER -> false
-        item.components.contains(RagiumComponentTypes.TOOLTIPS) -> false
-        item.components.contains(RagiumComponentTypes.DISABLE_TOOLTIPS) -> false
-        else -> true
     }
 }

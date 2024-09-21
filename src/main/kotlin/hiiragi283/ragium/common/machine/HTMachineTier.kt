@@ -20,7 +20,7 @@ import java.util.function.IntFunction
 
 enum class HTMachineTier(val casingTex: Identifier, val base: Block, val condition: (World, BlockPos) -> Boolean = Condition.NONE) :
     StringIdentifiable {
-    // NONE,
+    NONE(Ragium.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE),
     HEAT(Ragium.id("block/ragi_alloy_block"), Blocks.BRICKS, Condition.HEAT),
     KINETIC(Ragium.id("block/ragi_steel_block"), Blocks.POLISHED_BLACKSTONE_BRICKS, Condition.KINETIC),
     ELECTRIC(Ragium.id("block/refined_ragi_steel_block"), Blocks.END_STONE_BRICKS),

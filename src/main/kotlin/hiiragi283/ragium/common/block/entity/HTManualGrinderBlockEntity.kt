@@ -10,9 +10,7 @@ import hiiragi283.ragium.common.util.modifyBlockState
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
 import net.minecraft.recipe.RecipeManager
-import net.minecraft.registry.RegistryWrapper
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
@@ -24,14 +22,6 @@ import kotlin.jvm.optionals.getOrNull
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBaseBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
     HTDelegatedInventory {
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        parent.writeNbt(nbt, registryLookup)
-    }
-
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        parent.readNbt(nbt, registryLookup)
-    }
-
     override fun onUse(
         state: BlockState,
         world: World,
@@ -63,8 +53,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val parent: HTSidedInventory =
         HTSidedStorageBuilder(2)
-            .set(0, HTStorageIO.INPUT, HTStorageSides.SIDE)
-            .set(1, HTStorageIO.OUTPUT, HTStorageSides.DOWN)
+            .set(0, HTStorageIO.INPUT, HTStorageSide.SIDE)
+            .set(1, HTStorageIO.OUTPUT, HTStorageSide.DOWN)
             .buildSided()
     private val matchGetter: RecipeManager.MatchGetter<HTMachineRecipeInput, HTMachineRecipe> =
         RecipeManager.createCachedMatchGetter(HTMachineType.Single.GRINDER)
@@ -92,7 +82,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                     else -> stackIn
                 }
             }
-            parent.getStack(0).decrement(recipe.inputs[0].count)
+            parent.getStack(0).decrement(recipe.getInput(0)?.count ?: 0)
         }
     }
 

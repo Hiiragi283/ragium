@@ -18,8 +18,6 @@ object HTManualGrinderBlock : HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STON
 
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = state.get(LEVEL_7)
 
-    override fun hasComparatorOutput(state: BlockState): Boolean = true
-
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(LEVEL_7)
     }

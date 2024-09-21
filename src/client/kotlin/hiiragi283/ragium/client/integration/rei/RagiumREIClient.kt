@@ -2,10 +2,10 @@ package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTFluidPumpRegistry
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import me.shedaniel.math.Rectangle
@@ -64,8 +64,8 @@ object RagiumREIClient : REIClientPlugin {
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             registry.registerRecipeFiller(HTMachineRecipe::class.java, type, ::HTMachineRecipeDisplay)
         }
-        // // Machines
-        HTFluidPumpRegistry.forEach { biomeKey: RegistryKey<Biome>, item: HTFluidCubeItem ->
+        // Fluid Pumps
+        HTFluidPumpEntryLoader.registry.forEach { (biomeKey: RegistryKey<Biome>, item: HTFluidCubeItem) ->
             registry.add(HTFluidPumpCategory.FluidDisplay(biomeKey, item))
         }
     }

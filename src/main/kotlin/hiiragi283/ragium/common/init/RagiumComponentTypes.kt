@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.component.HTTooltipsComponent
+import hiiragi283.ragium.common.component.item.HTTooltipsComponent
 import hiiragi283.ragium.common.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.machine.HTMachineTier
 import net.minecraft.component.ComponentType
@@ -12,10 +12,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumComponentTypes {
-    @JvmField
-    val DISABLE_CYCLE_POWER: ComponentType<Unit> =
-        register("disable_cycle_power", Codec.unit(Unit), PacketCodec.unit(Unit))
-
     @JvmField
     val TIER: ComponentType<HTMachineTier> =
         register("tier", HTMachineTier.CODEC, HTMachineTier.PACKET_CODEC)

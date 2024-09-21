@@ -2,6 +2,9 @@ package hiiragi283.ragium.common.util
 
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.common.component.item.HTTooltipsComponent
+import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.machine.HTMachineTier
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
@@ -17,11 +20,14 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.network.packet.s2c.play.TitleS2CPacket
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.State
 import net.minecraft.state.property.Property
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.Function
@@ -73,6 +79,12 @@ fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state:
 
 fun itemSettings(): Item.Settings = Item.Settings()
 
+fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.TIER, tier)
+
+fun Item.Settings.tooltips(component: HTTooltipsComponent): Item.Settings = component(RagiumComponentTypes.TOOLTIPS, component)
+
+fun Item.Settings.disableTooltips(): Item.Settings = component(RagiumComponentTypes.DISABLE_TOOLTIPS, Unit)
+
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
     if (item == null) return ItemStack.EMPTY
     val item1: Item = item.asItem()
@@ -85,6 +97,12 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
 //    PacketCodec    //
 
 fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> = collect(PacketCodecs.toList())
+
+//    Player    //
+
+fun ServerPlayerEntity.sendTitle(title: Text) {
+    networkHandler.sendPacket(TitleS2CPacket(title))
+}
 
 //    Table    //
 

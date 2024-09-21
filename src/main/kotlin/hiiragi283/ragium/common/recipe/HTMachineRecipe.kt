@@ -55,10 +55,16 @@ class HTMachineRecipe(
             )
     }
 
+    fun getInput(index: Int): WeightedIngredient? = inputs.getOrNull(index)
+
+    fun getOutput(index: Int): HTRecipeResult? = outputs.getOrNull(index)
+
+    //    Recipe    //
+
     override fun matches(input: HTMachineRecipeInput, world: World): Boolean = input.matches(
-        inputs.getOrNull(0),
-        inputs.getOrNull(1),
-        inputs.getOrNull(2),
+        getInput(0),
+        getInput(1),
+        getInput(2),
         catalyst,
     )
 
@@ -66,7 +72,7 @@ class HTMachineRecipe(
 
     override fun fits(width: Int, height: Int): Boolean = true
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = outputs[0].toStack()
+    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = getOutput(0)?.toStack() ?: ItemStack.EMPTY
 
     override fun isIgnoredInRecipeBook(): Boolean = true
 

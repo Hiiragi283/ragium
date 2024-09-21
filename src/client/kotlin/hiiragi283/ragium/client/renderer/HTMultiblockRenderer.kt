@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
+import hiiragi283.ragium.client.util.translate
 import hiiragi283.ragium.common.machine.HTBlockPredicate
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
 import net.fabricmc.api.EnvType
@@ -31,7 +32,7 @@ data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val c
     ): HTMultiblockBuilder = apply {
         val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
         matrix.push()
-        matrix.translate(x.toDouble(), y.toDouble(), z.toDouble())
+        matrix.translate(x, y, z)
         matrix.translate(0.125, 0.125, 0.125)
         matrix.scale(0.75f, 0.75f, 0.75f)
         predicate.getPreviewState(world)?.let { state: BlockState ->

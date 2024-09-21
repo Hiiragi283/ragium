@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTRecipeResult
-import hiiragi283.ragium.common.recipe.WeightedIngredient
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.display.Display
 import me.shedaniel.rei.api.common.entry.EntryIngredient
@@ -18,7 +17,9 @@ class HTMachineRecipeDisplay(val recipe: HTMachineRecipe, val id: Identifier) : 
     constructor(entry: RecipeEntry<HTMachineRecipe>) : this(entry.value, entry.id)
 
     override fun getInputEntries(): List<EntryIngredient> = buildList {
-        addAll(recipe.inputs.map(WeightedIngredient::entryIngredient))
+        add(recipe.getInput(0)?.entryIngredient ?: EntryIngredient.empty())
+        add(recipe.getInput(1)?.entryIngredient ?: EntryIngredient.empty())
+        add(recipe.getInput(2)?.entryIngredient ?: EntryIngredient.empty())
         add(EntryIngredients.ofIngredient(recipe.catalyst))
     }
 

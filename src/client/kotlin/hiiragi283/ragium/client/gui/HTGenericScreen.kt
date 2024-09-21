@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 
 @Environment(EnvType.CLIENT)
-class HTBurningBoxScreen(gui: SyncedGuiDescription, player: PlayerEntity, title: Text) :
+class HTGenericScreen(gui: SyncedGuiDescription, player: PlayerEntity, title: Text) :
     CottonInventoryScreen<SyncedGuiDescription>(gui, player, title) {
     constructor(gui: SyncedGuiDescription, inventory: PlayerInventory, title: Text) :
         this(gui, inventory.player, title)

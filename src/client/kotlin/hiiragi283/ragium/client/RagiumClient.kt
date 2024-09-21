@@ -1,9 +1,12 @@
 package hiiragi283.ragium.client
 
-import hiiragi283.ragium.client.gui.HTBurningBoxScreen
+import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
+import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMultiMachineBlockEntityRenderer
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.block.entity.HTMultiblockController
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
@@ -14,6 +17,8 @@ import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
@@ -52,18 +57,24 @@ object RagiumClient : ClientModInitializer {
             .map(HTMachineType::block)
             .forEach(RagiumClient::registerCutoutMipped)
 
-        HTMachineType.Multi.entries.forEach { type: HTMachineType.Multi ->
-            BlockEntityRendererFactories.register(type.blockEntityType) { HTMultiMachineBlockEntityRenderer }
-        }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
+        HTMachineType.Multi.entries
+            .map(HTMachineType.Multi::blockEntityType)
+            .forEach(::registerMultiblockRenderer)
     }
 
     private fun registerCutoutMipped(block: Block) {
         BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
     }
 
+    private fun <T> registerMultiblockRenderer(type: BlockEntityType<T>) where T : BlockEntity, T : HTMultiblockController {
+        BlockEntityRendererFactories.register(type, ::HTMultiMachineBlockEntityRenderer)
+    }
+
     private fun registerScreens() {
         HandledScreens.register(RagiumScreenHandlerTypes.MACHINE, ::HTMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.BURNING_BOX, ::HTBurningBoxScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.BURNING_BOX, ::HTGenericScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.ALCHEMICAL_INFUSER, ::HTGenericScreen)
     }
 
     private fun registerEvents() {

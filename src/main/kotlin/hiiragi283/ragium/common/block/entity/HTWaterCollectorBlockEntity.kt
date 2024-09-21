@@ -20,17 +20,17 @@ import net.minecraft.world.World
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTBaseBlockEntity(RagiumBlockEntityTypes.WATER_COLLECTOR, pos, state),
     SidedStorageBlockEntity {
-
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, registryLookup)
         SingleFluidStorage.writeNbt(internalTank, FluidVariant.CODEC, nbt, registryLookup)
     }
 
-    override fun readNbt(nbt: NbtCompound?, registryLookup: RegistryWrapper.WrapperLookup?) {
+    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, registryLookup)
         SingleFluidStorage.readNbt(internalTank, FluidVariant.CODEC, FluidVariant::blank, nbt, registryLookup)
     }
 
-    override fun tick(world: World, pos: BlockPos, state: BlockState) {
-        if (world.time % 20 != 0L) return
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         val sideWaters: Int =
             Direction.entries
                 .filterNot { it.axis == Direction.Axis.Y }
@@ -39,12 +39,12 @@ class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
                 .count { it.isIn(FluidTags.WATER) }
         val amount: Long =
             FluidConstants.BUCKET *
-                    when (sideWaters) {
-                        2 -> 1.0
-                        3 -> 1.5
-                        4 -> 2.0
-                        else -> 0.0
-                    }.toLong()
+                when (sideWaters) {
+                    2 -> 1.0
+                    3 -> 1.5
+                    4 -> 2.0
+                    else -> 0.0
+                }.toLong()
         useTransaction { transaction: Transaction ->
             internalTank.insert(
                 FluidVariant.of(Fluids.WATER),
@@ -54,7 +54,7 @@ class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             transaction.commit()
         }
     }
-    
+
     //    SidedStorageBlockEntity    //
 
     private val internalTank: SingleFluidStorage =

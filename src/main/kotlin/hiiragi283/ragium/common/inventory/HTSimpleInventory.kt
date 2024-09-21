@@ -26,15 +26,20 @@ open class HTSimpleInventory : Inventory {
     }
 
     protected val stacks: DefaultedList<ItemStack>
+    protected val slotFilter: (Int, ItemStack) -> Boolean
 
-    constructor(size: Int) {
+    constructor(size: Int, filter: (Int, ItemStack) -> Boolean = HTSidedStorageBuilder.ACCEPT_ALL) {
         stacks = DefaultedList.ofSize(size, ItemStack.EMPTY)
+        slotFilter = filter
     }
+
+    constructor(builder: HTSidedStorageBuilder) : this(builder.size, builder.slotFilter)
 
     constructor(stacks: List<ItemStack>) : this(*stacks.toTypedArray())
 
     constructor(vararg stacks: ItemStack) {
         this.stacks = DefaultedList.copyOf(ItemStack.EMPTY, *stacks)
+        this.slotFilter = HTSidedStorageBuilder.ACCEPT_ALL
     }
 
     fun writeNbt(nbt: NbtCompound, lookup: RegistryWrapper.WrapperLookup) {
@@ -73,4 +78,6 @@ open class HTSimpleInventory : Inventory {
     override fun markDirty() = Unit
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = true
+
+    override fun isValid(slot: Int, stack: ItemStack): Boolean = slotFilter(slot, stack)
 }

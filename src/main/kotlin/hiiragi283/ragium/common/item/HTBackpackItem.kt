@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.inventory.HTParentedInventory
+import hiiragi283.ragium.common.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.util.itemSettings
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -20,7 +20,7 @@ class HTBackpackItem private constructor(private val isLarge: Boolean) :
         itemSettings()
             .maxCount(1)
             .fireproof()
-            .component(RagiumComponentTypes.INVENTORY, HTParentedInventory(getSize(isLarge))),
+            .component(RagiumComponentTypes.INVENTORY, HTBackpackInventory(getSize(isLarge))),
     ) {
         companion object {
             @JvmField
@@ -36,7 +36,7 @@ class HTBackpackItem private constructor(private val isLarge: Boolean) :
                 false -> 3
             } * 9
 
-            private fun createHandler(isLarge: Boolean, inventory: HTParentedInventory): ScreenHandlerFactory = when (isLarge) {
+            private fun createHandler(isLarge: Boolean, inventory: HTBackpackInventory): ScreenHandlerFactory = when (isLarge) {
                 true -> ScreenHandlerFactory { syncId: Int, playerInventory: PlayerInventory, _: PlayerEntity ->
                     GenericContainerScreenHandler.createGeneric9x6(syncId, playerInventory, inventory)
                 }
@@ -49,12 +49,23 @@ class HTBackpackItem private constructor(private val isLarge: Boolean) :
 
         override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
             val stack: ItemStack = user.getStackInHand(hand)
-            val inventory: HTParentedInventory =
-                stack.get(RagiumComponentTypes.INVENTORY) as? HTParentedInventory ?: HTParentedInventory(getSize(isLarge))
+            val inventory: HTBackpackInventory =
+                stack.get(RagiumComponentTypes.INVENTORY) as? HTBackpackInventory
+                    ?: HTBackpackInventory(getSize(isLarge))
             inventory.parent = stack
             if (!world.isClient) {
                 user.openHandledScreen(SimpleNamedScreenHandlerFactory(createHandler(isLarge, inventory), TITLE))
             }
             return TypedActionResult.success(stack, world.isClient)
+        }
+
+        private class HTBackpackInventory(size: Int) : HTSimpleInventory(size) {
+            var parent: ItemStack? = null
+
+            override fun getMaxCount(stack: ItemStack): Int = 1024
+
+            override fun onClose(player: PlayerEntity) {
+                parent?.set(RagiumComponentTypes.INVENTORY, this)
+            }
         }
     }

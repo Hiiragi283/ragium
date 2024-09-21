@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.registry
 
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
+import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.forEach
@@ -9,6 +10,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.Transl
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.data.client.BlockStateModelGenerator
 import net.minecraft.data.server.loottable.BlockLootTableGenerator
 import net.minecraft.registry.Registries
@@ -28,6 +30,20 @@ class HTBlockRegister(val modId: String) : Iterable<Block> {
 
     fun registerSimple(name: String, settings: AbstractBlock.Settings = blockSettings(), action: Builder<Block>.() -> Unit): Block =
         register(name, Block(settings), action)
+
+    fun registerWithBE(
+        name: String,
+        type: BlockEntityType<*>,
+        settings: AbstractBlock.Settings = blockSettings(),
+        action: Builder<Block>.() -> Unit,
+    ): Block = register(name, HTBlockWithEntity.build(type, settings), action)
+
+    fun registerHorizontalWithBE(
+        name: String,
+        type: BlockEntityType<*>,
+        settings: AbstractBlock.Settings = blockSettings(),
+        action: Builder<Block>.() -> Unit,
+    ): Block = register(name, HTBlockWithEntity.buildHorizontal(type, settings), action)
 
     fun <T : Block> register(name: String, block: T, action: Builder<T>.() -> Unit): T {
         val id: Identifier = Identifier.of(modId, name)

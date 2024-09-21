@@ -5,28 +5,30 @@ import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.widget.WGridPanel
 import io.github.cottonmc.cotton.gui.widget.WItemSlot
 import io.github.cottonmc.cotton.gui.widget.data.Insets
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTBurningBoxScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
+class HTAlchemicalInfuserHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
     SyncedGuiDescription(
-        RagiumScreenHandlerTypes.BURNING_BOX,
+        RagiumScreenHandlerTypes.ALCHEMICAL_INFUSER,
         syncId,
         playerInv,
-        getBlockInventory(ctx, 2),
+        getBlockInventory(ctx, 5),
         getBlockPropertyDelegate(ctx),
     ) {
     init {
         val root = WGridPanel()
         setRootPanel(root)
         root.setInsets(Insets.ROOT_PANEL)
-        // fuel slot
-        root.add(WItemSlot.of(blockInventory, 0).setInputFilter(AbstractFurnaceBlockEntity::canUseAsFuel), 4, 1)
-        // ash slot
-        root.add(WItemSlot.of(blockInventory, 1).setInsertingAllowed(false), 4, 2)
+        // input slots
+        root.add(WItemSlot.of(blockInventory, 0), 2, 1)
+        root.add(WItemSlot.of(blockInventory, 1), 6, 1)
+        root.add(WItemSlot.of(blockInventory, 2), 2, 5)
+        root.add(WItemSlot.of(blockInventory, 3), 6, 5)
+        // output slots
+        root.add(WItemSlot.of(blockInventory, 4), 4, 3)
         // player inventory
-        root.add(createPlayerInventoryPanel(), 0, 3)
+        root.add(createPlayerInventoryPanel(), 0, 6)
         root.validate(this)
     }
 }
