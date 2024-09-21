@@ -22,9 +22,9 @@ object HTAlchemicalInfuserBlockEntityRenderer : BlockEntityRenderer<HTAlchemical
     ) {
         // render items
         renderItem(entity.world, Vec3d(-2.0, 1.0, -2.0), entity.getStack(0), matrices, vertexConsumers)
-        renderItem(entity.world, Vec3d(-2.0, 1.0, 2.0), entity.getStack(1), matrices, vertexConsumers)
-        renderItem(entity.world, Vec3d(2.0, 1.0, -2.0), entity.getStack(2), matrices, vertexConsumers)
-        renderItem(entity.world, Vec3d(2.0, 1.0, 2.0), entity.getStack(3), matrices, vertexConsumers)
+        renderItem(entity.world, Vec3d(2.0, 1.0, -2.0), entity.getStack(1), matrices, vertexConsumers)
+        renderItem(entity.world, Vec3d(2.0, 1.0, 2.0), entity.getStack(2), matrices, vertexConsumers)
+        renderItem(entity.world, Vec3d(-2.0, 1.0, 2.0), entity.getStack(3), matrices, vertexConsumers)
         // render preview
         renderMultiblock(entity, matrices, vertexConsumers)
     }

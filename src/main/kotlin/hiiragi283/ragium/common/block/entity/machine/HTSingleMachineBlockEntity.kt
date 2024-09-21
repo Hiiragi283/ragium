@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -17,11 +16,6 @@ abstract class HTSingleMachineBlockEntity(machineType: HTMachineType.Single, pos
     HTMachineBlockEntity<HTMachineType.Single>(machineType, pos, state),
     HTKineticProcessor {
     companion object {
-        @JvmField
-        val TICKER: BlockEntityTicker<HTSingleMachineBlockEntity> =
-            BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, blockEntity: HTSingleMachineBlockEntity ->
-            }
-
         @JvmStatic
         fun findProcessor(world: World, pos: BlockPos): BlockPos? {
             val state = world.getBlockState(pos)

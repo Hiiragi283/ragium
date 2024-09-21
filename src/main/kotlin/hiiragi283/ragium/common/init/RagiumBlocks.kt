@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.block.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.HTShaftBlock
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.registry.HTBlockRegister
 import hiiragi283.ragium.common.util.*
 import net.minecraft.block.Block
@@ -339,8 +338,6 @@ object RagiumBlocks {
 
     @JvmStatic
     private fun registerMachines(register: HTBlockRegister) {
-        // Recipe Serializer
-        Registry.register(Registries.RECIPE_SERIALIZER, Ragium.id("generic"), HTMachineRecipe.Serializer)
         // for each type
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             val id: Identifier = type.id

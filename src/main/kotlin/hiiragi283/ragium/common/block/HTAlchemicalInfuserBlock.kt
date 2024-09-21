@@ -1,13 +1,20 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.common.block.entity.HTAlchemicalInfuserBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.util.Hand
+import net.minecraft.util.ItemActionResult
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 
 object HTAlchemicalInfuserBlock :
     HTBlockWithEntity(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER, blockSettings(Blocks.CRYING_OBSIDIAN)) {
@@ -20,4 +27,16 @@ object HTAlchemicalInfuserBlock :
         pos: BlockPos,
         context: ShapeContext,
     ): VoxelShape = SHAPE
+
+    override fun onUseWithItem(
+        stack: ItemStack,
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+        hand: Hand,
+        hit: BlockHitResult,
+    ): ItemActionResult = (world.getBlockEntity(pos) as? HTAlchemicalInfuserBlockEntity)
+        ?.processRecipe(stack, world)
+        ?: ItemActionResult.SUCCESS
 }

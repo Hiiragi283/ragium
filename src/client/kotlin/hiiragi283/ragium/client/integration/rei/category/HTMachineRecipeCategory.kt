@@ -1,12 +1,12 @@
-package hiiragi283.ragium.client.integration.rei
+package hiiragi283.ragium.client.integration.rei.category
 
+import hiiragi283.ragium.client.integration.rei.categoryId
+import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import hiiragi283.ragium.common.machine.HTMachineType
-import me.shedaniel.math.Point
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
 import me.shedaniel.rei.api.client.gui.widgets.Widget
 import me.shedaniel.rei.api.client.gui.widgets.Widgets
-import me.shedaniel.rei.api.client.registry.display.DisplayCategory
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.util.EntryIngredients
 import me.shedaniel.rei.api.common.util.EntryStacks
@@ -15,7 +15,7 @@ import net.fabricmc.api.Environment
 import net.minecraft.text.Text
 
 @Environment(EnvType.CLIENT)
-class HTMachineRecipeCategory(val type: HTMachineType) : DisplayCategory<HTMachineRecipeDisplay> {
+class HTMachineRecipeCategory(val type: HTMachineType) : HTDisplayCategory<HTMachineRecipeDisplay> {
     override fun getCategoryIdentifier(): CategoryIdentifier<out HTMachineRecipeDisplay> = type.categoryId
 
     override fun getTitle(): Text = type.text
@@ -45,7 +45,7 @@ class HTMachineRecipeCategory(val type: HTMachineType) : DisplayCategory<HTMachi
         this +=
             Widgets
                 .createSlot(getPoint(bounds, 3.5, 1.0))
-                .entries(EntryIngredients.ofIngredient(display.recipe.catalyst))
+                .entries(EntryIngredients.ofIngredient(display.catalyst))
                 .markInput()
         // outputs
         this +=
@@ -64,10 +64,6 @@ class HTMachineRecipeCategory(val type: HTMachineType) : DisplayCategory<HTMachi
                 .entries(display.outputEntries.getOrNull(2) ?: listOf())
                 .markOutput()
     }
-
-    private fun getPoint(bounds: Rectangle, x: Int, y: Int): Point = Point(bounds.x + 5 + x * 18, bounds.y + 5 + y * 18)
-
-    private fun getPoint(bounds: Rectangle, x: Double, y: Double): Point = Point(bounds.x + 5 + x * 18, bounds.y + 5 + y * 18)
 
     override fun getDisplayHeight(): Int = 18 * 2 + 8
 

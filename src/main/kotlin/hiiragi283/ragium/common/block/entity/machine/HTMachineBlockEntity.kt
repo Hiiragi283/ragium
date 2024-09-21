@@ -4,7 +4,6 @@ import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
@@ -39,7 +38,7 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         val input =
-            HTMachineRecipeInput(
+            HTMachineRecipe.Input(
                 getStack(0),
                 getStack(1),
                 getStack(2),

@@ -4,7 +4,6 @@ import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.HTFluidPumpEntry
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import me.shedaniel.autoconfig.AutoConfig
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer
 import net.fabricmc.api.ModInitializer
@@ -51,7 +50,8 @@ object Ragium : ModInitializer {
         RagiumItems
 
         RagiumAdvancementCriteria
-        HTMachineRecipe.Serializer
+        RagiumRecipeSerializers
+        RagiumRecipeTypes
 
         registerDynamics()
         registerModifications()

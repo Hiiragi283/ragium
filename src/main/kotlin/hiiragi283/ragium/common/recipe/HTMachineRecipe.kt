@@ -7,18 +7,17 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.world.World
 
 class HTMachineRecipe(
     val type: HTMachineType,
-    val inputs: List<WeightedIngredient>,
-    val outputs: List<HTRecipeResult>,
+    override val inputs: List<WeightedIngredient>,
+    override val outputs: List<HTRecipeResult>,
     val catalyst: Ingredient,
-) : Recipe<HTMachineRecipeInput> {
+) : HTRecipeBase<HTMachineRecipe.Input> {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMachineRecipe> =
@@ -55,28 +54,16 @@ class HTMachineRecipe(
             )
     }
 
-    fun getInput(index: Int): WeightedIngredient? = inputs.getOrNull(index)
-
-    fun getOutput(index: Int): HTRecipeResult? = outputs.getOrNull(index)
-
     //    Recipe    //
 
-    override fun matches(input: HTMachineRecipeInput, world: World): Boolean = input.matches(
+    override fun matches(input: Input, world: World): Boolean = input.matches(
         getInput(0),
         getInput(1),
         getInput(2),
         catalyst,
     )
 
-    override fun craft(input: HTMachineRecipeInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)
-
-    override fun fits(width: Int, height: Int): Boolean = true
-
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = getOutput(0)?.toStack() ?: ItemStack.EMPTY
-
-    override fun isIgnoredInRecipeBook(): Boolean = true
-
-    override fun createIcon(): ItemStack = ItemStack.EMPTY
+    override fun createIcon(): ItemStack = type.block.asItem().defaultStack
 
     override fun getSerializer(): RecipeSerializer<*> = Serializer
 
@@ -86,5 +73,51 @@ class HTMachineRecipe(
         override fun codec(): MapCodec<HTMachineRecipe> = CODEC
 
         override fun packetCodec(): PacketCodec<RegistryByteBuf, HTMachineRecipe> = PACKET_CODEC
+    }
+
+    //    Input    //
+
+    class Input(
+        private val first: ItemStack,
+        private val second: ItemStack,
+        private val third: ItemStack,
+        private val catalyst: ItemStack,
+    ) : RecipeInput {
+        fun matches(
+            first: WeightedIngredient?,
+            second: WeightedIngredient?,
+            third: WeightedIngredient?,
+            catalyst: Ingredient?,
+        ): Boolean = matchesInternal(
+            first ?: WeightedIngredient.EMPTY,
+            second ?: WeightedIngredient.EMPTY,
+            third ?: WeightedIngredient.EMPTY,
+            catalyst ?: Ingredient.EMPTY,
+        )
+
+        private fun matchesInternal(
+            first: WeightedIngredient,
+            second: WeightedIngredient,
+            third: WeightedIngredient,
+            catalyst: Ingredient,
+        ): Boolean = when {
+            !first.test(this.first) -> false
+            !second.test(this.second) -> false
+            !third.test(this.third) -> false
+            !catalyst.test(this.catalyst) -> false
+            else -> true
+        }
+
+        //    RecipeInput    //
+
+        override fun getStackInSlot(slot: Int): ItemStack = when (slot) {
+            0 -> first
+            1 -> second
+            2 -> third
+            3 -> catalyst
+            else -> throw IndexOutOfBoundsException()
+        }
+
+        override fun getSize(): Int = 4
     }
 }

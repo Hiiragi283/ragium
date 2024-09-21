@@ -5,7 +5,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks.Properties.LEVEL_7
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.recipe.HTMachineRecipeInput
 import hiiragi283.ragium.common.util.modifyBlockState
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -56,7 +55,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             .set(0, HTStorageIO.INPUT, HTStorageSide.SIDE)
             .set(1, HTStorageIO.OUTPUT, HTStorageSide.DOWN)
             .buildSided()
-    private val matchGetter: RecipeManager.MatchGetter<HTMachineRecipeInput, HTMachineRecipe> =
+    private val matchGetter: RecipeManager.MatchGetter<HTMachineRecipe.Input, HTMachineRecipe> =
         RecipeManager.createCachedMatchGetter(HTMachineType.Single.GRINDER)
 
     fun process() {
@@ -64,7 +63,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         val recipe: HTMachineRecipe =
             matchGetter
                 .getFirstMatch(
-                    HTMachineRecipeInput(
+                    HTMachineRecipe.Input(
                         getStack(0),
                         ItemStack.EMPTY,
                         ItemStack.EMPTY,

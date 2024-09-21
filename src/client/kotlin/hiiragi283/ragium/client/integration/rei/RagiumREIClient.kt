@@ -1,12 +1,22 @@
 package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.client.gui.HTMachineScreen
+import hiiragi283.ragium.client.integration.rei.category.HTAlchemyRecipeCategory
+import hiiragi283.ragium.client.integration.rei.category.HTFluidPumpCategory
+import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
+import hiiragi283.ragium.client.integration.rei.display.HTDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTInfusionRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
+import hiiragi283.ragium.common.recipe.HTInfusionRecipe
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
+import hiiragi283.ragium.common.recipe.HTTransformRecipe
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin
@@ -31,6 +41,10 @@ object RagiumREIClient : REIClientPlugin {
     @JvmField
     val FLUID_PUMP: CategoryIdentifier<HTFluidPumpCategory.FluidDisplay> =
         CategoryIdentifier.of(Ragium.MOD_ID, "fluid_pump")
+
+    @JvmStatic
+    val ALCHEMY: CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> =
+        CategoryIdentifier.of(Ragium.MOD_ID, "alchemical_infusion")
 
     private val CATEGORY_IDS: Map<HTMachineType, CategoryIdentifier<HTMachineRecipeDisplay>> =
         HTMachineType.getEntries().associateWith { CategoryIdentifier.of(it.id) }
@@ -57,6 +71,8 @@ object RagiumREIClient : REIClientPlugin {
         )
         // Fluid Pump
         registry.add(HTFluidPumpCategory)
+        // Alchemy Recipe
+        registry.add(HTAlchemyRecipeCategory)
     }
 
     override fun registerDisplays(registry: DisplayRegistry) {
@@ -68,6 +84,9 @@ object RagiumREIClient : REIClientPlugin {
         HTFluidPumpEntryLoader.registry.forEach { (biomeKey: RegistryKey<Biome>, item: HTFluidCubeItem) ->
             registry.add(HTFluidPumpCategory.FluidDisplay(biomeKey, item))
         }
+        // Alchemy Infusion
+        registry.registerRecipeFiller(HTInfusionRecipe::class.java, HTAlchemyRecipe.Type, ::HTInfusionRecipeDisplay)
+        registry.registerRecipeFiller(HTTransformRecipe::class.java, HTAlchemyRecipe.Type, ::HTTransformRecipeDisplay)
     }
 
     override fun registerScreens(registry: ScreenRegistry) {
