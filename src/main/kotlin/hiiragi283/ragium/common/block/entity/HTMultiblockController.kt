@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
 import hiiragi283.ragium.common.machine.HTMultiblockValidator
+import hiiragi283.ragium.common.util.getOrDefault
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.state.property.Properties
@@ -30,7 +31,7 @@ interface HTMultiblockController {
         return when (world.isClient) {
             true -> ActionResult.SUCCESS
             false -> {
-                val direction: Direction = state.get(Properties.HORIZONTAL_FACING)
+                val direction: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
                 val validator = HTMultiblockValidator(world, pos, player)
                 blockEntity.buildMultiblock(validator.rotate(direction))
                 if (validator.isValid) {

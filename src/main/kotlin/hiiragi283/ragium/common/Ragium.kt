@@ -60,6 +60,7 @@ object Ragium : ModInitializer {
         RagiumCauldronBehaviors.init()
         HTHardModeResourceCondition.init()
         RagiumEnergyProviders.init()
+        RagiumNetworks
 
         RagiumEventHandlers.init()
 

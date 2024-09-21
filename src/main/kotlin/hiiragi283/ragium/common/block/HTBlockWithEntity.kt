@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTBlockWithEntity(settings: Settings) :
+abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Settings) :
     Block(settings),
     BlockEntityProvider {
     companion object {
@@ -43,19 +43,14 @@ abstract class HTBlockWithEntity(settings: Settings) :
         } as? BlockEntityTicker<A>
 
         @JvmStatic
-        fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
+        fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(type, settings) {
             init {
                 type.addSupportedBlock(this)
             }
-
-            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
-
-            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-                validateTicker(type, type, TICKER)
         }
 
         @JvmStatic
-        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
+        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(type, settings) {
             init {
                 type.addSupportedBlock(this)
                 defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
@@ -73,11 +68,6 @@ abstract class HTBlockWithEntity(settings: Settings) :
 
             override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
                 state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
-
-            override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
-
-            override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-                validateTicker(type, type, TICKER)
         }
     }
 
@@ -107,4 +97,9 @@ abstract class HTBlockWithEntity(settings: Settings) :
         (world.getBlockEntity(pos) as? HTBaseBlockEntity)?.getComparatorOutput(state, world, pos) ?: 0
 
     override fun hasComparatorOutput(state: BlockState): Boolean = true
+
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
+
+    override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+        validateTicker(type, this.type, TICKER)
 }

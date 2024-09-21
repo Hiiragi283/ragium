@@ -26,7 +26,7 @@ class HTAlchemicalInfuserHandler(syncId: Int, playerInv: PlayerInventory, ctx: S
         root.add(WItemSlot.of(blockInventory, 2), 2, 5)
         root.add(WItemSlot.of(blockInventory, 3), 6, 5)
         // output slots
-        root.add(WItemSlot.of(blockInventory, 4), 4, 3)
+        root.add(WItemSlot.of(blockInventory, 4).setInsertingAllowed(false), 4, 3)
         // player inventory
         root.add(createPlayerInventoryPanel(), 0, 6)
         root.validate(this)

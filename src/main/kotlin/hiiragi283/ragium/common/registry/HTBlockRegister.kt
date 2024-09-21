@@ -5,6 +5,7 @@ import com.google.common.collect.Table
 import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.util.blockSettings
+import hiiragi283.ragium.common.util.buildModelVariant
 import hiiragi283.ragium.common.util.forEach
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -12,6 +13,8 @@ import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.data.client.BlockStateModelGenerator
+import net.minecraft.data.client.ModelIds
+import net.minecraft.data.client.VariantsBlockStateSupplier
 import net.minecraft.data.server.loottable.BlockLootTableGenerator
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -126,6 +129,15 @@ class HTBlockRegister(val modId: String) : Iterable<Block> {
         }
 
         fun generateSimpleState(): Builder<T> = generateState { it.registerSimpleCubeAll(block) }
+
+        fun generateStateWithoutModel(): Builder<T> = generateState {
+            it.blockStateCollector.accept(
+                VariantsBlockStateSupplier.create(
+                    block,
+                    buildModelVariant(ModelIds.getBlockModelId(block)),
+                ),
+            )
+        }
 
         fun setCustomBlockState(): Builder<T> = apply {
             register.stateCache.remove(block)

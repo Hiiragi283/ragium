@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.inventory
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.common.network.HTInventoryPayload
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
@@ -9,7 +11,9 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.collection.DefaultedList
+import net.minecraft.util.math.BlockPos
 
 open class HTSimpleInventory : Inventory {
     companion object {
@@ -53,6 +57,12 @@ open class HTSimpleInventory : Inventory {
     fun modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
         val stackIn: ItemStack = getStack(slot)
         setStack(slot, mapping(stackIn))
+    }
+
+    fun sendS2CPacket(player: ServerPlayerEntity, pos: BlockPos) {
+        stacks.forEachIndexed { slot: Int, stack: ItemStack ->
+            ServerPlayNetworking.send(player, HTInventoryPayload.createPacket(pos, slot, stack))
+        }
     }
 
     //    Inventory    //

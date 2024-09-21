@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.block.HTAlchemicalInfuserBlock
 import hiiragi283.ragium.common.block.HTGearBoxBlock
 import hiiragi283.ragium.common.block.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.HTShaftBlock
@@ -11,7 +12,10 @@ import hiiragi283.ragium.common.registry.HTBlockRegister
 import hiiragi283.ragium.common.util.*
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.data.client.*
+import net.minecraft.data.client.BlockStateModelGenerator
+import net.minecraft.data.client.TextureMap
+import net.minecraft.data.client.VariantSettings
+import net.minecraft.data.client.VariantsBlockStateSupplier
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.BlockTags
@@ -34,11 +38,7 @@ object RagiumBlocks {
             generateState {
                 it.registerSingleton(
                     block,
-                    TexturedModel.makeFactory({
-                        TextureMap()
-                            .put(TextureKey.LAYER0, Identifier.of("block/stone"))
-                            .put(TextureKey.LAYER1, prefixedId)
-                    }, RagiumModels.LAYERED),
+                    RagiumModels.createLayered(Identifier.of("block/stone"), prefixedId),
                 )
             }
             setCustomLootTable()
@@ -55,11 +55,7 @@ object RagiumBlocks {
             generateState {
                 it.registerSingleton(
                     block,
-                    TexturedModel.makeFactory({
-                        TextureMap()
-                            .put(TextureKey.LAYER0, Identifier.of("block/deepslate"))
-                            .put(TextureKey.LAYER1, Ragium.id("block/raginite_ore"))
-                    }, RagiumModels.LAYERED),
+                    RagiumModels.createLayered(Identifier.of("block/deepslate"), Ragium.id("block/raginite_ore")),
                 )
             }
 
@@ -222,14 +218,10 @@ object RagiumBlocks {
             generateState {
                 it.registerNorthDefaultHorizontalRotated(
                     block,
-                    TexturedModel.makeFactory(
-                        { block: Block ->
-                            TextureMap()
-                                .put(TextureKey.TOP, TextureMap.getId(Blocks.BRICKS))
-                                .put(TextureKey.BOTTOM, TextureMap.getId(Blocks.BRICKS))
-                                .put(TextureKey.FRONT, TextureMap.getSubId(block, "_front"))
-                        },
-                        RagiumModels.MACHINE,
+                    RagiumModels.createMachine(
+                        Blocks.BRICKS,
+                        Blocks.BRICKS,
+                        TextureMap.getSubId(block, "_front"),
                     ),
                 )
             }
@@ -302,14 +294,10 @@ object RagiumBlocks {
             generateState {
                 it.registerNorthDefaultHorizontalRotated(
                     block,
-                    TexturedModel.makeFactory(
-                        { block: Block ->
-                            TextureMap()
-                                .put(TextureKey.TOP, TextureMap.getId(Blocks.POLISHED_BLACKSTONE_BRICKS))
-                                .put(TextureKey.BOTTOM, TextureMap.getId(Blocks.POLISHED_BLACKSTONE_BRICKS))
-                                .put(TextureKey.FRONT, TextureMap.getSubId(BURNING_BOX, "_front"))
-                        },
-                        RagiumModels.MACHINE,
+                    RagiumModels.createMachine(
+                        Blocks.POLISHED_BLACKSTONE_BRICKS,
+                        Blocks.POLISHED_BLACKSTONE_BRICKS,
+                        TextureMap.getSubId(BURNING_BOX, "_front"),
                     ),
                 )
             }
@@ -318,11 +306,36 @@ object RagiumBlocks {
 
     @JvmField
     val ALCHEMICAL_INFUSER: Block =
-        REGISTER.registerHorizontalWithBE(
-            "alchemical_infuser",
-            RagiumBlockEntityTypes.ALCHEMICAL_INFUSER,
-        ) {
+        REGISTER.register("alchemical_infuser", HTAlchemicalInfuserBlock) {
+            putEnglish("Alchemical Infuser")
+            putEnglishTips("Gotcha!")
+            putJapanese("錬金注入機")
+            putJapaneseTips("ガッチャ！")
+            generateStateWithoutModel()
         }
+
+    @JvmField
+    val ITEM_DISPLAY: Block =
+        REGISTER.registerWithBE("item_display", RagiumBlockEntityTypes.ITEM_DISPLAY) {
+            putEnglish("Item Display")
+            putEnglishTips("")
+            putJapanese("アイテムティスプレイ")
+            putJapaneseTips("")
+            generateState {
+                it.registerSingleton(
+                    block,
+                    RagiumModels.createDisplay(
+                        Identifier.of("block/oak_log_top"),
+                        Identifier.of("block/oak_log"),
+                    ),
+                )
+            }
+        }
+
+    init {
+        RagiumBlockEntityTypes.ALCHEMICAL_INFUSER.addSupportedBlock(ALCHEMICAL_INFUSER)
+        RagiumBlockEntityTypes.ITEM_DISPLAY.addSupportedBlock(ITEM_DISPLAY)
+    }
 
     @JvmStatic
     private fun registerMachines(register: HTBlockRegister) {
@@ -337,17 +350,17 @@ object RagiumBlocks {
                 generateState {
                     it.registerNorthDefaultHorizontalRotated(
                         type.block,
-                        TexturedModel.makeFactory({
-                            TextureMap()
-                                .put(TextureKey.TOP, type.tier.casingTex)
-                                .put(TextureKey.BOTTOM, type.tier.baseTex)
-                                .put(TextureKey.FRONT, TextureMap.getSubId(type.block, "_front"))
-                        }, RagiumModels.MACHINE),
+                        RagiumModels.createMachine(
+                            type.tier.casingTex,
+                            type.tier.baseTex,
+                            TextureMap.getSubId(type.block, "_front"),
+                        ),
                     )
                 }
             }
             // BlockEntityType
             Registry.register(Registries.BLOCK_ENTITY_TYPE, id, type.blockEntityType)
+            type.blockEntityType.addSupportedBlock(block)
             // RecipeType
             Registry.register(Registries.RECIPE_TYPE, id, type)
         }

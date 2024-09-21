@@ -15,6 +15,7 @@ import net.minecraft.data.client.ModelIds
 import net.minecraft.data.client.TextureMap
 import net.minecraft.item.Item
 import net.minecraft.registry.tag.ItemTags
+import net.minecraft.util.Rarity
 import java.awt.Color
 
 object RagiumItems {
@@ -498,7 +499,11 @@ object RagiumItems {
         register.registerBlockItem(RagiumBlocks.SHAFT)
         register.registerBlockItem(RagiumBlocks.GEAR_BOX)
         register.registerBlockItem(RagiumBlocks.BLAZING_BOX)
-        register.registerBlockItem(RagiumBlocks.ALCHEMICAL_INFUSER)
+        register.registerBlockItem(
+            RagiumBlocks.ALCHEMICAL_INFUSER,
+            itemSettings().rarity(Rarity.EPIC),
+        )
+        register.registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
 
         registerMachines(register)
     }

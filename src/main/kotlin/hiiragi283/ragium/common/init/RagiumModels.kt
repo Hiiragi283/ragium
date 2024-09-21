@@ -7,6 +7,7 @@ import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
 import net.minecraft.data.client.TextureMap
 import net.minecraft.data.client.TexturedModel
+import net.minecraft.util.Identifier
 import java.util.*
 
 object RagiumModels {
@@ -37,6 +38,16 @@ object RagiumModels {
             TextureKey.FRONT,
         )
 
+    @JvmField
+    val EMPTY: Model = model("block/empty")
+
+    @JvmField
+    val DISPLAY: Model = model(
+        "block/display",
+        TextureKey.TOP,
+        TextureKey.SIDE,
+    )
+
     //    Item    //
 
     @JvmField
@@ -51,6 +62,14 @@ object RagiumModels {
     )
 
     //    Factory    //
+
+    @JvmStatic
+    fun createLayered(inner: Identifier, outer: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap()
+            .put(TextureKey.LAYER0, inner)
+            .put(TextureKey.LAYER1, outer)
+    }, LAYERED)
+
     @JvmField
     val HULL_TEXTURE_FACTORY: TexturedModel.Factory =
         TexturedModel.makeFactory({ block: Block ->
@@ -60,4 +79,21 @@ object RagiumModels {
                 .put(TextureKey.TOP, tier.casingTex)
                 .put(TextureKey.BOTTOM, tier.baseTex)
         }, HULL)
+
+    @JvmStatic
+    fun createMachine(top: Identifier, bottom: Identifier, front: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap().put(TextureKey.TOP, top).put(TextureKey.BOTTOM, bottom).put(TextureKey.FRONT, front)
+    }, MACHINE)
+
+    @JvmStatic
+    fun createMachine(top: Block, bottom: Block, front: Identifier): TexturedModel.Factory =
+        createMachine(TextureMap.getId(top), TextureMap.getId(bottom), front)
+
+    @JvmField
+    val EMPTY_FACTORY: TexturedModel.Factory = TexturedModel.makeFactory({ TextureMap() }, EMPTY)
+
+    @JvmStatic
+    fun createDisplay(top: Identifier, side: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap().put(TextureKey.TOP, top).put(TextureKey.SIDE, side)
+    }, DISPLAY)
 }

@@ -1,10 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.entity.HTAlchemicalInfuserBlockEntity
-import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
-import hiiragi283.ragium.common.block.entity.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.entity.HTWaterCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.block.entity.generator.HTBlazingBoxBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTBurningBoxBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTWaterGeneratorBlockEntity
@@ -41,6 +38,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val ALCHEMICAL_INFUSER: BlockEntityType<HTAlchemicalInfuserBlockEntity> =
         register("alchemical_infuser", ::HTAlchemicalInfuserBlockEntity)
+
+    @JvmField
+    val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
+        register("item_display", ::HTItemDisplayBlockEntity)
 
     private fun <T : HTBaseBlockEntity> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(

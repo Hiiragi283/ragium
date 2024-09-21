@@ -3,18 +3,18 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMultiMachineBlockEntityRenderer
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntity
@@ -22,8 +22,10 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.util.math.BlockPos
 import java.awt.Color
 
 @Environment(EnvType.CLIENT)
@@ -32,8 +34,8 @@ object RagiumClient : ClientModInitializer {
         registerItems()
         registerBlocks()
         registerScreens()
-
         registerEvents()
+        registerNetworks()
 
         Ragium.log { info("Ragium-Client initialized!") }
     }
@@ -51,6 +53,7 @@ object RagiumClient : ClientModInitializer {
         registerCutoutMipped(RagiumBlocks.BURNING_BOX)
         registerCutoutMipped(RagiumBlocks.GEAR_BOX)
         registerCutoutMipped(RagiumBlocks.BLAZING_BOX)
+        registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
 
         HTMachineType
             .getEntries()
@@ -58,6 +61,7 @@ object RagiumClient : ClientModInitializer {
             .forEach(RagiumClient::registerCutoutMipped)
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         HTMachineType.Multi.entries
             .map(HTMachineType.Multi::blockEntityType)
             .forEach(::registerMultiblockRenderer)
@@ -78,8 +82,21 @@ object RagiumClient : ClientModInitializer {
     }
 
     private fun registerEvents() {
-        /*ItemTooltipCallback.EVENT.register { stack: ItemStack, context: Item.TooltipContext, type: TooltipType, tooltips: MutableList<Text> ->
-            stack.get(RagiumComponentTypes.TOOLTIPS)?.appendTooltip(context, tooltips::add, type)
-        }*/
+    }
+
+    private fun registerNetworks() {
+        ClientPlayNetworking.registerGlobalReceiver(
+            RagiumNetworks.SET_STACK,
+        ) { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
+            val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
+            (context.player().world.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
+        }
+
+        ClientPlayNetworking.registerGlobalReceiver(
+            RagiumNetworks.REMOVE_STACK,
+        ) { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
+            val (pos: BlockPos, slot: Int) = payload
+            (context.player().world.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
+        }
     }
 }

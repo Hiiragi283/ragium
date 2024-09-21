@@ -23,8 +23,8 @@ sealed interface HTMachineType :
     ItemConvertible,
     StringIdentifiable {
     val tier: HTMachineTier
-    val block: HTMachineBlock
     val blockEntityType: BlockEntityType<*>
+    val block: HTMachineBlock
 
     val id: Identifier
         get() = Ragium.id(asString())
@@ -98,9 +98,9 @@ sealed interface HTMachineType :
             val CODEC: Codec<Single> = StringIdentifiable.createCodec(Single::values)
         }
 
-        override val block: HTMachineBlock = HTMachineBlock(this)
         override val blockEntityType: BlockEntityType<HTSingleMachineBlockEntity> =
-            BlockEntityType.Builder.create(factory, block).build()
+            BlockEntityType.Builder.create(factory).build()
+        override val block: HTMachineBlock = HTMachineBlock(this)
 
         override fun asString(): String = name.lowercase()
     }
@@ -119,9 +119,9 @@ sealed interface HTMachineType :
         DISTILLATION_TOWER(HTMachineTier.ELECTRIC, ::HTDistillationTowerBlockEntity),
         ;
 
-        override val block: HTMachineBlock = HTMachineBlock(this)
         override val blockEntityType: BlockEntityType<HTMultiMachineBlockEntity> =
-            BlockEntityType.Builder.create(factory, block).build()
+            BlockEntityType.Builder.create(factory).build()
+        override val block: HTMachineBlock = HTMachineBlock(this)
 
         override fun asString(): String = name.lowercase()
 

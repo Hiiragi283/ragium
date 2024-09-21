@@ -51,6 +51,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         distillation(exporter)
         // tier4
 
+        // patterned
         RagiumMetalItemRecipeGroups
         HTMetalItemRecipeGroup.registry.forEach { (_: String, family: HTMetalItemRecipeGroup) ->
             family.generateRecipes(exporter, ::exporterWrapper)
@@ -100,6 +101,24 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             )
 
         createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
+        createEmptyFluidCube(exporter, RagiumItems.PE_PLATE, 8, "_pe")
+        createEmptyFluidCube(exporter, RagiumItems.PVC_PLATE, 16, "_pvc")
+        createEmptyFluidCube(exporter, RagiumItems.PTFE_PLATE, 32, "_ptfe")
+
+        createShaped(Items.NETHER_STAR)
+            .pattern(" A ")
+            .pattern("BCD")
+            .pattern(" E ")
+            .input('A', RagiumItems.RAGIUM_DUST)
+            .input('B', RagiumItems.RIGIUM_DUST)
+            .input('C', RagiumItems.RUGIUM_DUST)
+            .input('D', RagiumItems.REGIUM_DUST)
+            .input('E', RagiumItems.ROGIUM_DUST)
+            .itemCriterion(Items.NETHER_STAR)
+            .offerTo(
+                exporter,
+                Ragium.id("shaped/nether_star"),
+            )
 
         // tools
         createShaped(RagiumItems.FORGE_HAMMER)
@@ -342,6 +361,16 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             RagiumBlocks.REFINED_RAGI_STEEL_HULL,
         )
         // tier4
+        createShaped(RagiumBlocks.ALCHEMICAL_INFUSER)
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .input('A', RagiumItemTags.STEEL_INGOTS)
+            .input('B', Items.DRAGON_BREATH)
+            .input('C', Items.NETHER_STAR)
+            .input('D', Items.CRYING_OBSIDIAN)
+            .itemCriterion(Items.NETHER_STAR)
+            .offerTo(exporter, Ragium.id("shaped/alchemical_infuser"))
     }
 
     private fun createShaped(output: ItemConvertible, count: Int = 1): ShapedRecipeJsonBuilder =
