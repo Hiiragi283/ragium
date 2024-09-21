@@ -9,9 +9,9 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         val pack: FabricDataGenerator.Pack = fabricDataGenerator.createPack()
 
         pack.addProvider(::RagiumAdvancementProvider)
+        pack.addProvider(::RagiumFluidPumpEntryProvider)
         pack.addProvider(::RagiumLootProvider)
         pack.addProvider(::RagiumRecipeProvider)
-        pack.addProvider(::RagiumDynamicRegistryProvider)
         RagiumTagProviders.init(pack)
 
         pack.addProvider(::RagiumModelProvider)
