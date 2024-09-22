@@ -12,9 +12,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.data.client.BlockStateModelGenerator
-import net.minecraft.data.client.ModelIds
-import net.minecraft.data.client.VariantsBlockStateSupplier
+import net.minecraft.data.client.*
 import net.minecraft.data.server.loottable.BlockLootTableGenerator
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -128,7 +126,8 @@ class HTBlockRegister(val modId: String) : Iterable<Block> {
             register.stateCache[block] = action
         }
 
-        fun generateSimpleState(): Builder<T> = generateState { it.registerSimpleCubeAll(block) }
+        fun generateSimpleState(id: Identifier = TextureMap.getId(block)): Builder<T> =
+            generateState { it.registerSingleton(block) { TexturedModel.getCubeAll(id) } }
 
         fun generateStateWithoutModel(): Builder<T> = generateState {
             it.blockStateCollector.accept(

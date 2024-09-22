@@ -39,12 +39,11 @@ repositories {
             includeGroup("net.fabricmc.fabric-api")
         }
     }
-    // maven(url = "https://dvs1.progwml6.com/files/maven") // JEI
     maven(url = "https://maven.architectury.dev")
     maven(url = "https://maven.shedaniel.me") // REI
     maven(url = "https://maven.terraformersmc.com/releases")
-    // maven(url = "https://thedarkcolour.github.io/KotlinForForge") // KfF
     maven(url = "https://server.bbkr.space/artifactory/libs-release") // LibGui
+    maven(url = "https://maven.ladysnake.org/releases") // CCA
 }
 
 loom {

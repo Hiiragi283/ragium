@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_input": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:alchemical_infuser"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:chiseled_quartz_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:lime_stained_glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input2": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:melon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input3": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:ender_pearl"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:alchemy/infuse/budding_rugium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_input0",
+      "has_input1",
+      "has_input2",
+      "has_input3",
+      "has_input"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:alchemy/infuse/budding_rugium"
+    ]
+  }
+}

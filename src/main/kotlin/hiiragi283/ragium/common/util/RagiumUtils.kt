@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.util
 
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.common.component.item.HTTooltipsComponent
+import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.component.HTTooltipsComponent
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.machine.HTMachineTier
 import io.netty.buffer.ByteBuf
@@ -78,6 +79,8 @@ fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state:
 //    Item    //
 
 fun itemSettings(): Item.Settings = Item.Settings()
+
+fun Item.Settings.element(element: RagiElement): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.TIER, tier)
 

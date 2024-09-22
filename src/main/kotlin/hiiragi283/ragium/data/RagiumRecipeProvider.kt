@@ -1,7 +1,9 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
+import hiiragi283.ragium.common.data.HTInfusionRecipeJsonBuilder
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItemTags
@@ -50,7 +52,8 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         electrolyzer(exporter)
         distillation(exporter)
         // tier4
-
+        infusion(exporter)
+        transform(exporter)
         // patterned
         RagiumMetalItemRecipeGroups
         HTMetalItemRecipeGroup.registry.forEach { (_: String, family: HTMetalItemRecipeGroup) ->
@@ -109,11 +112,11 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .pattern(" A ")
             .pattern("BCD")
             .pattern(" E ")
-            .input('A', RagiumItems.RAGIUM_DUST)
-            .input('B', RagiumItems.RIGIUM_DUST)
-            .input('C', RagiumItems.RUGIUM_DUST)
-            .input('D', RagiumItems.REGIUM_DUST)
-            .input('E', RagiumItems.ROGIUM_DUST)
+            .input('A', RagiElement.RAGIUM.dustItem)
+            .input('B', RagiElement.RIGIUM.dustItem)
+            .input('C', RagiElement.RUGIUM.dustItem)
+            .input('D', RagiElement.REGIUM.dustItem)
+            .input('E', RagiElement.ROGIUM.dustItem)
             .itemCriterion(Items.NETHER_STAR)
             .offerTo(
                 exporter,
@@ -178,18 +181,18 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         // hulls
         val hullMap: Map<HTMachineTier, Block> = mapOf(
             HTMachineTier.HEAT to RagiumBlocks.RAGI_ALLOY_HULL,
-            HTMachineTier.KINETIC to RagiumBlocks.RAGI_STEEL_HULL,
-            HTMachineTier.ELECTRIC to RagiumBlocks.REFINED_RAGI_STEEL_HULL,
+            HTMachineTier.ELECTRIC to RagiumBlocks.RAGI_STEEL_HULL,
+            HTMachineTier.CHEMICAL to RagiumBlocks.REFINED_RAGI_STEEL_HULL,
         )
         val ingotMap: Map<HTMachineTier, Item> = mapOf(
             HTMachineTier.HEAT to RagiumItems.RAGI_ALLOY_INGOT,
-            HTMachineTier.KINETIC to RagiumItems.RAGI_STEEL_INGOT,
-            HTMachineTier.ELECTRIC to RagiumItems.REFINED_RAGI_STEEL_INGOT,
+            HTMachineTier.ELECTRIC to RagiumItems.RAGI_STEEL_INGOT,
+            HTMachineTier.CHEMICAL to RagiumItems.REFINED_RAGI_STEEL_INGOT,
         )
         val plateMap: Map<HTMachineTier, Item> = mapOf(
             HTMachineTier.HEAT to RagiumItems.RAGI_ALLOY_PLATE,
-            HTMachineTier.KINETIC to RagiumItems.RAGI_STEEL_PLATE,
-            HTMachineTier.ELECTRIC to RagiumItems.REFINED_RAGI_STEEL_PLATE,
+            HTMachineTier.ELECTRIC to RagiumItems.RAGI_STEEL_PLATE,
+            HTMachineTier.CHEMICAL to RagiumItems.REFINED_RAGI_STEEL_PLATE,
         )
 
         ingotMap.forEach { (tier: HTMachineTier, ingot: Item) ->
@@ -255,7 +258,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .pattern("BCB")
             .pattern("BDB")
             .input('A', RagiumItems.RAGI_STEEL_INGOT)
-            .input('B', HTMachineTier.KINETIC.base)
+            .input('B', HTMachineTier.ELECTRIC.base)
             .input('C', RagiumBlocks.SHAFT)
             .input('D', ConventionalItemTags.REDSTONE_DUSTS)
             .itemCriterion(RagiumBlocks.SHAFT)
@@ -768,5 +771,72 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addOutput(RagiumItems.TOLUENE_FLUID_CUBE)
             .addOutput(RagiumItems.PHENOL_FLUID_CUBE)
             .offerTo(exporter)
+    }
+
+    //    Alchemical Infusion    //
+
+    private fun infusion(exporter: RecipeExporter) {
+        registerBudding(
+            exporter,
+            RagiElement.RAGIUM,
+            Items.RED_STAINED_GLASS,
+            Items.RED_NETHER_BRICKS,
+            Items.BLAZE_POWDER,
+        )
+        registerBudding(
+            exporter,
+            RagiElement.RIGIUM,
+            Items.YELLOW_STAINED_GLASS,
+            Items.GLOWSTONE,
+            Items.GOLDEN_APPLE,
+        )
+        registerBudding(
+            exporter,
+            RagiElement.RUGIUM,
+            Items.LIME_STAINED_GLASS,
+            Items.MELON,
+            Items.ENDER_PEARL,
+        )
+        registerBudding(
+            exporter,
+            RagiElement.REGIUM,
+            Items.LIGHT_BLUE_STAINED_GLASS,
+            Items.BLUE_ICE,
+            Items.PRISMARINE_SHARD,
+        )
+        registerBudding(
+            exporter,
+            RagiElement.ROGIUM,
+            Items.PURPLE_STAINED_GLASS,
+            Items.AMETHYST_BLOCK,
+            Items.SHULKER_SHELL,
+        )
+    }
+
+    private fun registerBudding(
+        exporter: RecipeExporter,
+        element: RagiElement,
+        glass: ItemConvertible,
+        ing1: ItemConvertible,
+        ing2: ItemConvertible,
+    ) {
+        HTInfusionRecipeJsonBuilder(element.buddingBlock)
+            .addInput(Items.CHISELED_QUARTZ_BLOCK)
+            .addInput(glass, 64)
+            .addInput(ing1, 16)
+            .addInput(ing2, 8)
+            .hasInput(RagiumBlocks.ALCHEMICAL_INFUSER)
+            .offerTo(exporter)
+    }
+
+    //    Alchemical Transform    //
+
+    private fun transform(exporter: RecipeExporter) {
+        /*HTTransformRecipeJsonBuilder(Items.DIAMOND, Items.COAL_BLOCK)
+            .addUpgrade(Items.COAL_BLOCK, 7)
+            .hasInput(Items.COAL_BLOCK)
+            .modifyComponents {
+                add(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
+            }.offerTo(exporter)*/
     }
 }

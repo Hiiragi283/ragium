@@ -1,0 +1,33 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:chiseled_quartz_block"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "minecraft:lime_stained_glass"
+      }
+    },
+    {
+      "count": 16,
+      "ingredient": {
+        "item": "minecraft:melon"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "minecraft:ender_pearl"
+      }
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ragium:budding_rugium"
+  }
+}

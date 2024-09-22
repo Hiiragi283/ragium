@@ -1,0 +1,33 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "minecraft:chiseled_quartz_block"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "minecraft:light_blue_stained_glass"
+      }
+    },
+    {
+      "count": 16,
+      "ingredient": {
+        "item": "minecraft:blue_ice"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "minecraft:prismarine_shard"
+      }
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "ragium:budding_regium"
+  }
+}

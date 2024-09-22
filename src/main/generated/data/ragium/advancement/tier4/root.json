@@ -4,19 +4,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragium_dust"
-          },
-          {
-            "items": "ragium:rigium_dust"
-          },
-          {
-            "items": "ragium:rugium_dust"
-          },
-          {
-            "items": "ragium:regium_dust"
-          },
-          {
-            "items": "ragium:rogium_dust"
+            "items": "ragium:alchemical_infuser"
           }
         ]
       },
@@ -31,7 +19,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragium_dust"
+      "id": "ragium:alchemical_infuser"
     },
     "show_toast": false,
     "title": {

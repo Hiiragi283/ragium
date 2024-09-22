@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItemGroup
@@ -20,6 +21,10 @@ object RagiumLangProviders {
         pack.addProvider(RagiumLangProviders::JapaneseLang)
     }
 
+    fun TranslationBuilder.add(element: RagiElement, value: String) {
+        add(element.translationKey, value)
+    }
+
     fun TranslationBuilder.add(type: HTMachineType, value: String) {
         add(type.translationKey, value)
     }
@@ -31,10 +36,14 @@ object RagiumLangProviders {
             RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
             // Blocks
             RagiumBlocks.REGISTER.generateLang(HTLangType.EN_US, builder)
+            // Elements
+            RagiElement.TRANSLATION_TABLE.column(HTLangType.EN_US).forEach { (element: RagiElement, value: String) ->
+                builder.add(element, value)
+            }
             // Items
             RagiumItems.REGISTER.generateLang(HTLangType.EN_US, builder)
             // Item Group
-            builder.add(RagiumItemGroup.ITEM, "Ragium Items")
+            builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
             // Machine
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
@@ -71,10 +80,15 @@ object RagiumLangProviders {
             RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
             RagiumBlocks.REGISTER.generateLang(HTLangType.JA_JP, builder)
+            // Elements
+            RagiElement.TRANSLATION_TABLE.column(HTLangType.JA_JP).forEach { (element: RagiElement, value: String) ->
+                builder.add(element, value)
+            }
+
             // Items
             RagiumItems.REGISTER.generateLang(HTLangType.JA_JP, builder)
             // Item Group
-            builder.add(RagiumItemGroup.ITEM, "Ragium - アイテム")
+            builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             // Machine
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")

@@ -48,6 +48,7 @@ object Ragium : ModInitializer {
         RagiumBlockEntityTypes
         RagiumBlocks
         RagiumItems
+        RagiumItemGroup
 
         RagiumAdvancementCriteria
         RagiumRecipeSerializers
@@ -56,7 +57,6 @@ object Ragium : ModInitializer {
         registerDynamics()
         registerModifications()
 
-        RagiumItemGroup.init()
         RagiumCauldronBehaviors.init()
         HTHardModeResourceCondition.init()
         RagiumEnergyProviders.init()

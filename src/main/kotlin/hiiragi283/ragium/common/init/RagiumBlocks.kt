@@ -133,20 +133,16 @@ object RagiumBlocks {
 
     @JvmField
     val CREATIVE_SOURCE: Block =
-        REGISTER.registerCopy("creative_source", Blocks.COMMAND_BLOCK) {
+        REGISTER.registerWithBE(
+            "creative_source",
+            RagiumBlockEntityTypes.CREATIVE_SOURCE,
+            blockSettings(Blocks.COMMAND_BLOCK),
+        ) {
             putEnglish("Creative Power Source")
             // putEnglishTips("(L-Shift +) Right-Click to change power level")
             putJapanese("クリエイティブ用エネルギー源")
             // putJapaneseTips("右クリック（＋左シフト）で出力を変更")
-            /*generateState {
-                it.blockStateCollector.accept(
-                    VariantsBlockStateSupplier
-                        .create(block, buildModelVariant(Ragium.MOD_ID, name))
-                        .coordinate(
-                            BlockStateVariantMap.create(HTMachineTier.PROPERTY),
-                        ),
-                )
-            }*/
+            generateSimpleState(Identifier.of("block/respawn_anchor_top_off"))
         }
 
     @JvmField
@@ -315,7 +311,7 @@ object RagiumBlocks {
 
     @JvmField
     val ITEM_DISPLAY: Block =
-        REGISTER.registerWithBE("item_display", RagiumBlockEntityTypes.ITEM_DISPLAY) {
+        REGISTER.register("item_display", HTItemDisplayBlock) {
             putEnglish("Item Display")
             putEnglishTips("")
             putJapanese("アイテムティスプレイ")
@@ -338,7 +334,6 @@ object RagiumBlocks {
 
     @JvmStatic
     private fun registerMachines(register: HTBlockRegister) {
-        // for each type
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             val id: Identifier = type.id
             val block: Block = type.block
@@ -360,6 +355,38 @@ object RagiumBlocks {
             type.blockEntityType.addSupportedBlock(block)
             // RecipeType
             Registry.register(Registries.RECIPE_TYPE, id, type)
+        }
+    }
+
+    @JvmStatic
+    private fun registerElements(register: HTBlockRegister) {
+        RagiElement.entries.forEach { element: RagiElement ->
+            // Budding Block
+            register.register("budding_${element.asString()}", element.buddingBlock) {
+                putEnglish("Budding ${element.getTranslatedName(HTLangType.EN_US)}")
+                putJapanese("芽生えた${element.getTranslatedName(HTLangType.JA_JP)}")
+            }
+            // Cluster Block
+            register.register("${element.asString()}_cluster", element.clusterBlock) {
+                putEnglish("${element.getTranslatedName(HTLangType.EN_US)} Cluster")
+                putJapanese("${element.getTranslatedName(HTLangType.JA_JP)}の塊")
+                generateState {
+                    it.blockStateCollector.accept(
+                        VariantsBlockStateSupplier
+                            .create(
+                                block,
+                                buildModelVariant(
+                                    Models.CROSS.upload(
+                                        block,
+                                        TextureMap.cross(block),
+                                        it.modelCollector,
+                                    ),
+                                ),
+                            ).coordinate(it.createUpDefaultFacingVariantMap()),
+                    )
+                }
+                setCustomLootTable()
+            }
         }
     }
 

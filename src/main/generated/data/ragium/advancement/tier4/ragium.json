@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:tier4/root",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ragium_dust"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.ragium.tier4.ragium.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragium_dust"
+    },
+    "title": {
+      "translate": "advancement.ragium.tier4.ragium"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

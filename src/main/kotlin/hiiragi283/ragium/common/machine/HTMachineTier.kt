@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.machine
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.init.RagiumEnergyProviders
-import hiiragi283.ragium.common.util.createCacheOrNull
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -16,14 +15,15 @@ import net.minecraft.util.function.ValueLists
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
 import java.util.function.IntFunction
 
 enum class HTMachineTier(val casingTex: Identifier, val base: Block, val condition: (World, BlockPos) -> Boolean = Condition.NONE) :
     StringIdentifiable {
     NONE(Ragium.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE),
     HEAT(Ragium.id("block/ragi_alloy_block"), Blocks.BRICKS, Condition.HEAT),
-    KINETIC(Ragium.id("block/ragi_steel_block"), Blocks.POLISHED_BLACKSTONE_BRICKS, Condition.KINETIC),
-    ELECTRIC(Ragium.id("block/refined_ragi_steel_block"), Blocks.END_STONE_BRICKS),
+    ELECTRIC(Ragium.id("block/ragi_steel_block"), Blocks.POLISHED_BLACKSTONE_BRICKS, Condition.ELECTRIC),
+    CHEMICAL(Ragium.id("block/refined_ragi_steel_block"), Blocks.END_STONE_BRICKS, Condition.ELECTRIC),
     // ALCHEMICAL(Ragium.id("block/refined_ragi_steel_block"), Blocks.CRYING_OBSIDIAN),
     ;
 
@@ -75,10 +75,19 @@ enum class HTMachineTier(val casingTex: Identifier, val base: Block, val conditi
             ) ?: false
         }
 
-        @JvmField
+        /*@JvmField
         val KINETIC: (World, BlockPos) -> Boolean = { world: World, pos: BlockPos ->
             RagiumEnergyProviders.KINETIC.createCacheOrNull(world, pos)?.find(null) ?: false
             // (world.getBlockEntity(pos) as? HTSingleMachineBlockEntity)?.receivingPower ?: false
+        }*/
+
+        @JvmField
+        val ELECTRIC: (World, BlockPos) -> Boolean = { world: World, pos: BlockPos ->
+            EnergyStorage.SIDED
+                .find(world, pos, world.getBlockState(pos), world.getBlockEntity(pos), null)
+                ?.amount
+                ?.let { it > -32 * 200 }
+                ?: false
         }
     }
 }

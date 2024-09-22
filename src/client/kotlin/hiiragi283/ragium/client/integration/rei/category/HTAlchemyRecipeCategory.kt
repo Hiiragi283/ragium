@@ -36,12 +36,12 @@ object HTAlchemyRecipeCategory : HTDisplayCategory<HTDisplay<out HTAlchemyRecipe
                 .markInput()
         this +=
             Widgets
-                .createSlot(getPoint(bounds, 3, 3))
+                .createSlot(getPoint(bounds, 0, 3))
                 .entries(display.inputEntries.getOrNull(2) ?: listOf())
                 .markInput()
         this +=
             Widgets
-                .createSlot(getPoint(bounds, 0, 3))
+                .createSlot(getPoint(bounds, 3, 3))
                 .entries(display.inputEntries.getOrNull(3) ?: listOf())
                 .markInput()
         // output

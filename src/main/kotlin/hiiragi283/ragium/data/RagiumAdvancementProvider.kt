@@ -2,6 +2,8 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.advancement.HTBuildMultiblockCriterion
+import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.machine.HTMachineType
@@ -381,19 +383,78 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumItems.RAGIUM_DUST,
+                RagiumBlocks.ALCHEMICAL_INFUSER,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(
-                    RagiumItems.RAGIUM_DUST,
-                    RagiumItems.RIGIUM_DUST,
-                    RagiumItems.RUGIUM_DUST,
-                    RagiumItems.REGIUM_DUST,
-                    RagiumItems.ROGIUM_DUST,
-                )
+                hasItems(RagiumBlocks.ALCHEMICAL_INFUSER)
             }.putEnglish("Ragium - Tier 4")
-            .putEnglishDesc("It's the end of tutorial.")
+            .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")
+            .build()
+
+        val ragium: AdvancementEntry = register
+            .createChild(
+                "tier4/ragium",
+                root,
+                RagiElement.RAGIUM.dustItem,
+            ) {
+                hasItems(RagiElement.RAGIUM.dustItem)
+            }.putEnglish(RagiElement.RAGIUM.getTranslatedName(HTLangType.EN_US))
+            .putEnglishDesc("IT'S THE END OF TUTORIAL")
+            .putJapanese(RagiElement.RAGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapaneseDesc("ネザーまたは燃焼室の上で成長する")
+            .build()
+
+        val rigium: AdvancementEntry = register
+            .createChild(
+                "tier4/rigium",
+                root,
+                RagiElement.RIGIUM.dustItem,
+            ) {
+                hasItems(RagiElement.RAGIUM.dustItem)
+            }.putEnglish(RagiElement.RIGIUM.getTranslatedName(HTLangType.EN_US))
+            .putEnglishDesc("IT'S THE END OF TUTORIAL")
+            .putJapanese(RagiElement.RIGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapaneseDesc("荒地またはy=192より高い場所で成長する")
+            .build()
+
+        val rugium: AdvancementEntry = register
+            .createChild(
+                "tier4/rugium",
+                root,
+                RagiElement.RUGIUM.dustItem,
+            ) {
+                hasItems(RagiElement.RAGIUM.dustItem)
+            }.putEnglish(RagiElement.RUGIUM.getTranslatedName(HTLangType.EN_US))
+            .putEnglishDesc("IT'S THE END OF TUTORIAL")
+            .putJapanese(RagiElement.RUGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapaneseDesc("ジャングルまたは---で成長する")
+            .build()
+
+        val regium: AdvancementEntry = register
+            .createChild(
+                "tier4/regium",
+                root,
+                RagiElement.REGIUM.dustItem,
+            ) {
+                hasItems(RagiElement.RAGIUM.dustItem)
+            }.putEnglish(RagiElement.REGIUM.getTranslatedName(HTLangType.EN_US))
+            .putEnglishDesc("IT'S THE END OF TUTORIAL")
+            .putJapanese(RagiElement.REGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapaneseDesc("海洋または---で成長する")
+            .build()
+
+        val rogium: AdvancementEntry = register
+            .createChild(
+                "tier4/rogium",
+                root,
+                RagiElement.ROGIUM.dustItem,
+            ) {
+                hasItems(RagiElement.RAGIUM.dustItem)
+            }.putEnglish(RagiElement.ROGIUM.getTranslatedName(HTLangType.EN_US))
+            .putEnglishDesc("IT'S THE END OF TUTORIAL")
+            .putJapanese(RagiElement.ROGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapaneseDesc("エンドまたは---で成長する")
             .build()
     }
 }

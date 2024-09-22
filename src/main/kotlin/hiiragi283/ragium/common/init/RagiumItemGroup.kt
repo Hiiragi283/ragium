@@ -11,24 +11,17 @@ import net.minecraft.text.Text
 
 object RagiumItemGroup {
     @JvmField
-    val ITEM: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, Ragium.id("item"))
+    val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, Ragium.id("item"))
 
-    @JvmStatic
-    fun init() {
-        register(ITEM) {
-            displayName(Text.translatable("itemGroup.ragium.item"))
-            icon { RagiumItems.RAGI_ALLOY_INGOT.defaultStack }
-            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                RagiumItems.REGISTER.forEach(entries::add)
-            }
+    @JvmField
+    val ITEM: ItemGroup = register(ITEM_KEY) {
+        displayName(Text.translatable("itemGroup.ragium.item"))
+        icon { RagiumItems.RAGI_ALLOY_INGOT.defaultStack }
+        entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+            RagiumItems.REGISTER.forEach(entries::add)
         }
     }
 
-    private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit) {
-        Registry.register(
-            Registries.ITEM_GROUP,
-            key,
-            FabricItemGroup.builder().apply(action).build(),
-        )
-    }
+    private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup =
+        Registry.register(Registries.ITEM_GROUP, key, FabricItemGroup.builder().apply(action).build())
 }

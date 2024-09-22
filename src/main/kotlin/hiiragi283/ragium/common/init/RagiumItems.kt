@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTEnderBundleItem
 import hiiragi283.ragium.common.item.HTFluidCubeItem
@@ -20,7 +22,7 @@ import java.awt.Color
 
 object RagiumItems {
     @JvmField
-    val REGISTER: HTItemRegister = HTItemRegister(Ragium.MOD_ID).apply(::registerBlockItems)
+    val REGISTER: HTItemRegister = HTItemRegister(Ragium.MOD_ID).apply(::registerBlockItems).apply(::registerElements)
 
     //    Tools    //
 
@@ -413,47 +415,6 @@ object RagiumItems {
     val PHENOL_FLUID_CUBE: HTFluidCubeItem =
         registerFluidCube("phenol", "Phenol", "フェノール", Color(0x996633))
 
-    @JvmField
-    val RAGINITE_SLUDGE_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("raginite_sludge", "Raginite Sludge", "ラギナイト汚泥", Color(0xff003f))
-
-    //    Alchemy    //
-
-    @JvmField
-    val RAGIUM_DUST: Item =
-        REGISTER.registerSimple("ragium_dust") {
-            putEnglish("Ragium Dust")
-            putJapanese("ラギウムの粉")
-        }
-
-    @JvmField
-    val RIGIUM_DUST: Item =
-        REGISTER.registerSimple("rigium_dust") {
-            putEnglish("Rigium Dust")
-            putJapanese("リギウムの粉")
-        }
-
-    @JvmField
-    val RUGIUM_DUST: Item =
-        REGISTER.registerSimple("rugium_dust") {
-            putEnglish("Rugium Dust")
-            putJapanese("ルギウムの粉")
-        }
-
-    @JvmField
-    val REGIUM_DUST: Item =
-        REGISTER.registerSimple("regium_dust") {
-            putEnglish("Regium Dust")
-            putJapanese("レギウムの粉")
-        }
-
-    @JvmField
-    val ROGIUM_DUST: Item =
-        REGISTER.registerSimple("rogium_dust") {
-            putEnglish("Rogium Dust")
-            putJapanese("ロギウムの粉")
-        }
-
     @JvmStatic
     private fun registerBlockItems(register: HTItemRegister) {
         // ores
@@ -470,11 +431,11 @@ object RagiumItems {
         )
         register.registerBlockItem(
             RagiumBlocks.RAGI_STEEL_BLOCK,
-            itemSettings().tier(HTMachineTier.KINETIC),
+            itemSettings().tier(HTMachineTier.ELECTRIC),
         )
         register.registerBlockItem(
             RagiumBlocks.REFINED_RAGI_STEEL_BLOCK,
-            itemSettings().tier(HTMachineTier.ELECTRIC),
+            itemSettings().tier(HTMachineTier.CHEMICAL),
         )
         // hulls
         register.registerBlockItem(
@@ -483,11 +444,11 @@ object RagiumItems {
         )
         register.registerBlockItem(
             RagiumBlocks.RAGI_STEEL_HULL,
-            itemSettings().tier(HTMachineTier.KINETIC),
+            itemSettings().tier(HTMachineTier.ELECTRIC),
         )
         register.registerBlockItem(
             RagiumBlocks.REFINED_RAGI_STEEL_HULL,
-            itemSettings().tier(HTMachineTier.ELECTRIC),
+            itemSettings().tier(HTMachineTier.CHEMICAL),
         )
         // machines
         register.registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
@@ -514,8 +475,29 @@ object RagiumItems {
             // BlockItem
             register.registerBlockItem(
                 type.block,
-                itemSettings().disableTooltips(),
+                itemSettings().tier(type.tier).disableTooltips(),
             )
+        }
+    }
+
+    @JvmStatic
+    private fun registerElements(register: HTItemRegister) {
+        RagiElement.entries.forEach { element: RagiElement ->
+            register.registerBlockItem(element.buddingBlock)
+            register.registerBlockItem(element.clusterBlock) {
+                /*generateModel {
+                    RagiumModels.CLUSTER_ITEM.upload(
+                        TextureMap.getId(element.clusterBlock.asItem()),
+                        TextureMap().put(TextureKey.LAYER0, TextureMap.getSubId(element.clusterBlock, "_cluster")),
+                        it.writer
+                    )
+                }*/
+            }
+            // item
+            register.register("${element.asString()}_dust", element.dustItem) {
+                putEnglish("${element.getTranslatedName(HTLangType.EN_US)} Dust")
+                putJapanese("${element.getTranslatedName(HTLangType.JA_JP)}の粉")
+            }
         }
     }
 

@@ -23,7 +23,7 @@ sealed interface HTMachineType :
     ItemConvertible,
     StringIdentifiable {
     val tier: HTMachineTier
-    val blockEntityType: BlockEntityType<*>
+    val blockEntityType: BlockEntityType<out HTMachineBlockEntity<*>>
     val block: HTMachineBlock
 
     val id: Identifier
@@ -81,16 +81,16 @@ sealed interface HTMachineType :
         ALLOY_FURNACE(HTMachineTier.HEAT, ::HTAlloyFurnaceBlockEntity),
 
         // tier2
-        COMPRESSOR(HTMachineTier.KINETIC, ::HTCompressorBlockEntity),
-        EXTRACTOR(HTMachineTier.KINETIC, ::HTExtractorBlockEntity),
-        GRINDER(HTMachineTier.KINETIC, ::HTGrinderBlockEntity),
-        METAL_FORMER(HTMachineTier.KINETIC, ::HTMetalFormerBlockEntity),
-        MIXER(HTMachineTier.KINETIC, ::HTMixerBlockEntity),
+        COMPRESSOR(HTMachineTier.ELECTRIC, ::HTCompressorBlockEntity),
+        EXTRACTOR(HTMachineTier.ELECTRIC, ::HTExtractorBlockEntity),
+        GRINDER(HTMachineTier.ELECTRIC, ::HTGrinderBlockEntity),
+        METAL_FORMER(HTMachineTier.ELECTRIC, ::HTMetalFormerBlockEntity),
+        MIXER(HTMachineTier.ELECTRIC, ::HTMixerBlockEntity),
 
         // tier3
-        CENTRIFUGE(HTMachineTier.ELECTRIC, ::HTCentrifugeBlockEntity),
-        CHEMICAL_REACTOR(HTMachineTier.ELECTRIC, ::HTChemicalReactorBlockEntity),
-        ELECTROLYZER(HTMachineTier.ELECTRIC, ::HTElectrolyzerBlockEntity),
+        CENTRIFUGE(HTMachineTier.CHEMICAL, ::HTCentrifugeBlockEntity),
+        CHEMICAL_REACTOR(HTMachineTier.CHEMICAL, ::HTChemicalReactorBlockEntity),
+        ELECTROLYZER(HTMachineTier.CHEMICAL, ::HTElectrolyzerBlockEntity),
         ;
 
         companion object {
@@ -113,10 +113,10 @@ sealed interface HTMachineType :
         BRICK_BLAST_FURNACE(HTMachineTier.HEAT, ::HTBrickBlastFurnaceBlockEntity),
 
         // tier2
-        BLAZING_BLAST_FURNACE(HTMachineTier.KINETIC, ::HTBlazingBlastFurnaceBlockEntity),
+        BLAZING_BLAST_FURNACE(HTMachineTier.ELECTRIC, ::HTBlazingBlastFurnaceBlockEntity),
 
         // tier3
-        DISTILLATION_TOWER(HTMachineTier.ELECTRIC, ::HTDistillationTowerBlockEntity),
+        DISTILLATION_TOWER(HTMachineTier.CHEMICAL, ::HTDistillationTowerBlockEntity),
         ;
 
         override val blockEntityType: BlockEntityType<HTMultiMachineBlockEntity> =

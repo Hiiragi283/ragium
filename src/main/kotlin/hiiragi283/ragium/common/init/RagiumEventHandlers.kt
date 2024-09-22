@@ -3,8 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.common.Ragium.id
 import hiiragi283.ragium.common.Ragium.log
 import hiiragi283.ragium.common.advancement.HTAdvancementRewardCallback
-import hiiragi283.ragium.common.component.item.HTTooltipsComponent
-import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.component.HTTooltipsComponent
 import hiiragi283.ragium.common.util.sendTitle
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
@@ -20,19 +19,15 @@ object RagiumEventHandlers {
         HTAdvancementRewardCallback.EVENT.register { player: ServerPlayerEntity, entry: AdvancementEntry ->
             log { info("Current advancement; ${entry.id}") }
             if (entry.id == id("tier1/root")) {
-                RagiumComponentKeys.PROGRESS.get(player).value = HTMachineTier.HEAT
                 player.sendTitle(Text.literal("Welcome to Heat Age!"))
             }
             if (entry.id == id("tier2/root")) {
-                RagiumComponentKeys.PROGRESS.get(player).value = HTMachineTier.KINETIC
                 player.sendTitle(Text.literal("Welcome to Kinetic Age!"))
             }
             if (entry.id == id("tier3/root")) {
-                RagiumComponentKeys.PROGRESS.get(player).value = HTMachineTier.ELECTRIC
                 player.sendTitle(Text.literal("Welcome to Electric Age!"))
             }
             if (entry.id == id("tier4/root")) {
-                RagiumComponentKeys.UNLOCK_ALCHEMY.get(player).value = true
                 player.sendTitle(Text.literal("Welcome to Alchemical Age!"))
             }
         }

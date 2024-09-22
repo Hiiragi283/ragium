@@ -14,12 +14,26 @@ object RagiumModels {
     //    Block    //
 
     @JvmField
-    val LAYERED: Model =
-        model(
-            "block/layered",
-            TextureKey.LAYER0,
-            TextureKey.LAYER1,
-        )
+    val ALL_TINTED: Model = model(
+        "block/all_tinted",
+        TextureKey.ALL,
+    )
+
+    @JvmField
+    val CROSS_TINTED: Model = model(
+        "block/cross_tinted",
+        TextureKey.CROSS,
+    )
+
+    @JvmField
+    val DISPLAY: Model = model(
+        "block/display",
+        TextureKey.TOP,
+        TextureKey.SIDE,
+    )
+
+    @JvmField
+    val EMPTY: Model = model("block/empty")
 
     @JvmField
     val HULL: Model =
@@ -27,6 +41,14 @@ object RagiumModels {
             "block/hull",
             TextureKey.TOP,
             TextureKey.BOTTOM,
+        )
+
+    @JvmField
+    val LAYERED: Model =
+        model(
+            "block/layered",
+            TextureKey.LAYER0,
+            TextureKey.LAYER1,
         )
 
     @JvmField
@@ -38,17 +60,10 @@ object RagiumModels {
             TextureKey.FRONT,
         )
 
-    @JvmField
-    val EMPTY: Model = model("block/empty")
-
-    @JvmField
-    val DISPLAY: Model = model(
-        "block/display",
-        TextureKey.TOP,
-        TextureKey.SIDE,
-    )
-
     //    Item    //
+
+    @JvmField
+    val CLUSTER_ITEM: Model = model("item/cluster", TextureKey.LAYER0)
 
     @JvmField
     val FILLED_FLUID_CUBE: Model =
@@ -63,22 +78,45 @@ object RagiumModels {
 
     //    Factory    //
 
+    @JvmField
+    val EMPTY_FACTORY: TexturedModel.Factory = TexturedModel.makeFactory({ TextureMap() }, EMPTY)
+
+    @JvmField
+    val HULL_TEXTURE_FACTORY: TexturedModel.Factory =
+        TexturedModel.makeFactory({ block: Block ->
+            val tier: HTMachineTier =
+                block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.NONE)
+            TextureMap()
+                .put(TextureKey.TOP, tier.casingTex)
+                .put(TextureKey.BOTTOM, tier.baseTex)
+        }, HULL)
+
+    @JvmStatic
+    fun createAllTinted(all: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap().put(TextureKey.ALL, all)
+    }, ALL_TINTED)
+
+    @JvmStatic
+    fun createCluster(layer0: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap().put(TextureKey.LAYER0, layer0)
+    }, CLUSTER_ITEM)
+
+    @JvmStatic
+    fun createCrossTinted(cross: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap().put(TextureKey.CROSS, cross)
+    }, CROSS_TINTED)
+
+    @JvmStatic
+    fun createDisplay(top: Identifier, side: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
+        TextureMap().put(TextureKey.TOP, top).put(TextureKey.SIDE, side)
+    }, DISPLAY)
+
     @JvmStatic
     fun createLayered(inner: Identifier, outer: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
         TextureMap()
             .put(TextureKey.LAYER0, inner)
             .put(TextureKey.LAYER1, outer)
     }, LAYERED)
-
-    @JvmField
-    val HULL_TEXTURE_FACTORY: TexturedModel.Factory =
-        TexturedModel.makeFactory({ block: Block ->
-            val tier: HTMachineTier =
-                block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.HEAT)
-            TextureMap()
-                .put(TextureKey.TOP, tier.casingTex)
-                .put(TextureKey.BOTTOM, tier.baseTex)
-        }, HULL)
 
     @JvmStatic
     fun createMachine(top: Identifier, bottom: Identifier, front: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
@@ -88,12 +126,4 @@ object RagiumModels {
     @JvmStatic
     fun createMachine(top: Block, bottom: Block, front: Identifier): TexturedModel.Factory =
         createMachine(TextureMap.getId(top), TextureMap.getId(bottom), front)
-
-    @JvmField
-    val EMPTY_FACTORY: TexturedModel.Factory = TexturedModel.makeFactory({ TextureMap() }, EMPTY)
-
-    @JvmStatic
-    fun createDisplay(top: Identifier, side: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap().put(TextureKey.TOP, top).put(TextureKey.SIDE, side)
-    }, DISPLAY)
 }
