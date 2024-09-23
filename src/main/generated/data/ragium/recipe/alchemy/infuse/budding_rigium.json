@@ -26,7 +26,6 @@
     }
   ],
   "output": {
-    "count": 1,
-    "id": "ragium:budding_rigium"
+    "item": "ragium:budding_rigium"
   }
 }

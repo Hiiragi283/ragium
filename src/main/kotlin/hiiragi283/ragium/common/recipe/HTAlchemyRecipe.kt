@@ -7,12 +7,12 @@ import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.registry.RegistryWrapper
 
 interface HTAlchemyRecipe : HTRecipeBase<HTAlchemyRecipe.Input> {
-    val result: ItemStack
+    val result: HTRecipeResult
 
     override val outputs: List<HTRecipeResult>
-        get() = listOf(HTRecipeResult.item(result.item, result.count))
+        get() = listOf(result)
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = result.copy()
+    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = result.toStack()
 
     override fun createIcon(): ItemStack = RagiumContents.ALCHEMICAL_INFUSER.asItem().defaultStack
 

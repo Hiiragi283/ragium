@@ -2,13 +2,12 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.world.World
 
-class HTInfusionRecipe(override val inputs: List<WeightedIngredient>, override val result: ItemStack) : HTAlchemyRecipe {
+class HTInfusionRecipe(override val inputs: List<WeightedIngredient>, override val result: HTRecipeResult) : HTAlchemyRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTInfusionRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -18,7 +17,7 @@ class HTInfusionRecipe(override val inputs: List<WeightedIngredient>, override v
                         .listOf()
                         .fieldOf("inputs")
                         .forGetter(HTInfusionRecipe::inputs),
-                    ItemStack.VALIDATED_CODEC.fieldOf("output").forGetter { it.result },
+                    HTRecipeResult.CODEC.fieldOf("output").forGetter(HTInfusionRecipe::result),
                 ).apply(instance, ::HTInfusionRecipe)
         }
 
@@ -26,7 +25,7 @@ class HTInfusionRecipe(override val inputs: List<WeightedIngredient>, override v
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTInfusionRecipe> = PacketCodec.tuple(
             WeightedIngredient.LIST_PACKET_CODEC,
             HTInfusionRecipe::inputs,
-            ItemStack.PACKET_CODEC,
+            HTRecipeResult.PACKET_CODEC,
             HTInfusionRecipe::result,
             ::HTInfusionRecipe,
         )

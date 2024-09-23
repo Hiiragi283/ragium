@@ -2,24 +2,15 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.component.ComponentChanges
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.recipe.RecipeSerializer
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.world.World
 
-class HTTransformRecipe(
-    val target: WeightedIngredient,
-    val upgrades: List<WeightedIngredient>,
-    val output: RegistryEntry<Item>,
-    val overrides: ComponentChanges,
-) : HTAlchemyRecipe {
+class HTTransformRecipe(val target: WeightedIngredient, val upgrades: List<WeightedIngredient>, override val result: HTRecipeResult) :
+    HTAlchemyRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTTransformRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -30,8 +21,7 @@ class HTTransformRecipe(
                         .listOf()
                         .fieldOf("upgrades")
                         .forGetter(HTTransformRecipe::upgrades),
-                    ItemStack.ITEM_CODEC.fieldOf("output").forGetter(HTTransformRecipe::output),
-                    ComponentChanges.CODEC.fieldOf("overrides").forGetter(HTTransformRecipe::overrides),
+                    HTRecipeResult.CODEC.fieldOf("result").forGetter(HTTransformRecipe::result),
                 ).apply(instance, ::HTTransformRecipe)
         }
 
@@ -41,10 +31,8 @@ class HTTransformRecipe(
             HTTransformRecipe::target,
             WeightedIngredient.LIST_PACKET_CODEC,
             HTTransformRecipe::upgrades,
-            PacketCodecs.registryEntry(RegistryKeys.ITEM),
-            HTTransformRecipe::output,
-            ComponentChanges.PACKET_CODEC,
-            HTTransformRecipe::overrides,
+            HTRecipeResult.PACKET_CODEC,
+            HTTransformRecipe::result,
             ::HTTransformRecipe,
         )
     }
@@ -53,7 +41,6 @@ class HTTransformRecipe(
         add(target)
         addAll(upgrades)
     }
-    override val result: ItemStack = output.value().defaultStack
 
     override fun matches(input: HTAlchemyRecipe.Input, world: World): Boolean = input.matches(
         target,
@@ -63,8 +50,8 @@ class HTTransformRecipe(
     )
 
     override fun craft(input: HTAlchemyRecipe.Input, lookup: RegistryWrapper.WrapperLookup): ItemStack {
-        val stack1: ItemStack = input.getStackInSlot(0).copyComponentsToNewStack(output.value(), 1)
-        stack1.applyUnvalidatedChanges(overrides)
+        val stack1: ItemStack = input.getStackInSlot(0).copyComponentsToNewStack(result.value, result.count)
+        stack1.applyUnvalidatedChanges(result.components)
         return stack1
     }
 

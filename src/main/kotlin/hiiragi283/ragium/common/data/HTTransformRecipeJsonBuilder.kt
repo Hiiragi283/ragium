@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data
 
+import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.recipe.HTTransformRecipe
 import hiiragi283.ragium.common.recipe.WeightedIngredient
 import net.minecraft.advancement.AdvancementCriterion
@@ -13,21 +14,37 @@ import net.minecraft.data.server.recipe.RecipeProvider
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.recipe.Ingredient
-import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-class HTTransformRecipeJsonBuilder(val output: Item, val target: WeightedIngredient) : CraftingRecipeJsonBuilder {
+class HTTransformRecipeJsonBuilder(val result: HTRecipeResult) : CraftingRecipeJsonBuilder {
     private val upgrades: MutableList<WeightedIngredient> = mutableListOf()
     private val criteria: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private val builder: ComponentChanges.Builder = ComponentChanges.builder()
     private var suffixCache: Int = 0
 
-    constructor(output: Item, target: ItemConvertible, count: Int = 1) : this(output, WeightedIngredient.of(target, count))
+    constructor(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
+        HTRecipeResult.item(item, count, components),
+    )
 
-    constructor(output: Item, target: TagKey<Item>, count: Int = 1) : this(output, WeightedIngredient.of(target, count))
+    constructor(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
+        HTRecipeResult.tag(tagKey, count, components),
+    )
 
     //    Input    //
+
+    private lateinit var target: WeightedIngredient
+
+    private fun setTarget(ingredient: WeightedIngredient): HTTransformRecipeJsonBuilder = apply {
+        target = ingredient
+    }
+
+    fun setTarget(ingredient: Ingredient, count: Int = 1): HTTransformRecipeJsonBuilder =
+        setTarget(WeightedIngredient.of(ingredient, count))
+
+    fun setTarget(item: ItemConvertible, count: Int = 1): HTTransformRecipeJsonBuilder = setTarget(Ingredient.ofItems(item), count)
+
+    fun setTarget(tagKey: TagKey<Item>, count: Int = 1): HTTransformRecipeJsonBuilder = setTarget(Ingredient.fromTag(tagKey), count)
 
     private fun addUpgrade(ingredient: WeightedIngredient): HTTransformRecipeJsonBuilder = apply {
         upgrades.add(ingredient)
@@ -68,7 +85,7 @@ class HTTransformRecipeJsonBuilder(val output: Item, val target: WeightedIngredi
 
     override fun group(group: String?): CraftingRecipeJsonBuilder = this
 
-    override fun getOutputItem(): Item = output
+    override fun getOutputItem(): Item = result.value
 
     fun offerWith(exporter: RecipeExporter, suffix: String = "") {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withSuffixedPath(suffix))
@@ -80,7 +97,7 @@ class HTTransformRecipeJsonBuilder(val output: Item, val target: WeightedIngredi
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         exporter.accept(
             prefixedId,
-            HTTransformRecipe(target, upgrades, Registries.ITEM.getEntry(output), builder.build()),
+            HTTransformRecipe(target, upgrades, result),
             exporter.advancementBuilder
                 .criterion("has_the_recipe", RecipeUnlockedCriterion.create(prefixedId))
                 .rewards(AdvancementRewards.Builder.recipe(prefixedId))

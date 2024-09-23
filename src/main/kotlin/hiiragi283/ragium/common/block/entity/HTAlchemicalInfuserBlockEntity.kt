@@ -5,6 +5,7 @@ import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTBlockPredicate
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
 import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
+import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -73,13 +74,13 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun modifyOutput(input: HTAlchemyRecipe.Input, world: World, recipe: HTAlchemyRecipe) {
         parent.modifyStack(4) { stackIn: ItemStack ->
-            val result: ItemStack = recipe.craft(input, world.registryManager)
-            when {
+            HTRecipeResult.stack(recipe.craft(input, world.registryManager)).modifyStack(stackIn)
+            /*when {
                 !canAcceptOutput(input, world, recipe) -> null
                 stackIn.isEmpty -> result
                 ItemStack.areItemsAndComponentsEqual(stackIn, result) -> stackIn.apply { count += result.count }
                 else -> null
-            } ?: stackIn
+            } ?: stackIn*/
         }
     }
 

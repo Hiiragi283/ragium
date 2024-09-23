@@ -5,7 +5,6 @@ import hiiragi283.ragium.client.integration.rei.entryIngredient
 import hiiragi283.ragium.common.recipe.HTInfusionRecipe
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
-import me.shedaniel.rei.api.common.util.EntryIngredients
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.util.Identifier
 
@@ -19,7 +18,7 @@ class HTInfusionRecipeDisplay(recipe: HTInfusionRecipe, id: Identifier) : HTDisp
         add(recipe.getInput(3)?.entryIngredient ?: EntryIngredient.empty())
     }
 
-    override fun getOutputEntries(): List<EntryIngredient> = listOf(EntryIngredients.of(recipe.result))
+    override fun getOutputEntries(): List<EntryIngredient> = listOf(recipe.result.entryIngredient)
 
     override fun getCategoryIdentifier(): CategoryIdentifier<*> = RagiumREIClient.ALCHEMY
 }

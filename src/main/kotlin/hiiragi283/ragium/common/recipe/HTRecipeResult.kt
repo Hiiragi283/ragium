@@ -27,7 +27,7 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
 
     abstract fun writeBuf(buf: RegistryByteBuf)
 
-    fun toStack(): ItemStack = ItemStack(value, count)
+    fun toStack(): ItemStack = ItemStack(Registries.ITEM.getEntry(value), count, components)
 
     fun canAccept(other: ItemStack): Boolean = when {
         other.isEmpty -> true
@@ -81,6 +81,9 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
         @JvmStatic
         fun item(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
             ItemImpl(item, count, components)
+
+        @JvmStatic
+        fun stack(stack: ItemStack): HTRecipeResult = item(stack.item, stack.count, stack.componentChanges)
 
         @JvmStatic
         fun tag(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
