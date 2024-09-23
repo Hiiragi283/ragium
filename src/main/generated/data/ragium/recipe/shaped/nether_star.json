@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragium_dust"
+    },
+    "B": {
+      "item": "ragium:rigium_dust"
+    },
+    "C": {
+      "item": "ragium:rugium_dust"
+    },
+    "D": {
+      "item": "ragium:regium_dust"
+    },
+    "E": {
+      "item": "ragium:rogium_dust"
+    }
+  },
+  "pattern": [
+    " A ",
+    "DEB",
+    " C "
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:nether_star"
+  }
+}

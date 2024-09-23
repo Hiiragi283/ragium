@@ -72,10 +72,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/ragi_alloy",
                 root,
-                RagiumItems.RAGI_ALLOY_INGOT,
+                RagiumItems.Ingots.RAGI_ALLOY,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumItems.RAGI_ALLOY_INGOT)
+                hasItems(RagiumItems.Ingots.RAGI_ALLOY)
             }.putEnglish("")
             .putEnglishDesc("Craft Ragi-Alloy Ingot")
             .putJapanese("")
@@ -86,9 +86,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/ragi_alloy_hull",
                 ragiAlloy,
-                RagiumItems.RAGI_ALLOY_INGOT,
+                RagiumBlocks.Hulls.RAGI_ALLOY,
             ) {
-                hasItems(RagiumBlocks.RAGI_ALLOY_HULL)
+                hasItems(RagiumBlocks.Hulls.RAGI_ALLOY)
             }.putEnglish("Not made of bronze")
             .putEnglishDesc("Craft Ragi-Alloy Hull")
             .putJapanese("ブロンズ製ではない")
@@ -138,10 +138,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/raginite_dust",
                 manualGrinder,
-                RagiumItems.RAGINITE_DUST,
+                RagiumItems.Dusts.RAGINITE,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumItems.RAGINITE_DUST)
+                hasItems(RagiumItems.Dusts.RAGINITE)
             }.putEnglish("")
             .putEnglishDesc("Wash Raw Raginite Dust with Cauldron")
             .putJapanese("")
@@ -155,10 +155,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier2/root",
-                RagiumItems.RAGI_STEEL_INGOT,
+                RagiumItems.Ingots.RAGI_STEEL,
                 Identifier.of("textures/block/polished_blackstone_bricks.png"),
             ) {
-                hasItems(RagiumItems.RAGI_STEEL_INGOT)
+                hasItems(RagiumItems.Ingots.RAGI_STEEL)
             }.putEnglish("Ragium - Tier 2")
             .putEnglishDesc("The Industrial Revolution")
             .putJapaneseDesc("産業革命")
@@ -168,9 +168,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/ragi_steel_hull",
                 root,
-                RagiumBlocks.RAGI_STEEL_HULL,
+                RagiumBlocks.Hulls.RAGI_STEEL,
             ) {
-                hasItems(RagiumBlocks.RAGI_STEEL_HULL)
+                hasItems(RagiumBlocks.Hulls.RAGI_STEEL)
             }.putEnglish("Not made of steel...")
             .putEnglishDesc("Craft Ragi-Steel Hull")
             .putJapanese("スチール製ではない...")
@@ -259,10 +259,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/refined_raginite_dust",
                 soap,
-                RagiumItems.REFINED_RAGINITE_DUST,
+                RagiumItems.Dusts.REFINED_RAGINITE,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumItems.REFINED_RAGINITE_DUST)
+                hasItems(RagiumItems.Dusts.REFINED_RAGINITE)
             }.putEnglish("")
             .putEnglishDesc("Craft Refined Raginite Dust")
             .putJapanese("")
@@ -289,10 +289,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier3/root",
-                RagiumItems.REFINED_RAGI_STEEL_INGOT,
+                RagiumItems.Ingots.REFINED_RAGI_STEEL,
                 Identifier.of("textures/block/end_stone_bricks.png"),
             ) {
-                hasItems(RagiumItems.REFINED_RAGI_STEEL_INGOT)
+                hasItems(RagiumItems.Ingots.REFINED_RAGI_STEEL)
             }.putEnglish("Ragium - Tier 3")
             .putEnglishDesc("Age of Electricity")
             .putJapaneseDesc("電気時代")
@@ -302,9 +302,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/refined_steel_hull",
                 root,
-                RagiumBlocks.REFINED_RAGI_STEEL_HULL,
+                RagiumBlocks.Hulls.REFINED_RAGI_STEEL,
             ) {
-                hasItems(RagiumBlocks.REFINED_RAGI_STEEL_HULL)
+                hasItems(RagiumBlocks.Hulls.REFINED_RAGI_STEEL)
             }.putEnglish("Not made of steeeeel!!")
             .putEnglishDesc("Craft Refined Ragi-Steel Hull")
             .putJapanese("スチール製ではなあああい!!")
@@ -367,9 +367,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/oil",
                 distillationTower,
-                RagiumItems.OIL_FLUID_CUBE,
+                RagiumItems.Fluids.OIL,
             ) {
-                hasItems(RagiumItems.OIL_FLUID_CUBE)
+                hasItems(RagiumItems.Fluids.OIL)
             }.putEnglish("")
             .putEnglishDesc("Get Oil")
             .putJapanese("")

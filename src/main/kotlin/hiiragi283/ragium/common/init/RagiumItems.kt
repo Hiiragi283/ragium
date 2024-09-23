@@ -7,22 +7,27 @@ import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTEnderBundleItem
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
-import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.registry.HTItemRegister
-import hiiragi283.ragium.common.util.disableTooltips
-import hiiragi283.ragium.common.util.itemSettings
-import hiiragi283.ragium.common.util.tier
+import hiiragi283.ragium.common.util.*
 import net.minecraft.data.client.ModelIds
 import net.minecraft.data.client.TextureMap
 import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.util.Rarity
 import java.awt.Color
 
 object RagiumItems {
     @JvmField
-    val REGISTER: HTItemRegister = HTItemRegister(Ragium.MOD_ID).apply(::registerBlockItems).apply(::registerElements)
+    val REGISTER: HTItemRegister = HTItemRegister(Ragium.MOD_ID)
+        .apply(::initBlockItems)
+        .apply(::initMachines)
+        .apply(::initDusts)
+        .apply(::initIngots)
+        .apply(::initPlates)
+        .apply(::initElements)
+        .apply(::initFluids)
 
     //    Tools    //
 
@@ -117,169 +122,6 @@ object RagiumItems {
             registerTags(ItemTags.HOES)
         }
 
-    //    Fluid Cubes    //
-
-    @JvmField
-    val EMPTY_FLUID_CUBE: Item =
-        REGISTER.registerSimple("empty_fluid_cube") {
-            putEnglish("Fluid Cube (Empty)")
-            putEnglishTips("Holdable fluid for 1 Bucket")
-            putJapanese("液体キューブ（なし）")
-            putJapaneseTips("1バケツ分の液体を保持できる")
-            setCustomModel()
-        }
-
-    //    Dusts    //
-
-    @JvmField
-    val RAW_RAGINITE_DUST: Item =
-        REGISTER.registerSimple("raw_raginite_dust") {
-            putEnglish("Raw Raginite Dust")
-            putEnglishTips("Impure and rough raginite dust")
-            putJapanese("ラギナイトの原石の粉")
-            putJapaneseTips("不純で粗いラギナイトの粉")
-        }
-
-    @JvmField
-    val RAGINITE_DUST: Item =
-        REGISTER.registerSimple("raginite_dust") {
-            putEnglish("Raginite Dust")
-            putEnglishTips("Obtained from washing Raw Raginite Dust by Cauldron")
-            putJapanese("ラギナイトの粉")
-            putJapaneseTips("ラギナイトの原石の粉を大釜で洗うと手に入る")
-        }
-
-    @JvmField
-    val REFINED_RAGINITE_DUST: Item =
-        REGISTER.registerSimple("refined_raginite_dust") {
-            putEnglish("Refined Raginite Dust")
-            putEnglishTips("Purified and fine raginite dust")
-            putJapanese("精製ラギナイトの粉")
-            putJapaneseTips("純粋で細かなラギナイトの粉")
-        }
-
-    @JvmField
-    val ASH_DUST: Item =
-        REGISTER.registerSimple("ash_dust") {
-            putEnglish("Ash Dust")
-            putEnglishTips("Obtained from Burning Box")
-            putJapanese("灰の粉")
-            putJapaneseTips("燃焼室から手に入る")
-        }
-
-    //    Ingots    //
-
-    @JvmField
-    val RAGI_ALLOY_INGOT: Item =
-        REGISTER.registerSimple("ragi_alloy_ingot") {
-            putEnglish("Ragi-Alloy Ingot")
-            putEnglishTips("Tier 1 - Metal")
-            putJapanese("ラギ合金インゴット")
-            putJapaneseTips("Tier 1 - 金属")
-        }
-
-    @JvmField
-    val RAGI_STEEL_INGOT: Item =
-        REGISTER.registerSimple("ragi_steel_ingot") {
-            putEnglish("Ragi-Steel Ingot")
-            putEnglishTips("Tier 2 - Metal")
-            putJapanese("ラギスチールインゴット")
-            putJapaneseTips("Tier 2 - 金属")
-        }
-
-    @JvmField
-    val REFINED_RAGI_STEEL_INGOT: Item =
-        REGISTER.registerSimple("refined_ragi_steel_ingot") {
-            putEnglish("Refined Ragi-Steel Ingot")
-            putEnglishTips("Tier 3 - Metal")
-            putJapanese("精製ラギスチールインゴット")
-            putJapaneseTips("Tier 3 - 金属")
-        }
-
-    @JvmField
-    val STEEL_INGOT: Item =
-        REGISTER.registerSimple("steel_ingot") {
-            putEnglish("Steel Ingot")
-            putEnglishTips("Harder than Iron")
-            putJapanese("鋼鉄インゴット")
-            putJapaneseTips("鉄より固い鋼鉄の仮面")
-            registerTags(RagiumItemTags.STEEL_INGOTS)
-        }
-
-    @JvmField
-    val TWILIGHT_METAL_INGOT: Item =
-        REGISTER.registerSimple("twilight_metal_ingot") {
-            putEnglish("Twilight Metal Ingot")
-            putEnglishTips("-- Nostalgia --")
-            putJapanese("黄昏金属インゴット")
-            putJapaneseTips("-- 郷愁 --")
-        }
-
-    @JvmField
-    val SOAP_INGOT: Item =
-        REGISTER.registerSimple("soap_ingot") {
-            putEnglish("Soap Ingot")
-            putEnglishTips("How about a Soap Sandwich?")
-            putJapanese("石鹸インゴット")
-            putJapaneseTips("石鹸サンドイッチはいかが？")
-        }
-
-    //    Plates    //
-
-    @JvmField
-    val RAGI_ALLOY_PLATE: Item =
-        REGISTER.registerSimple("ragi_alloy_plate") {
-            putEnglish("Ragi-Alloy Plate")
-            putEnglishTips("Tier 1 - Metal Plate")
-            putJapanese("ラギ合金の板")
-            putJapaneseTips("Tier 1 - 金属板")
-        }
-
-    @JvmField
-    val RAGI_STEEL_PLATE: Item =
-        REGISTER.registerSimple("ragi_steel_plate") {
-            putEnglish("Ragi-Steel Plate")
-            putEnglishTips("Tier 2 - Metal Plate")
-            putJapanese("ラギスチールの板")
-            putJapaneseTips("Tier 2 - 金属板")
-        }
-
-    @JvmField
-    val REFINED_RAGI_STEEL_PLATE: Item =
-        REGISTER.registerSimple("refined_ragi_steel_plate") {
-            putEnglish("Refined Ragi-Steel Plate")
-            putEnglishTips("Tier 3 - Metal Plate")
-            putJapanese("精製ラギスチールの板")
-            putJapaneseTips("Tier 3 - 金属板")
-        }
-
-    @JvmField
-    val PE_PLATE: Item =
-        REGISTER.registerSimple("pe_plate") {
-            putEnglish("Poly Ethylene Plate")
-            putEnglishTips("Tier 1 - Plastic Plate")
-            putJapanese("ポリエチレンの板")
-            putJapaneseTips("Tier 1 - プラスチック板")
-        }
-
-    @JvmField
-    val PVC_PLATE: Item =
-        REGISTER.registerSimple("pvc_plate") {
-            putEnglish("Poly Vinyl Chloride Plate")
-            putEnglishTips("Tier 2 - Plastic Plate")
-            putJapanese("ポリ塩化ビニルの板")
-            putJapaneseTips("Tier 2 - プラスチック板")
-        }
-
-    @JvmField
-    val PTFE_PLATE: Item =
-        REGISTER.registerSimple("ptfe_plate") {
-            putEnglish("PTFE Plate")
-            putEnglishTips("Tier 3 - Plastic Plate")
-            putJapanese("PTFEの板")
-            putJapaneseTips("Tier 3 - プラスチック板")
-        }
-
     //    Ingredients    //
 
     @JvmField
@@ -300,22 +142,24 @@ object RagiumItems {
             putJapaneseTips("ただの中間素材")
         }
 
-    // vanilla
     @JvmField
-    val WATER_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("water", "Water", "水", Color(0x0033ff))
+    val EMPTY_FLUID_CUBE: Item =
+        REGISTER.registerSimple("empty_fluid_cube") {
+            putEnglish("Fluid Cube (Empty)")
+            putEnglishTips("Holdable fluid for 1 Bucket")
+            putJapanese("液体キューブ（なし）")
+            putJapaneseTips("1バケツ分の液体を保持できる")
+            setCustomModel()
+        }
 
     @JvmField
-    val LAVA_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("lava", "Lava", "溶岩", Color(0xff6600))
-
-    @JvmField
-    val MILK_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("milk", "Milk", "牛乳", Color(0xffffff))
-
-    @JvmField
-    val HONEY_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("honey", "Honey", "蜂蜜", Color(0xffcc33))
+    val SOAP_INGOT: Item =
+        REGISTER.registerSimple("soap_ingot") {
+            putEnglish("Soap Ingot")
+            putEnglishTips("How about a Soap Sandwich?")
+            putJapanese("石鹸インゴット")
+            putJapaneseTips("石鹸サンドイッチはいかが？")
+        }
 
     // tier2
     @JvmField
@@ -331,10 +175,6 @@ object RagiumItems {
         registerFluidCube("glycerol", "Glycerol", "グリセロール", Color(0x99cc66))
 
     // tier3
-    @JvmField
-    val SALT_WATER_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("salt_water", "Salt Water", "塩水", Color(0x003399))
-
     @JvmField
     val HYDROGEN_FLUID_CUBE: HTFluidCubeItem =
         registerFluidCube("hydrogen", "Hydrogen", "水素", Color(0x0000cc))
@@ -354,10 +194,6 @@ object RagiumItems {
     @JvmField
     val CHLORINE_FLUID_CUBE: HTFluidCubeItem =
         registerFluidCube("chlorine", "Chlorine", "塩素", Color(0xccff33))
-
-    @JvmField
-    val OIL_FLUID_CUBE: HTFluidCubeItem =
-        registerFluidCube("oil", "Oil", "石油", Color(0x000000))
 
     @JvmField
     val REFINED_GAS_FLUID_CUBE: HTFluidCubeItem =
@@ -415,8 +251,10 @@ object RagiumItems {
     val PHENOL_FLUID_CUBE: HTFluidCubeItem =
         registerFluidCube("phenol", "Phenol", "フェノール", Color(0x996633))
 
+    //    Blocks    //
+
     @JvmStatic
-    private fun registerBlockItems(register: HTItemRegister) {
+    private fun initBlockItems(register: HTItemRegister) {
         // ores
         register.registerBlockItem(RagiumBlocks.RAGINITE_ORE) {
             registerTags(RagiumItemTags.RAGINITE_ORES)
@@ -425,31 +263,13 @@ object RagiumItems {
             registerTags(RagiumItemTags.RAGINITE_ORES)
         }
         // blocks
-        register.registerBlockItem(
-            RagiumBlocks.RAGI_ALLOY_BLOCK,
-            itemSettings().tier(HTMachineTier.HEAT),
-        )
-        register.registerBlockItem(
-            RagiumBlocks.RAGI_STEEL_BLOCK,
-            itemSettings().tier(HTMachineTier.ELECTRIC),
-        )
-        register.registerBlockItem(
-            RagiumBlocks.REFINED_RAGI_STEEL_BLOCK,
-            itemSettings().tier(HTMachineTier.CHEMICAL),
-        )
+        RagiumBlocks.StorageBlocks.entries.forEach { block: RagiumBlocks.StorageBlocks ->
+            register.registerBlockItem(block.block, itemSettings().tier(block.material.tier))
+        }
         // hulls
-        register.registerBlockItem(
-            RagiumBlocks.RAGI_ALLOY_HULL,
-            itemSettings().tier(HTMachineTier.HEAT),
-        )
-        register.registerBlockItem(
-            RagiumBlocks.RAGI_STEEL_HULL,
-            itemSettings().tier(HTMachineTier.ELECTRIC),
-        )
-        register.registerBlockItem(
-            RagiumBlocks.REFINED_RAGI_STEEL_HULL,
-            itemSettings().tier(HTMachineTier.CHEMICAL),
-        )
+        RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
+            register.registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
+        }
         // machines
         register.registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
         register.registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
@@ -465,12 +285,12 @@ object RagiumItems {
             itemSettings().rarity(Rarity.EPIC),
         )
         register.registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
-
-        registerMachines(register)
     }
 
+    //    Machines    //
+
     @JvmStatic
-    private fun registerMachines(register: HTItemRegister) {
+    private fun initMachines(register: HTItemRegister) {
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             // BlockItem
             register.registerBlockItem(
@@ -480,19 +300,13 @@ object RagiumItems {
         }
     }
 
+    //    Elements    //
+
     @JvmStatic
-    private fun registerElements(register: HTItemRegister) {
+    private fun initElements(register: HTItemRegister) {
         RagiElement.entries.forEach { element: RagiElement ->
             register.registerBlockItem(element.buddingBlock)
-            register.registerBlockItem(element.clusterBlock) {
-                /*generateModel {
-                    RagiumModels.CLUSTER_ITEM.upload(
-                        TextureMap.getId(element.clusterBlock.asItem()),
-                        TextureMap().put(TextureKey.LAYER0, TextureMap.getSubId(element.clusterBlock, "_cluster")),
-                        it.writer
-                    )
-                }*/
-            }
+            register.registerBlockItem(element.clusterBlock)
             // item
             register.register("${element.asString()}_dust", element.dustItem) {
                 putEnglish("${element.getTranslatedName(HTLangType.EN_US)} Dust")
@@ -517,6 +331,124 @@ object RagiumItems {
                 TextureMap(),
                 it.writer,
             )
+        }
+    }
+
+    //    Dusts    //
+
+    enum class Dusts(val enName: String, val jaName: String) : ItemConvertible {
+        RAW_RAGINITE("Raw Raginite Dust", "未加工のラギナイトの粉"),
+        RAGINITE("Raginite Dust", "ラギナイトの粉"),
+        REFINED_RAGINITE("Refined Raginite Dust", "精製ラギナイトの粉"),
+        ASH("Ash Dust", "灰"),
+        ;
+
+        private val dust = Item(itemSettings())
+
+        override fun asItem(): Item = dust
+    }
+
+    @JvmStatic
+    private fun initDusts(register: HTItemRegister) {
+        Dusts.entries.forEach { dust: Dusts ->
+            register.register("${dust.name.lowercase()}_dust", dust.asItem())
+        }
+    }
+
+    //    Ingots    //
+
+    enum class Ingots(val material: RagiumMaterials) :
+        ItemConvertible,
+        HTTranslationFormatter {
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        STEEL(RagiumMaterials.STEEL),
+        TWILIGHT_METAL(RagiumMaterials.TWILIGHT_METAL),
+        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        ;
+
+        private val ingot = Item(itemSettings())
+
+        override fun asItem(): Item = ingot
+
+        override val enPattern: String = "%s Ingot"
+        override val jaPattern: String = "%sインゴット"
+    }
+
+    @JvmStatic
+    private fun initIngots(register: HTItemRegister) {
+        Ingots.entries.forEach { ingot: Ingots ->
+            register.register("${ingot.name.lowercase()}_ingot", ingot.asItem())
+        }
+    }
+
+    //    Plates    //
+
+    enum class Plates(val material: RagiumMaterials) :
+        ItemConvertible,
+        HTTranslationFormatter {
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        STEEL(RagiumMaterials.STEEL),
+        TWILIGHT(RagiumMaterials.TWILIGHT_METAL),
+        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        PE(RagiumMaterials.PE),
+        PVC(RagiumMaterials.PVC),
+        PTFE(RagiumMaterials.PTFE),
+        ;
+
+        private val plate = Item(itemSettings())
+
+        override fun asItem(): Item = plate
+
+        override val enPattern: String = "%s Plate"
+        override val jaPattern: String = "%s板"
+    }
+
+    @JvmStatic
+    private fun initPlates(register: HTItemRegister) {
+        Plates.entries.forEach { plate: Plates ->
+            register.register("${plate.name.lowercase()}_plate", plate.asItem())
+        }
+    }
+
+    //    Fluids    //
+
+    enum class Fluids(val color: Color, override val enName: String, override val jaName: String) :
+        ItemConvertible,
+        HTTranslationProvider {
+        // tier1
+        WATER(Color(0x0033ff), "Water", "水"),
+        LAVA(Color(0xff6600), "Lava", "溶岩"),
+        MILK(Color(0xffffff), "Milk", "牛乳"),
+        HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
+
+        // tier2
+        // tier3
+        SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
+        OIL(Color(0x000000), "Oil", "石油"),
+        ;
+
+        val fluidName: String = name.lowercase()
+
+        private val item: HTFluidCubeItem = HTFluidCubeItem.create(fluidName)
+
+        override fun asItem(): Item = item
+    }
+
+    @JvmStatic
+    private fun initFluids(register: HTItemRegister) {
+        Fluids.entries.forEach { fluid: Fluids ->
+            register.register("${fluid.fluidName}_fluid_cube", fluid.asItem()) {
+                setColor(fluid.color)
+                generateModel {
+                    RagiumModels.FILLED_FLUID_CUBE.upload(
+                        ModelIds.getItemModelId(item),
+                        TextureMap(),
+                        it.writer,
+                    )
+                }
+            }
         }
     }
 }

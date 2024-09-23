@@ -46,7 +46,7 @@ class HTBlockRegister(val modId: String) : Iterable<Block> {
         action: Builder<Block>.() -> Unit,
     ): Block = register(name, HTBlockWithEntity.buildHorizontal(type, settings), action)
 
-    fun <T : Block> register(name: String, block: T, action: Builder<T>.() -> Unit): T {
+    fun <T : Block> register(name: String, block: T, action: Builder<T>.() -> Unit = {}): T {
         val id: Identifier = Identifier.of(modId, name)
         check(id !in blockCache)
         Registry.register(Registries.BLOCK, id, block)

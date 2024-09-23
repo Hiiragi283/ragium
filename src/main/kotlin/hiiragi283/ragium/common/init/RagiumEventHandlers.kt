@@ -33,16 +33,16 @@ object RagiumEventHandlers {
         }
 
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
-            customTooltip(context, RagiumItems.TWILIGHT_METAL_INGOT, Formatting.GRAY, Formatting.ITALIC)
+            customTooltip(context, RagiumItems.Ingots.TWILIGHT_METAL.asItem(), Formatting.GRAY, Formatting.ITALIC)
             customTooltip(context, RagiumItems.SOAP_INGOT, Formatting.GRAY, Formatting.ITALIC)
             customTooltip(context, RagiumItems.RAW_RAGINITE, Formatting.GRAY, Formatting.OBFUSCATED)
             // auto setting
-            context.modify(::canSetTooltip) { builder: ComponentMap.Builder, item: Item ->
+            /*context.modify(::canSetTooltip) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
                     RagiumComponentTypes.TOOLTIPS,
                     HTTooltipsComponent.fromItem(item, Formatting.GRAY),
                 )
-            }
+            }*/
         }
     }
 
@@ -54,13 +54,5 @@ object RagiumEventHandlers {
                 HTTooltipsComponent.fromItem(item, *formattings),
             )
         }
-    }
-
-    @JvmStatic
-    private fun canSetTooltip(item: Item): Boolean = when {
-        item !in RagiumItems.REGISTER -> false
-        RagiumComponentTypes.TOOLTIPS in item.components -> false
-        RagiumComponentTypes.DISABLE_TOOLTIPS in item.components -> false
-        else -> true
     }
 }

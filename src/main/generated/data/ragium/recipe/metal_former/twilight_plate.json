@@ -1,0 +1,18 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 1,
+      "ingredient": {
+        "item": "ragium:twilight_metal_ingot"
+      }
+    }
+  ],
+  "machine_type": "metal_former",
+  "outputs": [
+    {
+      "count": 1,
+      "item": "ragium:twilight_plate"
+    }
+  ]
+}

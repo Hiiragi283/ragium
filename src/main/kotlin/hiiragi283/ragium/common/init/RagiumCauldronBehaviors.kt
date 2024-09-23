@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.LeveledCauldronBlock
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemActionResult
@@ -16,11 +16,11 @@ object RagiumCauldronBehaviors {
     @JvmField
     val WASH_RAW_RAGINITE =
         CauldronBehavior { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
-            if (stack.isOf(RagiumItems.RAW_RAGINITE_DUST)) {
+            if (stack.isOf(RagiumItems.Dusts.RAW_RAGINITE.asItem())) {
                 if (!world.isClient) {
                     val count: Int = stack.count
                     stack.count = -1
-                    dropStackAt(player, ItemStack(RagiumItems.RAGINITE_DUST, count))
+                    dropStackAt(player, ItemStack(RagiumItems.Dusts.RAGINITE, count))
                     LeveledCauldronBlock.decrementFluidLevel(state, world, pos)
                 }
                 ItemActionResult.success(world.isClient)
@@ -31,11 +31,11 @@ object RagiumCauldronBehaviors {
 
     @JvmStatic
     fun init() {
-        register(CauldronBehavior.WATER_CAULDRON_BEHAVIOR, RagiumItems.RAW_RAGINITE_DUST, WASH_RAW_RAGINITE)
+        register(CauldronBehavior.WATER_CAULDRON_BEHAVIOR, RagiumItems.Dusts.RAW_RAGINITE, WASH_RAW_RAGINITE)
     }
 
     @JvmStatic
-    private fun register(map: CauldronBehavior.CauldronBehaviorMap, item: Item, behavior: CauldronBehavior) {
-        map.map[item] = behavior
+    private fun register(map: CauldronBehavior.CauldronBehaviorMap, item: ItemConvertible, behavior: CauldronBehavior) {
+        map.map[item.asItem()] = behavior
     }
 }

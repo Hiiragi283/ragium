@@ -16,7 +16,11 @@ object RagiumItemGroup {
     @JvmField
     val ITEM: ItemGroup = register(ITEM_KEY) {
         displayName(Text.translatable("itemGroup.ragium.item"))
-        icon { RagiumItems.RAGI_ALLOY_INGOT.defaultStack }
+        icon {
+            RagiumItems.Ingots.RAGI_STEEL
+                .asItem()
+                .defaultStack
+        }
         entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
             RagiumItems.REGISTER.forEach(entries::add)
         }

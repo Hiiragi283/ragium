@@ -142,7 +142,7 @@ class HTItemRegister(private val modId: String) : Iterable<Item> {
         action,
     )
 
-    fun <T : Item> register(name: String, item: T, action: Builder<T>.() -> Unit): T {
+    fun <T : Item> register(name: String, item: T, action: Builder<T>.() -> Unit = {}): T {
         val id: Identifier = Identifier.of(modId, name)
         check(id !in itemCache)
         Registry.register(Registries.ITEM, id, item)

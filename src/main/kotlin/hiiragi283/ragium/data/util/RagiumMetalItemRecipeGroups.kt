@@ -47,7 +47,7 @@ object RagiumMetalItemRecipeGroups {
     val RAGINITE: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .dust(RagiumItems.RAW_RAGINITE_DUST)
+            .dust(RagiumItems.Dusts.RAW_RAGINITE)
             .ore(RagiumBlocks.RAGINITE_ORE)
             .rawMaterial(RagiumItems.RAW_RAGINITE)
             .build("raginite")
@@ -56,40 +56,42 @@ object RagiumMetalItemRecipeGroups {
     val RAGI_ALLOY: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .block(RagiumBlocks.RAGI_ALLOY_BLOCK)
-            .ingot(RagiumItems.RAGI_ALLOY_INGOT)
-            .plate(RagiumItems.RAGI_ALLOY_PLATE)
+            .block(RagiumBlocks.StorageBlocks.RAGI_ALLOY)
+            .ingot(RagiumItems.Ingots.RAGI_ALLOY)
+            .plate(RagiumItems.Plates.RAGI_ALLOY)
             .build("ragi_alloy")
 
     @JvmField
     val RAGI_STEEL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .block(RagiumBlocks.RAGI_STEEL_BLOCK)
-            .ingot(RagiumItems.RAGI_STEEL_INGOT)
-            .plate(RagiumItems.RAGI_STEEL_PLATE)
+            .block(RagiumBlocks.StorageBlocks.RAGI_STEEL)
+            .ingot(RagiumItems.Ingots.RAGI_STEEL)
+            .plate(RagiumItems.Plates.RAGI_STEEL)
             .build("ragi_steel")
 
     @JvmField
     val REFINED_RAGI_STEEL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .block(RagiumBlocks.REFINED_RAGI_STEEL_BLOCK)
-            .ingot(RagiumItems.REFINED_RAGI_STEEL_INGOT)
-            .plate(RagiumItems.REFINED_RAGI_STEEL_PLATE)
+            .block(RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL)
+            .ingot(RagiumItems.Ingots.REFINED_RAGI_STEEL)
+            .plate(RagiumItems.Plates.REFINED_RAGI_STEEL)
             .build("refined_ragi_steel")
 
     @JvmField
     val STEEL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .ingot(RagiumItems.STEEL_INGOT)
+            .ingot(RagiumItems.Ingots.STEEL)
+            .plate(RagiumItems.Plates.STEEL)
             .build("steel")
 
     @JvmField
     val TWILIGHT_METAL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .ingot(RagiumItems.TWILIGHT_METAL_INGOT)
+            .ingot(RagiumItems.Ingots.TWILIGHT_METAL)
+            .plate(RagiumItems.Plates.TWILIGHT)
             .build("twilight_metal")
 }

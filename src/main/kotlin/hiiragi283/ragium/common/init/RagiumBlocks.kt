@@ -1,20 +1,17 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.HTAlchemicalInfuserBlock
-import hiiragi283.ragium.common.block.HTGearBoxBlock
-import hiiragi283.ragium.common.block.HTManualGrinderBlock
-import hiiragi283.ragium.common.block.HTShaftBlock
-import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.registry.HTBlockRegister
 import hiiragi283.ragium.common.util.*
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.data.client.BlockStateModelGenerator
-import net.minecraft.data.client.TextureMap
-import net.minecraft.data.client.VariantSettings
-import net.minecraft.data.client.VariantsBlockStateSupplier
+import net.minecraft.data.client.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.BlockTags
@@ -23,7 +20,11 @@ import net.minecraft.util.Identifier
 
 object RagiumBlocks {
     @JvmField
-    val REGISTER: HTBlockRegister = HTBlockRegister(Ragium.MOD_ID).apply(::registerMachines)
+    val REGISTER: HTBlockRegister = HTBlockRegister(Ragium.MOD_ID)
+        .apply(::initMachines)
+        .apply(::initElements)
+        .apply(::initStorageBlocks)
+        .apply(::initHulls)
 
     //    Ores    //
 
@@ -59,73 +60,6 @@ object RagiumBlocks {
             }
 
             setCustomLootTable()
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    //    Blocks    //
-
-    @JvmField
-    val RAGI_ALLOY_BLOCK: Block =
-        REGISTER.registerCopy("ragi_alloy_block", Blocks.IRON_BLOCK) {
-            putEnglish("Block of Ragi-Alloy")
-            putEnglishTips("Just a compressed block.")
-            putJapanese("ラギ合金ブロック")
-            putJapaneseTips("ただの圧縮ブロック。")
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    @JvmField
-    val RAGI_STEEL_BLOCK: Block =
-        REGISTER.registerCopy("ragi_steel_block", Blocks.IRON_BLOCK) {
-            putEnglish("Block of Ragi-Steel")
-            putEnglishTips("Just a compressed block?")
-            putJapanese("ラギスチールブロック")
-            putJapaneseTips("ただの圧縮ブロック？")
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    @JvmField
-    val REFINED_RAGI_STEEL_BLOCK: Block =
-        REGISTER.registerCopy("refined_ragi_steel_block", Blocks.IRON_BLOCK) {
-            putEnglish("Block of Refined Ragi-Steel")
-            putEnglishTips("Just a compressed block!")
-            putJapanese("精製ラギスチールブロック")
-            putJapaneseTips("ただの圧縮ブロック！")
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    //    Hulls    //
-
-    @JvmField
-    val RAGI_ALLOY_HULL: Block =
-        REGISTER.registerCopy("ragi_alloy_hull", HTMachineTier.HEAT.base) {
-            putEnglish("Ragi-Alloy Hull")
-            putEnglishTips("Tier 1 - Machine Hull")
-            putJapanese("ラギ合金筐体")
-            putJapaneseTips("Tier 1 - マシン筐体")
-            generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    @JvmField
-    val RAGI_STEEL_HULL: Block =
-        REGISTER.registerCopy("ragi_steel_hull", HTMachineTier.KINETIC.base) {
-            putEnglish("Ragi-Steel Hull")
-            putEnglishTips("Tier 2 - Machine Hull")
-            putJapanese("ラギスチール筐体")
-            putJapaneseTips("Tier 2 - マシン筐体")
-            generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
-            registerTags(BlockTags.PICKAXE_MINEABLE)
-        }
-
-    @JvmField
-    val REFINED_RAGI_STEEL_HULL: Block =
-        REGISTER.registerCopy("refined_ragi_steel_hull", HTMachineTier.ELECTRIC.base) {
-            putEnglish("Refined Ragi-Steel Hull")
-            putEnglishTips("Tier 3 - Machine Hull")
-            putJapanese("精製ラギスチール筐体")
-            putJapaneseTips("Tier 3 - マシン筐体")
-            generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
             registerTags(BlockTags.PICKAXE_MINEABLE)
         }
 
@@ -327,13 +261,31 @@ object RagiumBlocks {
             }
         }
 
+    @JvmField
+    val INFESTING: Block = REGISTER.register("infesting", HTInfectingBlock) {
+        generateState {
+            it.blockStateCollector.accept(
+                VariantsBlockStateSupplier
+                    .create(block)
+                    .coordinate(
+                        BlockStateVariantMap
+                            .create(net.minecraft.state.property.Properties.ENABLED)
+                            .register(false, buildModelVariant(TextureMap.getId(Blocks.GRAY_CONCRETE_POWDER)))
+                            .register(true, buildModelVariant(TextureMap.getId(Blocks.LIGHT_GRAY_CONCRETE_POWDER))),
+                    ),
+            )
+        }
+    }
+
     init {
         RagiumBlockEntityTypes.ALCHEMICAL_INFUSER.addSupportedBlock(ALCHEMICAL_INFUSER)
         RagiumBlockEntityTypes.ITEM_DISPLAY.addSupportedBlock(ITEM_DISPLAY)
     }
 
+    //    Machines    //
+
     @JvmStatic
-    private fun registerMachines(register: HTBlockRegister) {
+    private fun initMachines(register: HTBlockRegister) {
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             val id: Identifier = type.id
             val block: Block = type.block
@@ -358,8 +310,10 @@ object RagiumBlocks {
         }
     }
 
+    //    Elements    //
+
     @JvmStatic
-    private fun registerElements(register: HTBlockRegister) {
+    private fun initElements(register: HTBlockRegister) {
         RagiElement.entries.forEach { element: RagiElement ->
             // Budding Block
             register.register("budding_${element.asString()}", element.buddingBlock) {
@@ -386,6 +340,61 @@ object RagiumBlocks {
                     )
                 }
                 setCustomLootTable()
+            }
+        }
+    }
+
+    //    Storage Blocks    //
+
+    enum class StorageBlocks(val material: RagiumMaterials) :
+        ItemConvertible,
+        HTTranslationFormatter {
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        ;
+
+        val block = Block(blockSettings(Blocks.IRON_BLOCK))
+
+        override fun asItem(): Item = block.asItem()
+
+        override val enPattern: String = "Block of %s"
+        override val jaPattern: String = "%sブロック"
+    }
+
+    @JvmStatic
+    private fun initStorageBlocks(register: HTBlockRegister) {
+        StorageBlocks.entries.forEach { block: StorageBlocks ->
+            register.register("${block.name.lowercase()}_block", block.block) {
+                registerTags(BlockTags.PICKAXE_MINEABLE)
+            }
+        }
+    }
+
+    //    Hulls    //
+
+    enum class Hulls(val material: RagiumMaterials) :
+        ItemConvertible,
+        HTTranslationFormatter {
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        ;
+
+        val block = Block(blockSettings(material.tier.base))
+
+        override fun asItem(): Item = block.asItem()
+
+        override val enPattern: String = "%s Hull"
+        override val jaPattern: String = "%s筐体"
+    }
+
+    @JvmStatic
+    private fun initHulls(register: HTBlockRegister) {
+        Hulls.entries.forEach { hull: Hulls ->
+            register.register("${hull.name.lowercase()}_hull", hull.block) {
+                generateState { it.registerSingleton(block, RagiumModels.HULL_TEXTURE_FACTORY) }
+                registerTags(BlockTags.PICKAXE_MINEABLE)
             }
         }
     }

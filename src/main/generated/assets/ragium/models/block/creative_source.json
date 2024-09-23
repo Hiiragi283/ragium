@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/creative_source"
+    "all": "minecraft:block/respawn_anchor_top_off"
   }
 }
