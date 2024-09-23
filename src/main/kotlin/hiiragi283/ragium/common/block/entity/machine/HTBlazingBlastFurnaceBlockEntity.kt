@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumEnergyProviders
 import hiiragi283.ragium.common.machine.HTBlockPredicate
 import hiiragi283.ragium.common.machine.HTMachineTier
@@ -31,12 +31,12 @@ class HTBlazingBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
             -1..1,
             -1,
             1..3,
-            HTBlockPredicate.block(HTMachineTier.KINETIC.base),
+            HTBlockPredicate.block(HTMachineTier.ELECTRIC.base),
         ).addHollow(
             -1..1,
             0,
             1..3,
-            HTBlockPredicate.block(RagiumBlocks.RAGI_STEEL_HULL),
+            HTBlockPredicate.block(RagiumContents.Hulls.RAGI_STEEL.block),
         ).addHollow(
             -1..1,
             1,

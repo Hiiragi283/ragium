@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.util.HTMetalItemRecipeGroup
@@ -12,6 +12,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
@@ -35,7 +36,23 @@ object RagiumTagProviders {
     private class BlockProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.BlockTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            RagiumBlocks.REGISTER.generateTag(::getOrCreateTagBuilder)
+            val pickaxeMinable: FabricTagBuilder = getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
+            pickaxeMinable
+                .add(
+                    RagiumContents.RAGINITE_ORE,
+                    RagiumContents.DEEPSLATE_RAGINITE_ORE,
+                    RagiumContents.MANUAL_GRINDER,
+                    RagiumContents.BURNING_BOX,
+                    RagiumContents.BLAZING_BOX,
+                    RagiumContents.WATER_GENERATOR,
+                    RagiumContents.WIND_GENERATOR,
+                )
+            RagiumContents.StorageBlocks.entries
+                .map(RagiumContents.StorageBlocks::block)
+                .forEach(pickaxeMinable::add)
+            RagiumContents.Hulls.entries
+                .map(RagiumContents.Hulls::block)
+                .forEach(pickaxeMinable::add)
         }
     }
 

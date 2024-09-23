@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumItems.Ingots
 import hiiragi283.ragium.common.init.RagiumItems.Plates
 import hiiragi283.ragium.common.machine.HTMachineTier
@@ -17,9 +18,9 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     PTFE(HTMachineTier.CHEMICAL, "PTFE", "テフロン"),
     ;
 
-    fun getBlock(): RagiumBlocks.StorageBlocks? = RagiumBlocks.StorageBlocks.entries.firstOrNull { it.material == this }
+    fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }
 
-    fun getHull(): RagiumBlocks.Hulls? = RagiumBlocks.Hulls.entries.firstOrNull { it.material == this }
+    fun getHull(): RagiumContents.Hulls? = RagiumContents.Hulls.entries.firstOrNull { it.material == this }
 
     fun getIngot(): Ingots? = Ingots.entries.firstOrNull { it.material == this }
 

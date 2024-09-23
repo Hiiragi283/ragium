@@ -9,8 +9,8 @@ import hiiragi283.ragium.client.integration.rei.display.HTInfusionRecipeDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
@@ -67,13 +67,13 @@ object RagiumREIClient : REIClientPlugin {
         }
         registry.addWorkstations(
             HTMachineType.Single.GRINDER.categoryId,
-            EntryStacks.of(RagiumBlocks.MANUAL_GRINDER),
+            EntryStacks.of(RagiumContents.MANUAL_GRINDER),
         )
         // Fluid Pump
         registry.add(HTFluidPumpCategory)
         // Alchemy Recipe
         registry.add(HTAlchemyRecipeCategory)
-        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumBlocks.ALCHEMICAL_INFUSER))
+        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.ALCHEMICAL_INFUSER))
     }
 
     override fun registerDisplays(registry: DisplayRegistry) {

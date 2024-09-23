@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.data.HTInfusionRecipeJsonBuilder
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMaterials
@@ -189,7 +189,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         materials.forEach { material: RagiumMaterials ->
             val base: Block = material.tier.base
             val ingot: RagiumItems.Ingots = material.getIngot() ?: return@forEach
-            val hull: RagiumBlocks.Hulls = material.getHull() ?: return@forEach
+            val hull: RagiumContents.Hulls = material.getHull() ?: return@forEach
             createShaped(hull)
                 .pattern("AAA")
                 .pattern("A A")
@@ -215,7 +215,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
                 )
         }
         // machines
-        createShaped(RagiumBlocks.MANUAL_GRINDER)
+        createShaped(RagiumContents.MANUAL_GRINDER)
             .pattern("A  ")
             .pattern("BBB")
             .pattern("CCC")
@@ -225,7 +225,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .itemCriterion(RagiumItems.Ingots.RAGI_ALLOY)
             .offerTo(exporter, Ragium.id("shaped/manual_grinder"))
 
-        createShaped(RagiumBlocks.MANUAL_GRINDER)
+        createShaped(RagiumContents.MANUAL_GRINDER)
             .pattern("A  ")
             .pattern("BBB")
             .pattern("CCC")
@@ -235,7 +235,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .itemCriterion(RagiumItems.Plates.RAGI_ALLOY)
             .offerTo(exporter, Ragium.id("shaped/hard/manual_grinder"))
 
-        createShaped(RagiumBlocks.BURNING_BOX)
+        createShaped(RagiumContents.BURNING_BOX)
             .pattern("AAA")
             .pattern("A A")
             .pattern("ABA")
@@ -244,15 +244,15 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .itemCriterion(Items.BRICKS)
             .offerTo(exporter, Ragium.id("shaped/burning_box"))
 
-        createShaped(RagiumBlocks.GEAR_BOX)
+        createShaped(RagiumContents.GEAR_BOX)
             .pattern("AAA")
             .pattern("BCB")
             .pattern("BDB")
             .input('A', RagiumItems.Ingots.RAGI_STEEL)
             .input('B', HTMachineTier.ELECTRIC.base)
-            .input('C', RagiumBlocks.SHAFT)
+            .input('C', RagiumContents.SHAFT)
             .input('D', ConventionalItemTags.REDSTONE_DUSTS)
-            .itemCriterion(RagiumBlocks.SHAFT)
+            .itemCriterion(RagiumContents.SHAFT)
             .offerTo(exporter, Ragium.id("shaped/gear_box"))
 
         // tiered machines
@@ -262,7 +262,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.ALLOY_FURNACE,
             RagiumItems.Ingots.RAGI_ALLOY,
             Items.FURNACE,
-            RagiumBlocks.Hulls.RAGI_ALLOY,
+            RagiumContents.Hulls.RAGI_ALLOY,
         )
 
         createMachine(
@@ -270,7 +270,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Multi.BRICK_BLAST_FURNACE,
             RagiumItems.Ingots.RAGI_ALLOY,
             Items.BLAST_FURNACE,
-            RagiumBlocks.Hulls.RAGI_ALLOY,
+            RagiumContents.Hulls.RAGI_ALLOY,
         )
 
         // tier2
@@ -279,7 +279,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.COMPRESSOR,
             RagiumItems.Ingots.RAGI_STEEL,
             Items.PISTON,
-            RagiumBlocks.Hulls.RAGI_STEEL,
+            RagiumContents.Hulls.RAGI_STEEL,
         )
 
         createMachine(
@@ -287,7 +287,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.EXTRACTOR,
             RagiumItems.Ingots.RAGI_STEEL,
             Items.BUCKET, // TODO
-            RagiumBlocks.Hulls.RAGI_STEEL,
+            RagiumContents.Hulls.RAGI_STEEL,
         )
 
         createMachine(
@@ -295,7 +295,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.GRINDER,
             RagiumItems.Ingots.RAGI_STEEL,
             Items.FLINT,
-            RagiumBlocks.Hulls.RAGI_STEEL,
+            RagiumContents.Hulls.RAGI_STEEL,
         )
 
         createMachine(
@@ -303,7 +303,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.METAL_FORMER,
             RagiumItems.Ingots.RAGI_STEEL,
             RagiumItems.FORGE_HAMMER,
-            RagiumBlocks.Hulls.RAGI_STEEL,
+            RagiumContents.Hulls.RAGI_STEEL,
         )
 
         createMachine(
@@ -311,7 +311,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.MIXER,
             RagiumItems.Ingots.RAGI_STEEL,
             Items.CAULDRON, // TODO
-            RagiumBlocks.Hulls.RAGI_STEEL,
+            RagiumContents.Hulls.RAGI_STEEL,
         )
 
         createMachine(
@@ -319,7 +319,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Multi.BLAZING_BLAST_FURNACE,
             RagiumItems.Ingots.RAGI_STEEL,
             HTMachineType.Multi.BRICK_BLAST_FURNACE,
-            RagiumBlocks.Hulls.RAGI_STEEL,
+            RagiumContents.Hulls.RAGI_STEEL,
         )
 
         // tier3
@@ -328,7 +328,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.CENTRIFUGE,
             RagiumItems.Ingots.REFINED_RAGI_STEEL,
             Items.COPPER_GRATE, // TODO
-            RagiumBlocks.Hulls.REFINED_RAGI_STEEL,
+            RagiumContents.Hulls.REFINED_RAGI_STEEL,
         )
 
         createMachine(
@@ -336,7 +336,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.CHEMICAL_REACTOR,
             RagiumItems.Ingots.REFINED_RAGI_STEEL,
             Items.CRAFTING_TABLE, // TODO
-            RagiumBlocks.Hulls.REFINED_RAGI_STEEL,
+            RagiumContents.Hulls.REFINED_RAGI_STEEL,
         )
 
         createMachine(
@@ -344,7 +344,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Single.ELECTROLYZER,
             RagiumItems.Ingots.REFINED_RAGI_STEEL,
             Items.HOPPER, // TODO
-            RagiumBlocks.Hulls.REFINED_RAGI_STEEL,
+            RagiumContents.Hulls.REFINED_RAGI_STEEL,
         )
 
         createMachine(
@@ -352,10 +352,10 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             HTMachineType.Multi.DISTILLATION_TOWER,
             RagiumItems.Ingots.REFINED_RAGI_STEEL,
             Items.COPPER_GRATE,
-            RagiumBlocks.Hulls.REFINED_RAGI_STEEL,
+            RagiumContents.Hulls.REFINED_RAGI_STEEL,
         )
         // tier4
-        createShaped(RagiumBlocks.ALCHEMICAL_INFUSER)
+        createShaped(RagiumContents.ALCHEMICAL_INFUSER)
             .pattern("AAA")
             .pattern("BCB")
             .pattern("DDD")
@@ -541,7 +541,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
     private fun metalFormer(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
             .addInput(RagiumItemTags.STEEL_INGOTS, 2)
-            .addOutput(RagiumBlocks.SHAFT)
+            .addOutput(RagiumContents.SHAFT)
             .offerTo(exporter)
     }
 
@@ -816,7 +816,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addInput(glass, 64)
             .addInput(ing1, 16)
             .addInput(ing2, 8)
-            .hasInput(RagiumBlocks.ALCHEMICAL_INFUSER)
+            .hasInput(RagiumContents.ALCHEMICAL_INFUSER)
             .offerTo(exporter)
     }
 

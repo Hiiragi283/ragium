@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.integration.rei.category
 
 import hiiragi283.ragium.client.integration.rei.RagiumREIClient
 import hiiragi283.ragium.client.integration.rei.display.HTDisplay
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
@@ -17,7 +17,7 @@ object HTAlchemyRecipeCategory : HTDisplayCategory<HTDisplay<out HTAlchemyRecipe
 
     override fun getTitle(): Text = Text.literal("Alchemical Infusion")
 
-    override fun getIcon(): Renderer = EntryStacks.of(RagiumBlocks.ALCHEMICAL_INFUSER)
+    override fun getIcon(): Renderer = EntryStacks.of(RagiumContents.ALCHEMICAL_INFUSER)
 
     override fun setupDisplay(display: HTDisplay<out HTAlchemyRecipe>, bounds: Rectangle): List<Widget> = buildList {
         this += Widgets.createRecipeBase(bounds)

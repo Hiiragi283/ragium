@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -256,35 +257,34 @@ object RagiumItems {
     @JvmStatic
     private fun initBlockItems(register: HTItemRegister) {
         // ores
-        register.registerBlockItem(RagiumBlocks.RAGINITE_ORE) {
+        register.registerBlockItem(RagiumContents.RAGINITE_ORE) {
             registerTags(RagiumItemTags.RAGINITE_ORES)
         }
-        register.registerBlockItem(RagiumBlocks.DEEPSLATE_RAGINITE_ORE) {
+        register.registerBlockItem(RagiumContents.DEEPSLATE_RAGINITE_ORE) {
             registerTags(RagiumItemTags.RAGINITE_ORES)
         }
         // blocks
-        RagiumBlocks.StorageBlocks.entries.forEach { block: RagiumBlocks.StorageBlocks ->
+        RagiumContents.StorageBlocks.entries.forEach { block: RagiumContents.StorageBlocks ->
             register.registerBlockItem(block.block, itemSettings().tier(block.material.tier))
         }
         // hulls
-        RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
+        RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             register.registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
         }
         // machines
-        register.registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
-        register.registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
-        register.registerBlockItem(RagiumBlocks.WATER_COLLECTOR)
-        register.registerBlockItem(RagiumBlocks.BURNING_BOX)
-        register.registerBlockItem(RagiumBlocks.WATER_GENERATOR)
-        register.registerBlockItem(RagiumBlocks.WIND_GENERATOR)
-        register.registerBlockItem(RagiumBlocks.SHAFT)
-        register.registerBlockItem(RagiumBlocks.GEAR_BOX)
-        register.registerBlockItem(RagiumBlocks.BLAZING_BOX)
+        register.registerBlockItem(RagiumContents.CREATIVE_SOURCE)
+        register.registerBlockItem(RagiumContents.MANUAL_GRINDER)
+        register.registerBlockItem(RagiumContents.BURNING_BOX)
+        register.registerBlockItem(RagiumContents.WATER_GENERATOR)
+        register.registerBlockItem(RagiumContents.WIND_GENERATOR)
+        register.registerBlockItem(RagiumContents.SHAFT)
+        register.registerBlockItem(RagiumContents.GEAR_BOX)
+        register.registerBlockItem(RagiumContents.BLAZING_BOX)
         register.registerBlockItem(
-            RagiumBlocks.ALCHEMICAL_INFUSER,
+            RagiumContents.ALCHEMICAL_INFUSER,
             itemSettings().rarity(Rarity.EPIC),
         )
-        register.registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
+        register.registerBlockItem(RagiumContents.ITEM_DISPLAY)
     }
 
     //    Machines    //

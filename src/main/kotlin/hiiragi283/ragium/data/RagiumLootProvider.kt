@@ -1,8 +1,9 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.machine.HTMachineType
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -34,12 +35,36 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
     override fun generate() {
-        RagiumBlocks.REGISTER.generateLootTable(this)
+        addDrop(RagiumContents.RAGINITE_ORE, ::dropRaginiteOre)
+        addDrop(RagiumContents.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
+        addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
+        addDrop(RagiumContents.MANUAL_GRINDER)
+        addDrop(RagiumContents.BURNING_BOX)
+        addDrop(RagiumContents.WATER_GENERATOR)
+        addDrop(RagiumContents.WIND_GENERATOR)
+        addDrop(RagiumContents.SHAFT)
+        addDrop(RagiumContents.GEAR_BOX)
+        addDrop(RagiumContents.BLAZING_BOX)
+        addDrop(RagiumContents.ALCHEMICAL_INFUSER)
+        addDrop(RagiumContents.ITEM_DISPLAY)
 
-        addDrop(RagiumBlocks.RAGINITE_ORE, ::dropRaginiteOre)
-        addDrop(RagiumBlocks.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
+        RagiumContents.StorageBlocks.entries
+            .map(RagiumContents.StorageBlocks::block)
+            .forEach(::addDrop)
+
+        RagiumContents.Hulls.entries
+            .map(RagiumContents.Hulls::block)
+            .forEach(::addDrop)
+
+        HTMachineType
+            .getEntries()
+            .map(HTMachineType::block)
+            .forEach(::addDrop)
 
         RagiElement.entries.forEach { element: RagiElement ->
+            // budding block
+            addDrop(element.buddingBlock)
+            // cluster block
             addDrop(element.clusterBlock) { block: Block ->
                 dropsWithSilkTouch(
                     block,

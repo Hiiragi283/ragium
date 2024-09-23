@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.util
 
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.item.Items
 
@@ -48,7 +48,7 @@ object RagiumMetalItemRecipeGroups {
         HTMetalItemRecipeGroup
             .Builder()
             .dust(RagiumItems.Dusts.RAW_RAGINITE)
-            .ore(RagiumBlocks.RAGINITE_ORE)
+            .ore(RagiumContents.RAGINITE_ORE)
             .rawMaterial(RagiumItems.RAW_RAGINITE)
             .build("raginite")
 
@@ -56,7 +56,7 @@ object RagiumMetalItemRecipeGroups {
     val RAGI_ALLOY: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .block(RagiumBlocks.StorageBlocks.RAGI_ALLOY)
+            .block(RagiumContents.StorageBlocks.RAGI_ALLOY)
             .ingot(RagiumItems.Ingots.RAGI_ALLOY)
             .plate(RagiumItems.Plates.RAGI_ALLOY)
             .build("ragi_alloy")
@@ -65,7 +65,7 @@ object RagiumMetalItemRecipeGroups {
     val RAGI_STEEL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .block(RagiumBlocks.StorageBlocks.RAGI_STEEL)
+            .block(RagiumContents.StorageBlocks.RAGI_STEEL)
             .ingot(RagiumItems.Ingots.RAGI_STEEL)
             .plate(RagiumItems.Plates.RAGI_STEEL)
             .build("ragi_steel")
@@ -74,7 +74,7 @@ object RagiumMetalItemRecipeGroups {
     val REFINED_RAGI_STEEL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
-            .block(RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL)
+            .block(RagiumContents.StorageBlocks.REFINED_RAGI_STEEL)
             .ingot(RagiumItems.Ingots.REFINED_RAGI_STEEL)
             .plate(RagiumItems.Plates.REFINED_RAGI_STEEL)
             .build("refined_ragi_steel")

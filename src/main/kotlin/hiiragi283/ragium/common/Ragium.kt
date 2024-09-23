@@ -46,9 +46,10 @@ object Ragium : ModInitializer {
 
         RagiumComponentTypes
         RagiumBlockEntityTypes
-        RagiumBlocks
+        RagiumContents.init()
         RagiumItems
         RagiumItemGroup
+        RagiumBlockEntityTypes.init()
 
         RagiumAdvancementCriteria
         RagiumRecipeSerializers

@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.advancement.HTBuildMultiblockCriterion
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.data.util.HTAdvancementRegister
@@ -59,7 +59,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier1/root",
-                RagiumBlocks.RAGINITE_ORE,
+                RagiumContents.RAGINITE_ORE,
                 Identifier.of("textures/block/bricks.png"),
             ) {
                 hasItems(RagiumItems.RAW_RAGINITE)
@@ -86,9 +86,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/ragi_alloy_hull",
                 ragiAlloy,
-                RagiumBlocks.Hulls.RAGI_ALLOY,
+                RagiumContents.Hulls.RAGI_ALLOY,
             ) {
-                hasItems(RagiumBlocks.Hulls.RAGI_ALLOY)
+                hasItems(RagiumContents.Hulls.RAGI_ALLOY)
             }.putEnglish("Not made of bronze")
             .putEnglishDesc("Craft Ragi-Alloy Hull")
             .putJapanese("ブロンズ製ではない")
@@ -125,9 +125,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/manual_grinder",
                 ragiAlloy,
-                RagiumBlocks.MANUAL_GRINDER,
+                RagiumContents.MANUAL_GRINDER,
             ) {
-                hasItems(RagiumBlocks.MANUAL_GRINDER)
+                hasItems(RagiumContents.MANUAL_GRINDER)
             }.putEnglish("Traditional One")
             .putEnglishDesc("Craft Manual Grinder")
             .putJapanese("あのクルクル")
@@ -168,9 +168,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/ragi_steel_hull",
                 root,
-                RagiumBlocks.Hulls.RAGI_STEEL,
+                RagiumContents.Hulls.RAGI_STEEL,
             ) {
-                hasItems(RagiumBlocks.Hulls.RAGI_STEEL)
+                hasItems(RagiumContents.Hulls.RAGI_STEEL)
             }.putEnglish("Not made of steel...")
             .putEnglishDesc("Craft Ragi-Steel Hull")
             .putJapanese("スチール製ではない...")
@@ -302,9 +302,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/refined_steel_hull",
                 root,
-                RagiumBlocks.Hulls.REFINED_RAGI_STEEL,
+                RagiumContents.Hulls.REFINED_RAGI_STEEL,
             ) {
-                hasItems(RagiumBlocks.Hulls.REFINED_RAGI_STEEL)
+                hasItems(RagiumContents.Hulls.REFINED_RAGI_STEEL)
             }.putEnglish("Not made of steeeeel!!")
             .putEnglishDesc("Craft Refined Ragi-Steel Hull")
             .putJapanese("スチール製ではなあああい!!")
@@ -383,10 +383,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumBlocks.ALCHEMICAL_INFUSER,
+                RagiumContents.ALCHEMICAL_INFUSER,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(RagiumBlocks.ALCHEMICAL_INFUSER)
+                hasItems(RagiumContents.ALCHEMICAL_INFUSER)
             }.putEnglish("Ragium - Tier 4")
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")

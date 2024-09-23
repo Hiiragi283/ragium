@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlocks.Properties.LEVEL_7
+import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
@@ -28,13 +28,13 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        val step: Int = state.get(LEVEL_7)
+        val step: Int = state.get(RagiumBlockProperties.LEVEL_7)
         if (step == 7) {
             (world.getBlockEntity(pos) as? HTManualGrinderBlockEntity)?.process()
         }
         if (!world.isClient) {
             world.modifyBlockState(pos) { stateIn: BlockState ->
-                stateIn.with(LEVEL_7, (step + 1) % 8)
+                stateIn.with(RagiumBlockProperties.LEVEL_7, (step + 1) % 8)
             }
         }
         world.playSoundAtBlockCenter(

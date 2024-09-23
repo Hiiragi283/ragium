@@ -6,6 +6,7 @@ import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMultiMachineBlockEntityRenderer
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.*
@@ -54,19 +55,20 @@ object RagiumClient : ClientModInitializer {
     private fun registerBlocks() {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
-            RagiumBlocks.RAGINITE_ORE,
-            RagiumBlocks.DEEPSLATE_RAGINITE_ORE,
-            RagiumBlocks.MANUAL_GRINDER,
-            RagiumBlocks.BURNING_BOX,
-            RagiumBlocks.GEAR_BOX,
-            RagiumBlocks.BLAZING_BOX,
-            RagiumBlocks.ITEM_DISPLAY,
+            RagiumContents.RAGINITE_ORE,
+            RagiumContents.DEEPSLATE_RAGINITE_ORE,
+            RagiumContents.MANUAL_GRINDER,
+            RagiumContents.BURNING_BOX,
+            RagiumContents.GEAR_BOX,
+            RagiumContents.BLAZING_BOX,
         )
 
         HTMachineType
             .getEntries()
             .map(HTMachineType::block)
             .forEach(RagiumClient::registerCutoutMipped)
+
+        BlockRenderLayerMap.INSTANCE.putBlock(RagiumContents.ITEM_DISPLAY, RenderLayer.getCutout())
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }

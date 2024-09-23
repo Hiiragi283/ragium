@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
@@ -14,7 +14,7 @@ interface HTAlchemyRecipe : HTRecipeBase<HTAlchemyRecipe.Input> {
 
     override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = result.copy()
 
-    override fun createIcon(): ItemStack = RagiumBlocks.ALCHEMICAL_INFUSER.asItem().defaultStack
+    override fun createIcon(): ItemStack = RagiumContents.ALCHEMICAL_INFUSER.asItem().defaultStack
 
     override fun getType(): RecipeType<*> = Type
 
