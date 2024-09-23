@@ -2,7 +2,6 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:water_fluid_cube"
       }
@@ -21,7 +20,6 @@
       "item": "ragium:hydrogen_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:oxygen_fluid_cube"
     }
   ]

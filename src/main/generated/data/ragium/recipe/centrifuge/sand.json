@@ -2,13 +2,11 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "minecraft:soul_sand"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:empty_fluid_cube"
       }
@@ -17,11 +15,9 @@
   "machine_type": "centrifuge",
   "outputs": [
     {
-      "count": 1,
       "item": "minecraft:sand"
     },
     {
-      "count": 1,
       "item": "ragium:oil_fluid_cube"
     }
   ]

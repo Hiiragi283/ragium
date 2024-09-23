@@ -2,7 +2,6 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "tag": "c:ingots/iron"
       }
@@ -17,7 +16,6 @@
   "machine_type": "brick_blast_furnace",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:ragi_steel_ingot"
     }
   ]

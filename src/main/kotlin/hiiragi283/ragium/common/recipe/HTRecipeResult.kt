@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.common.util.mapCast
 import hiiragi283.ragium.common.util.toList
+import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -17,7 +18,7 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-sealed class HTRecipeResult(val count: Int) {
+sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
     abstract val value: Item
 
     init {
@@ -78,16 +79,18 @@ sealed class HTRecipeResult(val count: Int) {
         val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<HTRecipeResult>> = PACKET_CODEC.toList()
 
         @JvmStatic
-        fun item(item: ItemConvertible, count: Int = 1): HTRecipeResult = ItemImpl(item, count)
+        fun item(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
+            ItemImpl(item, count, components)
 
         @JvmStatic
-        fun tag(tagKey: TagKey<Item>, count: Int = 1): HTRecipeResult = TagImpl(tagKey, count)
+        fun tag(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
+            TagImpl(tagKey, count, components)
     }
 
     //    Item    //
 
-    private class ItemImpl(item: ItemConvertible, count: Int) :
-        HTRecipeResult(count),
+    private class ItemImpl(item: ItemConvertible, count: Int, components: ComponentChanges) :
+        HTRecipeResult(count, components),
         ItemConvertible by item {
         companion object {
             @JvmField
@@ -99,9 +102,11 @@ sealed class HTRecipeResult(val count: Int) {
                                 .fieldOf("item")
                                 .forGetter(ItemImpl::asItem),
                             Codec.INT
-                                .orElse(1)
-                                .fieldOf("count")
+                                .optionalFieldOf("count", 1)
                                 .forGetter(ItemImpl::count),
+                            ComponentChanges.CODEC
+                                .optionalFieldOf("components", ComponentChanges.EMPTY)
+                                .forGetter(ItemImpl::components),
                         ).apply(instance, ::ItemImpl)
                 }
         }
@@ -121,7 +126,8 @@ sealed class HTRecipeResult(val count: Int) {
         }
     }
 
-    private class TagImpl(private val tagKey: TagKey<Item>, count: Int) : HTRecipeResult(count) {
+    private class TagImpl(private val tagKey: TagKey<Item>, count: Int, components: ComponentChanges) :
+        HTRecipeResult(count, components) {
         companion object {
             @JvmField
             val CODEC: Codec<TagImpl> =
@@ -130,9 +136,11 @@ sealed class HTRecipeResult(val count: Int) {
                         .group(
                             TagKey.unprefixedCodec(RegistryKeys.ITEM).fieldOf("tag").forGetter(TagImpl::tagKey),
                             Codec.INT
-                                .orElse(1)
-                                .fieldOf("count")
+                                .optionalFieldOf("count", 1)
                                 .forGetter(TagImpl::count),
+                            ComponentChanges.CODEC
+                                .optionalFieldOf("components", ComponentChanges.EMPTY)
+                                .forGetter(TagImpl::components),
                         ).apply(instance, ::TagImpl)
                 }
         }

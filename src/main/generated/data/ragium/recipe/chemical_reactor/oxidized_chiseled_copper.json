@@ -2,13 +2,11 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "minecraft:chiseled_copper"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:oxygen_fluid_cube"
       }
@@ -17,11 +15,9 @@
   "machine_type": "chemical_reactor",
   "outputs": [
     {
-      "count": 1,
       "item": "minecraft:oxidized_chiseled_copper"
     },
     {
-      "count": 1,
       "item": "ragium:empty_fluid_cube"
     }
   ]

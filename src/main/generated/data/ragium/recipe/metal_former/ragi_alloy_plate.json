@@ -2,7 +2,6 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:ragi_alloy_ingot"
       }
@@ -11,7 +10,6 @@
   "machine_type": "metal_former",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:ragi_alloy_plate"
     }
   ]

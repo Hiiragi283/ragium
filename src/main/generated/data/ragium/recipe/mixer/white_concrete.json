@@ -2,19 +2,16 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "tag": "c:concretes"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:soap_ingot"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:water_fluid_cube"
       }
@@ -23,11 +20,9 @@
   "machine_type": "mixer",
   "outputs": [
     {
-      "count": 1,
       "item": "minecraft:white_concrete"
     },
     {
-      "count": 1,
       "item": "ragium:empty_fluid_cube"
     }
   ]

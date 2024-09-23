@@ -2,7 +2,6 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:raw_raginite"
       }
@@ -11,11 +10,9 @@
   "machine_type": "grinder",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:raw_raginite_dust"
     },
     {
-      "count": 1,
       "item": "ragium:raw_raginite_dust"
     }
   ]

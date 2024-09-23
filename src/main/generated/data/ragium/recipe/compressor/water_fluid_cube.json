@@ -2,13 +2,11 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:empty_fluid_cube"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "minecraft:water_bucket"
       }
@@ -17,11 +15,9 @@
   "machine_type": "compressor",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:water_fluid_cube"
     },
     {
-      "count": 1,
       "item": "minecraft:bucket"
     }
   ]

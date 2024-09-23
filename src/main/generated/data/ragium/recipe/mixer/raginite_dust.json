@@ -8,7 +8,6 @@
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:water_fluid_cube"
       }
@@ -21,7 +20,6 @@
       "item": "ragium:raginite_dust"
     },
     {
-      "count": 1,
       "item": "ragium:empty_fluid_cube"
     }
   ]

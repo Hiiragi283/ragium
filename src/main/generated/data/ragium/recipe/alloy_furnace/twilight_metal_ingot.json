@@ -2,13 +2,11 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "tag": "c:ingots/copper"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "tag": "c:ingots/gold"
       }

@@ -11,11 +11,9 @@
   "machine_type": "distillation_tower",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:ethylene_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:diesel_fluid_cube"
     }
   ]

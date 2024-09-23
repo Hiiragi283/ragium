@@ -2,13 +2,11 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:salt_water_fluid_cube"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:empty_fluid_cube"
       }
@@ -17,15 +15,12 @@
   "machine_type": "electrolyzer",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:hydrogen_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:chlorine_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:ash_dust"
     }
   ]

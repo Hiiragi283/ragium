@@ -2,13 +2,11 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:ethylene_fluid_cube"
       }
     },
     {
-      "count": 1,
       "ingredient": {
         "item": "ragium:chlorine_fluid_cube"
       }
@@ -17,11 +15,9 @@
   "machine_type": "chemical_reactor",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:vinyl_chloride_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:hydrogen_fluid_cube"
     }
   ]

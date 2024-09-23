@@ -11,7 +11,6 @@
   "machine_type": "distillation_tower",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:refined_gas_fluid_cube"
     },
     {
@@ -19,7 +18,6 @@
       "item": "ragium:naphtha_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:tar_fluid_cube"
     }
   ]

@@ -11,15 +11,12 @@
   "machine_type": "distillation_tower",
   "outputs": [
     {
-      "count": 1,
       "item": "ragium:benzene_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:toluene_fluid_cube"
     },
     {
-      "count": 1,
       "item": "ragium:phenol_fluid_cube"
     }
   ]

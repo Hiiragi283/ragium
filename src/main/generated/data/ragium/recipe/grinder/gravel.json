@@ -2,7 +2,6 @@
   "type": "ragium:generic",
   "inputs": [
     {
-      "count": 1,
       "ingredient": {
         "item": "minecraft:cobblestone"
       }
@@ -11,7 +10,6 @@
   "machine_type": "grinder",
   "outputs": [
     {
-      "count": 1,
       "item": "minecraft:gravel"
     }
   ]
