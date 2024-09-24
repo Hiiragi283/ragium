@@ -3,13 +3,17 @@ package hiiragi283.ragium.client.util
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.util.getOrDefault
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
+import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
+import net.minecraft.network.packet.CustomPayload
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
@@ -75,4 +79,18 @@ fun <T> renderMultiblock(
     val direction: Direction = entity.cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
     val world: World = entity.world ?: return
     entity.buildMultiblock(HTMultiblockRenderer(world, matrices, vertexConsumers).rotate(direction))
+}
+
+//    Network    //
+
+fun <T : CustomPayload> CustomPayload.Id<T>.registerGlobalReceiver(handler: ClientPlayNetworking.PlayPayloadHandler<T>) {
+    ClientPlayNetworking.registerGlobalReceiver(this, handler)
+}
+
+fun <T : CustomPayload> CustomPayload.Id<T>.registerGlobalReceiver(
+    handler: (T, MinecraftClient, ClientPlayerEntity, PacketSender) -> Unit,
+) {
+    ClientPlayNetworking.registerGlobalReceiver(this) { payload: T, context: ClientPlayNetworking.Context ->
+        handler(payload, context.client(), context.player(), context.responseSender())
+    }
 }

@@ -5,6 +5,7 @@ import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMultiMachineBlockEntityRenderer
+import hiiragi283.ragium.client.util.registerGlobalReceiver
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
@@ -13,6 +14,7 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
@@ -111,16 +113,16 @@ object RagiumClient : ClientModInitializer {
     //    Networks    //
 
     private fun registerNetworks() {
-        ClientPlayNetworking.registerGlobalReceiver(
-            RagiumNetworks.SET_STACK,
-        ) { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.FLOATING_ITEM.registerGlobalReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
+            context.client().gameRenderer.showFloatingItem(payload.stack)
+        }
+
+        RagiumNetworks.SET_STACK.registerGlobalReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
             (context.player().world.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
         }
 
-        ClientPlayNetworking.registerGlobalReceiver(
-            RagiumNetworks.REMOVE_STACK,
-        ) { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.REMOVE_STACK.registerGlobalReceiver { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int) = payload
             (context.player().world.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
         }

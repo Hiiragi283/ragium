@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.machine.HTMachineTier
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
@@ -150,4 +151,8 @@ fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack) {
     val itemEntity = ItemEntity(world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
     itemEntity.setPickupDelay(0)
     world.spawnEntity(itemEntity)
+}
+
+fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
+    (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
 }
