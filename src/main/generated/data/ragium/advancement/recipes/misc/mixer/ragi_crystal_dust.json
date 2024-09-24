@@ -33,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:mixer/refined_raginite_dust"
+        "recipe": "ragium:mixer/ragi_crystal_dust"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -48,7 +48,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:mixer/refined_raginite_dust"
+      "ragium:mixer/ragi_crystal_dust"
     ]
   }
 }

@@ -57,6 +57,7 @@ sealed interface HTMachineType :
         HTMachineType {
         // tier2
         ALLOY_FURNACE(HTMachineTier.BASIC, ::HTAlloyFurnaceBlockEntity),
+        ASSEMBLER(HTMachineTier.BASIC, ::HTAssemblerBlockEntity),
         COMPRESSOR(HTMachineTier.BASIC, ::HTCompressorBlockEntity),
         EXTRACTOR(HTMachineTier.BASIC, ::HTExtractorBlockEntity),
         GRINDER(HTMachineTier.BASIC, ::HTGrinderBlockEntity),
@@ -89,6 +90,7 @@ sealed interface HTMachineType :
         BLAZING_BLAST_FURNACE(HTMachineTier.BASIC, ::HTBlazingBlastFurnaceBlockEntity),
 
         // tier3
+        ELECTRIC_BLAST_FURNACE(HTMachineTier.ADVANCED, ::HTElectricBlastFurnaceBlockEntity),
         DISTILLATION_TOWER(HTMachineTier.ADVANCED, ::HTDistillationTowerBlockEntity),
         ;
 

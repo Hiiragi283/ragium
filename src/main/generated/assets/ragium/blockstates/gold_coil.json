@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "ragium:block/gold_coil",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "ragium:block/gold_coil"
+    },
+    "axis=z": {
+      "model": "ragium:block/gold_coil",
+      "x": 90
+    }
+  }
+}

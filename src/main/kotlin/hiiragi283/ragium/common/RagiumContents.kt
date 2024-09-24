@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.util.*
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.PillarBlock
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.item.*
@@ -132,12 +133,16 @@ object RagiumContents {
     @JvmField
     val SOAP_INGOT: Item = registerItem("soap_ingot")
 
+    @JvmField
+    val RAGI_CRYSTAL: Item = registerItem("ragi_crystal")
+
     //    Register    //
 
     @JvmStatic
     fun init() {
         initBlockItems()
         initHulls()
+        initCoils()
         initMachines()
         initStorageBlocks()
         initDusts()
@@ -275,18 +280,13 @@ object RagiumContents {
 
     //    Hulls    //
 
-    enum class Hulls(val material: RagiumMaterials) :
-        ItemConvertible,
-        HTTranslationFormatter {
+    enum class Hulls(override val material: RagiumMaterials) : HTBlockContent {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        val block = Block(blockSettings(material.tier.baseBlock))
-
-        override fun asItem(): Item = block.asItem()
-
+        override val block = Block(blockSettings(material.tier.baseBlock))
         override val enPattern: String = "%s Hull"
         override val jaPattern: String = "%s筐体"
     }
@@ -296,6 +296,26 @@ object RagiumContents {
         Hulls.entries.forEach { hull: Hulls ->
             registerBlock("${hull.name.lowercase()}_hull", hull.block)
             registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
+        }
+    }
+
+    //    Coils    //
+
+    enum class Coils(override val material: RagiumMaterials) : HTBlockContent {
+        COPPER(RagiumMaterials.COPPER),
+        GOLD(RagiumMaterials.GOLD),
+        ;
+
+        override val block = PillarBlock(blockSettings())
+        override val enPattern: String = "%S Coil"
+        override val jaPattern: String = "%sコイル"
+    }
+
+    @JvmStatic
+    fun initCoils() {
+        Coils.entries.forEach { coil ->
+            registerBlock("${coil.name.lowercase()}_coil", coil.block)
+            registerBlockItem(coil.block, itemSettings())
         }
     }
 
@@ -319,18 +339,13 @@ object RagiumContents {
 
     //    Storage Blocks    //
 
-    enum class StorageBlocks(val material: RagiumMaterials) :
-        ItemConvertible,
-        HTTranslationFormatter {
+    enum class StorageBlocks(override val material: RagiumMaterials) : HTBlockContent {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        val block = Block(blockSettings(Blocks.IRON_BLOCK))
-
-        override fun asItem(): Item = block.asItem()
-
+        override val block = Block(blockSettings(Blocks.IRON_BLOCK))
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
     }
@@ -345,16 +360,16 @@ object RagiumContents {
 
     //    Dusts    //
 
-    enum class Dusts(val enName: String, val jaName: String) : ItemConvertible {
-        RAW_RAGINITE("Raw Raginite Dust", "未加工のラギナイトの粉"),
-        RAGINITE("Raginite Dust", "ラギナイトの粉"),
-        REFINED_RAGINITE("Refined Raginite Dust", "精製ラギナイトの粉"),
-        ASH("Ash Dust", "灰"),
+    enum class Dusts(override val material: RagiumMaterials) : HTItemContent {
+        RAW_RAGINITE(RagiumMaterials.RAW_RAGINITE),
+        RAGINITE(RagiumMaterials.RAGINITE),
+        RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
+        ASH(RagiumMaterials.ASH),
         ;
 
-        private val dust = Item(itemSettings())
-
-        override fun asItem(): Item = dust
+        override val item = Item(itemSettings())
+        override val enPattern: String = "%s Dust"
+        override val jaPattern: String = "%sの粉"
     }
 
     @JvmStatic
@@ -366,9 +381,7 @@ object RagiumContents {
 
     //    Ingots    //
 
-    enum class Ingots(val material: RagiumMaterials) :
-        ItemConvertible,
-        HTTranslationFormatter {
+    enum class Ingots(override val material: RagiumMaterials) : HTItemContent {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         STEEL(RagiumMaterials.STEEL),
@@ -376,10 +389,7 @@ object RagiumContents {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        private val ingot = Item(itemSettings())
-
-        override fun asItem(): Item = ingot
-
+        override val item = Item(itemSettings())
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
     }
@@ -393,16 +403,19 @@ object RagiumContents {
 
     //    Plates    //
 
-    enum class Plates(val material: RagiumMaterials) :
-        ItemConvertible,
-        HTTranslationFormatter {
+    enum class Plates(override val material: RagiumMaterials) : HTItemContent {
+        // tier1
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         IRON(RagiumMaterials.IRON),
         COPPER(RagiumMaterials.COPPER),
+
+        // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         GOLD(RagiumMaterials.GOLD),
         STEEL(RagiumMaterials.STEEL),
         TWILIGHT(RagiumMaterials.TWILIGHT_METAL),
+
+        // tier3
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         NETHERITE(RagiumMaterials.NETHERITE),
         PE(RagiumMaterials.PE),
@@ -410,10 +423,7 @@ object RagiumContents {
         PTFE(RagiumMaterials.PTFE),
         ;
 
-        private val plate = Item(itemSettings())
-
-        override fun asItem(): Item = plate
-
+        override val item = Item(itemSettings())
         override val enPattern: String = "%s Plate"
         override val jaPattern: String = "%s板"
     }

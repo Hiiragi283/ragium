@@ -12,14 +12,19 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄"),
 
     // tier2
+    RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
     RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
+    ASH(HTMachineTier.BASIC, "Ash", "灰"),
     GOLD(HTMachineTier.BASIC, "Gold", "金"),
     STEEL(HTMachineTier.BASIC, "Steel", "スチール"),
     TWILIGHT_METAL(HTMachineTier.BASIC, "Twilight Metal", "黄昏合金"),
 
     // tier3
+    RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
     REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
     NETHERITE(HTMachineTier.ADVANCED, "Netherite", "ネザライト"),
+
+    // OBSIDIAN(HTMachineTier.ADVANCED, "Obsidian", "黒曜石"),
     PE(HTMachineTier.ADVANCED, "PE", "ポリエチレン"),
     PVC(HTMachineTier.ADVANCED, "PVC", "塩化ビニル"),
     PTFE(HTMachineTier.ADVANCED, "PTFE", "テフロン"),

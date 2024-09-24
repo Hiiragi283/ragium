@@ -41,6 +41,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         alloyFurnaceRecipes(exporter)
         blastFurnace(exporter)
         // tier2
+        assembler(exporter)
         compressor(exporter)
         extractor(exporter)
         metalFormer(exporter)
@@ -448,6 +449,8 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         grinderRecipe(exporter, ItemTags.LAPIS_ORES, Items.LAPIS_LAZULI, 8)
         grinderRecipe(exporter, ItemTags.REDSTONE_ORES, Items.REDSTONE, 8)
         grinderRecipe(exporter, ItemTags.WOOL, Items.STRING, 4)
+
+        grinderRecipe(exporter, RagiumContents.RAGI_CRYSTAL, RagiumContents.Dusts.RAGI_CRYSTAL)
     }
 
     private fun grinderRecipe(
@@ -489,6 +492,28 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addInput(ConventionalItemTags.COPPER_INGOTS)
             .addInput(ConventionalItemTags.GOLD_INGOTS)
             .addOutput(RagiumContents.Ingots.TWILIGHT_METAL, 2)
+            .offerTo(exporter)
+    }
+
+    //    Assembler    //
+
+    private fun assembler(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.ASSEMBLER)
+            .addInput(RagiumContents.Plates.PE, 8)
+            .addInput(Items.CHEST)
+            .addOutput(RagiumContents.BACKPACK)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.ASSEMBLER)
+            .addInput(RagiumContents.Plates.PVC, 8)
+            .addInput(Items.CHEST)
+            .addOutput(RagiumContents.LARGE_BACKPACK)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.ASSEMBLER)
+            .addInput(RagiumContents.Plates.PTFE, 8)
+            .addInput(Items.ENDER_EYE)
+            .addOutput(RagiumContents.ENDER_BACKPACK)
             .offerTo(exporter)
     }
 
@@ -553,6 +578,18 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addInput(RagiumItemTags.STEEL_INGOTS, 2)
             .addOutput(RagiumContents.SHAFT)
             .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
+            .addInput(ConventionalItemTags.COPPER_INGOTS, 8)
+            .addInput(RagiumContents.SHAFT)
+            .addOutput(RagiumContents.Coils.COPPER)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
+            .addInput(ConventionalItemTags.GOLD_INGOTS, 8)
+            .addInput(RagiumContents.SHAFT)
+            .addOutput(RagiumContents.Coils.GOLD)
+            .offerTo(exporter)
     }
 
     //    Mixer    //
@@ -576,7 +613,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .addInput(RagiumContents.Dusts.RAGINITE, 2)
             .addInput(RagiumContents.SOAP_INGOT)
             .addInput(RagiumContents.Fluids.WATER)
-            .addOutput(RagiumContents.Dusts.REFINED_RAGINITE, 2)
+            .addOutput(RagiumContents.Dusts.RAGI_CRYSTAL, 2)
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
@@ -744,7 +781,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
     private fun blazingBlastFurnace(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder(HTMachineType.Multi.BLAZING_BLAST_FURNACE)
             .addInput(RagiumItemTags.STEEL_INGOTS)
-            .addInput(RagiumContents.Dusts.REFINED_RAGINITE, 4)
+            .addInput(RagiumContents.Dusts.RAGI_CRYSTAL, 4)
             .addInput(ConventionalItemTags.QUARTZ_GEMS)
             .addOutput(RagiumContents.Ingots.REFINED_RAGI_STEEL)
             .offerTo(exporter)

@@ -72,7 +72,7 @@ abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Setting
     }
 
     override fun createScreenHandlerFactory(state: BlockState, world: World, pos: BlockPos): NamedScreenHandlerFactory? =
-        world.getBlockEntity(pos) as? NamedScreenHandlerFactory
+        (world.getBlockEntity(pos) as? NamedScreenHandlerFactory)?.takeUnless { world.isClient }
 
     override fun onUse(
         state: BlockState,

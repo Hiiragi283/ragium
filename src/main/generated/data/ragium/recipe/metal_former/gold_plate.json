@@ -1,0 +1,16 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:gold_ingot"
+      }
+    }
+  ],
+  "machine_type": "metal_former",
+  "outputs": [
+    {
+      "item": "ragium:gold_plate"
+    }
+  ]
+}

@@ -93,27 +93,18 @@ object RagiumEnergyProviders {
                     val posTo: BlockPos = pos.offset(direction.opposite)
                     val stateTo: BlockState = world.getBlockState(posTo)
                     val blockEntityTo: BlockEntity? = world.getBlockEntity(posTo)
-                    val energyTo = ENERGY.find(world, posTo, stateTo, blockEntityTo, direction)
-                    Ragium.log { info("EnergyTo is ${energyTo != null}") }
-                    return@registerForBlocks energyTo
+                    ENERGY.find(world, posTo, stateTo, blockEntityTo, direction)
                 }
             }
             null
         }, RagiumContents.SHAFT)
 
-        ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
-            if (direction != null) {
-                val facing: Direction = state.get(Properties.FACING)
-                val posTo: BlockPos = pos.offset(facing)
-                ENERGY.find(
-                    world,
-                    posTo,
-                    world.getBlockState(posTo),
-                    world.getBlockEntity(posTo),
-                    facing.opposite,
-                )
-            }
-            null
+        ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, _: Direction? ->
+            val facing: Direction = state.get(Properties.FACING)
+            val posTo: BlockPos = pos.offset(facing)
+            val stateTo: BlockState = world.getBlockState(posTo)
+            val blockEntityTo: BlockEntity? = world.getBlockEntity(posTo)
+            ENERGY.find(world, posTo, stateTo, blockEntityTo, facing.opposite)
         }, RagiumContents.GEAR_BOX)
     }
 

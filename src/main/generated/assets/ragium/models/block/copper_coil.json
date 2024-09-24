@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ragium:block/copper_coil_top",
+    "side": "ragium:block/copper_coil_side"
+  }
+}

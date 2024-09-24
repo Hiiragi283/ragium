@@ -6,6 +6,8 @@ import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.util.HTBlockContent
+import hiiragi283.ragium.common.util.HTItemContent
 import hiiragi283.ragium.common.util.HTTranslationFormatter
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -31,20 +33,12 @@ object RagiumLangProviders {
 
     @JvmStatic
     private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
-        // storage block
-        RagiumContents.StorageBlocks.entries.forEach { block: RagiumContents.StorageBlocks ->
-            builder.add(
-                block.block,
-                block.getTranslation(type, block.material),
-            )
-        }
-        // hulls
-        RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            builder.add(
-                hull.block,
-                hull.getTranslation(type, hull.material),
-            )
-        }
+        // blocks
+        buildList<HTBlockContent> {
+            addAll(RagiumContents.StorageBlocks.entries)
+            addAll(RagiumContents.Hulls.entries)
+            addAll(RagiumContents.Coils.entries)
+        }.forEach { block: HTBlockContent -> builder.add(block.block, block.getTranslation(type)) }
         // elements
         RagiElement.entries.forEach { element: RagiElement ->
             val translatedName: String = element.getTranslation(type)
@@ -64,29 +58,12 @@ object RagiumLangProviders {
             }
         }
         // dusts
-        RagiumContents.Dusts.entries.forEach { dust: RagiumContents.Dusts ->
-            builder.add(
-                dust.asItem(),
-                when (type) {
-                    HTLangType.EN_US -> dust.enName
-                    HTLangType.JA_JP -> dust.jaName
-                },
-            )
-        }
-        // ingots
-        RagiumContents.Ingots.entries.forEach { ingot: RagiumContents.Ingots ->
-            builder.add(
-                ingot.asItem(),
-                ingot.getTranslation(type, ingot.material),
-            )
-        }
-        // plates
-        RagiumContents.Plates.entries.forEach { plate: RagiumContents.Plates ->
-            builder.add(
-                plate.asItem(),
-                plate.getTranslation(type, plate.material),
-            )
-        }
+        // items
+        buildList<HTItemContent> {
+            addAll(RagiumContents.Dusts.entries)
+            addAll(RagiumContents.Ingots.entries)
+            addAll(RagiumContents.Plates.entries)
+        }.forEach { item: HTItemContent -> builder.add(item.item, item.getTranslation(type)) }
         // fluids
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             builder.add(
@@ -139,6 +116,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
             builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
+            builder.add(RagiumContents.RAGI_CRYSTAL, "Ragi-Crystal")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
             // Machine
@@ -159,6 +137,7 @@ object RagiumLangProviders {
 
             builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "Brick Blast Furnace")
             builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "Blazing Blast Furnace")
+            builder.add(HTMachineType.Multi.ELECTRIC_BLAST_FURNACE, "Electric Blast Furnace")
             builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "Distillation Tower")
 
             // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "Alchemical Infuser")
@@ -207,6 +186,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")
+            builder.add(RagiumContents.RAGI_CRYSTAL, "ラギクリスタリル")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             // Machine
@@ -227,6 +207,7 @@ object RagiumLangProviders {
 
             builder.add(HTMachineType.Multi.BRICK_BLAST_FURNACE, "レンガ高炉")
             builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "ブレイズ高炉")
+            builder.add(HTMachineType.Multi.ELECTRIC_BLAST_FURNACE, "電気高炉")
             builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "蒸留塔")
 
             // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "錬金注入機")

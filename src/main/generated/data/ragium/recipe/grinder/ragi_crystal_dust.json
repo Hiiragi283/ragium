@@ -1,0 +1,16 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:ragi_crystal"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "item": "ragium:ragi_crystal_dust"
+    }
+  ]
+}

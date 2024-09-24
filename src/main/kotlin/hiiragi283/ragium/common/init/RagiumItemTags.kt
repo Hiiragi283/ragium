@@ -8,14 +8,30 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 object RagiumItemTags {
+    //    Custom    //
+
     @JvmField
     val ORGANIC_OILS: TagKey<Item> = create(Ragium.MOD_ID, "organic_oils")
+
+    //    Conventional    //
+
+    @JvmField
+    val COPPER_PLATES: TagKey<Item> = create("plates/copper")
+
+    @JvmField
+    val GOLD_PLATES: TagKey<Item> = create("plates/gold")
+
+    @JvmField
+    val IRON_PLATES: TagKey<Item> = create("plates/iron")
 
     @JvmField
     val RAGINITE_ORES: TagKey<Item> = create("ores/raginite")
 
     @JvmField
     val STEEL_INGOTS: TagKey<Item> = create("ingots/steel")
+
+    @JvmField
+    val STEEL_PLATES: TagKey<Item> = create("plates/steel")
 
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))

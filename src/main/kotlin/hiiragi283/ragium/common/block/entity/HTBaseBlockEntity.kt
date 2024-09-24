@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.common.inventory.HTDelegatedInventory
 import hiiragi283.ragium.common.inventory.HTSidedInventory
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import hiiragi283.ragium.common.util.sendPacketForPlayers
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -10,11 +10,11 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import java.util.*
 
 open class HTBaseBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
     private fun asInventory(): HTSidedInventory? = (this as? HTDelegatedInventory)?.parent
@@ -41,7 +41,7 @@ open class HTBaseBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
     //    Extensions    //
 
     fun sendS2CPacket() {
-        (world as? ServerWorld)?.let(PlayerLookup::world)?.forEach { asInventory()?.sendS2CPacket(it, pos) }
+        world?.sendPacketForPlayers { asInventory()?.sendS2CPacket(it, pos) }
     }
 
     open fun onUse(
@@ -50,11 +50,11 @@ open class HTBaseBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: Blo
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = when (world.isClient) {
-        true -> ActionResult.SUCCESS
-        false -> {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
-            ActionResult.CONSUME
+    ): ActionResult {
+        val result: OptionalInt = player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
+        return when {
+            result.isPresent -> ActionResult.success(world.isClient)
+            else -> ActionResult.PASS
         }
     }
 

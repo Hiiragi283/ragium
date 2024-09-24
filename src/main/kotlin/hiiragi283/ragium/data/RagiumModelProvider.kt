@@ -14,6 +14,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.*
 import net.minecraft.item.Item
+import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 
 class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
@@ -22,6 +23,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
     override fun generateBlockStateModels(generator: BlockStateModelGenerator) {
         fun register(block: Block, action: (Block) -> Unit) {
             action(block)
+        }
+
+        fun register(block: Block, factory: TexturedModel.Factory) {
+            register(block) { generator.registerSingleton(it, factory) }
         }
 
         fun registerSimple(block: Block, id: Identifier = TextureMap.getId(block)) {
@@ -159,6 +164,18 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
+        // coils
+        RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
+            register(coil.block) {
+                generator.registerAxisRotated(
+                    it,
+                    TexturedModel.CUBE_COLUMN.upload(
+                        it,
+                        generator.modelCollector,
+                    ),
+                )
+            }
+        }
         // machines
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             val block: Block = type.block
@@ -222,8 +239,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.ENDER_BACKPACK)
 
         register(RagiumContents.RAW_RAGINITE)
-        register(RagiumContents.RAGI_ALLOY_COMPOUND)
+        Models.GENERATED_TWO_LAYERS.upload(
+            ModelIds.getItemModelId(RagiumContents.RAGI_ALLOY_COMPOUND),
+            TextureMap()
+                .put(TextureKey.LAYER0, TextureMap.getId(Items.COPPER_INGOT))
+                .put(TextureKey.LAYER1, TextureMap.getId(RagiumContents.RAGI_ALLOY_COMPOUND)),
+            generator.writer,
+        )
         register(RagiumContents.SOAP_INGOT)
+        register(RagiumContents.RAGI_CRYSTAL)
         // dusts
         RagiumContents.Dusts.entries
             .map(RagiumContents.Dusts::asItem)

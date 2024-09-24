@@ -1,0 +1,22 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "ragium:pe_plate"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:chest"
+      }
+    }
+  ],
+  "machine_type": "assembler",
+  "outputs": [
+    {
+      "item": "ragium:backpack"
+    }
+  ]
+}

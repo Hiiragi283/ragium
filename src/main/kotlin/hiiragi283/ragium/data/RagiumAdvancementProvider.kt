@@ -257,10 +257,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/refined_raginite_dust",
                 soap,
-                RagiumContents.Dusts.REFINED_RAGINITE,
+                RagiumContents.Dusts.RAGI_CRYSTAL,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumContents.Dusts.REFINED_RAGINITE)
+                hasItems(RagiumContents.Dusts.RAGI_CRYSTAL)
             }.putEnglish("")
             .putEnglishDesc("Craft Refined Raginite Dust")
             .putJapanese("")

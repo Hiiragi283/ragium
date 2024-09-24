@@ -1,0 +1,22 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": {
+        "tag": "c:ingots/gold"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:shaft"
+      }
+    }
+  ],
+  "machine_type": "metal_former",
+  "outputs": [
+    {
+      "item": "ragium:gold_coil"
+    }
+  ]
+}

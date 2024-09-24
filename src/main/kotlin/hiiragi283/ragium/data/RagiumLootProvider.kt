@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -48,13 +49,11 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
         addDrop(RagiumContents.ALCHEMICAL_INFUSER)
         addDrop(RagiumContents.ITEM_DISPLAY)
 
-        RagiumContents.StorageBlocks.entries
-            .map(RagiumContents.StorageBlocks::block)
-            .forEach(::addDrop)
-
-        RagiumContents.Hulls.entries
-            .map(RagiumContents.Hulls::block)
-            .forEach(::addDrop)
+        buildList<HTBlockContent> {
+            addAll(RagiumContents.StorageBlocks.entries)
+            addAll(RagiumContents.Hulls.entries)
+            addAll(RagiumContents.Coils.entries)
+        }.map(HTBlockContent::block).forEach(::addDrop)
 
         HTMachineType
             .getEntries()

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_input0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:ptfe_plate"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:ender_eye"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:assembler/ender_backpack"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_input0",
+      "has_input1"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:assembler/ender_backpack"
+    ]
+  }
+}

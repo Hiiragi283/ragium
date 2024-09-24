@@ -1,5 +1,9 @@
 {
   "values": [
+    "ragium:iron_plate",
+    "ragium:gold_plate",
+    "ragium:copper_plate",
+    "ragium:netherite_plate",
     "ragium:ragi_alloy_plate",
     "ragium:ragi_steel_plate",
     "ragium:refined_ragi_steel_plate",

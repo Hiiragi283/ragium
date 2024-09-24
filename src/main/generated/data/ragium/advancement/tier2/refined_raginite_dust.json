@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:refined_raginite_dust"
+            "items": "ragium:ragi_crystal_dust"
           }
         ]
       },
@@ -19,7 +19,7 @@
     "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:refined_raginite_dust"
+      "id": "ragium:ragi_crystal_dust"
     },
     "title": {
       "translate": "advancement.ragium.tier2.refined_raginite_dust"

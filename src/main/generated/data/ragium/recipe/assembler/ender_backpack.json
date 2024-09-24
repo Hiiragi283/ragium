@@ -1,0 +1,22 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "ragium:ptfe_plate"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:ender_eye"
+      }
+    }
+  ],
+  "machine_type": "assembler",
+  "outputs": [
+    {
+      "item": "ragium:ender_backpack"
+    }
+  ]
+}

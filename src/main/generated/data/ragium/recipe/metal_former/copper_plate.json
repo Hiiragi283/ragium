@@ -1,0 +1,16 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:copper_ingot"
+      }
+    }
+  ],
+  "machine_type": "metal_former",
+  "outputs": [
+    {
+      "item": "ragium:copper_plate"
+    }
+  ]
+}
