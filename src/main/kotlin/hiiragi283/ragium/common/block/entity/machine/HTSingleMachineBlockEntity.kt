@@ -1,46 +1,58 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.block.HTKineticNode
-import hiiragi283.ragium.common.block.entity.HTKineticProcessor
-import hiiragi283.ragium.common.block.entity.generator.HTKineticGeneratorBlockEntity
+import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.state.property.Properties
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.registry.RegistryWrapper
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
+import team.reborn.energy.api.base.SimpleEnergyStorage
+import kotlin.math.max
 
-abstract class HTSingleMachineBlockEntity(machineType: HTMachineType.Single, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity<HTMachineType.Single>(machineType, pos, state),
-    HTKineticProcessor {
-    companion object {
-        @JvmStatic
-        fun findProcessor(world: World, pos: BlockPos): BlockPos? {
-            val state = world.getBlockState(pos)
-            val toDirection: Direction = state.get(Properties.HORIZONTAL_FACING).opposite
-            val toPos: BlockPos = pos.offset(toDirection)
-            val toBlock: Block = world.getBlockState(toPos).block
-            return when {
-                toBlock is HTKineticNode -> toBlock.findProcessor(world, toPos, toDirection.opposite)
-                world.getBlockEntity(toPos) is HTKineticGeneratorBlockEntity -> toPos
-                else -> null
-            }
-        }
+abstract class HTSingleMachineBlockEntity(private val machineType: HTMachineType.Single, pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntity(machineType, pos, state),
+    HTEnergyStorageHolder {
+    private var energyStorage = SimpleEnergyStorage(Ragium.RECIPE_COST * 16, 128, 0)
+
+    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, registryLookup)
+        nbt.putLong("energy", energyStorage.amount)
     }
 
-    var receivingPower: Boolean = false
-
-    override fun canProcessRecipe(world: World, pos: BlockPos, recipe: HTMachineRecipe): Boolean = machineType.tier.condition(world, pos)
-
-    //    HTKineticProcessor    //
-
-    override fun onActive(world: World, pos: BlockPos) {
-        receivingPower = true
+    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, registryLookup)
+        energyStorage.amount = nbt.getLong("energy")
     }
 
-    override fun onInactive(world: World, pos: BlockPos) {
-        receivingPower = false
+    override val condition: (World, BlockPos) -> Boolean = RagiumMachineConditions.ELECTRIC
+
+    override fun onProcessed(world: World, pos: BlockPos, recipe: HTMachineRecipe) {
+        // extract energy
+        val currentAmount: Long = energyStorage.amount
+        val extracted: Long = currentAmount - Ragium.RECIPE_COST
+        energyStorage.amount = max(0, extracted)
+        // play sound
+        /*world.playSound(
+            pos.x.toDouble(),
+            pos.y.toDouble(),
+            pos.z.toDouble(),
+            machineType.processedSound,
+            SoundCategory.BLOCKS,
+            1.0f,
+            1.0f,
+            false,
+        )*/
     }
+
+    override fun getDisplayName(): Text = machineType.text
+
+    //    HTEnergyStorageHolder    //
+
+    override fun getEnergyStorage(direction: Direction?): EnergyStorage? = energyStorage
 }

@@ -186,7 +186,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         )
 
         materials.forEach { material: RagiumMaterials ->
-            val base: Block = material.tier.base
+            val base: Block = material.tier.baseBlock
             val ingot: RagiumContents.Ingots = material.getIngot() ?: return@forEach
             val hull: RagiumContents.Hulls = material.getHull() ?: return@forEach
             createShaped(hull)
@@ -248,7 +248,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .pattern("BCB")
             .pattern("BDB")
             .input('A', RagiumContents.Ingots.RAGI_STEEL)
-            .input('B', HTMachineTier.ELECTRIC.base)
+            .input('B', HTMachineTier.BASIC.baseBlock)
             .input('C', RagiumContents.SHAFT)
             .input('D', ConventionalItemTags.REDSTONE_DUSTS)
             .itemCriterion(RagiumContents.SHAFT)
@@ -256,13 +256,16 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
 
         // tiered machines
         // tier1
-        createMachine(
-            exporter,
-            HTMachineType.Single.ALLOY_FURNACE,
-            RagiumContents.Ingots.RAGI_ALLOY,
-            Items.FURNACE,
-            RagiumContents.Hulls.RAGI_ALLOY,
-        )
+        createShaped(RagiumContents.BRICK_ALLOY_FURNACE)
+            .pattern("AAA")
+            .pattern("BCB")
+            .pattern("DDD")
+            .input('A', RagiumContents.Ingots.RAGI_ALLOY)
+            .input('B', Items.FURNACE)
+            .input('C', RagiumContents.Hulls.RAGI_ALLOY)
+            .input('D', Items.BRICKS)
+            .itemCriterion(RagiumContents.Hulls.RAGI_ALLOY)
+            .offerTo(exporter, Ragium.id("shaped/brick_alloy_furnace"))
 
         createMachine(
             exporter,
@@ -273,6 +276,14 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
         )
 
         // tier2
+        createMachine(
+            exporter,
+            HTMachineType.Single.ALLOY_FURNACE,
+            RagiumContents.Ingots.RAGI_ALLOY,
+            Items.FURNACE,
+            RagiumContents.Hulls.RAGI_ALLOY,
+        )
+
         createMachine(
             exporter,
             HTMachineType.Single.COMPRESSOR,
@@ -401,7 +412,7 @@ class RagiumRecipeProvider(output: FabricDataOutput, registriesFuture: Completab
             .input('A', ingot)
             .input('B', side)
             .input('C', hull)
-            .input('D', type.tier.base)
+            .input('D', type.tier.baseBlock)
             .itemCriterion(hull)
             .offerTo(exporter, type.id.withPrefixedPath("shaped/"))
     }

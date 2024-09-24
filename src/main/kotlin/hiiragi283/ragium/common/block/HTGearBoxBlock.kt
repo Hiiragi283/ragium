@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.common.block.entity.HTKineticProcessor
 import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -10,11 +9,9 @@ import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.world.World
 
-object HTGearBoxBlock : FacingBlock(blockSettings()), HTKineticNode {
+object HTGearBoxBlock : FacingBlock(blockSettings()) {
     init {
         defaultState = stateManager.defaultState.with(FACING, Direction.NORTH)
     }
@@ -33,7 +30,7 @@ object HTGearBoxBlock : FacingBlock(blockSettings()), HTKineticNode {
 
     //    HTKineticNode    //
 
-    override fun findProcessor(world: World, pos: BlockPos, from: Direction): BlockPos? {
+    /*override fun findProcessor(world: World, pos: BlockPos, from: Direction): BlockPos? {
         val state: BlockState = world.getBlockState(pos)
         val facing: Direction = state.get(FACING)
         val toPos: BlockPos = pos.offset(facing)
@@ -43,5 +40,5 @@ object HTGearBoxBlock : FacingBlock(blockSettings()), HTKineticNode {
             toBlock is HTKineticNode -> toBlock.findProcessor(world, toPos, facing.opposite)
             else -> null
         }
-    }
+    }*/
 }

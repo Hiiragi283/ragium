@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.alchemy
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
-import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.block.entity.machine.RagiumMachineConditions
 import hiiragi283.ragium.common.util.HTTranslationProvider
 import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.element
@@ -31,10 +31,10 @@ enum class RagiElement(
     override val enName: String,
     override val jaName: String,
     mapColor: MapColor,
-    private val condition: (World, BlockPos) -> Boolean = HTMachineTier.NONE.condition,
+    private val condition: (World, BlockPos) -> Boolean = RagiumMachineConditions.NONE,
 ) : HTTranslationProvider,
     StringIdentifiable {
-    RAGIUM(ConventionalBiomeTags.IS_NETHER, "Ragium", "ラギウム", MapColor.RED, HTMachineTier.HEAT.condition),
+    RAGIUM(ConventionalBiomeTags.IS_NETHER, "Ragium", "ラギウム", MapColor.RED, RagiumMachineConditions.HEAT),
     RIGIUM(ConventionalBiomeTags.IS_WASTELAND, "Rigium", "リギウム", MapColor.YELLOW),
     RUGIUM(ConventionalBiomeTags.IS_JUNGLE, "Rugium", "ルギウム", MapColor.GREEN),
     REGIUM(ConventionalBiomeTags.IS_OCEAN, "Regium", "レギウム", MapColor.BLUE),
@@ -80,11 +80,4 @@ enum class RagiElement(
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()
-
-    //    Condition    //
-
-    private object Condition {
-        @JvmField
-        val RAGIUM: (World, BlockPos) -> Boolean = HTMachineTier.HEAT.condition
-    }
 }

@@ -1,12 +1,10 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
 import hiiragi283.ragium.common.block.entity.generator.HTBlazingBoxBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTKineticGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSingleMachineBlockEntity
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.getOrDefault
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.BlockState
@@ -16,6 +14,8 @@ import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
+import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumEnergyProviders {
     @JvmField
@@ -25,10 +25,7 @@ object RagiumEnergyProviders {
     val BLAZING_HEAT: BlockApiLookup<Boolean, Direction?> = create("blazing_heat")
 
     @JvmField
-    val KINETIC: BlockApiLookup<Boolean, Direction?> = create("kinetic")
-
-    @JvmField
-    val ELECTRIC: BlockApiLookup<Boolean, Direction?> = create("electric")
+    val ENERGY: BlockApiLookup<EnergyStorage, Direction?> = EnergyStorage.SIDED
 
     @JvmStatic
     private fun create(name: String): BlockApiLookup<Boolean, Direction?> = BlockApiLookup.get(
@@ -41,13 +38,12 @@ object RagiumEnergyProviders {
     fun init() {
         initHeat()
         initBlazingHeat()
-        initKinetic()
         initElectric()
     }
 
     @JvmStatic
     private fun initHeat() {
-        HEAT.registerForBlocks(ALWAYS_TRUE, RagiumBlocks.CREATIVE_SOURCE)
+        HEAT.registerForBlocks(provideStatic(true), RagiumContents.CREATIVE_SOURCE)
 
         HEAT.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
             direction == Direction.UP
@@ -64,45 +60,64 @@ object RagiumEnergyProviders {
 
     @JvmStatic
     private fun initBlazingHeat() {
-        BLAZING_HEAT.registerForBlocks(ALWAYS_TRUE, RagiumBlocks.CREATIVE_SOURCE)
+        BLAZING_HEAT.registerForBlocks(provideStatic(true), RagiumContents.CREATIVE_SOURCE)
 
-        HEAT.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
+        BLAZING_HEAT.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
             direction == Direction.UP
         }, Blocks.SOUL_FIRE)
 
-        HEAT.registerForBlocks({ _: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+        BLAZING_HEAT.registerForBlocks({ _: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             direction == Direction.UP && state.getOrDefault(Properties.LIT, false)
         }, Blocks.SOUL_CAMPFIRE)
 
-        HEAT.registerForBlockEntity({ blockEntity: HTBlazingBoxBlockEntity, direction: Direction? ->
+        BLAZING_HEAT.registerForBlockEntity({ blockEntity: HTBlazingBoxBlockEntity, direction: Direction? ->
             direction == Direction.UP && blockEntity.isBurning && blockEntity.isBlazing
         }, RagiumBlockEntityTypes.BLAZING_BOX)
     }
 
     @JvmStatic
-    private fun initKinetic() {
-        KINETIC.registerForBlocks(ALWAYS_TRUE, RagiumBlocks.CREATIVE_SOURCE)
+    private fun initElectric() {
+        ENERGY.registerForBlocks(
+            provideStatic(InfiniteEnergyStorage.INSTANCE),
+            RagiumContents.CREATIVE_SOURCE,
+        )
 
-        HTMachineType.Single.entries
-            .filter { it.tier == HTMachineTier.KINETIC }
-            .forEach { type: HTMachineType.Single ->
-                KINETIC.registerForBlockEntity({ blockEntity: HTSingleMachineBlockEntity, direction: Direction? ->
-                    val world: World = blockEntity.world ?: return@registerForBlockEntity false
-                    val pos: BlockPos = blockEntity.pos
-                    val toPos: BlockPos =
-                        HTSingleMachineBlockEntity.findProcessor(world, pos) ?: return@registerForBlockEntity false
-                    val toState: BlockState = world.getBlockState(pos)
-                    (world.getBlockEntity(pos) as? HTKineticGeneratorBlockEntity)
-                        ?.canProvidePower(world, toPos, toState) ?: false
-                }, type.blockEntityType)
+        ENERGY.registerFallback { _: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, direction: Direction? ->
+            (blockEntity as? HTEnergyStorageHolder)?.getEnergyStorage(direction)
+        }
+
+        ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+            if (direction != null) {
+                val axis: Direction.Axis = state.get(Properties.AXIS)
+                if (direction.axis == axis) {
+                    val posTo: BlockPos = pos.offset(direction.opposite)
+                    val stateTo: BlockState = world.getBlockState(posTo)
+                    val blockEntityTo: BlockEntity? = world.getBlockEntity(posTo)
+                    val energyTo = ENERGY.find(world, posTo, stateTo, blockEntityTo, direction)
+                    Ragium.log { info("EnergyTo is ${energyTo != null}") }
+                    return@registerForBlocks energyTo
+                }
             }
+            null
+        }, RagiumContents.SHAFT)
+
+        ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+            if (direction != null) {
+                val facing: Direction = state.get(Properties.FACING)
+                val posTo: BlockPos = pos.offset(facing)
+                ENERGY.find(
+                    world,
+                    posTo,
+                    world.getBlockState(posTo),
+                    world.getBlockEntity(posTo),
+                    facing.opposite,
+                )
+            }
+            null
+        }, RagiumContents.GEAR_BOX)
     }
 
     @JvmStatic
-    private fun initElectric() {
-        ELECTRIC.registerForBlocks(ALWAYS_TRUE, RagiumBlocks.CREATIVE_SOURCE)
-    }
-
-    private val ALWAYS_TRUE: BlockApiLookup.BlockApiProvider<Boolean, Direction?> =
-        BlockApiLookup.BlockApiProvider { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> true }
+    private fun <A, C> provideStatic(value: A): BlockApiLookup.BlockApiProvider<A, C> =
+        BlockApiLookup.BlockApiProvider { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: C? -> value }
 }

@@ -97,13 +97,13 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/alloy_furnace",
                 ragiAlloyHull,
-                HTMachineType.Single.ALLOY_FURNACE,
+                RagiumContents.BRICK_ALLOY_FURNACE,
             ) {
-                hasItems(HTMachineType.Single.ALLOY_FURNACE)
+                hasItems(RagiumContents.BRICK_ALLOY_FURNACE)
             }.putEnglish("Pen Pineapple Apple Pen")
             .putEnglishDesc("Craft Alloy Furnace")
             .putJapanese("ペンパイナッポーアッポーペン")
-            .putJapaneseDesc("かまど合金を作る")
+            .putJapaneseDesc("合金かまどを作る")
             .build()
 
         val brickBlastFurnace: AdvancementEntry = register

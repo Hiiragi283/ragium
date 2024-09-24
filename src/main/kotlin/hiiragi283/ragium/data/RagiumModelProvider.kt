@@ -75,6 +75,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 },
             )
         }
+        register(RagiumContents.BRICK_ALLOY_FURNACE) {
+            generator.registerNorthDefaultHorizontalRotated(
+                it,
+                RagiumModels.createMachine(
+                    HTMachineTier.PRIMITIVE.casingTex,
+                    HTMachineTier.PRIMITIVE.baseTex,
+                    TextureMap.getSubId(HTMachineType.Single.ALLOY_FURNACE.block, "_front"),
+                ),
+            )
+        }
         register(RagiumContents.BURNING_BOX) {
             generator.registerNorthDefaultHorizontalRotated(
                 it,
@@ -152,13 +162,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // machines
         HTMachineType.getEntries().forEach { type: HTMachineType ->
             val block: Block = type.block
-            val tier: HTMachineTier = type.tier
             register(block) {
                 generator.registerNorthDefaultHorizontalRotated(
                     block,
                     RagiumModels.createMachine(
-                        tier.casingTex,
-                        tier.baseTex,
+                        type.tier.casingTex,
+                        type.tier.baseTex,
                         TextureMap.getSubId(block, "_front"),
                     ),
                 )

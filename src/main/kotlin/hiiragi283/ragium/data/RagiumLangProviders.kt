@@ -115,6 +115,7 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
+            builder.add(RagiumContents.BRICK_ALLOY_FURNACE, "Brick Alloy Furnace")
             builder.add(RagiumContents.BURNING_BOX, "Burning Box")
             builder.add(RagiumContents.WATER_GENERATOR, "Water Generator")
             builder.add(RagiumContents.WIND_GENERATOR, "Wind Generator")
@@ -182,6 +183,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "深層ラギナイト鉱石")
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
+            builder.add(RagiumContents.BRICK_ALLOY_FURNACE, "レンガ合金かまど")
             builder.add(RagiumContents.BURNING_BOX, "燃焼室")
             builder.add(RagiumContents.WATER_GENERATOR, "水力発電機")
             builder.add(RagiumContents.WIND_GENERATOR, "風力発電機")

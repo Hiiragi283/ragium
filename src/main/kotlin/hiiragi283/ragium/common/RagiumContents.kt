@@ -46,6 +46,14 @@ object RagiumContents {
         registerBlock("manual_grinder", HTManualGrinderBlock)
 
     @JvmField
+    val BRICK_ALLOY_FURNACE: Block =
+        registerHorizontalWithBE(
+            "brick_alloy_furnace",
+            RagiumBlockEntityTypes.BRICK_ALLOY_FURNACE,
+            blockSettings(Blocks.BRICKS),
+        )
+
+    @JvmField
     val BURNING_BOX: Block =
         registerHorizontalWithBE("burning_box", RagiumBlockEntityTypes.BURNING_BOX, Blocks.BRICKS)
 
@@ -254,6 +262,7 @@ object RagiumContents {
         registerBlockItem(DEEPSLATE_RAGINITE_ORE)
         registerBlockItem(CREATIVE_SOURCE)
         registerBlockItem(MANUAL_GRINDER)
+        registerBlockItem(BRICK_ALLOY_FURNACE)
         registerBlockItem(BURNING_BOX)
         registerBlockItem(WATER_GENERATOR)
         registerBlockItem(WIND_GENERATOR)
@@ -274,7 +283,7 @@ object RagiumContents {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        val block = Block(blockSettings(material.tier.base))
+        val block = Block(blockSettings(material.tier.baseBlock))
 
         override fun asItem(): Item = block.asItem()
 
@@ -299,7 +308,7 @@ object RagiumContents {
             val block: Block = type.block
             // Machine Block
             registerBlock(id.path, block)
-            registerBlockItem(block, itemSettings().tier(type.tier))
+            registerBlockItem(block)
             // BlockEntityType
             Registry.register(Registries.BLOCK_ENTITY_TYPE, id, type.blockEntityType)
             type.blockEntityType.addSupportedBlock(block)
@@ -388,10 +397,14 @@ object RagiumContents {
         ItemConvertible,
         HTTranslationFormatter {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        IRON(RagiumMaterials.IRON),
+        COPPER(RagiumMaterials.COPPER),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        GOLD(RagiumMaterials.GOLD),
         STEEL(RagiumMaterials.STEEL),
         TWILIGHT(RagiumMaterials.TWILIGHT_METAL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        NETHERITE(RagiumMaterials.NETHERITE),
         PE(RagiumMaterials.PE),
         PVC(RagiumMaterials.PVC),
         PTFE(RagiumMaterials.PTFE),

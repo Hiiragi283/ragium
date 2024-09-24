@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.util
 
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.machine.HTMachineTier
@@ -10,7 +11,10 @@ import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.AbstractBlock
+import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentChanges
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -28,6 +32,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.State
 import net.minecraft.state.property.Property
 import net.minecraft.text.Text
+import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.Function
@@ -41,6 +46,9 @@ fun <T : Any> Either<out T, out T>.mapCast(): T = map(Function.identity(), Funct
 fun blockSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create()
 
 fun blockSettings(block: AbstractBlock): AbstractBlock.Settings = AbstractBlock.Settings.copy(block)
+
+fun <T : BlockEntity> blockEntityType(factory: BlockEntityType.BlockEntityFactory<T>, vararg blocks: Block): BlockEntityType<T> =
+    BlockEntityType.Builder.create(factory, *blocks).build()
 
 fun World.modifyBlockState(pos: BlockPos, mapping: (BlockState) -> BlockState): Boolean {
     val stateIn: BlockState = getBlockState(pos)
@@ -103,6 +111,15 @@ fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> =
 fun ServerPlayerEntity.sendTitle(title: Text) {
     networkHandler.sendPacket(TitleS2CPacket(title))
 }
+
+//    StringIdentifiable    //
+
+inline fun <reified T : StringIdentifiable> List<T>.createCodec(): Codec<T> =
+    StringIdentifiable.BasicCodec(this.toTypedArray(), this::matchName, this::indexOf)
+
+fun <T : StringIdentifiable> Iterable<T>.matchName(name: String): T = first { it.asString() == name }
+
+fun <T : StringIdentifiable> Iterable<T>.matchNameOrNull(name: String): T? = firstOrNull { it.asString() == name }
 
 //    Table    //
 

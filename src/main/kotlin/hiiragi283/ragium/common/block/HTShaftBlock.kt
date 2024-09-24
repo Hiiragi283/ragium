@@ -1,15 +1,13 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.block.entity.HTKineticProcessor
 import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
-import net.minecraft.world.World
 
-object HTShaftBlock : PillarBlock(blockSettings(Blocks.CHAIN)), HTKineticNode {
+object HTShaftBlock : PillarBlock(blockSettings(Blocks.CHAIN)) {
     @JvmField
     val Y_SHAPE: VoxelShape = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)
 
@@ -32,7 +30,7 @@ object HTShaftBlock : PillarBlock(blockSettings(Blocks.CHAIN)), HTKineticNode {
 
     //    HTKineticNode    //
 
-    override fun findProcessor(world: World, pos: BlockPos, from: Direction): BlockPos? {
+    /*override fun findProcessor(world: World, pos: BlockPos, from: Direction): BlockPos? {
         val state: BlockState = world.getBlockState(pos)
         val axis: Direction.Axis = state.get(AXIS)
         return if (axis == from.axis) {
@@ -46,5 +44,5 @@ object HTShaftBlock : PillarBlock(blockSettings(Blocks.CHAIN)), HTKineticNode {
         } else {
             null
         }
-    }
+    }*/
 }

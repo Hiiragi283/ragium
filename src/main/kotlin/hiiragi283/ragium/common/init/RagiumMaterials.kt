@@ -5,15 +5,24 @@ import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.util.HTTranslationProvider
 
 enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String, override val jaName: String) : HTTranslationProvider {
-    RAW_RAGINITE(HTMachineTier.HEAT, "Raw Raginite", "未加工のラギナイト"),
-    RAGI_ALLOY(HTMachineTier.HEAT, "Ragi-Alloy", "ラギ合金"),
-    RAGI_STEEL(HTMachineTier.ELECTRIC, "Ragi-Steel", "ラギスチール"),
-    STEEL(HTMachineTier.ELECTRIC, "Steel", "スチール"),
-    TWILIGHT_METAL(HTMachineTier.ELECTRIC, "Twilight Metal", "黄昏合金"),
-    REFINED_RAGI_STEEL(HTMachineTier.CHEMICAL, "Refined Ragi-Steel", "精製ラギスチール"),
-    PE(HTMachineTier.CHEMICAL, "PE", "ポリエチレン"),
-    PVC(HTMachineTier.CHEMICAL, "PVC", "塩化ビニル"),
-    PTFE(HTMachineTier.CHEMICAL, "PTFE", "テフロン"),
+    // tier1
+    RAW_RAGINITE(HTMachineTier.PRIMITIVE, "Raw Raginite", "未加工のラギナイト"),
+    RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
+    COPPER(HTMachineTier.PRIMITIVE, "Copper", "銅"),
+    IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄"),
+
+    // tier2
+    RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
+    GOLD(HTMachineTier.BASIC, "Gold", "金"),
+    STEEL(HTMachineTier.BASIC, "Steel", "スチール"),
+    TWILIGHT_METAL(HTMachineTier.BASIC, "Twilight Metal", "黄昏合金"),
+
+    // tier3
+    REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
+    NETHERITE(HTMachineTier.ADVANCED, "Netherite", "ネザライト"),
+    PE(HTMachineTier.ADVANCED, "PE", "ポリエチレン"),
+    PVC(HTMachineTier.ADVANCED, "PVC", "塩化ビニル"),
+    PTFE(HTMachineTier.ADVANCED, "PTFE", "テフロン"),
     ;
 
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }

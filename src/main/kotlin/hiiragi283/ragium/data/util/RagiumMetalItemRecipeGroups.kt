@@ -11,6 +11,7 @@ object RagiumMetalItemRecipeGroups {
             .block(Items.IRON_BLOCK, true)
             .ingot(Items.IRON_INGOT, true)
             .ore(Items.IRON_ORE)
+            .plate(RagiumContents.Plates.IRON)
             .rawMaterial(Items.RAW_IRON)
             .build("iron")
 
@@ -21,6 +22,7 @@ object RagiumMetalItemRecipeGroups {
             .block(Items.GOLD_BLOCK, true)
             .ingot(Items.GOLD_INGOT, true)
             .ore(Items.GOLD_ORE)
+            .plate(RagiumContents.Plates.GOLD)
             .rawMaterial(Items.RAW_GOLD)
             .build("gold")
 
@@ -31,6 +33,7 @@ object RagiumMetalItemRecipeGroups {
             .block(Items.COPPER_BLOCK, true)
             .ingot(Items.COPPER_INGOT, true)
             .ore(Items.COPPER_ORE)
+            .plate(RagiumContents.Plates.COPPER)
             .rawMaterial(Items.RAW_COPPER)
             .build("copper")
 
@@ -40,6 +43,7 @@ object RagiumMetalItemRecipeGroups {
             .Builder()
             .block(Items::NETHERITE_BLOCK, true)
             .ingot(Items::NETHERITE_INGOT, true)
+            .plate(RagiumContents.Plates.NETHERITE)
             .build("netherite")
 
     @JvmField

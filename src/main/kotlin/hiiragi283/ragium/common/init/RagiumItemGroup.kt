@@ -9,6 +9,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 
 object RagiumItemGroup {
@@ -29,11 +30,11 @@ object RagiumItemGroup {
                     .defaultStack
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                Registries.ITEM.entrySet
-                    .filter { it.key.value.namespace == Ragium.MOD_ID }
-                    .forEach { (_: RegistryKey<Item>, item: Item) ->
-                        entries.add(item)
-                    }
+                Registries.ITEM
+                    .streamEntries()
+                    .filter { it.registryKey().value.namespace == Ragium.MOD_ID }
+                    .map(RegistryEntry.Reference<Item>::value)
+                    .forEach(entries::add)
             }
         }
     }

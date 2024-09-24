@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.generator
 
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.screen.HTBurningBoxScreenHandler
 import net.fabricmc.fabric.api.registry.FuelRegistry
@@ -62,7 +62,12 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
                     burningTime = fuelTime
                     fuelStack.decrement(1)
                     when {
-                        ashStack.isEmpty -> setStack(1, RagiumItems.ASH_DUST.defaultStack)
+                        ashStack.isEmpty -> setStack(
+                            1,
+                            RagiumContents.Dusts.ASH
+                                .asItem()
+                                .defaultStack,
+                        )
                         else -> ashStack.increment(1)
                     }
                 }

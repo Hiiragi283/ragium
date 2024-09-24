@@ -8,24 +8,36 @@ import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeEntry
+import net.minecraft.recipe.RecipeType
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
-import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(machineType.blockEntityType, pos, state),
+abstract class HTMachineBlockEntity(
+    val recipeType: RecipeType<HTMachineRecipe>,
+    type: BlockEntityType<*>,
+    pos: BlockPos,
+    state: BlockState,
+) : HTBaseBlockEntity(type, pos, state),
     HTDelegatedInventory,
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
+    constructor(machineType: HTMachineType, pos: BlockPos, state: BlockState) : this(
+        machineType,
+        machineType.blockEntityType,
+        pos,
+        state,
+    )
+
     var isActive: Boolean = false
         protected set
 
@@ -46,21 +58,22 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
             )
         val recipe: HTMachineRecipe =
             world.recipeManager
-                .getFirstMatch(machineType, input, world)
+                .getFirstMatch(recipeType, input, world)
                 .map(RecipeEntry<HTMachineRecipe>::value)
                 .getOrNull() ?: return
         if (!canAcceptOutputs(recipe)) return
-        if (!canProcessRecipe(world, pos, recipe)) {
+        if (!condition(world, pos)) {
             isActive = false
             return
         }
         isActive = true
-        decrementInput(0, recipe)
-        decrementInput(1, recipe)
-        decrementInput(2, recipe)
         modifyOutput(0, recipe)
         modifyOutput(1, recipe)
         modifyOutput(2, recipe)
+        decrementInput(0, recipe)
+        decrementInput(1, recipe)
+        decrementInput(2, recipe)
+        onProcessed(world, pos, recipe)
     }
 
     private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
@@ -84,7 +97,9 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
         }
     }
 
-    protected abstract fun canProcessRecipe(world: World, pos: BlockPos, recipe: HTMachineRecipe): Boolean
+    protected abstract val condition: (World, BlockPos) -> Boolean
+
+    protected abstract fun onProcessed(world: World, pos: BlockPos, recipe: HTMachineRecipe)
 
     //    HTDelegatedInventory    //
 
@@ -107,8 +122,6 @@ abstract class HTMachineBlockEntity<T : HTMachineType>(val machineType: T, pos: 
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTMachineScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos))
-
-    override fun getDisplayName(): Text = machineType.text
 
     //    PropertyDelegateHolder    //
 

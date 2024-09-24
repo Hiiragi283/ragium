@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.common.block.HTKineticNode
 import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
 import hiiragi283.ragium.common.block.entity.HTKineticProcessor
 import net.minecraft.block.Block
@@ -19,7 +18,7 @@ abstract class HTKineticGeneratorBlockEntity(type: BlockEntityType<*>, pos: Bloc
             val toDirection: Direction = state.get(Properties.HORIZONTAL_FACING)
             val toPos: BlockPos = pos.offset(toDirection)
             return when (val toBlock: Block = world.getBlockState(toPos).block) {
-                is HTKineticNode -> toBlock.findProcessor(world, toPos, toDirection.opposite)
+                // is HTKineticNode -> toBlock.findProcessor(world, toPos, toDirection.opposite)
                 is HTKineticProcessor -> toPos
                 else -> null
             }

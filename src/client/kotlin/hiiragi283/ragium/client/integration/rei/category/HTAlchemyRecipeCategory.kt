@@ -15,7 +15,7 @@ import net.minecraft.text.Text
 object HTAlchemyRecipeCategory : HTDisplayCategory<HTDisplay<out HTAlchemyRecipe>> {
     override fun getCategoryIdentifier(): CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> = RagiumREIClient.ALCHEMY
 
-    override fun getTitle(): Text = Text.literal("Alchemical Infusion")
+    override fun getTitle(): Text = RagiumContents.ALCHEMICAL_INFUSER.name
 
     override fun getIcon(): Renderer = EntryStacks.of(RagiumContents.ALCHEMICAL_INFUSER)
 

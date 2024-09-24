@@ -12,7 +12,7 @@
       "item": "ragium:ragi_alloy_hull"
     },
     "D": {
-      "item": "minecraft:polished_blackstone_bricks"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:alloy_furnace"
+    "id": "ragium:brick_alloy_furnace"
   }
 }

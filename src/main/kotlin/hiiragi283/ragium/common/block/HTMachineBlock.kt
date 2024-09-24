@@ -16,7 +16,7 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.Direction
 
 class HTMachineBlock(private val machineType: HTMachineType) :
-    HTBlockWithEntity(machineType.blockEntityType, blockSettings(machineType.tier.base)) {
+    HTBlockWithEntity(machineType.blockEntityType, blockSettings(machineType.tier.baseBlock)) {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }

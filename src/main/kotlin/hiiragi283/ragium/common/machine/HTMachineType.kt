@@ -1,12 +1,16 @@
 package hiiragi283.ragium.common.machine
 
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.block.HTMachineBlock
-import hiiragi283.ragium.common.block.entity.machine.*
+import hiiragi283.ragium.common.block.entity.machine.HTMultiMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTSingleMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.electric.*
+import hiiragi283.ragium.common.block.entity.machine.heat.HTBlazingBlastFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.heat.HTBrickBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.util.mapCast
+import hiiragi283.ragium.common.util.blockEntityType
+import hiiragi283.ragium.common.util.createCodec
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.Item
@@ -22,8 +26,22 @@ sealed interface HTMachineType :
     RecipeType<HTMachineRecipe>,
     ItemConvertible,
     StringIdentifiable {
+    companion object {
+        @JvmStatic
+        fun getEntries(): List<HTMachineType> = buildList {
+            addAll(Single.entries)
+            addAll(Multi.entries)
+        }
+
+        @JvmField
+        val CODEC: Codec<HTMachineType> = getEntries().createCodec()
+
+        @JvmField
+        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType> = PacketCodecs.codec(CODEC)
+    }
+
     val tier: HTMachineTier
-    val blockEntityType: BlockEntityType<out HTMachineBlockEntity<*>>
+    val blockEntityType: BlockEntityType<*>
     val block: HTMachineBlock
 
     val id: Identifier
@@ -33,64 +51,22 @@ sealed interface HTMachineType :
     val text: Text
         get() = Text.translatableWithFallback(translationKey, asString())
 
-    //    ItemConvertible    //
-
     override fun asItem(): Item = block.asItem()
-
-    companion object {
-        @JvmStatic
-        fun getEntries(): List<HTMachineType> = buildList {
-            addAll(Single.entries)
-            addAll(Multi.entries)
-        }
-
-        @JvmField
-        val CODEC: Codec<HTMachineType> =
-            Codec
-                .xor(Single.CODEC, Multi.CODEC)
-                .xmap(Either<Single, Multi>::mapCast) {
-                    when (it) {
-                        is Single -> Either.left(it)
-                        is Multi -> Either.right(it)
-                    }
-                }
-
-        @JvmField
-        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType> = PacketCodecs.codec(CODEC)
-
-        /*@JvmField
-        val SINGLE_BLOCK_ENTITY_TYPE: BlockEntityType<HTSingleMachineBlockEntity> = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE,
-            Ragium.id("single_machine"),
-            BlockEntityType.Builder.create(::HTSingleMachineBlockEntity).build(),
-        )
-
-        @JvmField
-        val MULTI_BLOCK_ENTITY_TYPE: BlockEntityType<HTMultiMachineBlockEntity> = Registry.register(
-            Registries.BLOCK_ENTITY_TYPE,
-            Ragium.id("multi_machine"),
-            BlockEntityType.Builder.create(::HTMultiMachineBlockEntity).build(),
-        )*/
-    }
-
-    //    Single    //
 
     enum class Single(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<HTSingleMachineBlockEntity>) :
         HTMachineType {
-        // tier1
-        ALLOY_FURNACE(HTMachineTier.HEAT, ::HTAlloyFurnaceBlockEntity),
-
         // tier2
-        COMPRESSOR(HTMachineTier.ELECTRIC, ::HTCompressorBlockEntity),
-        EXTRACTOR(HTMachineTier.ELECTRIC, ::HTExtractorBlockEntity),
-        GRINDER(HTMachineTier.ELECTRIC, ::HTGrinderBlockEntity),
-        METAL_FORMER(HTMachineTier.ELECTRIC, ::HTMetalFormerBlockEntity),
-        MIXER(HTMachineTier.ELECTRIC, ::HTMixerBlockEntity),
+        ALLOY_FURNACE(HTMachineTier.BASIC, ::HTAlloyFurnaceBlockEntity),
+        COMPRESSOR(HTMachineTier.BASIC, ::HTCompressorBlockEntity),
+        EXTRACTOR(HTMachineTier.BASIC, ::HTExtractorBlockEntity),
+        GRINDER(HTMachineTier.BASIC, ::HTGrinderBlockEntity),
+        METAL_FORMER(HTMachineTier.BASIC, ::HTMetalFormerBlockEntity),
+        MIXER(HTMachineTier.BASIC, ::HTMixerBlockEntity),
 
         // tier3
-        CENTRIFUGE(HTMachineTier.CHEMICAL, ::HTCentrifugeBlockEntity),
-        CHEMICAL_REACTOR(HTMachineTier.CHEMICAL, ::HTChemicalReactorBlockEntity),
-        ELECTROLYZER(HTMachineTier.CHEMICAL, ::HTElectrolyzerBlockEntity),
+        CENTRIFUGE(HTMachineTier.ADVANCED, ::HTCentrifugeBlockEntity),
+        CHEMICAL_REACTOR(HTMachineTier.ADVANCED, ::HTChemicalReactorBlockEntity),
+        ELECTROLYZER(HTMachineTier.ADVANCED, ::HTElectrolyzerBlockEntity),
         ;
 
         companion object {
@@ -98,36 +74,32 @@ sealed interface HTMachineType :
             val CODEC: Codec<Single> = StringIdentifiable.createCodec(Single::values)
         }
 
-        override val blockEntityType: BlockEntityType<HTSingleMachineBlockEntity> =
-            BlockEntityType.Builder.create(factory).build()
+        override val blockEntityType: BlockEntityType<HTSingleMachineBlockEntity> = blockEntityType(factory)
         override val block: HTMachineBlock = HTMachineBlock(this)
 
         override fun asString(): String = name.lowercase()
     }
 
-    //    Multi    //
-
-    enum class Multi(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<out HTMultiMachineBlockEntity>) :
+    enum class Multi(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<HTMultiMachineBlockEntity>) :
         HTMachineType {
         // tier1
-        BRICK_BLAST_FURNACE(HTMachineTier.HEAT, ::HTBrickBlastFurnaceBlockEntity),
+        BRICK_BLAST_FURNACE(HTMachineTier.PRIMITIVE, ::HTBrickBlastFurnaceBlockEntity),
 
         // tier2
-        BLAZING_BLAST_FURNACE(HTMachineTier.ELECTRIC, ::HTBlazingBlastFurnaceBlockEntity),
+        BLAZING_BLAST_FURNACE(HTMachineTier.BASIC, ::HTBlazingBlastFurnaceBlockEntity),
 
         // tier3
-        DISTILLATION_TOWER(HTMachineTier.CHEMICAL, ::HTDistillationTowerBlockEntity),
+        DISTILLATION_TOWER(HTMachineTier.ADVANCED, ::HTDistillationTowerBlockEntity),
         ;
 
+        companion object {
+            val CODEC: Codec<Multi> = StringIdentifiable.createCodec(Multi::values)
+        }
+
         override val blockEntityType: BlockEntityType<HTMultiMachineBlockEntity> =
-            BlockEntityType.Builder.create(factory).build()
+            blockEntityType(factory)
         override val block: HTMachineBlock = HTMachineBlock(this)
 
         override fun asString(): String = name.lowercase()
-
-        companion object {
-            @JvmField
-            val CODEC: Codec<Multi> = StringIdentifiable.createCodec(Multi::values)
-        }
     }
 }

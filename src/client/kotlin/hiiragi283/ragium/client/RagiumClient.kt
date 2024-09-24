@@ -58,6 +58,7 @@ object RagiumClient : ClientModInitializer {
             RagiumContents.RAGINITE_ORE,
             RagiumContents.DEEPSLATE_RAGINITE_ORE,
             RagiumContents.MANUAL_GRINDER,
+            RagiumContents.BRICK_ALLOY_FURNACE,
             RagiumContents.BURNING_BOX,
             RagiumContents.GEAR_BOX,
             RagiumContents.BLAZING_BOX,

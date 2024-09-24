@@ -69,6 +69,10 @@ object RagiumREIClient : REIClientPlugin {
             HTMachineType.Single.GRINDER.categoryId,
             EntryStacks.of(RagiumContents.MANUAL_GRINDER),
         )
+        registry.addWorkstations(
+            HTMachineType.Single.ALLOY_FURNACE.categoryId,
+            EntryStacks.of(RagiumContents.BRICK_ALLOY_FURNACE),
+        )
         // Fluid Pump
         registry.add(HTFluidPumpCategory)
         // Alchemy Recipe

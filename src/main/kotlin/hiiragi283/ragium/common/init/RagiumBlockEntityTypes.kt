@@ -4,6 +4,8 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.block.entity.generator.*
+import hiiragi283.ragium.common.block.entity.machine.heat.HTBrickAlloyFurnaceBlockEntity
+import hiiragi283.ragium.common.util.blockEntityType
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -12,6 +14,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val ALCHEMICAL_INFUSER: BlockEntityType<HTAlchemicalInfuserBlockEntity> =
         register("alchemical_infuser", ::HTAlchemicalInfuserBlockEntity)
+
+    @JvmField
+    val BRICK_ALLOY_FURNACE: BlockEntityType<HTBrickAlloyFurnaceBlockEntity> =
+        register("brick_alloy_furnace", ::HTBrickAlloyFurnaceBlockEntity)
 
     @JvmField
     val BUFFER: BlockEntityType<HTBufferBlockEntity> =
@@ -38,10 +44,6 @@ object RagiumBlockEntityTypes {
         register("manual_grinder", ::HTManualGrinderBlockEntity)
 
     @JvmField
-    val WATER_COLLECTOR: BlockEntityType<HTWaterCollectorBlockEntity> =
-        register("water_collector", ::HTWaterCollectorBlockEntity)
-
-    @JvmField
     val WATER_GENERATOR: BlockEntityType<HTWaterGeneratorBlockEntity> =
         register("water_generator", ::HTWaterGeneratorBlockEntity)
 
@@ -54,12 +56,14 @@ object RagiumBlockEntityTypes {
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             Ragium.id(name),
-            BlockEntityType.Builder.create(factory).build(),
+            blockEntityType(factory),
         )
 
     @JvmStatic
     fun init() {
         ALCHEMICAL_INFUSER.addSupportedBlock(RagiumContents.ALCHEMICAL_INFUSER)
+        BRICK_ALLOY_FURNACE.addSupportedBlock(RagiumContents.BRICK_ALLOY_FURNACE)
         ITEM_DISPLAY.addSupportedBlock(RagiumContents.ITEM_DISPLAY)
+        MANUAL_GRINDER.addSupportedBlock(RagiumContents.MANUAL_GRINDER)
     }
 }

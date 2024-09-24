@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:alloy_furnace"
+            "items": "ragium:brick_alloy_furnace"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:alloy_furnace"
+      "id": "ragium:brick_alloy_furnace"
     },
     "title": {
       "translate": "advancement.ragium.tier1.alloy_furnace"

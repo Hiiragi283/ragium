@@ -38,6 +38,7 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
         addDrop(RagiumContents.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
         addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumContents.MANUAL_GRINDER)
+        addDrop(RagiumContents.BRICK_ALLOY_FURNACE)
         addDrop(RagiumContents.BURNING_BOX)
         addDrop(RagiumContents.WATER_GENERATOR)
         addDrop(RagiumContents.WIND_GENERATOR)
