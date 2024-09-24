@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.common.util.disableTooltips
-
-class HTFluidCubeItem private constructor(val fluidName: String) : HTBaseItem(Settings().disableTooltips()) {
+class HTFluidCubeItem private constructor(val fluidName: String) : HTBaseItem(Settings()) {
     companion object {
         val registry: Map<String, HTFluidCubeItem>
             get() = registry1

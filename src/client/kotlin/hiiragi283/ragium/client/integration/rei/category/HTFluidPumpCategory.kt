@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.rei.category
 
 import hiiragi283.ragium.client.integration.rei.RagiumREIClient
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import me.shedaniel.math.Point
 import me.shedaniel.math.Rectangle
@@ -43,7 +43,7 @@ object HTFluidPumpCategory : DisplayCategory<HTFluidPumpCategory.FluidDisplay> {
                 .createSlot(Point(startPoint.x + 4, startPoint.y + 5))
                 .entries(
                     listOf(
-                        EntryStacks.of(RagiumItems.EMPTY_FLUID_CUBE),
+                        EntryStacks.of(RagiumContents.EMPTY_FLUID_CUBE),
                     ),
                 ),
         )

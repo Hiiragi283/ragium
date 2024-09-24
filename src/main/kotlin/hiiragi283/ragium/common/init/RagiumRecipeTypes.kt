@@ -10,6 +10,7 @@ object RagiumRecipeTypes {
     @JvmField
     val ALCHEMY_INFUSE: HTAlchemyRecipe.Type = register("alchemy", HTAlchemyRecipe.Type)
 
+    @JvmStatic
     private fun <T : RecipeType<*>> register(name: String, type: T): T = Registry.register(
         Registries.RECIPE_TYPE,
         Ragium.id(name),

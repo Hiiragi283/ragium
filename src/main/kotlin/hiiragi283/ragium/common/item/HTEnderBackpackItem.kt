@@ -14,7 +14,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-object HTEnderBundleItem : HTBaseItem(itemSettings()) {
+object HTEnderBackpackItem : HTBaseItem(itemSettings()) {
     private val TITLE: Text = Text.translatable("container.enderchest")
 
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {

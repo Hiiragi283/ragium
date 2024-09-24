@@ -2,12 +2,11 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium.id
 import hiiragi283.ragium.common.Ragium.log
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.advancement.HTAdvancementRewardCallback
-import hiiragi283.ragium.common.component.HTTooltipsComponent
 import hiiragi283.ragium.common.util.sendTitle
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.component.ComponentMap
 import net.minecraft.item.Item
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
@@ -33,9 +32,9 @@ object RagiumEventHandlers {
         }
 
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
-            customTooltip(context, RagiumItems.Ingots.TWILIGHT_METAL.asItem(), Formatting.GRAY, Formatting.ITALIC)
-            customTooltip(context, RagiumItems.SOAP_INGOT, Formatting.GRAY, Formatting.ITALIC)
-            customTooltip(context, RagiumItems.RAW_RAGINITE, Formatting.GRAY, Formatting.OBFUSCATED)
+            customTooltip(context, RagiumContents.Ingots.TWILIGHT_METAL.asItem(), Formatting.GRAY, Formatting.ITALIC)
+            customTooltip(context, RagiumContents.SOAP_INGOT, Formatting.GRAY, Formatting.ITALIC)
+            customTooltip(context, RagiumContents.RAW_RAGINITE, Formatting.GRAY, Formatting.OBFUSCATED)
             // auto setting
             /*context.modify(::canSetTooltip) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
@@ -48,11 +47,11 @@ object RagiumEventHandlers {
 
     @JvmStatic
     private fun customTooltip(context: DefaultItemComponentEvents.ModifyContext, item: Item, vararg formattings: Formatting) {
-        context.modify(item) { builder: ComponentMap.Builder ->
+        /*context.modify(item) { builder: ComponentMap.Builder ->
             builder.add(
                 RagiumComponentTypes.TOOLTIPS,
                 HTTooltipsComponent.fromItem(item, *formattings),
             )
-        }
+        }*/
     }
 }

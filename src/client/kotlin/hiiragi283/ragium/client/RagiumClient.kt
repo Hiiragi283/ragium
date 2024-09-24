@@ -9,7 +9,9 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumNetworks
+import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
@@ -25,10 +27,8 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.inventory.Inventory
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import java.awt.Color
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
@@ -45,8 +45,8 @@ object RagiumClient : ClientModInitializer {
     //    Items    //
 
     private fun registerItems() {
-        RagiumItems.REGISTER.registerColors { item: Item, color: Color ->
-            ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> color.rgb }, item)
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+            ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> fluid.color.rgb }, fluid)
         }
     }
 

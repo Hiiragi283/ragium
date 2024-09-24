@@ -4,7 +4,6 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumItemGroup
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.HTTranslationFormatter
@@ -31,45 +30,41 @@ object RagiumLangProviders {
     }
 
     @JvmStatic
-    private fun translateStorageBlocks(builder: TranslationBuilder, type: HTLangType) {
+    private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
+        // storage block
         RagiumContents.StorageBlocks.entries.forEach { block: RagiumContents.StorageBlocks ->
             builder.add(
                 block.block,
                 block.getTranslation(type, block.material),
             )
         }
-    }
-
-    @JvmStatic
-    private fun translateHulls(builder: TranslationBuilder, type: HTLangType) {
+        // hulls
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             builder.add(
                 hull.block,
                 hull.getTranslation(type, hull.material),
             )
         }
-    }
-
-    @JvmStatic
-    private fun translateElements(builder: TranslationBuilder, type: HTLangType) {
-        RagiElement.entries.forEach { element ->
+        // elements
+        RagiElement.entries.forEach { element: RagiElement ->
+            val translatedName: String = element.getTranslation(type)
+            builder.add(element.translationKey, translatedName)
             when (type) {
                 HTLangType.EN_US -> {
-                    builder.add(element.buddingBlock, "Budding ${element.getTranslatedName(type)}")
-                    builder.add(element.clusterBlock, "${element.getTranslatedName(type)} Cluster")
+                    builder.add(element.buddingBlock, "Budding $translatedName")
+                    builder.add(element.clusterBlock, "$translatedName Cluster")
+                    builder.add(element.dustItem, "$translatedName Dust")
                 }
 
                 HTLangType.JA_JP -> {
-                    builder.add(element.buddingBlock, "芽生えた${element.getTranslatedName(type)}")
-                    builder.add(element.clusterBlock, "${element.getTranslatedName(type)}の塊")
+                    builder.add(element.buddingBlock, "芽生えた$translatedName")
+                    builder.add(element.clusterBlock, "${translatedName}の塊")
+                    builder.add(element.dustItem, "${translatedName}の粉")
                 }
             }
         }
-    }
-
-    @JvmStatic
-    private fun translateDusts(builder: TranslationBuilder, type: HTLangType) {
-        RagiumItems.Dusts.entries.forEach { dust: RagiumItems.Dusts ->
+        // dusts
+        RagiumContents.Dusts.entries.forEach { dust: RagiumContents.Dusts ->
             builder.add(
                 dust.asItem(),
                 when (type) {
@@ -78,24 +73,25 @@ object RagiumLangProviders {
                 },
             )
         }
-    }
-
-    @JvmStatic
-    private fun translateIngots(builder: TranslationBuilder, type: HTLangType) {
-        RagiumItems.Ingots.entries.forEach { ingot: RagiumItems.Ingots ->
+        // ingots
+        RagiumContents.Ingots.entries.forEach { ingot: RagiumContents.Ingots ->
             builder.add(
                 ingot.asItem(),
                 ingot.getTranslation(type, ingot.material),
             )
         }
-    }
-
-    @JvmStatic
-    private fun translatePlates(builder: TranslationBuilder, type: HTLangType) {
-        RagiumItems.Plates.entries.forEach { plate: RagiumItems.Plates ->
+        // plates
+        RagiumContents.Plates.entries.forEach { plate: RagiumContents.Plates ->
             builder.add(
                 plate.asItem(),
                 plate.getTranslation(type, plate.material),
+            )
+        }
+        // fluids
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+            builder.add(
+                fluid.asItem(),
+                FluidFormatter.getTranslation(type, fluid),
             )
         }
     }
@@ -105,26 +101,18 @@ object RagiumLangProviders {
         override val jaPattern: String = "液体キューブ（%s）"
     }
 
-    @JvmStatic
-    private fun translateFluids(builder: TranslationBuilder, type: HTLangType) {
-        RagiumItems.Fluids.entries.forEach { fluid: RagiumItems.Fluids ->
-            builder.add(
-                fluid.asItem(),
-                FluidFormatter.getTranslation(type, fluid),
-            )
-        }
-    }
-
     //    English    //
 
     private class EnglishLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
+            translateContents(builder, HTLangType.EN_US)
             // Advancements
             RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
             // Blocks
             builder.add(RagiumContents.RAGINITE_ORE, "Raginite Ore")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "Deep Raginite Ore")
+
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
             builder.add(RagiumContents.BURNING_BOX, "Burning Box")
@@ -135,20 +123,21 @@ object RagiumLangProviders {
             builder.add(RagiumContents.BLAZING_BOX, "Blazing Box")
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
-
-            translateStorageBlocks(builder, HTLangType.EN_US)
-            translateHulls(builder, HTLangType.EN_US)
-            translateElements(builder, HTLangType.EN_US)
-            // Elements
-            RagiElement.TRANSLATION_TABLE.column(HTLangType.EN_US).forEach { (element: RagiElement, value: String) ->
-                builder.add(element, value)
-            }
             // Items
-            RagiumItems.REGISTER.generateLang(HTLangType.EN_US, builder)
-            translateDusts(builder, HTLangType.EN_US)
-            translateIngots(builder, HTLangType.EN_US)
-            translatePlates(builder, HTLangType.EN_US)
-            translateFluids(builder, HTLangType.EN_US)
+            builder.add(RagiumContents.FORGE_HAMMER, "Forge Hammer")
+            builder.add(RagiumContents.STEEL_SWORD, "Steel Sword")
+            builder.add(RagiumContents.STEEL_SHOVEL, "Steel Shovel")
+            builder.add(RagiumContents.STEEL_PICKAXE, "Steel Pickaxe")
+            builder.add(RagiumContents.STEEL_AXE, "Steel Axe")
+            builder.add(RagiumContents.STEEL_HOE, "Steel Hoe")
+            builder.add(RagiumContents.BACKPACK, "Backpack")
+            builder.add(RagiumContents.LARGE_BACKPACK, "Large Backpack")
+            builder.add(RagiumContents.ENDER_BACKPACK, "Ender Backpack")
+
+            builder.add(RagiumContents.RAW_RAGINITE, "Raw Raginite")
+            builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+            builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
+            builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
             // Machine
@@ -185,6 +174,7 @@ object RagiumLangProviders {
     class JapaneseLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, "ja_jp", registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
+            translateContents(builder, HTLangType.JA_JP)
             // Advancements
             RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
@@ -200,20 +190,21 @@ object RagiumLangProviders {
             builder.add(RagiumContents.BLAZING_BOX, "豪炎室")
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
             builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
-
-            translateStorageBlocks(builder, HTLangType.JA_JP)
-            translateHulls(builder, HTLangType.JA_JP)
-            translateElements(builder, HTLangType.JA_JP)
-            // Elements
-            RagiElement.TRANSLATION_TABLE.column(HTLangType.JA_JP).forEach { (element: RagiElement, value: String) ->
-                builder.add(element, value)
-            }
             // Items
-            RagiumItems.REGISTER.generateLang(HTLangType.JA_JP, builder)
-            translateDusts(builder, HTLangType.JA_JP)
-            translateIngots(builder, HTLangType.JA_JP)
-            translatePlates(builder, HTLangType.JA_JP)
-            translateFluids(builder, HTLangType.JA_JP)
+            builder.add(RagiumContents.FORGE_HAMMER, "鍛造ハンマー")
+            builder.add(RagiumContents.STEEL_SWORD, "鋼鉄の剣")
+            builder.add(RagiumContents.STEEL_SHOVEL, "鋼鉄のシャベル")
+            builder.add(RagiumContents.STEEL_PICKAXE, "鋼鉄のツルハシ")
+            builder.add(RagiumContents.STEEL_AXE, "鋼鉄の斧")
+            builder.add(RagiumContents.STEEL_HOE, "鋼鉄のクワ")
+            builder.add(RagiumContents.BACKPACK, "バックパック")
+            builder.add(RagiumContents.LARGE_BACKPACK, "大型パックパック")
+            builder.add(RagiumContents.ENDER_BACKPACK, "エンダーパックパック")
+
+            builder.add(RagiumContents.RAW_RAGINITE, "ラギナイトの原石")
+            builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+            builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
+            builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             // Machine

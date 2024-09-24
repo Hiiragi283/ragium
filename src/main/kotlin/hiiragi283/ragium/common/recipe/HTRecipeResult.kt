@@ -83,7 +83,10 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
             ItemImpl(item, count, components)
 
         @JvmStatic
-        fun stack(stack: ItemStack): HTRecipeResult = item(stack.item, stack.count, stack.componentChanges)
+        fun stack(stack: ItemStack): HTRecipeResult {
+            check(!stack.isEmpty) { "Could not accept empty ItemStack as a recipe result!" }
+            return item(stack.item, stack.count, stack.componentChanges)
+        }
 
         @JvmStatic
         fun tag(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =

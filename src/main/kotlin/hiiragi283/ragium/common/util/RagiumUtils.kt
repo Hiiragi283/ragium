@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.util
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.component.HTTooltipsComponent
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.machine.HTMachineTier
 import io.netty.buffer.ByteBuf
@@ -74,6 +73,8 @@ fun <A, C> BlockApiLookup<A, C>.createCacheOrNull(world: World, pos: BlockPos): 
 fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state: BlockState? = null): A =
     find(state, context) ?: defaultValue
 
+//    Energy    //
+
 //    Fluid    //
 
 //    Item    //
@@ -83,10 +84,6 @@ fun itemSettings(): Item.Settings = Item.Settings()
 fun Item.Settings.element(element: RagiElement): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.TIER, tier)
-
-fun Item.Settings.tooltips(component: HTTooltipsComponent): Item.Settings = component(RagiumComponentTypes.TOOLTIPS, component)
-
-fun Item.Settings.disableTooltips(): Item.Settings = component(RagiumComponentTypes.DISABLE_TOOLTIPS, Unit)
 
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
     if (item == null) return ItemStack.EMPTY

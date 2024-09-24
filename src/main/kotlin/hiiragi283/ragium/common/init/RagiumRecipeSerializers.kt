@@ -18,6 +18,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val TRANSFORM: HTTransformRecipe.Serializer = register("alchemical_transform", HTTransformRecipe.Serializer)
 
+    @JvmStatic
     private fun <T : RecipeSerializer<*>> register(name: String, serializer: T): T = Registry.register(
         Registries.RECIPE_SERIALIZER,
         Ragium.id(name),

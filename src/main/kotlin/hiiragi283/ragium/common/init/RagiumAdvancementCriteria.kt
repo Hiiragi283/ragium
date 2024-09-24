@@ -10,6 +10,7 @@ object RagiumAdvancementCriteria {
     @JvmField
     val BUILD_MULTIBLOCK: HTBuildMultiblockCriterion = register("build_multiblock", HTBuildMultiblockCriterion)
 
+    @JvmStatic
     private fun <T : Criterion<*>> register(name: String, criterion: T): T = Registry.register(
         Registries.CRITERION,
         Ragium.id(name),

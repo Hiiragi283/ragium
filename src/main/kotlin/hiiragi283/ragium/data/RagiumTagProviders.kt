@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.util.HTMetalItemRecipeGroup
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -13,6 +12,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
@@ -69,9 +69,26 @@ object RagiumTagProviders {
     private class ItemProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.ItemTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            RagiumItems.REGISTER.generateTag(::getOrCreateTagBuilder)
+            getOrCreateTagBuilder(ItemTags.SWORDS).add(RagiumContents.STEEL_SWORD)
+            getOrCreateTagBuilder(ItemTags.SHOVELS).add(RagiumContents.STEEL_SHOVEL)
+            getOrCreateTagBuilder(ItemTags.PICKAXES).add(RagiumContents.STEEL_PICKAXE)
+            getOrCreateTagBuilder(ItemTags.AXES).add(RagiumContents.STEEL_AXE)
+            getOrCreateTagBuilder(ItemTags.HOES).add(RagiumContents.STEEL_HOE)
 
-            getOrCreateTagBuilder(RagiumItemTags.STEEL_INGOTS).add(RagiumItems.Ingots.STEEL.asItem())
+            getOrCreateTagBuilder(RagiumItemTags.ORGANIC_OILS)
+                .add(
+                    RagiumContents.Fluids.TALLOW.asItem(),
+                    RagiumContents.Fluids.SEED_OIL.asItem(),
+                )
+
+            getOrCreateTagBuilder(RagiumItemTags.RAGINITE_ORES)
+                .add(
+                    RagiumContents.RAGINITE_ORE.asItem(),
+                    RagiumContents.DEEPSLATE_RAGINITE_ORE.asItem(),
+                )
+
+            getOrCreateTagBuilder(RagiumItemTags.STEEL_INGOTS)
+                .add(RagiumContents.Ingots.STEEL.asItem())
 
             HTMetalItemRecipeGroup.registry.forEach { (name: String, family: HTMetalItemRecipeGroup) ->
                 HTMetalItemRecipeGroup.Variant.entries.forEach variant@{ variant: HTMetalItemRecipeGroup.Variant ->

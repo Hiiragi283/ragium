@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumItems.Ingots
-import hiiragi283.ragium.common.init.RagiumItems.Plates
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.util.HTTranslationProvider
 
@@ -22,7 +20,7 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
 
     fun getHull(): RagiumContents.Hulls? = RagiumContents.Hulls.entries.firstOrNull { it.material == this }
 
-    fun getIngot(): Ingots? = Ingots.entries.firstOrNull { it.material == this }
+    fun getIngot(): RagiumContents.Ingots? = RagiumContents.Ingots.entries.firstOrNull { it.material == this }
 
-    fun getPlate(): Plates? = Plates.entries.firstOrNull { it.material == this }
+    fun getPlate(): RagiumContents.Plates? = RagiumContents.Plates.entries.firstOrNull { it.material == this }
 }

@@ -49,6 +49,7 @@ object RagiumBlockEntityTypes {
     val WIND_GENERATOR: BlockEntityType<HTWindGeneratorBlockEntity> =
         register("wind_generator", ::HTWindGeneratorBlockEntity)
 
+    @JvmStatic
     private fun <T : HTBaseBlockEntity> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,

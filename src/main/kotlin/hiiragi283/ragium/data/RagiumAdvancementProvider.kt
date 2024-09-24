@@ -4,8 +4,6 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.advancement.HTBuildMultiblockCriterion
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.data.HTLangType
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.data.util.HTAdvancementRegister
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -62,7 +60,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiumContents.RAGINITE_ORE,
                 Identifier.of("textures/block/bricks.png"),
             ) {
-                hasItems(RagiumItems.RAW_RAGINITE)
+                hasItems(RagiumContents.RAW_RAGINITE)
             }.putEnglish("Ragium - Tier 1")
             .putEnglishDesc("Get Raw Raginite and Start!")
             .putJapaneseDesc("ラギナイトの原石を手に入れて始める")
@@ -72,10 +70,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/ragi_alloy",
                 root,
-                RagiumItems.Ingots.RAGI_ALLOY,
+                RagiumContents.Ingots.RAGI_ALLOY,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumItems.Ingots.RAGI_ALLOY)
+                hasItems(RagiumContents.Ingots.RAGI_ALLOY)
             }.putEnglish("")
             .putEnglishDesc("Craft Ragi-Alloy Ingot")
             .putJapanese("")
@@ -138,10 +136,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/raginite_dust",
                 manualGrinder,
-                RagiumItems.Dusts.RAGINITE,
+                RagiumContents.Dusts.RAGINITE,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumItems.Dusts.RAGINITE)
+                hasItems(RagiumContents.Dusts.RAGINITE)
             }.putEnglish("")
             .putEnglishDesc("Wash Raw Raginite Dust with Cauldron")
             .putJapanese("")
@@ -155,10 +153,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier2/root",
-                RagiumItems.Ingots.RAGI_STEEL,
+                RagiumContents.Ingots.RAGI_STEEL,
                 Identifier.of("textures/block/polished_blackstone_bricks.png"),
             ) {
-                hasItems(RagiumItems.Ingots.RAGI_STEEL)
+                hasItems(RagiumContents.Ingots.RAGI_STEEL)
             }.putEnglish("Ragium - Tier 2")
             .putEnglishDesc("The Industrial Revolution")
             .putJapaneseDesc("産業革命")
@@ -246,9 +244,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/soap",
                 mixer,
-                RagiumItems.SOAP_INGOT,
+                RagiumContents.SOAP_INGOT,
             ) {
-                hasItems(RagiumItems.SOAP_INGOT)
+                hasItems(RagiumContents.SOAP_INGOT)
             }.putEnglish("")
             .putEnglishDesc("Craft Soap Ingot")
             .putJapanese("")
@@ -259,10 +257,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/refined_raginite_dust",
                 soap,
-                RagiumItems.Dusts.REFINED_RAGINITE,
+                RagiumContents.Dusts.REFINED_RAGINITE,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumItems.Dusts.REFINED_RAGINITE)
+                hasItems(RagiumContents.Dusts.REFINED_RAGINITE)
             }.putEnglish("")
             .putEnglishDesc("Craft Refined Raginite Dust")
             .putJapanese("")
@@ -289,10 +287,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier3/root",
-                RagiumItems.Ingots.REFINED_RAGI_STEEL,
+                RagiumContents.Ingots.REFINED_RAGI_STEEL,
                 Identifier.of("textures/block/end_stone_bricks.png"),
             ) {
-                hasItems(RagiumItems.Ingots.REFINED_RAGI_STEEL)
+                hasItems(RagiumContents.Ingots.REFINED_RAGI_STEEL)
             }.putEnglish("Ragium - Tier 3")
             .putEnglishDesc("Age of Electricity")
             .putJapaneseDesc("電気時代")
@@ -367,9 +365,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/oil",
                 distillationTower,
-                RagiumItems.Fluids.OIL,
+                RagiumContents.Fluids.OIL,
             ) {
-                hasItems(RagiumItems.Fluids.OIL)
+                hasItems(RagiumContents.Fluids.OIL)
             }.putEnglish("")
             .putEnglishDesc("Get Oil")
             .putJapanese("")
@@ -399,9 +397,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiElement.RAGIUM.dustItem,
             ) {
                 hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.RAGIUM.getTranslatedName(HTLangType.EN_US))
+            }.putEnglish(RagiElement.RAGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.RAGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapanese(RagiElement.RAGIUM.jaName)
             .putJapaneseDesc("ネザーまたは燃焼室の上で成長する")
             .build()
 
@@ -412,9 +410,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiElement.RIGIUM.dustItem,
             ) {
                 hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.RIGIUM.getTranslatedName(HTLangType.EN_US))
+            }.putEnglish(RagiElement.RIGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.RIGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapanese(RagiElement.RIGIUM.jaName)
             .putJapaneseDesc("荒地またはy=192より高い場所で成長する")
             .build()
 
@@ -425,9 +423,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiElement.RUGIUM.dustItem,
             ) {
                 hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.RUGIUM.getTranslatedName(HTLangType.EN_US))
+            }.putEnglish(RagiElement.RUGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.RUGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapanese(RagiElement.RUGIUM.jaName)
             .putJapaneseDesc("ジャングルまたは---で成長する")
             .build()
 
@@ -438,9 +436,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiElement.REGIUM.dustItem,
             ) {
                 hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.REGIUM.getTranslatedName(HTLangType.EN_US))
+            }.putEnglish(RagiElement.REGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.REGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapanese(RagiElement.REGIUM.jaName)
             .putJapaneseDesc("海洋または---で成長する")
             .build()
 
@@ -451,9 +449,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiElement.ROGIUM.dustItem,
             ) {
                 hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.ROGIUM.getTranslatedName(HTLangType.EN_US))
+            }.putEnglish(RagiElement.ROGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.ROGIUM.getTranslatedName(HTLangType.JA_JP))
+            .putJapanese(RagiElement.ROGIUM.jaName)
             .putJapaneseDesc("エンドまたは---で成長する")
             .build()
     }

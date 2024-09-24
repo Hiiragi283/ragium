@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.util
 
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.machine.HTMachineType
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.data.server.recipe.*
@@ -82,7 +82,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .pattern("A")
             .pattern("B")
             .pattern("B")
-            .input('A', RagiumItems.FORGE_HAMMER)
+            .input('A', RagiumContents.FORGE_HAMMER)
             .input('B', ingot)
             .criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(plate).withPrefixedPath("shaped/"))
@@ -100,7 +100,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         // Smithing Recipe (only hard mode)
         SmithingTransformRecipeJsonBuilder
             .create(
-                Ingredient.ofItems(RagiumItems.FORGE_HAMMER),
+                Ingredient.ofItems(RagiumContents.FORGE_HAMMER),
                 Ingredient.ofItems(ingot),
                 Ingredient.EMPTY,
                 RecipeCategory.MISC,

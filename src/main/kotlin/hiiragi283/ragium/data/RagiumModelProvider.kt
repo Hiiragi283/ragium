@@ -4,7 +4,6 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumModels
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
@@ -14,6 +13,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.*
+import net.minecraft.item.Item
 import net.minecraft.util.Identifier
 
 class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
@@ -166,7 +166,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         // elements
         RagiElement.entries.forEach { element: RagiElement ->
+            // budding block
             registerSimple(element.buddingBlock)
+            // cluster block
             register(element.clusterBlock) {
                 accept(
                     VariantsBlockStateSupplier
@@ -188,6 +190,50 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
     //    Model    //
 
     override fun generateItemModels(generator: ItemModelGenerator) {
-        RagiumItems.REGISTER.generateModel(generator)
+        fun register(item: Item, model: Model = Models.GENERATED) {
+            generator.register(item, model)
+        }
+
+        fun register(item: Item, model: Model, textureMap: TextureMap = TextureMap()) {
+            model.upload(
+                TextureMap.getId(item),
+                textureMap,
+                generator.writer,
+            )
+        }
+
+        register(RagiumContents.STEEL_SWORD)
+        register(RagiumContents.STEEL_SHOVEL)
+        register(RagiumContents.STEEL_PICKAXE)
+        register(RagiumContents.STEEL_AXE)
+        register(RagiumContents.STEEL_HOE)
+        register(RagiumContents.FORGE_HAMMER)
+        register(RagiumContents.BACKPACK)
+        register(RagiumContents.LARGE_BACKPACK)
+        register(RagiumContents.ENDER_BACKPACK)
+
+        register(RagiumContents.RAW_RAGINITE)
+        register(RagiumContents.RAGI_ALLOY_COMPOUND)
+        register(RagiumContents.SOAP_INGOT)
+        // dusts
+        RagiumContents.Dusts.entries
+            .map(RagiumContents.Dusts::asItem)
+            .forEach(::register)
+        // ingots
+        RagiumContents.Ingots.entries
+            .map(RagiumContents.Ingots::asItem)
+            .forEach(::register)
+        // plates
+        RagiumContents.Plates.entries
+            .map(RagiumContents.Plates::asItem)
+            .forEach(::register)
+        // elements
+        RagiElement.entries.forEach { element: RagiElement ->
+            register(element.dustItem)
+        }
+        // fluids
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+            register(fluid.asItem(), RagiumModels.FILLED_FLUID_CUBE)
+        }
     }
 }

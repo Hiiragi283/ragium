@@ -23,6 +23,7 @@ object RagiumScreenHandlerTypes {
     val ALCHEMICAL_INFUSER: ScreenHandlerType<HTAlchemicalInfuserHandler> =
         register("alchemical_infuser", ::HTAlchemicalInfuserHandler)
 
+    @JvmStatic
     private fun <T : ScreenHandler> register(name: String, factory: ScreenHandlerType.Factory<T>): ScreenHandlerType<T> = Registry.register(
         Registries.SCREEN_HANDLER,
         Ragium.id(name),

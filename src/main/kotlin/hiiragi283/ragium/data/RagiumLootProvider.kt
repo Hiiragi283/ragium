@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.machine.HTMachineType
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
@@ -90,7 +89,7 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
         applyExplosionDecay(
             ore,
             ItemEntry
-                .builder(RagiumItems.RAW_RAGINITE)
+                .builder(RagiumContents.RAW_RAGINITE)
                 .applyDropRange(2, 5)
                 .applyFortune(),
         ),

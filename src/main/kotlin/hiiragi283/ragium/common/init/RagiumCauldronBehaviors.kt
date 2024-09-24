@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.util.dropStackAt
 import net.minecraft.block.BlockState
 import net.minecraft.block.LeveledCauldronBlock
@@ -16,11 +17,11 @@ object RagiumCauldronBehaviors {
     @JvmField
     val WASH_RAW_RAGINITE =
         CauldronBehavior { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
-            if (stack.isOf(RagiumItems.Dusts.RAW_RAGINITE.asItem())) {
+            if (stack.isOf(RagiumContents.Dusts.RAW_RAGINITE.asItem())) {
                 if (!world.isClient) {
                     val count: Int = stack.count
                     stack.count = -1
-                    dropStackAt(player, ItemStack(RagiumItems.Dusts.RAGINITE, count))
+                    dropStackAt(player, ItemStack(RagiumContents.Dusts.RAGINITE, count))
                     LeveledCauldronBlock.decrementFluidLevel(state, world, pos)
                 }
                 ItemActionResult.success(world.isClient)
@@ -31,7 +32,7 @@ object RagiumCauldronBehaviors {
 
     @JvmStatic
     fun init() {
-        register(CauldronBehavior.WATER_CAULDRON_BEHAVIOR, RagiumItems.Dusts.RAW_RAGINITE, WASH_RAW_RAGINITE)
+        register(CauldronBehavior.WATER_CAULDRON_BEHAVIOR, RagiumContents.Dusts.RAW_RAGINITE, WASH_RAW_RAGINITE)
     }
 
     @JvmStatic

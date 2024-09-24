@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "ragium:seed_oil_fluid_cube"
+        "tag": "ragium:organic_oils"
       }
     },
     {
