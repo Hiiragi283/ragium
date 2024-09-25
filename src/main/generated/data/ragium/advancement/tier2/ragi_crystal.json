@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier2/ragi_steel_hull",
+  "parent": "ragium:tier2/soap",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:mixer"
+            "items": "ragium:ragi_crystal_dust"
           }
         ]
       },
@@ -14,14 +14,15 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier2.mixer.description"
+      "translate": "advancement.ragium.tier2.ragi_crystal.description"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:mixer"
+      "id": "ragium:ragi_crystal_dust"
     },
     "title": {
-      "translate": "advancement.ragium.tier2.mixer"
+      "translate": "advancement.ragium.tier2.ragi_crystal"
     }
   },
   "requirements": [

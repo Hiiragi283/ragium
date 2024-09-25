@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier2/ragi_steel_hull",
+  "parent": "ragium:tier1/manual_grinder",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:mixer"
+            "items": "ragium:grinder"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier2.mixer.description"
+      "translate": "advancement.ragium.tier1.grinder.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:mixer"
+      "id": "ragium:grinder"
     },
     "title": {
-      "translate": "advancement.ragium.tier2.mixer"
+      "translate": "advancement.ragium.tier1.grinder"
     }
   },
   "requirements": [

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier2/ragi_steel_hull",
+  "parent": "ragium:tier3/pvc",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:extractor"
+            "items": "ragium:pvc_plate"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier2.grinder.description"
+      "translate": "advancement.ragium.tier3.ptfe.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:grinder"
+      "id": "ragium:pvc_plate"
     },
     "title": {
-      "translate": "advancement.ragium.tier2.grinder"
+      "translate": "advancement.ragium.tier3.ptfe"
     }
   },
   "requirements": [

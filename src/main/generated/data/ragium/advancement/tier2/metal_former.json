@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:extractor"
+            "items": "ragium:metal_former"
           }
         ]
       },

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier2/ragi_steel_hull",
+  "parent": "ragium:tier3/chemical_reactor",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:mixer"
+            "items": "ragium:pe_plate"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier2.mixer.description"
+      "translate": "advancement.ragium.tier3.pe.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:mixer"
+      "id": "ragium:pe_plate"
     },
     "title": {
-      "translate": "advancement.ragium.tier2.mixer"
+      "translate": "advancement.ragium.tier3.pe"
     }
   },
   "requirements": [

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier2/ragi_steel_hull",
+  "parent": "ragium:tier1/ragi_alloy_hull",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:mixer"
+            "items": "ragium:brick_alloy_furnace"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier2.mixer.description"
+      "translate": "advancement.ragium.tier1.brick_alloy_furnace.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:mixer"
+      "id": "ragium:brick_alloy_furnace"
     },
     "title": {
-      "translate": "advancement.ragium.tier2.mixer"
+      "translate": "advancement.ragium.tier1.brick_alloy_furnace"
     }
   },
   "requirements": [

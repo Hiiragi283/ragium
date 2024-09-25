@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier2/soap",
+  "parent": "ragium:tier2/ragi_steel_hull",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_crystal_dust"
+            "items": "ragium:assembler"
           }
         ]
       },
@@ -14,15 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier2.refined_raginite_dust.description"
+      "translate": "advancement.ragium.tier2.assembler.description"
     },
-    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_crystal_dust"
+      "id": "ragium:assembler"
     },
     "title": {
-      "translate": "advancement.ragium.tier2.refined_raginite_dust"
+      "translate": "advancement.ragium.tier2.assembler"
     }
   },
   "requirements": [

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier1/ragi_alloy_hull",
+  "parent": "ragium:tier1/brick_alloy_furnace",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:brick_alloy_furnace"
+            "items": "ragium:alloy_furnace"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:brick_alloy_furnace"
+      "id": "ragium:alloy_furnace"
     },
     "title": {
       "translate": "advancement.ragium.tier1.alloy_furnace"
