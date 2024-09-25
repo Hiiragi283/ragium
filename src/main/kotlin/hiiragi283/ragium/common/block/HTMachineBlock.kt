@@ -29,6 +29,7 @@ class HTMachineBlock(private val machineType: HTMachineType) :
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
+        machineType.appendTooltip(stack, context.registryLookup, tooltip::add)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState =

@@ -11,9 +11,10 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-abstract class HTMultiMachineBlockEntity(private val machineType: HTMachineType.Multi, pos: BlockPos, state: BlockState) :
+abstract class HTMultiMachineBlockEntity(final override val machineType: HTMachineType.Multi, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(machineType, pos, state),
-    HTMultiblockController {
+    HTMultiblockController,
+    HTTypedMachineBlockEntity<HTMachineType.Multi> {
     override var showPreview: Boolean = false
 
     override fun onUse(

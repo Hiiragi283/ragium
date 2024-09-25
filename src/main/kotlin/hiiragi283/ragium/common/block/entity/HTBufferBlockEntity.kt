@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.inventory.*
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.util.getOrDefault
 import net.minecraft.block.BlockState
 import net.minecraft.nbt.NbtCompound
@@ -41,16 +41,16 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTEnergyStorageHolder    //
 
     private var energyStorageContainer: SimpleSidedEnergyContainer = object : SimpleSidedEnergyContainer() {
-        override fun getCapacity(): Long = Ragium.RECIPE_COST * 16
+        override fun getCapacity(): Long = HTMachineTier.BASIC.energyCapacity
 
         override fun getMaxInsert(side: Direction?): Long {
             val facing: Direction = cachedState.getOrDefault(Properties.FACING, Direction.NORTH)
-            return if (side == null || side != facing) Ragium.RECIPE_COST * 16 else 0
+            return if (side == null || side != facing) capacity else 0
         }
 
         override fun getMaxExtract(side: Direction?): Long {
             val facing: Direction = cachedState.getOrDefault(Properties.FACING, Direction.NORTH)
-            return if (side == null || side == facing) Ragium.RECIPE_COST * 16 else 0
+            return if (side == null || side == facing) capacity else 0
         }
     }
 

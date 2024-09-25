@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory
 object Ragium : ModInitializer {
     const val MOD_ID = "ragium"
     const val MOD_NAME = "Ragium"
-    const val RECIPE_COST = 1280L
 
     @JvmStatic
     fun id(path: String): Identifier = Identifier.of(MOD_ID, path)

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.init.RagiumEnergyProviders
 import net.minecraft.block.Blocks
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -27,10 +27,13 @@ object RagiumMachineConditions {
     @JvmField
     val ELECTRIC: (World, BlockPos) -> Boolean = { world: World, pos: BlockPos ->
         RagiumEnergyProviders.ENERGY
-            .find(world, pos, world.getBlockState(pos), world.getBlockEntity(pos), null)
-            ?.amount
-            ?.let { it >= Ragium.RECIPE_COST }
-            ?: false
+        val blockEntity: BlockEntity? = world.getBlockEntity(pos)
+        (blockEntity as? HTTypedMachineBlockEntity<*>)?.machineType?.tier?.recipeCost?.let { recipeCost: Long ->
+            RagiumEnergyProviders.ENERGY
+                .find(world, pos, world.getBlockState(pos), blockEntity, null)
+                ?.amount
+                ?.let { it >= recipeCost }
+        } ?: false
     }
 
     @JvmField

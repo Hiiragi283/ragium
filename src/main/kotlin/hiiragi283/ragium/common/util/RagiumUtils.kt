@@ -32,10 +32,12 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.State
 import net.minecraft.state.property.Property
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import java.text.NumberFormat
 import java.util.function.Function
 
 //    Either    //
@@ -131,6 +133,10 @@ fun <R : Any, C : Any, V : Any> Table<R, C, V>.forEach(action: (R, C, V) -> Unit
 //    Transaction    //
 
 inline fun <R : Any> useTransaction(action: (Transaction) -> R): R = Transaction.openOuter().use(action)
+
+//    Text    //
+
+fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
 //    Recipe    //
 

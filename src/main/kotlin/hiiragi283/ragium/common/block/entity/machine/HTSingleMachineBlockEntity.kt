@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
@@ -15,10 +14,11 @@ import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.SimpleEnergyStorage
 import kotlin.math.max
 
-abstract class HTSingleMachineBlockEntity(private val machineType: HTMachineType.Single, pos: BlockPos, state: BlockState) :
+abstract class HTSingleMachineBlockEntity(final override val machineType: HTMachineType.Single, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(machineType, pos, state),
-    HTEnergyStorageHolder {
-    private var energyStorage = SimpleEnergyStorage(Ragium.RECIPE_COST * 16, 128, 0)
+    HTEnergyStorageHolder,
+    HTTypedMachineBlockEntity<HTMachineType.Single> {
+    private var energyStorage = SimpleEnergyStorage(machineType.tier.energyCapacity, 128, 0)
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, registryLookup)
@@ -35,7 +35,7 @@ abstract class HTSingleMachineBlockEntity(private val machineType: HTMachineType
     override fun onProcessed(world: World, pos: BlockPos, recipe: HTMachineRecipe) {
         // extract energy
         val currentAmount: Long = energyStorage.amount
-        val extracted: Long = currentAmount - Ragium.RECIPE_COST
+        val extracted: Long = currentAmount - machineType.tier.recipeCost
         energyStorage.amount = max(0, extracted)
         // play sound
         /*world.playSound(

@@ -9,17 +9,22 @@ import hiiragi283.ragium.common.block.entity.machine.electric.*
 import hiiragi283.ragium.common.block.entity.machine.heat.HTBlazingBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.heat.HTBrickBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.heat.HTRockGeneratorBlockEntity
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.util.blockEntityType
 import hiiragi283.ragium.common.util.createCodec
+import hiiragi283.ragium.common.util.longText
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.recipe.RecipeType
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
@@ -52,7 +57,30 @@ sealed interface HTMachineType :
     val text: Text
         get() = Text.translatableWithFallback(translationKey, asString())
 
+    fun appendTooltip(stack: ItemStack, lookup: RegistryWrapper.WrapperLookup?, consumer: (Text) -> Unit) {
+        consumer(Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.GRAY))
+        consumer(Text.translatable(RagiumTranslationKeys.MACHINE_TIER, tier.text).formatted(Formatting.GRAY))
+        consumer(
+            Text
+                .translatable(
+                    RagiumTranslationKeys.MACHINE_RECIPE_COST,
+                    longText(tier.recipeCost).formatted(Formatting.YELLOW),
+                ).formatted(Formatting.GRAY),
+        )
+        consumer(
+            Text
+                .translatable(
+                    RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY,
+                    longText(tier.energyCapacity).formatted(Formatting.YELLOW),
+                ).formatted(Formatting.GRAY),
+        )
+    }
+
+    //    ItemConvertible    //
+
     override fun asItem(): Item = block.asItem()
+
+    //    Single    //
 
     enum class Single(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<HTSingleMachineBlockEntity>) :
         HTMachineType {
@@ -82,6 +110,8 @@ sealed interface HTMachineType :
 
         override fun asString(): String = name.lowercase()
     }
+
+    //    Multi    //
 
     enum class Multi(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<HTMultiMachineBlockEntity>) :
         HTMachineType {
