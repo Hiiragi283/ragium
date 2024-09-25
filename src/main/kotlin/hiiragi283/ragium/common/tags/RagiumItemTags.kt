@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.common.tags
 
 import hiiragi283.ragium.common.Ragium
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
@@ -9,6 +9,9 @@ import net.minecraft.util.Identifier
 
 object RagiumItemTags {
     //    Custom    //
+
+    @JvmField
+    val MACHINES: TagKey<Item> = create(Ragium.MOD_ID, "machines")
 
     @JvmField
     val ORGANIC_OILS: TagKey<Item> = create(Ragium.MOD_ID, "organic_oils")
@@ -28,10 +31,16 @@ object RagiumItemTags {
     val RAGINITE_ORES: TagKey<Item> = create("ores/raginite")
 
     @JvmField
+    val STEEL_BLOCKS: TagKey<Item> = create("storage_blocks/steel")
+
+    @JvmField
     val STEEL_INGOTS: TagKey<Item> = create("ingots/steel")
 
     @JvmField
     val STEEL_PLATES: TagKey<Item> = create("plates/steel")
+
+    @JvmField
+    val SULFUR_DUSTS: TagKey<Item> = create("dusts/sulfur")
 
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))

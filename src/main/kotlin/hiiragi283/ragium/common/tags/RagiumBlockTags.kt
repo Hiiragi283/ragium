@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.common.tags
 
 import hiiragi283.ragium.common.Ragium
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
@@ -11,6 +11,9 @@ object RagiumBlockTags {
     //    Custom    //
     @JvmField
     val COILS: TagKey<Block> = create(Ragium.MOD_ID, "coils")
+
+    @JvmField
+    val MACHINES: TagKey<Block> = create(Ragium.MOD_ID, "machines")
 
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier.of(namespace, path))

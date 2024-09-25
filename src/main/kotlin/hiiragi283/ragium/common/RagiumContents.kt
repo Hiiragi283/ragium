@@ -4,6 +4,7 @@ import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMaterials
+import hiiragi283.ragium.common.init.RagiumSaplingGenerators
 import hiiragi283.ragium.common.init.RagiumToolMaterials
 import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTEnderBackpackItem
@@ -11,15 +12,13 @@ import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.PillarBlock
+import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import java.awt.Color
@@ -36,6 +35,20 @@ object RagiumContents {
     val DEEPSLATE_RAGINITE_ORE: Block =
         registerCopy("deepslate_raginite_ore", Blocks.DEEPSLATE_IRON_ORE)
 
+    //    Blocks - Plants    //
+
+    @JvmField
+    val RUBBER_LOG: Block =
+        registerBlock("rubber_log", Blocks.createLogBlock(MapColor.OAK_TAN, MapColor.SPRUCE_BROWN))
+
+    @JvmField
+    val RUBBER_LEAVES: Block =
+        registerBlock("rubber_leaves", Blocks.createLeavesBlock(BlockSoundGroup.GRASS))
+
+    @JvmField
+    val RUBBER_SAPLING: Block =
+        registerBlock("rubber_sapling", SaplingBlock(RagiumSaplingGenerators.RUBBER, blockSettings(Blocks.OAK_SAPLING)))
+
     //    Blocks - Utilities    //
 
     @JvmField
@@ -51,7 +64,7 @@ object RagiumContents {
         registerHorizontalWithBE(
             "brick_alloy_furnace",
             RagiumBlockEntityTypes.BRICK_ALLOY_FURNACE,
-            blockSettings(Blocks.BRICKS),
+            Blocks.BRICKS,
         )
 
     @JvmField
@@ -68,7 +81,11 @@ object RagiumContents {
 
     @JvmField
     val SHAFT: Block =
-        registerBlock("shaft", HTShaftBlock)
+        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
+
+    @JvmField
+    val CABLE: Block =
+        registerBlock("cable", HTThinPillarBlock(blockSettings(Blocks.COPPER_BLOCK)))
 
     @JvmField
     val GEAR_BOX: Block =
@@ -132,6 +149,9 @@ object RagiumContents {
 
     @JvmField
     val SOAP_INGOT: Item = registerItem("soap_ingot")
+
+    @JvmField
+    val RAW_RUBBER_BALL: Item = registerItem("raw_rubber_ball")
 
     @JvmField
     val RAGI_CRYSTAL: Item = registerItem("ragi_crystal")
@@ -265,6 +285,11 @@ object RagiumContents {
     private fun initBlockItems() {
         registerBlockItem(RAGINITE_ORE)
         registerBlockItem(DEEPSLATE_RAGINITE_ORE)
+
+        registerBlockItem(RUBBER_LOG)
+        registerBlockItem(RUBBER_LEAVES)
+        registerBlockItem(RUBBER_SAPLING)
+
         registerBlockItem(CREATIVE_SOURCE)
         registerBlockItem(MANUAL_GRINDER)
         registerBlockItem(BRICK_ALLOY_FURNACE)
@@ -272,6 +297,7 @@ object RagiumContents {
         registerBlockItem(WATER_GENERATOR)
         registerBlockItem(WIND_GENERATOR)
         registerBlockItem(SHAFT)
+        registerBlockItem(CABLE)
         registerBlockItem(GEAR_BOX)
         registerBlockItem(BLAZING_BOX)
         registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
@@ -304,6 +330,7 @@ object RagiumContents {
     enum class Coils(override val material: RagiumMaterials) : HTBlockContent {
         COPPER(RagiumMaterials.COPPER),
         GOLD(RagiumMaterials.GOLD),
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         ;
 
         override val block = PillarBlock(blockSettings())
@@ -313,7 +340,7 @@ object RagiumContents {
 
     @JvmStatic
     fun initCoils() {
-        Coils.entries.forEach { coil ->
+        Coils.entries.forEach { coil: Coils ->
             registerBlock("${coil.name.lowercase()}_coil", coil.block)
             registerBlockItem(coil.block, itemSettings())
         }
@@ -342,6 +369,7 @@ object RagiumContents {
     enum class StorageBlocks(override val material: RagiumMaterials) : HTBlockContent {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        STEEL(RagiumMaterials.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
@@ -365,6 +393,7 @@ object RagiumContents {
         RAGINITE(RagiumMaterials.RAGINITE),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
         ASH(RagiumMaterials.ASH),
+        SULFUR(RagiumMaterials.SULFUR),
         ;
 
         override val item = Item(itemSettings())
@@ -385,7 +414,6 @@ object RagiumContents {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         STEEL(RagiumMaterials.STEEL),
-        TWILIGHT_METAL(RagiumMaterials.TWILIGHT_METAL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
@@ -408,12 +436,13 @@ object RagiumContents {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         IRON(RagiumMaterials.IRON),
         COPPER(RagiumMaterials.COPPER),
+        WOOD(RagiumMaterials.WOOD),
 
         // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         GOLD(RagiumMaterials.GOLD),
+        RUBBER(RagiumMaterials.RUBBER),
         STEEL(RagiumMaterials.STEEL),
-        TWILIGHT(RagiumMaterials.TWILIGHT_METAL),
 
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),

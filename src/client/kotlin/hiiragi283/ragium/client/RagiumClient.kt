@@ -23,14 +23,18 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.BlockRenderView
+import net.minecraft.world.biome.FoliageColors
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
@@ -50,6 +54,11 @@ object RagiumClient : ClientModInitializer {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> fluid.color.rgb }, fluid)
         }
+
+        ColorProviderRegistry.ITEM.register(
+            { _: ItemStack, _: Int -> FoliageColors.getDefaultColor() },
+            RagiumContents.RUBBER_LEAVES,
+        )
     }
 
     //    Blocks    //
@@ -59,6 +68,7 @@ object RagiumClient : ClientModInitializer {
             RenderLayer.getCutoutMipped(),
             RagiumContents.RAGINITE_ORE,
             RagiumContents.DEEPSLATE_RAGINITE_ORE,
+            RagiumContents.RUBBER_LEAVES,
             RagiumContents.MANUAL_GRINDER,
             RagiumContents.BRICK_ALLOY_FURNACE,
             RagiumContents.BURNING_BOX,
@@ -83,6 +93,13 @@ object RagiumClient : ClientModInitializer {
         RagiElement.entries
             .map(RagiElement::clusterBlock)
             .forEach(::registerCutout)
+
+        ColorProviderRegistry.BLOCK.register({ _: BlockState, world: BlockRenderView?, pos: BlockPos?, _: Int ->
+            when {
+                world != null && pos != null -> BiomeColors.getFoliageColor(world, pos)
+                else -> FoliageColors.getDefaultColor()
+            }
+        }, RagiumContents.RUBBER_LEAVES)
     }
 
     private fun registerCutout(block: Block) {
