@@ -37,6 +37,13 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
     override fun generate() {
         addDrop(RagiumContents.RAGINITE_ORE, ::dropRaginiteOre)
         addDrop(RagiumContents.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
+
+        addDrop(RagiumContents.RUBBER_LOG)
+        addDrop(RagiumContents.RUBBER_LEAVES) { block: Block ->
+            leavesDrops(block, RagiumContents.RUBBER_SAPLING, *SAPLING_DROP_CHANCE)
+        }
+        addDrop(RagiumContents.RUBBER_SAPLING)
+
         addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumContents.MANUAL_GRINDER)
         addDrop(RagiumContents.BRICK_ALLOY_FURNACE)
@@ -44,6 +51,7 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
         addDrop(RagiumContents.WATER_GENERATOR)
         addDrop(RagiumContents.WIND_GENERATOR)
         addDrop(RagiumContents.SHAFT)
+        addDrop(RagiumContents.CABLE)
         addDrop(RagiumContents.GEAR_BOX)
         addDrop(RagiumContents.BLAZING_BOX)
         addDrop(RagiumContents.ALCHEMICAL_INFUSER)
@@ -70,15 +78,7 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
                     ItemEntry
                         .builder(element.dustItem)
                         .applyDrop(4.0f)
-                        .applyFortune()
-                        .alternatively(
-                            applyExplosionDecay(
-                                block,
-                                ItemEntry
-                                    .builder(element.dustItem)
-                                    .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(2.0F))),
-                            ),
-                        ),
+                        .applyFortune(),
                 )
             }
         }

@@ -9,9 +9,13 @@
     "ragium:wind_generator",
     "ragium:ragi_alloy_block",
     "ragium:ragi_steel_block",
+    "ragium:steel_block",
     "ragium:refined_ragi_steel_block",
     "ragium:ragi_alloy_hull",
     "ragium:ragi_steel_hull",
-    "ragium:refined_ragi_steel_hull"
+    "ragium:refined_ragi_steel_hull",
+    "ragium:copper_coil",
+    "ragium:gold_coil",
+    "ragium:ragi_alloy_coil"
   ]
 }

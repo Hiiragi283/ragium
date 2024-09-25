@@ -1,0 +1,23 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:rubber_plate"
+      }
+    },
+    {
+      "count": 6,
+      "ingredient": {
+        "tag": "c:ingots/copper"
+      }
+    }
+  ],
+  "machine_type": "assembler",
+  "outputs": [
+    {
+      "count": 6,
+      "item": "ragium:cable"
+    }
+  ]
+}

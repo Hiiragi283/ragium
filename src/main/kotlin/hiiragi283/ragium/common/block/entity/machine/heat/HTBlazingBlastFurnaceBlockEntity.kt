@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.machine.HTBlockPredicate
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
@@ -16,9 +15,6 @@ import net.minecraft.world.World
 class HTBlazingBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiMachineBlockEntity(HTMachineType.Multi.BLAZING_BLAST_FURNACE, pos, state) {
     override val condition: (World, BlockPos) -> Boolean = RagiumMachineConditions.BLAZING_HEAT
-
-    override fun onProcessed(world: World, pos: BlockPos, recipe: HTMachineRecipe) {
-    }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder): HTMultiblockBuilder = builder
         .addLayer(

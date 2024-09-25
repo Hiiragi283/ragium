@@ -1,0 +1,14 @@
+{
+  "type": "ragium:generic",
+  "catalyst": {
+    "item": "minecraft:blackstone"
+  },
+  "inputs": [],
+  "machine_type": "rock_generator",
+  "outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:blackstone"
+    }
+  ]
+}

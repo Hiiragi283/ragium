@@ -1,0 +1,17 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:netherrack"
+      }
+    }
+  ],
+  "machine_type": "grinder",
+  "outputs": [
+    {
+      "item": "ragium:sulfur_dust"
+    }
+  ]
+}

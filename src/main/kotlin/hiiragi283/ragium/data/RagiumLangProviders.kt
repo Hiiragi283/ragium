@@ -90,6 +90,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGINITE_ORE, "Raginite Ore")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "Deep Raginite Ore")
 
+            builder.add(RagiumContents.RUBBER_LOG, "Rubber Log")
+            builder.add(RagiumContents.RUBBER_LEAVES, "Rubber Leaves")
+            builder.add(RagiumContents.RUBBER_SAPLING, "Rubber Sapling")
+
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
             builder.add(RagiumContents.BRICK_ALLOY_FURNACE, "Brick Alloy Furnace")
@@ -97,6 +101,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.WATER_GENERATOR, "Water Generator")
             builder.add(RagiumContents.WIND_GENERATOR, "Wind Generator")
             builder.add(RagiumContents.SHAFT, "Shaft")
+            builder.add(RagiumContents.CABLE, "Cable")
             builder.add(RagiumContents.GEAR_BOX, "Gear Box")
             builder.add(RagiumContents.BLAZING_BOX, "Blazing Box")
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
@@ -116,6 +121,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
             builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
+            builder.add(RagiumContents.RAW_RUBBER_BALL, "Raw Rubber Ball")
             builder.add(RagiumContents.RAGI_CRYSTAL, "Ragi-Crystal")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
@@ -130,6 +136,7 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Single.GRINDER, "Grinder")
             builder.add(HTMachineType.Single.METAL_FORMER, "Metal Former")
             builder.add(HTMachineType.Single.MIXER, "Mixer")
+            builder.add(HTMachineType.Single.ROCK_GENERATOR, "Rock Generator")
 
             builder.add(HTMachineType.Single.CENTRIFUGE, "Centrifuge")
             builder.add(HTMachineType.Single.CHEMICAL_REACTOR, "Chemical Reactor")
@@ -160,6 +167,11 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumContents.RAGINITE_ORE, "ラギナイト鉱石")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "深層ラギナイト鉱石")
+
+            builder.add(RagiumContents.RUBBER_LOG, "ゴムノキの原木")
+            builder.add(RagiumContents.RUBBER_LEAVES, "ゴムノキの葉")
+            builder.add(RagiumContents.RUBBER_SAPLING, "ゴムノキの苗木")
+
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
             builder.add(RagiumContents.BRICK_ALLOY_FURNACE, "レンガ合金かまど")
@@ -167,6 +179,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.WATER_GENERATOR, "水力発電機")
             builder.add(RagiumContents.WIND_GENERATOR, "風力発電機")
             builder.add(RagiumContents.SHAFT, "シャフト")
+            builder.add(RagiumContents.CABLE, "ケーブル")
             builder.add(RagiumContents.GEAR_BOX, "ギアボックス")
             builder.add(RagiumContents.BLAZING_BOX, "豪炎室")
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
@@ -186,6 +199,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")
+            builder.add(RagiumContents.RAW_RUBBER_BALL, "生ゴムボール")
             builder.add(RagiumContents.RAGI_CRYSTAL, "ラギクリスタリル")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
@@ -200,6 +214,7 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Single.GRINDER, "粉砕機")
             builder.add(HTMachineType.Single.METAL_FORMER, "金属加工機")
             builder.add(HTMachineType.Single.MIXER, "ミキサー")
+            builder.add(HTMachineType.Single.ROCK_GENERATOR, "岩石生成機")
 
             builder.add(HTMachineType.Single.CENTRIFUGE, "遠心分離機")
             builder.add(HTMachineType.Single.CHEMICAL_REACTOR, "化学反応槽")

@@ -50,3 +50,7 @@ fun BlockStateVariant.model(modelId: Identifier): BlockStateVariant = put(Varian
 fun BlockStateVariant.model(namespace: String, path: String): BlockStateVariant = model(Identifier.of(namespace, path))
 
 fun BlockStateVariant.model(path: String): BlockStateVariant = model(Identifier.ofVanilla(path))
+
+//    TextureMap    //
+
+fun textureMap(action: TextureMap.() -> Unit): TextureMap = TextureMap().apply(action)

@@ -1,0 +1,23 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": {
+        "tag": "c:slime_balls"
+      }
+    },
+    {
+      "ingredient": {
+        "tag": "c:dusts/sulfur"
+      }
+    }
+  ],
+  "machine_type": "mixer",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "ragium:rubber_plate"
+    }
+  ]
+}

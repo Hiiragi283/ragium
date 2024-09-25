@@ -1,0 +1,16 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:lava_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "rock_generator",
+  "outputs": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ]
+}

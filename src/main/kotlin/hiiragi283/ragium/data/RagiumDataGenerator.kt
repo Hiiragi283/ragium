@@ -11,7 +11,8 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider(::RagiumAdvancementProvider)
         pack.addProvider(::RagiumFluidPumpEntryProvider)
         pack.addProvider(::RagiumLootProvider)
-        pack.addProvider(::RagiumRecipeProvider)
+        pack.addProvider(::RagiumVanillaRecipeProvider)
+        pack.addProvider(::RagiumMachineRecipeProvider)
         RagiumTagProviders.init(pack)
 
         pack.addProvider(::RagiumModelProvider)

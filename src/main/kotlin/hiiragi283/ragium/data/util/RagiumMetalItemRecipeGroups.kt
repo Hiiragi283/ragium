@@ -86,15 +86,8 @@ object RagiumMetalItemRecipeGroups {
     val STEEL: HTMetalItemRecipeGroup =
         HTMetalItemRecipeGroup
             .Builder()
+            .block(RagiumContents.StorageBlocks.STEEL)
             .ingot(RagiumContents.Ingots.STEEL)
             .plate(RagiumContents.Plates.STEEL)
             .build("steel")
-
-    @JvmField
-    val TWILIGHT_METAL: HTMetalItemRecipeGroup =
-        HTMetalItemRecipeGroup
-            .Builder()
-            .ingot(RagiumContents.Ingots.TWILIGHT_METAL)
-            .plate(RagiumContents.Plates.TWILIGHT)
-            .build("twilight_metal")
 }

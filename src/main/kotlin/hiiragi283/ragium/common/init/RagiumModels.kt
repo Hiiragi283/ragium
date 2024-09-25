@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.util.textureMap
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
@@ -86,41 +87,50 @@ object RagiumModels {
         TexturedModel.makeFactory({ block: Block ->
             val tier: HTMachineTier =
                 block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.NONE)
-            TextureMap()
-                .put(TextureKey.TOP, tier.casingTex)
-                .put(TextureKey.BOTTOM, tier.baseTex)
+            textureMap {
+                put(TextureKey.TOP, tier.casingTex)
+                put(TextureKey.BOTTOM, tier.baseTex)
+            }
         }, HULL)
 
     @JvmStatic
     fun createAllTinted(all: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap().put(TextureKey.ALL, all)
+        TextureMap.of(TextureKey.ALL, all)
     }, ALL_TINTED)
 
     @JvmStatic
     fun createCluster(layer0: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap().put(TextureKey.LAYER0, layer0)
+        TextureMap.of(TextureKey.LAYER0, layer0)
     }, CLUSTER_ITEM)
 
     @JvmStatic
     fun createCrossTinted(cross: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap().put(TextureKey.CROSS, cross)
+        TextureMap.of(TextureKey.CROSS, cross)
     }, CROSS_TINTED)
 
     @JvmStatic
     fun createDisplay(top: Identifier, side: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap().put(TextureKey.TOP, top).put(TextureKey.SIDE, side)
+        textureMap {
+            put(TextureKey.TOP, top)
+            put(TextureKey.SIDE, side)
+        }
     }, DISPLAY)
 
     @JvmStatic
     fun createLayered(inner: Identifier, outer: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap()
-            .put(TextureKey.LAYER0, inner)
-            .put(TextureKey.LAYER1, outer)
+        textureMap {
+            put(TextureKey.LAYER0, inner)
+            put(TextureKey.LAYER1, outer)
+        }
     }, LAYERED)
 
     @JvmStatic
     fun createMachine(top: Identifier, bottom: Identifier, front: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap().put(TextureKey.TOP, top).put(TextureKey.BOTTOM, bottom).put(TextureKey.FRONT, front)
+        textureMap {
+            put(TextureKey.TOP, top)
+            put(TextureKey.BOTTOM, bottom)
+            put(TextureKey.FRONT, front)
+        }
     }, MACHINE)
 
     @JvmStatic

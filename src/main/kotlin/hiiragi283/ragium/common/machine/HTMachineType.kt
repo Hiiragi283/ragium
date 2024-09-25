@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTSingleMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.electric.*
 import hiiragi283.ragium.common.block.entity.machine.heat.HTBlazingBlastFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.heat.HTBrickBlastFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.heat.HTRockGeneratorBlockEntity
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.util.blockEntityType
 import hiiragi283.ragium.common.util.createCodec
@@ -63,6 +64,7 @@ sealed interface HTMachineType :
         GRINDER(HTMachineTier.BASIC, ::HTGrinderBlockEntity),
         METAL_FORMER(HTMachineTier.BASIC, ::HTMetalFormerBlockEntity),
         MIXER(HTMachineTier.BASIC, ::HTMixerBlockEntity),
+        ROCK_GENERATOR(HTMachineTier.BASIC, ::HTRockGeneratorBlockEntity),
 
         // tier3
         CENTRIFUGE(HTMachineTier.ADVANCED, ::HTCentrifugeBlockEntity),

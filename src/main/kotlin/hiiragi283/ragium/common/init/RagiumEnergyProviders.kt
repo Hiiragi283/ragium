@@ -97,7 +97,7 @@ object RagiumEnergyProviders {
                 }
             }
             null
-        }, RagiumContents.SHAFT)
+        }, RagiumContents.CABLE)
 
         ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, _: Direction? ->
             val facing: Direction = state.get(Properties.FACING)

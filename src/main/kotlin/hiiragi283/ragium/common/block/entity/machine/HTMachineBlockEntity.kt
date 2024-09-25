@@ -99,7 +99,7 @@ abstract class HTMachineBlockEntity(
 
     protected abstract val condition: (World, BlockPos) -> Boolean
 
-    protected abstract fun onProcessed(world: World, pos: BlockPos, recipe: HTMachineRecipe)
+    protected open fun onProcessed(world: World, pos: BlockPos, recipe: HTMachineRecipe) {}
 
     //    HTDelegatedInventory    //
 

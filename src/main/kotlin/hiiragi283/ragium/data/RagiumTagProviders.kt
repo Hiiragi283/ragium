@@ -1,23 +1,22 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumBlockTags
-import hiiragi283.ragium.common.init.RagiumItemTags
+import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.tags.RagiumBlockTags
+import hiiragi283.ragium.common.tags.RagiumItemTags
+import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.data.util.HTMetalItemRecipeGroup
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
-import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 import java.util.concurrent.CompletableFuture
 
 object RagiumTagProviders {
@@ -28,38 +27,42 @@ object RagiumTagProviders {
         pack.addProvider(RagiumTagProviders::ItemProvider)
     }
 
-    @JvmStatic
-    fun blockTag(id: Identifier): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id)
-
-    @JvmStatic
-    fun fluidTag(id: Identifier): TagKey<Fluid> = TagKey.of(RegistryKeys.FLUID, id)
-
     //    Block    //
 
     private class BlockProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.BlockTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            val pickaxeMinable: FabricTagBuilder = getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-            pickaxeMinable
-                .add(
-                    RagiumContents.RAGINITE_ORE,
-                    RagiumContents.DEEPSLATE_RAGINITE_ORE,
-                    RagiumContents.MANUAL_GRINDER,
-                    RagiumContents.BURNING_BOX,
-                    RagiumContents.BLAZING_BOX,
-                    RagiumContents.WATER_GENERATOR,
-                    RagiumContents.WIND_GENERATOR,
-                )
-            RagiumContents.StorageBlocks.entries
-                .map(RagiumContents.StorageBlocks::block)
-                .forEach(pickaxeMinable::add)
-            RagiumContents.Hulls.entries
-                .map(RagiumContents.Hulls::block)
-                .forEach(pickaxeMinable::add)
+            fun add(tagKey: TagKey<Block>, block: Block) {
+                getOrCreateTagBuilder(tagKey).add(block)
+            }
 
-            getOrCreateTagBuilder(RagiumBlockTags.COILS)
-                .add(RagiumContents.Coils.COPPER.block)
-                .add(RagiumContents.Coils.GOLD.block)
+            fun add(tagKey: TagKey<Block>, block: HTBlockContent) {
+                add(tagKey, block.block)
+            }
+
+            // vanilla
+            add(BlockTags.HOE_MINEABLE, RagiumContents.RUBBER_LEAVES)
+
+            add(BlockTags.LEAVES, RagiumContents.RUBBER_LEAVES)
+
+            add(BlockTags.LOGS, RagiumContents.RUBBER_LOG)
+
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.RAGINITE_ORE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BURNING_BOX)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BLAZING_BOX)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WATER_GENERATOR)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WIND_GENERATOR)
+
+            buildList<HTBlockContent> {
+                addAll(RagiumContents.StorageBlocks.entries)
+                addAll(RagiumContents.Hulls.entries)
+                addAll(RagiumContents.Coils.entries)
+            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
+            // ragium
+            RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
+            HTMachineType.getEntries().forEach { add(RagiumBlockTags.MACHINES, it.block) }
         }
     }
 
@@ -88,24 +91,26 @@ object RagiumTagProviders {
             add(ItemTags.HOES, RagiumContents.STEEL_HOE)
             // conventional
             add(ConventionalItemTags.GEMS, RagiumContents.RAGI_CRYSTAL)
+            add(ConventionalItemTags.SLIME_BALLS, RagiumContents.RAW_RUBBER_BALL)
             add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
             add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)
             add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.RAGINITE_ORE)
+            add(RagiumItemTags.STEEL_BLOCKS, RagiumContents.StorageBlocks.STEEL)
             add(RagiumItemTags.STEEL_INGOTS, RagiumContents.Ingots.STEEL)
             add(RagiumItemTags.STEEL_PLATES, RagiumContents.Plates.STEEL)
+            add(RagiumItemTags.SULFUR_DUSTS, RagiumContents.Dusts.SULFUR)
             // ragium
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
 
-            HTMetalItemRecipeGroup.registry.forEach { (name: String, family: HTMetalItemRecipeGroup) ->
-                HTMetalItemRecipeGroup.Variant.entries.forEach variant@{ variant: HTMetalItemRecipeGroup.Variant ->
-                    val item: Item = family.get(variant) ?: return@variant
-                    getOrCreateTagBuilder(variant.allTagKey).add(item)
+            HTMachineType.getEntries().forEach { add(RagiumItemTags.MACHINES, it.block) }
 
-                    // val tagKey: TagKey<Item> = family.getTagKey(variant)
-                    // getOrCreateTagBuilder(tagKey).add(item)
+            HTMetalItemRecipeGroup.registry.values.forEach { group: HTMetalItemRecipeGroup ->
+                HTMetalItemRecipeGroup.Variant.entries.forEach variant@{ variant: HTMetalItemRecipeGroup.Variant ->
+                    val item: Item = group[variant] ?: return@variant
+                    getOrCreateTagBuilder(variant.allTagKey).add(item)
                 }
             }
         }

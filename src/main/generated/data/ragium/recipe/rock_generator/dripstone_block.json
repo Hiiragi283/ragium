@@ -1,0 +1,14 @@
+{
+  "type": "ragium:generic",
+  "catalyst": {
+    "item": "minecraft:dripstone_block"
+  },
+  "inputs": [],
+  "machine_type": "rock_generator",
+  "outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:dripstone_block"
+    }
+  ]
+}

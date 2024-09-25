@@ -1,0 +1,17 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:rubber_log"
+      }
+    }
+  ],
+  "machine_type": "extractor",
+  "outputs": [
+    {
+      "count": 3,
+      "item": "ragium:raw_rubber_ball"
+    }
+  ]
+}

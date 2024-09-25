@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium.id
 import hiiragi283.ragium.common.Ragium.log
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.advancement.HTAdvancementRewardCallback
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
@@ -10,11 +9,9 @@ import hiiragi283.ragium.common.util.sendTitle
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.advancement.AdvancementEntry
-import net.minecraft.item.Item
 import net.minecraft.item.Items
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 
 object RagiumEventHandlers {
     @JvmStatic
@@ -40,26 +37,6 @@ object RagiumEventHandlers {
         }
 
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
-            customTooltip(context, RagiumContents.Ingots.TWILIGHT_METAL.asItem(), Formatting.GRAY, Formatting.ITALIC)
-            customTooltip(context, RagiumContents.SOAP_INGOT, Formatting.GRAY, Formatting.ITALIC)
-            customTooltip(context, RagiumContents.RAW_RAGINITE, Formatting.GRAY, Formatting.OBFUSCATED)
-            // auto setting
-            /*context.modify(::canSetTooltip) { builder: ComponentMap.Builder, item: Item ->
-                builder.add(
-                    RagiumComponentTypes.TOOLTIPS,
-                    HTTooltipsComponent.fromItem(item, Formatting.GRAY),
-                )
-            }*/
         }
-    }
-
-    @JvmStatic
-    private fun customTooltip(context: DefaultItemComponentEvents.ModifyContext, item: Item, vararg formattings: Formatting) {
-        /*context.modify(item) { builder: ComponentMap.Builder ->
-            builder.add(
-                RagiumComponentTypes.TOOLTIPS,
-                HTTooltipsComponent.fromItem(item, *formattings),
-            )
-        }*/
     }
 }

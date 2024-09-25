@@ -1,0 +1,22 @@
+{
+  "type": "ragium:generic",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "ragium:ragi_alloy_ingot"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:shaft"
+      }
+    }
+  ],
+  "machine_type": "metal_former",
+  "outputs": [
+    {
+      "item": "ragium:ragi_alloy_coil"
+    }
+  ]
+}
