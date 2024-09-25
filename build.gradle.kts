@@ -155,7 +155,7 @@ tasks {
         from("LICENSE") {
             rename { "${it}_${project.base.archivesName.get()}" }
         }
-        exclude("**/datagen/**")
+        exclude("**/ragium/data/**")
         exclude("**/unused/**")
     }
 }
