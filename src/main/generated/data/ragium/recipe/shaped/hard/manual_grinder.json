@@ -1,4 +1,10 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": true
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {

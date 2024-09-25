@@ -74,7 +74,7 @@ class HTMachineRecipeJsonBuilder(private val type: HTMachineType) {
     fun hasInput(tagKey: TagKey<Item>, suffix: String = ""): HTMachineRecipeJsonBuilder =
         criterion("has_input$suffix", RecipeProvider.conditionsFromTag(tagKey))
 
-    fun offerTo(exporter: RecipeExporter, suffix: String = "") {
+    fun offerSuffix(exporter: RecipeExporter, suffix: String = "") {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputs[0].value).withSuffixedPath(suffix))
     }
 

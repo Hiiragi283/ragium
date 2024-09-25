@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_the_item": {
       "conditions": {
         "items": [
           {
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/nether_star"
+        "recipe": "minecraft:shaped/nether_star"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_the_item"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/nether_star"
+      "minecraft:shaped/nether_star"
     ]
   }
 }
