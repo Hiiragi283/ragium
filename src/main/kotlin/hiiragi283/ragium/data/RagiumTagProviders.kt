@@ -41,6 +41,8 @@ object RagiumTagProviders {
             }
 
             // vanilla
+            add(BlockTags.AXE_MINEABLE, RagiumContents.RUBBER_LOG)
+
             add(BlockTags.HOE_MINEABLE, RagiumContents.RUBBER_LEAVES)
 
             add(BlockTags.LEAVES, RagiumContents.RUBBER_LEAVES)
@@ -49,11 +51,17 @@ object RagiumTagProviders {
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.RAGINITE_ORE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BRICK_ALLOY_FURNACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BURNING_BOX)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BLAZING_BOX)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WATER_GENERATOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WIND_GENERATOR)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BLAZING_BOX)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.CABLE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.GEAR_BOX)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
 
             buildList<HTBlockContent> {
                 addAll(RagiumContents.StorageBlocks.entries)
