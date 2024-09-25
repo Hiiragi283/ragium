@@ -20,6 +20,4 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
 
         Ragium.log { info("Ragium data generation is done!") }
     }
-
-    override fun getEffectiveModId(): String = Ragium.MOD_ID
 }

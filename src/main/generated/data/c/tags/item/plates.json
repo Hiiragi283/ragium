@@ -1,12 +1,17 @@
 {
   "values": [
-    "ragium:iron_plate",
-    "ragium:gold_plate",
-    "ragium:copper_plate",
-    "ragium:netherite_plate",
     "ragium:ragi_alloy_plate",
+    "ragium:iron_plate",
+    "ragium:copper_plate",
+    "ragium:wood_plate",
     "ragium:ragi_steel_plate",
+    "ragium:gold_plate",
+    "ragium:rubber_plate",
+    "ragium:steel_plate",
     "ragium:refined_ragi_steel_plate",
-    "ragium:steel_plate"
+    "ragium:netherite_plate",
+    "ragium:pe_plate",
+    "ragium:pvc_plate",
+    "ragium:ptfe_plate"
   ]
 }

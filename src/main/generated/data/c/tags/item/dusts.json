@@ -1,5 +1,14 @@
 {
   "values": [
-    "ragium:raw_raginite_dust"
+    "ragium:raw_raginite_dust",
+    "ragium:raginite_dust",
+    "ragium:ragi_crystal_dust",
+    "ragium:ash_dust",
+    "ragium:sulfur_dust",
+    "ragium:ragium_dust",
+    "ragium:rigium_dust",
+    "ragium:rugium_dust",
+    "ragium:regium_dust",
+    "ragium:rogium_dust"
   ]
 }

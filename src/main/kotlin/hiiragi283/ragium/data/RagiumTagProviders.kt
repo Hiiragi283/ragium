@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.tags.RagiumBlockTags
 import hiiragi283.ragium.common.tags.RagiumItemTags
 import hiiragi283.ragium.common.util.HTBlockContent
-import hiiragi283.ragium.data.util.HTMetalItemRecipeGroup
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -91,28 +91,30 @@ object RagiumTagProviders {
             add(ItemTags.HOES, RagiumContents.STEEL_HOE)
             // conventional
             add(ConventionalItemTags.GEMS, RagiumContents.RAGI_CRYSTAL)
+            add(ConventionalItemTags.ORES, RagiumContents.RAGINITE_ORE)
+            add(ConventionalItemTags.ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+            add(ConventionalItemTags.RAW_MATERIALS, RagiumContents.RAW_RAGINITE)
             add(ConventionalItemTags.SLIME_BALLS, RagiumContents.RAW_RUBBER_BALL)
             add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
             add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)
             add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.RAGINITE_ORE)
+            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(RagiumItemTags.STEEL_BLOCKS, RagiumContents.StorageBlocks.STEEL)
             add(RagiumItemTags.STEEL_INGOTS, RagiumContents.Ingots.STEEL)
             add(RagiumItemTags.STEEL_PLATES, RagiumContents.Plates.STEEL)
             add(RagiumItemTags.SULFUR_DUSTS, RagiumContents.Dusts.SULFUR)
+
+            RagiumContents.StorageBlocks.entries.forEach { add(ConventionalItemTags.STORAGE_BLOCKS, it) }
+            RagiumContents.Dusts.entries.forEach { add(ConventionalItemTags.DUSTS, it) }
+            RagiElement.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
+            RagiumContents.Ingots.entries.forEach { add(ConventionalItemTags.INGOTS, it) }
+            RagiumContents.Plates.entries.forEach { add(RagiumItemTags.PLATES, it) }
             // ragium
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
 
             HTMachineType.getEntries().forEach { add(RagiumItemTags.MACHINES, it.block) }
-
-            HTMetalItemRecipeGroup.registry.values.forEach { group: HTMetalItemRecipeGroup ->
-                HTMetalItemRecipeGroup.Variant.entries.forEach variant@{ variant: HTMetalItemRecipeGroup.Variant ->
-                    val item: Item = group[variant] ?: return@variant
-                    getOrCreateTagBuilder(variant.allTagKey).add(item)
-                }
-            }
         }
     }
 }

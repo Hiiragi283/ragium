@@ -19,6 +19,9 @@ object RagiumItemTags {
     //    Conventional    //
 
     @JvmField
+    val PLATES: TagKey<Item> = create("plates")
+
+    @JvmField
     val COPPER_PLATES: TagKey<Item> = create("plates/copper")
 
     @JvmField

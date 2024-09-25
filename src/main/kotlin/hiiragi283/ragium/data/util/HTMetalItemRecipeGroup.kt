@@ -3,15 +3,12 @@ package hiiragi283.ragium.data.util
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.common.machine.HTMachineType
-import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.book.RecipeCategory
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, private val excludeVariants: Set<Variant>) :
@@ -91,7 +88,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .addInput(ingot)
             .addOutput(plate)
             // .setCatalyst(RagiumItems.PLATE_SHAPE)
-            .offerTo(exporter)
+            .offerSuffix(exporter)
     }
 
     private fun ingotToRodRecipe(exporter: RecipeExporter, wrapper: (RecipeExporter, Boolean) -> RecipeExporter) {
@@ -112,7 +109,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .addInput(ingot)
             .addOutput(rod, 2)
             // .setCatalyst(RagiumItems.ROD_SHAPE)
-            .offerTo(exporter)
+            .offerSuffix(exporter)
     }
 
     private fun oreToRawRecipe(exporter: RecipeExporter) {
@@ -123,7 +120,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .addInput(ore)
             .addOutput(rawMaterial)
             .addOutput(rawMaterial, 4)
-            .offerTo(exporter)
+            .offerSuffix(exporter)
     }
 
     private fun rawToDustRecipe(exporter: RecipeExporter) {
@@ -134,7 +131,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .addInput(rawMaterial)
             .addOutput(dust)
             .addOutput(dust)
-            .offerTo(exporter)
+            .offerSuffix(exporter)
     }
 
     private fun dustToIngotRecipe(exporter: RecipeExporter) {
@@ -207,13 +204,12 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         PLATE,
         RAW_MATERIAL,
         ROD,
-        ;
 
         // val tagPrefix = "${name.lowercase()}s/"
-        val allTagKey: TagKey<Item> =
+        /*val allTagKey: TagKey<Item> =
             TagKey.of(
                 RegistryKeys.ITEM,
                 Identifier.of(TagUtil.C_TAG_NAMESPACE, "${name.lowercase()}s"),
-            )
+            )*/
     }
 }
