@@ -81,7 +81,12 @@ object RagiumClient : ClientModInitializer {
             .map(HTMachineType::block)
             .forEach(RagiumClient::registerCutoutMipped)
 
-        BlockRenderLayerMap.INSTANCE.putBlock(RagiumContents.ITEM_DISPLAY, RenderLayer.getCutout())
+        registerCutout(RagiumContents.RUBBER_SAPLING)
+        registerCutout(RagiumContents.ITEM_DISPLAY)
+
+        RagiElement.entries
+            .map(RagiElement::clusterBlock)
+            .forEach(::registerCutout)
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
@@ -89,10 +94,6 @@ object RagiumClient : ClientModInitializer {
         HTMachineType.Multi.entries
             .map(HTMachineType.Multi::blockEntityType)
             .forEach(::registerMultiblockRenderer)
-
-        RagiElement.entries
-            .map(RagiElement::clusterBlock)
-            .forEach(::registerCutout)
 
         ColorProviderRegistry.BLOCK.register({ _: BlockState, world: BlockRenderView?, pos: BlockPos?, _: Int ->
             when {
