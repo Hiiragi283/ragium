@@ -5,6 +5,7 @@ import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.common.util.HTItemContent
@@ -25,6 +26,10 @@ object RagiumLangProviders {
 
     fun TranslationBuilder.add(element: RagiElement, value: String) {
         add(element.translationKey, value)
+    }
+
+    fun TranslationBuilder.add(tier: HTMachineTier, value: String) {
+        add(tier.translationKey, value)
     }
 
     fun TranslationBuilder.add(type: HTMachineType, value: String) {
@@ -57,7 +62,6 @@ object RagiumLangProviders {
                 }
             }
         }
-        // dusts
         // items
         buildList<HTItemContent> {
             addAll(RagiumContents.Dusts.entries)
@@ -126,11 +130,21 @@ object RagiumLangProviders {
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
             // Machine
+            builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
+            builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "Energy Capacity: %s E")
+
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
+            // Machine Tier
+            builder.add(HTMachineTier.NONE, "None")
+            builder.add(HTMachineTier.PRIMITIVE, "Primitive")
+            builder.add(HTMachineTier.BASIC, "Basic")
+            builder.add(HTMachineTier.ADVANCED, "Advanced")
             // Machine Type
             builder.add(HTMachineType.Single.ALLOY_FURNACE, "Alloy Furnace")
-
+            builder.add(HTMachineType.Single.ASSEMBLER, "Assembler")
             builder.add(HTMachineType.Single.COMPRESSOR, "Compressor")
             builder.add(HTMachineType.Single.EXTRACTOR, "Extractor")
             builder.add(HTMachineType.Single.GRINDER, "Grinder")
@@ -146,10 +160,9 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "Blazing Blast Furnace")
             builder.add(HTMachineType.Multi.ELECTRIC_BLAST_FURNACE, "Electric Blast Furnace")
             builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "Distillation Tower")
-
-            // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Mod Menu
-            builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode")
+            builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
+            builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
             // Jade
             builder.add(RagiumTranslationKeys.CONFIG_JADE_BURNING_BOX, "Burning Box")
             // REI
@@ -204,11 +217,21 @@ object RagiumLangProviders {
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             // Machine
+            builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
+            builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "バッテリー容量: %s E")
+
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")
+            // Machine Tier
+            builder.add(HTMachineTier.NONE, "なし")
+            builder.add(HTMachineTier.PRIMITIVE, "簡易")
+            builder.add(HTMachineTier.BASIC, "基本")
+            builder.add(HTMachineTier.ADVANCED, "発展")
             // Machine Type
             builder.add(HTMachineType.Single.ALLOY_FURNACE, "合金かまど")
-
+            builder.add(HTMachineType.Single.ASSEMBLER, "組立機")
             builder.add(HTMachineType.Single.COMPRESSOR, "圧縮機")
             builder.add(HTMachineType.Single.EXTRACTOR, "抽出器")
             builder.add(HTMachineType.Single.GRINDER, "粉砕機")
@@ -224,10 +247,9 @@ object RagiumLangProviders {
             builder.add(HTMachineType.Multi.BLAZING_BLAST_FURNACE, "ブレイズ高炉")
             builder.add(HTMachineType.Multi.ELECTRIC_BLAST_FURNACE, "電気高炉")
             builder.add(HTMachineType.Multi.DISTILLATION_TOWER, "蒸留塔")
-
-            // builder.add(HTMachineType.Single.ALCHEMICAL_INFUSER, "錬金注入機")
             // Mod Menu
-            builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードを有効")
+            builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
+            builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")
             // Jade
             builder.add(RagiumTranslationKeys.CONFIG_JADE_BURNING_BOX, "燃焼室")
             // REI
