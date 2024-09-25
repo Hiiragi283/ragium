@@ -334,7 +334,7 @@ object RagiumContents {
         ;
 
         override val block = PillarBlock(blockSettings())
-        override val enPattern: String = "%S Coil"
+        override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
     }
 
