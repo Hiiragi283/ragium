@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumEnergyProviders
 import hiiragi283.ragium.common.util.useTransaction
@@ -13,7 +13,7 @@ import net.minecraft.world.World
 import team.reborn.energy.api.EnergyStorage
 
 class HTCreativeSourceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(RagiumBlockEntityTypes.CREATIVE_SOURCE, pos, state) {
+    HTBlockEntityBase(RagiumBlockEntityTypes.CREATIVE_SOURCE, pos, state) {
     override fun tickEach(
         world: World,
         pos: BlockPos,

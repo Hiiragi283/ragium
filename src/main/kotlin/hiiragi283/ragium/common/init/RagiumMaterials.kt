@@ -18,6 +18,7 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     ASH(HTMachineTier.BASIC, "Ash", "灰"),
     GOLD(HTMachineTier.BASIC, "Gold", "金"),
     RUBBER(HTMachineTier.BASIC, "Rubber", "ゴム"),
+    SILICON(HTMachineTier.BASIC, "Silicon", "シリコン"),
     STEEL(HTMachineTier.BASIC, "Steel", "スチール"),
     SULFUR(HTMachineTier.BASIC, "Sulfur", "硫黄"),
 

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.block.entity.HTKineticProcessor
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -11,7 +11,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 abstract class HTKineticGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(type, pos, state) {
+    HTBlockEntityBase(type, pos, state) {
     companion object {
         @JvmStatic
         private fun findProcessor(world: World, pos: BlockPos, state: BlockState): BlockPos? {

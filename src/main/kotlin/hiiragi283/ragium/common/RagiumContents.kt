@@ -476,6 +476,7 @@ object RagiumContents {
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         GOLD(RagiumMaterials.GOLD),
         RUBBER(RagiumMaterials.RUBBER),
+        SILICON(RagiumMaterials.SILICON),
         STEEL(RagiumMaterials.STEEL),
 
         // tier3

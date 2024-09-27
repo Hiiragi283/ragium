@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.screen.HTBurningBoxScreenHandler
 import net.fabricmc.fabric.api.registry.FuelRegistry
@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(type, pos, state),
+    HTBlockEntityBase(type, pos, state),
     HTDelegatedInventory,
     NamedScreenHandlerFactory {
     var burningTime: Int = 0
@@ -89,7 +89,7 @@ abstract class HTHeatGeneratorBlockEntity(type: BlockEntityType<*>, pos: BlockPo
             }.buildSided()
 
     override fun markDirty() {
-        super<HTBaseBlockEntity>.markDirty()
+        super<HTBlockEntityBase>.markDirty()
     }
 
     //    NamedScreenHandlerFactory    //
