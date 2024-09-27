@@ -17,7 +17,9 @@ class HTInfusionRecipe(override val inputs: List<WeightedIngredient>, override v
                         .listOf()
                         .fieldOf("inputs")
                         .forGetter(HTInfusionRecipe::inputs),
-                    HTRecipeResult.CODEC.fieldOf("output").forGetter(HTInfusionRecipe::result),
+                    HTRecipeResult.CODEC
+                        .fieldOf("output")
+                        .forGetter(HTInfusionRecipe::result),
                 ).apply(instance, ::HTInfusionRecipe)
         }
 

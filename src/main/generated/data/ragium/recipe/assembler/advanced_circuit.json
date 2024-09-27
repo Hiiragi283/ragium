@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:ptfe_plate"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:ragi_alloy_plate"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:ragi_crystal_dust"
+      }
+    }
+  ],
+  "machine_type": "ragium:assembler",
+  "outputs": [
+    {
+      "item": "ragium:advanced_circuit"
+    }
+  ]
+}

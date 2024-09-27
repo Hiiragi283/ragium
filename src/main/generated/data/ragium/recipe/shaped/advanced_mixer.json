@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_steel_ingot"
+      "item": "ragium:refined_ragi_steel_ingot"
     },
     "B": {
       "item": "minecraft:cauldron"
     },
     "C": {
-      "item": "ragium:ragi_steel_hull"
+      "item": "ragium:refined_ragi_steel_hull"
     },
     "D": {
+      "item": "minecraft:cauldron"
+    },
+    "E": {
       "item": "minecraft:end_stone_bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

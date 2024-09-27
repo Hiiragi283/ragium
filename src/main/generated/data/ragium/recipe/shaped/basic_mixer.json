@@ -12,13 +12,16 @@
       "item": "ragium:ragi_steel_hull"
     },
     "D": {
+      "item": "minecraft:cauldron"
+    },
+    "E": {
       "item": "minecraft:polished_blackstone_bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

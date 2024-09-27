@@ -107,6 +107,7 @@ object RagiumTagProviders {
             add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.RAGINITE_ORE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+            add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)
             add(RagiumItemTags.STEEL_BLOCKS, RagiumContents.StorageBlocks.STEEL)
             add(RagiumItemTags.STEEL_INGOTS, RagiumContents.Ingots.STEEL)
             add(RagiumItemTags.STEEL_PLATES, RagiumContents.Plates.STEEL)

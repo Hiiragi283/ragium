@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_alloy_ingot"
+      "item": "ragium:ragi_steel_ingot"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "item": "minecraft:blast_furnace"
     },
     "C": {
-      "item": "ragium:ragi_alloy_hull"
+      "item": "ragium:ragi_steel_hull"
     },
     "D": {
+      "item": "minecraft:blast_furnace"
+    },
+    "E": {
       "item": "minecraft:polished_blackstone_bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -43,12 +42,12 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState, tier: HTM
             -1..1,
             -1,
             1..3,
-            HTBlockPredicate.block(HTMachineTier.ADVANCED.baseBlock),
+            HTBlockPredicate.block(tier.baseBlock),
         ).addHollow(
             -1..1,
             0,
             1..3,
-            HTBlockPredicate.block(RagiumContents.Hulls.REFINED_RAGI_STEEL.block),
+            HTBlockPredicate.block(tier.getHull().block),
         ).addCross4(
             -1..1,
             1,

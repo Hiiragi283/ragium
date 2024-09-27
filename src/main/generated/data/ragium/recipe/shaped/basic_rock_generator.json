@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:lava_bucket"
+    },
+    "C": {
+      "item": "ragium:ragi_steel_hull"
+    },
+    "D": {
+      "item": "minecraft:water_bucket"
+    },
+    "E": {
+      "item": "minecraft:polished_blackstone_bricks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_rock_generator"
+  }
+}

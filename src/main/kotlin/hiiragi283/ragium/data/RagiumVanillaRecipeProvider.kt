@@ -187,6 +187,33 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
             .offerTo(exporter)
 
+        // circuits
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Circuit.PRIMITIVE)
+            .patterns(
+                "ABA",
+                "CDC",
+                "ABA",
+            ).input('A', ConventionalItemTags.REDSTONE_DUSTS)
+            .input('B', ConventionalItemTags.IRON_INGOTS)
+            .input('C', ConventionalItemTags.COPPER_INGOTS)
+            .input('D', ItemTags.PLANKS)
+            .unlockedBy(ConventionalItemTags.REDSTONE_DUSTS)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Circuit.BASIC)
+            .patterns(
+                "ABA",
+                "CDC",
+                "ABA",
+            ).input('A', RagiumContents.Dusts.RAGINITE)
+            .input('B', RagiumItemTags.STEEL_PLATES)
+            .input('C', RagiumItemTags.GOLD_PLATES)
+            .input('D', RagiumContents.Circuit.PRIMITIVE)
+            .unlockedBy(RagiumContents.Dusts.RAGINITE)
+            .offerTo(exporter)
+
         // hulls
         val materials: List<RagiumMaterials> = listOf(
             RagiumMaterials.RAGI_ALLOY,
@@ -286,102 +313,81 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         createMachine(
             exporter,
-            RagiumMachineTypes.BLAST_FURNACE,
-            RagiumContents.Ingots.RAGI_ALLOY,
-            Items.BLAST_FURNACE,
-            RagiumContents.Hulls.RAGI_ALLOY,
-        )
-
-        // tier2
-        createMachine(
-            exporter,
             RagiumMachineTypes.Single.ALLOY_FURNACE,
-            RagiumContents.Ingots.RAGI_ALLOY,
-            Items.FURNACE,
-            RagiumContents.Hulls.RAGI_ALLOY,
+            Items.BLAST_FURNACE,
         )
-
-        createMachine(
-            exporter,
-            RagiumMachineTypes.Single.COMPRESSOR,
-            RagiumContents.Ingots.RAGI_STEEL,
-            Items.PISTON,
-            RagiumContents.Hulls.RAGI_STEEL,
-        )
-
-        createMachine(
-            exporter,
-            RagiumMachineTypes.Single.EXTRACTOR,
-            RagiumContents.Ingots.RAGI_STEEL,
-            Items.BUCKET, // TODO
-            RagiumContents.Hulls.RAGI_STEEL,
-        )
-
-        createMachine(
-            exporter,
-            RagiumMachineTypes.Single.GRINDER,
-            RagiumContents.Ingots.RAGI_STEEL,
-            Items.FLINT,
-            RagiumContents.Hulls.RAGI_STEEL,
-        )
-
-        createMachine(
-            exporter,
-            RagiumMachineTypes.Single.METAL_FORMER,
-            RagiumContents.Ingots.RAGI_STEEL,
-            RagiumContents.FORGE_HAMMER,
-            RagiumContents.Hulls.RAGI_STEEL,
-        )
-
-        createMachine(
-            exporter,
-            RagiumMachineTypes.Single.MIXER,
-            RagiumContents.Ingots.RAGI_STEEL,
-            Items.CAULDRON, // TODO
-            RagiumContents.Hulls.RAGI_STEEL,
-        )
-
-        /*createMachine(
-            exporter,
-            RagiumMachineTypes.BLAZING_BLAST_FURNACE,
-            RagiumContents.Ingots.RAGI_STEEL,
-            RagiumMachineTypes.BRICK_BLAST_FURNACE,
-            RagiumContents.Hulls.RAGI_STEEL,
-        )*/
-
-        // tier3
+        HTMachineTier.entries.forEach { tier: HTMachineTier ->
+            val block: HTBaseMachineBlock = RagiumMachineTypes.Single.ASSEMBLER.getBlock(tier) ?: return@forEach
+            HTShapedRecipeJsonBuilder
+                .create(block)
+                .patterns(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                ).input('A', tier.getIngot())
+                .input('B', tier.getCircuit())
+                .input('C', tier.getHull())
+                .input('D', tier.baseBlock)
+                .unlockedBy(tier.getHull())
+                .offerTo(exporter, tier.createId(RagiumMachineTypes.Single.ASSEMBLER))
+        }
         createMachine(
             exporter,
             RagiumMachineTypes.Single.CENTRIFUGE,
-            RagiumContents.Ingots.REFINED_RAGI_STEEL,
             Items.COPPER_GRATE, // TODO
-            RagiumContents.Hulls.REFINED_RAGI_STEEL,
         )
-
         createMachine(
             exporter,
             RagiumMachineTypes.Single.CHEMICAL_REACTOR,
-            RagiumContents.Ingots.REFINED_RAGI_STEEL,
-            Items.CRAFTING_TABLE, // TODO
-            RagiumContents.Hulls.REFINED_RAGI_STEEL,
+            Items.GLASS, // TODO
         )
-
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Single.COMPRESSOR,
+            Items.PISTON,
+        )
         createMachine(
             exporter,
             RagiumMachineTypes.Single.ELECTROLYZER,
-            RagiumContents.Ingots.REFINED_RAGI_STEEL,
-            Items.HOPPER, // TODO
-            RagiumContents.Hulls.REFINED_RAGI_STEEL,
+            Items.LIGHTNING_ROD,
         )
-
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Single.EXTRACTOR,
+            Items.HOPPER,
+        )
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Single.GRINDER,
+            Items.FLINT,
+        )
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Single.METAL_FORMER,
+            Items.ANVIL,
+        )
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Single.MIXER,
+            Items.CAULDRON,
+        )
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Single.ROCK_GENERATOR,
+            Items.LAVA_BUCKET,
+            Items.WATER_BUCKET,
+        )
+        createMachine(
+            exporter,
+            RagiumMachineTypes.BLAST_FURNACE,
+            Items.BLAST_FURNACE,
+        )
         createMachine(
             exporter,
             RagiumMachineTypes.DISTILLATION_TOWER,
-            RagiumContents.Ingots.REFINED_RAGI_STEEL,
-            Items.COPPER_GRATE,
-            RagiumContents.Hulls.REFINED_RAGI_STEEL,
+            RagiumContents.Circuit.ADVANCED,
         )
-        // tier4
+
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.ALCHEMICAL_INFUSER)
             .patterns(
@@ -419,9 +425,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun createMachine(
         exporter: RecipeExporter,
         type: HTMachineType<*>,
-        ingot: ItemConvertible,
-        side: ItemConvertible,
-        hull: ItemConvertible,
+        left: ItemConvertible,
+        right: ItemConvertible = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             val block: HTBaseMachineBlock = type.getBlock(tier) ?: return@forEach
@@ -429,13 +434,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .create(block)
                 .patterns(
                     "AAA",
-                    "BCB",
-                    "DDD",
-                ).input('A', ingot)
-                .input('B', side)
-                .input('C', hull)
-                .input('D', tier.baseBlock)
-                .unlockedBy(hull)
+                    "BCD",
+                    "EEE",
+                ).input('A', tier.getIngot())
+                .input('B', left)
+                .input('C', tier.getHull())
+                .input('D', right)
+                .input('E', tier.baseBlock)
+                .unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(type))
         }
     }

@@ -470,7 +470,6 @@ object RagiumContents {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         IRON(RagiumMaterials.IRON),
         COPPER(RagiumMaterials.COPPER),
-        WOOD(RagiumMaterials.WOOD),
 
         // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),

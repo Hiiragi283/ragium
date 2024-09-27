@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.util.HTTranslationProvider
 import hiiragi283.ragium.common.util.longText
@@ -104,6 +105,36 @@ enum class HTMachineTier(
     fun createPrefixedText(type: HTMachineType<*>): MutableText = Text.translatable(prefixKey, type.text)
 
     fun createId(type: HTMachineType<*>): Identifier = type.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
+
+    fun getCircuit(): RagiumContents.Circuit = when (this) {
+        PRIMITIVE -> RagiumContents.Circuit.PRIMITIVE
+        BASIC -> RagiumContents.Circuit.BASIC
+        ADVANCED -> RagiumContents.Circuit.ADVANCED
+    }
+
+    fun getCoil(): RagiumContents.Coils = when (this) {
+        PRIMITIVE -> RagiumContents.Coils.COPPER
+        BASIC -> RagiumContents.Coils.GOLD
+        ADVANCED -> RagiumContents.Coils.RAGI_ALLOY
+    }
+
+    fun getHull(): RagiumContents.Hulls = when (this) {
+        PRIMITIVE -> RagiumContents.Hulls.RAGI_ALLOY
+        BASIC -> RagiumContents.Hulls.RAGI_STEEL
+        ADVANCED -> RagiumContents.Hulls.REFINED_RAGI_STEEL
+    }
+
+    fun getIngot(): RagiumContents.Ingots = when (this) {
+        PRIMITIVE -> RagiumContents.Ingots.RAGI_ALLOY
+        BASIC -> RagiumContents.Ingots.RAGI_STEEL
+        ADVANCED -> RagiumContents.Ingots.REFINED_RAGI_STEEL
+    }
+
+    fun getPlate(): RagiumContents.Plates = when (this) {
+        PRIMITIVE -> RagiumContents.Plates.RAGI_ALLOY
+        BASIC -> RagiumContents.Plates.RAGI_STEEL
+        ADVANCED -> RagiumContents.Plates.REFINED_RAGI_STEEL
+    }
 
     //    StringIdentifiable    //
 

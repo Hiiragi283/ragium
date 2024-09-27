@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:refined_ragi_steel_ingot"
+      "item": "ragium:ragi_steel_ingot"
     },
     "B": {
-      "item": "minecraft:hopper"
+      "item": "minecraft:lightning_rod"
     },
     "C": {
-      "item": "ragium:refined_ragi_steel_hull"
+      "item": "ragium:ragi_steel_hull"
     },
     "D": {
+      "item": "minecraft:lightning_rod"
+    },
+    "E": {
       "item": "minecraft:polished_blackstone_bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

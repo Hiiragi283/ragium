@@ -6,19 +6,22 @@
       "item": "ragium:ragi_alloy_ingot"
     },
     "B": {
-      "item": "minecraft:furnace"
+      "item": "minecraft:blast_furnace"
     },
     "C": {
       "item": "ragium:ragi_alloy_hull"
     },
     "D": {
+      "item": "minecraft:blast_furnace"
+    },
+    "E": {
       "item": "minecraft:bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

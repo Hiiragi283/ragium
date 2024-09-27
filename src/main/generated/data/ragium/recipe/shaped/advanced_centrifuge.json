@@ -12,13 +12,16 @@
       "item": "ragium:refined_ragi_steel_hull"
     },
     "D": {
+      "item": "minecraft:copper_grate"
+    },
+    "E": {
       "item": "minecraft:end_stone_bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

@@ -21,7 +21,9 @@ class HTTransformRecipe(val target: WeightedIngredient, val upgrades: List<Weigh
                         .listOf()
                         .fieldOf("upgrades")
                         .forGetter(HTTransformRecipe::upgrades),
-                    HTRecipeResult.CODEC.fieldOf("result").forGetter(HTTransformRecipe::result),
+                    HTRecipeResult.CODEC
+                        .fieldOf("result")
+                        .forGetter(HTTransformRecipe::result),
                 ).apply(instance, ::HTTransformRecipe)
         }
 

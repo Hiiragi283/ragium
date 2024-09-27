@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -42,33 +41,21 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachin
             -1..1,
             0,
             1..3,
-            HTBlockPredicate.block(getHull(tier).block),
+            HTBlockPredicate.block(tier.getHull().block),
         ).addHollow(
             -1..1,
             1,
             1..3,
-            HTBlockPredicate.block(getCoil(tier).block),
+            HTBlockPredicate.block(tier.getCoil().block),
         ).addHollow(
             -1..1,
             2,
             1..3,
-            HTBlockPredicate.block(getCoil(tier).block),
+            HTBlockPredicate.block(tier.getCoil().block),
         ).addHollow(
             -1..1,
             3,
             1..3,
             HTBlockPredicate.block(tier.baseBlock),
         )
-
-    private fun getHull(tier: HTMachineTier): RagiumContents.Hulls = when (tier) {
-        HTMachineTier.PRIMITIVE -> RagiumContents.Hulls.RAGI_ALLOY
-        HTMachineTier.BASIC -> RagiumContents.Hulls.RAGI_STEEL
-        HTMachineTier.ADVANCED -> RagiumContents.Hulls.REFINED_RAGI_STEEL
-    }
-
-    private fun getCoil(tier: HTMachineTier): RagiumContents.Coils = when (tier) {
-        HTMachineTier.PRIMITIVE -> RagiumContents.Coils.COPPER
-        HTMachineTier.BASIC -> RagiumContents.Coils.GOLD
-        HTMachineTier.ADVANCED -> RagiumContents.Coils.RAGI_ALLOY
-    }
 }

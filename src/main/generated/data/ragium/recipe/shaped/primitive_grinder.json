@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_steel_ingot"
+      "item": "ragium:ragi_alloy_ingot"
     },
     "B": {
       "item": "minecraft:flint"
     },
     "C": {
-      "item": "ragium:ragi_steel_hull"
+      "item": "ragium:ragi_alloy_hull"
     },
     "D": {
+      "item": "minecraft:flint"
+    },
+    "E": {
       "item": "minecraft:bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

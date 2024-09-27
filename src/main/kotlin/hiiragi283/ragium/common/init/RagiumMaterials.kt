@@ -10,7 +10,7 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
     COPPER(HTMachineTier.PRIMITIVE, "Copper", "銅"),
     IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄"),
-    WOOD(HTMachineTier.PRIMITIVE, "Wooden", "木"),
+    // WOOD(HTMachineTier.PRIMITIVE, "Wooden", "木"),
 
     // tier2
     RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),

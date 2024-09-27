@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:refined_ragi_steel_ingot"
+      "item": "ragium:ragi_alloy_ingot"
     },
     "B": {
       "item": "minecraft:copper_grate"
     },
     "C": {
-      "item": "ragium:refined_ragi_steel_hull"
+      "item": "ragium:ragi_alloy_hull"
     },
     "D": {
+      "item": "minecraft:copper_grate"
+    },
+    "E": {
       "item": "minecraft:bricks"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,
