@@ -4,8 +4,6 @@ import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.HTFluidPumpEntry
-import me.shedaniel.autoconfig.AutoConfig
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
@@ -34,15 +32,9 @@ object Ragium : ModInitializer {
         logger.action()
     }
 
-    @JvmStatic
-    var config: RagiumConfig = RagiumConfig()
-        private set
-
     override fun onInitialize() {
         log { info("Registering game objects...") }
-
-        AutoConfig.register(RagiumConfig::class.java, ::GsonConfigSerializer)
-        config = AutoConfig.getConfigHolder(RagiumConfig::class.java).get()
+        RagiumConfig.init()
 
         RagiumComponentTypes
 
@@ -59,6 +51,7 @@ object Ragium : ModInitializer {
 
         RagiumBlockEntityTypes.init()
         RagiumCauldronBehaviors.init()
+        RagiumCommands.init()
         RagiumEnergyProviders.init()
         RagiumEventHandlers.init()
         RagiumItemGroup.init()

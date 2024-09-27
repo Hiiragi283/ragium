@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.inventory
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.common.network.HTInventoryPayload
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import hiiragi283.ragium.common.init.RagiumNetworks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
@@ -61,7 +60,7 @@ open class HTSimpleInventory : Inventory {
 
     fun sendS2CPacket(player: ServerPlayerEntity, pos: BlockPos) {
         stacks.forEachIndexed { slot: Int, stack: ItemStack ->
-            ServerPlayNetworking.send(player, HTInventoryPayload.createPacket(pos, slot, stack))
+            RagiumNetworks.sendItemSync(player, pos, slot, stack)
         }
     }
 

@@ -31,18 +31,29 @@ interface HTMultiblockController {
         return when (world.isClient) {
             true -> ActionResult.SUCCESS
             false -> {
-                val direction: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                val validator = HTMultiblockValidator(world, pos, player)
-                blockEntity.buildMultiblock(validator.rotate(direction))
-                if (validator.isValid) {
+                if (isValid(state, world, pos, player)) {
                     player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), false)
-                    onValid(state, world, pos, player)
                     player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
+                    onValid(state, world, pos, player)
                     showPreview = false
                 }
                 ActionResult.CONSUME
             }
         }
+    }
+
+    fun buildMultiblock(builder: HTMultiblockBuilder): HTMultiblockBuilder
+
+    fun isValid(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity? = null,
+    ): Boolean {
+        val direction: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+        val validator = HTMultiblockValidator(world, pos, player)
+        buildMultiblock(validator.rotate(direction))
+        return validator.isValid
     }
 
     fun onValid(
@@ -51,6 +62,4 @@ interface HTMultiblockController {
         pos: BlockPos,
         player: PlayerEntity,
     )
-
-    fun buildMultiblock(builder: HTMultiblockBuilder): HTMultiblockBuilder
 }

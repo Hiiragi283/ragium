@@ -4,9 +4,14 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.packet.CustomPayload
+import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.util.math.BlockPos
 
 object RagiumNetworks {
     @JvmField
@@ -33,5 +38,27 @@ object RagiumNetworks {
         val id = CustomPayload.Id<T>(Ragium.id(name))
         PayloadTypeRegistry.playS2C().register(id, codec)
         return id
+    }
+
+    //    Utils    //
+
+    @JvmStatic
+    fun sendItemSync(
+        player: ServerPlayerEntity,
+        pos: BlockPos,
+        slot: Int,
+        stack: ItemStack,
+    ) {
+        ServerPlayNetworking.send(player, HTInventoryPayload.createPacket(pos, slot, stack))
+    }
+
+    @JvmStatic
+    fun sendFloatingItem(player: ServerPlayerEntity, stack: ItemStack) {
+        ServerPlayNetworking.send(player, HTFloatingItemPayload(stack))
+    }
+
+    @JvmStatic
+    fun sendFloatingItem(player: ServerPlayerEntity, item: ItemConvertible, count: Int = 1) {
+        ServerPlayNetworking.send(player, HTFloatingItemPayload(item, count))
     }
 }

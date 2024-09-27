@@ -20,15 +20,14 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentChanges
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
+import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.State
@@ -38,6 +37,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.PersistentState
 import net.minecraft.world.World
 import java.text.NumberFormat
 import java.util.function.Function
@@ -109,6 +109,14 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     return ItemStack(entry, count, changes)
 }
 
+//    ItemUsageContext    //
+
+val ItemUsageContext.blockState: BlockState
+    get() = world.getBlockState(blockPos)
+
+val ItemUsageContext.blockEntity: BlockEntity?
+    get() = world.getBlockEntity(blockPos)
+
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
@@ -122,6 +130,25 @@ fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> =
 fun ServerPlayerEntity.sendTitle(title: Text) {
     networkHandler.sendPacket(TitleS2CPacket(title))
 }
+
+//    PersistentState    //
+
+fun <T : PersistentState> getManager(world: ServerWorld, type: PersistentState.Type<T>, modId: String): T = world.persistentStateManager
+    .getOrCreate(type, modId)
+    .apply { markDirty() }
+
+fun <T : PersistentState> getManager(world: World, type: PersistentState.Type<T>, modId: String): T? {
+    val key: RegistryKey<World> = world.registryKey
+    val server: MinecraftServer = world.server ?: return null
+    return getManager(server, key, type, modId)
+}
+
+fun <T : PersistentState> getManager(
+    server: MinecraftServer,
+    key: RegistryKey<World>,
+    type: PersistentState.Type<T>,
+    modId: String,
+): T? = server.getWorld(key)?.let { getManager(it, type, modId) }
 
 //    StringIdentifiable    //
 
