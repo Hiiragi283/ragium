@@ -258,7 +258,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', RagiumContents.Ingots.RAGI_ALLOY)
             .input('C', Items.SMOOTH_STONE)
             .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
-            .offerTo(exporter)
+            .offerTo(exporter.hardMode(false))
 
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.MANUAL_GRINDER)

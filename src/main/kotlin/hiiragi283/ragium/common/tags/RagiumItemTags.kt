@@ -34,6 +34,9 @@ object RagiumItemTags {
     val RAGINITE_ORES: TagKey<Item> = create("ores/raginite")
 
     @JvmField
+    val SILICON_PLATES: TagKey<Item> = create("plates/silicon")
+
+    @JvmField
     val STEEL_BLOCKS: TagKey<Item> = create("storage_blocks/steel")
 
     @JvmField

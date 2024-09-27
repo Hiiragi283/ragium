@@ -115,6 +115,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumItemTags.SULFUR_DUSTS)
             .addOutput(RagiumContents.Plates.RUBBER, 4)
             .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.ALLOY_FURNACE, HTMachineTier.ADVANCED, true)
+            .addInput(ConventionalItemTags.GOLD_INGOTS, 5)
+            .addInput(Items.NETHERITE_SCRAP, 3)
+            .addOutput(Items.NETHERITE_INGOT)
+            .offerTo(exporter)
     }
 
     //    Assembler    //

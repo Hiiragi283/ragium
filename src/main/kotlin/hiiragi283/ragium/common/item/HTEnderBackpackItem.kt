@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.common.util.itemSettings
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
@@ -14,7 +13,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-object HTEnderBackpackItem : HTBaseItem(itemSettings()) {
+object HTEnderBackpackItem : HTBaseItem() {
     private val TITLE: Text = Text.translatable("container.enderchest")
 
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {

@@ -52,7 +52,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachin
             2,
             1..3,
             HTBlockPredicate.block(tier.getCoil().block),
-        ).addHollow(
+        ).addLayer(
             -1..1,
             3,
             1..3,

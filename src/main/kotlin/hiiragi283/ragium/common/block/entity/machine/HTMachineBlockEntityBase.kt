@@ -8,7 +8,9 @@ import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTRecipeBase
 import hiiragi283.ragium.common.recipe.HTRecipeResult
+import hiiragi283.ragium.common.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
+import hiiragi283.ragium.common.world.HTDataDriveManager
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -16,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.NamedScreenHandlerFactory
@@ -100,13 +103,17 @@ abstract class HTMachineBlockEntityBase :
             )
         val recipeType: RecipeType<HTRecipeBase<HTMachineRecipe.Input>> =
             machineType.recipeType as? RecipeType<HTRecipeBase<HTMachineRecipe.Input>> ?: return
-        val recipe: HTRecipeBase<HTMachineRecipe.Input> =
-            world.recipeManager
-                .getFirstMatch(recipeType, input, world)
-                .map { it.value }
-                .getOrNull() ?: return
+        val recipeEntry: RecipeEntry<HTRecipeBase<HTMachineRecipe.Input>> = world.recipeManager
+            .getFirstMatch(recipeType, input, world)
+            .getOrNull() ?: return
+        val recipe: HTRecipeBase<HTMachineRecipe.Input> = recipeEntry.value
+        val recipeId: Identifier = recipeEntry.id
         if (!canAcceptOutputs(recipe)) return
         if (!condition(world, pos)) return
+        if ((recipe as? HTRequireScanRecipe)?.requireScan == true) {
+            val manager: HTDataDriveManager = HTDataDriveManager.getManager(world) ?: return
+            if (recipeId !in manager) return
+        }
         modifyOutput(0, recipe)
         modifyOutput(1, recipe)
         modifyOutput(2, recipe)

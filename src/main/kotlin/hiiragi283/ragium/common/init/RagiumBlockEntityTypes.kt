@@ -47,6 +47,10 @@ object RagiumBlockEntityTypes {
         register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
     @JvmField
+    val DRIVE_SCANNER: BlockEntityType<HTDriveScannerBlockEntity> =
+        register("drive_scanner", ::HTDriveScannerBlockEntity)
+
+    @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 

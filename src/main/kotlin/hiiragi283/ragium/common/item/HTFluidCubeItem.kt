@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-class HTFluidCubeItem private constructor(val fluidName: String) : HTBaseItem(Settings()) {
+class HTFluidCubeItem private constructor(val fluidName: String) : HTBaseItem() {
     companion object {
         val registry: Map<String, HTFluidCubeItem>
             get() = registry1

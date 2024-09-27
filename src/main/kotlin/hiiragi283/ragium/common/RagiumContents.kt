@@ -102,6 +102,14 @@ object RagiumContents {
     val INFESTING: Block =
         registerBlock("infesting", HTInfectingBlock)
 
+    @JvmField
+    val DATA_DRIVE: Block =
+        registerBlock("data_drive")
+
+    @JvmStatic
+    val DRIVE_SCANNER: Block =
+        registerWithBE("drive_scanner", RagiumBlockEntityTypes.DRIVE_SCANNER)
+
     //    Item - Tools    //
 
     @JvmField
@@ -298,6 +306,8 @@ object RagiumContents {
         registerBlockItem(BLAZING_BOX)
         registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
         registerBlockItem(ITEM_DISPLAY)
+        registerBlockItem(DATA_DRIVE)
+        registerBlockItem(DRIVE_SCANNER)
     }
 
     //    Hulls    //

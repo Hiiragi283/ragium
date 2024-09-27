@@ -124,6 +124,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.BLAZING_BOX, "Blazing Box")
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
+            builder.add(RagiumContents.DATA_DRIVE, "Data Drive")
+            builder.add(RagiumContents.DRIVE_SCANNER, "Drive Scanner")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.STEEL_SWORD, "Steel Sword")
@@ -178,6 +180,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CONFIG_JADE_BURNING_BOX, "Burning Box")
             // REI
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "Recipe Info")
+            builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "Required Scanning!")
         }
     }
 
@@ -209,6 +212,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.BLAZING_BOX, "豪炎室")
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
             builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
+            builder.add(RagiumContents.DATA_DRIVE, "データドライブ")
+            builder.add(RagiumContents.DRIVE_SCANNER, "ドライブスキャナ")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.STEEL_SWORD, "鋼鉄の剣")
@@ -263,6 +268,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CONFIG_JADE_BURNING_BOX, "燃焼室")
             // REI
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "レシピ情報")
+            builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "スキャンが必要です！")
         }
     }
 }

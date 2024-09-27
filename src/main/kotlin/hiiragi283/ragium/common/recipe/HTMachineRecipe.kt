@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -8,6 +9,7 @@ import hiiragi283.ragium.common.machine.HTMachineType
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
@@ -17,20 +19,27 @@ import net.minecraft.world.World
 class HTMachineRecipe(
     val type: HTMachineType<*>,
     val minTier: HTMachineTier,
+    override val requireScan: Boolean,
     override val inputs: List<WeightedIngredient>,
     override val outputs: List<HTRecipeResult>,
     val catalyst: Ingredient,
-) : HTRecipeBase<HTMachineRecipe.Input> {
+) : HTRecipeBase<HTMachineRecipe.Input>,
+    HTRequireScanRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMachineRecipe> =
             RecordCodecBuilder.mapCodec { instance ->
                 instance
                     .group(
-                        HTMachineType.CODEC.fieldOf("machine_type").forGetter(HTMachineRecipe::type),
+                        HTMachineType.CODEC
+                            .fieldOf("machine_type")
+                            .forGetter(HTMachineRecipe::type),
                         HTMachineTier.CODEC
                             .optionalFieldOf("min_tier", HTMachineTier.PRIMITIVE)
                             .forGetter(HTMachineRecipe::minTier),
+                        Codec.BOOL
+                            .optionalFieldOf("require_scan", false)
+                            .forGetter(HTMachineRecipe::requireScan),
                         WeightedIngredient.CODEC
                             .listOf()
                             .fieldOf("inputs")
@@ -52,6 +61,8 @@ class HTMachineRecipe(
                 HTMachineRecipe::type,
                 HTMachineTier.PACKET_CODEC,
                 HTMachineRecipe::minTier,
+                PacketCodecs.BOOL,
+                HTMachineRecipe::requireScan,
                 WeightedIngredient.LIST_PACKET_CODEC,
                 HTMachineRecipe::inputs,
                 HTRecipeResult.LIST_PACKET_CODEC,

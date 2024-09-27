@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 5,
+      "ingredient": {
+        "tag": "c:ingots/gold"
+      }
+    },
+    {
+      "count": 3,
+      "ingredient": {
+        "item": "minecraft:netherite_scrap"
+      }
+    }
+  ],
+  "machine_type": "ragium:alloy_furnace",
+  "min_tier": "advanced",
+  "outputs": [
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "require_scan": true
+}
