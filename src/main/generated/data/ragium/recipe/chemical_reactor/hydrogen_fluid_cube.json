@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "catalyst": {
     "item": "minecraft:heart_of_the_sea"
   },
@@ -15,7 +15,7 @@
       }
     }
   ],
-  "machine_type": "chemical_reactor",
+  "machine_type": "ragium:chemical_reactor",
   "outputs": [
     {
       "item": "ragium:hydrogen_fluid_cube"

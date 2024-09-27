@@ -3,9 +3,9 @@
   "criteria": {
     "build_multiblock": {
       "conditions": {
-        "machine_type": "distillation_tower"
+        "machine_type": "ragium:distillation_tower"
       },
-      "trigger": "ragium:build_multiblock"
+      "trigger": "ragium:build_machine"
     }
   },
   "display": {
@@ -14,7 +14,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:distillation_tower"
+      "id": "ragium:empty_fluid_cube"
     },
     "title": {
       "translate": "advancement.ragium.tier3.distillation_tower"

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "chemical_reactor",
+  "machine_type": "ragium:chemical_reactor",
   "outputs": [
     {
       "item": "ragium:tetra_fluoro_ethylene_fluid_cube"

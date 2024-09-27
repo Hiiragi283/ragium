@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "count": 8,
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "metal_former",
+  "machine_type": "ragium:metal_former",
   "outputs": [
     {
       "item": "ragium:gold_coil"

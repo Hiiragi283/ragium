@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.machine.HTMachineType
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
@@ -34,6 +35,7 @@ import net.minecraft.state.State
 import net.minecraft.state.property.Property
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -94,6 +96,8 @@ fun itemSettings(): Item.Settings = Item.Settings()
 
 fun Item.Settings.element(element: RagiElement): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
+fun Item.Settings.machineType(type: HTMachineType<*>): Item.Settings = component(RagiumComponentTypes.MACHINE_TYPE, type)
+
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.TIER, tier)
 
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
@@ -104,6 +108,10 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     val changes: ComponentChanges = ComponentChanges.builder().apply(builderAction).build()
     return ItemStack(entry, count, changes)
 }
+
+//    Identifier    //
+
+fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
 
 //    PacketCodec    //
 

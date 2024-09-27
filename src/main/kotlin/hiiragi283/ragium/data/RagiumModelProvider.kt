@@ -3,8 +3,11 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.block.HTBaseMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
+import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumModels
+import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
@@ -120,7 +123,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 RagiumModels.createMachine(
                     HTMachineTier.PRIMITIVE.casingTex,
                     HTMachineTier.PRIMITIVE.baseTex,
-                    TextureMap.getSubId(HTMachineType.Single.ALLOY_FURNACE.block, "_front"),
+                    RagiumMachineTypes.Single.ALLOY_FURNACE.frontTexId,
                 ),
             )
         }
@@ -212,7 +215,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // machines
-        HTMachineType.getEntries().forEach { type: HTMachineType ->
+        /*HTMachineType.getEntries().forEach { type: HTMachineType ->
             val block: Block = type.block
             register(block) {
                 generator.registerNorthDefaultHorizontalRotated(
@@ -221,6 +224,18 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         type.tier.casingTex,
                         type.tier.baseTex,
                         TextureMap.getSubId(block, "_front"),
+                    ),
+                )
+            }
+        }*/
+        HTMachineBlockRegistry.registry.forEach { type: HTMachineType<*>, tier: HTMachineTier, machineBlock: HTBaseMachineBlock ->
+            register(machineBlock) { block: Block ->
+                generator.registerNorthDefaultHorizontalRotated(
+                    block,
+                    RagiumModels.createMachine(
+                        tier.casingTex,
+                        tier.baseTex,
+                        type.frontTexId,
                     ),
                 )
             }
@@ -285,22 +300,18 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.SOAP_INGOT)
         register(RagiumContents.RAW_RUBBER_BALL)
         register(RagiumContents.RAGI_CRYSTAL)
-        // dusts
-        RagiumContents.Dusts.entries
-            .map(RagiumContents.Dusts::asItem)
+        // circuits
+        RagiumContents.Circuit.entries
+            .map(RagiumContents.Circuit::asItem)
             .forEach(::register)
-        // ingots
-        RagiumContents.Ingots.entries
-            .map(RagiumContents.Ingots::asItem)
-            .forEach(::register)
-        // plates
-        RagiumContents.Plates.entries
-            .map(RagiumContents.Plates::asItem)
-            .forEach(::register)
+        // contents
+        buildList {
+            addAll(RagiumContents.Dusts.entries)
+            addAll(RagiumContents.Ingots.entries)
+            addAll(RagiumContents.Plates.entries)
+        }.map { it.asItem() }.forEach(::register)
         // elements
-        RagiElement.entries.forEach { element: RagiElement ->
-            register(element.dustItem)
-        }
+        RagiElement.entries.map(RagiElement::dustItem).forEach(::register)
         // fluids
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             register(fluid.asItem(), RagiumModels.FILLED_FLUID_CUBE)

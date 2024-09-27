@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/steel"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "ragium:ragi_crystal_dust"
+      }
+    },
+    {
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      }
+    }
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "min_tier": "basic",
+  "outputs": [
+    {
+      "item": "ragium:refined_ragi_steel_ingot"
+    }
+  ]
+}

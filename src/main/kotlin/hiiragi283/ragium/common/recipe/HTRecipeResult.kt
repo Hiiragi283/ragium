@@ -32,6 +32,7 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
     fun canAccept(other: ItemStack): Boolean = when {
         other.isEmpty -> true
         ItemStack.areItemsAndComponentsEqual(toStack(), other) -> true
+        other.count + this.count > other.maxCount -> false
         else -> false
     }
 
@@ -40,6 +41,7 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
         return when {
             !canAccept(other) -> other
             other.isEmpty -> stack
+            other.count + this.count > other.maxCount -> other.apply { count = other.maxCount }
             ItemStack.areItemsAndComponentsEqual(stack, other) -> other.apply { count += stack.count }
             else -> other
         }

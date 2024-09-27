@@ -17,7 +17,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(TODO(), pos, state),
+    HTBlockEntityBase(TODO(), pos, state),
     SidedStorageBlockEntity {
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, registryLookup)

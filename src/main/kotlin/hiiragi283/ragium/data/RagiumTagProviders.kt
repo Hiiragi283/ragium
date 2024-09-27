@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.tags.RagiumBlockTags
 import hiiragi283.ragium.common.tags.RagiumItemTags
 import hiiragi283.ragium.common.util.HTBlockContent
@@ -70,7 +69,7 @@ object RagiumTagProviders {
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             // ragium
             RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
-            HTMachineType.getEntries().forEach { add(RagiumBlockTags.MACHINES, it.block) }
+            // HTMachineType.getEntries().forEach { add(RagiumBlockTags.MACHINES, it.block) }
         }
     }
 
@@ -122,7 +121,7 @@ object RagiumTagProviders {
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
 
-            HTMachineType.getEntries().forEach { add(RagiumItemTags.MACHINES, it.block) }
+            // HTMachineType.getEntries().forEach { add(RagiumItemTags.MACHINES, it.block) }
         }
     }
 }

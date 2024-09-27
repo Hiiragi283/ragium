@@ -2,138 +2,95 @@ package hiiragi283.ragium.common.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.HTMachineBlock
-import hiiragi283.ragium.common.block.entity.machine.HTMultiMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSingleMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.electric.*
-import hiiragi283.ragium.common.block.entity.machine.heat.HTBlazingBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.heat.HTBrickBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.heat.HTRockGeneratorBlockEntity
+import hiiragi283.ragium.common.block.HTBaseMachineBlock
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.util.blockEntityType
-import hiiragi283.ragium.common.util.createCodec
-import hiiragi283.ragium.common.util.longText
+import hiiragi283.ragium.common.recipe.HTRecipeBase
 import io.netty.buffer.ByteBuf
-import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.item.Item
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
+import net.fabricmc.fabric.api.event.registry.RegistryAttribute
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.recipe.RecipeType
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
-import net.minecraft.util.StringIdentifiable
+import net.minecraft.util.Util
 
-sealed interface HTMachineType :
-    RecipeType<HTMachineRecipe>,
-    ItemConvertible,
-    StringIdentifiable {
+interface HTMachineType<T : HTRecipeBase<*>> {
     companion object {
+        @JvmField
+        val REGISTRY_KEY: RegistryKey<Registry<HTMachineType<*>>> = RegistryKey.ofRegistry(Ragium.id("machine"))
+
+        @JvmField
+        val REGISTRY: Registry<HTMachineType<*>> = FabricRegistryBuilder
+            .createSimple(REGISTRY_KEY)
+            .attribute(RegistryAttribute.SYNCED)
+            .buildAndRegister()
+
+        @JvmField
+        val CODEC: Codec<HTMachineType<*>> = REGISTRY.codec
+
+        @JvmField
+        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType<*>> = PacketCodecs.codec(CODEC)
+
         @JvmStatic
-        fun getEntries(): List<HTMachineType> = buildList {
-            addAll(Single.entries)
-            addAll(Multi.entries)
+        fun <T : HTRecipeBase<*>> register(type: HTMachineType<T>): HTMachineType<T> = Registry.register(REGISTRY, type.id, type)
+
+        @JvmStatic
+        fun <T : HTRecipeBase<*>> register(id: Identifier, recipeType: RecipeType<T>): HTMachineType<T> =
+            register(object : HTMachineType<T> {
+                override val id: Identifier = id
+                override val recipeType: RecipeType<T> = recipeType
+            })
+
+        init {
+            register(Default)
         }
-
-        @JvmField
-        val CODEC: Codec<HTMachineType> = getEntries().createCodec()
-
-        @JvmField
-        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType> = PacketCodecs.codec(CODEC)
     }
-
-    val tier: HTMachineTier
-    val blockEntityType: BlockEntityType<*>
-    val block: HTMachineBlock
 
     val id: Identifier
-        get() = Ragium.id(asString())
+    val frontTexId: Identifier
+        get() = id.withPath { "block/${it}_front" }
+
+    val recipeType: RecipeType<T>
+
     val translationKey: String
-        get() = "machine_type.${asString()}"
-    val text: Text
-        get() = Text.translatableWithFallback(translationKey, asString())
+        get() = Util.createTranslationKey("machine_type", id)
+    val text: MutableText
+        get() = Text.translatable(translationKey)
+    val nameText: MutableText
+        get() = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.WHITE)
 
-    fun appendTooltip(stack: ItemStack, lookup: RegistryWrapper.WrapperLookup?, consumer: (Text) -> Unit) {
-        consumer(Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.GRAY))
-        consumer(Text.translatable(RagiumTranslationKeys.MACHINE_TIER, tier.text).formatted(Formatting.GRAY))
-        consumer(
-            Text
-                .translatable(
-                    RagiumTranslationKeys.MACHINE_RECIPE_COST,
-                    longText(tier.recipeCost).formatted(Formatting.YELLOW),
-                ).formatted(Formatting.GRAY),
-        )
-        consumer(
-            Text
-                .translatable(
-                    RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY,
-                    longText(tier.energyCapacity).formatted(Formatting.YELLOW),
-                ).formatted(Formatting.GRAY),
-        )
+    fun appendTooltip(
+        stack: ItemStack,
+        lookup: RegistryWrapper.WrapperLookup?,
+        consumer: (Text) -> Unit,
+        tier: HTMachineTier,
+    ) {
+        consumer(nameText)
+        consumer(tier.tierText)
+        consumer(tier.recipeCostText)
+        consumer(tier.energyCapacityText)
     }
 
-    //    ItemConvertible    //
+    fun getBlock(tier: HTMachineTier): HTBaseMachineBlock? = HTMachineBlockRegistry.get(this, tier)
 
-    override fun asItem(): Item = block.asItem()
+    fun getBlockOrThrow(tier: HTMachineTier): HTBaseMachineBlock = HTMachineBlockRegistry.getOrThrow(this, tier)
 
-    //    Single    //
+    fun createConvertible(): ItemConvertible = ItemConvertible { getBlock(HTMachineTier.PRIMITIVE)?.asItem() ?: Items.AIR }
 
-    enum class Single(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<HTSingleMachineBlockEntity>) :
-        HTMachineType {
-        // tier2
-        ALLOY_FURNACE(HTMachineTier.BASIC, ::HTAlloyFurnaceBlockEntity),
-        ASSEMBLER(HTMachineTier.BASIC, ::HTAssemblerBlockEntity),
-        COMPRESSOR(HTMachineTier.BASIC, ::HTCompressorBlockEntity),
-        EXTRACTOR(HTMachineTier.BASIC, ::HTExtractorBlockEntity),
-        GRINDER(HTMachineTier.BASIC, ::HTGrinderBlockEntity),
-        METAL_FORMER(HTMachineTier.BASIC, ::HTMetalFormerBlockEntity),
-        MIXER(HTMachineTier.BASIC, ::HTMixerBlockEntity),
-        ROCK_GENERATOR(HTMachineTier.BASIC, ::HTRockGeneratorBlockEntity),
+    //    Default    //
 
-        // tier3
-        CENTRIFUGE(HTMachineTier.ADVANCED, ::HTCentrifugeBlockEntity),
-        CHEMICAL_REACTOR(HTMachineTier.ADVANCED, ::HTChemicalReactorBlockEntity),
-        ELECTROLYZER(HTMachineTier.ADVANCED, ::HTElectrolyzerBlockEntity),
-        ;
-
-        companion object {
-            @JvmField
-            val CODEC: Codec<Single> = StringIdentifiable.createCodec(Single::values)
-        }
-
-        override val blockEntityType: BlockEntityType<HTSingleMachineBlockEntity> = blockEntityType(factory)
-        override val block: HTMachineBlock = HTMachineBlock(this)
-
-        override fun asString(): String = name.lowercase()
-    }
-
-    //    Multi    //
-
-    enum class Multi(override val tier: HTMachineTier, factory: BlockEntityType.BlockEntityFactory<HTMultiMachineBlockEntity>) :
-        HTMachineType {
-        // tier1
-        BRICK_BLAST_FURNACE(HTMachineTier.PRIMITIVE, ::HTBrickBlastFurnaceBlockEntity),
-
-        // tier2
-        BLAZING_BLAST_FURNACE(HTMachineTier.BASIC, ::HTBlazingBlastFurnaceBlockEntity),
-
-        // tier3
-        ELECTRIC_BLAST_FURNACE(HTMachineTier.ADVANCED, ::HTElectricBlastFurnaceBlockEntity),
-        DISTILLATION_TOWER(HTMachineTier.ADVANCED, ::HTDistillationTowerBlockEntity),
-        ;
-
-        companion object {
-            val CODEC: Codec<Multi> = StringIdentifiable.createCodec(Multi::values)
-        }
-
-        override val blockEntityType: BlockEntityType<HTMultiMachineBlockEntity> =
-            blockEntityType(factory)
-        override val block: HTMachineBlock = HTMachineBlock(this)
-
-        override fun asString(): String = name.lowercase()
+    data object Default : HTMachineType<HTRecipeBase<*>> {
+        override val id: Identifier = Ragium.id("default")
+        override val recipeType: RecipeType<HTRecipeBase<*>>
+            get() = throw IllegalAccessException("Default HTMachineType does not support RecipeType!")
     }
 }

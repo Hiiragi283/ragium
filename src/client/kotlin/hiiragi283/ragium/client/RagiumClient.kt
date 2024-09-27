@@ -13,7 +13,7 @@ import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
-import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
@@ -76,10 +76,7 @@ object RagiumClient : ClientModInitializer {
             RagiumContents.BLAZING_BOX,
         )
 
-        HTMachineType
-            .getEntries()
-            .map(HTMachineType::block)
-            .forEach(RagiumClient::registerCutoutMipped)
+        HTMachineBlockRegistry.registry.values().forEach(RagiumClient::registerCutoutMipped)
 
         registerCutout(RagiumContents.RUBBER_SAPLING)
         registerCutout(RagiumContents.ITEM_DISPLAY)
@@ -91,9 +88,8 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
 
-        HTMachineType.Multi.entries
-            .map(HTMachineType.Multi::blockEntityType)
-            .forEach(::registerMultiblockRenderer)
+        registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
+        registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
 
         ColorProviderRegistry.BLOCK.register({ _: BlockState, world: BlockRenderView?, pos: BlockPos?, _: Int ->
             when {

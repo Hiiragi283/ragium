@@ -2,14 +2,10 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMaterials
-import hiiragi283.ragium.common.init.RagiumSaplingGenerators
-import hiiragi283.ragium.common.init.RagiumToolMaterials
-import hiiragi283.ragium.common.item.HTBackpackItem
-import hiiragi283.ragium.common.item.HTEnderBackpackItem
-import hiiragi283.ragium.common.item.HTFluidCubeItem
-import hiiragi283.ragium.common.item.HTForgeHammerItem
+import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
 import net.minecraft.block.*
@@ -19,7 +15,6 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import java.awt.Color
 import kotlin.jvm.optionals.getOrNull
@@ -165,6 +160,7 @@ object RagiumContents {
         initCoils()
         initMachines()
         initStorageBlocks()
+        initCircuits()
         initDusts()
         initIngots()
         initPlates()
@@ -349,19 +345,35 @@ object RagiumContents {
     //    Machines    //
 
     @JvmStatic
-    fun initMachines() {
-        HTMachineType.getEntries().forEach { type: HTMachineType ->
-            val id: Identifier = type.id
-            val block: Block = type.block
-            // Machine Block
-            registerBlock(id.path, block)
-            registerBlockItem(block)
-            // BlockEntityType
-            Registry.register(Registries.BLOCK_ENTITY_TYPE, id, type.blockEntityType)
-            type.blockEntityType.addSupportedBlock(block)
-            // RecipeType
-            Registry.register(Registries.RECIPE_TYPE, id, type)
+    private fun initMachines() {
+        HTMachineTier.entries.forEach { tier: HTMachineTier ->
+            // single
+            RagiumMachineTypes.Single.entries.forEach { type: RagiumMachineTypes.Single ->
+                registerMachine(type, tier, ::HTSingleMachineBlock)
+            }
+            // blast furnace
+            registerMachine(
+                RagiumMachineTypes.BLAST_FURNACE,
+                tier,
+            ) { _: HTMachineType<*>, tier1: HTMachineTier -> HTBlastFurnaceBlock(tier1) }
+            // distillation tower
+            registerMachine(
+                RagiumMachineTypes.DISTILLATION_TOWER,
+                tier,
+            ) { _: HTMachineType<*>, tier1: HTMachineTier -> HTDistillationTowerBlock(tier1) }
         }
+    }
+
+    @JvmStatic
+    private fun registerMachine(
+        type: HTMachineType<*>,
+        tier: HTMachineTier,
+        factory: (HTMachineType<*>, HTMachineTier) -> HTBaseMachineBlock,
+    ) {
+        val name: String = tier.createId(type).path
+        val machineBlock: HTBaseMachineBlock = registerBlock(name, factory(type, tier))
+        registerItem(name, HTMachineBlockItem(machineBlock, itemSettings()))
+        HTMachineBlockRegistry.register(machineBlock)
     }
 
     //    Storage Blocks    //
@@ -383,6 +395,28 @@ object RagiumContents {
         StorageBlocks.entries.forEach { block: StorageBlocks ->
             registerBlock("${block.name.lowercase()}_block", block.block)
             registerBlockItem(block.block, itemSettings().tier(block.material.tier))
+        }
+    }
+
+    //    Circuits    //
+
+    enum class Circuit(val tier: HTMachineTier) :
+        HTTranslationProvider by tier,
+        ItemConvertible {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        private val item: Item = Item(itemSettings())
+
+        override fun asItem(): Item = item
+    }
+
+    @JvmStatic
+    private fun initCircuits() {
+        Circuit.entries.forEach { circuit: Circuit ->
+            registerItem("${circuit.name.lowercase()}_circuit", circuit.asItem())
         }
     }
 

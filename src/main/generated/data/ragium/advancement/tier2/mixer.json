@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:mixer"
+            "items": "ragium:basic_mixer"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:mixer"
+      "id": "ragium:basic_mixer"
     },
     "title": {
       "translate": "advancement.ragium.tier2.mixer"

@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "compressor",
+  "machine_type": "ragium:compressor",
   "outputs": [
     {
       "item": "ragium:honey_fluid_cube"

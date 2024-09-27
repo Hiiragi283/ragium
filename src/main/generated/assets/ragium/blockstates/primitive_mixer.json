@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ragium:block/primitive_mixer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/primitive_mixer"
+    },
+    "facing=south": {
+      "model": "ragium:block/primitive_mixer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/primitive_mixer",
+      "y": 270
+    }
+  }
+}

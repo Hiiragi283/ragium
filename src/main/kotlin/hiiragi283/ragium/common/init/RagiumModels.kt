@@ -86,7 +86,7 @@ object RagiumModels {
     val HULL_TEXTURE_FACTORY: TexturedModel.Factory =
         TexturedModel.makeFactory({ block: Block ->
             val tier: HTMachineTier =
-                block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.NONE)
+                block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.PRIMITIVE)
             textureMap {
                 put(TextureKey.TOP, tier.casingTex)
                 put(TextureKey.BOTTOM, tier.baseTex)

@@ -3,9 +3,10 @@
   "criteria": {
     "build_multiblock": {
       "conditions": {
-        "machine_type": "blazing_blast_furnace"
+        "machine_type": "ragium:blast_furnace",
+        "min_tier": "basic"
       },
-      "trigger": "ragium:build_multiblock"
+      "trigger": "ragium:build_machine"
     }
   },
   "display": {
@@ -14,7 +15,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:blazing_blast_furnace"
+      "id": "ragium:basic_blast_furnace"
     },
     "title": {
       "translate": "advancement.ragium.tier2.blazing_blast_furnace"

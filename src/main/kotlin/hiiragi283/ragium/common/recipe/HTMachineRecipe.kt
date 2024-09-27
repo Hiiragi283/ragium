@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
@@ -13,7 +15,8 @@ import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.world.World
 
 class HTMachineRecipe(
-    val type: HTMachineType,
+    val type: HTMachineType<*>,
+    val minTier: HTMachineTier,
     override val inputs: List<WeightedIngredient>,
     override val outputs: List<HTRecipeResult>,
     val catalyst: Ingredient,
@@ -25,6 +28,9 @@ class HTMachineRecipe(
                 instance
                     .group(
                         HTMachineType.CODEC.fieldOf("machine_type").forGetter(HTMachineRecipe::type),
+                        HTMachineTier.CODEC
+                            .optionalFieldOf("min_tier", HTMachineTier.PRIMITIVE)
+                            .forGetter(HTMachineRecipe::minTier),
                         WeightedIngredient.CODEC
                             .listOf()
                             .fieldOf("inputs")
@@ -44,6 +50,8 @@ class HTMachineRecipe(
             PacketCodec.tuple(
                 HTMachineType.PACKET_CODEC,
                 HTMachineRecipe::type,
+                HTMachineTier.PACKET_CODEC,
+                HTMachineRecipe::minTier,
                 WeightedIngredient.LIST_PACKET_CODEC,
                 HTMachineRecipe::inputs,
                 HTRecipeResult.LIST_PACKET_CODEC,
@@ -57,17 +65,18 @@ class HTMachineRecipe(
     //    Recipe    //
 
     override fun matches(input: Input, world: World): Boolean = input.matches(
+        minTier,
         getInput(0),
         getInput(1),
         getInput(2),
         catalyst,
     )
 
-    override fun createIcon(): ItemStack = type.block.asItem().defaultStack
+    override fun createIcon(): ItemStack = type.getBlock(minTier)?.asItem()?.defaultStack ?: ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = Serializer
 
-    override fun getType(): RecipeType<*> = type
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MACHINE
 
     object Serializer : RecipeSerializer<HTMachineRecipe> {
         override fun codec(): MapCodec<HTMachineRecipe> = CODEC
@@ -78,17 +87,20 @@ class HTMachineRecipe(
     //    Input    //
 
     class Input(
+        private val minTier: HTMachineTier,
         private val first: ItemStack,
         private val second: ItemStack,
         private val third: ItemStack,
         private val catalyst: ItemStack,
     ) : RecipeInput {
         fun matches(
+            minTier: HTMachineTier,
             first: WeightedIngredient?,
             second: WeightedIngredient?,
             third: WeightedIngredient?,
             catalyst: Ingredient?,
         ): Boolean = matchesInternal(
+            minTier,
             first ?: WeightedIngredient.EMPTY,
             second ?: WeightedIngredient.EMPTY,
             third ?: WeightedIngredient.EMPTY,
@@ -96,11 +108,13 @@ class HTMachineRecipe(
         )
 
         private fun matchesInternal(
+            currentTier: HTMachineTier,
             first: WeightedIngredient,
             second: WeightedIngredient,
             third: WeightedIngredient,
             catalyst: Ingredient,
         ): Boolean = when {
+            minTier > currentTier -> false
             !first.test(this.first) -> false
             !second.test(this.second) -> false
             !third.test(this.third) -> false

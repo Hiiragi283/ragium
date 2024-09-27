@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -12,7 +12,7 @@
       }
     }
   ],
-  "machine_type": "centrifuge",
+  "machine_type": "ragium:centrifuge",
   "outputs": [
     {
       "item": "minecraft:sand"

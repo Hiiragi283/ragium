@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:refined_ragi_steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:crafting_table"
+    },
+    "C": {
+      "item": "ragium:refined_ragi_steel_hull"
+    },
+    "D": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:primitive_chemical_reactor"
+  }
+}

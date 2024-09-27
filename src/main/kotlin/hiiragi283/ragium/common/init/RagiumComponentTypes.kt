@@ -5,6 +5,7 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.machine.HTMachineType
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -19,6 +20,10 @@ object RagiumComponentTypes {
     @JvmField
     val INVENTORY: ComponentType<HTSimpleInventory> =
         register("inventory", HTSimpleInventory.CODEC, HTSimpleInventory.PACKET_CODEC)
+
+    @JvmField
+    val MACHINE_TYPE: ComponentType<HTMachineType<*>> =
+        register("machine_type", HTMachineType.CODEC, HTMachineType.PACKET_CODEC)
 
     @JvmField
     val TIER: ComponentType<HTMachineTier> =

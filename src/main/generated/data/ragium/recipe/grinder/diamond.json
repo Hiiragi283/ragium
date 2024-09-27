@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -7,7 +7,7 @@
       }
     }
   ],
-  "machine_type": "grinder",
+  "machine_type": "ragium:grinder",
   "outputs": [
     {
       "count": 2,

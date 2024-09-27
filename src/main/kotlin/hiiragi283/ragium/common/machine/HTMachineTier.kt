@@ -2,13 +2,18 @@ package hiiragi283.ragium.common.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.util.HTTranslationProvider
+import hiiragi283.ragium.common.util.longText
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.data.client.ModelIds
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.registry.Registries
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
@@ -16,15 +21,47 @@ import net.minecraft.util.function.ValueLists
 import java.util.function.IntFunction
 
 enum class HTMachineTier(
+    private val idPattern: String,
+    override val enName: String,
+    override val jaName: String,
     val casingTex: Identifier,
     val baseBlock: Block,
     val recipeCost: Long,
+    val tickRate: Int,
     rarity: Rarity,
-) : StringIdentifiable {
-    NONE(Ragium.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, Rarity.COMMON),
-    PRIMITIVE(Ragium.id("block/ragi_alloy_block"), Blocks.BRICKS, 320, Rarity.UNCOMMON),
-    BASIC(Ragium.id("block/ragi_steel_block"), Blocks.POLISHED_BLACKSTONE_BRICKS, 1280, Rarity.RARE),
-    ADVANCED(Ragium.id("block/refined_ragi_steel_block"), Blocks.END_STONE_BRICKS, 5120, Rarity.EPIC),
+) : StringIdentifiable,
+    HTTranslationProvider {
+    // NONE(Ragium.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
+    PRIMITIVE(
+        "primitive_%s",
+        "Primitive",
+        "簡易",
+        Ragium.id("block/ragi_alloy_block"),
+        Blocks.BRICKS,
+        320,
+        200,
+        Rarity.COMMON,
+    ),
+    BASIC(
+        "basic_%s",
+        "Basic",
+        "基本",
+        Ragium.id("block/ragi_steel_block"),
+        Blocks.POLISHED_BLACKSTONE_BRICKS,
+        1280,
+        150,
+        Rarity.UNCOMMON,
+    ),
+    ADVANCED(
+        "advanced_%s",
+        "Advanced",
+        "発展",
+        Ragium.id("block/refined_ragi_steel_block"),
+        Blocks.END_STONE_BRICKS,
+        5120,
+        100,
+        Rarity.RARE,
+    ),
     ;
 
     companion object {
@@ -44,12 +81,29 @@ enum class HTMachineTier(
             PacketCodecs.indexed(INT_FUNCTION, HTMachineTier::ordinal)
     }
 
-    val baseTex: Identifier = ModelIds.getBlockModelId(baseBlock)
+    val energyCapacity: Long = recipeCost * 16
+
+    val baseTex: Identifier = Registries.BLOCK.getId(baseBlock).withPrefixedPath("block/")
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
-    val text: Text = Text.translatable(translationKey).formatted(rarity.formatting)
+    val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)
+    val tierText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_TIER, text).formatted(Formatting.GRAY)
+    val recipeCostText: MutableText = Text
+        .translatable(
+            RagiumTranslationKeys.MACHINE_RECIPE_COST,
+            longText(recipeCost).formatted(Formatting.YELLOW),
+        ).formatted(Formatting.GRAY)
+    val energyCapacityText: MutableText = Text
+        .translatable(
+            RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY,
+            longText(energyCapacity).formatted(Formatting.YELLOW),
+        ).formatted(Formatting.GRAY)
 
-    val energyCapacity: Long = recipeCost * 16
+    val prefixKey = "$translationKey.prefix"
+
+    fun createPrefixedText(type: HTMachineType<*>): MutableText = Text.translatable(prefixKey, type.text)
+
+    fun createId(type: HTMachineType<*>): Identifier = type.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
     //    StringIdentifiable    //
 

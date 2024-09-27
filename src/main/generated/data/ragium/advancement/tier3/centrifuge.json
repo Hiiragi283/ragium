@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:centrifuge"
+            "items": "ragium:basic_centrifuge"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:centrifuge"
+      "id": "ragium:basic_centrifuge"
     },
     "title": {
       "translate": "advancement.ragium.tier3.centrifuge"

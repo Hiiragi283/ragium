@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "count": 4,
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "mixer",
+  "machine_type": "ragium:mixer",
   "outputs": [
     {
       "count": 4,

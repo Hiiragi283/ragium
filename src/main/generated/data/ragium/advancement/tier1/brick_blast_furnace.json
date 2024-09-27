@@ -3,9 +3,9 @@
   "criteria": {
     "build_multiblock": {
       "conditions": {
-        "machine_type": "brick_blast_furnace"
+        "machine_type": "ragium:blast_furnace"
       },
-      "trigger": "ragium:build_multiblock"
+      "trigger": "ragium:build_machine"
     }
   },
   "display": {
@@ -14,7 +14,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:brick_blast_furnace"
+      "id": "ragium:primitive_blast_furnace"
     },
     "title": {
       "translate": "advancement.ragium.tier1.brick_blast_furnace"

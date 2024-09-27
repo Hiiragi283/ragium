@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumMaterials
+import hiiragi283.ragium.common.machine.HTMachineTier
 
 interface HTTranslationFormatter {
     val enPattern: String
@@ -12,8 +13,22 @@ interface HTTranslationFormatter {
         HTLangType.JA_JP -> jaPattern
     }.replace("%s", provider.getTranslation(type))
 
-    interface Material : HTTranslationFormatter {
+    interface Holder : HTTranslationFormatter {
+        val provider: HTTranslationProvider
+    }
+
+    interface Tier : Holder {
+        val tier: HTMachineTier
+
+        override val provider: HTTranslationProvider
+            get() = tier
+    }
+
+    interface Material : Holder {
         val material: RagiumMaterials
+
+        override val provider: HTTranslationProvider
+            get() = material
 
         fun getTranslation(type: HTLangType): String = getTranslation(type, material)
     }

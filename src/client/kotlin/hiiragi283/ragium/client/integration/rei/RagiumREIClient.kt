@@ -11,7 +11,10 @@ import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
+import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.item.HTFluidCubeItem
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
 import hiiragi283.ragium.common.recipe.HTInfusionRecipe
@@ -26,9 +29,11 @@ import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry
 import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandler
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
+import me.shedaniel.rei.api.common.entry.EntryStack
 import me.shedaniel.rei.api.common.util.EntryStacks
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryKey
 import net.minecraft.world.biome.Biome
 
@@ -46,31 +51,31 @@ object RagiumREIClient : REIClientPlugin {
     val ALCHEMY: CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> =
         CategoryIdentifier.of(Ragium.MOD_ID, "alchemical_infusion")
 
-    private val CATEGORY_IDS: Map<HTMachineType, CategoryIdentifier<HTMachineRecipeDisplay>> =
-        HTMachineType.getEntries().associateWith { CategoryIdentifier.of(it.id) }
-
     @JvmStatic
-    fun getCategoryId(type: HTMachineType): CategoryIdentifier<HTMachineRecipeDisplay> = CATEGORY_IDS[type]!!
+    fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> =
+        HTMachineType.REGISTRY.map { CategoryIdentifier.of<HTMachineRecipeDisplay>(it.id) }
 
     @JvmStatic
     fun forEachId(action: (CategoryIdentifier<HTMachineRecipeDisplay>) -> Unit) {
-        CATEGORY_IDS.values.forEach(action)
+        getMachineIds().forEach(action)
     }
 
     //    REIClientPlugin    //
 
     override fun registerCategories(registry: CategoryRegistry) {
         // Machines
-        HTMachineType.getEntries().forEach { type: HTMachineType ->
+        HTMachineType.REGISTRY.forEach { type: HTMachineType<*> ->
             registry.add(HTMachineRecipeCategory(type))
-            registry.addWorkstations(type.categoryId, EntryStacks.of(type))
+            HTMachineTier.entries.mapNotNull(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
+                registry.addWorkstations(type.categoryId, stack)
+            }
         }
         registry.addWorkstations(
-            HTMachineType.Single.GRINDER.categoryId,
+            RagiumMachineTypes.Single.GRINDER.categoryId,
             EntryStacks.of(RagiumContents.MANUAL_GRINDER),
         )
         registry.addWorkstations(
-            HTMachineType.Single.ALLOY_FURNACE.categoryId,
+            RagiumMachineTypes.Single.ALLOY_FURNACE.categoryId,
             EntryStacks.of(RagiumContents.BRICK_ALLOY_FURNACE),
         )
         // Fluid Pump
@@ -82,16 +87,26 @@ object RagiumREIClient : REIClientPlugin {
 
     override fun registerDisplays(registry: DisplayRegistry) {
         // Machines
-        HTMachineType.getEntries().forEach { type: HTMachineType ->
-            registry.registerRecipeFiller(HTMachineRecipe::class.java, type, ::HTMachineRecipeDisplay)
-        }
+        registry.registerRecipeFiller(
+            HTMachineRecipe::class.java,
+            RagiumRecipeTypes.MACHINE,
+            ::HTMachineRecipeDisplay,
+        )
         // Fluid Pumps
         HTFluidPumpEntryLoader.registry.forEach { (biomeKey: RegistryKey<Biome>, item: HTFluidCubeItem) ->
             registry.add(HTFluidPumpCategory.FluidDisplay(biomeKey, item))
         }
         // Alchemy Infusion
-        registry.registerRecipeFiller(HTInfusionRecipe::class.java, HTAlchemyRecipe.Type, ::HTInfusionRecipeDisplay)
-        registry.registerRecipeFiller(HTTransformRecipe::class.java, HTAlchemyRecipe.Type, ::HTTransformRecipeDisplay)
+        registry.registerRecipeFiller(
+            HTInfusionRecipe::class.java,
+            RagiumRecipeTypes.ALCHEMY,
+            ::HTInfusionRecipeDisplay,
+        )
+        registry.registerRecipeFiller(
+            HTTransformRecipe::class.java,
+            RagiumRecipeTypes.ALCHEMY,
+            ::HTTransformRecipeDisplay,
+        )
     }
 
     override fun registerScreens(registry: ScreenRegistry) {
@@ -99,7 +114,7 @@ object RagiumREIClient : REIClientPlugin {
         registry.registerContainerClickArea(
             Rectangle(5 + 18 * 4, 5 + 18 * 1, 18, 18),
             HTMachineScreen::class.java,
-            *CATEGORY_IDS.values.toTypedArray(),
+            *getMachineIds().toTypedArray(),
         )
     }
 

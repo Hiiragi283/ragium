@@ -10,7 +10,7 @@ import net.minecraft.registry.Registry
 
 object RagiumRecipeSerializers {
     @JvmField
-    val MACHINE: HTMachineRecipe.Serializer = register("generic", HTMachineRecipe.Serializer)
+    val MACHINE: HTMachineRecipe.Serializer = register("machine", HTMachineRecipe.Serializer)
 
     @JvmField
     val INFUSION: HTInfusionRecipe.Serializer = register("alchemical_infusion", HTInfusionRecipe.Serializer)

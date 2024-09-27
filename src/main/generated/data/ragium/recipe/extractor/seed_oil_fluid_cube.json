@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "count": 4,
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "extractor",
+  "machine_type": "ragium:extractor",
   "outputs": [
     {
       "item": "ragium:seed_oil_fluid_cube"

@@ -28,7 +28,7 @@ object RagiumMachineConditions {
     val ELECTRIC: (World, BlockPos) -> Boolean = { world: World, pos: BlockPos ->
         RagiumEnergyProviders.ENERGY
         val blockEntity: BlockEntity? = world.getBlockEntity(pos)
-        (blockEntity as? HTTypedMachineBlockEntity<*>)?.machineType?.tier?.recipeCost?.let { recipeCost: Long ->
+        (blockEntity as? HTMachineBlockEntityBase)?.tier?.recipeCost?.let { recipeCost: Long ->
             RagiumEnergyProviders.ENERGY
                 .find(world, pos, world.getBlockState(pos), blockEntity, null)
                 ?.amount

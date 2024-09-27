@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "count": 4,
@@ -8,7 +8,7 @@
       }
     }
   ],
-  "machine_type": "grinder",
+  "machine_type": "ragium:grinder",
   "outputs": [
     {
       "item": "ragium:sulfur_dust"

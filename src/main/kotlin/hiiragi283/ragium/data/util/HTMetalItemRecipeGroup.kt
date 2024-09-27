@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.util
 
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -84,7 +84,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(plate).withPrefixedPath("shaped/"))
         // Metal Former Recipe
-        HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
+        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.METAL_FORMER)
             .addInput(ingot)
             .addOutput(plate)
             // .setCatalyst(RagiumItems.PLATE_SHAPE)
@@ -105,7 +105,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             ).criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(rod).withPrefixedPath("smithing/"))
         // Metal Former Recipe
-        HTMachineRecipeJsonBuilder(HTMachineType.Single.METAL_FORMER)
+        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.METAL_FORMER)
             .addInput(ingot)
             .addOutput(rod, 2)
             // .setCatalyst(RagiumItems.ROD_SHAPE)
@@ -116,7 +116,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         val rawMaterial: Item = get(Variant.RAW_MATERIAL) ?: return
         val ore: Item = get(Variant.ORE) ?: return
         // Grinder Recipe
-        HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
+        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.GRINDER)
             .addInput(ore)
             .addOutput(rawMaterial)
             .addOutput(rawMaterial, 4)
@@ -127,7 +127,7 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         val dust: Item = get(Variant.DUST) ?: return
         val rawMaterial: Item = get(Variant.RAW_MATERIAL) ?: return
         // Grinder Recipe
-        HTMachineRecipeJsonBuilder(HTMachineType.Single.GRINDER)
+        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.GRINDER)
             .addInput(rawMaterial)
             .addOutput(dust)
             .addOutput(dust)

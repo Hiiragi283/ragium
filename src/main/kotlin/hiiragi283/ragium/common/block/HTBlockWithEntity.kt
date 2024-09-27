@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.block.entity.HTBaseBlockEntity
+import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
@@ -21,13 +21,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Settings) :
+abstract class HTBlockWithEntity(settings: Settings) :
     Block(settings),
     BlockEntityProvider {
     companion object {
         @JvmField
-        val TICKER: BlockEntityTicker<out HTBaseBlockEntity> =
-            BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, blockEntity: HTBaseBlockEntity ->
+        val TICKER: BlockEntityTicker<HTBlockEntityBase> =
+            BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, blockEntity: HTBlockEntityBase ->
                 blockEntity.tick(world, pos, state)
             }
 
@@ -43,14 +43,16 @@ abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Setting
         } as? BlockEntityTicker<A>
 
         @JvmStatic
-        fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(type, settings) {
+        fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
             init {
                 type.addSupportedBlock(this)
             }
+
+            override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity? = type.instantiate(pos, state)
         }
 
         @JvmStatic
-        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(type, settings) {
+        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
             init {
                 type.addSupportedBlock(this)
                 defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
@@ -68,6 +70,8 @@ abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Setting
 
             override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
                 state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
+
+            override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity? = type.instantiate(pos, state)
         }
     }
 
@@ -80,7 +84,7 @@ abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Setting
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = (world.getBlockEntity(pos) as? HTBaseBlockEntity)?.onUse(state, world, pos, player, hit) ?: ActionResult.PASS
+    ): ActionResult = (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onUse(state, world, pos, player, hit) ?: ActionResult.PASS
 
     override fun onStateReplaced(
         state: BlockState,
@@ -94,12 +98,12 @@ abstract class HTBlockWithEntity(val type: BlockEntityType<*>, settings: Setting
     }
 
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
-        (world.getBlockEntity(pos) as? HTBaseBlockEntity)?.getComparatorOutput(state, world, pos) ?: 0
+        (world.getBlockEntity(pos) as? HTBlockEntityBase)?.getComparatorOutput(state, world, pos) ?: 0
 
     override fun hasComparatorOutput(state: BlockState): Boolean = true
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = type.instantiate(pos, state)
-
     override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
-        validateTicker(type, this.type, TICKER)
+        BlockEntityTicker { world1: World, pos: BlockPos, state1: BlockState, blockEntity: T ->
+            (blockEntity as? HTBlockEntityBase)?.let { TICKER.tick(world1, pos, state1, it) }
+        }
 }

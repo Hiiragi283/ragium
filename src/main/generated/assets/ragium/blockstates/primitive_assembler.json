@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ragium:block/primitive_assembler",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/primitive_assembler"
+    },
+    "facing=south": {
+      "model": "ragium:block/primitive_assembler",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/primitive_assembler",
+      "y": 270
+    }
+  }
+}

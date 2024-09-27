@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 4,
+      "ingredient": {
+        "tag": "c:gems/quartz"
+      }
+    },
+    {
+      "ingredient": {
+        "tag": "minecraft:coals"
+      }
+    }
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "min_tier": "basic",
+  "outputs": [
+    {
+      "item": "ragium:silicon_plate"
+    }
+  ]
+}

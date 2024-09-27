@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state),
+    HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state),
     HTDelegatedInventory {
     override fun onUse(
         state: BlockState,
@@ -36,6 +36,6 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
         .buildSided()
 
     override fun markDirty() {
-        super<HTBaseBlockEntity>.markDirty()
+        super<HTBlockEntityBase>.markDirty()
     }
 }

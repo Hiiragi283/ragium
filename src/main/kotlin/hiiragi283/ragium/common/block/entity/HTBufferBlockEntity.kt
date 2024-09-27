@@ -14,7 +14,7 @@ import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.SimpleSidedEnergyContainer
 
 class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(RagiumBlockEntityTypes.BUFFER, pos, state),
+    HTBlockEntityBase(RagiumBlockEntityTypes.BUFFER, pos, state),
     HTDelegatedInventory,
     HTEnergyStorageHolder {
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
@@ -35,7 +35,7 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
             .buildSided()
 
     override fun markDirty() {
-        super<HTBaseBlockEntity>.markDirty()
+        super<HTBlockEntityBase>.markDirty()
     }
 
     //    HTEnergyStorageHolder    //

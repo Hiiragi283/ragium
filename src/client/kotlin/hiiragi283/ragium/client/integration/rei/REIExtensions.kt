@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.recipe.WeightedIngredient
@@ -20,8 +21,12 @@ val dynamicRegistry: () -> DynamicRegistryManager
 
 //    CategoryIdentifier    //
 
-val HTMachineType.categoryId: CategoryIdentifier<HTMachineRecipeDisplay>
-    get() = RagiumREIClient.getCategoryId(this)
+val HTMachineType<*>.categoryId: CategoryIdentifier<HTMachineRecipeDisplay>
+    get() = CategoryIdentifier.of(id)
+
+//    EntryStack    //
+
+fun HTMachineType<*>.createEntryStack(tier: HTMachineTier): EntryStack<ItemStack>? = getBlock(tier)?.let(EntryStacks::of)
 
 //    WeightedIngredient    //
 

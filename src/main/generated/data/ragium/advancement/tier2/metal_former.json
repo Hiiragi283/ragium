@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:metal_former"
+            "items": "ragium:basic_metal_former"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:metal_former"
+      "id": "ragium:basic_metal_former"
     },
     "title": {
       "translate": "advancement.ragium.tier2.metal_former"

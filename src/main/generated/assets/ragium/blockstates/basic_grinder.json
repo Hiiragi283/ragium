@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ragium:block/basic_grinder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/basic_grinder"
+    },
+    "facing=south": {
+      "model": "ragium:block/basic_grinder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ragium:block/basic_grinder",
+      "y": 270
+    }
+  }
+}

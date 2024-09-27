@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -17,7 +17,7 @@
       }
     }
   ],
-  "machine_type": "mixer",
+  "machine_type": "ragium:mixer",
   "outputs": [
     {
       "item": "minecraft:white_concrete_powder"

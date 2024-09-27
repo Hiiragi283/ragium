@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "tag": "minecraft:coals"
+      }
+    }
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "outputs": [
+    {
+      "item": "ragium:steel_ingot"
+    }
+  ]
+}

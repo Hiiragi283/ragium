@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:extractor"
+            "items": "ragium:basic_extractor"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:extractor"
+      "id": "ragium:basic_extractor"
     },
     "title": {
       "translate": "advancement.ragium.tier2.extractor"

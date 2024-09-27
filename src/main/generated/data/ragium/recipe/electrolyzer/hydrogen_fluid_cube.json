@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "electrolyzer",
+  "machine_type": "ragium:electrolyzer",
   "outputs": [
     {
       "count": 2,

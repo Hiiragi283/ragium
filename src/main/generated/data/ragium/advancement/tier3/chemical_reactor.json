@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:chemical_reactor"
+            "items": "ragium:basic_chemical_reactor"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:chemical_reactor"
+      "id": "ragium:basic_chemical_reactor"
     },
     "title": {
       "translate": "advancement.ragium.tier3.chemical_reactor"

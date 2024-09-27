@@ -26,4 +26,6 @@ object RagiumTranslationKeys {
     const val CONFIG_JADE_BURNING_BOX = "config.jade.plugin_ragium.burning_box"
 
     //    REI    //
+
+    const val REI_RECIPE_INFO = "tooltip.ragium.recipe_info"
 }

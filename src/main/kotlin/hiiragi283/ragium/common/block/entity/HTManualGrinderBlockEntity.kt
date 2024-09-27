@@ -2,8 +2,9 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
+import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.inventory.*
-import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.util.dropStackAt
 import hiiragi283.ragium.common.util.modifyBlockState
@@ -20,7 +21,7 @@ import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
+    HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
     HTDelegatedInventory {
     override fun onUse(
         state: BlockState,
@@ -48,7 +49,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .buildSided()
     private val matchGetter: RecipeManager.MatchGetter<HTMachineRecipe.Input, HTMachineRecipe> =
-        RecipeManager.createCachedMatchGetter(HTMachineType.Single.GRINDER)
+        RecipeManager.createCachedMatchGetter(RagiumMachineTypes.Single.GRINDER.recipeType)
 
     fun process(player: PlayerEntity) {
         val world: World = world ?: return
@@ -56,6 +57,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             matchGetter
                 .getFirstMatch(
                     HTMachineRecipe.Input(
+                        HTMachineTier.PRIMITIVE,
                         getStack(0),
                         ItemStack.EMPTY,
                         ItemStack.EMPTY,
@@ -77,6 +79,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun markDirty() {
-        super<HTBaseBlockEntity>.markDirty()
+        super<HTBlockEntityBase>.markDirty()
     }
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTBlockPredicate
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
@@ -26,7 +27,7 @@ import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
 class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBaseBlockEntity(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER, pos, state),
+    HTBlockEntityBase(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER, pos, state),
     HTDelegatedInventory,
     HTMultiblockController,
     NamedScreenHandlerFactory {
@@ -48,7 +49,7 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
             )
             val recipe: HTAlchemyRecipe =
                 world.recipeManager
-                    .getFirstMatch(HTAlchemyRecipe.Type, input, world)
+                    .getFirstMatch(RagiumRecipeTypes.ALCHEMY, input, world)
                     .map(RecipeEntry<HTAlchemyRecipe>::value)
                     .getOrNull() ?: return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
             if (!canAcceptOutput(input, world, recipe)) return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
@@ -100,7 +101,7 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         .buildSided()
 
     override fun markDirty() {
-        super<HTBaseBlockEntity>.markDirty()
+        super<HTBlockEntityBase>.markDirty()
     }
 
     //    HTMultiblockController    //

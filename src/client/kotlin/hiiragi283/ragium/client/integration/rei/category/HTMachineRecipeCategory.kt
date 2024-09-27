@@ -2,25 +2,41 @@ package hiiragi283.ragium.client.integration.rei.category
 
 import hiiragi283.ragium.client.integration.rei.categoryId
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
+import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
+import me.shedaniel.rei.api.client.gui.widgets.Tooltip
 import me.shedaniel.rei.api.client.gui.widgets.Widget
 import me.shedaniel.rei.api.client.gui.widgets.Widgets
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
+import me.shedaniel.rei.api.common.entry.EntryStack
 import me.shedaniel.rei.api.common.util.EntryIngredients
 import me.shedaniel.rei.api.common.util.EntryStacks
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.component.ComponentChanges
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
+import net.minecraft.registry.Registries
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 
 @Environment(EnvType.CLIENT)
-class HTMachineRecipeCategory(val type: HTMachineType) : HTDisplayCategory<HTMachineRecipeDisplay> {
+class HTMachineRecipeCategory(private val type: HTMachineType<*>) : HTDisplayCategory<HTMachineRecipeDisplay> {
     override fun getCategoryIdentifier(): CategoryIdentifier<out HTMachineRecipeDisplay> = type.categoryId
 
     override fun getTitle(): Text = type.text
 
-    override fun getIcon(): Renderer = EntryStacks.of(type)
+    override fun getIcon(): Renderer = HTMachineBlockRegistry.get(type, HTMachineTier.BASIC)?.let { EntryStacks.of(it) }
+        ?: EntryStacks.of(RagiumContents.Hulls.RAGI_ALLOY)
 
     override fun setupDisplay(display: HTMachineRecipeDisplay, bounds: Rectangle): List<Widget> = buildList {
         this += Widgets.createRecipeBase(bounds)
@@ -63,6 +79,28 @@ class HTMachineRecipeCategory(val type: HTMachineType) : HTDisplayCategory<HTMac
                 .createSlot(getPoint(bounds, 7, 0))
                 .entries(display.outputEntries.getOrNull(2) ?: listOf())
                 .markOutput()
+        // info
+        this +=
+            Widgets
+                .createSlot(getPoint(bounds, 7, 1))
+                .entries(listOf(createInfoEntry(display.recipe)))
+                .markOutput()
+    }
+
+    private fun createInfoEntry(recipe: HTMachineRecipe): EntryStack<*> {
+        val entry: RegistryEntry<Item> = Registries.ITEM.getEntry(Items.WRITABLE_BOOK)
+        val components: ComponentChanges = ComponentChanges
+            .builder()
+            .add(
+                DataComponentTypes.ITEM_NAME,
+                Text.translatable(RagiumTranslationKeys.REI_RECIPE_INFO).formatted(Formatting.LIGHT_PURPLE),
+            ).build()
+        val stack = ItemStack(entry, 1, components)
+        val tier: HTMachineTier = recipe.minTier
+        return EntryStacks.of(stack).tooltipProcessor { _: EntryStack<ItemStack>, tooltip: Tooltip ->
+            tooltip.add(tier.tierText)
+            tooltip.add(tier.recipeCostText)
+        }
     }
 
     override fun getDisplayHeight(): Int = 18 * 2 + 8

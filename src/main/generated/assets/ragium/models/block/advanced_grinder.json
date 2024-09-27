@@ -1,0 +1,8 @@
+{
+  "parent": "ragium:block/machine",
+  "textures": {
+    "bottom": "minecraft:block/end_stone_bricks",
+    "front": "ragium:block/grinder_front",
+    "top": "ragium:block/refined_ragi_steel_block"
+  }
+}

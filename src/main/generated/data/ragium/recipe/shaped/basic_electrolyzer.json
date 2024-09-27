@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:refined_ragi_steel_ingot"
+    },
+    "B": {
+      "item": "minecraft:hopper"
+    },
+    "C": {
+      "item": "ragium:refined_ragi_steel_hull"
+    },
+    "D": {
+      "item": "minecraft:polished_blackstone_bricks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_electrolyzer"
+  }
+}

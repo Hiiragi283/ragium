@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -7,7 +7,7 @@
       }
     }
   ],
-  "machine_type": "metal_former",
+  "machine_type": "ragium:metal_former",
   "outputs": [
     {
       "item": "ragium:netherite_plate"

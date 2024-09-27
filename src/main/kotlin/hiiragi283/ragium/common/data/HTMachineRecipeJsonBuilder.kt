@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data
 
+import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTRecipeResult
@@ -17,7 +18,7 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-class HTMachineRecipeJsonBuilder(private val type: HTMachineType) {
+class HTMachineRecipeJsonBuilder(private val type: HTMachineType<*>, private val minTier: HTMachineTier = HTMachineTier.PRIMITIVE) {
     private val inputs: MutableList<WeightedIngredient> = mutableListOf()
     private val outputs: MutableList<HTRecipeResult> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
@@ -81,11 +82,11 @@ class HTMachineRecipeJsonBuilder(private val type: HTMachineType) {
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         check(inputs.size in 0..3) { "Invalid input count; ${inputs.size}!" }
         check(outputs.size in 0..3) { "Invalid output count; ${outputs.size}!" }
-        val prefix = "${type.asString()}/"
+        val prefix = "${type.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         exporter.accept(
             prefixedId,
-            HTMachineRecipe(type, inputs, outputs, catalyst),
+            HTMachineRecipe(type, minTier, inputs, outputs, catalyst),
             exporter.advancementBuilder
                 .criterion("has_the_recipe", RecipeUnlockedCriterion.create(prefixedId))
                 .rewards(AdvancementRewards.Builder.recipe(prefixedId))

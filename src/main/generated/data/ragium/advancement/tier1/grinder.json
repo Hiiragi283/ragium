@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:grinder"
+            "items": "ragium:basic_grinder"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:grinder"
+      "id": "ragium:basic_grinder"
     },
     "title": {
       "translate": "advancement.ragium.tier1.grinder"

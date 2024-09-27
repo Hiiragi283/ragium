@@ -1,10 +1,10 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "catalyst": {
     "item": "minecraft:cobbled_deepslate"
   },
   "inputs": [],
-  "machine_type": "rock_generator",
+  "machine_type": "ragium:rock_generator",
   "outputs": [
     {
       "count": 8,

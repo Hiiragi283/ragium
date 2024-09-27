@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:electrolyzer"
+            "items": "ragium:basic_electrolyzer"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:electrolyzer"
+      "id": "ragium:basic_electrolyzer"
     },
     "title": {
       "translate": "advancement.ragium.tier3.electrolyzer"

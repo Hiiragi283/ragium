@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "count": 2,
@@ -8,7 +8,7 @@
       }
     }
   ],
-  "machine_type": "distillation_tower",
+  "machine_type": "ragium:distillation_tower",
   "outputs": [
     {
       "item": "ragium:ethylene_fluid_cube"

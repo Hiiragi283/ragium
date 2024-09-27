@@ -1,5 +1,5 @@
 {
-  "type": "ragium:generic",
+  "type": "ragium:machine",
   "inputs": [
     {
       "ingredient": {
@@ -13,7 +13,7 @@
       }
     }
   ],
-  "machine_type": "assembler",
+  "machine_type": "ragium:assembler",
   "outputs": [
     {
       "count": 6,
