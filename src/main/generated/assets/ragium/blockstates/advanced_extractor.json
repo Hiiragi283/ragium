@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "ragium:block/advanced_extractor",
+      "model": "ragium:block/dynamic_machine",
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:block/advanced_extractor"
+      "model": "ragium:block/dynamic_machine"
     },
     "facing=south": {
-      "model": "ragium:block/advanced_extractor",
+      "model": "ragium:block/dynamic_machine",
       "y": 180
     },
     "facing=west": {
-      "model": "ragium:block/advanced_extractor",
+      "model": "ragium:block/dynamic_machine",
       "y": 270
     }
   }

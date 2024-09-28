@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.tags.RagiumBlockTags
 import hiiragi283.ragium.common.tags.RagiumItemTags
 import hiiragi283.ragium.common.util.HTBlockContent
@@ -53,7 +54,6 @@ object RagiumTagProviders {
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BRICK_ALLOY_FURNACE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BURNING_BOX)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WATER_GENERATOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WIND_GENERATOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BLAZING_BOX)
@@ -69,7 +69,9 @@ object RagiumTagProviders {
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             // ragium
             RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
-            // HTMachineType.getEntries().forEach { add(RagiumBlockTags.MACHINES, it.block) }
+            HTMachineBlockRegistry.registry.values().forEach { block: Block ->
+                add(BlockTags.PICKAXE_MINEABLE, block)
+            }
         }
     }
 
@@ -121,8 +123,6 @@ object RagiumTagProviders {
             // ragium
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
-
-            // HTMachineType.getEntries().forEach { add(RagiumItemTags.MACHINES, it.block) }
         }
     }
 }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.integration.jade
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.util.Identifier
 import snownee.jade.api.IWailaClientRegistration
 import snownee.jade.api.IWailaCommonRegistration
@@ -15,10 +14,10 @@ object RagiumJadePlugin : IWailaPlugin {
     val MACHINE: Identifier = Ragium.id("machine")
 
     override fun register(registration: IWailaCommonRegistration) {
-        registration.registerBlock(HTBurningBoxProvider, RagiumContents.BURNING_BOX)
+        // registration.registerBlock(HTBurningBoxProvider, RagiumContents.BURNING_BOX)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
-        registration.registerBlock(HTBurningBoxProvider, RagiumContents.BURNING_BOX)
+        // registration.registerBlock(HTBurningBoxProvider, RagiumContents.BURNING_BOX)
     }
 }

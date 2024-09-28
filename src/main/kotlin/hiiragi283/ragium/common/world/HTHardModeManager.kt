@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.world
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.util.getManager
+import hiiragi283.ragium.common.util.getState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.MinecraftServer
@@ -19,7 +19,7 @@ class HTHardModeManager() : PersistentState() {
             HTHardModeManager(nbt.getBoolean(KEY))
 
         @JvmStatic
-        fun getOverworldManager(server: MinecraftServer): HTHardModeManager = getManager(server.overworld, TYPE, Ragium.MOD_ID)
+        fun getOverworldManager(server: MinecraftServer): HTHardModeManager = getState(server.overworld, TYPE, Ragium.MOD_ID)
     }
 
     var isHardMode: Boolean = false

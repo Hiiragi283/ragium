@@ -12,6 +12,9 @@ import net.minecraft.util.Identifier
 import java.util.*
 
 object RagiumModels {
+    @JvmField
+    val MACHINE_MODEL_ID: Identifier = Ragium.id("block/dynamic_machine")
+
     //    Block    //
 
     @JvmField
@@ -60,6 +63,9 @@ object RagiumModels {
             TextureKey.BOTTOM,
             TextureKey.FRONT,
         )
+
+    @JvmField
+    val DYNAMIC_MACHINE: Model = model(MACHINE_MODEL_ID.path)
 
     //    Item    //
 

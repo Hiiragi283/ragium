@@ -1,3 +1,3 @@
 {
-  "parent": "ragium:block/basic_assembler"
+  "parent": "ragium:block/dynamic_machine"
 }

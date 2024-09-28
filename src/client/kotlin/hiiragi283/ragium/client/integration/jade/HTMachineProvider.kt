@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.integration.jade
 
-import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntityBase
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.Identifier
 import snownee.jade.api.BlockAccessor

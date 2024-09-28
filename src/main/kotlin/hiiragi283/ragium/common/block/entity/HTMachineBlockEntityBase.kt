@@ -1,7 +1,5 @@
-package hiiragi283.ragium.common.block.entity.machine
+package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
-import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
@@ -39,11 +37,12 @@ abstract class HTMachineBlockEntityBase :
     HTBlockEntityBase,
     HTDelegatedInventory,
     HTEnergyStorageHolder,
+    HTTieredMachine,
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
-    var machineType: HTMachineType<*> = HTMachineType.Default
+    override var machineType: HTMachineType<*> = HTMachineType.Default
         protected set
-    var tier: HTMachineTier = HTMachineTier.PRIMITIVE
+    override var tier: HTMachineTier = HTMachineTier.PRIMITIVE
         protected set
 
     @Deprecated("")
@@ -109,7 +108,7 @@ abstract class HTMachineBlockEntityBase :
         val recipe: HTRecipeBase<HTMachineRecipe.Input> = recipeEntry.value
         val recipeId: Identifier = recipeEntry.id
         if (!canAcceptOutputs(recipe)) return
-        if (!condition(world, pos)) return
+        if (!machineType.machineCondition(world, pos)) return
         if ((recipe as? HTRequireScanRecipe)?.requireScan == true) {
             val manager: HTDataDriveManager = HTDataDriveManager.getManager(world) ?: return
             if (recipeId !in manager) return
@@ -122,8 +121,6 @@ abstract class HTMachineBlockEntityBase :
         decrementInput(2, recipe)
         onProcessed(world, pos, recipe)
     }
-
-    open val condition: (World, BlockPos) -> Boolean = RagiumMachineConditions.ELECTRIC
 
     open fun onProcessed(world: World, pos: BlockPos, recipe: HTRecipeBase<HTMachineRecipe.Input>) {
         // extract energy

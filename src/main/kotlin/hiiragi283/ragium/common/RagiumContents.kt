@@ -63,8 +63,7 @@ object RagiumContents {
         )
 
     @JvmField
-    val BURNING_BOX: Block =
-        registerHorizontalWithBE("burning_box", RagiumBlockEntityTypes.BURNING_BOX, Blocks.BRICKS)
+    val BURNING_BOX: Block = registerBlock("burning_box", HTBurningBoxBlock)
 
     @JvmField
     val WATER_GENERATOR: Block =
@@ -297,7 +296,6 @@ object RagiumContents {
         registerBlockItem(CREATIVE_SOURCE)
         registerBlockItem(MANUAL_GRINDER)
         registerBlockItem(BRICK_ALLOY_FURNACE)
-        registerBlockItem(BURNING_BOX)
         registerBlockItem(WATER_GENERATOR)
         registerBlockItem(WIND_GENERATOR)
         registerBlockItem(SHAFT)
@@ -378,10 +376,10 @@ object RagiumContents {
     private fun registerMachine(
         type: HTMachineType<*>,
         tier: HTMachineTier,
-        factory: (HTMachineType<*>, HTMachineTier) -> HTBaseMachineBlock,
+        factory: (HTMachineType<*>, HTMachineTier) -> HTMachineBlockBase,
     ) {
         val name: String = tier.createId(type).path
-        val machineBlock: HTBaseMachineBlock = registerBlock(name, factory(type, tier))
+        val machineBlock: HTMachineBlockBase = registerBlock(name, factory(type, tier))
         registerItem(name, HTMachineBlockItem(machineBlock, itemSettings()))
         HTMachineBlockRegistry.register(machineBlock)
     }

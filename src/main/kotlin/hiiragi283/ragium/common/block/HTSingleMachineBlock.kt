@@ -8,7 +8,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.math.BlockPos
 
-class HTSingleMachineBlock(machineType: HTMachineType<*>, tier: HTMachineTier) : HTBaseMachineBlock(machineType, tier) {
+class HTSingleMachineBlock(machineType: HTMachineType<*>, tier: HTMachineTier) : HTMachineBlockBase(machineType, tier) {
     init {
         RagiumBlockEntityTypes.SINGLE_MACHINE.addSupportedBlock(this)
     }

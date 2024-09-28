@@ -1,8 +1,0 @@
-{
-  "parent": "ragium:block/machine",
-  "textures": {
-    "bottom": "minecraft:block/bricks",
-    "front": "ragium:block/extractor_front",
-    "top": "ragium:block/ragi_alloy_block"
-  }
-}

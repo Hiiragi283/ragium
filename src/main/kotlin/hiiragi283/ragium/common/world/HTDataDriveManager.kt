@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.world
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.util.getManager
+import hiiragi283.ragium.common.util.getState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtOps
@@ -34,10 +34,10 @@ class HTDataDriveManager :
         }
 
         @JvmStatic
-        fun getManager(world: ServerWorld): HTDataDriveManager = getManager(world, TYPE, Ragium.MOD_ID)
+        fun getManager(world: ServerWorld): HTDataDriveManager = getState(world, TYPE, Ragium.MOD_ID)
 
         @JvmStatic
-        fun getManager(world: World): HTDataDriveManager? = getManager(world, TYPE, Ragium.MOD_ID)
+        fun getManager(world: World): HTDataDriveManager? = getState(world, TYPE, Ragium.MOD_ID)
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {

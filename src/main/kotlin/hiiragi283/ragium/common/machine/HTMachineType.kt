@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.HTBaseMachineBlock
+import hiiragi283.ragium.common.block.HTMachineBlockBase
+import hiiragi283.ragium.common.init.RagiumMachineConditions
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.recipe.HTRecipeBase
 import io.netty.buffer.ByteBuf
@@ -22,6 +23,8 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 
 interface HTMachineType<T : HTRecipeBase<*>> {
     companion object {
@@ -61,6 +64,9 @@ interface HTMachineType<T : HTRecipeBase<*>> {
 
     val recipeType: RecipeType<T>
 
+    val machineCondition: (World, BlockPos) -> Boolean
+        get() = RagiumMachineConditions.NONE
+
     val translationKey: String
         get() = Util.createTranslationKey("machine_type", id)
     val text: MutableText
@@ -80,9 +86,9 @@ interface HTMachineType<T : HTRecipeBase<*>> {
         consumer(tier.energyCapacityText)
     }
 
-    fun getBlock(tier: HTMachineTier): HTBaseMachineBlock? = HTMachineBlockRegistry.get(this, tier)
+    fun getBlock(tier: HTMachineTier): HTMachineBlockBase? = HTMachineBlockRegistry.get(this, tier)
 
-    fun getBlockOrThrow(tier: HTMachineTier): HTBaseMachineBlock = HTMachineBlockRegistry.getOrThrow(this, tier)
+    fun getBlockOrThrow(tier: HTMachineTier): HTMachineBlockBase = HTMachineBlockRegistry.getOrThrow(this, tier)
 
     fun createConvertible(): ItemConvertible = ItemConvertible { getBlock(HTMachineTier.PRIMITIVE)?.asItem() ?: Items.AIR }
 
@@ -90,6 +96,8 @@ interface HTMachineType<T : HTRecipeBase<*>> {
 
     data object Default : HTMachineType<HTRecipeBase<*>> {
         override val id: Identifier = Ragium.id("default")
+        override val frontTexId: Identifier
+            get() = id.withPath { "block/alloy_furnace_front" }
         override val recipeType: RecipeType<HTRecipeBase<*>>
             get() = throw IllegalAccessException("Default HTMachineType does not support RecipeType!")
     }

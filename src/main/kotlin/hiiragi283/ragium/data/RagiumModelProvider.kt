@@ -3,13 +3,12 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.block.HTBaseMachineBlock
+import hiiragi283.ragium.common.block.HTMachineBlockBase
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumModels
 import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -127,7 +126,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 ),
             )
         }
-        register(RagiumContents.BURNING_BOX) {
+        /*register(RagiumContents.BURNING_BOX) {
             generator.registerNorthDefaultHorizontalRotated(
                 it,
                 RagiumModels.createMachine(
@@ -136,7 +135,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     TextureMap.getSubId(it, "_front"),
                 ),
             )
-        }
+        }*/
         registerSimple(RagiumContents.WATER_GENERATOR)
         registerSimple(RagiumContents.WIND_GENERATOR)
         register(RagiumContents.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
@@ -156,7 +155,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 RagiumModels.createMachine(
                     Blocks.POLISHED_BLACKSTONE_BRICKS,
                     Blocks.POLISHED_BLACKSTONE_BRICKS,
-                    TextureMap.getSubId(RagiumContents.BURNING_BOX, "_front"),
+                    Ragium.id("block/burning_box_front"),
                 ),
             )
         }
@@ -219,20 +218,23 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // machines
-        /*HTMachineType.getEntries().forEach { type: HTMachineType ->
-            val block: Block = type.block
-            register(block) {
-                generator.registerNorthDefaultHorizontalRotated(
-                    block,
-                    RagiumModels.createMachine(
-                        type.tier.casingTex,
-                        type.tier.baseTex,
-                        TextureMap.getSubId(block, "_front"),
-                    ),
+        HTMachineBlockRegistry.registry.values().forEach { machineBlock: HTMachineBlockBase ->
+            register(machineBlock) { block: Block ->
+                accept(
+                    VariantsBlockStateSupplier
+                        .create(
+                            block,
+                            buildModelVariant(RagiumModels.MACHINE_MODEL_ID),
+                        ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+                )
+                RagiumModels.DYNAMIC_MACHINE.upload(
+                    ModelIds.getItemModelId(block.asItem()),
+                    TextureMap(),
+                    generator.modelCollector,
                 )
             }
-        }*/
-        HTMachineBlockRegistry.registry.forEach { type: HTMachineType<*>, tier: HTMachineTier, machineBlock: HTBaseMachineBlock ->
+        }
+        /*HTMachineBlockRegistry.registry.forEach { type: HTMachineType<*>, tier: HTMachineTier, machineBlock: HTMachineBlockBase ->
             register(machineBlock) { block: Block ->
                 generator.registerNorthDefaultHorizontalRotated(
                     block,
@@ -243,7 +245,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     ),
                 )
             }
-        }
+        }*/
         // elements
         RagiElement.entries.forEach { element: RagiElement ->
             // budding block

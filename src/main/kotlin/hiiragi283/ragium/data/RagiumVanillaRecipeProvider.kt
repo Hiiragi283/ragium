@@ -3,7 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.block.HTBaseMachineBlock
+import hiiragi283.ragium.common.block.HTMachineBlockBase
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -272,7 +272,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
             .offerPrefix(exporter.hardMode(true), "hard/")
 
-        HTShapedRecipeJsonBuilder
+        /*HTShapedRecipeJsonBuilder
             .create(RagiumContents.BURNING_BOX)
             .patterns(
                 "AAA",
@@ -281,7 +281,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', Items.BRICKS)
             .input('B', Items.FURNACE)
             .unlockedBy(Items.BRICKS)
-            .offerTo(exporter)
+            .offerTo(exporter)*/
 
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.GEAR_BOX)
@@ -317,7 +317,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             Items.BLAST_FURNACE,
         )
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val block: HTBaseMachineBlock = RagiumMachineTypes.Single.ASSEMBLER.getBlock(tier) ?: return@forEach
+            val block: HTMachineBlockBase = RagiumMachineTypes.Single.ASSEMBLER.getBlock(tier) ?: return@forEach
             HTShapedRecipeJsonBuilder
                 .create(block)
                 .patterns(
@@ -331,6 +331,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(RagiumMachineTypes.Single.ASSEMBLER))
         }
+        // single
         createMachine(
             exporter,
             RagiumMachineTypes.Single.CENTRIFUGE,
@@ -377,6 +378,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             Items.LAVA_BUCKET,
             Items.WATER_BUCKET,
         )
+        // multi
         createMachine(
             exporter,
             RagiumMachineTypes.BLAST_FURNACE,
@@ -386,6 +388,12 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumMachineTypes.DISTILLATION_TOWER,
             RagiumContents.Circuit.ADVANCED,
+        )
+        // custom
+        createMachine(
+            exporter,
+            RagiumMachineTypes.BURNING_BOX,
+            Items.IRON_BARS,
         )
 
         HTShapedRecipeJsonBuilder
@@ -429,7 +437,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         right: ItemConvertible = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val block: HTBaseMachineBlock = type.getBlock(tier) ?: return@forEach
+            val block: HTMachineBlockBase = type.getBlock(tier) ?: return@forEach
             HTShapedRecipeJsonBuilder
                 .create(block)
                 .patterns(

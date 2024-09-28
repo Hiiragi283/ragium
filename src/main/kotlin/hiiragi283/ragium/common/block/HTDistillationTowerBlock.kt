@@ -8,7 +8,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.math.BlockPos
 
-class HTDistillationTowerBlock(tier: HTMachineTier) : HTBaseMachineBlock(RagiumMachineTypes.DISTILLATION_TOWER, tier) {
+class HTDistillationTowerBlock(tier: HTMachineTier) : HTMachineBlockBase(RagiumMachineTypes.DISTILLATION_TOWER, tier) {
     init {
         RagiumBlockEntityTypes.DISTILLATION_TOWER.addSupportedBlock(this)
     }

@@ -4,7 +4,6 @@ import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
 import hiiragi283.ragium.common.block.entity.generator.HTBlazingBoxBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
 import hiiragi283.ragium.common.util.getOrDefault
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.BlockState
@@ -53,9 +52,9 @@ object RagiumEnergyProviders {
             direction == Direction.UP && state.getOrDefault(Properties.LIT, false)
         }, Blocks.CAMPFIRE)
 
-        HEAT.registerForBlockEntities({ blockEntity: BlockEntity, direction: Direction? ->
+        /*HEAT.registerForBlockEntities({ blockEntity: BlockEntity, direction: Direction? ->
             direction == Direction.UP && (blockEntity as? HTHeatGeneratorBlockEntity)?.isBurning ?: false
-        }, RagiumBlockEntityTypes.BURNING_BOX, RagiumBlockEntityTypes.BLAZING_BOX)
+        }, RagiumBlockEntityTypes.BURNING_BOX, RagiumBlockEntityTypes.BLAZING_BOX)*/
     }
 
     @JvmStatic

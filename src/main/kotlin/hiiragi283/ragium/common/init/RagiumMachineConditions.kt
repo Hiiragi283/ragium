@@ -1,6 +1,6 @@
-package hiiragi283.ragium.common.block.entity.machine
+package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.init.RagiumEnergyProviders
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.math.BlockPos

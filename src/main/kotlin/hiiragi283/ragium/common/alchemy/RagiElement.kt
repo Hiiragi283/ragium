@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.alchemy
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
-import hiiragi283.ragium.common.block.entity.machine.RagiumMachineConditions
+import hiiragi283.ragium.common.init.RagiumMachineConditions
 import hiiragi283.ragium.common.util.HTTranslationProvider
 import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.element

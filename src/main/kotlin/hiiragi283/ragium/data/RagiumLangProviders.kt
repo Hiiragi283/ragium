@@ -115,7 +115,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
             builder.add(RagiumContents.BRICK_ALLOY_FURNACE, "Brick Alloy Furnace")
-            builder.add(RagiumContents.BURNING_BOX, "Burning Box")
             builder.add(RagiumContents.WATER_GENERATOR, "Water Generator")
             builder.add(RagiumContents.WIND_GENERATOR, "Wind Generator")
             builder.add(RagiumContents.SHAFT, "Shaft")
@@ -173,6 +172,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "Large Blast Furnace")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "Distillation Tower")
+
+            builder.add(RagiumMachineTypes.BURNING_BOX, "Burning Box")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
@@ -203,7 +204,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
             builder.add(RagiumContents.BRICK_ALLOY_FURNACE, "レンガ合金かまど")
-            builder.add(RagiumContents.BURNING_BOX, "燃焼室")
             builder.add(RagiumContents.WATER_GENERATOR, "水力発電機")
             builder.add(RagiumContents.WIND_GENERATOR, "風力発電機")
             builder.add(RagiumContents.SHAFT, "シャフト")
@@ -261,6 +261,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔")
+
+            builder.add(RagiumMachineTypes.BURNING_BOX, "燃焼室")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")

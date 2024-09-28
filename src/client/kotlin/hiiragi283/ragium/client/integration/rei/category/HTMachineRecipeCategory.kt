@@ -100,6 +100,12 @@ class HTMachineRecipeCategory(private val type: HTMachineType<*>) : HTDisplayCat
         return EntryStacks.of(stack).tooltipProcessor { _: EntryStack<ItemStack>, tooltip: Tooltip ->
             tooltip.add(tier.tierText)
             tooltip.add(tier.recipeCostText)
+            if (recipe.requireScan) {
+                tooltip.add(
+                    Text.translatable(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN).formatted(Formatting.RED),
+                )
+            }
+            tooltip
         }
     }
 

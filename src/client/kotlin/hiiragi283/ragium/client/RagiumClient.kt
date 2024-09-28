@@ -2,6 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
+import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMultiMachineBlockEntityRenderer
@@ -9,8 +10,10 @@ import hiiragi283.ragium.client.util.registerGlobalReceiver
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.block.HTMachineBlockBase
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumModels
 import hiiragi283.ragium.common.init.RagiumNetworks
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
@@ -20,6 +23,9 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.model.loading.v1.BlockStateResolver
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.minecraft.block.Block
@@ -30,6 +36,7 @@ import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
@@ -71,7 +78,6 @@ object RagiumClient : ClientModInitializer {
             RagiumContents.RUBBER_LEAVES,
             RagiumContents.MANUAL_GRINDER,
             RagiumContents.BRICK_ALLOY_FURNACE,
-            RagiumContents.BURNING_BOX,
             RagiumContents.GEAR_BOX,
             RagiumContents.BLAZING_BOX,
         )
@@ -122,6 +128,27 @@ object RagiumClient : ClientModInitializer {
     //    Events    //
 
     private fun registerEvents() {
+        ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
+            // register block state resolver
+            HTMachineBlockRegistry.registry.values().forEach { block: HTMachineBlockBase ->
+                context.registerBlockStateResolver(block) { context1: BlockStateResolver.Context ->
+                    context1.block().stateManager.states.forEach { state: BlockState ->
+                        context1.setModel(state, HTMachineModel)
+                    }
+                }
+            }
+            // register item model resolver
+            context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
+                when (RagiumModels.MACHINE_MODEL_ID) {
+                    in original.modelDependencies -> HTMachineModel
+                    else -> original
+                }
+                /*val id: Identifier = context1.topLevelId()?.id ?: return@onLoad original
+                val entry: RegistryEntry.Reference<Block> =
+                    Registries.BLOCK.getEntry(id).getOrNull() ?: return@onLoad original
+                if (entry.isIn(RagiumBlockTags.ALLOW_MACHINE_MODEL)) HTMachineModel else original*/
+            }
+        }
     }
 
     //    Networks    //

@@ -12,9 +12,6 @@ object RagiumBlockTags {
     @JvmField
     val COILS: TagKey<Block> = create(Ragium.MOD_ID, "coils")
 
-    @JvmField
-    val MACHINES: TagKey<Block> = create(Ragium.MOD_ID, "machines")
-
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, Identifier.of(namespace, path))
 
