@@ -1,3 +1,6 @@
 {
-  "parent": "ragium:block/rugium_cluster"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ragium:block/rugium_cluster"
+  }
 }

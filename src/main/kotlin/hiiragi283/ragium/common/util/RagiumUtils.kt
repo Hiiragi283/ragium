@@ -133,22 +133,22 @@ fun ServerPlayerEntity.sendTitle(title: Text) {
 
 //    PersistentState    //
 
-fun <T : PersistentState> getState(world: ServerWorld, type: PersistentState.Type<T>, modId: String): T = world.persistentStateManager
-    .getOrCreate(type, modId)
+fun <T : PersistentState> getState(world: ServerWorld, type: PersistentState.Type<T>, id: Identifier): T = world.persistentStateManager
+    .getOrCreate(type, id.splitWith('_'))
     .apply { markDirty() }
 
-fun <T : PersistentState> getState(world: World, type: PersistentState.Type<T>, modId: String): T? {
+fun <T : PersistentState> getState(world: World, type: PersistentState.Type<T>, id: Identifier): T? {
     val key: RegistryKey<World> = world.registryKey
     val server: MinecraftServer = world.server ?: return null
-    return getState(server, key, type, modId)
+    return getState(server, key, type, id)
 }
 
 fun <T : PersistentState> getState(
     server: MinecraftServer,
     key: RegistryKey<World>,
     type: PersistentState.Type<T>,
-    modId: String,
-): T? = server.getWorld(key)?.let { getState(it, type, modId) }
+    id: Identifier,
+): T? = server.getWorld(key)?.let { getState(it, type, id) }
 
 //    StringIdentifiable    //
 

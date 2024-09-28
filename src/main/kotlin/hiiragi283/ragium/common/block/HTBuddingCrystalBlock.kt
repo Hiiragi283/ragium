@@ -20,7 +20,7 @@ class HTBuddingCrystalBlock(private val element: RagiElement, settings: Settings
             val posTo: BlockPos = pos.offset(direction)
             val stateTo: BlockState = world.getBlockState(posTo)
             val block: Block = when {
-                BuddingAmethystBlock.canGrowIn(stateTo) && element.canGrow(world, pos) -> element.clusterBlock
+                BuddingAmethystBlock.canGrowIn(stateTo) && element.isSuitableBiome(world, pos) -> element.clusterBlock
                 else -> null
             } ?: return
             world.setBlockState(

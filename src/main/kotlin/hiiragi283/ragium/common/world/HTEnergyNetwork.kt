@@ -13,26 +13,29 @@ import net.minecraft.world.World
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.SimpleEnergyStorage
 
-class RagiNetworkManager() :
+class HTEnergyNetwork() :
     PersistentState(),
     EnergyStorage {
     companion object {
         const val KEY = "amount"
 
         @JvmField
-        val TYPE: Type<RagiNetworkManager> = Type(::RagiNetworkManager, ::fromNbt, null)
+        val TYPE: Type<HTEnergyNetwork> = Type(::HTEnergyNetwork, ::fromNbt, null)
 
         @JvmStatic
-        fun fromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): RagiNetworkManager =
-            RagiNetworkManager(nbt.getLong(KEY))
+        fun fromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): HTEnergyNetwork =
+            HTEnergyNetwork(nbt.getLong(KEY))
 
         @JvmStatic
-        fun getManager(world: ServerWorld): RagiNetworkManager = getState(world, TYPE, Ragium.MOD_ID)
+        fun getStorage(world: ServerWorld): HTEnergyNetwork = getState(world, TYPE, Ragium.id("network"))
 
         @JvmStatic
-        fun getManagerMap(server: MinecraftServer): Map<RegistryKey<World>, RagiNetworkManager> = server.worlds
+        fun getStorage(world: World): HTEnergyNetwork? = getState(world, TYPE, Ragium.id("network"))
+
+        @JvmStatic
+        fun getStorageMap(server: MinecraftServer): Map<RegistryKey<World>, HTEnergyNetwork> = server.worlds
             .associateBy(ServerWorld::getRegistryKey)
-            .mapValues { getManager(it.value) }
+            .mapValues { getStorage(it.value) }
     }
 
     private val storage: SimpleEnergyStorage = SimpleEnergyStorage(Long.MAX_VALUE, Long.MAX_VALUE, Long.MAX_VALUE)
@@ -41,6 +44,10 @@ class RagiNetworkManager() :
         storage.amount = amount
     }
 
+    fun setAmount(value: Long) {
+        storage.amount = value
+    }
+    
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
         nbt.putLong(KEY, storage.amount)
         return nbt

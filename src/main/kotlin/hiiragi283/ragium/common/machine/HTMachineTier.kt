@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.machine
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.util.HTTranslationProvider
@@ -25,8 +24,6 @@ enum class HTMachineTier(
     private val idPattern: String,
     override val enName: String,
     override val jaName: String,
-    val casingTex: Identifier,
-    val baseBlock: Block,
     val recipeCost: Long,
     val tickRate: Int,
     rarity: Rarity,
@@ -37,8 +34,6 @@ enum class HTMachineTier(
         "primitive_%s",
         "Primitive",
         "簡易",
-        Ragium.id("block/ragi_alloy_block"),
-        Blocks.BRICKS,
         320,
         200,
         Rarity.COMMON,
@@ -47,8 +42,6 @@ enum class HTMachineTier(
         "basic_%s",
         "Basic",
         "基本",
-        Ragium.id("block/ragi_steel_block"),
-        Blocks.POLISHED_BLACKSTONE_BRICKS,
         1280,
         150,
         Rarity.UNCOMMON,
@@ -57,8 +50,6 @@ enum class HTMachineTier(
         "advanced_%s",
         "Advanced",
         "発展",
-        Ragium.id("block/refined_ragi_steel_block"),
-        Blocks.END_STONE_BRICKS,
         5120,
         100,
         Rarity.RARE,
@@ -84,7 +75,10 @@ enum class HTMachineTier(
 
     val energyCapacity: Long = recipeCost * 16
 
-    val baseTex: Identifier = Registries.BLOCK.getId(baseBlock).withPrefixedPath("block/")
+    val baseTex: Identifier
+        get() = Registries.BLOCK.getId(getBaseBlock()).withPrefixedPath("block/")
+    val casingTex: Identifier
+        get() = getStorageBlock().id.withPrefixedPath("block/")
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
     val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)
@@ -106,6 +100,12 @@ enum class HTMachineTier(
 
     fun createId(type: HTMachineType<*>): Identifier = type.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
+    fun getBaseBlock(): Block = when (this) {
+        PRIMITIVE -> Blocks.BRICKS
+        BASIC -> Blocks.POLISHED_DEEPSLATE
+        ADVANCED -> RagiumContents.ADVANCED_CASING
+    }
+    
     fun getCircuit(): RagiumContents.Circuit = when (this) {
         PRIMITIVE -> RagiumContents.Circuit.PRIMITIVE
         BASIC -> RagiumContents.Circuit.BASIC
@@ -134,6 +134,12 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumContents.Plates.RAGI_ALLOY
         BASIC -> RagiumContents.Plates.RAGI_STEEL
         ADVANCED -> RagiumContents.Plates.REFINED_RAGI_STEEL
+    }
+
+    fun getStorageBlock(): RagiumContents.StorageBlocks = when (this) {
+        PRIMITIVE -> RagiumContents.StorageBlocks.RAGI_ALLOY
+        BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
+        ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
 
     //    StringIdentifiable    //

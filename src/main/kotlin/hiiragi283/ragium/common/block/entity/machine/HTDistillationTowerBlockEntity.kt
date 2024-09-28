@@ -43,7 +43,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState, tier: HTM
             -1..1,
             -1,
             1..3,
-            HTBlockPredicate.block(tier.baseBlock),
+            HTBlockPredicate.block(tier.getBaseBlock()),
         ).addHollow(
             -1..1,
             0,

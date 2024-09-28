@@ -151,6 +151,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.DATA_DRIVE) {
             accept(VariantsBlockStateSupplier.create(it, buildModelVariant(TextureMap.getId(it))))
         }
+        registerSimple(RagiumContents.NETWORK_INTERFACE)
+        registerSimple(RagiumContents.ADVANCED_CASING)
 
         register(RagiumContents.INFESTING) {
             accept(

@@ -34,10 +34,10 @@ class HTDataDriveManager :
         }
 
         @JvmStatic
-        fun getManager(world: ServerWorld): HTDataDriveManager = getState(world, TYPE, Ragium.MOD_ID)
+        fun getManager(world: ServerWorld): HTDataDriveManager = getState(world, TYPE, Ragium.id("data_drive"))
 
         @JvmStatic
-        fun getManager(world: World): HTDataDriveManager? = getState(world, TYPE, Ragium.MOD_ID)
+        fun getManager(world: World): HTDataDriveManager? = getState(world, TYPE, Ragium.id("data_drive"))
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {

@@ -57,6 +57,6 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachin
             -1..1,
             3,
             1..3,
-            HTBlockPredicate.block(tier.baseBlock),
+            HTBlockPredicate.block(tier.getBaseBlock()),
         )
 }

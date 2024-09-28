@@ -123,6 +123,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumContents.DATA_DRIVE, "Data Drive")
             builder.add(RagiumContents.DRIVE_SCANNER, "Drive Scanner")
+            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumContents.ADVANCED_CASING, "Advanced Casing")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.STEEL_SWORD, "Steel Sword")
@@ -210,6 +212,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumContents.DATA_DRIVE, "データドライブ")
             builder.add(RagiumContents.DRIVE_SCANNER, "ドライブスキャナ")
+            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumContents.ADVANCED_CASING, "発展型外装")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.STEEL_SWORD, "鋼鉄の剣")

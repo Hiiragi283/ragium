@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.alchemy
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
-import hiiragi283.ragium.common.init.RagiumMachineConditions
 import hiiragi283.ragium.common.util.HTTranslationProvider
 import hiiragi283.ragium.common.util.blockSettings
 import hiiragi283.ragium.common.util.element
@@ -31,10 +30,9 @@ enum class RagiElement(
     override val enName: String,
     override val jaName: String,
     mapColor: MapColor,
-    private val condition: (World, BlockPos) -> Boolean = RagiumMachineConditions.NONE,
 ) : HTTranslationProvider,
     StringIdentifiable {
-    RAGIUM(ConventionalBiomeTags.IS_NETHER, "Ragium", "ラギウム", MapColor.RED, RagiumMachineConditions.HEAT),
+    RAGIUM(ConventionalBiomeTags.IS_NETHER, "Ragium", "ラギウム", MapColor.RED),
     RIGIUM(ConventionalBiomeTags.IS_WASTELAND, "Rigium", "リギウム", MapColor.YELLOW),
     RUGIUM(ConventionalBiomeTags.IS_JUNGLE, "Rugium", "ルギウム", MapColor.GREEN),
     REGIUM(ConventionalBiomeTags.IS_OCEAN, "Regium", "レギウム", MapColor.BLUE),
@@ -75,7 +73,7 @@ enum class RagiElement(
     val translationKey = "element.${asString()}"
     val text: Text = Text.translatable(translationKey)
 
-    fun canGrow(world: World, pos: BlockPos): Boolean = world.getBiome(pos).isIn(suitableBiome) || condition(world, pos)
+    fun isSuitableBiome(world: World, pos: BlockPos): Boolean = world.getBiome(pos).isIn(suitableBiome)
 
     //    StringIdentifiable    //
 

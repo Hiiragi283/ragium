@@ -19,7 +19,8 @@ class HTHardModeManager() : PersistentState() {
             HTHardModeManager(nbt.getBoolean(KEY))
 
         @JvmStatic
-        fun getOverworldManager(server: MinecraftServer): HTHardModeManager = getState(server.overworld, TYPE, Ragium.MOD_ID)
+        fun getOverworldManager(server: MinecraftServer): HTHardModeManager =
+            getState(server.overworld, TYPE, Ragium.id("hard_mode"))
     }
 
     var isHardMode: Boolean = false

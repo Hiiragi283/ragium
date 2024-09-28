@@ -15,6 +15,7 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import java.awt.Color
 import kotlin.jvm.optionals.getOrNull
@@ -101,6 +102,14 @@ object RagiumContents {
     val DRIVE_SCANNER: Block =
         registerWithBE("drive_scanner", RagiumBlockEntityTypes.DRIVE_SCANNER)
 
+    @JvmField
+    val NETWORK_INTERFACE: Block =
+        registerBlock("network_interface")
+    
+    @JvmField
+    val ADVANCED_CASING: Block = 
+        registerCopy("advanced_casing", Blocks.IRON_BLOCK)
+
     //    Item - Tools    //
 
     @JvmField
@@ -174,6 +183,9 @@ object RagiumContents {
     @JvmStatic
     private fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
 
+    @JvmStatic
+    private fun registerBlock(content: HTBlockContent): Block = registerBlock(content.id.path, content.block)
+    
     @JvmStatic
     private fun registerBlock(name: String, settings: AbstractBlock.Settings = blockSettings()): Block =
         registerBlock(name, Block(settings))
@@ -291,13 +303,13 @@ object RagiumContents {
         registerBlockItem(WATER_GENERATOR)
         registerBlockItem(WIND_GENERATOR)
         registerBlockItem(SHAFT)
-        registerBlockItem(CABLE)
-        registerBlockItem(GEAR_BOX)
         registerBlockItem(BLAZING_BOX)
         registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
         registerBlockItem(ITEM_DISPLAY)
         registerBlockItem(DATA_DRIVE)
         registerBlockItem(DRIVE_SCANNER)
+        registerBlockItem(NETWORK_INTERFACE)
+        registerBlockItem(ADVANCED_CASING)
     }
 
     //    Hulls    //
@@ -308,7 +320,8 @@ object RagiumContents {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val block = Block(blockSettings(material.tier.baseBlock))
+        override val block = Block(blockSettings(material.tier.getBaseBlock()))
+        override val id: Identifier = Ragium.id("${name.lowercase()}_hull")
         override val enPattern: String = "%s Hull"
         override val jaPattern: String = "%s筐体"
     }
@@ -316,7 +329,7 @@ object RagiumContents {
     @JvmStatic
     fun initHulls() {
         Hulls.entries.forEach { hull: Hulls ->
-            registerBlock("${hull.name.lowercase()}_hull", hull.block)
+            registerBlock(hull)
             registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
         }
     }
@@ -330,6 +343,7 @@ object RagiumContents {
         ;
 
         override val block = PillarBlock(blockSettings())
+        override val id: Identifier = Ragium.id("${name.lowercase()}_coil")
         override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
     }
@@ -337,7 +351,7 @@ object RagiumContents {
     @JvmStatic
     fun initCoils() {
         Coils.entries.forEach { coil: Coils ->
-            registerBlock("${coil.name.lowercase()}_coil", coil.block)
+            registerBlock(coil)
             registerBlockItem(coil.block, itemSettings())
         }
     }
@@ -386,6 +400,7 @@ object RagiumContents {
         ;
 
         override val block = Block(blockSettings(Blocks.IRON_BLOCK))
+        override val id: Identifier = Ragium.id("${name.lowercase()}_block")
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
     }
@@ -393,7 +408,7 @@ object RagiumContents {
     @JvmStatic
     fun initStorageBlocks() {
         StorageBlocks.entries.forEach { block: StorageBlocks ->
-            registerBlock("${block.name.lowercase()}_block", block.block)
+            registerBlock(block)
             registerBlockItem(block.block, itemSettings().tier(block.material.tier))
         }
     }

@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import hiiragi283.ragium.common.world.HTDataDriveManager
+import hiiragi283.ragium.common.world.HTEnergyNetwork
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -26,17 +27,13 @@ import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import team.reborn.energy.api.EnergyStorage
-import team.reborn.energy.api.base.SimpleEnergyStorage
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 
 abstract class HTMachineBlockEntityBase :
     HTBlockEntityBase,
     HTDelegatedInventory,
-    HTEnergyStorageHolder,
     HTTieredMachine,
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
@@ -65,19 +62,16 @@ abstract class HTMachineBlockEntityBase :
     private fun updateProperties(machineType: HTMachineType<*>, tier: HTMachineTier) {
         this.machineType = machineType
         this.tier = tier
-        this.energyStorage = SimpleEnergyStorage(tier.energyCapacity, tier.recipeCost, 0)
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, registryLookup)
-        nbt.putLong("energy", energyStorage.amount)
         nbt.putString("machine_type", machineType.id.toString())
         nbt.putString("tier", tier.asString())
     }
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, registryLookup)
-        energyStorage.amount = nbt.getLong("energy")
         val machineType: HTMachineType<*> =
             HTMachineType.REGISTRY.get(Identifier.of(nbt.getString("machine_type"))) ?: return
         val tier: HTMachineTier =
@@ -124,9 +118,11 @@ abstract class HTMachineBlockEntityBase :
 
     open fun onProcessed(world: World, pos: BlockPos, recipe: HTRecipeBase<HTMachineRecipe.Input>) {
         // extract energy
-        val currentAmount: Long = energyStorage.amount
-        val extracted: Long = currentAmount - tier.recipeCost
-        energyStorage.amount = max(0, extracted)
+        HTEnergyNetwork.getStorage(world)?.let { network: HTEnergyNetwork ->
+            val currentAmount: Long = network.amount
+            val extracted: Long = currentAmount - tier.recipeCost
+            network.setAmount(max(0, extracted))
+        }
     }
 
     private fun canAcceptOutputs(recipe: HTRecipeBase<HTMachineRecipe.Input>): Boolean {
@@ -165,12 +161,6 @@ abstract class HTMachineBlockEntityBase :
     override fun markDirty() {
         super<HTBlockEntityBase>.markDirty()
     }
-
-    //    HTEnergyStorageHolder    //
-
-    protected var energyStorage = SimpleEnergyStorage(tier.energyCapacity, tier.recipeCost, 0)
-
-    override fun getEnergyStorage(direction: Direction?): EnergyStorage? = energyStorage
 
     //    NamedScreenHandlerFactory    //
 

@@ -5,6 +5,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
 import hiiragi283.ragium.common.block.entity.generator.HTBlazingBoxBlockEntity
 import hiiragi283.ragium.common.util.getOrDefault
+import hiiragi283.ragium.common.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -80,12 +81,16 @@ object RagiumEnergyProviders {
             provideStatic(InfiniteEnergyStorage.INSTANCE),
             RagiumContents.CREATIVE_SOURCE,
         )
+        
+        ENERGY.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> 
+            HTEnergyNetwork.getStorage(world)
+        }, RagiumContents.NETWORK_INTERFACE)
 
         ENERGY.registerFallback { _: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, direction: Direction? ->
             (blockEntity as? HTEnergyStorageHolder)?.getEnergyStorage(direction)
         }
 
-        ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+        /*ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             if (direction != null) {
                 val axis: Direction.Axis = state.get(Properties.AXIS)
                 if (direction.axis == axis) {
@@ -104,7 +109,7 @@ object RagiumEnergyProviders {
             val stateTo: BlockState = world.getBlockState(posTo)
             val blockEntityTo: BlockEntity? = world.getBlockEntity(posTo)
             ENERGY.find(world, posTo, stateTo, blockEntityTo, facing.opposite)
-        }, RagiumContents.GEAR_BOX)
+        }, RagiumContents.GEAR_BOX)*/
     }
 
     @JvmStatic

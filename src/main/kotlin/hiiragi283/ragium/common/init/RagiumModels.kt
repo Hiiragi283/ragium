@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.machine.HTMachineTier
+import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.textureMap
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
@@ -142,4 +143,8 @@ object RagiumModels {
     @JvmStatic
     fun createMachine(top: Block, bottom: Block, front: Identifier): TexturedModel.Factory =
         createMachine(TextureMap.getId(top), TextureMap.getId(bottom), front)
+
+    @JvmStatic
+    fun createMachine(type: HTMachineType<*>, tier: HTMachineTier): TexturedModel.Factory =
+        createMachine(tier.getStorageBlock().block, tier.getBaseBlock(), type.frontTexId)
 }

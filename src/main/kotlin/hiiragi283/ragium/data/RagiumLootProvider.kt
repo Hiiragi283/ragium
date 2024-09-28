@@ -55,6 +55,8 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
         addDrop(RagiumContents.ITEM_DISPLAY)
         addDrop(RagiumContents.DATA_DRIVE)
         addDrop(RagiumContents.DRIVE_SCANNER)
+        addDrop(RagiumContents.NETWORK_INTERFACE)
+        addDrop(RagiumContents.ADVANCED_CASING)
 
         buildList<HTBlockContent> {
             addAll(RagiumContents.StorageBlocks.entries)

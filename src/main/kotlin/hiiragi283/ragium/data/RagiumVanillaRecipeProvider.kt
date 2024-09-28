@@ -214,7 +214,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
 
         materials.forEach { material: RagiumMaterials ->
-            val base: Block = material.tier.baseBlock
+            val base: Block = material.tier.getBaseBlock()
             val ingot: RagiumContents.Ingots = material.getIngot() ?: return@forEach
             val hull: RagiumContents.Hulls = material.getHull() ?: return@forEach
             HTShapedRecipeJsonBuilder
@@ -295,7 +295,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input('A', tier.getIngot())
                 .input('B', tier.getCircuit())
                 .input('C', tier.getHull())
-                .input('D', tier.baseBlock)
+                .input('D', tier.getBaseBlock())
                 .unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(RagiumMachineTypes.Single.ASSEMBLER))
         }
@@ -416,7 +416,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input('B', left)
                 .input('C', tier.getHull())
                 .input('D', right)
-                .input('E', tier.baseBlock)
+                .input('E', tier.getBaseBlock())
                 .unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(type))
         }
