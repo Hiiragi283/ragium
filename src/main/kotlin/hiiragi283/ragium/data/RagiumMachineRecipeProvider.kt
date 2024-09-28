@@ -145,12 +145,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.ASSEMBLER)
-            .addInput(RagiumContents.Plates.RUBBER)
-            .addInput(ConventionalItemTags.COPPER_INGOTS, 6)
-            .addOutput(RagiumContents.CABLE, 6)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.ASSEMBLER)
             .addInput(RagiumContents.Plates.PE)
             .addInput(RagiumItemTags.COPPER_PLATES)
             .addInput(ConventionalItemTags.REDSTONE_DUSTS)

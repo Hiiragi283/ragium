@@ -50,8 +50,6 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
         addDrop(RagiumContents.WATER_GENERATOR)
         addDrop(RagiumContents.WIND_GENERATOR)
         addDrop(RagiumContents.SHAFT)
-        addDrop(RagiumContents.CABLE)
-        addDrop(RagiumContents.GEAR_BOX)
         addDrop(RagiumContents.BLAZING_BOX)
         addDrop(RagiumContents.ALCHEMICAL_INFUSER)
         addDrop(RagiumContents.ITEM_DISPLAY)

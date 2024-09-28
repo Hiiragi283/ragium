@@ -78,7 +78,6 @@ object RagiumClient : ClientModInitializer {
             RagiumContents.RUBBER_LEAVES,
             RagiumContents.MANUAL_GRINDER,
             RagiumContents.BRICK_ALLOY_FURNACE,
-            RagiumContents.GEAR_BOX,
             RagiumContents.BLAZING_BOX,
         )
 

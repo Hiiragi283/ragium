@@ -78,14 +78,6 @@ object RagiumContents {
         registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
 
     @JvmField
-    val CABLE: Block =
-        registerBlock("cable", HTThinPillarBlock(blockSettings(Blocks.COPPER_BLOCK)))
-
-    @JvmField
-    val GEAR_BOX: Block =
-        registerBlock("gear_box", HTGearBoxBlock)
-
-    @JvmField
     val BLAZING_BOX: Block =
         registerHorizontalWithBE("blazing_box", RagiumBlockEntityTypes.BLAZING_BOX, Blocks.POLISHED_BLACKSTONE_BRICKS)
 

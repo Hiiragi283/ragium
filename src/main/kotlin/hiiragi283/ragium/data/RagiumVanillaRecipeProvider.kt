@@ -112,14 +112,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(ConventionalItemTags.SLIME_BALLS)
             .offerTo(exporter)
 
-        createShapeless(RagiumContents.CABLE)
-            .input(ItemTags.WOOL_CARPETS)
-            .input(ConventionalItemTags.COPPER_INGOTS)
-            .input(ConventionalItemTags.COPPER_INGOTS)
-            .input(ConventionalItemTags.COPPER_INGOTS)
-            .unlockedBy(ConventionalItemTags.COPPER_INGOTS)
-            .offerTo(exporter, Ragium.id("shapeless/cable"))
-
         // tools
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.FORGE_HAMMER)
@@ -271,30 +263,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('C', Items.SMOOTH_STONE)
             .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
             .offerPrefix(exporter.hardMode(true), "hard/")
-
-        /*HTShapedRecipeJsonBuilder
-            .create(RagiumContents.BURNING_BOX)
-            .patterns(
-                "AAA",
-                "A A",
-                "ABA",
-            ).input('A', Items.BRICKS)
-            .input('B', Items.FURNACE)
-            .unlockedBy(Items.BRICKS)
-            .offerTo(exporter)*/
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumContents.GEAR_BOX)
-            .patterns(
-                "AAA",
-                "BCB",
-                "BDB",
-            ).input('A', RagiumContents.Ingots.RAGI_STEEL)
-            .input('B', HTMachineTier.BASIC.baseBlock)
-            .input('C', RagiumContents.SHAFT)
-            .input('D', ConventionalItemTags.REDSTONE_DUSTS)
-            .unlockedBy(RagiumContents.SHAFT)
-            .offerTo(exporter)
 
         // tiered machines
         // tier1

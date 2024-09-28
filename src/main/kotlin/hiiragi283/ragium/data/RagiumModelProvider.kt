@@ -119,44 +119,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.BRICK_ALLOY_FURNACE) {
             generator.registerNorthDefaultHorizontalRotated(
                 it,
-                RagiumModels.createMachine(
-                    HTMachineTier.PRIMITIVE.casingTex,
-                    HTMachineTier.PRIMITIVE.baseTex,
-                    RagiumMachineTypes.Single.ALLOY_FURNACE.frontTexId,
-                ),
+                RagiumModels.createMachine(RagiumMachineTypes.Single.ALLOY_FURNACE, HTMachineTier.BASIC)
             )
         }
-        /*register(RagiumContents.BURNING_BOX) {
-            generator.registerNorthDefaultHorizontalRotated(
-                it,
-                RagiumModels.createMachine(
-                    Blocks.BRICKS,
-                    Blocks.BRICKS,
-                    TextureMap.getSubId(it, "_front"),
-                ),
-            )
-        }*/
         registerSimple(RagiumContents.WATER_GENERATOR)
         registerSimple(RagiumContents.WIND_GENERATOR)
         register(RagiumContents.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        register(RagiumContents.CABLE) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        register(RagiumContents.GEAR_BOX) {
-            generator.blockStateCollector.accept(
-                VariantsBlockStateSupplier
-                    .create(
-                        it,
-                        buildModelVariant(TextureMap.getId(it)),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
-            )
-        }
         register(RagiumContents.BLAZING_BOX) {
             generator.registerNorthDefaultHorizontalRotated(
                 it,
-                RagiumModels.createMachine(
-                    Blocks.POLISHED_BLACKSTONE_BRICKS,
-                    Blocks.POLISHED_BLACKSTONE_BRICKS,
-                    Ragium.id("block/burning_box_front"),
-                ),
+                RagiumModels.createMachine(RagiumMachineTypes.BURNING_BOX, HTMachineTier.BASIC),
             )
         }
         register(RagiumContents.ALCHEMICAL_INFUSER) {
@@ -234,38 +206,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
-        /*HTMachineBlockRegistry.registry.forEach { type: HTMachineType<*>, tier: HTMachineTier, machineBlock: HTMachineBlockBase ->
-            register(machineBlock) { block: Block ->
-                generator.registerNorthDefaultHorizontalRotated(
-                    block,
-                    RagiumModels.createMachine(
-                        tier.casingTex,
-                        tier.baseTex,
-                        type.frontTexId,
-                    ),
-                )
-            }
-        }*/
         // elements
         RagiElement.entries.forEach { element: RagiElement ->
             // budding block
             registerSimple(element.buddingBlock)
             // cluster block
-            register(element.clusterBlock) {
-                accept(
-                    VariantsBlockStateSupplier
-                        .create(
-                            it,
-                            buildModelVariant(
-                                Models.CROSS.upload(
-                                    it,
-                                    TextureMap.cross(it),
-                                    generator.modelCollector,
-                                ),
-                            ),
-                        ).coordinate(generator.createUpDefaultFacingVariantMap()),
-                )
-            }
+            register(element.clusterBlock, generator::registerAmethyst)
         }
     }
 
@@ -317,7 +263,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Plates.entries)
         }.map { it.asItem() }.forEach(::register)
         // elements
-        RagiElement.entries.map(RagiElement::dustItem).forEach(::register)
+        RagiElement.entries.forEach { element: RagiElement ->
+            register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))
+            register(element.dustItem)
+        }
         // fluids
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             register(fluid.asItem(), RagiumModels.FILLED_FLUID_CUBE)

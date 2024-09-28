@@ -58,8 +58,6 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WIND_GENERATOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BLAZING_BOX)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.CABLE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.GEAR_BOX)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
 
             buildList<HTBlockContent> {
