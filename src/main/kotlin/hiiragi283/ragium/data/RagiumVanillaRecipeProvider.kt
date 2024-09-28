@@ -433,6 +433,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 0.0f,
                 200,
             ).unlockedBy(RagiumContents.RAGI_ALLOY_COMPOUND)
-            .offerTo(exporter, Ragium.id("smelting/ragi_alloy_ingot_alt"))
+            .offerTo(exporter, Ragium.id("smelting/ragi_alloy_ingot"))
+
+        CookingRecipeJsonBuilder
+            .createBlasting(
+                Ingredient.ofItems(RagiumContents.RAGI_ALLOY_COMPOUND),
+                RecipeCategory.MISC,
+                RagiumContents.Ingots.RAGI_ALLOY,
+                0.0f,
+                100,
+            ).unlockedBy(RagiumContents.RAGI_ALLOY_COMPOUND)
+            .offerTo(exporter, Ragium.id("blasting/ragi_alloy_ingot"))
     }
 }

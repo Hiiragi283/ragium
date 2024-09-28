@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
@@ -11,7 +12,7 @@ import hiiragi283.ragium.common.util.modifyBlockState
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.RecipeManager
+import net.minecraft.recipe.RecipeEntry
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
@@ -48,24 +49,23 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         HTSidedStorageBuilder(1)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .buildSided()
-    private val matchGetter: RecipeManager.MatchGetter<HTMachineRecipe.Input, HTMachineRecipe> =
-        RecipeManager.createCachedMatchGetter(RagiumMachineTypes.Single.GRINDER.recipeType)
 
-    fun process(player: PlayerEntity) {
+    private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val recipe: HTMachineRecipe =
-            matchGetter
-                .getFirstMatch(
-                    HTMachineRecipe.Input(
-                        HTMachineTier.PRIMITIVE,
-                        getStack(0),
-                        ItemStack.EMPTY,
-                        ItemStack.EMPTY,
-                        ItemStack.EMPTY,
-                    ),
-                    world,
-                ).map { it.value }
-                .getOrNull() ?: return
+        val recipe: HTMachineRecipe = world.recipeManager
+            .getFirstMatch(
+                RagiumRecipeTypes.MACHINE,
+                HTMachineRecipe.Input(
+                    RagiumMachineTypes.Single.GRINDER,
+                    HTMachineTier.PRIMITIVE,
+                    getStack(0),
+                    ItemStack.EMPTY,
+                    ItemStack.EMPTY,
+                    ItemStack.EMPTY,
+                ),
+                world,
+            ).map(RecipeEntry<HTMachineRecipe>::value)
+            .getOrNull() ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         parent.getStack(0).decrement(recipe.getInput(0)?.count ?: 0)
         world.playSoundAtBlockCenter(

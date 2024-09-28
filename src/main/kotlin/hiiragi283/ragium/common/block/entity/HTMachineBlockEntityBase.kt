@@ -88,6 +88,7 @@ abstract class HTMachineBlockEntityBase :
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         val input =
             HTMachineRecipe.Input(
+                machineType,
                 tier,
                 getStack(0),
                 getStack(1),
@@ -121,13 +122,13 @@ abstract class HTMachineBlockEntityBase :
         HTEnergyNetwork.getStorage(world)?.let { network: HTEnergyNetwork ->
             val currentAmount: Long = network.amount
             val extracted: Long = currentAmount - tier.recipeCost
-            network.setAmount(max(0, extracted))
+            network.amount = max(0, extracted)
         }
     }
 
     private fun canAcceptOutputs(recipe: HTRecipeBase<HTMachineRecipe.Input>): Boolean {
         recipe.outputs.forEachIndexed { index: Int, result: HTRecipeResult ->
-            val stackIn: ItemStack = getStack(index + 3)
+            val stackIn: ItemStack = getStack(index + 4)
             if (!result.canAccept(stackIn)) {
                 return false
             }

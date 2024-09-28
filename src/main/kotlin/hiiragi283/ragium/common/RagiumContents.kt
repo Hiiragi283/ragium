@@ -219,6 +219,9 @@ object RagiumContents {
     private fun registerItem(name: String, settings: Item.Settings = itemSettings()): Item = registerItem(name, Item(settings))
 
     @JvmStatic
+    private fun registerItem(item: HTItemContent): Item = registerItem(item.id.path, item.item)
+
+    @JvmStatic
     private fun registerBlockItem(
         block: Block,
         settings: Item.Settings = itemSettings(),
@@ -342,7 +345,7 @@ object RagiumContents {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         ;
 
-        override val block = PillarBlock(blockSettings())
+        override val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
         override val id: Identifier = Ragium.id("${name.lowercase()}_coil")
         override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
@@ -446,15 +449,14 @@ object RagiumContents {
         ;
 
         override val item = Item(itemSettings())
+        override val id: Identifier = Ragium.id("${name.lowercase()}_dust")
         override val enPattern: String = "%s Dust"
         override val jaPattern: String = "%sの粉"
     }
 
     @JvmStatic
     private fun initDusts() {
-        Dusts.entries.forEach { dust: Dusts ->
-            registerItem("${dust.name.lowercase()}_dust", dust.asItem())
-        }
+        Dusts.entries.forEach(::registerItem)
     }
 
     //    Ingots    //
@@ -467,15 +469,14 @@ object RagiumContents {
         ;
 
         override val item = Item(itemSettings())
+        override val id: Identifier = Ragium.id("${name.lowercase()}_ingot")
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
     }
 
     @JvmStatic
     private fun initIngots() {
-        Ingots.entries.forEach { ingot: Ingots ->
-            registerItem("${ingot.name.lowercase()}_ingot", ingot.asItem())
-        }
+        Ingots.entries.forEach(::registerItem)
     }
 
     //    Plates    //
@@ -502,15 +503,14 @@ object RagiumContents {
         ;
 
         override val item = Item(itemSettings())
+        override val id: Identifier = Ragium.id("${name.lowercase()}_plate")
         override val enPattern: String = "%s Plate"
         override val jaPattern: String = "%s板"
     }
 
     @JvmStatic
     private fun initPlates() {
-        Plates.entries.forEach { plate: Plates ->
-            registerItem("${plate.name.lowercase()}_plate", plate.asItem())
-        }
+        Plates.entries.forEach(::registerItem)
     }
 
     //    Elements    //

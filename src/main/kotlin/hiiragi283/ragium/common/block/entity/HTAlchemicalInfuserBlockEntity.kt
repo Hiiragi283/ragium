@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.*
@@ -148,5 +149,5 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTAlchemicalInfuserHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos))
 
-    override fun getDisplayName(): Text = Text.literal("Alchemical Infuser")
+    override fun getDisplayName(): Text = RagiumContents.ALCHEMICAL_INFUSER.name
 }

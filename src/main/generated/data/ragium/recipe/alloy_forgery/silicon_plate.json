@@ -19,7 +19,7 @@
       "tag": "minecraft:coals"
     }
   ],
-  "min_forge_tier": 1,
+  "min_forge_tier": 2,
   "output": {
     "count": 1,
     "item": "ragium:silicon_plate"

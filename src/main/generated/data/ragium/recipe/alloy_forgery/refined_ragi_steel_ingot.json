@@ -23,7 +23,7 @@
       "tag": "c:gems/quartz"
     }
   ],
-  "min_forge_tier": 1,
+  "min_forge_tier": 3,
   "output": {
     "count": 1,
     "item": "ragium:refined_ragi_steel_ingot"

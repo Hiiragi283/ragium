@@ -76,6 +76,7 @@ class HTMachineRecipe(
     //    Recipe    //
 
     override fun matches(input: Input, world: World): Boolean = input.matches(
+        type,
         minTier,
         getInput(0),
         getInput(1),
@@ -98,20 +99,23 @@ class HTMachineRecipe(
     //    Input    //
 
     class Input(
-        private val minTier: HTMachineTier,
+        private val currentType: HTMachineType<*>,
+        private val currentTier: HTMachineTier,
         private val first: ItemStack,
         private val second: ItemStack,
         private val third: ItemStack,
         private val catalyst: ItemStack,
     ) : RecipeInput {
         fun matches(
-            minTier: HTMachineTier,
+            type: HTMachineType<*>,
+            currentTier: HTMachineTier,
             first: WeightedIngredient?,
             second: WeightedIngredient?,
             third: WeightedIngredient?,
             catalyst: Ingredient?,
         ): Boolean = matchesInternal(
-            minTier,
+            type,
+            currentTier,
             first ?: WeightedIngredient.EMPTY,
             second ?: WeightedIngredient.EMPTY,
             third ?: WeightedIngredient.EMPTY,
@@ -119,13 +123,15 @@ class HTMachineRecipe(
         )
 
         private fun matchesInternal(
-            currentTier: HTMachineTier,
+            type: HTMachineType<*>,
+            tier: HTMachineTier,
             first: WeightedIngredient,
             second: WeightedIngredient,
             third: WeightedIngredient,
             catalyst: Ingredient,
         ): Boolean = when {
-            minTier > currentTier -> false
+            type != this.currentType -> false
+            this.currentTier < tier -> false
             !first.test(this.first) -> false
             !second.test(this.second) -> false
             !third.test(this.third) -> false
