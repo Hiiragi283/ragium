@@ -27,7 +27,8 @@ object RagiumMachineConditions {
     @JvmField
     val ELECTRIC: (World, BlockPos) -> Boolean = { world: World, pos: BlockPos ->
         (world.getBlockEntity(pos) as? HTTieredMachine)?.tier?.recipeCost?.let { recipeCost: Long ->
-            HTEnergyNetwork.getStorage(world)
+            HTEnergyNetwork
+                .getStorage(world)
                 ?.amount
                 ?.let { it >= recipeCost }
         } ?: false

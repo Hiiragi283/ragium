@@ -119,7 +119,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.BRICK_ALLOY_FURNACE) {
             generator.registerNorthDefaultHorizontalRotated(
                 it,
-                RagiumModels.createMachine(RagiumMachineTypes.Single.ALLOY_FURNACE, HTMachineTier.BASIC)
+                RagiumModels.createMachine(RagiumMachineTypes.Single.ALLOY_FURNACE, HTMachineTier.BASIC),
             )
         }
         registerSimple(RagiumContents.WATER_GENERATOR)

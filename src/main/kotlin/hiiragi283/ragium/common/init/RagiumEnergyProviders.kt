@@ -81,8 +81,8 @@ object RagiumEnergyProviders {
             provideStatic(InfiniteEnergyStorage.INSTANCE),
             RagiumContents.CREATIVE_SOURCE,
         )
-        
-        ENERGY.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> 
+
+        ENERGY.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             HTEnergyNetwork.getStorage(world)
         }, RagiumContents.NETWORK_INTERFACE)
 

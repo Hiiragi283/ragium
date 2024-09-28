@@ -105,7 +105,7 @@ enum class HTMachineTier(
         BASIC -> Blocks.POLISHED_DEEPSLATE
         ADVANCED -> RagiumContents.ADVANCED_CASING
     }
-    
+
     fun getCircuit(): RagiumContents.Circuit = when (this) {
         PRIMITIVE -> RagiumContents.Circuit.PRIMITIVE
         BASIC -> RagiumContents.Circuit.BASIC

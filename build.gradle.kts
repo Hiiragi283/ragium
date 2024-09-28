@@ -44,6 +44,7 @@ repositories {
     maven(url = "https://maven.terraformersmc.com/releases")
     maven(url = "https://server.bbkr.space/artifactory/libs-release") // LibGui
     maven(url = "https://maven.ladysnake.org/releases") // CCA
+    maven(url = "https://maven.wispforest.io") // oωo
 }
 
 loom {
@@ -99,6 +100,11 @@ dependencies {
         exclude(module = "fabric-loader")
     }
     include(libs.bundles.mods.include) { isTransitive = false }
+
+    modCompileOnly(libs.bundles.mods.compile) {
+        exclude(module = "fabric-api")
+        exclude(module = "fabric-loader")
+    }
 
     modLocalRuntime(libs.bundles.mods.runtime) {
         exclude(module = "fabric-api")

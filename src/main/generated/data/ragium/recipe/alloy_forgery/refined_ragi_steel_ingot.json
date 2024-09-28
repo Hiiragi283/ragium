@@ -1,0 +1,32 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "alloy_forgery"
+      ]
+    }
+  ],
+  "type": "alloy_forgery:forging",
+  "fuel_per_tick": 5,
+  "inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/steel"
+    },
+    {
+      "count": 4,
+      "item": "ragium:ragi_crystal_dust"
+    },
+    {
+      "count": 1,
+      "tag": "c:gems/quartz"
+    }
+  ],
+  "min_forge_tier": 1,
+  "output": {
+    "count": 1,
+    "item": "ragium:refined_ragi_steel_ingot"
+  },
+  "overrides": {}
+}

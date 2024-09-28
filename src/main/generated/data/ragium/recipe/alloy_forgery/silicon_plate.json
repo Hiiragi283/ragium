@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "alloy_forgery"
+      ]
+    }
+  ],
+  "type": "alloy_forgery:forging",
+  "fuel_per_tick": 5,
+  "inputs": [
+    {
+      "count": 2,
+      "tag": "c:gems/quartz"
+    },
+    {
+      "count": 4,
+      "tag": "minecraft:coals"
+    }
+  ],
+  "min_forge_tier": 1,
+  "output": {
+    "count": 1,
+    "item": "ragium:silicon_plate"
+  },
+  "overrides": {}
+}

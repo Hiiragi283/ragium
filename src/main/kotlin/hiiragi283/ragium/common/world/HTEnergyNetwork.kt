@@ -23,8 +23,7 @@ class HTEnergyNetwork() :
         val TYPE: Type<HTEnergyNetwork> = Type(::HTEnergyNetwork, ::fromNbt, null)
 
         @JvmStatic
-        fun fromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): HTEnergyNetwork =
-            HTEnergyNetwork(nbt.getLong(KEY))
+        fun fromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): HTEnergyNetwork = HTEnergyNetwork(nbt.getLong(KEY))
 
         @JvmStatic
         fun getStorage(world: ServerWorld): HTEnergyNetwork = getState(world, TYPE, Ragium.id("network"))
@@ -47,7 +46,7 @@ class HTEnergyNetwork() :
     fun setAmount(value: Long) {
         storage.amount = value
     }
-    
+
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {
         nbt.putLong(KEY, storage.amount)
         return nbt

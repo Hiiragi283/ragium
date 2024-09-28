@@ -105,9 +105,9 @@ object RagiumContents {
     @JvmField
     val NETWORK_INTERFACE: Block =
         registerBlock("network_interface")
-    
+
     @JvmField
-    val ADVANCED_CASING: Block = 
+    val ADVANCED_CASING: Block =
         registerCopy("advanced_casing", Blocks.IRON_BLOCK)
 
     //    Item - Tools    //
@@ -185,7 +185,7 @@ object RagiumContents {
 
     @JvmStatic
     private fun registerBlock(content: HTBlockContent): Block = registerBlock(content.id.path, content.block)
-    
+
     @JvmStatic
     private fun registerBlock(name: String, settings: AbstractBlock.Settings = blockSettings()): Block =
         registerBlock(name, Block(settings))
