@@ -11,15 +11,15 @@ object RagiumItemTags {
     //    Custom    //
 
     @JvmField
-    val MACHINES: TagKey<Item> = create(Ragium.MOD_ID, "machines")
-
-    @JvmField
     val ORGANIC_OILS: TagKey<Item> = create(Ragium.MOD_ID, "organic_oils")
 
     //    Conventional    //
 
     @JvmField
     val PLATES: TagKey<Item> = create("plates")
+
+    @JvmField
+    val CARBON_PLATES: TagKey<Item> = create("plates/carbon")
 
     @JvmField
     val COPPER_PLATES: TagKey<Item> = create("plates/copper")

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/carbon"
+    },
+    "B": {
+      "tag": "c:plates/steel"
+    },
+    "C": {
+      "item": "ragium:ragi_crystal"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ragium:advanced_casing"
+  }
+}

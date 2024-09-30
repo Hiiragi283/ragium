@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.util
 
-import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.util.forEach
+import hiiragi283.ragium.common.util.hashTableOf
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementEntry
@@ -24,8 +24,8 @@ class HTAdvancementRegister(private val modId: String, private val consumer: Con
     }
 
     private val entryCache: MutableMap<Identifier, AdvancementEntry> = mutableMapOf()
-    private val titleCache: Table<String, HTLangType, String> = HashBasedTable.create()
-    private val descriptionCache: Table<String, HTLangType, String> = HashBasedTable.create()
+    private val titleCache: Table<String, HTLangType, String> = hashTableOf()
+    private val descriptionCache: Table<String, HTLangType, String> = hashTableOf()
 
     fun createRoot(
         name: String,

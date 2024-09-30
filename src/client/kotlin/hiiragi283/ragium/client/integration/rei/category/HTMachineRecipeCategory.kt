@@ -7,7 +7,7 @@ import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
+import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
 import me.shedaniel.rei.api.client.gui.widgets.Tooltip
@@ -30,7 +30,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 
 @Environment(EnvType.CLIENT)
-class HTMachineRecipeCategory(private val type: HTMachineType<*>) : HTDisplayCategory<HTMachineRecipeDisplay> {
+class HTMachineRecipeCategory(private val type: HTMachineType.Processor) : HTDisplayCategory<HTMachineRecipeDisplay> {
     override fun getCategoryIdentifier(): CategoryIdentifier<out HTMachineRecipeDisplay> = type.categoryId
 
     override fun getTitle(): Text = type.text

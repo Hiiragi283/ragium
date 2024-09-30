@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_input": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:empty_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:honey_fluid_cube"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_the_input"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:honey_fluid_cube"
+    ]
+  }
+}

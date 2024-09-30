@@ -1,17 +1,9 @@
 package hiiragi283.ragium.data.integration
 
-import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.tags.RagiumItemTags
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.RecipeProvider
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.ItemTags
-import wraith.alloyforgery.data.builders.AlloyForgeryRecipeBuilder
 import java.util.concurrent.CompletableFuture
 
 class RagiumAlloyForgeryRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
@@ -19,10 +11,10 @@ class RagiumAlloyForgeryRecipeProvider(output: FabricDataOutput, registriesFutur
     override fun getName(): String = "Recipes/Alloy Forgery"
 
     override fun generate(exporter: RecipeExporter) {
-        generateRecipes(withConditions(exporter, ResourceConditions.allModsLoaded("alloy_forgery")))
+        // generateRecipes(withConditions(exporter, ResourceConditions.allModsLoaded("alloy_forgery")))
     }
 
-    private fun generateRecipes(exporter: RecipeExporter) {
+    /*private fun generateRecipes(exporter: RecipeExporter) {
         // ragi-alloy
         AlloyForgeryRecipeBuilder
             .create(RagiumContents.Ingots.RAGI_ALLOY)
@@ -55,5 +47,5 @@ class RagiumAlloyForgeryRecipeProvider(output: FabricDataOutput, registriesFutur
             .setMinimumForgeTier(2)
             .criterion("has_the_input", RecipeProvider.conditionsFromTag(ConventionalItemTags.QUARTZ_GEMS))
             .offerTo(exporter, Ragium.id("alloy_forgery/silicon_plate"))
-    }
+    }*/
 }

@@ -1,54 +1,61 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.common.machine.HTMachineCondition
+import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import net.minecraft.recipe.RecipeType
-import net.minecraft.util.Identifier
+import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import java.util.function.Consumer
 
-object RagiumMachineTypes {
-    //    Custom    //
-
-    @JvmField
-    val BURNING_BOX: HTMachineType<HTMachineRecipe> = register("burning_box")
+object RagiumMachineTypes : HTMachineTypeInitializer {
+    override fun registerType(register: Consumer<HTMachineConvertible>) {
+        buildList {
+            add(BLAST_FURNACE)
+            add(DISTILLATION_TOWER)
+            addAll(RagiumMachineTypes.Generator.entries)
+            addAll(RagiumMachineTypes.Processor.entries)
+        }.forEach(register::accept)
+    }
 
     //    Multi    //
 
     @JvmField
-    val BLAST_FURNACE: HTMachineType<HTMachineRecipe> = register("blast_furnace")
+    val BLAST_FURNACE =
+        HTMachineType.Processor(Ragium.id("blast_furnace"), RagiumMachineConditions.ELECTRIC_CONSUMER)
 
     @JvmField
-    val DISTILLATION_TOWER: HTMachineType<HTMachineRecipe> = register("distillation_tower")
+    val DISTILLATION_TOWER =
+        HTMachineType.Processor(Ragium.id("distillation_tower"), RagiumMachineConditions.ELECTRIC_CONSUMER)
 
-    @JvmStatic
-    private fun register(
-        name: String,
-        machineCondition: (World, BlockPos) -> Boolean = RagiumMachineConditions.ELECTRIC,
-    ): HTMachineType<HTMachineRecipe> = HTMachineType.register(object : HTMachineType<HTMachineRecipe> {
-        override val id: Identifier = Ragium.id(name)
-        override val recipeType: RecipeType<HTMachineRecipe> = RagiumRecipeTypes.MACHINE
-        override val machineCondition: (World, BlockPos) -> Boolean = machineCondition
-    })
+    //    Generator    //
 
-    @JvmStatic
-    fun init() {
-        buildList {
-            // single
-            addAll(Single.entries)
-            // custom
-            add(BURNING_BOX)
-            // multi
-            add(BLAST_FURNACE)
-            add(DISTILLATION_TOWER)
-        }.forEach(HTMachineType.Companion::register)
+    enum class Generator : HTMachineConvertible {
+        WATER {
+            override fun canGenerate(world: World, pos: BlockPos): Boolean = Direction.entries
+                .map(pos::offset)
+                .map(world::getFluidState)
+                .filter { it.isIn(FluidTags.WATER) }
+                .size >= 2
+        },
+        SOLAR {
+            override fun canGenerate(world: World, pos: BlockPos): Boolean = world.isDay
+        },
+        ;
+
+        abstract fun canGenerate(world: World, pos: BlockPos): Boolean
+
+        private val machineType = HTMachineType.Generator(Ragium.id(name.lowercase()), ::canGenerate)
+
+        override fun asMachine(): HTMachineType = machineType
     }
 
-    //    Single    //
+    //    Processor    //
 
-    enum class Single(override val machineCondition: (World, BlockPos) -> Boolean = RagiumMachineConditions.ELECTRIC) :
-        HTMachineType<HTMachineRecipe> {
+    enum class Processor(condition: HTMachineCondition = RagiumMachineConditions.ELECTRIC_CONSUMER) : HTMachineConvertible {
         ALLOY_FURNACE,
         ASSEMBLER,
         CENTRIFUGE,
@@ -62,7 +69,8 @@ object RagiumMachineTypes {
         ROCK_GENERATOR(RagiumMachineConditions.ROCK_GENERATOR),
         ;
 
-        override val id: Identifier = Ragium.id(name.lowercase())
-        override val recipeType: RecipeType<HTMachineRecipe> = RagiumRecipeTypes.MACHINE
+        private val machineType = HTMachineType.Processor(Ragium.id(name.lowercase()), condition)
+
+        override fun asMachine(): HTMachineType = machineType
     }
 }

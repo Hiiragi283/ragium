@@ -80,7 +80,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         context: RenderContext,
     ) {
         val machineBlockEntity: HTTieredMachine? = blockView.getBlockEntity(pos) as? HTTieredMachine
-        val type: HTMachineType<*> = machineBlockEntity?.machineType ?: HTMachineType.Default
+        val type: HTMachineType = machineBlockEntity?.machineType ?: HTMachineType.Default
         val tier: HTMachineTier = machineBlockEntity?.tier ?: HTMachineTier.PRIMITIVE
         val frontDir: Direction =
             blockView.getBlockState(pos).getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
@@ -90,7 +90,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        val type: HTMachineType<*> = stack.getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.Default)
+        val type: HTMachineType = stack.getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.Default)
         val tier: HTMachineTier = stack.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.PRIMITIVE)
         emitMachineQuads(Direction.NORTH, type, tier, context) {
             it.emitItemQuads(stack, randomSupplier, context)
@@ -100,7 +100,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
     @JvmStatic
     private fun emitMachineQuads(
         frontDir: Direction,
-        type: HTMachineType<*>,
+        type: HTMachineType,
         tier: HTMachineTier,
         context: RenderContext,
         hullRenderer: (BakedModel) -> Unit,
@@ -115,7 +115,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.frontTexId)
         this.frontSprite = this.textureGetter.apply(frontId)
         val emitter: QuadEmitter = context.emitter
-        emitter.square(frontDir, 0.0f, 0.0f, 1.0f, 1.0f, -0.01f)
+        emitter.square(type.getFrontTexDir(frontDir), 0.0f, 0.0f, 1.0f, 1.0f, -0.01f)
         emitter.spriteBake(frontSprite, MutableQuadView.BAKE_LOCK_UV)
         emitter.color(-1, -1, -1, -1)
         emitter.emit()

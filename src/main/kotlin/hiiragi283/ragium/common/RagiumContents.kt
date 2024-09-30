@@ -5,6 +5,7 @@ import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.*
 import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
+import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
@@ -56,31 +57,8 @@ object RagiumContents {
         registerBlock("manual_grinder", HTManualGrinderBlock)
 
     @JvmField
-    val BRICK_ALLOY_FURNACE: Block =
-        registerHorizontalWithBE(
-            "brick_alloy_furnace",
-            RagiumBlockEntityTypes.BRICK_ALLOY_FURNACE,
-            Blocks.BRICKS,
-        )
-
-    @JvmField
-    val BURNING_BOX: Block = registerBlock("burning_box", HTBurningBoxBlock)
-
-    @JvmField
-    val WATER_GENERATOR: Block =
-        registerHorizontalWithBE("water_generator", RagiumBlockEntityTypes.WATER_GENERATOR)
-
-    @JvmField
-    val WIND_GENERATOR: Block =
-        registerHorizontalWithBE("wind_generator", RagiumBlockEntityTypes.WIND_GENERATOR)
-
-    @JvmField
     val SHAFT: Block =
         registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
-
-    @JvmField
-    val BLAZING_BOX: Block =
-        registerHorizontalWithBE("blazing_box", RagiumBlockEntityTypes.BLAZING_BOX, Blocks.POLISHED_BLACKSTONE_BRICKS)
 
     @JvmField
     val ALCHEMICAL_INFUSER: Block =
@@ -105,6 +83,10 @@ object RagiumContents {
     @JvmField
     val NETWORK_INTERFACE: Block =
         registerBlock("network_interface")
+
+    @JvmField
+    val BASIC_CASING: Block =
+        registerCopy("basic_casing", Blocks.IRON_BLOCK)
 
     @JvmField
     val ADVANCED_CASING: Block =
@@ -302,16 +284,13 @@ object RagiumContents {
 
         registerBlockItem(CREATIVE_SOURCE)
         registerBlockItem(MANUAL_GRINDER)
-        registerBlockItem(BRICK_ALLOY_FURNACE)
-        registerBlockItem(WATER_GENERATOR)
-        registerBlockItem(WIND_GENERATOR)
         registerBlockItem(SHAFT)
-        registerBlockItem(BLAZING_BOX)
         registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
         registerBlockItem(ITEM_DISPLAY)
         registerBlockItem(DATA_DRIVE)
         registerBlockItem(DRIVE_SCANNER)
         registerBlockItem(NETWORK_INTERFACE)
+        registerBlockItem(BASIC_CASING)
         registerBlockItem(ADVANCED_CASING)
     }
 
@@ -364,28 +343,31 @@ object RagiumContents {
     @JvmStatic
     private fun initMachines() {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            // single
-            RagiumMachineTypes.Single.entries.forEach { type: RagiumMachineTypes.Single ->
-                registerMachine(type, tier, ::HTSingleMachineBlock)
-            }
+            // generator
+            RagiumMachineTypes.Generator.entries
+                .map(RagiumMachineTypes.Generator::asMachine)
+                .forEach { type: HTMachineType -> registerMachine(type, tier, ::HTGeneratorMachineBlock) }
+            // processor
+            RagiumMachineTypes.Processor.entries
+                .map(RagiumMachineTypes.Processor::asMachine)
+                .forEach { type: HTMachineType -> registerMachine(type, tier, ::HTSingleMachineBlock) }
             // blast furnace
-            registerMachine(
-                RagiumMachineTypes.BLAST_FURNACE,
-                tier,
-            ) { _: HTMachineType<*>, tier1: HTMachineTier -> HTBlastFurnaceBlock(tier1) }
+            registerCustomMachine(RagiumMachineTypes.BLAST_FURNACE, tier, ::HTBlastFurnaceBlock)
             // distillation tower
-            registerMachine(
-                RagiumMachineTypes.DISTILLATION_TOWER,
-                tier,
-            ) { _: HTMachineType<*>, tier1: HTMachineTier -> HTDistillationTowerBlock(tier1) }
+            registerCustomMachine(RagiumMachineTypes.DISTILLATION_TOWER, tier, ::HTDistillationTowerBlock)
         }
     }
 
     @JvmStatic
+    private fun registerCustomMachine(type: HTMachineConvertible, tier: HTMachineTier, factory: (HTMachineTier) -> HTMachineBlockBase) {
+        registerMachine(type, tier) { _: HTMachineConvertible, tier1: HTMachineTier -> factory(tier1) }
+    }
+
+    @JvmStatic
     private fun registerMachine(
-        type: HTMachineType<*>,
+        type: HTMachineConvertible,
         tier: HTMachineTier,
-        factory: (HTMachineType<*>, HTMachineTier) -> HTMachineBlockBase,
+        factory: (HTMachineConvertible, HTMachineTier) -> HTMachineBlockBase,
     ) {
         val name: String = tier.createId(type).path
         val machineBlock: HTMachineBlockBase = registerBlock(name, factory(type, tier))
@@ -489,8 +471,8 @@ object RagiumContents {
 
         // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        CARBON(RagiumMaterials.CARBON),
         GOLD(RagiumMaterials.GOLD),
-        RUBBER(RagiumMaterials.RUBBER),
         SILICON(RagiumMaterials.SILICON),
         STEEL(RagiumMaterials.STEEL),
 

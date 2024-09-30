@@ -5,11 +5,18 @@ import hiiragi283.ragium.common.util.getState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.MinecraftServer
+import net.minecraft.util.Identifier
 import net.minecraft.world.PersistentState
+
+val MinecraftServer.hardModeManager: HTHardModeManager
+    get() = getState(overworld, HTHardModeManager.TYPE, HTHardModeManager.ID)
 
 class HTHardModeManager() : PersistentState() {
     companion object {
         const val KEY = "is_hard_mode"
+
+        @JvmField
+        val ID: Identifier = Ragium.id(KEY)
 
         @JvmField
         val TYPE: Type<HTHardModeManager> = Type(::HTHardModeManager, ::fromNbt, null)
@@ -17,9 +24,6 @@ class HTHardModeManager() : PersistentState() {
         @JvmStatic
         fun fromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): HTHardModeManager =
             HTHardModeManager(nbt.getBoolean(KEY))
-
-        @JvmStatic
-        fun getOverworldManager(server: MinecraftServer): HTHardModeManager = getState(server.overworld, TYPE, Ragium.id("hard_mode"))
     }
 
     var isHardMode: Boolean = false

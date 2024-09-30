@@ -5,10 +5,8 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.HTMachineBlockBase
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumModels
 import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
-import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -116,21 +114,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 },
             )
         }
-        register(RagiumContents.BRICK_ALLOY_FURNACE) {
-            generator.registerNorthDefaultHorizontalRotated(
-                it,
-                RagiumModels.createMachine(RagiumMachineTypes.Single.ALLOY_FURNACE, HTMachineTier.BASIC),
-            )
-        }
-        registerSimple(RagiumContents.WATER_GENERATOR)
-        registerSimple(RagiumContents.WIND_GENERATOR)
         register(RagiumContents.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        register(RagiumContents.BLAZING_BOX) {
-            generator.registerNorthDefaultHorizontalRotated(
-                it,
-                RagiumModels.createMachine(RagiumMachineTypes.BURNING_BOX, HTMachineTier.BASIC),
-            )
-        }
         register(RagiumContents.ALCHEMICAL_INFUSER) {
             accept(
                 VariantsBlockStateSupplier.create(
@@ -152,6 +136,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             accept(VariantsBlockStateSupplier.create(it, buildModelVariant(TextureMap.getId(it))))
         }
         registerSimple(RagiumContents.NETWORK_INTERFACE)
+        registerSimple(RagiumContents.BASIC_CASING, Identifier.of("block/smithing_table_top"))
         registerSimple(RagiumContents.ADVANCED_CASING)
 
         register(RagiumContents.INFESTING) {
@@ -192,7 +177,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // machines
-        HTMachineBlockRegistry.registry.values().forEach { machineBlock: HTMachineBlockBase ->
+        HTMachineBlockRegistry.forEachBlock { machineBlock: HTMachineBlockBase ->
             register(machineBlock) { block: Block ->
                 accept(
                     VariantsBlockStateSupplier
@@ -241,6 +226,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.BACKPACK)
         register(RagiumContents.LARGE_BACKPACK)
         register(RagiumContents.ENDER_BACKPACK)
+
+        register(RagiumContents.STEEL_HELMET)
+        register(RagiumContents.STEEL_CHESTPLATE)
+        register(RagiumContents.STEEL_LEGGINGS)
+        register(RagiumContents.STEEL_BOOTS)
 
         register(RagiumContents.RAW_RAGINITE)
         Models.GENERATED_TWO_LAYERS.upload(

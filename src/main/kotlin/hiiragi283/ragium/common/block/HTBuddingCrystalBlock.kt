@@ -15,7 +15,7 @@ class HTBuddingCrystalBlock(private val element: RagiElement, settings: Settings
         pos: BlockPos,
         random: Random,
     ) {
-        if (random.nextInt(5) == 0) {
+        if (random.nextInt(5) == 0 || element.isSuitableBiome(world, pos)) {
             val direction: Direction = Direction.entries[random.nextInt(6)]
             val posTo: BlockPos = pos.offset(direction)
             val stateTo: BlockState = world.getBlockState(posTo)

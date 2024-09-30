@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.recipe.HTFluidPumpEntry
+import hiiragi283.ragium.common.recipe.machine.HTFluidPumpEntry
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricCodecDataProvider
 import net.minecraft.registry.RegistryKey

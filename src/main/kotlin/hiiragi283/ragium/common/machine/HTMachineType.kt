@@ -1,22 +1,12 @@
 package hiiragi283.ragium.common.machine
 
-import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.block.HTMachineBlockBase
-import hiiragi283.ragium.common.init.RagiumMachineConditions
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.recipe.HTRecipeBase
-import io.netty.buffer.ByteBuf
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
-import net.fabricmc.fabric.api.event.registry.RegistryAttribute
-import net.minecraft.item.ItemConvertible
+import hiiragi283.ragium.common.util.useTransaction
+import hiiragi283.ragium.common.world.HTEnergyNetwork
+import hiiragi283.ragium.common.world.energyNetwork
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.recipe.RecipeType
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
@@ -24,55 +14,18 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import java.util.function.BiPredicate
 
-interface HTMachineType<T : HTRecipeBase<*>> {
-    companion object {
-        @JvmField
-        val REGISTRY_KEY: RegistryKey<Registry<HTMachineType<*>>> = RegistryKey.ofRegistry(Ragium.id("machine"))
+sealed class HTMachineType(val id: Identifier) : HTMachineConvertible {
+    open val frontTexId: Identifier = id.withPath { "block/${it}_front" }
 
-        @JvmField
-        val REGISTRY: Registry<HTMachineType<*>> = FabricRegistryBuilder
-            .createSimple(REGISTRY_KEY)
-            .attribute(RegistryAttribute.SYNCED)
-            .buildAndRegister()
+    val translationKey: String = Util.createTranslationKey("machine_type", id)
+    val text: MutableText = Text.translatable(translationKey)
+    val nameText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.WHITE)
 
-        @JvmField
-        val CODEC: Codec<HTMachineType<*>> = REGISTRY.codec
-
-        @JvmField
-        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType<*>> = PacketCodecs.codec(CODEC)
-
-        @JvmStatic
-        fun <T : HTRecipeBase<*>> register(type: HTMachineType<T>): HTMachineType<T> = Registry.register(REGISTRY, type.id, type)
-
-        @JvmStatic
-        fun <T : HTRecipeBase<*>> register(id: Identifier, recipeType: RecipeType<T>): HTMachineType<T> =
-            register(object : HTMachineType<T> {
-                override val id: Identifier = id
-                override val recipeType: RecipeType<T> = recipeType
-            })
-
-        init {
-            register(Default)
-        }
-    }
-
-    val id: Identifier
-    val frontTexId: Identifier
-        get() = id.withPath { "block/${it}_front" }
-
-    val recipeType: RecipeType<T>
-
-    val machineCondition: (World, BlockPos) -> Boolean
-        get() = RagiumMachineConditions.NONE
-
-    val translationKey: String
-        get() = Util.createTranslationKey("machine_type", id)
-    val text: MutableText
-        get() = Text.translatable(translationKey)
-    val nameText: MutableText
-        get() = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.WHITE)
+    abstract fun getFrontTexDir(facing: Direction): Direction
 
     fun appendTooltip(
         stack: ItemStack,
@@ -86,19 +39,69 @@ interface HTMachineType<T : HTRecipeBase<*>> {
         consumer(tier.energyCapacityText)
     }
 
-    fun getBlock(tier: HTMachineTier): HTMachineBlockBase? = HTMachineBlockRegistry.get(this, tier)
-
-    fun getBlockOrThrow(tier: HTMachineTier): HTMachineBlockBase = HTMachineBlockRegistry.getOrThrow(this, tier)
-
-    fun createConvertible(): ItemConvertible = ItemConvertible { getBlock(HTMachineTier.PRIMITIVE)?.asItem() ?: Items.AIR }
+    override fun asMachine(): HTMachineType = this
 
     //    Default    //
 
-    data object Default : HTMachineType<HTRecipeBase<*>> {
-        override val id: Identifier = Ragium.id("default")
-        override val frontTexId: Identifier
-            get() = id.withPath { "block/alloy_furnace_front" }
-        override val recipeType: RecipeType<HTRecipeBase<*>>
-            get() = throw IllegalAccessException("Default HTMachineType does not support RecipeType!")
+    data object Default : HTMachineType(Ragium.id("default")) {
+        override val frontTexId: Identifier = id.withPath { "block/alloy_furnace_front" }
+
+        override fun getFrontTexDir(facing: Direction): Direction = facing
+    }
+
+    //    Generator    //
+
+    class Generator(id: Identifier, val predicate: BiPredicate<World, BlockPos>) : HTMachineType(id) {
+        override fun getFrontTexDir(facing: Direction): Direction = Direction.UP
+
+        fun process(
+            world: World,
+            pos: BlockPos,
+            type: HTMachineType,
+            tier: HTMachineTier,
+        ) {
+            if (predicate.test(world, pos)) {
+                world.energyNetwork?.let { network: HTEnergyNetwork ->
+                    useTransaction { transaction: Transaction ->
+                        val inserted: Long = network.insert(tier.recipeCost, transaction)
+                        when {
+                            inserted > 0 -> transaction.commit()
+                            else -> transaction.abort()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    //    Processor    //
+
+    class Processor(id: Identifier, val condition: HTMachineCondition) : HTMachineType(id) {
+        override fun getFrontTexDir(facing: Direction): Direction = facing
+
+        fun match(
+            world: World,
+            pos: BlockPos,
+            type: HTMachineType,
+            tier: HTMachineTier,
+        ): Boolean = condition.condition.match(world, pos, type, tier)
+
+        fun onSucceeded(
+            world: World,
+            pos: BlockPos,
+            type: HTMachineType,
+            tier: HTMachineTier,
+        ) {
+            condition.succeeded.onSucceeded(world, pos, type, tier)
+        }
+
+        fun onFailed(
+            world: World,
+            pos: BlockPos,
+            type: HTMachineType,
+            tier: HTMachineTier,
+        ) {
+            condition.failed.onFailed(world, pos, type, tier)
+        }
     }
 }

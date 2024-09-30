@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.blockSettings
@@ -17,11 +18,13 @@ import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.Direction
 
-abstract class HTMachineBlockBase(val machineType: HTMachineType<*>, val tier: HTMachineTier) :
+abstract class HTMachineBlockBase(val machineType: HTMachineType, val tier: HTMachineTier) :
     HTBlockWithEntity(blockSettings(tier.getBaseBlock())) {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }
+
+    constructor(convertible: HTMachineConvertible, tier: HTMachineTier) : this(convertible.asMachine(), tier)
 
     override fun getTranslationKey(): String = machineType.translationKey
 

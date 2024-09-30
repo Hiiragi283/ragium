@@ -1,12 +1,14 @@
 package hiiragi283.ragium.common.util
 
+import com.google.common.collect.HashBasedTable
+import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
@@ -86,17 +88,13 @@ fun <A, C> BlockApiLookup<A, C>.createCacheOrNull(world: World, pos: BlockPos): 
 fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state: BlockState? = null): A =
     find(state, context) ?: defaultValue
 
-//    Energy    //
-
-//    Fluid    //
-
 //    Item    //
 
 fun itemSettings(): Item.Settings = Item.Settings()
 
 fun Item.Settings.element(element: RagiElement): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
-fun Item.Settings.machineType(type: HTMachineType<*>): Item.Settings = component(RagiumComponentTypes.MACHINE_TYPE, type)
+fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(RagiumComponentTypes.MACHINE_TYPE, type.asMachine())
 
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.TIER, tier)
 
@@ -161,6 +159,11 @@ fun <T : StringIdentifiable> Iterable<T>.matchNameOrNull(name: String): T? = fir
 
 //    Table    //
 
+fun <R : Any, C : Any, V : Any> hashTableOf(): Table<R, C, V> = HashBasedTable.create()
+
+fun <R : Any, C : Any, V : Any> buildTable(builderAction: ImmutableTable.Builder<R, C, V>.() -> Unit): ImmutableTable<R, C, V> =
+    ImmutableTable.builder<R, C, V>().apply(builderAction).build()
+
 fun <R : Any, C : Any, V : Any> Table<R, C, V>.forEach(action: (R, C, V) -> Unit) {
     cellSet().forEach { action(it.rowKey, it.columnKey, it.value) }
 }
@@ -172,15 +175,6 @@ inline fun <R : Any> useTransaction(action: (Transaction) -> R): R = Transaction
 //    Text    //
 
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
-
-//    Recipe    //
-
-//    Reflection    //
-
-/*inline fun <reified T : Any> Any.getFilteredInstances(): List<T> = this::class.java.declaredFields
-    .onEach { it.isAccessible = true }
-    .map { it.get(this) }
-    .filterIsInstance<T>()*/
 
 //    World    //
 

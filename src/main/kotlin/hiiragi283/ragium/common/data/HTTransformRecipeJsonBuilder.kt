@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.data
 
 import hiiragi283.ragium.common.recipe.HTRecipeResult
-import hiiragi283.ragium.common.recipe.HTTransformRecipe
 import hiiragi283.ragium.common.recipe.WeightedIngredient
+import hiiragi283.ragium.common.recipe.alchemy.HTTransformRecipe
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
 import net.minecraft.advancement.AdvancementRewards

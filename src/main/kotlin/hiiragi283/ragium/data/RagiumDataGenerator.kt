@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.data.integration.RagiumAlloyForgeryRecipeProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 
@@ -15,8 +14,6 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider(::RagiumVanillaRecipeProvider)
         pack.addProvider(::RagiumMachineRecipeProvider)
         RagiumTagProviders.init(pack)
-
-        pack.addProvider(::RagiumAlloyForgeryRecipeProvider)
         // client
         pack.addProvider(::RagiumModelProvider)
         RagiumLangProviders.init(pack)

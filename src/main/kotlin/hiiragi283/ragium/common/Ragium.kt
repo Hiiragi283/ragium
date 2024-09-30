@@ -3,7 +3,8 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.recipe.HTFluidPumpEntry
+import hiiragi283.ragium.common.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.common.recipe.machine.HTFluidPumpEntry
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
@@ -40,13 +41,13 @@ object Ragium : ModInitializer {
 
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
-        RagiumMachineTypes.init()
         RagiumNetworks
         RagiumRecipeSerializers
         RagiumRecipeTypes
         registerDynamics()
         registerModifications()
 
+        HTMachineTypeRegistry.init()
         RagiumContents.init()
 
         RagiumBlockEntityTypes.init()

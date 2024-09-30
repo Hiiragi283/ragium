@@ -6,16 +6,29 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.world.PersistentState
 import net.minecraft.world.World
+
+val MinecraftServer.dataDriveManager: HTDataDriveManager
+    get() = getState(overworld, HTDataDriveManager.TYPE, HTDataDriveManager.ID)
+
+val ServerWorld.dataDriveManager: HTDataDriveManager
+    get() = server.dataDriveManager
+
+val World.dataDriveManager: HTDataDriveManager?
+    get() = server?.dataDriveManager
 
 class HTDataDriveManager :
     PersistentState(),
     MutableList<Identifier> by mutableListOf() {
     companion object {
         const val KEY = "data_drives"
+
+        @JvmField
+        val ID: Identifier = Ragium.id(KEY)
 
         @JvmField
         val TYPE: Type<HTDataDriveManager> = Type(::HTDataDriveManager, ::fromNbt, null)
@@ -32,12 +45,6 @@ class HTDataDriveManager :
         private fun fromCopy(copy: List<Identifier>): HTDataDriveManager = HTDataDriveManager().apply {
             copy.forEach(this::add)
         }
-
-        @JvmStatic
-        fun getManager(world: ServerWorld): HTDataDriveManager = getState(world, TYPE, Ragium.id("data_drive"))
-
-        @JvmStatic
-        fun getManager(world: World): HTDataDriveManager? = getState(world, TYPE, Ragium.id("data_drive"))
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound {

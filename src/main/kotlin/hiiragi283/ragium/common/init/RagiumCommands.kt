@@ -3,13 +3,14 @@ package hiiragi283.ragium.common.init
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
+import com.mojang.brigadier.arguments.LongArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.common.RagiumConfig
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.machine.HTMultiblockConstructor
 import hiiragi283.ragium.common.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.common.util.getOrDefault
-import hiiragi283.ragium.common.world.HTDataDriveManager
+import hiiragi283.ragium.common.world.*
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
 import net.minecraft.command.CommandRegistryAccess
@@ -92,6 +93,22 @@ object RagiumCommands {
                         ),
                 ).then(
                     CommandManager
+                        .literal("energy_network")
+                        .then(
+                            CommandManager
+                                .literal("show")
+                                .executes(::showEnergy),
+                        ).then(
+                            CommandManager
+                                .literal("set")
+                                .then(
+                                    CommandManager
+                                        .argument("value", LongArgumentType.longArg(0))
+                                        .executes(::setEnergy),
+                                ),
+                        ),
+                ).then(
+                    CommandManager
                         .literal("config")
                         .then(RagiumConfig.ARGUMENT_BUILDER),
                 ),
@@ -109,7 +126,7 @@ object RagiumCommands {
         if (recipeEntry != null) {
             val recipe: Recipe<*> = recipeEntry.value
             if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                val manager: HTDataDriveManager = HTDataDriveManager.getManager(context.source.world)
+                val manager: HTDataDriveManager = context.source.server.dataDriveManager
                 if (id !in manager) {
                     manager.add(id)
                     context.source.sendFeedback({ Text.literal("Unlocked the recipe; $id!") }, true)
@@ -134,7 +151,7 @@ object RagiumCommands {
         if (recipeEntry != null) {
             val recipe: Recipe<*> = recipeEntry.value
             if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                val manager: HTDataDriveManager = HTDataDriveManager.getManager(context.source.world)
+                val manager: HTDataDriveManager = context.source.server.dataDriveManager
                 if (id in manager) {
                     manager.remove(id)
                     context.source.sendFeedback({ Text.literal("Locked the recipe; $id!") }, true)
@@ -184,6 +201,28 @@ object RagiumCommands {
             }
         } else {
             context.source.sendError(Text.literal("No multiblock controller exists at $pos!"))
+        }
+        return Command.SINGLE_SUCCESS
+    }
+
+    //    Energy Network    //
+
+    @JvmStatic
+    private fun showEnergy(context: CommandContext<ServerCommandSource>): Int {
+        context.source.run {
+            server.networkMap.forEach { (world: ServerWorld, network: HTEnergyNetwork) ->
+                sendFeedback({ Text.literal("${world.registryKey.value} - ${network.amount} E") }, true)
+            }
+        }
+        return Command.SINGLE_SUCCESS
+    }
+
+    @JvmStatic
+    private fun setEnergy(context: CommandContext<ServerCommandSource>): Int {
+        val value: Long = LongArgumentType.getLong(context, "value")
+        context.source.run {
+            world.energyNetwork.amount = value
+            sendFeedback({ Text.literal("Set Energy to $value E") }, true)
         }
         return Command.SINGLE_SUCCESS
     }

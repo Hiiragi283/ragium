@@ -11,12 +11,12 @@ cca = "6.1.1"
 energy = "4.1.0"
 lib-gui = "11.1.0+1.21"
 
+accessories = "1.0.0-beta.35+1.21"
 alloy-forgery = "2.4.1+1.21"
 cloth-config = "15.0.130"
 jade = "15.3.3+fabric"
 mod-menu = "11.0.2"
 rei = "16.0.777"
-
 owo = "0.12.11+1.21"
 
 [libraries]
@@ -31,6 +31,7 @@ cca-entity = { group = "org.ladysnake.cardinal-components-api", name = "cardinal
 energy = { group = "teamreborn", name = "energy", version.ref = "energy" }
 libgui = { group = "io.github.cottonmc", name = "LibGui", version.ref = "lib-gui" }
 
+accessories = { group = "io.wispforest", name = "accessories-fabric", version.ref = "accessories" }
 alloy-forgely = { group = "maven.modrinth", name = "alloy-forgery", version.ref = "alloy-forgery" }
 cloth-config = { group = "me.shedaniel.cloth", name = "cloth-config-fabric", version.ref = "cloth-config" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
@@ -45,12 +46,11 @@ mods-fabric = [
     "fabric-api",
     "fabric-kotlin",
     "fabric-loader",
-    "alloy-forgely",
+    "accessories",
     "jade",
     "mod-modmenu",
     "rei",
-    "tech-reborn",
-    "owo"
+    "tech-reborn"
 ]
 mods-include = [
     "energy",

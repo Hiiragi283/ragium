@@ -8,9 +8,10 @@ import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumMaterials
+import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.tags.RagiumItemTags
+import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
@@ -112,6 +113,39 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(ConventionalItemTags.SLIME_BALLS)
             .offerTo(exporter)
 
+        createShapeless(RagiumContents.Fluids.WATER)
+            .input(Items.WATER_BUCKET)
+            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        createShapeless(RagiumContents.Fluids.LAVA)
+            .input(Items.LAVA_BUCKET)
+            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        createShapeless(RagiumContents.Fluids.MILK)
+            .input(Items.MILK_BUCKET)
+            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        createShapeless(RagiumContents.Fluids.HONEY)
+            .input(Items.HONEY_BLOCK)
+            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        createShapeless(RagiumContents.Fluids.HONEY)
+            .input(Items.HONEY_BOTTLE)
+            .input(Items.HONEY_BOTTLE)
+            .input(Items.HONEY_BOTTLE)
+            .input(Items.HONEY_BOTTLE)
+            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter, Ragium.id("shapeless/honey_fluid_cube_alt"))
+
         // tools
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.FORGE_HAMMER)
@@ -179,6 +213,45 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
             .offerTo(exporter)
 
+        // armors
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.STEEL_HELMET)
+            .patterns(
+                "AAA",
+                "A A",
+            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.STEEL_CHESTPLATE)
+            .patterns(
+                "A A",
+                "AAA",
+                "AAA",
+            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.STEEL_LEGGINGS)
+            .patterns(
+                "AAA",
+                "A A",
+                "A A",
+            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.STEEL_BOOTS)
+            .patterns(
+                "A A",
+                "A A",
+            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter)
+
         // circuits
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.Circuit.PRIMITIVE)
@@ -239,6 +312,29 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .unlockedBy(plate)
                 .offerPrefix(exporter.hardMode(true), "hard/")
         }
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.BASIC_CASING, 3)
+            .patterns(
+                "AAA",
+                "ABA",
+                "AAA",
+            ).input('A', RagiumItemTags.IRON_PLATES)
+            .input('B', RagiumContents.Dusts.RAGINITE)
+            .unlockedBy(RagiumContents.Dusts.RAGINITE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.ADVANCED_CASING, 3)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumItemTags.CARBON_PLATES)
+            .input('B', RagiumItemTags.STEEL_PLATES)
+            .input('C', RagiumContents.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.RAGI_CRYSTAL)
+            .offerTo(exporter)
         // machines
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.MANUAL_GRINDER)
@@ -266,83 +362,60 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // tiered machines
         // tier1
-        HTShapedRecipeJsonBuilder
-            .create(RagiumContents.BRICK_ALLOY_FURNACE)
-            .patterns(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
-            .input('B', Items.FURNACE)
-            .input('C', RagiumContents.Hulls.RAGI_ALLOY)
-            .input('D', Items.BRICKS)
-            .unlockedBy(RagiumContents.Hulls.RAGI_ALLOY)
-            .offerTo(exporter)
-
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.ALLOY_FURNACE,
+            RagiumMachineTypes.Processor.ALLOY_FURNACE,
             Items.BLAST_FURNACE,
         )
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val block: HTMachineBlockBase = RagiumMachineTypes.Single.ASSEMBLER.getBlock(tier) ?: return@forEach
-            HTShapedRecipeJsonBuilder
-                .create(block)
-                .patterns(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                ).input('A', tier.getIngot())
-                .input('B', tier.getCircuit())
-                .input('C', tier.getHull())
-                .input('D', tier.getBaseBlock())
-                .unlockedBy(tier.getHull())
-                .offerTo(exporter, tier.createId(RagiumMachineTypes.Single.ASSEMBLER))
-        }
+        createMachine(
+            exporter,
+            RagiumMachineTypes.Processor.ASSEMBLER,
+            RagiumContents.Circuit.PRIMITIVE,
+        )
         // single
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.CENTRIFUGE,
+            RagiumMachineTypes.Processor.CENTRIFUGE,
             Items.COPPER_GRATE, // TODO
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.CHEMICAL_REACTOR,
+            RagiumMachineTypes.Processor.CHEMICAL_REACTOR,
             Items.GLASS, // TODO
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.COMPRESSOR,
+            RagiumMachineTypes.Processor.COMPRESSOR,
             Items.PISTON,
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.ELECTROLYZER,
+            RagiumMachineTypes.Processor.ELECTROLYZER,
             Items.LIGHTNING_ROD,
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.EXTRACTOR,
+            RagiumMachineTypes.Processor.EXTRACTOR,
             Items.HOPPER,
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.GRINDER,
+            RagiumMachineTypes.Processor.GRINDER,
             Items.FLINT,
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.METAL_FORMER,
+            RagiumMachineTypes.Processor.METAL_FORMER,
             Items.ANVIL,
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.MIXER,
+            RagiumMachineTypes.Processor.MIXER,
             Items.CAULDRON,
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Single.ROCK_GENERATOR,
+            RagiumMachineTypes.Processor.ROCK_GENERATOR,
             Items.LAVA_BUCKET,
             Items.WATER_BUCKET,
         )
@@ -358,12 +431,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumContents.Circuit.ADVANCED,
         )
         // custom
-        createMachine(
-            exporter,
-            RagiumMachineTypes.BURNING_BOX,
-            Items.IRON_BARS,
-        )
-
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.ALCHEMICAL_INFUSER)
             .patterns(
@@ -400,25 +467,53 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun createMachine(
         exporter: RecipeExporter,
-        type: HTMachineType<*>,
+        type: HTMachineConvertible,
         left: ItemConvertible,
         right: ItemConvertible = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val block: HTMachineBlockBase = type.getBlock(tier) ?: return@forEach
-            HTShapedRecipeJsonBuilder
+            val block: HTMachineBlockBase = type.asMachine().getBlock(tier) ?: return@forEach
+
+            fun createPattern(isHard: Boolean): HTShapedRecipeJsonBuilder = HTShapedRecipeJsonBuilder
                 .create(block)
                 .patterns(
                     "AAA",
                     "BCD",
                     "EEE",
-                ).input('A', tier.getIngot())
+                ).input('A', getMachineMaterial(tier, isHard))
                 .input('B', left)
                 .input('C', tier.getHull())
                 .input('D', right)
-                .input('E', tier.getBaseBlock())
+                .input('E', getMachineBase(tier, isHard))
                 .unlockedBy(tier.getHull())
-                .offerTo(exporter, tier.createId(type))
+            createPattern(true).offerPrefix(exporter.hardMode(true), "hard/")
+            createPattern(false).offerTo(exporter.hardMode(false))
+        }
+    }
+
+    private fun getMachineMaterial(tier: HTMachineTier, isHard: Boolean): HTItemContent = when (isHard) {
+        true -> when (tier) {
+            HTMachineTier.PRIMITIVE -> RagiumContents.Plates.RAGI_ALLOY
+            HTMachineTier.BASIC -> RagiumContents.Plates.RAGI_STEEL
+            HTMachineTier.ADVANCED -> RagiumContents.Plates.REFINED_RAGI_STEEL
+        }
+        false -> when (tier) {
+            HTMachineTier.PRIMITIVE -> RagiumContents.Ingots.RAGI_ALLOY
+            HTMachineTier.BASIC -> RagiumContents.Ingots.RAGI_STEEL
+            HTMachineTier.ADVANCED -> RagiumContents.Ingots.REFINED_RAGI_STEEL
+        }
+    }
+
+    private fun getMachineBase(tier: HTMachineTier, isHard: Boolean): TagKey<Item> = when (isHard) {
+        true -> when (tier) {
+            HTMachineTier.PRIMITIVE -> RagiumItemTags.COPPER_PLATES
+            HTMachineTier.BASIC -> RagiumItemTags.IRON_PLATES
+            HTMachineTier.ADVANCED -> RagiumItemTags.STEEL_PLATES
+        }
+        false -> when (tier) {
+            HTMachineTier.PRIMITIVE -> ConventionalItemTags.COPPER_INGOTS
+            HTMachineTier.BASIC -> ConventionalItemTags.IRON_INGOTS
+            HTMachineTier.ADVANCED -> RagiumItemTags.STEEL_INGOTS
         }
     }
 

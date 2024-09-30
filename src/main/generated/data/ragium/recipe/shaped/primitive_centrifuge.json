@@ -1,4 +1,10 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
@@ -15,7 +21,7 @@
       "item": "minecraft:copper_grate"
     },
     "E": {
-      "item": "minecraft:bricks"
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [

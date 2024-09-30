@@ -1,10 +1,11 @@
 package hiiragi283.ragium.common.data
 
+import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTRecipeResult
 import hiiragi283.ragium.common.recipe.WeightedIngredient
+import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
 import net.minecraft.advancement.AdvancementRewards
@@ -18,11 +19,23 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-class HTMachineRecipeJsonBuilder(
-    private val type: HTMachineType<*>,
+class HTMachineRecipeJsonBuilder private constructor(
+    private val type: HTMachineType.Processor,
     private val minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
     private val requireScan: Boolean = false,
 ) {
+    companion object {
+        @JvmStatic
+        fun create(
+            type: HTMachineConvertible,
+            minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
+            requireScan: Boolean = false,
+        ): HTMachineRecipeJsonBuilder = type
+            .asProcessor()
+            ?.let { HTMachineRecipeJsonBuilder(it, minTier, requireScan) }
+            ?: throw IllegalStateException("Machine Type;  ${type.asMachine().id} must be Processor!")
+    }
+
     private val inputs: MutableList<WeightedIngredient> = mutableListOf()
     private val outputs: MutableList<HTRecipeResult> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY

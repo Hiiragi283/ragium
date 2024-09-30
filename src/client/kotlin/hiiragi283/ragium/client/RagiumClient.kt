@@ -75,13 +75,9 @@ object RagiumClient : ClientModInitializer {
             RenderLayer.getCutoutMipped(),
             RagiumContents.RAGINITE_ORE,
             RagiumContents.DEEPSLATE_RAGINITE_ORE,
-            RagiumContents.RUBBER_LEAVES,
-            RagiumContents.MANUAL_GRINDER,
-            RagiumContents.BRICK_ALLOY_FURNACE,
-            RagiumContents.BLAZING_BOX,
         )
 
-        HTMachineBlockRegistry.registry.values().forEach(RagiumClient::registerCutoutMipped)
+        HTMachineBlockRegistry.forEachBlock(RagiumClient::registerCutoutMipped)
 
         registerCutout(RagiumContents.RUBBER_SAPLING)
         registerCutout(RagiumContents.ITEM_DISPLAY)
@@ -129,7 +125,7 @@ object RagiumClient : ClientModInitializer {
     private fun registerEvents() {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register block state resolver
-            HTMachineBlockRegistry.registry.values().forEach { block: HTMachineBlockBase ->
+            HTMachineBlockRegistry.forEachBlock { block: HTMachineBlockBase ->
                 context.registerBlockStateResolver(block) { context1: BlockStateResolver.Context ->
                     context1.block().stateManager.states.forEach { state: BlockState ->
                         context1.setModel(state, HTMachineModel)
@@ -142,10 +138,6 @@ object RagiumClient : ClientModInitializer {
                     in original.modelDependencies -> HTMachineModel
                     else -> original
                 }
-                /*val id: Identifier = context1.topLevelId()?.id ?: return@onLoad original
-                val entry: RegistryEntry.Reference<Block> =
-                    Registries.BLOCK.getEntry(id).getOrNull() ?: return@onLoad original
-                if (entry.isIn(RagiumBlockTags.ALLOW_MACHINE_MODEL)) HTMachineModel else original*/
             }
         }
     }

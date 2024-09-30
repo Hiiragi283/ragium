@@ -1,0 +1,36 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_steel_plate"
+    },
+    "B": {
+      "item": "minecraft:lightning_rod"
+    },
+    "C": {
+      "item": "ragium:ragi_steel_hull"
+    },
+    "D": {
+      "item": "minecraft:lightning_rod"
+    },
+    "E": {
+      "tag": "c:plates/iron"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_electrolyzer"
+  }
+}

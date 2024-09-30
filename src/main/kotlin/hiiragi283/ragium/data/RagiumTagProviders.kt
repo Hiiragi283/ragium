@@ -53,10 +53,6 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BRICK_ALLOY_FURNACE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WATER_GENERATOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.WIND_GENERATOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BLAZING_BOX)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
 
@@ -67,7 +63,7 @@ object RagiumTagProviders {
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             // ragium
             RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
-            HTMachineBlockRegistry.registry.values().forEach { block: Block ->
+            HTMachineBlockRegistry.forEachBlock { block: Block ->
                 add(BlockTags.PICKAXE_MINEABLE, block)
             }
         }
@@ -96,12 +92,18 @@ object RagiumTagProviders {
             add(ItemTags.PICKAXES, RagiumContents.STEEL_PICKAXE)
             add(ItemTags.AXES, RagiumContents.STEEL_AXE)
             add(ItemTags.HOES, RagiumContents.STEEL_HOE)
+
+            add(ItemTags.HEAD_ARMOR, RagiumContents.STEEL_HELMET)
+            add(ItemTags.CHEST_ARMOR, RagiumContents.STEEL_CHESTPLATE)
+            add(ItemTags.LEG_ARMOR, RagiumContents.STEEL_LEGGINGS)
+            add(ItemTags.FOOT_ARMOR, RagiumContents.STEEL_BOOTS)
             // conventional
             add(ConventionalItemTags.GEMS, RagiumContents.RAGI_CRYSTAL)
             add(ConventionalItemTags.ORES, RagiumContents.RAGINITE_ORE)
             add(ConventionalItemTags.ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(ConventionalItemTags.RAW_MATERIALS, RagiumContents.RAW_RAGINITE)
             add(ConventionalItemTags.SLIME_BALLS, RagiumContents.RAW_RUBBER_BALL)
+            add(RagiumItemTags.CARBON_PLATES, RagiumContents.Plates.CARBON)
             add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
             add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)
             add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)

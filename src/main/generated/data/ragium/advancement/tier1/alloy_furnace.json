@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:tier1/brick_alloy_furnace",
+  "parent": "ragium:tier1/ragi_alloy_hull",
   "criteria": {
     "has_items": {
       "conditions": {

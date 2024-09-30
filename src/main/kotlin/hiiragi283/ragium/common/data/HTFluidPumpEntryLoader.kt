@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.data
 import com.google.gson.JsonObject
 import com.mojang.serialization.JsonOps
 import hiiragi283.ragium.common.item.HTFluidCubeItem
-import hiiragi283.ragium.common.recipe.HTFluidPumpEntry
+import hiiragi283.ragium.common.recipe.machine.HTFluidPumpEntry
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener
 import net.minecraft.registry.RegistryKey
 import net.minecraft.resource.Resource

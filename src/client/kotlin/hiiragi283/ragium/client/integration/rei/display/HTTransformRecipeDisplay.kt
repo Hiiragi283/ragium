@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.integration.rei.display
 
 import hiiragi283.ragium.client.integration.rei.RagiumREIClient
 import hiiragi283.ragium.client.integration.rei.entryIngredient
-import hiiragi283.ragium.common.recipe.HTTransformRecipe
+import hiiragi283.ragium.common.recipe.alchemy.HTTransformRecipe
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.util.EntryIngredients

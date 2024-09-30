@@ -46,16 +46,13 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
 
         addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumContents.MANUAL_GRINDER)
-        addDrop(RagiumContents.BRICK_ALLOY_FURNACE)
-        addDrop(RagiumContents.WATER_GENERATOR)
-        addDrop(RagiumContents.WIND_GENERATOR)
         addDrop(RagiumContents.SHAFT)
-        addDrop(RagiumContents.BLAZING_BOX)
         addDrop(RagiumContents.ALCHEMICAL_INFUSER)
         addDrop(RagiumContents.ITEM_DISPLAY)
         addDrop(RagiumContents.DATA_DRIVE)
         addDrop(RagiumContents.DRIVE_SCANNER)
         addDrop(RagiumContents.NETWORK_INTERFACE)
+        addDrop(RagiumContents.BASIC_CASING)
         addDrop(RagiumContents.ADVANCED_CASING)
 
         buildList<HTBlockContent> {
@@ -64,7 +61,7 @@ class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: Completab
             addAll(RagiumContents.Coils.entries)
         }.map(HTBlockContent::block).forEach(::addDrop)
 
-        HTMachineBlockRegistry.registry.values().forEach(::addDrop)
+        HTMachineBlockRegistry.forEachBlock(::addDrop)
 
         RagiElement.entries.forEach { element: RagiElement ->
             // budding block

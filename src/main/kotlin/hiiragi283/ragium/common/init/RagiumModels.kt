@@ -95,8 +95,15 @@ object RagiumModels {
             val tier: HTMachineTier =
                 block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.PRIMITIVE)
             textureMap {
-                put(TextureKey.TOP, tier.casingTex)
-                put(TextureKey.BOTTOM, tier.baseTex)
+                put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
+                put(
+                    TextureKey.BOTTOM,
+                    when (tier) {
+                        HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
+                        HTMachineTier.BASIC -> Identifier.of("block/smithing_table_top")
+                        HTMachineTier.ADVANCED -> Ragium.id("block/advanced_casing")
+                    },
+                )
             }
         }, HULL)
 
@@ -145,6 +152,6 @@ object RagiumModels {
         createMachine(TextureMap.getId(top), TextureMap.getId(bottom), front)
 
     @JvmStatic
-    fun createMachine(type: HTMachineType<*>, tier: HTMachineTier): TexturedModel.Factory =
+    fun createMachine(type: HTMachineType, tier: HTMachineTier): TexturedModel.Factory =
         createMachine(tier.getStorageBlock().block, tier.getBaseBlock(), type.frontTexId)
 }

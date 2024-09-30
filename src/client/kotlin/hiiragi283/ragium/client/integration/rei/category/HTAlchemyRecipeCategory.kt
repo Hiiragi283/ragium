@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.integration.rei.category
 import hiiragi283.ragium.client.integration.rei.RagiumREIClient
 import hiiragi283.ragium.client.integration.rei.display.HTDisplay
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
+import hiiragi283.ragium.common.recipe.alchemy.HTAlchemyRecipe
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
 import me.shedaniel.rei.api.client.gui.widgets.Widget

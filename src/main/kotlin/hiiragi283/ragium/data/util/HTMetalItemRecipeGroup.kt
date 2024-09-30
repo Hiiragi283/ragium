@@ -84,7 +84,8 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             .criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(plate).withPrefixedPath("shaped/"))
         // Metal Former Recipe
-        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.METAL_FORMER)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.METAL_FORMER)
             .addInput(ingot)
             .addOutput(plate)
             // .setCatalyst(RagiumItems.PLATE_SHAPE)
@@ -105,7 +106,8 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
             ).criterion("has_ingot", RecipeProvider.conditionsFromItem(ingot))
             .offerTo(wrapper(exporter, true), CraftingRecipeJsonBuilder.getItemId(rod).withPrefixedPath("smithing/"))
         // Metal Former Recipe
-        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.METAL_FORMER)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.METAL_FORMER)
             .addInput(ingot)
             .addOutput(rod, 2)
             // .setCatalyst(RagiumItems.ROD_SHAPE)
@@ -116,7 +118,8 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         val rawMaterial: Item = get(Variant.RAW_MATERIAL) ?: return
         val ore: Item = get(Variant.ORE) ?: return
         // Grinder Recipe
-        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.GRINDER)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
             .addInput(ore)
             .addOutput(rawMaterial)
             .addOutput(rawMaterial, 4)
@@ -127,7 +130,8 @@ class HTMetalItemRecipeGroup(val name: String, variants: Map<Variant, Item>, pri
         val dust: Item = get(Variant.DUST) ?: return
         val rawMaterial: Item = get(Variant.RAW_MATERIAL) ?: return
         // Grinder Recipe
-        HTMachineRecipeJsonBuilder(RagiumMachineTypes.Single.GRINDER)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
             .addInput(rawMaterial)
             .addOutput(dust)
             .addOutput(dust)

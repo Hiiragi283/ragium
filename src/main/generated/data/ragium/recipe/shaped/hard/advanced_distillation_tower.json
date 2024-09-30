@@ -1,0 +1,36 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:refined_ragi_steel_plate"
+    },
+    "B": {
+      "item": "ragium:advanced_circuit"
+    },
+    "C": {
+      "item": "ragium:refined_ragi_steel_hull"
+    },
+    "D": {
+      "item": "ragium:advanced_circuit"
+    },
+    "E": {
+      "tag": "c:plates/steel"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_distillation_tower"
+  }
+}

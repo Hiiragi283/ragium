@@ -1,4 +1,10 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
@@ -6,19 +12,22 @@
       "item": "ragium:refined_ragi_steel_ingot"
     },
     "B": {
-      "item": "ragium:advanced_circuit"
+      "item": "ragium:primitive_circuit"
     },
     "C": {
       "item": "ragium:refined_ragi_steel_hull"
     },
     "D": {
-      "item": "minecraft:end_stone_bricks"
+      "item": "ragium:primitive_circuit"
+    },
+    "E": {
+      "tag": "c:ingots/steel"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

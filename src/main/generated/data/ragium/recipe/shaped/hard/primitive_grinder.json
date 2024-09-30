@@ -1,0 +1,36 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_alloy_plate"
+    },
+    "B": {
+      "item": "minecraft:flint"
+    },
+    "C": {
+      "item": "ragium:ragi_alloy_hull"
+    },
+    "D": {
+      "item": "minecraft:flint"
+    },
+    "E": {
+      "tag": "c:plates/copper"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:primitive_grinder"
+  }
+}

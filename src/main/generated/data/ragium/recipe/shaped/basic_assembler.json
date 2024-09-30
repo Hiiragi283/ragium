@@ -1,4 +1,10 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
@@ -6,19 +12,22 @@
       "item": "ragium:ragi_steel_ingot"
     },
     "B": {
-      "item": "ragium:basic_circuit"
+      "item": "ragium:primitive_circuit"
     },
     "C": {
       "item": "ragium:ragi_steel_hull"
     },
     "D": {
-      "item": "minecraft:polished_blackstone_bricks"
+      "item": "ragium:primitive_circuit"
+    },
+    "E": {
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

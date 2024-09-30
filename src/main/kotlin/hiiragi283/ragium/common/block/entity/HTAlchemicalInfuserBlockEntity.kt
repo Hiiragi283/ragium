@@ -6,8 +6,8 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.machine.HTBlockPredicate
 import hiiragi283.ragium.common.machine.HTMultiblockBuilder
-import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
 import hiiragi283.ragium.common.recipe.HTRecipeResult
+import hiiragi283.ragium.common.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks

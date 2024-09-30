@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.recipe.HTInfusionRecipe
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.recipe.HTTransformRecipe
+import hiiragi283.ragium.common.recipe.alchemy.HTInfusionRecipe
+import hiiragi283.ragium.common.recipe.alchemy.HTTransformRecipe
+import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry

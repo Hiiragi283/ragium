@@ -2,10 +2,8 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.entity.HTEnergyStorageHolder
-import hiiragi283.ragium.common.block.entity.generator.HTBlazingBoxBlockEntity
 import hiiragi283.ragium.common.util.getOrDefault
-import hiiragi283.ragium.common.world.HTEnergyNetwork
+import hiiragi283.ragium.common.world.energyNetwork
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -52,10 +50,6 @@ object RagiumEnergyProviders {
         HEAT.registerForBlocks({ _: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             direction == Direction.UP && state.getOrDefault(Properties.LIT, false)
         }, Blocks.CAMPFIRE)
-
-        /*HEAT.registerForBlockEntities({ blockEntity: BlockEntity, direction: Direction? ->
-            direction == Direction.UP && (blockEntity as? HTHeatGeneratorBlockEntity)?.isBurning ?: false
-        }, RagiumBlockEntityTypes.BURNING_BOX, RagiumBlockEntityTypes.BLAZING_BOX)*/
     }
 
     @JvmStatic
@@ -69,10 +63,6 @@ object RagiumEnergyProviders {
         BLAZING_HEAT.registerForBlocks({ _: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             direction == Direction.UP && state.getOrDefault(Properties.LIT, false)
         }, Blocks.SOUL_CAMPFIRE)
-
-        BLAZING_HEAT.registerForBlockEntity({ blockEntity: HTBlazingBoxBlockEntity, direction: Direction? ->
-            direction == Direction.UP && blockEntity.isBurning && blockEntity.isBlazing
-        }, RagiumBlockEntityTypes.BLAZING_BOX)
     }
 
     @JvmStatic
@@ -83,12 +73,8 @@ object RagiumEnergyProviders {
         )
 
         ENERGY.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            HTEnergyNetwork.getStorage(world)
+            world.energyNetwork
         }, RagiumContents.NETWORK_INTERFACE)
-
-        ENERGY.registerFallback { _: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, direction: Direction? ->
-            (blockEntity as? HTEnergyStorageHolder)?.getEnergyStorage(direction)
-        }
 
         /*ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             if (direction != null) {

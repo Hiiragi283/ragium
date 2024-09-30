@@ -4,7 +4,7 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
-import hiiragi283.ragium.common.world.HTHardModeManager
+import hiiragi283.ragium.common.world.hardModeManager
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
@@ -22,7 +22,7 @@ object RagiumConfig {
     fun init() {
         ServerWorldEvents.LOAD.register { server: MinecraftServer, world: ServerWorld ->
             if (world.registryKey == World.OVERWORLD) {
-                isHardMode = HTHardModeManager.getOverworldManager(server).isHardMode
+                isHardMode = server.hardModeManager.isHardMode
             }
         }
     }
@@ -49,7 +49,7 @@ object RagiumConfig {
     @JvmStatic
     private fun changeHardMode(context: CommandContext<ServerCommandSource>): Int {
         val bool: Boolean = BoolArgumentType.getBool(context, "flag")
-        HTHardModeManager.getOverworldManager(context.source.server).isHardMode = bool
+        context.source.server.hardModeManager.isHardMode = bool
         isHardMode = bool
         context.source.sendFeedback({
             Text.literal(

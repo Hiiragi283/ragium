@@ -1,4 +1,10 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
@@ -12,13 +18,16 @@
       "item": "ragium:ragi_alloy_hull"
     },
     "D": {
-      "item": "minecraft:bricks"
+      "item": "ragium:primitive_circuit"
+    },
+    "E": {
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [
     "AAA",
-    "BCB",
-    "DDD"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

@@ -15,11 +15,11 @@ import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTAlchemyRecipe
-import hiiragi283.ragium.common.recipe.HTInfusionRecipe
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
-import hiiragi283.ragium.common.recipe.HTTransformRecipe
+import hiiragi283.ragium.common.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.common.recipe.alchemy.HTAlchemyRecipe
+import hiiragi283.ragium.common.recipe.alchemy.HTInfusionRecipe
+import hiiragi283.ragium.common.recipe.alchemy.HTTransformRecipe
+import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin
@@ -52,8 +52,7 @@ object RagiumREIClient : REIClientPlugin {
         CategoryIdentifier.of(Ragium.MOD_ID, "alchemical_infusion")
 
     @JvmStatic
-    fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> =
-        HTMachineType.REGISTRY.map { CategoryIdentifier.of<HTMachineRecipeDisplay>(it.id) }
+    fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = HTMachineTypeRegistry.types.map { CategoryIdentifier.of(it.id) }
 
     @JvmStatic
     fun forEachId(action: (CategoryIdentifier<HTMachineRecipeDisplay>) -> Unit) {
@@ -64,19 +63,15 @@ object RagiumREIClient : REIClientPlugin {
 
     override fun registerCategories(registry: CategoryRegistry) {
         // Machines
-        HTMachineType.REGISTRY.forEach { type: HTMachineType<*> ->
+        HTMachineTypeRegistry.processors.forEach { type ->
             registry.add(HTMachineRecipeCategory(type))
             HTMachineTier.entries.mapNotNull(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
                 registry.addWorkstations(type.categoryId, stack)
             }
         }
         registry.addWorkstations(
-            RagiumMachineTypes.Single.GRINDER.categoryId,
+            RagiumMachineTypes.Processor.GRINDER.categoryId,
             EntryStacks.of(RagiumContents.MANUAL_GRINDER),
-        )
-        registry.addWorkstations(
-            RagiumMachineTypes.Single.ALLOY_FURNACE.categoryId,
-            EntryStacks.of(RagiumContents.BRICK_ALLOY_FURNACE),
         )
         // Fluid Pump
         registry.add(HTFluidPumpCategory)

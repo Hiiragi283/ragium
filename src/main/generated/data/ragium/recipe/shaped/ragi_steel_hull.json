@@ -12,7 +12,7 @@
       "item": "ragium:ragi_steel_ingot"
     },
     "B": {
-      "item": "minecraft:polished_blackstone_bricks"
+      "item": "ragium:basic_casing"
     }
   },
   "pattern": [

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -17,7 +16,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
-    HTMachineBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state, RagiumMachineTypes.DISTILLATION_TOWER, tier),
+    HTProcessorBlockEntityBase(
+        RagiumBlockEntityTypes.DISTILLATION_TOWER,
+        pos,
+        state,
+        RagiumMachineTypes.DISTILLATION_TOWER,
+        tier,
+    ),
     HTMultiblockController {
     override var showPreview: Boolean = false
 

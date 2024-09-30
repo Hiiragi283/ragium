@@ -10,7 +10,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.registry.Registries
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -75,11 +74,6 @@ enum class HTMachineTier(
 
     val energyCapacity: Long = recipeCost * 16
 
-    val baseTex: Identifier
-        get() = Registries.BLOCK.getId(getBaseBlock()).withPrefixedPath("block/")
-    val casingTex: Identifier
-        get() = getStorageBlock().id.withPrefixedPath("block/")
-
     val translationKey: String = "machine_tier.ragium.${asString()}"
     val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)
     val tierText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_TIER, text).formatted(Formatting.GRAY)
@@ -96,13 +90,14 @@ enum class HTMachineTier(
 
     val prefixKey = "$translationKey.prefix"
 
-    fun createPrefixedText(type: HTMachineType<*>): MutableText = Text.translatable(prefixKey, type.text)
+    fun createPrefixedText(type: HTMachineConvertible): MutableText = Text.translatable(prefixKey, type.asMachine().text)
 
-    fun createId(type: HTMachineType<*>): Identifier = type.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
+    fun createId(type: HTMachineConvertible): Identifier =
+        type.asMachine().id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
     fun getBaseBlock(): Block = when (this) {
         PRIMITIVE -> Blocks.BRICKS
-        BASIC -> Blocks.POLISHED_DEEPSLATE
+        BASIC -> RagiumContents.BASIC_CASING
         ADVANCED -> RagiumContents.ADVANCED_CASING
     }
 
