@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.Items
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.ItemTags
@@ -23,7 +24,7 @@ object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(RagiumTagProviders::BlockProvider)
-        pack.addProvider(RagiumTagProviders::FluidProvider)
+        // pack.addProvider(RagiumTagProviders::FluidProvider)
         pack.addProvider(RagiumTagProviders::ItemProvider)
     }
 
@@ -51,6 +52,7 @@ object RagiumTagProviders {
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.RAGINITE_ORE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.OBLIVION_CLUSTER)
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
@@ -71,11 +73,11 @@ object RagiumTagProviders {
 
     //    Fluid    //
 
-    private class FluidProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    /*private class FluidProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.FluidTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
         }
-    }
+    }*/
 
     //    Item    //
 
@@ -99,10 +101,14 @@ object RagiumTagProviders {
             add(ItemTags.FOOT_ARMOR, RagiumContents.STEEL_BOOTS)
             // conventional
             add(ConventionalItemTags.GEMS, RagiumContents.RAGI_CRYSTAL)
+            add(ConventionalItemTags.GEMS, RagiumContents.OBLIVION_CRYSTAL)
             add(ConventionalItemTags.ORES, RagiumContents.RAGINITE_ORE)
             add(ConventionalItemTags.ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(ConventionalItemTags.RAW_MATERIALS, RagiumContents.RAW_RAGINITE)
             add(ConventionalItemTags.SLIME_BALLS, RagiumContents.RAW_RUBBER_BALL)
+            add(RagiumItemTags.BASALTS, Items.BASALT)
+            add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
+            add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
             add(RagiumItemTags.CARBON_PLATES, RagiumContents.Plates.CARBON)
             add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
             add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)

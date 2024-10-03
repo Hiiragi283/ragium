@@ -20,8 +20,8 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentChanges
+import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
@@ -178,8 +178,8 @@ fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInst
 
 //    World    //
 
-fun dropStackAt(player: PlayerEntity, stack: ItemStack) {
-    dropStackAt(player.world, player.blockPos, stack)
+fun dropStackAt(entity: Entity, stack: ItemStack) {
+    dropStackAt(entity.world, entity.blockPos, stack)
 }
 
 fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack) {

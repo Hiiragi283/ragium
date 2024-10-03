@@ -49,6 +49,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 RagiumModels.createLayered(Identifier.of("block/deepslate"), Ragium.id("block/raginite_ore")),
             )
         }
+        register(RagiumContents.OBLIVION_CLUSTER, generator::registerAmethyst)
 
         register(RagiumContents.RUBBER_LOG) {
             val textureMap: TextureMap = textureMap {
@@ -243,7 +244,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         )
         register(RagiumContents.SOAP_INGOT)
         register(RagiumContents.RAW_RUBBER_BALL)
+        register(RagiumContents.BASALT_FIBER)
         register(RagiumContents.RAGI_CRYSTAL)
+        register(RagiumContents.OBLIVION_CRYSTAL)
+        register(RagiumContents.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumContents.OBLIVION_CLUSTER))
         // circuits
         RagiumContents.Circuit.entries
             .map(RagiumContents.Circuit::asItem)
@@ -253,15 +257,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Dusts.entries)
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
-        }.map { it.asItem() }.forEach(::register)
+        }.map(HTItemContent::asItem).forEach(::register)
         // elements
         RagiElement.entries.forEach { element: RagiElement ->
             register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))
             register(element.dustItem)
         }
         // fluids
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
-            register(fluid.asItem(), RagiumModels.FILLED_FLUID_CUBE)
-        }
+        RagiumContents.Fluids.entries
+            .map(RagiumContents.Fluids::asItem)
+            .forEach { register(it, RagiumModels.FILLED_FLUID_CUBE) }
     }
 }

@@ -41,6 +41,7 @@ object Ragium : ModInitializer {
 
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
+        RagiumEntityTypes.init()
         RagiumNetworks
         RagiumRecipeSerializers
         RagiumRecipeTypes

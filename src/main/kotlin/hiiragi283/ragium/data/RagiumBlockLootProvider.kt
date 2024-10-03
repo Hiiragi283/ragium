@@ -23,7 +23,7 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import java.util.concurrent.CompletableFuture
 
-class RagiumLootProvider(dataOutput: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
     FabricBlockLootTableProvider(dataOutput, registryLookup) {
     private fun <T : Any> getWrapperOrThrow(registryKey: RegistryKey<Registry<T>>): RegistryWrapper.Impl<T> =
         this.registryLookup.getWrapperOrThrow(registryKey)

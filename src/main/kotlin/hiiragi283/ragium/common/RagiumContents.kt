@@ -15,6 +15,7 @@ import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
@@ -31,6 +32,10 @@ object RagiumContents {
     @JvmField
     val DEEPSLATE_RAGINITE_ORE: Block =
         registerCopy("deepslate_raginite_ore", Blocks.DEEPSLATE_IRON_ORE)
+
+    @JvmField
+    val OBLIVION_CLUSTER: Block =
+        registerBlock("oblivion_cluster", HTOblivionClusterBlock)
 
     //    Blocks - Plants    //
 
@@ -140,6 +145,20 @@ object RagiumContents {
 
     @JvmField
     val RAGI_CRYSTAL: Item = registerItem("ragi_crystal")
+
+    @JvmField
+    val OBLIVION_CRYSTAL: Item = registerItem("oblivion_crystal")
+
+    @JvmField
+    val OBLIVION_CUBE_SPAWN_EGG: Item = registerItem(
+        "oblivion_cube_spawn_egg",
+        SpawnEggItem(
+            RagiumEntityTypes.OBLIVION_CUBE,
+            0x000000,
+            0xffffff,
+            itemSettings(),
+        ),
+    )
 
     //    Register    //
 
@@ -277,6 +296,7 @@ object RagiumContents {
     private fun initBlockItems() {
         registerBlockItem(RAGINITE_ORE)
         registerBlockItem(DEEPSLATE_RAGINITE_ORE)
+        registerBlockItem(OBLIVION_CLUSTER)
 
         registerBlockItem(RUBBER_LOG)
         registerBlockItem(RUBBER_LEAVES)
