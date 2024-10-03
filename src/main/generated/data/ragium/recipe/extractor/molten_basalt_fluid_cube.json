@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:basalts"
+      }
+    }
+  ],
+  "machine_type": "ragium:extractor",
+  "outputs": [
+    {
+      "item": "ragium:molten_basalt_fluid_cube"
+    }
+  ]
+}

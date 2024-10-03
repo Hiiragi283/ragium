@@ -67,6 +67,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         METAL_FORMER,
         MIXER,
         ROCK_GENERATOR(RagiumMachineConditions.ROCK_GENERATOR),
+        SOLIDIFIER,
         ;
 
         private val machineType = HTMachineType.Processor(Ragium.id(name.lowercase()), condition)

@@ -144,10 +144,13 @@ object RagiumContents {
     val RAW_RUBBER_BALL: Item = registerItem("raw_rubber_ball")
 
     @JvmField
+    val BASALT_FIBER: Item = registerItem("basalt_fiber")
+
+    @JvmField
     val RAGI_CRYSTAL: Item = registerItem("ragi_crystal")
 
     @JvmField
-    val OBLIVION_CRYSTAL: Item = registerItem("oblivion_crystal")
+    val OBLIVION_CRYSTAL: Item = registerItem("oblivion_crystal", itemSettings().rarity(Rarity.EPIC))
 
     @JvmField
     val OBLIVION_CUBE_SPAWN_EGG: Item = registerItem(
@@ -296,7 +299,7 @@ object RagiumContents {
     private fun initBlockItems() {
         registerBlockItem(RAGINITE_ORE)
         registerBlockItem(DEEPSLATE_RAGINITE_ORE)
-        registerBlockItem(OBLIVION_CLUSTER)
+        registerBlockItem(OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
         registerBlockItem(RUBBER_LOG)
         registerBlockItem(RUBBER_LEAVES)
@@ -491,6 +494,7 @@ object RagiumContents {
 
         // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        BASALT_FIBER(RagiumMaterials.BASALT_FIBER),
         CARBON(RagiumMaterials.CARBON),
         GOLD(RagiumMaterials.GOLD),
         SILICON(RagiumMaterials.SILICON),
@@ -546,6 +550,7 @@ object RagiumContents {
         TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
         SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
         GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
+        MOLTEN_BASALT(Color(0x333333), "Molten Basalt", "溶融玄武岩"),
 
         // tier3 - resources
         SALT_WATER(Color(0x003399), "Salt Water", "塩水"),

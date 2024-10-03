@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/carbon"
+      "item": "ragium:basalt_fiber_plate"
     },
     "B": {
       "tag": "c:plates/steel"

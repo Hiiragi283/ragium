@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:molten_basalt_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:solidifier",
+  "outputs": [
+    {
+      "item": "ragium:basalt_fiber"
+    },
+    {
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

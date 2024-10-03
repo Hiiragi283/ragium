@@ -2,14 +2,9 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "count": 8,
+      "count": 4,
       "ingredient": {
-        "item": "ragium:pvc_plate"
-      }
-    },
-    {
-      "ingredient": {
-        "item": "minecraft:chest"
+        "item": "ragium:basalt_fiber"
       }
     }
   ],
@@ -17,7 +12,7 @@
   "min_tier": "basic",
   "outputs": [
     {
-      "item": "ragium:large_backpack"
+      "item": "ragium:basalt_fiber_plate"
     }
   ]
 }

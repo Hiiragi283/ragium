@@ -330,7 +330,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumItemTags.CARBON_PLATES)
+            ).input('A', RagiumContents.Plates.BASALT_FIBER)
             .input('B', RagiumItemTags.STEEL_PLATES)
             .input('C', RagiumContents.RAGI_CRYSTAL)
             .unlockedBy(RagiumContents.RAGI_CRYSTAL)

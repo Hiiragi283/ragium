@@ -2,6 +2,7 @@
   "values": [
     "ragium:raginite_ore",
     "ragium:deepslate_raginite_ore",
+    "ragium:oblivion_cluster",
     "ragium:manual_grinder",
     "ragium:shaft",
     "ragium:alchemical_infuser",
@@ -54,6 +55,9 @@
     "ragium:primitive_rock_generator",
     "ragium:basic_rock_generator",
     "ragium:advanced_rock_generator",
+    "ragium:primitive_solidifier",
+    "ragium:basic_solidifier",
+    "ragium:advanced_solidifier",
     "ragium:primitive_blast_furnace",
     "ragium:basic_blast_furnace",
     "ragium:advanced_blast_furnace",
