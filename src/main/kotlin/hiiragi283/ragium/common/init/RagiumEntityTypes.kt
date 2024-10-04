@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.entity.HTOblivionCoreEntity
+import hiiragi283.ragium.common.entity.HTOblivionCubeEntity
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -11,9 +11,9 @@ import net.minecraft.registry.Registry
 
 object RagiumEntityTypes {
     @JvmField
-    val OBLIVION_CUBE: EntityType<HTOblivionCoreEntity> = register(
+    val OBLIVION_CUBE: EntityType<HTOblivionCubeEntity> = register(
         "oblivion_cube",
-        ::HTOblivionCoreEntity,
+        ::HTOblivionCubeEntity,
         SpawnGroup.MONSTER,
     ) {
         dimensions(0.75f, 0.75f)
@@ -38,7 +38,7 @@ object RagiumEntityTypes {
     fun init() {
         FabricDefaultAttributeRegistry.register(
             OBLIVION_CUBE,
-            HTOblivionCoreEntity.createAttributes(),
+            HTOblivionCubeEntity.createAttributes(),
         )
     }
 }

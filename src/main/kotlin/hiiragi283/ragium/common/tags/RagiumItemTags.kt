@@ -11,6 +11,9 @@ object RagiumItemTags {
     //    Custom    //
 
     @JvmField
+    val ALKALI: TagKey<Item> = create(Ragium.MOD_ID, "alkali")
+
+    @JvmField
     val ORGANIC_OILS: TagKey<Item> = create(Ragium.MOD_ID, "organic_oils")
 
     //    Conventional    //

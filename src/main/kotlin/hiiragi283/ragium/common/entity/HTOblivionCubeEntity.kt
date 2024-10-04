@@ -11,7 +11,7 @@ import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
 import net.minecraft.world.World
 
-class HTOblivionCoreEntity(entityType: EntityType<HTOblivionCoreEntity>, world: World) : HostileEntity(entityType, world) {
+class HTOblivionCubeEntity(entityType: EntityType<HTOblivionCubeEntity>, world: World) : HostileEntity(entityType, world) {
     companion object {
         @JvmStatic
         fun createAttributes(): DefaultAttributeContainer.Builder = createHostileAttributes()
