@@ -32,7 +32,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.client.color.world.BiomeColors
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
 import net.minecraft.client.model.ModelPartBuilder
@@ -45,8 +44,6 @@ import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockRenderView
-import net.minecraft.world.biome.FoliageColors
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
@@ -73,7 +70,6 @@ object RagiumClient : ClientModInitializer {
 
         HTMachineBlockRegistry.forEachBlock(RagiumClient::registerCutoutMipped)
 
-        registerCutout(RagiumContents.RUBBER_SAPLING)
         registerCutout(RagiumContents.ITEM_DISPLAY)
 
         RagiElement.entries
@@ -85,13 +81,6 @@ object RagiumClient : ClientModInitializer {
 
         registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
-
-        ColorProviderRegistry.BLOCK.register({ _: BlockState, world: BlockRenderView?, pos: BlockPos?, _: Int ->
-            when {
-                world != null && pos != null -> BiomeColors.getFoliageColor(world, pos)
-                else -> FoliageColors.getDefaultColor()
-            }
-        }, RagiumContents.RUBBER_LEAVES)
     }
 
     private fun registerCutout(block: Block) {
@@ -127,11 +116,6 @@ object RagiumClient : ClientModInitializer {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> fluid.color.rgb }, fluid)
         }
-
-        ColorProviderRegistry.ITEM.register(
-            { _: ItemStack, _: Int -> FoliageColors.getDefaultColor() },
-            RagiumContents.RUBBER_LEAVES,
-        )
     }
 
     //    Screens    //

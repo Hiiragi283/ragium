@@ -201,6 +201,38 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.Fluids.METHANOL)
             .offerTo(exporter)
 
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .addInput(RagiumItemTags.SULFUR_DUSTS)
+            .addInput(RagiumContents.Fluids.WATER)
+            .addInput(RagiumContents.Fluids.OXYGEN)
+            .addOutput(RagiumContents.Fluids.SULFURIC_ACID)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .addInput(Items.GUNPOWDER)
+            .addInput(RagiumContents.Fluids.WATER)
+            .addOutput(RagiumContents.Fluids.NITRIC_ACID)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .addInput(RagiumContents.Fluids.GLYCEROL)
+            .addInput(RagiumContents.Fluids.MIXTURE_ACID, 3)
+            .addOutput(RagiumContents.Fluids.NITRO_GLYCERIN)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE, 3)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .addInput(RagiumContents.Fluids.TOLUENE)
+            .addInput(RagiumContents.Fluids.MIXTURE_ACID, 3)
+            .addOutput(RagiumContents.Fluids.TRINITROTOLUENE)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE, 3)
+            .offerTo(exporter)
+
         // PE
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
@@ -357,10 +389,10 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ELECTROLYZER)
             .addInput(RagiumContents.Fluids.SALT_WATER)
-            .addInput(RagiumContents.EMPTY_FLUID_CUBE)
+            .addInput(RagiumContents.EMPTY_FLUID_CUBE, 2)
             .addOutput(RagiumContents.Fluids.HYDROGEN)
             .addOutput(RagiumContents.Fluids.CHLORINE)
-            .addOutput(RagiumContents.Dusts.ASH)
+            .addOutput(RagiumContents.Fluids.SODIUM_HYDROXIDE)
             .offerSuffix(exporter, suffix = "_salty")
 
         HTMachineRecipeJsonBuilder
@@ -391,40 +423,53 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(RagiumContents.RUBBER_LOG)
-            .addOutput(RagiumContents.RAW_RUBBER_BALL, 3)
+            .addInput(RagiumItemTags.BASALTS)
+            .addInput(RagiumContents.EMPTY_FLUID_CUBE)
+            .addOutput(RagiumContents.Fluids.MOLTEN_BASALT)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(RagiumItemTags.BASALTS)
-            .addOutput(RagiumContents.Fluids.MOLTEN_BASALT)
+            .addInput(Items.SWEET_BERRIES)
+            .addInput(RagiumContents.EMPTY_FLUID_CUBE)
+            .addOutput(RagiumContents.Fluids.SWEET_BERRIES)
             .offerTo(exporter)
     }
 
     //    Grinder    //
 
     private fun grinderRecipes(exporter: RecipeExporter) {
-        registerGrinderTag(exporter, ConventionalItemTags.QUARTZ_ORES to 1, Items.QUARTZ to 2)
-        registerGrinderTag(exporter, ConventionalItemTags.RED_SANDSTONE_BLOCKS to 1, Items.RED_SAND to 4)
-        registerGrinderTag(exporter, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS to 1, Items.SAND to 4)
-        registerGrinderItem(exporter, Items.COARSE_DIRT to 1, Items.DIRT to 1)
-        registerGrinderItem(exporter, Items.COBBLESTONE to 1, Items.GRAVEL to 1)
-        registerGrinderItem(exporter, Items.DEEPSLATE to 1, Items.DEEPSLATE to 1)
-        registerGrinderItem(exporter, Items.GRAVEL to 1, Items.SAND to 1, id = Identifier.of("gravel_to_sand"))
-        registerGrinderItem(exporter, Items.STONE to 1, Items.COBBLESTONE to 1)
-        registerGrinderTag(exporter, ItemTags.COAL_ORES to 1, Items.COAL to 2)
-        registerGrinderTag(exporter, ItemTags.DIAMOND_ORES to 1, Items.DIAMOND to 2)
-        registerGrinderTag(exporter, ItemTags.EMERALD_ORES to 1, Items.EMERALD to 2)
-        registerGrinderTag(exporter, ItemTags.LAPIS_ORES to 1, Items.LAPIS_LAZULI to 8)
-        registerGrinderTag(exporter, ItemTags.REDSTONE_ORES to 1, Items.REDSTONE to 8)
-        registerGrinderTag(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
+        registerGrinder(exporter, ConventionalItemTags.COBBLESTONES to 1, Items.GRAVEL to 1)
+        registerGrinder(exporter, ConventionalItemTags.QUARTZ_ORES to 1, Items.QUARTZ to 2)
+        registerGrinder(exporter, ConventionalItemTags.RED_SANDSTONE_BLOCKS to 1, Items.RED_SAND to 4)
+        registerGrinder(exporter, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS to 1, Items.SAND to 4)
+        registerGrinder(exporter, ConventionalItemTags.WHEAT_CROPS to 1, RagiumContents.FLOUR to 1)
+        registerGrinder(exporter, Items.COARSE_DIRT to 1, Items.DIRT to 1)
+        registerGrinder(exporter, Items.DEEPSLATE to 1, Items.COBBLED_DEEPSLATE to 1)
+        registerGrinder(exporter, Items.GRAVEL to 1, Items.SAND to 1, id = Identifier.of("gravel_to_sand"))
+        registerGrinder(exporter, Items.NETHERRACK to 4, RagiumContents.Dusts.SULFUR to 1)
+        registerGrinder(exporter, Items.STONE to 1, Items.COBBLESTONE to 1)
+        registerGrinder(exporter, ItemTags.COAL_ORES to 1, Items.COAL to 2)
+        registerGrinder(exporter, ItemTags.DIAMOND_ORES to 1, Items.DIAMOND to 2)
+        registerGrinder(exporter, ItemTags.EMERALD_ORES to 1, Items.EMERALD to 2)
+        registerGrinder(exporter, ItemTags.LAPIS_ORES to 1, Items.LAPIS_LAZULI to 8)
+        registerGrinder(exporter, ItemTags.LOGS to 1, RagiumContents.PULP to 4, id = Identifier.of("log_to_pulp"))
+        registerGrinder(exporter, ItemTags.PLANKS to 1, RagiumContents.PULP to 1, id = Identifier.of("plank_to_pulp"))
+        registerGrinder(exporter, ItemTags.REDSTONE_ORES to 1, Items.REDSTONE to 8)
+        registerGrinder(exporter, ItemTags.SAPLINGS to 2, RagiumContents.PULP to 1, id = Identifier.of("sapling_to_pulp"))
+        registerGrinder(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
+        registerGrinder(exporter, RagiumContents.RAGI_CRYSTAL to 1, RagiumContents.Dusts.RAGI_CRYSTAL to 1)
 
-        registerGrinderItem(exporter, RagiumContents.RAGI_CRYSTAL to 1, RagiumContents.Dusts.RAGI_CRYSTAL to 1)
-        registerGrinderItem(exporter, Items.NETHERRACK to 4, RagiumContents.Dusts.SULFUR to 1)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .addInput(ConventionalItemTags.SUGAR_CANE_CROPS)
+            .addOutput(Items.SUGAR, 2)
+            .addOutput(RagiumContents.PULP)
+            .offerTo(exporter)
     }
 
-    private fun registerGrinderItem(
+    @JvmName("registerGrinderItem")
+    private fun registerGrinder(
         exporter: RecipeExporter,
         input: Pair<ItemConvertible, Int>,
         output: Pair<ItemConvertible, Int>,
@@ -437,7 +482,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, id)
     }
 
-    private fun registerGrinderTag(
+    @JvmName("registerGrinderTag")
+    private fun registerGrinder(
         exporter: RecipeExporter,
         input: Pair<TagKey<Item>, Int>,
         output: Pair<ItemConvertible, Int>,
@@ -495,18 +541,49 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.MIXER)
             .addInput(RagiumItemTags.ORGANIC_OILS)
-            .addInput(RagiumContents.Dusts.ASH)
+            .addInput(RagiumItemTags.ALKALI)
             .addOutput(RagiumContents.SOAP_INGOT)
             .addOutput(RagiumContents.Fluids.GLYCEROL)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.MIXER)
-            .addInput(RagiumContents.Dusts.RAGINITE, 2)
-            .addInput(RagiumContents.SOAP_INGOT)
+            .addInput(RagiumContents.FLOUR, 3)
             .addInput(RagiumContents.Fluids.WATER)
-            .addOutput(RagiumContents.Dusts.RAGI_CRYSTAL, 2)
+            .addOutput(RagiumContents.DOUGH, 3)
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.MIXER)
+            .addInput(RagiumContents.PULP)
+            .addInput(RagiumContents.Fluids.WATER)
+            .addOutput(Items.PAPER)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.MIXER)
+            .addInput(RagiumContents.PULP)
+            .addInput(RagiumContents.Fluids.SODIUM_HYDROXIDE)
+            .addOutput(Items.PAPER, 2)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerSuffix(exporter, "_alkali")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.MIXER)
+            .addInput(RagiumContents.PULP)
+            .addInput(RagiumContents.Fluids.WATER)
+            .addInput(RagiumContents.Fluids.SULFURIC_ACID)
+            .addOutput(Items.PAPER, 4)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE, 2)
+            .offerSuffix(exporter, "_sulfuric_acid")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.MIXER)
+            .addInput(RagiumContents.Fluids.NITRIC_ACID)
+            .addInput(RagiumContents.Fluids.SULFURIC_ACID)
+            .addOutput(RagiumContents.Fluids.MIXTURE_ACID, 2)
             .offerTo(exporter)
 
         registerBreaching(exporter, ConventionalItemTags.CONCRETE_POWDERS, Items.WHITE_CONCRETE_POWDER)
@@ -551,7 +628,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
     }
-    
+
     //    Rock Generator    //
 
     private fun rockGenerator(exporter: RecipeExporter) {

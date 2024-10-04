@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:crops/sugar_cane"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "ragium:pulp"
+    }
+  ]
+}

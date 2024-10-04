@@ -146,6 +146,24 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
             .offerTo(exporter, Ragium.id("shapeless/honey_fluid_cube_alt"))
 
+        HTShapedRecipeJsonBuilder
+            .create(Items.CANDLE)
+            .patterns(
+                "A",
+                "B",
+            ).input('A', ConventionalItemTags.STRINGS)
+            .input('B', RagiumContents.BEE_WAX)
+            .unlockedBy(RagiumContents.BEE_WAX)
+            .offerTo(exporter)
+
+        createShapeless(RagiumContents.DOUGH, 3)
+            .input(RagiumContents.FLOUR)
+            .input(RagiumContents.FLOUR)
+            .input(RagiumContents.FLOUR)
+            .input(RagiumContents.Fluids.WATER)
+            .unlockedBy(RagiumContents.FLOUR)
+            .offerTo(exporter, Ragium.id("shapeless/dough"))
+
         // tools
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.FORGE_HAMMER)
@@ -445,8 +463,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
     }
 
-    private fun createShapeless(output: ItemConvertible): ShapelessRecipeJsonBuilder =
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, output)
+    private fun createShapeless(output: ItemConvertible, count: Int = 1): ShapelessRecipeJsonBuilder =
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, output, count)
 
     private fun createEmptyFluidCube(
         exporter: RecipeExporter,
@@ -520,24 +538,52 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Cooking   //
 
     private fun cookingRecipes(exporter: RecipeExporter) {
+        addBlasting(exporter, RagiumContents.RAGI_ALLOY_COMPOUND, RagiumContents.Ingots.RAGI_ALLOY)
+
+        addSmoking(exporter, RagiumContents.DOUGH, Items.BREAD)
+    }
+
+    private fun addBlasting(exporter: RecipeExporter, input: ItemConvertible, output: ItemConvertible) {
         CookingRecipeJsonBuilder
             .createSmelting(
-                Ingredient.ofItems(RagiumContents.RAGI_ALLOY_COMPOUND),
+                Ingredient.ofItems(input),
                 RecipeCategory.MISC,
-                RagiumContents.Ingots.RAGI_ALLOY,
+                output,
                 0.0f,
                 200,
-            ).unlockedBy(RagiumContents.RAGI_ALLOY_COMPOUND)
-            .offerTo(exporter, Ragium.id("smelting/ragi_alloy_ingot"))
+            ).unlockedBy(input)
+            .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(output).withPrefixedPath("smelting/"))
 
         CookingRecipeJsonBuilder
             .createBlasting(
-                Ingredient.ofItems(RagiumContents.RAGI_ALLOY_COMPOUND),
+                Ingredient.ofItems(input),
                 RecipeCategory.MISC,
-                RagiumContents.Ingots.RAGI_ALLOY,
+                output,
                 0.0f,
                 100,
-            ).unlockedBy(RagiumContents.RAGI_ALLOY_COMPOUND)
-            .offerTo(exporter, Ragium.id("blasting/ragi_alloy_ingot"))
+            ).unlockedBy(input)
+            .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(output).withPrefixedPath("blasting/"))
+    }
+
+    private fun addSmoking(exporter: RecipeExporter, input: ItemConvertible, output: ItemConvertible) {
+        CookingRecipeJsonBuilder
+            .createSmelting(
+                Ingredient.ofItems(input),
+                RecipeCategory.MISC,
+                output,
+                0.0f,
+                200,
+            ).unlockedBy(input)
+            .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(output).withPrefixedPath("smelting/"))
+
+        CookingRecipeJsonBuilder
+            .createSmoking(
+                Ingredient.ofItems(input),
+                RecipeCategory.MISC,
+                output,
+                0.0f,
+                100,
+            ).unlockedBy(input)
+            .offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(output).withPrefixedPath("smoking/"))
     }
 }

@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:sweet_berries"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:empty_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:extractor",
+  "outputs": [
+    {
+      "item": "ragium:sweet_berries_fluid_cube"
+    }
+  ]
+}

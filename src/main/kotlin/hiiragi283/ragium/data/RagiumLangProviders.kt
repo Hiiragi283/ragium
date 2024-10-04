@@ -107,21 +107,19 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumContents.RAGINITE_ORE, "Raginite Ore")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "Deep Raginite Ore")
-
-            builder.add(RagiumContents.RUBBER_LOG, "Rubber Log")
-            builder.add(RagiumContents.RUBBER_LEAVES, "Rubber Leaves")
-            builder.add(RagiumContents.RUBBER_SAPLING, "Rubber Sapling")
+            builder.add(RagiumContents.OBLIVION_CLUSTER, "Oblivion Cluster")
 
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
-            builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
-            builder.add(RagiumContents.SHAFT, "Shaft")
-            builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
-            builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
-            builder.add(RagiumContents.DATA_DRIVE, "Data Drive")
-            builder.add(RagiumContents.DRIVE_SCANNER, "Drive Scanner")
-            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumContents.BASIC_CASING, "Basic Casing")
             builder.add(RagiumContents.ADVANCED_CASING, "Advanced Casing")
+            builder.add(RagiumContents.DATA_DRIVE, "Data Drive")
+            builder.add(RagiumContents.DRIVE_SCANNER, "Drive Scanner")
+            builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
+            builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
+            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumContents.SHAFT, "Shaft")
+
+            builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.STEEL_SWORD, "Steel Sword")
@@ -142,8 +140,14 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
             builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
-            builder.add(RagiumContents.RAW_RUBBER_BALL, "Raw Rubber Ball")
+            builder.add(RagiumContents.BASALT_FIBER, "Basalt Fiber")
             builder.add(RagiumContents.RAGI_CRYSTAL, "Ragi-Crystal")
+            builder.add(RagiumContents.OBLIVION_CRYSTAL, "Oblivion Crystal")
+
+            builder.add(RagiumContents.BEE_WAX, "Bee Wax")
+            builder.add(RagiumContents.FLOUR, "Flour")
+            builder.add(RagiumContents.DOUGH, "Dough")
+            builder.add(RagiumContents.PULP, "Pulp")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
             // Machine
@@ -199,21 +203,19 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumContents.RAGINITE_ORE, "ラギナイト鉱石")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "深層ラギナイト鉱石")
-
-            builder.add(RagiumContents.RUBBER_LOG, "ゴムノキの原木")
-            builder.add(RagiumContents.RUBBER_LEAVES, "ゴムノキの葉")
-            builder.add(RagiumContents.RUBBER_SAPLING, "ゴムノキの苗木")
+            builder.add(RagiumContents.OBLIVION_CLUSTER, "忘却の芽")
 
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
-            builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
-            builder.add(RagiumContents.SHAFT, "シャフト")
-            builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
-            builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
-            builder.add(RagiumContents.DATA_DRIVE, "データドライブ")
-            builder.add(RagiumContents.DRIVE_SCANNER, "ドライブスキャナ")
-            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumContents.BASIC_CASING, "基本型外装")
             builder.add(RagiumContents.ADVANCED_CASING, "発展型外装")
+            builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
+            builder.add(RagiumContents.DATA_DRIVE, "データドライブ")
+            builder.add(RagiumContents.DRIVE_SCANNER, "ドライブスキャナ")
+            builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
+            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumContents.SHAFT, "シャフト")
+
+            builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.STEEL_SWORD, "鋼鉄の剣")
@@ -234,8 +236,14 @@ object RagiumLangProviders {
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")
-            builder.add(RagiumContents.RAW_RUBBER_BALL, "生ゴムボール")
+            builder.add(RagiumContents.BASALT_FIBER, "玄武岩繊維")
             builder.add(RagiumContents.RAGI_CRYSTAL, "ラギクリスタリル")
+            builder.add(RagiumContents.OBLIVION_CRYSTAL, "忘却の結晶")
+
+            builder.add(RagiumContents.BEE_WAX, "蜜蠟")
+            builder.add(RagiumContents.FLOUR, "小麦粉")
+            builder.add(RagiumContents.DOUGH, "生地")
+            builder.add(RagiumContents.PULP, "パルプ")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             // Machine

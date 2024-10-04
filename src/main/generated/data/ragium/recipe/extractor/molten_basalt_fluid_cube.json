@@ -5,6 +5,11 @@
       "ingredient": {
         "tag": "c:basalts"
       }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:empty_fluid_cube"
+      }
     }
   ],
   "machine_type": "ragium:extractor",

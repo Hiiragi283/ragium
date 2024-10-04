@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": {
+        "tag": "minecraft:saplings"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:pulp"
+    }
+  ]
+}

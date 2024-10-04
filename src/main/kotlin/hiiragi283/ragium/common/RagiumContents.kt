@@ -9,14 +9,16 @@ import hiiragi283.ragium.common.machine.HTMachineConvertible
 import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
-import net.minecraft.block.*
+import net.minecraft.block.AbstractBlock
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
+import net.minecraft.block.PillarBlock
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.FluidTags
-import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import java.awt.Color
@@ -34,22 +36,14 @@ object RagiumContents {
         registerCopy("deepslate_raginite_ore", Blocks.DEEPSLATE_IRON_ORE)
 
     @JvmField
+    val POROUS_NETHERRACK: Block =
+        registerBlock("porous_netherrack", HTSpongeBlock(FluidTags.LAVA))
+
+    @JvmField
     val OBLIVION_CLUSTER: Block =
         registerBlock("oblivion_cluster", HTOblivionClusterBlock)
 
     //    Blocks - Plants    //
-
-    @JvmField
-    val RUBBER_LOG: Block =
-        registerBlock("rubber_log", Blocks.createLogBlock(MapColor.OAK_TAN, MapColor.SPRUCE_BROWN))
-
-    @JvmField
-    val RUBBER_LEAVES: Block =
-        registerBlock("rubber_leaves", Blocks.createLeavesBlock(BlockSoundGroup.GRASS))
-
-    @JvmField
-    val RUBBER_SAPLING: Block =
-        registerBlock("rubber_sapling", SaplingBlock(RagiumSaplingGenerators.RUBBER, blockSettings(Blocks.OAK_SAPLING)))
 
     //    Blocks - Utilities    //
 
@@ -58,24 +52,16 @@ object RagiumContents {
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
 
     @JvmField
+    val BASIC_CASING: Block =
+        registerCopy("basic_casing", Blocks.IRON_BLOCK)
+
+    @JvmField
+    val ADVANCED_CASING: Block =
+        registerCopy("advanced_casing", Blocks.IRON_BLOCK)
+
+    @JvmField
     val MANUAL_GRINDER: Block =
         registerBlock("manual_grinder", HTManualGrinderBlock)
-
-    @JvmField
-    val SHAFT: Block =
-        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
-
-    @JvmField
-    val ALCHEMICAL_INFUSER: Block =
-        registerBlock("alchemical_infuser", HTAlchemicalInfuserBlock)
-
-    @JvmField
-    val ITEM_DISPLAY: Block =
-        registerBlock("item_display", HTItemDisplayBlock)
-
-    @JvmField
-    val INFESTING: Block =
-        registerBlock("infesting", HTInfectingBlock)
 
     @JvmField
     val DATA_DRIVE: Block =
@@ -86,16 +72,24 @@ object RagiumContents {
         registerWithBE("drive_scanner", RagiumBlockEntityTypes.DRIVE_SCANNER)
 
     @JvmField
+    val ITEM_DISPLAY: Block =
+        registerBlock("item_display", HTItemDisplayBlock)
+
+    @JvmField
     val NETWORK_INTERFACE: Block =
         registerBlock("network_interface")
 
     @JvmField
-    val BASIC_CASING: Block =
-        registerCopy("basic_casing", Blocks.IRON_BLOCK)
+    val SHAFT: Block =
+        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
 
     @JvmField
-    val ADVANCED_CASING: Block =
-        registerCopy("advanced_casing", Blocks.IRON_BLOCK)
+    val ALCHEMICAL_INFUSER: Block =
+        registerBlock("alchemical_infuser", HTAlchemicalInfuserBlock)
+
+    @JvmField
+    val INFESTING: Block =
+        registerBlock("infesting", HTInfectingBlock)
 
     //    Item - Tools    //
 
@@ -126,6 +120,48 @@ object RagiumContents {
     @JvmField
     val ENDER_BACKPACK: Item = registerItem("ender_backpack", HTEnderBackpackItem)
 
+    //    Items - Armors    //
+
+    @JvmField
+    val STEEL_HELMET: ArmorItem = registerItem(
+        "steel_helmet",
+        ArmorItem(
+            RagiumArmorMaterials.STEEL,
+            ArmorItem.Type.HELMET,
+            itemSettings().maxDamage(ArmorItem.Type.HELMET.getMaxDamage(25)),
+        ),
+    )
+
+    @JvmField
+    val STEEL_CHESTPLATE: ArmorItem = registerItem(
+        "steel_chestplate",
+        ArmorItem(
+            RagiumArmorMaterials.STEEL,
+            ArmorItem.Type.CHESTPLATE,
+            itemSettings().maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(25)),
+        ),
+    )
+
+    @JvmField
+    val STEEL_LEGGINGS: ArmorItem = registerItem(
+        "steel_leggings",
+        ArmorItem(
+            RagiumArmorMaterials.STEEL,
+            ArmorItem.Type.LEGGINGS,
+            itemSettings().maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(25)),
+        ),
+    )
+
+    @JvmField
+    val STEEL_BOOTS: ArmorItem = registerItem(
+        "steel_boots",
+        ArmorItem(
+            RagiumArmorMaterials.STEEL,
+            ArmorItem.Type.BOOTS,
+            itemSettings().maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(25)),
+        ),
+    )
+
     //    Items - Ingredient    //
 
     @JvmField
@@ -141,9 +177,6 @@ object RagiumContents {
     val SOAP_INGOT: Item = registerItem("soap_ingot")
 
     @JvmField
-    val RAW_RUBBER_BALL: Item = registerItem("raw_rubber_ball")
-
-    @JvmField
     val BASALT_FIBER: Item = registerItem("basalt_fiber")
 
     @JvmField
@@ -151,6 +184,20 @@ object RagiumContents {
 
     @JvmField
     val OBLIVION_CRYSTAL: Item = registerItem("oblivion_crystal", itemSettings().rarity(Rarity.EPIC))
+
+    //    Items - Organics    //
+
+    @JvmField
+    val BEE_WAX: Item = registerItem("bee_wax")
+
+    @JvmField
+    val FLOUR: Item = registerItem("flour")
+
+    @JvmField
+    val DOUGH: Item = registerItem("dough")
+
+    @JvmField
+    val PULP: Item = registerItem("pulp")
 
     @JvmField
     val OBLIVION_CUBE_SPAWN_EGG: Item = registerItem(
@@ -299,22 +346,20 @@ object RagiumContents {
     private fun initBlockItems() {
         registerBlockItem(RAGINITE_ORE)
         registerBlockItem(DEEPSLATE_RAGINITE_ORE)
+        registerBlockItem(POROUS_NETHERRACK)
         registerBlockItem(OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
-        registerBlockItem(RUBBER_LOG)
-        registerBlockItem(RUBBER_LEAVES)
-        registerBlockItem(RUBBER_SAPLING)
-
         registerBlockItem(CREATIVE_SOURCE)
-        registerBlockItem(MANUAL_GRINDER)
-        registerBlockItem(SHAFT)
-        registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
-        registerBlockItem(ITEM_DISPLAY)
-        registerBlockItem(DATA_DRIVE)
-        registerBlockItem(DRIVE_SCANNER)
-        registerBlockItem(NETWORK_INTERFACE)
         registerBlockItem(BASIC_CASING)
         registerBlockItem(ADVANCED_CASING)
+        registerBlockItem(MANUAL_GRINDER)
+        registerBlockItem(DATA_DRIVE)
+        registerBlockItem(DRIVE_SCANNER)
+        registerBlockItem(SHAFT)
+        registerBlockItem(ITEM_DISPLAY)
+        registerBlockItem(NETWORK_INTERFACE)
+
+        registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
     }
 
     //    Hulls    //
@@ -540,30 +585,39 @@ object RagiumContents {
     enum class Fluids(val color: Color, override val enName: String, override val jaName: String) :
         ItemConvertible,
         HTTranslationProvider {
-        // tier1
+        // Vanilla
         WATER(Color(0x0033ff), "Water", "水"),
         LAVA(Color(0xff6600), "Lava", "溶岩"),
         MILK(Color(0xffffff), "Milk", "牛乳"),
         HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
 
-        // tier2
+        // Molten Materials
+        MOLTEN_BASALT(Color(0x333333), "Molten Basalt", "溶融玄武岩"),
+
+        // Organics
         TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
         SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
         GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
-        MOLTEN_BASALT(Color(0x333333), "Molten Basalt", "溶融玄武岩"),
+        SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー"),
 
-        // tier3 - resources
+        // Natural Resources
         SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
         OIL(Color(0x000000), "Oil", "石油"),
 
-        // tier3 - elements
+        // Elements
         HYDROGEN(Color(0x0000cc), "Hydrogen", "水素"),
         NITROGEN(Color(0x66cccc), "Nitrogen", "窒素"),
         OXYGEN(Color(0x99ccff), "Oxygen", "酸素"),
         FLUORINE(Color(0x66cc99), "Fluorine", "フッ素"),
         CHLORINE(Color(0xccff33), "Chlorine", "塩素"),
 
-        // tier3 - oil products
+        // Non-organic Chemical Compounds
+        NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
+        SODIUM_HYDROXIDE(Color(0x000099), "Sodium Hydroxide Solution", "水酸化ナトリウム水溶液"),
+        SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸"),
+        MIXTURE_ACID(Color(0xcc6633), "Mixture Acid", "混酸"),
+
+        // Oil products
         REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス"),
         NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
         TAR(Color(0x000033), "Tar", "タール"),
@@ -578,6 +632,9 @@ object RagiumContents {
         BENZENE(Color(0x000066), "Benzene", "ベンゼン"),
         TOLUENE(Color(0x666699), "Toluene", "トルエン"),
         PHENOL(Color(0x996633), "Phenol", "フェノール"),
+
+        NITRO_GLYCERIN(Color(0x99cc66), "Nitroglycerin", "ニトログリセリン"),
+        TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
         ;
 
         val fluidName: String = name.lowercase()

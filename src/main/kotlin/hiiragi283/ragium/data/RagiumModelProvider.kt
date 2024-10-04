@@ -51,39 +51,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         register(RagiumContents.OBLIVION_CLUSTER, generator::registerAmethyst)
 
-        register(RagiumContents.RUBBER_LOG) {
-            val textureMap: TextureMap = textureMap {
-                put(TextureKey.SIDE, TextureMap.getId(it))
-                put(TextureKey.END, TextureMap.getSubId(it, "_top"))
-                put(TextureKey.PARTICLE, TextureMap.getId(it))
-            }
-            accept(
-                BlockStateModelGenerator.createAxisRotatedBlockState(
-                    it,
-                    Models.CUBE_COLUMN.upload(
-                        it,
-                        textureMap,
-                        generator.modelCollector,
-                    ),
-                    Models.CUBE_COLUMN_HORIZONTAL.upload(
-                        it,
-                        textureMap,
-                        generator.modelCollector,
-                    ),
-                ),
-            )
-        }
-        register(RagiumContents.RUBBER_LEAVES) {
-            generator.registerSingleton(
-                it,
-                TextureMap.all(Identifier.of("block/oak_leaves")),
-                Models.LEAVES,
-            )
-        }
-        register(RagiumContents.RUBBER_SAPLING) {
-            generator.registerTintableCross(it, BlockStateModelGenerator.TintType.NOT_TINTED)
-        }
-
         registerSimple(RagiumContents.CREATIVE_SOURCE, Identifier.of("block/respawn_anchor_top_off"))
         register(RagiumContents.MANUAL_GRINDER) {
             accept(
@@ -234,20 +201,25 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.STEEL_BOOTS)
 
         register(RagiumContents.RAW_RAGINITE)
-        Models.GENERATED_TWO_LAYERS.upload(
-            ModelIds.getItemModelId(RagiumContents.RAGI_ALLOY_COMPOUND),
+        register(
+            RagiumContents.RAGI_ALLOY_COMPOUND,
+            Models.GENERATED_TWO_LAYERS,
             textureMap {
                 put(TextureKey.LAYER0, TextureMap.getId(Items.COPPER_INGOT))
                 put(TextureKey.LAYER1, TextureMap.getId(RagiumContents.RAGI_ALLOY_COMPOUND))
             },
-            generator.writer,
         )
         register(RagiumContents.SOAP_INGOT)
-        register(RagiumContents.RAW_RUBBER_BALL)
         register(RagiumContents.BASALT_FIBER)
+
         register(RagiumContents.RAGI_CRYSTAL)
         register(RagiumContents.OBLIVION_CRYSTAL)
         register(RagiumContents.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumContents.OBLIVION_CLUSTER))
+
+        register(RagiumContents.BEE_WAX)
+        register(RagiumContents.FLOUR)
+        register(RagiumContents.DOUGH)
+        register(RagiumContents.PULP)
         // circuits
         RagiumContents.Circuit.entries
             .map(RagiumContents.Circuit::asItem)

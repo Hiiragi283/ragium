@@ -1,0 +1,30 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:dusts/sulfur"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:oxygen_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "min_tier": "basic",
+  "outputs": [
+    {
+      "item": "ragium:sulfuric_acid_fluid_cube"
+    },
+    {
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

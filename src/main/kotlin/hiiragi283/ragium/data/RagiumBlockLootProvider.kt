@@ -38,12 +38,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumContents.RAGINITE_ORE, ::dropRaginiteOre)
         addDrop(RagiumContents.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
 
-        addDrop(RagiumContents.RUBBER_LOG)
-        addDrop(RagiumContents.RUBBER_LEAVES) { block: Block ->
-            leavesDrops(block, RagiumContents.RUBBER_SAPLING, *SAPLING_DROP_CHANCE)
-        }
-        addDrop(RagiumContents.RUBBER_SAPLING)
-
         addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumContents.MANUAL_GRINDER)
         addDrop(RagiumContents.SHAFT)

@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:pulp"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:mixer",
+  "outputs": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

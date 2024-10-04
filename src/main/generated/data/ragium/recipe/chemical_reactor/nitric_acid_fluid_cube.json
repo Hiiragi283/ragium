@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:gunpowder"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:water_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "min_tier": "basic",
+  "outputs": [
+    {
+      "item": "ragium:nitric_acid_fluid_cube"
+    }
+  ]
+}

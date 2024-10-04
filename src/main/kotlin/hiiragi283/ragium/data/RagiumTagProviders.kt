@@ -42,14 +42,6 @@ object RagiumTagProviders {
             }
 
             // vanilla
-            add(BlockTags.AXE_MINEABLE, RagiumContents.RUBBER_LOG)
-
-            add(BlockTags.HOE_MINEABLE, RagiumContents.RUBBER_LEAVES)
-
-            add(BlockTags.LEAVES, RagiumContents.RUBBER_LEAVES)
-
-            add(BlockTags.LOGS, RagiumContents.RUBBER_LOG)
-
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.RAGINITE_ORE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.OBLIVION_CLUSTER)
@@ -105,7 +97,6 @@ object RagiumTagProviders {
             add(ConventionalItemTags.ORES, RagiumContents.RAGINITE_ORE)
             add(ConventionalItemTags.ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(ConventionalItemTags.RAW_MATERIALS, RagiumContents.RAW_RAGINITE)
-            add(ConventionalItemTags.SLIME_BALLS, RagiumContents.RAW_RUBBER_BALL)
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
@@ -127,6 +118,9 @@ object RagiumTagProviders {
             RagiumContents.Ingots.entries.forEach { add(ConventionalItemTags.INGOTS, it) }
             RagiumContents.Plates.entries.forEach { add(RagiumItemTags.PLATES, it) }
             // ragium
+            add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
+            add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)
+
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
         }
