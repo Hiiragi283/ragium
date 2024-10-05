@@ -28,6 +28,6 @@ class HTGeneratorBlockEntity : HTMachineBlockEntityBase {
     }
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        machineType.asGenerator()?.process(world, pos, machineType, tier)
+        machineType.asGenerator()?.process(world, pos, tier)
     }
 }

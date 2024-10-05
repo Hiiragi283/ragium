@@ -62,6 +62,7 @@ object RagiumClient : ClientModInitializer {
             RenderLayer.getCutoutMipped(),
             RagiumContents.RAGINITE_ORE,
             RagiumContents.DEEPSLATE_RAGINITE_ORE,
+            RagiumContents.POROUS_NETHERRACK,
             RagiumContents.OBLIVION_CLUSTER,
         )
 
@@ -78,6 +79,7 @@ object RagiumClient : ClientModInitializer {
 
         RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
+        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
     }
 
     private fun registerCutout(block: Block) {
@@ -115,7 +117,6 @@ object RagiumClient : ClientModInitializer {
 
     private fun registerScreens() {
         HandledScreens.register(RagiumScreenHandlerTypes.MACHINE, ::HTMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.BURNING_BOX, ::HTGenericScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.ALCHEMICAL_INFUSER, ::HTGenericScreen)
     }
 

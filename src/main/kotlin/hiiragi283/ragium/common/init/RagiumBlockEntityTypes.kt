@@ -5,10 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
-import hiiragi283.ragium.common.block.entity.machine.HTBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTDistillationTowerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntityBase
+import hiiragi283.ragium.common.block.entity.machine.*
 import hiiragi283.ragium.common.util.blockEntityType
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -37,6 +34,10 @@ object RagiumBlockEntityTypes {
     val GENERATOR_MACHINE: BlockEntityType<HTGeneratorBlockEntity> =
         register("generator_machine", ::HTGeneratorBlockEntity)
 
+    @JvmField
+    val HEAT_GENERATOR: BlockEntityType<HTHeatGeneratorBlockEntity> =
+        register("heat_generator", ::HTHeatGeneratorBlockEntity)
+
     //    Processor    //
 
     @JvmField
@@ -46,6 +47,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val DISTILLATION_TOWER: BlockEntityType<HTDistillationTowerBlockEntity> =
         register("distillation_tower", ::HTDistillationTowerBlockEntity)
+
+    @JvmField
+    val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
+        register("fluid_drill", ::HTFluidDrillBlockEntity)
 
     @JvmField
     val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
@@ -69,8 +74,11 @@ object RagiumBlockEntityTypes {
         ITEM_DISPLAY.addSupportedBlock(RagiumContents.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumContents.MANUAL_GRINDER)
 
+        addMachineBlocks(RagiumMachineTypes.HEAT_GENERATOR, HEAT_GENERATOR)
+
         addMachineBlocks(RagiumMachineTypes.BLAST_FURNACE, BLAST_FURNACE)
         addMachineBlocks(RagiumMachineTypes.DISTILLATION_TOWER, DISTILLATION_TOWER)
+        addMachineBlocks(RagiumMachineTypes.FLUID_DRILL, FLUID_DRILL)
 
         RagiumMachineTypes.Generator.entries.forEach { generator: RagiumMachineTypes.Generator ->
             addMachineBlocks(generator, GENERATOR_MACHINE)

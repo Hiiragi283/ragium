@@ -16,6 +16,9 @@ object RagiumItemTags {
     @JvmField
     val ORGANIC_OILS: TagKey<Item> = create(RagiumAPI.MOD_ID, "organic_oils")
 
+    @JvmField
+    val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")
+
     //    Conventional    //
 
     @JvmField
@@ -23,9 +26,6 @@ object RagiumItemTags {
 
     @JvmField
     val PLATES: TagKey<Item> = create("plates")
-
-    @JvmField
-    val CARBON_PLATES: TagKey<Item> = create("plates/carbon")
 
     @JvmField
     val COPPER_PLATES: TagKey<Item> = create("plates/copper")

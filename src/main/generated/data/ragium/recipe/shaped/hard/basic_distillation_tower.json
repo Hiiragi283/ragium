@@ -12,13 +12,13 @@
       "item": "ragium:ragi_steel_plate"
     },
     "B": {
-      "item": "ragium:advanced_circuit"
+      "item": "ragium:empty_fluid_cube"
     },
     "C": {
       "item": "ragium:ragi_steel_hull"
     },
     "D": {
-      "item": "ragium:advanced_circuit"
+      "item": "ragium:empty_fluid_cube"
     },
     "E": {
       "tag": "c:plates/iron"

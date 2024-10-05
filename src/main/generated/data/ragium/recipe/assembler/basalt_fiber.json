@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:molten_basalt_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:assembler",
+  "min_tier": "basic",
+  "outputs": [
+    {
+      "item": "ragium:basalt_fiber"
+    },
+    {
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

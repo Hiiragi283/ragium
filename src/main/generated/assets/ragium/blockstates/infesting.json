@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "enabled=false": {
+      "model": "minecraft:block/gray_concrete_powder"
+    },
+    "enabled=true": {
+      "model": "minecraft:block/light_gray_concrete_powder"
+    }
+  }
+}

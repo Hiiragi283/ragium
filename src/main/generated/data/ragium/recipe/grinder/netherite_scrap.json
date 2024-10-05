@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:ancient_debris"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:netherite_scrap"
+    }
+  ]
+}

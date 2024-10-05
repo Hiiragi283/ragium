@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:trinitrotoluene_fluid_cube"
+      }
+    },
+    {
+      "ingredient": {
+        "tag": "minecraft:sand"
+      }
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "min_tier": "advanced",
+  "outputs": [
+    {
+      "count": 12,
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

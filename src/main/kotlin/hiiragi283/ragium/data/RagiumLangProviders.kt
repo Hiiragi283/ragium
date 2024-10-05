@@ -107,6 +107,7 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumContents.RAGINITE_ORE, "Raginite Ore")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "Deep Raginite Ore")
+            builder.add(RagiumContents.POROUS_NETHERRACK, "Porous Netherrack")
             builder.add(RagiumContents.OBLIVION_CLUSTER, "Oblivion Cluster")
 
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
@@ -141,6 +142,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
             builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumContents.BASALT_FIBER, "Basalt Fiber")
+            builder.add(RagiumContents.SOLAR_PANEL, "Solar Panel")
             builder.add(RagiumContents.RAGI_CRYSTAL, "Ragi-Crystal")
             builder.add(RagiumContents.OBLIVION_CRYSTAL, "Oblivion Crystal")
 
@@ -164,14 +166,18 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine Type
+            builder.add(RagiumMachineTypes.Generator.THERMAL, "Thermal Generator")
+            builder.add(RagiumMachineTypes.Generator.SOLAR, "Solar Generator")
             builder.add(RagiumMachineTypes.Generator.WATER, "Water Generator")
-            builder.add(RagiumMachineTypes.Generator.SOLAR, "Solar Panel")
+
+            builder.add(RagiumMachineTypes.HEAT_GENERATOR, "Heat Generator")
 
             builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "Alloy Furnace")
             builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "Assembler")
             builder.add(RagiumMachineTypes.Processor.CENTRIFUGE, "Centrifuge")
             builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "Chemical Reactor")
             builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "Compressor")
+            builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "Decompressor")
             builder.add(RagiumMachineTypes.Processor.ELECTROLYZER, "Electrolyzer")
             builder.add(RagiumMachineTypes.Processor.EXTRACTOR, "Extractor")
             builder.add(RagiumMachineTypes.Processor.GRINDER, "Grinder")
@@ -181,6 +187,7 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "Large Blast Furnace")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "Distillation Tower")
+            builder.add(RagiumMachineTypes.FLUID_DRILL, "Fluid Drill")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
@@ -203,6 +210,7 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumContents.RAGINITE_ORE, "ラギナイト鉱石")
             builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "深層ラギナイト鉱石")
+            builder.add(RagiumContents.POROUS_NETHERRACK, "多孔質ネザーラック")
             builder.add(RagiumContents.OBLIVION_CLUSTER, "忘却の芽")
 
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
@@ -237,6 +245,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumContents.BASALT_FIBER, "玄武岩繊維")
+            builder.add(RagiumContents.SOLAR_PANEL, "太陽光パネル")
             builder.add(RagiumContents.RAGI_CRYSTAL, "ラギクリスタリル")
             builder.add(RagiumContents.OBLIVION_CRYSTAL, "忘却の結晶")
 
@@ -260,14 +269,18 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine Type
+            builder.add(RagiumMachineTypes.Generator.SOLAR, "太陽光発電機")
+            builder.add(RagiumMachineTypes.Generator.THERMAL, "地熱発電機")
             builder.add(RagiumMachineTypes.Generator.WATER, "水力発電機")
-            builder.add(RagiumMachineTypes.Generator.SOLAR, "太陽光パネル")
+
+            builder.add(RagiumMachineTypes.HEAT_GENERATOR, "火力発電機")
 
             builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "合金かまど")
             builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "組立機")
             builder.add(RagiumMachineTypes.Processor.CENTRIFUGE, "遠心分離機")
             builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "化学反応槽")
             builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "圧縮機")
+            builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "減圧機")
             builder.add(RagiumMachineTypes.Processor.ELECTROLYZER, "電解槽")
             builder.add(RagiumMachineTypes.Processor.EXTRACTOR, "抽出器")
             builder.add(RagiumMachineTypes.Processor.GRINDER, "粉砕機")
@@ -277,6 +290,7 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔")
+            builder.add(RagiumMachineTypes.FLUID_DRILL, "液体ドリル")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")

@@ -1,0 +1,36 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_steel_ingot"
+    },
+    "B": {
+      "tag": "minecraft:trapdoors"
+    },
+    "C": {
+      "item": "ragium:ragi_steel_hull"
+    },
+    "D": {
+      "tag": "minecraft:trapdoors"
+    },
+    "E": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_water"
+  }
+}

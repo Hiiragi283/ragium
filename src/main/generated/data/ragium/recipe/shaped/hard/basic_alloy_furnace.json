@@ -12,13 +12,13 @@
       "item": "ragium:ragi_steel_plate"
     },
     "B": {
-      "item": "minecraft:blast_furnace"
+      "item": "minecraft:furnace"
     },
     "C": {
       "item": "ragium:ragi_steel_hull"
     },
     "D": {
-      "item": "minecraft:blast_furnace"
+      "item": "minecraft:furnace"
     },
     "E": {
       "tag": "c:plates/iron"

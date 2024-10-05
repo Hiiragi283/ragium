@@ -1,0 +1,36 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:refined_ragi_steel_ingot"
+    },
+    "B": {
+      "item": "ragium:solar_panel"
+    },
+    "C": {
+      "item": "ragium:refined_ragi_steel_hull"
+    },
+    "D": {
+      "item": "ragium:solar_panel"
+    },
+    "E": {
+      "tag": "c:ingots/steel"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_solar"
+  }
+}

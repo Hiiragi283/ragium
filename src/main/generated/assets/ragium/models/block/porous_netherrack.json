@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/layered",
+  "textures": {
+    "layer0": "minecraft:block/netherrack",
+    "layer1": "ragium:block/porous_netherrack"
+  }
+}

@@ -54,7 +54,6 @@ class HTDataDriveManager :
             .result()
             .ifPresent {
                 nbt.put(KEY, it)
-                RagiumAPI.log { info("Saved HTDataDriveManager!") }
             }
         return nbt
     }

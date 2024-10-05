@@ -7,18 +7,20 @@ import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.*
 import hiiragi283.ragium.common.util.*
-import net.minecraft.block.AbstractBlock
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.PillarBlock
+import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
+import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 import java.awt.Color
 import kotlin.jvm.optionals.getOrNull
 
@@ -35,11 +37,39 @@ object RagiumContents {
 
     @JvmField
     val POROUS_NETHERRACK: Block =
-        registerBlock("porous_netherrack", HTSpongeBlock(FluidTags.LAVA))
+        registerBlock(
+            "porous_netherrack",
+            HTSpongeBlock(Blocks.MAGMA_BLOCK::getDefaultState) { world: World, pos: BlockPos ->
+                world.getFluidState(pos).isIn(FluidTags.LAVA)
+            },
+        )
+
+    @JvmField
+    val SNOW_SPONGE: Block =
+        registerBlock(
+            "snow_sponge",
+            HTSpongeBlock(Blocks.SNOW_BLOCK::getDefaultState) { world: World, pos: BlockPos ->
+                world.getBlockState(pos).isIn(BlockTags.SNOW)
+            },
+        )
 
     @JvmField
     val OBLIVION_CLUSTER: Block =
-        registerBlock("oblivion_cluster", HTOblivionClusterBlock)
+        registerBlock(
+            "oblivion_cluster",
+            AmethystClusterBlock(
+                7.0f,
+                3.0f,
+                blockSettings()
+                    .mapColor(MapColor.BLACK)
+                    .strength(1.5f)
+                    .sounds(BlockSoundGroup.AMETHYST_BLOCK)
+                    .solid()
+                    .nonOpaque()
+                    .luminance { 5 }
+                    .pistonBehavior(PistonBehavior.DESTROY),
+            ),
+        )
 
     //    Blocks - Plants    //
 
@@ -176,6 +206,9 @@ object RagiumContents {
 
     @JvmField
     val BASALT_FIBER: Item = registerItem("basalt_fiber")
+
+    @JvmField
+    val SOLAR_PANEL: Item = registerItem("solar_panel")
 
     @JvmField
     val RAGI_CRYSTAL: Item = registerItem("ragi_crystal")
@@ -345,6 +378,7 @@ object RagiumContents {
         registerBlockItem(RAGINITE_ORE)
         registerBlockItem(DEEPSLATE_RAGINITE_ORE)
         registerBlockItem(POROUS_NETHERRACK)
+        registerBlockItem(SNOW_SPONGE)
         registerBlockItem(OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
         registerBlockItem(CREATIVE_SOURCE)
@@ -484,6 +518,8 @@ object RagiumContents {
         RAGINITE(RagiumMaterials.RAGINITE),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
         ASH(RagiumMaterials.ASH),
+        NITER(RagiumMaterials.NITER),
+        PROTEIN(RagiumMaterials.PROTEIN),
         SULFUR(RagiumMaterials.SULFUR),
         ;
 
@@ -529,14 +565,12 @@ object RagiumContents {
         // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         BASALT_FIBER(RagiumMaterials.BASALT_FIBER),
-        CARBON(RagiumMaterials.CARBON),
         GOLD(RagiumMaterials.GOLD),
         SILICON(RagiumMaterials.SILICON),
         STEEL(RagiumMaterials.STEEL),
 
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
-        NETHERITE(RagiumMaterials.NETHERITE),
         PE(RagiumMaterials.PE),
         PVC(RagiumMaterials.PVC),
         PTFE(RagiumMaterials.PTFE),

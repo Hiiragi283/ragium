@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "minecraft:gunpowder"
+        "item": "ragium:niter_dust"
       }
     },
     {

@@ -34,13 +34,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         centrifuge(exporter)
         chemicalReactor(exporter)
         compressor(exporter)
+        decompressor(exporter)
         distillation(exporter)
         electrolyzer(exporter)
         extractor(exporter)
         grinderRecipes(exporter)
         metalFormer(exporter)
         mixer(exporter)
-        solidifier(exporter)
         rockGenerator(exporter)
         // alchemy
         infusion(exporter)
@@ -125,6 +125,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
             .addInput(RagiumContents.BASALT_FIBER, 4)
             .addOutput(RagiumContents.Plates.BASALT_FIBER)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
+            .addInput(RagiumContents.Fluids.MOLTEN_BASALT)
+            .addOutput(RagiumContents.BASALT_FIBER)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
     }
 
@@ -211,11 +218,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
-            .addInput(Items.GUNPOWDER)
+            .addInput(RagiumContents.Dusts.NITER)
             .addInput(RagiumContents.Fluids.WATER)
             .addOutput(RagiumContents.Fluids.NITRIC_ACID)
             .offerTo(exporter)
 
+        // Dynamite
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
             .addInput(RagiumContents.Fluids.GLYCEROL)
@@ -224,12 +232,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE, 3)
             .offerTo(exporter)
 
+        // TNT
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .addInput(RagiumContents.Fluids.TOLUENE)
             .addInput(RagiumContents.Fluids.MIXTURE_ACID, 3)
             .addOutput(RagiumContents.Fluids.TRINITROTOLUENE)
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE, 3)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .addInput(RagiumContents.Fluids.TRINITROTOLUENE)
+            .addInput(ItemTags.SAND)
+            .addOutput(Items.TNT, 12)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
         // PE
@@ -339,6 +356,34 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerSuffix(exporter, suffix = "_alt")
     }
 
+    //    Decompressor    //
+
+    private fun decompressor(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.DECOMPRESSOR)
+            .addInput(Items.KELP, 64)
+            .addOutput(Items.DRIED_KELP, 64)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.DECOMPRESSOR)
+            .addInput(ConventionalItemTags.STORAGE_BLOCKS_DRIED_KELP, 64)
+            .addOutput(Items.DRIED_KELP_BLOCK, 64)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.DECOMPRESSOR)
+            .addInput(RagiumContents.Fluids.LAVA)
+            .addOutput(RagiumContents.POROUS_NETHERRACK)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.DECOMPRESSOR)
+            .addInput(Items.MUD)
+            .addOutput(Items.CLAY)
+            .offerTo(exporter)
+    }
+
     //    Distillation Tower    //
 
     private fun distillation(exporter: RecipeExporter) {
@@ -415,7 +460,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(ItemTags.MEAT, 2)
+            .addInput(RagiumItemTags.PROTEIN_FOODS)
             .addInput(RagiumContents.EMPTY_FLUID_CUBE)
             .addOutput(RagiumContents.Fluids.TALLOW)
             .offerTo(exporter)
@@ -441,8 +486,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ConventionalItemTags.COBBLESTONES to 1, Items.GRAVEL to 1)
         registerGrinder(exporter, ConventionalItemTags.QUARTZ_ORES to 1, Items.QUARTZ to 2)
         registerGrinder(exporter, ConventionalItemTags.RED_SANDSTONE_BLOCKS to 1, Items.RED_SAND to 4)
-        registerGrinder(exporter, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS to 1, Items.SAND to 4)
         registerGrinder(exporter, ConventionalItemTags.WHEAT_CROPS to 1, RagiumContents.FLOUR to 1)
+        registerGrinder(exporter, Items.ANCIENT_DEBRIS to 1, Items.NETHERITE_SCRAP to 2)
         registerGrinder(exporter, Items.COARSE_DIRT to 1, Items.DIRT to 1)
         registerGrinder(exporter, Items.DEEPSLATE to 1, Items.COBBLED_DEEPSLATE to 1)
         registerGrinder(exporter, Items.GRAVEL to 1, Items.SAND to 1, id = Identifier.of("gravel_to_sand"))
@@ -455,15 +500,28 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ItemTags.LOGS to 1, RagiumContents.PULP to 4, id = Identifier.of("log_to_pulp"))
         registerGrinder(exporter, ItemTags.PLANKS to 1, RagiumContents.PULP to 1, id = Identifier.of("plank_to_pulp"))
         registerGrinder(exporter, ItemTags.REDSTONE_ORES to 1, Items.REDSTONE to 8)
-        registerGrinder(exporter, ItemTags.SAPLINGS to 2, RagiumContents.PULP to 1, id = Identifier.of("sapling_to_pulp"))
+        registerGrinder(
+            exporter,
+            ItemTags.SAPLINGS to 2,
+            RagiumContents.PULP to 1,
+            id = Identifier.of("sapling_to_pulp"),
+        )
         registerGrinder(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
         registerGrinder(exporter, RagiumContents.RAGI_CRYSTAL to 1, RagiumContents.Dusts.RAGI_CRYSTAL to 1)
+        registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumContents.Dusts.PROTEIN to 1)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .addInput(ConventionalItemTags.SUGAR_CANE_CROPS)
             .addOutput(Items.SUGAR, 2)
             .addOutput(RagiumContents.PULP)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .addInput(ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS)
+            .addOutput(Items.SAND, 4)
+            .addOutput(RagiumContents.Dusts.NITER)
             .offerTo(exporter)
     }
 
@@ -613,17 +671,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(input)
             .addInput(RagiumContents.Fluids.CHLORINE)
             .addOutput(output)
-            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
-            .offerTo(exporter)
-    }
-
-    //    Solidifier    //
-
-    private fun solidifier(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.SOLIDIFIER)
-            .addInput(RagiumContents.Fluids.MOLTEN_BASALT)
-            .addOutput(RagiumContents.BASALT_FIBER)
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
     }

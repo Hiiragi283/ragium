@@ -39,6 +39,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.PersistentState
 import net.minecraft.world.World
 import java.text.NumberFormat
@@ -87,6 +88,10 @@ fun <A, C> BlockApiLookup<A, C>.createCacheOrNull(world: World, pos: BlockPos): 
 
 fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state: BlockState? = null): A =
     find(state, context) ?: defaultValue
+
+//    BlockPos    //
+
+fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direction.entries.map(this::offset).filter(filter)
 
 //    Item    //
 

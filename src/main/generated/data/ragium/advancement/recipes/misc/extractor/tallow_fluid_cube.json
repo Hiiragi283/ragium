@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#minecraft:meat"
+            "items": "#ragium:foods/protein"
           }
         ]
       },

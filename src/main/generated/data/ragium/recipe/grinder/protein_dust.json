@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "ragium:foods/protein"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:protein_dust"
+    }
+  ]
+}

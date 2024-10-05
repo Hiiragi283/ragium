@@ -44,7 +44,7 @@ object RagiumMetalItemRecipeGroups {
             .Builder()
             .block(Items::NETHERITE_BLOCK, true)
             .ingot(Items::NETHERITE_INGOT, true)
-            .plate(RagiumContents.Plates.NETHERITE)
+            // .plate(RagiumContents.Plates.NETHERITE)
             .build("netherite")
 
     @JvmField

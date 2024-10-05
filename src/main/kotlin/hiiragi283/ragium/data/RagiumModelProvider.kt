@@ -106,6 +106,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumContents.NETWORK_INTERFACE)
         registerSimple(RagiumContents.BASIC_CASING, Identifier.of("block/smithing_table_top"))
         registerSimple(RagiumContents.ADVANCED_CASING)
+        register(RagiumContents.POROUS_NETHERRACK) {
+            generator.registerSingleton(
+                it,
+                RagiumModels.createLayered(Identifier.of("block/netherrack"), TextureMap.getId(it)),
+            )
+        }
 
         register(RagiumContents.INFESTING) {
             accept(
@@ -211,6 +217,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         )
         register(RagiumContents.SOAP_INGOT)
         register(RagiumContents.BASALT_FIBER)
+        register(RagiumContents.SOLAR_PANEL, Models.GENERATED, TextureMap.layer0(RagiumAPI.id("block/solar_front")))
 
         register(RagiumContents.RAGI_CRYSTAL)
         register(RagiumContents.OBLIVION_CRYSTAL)

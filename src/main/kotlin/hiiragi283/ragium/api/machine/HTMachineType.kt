@@ -20,16 +20,21 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.util.function.BiPredicate
 
-sealed class HTMachineType(val id: Identifier) :
+sealed class HTMachineType(builder: Builder) :
     HTMachineConvertible,
-    HTMachineFactory {
-    open val frontTexId: Identifier = id.withPath { "block/${it}_front" }
+    HTMachineFactory by builder.factory {
+    val id: Identifier = builder.id
+    val frontTexId: Identifier = builder.frontTexId
+    private val frontType: FrontType = builder.frontType
 
     val translationKey: String = Util.createTranslationKey("machine_type", id)
     val text: MutableText = Text.translatable(translationKey)
     val nameText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.WHITE)
 
-    abstract fun getFrontTexDir(facing: Direction): Direction
+    fun getFrontTexDir(facing: Direction): Direction = when (frontType) {
+        FrontType.TOP -> Direction.UP
+        FrontType.SIDE -> facing
+    }
 
     fun appendTooltip(
         stack: ItemStack,
@@ -47,32 +52,17 @@ sealed class HTMachineType(val id: Identifier) :
 
     //    Default    //
 
-    data object Default : HTMachineType(RagiumAPI.id("default")) {
-        override val frontTexId: Identifier = id.withPath { "block/alloy_furnace_front" }
-
-        override fun getFrontTexDir(facing: Direction): Direction = facing
-
-        override fun createMachine(
-            pos: BlockPos,
-            state: BlockState,
-            type: HTMachineType,
-            tier: HTMachineTier,
-        ): HTMachineBlockEntityBase = throw AssertionError("")
-    }
+    data object Default : HTMachineType(
+        Builder(RagiumAPI.id("default"))
+            .frontTexId(RagiumAPI.id("block/alloy_furnace_front"))
+            .frontType(FrontType.SIDE)
+            .factory { _: BlockPos, _: BlockState, _: HTMachineType, _: HTMachineTier -> throw AssertionError("") },
+    )
 
     //    Generator    //
 
-    class Generator(id: Identifier, private val predicate: BiPredicate<World, BlockPos>, factory: HTMachineFactory) :
-        HTMachineType(id),
-        HTMachineFactory by factory {
-        override fun getFrontTexDir(facing: Direction): Direction = Direction.UP
-
-        fun process(
-            world: World,
-            pos: BlockPos,
-            type: HTMachineType,
-            tier: HTMachineTier,
-        ) {
+    class Generator(builder: Builder, private val predicate: BiPredicate<World, BlockPos>) : HTMachineType(builder) {
+        fun process(world: World, pos: BlockPos, tier: HTMachineTier) {
             if (predicate.test(world, pos)) {
                 world.energyNetwork?.let { network: HTEnergyNetwork ->
                     useTransaction { transaction: Transaction ->
@@ -89,11 +79,7 @@ sealed class HTMachineType(val id: Identifier) :
 
     //    Processor    //
 
-    class Processor(id: Identifier, private val condition: HTMachineCondition, factory: HTMachineFactory) :
-        HTMachineType(id),
-        HTMachineFactory by factory {
-        override fun getFrontTexDir(facing: Direction): Direction = facing
-
+    class Processor(builder: Builder, private val condition: HTMachineCondition) : HTMachineType(builder) {
         fun match(
             world: World,
             pos: BlockPos,
@@ -118,5 +104,41 @@ sealed class HTMachineType(val id: Identifier) :
         ) {
             condition.failed.onFailed(world, pos, type, tier)
         }
+    }
+
+    //    Builder    //
+
+    class Builder(val id: Identifier) {
+        lateinit var frontType: FrontType
+        lateinit var factory: HTMachineFactory
+        var frontTexId: Identifier = id.withPath { "block/${it}_front" }
+
+        fun frontType(frontType: FrontType): Builder = apply {
+            this.frontType = frontType
+        }
+
+        fun factory(factory: HTMachineFactory): Builder = apply {
+            this.factory = factory
+        }
+
+        fun factory(factory: (BlockPos, BlockState, HTMachineTier) -> HTMachineBlockEntityBase): Builder =
+            factory { pos: BlockPos, state: BlockState, _: HTMachineType, tier: HTMachineTier ->
+                factory(pos, state, tier)
+            }
+
+        fun frontTexId(id: Identifier): Builder = apply {
+            this.frontTexId = id
+        }
+
+        fun buildGenerator(predicate: BiPredicate<World, BlockPos>): Generator = Generator(this, predicate)
+
+        fun buildProcessor(condition: HTMachineCondition): Processor = Processor(this, condition)
+    }
+
+    //    FrontType    //
+
+    enum class FrontType {
+        TOP,
+        SIDE,
     }
 }

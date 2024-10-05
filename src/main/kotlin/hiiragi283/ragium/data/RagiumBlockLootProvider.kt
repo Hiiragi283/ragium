@@ -9,6 +9,8 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
+import net.minecraft.item.ItemConvertible
+import net.minecraft.item.Items
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LeafEntry
@@ -48,6 +50,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumContents.NETWORK_INTERFACE)
         addDrop(RagiumContents.BASIC_CASING)
         addDrop(RagiumContents.ADVANCED_CASING)
+        addDrop(RagiumContents.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
         buildList<HTBlockContent> {
             addAll(RagiumContents.StorageBlocks.entries)
@@ -80,6 +83,17 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             ItemEntry
                 .builder(RagiumContents.RAW_RAGINITE)
                 .applyDropRange(2, 5)
+                .applyFortune(),
+        ),
+    )
+
+    private fun withSilkTouch(with: Block, without: ItemConvertible, amount: Float = 1.0f): LootTable.Builder = dropsWithSilkTouch(
+        with,
+        applyExplosionDecay(
+            with,
+            ItemEntry
+                .builder(without)
+                .applyDrop(amount)
                 .applyFortune(),
         ),
     )

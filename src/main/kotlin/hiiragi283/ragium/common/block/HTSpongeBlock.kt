@@ -5,17 +5,15 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.FluidBlock
-import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.FluidState
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import java.util.function.BiPredicate
 import java.util.function.Consumer
 
-class HTSpongeBlock(val tagKey: TagKey<Fluid>) : Block(blockSettings()) {
+class HTSpongeBlock(val replaced: () -> BlockState, val predicate: BiPredicate<World, BlockPos>) : Block(blockSettings()) {
     override fun onBlockAdded(
         state: BlockState,
         world: World,
@@ -42,7 +40,7 @@ class HTSpongeBlock(val tagKey: TagKey<Fluid>) : Block(blockSettings()) {
 
     private fun update(world: World, pos: BlockPos) {
         if (absorbFluid(world, pos)) {
-            world.setBlockState(pos, Blocks.MAGMA_BLOCK.defaultState, NOTIFY_LISTENERS)
+            world.setBlockState(pos, replaced(), NOTIFY_LISTENERS)
             world.playSound(null, pos, SoundEvents.BLOCK_SPONGE_ABSORB, SoundCategory.BLOCKS, 1.0f, 1.0f)
         }
     }
@@ -61,9 +59,8 @@ class HTSpongeBlock(val tagKey: TagKey<Fluid>) : Block(blockSettings()) {
                 pos -> true
                 else -> {
                     val state: BlockState = world.getBlockState(currentPos)
-                    val fluidState: FluidState = world.getFluidState(currentPos)
                     when {
-                        !fluidState.isIn(tagKey) -> false
+                        !predicate.test(world, currentPos) -> false
                         else -> {
                             val block: Block = state.block
                             when {

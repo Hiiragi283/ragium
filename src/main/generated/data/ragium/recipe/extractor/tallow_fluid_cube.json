@@ -2,9 +2,8 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "count": 2,
       "ingredient": {
-        "tag": "minecraft:meat"
+        "tag": "ragium:foods/protein"
       }
     },
     {

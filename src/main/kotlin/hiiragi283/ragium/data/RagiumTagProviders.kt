@@ -100,7 +100,6 @@ object RagiumTagProviders {
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
-            add(RagiumItemTags.CARBON_PLATES, RagiumContents.Plates.CARBON)
             add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
             add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)
             add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)
@@ -123,6 +122,13 @@ object RagiumTagProviders {
 
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
+
+            getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
+                .add(Items.ROTTEN_FLESH)
+                .addOptionalTag(ConventionalItemTags.RAW_MEAT_FOODS)
+                .addOptionalTag(ConventionalItemTags.COOKED_MEAT_FOODS)
+                .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
+                .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
         }
     }
 }

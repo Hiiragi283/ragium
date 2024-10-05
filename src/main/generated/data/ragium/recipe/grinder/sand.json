@@ -12,6 +12,9 @@
     {
       "count": 4,
       "item": "minecraft:sand"
+    },
+    {
+      "item": "ragium:niter_dust"
     }
   ]
 }

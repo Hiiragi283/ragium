@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 64,
+      "ingredient": {
+        "tag": "c:storage_blocks/dried_kelp"
+      }
+    }
+  ],
+  "machine_type": "ragium:decompressor",
+  "outputs": [
+    {
+      "count": 64,
+      "item": "minecraft:dried_kelp_block"
+    }
+  ]
+}
