@@ -2,8 +2,7 @@ package hiiragi283.ragium.common.data
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.RagiumConfig
+import hiiragi283.ragium.api.RagiumAPI
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditionType
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
@@ -26,7 +25,7 @@ class HTHardModeResourceCondition private constructor(private val isHardMode: Bo
         @JvmField
         val TYPE: ResourceConditionType<HTHardModeResourceCondition> =
             ResourceConditionType.create(
-                Ragium.id("hard_mode"),
+                RagiumAPI.id("hard_mode"),
                 RecordCodecBuilder.mapCodec { instance ->
                     instance
                         .group(Codec.BOOL.fieldOf("value").forGetter { it.isHardMode })
@@ -42,5 +41,5 @@ class HTHardModeResourceCondition private constructor(private val isHardMode: Bo
 
     override fun getType(): ResourceConditionType<*> = TYPE
 
-    override fun test(registryLookup: RegistryWrapper.WrapperLookup?): Boolean = RagiumConfig.isHardMode == isHardMode
+    override fun test(registryLookup: RegistryWrapper.WrapperLookup?): Boolean = RagiumAPI.getInstance().config.isHardMode == isHardMode
 }

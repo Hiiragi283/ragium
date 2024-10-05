@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.model
 
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTTieredMachine
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.getOrDefault
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockValidator
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.machine.HTMultiblockBuilder
-import hiiragi283.ragium.common.machine.HTMultiblockValidator
 import hiiragi283.ragium.common.util.getOrDefault
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity

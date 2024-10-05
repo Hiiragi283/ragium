@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.common.block.HTMachineBlockBase
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.util.machineType
 import hiiragi283.ragium.common.util.tier
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.text.Text
 
-class HTMachineBlockItem(block: HTMachineBlockBase, settings: Settings) :
+class HTMachineBlockItem(block: HTMachineBlock, settings: Settings) :
     BlockItem(
         block,
         settings.machineType(block.machineType).tier(block.tier),

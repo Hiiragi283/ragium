@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import hiiragi283.ragium.common.screen.HTBurningBoxScreenHandler
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
@@ -26,7 +26,7 @@ object RagiumScreenHandlerTypes {
     @JvmStatic
     private fun <T : ScreenHandler> register(name: String, factory: ScreenHandlerType.Factory<T>): ScreenHandlerType<T> = Registry.register(
         Registries.SCREEN_HANDLER,
-        Ragium.id(name),
+        RagiumAPI.id(name),
         ScreenHandlerType(factory, FeatureFlags.VANILLA_FEATURES),
     )
 }

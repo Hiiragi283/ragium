@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.util.getOrDefault
-import hiiragi283.ragium.common.world.energyNetwork
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -27,7 +27,7 @@ object RagiumEnergyProviders {
 
     @JvmStatic
     private fun create(name: String): BlockApiLookup<Boolean, Direction?> = BlockApiLookup.get(
-        Ragium.id(name),
+        RagiumAPI.id(name),
         Boolean::class.java,
         Direction::class.java,
     )

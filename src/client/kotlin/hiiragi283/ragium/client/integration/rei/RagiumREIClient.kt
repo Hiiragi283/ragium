@@ -1,5 +1,12 @@
 package hiiragi283.ragium.client.integration.rei
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
+import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
+import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.integration.rei.category.HTAlchemyRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTFluidPumpCategory
@@ -8,18 +15,11 @@ import hiiragi283.ragium.client.integration.rei.display.HTDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTInfusionRecipeDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
-import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTFluidPumpEntryLoader
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.item.HTFluidCubeItem
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineTypeRegistry
-import hiiragi283.ragium.common.recipe.alchemy.HTAlchemyRecipe
-import hiiragi283.ragium.common.recipe.alchemy.HTInfusionRecipe
-import hiiragi283.ragium.common.recipe.alchemy.HTTransformRecipe
-import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin
@@ -40,16 +40,16 @@ import net.minecraft.world.biome.Biome
 @Environment(EnvType.CLIENT)
 object RagiumREIClient : REIClientPlugin {
     init {
-        Ragium.log { info("REI Integration enabled!") }
+        RagiumAPI.log { info("REI Integration enabled!") }
     }
 
     @JvmField
     val FLUID_PUMP: CategoryIdentifier<HTFluidPumpCategory.FluidDisplay> =
-        CategoryIdentifier.of(Ragium.MOD_ID, "fluid_pump")
+        CategoryIdentifier.of(RagiumAPI.MOD_ID, "fluid_pump")
 
     @JvmStatic
     val ALCHEMY: CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> =
-        CategoryIdentifier.of(Ragium.MOD_ID, "alchemical_infusion")
+        CategoryIdentifier.of(RagiumAPI.MOD_ID, "alchemical_infusion")
 
     @JvmStatic
     fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = HTMachineTypeRegistry.types.map { CategoryIdentifier.of(it.id) }

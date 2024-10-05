@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.entity.HTOblivionCubeEntity
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.entity.Entity
@@ -27,7 +27,7 @@ object RagiumEntityTypes {
         builderAction: EntityType.Builder<T>.() -> Unit,
     ): EntityType<T> = Registry.register(
         Registries.ENTITY_TYPE,
-        Ragium.id(name),
+        RagiumAPI.id(name),
         EntityType.Builder
             .create(factory, spawnGroup)
             .apply(builderAction)

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.inventory.HTSimpleInventory
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.machine.HTMachineTypeRegistry
 import net.minecraft.component.ComponentType
 import net.minecraft.entity.EntityType
 import net.minecraft.network.RegistryByteBuf
@@ -40,7 +40,7 @@ object RagiumComponentTypes {
     private fun <T : Any> register(name: String, codec: Codec<T>, packetCodec: PacketCodec<in RegistryByteBuf, T>): ComponentType<T> =
         Registry.register(
             Registries.DATA_COMPONENT_TYPE,
-            Ragium.id(name),
+            RagiumAPI.id(name),
             ComponentType
                 .builder<T>()
                 .codec(codec)

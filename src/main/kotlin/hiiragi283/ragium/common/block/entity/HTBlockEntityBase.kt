@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.common.inventory.HTDelegatedInventory
-import hiiragi283.ragium.common.inventory.HTSidedInventory
+import hiiragi283.ragium.api.inventory.HTDelegatedInventory
+import hiiragi283.ragium.api.inventory.HTSidedInventory
 import hiiragi283.ragium.common.util.sendPacketForPlayers
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity

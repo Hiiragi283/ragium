@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.util
 
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumMaterials
-import hiiragi283.ragium.common.machine.HTMachineTier
 
 interface HTTranslationFormatter {
     val enPattern: String

@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "hiiragi283.ragium"
-version = "0.1.1+121x"
+version = "0.2.0+121x"
 
 sourceSets {
     main {

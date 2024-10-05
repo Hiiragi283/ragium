@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.Item
@@ -14,7 +14,7 @@ import net.minecraft.text.Text
 
 object RagiumItemGroup {
     @JvmField
-    val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, Ragium.id("item"))
+    val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("item"))
 
     @JvmStatic
     private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup =
@@ -32,7 +32,7 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 Registries.ITEM
                     .streamEntries()
-                    .filter { it.registryKey().value.namespace == Ragium.MOD_ID }
+                    .filter { it.registryKey().value.namespace == RagiumAPI.MOD_ID }
                     .map(RegistryEntry.Reference<Item>::value)
                     .forEach(entries::add)
             }

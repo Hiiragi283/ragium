@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider

@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.*
-import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
 import hiiragi283.ragium.common.util.*
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
@@ -229,7 +227,7 @@ object RagiumContents {
 
     @JvmStatic
     private fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T =
-        Registry.register(registry, Ragium.id(name), value)
+        Registry.register(registry, RagiumAPI.id(name), value)
 
     @JvmStatic
     private fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
@@ -371,7 +369,7 @@ object RagiumContents {
         ;
 
         override val block = Block(blockSettings(material.tier.getBaseBlock()))
-        override val id: Identifier = Ragium.id("${name.lowercase()}_hull")
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_hull")
         override val enPattern: String = "%s Hull"
         override val jaPattern: String = "%s筐体"
     }
@@ -393,7 +391,7 @@ object RagiumContents {
         ;
 
         override val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
-        override val id: Identifier = Ragium.id("${name.lowercase()}_coil")
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_coil")
         override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
     }
@@ -411,23 +409,14 @@ object RagiumContents {
     @JvmStatic
     private fun initMachines() {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            // generator
-            RagiumMachineTypes.Generator.entries
-                .map(RagiumMachineTypes.Generator::asMachine)
-                .forEach { type: HTMachineType -> registerMachine(type, tier, ::HTGeneratorMachineBlock) }
-            // processor
-            RagiumMachineTypes.Processor.entries
-                .map(RagiumMachineTypes.Processor::asMachine)
-                .forEach { type: HTMachineType -> registerMachine(type, tier, ::HTSingleMachineBlock) }
-            // blast furnace
-            registerCustomMachine(RagiumMachineTypes.BLAST_FURNACE, tier, ::HTBlastFurnaceBlock)
-            // distillation tower
-            registerCustomMachine(RagiumMachineTypes.DISTILLATION_TOWER, tier, ::HTDistillationTowerBlock)
+            HTMachineTypeRegistry.types.forEach { type: HTMachineType ->
+                registerMachine(type, tier, ::HTMachineBlock)
+            }
         }
     }
 
     @JvmStatic
-    private fun registerCustomMachine(type: HTMachineConvertible, tier: HTMachineTier, factory: (HTMachineTier) -> HTMachineBlockBase) {
+    private fun registerCustomMachine(type: HTMachineConvertible, tier: HTMachineTier, factory: (HTMachineTier) -> HTMachineBlock) {
         registerMachine(type, tier) { _: HTMachineConvertible, tier1: HTMachineTier -> factory(tier1) }
     }
 
@@ -435,10 +424,10 @@ object RagiumContents {
     private fun registerMachine(
         type: HTMachineConvertible,
         tier: HTMachineTier,
-        factory: (HTMachineConvertible, HTMachineTier) -> HTMachineBlockBase,
+        factory: (HTMachineConvertible, HTMachineTier) -> HTMachineBlock,
     ) {
         val name: String = tier.createId(type).path
-        val machineBlock: HTMachineBlockBase = registerBlock(name, factory(type, tier))
+        val machineBlock: HTMachineBlock = registerBlock(name, factory(type, tier))
         registerItem(name, HTMachineBlockItem(machineBlock, itemSettings()))
         HTMachineBlockRegistry.register(machineBlock)
     }
@@ -453,7 +442,7 @@ object RagiumContents {
         ;
 
         override val block = Block(blockSettings(Blocks.IRON_BLOCK))
-        override val id: Identifier = Ragium.id("${name.lowercase()}_block")
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_block")
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
     }
@@ -499,7 +488,7 @@ object RagiumContents {
         ;
 
         override val item = Item(itemSettings())
-        override val id: Identifier = Ragium.id("${name.lowercase()}_dust")
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_dust")
         override val enPattern: String = "%s Dust"
         override val jaPattern: String = "%sの粉"
     }
@@ -519,7 +508,7 @@ object RagiumContents {
         ;
 
         override val item = Item(itemSettings())
-        override val id: Identifier = Ragium.id("${name.lowercase()}_ingot")
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_ingot")
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
     }
@@ -554,7 +543,7 @@ object RagiumContents {
         ;
 
         override val item = Item(itemSettings())
-        override val id: Identifier = Ragium.id("${name.lowercase()}_plate")
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_plate")
         override val enPattern: String = "%s Plate"
         override val jaPattern: String = "%s板"
     }

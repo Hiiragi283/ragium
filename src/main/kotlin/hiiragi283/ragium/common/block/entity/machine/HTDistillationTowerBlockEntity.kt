@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.machine.HTBlockPredicate
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMultiblockBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
@@ -48,31 +48,31 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState, tier: HTM
             -1..1,
             -1,
             1..3,
-            HTBlockPredicate.block(tier.getBaseBlock()),
+            HTMultiblockComponent.block(tier.getBaseBlock()),
         ).addHollow(
             -1..1,
             0,
             1..3,
-            HTBlockPredicate.block(tier.getHull().block),
+            HTMultiblockComponent.block(tier.getHull().block),
         ).addCross4(
             -1..1,
             1,
             1..3,
-            HTBlockPredicate.block(Blocks.RED_CONCRETE),
+            HTMultiblockComponent.block(Blocks.RED_CONCRETE),
         ).addCross4(
             -1..1,
             2,
             1..3,
-            HTBlockPredicate.block(Blocks.WHITE_CONCRETE),
+            HTMultiblockComponent.block(Blocks.WHITE_CONCRETE),
         ).addCross4(
             -1..1,
             3,
             1..3,
-            HTBlockPredicate.block(Blocks.RED_CONCRETE),
+            HTMultiblockComponent.block(Blocks.RED_CONCRETE),
         ).add(
             0,
             4,
             2,
-            HTBlockPredicate.block(Blocks.WHITE_CONCRETE),
+            HTMultiblockComponent.block(Blocks.WHITE_CONCRETE),
         )
 }

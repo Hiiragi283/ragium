@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
@@ -28,14 +28,14 @@ object RagiumNetworks {
 
     @JvmStatic
     private fun <T : CustomPayload> registerS2C(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {
-        val id = CustomPayload.Id<T>(Ragium.id(name))
+        val id = CustomPayload.Id<T>(RagiumAPI.id(name))
         PayloadTypeRegistry.playS2C().register(id, codec)
         return id
     }
 
     @JvmStatic
     private fun <T : CustomPayload> registerC2S(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {
-        val id = CustomPayload.Id<T>(Ragium.id(name))
+        val id = CustomPayload.Id<T>(RagiumAPI.id(name))
         PayloadTypeRegistry.playS2C().register(id, codec)
         return id
     }

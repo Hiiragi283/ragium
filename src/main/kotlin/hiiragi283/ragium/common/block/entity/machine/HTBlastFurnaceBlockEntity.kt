@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.machine.HTBlockPredicate
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMultiblockBuilder
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ActionResult
@@ -41,21 +41,21 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachin
             -1..1,
             0,
             1..3,
-            HTBlockPredicate.block(tier.getHull().block),
+            HTMultiblockComponent.block(tier.getHull().block),
         ).addHollow(
             -1..1,
             1,
             1..3,
-            HTBlockPredicate.block(tier.getCoil().block),
+            HTMultiblockComponent.block(tier.getCoil().block),
         ).addHollow(
             -1..1,
             2,
             1..3,
-            HTBlockPredicate.block(tier.getCoil().block),
+            HTMultiblockComponent.block(tier.getCoil().block),
         ).addLayer(
             -1..1,
             3,
             1..3,
-            HTBlockPredicate.block(tier.getBaseBlock()),
+            HTMultiblockComponent.block(tier.getBaseBlock()),
         )
 }

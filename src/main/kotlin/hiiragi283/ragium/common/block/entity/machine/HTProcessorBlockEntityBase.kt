@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.machine.HTMachineRecipeProcessor
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.math.BlockPos

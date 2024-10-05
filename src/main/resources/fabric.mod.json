@@ -17,7 +17,7 @@
   "entrypoints": {
     "main": [
       {
-        "value": "hiiragi283.ragium.common.Ragium",
+        "value": "hiiragi283.ragium.common.RagiumCommon",
         "adapter": "kotlin"
       }
     ],

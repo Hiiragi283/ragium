@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.machine.HTFluidPumpEntry
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.recipe.machine.HTFluidPumpEntry
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricCodecDataProvider
 import net.minecraft.registry.RegistryKey
@@ -20,7 +20,7 @@ class RagiumFluidPumpEntryProvider(output: FabricDataOutput, registryLookup: Com
         HTFluidPumpEntry.REGISTRY_KEY,
         HTFluidPumpEntry.CODEC,
     ) {
-    override fun getName(): String = "${Ragium.MOD_NAME}/Fluid Pump Entry"
+    override fun getName(): String = "${RagiumAPI.MOD_NAME}/Fluid Pump Entry"
 
     override fun configure(provider: BiConsumer<Identifier, HTFluidPumpEntry>, lookup: RegistryWrapper.WrapperLookup) {
         register(provider, BiomeKeys.WARM_OCEAN, RagiumContents.Fluids.SALT_WATER)

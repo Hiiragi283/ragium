@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.screen
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.widget.WBar
@@ -37,8 +37,8 @@ class HTMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scree
         // right arrow
         root.add(
             WBar(
-                Ragium.id("textures/gui/progress_base.png"),
-                Ragium.id("textures/gui/progress_bar.png"),
+                RagiumAPI.id("textures/gui/progress_base.png"),
+                RagiumAPI.id("textures/gui/progress_bar.png"),
                 0,
                 1,
                 WBar.Direction.RIGHT,

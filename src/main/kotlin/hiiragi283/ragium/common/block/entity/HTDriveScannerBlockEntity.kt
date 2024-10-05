@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.world.HTDataDriveManager
+import hiiragi283.ragium.api.world.dataDriveManager
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.common.world.HTDataDriveManager
-import hiiragi283.ragium.common.world.dataDriveManager
 import net.minecraft.block.BlockState
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.util.math.BlockPos
@@ -22,6 +22,6 @@ class HTDriveScannerBlockEntity(pos: BlockPos, state: BlockState) :
             .filter { it.id !in manager }
             .randomOrNull() ?: return
         manager.add(recipeEntry.id)
-        Ragium.log { info("Scanned recipe; ${recipeEntry.id}") }
+        RagiumAPI.log { info("Scanned recipe; ${recipeEntry.id}") }
     }
 }

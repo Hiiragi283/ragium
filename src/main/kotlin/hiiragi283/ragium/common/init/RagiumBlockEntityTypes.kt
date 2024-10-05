@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.block.entity.machine.HTBlastFurnaceBlockEntity
@@ -57,7 +59,7 @@ object RagiumBlockEntityTypes {
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
-            Ragium.id(name),
+            RagiumAPI.id(name),
             blockEntityType(factory),
         )
 
@@ -66,5 +68,24 @@ object RagiumBlockEntityTypes {
         ALCHEMICAL_INFUSER.addSupportedBlock(RagiumContents.ALCHEMICAL_INFUSER)
         ITEM_DISPLAY.addSupportedBlock(RagiumContents.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumContents.MANUAL_GRINDER)
+
+        addMachineBlocks(RagiumMachineTypes.BLAST_FURNACE, BLAST_FURNACE)
+        addMachineBlocks(RagiumMachineTypes.DISTILLATION_TOWER, DISTILLATION_TOWER)
+
+        RagiumMachineTypes.Generator.entries.forEach { generator: RagiumMachineTypes.Generator ->
+            addMachineBlocks(generator, GENERATOR_MACHINE)
+        }
+
+        RagiumMachineTypes.Processor.entries.forEach { processor: RagiumMachineTypes.Processor ->
+            addMachineBlocks(processor, PROCESSOR_MACHINE)
+        }
+    }
+
+    @JvmStatic
+    private fun addMachineBlocks(machineType: HTMachineConvertible, type: BlockEntityType<*>) {
+        HTMachineBlockRegistry
+            .getAllTier(machineType)
+            .values
+            .forEach(type::addSupportedBlock)
     }
 }

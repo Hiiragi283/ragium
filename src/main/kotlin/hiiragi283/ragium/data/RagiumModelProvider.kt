@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.block.HTMachineBlockBase
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumModels
-import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -46,7 +46,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.DEEPSLATE_RAGINITE_ORE) {
             generator.registerSingleton(
                 it,
-                RagiumModels.createLayered(Identifier.of("block/deepslate"), Ragium.id("block/raginite_ore")),
+                RagiumModels.createLayered(Identifier.of("block/deepslate"), RagiumAPI.id("block/raginite_ore")),
             )
         }
         register(RagiumContents.OBLIVION_CLUSTER, generator::registerAmethyst)
@@ -60,7 +60,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                             buildWhen(RagiumBlockProperties.LEVEL_7, level),
                             buildStateVariant {
                                 model(
-                                    Ragium.id(
+                                    RagiumAPI.id(
                                         when (level % 2 == 0) {
                                             true -> "block/manual_grinder"
                                             false -> "block/manual_grinder_diagonal"
@@ -145,7 +145,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // machines
-        HTMachineBlockRegistry.forEachBlock { machineBlock: HTMachineBlockBase ->
+        HTMachineBlockRegistry.forEachBlock { machineBlock: HTMachineBlock ->
             register(machineBlock) { block: Block ->
                 accept(
                     VariantsBlockStateSupplier

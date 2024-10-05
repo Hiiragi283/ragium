@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.inventory.*
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack

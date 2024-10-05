@@ -1,11 +1,11 @@
 package hiiragi283.ragium.client.integration.rei
 
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.HTRecipeResult
+import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.HTRecipeResult
-import hiiragi283.ragium.common.recipe.WeightedIngredient
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.entry.EntryStack

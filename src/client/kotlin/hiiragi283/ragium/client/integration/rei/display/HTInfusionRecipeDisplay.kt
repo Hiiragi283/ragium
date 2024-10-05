@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.integration.rei.display
 
+import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import hiiragi283.ragium.client.integration.rei.RagiumREIClient
 import hiiragi283.ragium.client.integration.rei.entryIngredient
-import hiiragi283.ragium.common.recipe.alchemy.HTInfusionRecipe
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import net.minecraft.recipe.RecipeEntry

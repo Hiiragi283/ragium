@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.util.textureMap
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
@@ -14,7 +14,7 @@ import java.util.*
 
 object RagiumModels {
     @JvmField
-    val MACHINE_MODEL_ID: Identifier = Ragium.id("block/dynamic_machine")
+    val MACHINE_MODEL_ID: Identifier = RagiumAPI.id("block/dynamic_machine")
 
     //    Block    //
 
@@ -79,7 +79,7 @@ object RagiumModels {
 
     @JvmStatic
     private fun model(path: String, vararg keys: TextureKey): Model = Model(
-        Optional.of(Ragium.id(path)),
+        Optional.of(RagiumAPI.id(path)),
         Optional.empty(),
         *keys,
     )
@@ -101,7 +101,7 @@ object RagiumModels {
                     when (tier) {
                         HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
                         HTMachineTier.BASIC -> Identifier.of("block/smithing_table_top")
-                        HTMachineTier.ADVANCED -> Ragium.id("block/advanced_casing")
+                        HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
                     },
                 )
             }

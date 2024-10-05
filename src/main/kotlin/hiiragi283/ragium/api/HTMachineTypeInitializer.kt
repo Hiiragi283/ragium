@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.common.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import java.util.function.Consumer
 
 fun interface HTMachineTypeInitializer {

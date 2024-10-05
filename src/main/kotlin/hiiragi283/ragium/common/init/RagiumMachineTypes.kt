@@ -1,10 +1,16 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
-import hiiragi283.ragium.common.Ragium
-import hiiragi283.ragium.common.machine.HTMachineCondition
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineCondition
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.common.block.entity.machine.HTBlastFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTDistillationTowerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTProcessorBlockEntityBase
+import net.minecraft.block.BlockState
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -25,11 +31,29 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
     @JvmField
     val BLAST_FURNACE =
-        HTMachineType.Processor(Ragium.id("blast_furnace"), RagiumMachineConditions.ELECTRIC_CONSUMER)
+        HTMachineType.Processor(
+            RagiumAPI.id("blast_furnace"),
+            RagiumMachineConditions.ELECTRIC_CONSUMER,
+        ) { pos: BlockPos, state: BlockState, _: HTMachineType, tier: HTMachineTier ->
+            HTBlastFurnaceBlockEntity(
+                pos,
+                state,
+                tier,
+            )
+        }
 
     @JvmField
     val DISTILLATION_TOWER =
-        HTMachineType.Processor(Ragium.id("distillation_tower"), RagiumMachineConditions.ELECTRIC_CONSUMER)
+        HTMachineType.Processor(
+            RagiumAPI.id("distillation_tower"),
+            RagiumMachineConditions.ELECTRIC_CONSUMER,
+        ) { pos: BlockPos, state: BlockState, _: HTMachineType, tier: HTMachineTier ->
+            HTDistillationTowerBlockEntity(
+                pos,
+                state,
+                tier,
+            )
+        }
 
     //    Generator    //
 
@@ -48,7 +72,8 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
         abstract fun canGenerate(world: World, pos: BlockPos): Boolean
 
-        private val machineType = HTMachineType.Generator(Ragium.id(name.lowercase()), ::canGenerate)
+        private val machineType =
+            HTMachineType.Generator(RagiumAPI.id(name.lowercase()), ::canGenerate, ::HTGeneratorBlockEntity)
 
         override fun asMachine(): HTMachineType = machineType
     }
@@ -70,7 +95,8 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         SOLIDIFIER,
         ;
 
-        private val machineType = HTMachineType.Processor(Ragium.id(name.lowercase()), condition)
+        private val machineType =
+            HTMachineType.Processor(RagiumAPI.id(name.lowercase()), condition, HTProcessorBlockEntityBase::Simple)
 
         override fun asMachine(): HTMachineType = machineType
     }

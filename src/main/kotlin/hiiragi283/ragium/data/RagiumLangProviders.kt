@@ -1,13 +1,13 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.common.util.HTItemContent
 import hiiragi283.ragium.common.util.HTTranslationFormatter

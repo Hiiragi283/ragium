@@ -5,10 +5,10 @@ import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup

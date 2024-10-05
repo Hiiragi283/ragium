@@ -1,13 +1,12 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTAdvancementRegister
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.data.util.HTAdvancementRegister
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancement.Advancement
@@ -31,7 +30,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
     }
 
     override fun generateAdvancement(registryLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
-        register = HTAdvancementRegister(Ragium.MOD_ID, consumer)
+        register = HTAdvancementRegister(RagiumAPI.MOD_ID, consumer)
         registerTier1(register)
         registerTier2(register)
         registerTier3(register)
@@ -40,7 +39,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
 
     private fun Advancement.Builder.buildMultiblock(machineType: HTMachineType, minTier: HTMachineTier): Advancement.Builder = criterion(
         "build_multiblock",
-        HTBuiltMachineCriterion.create(machineType, minTier),
+        RagiumAPI.getInstance().createBuiltMachineCriterion(machineType, minTier),
     )
 
     private fun Advancement.Builder.hasItems(vararg items: ItemConvertible): Advancement.Builder = criterion(

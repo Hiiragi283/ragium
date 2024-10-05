@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.machine.HTMachineCondition
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineCondition
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.world.HTEnergyNetwork
+import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.util.useTransaction
-import hiiragi283.ragium.common.world.HTEnergyNetwork
-import hiiragi283.ragium.common.world.energyNetwork
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
@@ -14,12 +14,6 @@ import net.minecraft.world.World
 import kotlin.enums.EnumEntries
 
 object RagiumMachineConditions {
-    @JvmField
-    val NONE: HTMachineCondition = HTMachineCondition(
-        HTMachineCondition.Condition.FALSE,
-        HTMachineCondition.Succeeded.EMPTY,
-    )
-
     //    Processor    //
 
     @JvmField

@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.advancement
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.criterion.AbstractCriterion
 import net.minecraft.entity.player.PlayerEntity

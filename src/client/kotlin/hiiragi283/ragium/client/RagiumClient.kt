@@ -1,20 +1,19 @@
 package hiiragi283.ragium.client
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumClientAPI
+import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTMultiMachineBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
 import hiiragi283.ragium.client.util.registerGlobalReceiver
-import hiiragi283.ragium.common.Ragium
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.block.HTMachineBlockBase
-import hiiragi283.ragium.common.block.entity.HTMultiblockController
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
@@ -30,8 +29,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
 import net.minecraft.client.model.ModelPartBuilder
@@ -55,7 +52,7 @@ object RagiumClient : ClientModInitializer {
         registerEvents()
         registerNetworks()
 
-        Ragium.log { info("Ragium-Client initialized!") }
+        RagiumAPI.log { info("Ragium-Client initialized!") }
     }
 
     //    Blocks    //
@@ -79,8 +76,8 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
 
-        registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
-        registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
+        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
+        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
     }
 
     private fun registerCutout(block: Block) {
@@ -89,10 +86,6 @@ object RagiumClient : ClientModInitializer {
 
     private fun registerCutoutMipped(block: Block) {
         BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
-    }
-
-    private fun <T> registerMultiblockRenderer(type: BlockEntityType<T>) where T : BlockEntity, T : HTMultiblockController {
-        BlockEntityRendererFactories.register(type, ::HTMultiMachineBlockEntityRenderer)
     }
 
     //    Entities    //
@@ -131,7 +124,7 @@ object RagiumClient : ClientModInitializer {
     private fun registerEvents() {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register block state resolver
-            HTMachineBlockRegistry.forEachBlock { block: HTMachineBlockBase ->
+            HTMachineBlockRegistry.forEachBlock { block: HTMachineBlock ->
                 context.registerBlockStateResolver(block) { context1: BlockStateResolver.Context ->
                     context1.block().stateManager.states.forEach { state: BlockState ->
                         context1.setModel(state, HTMachineModel)

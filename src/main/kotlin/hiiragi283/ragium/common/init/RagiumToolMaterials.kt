@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.tags.RagiumItemTags
+import hiiragi283.ragium.api.tags.RagiumItemTags
 import net.minecraft.block.Block
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.AttributeModifiersComponent

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.inventory.*
 import hiiragi283.ragium.common.screen.HTBurningBoxScreenHandler
 import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.BlockState

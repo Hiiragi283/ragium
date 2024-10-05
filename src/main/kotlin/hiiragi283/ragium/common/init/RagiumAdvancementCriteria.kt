@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import net.minecraft.advancement.criterion.Criterion
 import net.minecraft.registry.Registries
@@ -13,7 +13,7 @@ object RagiumAdvancementCriteria {
     @JvmStatic
     private fun <T : Criterion<*>> register(name: String, criterion: T): T = Registry.register(
         Registries.CRITERION,
-        Ragium.id(name),
+        RagiumAPI.id(name),
         criterion,
     )
 }

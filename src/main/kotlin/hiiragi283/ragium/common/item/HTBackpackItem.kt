@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.util.itemSettings
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory

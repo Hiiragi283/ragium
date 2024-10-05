@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.integration.rei.display
 
+import hiiragi283.ragium.api.recipe.HTRecipeResult
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.integration.rei.categoryId
 import hiiragi283.ragium.client.integration.rei.entryIngredient
-import hiiragi283.ragium.common.recipe.HTRecipeResult
-import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.util.EntryIngredients

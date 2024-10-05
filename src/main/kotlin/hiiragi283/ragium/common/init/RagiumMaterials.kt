@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.machine.HTMachineTier
 import hiiragi283.ragium.common.util.HTTranslationProvider
 
 enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String, override val jaName: String) : HTTranslationProvider {

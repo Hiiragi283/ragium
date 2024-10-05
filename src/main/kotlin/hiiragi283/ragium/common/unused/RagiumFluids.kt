@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.unused
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 
 object RagiumFluids {
     @JvmField
@@ -14,5 +14,5 @@ object RagiumFluids {
     }
 
     private fun register(name: String, builderAction: HTFlowableFluid.Settings.() -> Unit = {}): HTFluidContent =
-        HTFluidContent.create(Ragium.id(name), builderAction)
+        HTFluidContent.create(RagiumAPI.id(name), builderAction)
 }

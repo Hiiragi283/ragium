@@ -1,13 +1,13 @@
 package hiiragi283.ragium.client.integration.rei.category
 
+import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.integration.rei.categoryId
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.machine.HTMachineBlockRegistry
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.recipe.machine.HTMachineRecipe
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
 import me.shedaniel.rei.api.client.gui.widgets.Tooltip

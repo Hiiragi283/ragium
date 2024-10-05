@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 
@@ -19,6 +19,6 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider(::RagiumModelProvider)
         RagiumLangProviders.init(pack)
 
-        Ragium.log { info("Ragium data generation is done!") }
+        RagiumAPI.log { info("Ragium data generation is done!") }
     }
 }

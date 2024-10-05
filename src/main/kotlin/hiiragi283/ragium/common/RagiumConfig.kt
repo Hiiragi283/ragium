@@ -4,7 +4,8 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
-import hiiragi283.ragium.common.world.hardModeManager
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.world.hardModeManager
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
@@ -13,9 +14,8 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.world.World
 
-object RagiumConfig {
-    @JvmStatic
-    var isHardMode: Boolean = false
+internal object RagiumConfig : RagiumAPI.Config {
+    override var isHardMode: Boolean = false
         private set
 
     @JvmStatic

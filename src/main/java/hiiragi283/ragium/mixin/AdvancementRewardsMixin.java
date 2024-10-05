@@ -1,7 +1,7 @@
 package hiiragi283.ragium.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import hiiragi283.ragium.common.advancement.HTAdvancementRewardCallback;
+import hiiragi283.ragium.api.event.HTAdvancementRewardCallback;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.server.ServerAdvancementLoader;

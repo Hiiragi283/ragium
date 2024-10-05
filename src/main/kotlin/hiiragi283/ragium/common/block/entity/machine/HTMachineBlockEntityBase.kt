@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.block.entity.HTTieredMachine
-import hiiragi283.ragium.common.inventory.*
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTMachineType
-import hiiragi283.ragium.common.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.screen.HTMachineScreenHandler
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState

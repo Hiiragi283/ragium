@@ -1,16 +1,16 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.alchemy.RagiElement
-import hiiragi283.ragium.common.block.HTMachineBlockBase
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
-import hiiragi283.ragium.common.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumMaterials
-import hiiragi283.ragium.common.machine.HTMachineConvertible
-import hiiragi283.ragium.common.machine.HTMachineTier
-import hiiragi283.ragium.common.tags.RagiumItemTags
 import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -100,7 +100,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input(ConventionalItemTags.SLIME_BALLS)
             .input(Items.PISTON)
             .unlockedBy(Items.PISTON)
-            .offerTo(exporter, Ragium.id("shapeless/sticky_piston"))
+            .offerTo(exporter, RagiumAPI.id("shapeless/sticky_piston"))
 
         HTShapedRecipeJsonBuilder
             .create(Items.LEAD, 2)
@@ -144,7 +144,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input(Items.HONEY_BOTTLE)
             .input(RagiumContents.EMPTY_FLUID_CUBE)
             .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
-            .offerTo(exporter, Ragium.id("shapeless/honey_fluid_cube_alt"))
+            .offerTo(exporter, RagiumAPI.id("shapeless/honey_fluid_cube_alt"))
 
         HTShapedRecipeJsonBuilder
             .create(Items.CANDLE)
@@ -162,7 +162,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input(RagiumContents.FLOUR)
             .input(RagiumContents.Fluids.WATER)
             .unlockedBy(RagiumContents.FLOUR)
-            .offerTo(exporter, Ragium.id("shapeless/dough"))
+            .offerTo(exporter, RagiumAPI.id("shapeless/dough"))
 
         // tools
         HTShapedRecipeJsonBuilder
@@ -480,7 +480,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " A ",
             ).input('A', input)
             .unlockedBy(input)
-            .offerTo(exporter, Ragium.id("empty_fluid_cube$suffix"))
+            .offerTo(exporter, RagiumAPI.id("empty_fluid_cube$suffix"))
     }
 
     private fun createMachine(
@@ -490,7 +490,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         right: ItemConvertible = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val block: HTMachineBlockBase = type.asMachine().getBlock(tier) ?: return@forEach
+            val block: HTMachineBlock = type.asMachine().getBlock(tier) ?: return@forEach
 
             fun createPattern(isHard: Boolean): HTShapedRecipeJsonBuilder = HTShapedRecipeJsonBuilder
                 .create(block)

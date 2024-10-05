@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.common.Ragium
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.entity.HTOblivionCubeEntity
 import net.minecraft.client.model.ModelPart
 import net.minecraft.client.render.VertexConsumer
@@ -20,10 +20,10 @@ class HTOblivionCubeEntityRenderer(ctx: EntityRendererFactory.Context) :
     ) {
     companion object {
         @JvmField
-        val ENTITY_MODEL_LAYER = EntityModelLayer(Ragium.id("oblivion_cube"), "main")
+        val ENTITY_MODEL_LAYER = EntityModelLayer(RagiumAPI.id("oblivion_cube"), "main")
     }
 
-    override fun getTexture(entity: HTOblivionCubeEntity): Identifier = Ragium.id("textures/entity/oblivion_cube.png")
+    override fun getTexture(entity: HTOblivionCubeEntity): Identifier = RagiumAPI.id("textures/entity/oblivion_cube.png")
 
     //    Model    //
 

@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.recipe.HTRecipeResult
+import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.inventory.*
-import hiiragi283.ragium.common.machine.HTBlockPredicate
-import hiiragi283.ragium.common.machine.HTMultiblockBuilder
-import hiiragi283.ragium.common.recipe.HTRecipeResult
-import hiiragi283.ragium.common.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -119,30 +119,30 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun buildMultiblock(builder: HTMultiblockBuilder): HTMultiblockBuilder = builder
         // tiles
-        .add(-2, -1, -2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILES))
-        .add(-2, -1, 2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILES))
-        .add(2, -1, -2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILES))
-        .add(2, -1, 2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILES))
+        .add(-2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        .add(-2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        .add(2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        .add(2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
         // slabs
-        .add(-2, 0, -2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .add(-2, 0, 2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .add(2, 0, -2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .add(2, 0, 2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(-1..1, -1, -2..-2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(-1..1, -1, 2..2, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(-2..-2, -1, -1..1, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(2..2, -1, -1..1, HTBlockPredicate.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .add(-2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .add(-2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .add(2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .add(2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .addLayer(-1..1, -1, 2..2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .addLayer(-2..-2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        .addLayer(2..2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
         // obsidian
-        .add(-1, -1, -1, HTBlockPredicate.block(Blocks.OBSIDIAN))
-        .add(-1, -1, 1, HTBlockPredicate.block(Blocks.OBSIDIAN))
-        .add(1, -1, -1, HTBlockPredicate.block(Blocks.OBSIDIAN))
-        .add(1, -1, 1, HTBlockPredicate.block(Blocks.OBSIDIAN))
+        .add(-1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        .add(-1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        .add(1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        .add(1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
         // crying
-        .add(-1, -1, 0, HTBlockPredicate.block(Blocks.CRYING_OBSIDIAN))
-        .add(0, -1, -1, HTBlockPredicate.block(Blocks.CRYING_OBSIDIAN))
-        .add(0, -1, 0, HTBlockPredicate.block(Blocks.CRYING_OBSIDIAN))
-        .add(0, -1, 1, HTBlockPredicate.block(Blocks.CRYING_OBSIDIAN))
-        .add(1, -1, 0, HTBlockPredicate.block(Blocks.CRYING_OBSIDIAN))
+        .add(-1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        .add(0, -1, -1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        .add(0, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        .add(0, -1, 1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        .add(1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
 
     //    NamedScreenHandlerFactory    //
 
