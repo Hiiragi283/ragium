@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "minecraft:soul_soil"
+        "item": "minecraft:soul_sand"
       }
     },
     {
@@ -12,10 +12,11 @@
       }
     }
   ],
-  "machine_type": "ragium:centrifuge",
+  "machine_type": "ragium:extractor",
+  "min_tier": "basic",
   "outputs": [
     {
-      "item": "minecraft:clay"
+      "item": "minecraft:sand"
     },
     {
       "item": "ragium:oil_fluid_cube"

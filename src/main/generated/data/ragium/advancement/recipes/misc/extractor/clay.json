@@ -1,17 +1,21 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": false
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_item": {
+    "has_input0": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:refined_ragi_steel_hull"
+            "items": "minecraft:soul_soil"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:empty_fluid_cube"
           }
         ]
       },
@@ -19,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/advanced_centrifuge"
+        "recipe": "minecraft:extractor/clay"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -27,12 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_the_item"
+      "has_input0",
+      "has_input1"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/advanced_centrifuge"
+      "minecraft:extractor/clay"
     ]
   }
 }
