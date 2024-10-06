@@ -69,17 +69,16 @@ sealed class HTMachineType(builder: Builder) :
 
     //    Generator    //
 
-    class Generator(
-        builder: Builder,
-        val fluidTag: TagKey<Fluid>?,
-        private val predicate: BiPredicate<World, BlockPos>,
-    ) : HTMachineType(builder) {
+    class Generator(builder: Builder, val fluidTag: TagKey<Fluid>?, private val predicate: BiPredicate<World, BlockPos>) :
+        HTMachineType(builder) {
         fun process(world: World, pos: BlockPos, tier: HTMachineTier) {
             useTransaction { transaction: Transaction ->
                 // Try to consumer fluid
-                FluidStorage.SIDED.find(world, pos, world.getBlockState(pos), world.getBlockEntity(pos), null)
+                FluidStorage.SIDED
+                    .find(world, pos, world.getBlockState(pos), world.getBlockEntity(pos), null)
                     ?.let { storage: Storage<FluidVariant> ->
-                        StorageUtil.extractAny(storage, FluidConstants.BUCKET, transaction)
+                        StorageUtil
+                            .extractAny(storage, FluidConstants.BUCKET, transaction)
                             ?.let { resourceAmount: ResourceAmount<FluidVariant> ->
                                 if (resourceAmount.amount == FluidConstants.BUCKET && generateEnergy(world, tier, transaction)) {
                                     transaction.commit()
@@ -90,10 +89,12 @@ sealed class HTMachineType(builder: Builder) :
                 // check condition
                 if (predicate.test(world, pos) && generateEnergy(world, tier, transaction)) {
                     transaction.commit()
-                } else transaction.abort()
+                } else {
+                    transaction.abort()
+                }
             }
         }
-        
+
         private fun generateEnergy(world: World, tier: HTMachineTier, transaction: Transaction): Boolean =
             world.energyNetwork?.let { network: HTEnergyNetwork ->
                 network.insert(tier.recipeCost, transaction) > 0

@@ -15,7 +15,7 @@ object RagiumRecipeTypes {
 
     @JvmField
     val FLUID_DRILL: RecipeType<HTFluidDrillRecipe> = register("fluid_drill")
-    
+
     @JvmField
     val MACHINE: RecipeType<HTMachineRecipe> = register("machine")
 

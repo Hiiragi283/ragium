@@ -18,10 +18,10 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-class HTMachineRecipeProcessor<T: RecipeInput, U : HTRecipeBase<T>>(
+class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
     private val inventory: HTSimpleInventory,
     private val recipeType: RecipeType<U>,
-    private val inputFactory: (HTMachineType.Processor, HTMachineTier, HTSimpleInventory) -> T
+    private val inputFactory: (HTMachineType.Processor, HTMachineTier, HTSimpleInventory) -> T,
 ) {
     init {
         check(inventory.size() == 7)
@@ -37,7 +37,7 @@ class HTMachineRecipeProcessor<T: RecipeInput, U : HTRecipeBase<T>>(
             .ifError { machineType.onFailed(world, pos, machineType, tier) }
             .ifSuccess { machineType.onSucceeded(world, pos, machineType, tier) }
     }
-    
+
     private fun processInternal(
         world: World,
         pos: BlockPos,

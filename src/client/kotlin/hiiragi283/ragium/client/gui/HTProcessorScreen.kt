@@ -12,5 +12,5 @@ import net.minecraft.text.Text
 class HTProcessorScreen(gui: HTProcessorScreenHandler, player: PlayerEntity, title: Text) :
     CottonInventoryScreen<HTProcessorScreenHandler>(gui, player, title) {
     constructor(gui: HTProcessorScreenHandler, inventory: PlayerInventory, title: Text) :
-            this(gui, inventory.player, title)
+        this(gui, inventory.player, title)
 }

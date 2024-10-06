@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -13,7 +12,7 @@ import net.minecraft.world.World
 import java.util.function.BiPredicate
 import java.util.function.Consumer
 
-class HTSpongeBlock(val replaced: () -> BlockState, val predicate: BiPredicate<World, BlockPos>) : Block(blockSettings()) {
+class HTSpongeBlock(settings: Settings, val replaced: () -> BlockState, val predicate: BiPredicate<World, BlockPos>) : Block(settings) {
     override fun onBlockAdded(
         state: BlockState,
         world: World,

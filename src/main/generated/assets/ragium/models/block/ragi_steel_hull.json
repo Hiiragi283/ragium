@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/hull",
   "textures": {
-    "bottom": "minecraft:block/smithing_table_top",
+    "bottom": "minecraft:block/blast_furnace_top",
     "top": "ragium:block/ragi_steel_block"
   }
 }

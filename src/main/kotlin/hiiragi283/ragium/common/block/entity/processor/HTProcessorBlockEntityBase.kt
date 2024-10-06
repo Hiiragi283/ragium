@@ -47,7 +47,7 @@ abstract class HTProcessorBlockEntityBase : HTMachineBlockEntityBase {
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         HTMachineRecipeProcessor(
             parent,
-            RagiumRecipeTypes.MACHINE
+            RagiumRecipeTypes.MACHINE,
         ) { machineType: HTMachineType.Processor, tier: HTMachineTier, inventory: HTSimpleInventory ->
             HTMachineRecipe.Input.create(
                 machineType,
@@ -78,7 +78,7 @@ abstract class HTProcessorBlockEntityBase : HTMachineBlockEntityBase {
         HTProcessorScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos))
 
     //    Simple    //
-    
+
     class Simple : HTProcessorBlockEntityBase {
         @Deprecated("")
         constructor(pos: BlockPos, state: BlockState) :

@@ -12,9 +12,7 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄"),
     ASH(HTMachineTier.BASIC, "Ash", "灰"),
     NITER(HTMachineTier.PRIMITIVE, "Niter", "硝石"),
-    PROTEIN(HTMachineTier.PRIMITIVE, "Protein", "タンパク質"),
     SULFUR(HTMachineTier.BASIC, "Sulfur", "硫黄"),
-    // WOOD(HTMachineTier.PRIMITIVE, "Wooden", "木"),
 
     // tier2
     RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
@@ -30,6 +28,7 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     PE(HTMachineTier.ADVANCED, "PE", "ポリエチレン"),
     PVC(HTMachineTier.ADVANCED, "PVC", "塩化ビニル"),
     PTFE(HTMachineTier.ADVANCED, "PTFE", "テフロン"),
+
     ;
 
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }

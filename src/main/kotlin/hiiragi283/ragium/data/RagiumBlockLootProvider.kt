@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
@@ -40,6 +39,8 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumContents.RAGINITE_ORE, ::dropRaginiteOre)
         addDrop(RagiumContents.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
 
+        addDrop(RagiumContents.SPONGE_CAKE)
+
         addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumContents.MANUAL_GRINDER)
         addDrop(RagiumContents.SHAFT)
@@ -60,7 +61,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         HTMachineBlockRegistry.forEachBlock(::addDrop)
 
-        RagiElement.entries.forEach { element: RagiElement ->
+        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
             addDrop(element.buddingBlock)
             // cluster block

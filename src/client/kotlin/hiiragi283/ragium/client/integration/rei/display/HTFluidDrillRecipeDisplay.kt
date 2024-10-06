@@ -8,11 +8,9 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.util.Identifier
 
-class HTFluidDrillRecipeDisplay(recipe: HTFluidDrillRecipe, id: Identifier) :
-    HTDisplay<HTFluidDrillRecipe>(recipe, id) {
-
+class HTFluidDrillRecipeDisplay(recipe: HTFluidDrillRecipe, id: Identifier) : HTDisplay<HTFluidDrillRecipe>(recipe, id) {
     constructor(entry: RecipeEntry<HTFluidDrillRecipe>) : this(entry.value, entry.id)
-    
+
     override fun getInputEntries(): List<EntryIngredient> = listOf()
 
     override fun getOutputEntries(): List<EntryIngredient> = listOf(recipe.result.entryIngredient)

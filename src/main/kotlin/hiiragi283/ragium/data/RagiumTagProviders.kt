@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -44,9 +43,17 @@ object RagiumTagProviders {
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.RAGINITE_ORE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.POROUS_NETHERRACK)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.OBLIVION_CLUSTER)
 
+            add(BlockTags.HOE_MINEABLE, RagiumContents.SPONGE_CAKE)
+
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BASIC_CASING)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ADVANCED_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DATA_DRIVE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DRIVE_SCANNER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
 
@@ -113,7 +120,7 @@ object RagiumTagProviders {
 
             RagiumContents.StorageBlocks.entries.forEach { add(ConventionalItemTags.STORAGE_BLOCKS, it) }
             RagiumContents.Dusts.entries.forEach { add(ConventionalItemTags.DUSTS, it) }
-            RagiElement.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
+            RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             RagiumContents.Ingots.entries.forEach { add(ConventionalItemTags.INGOTS, it) }
             RagiumContents.Plates.entries.forEach { add(RagiumItemTags.PLATES, it) }
             // ragium

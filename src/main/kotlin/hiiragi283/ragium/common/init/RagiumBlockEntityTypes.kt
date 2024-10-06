@@ -86,7 +86,7 @@ object RagiumBlockEntityTypes {
         addMachineBlocks(RagiumMachineTypes.DISTILLATION_TOWER, DISTILLATION_TOWER)
         addMachineBlocks(RagiumMachineTypes.FLUID_DRILL, FLUID_DRILL)
         addMachineBlocks(RagiumMachineTypes.SAW_MILL, SAW_MILL)
-        
+
         RagiumMachineTypes.Generator.entries.forEach { generator: RagiumMachineTypes.Generator ->
             addMachineBlocks(generator, GENERATOR_MACHINE)
         }

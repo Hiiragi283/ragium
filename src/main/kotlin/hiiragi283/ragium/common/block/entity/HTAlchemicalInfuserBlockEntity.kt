@@ -128,7 +128,8 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         builder.add(-2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
         builder.add(2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
         builder.add(2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        builder.addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        builder
+            .addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
             .addLayer(-1..1, -1, 2..2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
             .addLayer(-2..-2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
             .addLayer(2..2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))

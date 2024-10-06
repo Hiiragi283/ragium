@@ -100,7 +100,7 @@ object RagiumModels {
                     TextureKey.BOTTOM,
                     when (tier) {
                         HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
-                        HTMachineTier.BASIC -> Identifier.of("block/smithing_table_top")
+                        HTMachineTier.BASIC -> Identifier.of("block/blast_furnace_top")
                         HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
                     },
                 )

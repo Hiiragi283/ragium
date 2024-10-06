@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -54,6 +53,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingRecipes(exporter: RecipeExporter) {
         craftingAlternatives(exporter)
         craftingArmors(exporter)
+        craftingFoods(exporter)
         craftingIngredients(exporter)
         craftingMachines(exporter)
         craftingTools(exporter)
@@ -171,6 +171,24 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumItemTags.STEEL_INGOTS)
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter)
+    }
+
+    //    Crafting - Foods    //
+
+    private fun craftingFoods(exporter: RecipeExporter) {
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.SWEET_BERRIES_CAKE)
+            .patterns(
+                "ABA",
+                "CDC",
+                "EEE",
+            ).input('A', RagiumContents.Fluids.MILK)
+            .input('B', Items.SWEET_BERRIES)
+            .input('C', RagiumContents.CHOCOLATE)
+            .input('D', Items.EGG)
+            .input('E', RagiumContents.SPONGE_CAKE)
+            .unlockedBy(RagiumContents.SPONGE_CAKE)
             .offerTo(exporter)
     }
 
@@ -345,11 +363,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.BASIC_CASING, 3)
             .patterns(
-                "AAA",
+                " A ",
                 "ABA",
-                "AAA",
+                " A ",
             ).input('A', RagiumItemTags.IRON_PLATES)
-            .input('B', RagiumContents.Dusts.RAGINITE)
+            .input('B', Items.SMOOTH_STONE)
             .unlockedBy(RagiumContents.Dusts.RAGINITE)
             .offerTo(exporter)
 
@@ -436,11 +454,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         createMachine(
             exporter,
-            RagiumMachineTypes.Processor.CENTRIFUGE,
-            Items.COPPER_GRATE, // TODO
-        )
-        createMachine(
-            exporter,
             RagiumMachineTypes.Processor.CHEMICAL_REACTOR,
             Items.GLASS,
         )
@@ -490,6 +503,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumMachineTypes.DISTILLATION_TOWER,
             RagiumContents.EMPTY_FLUID_CUBE,
+        )
+        createMachine(
+            exporter,
+            RagiumMachineTypes.SAW_MILL,
+            Items.STONECUTTER,
         )
     }
 
@@ -582,11 +600,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " A ",
                 "DEB",
                 " C ",
-            ).input('A', RagiElement.RAGIUM.dustItem)
-            .input('B', RagiElement.RIGIUM.dustItem)
-            .input('C', RagiElement.RUGIUM.dustItem)
-            .input('D', RagiElement.REGIUM.dustItem)
-            .input('E', RagiElement.ROGIUM.dustItem)
+            ).input('A', RagiumContents.Element.RAGIUM.dustItem)
+            .input('B', RagiumContents.Element.RIGIUM.dustItem)
+            .input('C', RagiumContents.Element.RUGIUM.dustItem)
+            .input('D', RagiumContents.Element.REGIUM.dustItem)
+            .input('E', RagiumContents.Element.ROGIUM.dustItem)
             .unlockedBy(Items.NETHER_STAR)
             .offerTo(exporter)
 

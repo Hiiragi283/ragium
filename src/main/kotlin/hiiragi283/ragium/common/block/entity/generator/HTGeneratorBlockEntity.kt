@@ -21,7 +21,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTGeneratorBlockEntity : HTMachineBlockEntityBase, SidedStorageBlockEntity {
+abstract class HTGeneratorBlockEntity :
+    HTMachineBlockEntityBase,
+    SidedStorageBlockEntity {
     constructor(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : super(type, pos, state)
 
     constructor(
@@ -77,9 +79,9 @@ abstract class HTGeneratorBlockEntity : HTMachineBlockEntityBase, SidedStorageBl
     class Simple : HTGeneratorBlockEntity {
         @Deprecated("")
         constructor(pos: BlockPos, state: BlockState) :
-                super(RagiumBlockEntityTypes.GENERATOR_MACHINE, pos, state)
+            super(RagiumBlockEntityTypes.GENERATOR_MACHINE, pos, state)
 
         constructor(pos: BlockPos, state: BlockState, machineType: HTMachineType, tier: HTMachineTier) :
-                super(RagiumBlockEntityTypes.GENERATOR_MACHINE, pos, state, machineType, tier)
+            super(RagiumBlockEntityTypes.GENERATOR_MACHINE, pos, state, machineType, tier)
     }
 }

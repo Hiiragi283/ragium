@@ -97,7 +97,7 @@ class HTMachineRecipe(
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MACHINE
 
     //    Serializer    //
-    
+
     data object Serializer : RecipeSerializer<HTMachineRecipe> {
         override fun codec(): MapCodec<HTMachineRecipe> = CODEC
 

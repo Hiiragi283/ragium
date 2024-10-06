@@ -9,7 +9,6 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         val pack: FabricDataGenerator.Pack = fabricDataGenerator.createPack()
         // server
         pack.addProvider(::RagiumAdvancementProvider)
-        pack.addProvider(::RagiumFluidPumpEntryProvider)
         pack.addProvider(::RagiumBlockLootProvider)
         pack.addProvider(::RagiumEntityLootProvider)
         pack.addProvider(::RagiumVanillaRecipeProvider)

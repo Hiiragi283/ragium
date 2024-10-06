@@ -12,7 +12,7 @@ import net.minecraft.registry.Registry
 object RagiumRecipeSerializers {
     @JvmField
     val FLUID_DRILL: HTFluidDrillRecipe.Serializer = register("fluid_drill", HTFluidDrillRecipe.Serializer)
-    
+
     @JvmField
     val MACHINE: HTMachineRecipe.Serializer = register("machine", HTMachineRecipe.Serializer)
 

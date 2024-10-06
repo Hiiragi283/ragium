@@ -3,7 +3,6 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -25,10 +24,6 @@ object RagiumLangProviders {
         pack.addProvider(RagiumLangProviders::JapaneseLang)
     }
 
-    fun TranslationBuilder.add(element: RagiElement, value: String) {
-        add(element.translationKey, value)
-    }
-
     fun TranslationBuilder.add(tier: HTMachineTier, name: String, prefix: String) {
         add(tier.translationKey, name)
         add(tier.prefixKey, prefix)
@@ -47,7 +42,7 @@ object RagiumLangProviders {
             addAll(RagiumContents.Coils.entries)
         }.forEach { block: HTBlockContent -> builder.add(block.block, block.getTranslation(type)) }
         // elements
-        RagiElement.entries.forEach { element: RagiElement ->
+        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             val translatedName: String = element.getTranslation(type)
             builder.add(element.translationKey, translatedName)
             when (type) {
@@ -147,8 +142,11 @@ object RagiumLangProviders {
             builder.add(RagiumContents.OBLIVION_CRYSTAL, "Oblivion Crystal")
 
             builder.add(RagiumContents.BEE_WAX, "Bee Wax")
+            builder.add(RagiumContents.BUTTER, "Butter")
+            builder.add(RagiumContents.CHOCOLATE, "Chocolate")
             builder.add(RagiumContents.FLOUR, "Flour")
             builder.add(RagiumContents.DOUGH, "Dough")
+            builder.add(RagiumContents.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumContents.PULP, "Pulp")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
@@ -174,7 +172,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "Alloy Furnace")
             builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "Assembler")
-            builder.add(RagiumMachineTypes.Processor.CENTRIFUGE, "Centrifuge")
             builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "Chemical Reactor")
             builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "Compressor")
             builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "Decompressor")
@@ -188,6 +185,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "Large Blast Furnace")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "Distillation Tower")
             builder.add(RagiumMachineTypes.FLUID_DRILL, "Fluid Drill")
+            builder.add(RagiumMachineTypes.SAW_MILL, "Saw Mill")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
@@ -250,8 +248,11 @@ object RagiumLangProviders {
             builder.add(RagiumContents.OBLIVION_CRYSTAL, "忘却の結晶")
 
             builder.add(RagiumContents.BEE_WAX, "蜜蠟")
+            builder.add(RagiumContents.BUTTER, "バター")
+            builder.add(RagiumContents.CHOCOLATE, "チョコレート")
             builder.add(RagiumContents.FLOUR, "小麦粉")
             builder.add(RagiumContents.DOUGH, "生地")
+            builder.add(RagiumContents.MINCED_MEAT, "ひき肉")
             builder.add(RagiumContents.PULP, "パルプ")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
@@ -277,7 +278,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "合金かまど")
             builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "組立機")
-            builder.add(RagiumMachineTypes.Processor.CENTRIFUGE, "遠心分離機")
             builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "化学反応槽")
             builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "圧縮機")
             builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "減圧機")
@@ -291,6 +291,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔")
             builder.add(RagiumMachineTypes.FLUID_DRILL, "液体ドリル")
+            builder.add(RagiumMachineTypes.SAW_MILL, "製材機")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")

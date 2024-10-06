@@ -102,6 +102,5 @@ class HTHeatGeneratorBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachi
                 AbstractFurnaceBlockEntity.canUseAsFuel(stack)
             }
             true
-        }
-        .buildSided()
+        }.buildSided()
 }

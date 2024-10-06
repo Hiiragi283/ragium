@@ -1,27 +1,41 @@
 package hiiragi283.ragium.common
 
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.*
 import hiiragi283.ragium.common.util.*
+import io.netty.buffer.ByteBuf
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.component.type.AttributeModifiersComponent
+import net.minecraft.component.type.FoodComponent
+import net.minecraft.component.type.FoodComponents
+import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.*
+import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
+import net.minecraft.util.StringIdentifiable
+import net.minecraft.util.function.ValueLists
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import net.minecraft.world.biome.Biome
 import java.awt.Color
+import java.util.function.IntFunction
 import kotlin.jvm.optionals.getOrNull
 
 object RagiumContents {
@@ -39,7 +53,10 @@ object RagiumContents {
     val POROUS_NETHERRACK: Block =
         registerBlock(
             "porous_netherrack",
-            HTSpongeBlock(Blocks.MAGMA_BLOCK::getDefaultState) { world: World, pos: BlockPos ->
+            HTSpongeBlock(
+                blockSettings(Blocks.NETHERRACK),
+                Blocks.MAGMA_BLOCK::getDefaultState,
+            ) { world: World, pos: BlockPos ->
                 world.getFluidState(pos).isIn(FluidTags.LAVA)
             },
         )
@@ -48,7 +65,10 @@ object RagiumContents {
     val SNOW_SPONGE: Block =
         registerBlock(
             "snow_sponge",
-            HTSpongeBlock(Blocks.SNOW_BLOCK::getDefaultState) { world: World, pos: BlockPos ->
+            HTSpongeBlock(
+                blockSettings(Blocks.SNOW_BLOCK),
+                Blocks.SNOW_BLOCK::getDefaultState,
+            ) { world: World, pos: BlockPos ->
                 world.getBlockState(pos).isIn(BlockTags.SNOW)
             },
         )
@@ -71,7 +91,18 @@ object RagiumContents {
             ),
         )
 
-    //    Blocks - Plants    //
+    //    Blocks - Foods    //
+
+    @JvmField
+    val SPONGE_CAKE: Block =
+        registerBlock(
+            "sponge_cake",
+            HTDecreaseFallingBlock(0.2f, blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL)),
+        )
+
+    @JvmField
+    val SWEET_BERRIES_CAKE: Block =
+        registerBlock("sweet_berries_cake", CakeBlock(blockSettings(Blocks.CAKE)))
 
     //    Blocks - Utilities    //
 
@@ -190,6 +221,41 @@ object RagiumContents {
         ),
     )
 
+    //    Items - Foods    //
+
+    @JvmField
+    val BEE_WAX: Item = registerItem("bee_wax")
+
+    @JvmField
+    val BUTTER: Item = registerFoodItem("butter", FoodComponents.APPLE)
+
+    @JvmField
+    val CHOCOLATE: Item = registerFoodItem(
+        "chocolate",
+        FoodComponent
+            .Builder()
+            .nutrition(3)
+            .saturationModifier(0.3f)
+            .statusEffect(
+                StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
+                1.0f,
+            ).snack()
+            .alwaysEdible()
+            .build(),
+    )
+
+    @JvmField
+    val FLOUR: Item = registerItem("flour")
+
+    @JvmField
+    val DOUGH: Item = registerItem("dough")
+
+    @JvmField
+    val MINCED_MEAT: Item = registerItem("minced_meat")
+
+    @JvmField
+    val PULP: Item = registerItem("pulp")
+
     //    Items - Ingredient    //
 
     @JvmField
@@ -215,20 +281,6 @@ object RagiumContents {
 
     @JvmField
     val OBLIVION_CRYSTAL: Item = registerItem("oblivion_crystal", itemSettings().rarity(Rarity.EPIC))
-
-    //    Items - Organics    //
-
-    @JvmField
-    val BEE_WAX: Item = registerItem("bee_wax")
-
-    @JvmField
-    val FLOUR: Item = registerItem("flour")
-
-    @JvmField
-    val DOUGH: Item = registerItem("dough")
-
-    @JvmField
-    val PULP: Item = registerItem("pulp")
 
     @JvmField
     val OBLIVION_CUBE_SPAWN_EGG: Item = registerItem(
@@ -302,6 +354,9 @@ object RagiumContents {
 
     @JvmStatic
     private fun registerItem(item: HTItemContent): Item = registerItem(item.id.path, item.item)
+
+    @JvmStatic
+    private fun registerFoodItem(name: String, component: FoodComponent): Item = registerItem(name, Item(itemSettings().food(component)))
 
     @JvmStatic
     private fun registerBlockItem(
@@ -380,6 +435,9 @@ object RagiumContents {
         registerBlockItem(POROUS_NETHERRACK)
         registerBlockItem(SNOW_SPONGE)
         registerBlockItem(OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
+
+        registerBlockItem(SPONGE_CAKE)
+        registerBlockItem(SWEET_BERRIES_CAKE)
 
         registerBlockItem(CREATIVE_SOURCE)
         registerBlockItem(BASIC_CASING)
@@ -517,9 +575,9 @@ object RagiumContents {
         RAW_RAGINITE(RagiumMaterials.RAW_RAGINITE),
         RAGINITE(RagiumMaterials.RAGINITE),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
+
         ASH(RagiumMaterials.ASH),
         NITER(RagiumMaterials.NITER),
-        PROTEIN(RagiumMaterials.PROTEIN),
         SULFUR(RagiumMaterials.SULFUR),
         ;
 
@@ -589,9 +647,64 @@ object RagiumContents {
 
     //    Elements    //
 
+    enum class Element(
+        private val suitableBiome: TagKey<Biome>,
+        override val enName: String,
+        override val jaName: String,
+        mapColor: MapColor,
+    ) : HTTranslationProvider,
+        StringIdentifiable {
+        RAGIUM(ConventionalBiomeTags.IS_NETHER, "Ragium", "ラギウム", MapColor.RED),
+        RIGIUM(ConventionalBiomeTags.IS_WASTELAND, "Rigium", "リギウム", MapColor.YELLOW),
+        RUGIUM(ConventionalBiomeTags.IS_JUNGLE, "Rugium", "ルギウム", MapColor.GREEN),
+        REGIUM(ConventionalBiomeTags.IS_OCEAN, "Regium", "レギウム", MapColor.BLUE),
+        ROGIUM(ConventionalBiomeTags.IS_END, "Rogium", "ロギウム", MapColor.PURPLE),
+        ;
+
+        companion object {
+            @JvmField
+            val CODEC: Codec<Element> = StringIdentifiable.createCodec(Element::values)
+
+            @JvmField
+            val INT_FUNCTION: IntFunction<Element> =
+                ValueLists.createIdToValueFunction(
+                    Element::ordinal,
+                    Element.entries.toTypedArray(),
+                    ValueLists.OutOfBoundsHandling.WRAP,
+                )
+
+            @JvmField
+            val PACKET_CODEC: PacketCodec<ByteBuf, Element> =
+                PacketCodecs.indexed(INT_FUNCTION, Element::ordinal)
+        }
+
+        private val settings: AbstractBlock.Settings =
+            blockSettings().mapColor(mapColor).strength(1.5f).sounds(BlockSoundGroup.AMETHYST_BLOCK)
+        val buddingBlock: HTBuddingCrystalBlock = HTBuddingCrystalBlock(this, settings.ticksRandomly().requiresTool())
+        val clusterBlock: AmethystClusterBlock = AmethystClusterBlock(
+            7.0f,
+            3.0f,
+            settings
+                .solid()
+                .nonOpaque()
+                .luminance { 5 }
+                .pistonBehavior(PistonBehavior.DESTROY),
+        )
+        val dustItem = Item(itemSettings().element(this))
+
+        val translationKey = "element.${asString()}"
+        val text: Text = Text.translatable(translationKey)
+
+        fun isSuitableBiome(world: World, pos: BlockPos): Boolean = world.getBiome(pos).isIn(suitableBiome)
+
+        //    StringIdentifiable    //
+
+        override fun asString(): String = name.lowercase()
+    }
+
     @JvmStatic
     private fun initElements() {
-        RagiElement.entries.forEach { element: RagiElement ->
+        Element.entries.forEach { element: Element ->
             // Budding Block
             registerBlock("budding_${element.asString()}", element.buddingBlock)
             registerBlockItem(element.buddingBlock)
@@ -621,6 +734,9 @@ object RagiumContents {
         TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
         SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
         GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
+
+        // Foods
+        BATTER(Color(0xffcc66), "Batter", "バッター液"),
         SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー"),
 
         // Natural Resources

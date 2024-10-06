@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
-import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.component.ComponentType
 import net.minecraft.entity.EntityType
 import net.minecraft.network.RegistryByteBuf
@@ -17,8 +17,8 @@ import net.minecraft.registry.Registry
 
 object RagiumComponentTypes {
     @JvmField
-    val ELEMENT: ComponentType<RagiElement> =
-        register("element", RagiElement.CODEC, RagiElement.PACKET_CODEC)
+    val ELEMENT: ComponentType<RagiumContents.Element> =
+        register("element", RagiumContents.Element.CODEC, RagiumContents.Element.PACKET_CODEC)
 
     @JvmField
     val ENTITY_TYPE: ComponentType<EntityType<*>> =

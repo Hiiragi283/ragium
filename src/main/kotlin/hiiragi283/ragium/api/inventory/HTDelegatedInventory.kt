@@ -6,8 +6,7 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
 
-interface HTDelegatedInventory<T: HTSimpleInventory> : Inventory {
-
+interface HTDelegatedInventory<T : HTSimpleInventory> : Inventory {
     val parent: T
 
     override fun clear() {
@@ -33,14 +32,16 @@ interface HTDelegatedInventory<T: HTSimpleInventory> : Inventory {
     }
 
     override fun canPlayerUse(player: PlayerEntity): Boolean = parent.canPlayerUse(player)
-    
+
     //    Simple    //
-    
+
     interface Simple : HTDelegatedInventory<HTSimpleInventory>
-    
+
     //    Sided    //
-    
-    interface Sided : HTDelegatedInventory<HTSidedInventory>, SidedInventory {
+
+    interface Sided :
+        HTDelegatedInventory<HTSidedInventory>,
+        SidedInventory {
         override fun getAvailableSlots(side: Direction): IntArray = parent.getAvailableSlots(side)
 
         override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean = parent.canInsert(slot, stack, dir)

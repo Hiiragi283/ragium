@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:milk_fluid_cube"
+    },
+    "B": {
+      "item": "minecraft:sweet_berries"
+    },
+    "C": {
+      "item": "ragium:chocolate"
+    },
+    "D": {
+      "item": "minecraft:egg"
+    },
+    "E": {
+      "item": "ragium:sponge_cake"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:sweet_berries_cake"
+  }
+}

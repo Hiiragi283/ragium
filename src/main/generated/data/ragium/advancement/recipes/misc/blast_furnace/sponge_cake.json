@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:blast_furnace/sponge_block"
+        "recipe": "ragium:blast_furnace/sponge_cake"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:blast_furnace/sponge_block"
+      "ragium:blast_furnace/sponge_cake"
     ]
   }
 }

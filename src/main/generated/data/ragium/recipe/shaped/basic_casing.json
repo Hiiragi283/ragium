@@ -6,13 +6,13 @@
       "tag": "c:plates/iron"
     },
     "B": {
-      "item": "ragium:raginite_dust"
+      "item": "minecraft:smooth_stone"
     }
   },
   "pattern": [
-    "AAA",
+    " A ",
     "ABA",
-    "AAA"
+    " A "
   ],
   "result": {
     "count": 3,

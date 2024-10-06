@@ -53,10 +53,12 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         THERMAL(FluidTags.LAVA) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = when {
                 world.getBiome(pos).isIn(BiomeTags.IS_NETHER) -> true
-                else -> pos.getAroundPos {
-                    val fluidState: FluidState = world.getFluidState(it)
-                    fluidState.isIn(FluidTags.LAVA) && fluidState.isStill
-                }.size >= 4
+                else ->
+                    pos
+                        .getAroundPos {
+                            val fluidState: FluidState = world.getFluidState(it)
+                            fluidState.isIn(FluidTags.LAVA) && fluidState.isStill
+                        }.size >= 4
             }
         },
         WATER(FluidTags.WATER) {

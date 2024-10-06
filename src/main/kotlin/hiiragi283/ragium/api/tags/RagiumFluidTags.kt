@@ -13,8 +13,7 @@ object RagiumFluidTags {
     val COMBUSTION_FUEL: TagKey<Fluid> = create(RagiumAPI.MOD_ID, "combustion_fuel")
 
     @JvmStatic
-    fun create(namespace: String, path: String): TagKey<Fluid> =
-        TagKey.of(RegistryKeys.FLUID, Identifier.of(namespace, path))
+    fun create(namespace: String, path: String): TagKey<Fluid> = TagKey.of(RegistryKeys.FLUID, Identifier.of(namespace, path))
 
     @JvmStatic
     fun create(path: String): TagKey<Fluid> = create(TagUtil.C_TAG_NAMESPACE, path)

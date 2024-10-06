@@ -15,7 +15,7 @@
   "machine_type": "ragium:blast_furnace",
   "outputs": [
     {
-      "item": "ragium:sponge_block"
+      "item": "ragium:sponge_cake"
     }
   ]
 }

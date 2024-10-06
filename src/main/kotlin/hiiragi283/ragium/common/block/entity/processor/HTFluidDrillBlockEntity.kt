@@ -36,9 +36,8 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachineT
     ): ActionResult = onUseController(state, world, pos, player)
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        
     }
-    
+
     override fun onValid(
         state: BlockState,
         world: World,

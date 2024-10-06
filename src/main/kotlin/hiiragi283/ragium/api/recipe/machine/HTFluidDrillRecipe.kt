@@ -17,17 +17,15 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 
-class HTFluidDrillRecipe(
-    val biomeKey: RegistryKey<Biome>,
-    val result: HTRecipeResult
-) : HTRecipeBase<HTFluidDrillRecipe.Input> {
+class HTFluidDrillRecipe(val biomeKey: RegistryKey<Biome>, val result: HTRecipeResult) : HTRecipeBase<HTFluidDrillRecipe.Input> {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTFluidDrillRecipe> = RecordCodecBuilder.mapCodec { instance ->
-            instance.group(
-                RegistryKey.createCodec(RegistryKeys.BIOME).fieldOf("biome").forGetter(HTFluidDrillRecipe::biomeKey),
-                HTRecipeResult.CODEC.fieldOf("result").forGetter(HTFluidDrillRecipe::result)
-            ).apply(instance, ::HTFluidDrillRecipe)
+            instance
+                .group(
+                    RegistryKey.createCodec(RegistryKeys.BIOME).fieldOf("biome").forGetter(HTFluidDrillRecipe::biomeKey),
+                    HTRecipeResult.CODEC.fieldOf("result").forGetter(HTFluidDrillRecipe::result),
+                ).apply(instance, ::HTFluidDrillRecipe)
         }
 
         @JvmField
@@ -36,7 +34,7 @@ class HTFluidDrillRecipe(
             HTFluidDrillRecipe::biomeKey,
             HTRecipeResult.PACKET_CODEC,
             HTFluidDrillRecipe::result,
-            ::HTFluidDrillRecipe
+            ::HTFluidDrillRecipe,
         )
     }
 
@@ -64,5 +62,4 @@ class HTFluidDrillRecipe(
 
         override fun getSize(): Int = 0
     }
-
 }

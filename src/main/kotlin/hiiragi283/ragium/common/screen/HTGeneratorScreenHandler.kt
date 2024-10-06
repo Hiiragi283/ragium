@@ -11,11 +11,8 @@ import net.minecraft.block.entity.AbstractFurnaceBlockEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTGeneratorScreenHandler(
-    syncId: Int,
-    playerInv: PlayerInventory,
-    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY
-) : SyncedGuiDescription(
+class HTGeneratorScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
+    SyncedGuiDescription(
         RagiumScreenHandlerTypes.GENERATOR,
         syncId,
         playerInv,

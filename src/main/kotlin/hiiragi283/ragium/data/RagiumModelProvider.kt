@@ -3,7 +3,6 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumModels
@@ -104,14 +103,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             accept(VariantsBlockStateSupplier.create(it, buildModelVariant(TextureMap.getId(it))))
         }
         registerSimple(RagiumContents.NETWORK_INTERFACE)
-        registerSimple(RagiumContents.BASIC_CASING, Identifier.of("block/smithing_table_top"))
+        registerSimple(RagiumContents.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
         registerSimple(RagiumContents.ADVANCED_CASING)
         register(RagiumContents.POROUS_NETHERRACK) {
             generator.registerSingleton(
                 it,
-                RagiumModels.createLayered(Identifier.of("block/netherrack"), TextureMap.getId(it)),
+                RagiumModels.createLayered(Identifier.of("block/netherrack"), Identifier.of("block/destroy_stage_5")),
             )
         }
+
+        registerSimple(RagiumContents.SPONGE_CAKE)
 
         register(RagiumContents.INFESTING) {
             accept(
@@ -168,7 +169,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // elements
-        RagiElement.entries.forEach { element: RagiElement ->
+        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
             registerSimple(element.buddingBlock)
             // cluster block
@@ -197,9 +198,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.STEEL_AXE)
         register(RagiumContents.STEEL_HOE)
         register(RagiumContents.FORGE_HAMMER)
-        register(RagiumContents.BACKPACK)
-        register(RagiumContents.LARGE_BACKPACK)
-        register(RagiumContents.ENDER_BACKPACK)
 
         register(RagiumContents.STEEL_HELMET)
         register(RagiumContents.STEEL_CHESTPLATE)
@@ -224,8 +222,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumContents.OBLIVION_CLUSTER))
 
         register(RagiumContents.BEE_WAX)
+        register(RagiumContents.BUTTER)
+        register(RagiumContents.CHOCOLATE)
         register(RagiumContents.FLOUR)
         register(RagiumContents.DOUGH)
+        register(RagiumContents.MINCED_MEAT)
         register(RagiumContents.PULP)
         // circuits
         RagiumContents.Circuit.entries
@@ -238,7 +239,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Plates.entries)
         }.map(HTItemContent::asItem).forEach(::register)
         // elements
-        RagiElement.entries.forEach { element: RagiElement ->
+        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))
             register(element.dustItem)
         }

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.HTAdvancementRegister
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -336,19 +335,6 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("精製ラギスチール筐体を作る")
             .build()
 
-        val centrifuge: AdvancementEntry = register
-            .createChild(
-                "tier3/centrifuge",
-                refinedRagiSteelHull,
-                RagiumMachineTypes.Processor.CENTRIFUGE.getBlockOrThrow(HTMachineTier.BASIC),
-            ) {
-                hasItems(RagiumMachineTypes.Processor.CENTRIFUGE.getBlockOrThrow(HTMachineTier.BASIC))
-            }.putEnglish("Typhoon the Racoon")
-            .putEnglishDesc("Craft Centrifuge")
-            .putJapanese("あらいぐま台風")
-            .putJapaneseDesc("遠心分離機を作る")
-            .build()
-
         val chemicalReactor: AdvancementEntry = register
             .createChild(
                 "tier3/chemical_reactor",
@@ -460,12 +446,12 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier4/ragium",
                 root,
-                RagiElement.RAGIUM.dustItem,
+                RagiumContents.Element.RAGIUM.dustItem,
             ) {
-                hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.RAGIUM.enName)
+                hasItems(RagiumContents.Element.RAGIUM.dustItem)
+            }.putEnglish(RagiumContents.Element.RAGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.RAGIUM.jaName)
+            .putJapanese(RagiumContents.Element.RAGIUM.jaName)
             .putJapaneseDesc("ネザーまたは燃焼室の上で成長する")
             .build()
 
@@ -473,12 +459,12 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier4/rigium",
                 root,
-                RagiElement.RIGIUM.dustItem,
+                RagiumContents.Element.RIGIUM.dustItem,
             ) {
-                hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.RIGIUM.enName)
+                hasItems(RagiumContents.Element.RAGIUM.dustItem)
+            }.putEnglish(RagiumContents.Element.RIGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.RIGIUM.jaName)
+            .putJapanese(RagiumContents.Element.RIGIUM.jaName)
             .putJapaneseDesc("荒地またはy=192より高い場所で成長する")
             .build()
 
@@ -486,12 +472,12 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier4/rugium",
                 root,
-                RagiElement.RUGIUM.dustItem,
+                RagiumContents.Element.RUGIUM.dustItem,
             ) {
-                hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.RUGIUM.enName)
+                hasItems(RagiumContents.Element.RAGIUM.dustItem)
+            }.putEnglish(RagiumContents.Element.RUGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.RUGIUM.jaName)
+            .putJapanese(RagiumContents.Element.RUGIUM.jaName)
             .putJapaneseDesc("ジャングルまたは---で成長する")
             .build()
 
@@ -499,12 +485,12 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier4/regium",
                 root,
-                RagiElement.REGIUM.dustItem,
+                RagiumContents.Element.REGIUM.dustItem,
             ) {
-                hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.REGIUM.enName)
+                hasItems(RagiumContents.Element.RAGIUM.dustItem)
+            }.putEnglish(RagiumContents.Element.REGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.REGIUM.jaName)
+            .putJapanese(RagiumContents.Element.REGIUM.jaName)
             .putJapaneseDesc("海洋または---で成長する")
             .build()
 
@@ -512,12 +498,12 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier4/rogium",
                 root,
-                RagiElement.ROGIUM.dustItem,
+                RagiumContents.Element.ROGIUM.dustItem,
             ) {
-                hasItems(RagiElement.RAGIUM.dustItem)
-            }.putEnglish(RagiElement.ROGIUM.enName)
+                hasItems(RagiumContents.Element.RAGIUM.dustItem)
+            }.putEnglish(RagiumContents.Element.ROGIUM.enName)
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiElement.ROGIUM.jaName)
+            .putJapanese(RagiumContents.Element.ROGIUM.jaName)
             .putJapaneseDesc("エンドまたは---で成長する")
             .build()
     }
