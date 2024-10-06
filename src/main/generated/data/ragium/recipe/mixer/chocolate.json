@@ -1,0 +1,29 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:cocoa_beans"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:sugar"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:milk_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:mixer",
+  "outputs": [
+    {
+      "item": "ragium:chocolate"
+    },
+    {
+      "item": "ragium:empty_fluid_cube"
+    }
+  ]
+}

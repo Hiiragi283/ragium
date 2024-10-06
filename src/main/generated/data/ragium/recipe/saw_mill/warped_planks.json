@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "minecraft:warped_stems"
+      }
+    }
+  ],
+  "machine_type": "ragium:saw_mill",
+  "outputs": [
+    {
+      "count": 6,
+      "item": "minecraft:warped_planks"
+    },
+    {
+      "item": "ragium:pulp"
+    }
+  ]
+}

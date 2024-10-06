@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
-import hiiragi283.ragium.common.screen.HTMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
+import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.resource.featuretoggle.FeatureFlags
@@ -11,8 +12,12 @@ import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
     @JvmField
-    val MACHINE: ScreenHandlerType<HTMachineScreenHandler> =
-        register("machine", ::HTMachineScreenHandler)
+    val GENERATOR: ScreenHandlerType<HTGeneratorScreenHandler> =
+        register("generator", ::HTGeneratorScreenHandler)
+
+    @JvmField
+    val PROCESSOR: ScreenHandlerType<HTProcessorScreenHandler> =
+        register("processor", ::HTProcessorScreenHandler)
 
     @JvmField
     val ALCHEMICAL_INFUSER: ScreenHandlerType<HTAlchemicalInfuserHandler> =

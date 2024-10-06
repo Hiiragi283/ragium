@@ -29,7 +29,7 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER, pos, state),
-    HTDelegatedInventory,
+    HTDelegatedInventory.Simple,
     HTMultiblockController,
     NamedScreenHandlerFactory {
     override fun onUse(
@@ -93,13 +93,13 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory = HTSidedStorageBuilder(5)
+    override val parent: HTSimpleInventory = HTSidedStorageBuilder(5)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(3, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSided()
+        .buildSimple()
 
     override fun markDirty() {
         super<HTBlockEntityBase>.markDirty()
@@ -117,32 +117,33 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
     }
 
-    override fun buildMultiblock(builder: HTMultiblockBuilder): HTMultiblockBuilder = builder
+    override fun buildMultiblock(builder: HTMultiblockBuilder) {
         // tiles
-        .add(-2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        .add(-2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        .add(2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        .add(2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        builder.add(-2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        builder.add(-2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        builder.add(2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
+        builder.add(2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
         // slabs
-        .add(-2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .add(-2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .add(2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .add(2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(-1..1, -1, 2..2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(-2..-2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        .addLayer(2..2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        builder.add(-2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        builder.add(-2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        builder.add(2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        builder.add(2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+        builder.addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+            .addLayer(-1..1, -1, 2..2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+            .addLayer(-2..-2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
+            .addLayer(2..2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
         // obsidian
-        .add(-1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        .add(-1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        .add(1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        .add(1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        builder.add(-1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        builder.add(-1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        builder.add(1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
+        builder.add(1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
         // crying
-        .add(-1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        .add(0, -1, -1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        .add(0, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        .add(0, -1, 1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        .add(1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        builder.add(-1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        builder.add(0, -1, -1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        builder.add(0, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        builder.add(0, -1, 1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+        builder.add(1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
+    }
 
     //    NamedScreenHandlerFactory    //
 

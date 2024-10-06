@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_input0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:jungle_logs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:saw_mill/jungle_planks"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_input0"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:saw_mill/jungle_planks"
+    ]
+  }
+}

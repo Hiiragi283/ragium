@@ -1,12 +1,14 @@
 package hiiragi283.ragium.api.inventory
 
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
 
-interface HTDelegatedInventory : SidedInventory {
-    val parent: HTSidedInventory
+interface HTDelegatedInventory<T: HTSimpleInventory> : Inventory {
+
+    val parent: T
 
     override fun clear() {
         parent.clear()
@@ -31,10 +33,18 @@ interface HTDelegatedInventory : SidedInventory {
     }
 
     override fun canPlayerUse(player: PlayerEntity): Boolean = parent.canPlayerUse(player)
+    
+    //    Simple    //
+    
+    interface Simple : HTDelegatedInventory<HTSimpleInventory>
+    
+    //    Sided    //
+    
+    interface Sided : HTDelegatedInventory<HTSidedInventory>, SidedInventory {
+        override fun getAvailableSlots(side: Direction): IntArray = parent.getAvailableSlots(side)
 
-    override fun getAvailableSlots(side: Direction): IntArray = parent.getAvailableSlots(side)
+        override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean = parent.canInsert(slot, stack, dir)
 
-    override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean = parent.canInsert(slot, stack, dir)
-
-    override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean = parent.canExtract(slot, stack, dir)
+        override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean = parent.canExtract(slot, stack, dir)
+    }
 }

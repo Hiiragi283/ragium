@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.*
 import net.minecraft.fluid.Fluids
 import net.minecraft.server.world.ServerWorld
@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 
-class HTBuddingCrystalBlock(private val element: RagiElement, settings: Settings) : AmethystBlock(settings) {
+class HTBuddingCrystalBlock(private val element: RagiumContents.Element, settings: Settings) : AmethystBlock(settings) {
     override fun randomTick(
         state: BlockState,
         world: ServerWorld,

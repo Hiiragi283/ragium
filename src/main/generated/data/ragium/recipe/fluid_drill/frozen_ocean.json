@@ -1,0 +1,7 @@
+{
+  "type": "ragium:fluid_drill",
+  "biome": "minecraft:frozen_ocean",
+  "result": {
+    "item": "ragium:salt_water_fluid_cube"
+  }
+}

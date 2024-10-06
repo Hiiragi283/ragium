@@ -1,0 +1,7 @@
+{
+  "type": "ragium:fluid_drill",
+  "biome": "minecraft:nether_wastes",
+  "result": {
+    "item": "ragium:lava_fluid_cube"
+  }
+}

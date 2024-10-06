@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:batter_fluid_cube"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:butter"
+      }
+    }
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "outputs": [
+    {
+      "item": "ragium:sponge_block"
+    }
+  ]
+}

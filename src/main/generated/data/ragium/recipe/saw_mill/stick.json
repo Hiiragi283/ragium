@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "minecraft:planks"
+      }
+    }
+  ],
+  "machine_type": "ragium:saw_mill",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:stick"
+    }
+  ]
+}

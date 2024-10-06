@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 3,
+      "ingredient": {
+        "tag": "minecraft:wooden_fences"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "count": 5,
+      "item": "ragium:pulp"
+    }
+  ]
+}

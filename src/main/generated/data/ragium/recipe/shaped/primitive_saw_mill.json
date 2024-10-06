@@ -1,0 +1,36 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_alloy_ingot"
+    },
+    "B": {
+      "item": "minecraft:stonecutter"
+    },
+    "C": {
+      "item": "ragium:ragi_alloy_hull"
+    },
+    "D": {
+      "item": "minecraft:stonecutter"
+    },
+    "E": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:primitive_saw_mill"
+  }
+}

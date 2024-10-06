@@ -9,15 +9,20 @@ import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.dataDriveManager
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeEntry
+import net.minecraft.recipe.RecipeType
+import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-class HTMachineRecipeProcessor(val inventory: HTSimpleInventory) {
+class HTMachineRecipeProcessor<T: RecipeInput, U : HTRecipeBase<T>>(
+    private val inventory: HTSimpleInventory,
+    private val recipeType: RecipeType<U>,
+    private val inputFactory: (HTMachineType.Processor, HTMachineTier, HTSimpleInventory) -> T
+) {
     init {
         check(inventory.size() == 7)
     }
@@ -32,27 +37,17 @@ class HTMachineRecipeProcessor(val inventory: HTSimpleInventory) {
             .ifError { machineType.onFailed(world, pos, machineType, tier) }
             .ifSuccess { machineType.onSucceeded(world, pos, machineType, tier) }
     }
-
+    
     private fun processInternal(
         world: World,
         pos: BlockPos,
         machineType: HTMachineType.Processor,
         tier: HTMachineTier,
-    ): DataResult<HTRecipeBase<HTMachineRecipe.Input>> {
-        val processorType: HTMachineType.Processor = machineType.asProcessor() ?: return DataResult.error { "" }
-        val input: HTMachineRecipe.Input =
-            HTMachineRecipe.Input.create(
-                processorType,
-                tier,
-                inventory.getStack(0),
-                inventory.getStack(1),
-                inventory.getStack(2),
-                inventory.getStack(3),
-            )
-        val recipeEntry: RecipeEntry<HTMachineRecipe> = world.recipeManager
-            .getFirstMatch(RagiumRecipeTypes.MACHINE, input, world)
+    ): DataResult<U> {
+        val recipeEntry: RecipeEntry<U> = world.recipeManager
+            .getFirstMatch(recipeType, inputFactory(machineType, tier, inventory), world)
             .getOrNull() ?: return DataResult.error { "Could not find matching recipe!" }
-        val recipe: HTRecipeBase<HTMachineRecipe.Input> = recipeEntry.value
+        val recipe: U = recipeEntry.value
         val recipeId: Identifier = recipeEntry.id
         if (!canAcceptOutputs(recipe)) return DataResult.error { "Could not insert recipe outputs to slots!" }
         if (!machineType.match(world, pos, machineType, tier)) return DataResult.error { "Not matching required condition!" }
@@ -70,7 +65,7 @@ class HTMachineRecipeProcessor(val inventory: HTSimpleInventory) {
         return DataResult.success(recipe)
     }
 
-    private fun canAcceptOutputs(recipe: HTRecipeBase<HTMachineRecipe.Input>): Boolean {
+    private fun canAcceptOutputs(recipe: U): Boolean {
         recipe.outputs.forEachIndexed { index: Int, result: HTRecipeResult ->
             val stackIn: ItemStack = inventory.getStack(index + 4)
             if (!result.canAccept(stackIn)) {
@@ -80,13 +75,13 @@ class HTMachineRecipeProcessor(val inventory: HTSimpleInventory) {
         return true
     }
 
-    private fun modifyOutput(slot: Int, recipe: HTRecipeBase<HTMachineRecipe.Input>) {
+    private fun modifyOutput(slot: Int, recipe: U) {
         inventory.modifyStack(slot + 4) { stackIn: ItemStack ->
             recipe.getOutput(slot)?.modifyStack(stackIn) ?: stackIn
         }
     }
 
-    private fun decrementInput(slot: Int, recipe: HTRecipeBase<HTMachineRecipe.Input>) {
+    private fun decrementInput(slot: Int, recipe: U) {
         val delCount: Int = recipe.getInput(slot)?.count ?: return
         inventory.getStack(slot).count -= delCount
     }

@@ -42,7 +42,7 @@ interface HTMultiblockController {
         }
     }
 
-    fun buildMultiblock(builder: HTMultiblockBuilder): HTMultiblockBuilder
+    fun buildMultiblock(builder: HTMultiblockBuilder)
 
     fun isValid(
         state: BlockState,

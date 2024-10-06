@@ -4,12 +4,17 @@ import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineCondition
 import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineFactory
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.block.entity.machine.*
+import hiiragi283.ragium.api.tags.RagiumFluidTags
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.*
 import hiiragi283.ragium.common.util.getAroundPos
+import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.FluidState
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.Consumer
@@ -22,6 +27,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             add(BLAST_FURNACE)
             add(DISTILLATION_TOWER)
             add(FLUID_DRILL)
+            add(SAW_MILL)
             addAll(RagiumMachineTypes.Processor.entries)
         }.forEach(register::accept)
     }
@@ -33,21 +39,27 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         .Builder(RagiumAPI.id("heat_generator"))
         .frontType(HTMachineType.FrontType.SIDE)
         .factory(::HTHeatGeneratorBlockEntity)
-        .buildGenerator { world: World, pos: BlockPos ->
+        .buildGenerator(FluidTags.WATER) { world: World, pos: BlockPos ->
             (world.getBlockEntity(pos) as? HTHeatGeneratorBlockEntity)?.isBurning ?: false
         }
 
-    enum class Generator(factory: HTMachineFactory = HTMachineFactory(::HTGeneratorBlockEntity)) : HTMachineConvertible {
+    enum class Generator(fluidTag: TagKey<Fluid>? = null) : HTMachineConvertible {
+        COMBUSTION(RagiumFluidTags.COMBUSTION_FUEL) {
+            override fun canGenerate(world: World, pos: BlockPos): Boolean = false
+        },
         SOLAR {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = world.isDay
         },
-        THERMAL {
+        THERMAL(FluidTags.LAVA) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = when {
                 world.getBiome(pos).isIn(BiomeTags.IS_NETHER) -> true
-                else -> pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.LAVA) }.size >= 2
+                else -> pos.getAroundPos {
+                    val fluidState: FluidState = world.getFluidState(it)
+                    fluidState.isIn(FluidTags.LAVA) && fluidState.isStill
+                }.size >= 4
             }
         },
-        WATER {
+        WATER(FluidTags.WATER) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean =
                 pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
         },
@@ -58,8 +70,8 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         private val machineType: HTMachineType.Generator = HTMachineType
             .Builder(RagiumAPI.id(name.lowercase()))
             .frontType(HTMachineType.FrontType.TOP)
-            .factory(factory)
-            .buildGenerator(::canGenerate)
+            .factory(HTGeneratorBlockEntity::Simple)
+            .buildGenerator(fluidTag, ::canGenerate)
 
         override fun asMachine(): HTMachineType = machineType
     }
@@ -90,13 +102,20 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             .factory(::HTFluidDrillBlockEntity)
             .buildProcessor(RagiumMachineConditions.ELECTRIC_CONSUMER)
 
+    @JvmField
+    val SAW_MILL: HTMachineType.Processor =
+        HTMachineType
+            .Builder(RagiumAPI.id("saw_mill"))
+            .frontType(HTMachineType.FrontType.SIDE)
+            .factory(::HTSawMillBlockEntity)
+            .buildProcessor(RagiumMachineConditions.ELECTRIC_CONSUMER)
+
     enum class Processor(
         frontType: HTMachineType.FrontType = HTMachineType.FrontType.SIDE,
         condition: HTMachineCondition = RagiumMachineConditions.ELECTRIC_CONSUMER,
     ) : HTMachineConvertible {
         ALLOY_FURNACE,
         ASSEMBLER(frontType = HTMachineType.FrontType.TOP),
-        CENTRIFUGE(frontType = HTMachineType.FrontType.TOP),
         CHEMICAL_REACTOR,
         COMPRESSOR,
         DECOMPRESSOR,

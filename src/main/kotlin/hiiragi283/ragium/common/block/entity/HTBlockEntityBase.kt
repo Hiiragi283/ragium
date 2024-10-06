@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
-import hiiragi283.ragium.api.inventory.HTSidedInventory
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.util.sendPacketForPlayers
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
-    private fun asInventory(): HTSidedInventory? = (this as? HTDelegatedInventory)?.parent
+    private fun asInventory(): HTSimpleInventory? = (this as? HTDelegatedInventory<*>)?.parent
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         asInventory()?.writeNbt(nbt, registryLookup)

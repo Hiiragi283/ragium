@@ -5,7 +5,9 @@ import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
-import hiiragi283.ragium.common.block.entity.machine.*
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.*
 import hiiragi283.ragium.common.util.blockEntityType
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -31,8 +33,8 @@ object RagiumBlockEntityTypes {
     //    Generator    //
 
     @JvmField
-    val GENERATOR_MACHINE: BlockEntityType<HTGeneratorBlockEntity> =
-        register("generator_machine", ::HTGeneratorBlockEntity)
+    val GENERATOR_MACHINE: BlockEntityType<HTGeneratorBlockEntity.Simple> =
+        register("generator_machine", HTGeneratorBlockEntity::Simple)
 
     @JvmField
     val HEAT_GENERATOR: BlockEntityType<HTHeatGeneratorBlockEntity> =
@@ -57,7 +59,11 @@ object RagiumBlockEntityTypes {
         register("manual_grinder", ::HTManualGrinderBlockEntity)
 
     @JvmField
-    val PROCESSOR_MACHINE: BlockEntityType<HTProcessorBlockEntityBase.Simple> =
+    val SAW_MILL: BlockEntityType<HTSawMillBlockEntity> =
+        register("distillation_tower", ::HTSawMillBlockEntity)
+
+    @JvmField
+    val PROCESSOR_MACHINE: BlockEntityType<HTProcessorBlockEntityBase> =
         register("processor_machine", HTProcessorBlockEntityBase::Simple)
 
     @JvmStatic
@@ -79,7 +85,8 @@ object RagiumBlockEntityTypes {
         addMachineBlocks(RagiumMachineTypes.BLAST_FURNACE, BLAST_FURNACE)
         addMachineBlocks(RagiumMachineTypes.DISTILLATION_TOWER, DISTILLATION_TOWER)
         addMachineBlocks(RagiumMachineTypes.FLUID_DRILL, FLUID_DRILL)
-
+        addMachineBlocks(RagiumMachineTypes.SAW_MILL, SAW_MILL)
+        
         RagiumMachineTypes.Generator.entries.forEach { generator: RagiumMachineTypes.Generator ->
             addMachineBlocks(generator, GENERATOR_MACHINE)
         }

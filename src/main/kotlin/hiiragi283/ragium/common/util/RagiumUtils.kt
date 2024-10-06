@@ -7,7 +7,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.alchemy.RagiElement
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
@@ -97,7 +97,7 @@ fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direc
 
 fun itemSettings(): Item.Settings = Item.Settings()
 
-fun Item.Settings.element(element: RagiElement): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
+fun Item.Settings.element(element: RagiumContents.Element): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
 fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(RagiumComponentTypes.MACHINE_TYPE, type.asMachine())
 
@@ -175,7 +175,7 @@ fun <R : Any, C : Any, V : Any> Table<R, C, V>.forEach(action: (R, C, V) -> Unit
 
 //    Transaction    //
 
-inline fun <R : Any> useTransaction(action: (Transaction) -> R): R = Transaction.openOuter().use(action)
+inline fun <R> useTransaction(action: (Transaction) -> R): R = Transaction.openOuter().use(action)
 
 //    Text    //
 

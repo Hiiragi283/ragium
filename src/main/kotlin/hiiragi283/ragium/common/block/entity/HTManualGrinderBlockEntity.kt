@@ -23,7 +23,7 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
-    HTDelegatedInventory {
+    HTDelegatedInventory.Simple {
     override fun onUse(
         state: BlockState,
         world: World,
@@ -45,10 +45,10 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory =
+    override val parent: HTSimpleInventory =
         HTSidedStorageBuilder(1)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .buildSided()
+            .buildSimple()
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return

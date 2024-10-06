@@ -13,6 +13,7 @@
     }
   ],
   "machine_type": "ragium:mixer",
+  "min_tier": "basic",
   "outputs": [
     {
       "count": 2,

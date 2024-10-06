@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
+import hiiragi283.ragium.api.recipe.machine.HTFluidDrillRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeType
@@ -12,6 +13,9 @@ object RagiumRecipeTypes {
     @JvmField
     val ALCHEMY: RecipeType<HTAlchemyRecipe> = register("alchemy")
 
+    @JvmField
+    val FLUID_DRILL: RecipeType<HTFluidDrillRecipe> = register("fluid_drill")
+    
     @JvmField
     val MACHINE: RecipeType<HTMachineRecipe> = register("machine")
 

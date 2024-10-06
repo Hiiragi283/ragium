@@ -13,7 +13,7 @@ import net.minecraft.world.World
 
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state),
-    HTDelegatedInventory {
+    HTDelegatedInventory.Simple {
     override fun onUse(
         state: BlockState,
         world: World,
@@ -31,9 +31,9 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory = HTSidedStorageBuilder(1)
+    override val parent: HTSimpleInventory = HTSidedStorageBuilder(1)
         .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .buildSided()
+        .buildSimple()
 
     override fun markDirty() {
         super<HTBlockEntityBase>.markDirty()

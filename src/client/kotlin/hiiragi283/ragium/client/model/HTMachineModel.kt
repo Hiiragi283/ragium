@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.model
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.entity.HTTieredMachine
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.util.getOrDefault
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
@@ -79,7 +79,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         randomSupplier: Supplier<Random>,
         context: RenderContext,
     ) {
-        val machineBlockEntity: HTTieredMachine? = blockView.getBlockEntity(pos) as? HTTieredMachine
+        val machineBlockEntity: HTMachineBlockEntityBase? = blockView.getBlockEntity(pos) as? HTMachineBlockEntityBase
         val type: HTMachineType = machineBlockEntity?.machineType ?: HTMachineType.Default
         val tier: HTMachineTier = machineBlockEntity?.tier ?: HTMachineTier.PRIMITIVE
         val frontDir: Direction =

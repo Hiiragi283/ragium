@@ -3,15 +3,15 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumClientAPI
 import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
+import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
-import hiiragi283.ragium.client.gui.HTMachineScreen
+import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
 import hiiragi283.ragium.client.util.registerGlobalReceiver
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.alchemy.RagiElement
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
@@ -70,8 +70,8 @@ object RagiumClient : ClientModInitializer {
 
         registerCutout(RagiumContents.ITEM_DISPLAY)
 
-        RagiElement.entries
-            .map(RagiElement::clusterBlock)
+        RagiumContents.Element.entries
+            .map(RagiumContents.Element::clusterBlock)
             .forEach(::registerCutout)
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
@@ -80,6 +80,7 @@ object RagiumClient : ClientModInitializer {
         RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
+        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.SAW_MILL)
     }
 
     private fun registerCutout(block: Block) {
@@ -116,7 +117,8 @@ object RagiumClient : ClientModInitializer {
     //    Screens    //
 
     private fun registerScreens() {
-        HandledScreens.register(RagiumScreenHandlerTypes.MACHINE, ::HTMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.GENERATOR, ::HTGeneratorScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.PROCESSOR, ::HTProcessorScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.ALCHEMICAL_INFUSER, ::HTGenericScreen)
     }
 

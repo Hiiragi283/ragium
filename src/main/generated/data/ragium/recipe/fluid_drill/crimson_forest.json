@@ -1,0 +1,7 @@
+{
+  "type": "ragium:fluid_drill",
+  "biome": "minecraft:crimson_forest",
+  "result": {
+    "item": "ragium:lava_fluid_cube"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "minecraft:crimson_stems"
+      }
+    }
+  ],
+  "machine_type": "ragium:saw_mill",
+  "outputs": [
+    {
+      "count": 6,
+      "item": "minecraft:crimson_planks"
+    },
+    {
+      "item": "ragium:pulp"
+    }
+  ]
+}

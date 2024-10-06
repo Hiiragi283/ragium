@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "minecraft:jungle_logs"
+      }
+    }
+  ],
+  "machine_type": "ragium:saw_mill",
+  "outputs": [
+    {
+      "count": 6,
+      "item": "minecraft:jungle_planks"
+    },
+    {
+      "item": "ragium:pulp"
+    }
+  ]
+}

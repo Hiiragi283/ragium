@@ -1,0 +1,7 @@
+{
+  "type": "ragium:fluid_drill",
+  "biome": "minecraft:soul_sand_valley",
+  "result": {
+    "item": "ragium:oil_fluid_cube"
+  }
+}

@@ -3,13 +3,21 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
-import hiiragi283.ragium.common.block.entity.machine.HTMachineBlockEntityBase
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.util.useTransaction
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -61,20 +69,35 @@ sealed class HTMachineType(builder: Builder) :
 
     //    Generator    //
 
-    class Generator(builder: Builder, private val predicate: BiPredicate<World, BlockPos>) : HTMachineType(builder) {
+    class Generator(
+        builder: Builder,
+        val fluidTag: TagKey<Fluid>?,
+        private val predicate: BiPredicate<World, BlockPos>,
+    ) : HTMachineType(builder) {
         fun process(world: World, pos: BlockPos, tier: HTMachineTier) {
-            if (predicate.test(world, pos)) {
-                world.energyNetwork?.let { network: HTEnergyNetwork ->
-                    useTransaction { transaction: Transaction ->
-                        val inserted: Long = network.insert(tier.recipeCost, transaction)
-                        when {
-                            inserted > 0 -> transaction.commit()
-                            else -> transaction.abort()
-                        }
+            useTransaction { transaction: Transaction ->
+                // Try to consumer fluid
+                FluidStorage.SIDED.find(world, pos, world.getBlockState(pos), world.getBlockEntity(pos), null)
+                    ?.let { storage: Storage<FluidVariant> ->
+                        StorageUtil.extractAny(storage, FluidConstants.BUCKET, transaction)
+                            ?.let { resourceAmount: ResourceAmount<FluidVariant> ->
+                                if (resourceAmount.amount == FluidConstants.BUCKET && generateEnergy(world, tier, transaction)) {
+                                    transaction.commit()
+                                    return
+                                }
+                            }
                     }
-                }
+                // check condition
+                if (predicate.test(world, pos) && generateEnergy(world, tier, transaction)) {
+                    transaction.commit()
+                } else transaction.abort()
             }
         }
+        
+        private fun generateEnergy(world: World, tier: HTMachineTier, transaction: Transaction): Boolean =
+            world.energyNetwork?.let { network: HTEnergyNetwork ->
+                network.insert(tier.recipeCost, transaction) > 0
+            } ?: false
     }
 
     //    Processor    //
@@ -130,7 +153,8 @@ sealed class HTMachineType(builder: Builder) :
             this.frontTexId = id
         }
 
-        fun buildGenerator(predicate: BiPredicate<World, BlockPos>): Generator = Generator(this, predicate)
+        fun buildGenerator(fluidTag: TagKey<Fluid>?, predicate: BiPredicate<World, BlockPos>): Generator =
+            Generator(this, fluidTag, predicate)
 
         fun buildProcessor(condition: HTMachineCondition): Processor = Processor(this, condition)
     }
