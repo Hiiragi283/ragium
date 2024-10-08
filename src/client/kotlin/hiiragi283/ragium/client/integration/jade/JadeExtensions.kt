@@ -1,5 +1,7 @@
 package hiiragi283.ragium.client.integration.jade
 
+import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import snownee.jade.api.*
 
@@ -15,6 +17,5 @@ fun IWailaClientRegistration.registerBlock(provider: IBlockComponentProvider, bl
 
 //    BlockAccessor    //
 
-fun BlockAccessor.ifPresent(key: String, action: BlockAccessor.() -> Unit) {
-    if (serverData.contains(key)) action(this)
-}
+val BlockAccessor.machineEntity: HTMachineEntity?
+    get() = (blockEntity as? HTMetaMachineBlockEntity)?.machineEntity
