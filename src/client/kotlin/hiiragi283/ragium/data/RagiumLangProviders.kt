@@ -1,9 +1,11 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -50,12 +52,16 @@ object RagiumLangProviders {
                     builder.add(element.buddingBlock, "Budding $translatedName")
                     builder.add(element.clusterBlock, "$translatedName Cluster")
                     builder.add(element.dustItem, "$translatedName Dust")
+                    builder.add(element.pendantItem, "$translatedName Pendant")
+                    builder.add(element.ringItem, "$translatedName Ring")
                 }
 
                 HTLangType.JA_JP -> {
                     builder.add(element.buddingBlock, "芽生えた$translatedName")
                     builder.add(element.clusterBlock, "${translatedName}の塊")
                     builder.add(element.dustItem, "${translatedName}の粉")
+                    builder.add(element.pendantItem, "${translatedName}のペンダント")
+                    builder.add(element.ringItem, "${translatedName}の指輪")
                 }
             }
         }
@@ -131,6 +137,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.STEEL_CHESTPLATE, "Steel Chestplate")
             builder.add(RagiumContents.STEEL_LEGGINGS, "Steel Leggings")
             builder.add(RagiumContents.STEEL_BOOTS, "Steel Boots")
+            builder.add(RagiumContents.DIVING_GOGGLES, "Diving Goggle")
+            builder.add(RagiumContents.NIGHT_VISION_GOGGLES, "Night Vision Goggle")
+            builder.add(RagiumContents.PISTON_BOOTS, "Piston Boots")
+            builder.add(RagiumContents.PARACHUTE, "Parachute")
 
             builder.add(RagiumContents.RAW_RAGINITE, "Raw Raginite")
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
@@ -150,6 +160,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.PULP, "Pulp")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
+            // Key Binds
+            builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
+
+            builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "Open Backpack")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
@@ -237,6 +251,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.STEEL_CHESTPLATE, "鋼鉄のチェストプレート")
             builder.add(RagiumContents.STEEL_LEGGINGS, "鋼鉄のレギンス")
             builder.add(RagiumContents.STEEL_BOOTS, "鋼鉄のブーツ")
+            builder.add(RagiumContents.DIVING_GOGGLES, "潜水ゴーグル")
+            builder.add(RagiumContents.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
+            builder.add(RagiumContents.PISTON_BOOTS, "ピストンブーツ")
+            builder.add(RagiumContents.PARACHUTE, "パラシュート")
 
             builder.add(RagiumContents.RAW_RAGINITE, "ラギナイトの原石")
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
@@ -256,6 +274,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.PULP, "パルプ")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
+            // Key Binds
+            builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
+
+            builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "バックパックを開く")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")

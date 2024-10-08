@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.init.RagiumModels
 import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -203,6 +202,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.STEEL_CHESTPLATE)
         register(RagiumContents.STEEL_LEGGINGS)
         register(RagiumContents.STEEL_BOOTS)
+        register(RagiumContents.DIVING_GOGGLES)
+        register(RagiumContents.NIGHT_VISION_GOGGLES)
+        register(RagiumContents.PISTON_BOOTS)
+        register(RagiumContents.PARACHUTE)
 
         register(RagiumContents.RAW_RAGINITE)
         register(
@@ -242,6 +245,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))
             register(element.dustItem)
+            register(element.pendantItem)
+            register(element.ringItem)
         }
         // fluids
         RagiumContents.Fluids.entries

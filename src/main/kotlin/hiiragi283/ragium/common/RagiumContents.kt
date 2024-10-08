@@ -501,15 +501,10 @@ object RagiumContents {
     @JvmStatic
     private fun initMachines() {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            HTMachineTypeRegistry.types.forEach { type: HTMachineType ->
+            RagiumAPI.getInstance().machineTypeRegistry.types.forEach { type: HTMachineType ->
                 registerMachine(type, tier, ::HTMachineBlock)
             }
         }
-    }
-
-    @JvmStatic
-    private fun registerCustomMachine(type: HTMachineConvertible, tier: HTMachineTier, factory: (HTMachineTier) -> HTMachineBlock) {
-        registerMachine(type, tier) { _: HTMachineConvertible, tier1: HTMachineTier -> factory(tier1) }
     }
 
     @JvmStatic

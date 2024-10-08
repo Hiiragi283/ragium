@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.util
 
+import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.init.RagiumMaterials
 
 interface HTTranslationFormatter {

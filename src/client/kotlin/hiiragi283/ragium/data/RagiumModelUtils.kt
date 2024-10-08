@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.data
 
 import net.minecraft.block.Block
 import net.minecraft.data.client.*

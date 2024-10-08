@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.integration.rei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
@@ -47,7 +46,10 @@ object RagiumREIClient : REIClientPlugin {
         CategoryIdentifier.of(RagiumAPI.MOD_ID, "fluid_drill")
 
     @JvmStatic
-    fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = HTMachineTypeRegistry.types.map { CategoryIdentifier.of(it.id) }
+    fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = RagiumAPI
+        .getInstance()
+        .machineTypeRegistry.processors
+        .map { CategoryIdentifier.of(it.id) }
 
     @JvmStatic
     fun forEachId(action: (CategoryIdentifier<HTMachineRecipeDisplay>) -> Unit) {
@@ -58,7 +60,7 @@ object RagiumREIClient : REIClientPlugin {
 
     override fun registerCategories(registry: CategoryRegistry) {
         // Machines
-        HTMachineTypeRegistry.processors.forEach { type: HTMachineType.Processor ->
+        RagiumAPI.getInstance().machineTypeRegistry.processors.forEach { type: HTMachineType ->
             registry.add(HTMachineRecipeCategory(type))
             HTMachineTier.entries.mapNotNull(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
                 registry.addWorkstations(type.categoryId, stack)
@@ -99,6 +101,19 @@ object RagiumREIClient : REIClientPlugin {
             RagiumRecipeTypes.ALCHEMY,
             ::HTTransformRecipeDisplay,
         )
+
+        /*registry.registerVisibilityPredicate { _: DisplayCategory<*>, display: Display ->
+            if (display is HTDisplay<*>) {
+                val id: Identifier = display.id
+                val recipe: HTRecipeBase<*> = display.recipe
+                if (recipe is HTRequireScanRecipe && recipe.requireScan) {
+                    if (MinecraftClient.getInstance().server?.dataDriveManager?.contains(id) != true) {
+                        EventResult.interruptFalse()
+                    }
+                }
+            }
+            EventResult.pass()
+        }*/
     }
 
     override fun registerScreens(registry: ScreenRegistry) {

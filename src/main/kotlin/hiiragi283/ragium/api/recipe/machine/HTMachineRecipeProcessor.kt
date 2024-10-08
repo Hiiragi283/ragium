@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe.machine
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeBase
@@ -21,7 +22,7 @@ import kotlin.jvm.optionals.getOrNull
 class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
     private val inventory: HTSimpleInventory,
     private val recipeType: RecipeType<U>,
-    private val inputFactory: (HTMachineType.Processor, HTMachineTier, HTSimpleInventory) -> T,
+    private val inputFactory: (HTMachineType, HTMachineTier, HTSimpleInventory) -> T,
 ) {
     init {
         check(inventory.size() == 7)
@@ -30,18 +31,19 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
     fun process(
         world: World,
         pos: BlockPos,
-        machineType: HTMachineType.Processor,
+        machineType: HTMachineType,
         tier: HTMachineTier,
     ) {
+        if (!machineType.isProcessor()) return
         processInternal(world, pos, machineType, tier)
-            .ifError { machineType.onFailed(world, pos, machineType, tier) }
-            .ifSuccess { machineType.onSucceeded(world, pos, machineType, tier) }
+            .ifError { machineType[HTMachinePropertyKeys.CONDITION]?.failed?.onFailed(world, pos, machineType, tier) }
+            .ifSuccess { machineType[HTMachinePropertyKeys.CONDITION]?.succeeded?.onSucceeded(world, pos, machineType, tier) }
     }
 
     private fun processInternal(
         world: World,
         pos: BlockPos,
-        machineType: HTMachineType.Processor,
+        machineType: HTMachineType,
         tier: HTMachineTier,
     ): DataResult<U> {
         val recipeEntry: RecipeEntry<U> = world.recipeManager
@@ -50,7 +52,9 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
         val recipe: U = recipeEntry.value
         val recipeId: Identifier = recipeEntry.id
         if (!canAcceptOutputs(recipe)) return DataResult.error { "Could not insert recipe outputs to slots!" }
-        if (!machineType.match(world, pos, machineType, tier)) return DataResult.error { "Not matching required condition!" }
+        if (machineType[HTMachinePropertyKeys.CONDITION]?.condition?.match(world, pos, machineType, tier) == false) {
+            return DataResult.error { "Not matching required condition!" }
+        }
         if ((recipe as? HTRequireScanRecipe)?.requireScan == true) {
             val manager: HTDataDriveManager = world.dataDriveManager
                 ?: return DataResult.error { "The recipe; $recipeId requires scanning but data drive manager not found!" }

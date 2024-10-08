@@ -83,7 +83,7 @@ class HTHeatGeneratorBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachi
     }
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        machineType.asGenerator()?.process(world, pos, tier)
+        machineType.generateEnergy(world, pos, tier)
     }
 
     override fun getProperty(index: Int): Int = when (index) {

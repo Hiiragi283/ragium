@@ -23,7 +23,7 @@ import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.world.World
 
 class HTMachineRecipe(
-    val type: HTMachineType.Processor,
+    val type: HTMachineType,
     val minTier: HTMachineTier,
     override val requireScan: Boolean,
     override val inputs: List<WeightedIngredient>,
@@ -107,7 +107,7 @@ class HTMachineRecipe(
     //    Input    //
 
     class Input private constructor(
-        private val currentType: HTMachineType.Processor,
+        private val currentType: HTMachineType,
         private val currentTier: HTMachineTier,
         private val first: ItemStack,
         private val second: ItemStack,

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
@@ -45,7 +46,7 @@ abstract class HTGeneratorBlockEntity :
     }
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        machineType.asGenerator()?.process(world, pos, tier)
+        machineType.generateEnergy(world, pos, tier)
     }
 
     //    HTDelegatedInventory    //
@@ -66,10 +67,10 @@ abstract class HTGeneratorBlockEntity :
         override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * 8
 
         override fun canInsert(variant: FluidVariant): Boolean =
-            machineType.asGenerator()?.fluidTag?.let(variant.registryEntry::isIn) ?: false
+            machineType[HTMachinePropertyKeys.FUEL_TAG]?.let(variant.registryEntry::isIn) ?: false
 
         override fun canExtract(variant: FluidVariant): Boolean =
-            machineType.asGenerator()?.fluidTag?.let(variant.registryEntry::isIn) ?: false
+            machineType[HTMachinePropertyKeys.FUEL_TAG]?.let(variant.registryEntry::isIn) ?: false
     }
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage

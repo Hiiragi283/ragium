@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
@@ -32,6 +33,7 @@ interface RagiumAPI {
     }
 
     val config: Config
+    val machineTypeRegistry: HTMachineTypeRegistry
 
     fun createBuiltMachineCriterion(
         machineType: HTMachineType,

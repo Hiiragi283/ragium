@@ -30,7 +30,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 
 @Environment(EnvType.CLIENT)
-class HTMachineRecipeCategory(private val type: HTMachineType.Processor) : HTDisplayCategory<HTMachineRecipeDisplay> {
+class HTMachineRecipeCategory(private val type: HTMachineType) : HTDisplayCategory<HTMachineRecipeDisplay> {
     override fun getCategoryIdentifier(): CategoryIdentifier<out HTMachineRecipeDisplay> = type.categoryId
 
     override fun getTitle(): Text = type.text

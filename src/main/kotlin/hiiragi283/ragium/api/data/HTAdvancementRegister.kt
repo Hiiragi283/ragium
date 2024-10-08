@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data
 
 import com.google.common.collect.Table
-import hiiragi283.ragium.common.data.HTLangType
 import hiiragi283.ragium.common.util.forEach
 import hiiragi283.ragium.common.util.hashTableOf
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder

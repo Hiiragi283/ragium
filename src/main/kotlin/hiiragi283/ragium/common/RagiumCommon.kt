@@ -27,7 +27,7 @@ object RagiumCommon : ModInitializer {
         RagiumRecipeTypes
         registerModifications()
 
-        HTMachineTypeRegistry.init()
+        InternalRagiumAPI.initMachineType()
         RagiumContents.init()
 
         RagiumBlockEntityTypes.init()

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.model
 
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
@@ -80,7 +81,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         context: RenderContext,
     ) {
         val machineBlockEntity: HTMachineBlockEntityBase? = blockView.getBlockEntity(pos) as? HTMachineBlockEntityBase
-        val type: HTMachineType = machineBlockEntity?.machineType ?: HTMachineType.Default
+        val type: HTMachineType = machineBlockEntity?.machineType ?: HTMachineType.DEFAULT
         val tier: HTMachineTier = machineBlockEntity?.tier ?: HTMachineTier.PRIMITIVE
         val frontDir: Direction =
             blockView.getBlockState(pos).getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
@@ -90,7 +91,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        val type: HTMachineType = stack.getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.Default)
+        val type: HTMachineType = stack.getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
         val tier: HTMachineTier = stack.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.PRIMITIVE)
         emitMachineQuads(Direction.NORTH, type, tier, context) {
             it.emitItemQuads(stack, randomSupplier, context)
@@ -115,7 +116,8 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.frontTexId)
         this.frontSprite = this.textureGetter.apply(frontId)
         val emitter: QuadEmitter = context.emitter
-        emitter.square(type.getFrontTexDir(frontDir), 0.0f, 0.0f, 1.0f, 1.0f, -0.01f)
+        val texDir: Direction = type.getOrDefault(HTMachinePropertyKeys.FRONT_MAPPER).apply(frontDir)
+        emitter.square(texDir, 0.0f, 0.0f, 1.0f, 1.0f, -0.01f)
         emitter.spriteBake(frontSprite, MutableQuadView.BAKE_LOCK_UV)
         emitter.color(-1, -1, -1, -1)
         emitter.emit()

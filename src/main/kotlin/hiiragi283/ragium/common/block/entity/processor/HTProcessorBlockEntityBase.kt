@@ -48,7 +48,7 @@ abstract class HTProcessorBlockEntityBase : HTMachineBlockEntityBase {
         HTMachineRecipeProcessor(
             parent,
             RagiumRecipeTypes.MACHINE,
-        ) { machineType: HTMachineType.Processor, tier: HTMachineTier, inventory: HTSimpleInventory ->
+        ) { machineType: HTMachineType, tier: HTMachineTier, inventory: HTSimpleInventory ->
             HTMachineRecipe.Input.create(
                 machineType,
                 tier,
@@ -57,7 +57,7 @@ abstract class HTProcessorBlockEntityBase : HTMachineBlockEntityBase {
                 inventory.getStack(2),
                 inventory.getStack(3),
             )
-        }.process(world, pos, machineType.asProcessor()!!, tier)
+        }.process(world, pos, machineType, tier)
     }
 
     //    HTDelegatedInventory    //

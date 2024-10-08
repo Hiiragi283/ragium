@@ -20,7 +20,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 class HTMachineRecipeJsonBuilder private constructor(
-    private val type: HTMachineType.Processor,
+    private val type: HTMachineType,
     private val minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
     private val requireScan: Boolean = false,
 ) {

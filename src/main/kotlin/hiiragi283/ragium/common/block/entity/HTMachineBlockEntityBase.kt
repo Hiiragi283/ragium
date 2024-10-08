@@ -1,10 +1,11 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.event.HTMachineEvents
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.util.HTDynamicPropertyDelegate
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
@@ -22,7 +23,7 @@ abstract class HTMachineBlockEntityBase :
     HTDelegatedInventory.Simple,
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
-    var machineType: HTMachineType = HTMachineType.Default
+    var machineType: HTMachineType = HTMachineType.DEFAULT
         protected set
     var tier: HTMachineTier = HTMachineTier.PRIMITIVE
         protected set
@@ -48,6 +49,7 @@ abstract class HTMachineBlockEntityBase :
         validateMachineType(machineType)
         this.machineType = machineType
         this.tier = tier
+        HTMachineEvents.UPDATE_PROPERTIES.invoker().onUpdate(machineType, tier, this)
     }
 
     abstract fun validateMachineType(machineType: HTMachineType)
@@ -61,7 +63,7 @@ abstract class HTMachineBlockEntityBase :
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, registryLookup)
         val machineType: HTMachineType =
-            HTMachineTypeRegistry.get(Identifier.of(nbt.getString("machine_type"))) ?: return
+            RagiumAPI.getInstance().machineTypeRegistry.get(Identifier.of(nbt.getString("machine_type"))) ?: return
         val tier: HTMachineTier =
             HTMachineTier.entries.firstOrNull { it.asString() == nbt.getString("tier") } ?: return
         updateProperties(machineType, tier)

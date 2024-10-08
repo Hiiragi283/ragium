@@ -53,5 +53,5 @@ class HTMachineBlock(val machineType: HTMachineType, val tier: HTMachineTier) : 
     override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
         state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = machineType.createMachine(pos, state, machineType, tier)
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = machineType.createMachine(pos, state, tier)
 }
