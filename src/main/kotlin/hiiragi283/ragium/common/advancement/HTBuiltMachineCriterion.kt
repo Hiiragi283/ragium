@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.advancement
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
@@ -21,7 +22,7 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
     override fun getConditionsCodec(): Codec<Condition> = Condition.CODEC
 
-    fun trigger(player: PlayerEntity?, machineType: HTMachineType, tier: HTMachineTier) {
+    fun trigger(player: PlayerEntity?, machineType: HTMachineConvertible, tier: HTMachineTier) {
         (player as? ServerPlayerEntity)?.let {
             trigger(it) { condition: Condition ->
                 condition.matches(machineType, tier)
@@ -62,6 +63,6 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
         override fun player(): Optional<LootContextPredicate> = Optional.ofNullable(predicate)
 
-        fun matches(machineType: HTMachineType, tier: HTMachineTier): Boolean = this.machineType == machineType && tier >= minTier
+        fun matches(machineType: HTMachineConvertible, tier: HTMachineTier): Boolean = machineType.asMachine() == this.machineType && tier >= minTier
     }
 }

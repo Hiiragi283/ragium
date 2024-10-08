@@ -83,11 +83,11 @@ fun <T> renderMultiblock(
 
 //    Network    //
 
-fun <T : CustomPayload> CustomPayload.Id<T>.registerGlobalReceiver(handler: ClientPlayNetworking.PlayPayloadHandler<T>) {
+fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(handler: ClientPlayNetworking.PlayPayloadHandler<T>) {
     ClientPlayNetworking.registerGlobalReceiver(this, handler)
 }
 
-fun <T : CustomPayload> CustomPayload.Id<T>.registerGlobalReceiver(
+fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(
     handler: (T, MinecraftClient, ClientPlayerEntity, PacketSender) -> Unit,
 ) {
     ClientPlayNetworking.registerGlobalReceiver(this) { payload: T, context: ClientPlayNetworking.Context ->

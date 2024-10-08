@@ -22,6 +22,8 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentChanges
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
@@ -29,9 +31,13 @@ import net.minecraft.network.packet.s2c.play.TitleS2CPacket
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.screen.GenericContainerScreenHandler
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.State
 import net.minecraft.state.property.Property
 import net.minecraft.text.MutableText
@@ -123,6 +129,32 @@ val ItemUsageContext.blockEntity: BlockEntity?
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
+
+//    Inventory    //
+
+fun openEnderChest(world: World, player: PlayerEntity) {
+    if (!world.isClient) {
+        player.openHandledScreen(
+            SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
+                GenericContainerScreenHandler.createGeneric9x3(
+                    syncId,
+                    playerInv,
+                    playerInv.player.enderChestInventory,
+                )
+            }, Text.translatable("container.enderchest")),
+        )
+    }
+    world.playSound(
+        null,
+        player.x,
+        player.y,
+        player.z,
+        SoundEvents.BLOCK_ENDER_CHEST_OPEN,
+        SoundCategory.BLOCKS,
+        0.5f,
+        1.0f,
+    )
+}
 
 //    PacketCodec    //
 

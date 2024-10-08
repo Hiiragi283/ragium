@@ -10,16 +10,20 @@ import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
-import hiiragi283.ragium.client.util.registerGlobalReceiver
+import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.network.HTOpenBackpackPayload
+import hiiragi283.ragium.data.RagiumModels
+import io.wispforest.accessories.api.AccessoriesCapability
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.model.loading.v1.BlockStateResolver
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
@@ -29,6 +33,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
 import net.minecraft.client.model.ModelPartBuilder
@@ -45,6 +50,8 @@ import net.minecraft.util.math.BlockPos
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
     override fun onInitializeClient() {
+        RagiumKeyBinds
+
         registerBlocks()
         registerEntities()
         registerItems()
@@ -142,21 +149,32 @@ object RagiumClient : ClientModInitializer {
                 }
             }
         }
+
+        ClientTickEvents.END_CLIENT_TICK.register { client: MinecraftClient ->
+            while (RagiumKeyBinds.OPEN_BACKPACK.wasPressed()) {
+                val capability: AccessoriesCapability = client.player?.accessoriesCapability() ?: break
+                when {
+                    capability.isEquipped { it.contains(RagiumComponentTypes.INVENTORY) } -> HTOpenBackpackPayload.NORMAL
+                    capability.isEquipped(RagiumContents.ENDER_BACKPACK) -> HTOpenBackpackPayload.ENDER
+                    else -> break
+                }.let(ClientPlayNetworking::send)
+            }
+        }
     }
 
     //    Networks    //
 
     private fun registerNetworks() {
-        RagiumNetworks.FLOATING_ITEM.registerGlobalReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.FLOATING_ITEM.registerClientReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
             context.client().gameRenderer.showFloatingItem(payload.stack)
         }
 
-        RagiumNetworks.SET_STACK.registerGlobalReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.SET_STACK.registerClientReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
             (context.player().world.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
         }
 
-        RagiumNetworks.REMOVE_STACK.registerGlobalReceiver { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.REMOVE_STACK.registerClientReceiver { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int) = payload
             (context.player().world.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
         }

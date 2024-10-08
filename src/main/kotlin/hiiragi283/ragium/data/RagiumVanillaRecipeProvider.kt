@@ -102,6 +102,30 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumItemTags.STEEL_INGOTS)
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
             .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.NIGHT_VISION_GOGGLES)
+            .patterns(
+                "AAA",
+                "BCB",
+                "A A",
+            ).input('A', RagiumItemTags.IRON_PLATES)
+            .input('B', Items.FERMENTED_SPIDER_EYE)
+            .input('C', Items.GREEN_STAINED_GLASS_PANE)
+            .unlockedBy(Items.FERMENTED_SPIDER_EYE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.DIVING_GOGGLES)
+            .patterns(
+                "AAA",
+                "BCB",
+                "A A",
+            ).input('A', RagiumContents.Plates.PE)
+            .input('B', RagiumContents.Fluids.OXYGEN)
+            .input('C', Items.GLASS_PANE)
+            .unlockedBy(RagiumContents.Fluids.OXYGEN)
+            .offerTo(exporter)
     }
 
     //    Crafting - Tools    //

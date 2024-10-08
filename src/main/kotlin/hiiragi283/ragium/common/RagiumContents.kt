@@ -2,10 +2,13 @@ package hiiragi283.ragium.common
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.inventory.HTBackpackInventory
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.HTFluidCubeItem
+import hiiragi283.ragium.common.item.HTForgeHammerItem
+import hiiragi283.ragium.common.item.HTMachineBlockItem
 import hiiragi283.ragium.common.util.*
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
@@ -171,13 +174,30 @@ object RagiumContents {
     val STEEL_HOE: Item = registerHoeItem("steel_hoe", RagiumToolMaterials.STEEL)
 
     @JvmField
-    val BACKPACK: Item = registerItem("backpack", HTBackpackItem.NORMAL)
+    val BACKPACK: Item = registerItem(
+        "backpack",
+        itemSettings()
+            .maxCount(1)
+            .fireproof()
+            .component(RagiumComponentTypes.INVENTORY, HTBackpackInventory(false)),
+    )
 
     @JvmField
-    val LARGE_BACKPACK: Item = registerItem("large_backpack", HTBackpackItem.LARGE)
+    val LARGE_BACKPACK: Item = registerItem(
+        "large_backpack",
+        itemSettings()
+            .maxCount(1)
+            .fireproof()
+            .component(RagiumComponentTypes.INVENTORY, HTBackpackInventory(true)),
+    )
 
     @JvmField
-    val ENDER_BACKPACK: Item = registerItem("ender_backpack", HTEnderBackpackItem)
+    val ENDER_BACKPACK: Item = registerItem(
+        "ender_backpack",
+        itemSettings()
+            .maxCount(1)
+            .fireproof(),
+    )
 
     //    Items - Armors    //
 
@@ -220,6 +240,18 @@ object RagiumContents {
             itemSettings().maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(25)),
         ),
     )
+
+    @JvmField
+    val DIVING_GOGGLES: Item = registerItem("diving_goggles", itemSettings().maxCount(1))
+
+    @JvmField
+    val NIGHT_VISION_GOGGLES: Item = registerItem("night_vision_goggles", itemSettings().maxCount(1))
+
+    @JvmField
+    val PISTON_BOOTS: Item = registerItem("piston_boots", itemSettings().maxCount(1))
+
+    @JvmField
+    val PARACHUTE: Item = registerItem("parachute", itemSettings().maxCount(1))
 
     //    Items - Foods    //
 
@@ -687,6 +719,9 @@ object RagiumContents {
         )
         val dustItem = Item(itemSettings().element(this))
 
+        val pendantItem = Item(itemSettings().element(this).maxDamage(63))
+        val ringItem = Item(itemSettings().element(this).maxDamage(63))
+
         val translationKey = "element.${asString()}"
         val text: Text = Text.translatable(translationKey)
 
@@ -708,6 +743,10 @@ object RagiumContents {
             registerBlockItem(element.clusterBlock)
             // dust item
             registerItem("${element.asString()}_dust", element.dustItem)
+            // pendant item
+            registerItem("${element.asString()}_pendant", element.pendantItem)
+            // ring item
+            registerItem("${element.asString()}_ring", element.ringItem)
         }
     }
 
