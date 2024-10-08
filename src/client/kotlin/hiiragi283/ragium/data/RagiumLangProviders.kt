@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumItemGroup
@@ -118,6 +119,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.DRIVE_SCANNER, "Drive Scanner")
             builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
+            builder.add(RagiumContents.META_MACHINE, "Machine")
             builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumContents.SHAFT, "Shaft")
 
@@ -159,7 +161,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumContents.PULP, "Pulp")
             // Item Group
-            builder.add(RagiumItemGroup.ITEM_KEY, "Ragium Items")
+            builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
+            builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
             // Key Binds
             builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
 
@@ -178,6 +181,9 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine Type
+            builder.add(HTMachineType.DEFAULT, "Default Machine")
+
+            builder.add(RagiumMachineTypes.Generator.COMBUSTION, "Combustion Generator")
             builder.add(RagiumMachineTypes.Generator.THERMAL, "Thermal Generator")
             builder.add(RagiumMachineTypes.Generator.SOLAR, "Solar Generator")
             builder.add(RagiumMachineTypes.Generator.WATER, "Water Generator")
@@ -204,7 +210,8 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
             // Jade
-            builder.add(RagiumTranslationKeys.CONFIG_JADE_BURNING_BOX, "Burning Box")
+            builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "Machines")
+            builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
             // REI
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "Recipe Info")
             builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "Required Scanning!")
@@ -228,10 +235,11 @@ object RagiumLangProviders {
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumContents.BASIC_CASING, "基本型外装")
             builder.add(RagiumContents.ADVANCED_CASING, "発展型外装")
-            builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
             builder.add(RagiumContents.DATA_DRIVE, "データドライブ")
             builder.add(RagiumContents.DRIVE_SCANNER, "ドライブスキャナ")
             builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
+            builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
+            builder.add(RagiumContents.META_MACHINE, "機械")
             builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumContents.SHAFT, "シャフト")
 
@@ -274,6 +282,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.PULP, "パルプ")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
+            builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
             // Key Binds
             builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
 
@@ -292,6 +301,9 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine Type
+            builder.add(HTMachineType.DEFAULT, "デフォルト機械")
+
+            builder.add(RagiumMachineTypes.Generator.COMBUSTION, "燃焼発電機")
             builder.add(RagiumMachineTypes.Generator.SOLAR, "太陽光発電機")
             builder.add(RagiumMachineTypes.Generator.THERMAL, "地熱発電機")
             builder.add(RagiumMachineTypes.Generator.WATER, "水力発電機")
@@ -318,7 +330,8 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")
             // Jade
-            builder.add(RagiumTranslationKeys.CONFIG_JADE_BURNING_BOX, "燃焼室")
+            builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "機械")
+            builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
             // REI
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "レシピ情報")
             builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "スキャンが必要です！")

@@ -36,6 +36,8 @@ internal data object InternalRagiumAPI : RagiumAPI {
             machineTypes[type.id] = type
         }
 
+        addMachine(HTMachineType.DEFAULT)
+
         FabricLoader.getInstance().invokeEntrypoints(
             HTMachineTypeInitializer.KEY,
             HTMachineTypeInitializer::class.java,

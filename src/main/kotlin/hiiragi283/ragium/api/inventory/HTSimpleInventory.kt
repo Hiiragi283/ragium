@@ -18,7 +18,7 @@ open class HTSimpleInventory : Inventory {
     companion object {
         @JvmField
         val CODEC: Codec<HTSimpleInventory> =
-            ItemStack.VALIDATED_CODEC.listOf().xmap(::HTSimpleInventory, HTSimpleInventory::stacks)
+            ItemStack.OPTIONAL_CODEC.listOf().xmap(::HTSimpleInventory, HTSimpleInventory::stacks)
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTSimpleInventory> = PacketCodec.tuple(
@@ -72,7 +72,7 @@ open class HTSimpleInventory : Inventory {
 
     override fun size(): Int = stacks.size
 
-    override fun isEmpty(): Boolean = stacks.isEmpty()
+    override fun isEmpty(): Boolean = stacks.isEmpty() || stacks.all(ItemStack::isEmpty)
 
     override fun getStack(slot: Int): ItemStack = stacks.getOrNull(slot) ?: ItemStack.EMPTY
 

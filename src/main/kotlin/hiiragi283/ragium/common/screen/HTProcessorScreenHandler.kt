@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
+import hiiragi283.ragium.common.util.machineInventory
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.widget.WBar
 import io.github.cottonmc.cotton.gui.widget.WGridPanel
@@ -15,7 +16,7 @@ class HTProcessorScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scr
         RagiumScreenHandlerTypes.PROCESSOR,
         syncId,
         playerInv,
-        getBlockInventory(ctx, 7),
+        ctx.machineInventory(7),
         getBlockPropertyDelegate(ctx, 2),
     ) {
     init {

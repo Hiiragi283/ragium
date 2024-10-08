@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity.Factory
@@ -42,6 +43,11 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
     }
 
     open fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {}
+
+    fun readFromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+        readNbt(nbt, registryLookup)
+        RagiumAPI.log { info(nbt.toString()) }
+    }
 
     open fun onUse(
         state: BlockState,

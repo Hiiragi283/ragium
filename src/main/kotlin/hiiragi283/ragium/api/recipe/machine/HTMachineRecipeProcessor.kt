@@ -24,10 +24,6 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
     private val recipeType: RecipeType<U>,
     private val inputFactory: (HTMachineType, HTMachineTier, HTSimpleInventory) -> T,
 ) {
-    init {
-        check(inventory.size() == 7)
-    }
-
     fun process(
         world: World,
         pos: BlockPos,
@@ -35,6 +31,7 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
         tier: HTMachineTier,
     ) {
         if (!machineType.isProcessor()) return
+        if (inventory.size() != 7) return
         processInternal(world, pos, machineType, tier)
             .ifError { machineType[HTMachinePropertyKeys.CONDITION]?.failed?.onFailed(world, pos, machineType, tier) }
             .ifSuccess { machineType[HTMachinePropertyKeys.CONDITION]?.succeeded?.onSucceeded(world, pos, machineType, tier) }

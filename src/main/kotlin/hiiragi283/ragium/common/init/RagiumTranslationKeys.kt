@@ -20,10 +20,8 @@ object RagiumTranslationKeys {
 
     //    Jade    //
 
-    const val MACHINE_IS_ACTIVE = "tooltip.ragium.machine.is_active"
-    const val MACHINE_SHOW_PREVIEW = "tooltip.ragium.machine.show_preview"
-
-    const val CONFIG_JADE_BURNING_BOX = "config.jade.plugin_ragium.burning_box"
+    const val CONFIG_JADE_MACHINE = "config.jade.plugin_ragium.machine"
+    const val CONFIG_JADE_NETWORK_INTERFACE = "config.jade.plugin_ragium.network_interface"
 
     //    REI    //
 

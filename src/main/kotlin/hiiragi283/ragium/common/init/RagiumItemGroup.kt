@@ -18,6 +18,9 @@ object RagiumItemGroup {
     @JvmField
     val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("item"))
 
+    @JvmField
+    val MACHINE_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("machine"))
+
     @JvmStatic
     private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup =
         Registry.register(Registries.ITEM_GROUP, key, FabricItemGroup.builder().apply(action).build())
@@ -32,6 +35,23 @@ object RagiumItemGroup {
                     .defaultStack
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                Registries.ITEM
+                    .streamEntries()
+                    .filter { it.registryKey().value.namespace == RagiumAPI.MOD_ID }
+                    .map(RegistryEntry.Reference<Item>::value)
+                    .filter { it != RagiumContents.META_MACHINE.asItem() }
+                    .forEach(entries::add)
+            }
+        }
+
+        register(MACHINE_KEY) {
+            displayName(Text.translatable("itemGroup.ragium.machine"))
+            icon {
+                RagiumContents.META_MACHINE
+                    .asItem()
+                    .defaultStack
+            }
+            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->
                     RagiumAPI
                         .getInstance()
@@ -39,13 +59,6 @@ object RagiumItemGroup {
                         .map { type: HTMachineType -> type.createItemStack(tier) }
                         .forEach(entries::add)
                 }
-
-                Registries.ITEM
-                    .streamEntries()
-                    .filter { it.registryKey().value.namespace == RagiumAPI.MOD_ID }
-                    .map(RegistryEntry.Reference<Item>::value)
-                    .filter { it != RagiumContents.META_MACHINE.asItem() }
-                    .forEach(entries::add)
             }
         }
     }

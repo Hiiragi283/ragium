@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -29,6 +30,8 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.Inventory
+import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
@@ -37,6 +40,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.screen.GenericContainerScreenHandler
+import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
@@ -138,6 +142,18 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     return ItemStack(entry, count, changes)
 }
 
+val ITEM_STACK_CODEC: Codec<ItemStack> = RecordCodecBuilder.create { instance ->
+    instance
+        .group(
+            ItemStack.ITEM_CODEC.fieldOf("id").forGetter(ItemStack::getRegistryEntry),
+            Codec.INT
+                .fieldOf("count")
+                .orElse(1)
+                .forGetter(ItemStack::getCount),
+            ComponentChanges.CODEC.optionalFieldOf("components", ComponentChanges.EMPTY).forGetter(ItemStack::getComponentChanges),
+        ).apply(instance, ::ItemStack)
+}
+
 //    ItemUsageContext    //
 
 val ItemUsageContext.blockState: BlockState
@@ -204,6 +220,12 @@ fun <T : PersistentState> getState(
     type: PersistentState.Type<T>,
     id: Identifier,
 ): T? = server.getWorld(key)?.let { getState(it, type, id) }
+
+//    ScreenHandler    //
+
+fun ScreenHandlerContext.machineInventory(size: Int): Inventory = get { world: World, pos: BlockPos ->
+    world.getMachineEntity(pos)?.parent ?: SimpleInventory(size)
+}.orElseGet { SimpleInventory(size) }
 
 //    StringIdentifiable    //
 

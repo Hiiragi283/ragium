@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -42,15 +43,16 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, registryLookup)
-        val machineType: HTMachineType =
-            RagiumAPI.getInstance().machineTypeRegistry.getOrThrow(Identifier.of(nbt.getString("machine_type")))
-        val tier: HTMachineTier =
-            HTMachineTier.entries.firstOrNull { it.asString() == nbt.getString("tier") } ?: HTMachineTier.PRIMITIVE
+        val machineType: HTMachineType = RagiumAPI
+            .getInstance()
+            .machineTypeRegistry
+            .get(Identifier.of(nbt.getString("machine_type")))
+            ?: HTMachineType.DEFAULT
+        val tier: HTMachineTier = HTMachineTier.entries
+            .firstOrNull { it.asString() == nbt.getString("tier") }
+            ?: HTMachineTier.PRIMITIVE
         initMachineEntity(machineType, tier)
-    }
-
-    override fun markDirty() {
-        super<HTBlockEntityBase>.markDirty()
+        machineEntity.readFromNbt(nbt, registryLookup)
     }
 
     override fun readComponents(components: ComponentsAccess) {
@@ -74,6 +76,8 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     //    HTBlockEntityBase    //
+
+    override fun asInventory(): HTSimpleInventory = machineEntity.parent
 
     override fun onUse(
         state: BlockState,

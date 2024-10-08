@@ -17,7 +17,7 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTProcessorMachineEntity(RagiumMachineTypes.HEAT_GENERATOR, tier) {
+class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEntity(RagiumMachineTypes.HEAT_GENERATOR, tier) {
     var burningTime: Int = 0
         private set
     val isBurning: Boolean

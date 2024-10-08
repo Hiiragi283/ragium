@@ -13,8 +13,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.minecraft.item.ItemStack
-import net.minecraft.registry.RegistryWrapper
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -22,6 +20,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import java.util.function.UnaryOperator
 
 class HTMachineType private constructor(val id: Identifier, properties: HTPropertyHolder) :
     HTMachineConvertible,
@@ -30,7 +29,9 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             @JvmField
             val DEFAULT = HTMachineType(
                 RagiumAPI.id("default"),
-                HTPropertyHolder.EMPTY,
+                HTPropertyHolder.create {
+                    set(HTMachinePropertyKeys.FRONT_TEX_ID, UnaryOperator { RagiumAPI.id("block/alloy_furnace_front") })
+                },
             )
 
             @JvmStatic
@@ -59,14 +60,9 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
 
         val translationKey: String = Util.createTranslationKey("machine_type", id)
         val text: MutableText = Text.translatable(translationKey)
-        val nameText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text).formatted(Formatting.WHITE)
+        val nameText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text.formatted(Formatting.WHITE))
 
-        fun appendTooltip(
-            stack: ItemStack,
-            lookup: RegistryWrapper.WrapperLookup?,
-            consumer: (Text) -> Unit,
-            tier: HTMachineTier,
-        ) {
+        fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier) {
             consumer(nameText)
             consumer(tier.tierText)
             consumer(tier.recipeCostText)

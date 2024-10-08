@@ -36,7 +36,6 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
     @JvmField
     val HEAT_GENERATOR: HTMachineType = HTMachineType.createGenerator(RagiumAPI.id("heat_generator")) {
-        // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory.of(::HTHeatGeneratorBlockEntity))
         set(
             HTMachinePropertyKeys.GENERATOR_PREDICATE,
             BiPredicate { world: World, pos: BlockPos ->
@@ -78,7 +77,6 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
         private val machineType: HTMachineType = HTMachineType.createGenerator(RagiumAPI.id(name.lowercase())) {
             set(HTMachinePropertyKeys.FRONT_MAPPER, UnaryOperator { Direction.UP })
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory(HTGeneratorBlockEntity::Simple))
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTGeneratorMachineEntity))
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE, BiPredicate(::canGenerate))
             fluidTag?.let { set(HTMachinePropertyKeys.FUEL_TAG, it) }
@@ -91,27 +89,23 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
     @JvmField
     val BLAST_FURNACE: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("blast_furnace")) {
-        // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory.of(::HTBlastFurnaceBlockEntity))
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTBlastFurnaceMachineEntity))
         set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
     }
 
     @JvmField
     val DISTILLATION_TOWER: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("distillation_tower")) {
-        // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory.of(::HTDistillationTowerBlockEntity))
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTDistillationTowerMachineEntity))
         set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
     }
 
     @JvmField
     val FLUID_DRILL: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("fluid_drill")) {
-        // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory.of(::HTFluidDrillBlockEntity))
         set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
     }
 
     @JvmField
     val SAW_MILL: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("saw_mill")) {
-        // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory.of(::HTSawMillBlockEntity))
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTSawMillMachineEntity))
         set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
     }
@@ -131,7 +125,6 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         ;
 
         private val machineType: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id(name.lowercase())) {
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory(HTProcessorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTProcessorMachineEntity))
             set(HTMachinePropertyKeys.CONDITION, condition)
         }
