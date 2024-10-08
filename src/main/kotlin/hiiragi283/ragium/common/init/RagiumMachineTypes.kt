@@ -38,7 +38,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
     @JvmField
     val HEAT_GENERATOR: HTMachineType = HTMachineType.createGenerator(RagiumAPI.id("heat_generator")) {
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineFactory.of(::HTHeatGeneratorBlockEntity))
-        set(HTMachinePropertyKeys.FUEL_TAG, FluidTags.WATER)
+        // set(HTMachinePropertyKeys.FUEL_TAG, FluidTags.WATER)
         set(
             HTMachinePropertyKeys.GENERATOR_PREDICATE,
             BiPredicate { world: World, pos: BlockPos ->

@@ -3,7 +3,8 @@
   "package": "hiiragi283.ragium.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AdvancementRewardsMixin"
+    "AdvancementRewardsMixin",
+    "SpawnRestrictionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

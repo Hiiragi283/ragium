@@ -63,6 +63,7 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
         override fun player(): Optional<LootContextPredicate> = Optional.ofNullable(predicate)
 
-        fun matches(machineType: HTMachineConvertible, tier: HTMachineTier): Boolean = machineType.asMachine() == this.machineType && tier >= minTier
+        fun matches(machineType: HTMachineConvertible, tier: HTMachineTier): Boolean =
+            machineType.asMachine() == this.machineType && tier >= minTier
     }
 }

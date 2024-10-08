@@ -44,11 +44,28 @@ object RagiumEventHandlers {
             }
         }
 
-        /*ServerLivingEntityEvents.AFTER_DEATH.register { entity: LivingEntity, damage: DamageSource ->
+        /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
+            if (entityType.spawnGroup == SpawnGroup.MONSTER && reason == SpawnReason.NATURAL) TriState.FALSE else TriState.DEFAULT
+        }
+
+        ServerLivingEntityEvents.AFTER_DEATH.register { entity: LivingEntity, damage: DamageSource ->
             if (entity.type.isIn(EntityTypeTags.UNDEAD) && damage.isIn(DamageTypeTags.IS_PLAYER_ATTACK)) {
                 dropStackAt(entity, Items.NETHER_STAR.defaultStack)
             }
         }*/
+
+        // spawn oblivion cube when oblivion cluster broken
+        PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
+            if (!player.isCreative) {
+                if (state.isOf(RagiumContents.OBLIVION_CLUSTER)) {
+                    RagiumEntityTypes.OBLIVION_CUBE.create(world)?.let {
+                        it.refreshPositionAndAngles(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, 0.0F, 0.0F)
+                        world.spawnEntity(it)
+                        it.playSpawnEffects()
+                    }
+                }
+            }
+        }
 
         // open backpack
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
@@ -66,19 +83,6 @@ object RagiumEventHandlers {
                 TypedActionResult.success(stack, world.isClient)
             } else {
                 TypedActionResult.pass(stack)
-            }
-        }
-
-        // spawn oblivion cube when oblivion cluster broken
-        PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
-            if (!player.isCreative) {
-                if (state.isOf(RagiumContents.OBLIVION_CLUSTER)) {
-                    RagiumEntityTypes.OBLIVION_CUBE.create(world)?.let {
-                        it.refreshPositionAndAngles(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, 0.0F, 0.0F)
-                        world.spawnEntity(it)
-                        it.playSpawnEffects()
-                    }
-                }
             }
         }
     }

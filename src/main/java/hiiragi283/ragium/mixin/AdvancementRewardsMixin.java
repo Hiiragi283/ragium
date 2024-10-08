@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerAdvancementTracker.class)
-public class AdvancementRewardsMixin {
+public abstract class AdvancementRewardsMixin {
 
     @Shadow
     private ServerPlayerEntity owner;
