@@ -1,13 +1,8 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
-import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
-import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTHeatGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.*
 import hiiragi283.ragium.common.util.blockEntityType
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -30,19 +25,23 @@ object RagiumBlockEntityTypes {
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
+    @JvmField
+    val META_MACHINE: BlockEntityType<HTMetaMachineBlockEntity> =
+        register("meta_machine", ::HTMetaMachineBlockEntity)
+
     //    Generator    //
 
-    @JvmField
+    /*@JvmField
     val GENERATOR_MACHINE: BlockEntityType<HTGeneratorBlockEntity.Simple> =
         register("generator_machine", HTGeneratorBlockEntity::Simple)
 
     @JvmField
     val HEAT_GENERATOR: BlockEntityType<HTHeatGeneratorBlockEntity> =
-        register("heat_generator", ::HTHeatGeneratorBlockEntity)
+        register("heat_generator", ::HTHeatGeneratorBlockEntity)*/
 
     //    Processor    //
 
-    @JvmField
+    /*@JvmField
     val BLAST_FURNACE: BlockEntityType<HTBlastFurnaceBlockEntity> =
         register("blast_furnace", ::HTBlastFurnaceBlockEntity)
 
@@ -52,19 +51,19 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
-        register("fluid_drill", ::HTFluidDrillBlockEntity)
+        register("fluid_drill", ::HTFluidDrillBlockEntity)*/
 
     @JvmField
     val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
         register("manual_grinder", ::HTManualGrinderBlockEntity)
 
-    @JvmField
+    /*@JvmField
     val SAW_MILL: BlockEntityType<HTSawMillBlockEntity> =
         register("distillation_tower", ::HTSawMillBlockEntity)
 
     @JvmField
     val PROCESSOR_MACHINE: BlockEntityType<HTProcessorBlockEntityBase> =
-        register("processor_machine", HTProcessorBlockEntityBase::Simple)
+        register("processor_machine", HTProcessorBlockEntityBase::Simple)*/
 
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
@@ -79,8 +78,9 @@ object RagiumBlockEntityTypes {
         ALCHEMICAL_INFUSER.addSupportedBlock(RagiumContents.ALCHEMICAL_INFUSER)
         ITEM_DISPLAY.addSupportedBlock(RagiumContents.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumContents.MANUAL_GRINDER)
+        META_MACHINE.addSupportedBlock(RagiumContents.META_MACHINE)
 
-        addMachineBlocks(RagiumMachineTypes.HEAT_GENERATOR, HEAT_GENERATOR)
+        /*addMachineBlocks(RagiumMachineTypes.HEAT_GENERATOR, HEAT_GENERATOR)
 
         addMachineBlocks(RagiumMachineTypes.BLAST_FURNACE, BLAST_FURNACE)
         addMachineBlocks(RagiumMachineTypes.DISTILLATION_TOWER, DISTILLATION_TOWER)
@@ -93,14 +93,14 @@ object RagiumBlockEntityTypes {
 
         RagiumMachineTypes.Processor.entries.forEach { processor: RagiumMachineTypes.Processor ->
             addMachineBlocks(processor, PROCESSOR_MACHINE)
-        }
+        }*/
     }
 
-    @JvmStatic
+    /*@JvmStatic
     private fun addMachineBlocks(machineType: HTMachineConvertible, type: BlockEntityType<*>) {
         HTMachineBlockRegistry
             .getAllTier(machineType)
             .values
             .forEach(type::addSupportedBlock)
-    }
+    }*/
 }

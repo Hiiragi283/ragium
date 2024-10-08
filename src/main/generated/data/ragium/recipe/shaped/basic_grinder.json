@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "basic",
+      "ragium:machine_type": "ragium:grinder"
+    },
     "count": 1,
-    "id": "ragium:basic_grinder"
+    "id": "ragium:meta_machine"
   }
 }

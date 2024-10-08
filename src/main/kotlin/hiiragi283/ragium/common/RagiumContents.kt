@@ -3,12 +3,12 @@ package hiiragi283.ragium.common
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTBackpackInventory
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
-import hiiragi283.ragium.common.item.HTMachineBlockItem
+import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import hiiragi283.ragium.common.util.*
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
@@ -152,6 +152,10 @@ object RagiumContents {
     @JvmField
     val INFESTING: Block =
         registerBlock("infesting", HTInfectingBlock)
+
+    @JvmField // TODO
+    val META_MACHINE: Block =
+        registerBlock("meta_machine", HTMetaMachineBlock)
 
     //    Item - Tools    //
 
@@ -332,7 +336,7 @@ object RagiumContents {
         initBlockItems()
         initHulls()
         initCoils()
-        initMachines()
+        // initMachines()
         initStorageBlocks()
         initCircuits()
         initDusts()
@@ -482,6 +486,8 @@ object RagiumContents {
         registerBlockItem(NETWORK_INTERFACE)
 
         registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
+
+        registerItem("meta_machine", HTMetaMachineBlockItem)
     }
 
     //    Hulls    //
@@ -530,7 +536,7 @@ object RagiumContents {
 
     //    Machines    //
 
-    @JvmStatic
+    /*@JvmStatic
     private fun initMachines() {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             RagiumAPI.getInstance().machineTypeRegistry.types.forEach { type: HTMachineType ->
@@ -549,7 +555,7 @@ object RagiumContents {
         val machineBlock: HTMachineBlock = registerBlock(name, factory(type, tier))
         registerItem(name, HTMachineBlockItem(machineBlock, itemSettings()))
         HTMachineBlockRegistry.register(machineBlock)
-    }
+    }*/
 
     //    Storage Blocks    //
 

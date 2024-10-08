@@ -31,7 +31,7 @@ object RagiumCommon : ModInitializer {
         RagiumBlockEntityTypes.init()
         RagiumCauldronBehaviors.init()
         RagiumCommands.init()
-        RagiumEnergyProviders.init()
+        RagiumApiLookupInit.init()
         RagiumEventHandlers.init()
         RagiumItemGroup.init()
         HTHardModeResourceCondition.init()

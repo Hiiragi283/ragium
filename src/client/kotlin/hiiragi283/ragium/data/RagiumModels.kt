@@ -3,7 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.util.machineTier
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
@@ -92,8 +92,7 @@ object RagiumModels {
     @JvmField
     val HULL_TEXTURE_FACTORY: TexturedModel.Factory =
         TexturedModel.makeFactory({ block: Block ->
-            val tier: HTMachineTier =
-                block.asItem().components.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.PRIMITIVE)
+            val tier: HTMachineTier = block.asItem().components.machineTier
             textureMap {
                 put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
                 put(

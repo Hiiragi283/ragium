@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
@@ -10,10 +10,12 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
+import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LeafEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
+import net.minecraft.loot.function.CopyComponentsLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
@@ -53,13 +55,36 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumContents.ADVANCED_CASING)
         addDrop(RagiumContents.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
+        addDrop(RagiumContents.META_MACHINE) { block: Block ->
+            LootTable
+                .builder()
+                .pool(
+                    addSurvivesExplosionCondition(
+                        block,
+                        LootPool
+                            .builder()
+                            .rolls(ConstantLootNumberProvider.create(1.0f))
+                            .with(
+                                ItemEntry
+                                    .builder(block)
+                                    .apply(
+                                        CopyComponentsLootFunction
+                                            .builder(CopyComponentsLootFunction.Source.BLOCK_ENTITY)
+                                            .include(RagiumComponentTypes.MACHINE_TYPE)
+                                            .include(RagiumComponentTypes.MACHINE_TIER),
+                                    ),
+                            ),
+                    ),
+                )
+        }
+
         buildList<HTBlockContent> {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
         }.map(HTBlockContent::block).forEach(::addDrop)
 
-        HTMachineBlockRegistry.forEachBlock(::addDrop)
+        // HTMachineBlockRegistry.forEachBlock(::addDrop)
 
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block

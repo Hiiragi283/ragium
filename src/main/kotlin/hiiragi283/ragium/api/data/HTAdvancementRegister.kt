@@ -1,16 +1,20 @@
 package hiiragi283.ragium.api.data
 
 import com.google.common.collect.Table
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.util.forEach
 import hiiragi283.ragium.common.util.hashTableOf
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.advancement.Advancement
+import net.minecraft.advancement.AdvancementDisplay
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.item.ItemConvertible
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
+import java.util.*
 import java.util.function.Consumer
 
 class HTAdvancementRegister(private val modId: String, private val consumer: Consumer<AdvancementEntry>) {
@@ -71,6 +75,36 @@ class HTAdvancementRegister(private val modId: String, private val consumer: Con
                 showToast,
                 chat,
                 hidden,
+            ).apply(action)
+        return Builder(builder, id, this)
+    }
+
+    fun createChild(
+        name: String,
+        parent: AdvancementEntry,
+        type: HTMachineConvertible,
+        tier: HTMachineTier,
+        frame: AdvancementFrame = AdvancementFrame.TASK,
+        showToast: Boolean = true,
+        chat: Boolean = true,
+        hidden: Boolean = false,
+        action: Advancement.Builder.() -> Unit,
+    ): Builder {
+        val id: Identifier = Identifier.of(modId, name)
+        val builder: Advancement.Builder = Advancement.Builder
+            .create()
+            .parent(parent)
+            .display(
+                AdvancementDisplay(
+                    type.createItemStack(tier),
+                    Text.translatable(makeTitleKey(id)),
+                    Text.translatable(makeDescKey(id)),
+                    Optional.empty(),
+                    frame,
+                    showToast,
+                    chat,
+                    hidden,
+                ),
             ).apply(action)
         return Builder(builder, id, this)
     }

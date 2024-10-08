@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "basic",
+      "ragium:machine_type": "ragium:heat_generator"
+    },
     "count": 1,
-    "id": "ragium:basic_heat_generator"
+    "id": "ragium:meta_machine"
   }
 }

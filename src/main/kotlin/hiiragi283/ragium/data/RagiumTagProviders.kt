@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
@@ -56,6 +55,7 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.META_MACHINE)
 
             buildList<HTBlockContent> {
                 addAll(RagiumContents.StorageBlocks.entries)
@@ -64,9 +64,9 @@ object RagiumTagProviders {
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             // ragium
             RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
-            HTMachineBlockRegistry.forEachBlock { block: Block ->
+            /*HTMachineBlockRegistry.forEachBlock { block: Block ->
                 add(BlockTags.PICKAXE_MINEABLE, block)
-            }
+            }*/
         }
     }
 

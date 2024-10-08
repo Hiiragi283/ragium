@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.util.useTransaction
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -14,7 +13,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.minecraft.block.BlockState
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.text.MutableText
@@ -75,8 +73,8 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             consumer(tier.energyCapacityText)
         }
 
-        fun createMachine(pos: BlockPos, state: BlockState, tier: HTMachineTier): HTMachineBlockEntityBase? =
-            get(HTMachinePropertyKeys.MACHINE_FACTORY)?.createMachine(pos, state, this, tier)
+    /*fun createMachine(pos: BlockPos, state: BlockState, tier: HTMachineTier): HTMachineBlockEntityBase? =
+        get(HTMachinePropertyKeys.MACHINE_FACTORY)?.createMachine(pos, state, this, tier)*/
 
         fun generateEnergy(world: World, pos: BlockPos, tier: HTMachineTier) {
             if (!isGenerator()) return

@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.Item
@@ -30,10 +32,19 @@ object RagiumItemGroup {
                     .defaultStack
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                HTMachineTier.entries.forEach { tier: HTMachineTier ->
+                    RagiumAPI
+                        .getInstance()
+                        .machineTypeRegistry.types
+                        .map { type: HTMachineType -> type.createItemStack(tier) }
+                        .forEach(entries::add)
+                }
+
                 Registries.ITEM
                     .streamEntries()
                     .filter { it.registryKey().value.namespace == RagiumAPI.MOD_ID }
                     .map(RegistryEntry.Reference<Item>::value)
+                    .filter { it != RagiumContents.META_MACHINE.asItem() }
                     .forEach(entries::add)
             }
         }

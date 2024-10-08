@@ -5,7 +5,11 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_assembler"
+            "components": {
+              "ragium:machine_tier": "basic",
+              "ragium:machine_type": "ragium:assembler"
+            },
+            "items": "ragium:meta_machine"
           }
         ]
       },
@@ -17,8 +21,12 @@
       "translate": "advancement.ragium.tier2.assembler.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic",
+        "ragium:machine_type": "ragium:assembler"
+      },
       "count": 1,
-      "id": "ragium:basic_assembler"
+      "id": "ragium:meta_machine"
     },
     "title": {
       "translate": "advancement.ragium.tier2.assembler"

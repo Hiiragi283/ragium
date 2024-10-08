@@ -1,12 +1,14 @@
 package hiiragi283.ragium.client.model
 
+import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.util.getMachineEntity
 import hiiragi283.ragium.common.util.getOrDefault
+import hiiragi283.ragium.common.util.machineTier
+import hiiragi283.ragium.common.util.machineType
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel
@@ -80,9 +82,9 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         randomSupplier: Supplier<Random>,
         context: RenderContext,
     ) {
-        val machineBlockEntity: HTMachineBlockEntityBase? = blockView.getBlockEntity(pos) as? HTMachineBlockEntityBase
-        val type: HTMachineType = machineBlockEntity?.machineType ?: HTMachineType.DEFAULT
-        val tier: HTMachineTier = machineBlockEntity?.tier ?: HTMachineTier.PRIMITIVE
+        val machineEntity: HTMachineEntity = blockView.getMachineEntity(pos) ?: return
+        val type: HTMachineType = machineEntity.machineType
+        val tier: HTMachineTier = machineEntity.tier
         val frontDir: Direction =
             blockView.getBlockState(pos).getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
         emitMachineQuads(frontDir, type, tier, context) {
@@ -91,9 +93,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        val type: HTMachineType = stack.getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
-        val tier: HTMachineTier = stack.getOrDefault(RagiumComponentTypes.TIER, HTMachineTier.PRIMITIVE)
-        emitMachineQuads(Direction.NORTH, type, tier, context) {
+        emitMachineQuads(Direction.NORTH, stack.machineType, stack.machineTier, context) {
             it.emitItemQuads(stack, randomSupplier, context)
         }
     }

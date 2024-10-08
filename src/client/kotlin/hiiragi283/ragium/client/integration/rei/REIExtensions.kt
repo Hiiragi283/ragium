@@ -27,7 +27,7 @@ val HTMachineConvertible.categoryId: CategoryIdentifier<HTMachineRecipeDisplay>
 
 //    EntryStack    //
 
-fun HTMachineType.createEntryStack(tier: HTMachineTier): EntryStack<ItemStack>? = getBlock(tier)?.let(EntryStacks::of)
+fun HTMachineType.createEntryStack(tier: HTMachineTier): EntryStack<ItemStack> = EntryStacks.of(createItemStack(tier))
 
 //    WeightedIngredient    //
 

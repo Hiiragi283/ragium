@@ -1,12 +1,11 @@
 package hiiragi283.ragium.client.integration.rei.category
 
-import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.integration.rei.categoryId
+import hiiragi283.ragium.client.integration.rei.createEntryStack
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.gui.Renderer
@@ -35,8 +34,7 @@ class HTMachineRecipeCategory(private val type: HTMachineType) : HTDisplayCatego
 
     override fun getTitle(): Text = type.text
 
-    override fun getIcon(): Renderer = HTMachineBlockRegistry.get(type, HTMachineTier.BASIC)?.let { EntryStacks.of(it) }
-        ?: EntryStacks.of(RagiumContents.Hulls.RAGI_ALLOY)
+    override fun getIcon(): Renderer = type.createEntryStack(HTMachineTier.PRIMITIVE)
 
     override fun setupDisplay(display: HTMachineRecipeDisplay, bounds: Rectangle): List<Widget> = buildList {
         this += Widgets.createRecipeBase(bounds)

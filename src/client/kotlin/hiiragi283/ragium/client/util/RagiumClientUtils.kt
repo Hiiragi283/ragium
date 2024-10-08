@@ -2,10 +2,8 @@ package hiiragi283.ragium.client.util
 
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
-import hiiragi283.ragium.common.util.getOrDefault
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.networking.v1.PacketSender
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
@@ -14,7 +12,6 @@ import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.CustomPayload
-import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
@@ -70,15 +67,17 @@ fun renderItem(
     matrices.pop()
 }
 
-fun <T> renderMultiblock(
-    entity: T,
+fun <T : HTMultiblockController> renderMultiblock(
+    controller: T,
+    world: World?,
+    facing: Direction?,
     matrices: MatrixStack,
     vertexConsumers: VertexConsumerProvider,
-) where T : BlockEntity, T : HTMultiblockController {
-    if (!entity.showPreview) return
-    val direction: Direction = entity.cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-    val world: World = entity.world ?: return
-    entity.buildMultiblock(HTMultiblockRenderer(world, matrices, vertexConsumers).rotate(direction))
+) {
+    if (!controller.showPreview) return
+    world?.let {
+        controller.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
+    }
 }
 
 //    Network    //

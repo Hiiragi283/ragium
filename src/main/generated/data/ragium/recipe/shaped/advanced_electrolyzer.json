@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "advanced",
+      "ragium:machine_type": "ragium:electrolyzer"
+    },
     "count": 1,
-    "id": "ragium:advanced_electrolyzer"
+    "id": "ragium:meta_machine"
   }
 }

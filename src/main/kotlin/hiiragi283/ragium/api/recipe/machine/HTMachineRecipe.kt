@@ -90,7 +90,7 @@ class HTMachineRecipe(
         catalyst,
     )
 
-    override fun createIcon(): ItemStack = type.getBlock(minTier)?.asItem()?.defaultStack ?: ItemStack.EMPTY
+    override fun createIcon(): ItemStack = type.createItemStack(minTier)
 
     override fun getSerializer(): RecipeSerializer<*> = Serializer
 

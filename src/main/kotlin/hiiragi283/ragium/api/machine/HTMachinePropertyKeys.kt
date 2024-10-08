@@ -32,8 +32,11 @@ object HTMachinePropertyKeys {
         HTPropertyKey.Defaulted(RagiumAPI.id("front_mapper"), UnaryOperator.identity())
 
     @JvmField
-    val MACHINE_FACTORY: HTPropertyKey.Simple<HTMachineFactory> =
-        HTPropertyKey.Simple(RagiumAPI.id("machine_factory"))
+    val MACHINE_FACTORY: HTPropertyKey.Defaulted<HTMachineEntity.Factory> =
+        HTPropertyKey.Defaulted(
+            RagiumAPI.id("machine_factory"),
+            value = HTMachineEntity.Factory(HTMachineEntity::Default),
+        )
 
     @JvmField
     val FUEL_TAG: HTPropertyKey.Simple<TagKey<Fluid>> =

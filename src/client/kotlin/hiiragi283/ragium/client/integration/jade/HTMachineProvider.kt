@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.integration.jade
 
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntityBase
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.util.Identifier
 import snownee.jade.api.BlockAccessor
@@ -34,8 +33,5 @@ object HTMachineProvider : IBlockComponentProvider, IServerDataProvider<BlockAcc
     //    IServerDataProvider    //
 
     override fun appendServerData(nbt: NbtCompound, accessor: BlockAccessor) {
-        (accessor.blockEntity as HTMachineBlockEntityBase).let {
-            nbt.putInt(PROGRESS, it.ticks)
-        }
     }
 }

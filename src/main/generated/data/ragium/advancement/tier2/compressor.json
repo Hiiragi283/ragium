@@ -5,7 +5,11 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_compressor"
+            "components": {
+              "ragium:machine_tier": "basic",
+              "ragium:machine_type": "ragium:compressor"
+            },
+            "items": "ragium:meta_machine"
           }
         ]
       },
@@ -17,8 +21,12 @@
       "translate": "advancement.ragium.tier2.compressor.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic",
+        "ragium:machine_type": "ragium:compressor"
+      },
       "count": 1,
-      "id": "ragium:basic_compressor"
+      "id": "ragium:meta_machine"
     },
     "title": {
       "translate": "advancement.ragium.tier2.compressor"

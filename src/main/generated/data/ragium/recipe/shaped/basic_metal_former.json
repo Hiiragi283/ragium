@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "basic",
+      "ragium:machine_type": "ragium:metal_former"
+    },
     "count": 1,
-    "id": "ragium:basic_metal_former"
+    "id": "ragium:meta_machine"
   }
 }

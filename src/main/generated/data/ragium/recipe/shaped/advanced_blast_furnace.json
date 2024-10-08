@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "advanced",
+      "ragium:machine_type": "ragium:blast_furnace"
+    },
     "count": 1,
-    "id": "ragium:advanced_blast_furnace"
+    "id": "ragium:meta_machine"
   }
 }

@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "primitive",
+      "ragium:machine_type": "ragium:chemical_reactor"
+    },
     "count": 1,
-    "id": "ragium:primitive_chemical_reactor"
+    "id": "ragium:meta_machine"
   }
 }

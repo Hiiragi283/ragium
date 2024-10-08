@@ -2,9 +2,11 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementRegister
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -14,6 +16,7 @@ import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.advancement.criterion.InventoryChangedCriterion
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.predicate.ComponentPredicate
 import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.TagKey
@@ -49,6 +52,22 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
     private fun Advancement.Builder.hasItems(tagKey: TagKey<Item>): Advancement.Builder = criterion(
         "has_items",
         InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(tagKey)),
+    )
+
+    private fun Advancement.Builder.hasMachine(type: HTMachineConvertible, tier: HTMachineTier): Advancement.Builder = criterion(
+        "has_items",
+        InventoryChangedCriterion.Conditions.items(
+            ItemPredicate.Builder
+                .create()
+                .items(RagiumContents.META_MACHINE)
+                .component(
+                    ComponentPredicate
+                        .builder()
+                        .add(RagiumComponentTypes.MACHINE_TYPE, type.asMachine())
+                        .add(RagiumComponentTypes.MACHINE_TIER, tier)
+                        .build(),
+                ),
+        ),
     )
 
     //    Tier 1    //
@@ -110,9 +129,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/alloy_furnace",
                 ragiAlloyHull,
-                RagiumMachineTypes.Processor.ALLOY_FURNACE.getBlockOrThrow(HTMachineTier.PRIMITIVE),
+                RagiumMachineTypes.Processor.ALLOY_FURNACE,
+                HTMachineTier.PRIMITIVE,
             ) {
-                hasItems(RagiumMachineTypes.Processor.ALLOY_FURNACE.getBlockOrThrow(HTMachineTier.PRIMITIVE))
+                hasMachine(RagiumMachineTypes.Processor.ALLOY_FURNACE, HTMachineTier.PRIMITIVE)
             }.putEnglish("Gotcha!")
             .putEnglishDesc("Craft Alloy Furnace")
             .putJapanese("ガッチャ！")
@@ -123,7 +143,8 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/brick_blast_furnace",
                 ragiAlloyHull,
-                RagiumMachineTypes.BLAST_FURNACE.getBlockOrThrow(HTMachineTier.PRIMITIVE),
+                RagiumMachineTypes.BLAST_FURNACE,
+                HTMachineTier.PRIMITIVE,
             ) {
                 buildMultiblock(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.PRIMITIVE)
             }.putEnglish("Do not rust me!")
@@ -163,9 +184,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/grinder",
                 manualGrinder,
-                RagiumMachineTypes.Processor.GRINDER.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.GRINDER,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.GRINDER.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.GRINDER, HTMachineTier.BASIC)
             }.putEnglish("True Grinder")
             .putEnglishDesc("Craft Grinder")
             .putJapanese("本物の粉砕機")
@@ -205,9 +227,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/assembler",
                 ragiSteelHull,
-                RagiumMachineTypes.Processor.ASSEMBLER.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.ASSEMBLER,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.ASSEMBLER.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
             }.putEnglish("Avengers, Assemble!")
             .putEnglishDesc("Craft Assembler")
             .putJapanese("アベンジャーズ，アッセンブル！")
@@ -218,9 +241,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/compressor",
                 ragiSteelHull,
-                RagiumMachineTypes.Processor.COMPRESSOR.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.COMPRESSOR,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.COMPRESSOR.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.COMPRESSOR, HTMachineTier.BASIC)
             }.putEnglish("saves.zip.zip.zip")
             .putEnglishDesc("Craft Compressor")
             .putJapanese("saves.zip.zip.zip")
@@ -231,9 +255,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/extractor",
                 ragiSteelHull,
-                RagiumMachineTypes.Processor.EXTRACTOR.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.EXTRACTOR,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.EXTRACTOR.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.EXTRACTOR, HTMachineTier.BASIC)
             }.putEnglish("")
             .putEnglishDesc("Craft Extractor")
             .putJapanese("")
@@ -244,9 +269,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/metal_former",
                 ragiSteelHull,
-                RagiumMachineTypes.Processor.METAL_FORMER.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.METAL_FORMER,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.METAL_FORMER.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.METAL_FORMER, HTMachineTier.BASIC)
             }.putEnglish("It's High Quality.")
             .putEnglishDesc("Craft Metal Former")
             .putJapanese("It's High Quality.")
@@ -257,9 +283,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/mixer",
                 ragiSteelHull,
-                RagiumMachineTypes.Processor.MIXER.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.MIXER,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.MIXER.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.MIXER, HTMachineTier.BASIC)
             }.putEnglish("Do not mix chlorine bleach and acidic liquids")
             .putEnglishDesc("Craft Mixer")
             .putJapanese("カビキラーとサンポールを混ぜてはいけない")
@@ -297,7 +324,8 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/blazing_blast_furnace",
                 ragiSteelHull,
-                RagiumMachineTypes.BLAST_FURNACE.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.BLAST_FURNACE,
+                HTMachineTier.BASIC,
             ) {
                 buildMultiblock(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
             }.putEnglish("Blazing Poweeer!")
@@ -339,9 +367,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/chemical_reactor",
                 refinedRagiSteelHull,
-                RagiumMachineTypes.Processor.CHEMICAL_REACTOR.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.CHEMICAL_REACTOR,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.CHEMICAL_REACTOR.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
             }.putEnglish("Are you ready?")
             .putEnglishDesc("Craft Chemical Reactor")
             .putJapanese("Are you ready?")
@@ -391,9 +420,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/electrolyzer",
                 refinedRagiSteelHull,
-                RagiumMachineTypes.Processor.ELECTROLYZER.getBlockOrThrow(HTMachineTier.BASIC),
+                RagiumMachineTypes.Processor.ELECTROLYZER,
+                HTMachineTier.BASIC,
             ) {
-                hasItems(RagiumMachineTypes.Processor.ELECTROLYZER.getBlockOrThrow(HTMachineTier.BASIC))
+                hasMachine(RagiumMachineTypes.Processor.ELECTROLYZER, HTMachineTier.BASIC)
             }.putEnglish("")
             .putEnglishDesc("Craft Electrolyzer")
             .putJapanese("")

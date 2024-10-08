@@ -5,7 +5,11 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_chemical_reactor"
+            "components": {
+              "ragium:machine_tier": "basic",
+              "ragium:machine_type": "ragium:chemical_reactor"
+            },
+            "items": "ragium:meta_machine"
           }
         ]
       },
@@ -17,8 +21,12 @@
       "translate": "advancement.ragium.tier3.chemical_reactor.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic",
+        "ragium:machine_type": "ragium:chemical_reactor"
+      },
       "count": 1,
-      "id": "ragium:basic_chemical_reactor"
+      "id": "ragium:meta_machine"
     },
     "title": {
       "translate": "advancement.ragium.tier3.chemical_reactor"

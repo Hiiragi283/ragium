@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "primitive",
+      "ragium:machine_type": "ragium:electrolyzer"
+    },
     "count": 1,
-    "id": "ragium:primitive_electrolyzer"
+    "id": "ragium:meta_machine"
   }
 }

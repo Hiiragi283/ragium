@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "basic",
+      "ragium:machine_type": "ragium:water"
+    },
     "count": 1,
-    "id": "ragium:basic_water"
+    "id": "ragium:meta_machine"
   }
 }

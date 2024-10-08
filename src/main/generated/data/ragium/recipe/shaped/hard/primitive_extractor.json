@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "primitive",
+      "ragium:machine_type": "ragium:extractor"
+    },
     "count": 1,
-    "id": "ragium:primitive_extractor"
+    "id": "ragium:meta_machine"
   }
 }

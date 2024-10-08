@@ -1,18 +1,16 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumClientAPI
-import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
@@ -24,7 +22,6 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.model.loading.v1.BlockStateResolver
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -32,7 +29,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.block.Block
-import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
@@ -71,9 +67,10 @@ object RagiumClient : ClientModInitializer {
             RagiumContents.DEEPSLATE_RAGINITE_ORE,
             RagiumContents.POROUS_NETHERRACK,
             RagiumContents.OBLIVION_CLUSTER,
+            RagiumContents.META_MACHINE,
         )
 
-        HTMachineBlockRegistry.forEachBlock(RagiumClient::registerCutoutMipped)
+        // HTMachineBlockRegistry.forEachBlock(RagiumClient::registerCutoutMipped)
 
         registerCutout(RagiumContents.ITEM_DISPLAY)
 
@@ -83,11 +80,7 @@ object RagiumClient : ClientModInitializer {
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
-
-        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
-        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
-        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
-        RagiumClientAPI.getInstance().registerMultiblockRenderer(RagiumBlockEntityTypes.SAW_MILL)
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
     }
 
     private fun registerCutout(block: Block) {
@@ -134,13 +127,13 @@ object RagiumClient : ClientModInitializer {
     private fun registerEvents() {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register block state resolver
-            HTMachineBlockRegistry.forEachBlock { block: HTMachineBlock ->
+            /*HTMachineBlockRegistry.forEachBlock { block: HTMachineBlock ->
                 context.registerBlockStateResolver(block) { context1: BlockStateResolver.Context ->
                     context1.block().stateManager.states.forEach { state: BlockState ->
                         context1.setModel(state, HTMachineModel)
                     }
                 }
-            }
+            }*/
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
                 when (RagiumModels.MACHINE_MODEL_ID) {

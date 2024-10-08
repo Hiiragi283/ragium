@@ -5,7 +5,11 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_extractor"
+            "components": {
+              "ragium:machine_tier": "basic",
+              "ragium:machine_type": "ragium:extractor"
+            },
+            "items": "ragium:meta_machine"
           }
         ]
       },
@@ -17,8 +21,12 @@
       "translate": "advancement.ragium.tier2.extractor.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic",
+        "ragium:machine_type": "ragium:extractor"
+      },
       "count": 1,
-      "id": "ragium:basic_extractor"
+      "id": "ragium:meta_machine"
     },
     "title": {
       "translate": "advancement.ragium.tier2.extractor"

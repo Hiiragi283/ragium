@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineBlockRegistry
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.util.*
+import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -112,6 +110,20 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         registerSimple(RagiumContents.SPONGE_CAKE)
+        register(RagiumContents.META_MACHINE) { block: Block ->
+            accept(
+                VariantsBlockStateSupplier
+                    .create(
+                        block,
+                        buildModelVariant(RagiumModels.MACHINE_MODEL_ID),
+                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+            )
+            RagiumModels.DYNAMIC_MACHINE.upload(
+                ModelIds.getItemModelId(block.asItem()),
+                TextureMap(),
+                generator.modelCollector,
+            )
+        }
 
         register(RagiumContents.INFESTING) {
             accept(
@@ -151,7 +163,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // machines
-        HTMachineBlockRegistry.forEachBlock { machineBlock: HTMachineBlock ->
+        /*HTMachineBlockRegistry.forEachBlock { machineBlock: HTMachineBlock ->
             register(machineBlock) { block: Block ->
                 accept(
                     VariantsBlockStateSupplier
@@ -166,7 +178,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     generator.modelCollector,
                 )
             }
-        }
+        }*/
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block

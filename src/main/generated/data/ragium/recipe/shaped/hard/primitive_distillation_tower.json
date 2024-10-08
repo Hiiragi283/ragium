@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "primitive",
+      "ragium:machine_type": "ragium:distillation_tower"
+    },
     "count": 1,
-    "id": "ragium:primitive_distillation_tower"
+    "id": "ragium:meta_machine"
   }
 }

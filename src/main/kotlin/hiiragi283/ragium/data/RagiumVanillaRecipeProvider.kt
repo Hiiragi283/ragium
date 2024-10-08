@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumMaterials
@@ -19,6 +18,7 @@ import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.book.RecipeCategory
@@ -570,10 +570,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         right: Ingredient = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val block: HTMachineBlock = type.asMachine().getBlock(tier) ?: return@forEach
+            val output: ItemStack = type.createItemStack(tier)
 
             fun createPattern(isHard: Boolean): HTShapedRecipeJsonBuilder = HTShapedRecipeJsonBuilder
-                .create(block)
+                .create(output)
                 .patterns(
                     "AAA",
                     "BCD",
@@ -584,8 +584,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input('D', right)
                 .input('E', getMachineBase(tier, isHard))
                 .unlockedBy(tier.getHull())
-            createPattern(true).offerPrefix(exporter.hardMode(true), "hard/")
-            createPattern(false).offerTo(exporter.hardMode(false))
+            createPattern(true).offerTo(exporter.hardMode(true), tier.createId(type).withPrefixedPath("hard/"))
+            createPattern(false).offerTo(exporter.hardMode(false), tier.createId(type))
         }
     }
 

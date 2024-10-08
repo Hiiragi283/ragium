@@ -5,7 +5,11 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_mixer"
+            "components": {
+              "ragium:machine_tier": "basic",
+              "ragium:machine_type": "ragium:mixer"
+            },
+            "items": "ragium:meta_machine"
           }
         ]
       },
@@ -17,8 +21,12 @@
       "translate": "advancement.ragium.tier2.mixer.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic",
+        "ragium:machine_type": "ragium:mixer"
+      },
       "count": 1,
-      "id": "ragium:basic_mixer"
+      "id": "ragium:meta_machine"
     },
     "title": {
       "translate": "advancement.ragium.tier2.mixer"

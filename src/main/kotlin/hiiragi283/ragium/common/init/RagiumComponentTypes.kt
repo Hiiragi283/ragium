@@ -33,8 +33,8 @@ object RagiumComponentTypes {
         register("machine_type", HTMachineTypeRegistry.CODEC, HTMachineTypeRegistry.PACKET_CODEC)
 
     @JvmField
-    val TIER: ComponentType<HTMachineTier> =
-        register("tier", HTMachineTier.CODEC, HTMachineTier.PACKET_CODEC)
+    val MACHINE_TIER: ComponentType<HTMachineTier> =
+        register("machine_tier", HTMachineTier.CODEC, HTMachineTier.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : Any> register(name: String, codec: Codec<T>, packetCodec: PacketCodec<in RegistryByteBuf, T>): ComponentType<T> =

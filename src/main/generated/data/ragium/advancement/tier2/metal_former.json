@@ -5,7 +5,11 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_metal_former"
+            "components": {
+              "ragium:machine_tier": "basic",
+              "ragium:machine_type": "ragium:metal_former"
+            },
+            "items": "ragium:meta_machine"
           }
         ]
       },
@@ -17,8 +21,12 @@
       "translate": "advancement.ragium.tier2.metal_former.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic",
+        "ragium:machine_type": "ragium:metal_former"
+      },
       "count": 1,
-      "id": "ragium:basic_metal_former"
+      "id": "ragium:meta_machine"
     },
     "title": {
       "translate": "advancement.ragium.tier2.metal_former"

@@ -30,7 +30,11 @@
     "EEE"
   ],
   "result": {
+    "components": {
+      "ragium:machine_tier": "advanced",
+      "ragium:machine_type": "ragium:thermal"
+    },
     "count": 1,
-    "id": "ragium:advanced_thermal"
+    "id": "ragium:meta_machine"
   }
 }

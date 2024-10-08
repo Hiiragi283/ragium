@@ -49,13 +49,6 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = openScreen(state, world, pos, player)
-
-    fun openScreen(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity,
     ): ActionResult = when (world.isClient) {
         true -> ActionResult.SUCCESS
         else -> {

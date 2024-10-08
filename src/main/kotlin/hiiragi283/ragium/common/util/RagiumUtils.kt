@@ -6,8 +6,11 @@ import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
@@ -20,6 +23,8 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentChanges
+import net.minecraft.component.ComponentHolder
+import net.minecraft.component.ComponentMap
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -46,6 +51,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.BlockView
 import net.minecraft.world.PersistentState
 import net.minecraft.world.World
 import java.text.NumberFormat
@@ -99,6 +105,20 @@ fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state:
 
 fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direction.entries.map(this::offset).filter(filter)
 
+//    Component    //
+
+val ComponentHolder.machineType: HTMachineType
+    get() = getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
+
+val ComponentMap.machineType: HTMachineType
+    get() = getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
+
+val ComponentHolder.machineTier: HTMachineTier
+    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+
+val ComponentMap.machineTier: HTMachineTier
+    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+
 //    Item    //
 
 fun itemSettings(): Item.Settings = Item.Settings()
@@ -107,7 +127,7 @@ fun Item.Settings.element(element: RagiumContents.Element): Item.Settings = comp
 
 fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(RagiumComponentTypes.MACHINE_TYPE, type.asMachine())
 
-fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.TIER, tier)
+fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.MACHINE_TIER, tier)
 
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
     if (item == null) return ItemStack.EMPTY
@@ -214,6 +234,8 @@ inline fun <R> useTransaction(action: (Transaction) -> R): R = Transaction.openO
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
 //    World    //
+
+fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
 
 fun dropStackAt(entity: Entity, stack: ItemStack) {
     dropStackAt(entity.world, entity.blockPos, stack)
