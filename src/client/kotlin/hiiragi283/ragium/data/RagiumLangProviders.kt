@@ -7,16 +7,20 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumItemGroup
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.common.util.HTItemContent
 import hiiragi283.ragium.common.util.HTTranslationFormatter
+import hiiragi283.ragium.common.util.splitWith
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import java.util.concurrent.CompletableFuture
 
@@ -25,6 +29,10 @@ object RagiumLangProviders {
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(RagiumLangProviders::EnglishLang)
         pack.addProvider(RagiumLangProviders::JapaneseLang)
+    }
+
+    fun TranslationBuilder.add(enchantment: RegistryKey<Enchantment>, value: String) {
+        add("enchantment.${enchantment.value.splitWith('.')}", value)
     }
 
     fun TranslationBuilder.add(tier: HTMachineTier, name: String, prefix: String) {
@@ -124,6 +132,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.SHAFT, "Shaft")
 
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
+            // Enchantment
+            builder.add(RagiumEnchantments.SMELTING, "Smelting")
+            builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
+            builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.STEEL_SWORD, "Steel Sword")
@@ -244,6 +256,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.SHAFT, "シャフト")
 
             builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
+            // Enchantment
+            builder.add(RagiumEnchantments.SMELTING, "精錬")
+            builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
+            builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
             // Items
             builder.add(RagiumContents.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.STEEL_SWORD, "鋼鉄の剣")

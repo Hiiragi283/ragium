@@ -2,8 +2,14 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
+import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.inventory.HTBackpackInventory
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.util.getEntry
+import hiiragi283.ragium.common.util.hasEnchantment
 import hiiragi283.ragium.common.util.openEnderChest
 import hiiragi283.ragium.common.util.sendTitle
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
@@ -11,10 +17,24 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.enchantment.Enchantments
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EquipmentSlot
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.recipe.Recipe
+import net.minecraft.recipe.RecipeEntry
+import net.minecraft.recipe.RecipeType
+import net.minecraft.recipe.input.RecipeInput
+import net.minecraft.recipe.input.SingleStackRecipeInput
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
@@ -44,6 +64,33 @@ object RagiumEventHandlers {
             }
         }
 
+        // modify drops
+        HTModifyBlockDropsCallback.EVENT.register {
+                _: BlockState,
+                world: ServerWorld,
+                _: BlockPos,
+                _: BlockEntity?,
+                breaker: Entity?,
+                tool: ItemStack,
+                drops: List<ItemStack>,
+            ->
+            when {
+                hasEnchantment(RagiumEnchantments.SMELTING, world, tool) -> drops.map { drop: ItemStack ->
+                    applyRecipe(drop, world, breaker, tool, RecipeType.SMELTING, ::SingleStackRecipeInput)
+                }
+
+                hasEnchantment(RagiumEnchantments.SLEDGE_HAMMER, world, tool) -> drops.map { drop: ItemStack ->
+                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineTypes.Processor.GRINDER)
+                }
+
+                hasEnchantment(RagiumEnchantments.BUZZ_SAW, world, tool) -> drops.map { drop: ItemStack ->
+                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineTypes.SAW_MILL)
+                }
+
+                else -> drops
+            }
+        }
+
         /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
             if (entityType.spawnGroup == SpawnGroup.MONSTER && reason == SpawnReason.NATURAL) TriState.FALSE else TriState.DEFAULT
         }
@@ -53,6 +100,17 @@ object RagiumEventHandlers {
                 dropStackAt(entity, Items.NETHER_STAR.defaultStack)
             }
         }*/
+
+        PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, _: BlockState, _: BlockEntity? ->
+            val enchant: RegistryEntry<Enchantment> =
+                world.getEntry(RegistryKeys.ENCHANTMENT, Enchantments.UNBREAKING) ?: return@register
+            val enchantLevel: Int = EnchantmentHelper.getLevel(enchant, player.getStackInHand(Hand.MAIN_HAND))
+            if (enchantLevel > 0) {
+                BlockPos.iterate(pos, pos.up(enchantLevel)).forEach { pos1: BlockPos ->
+                    world.breakBlock(pos1, true, player)
+                }
+            }
+        }
 
         // spawn oblivion cube when oblivion cluster broken
         PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
@@ -85,5 +143,45 @@ object RagiumEventHandlers {
                 TypedActionResult.pass(stack)
             }
         }
+    }
+
+    @JvmStatic
+    private fun <T : RecipeInput, U : Recipe<T>> applyRecipe(
+        drop: ItemStack,
+        world: World,
+        breaker: Entity?,
+        tool: ItemStack,
+        recipeType: RecipeType<U>,
+        factory: (ItemStack) -> T,
+    ): ItemStack {
+        val input: T = factory(drop)
+        return world.recipeManager
+            .getFirstMatch(recipeType, input, world)
+            .map(RecipeEntry<U>::value)
+            .map { it.craft(input, world.registryManager) }
+            .map { drop1: ItemStack ->
+                breaker
+                    ?.let { it as? LivingEntity }
+                    ?.let { tool.damage(1, it, EquipmentSlot.MAINHAND) }
+                drop1
+            }.orElse(drop)
+    }
+
+    @JvmStatic
+    private fun applyMachineRecipe(
+        drop: ItemStack,
+        world: World,
+        breaker: Entity?,
+        tool: ItemStack,
+        machineType: HTMachineConvertible,
+    ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
+        HTMachineRecipe.Input.create(
+            machineType,
+            HTMachineTier.PRIMITIVE,
+            it,
+            ItemStack.EMPTY,
+            ItemStack.EMPTY,
+            ItemStack.EMPTY,
+        )
     }
 }

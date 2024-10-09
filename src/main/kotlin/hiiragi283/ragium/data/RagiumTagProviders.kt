@@ -22,6 +22,7 @@ object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(RagiumTagProviders::BlockProvider)
+        // pack.addProvider(RagiumTagProviders::EnchantmentProvider)
         // pack.addProvider(RagiumTagProviders::FluidProvider)
         pack.addProvider(RagiumTagProviders::ItemProvider)
     }
@@ -69,6 +70,20 @@ object RagiumTagProviders {
             }*/
         }
     }
+
+    //    Enchantment    //
+
+    /*private class EnchantmentProvider(
+        output: FabricDataOutput,
+        completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
+    ) : FabricTagProvider.EnchantmentTagProvider(output, completableFuture) {
+        override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
+            getOrCreateTagBuilder(RagiumEnchantmentTags.MODIFYING_EXCLUSIVE_SET)
+                .add(RagiumEnchantments.SMELTING.value)
+                .add(RagiumEnchantments.SLEDGE_HAMMER.value)
+                .add(RagiumEnchantments.BUZZ_SAW.value)
+        }
+    }*/
 
     //    Fluid    //
 

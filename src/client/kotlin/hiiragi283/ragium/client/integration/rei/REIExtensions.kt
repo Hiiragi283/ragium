@@ -11,8 +11,14 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.entry.EntryStack
 import me.shedaniel.rei.api.common.util.EntryStacks
 import me.shedaniel.rei.impl.Internals
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.EnchantmentLevelEntry
+import net.minecraft.item.EnchantedBookItem
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.DynamicRegistryManager
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 
 //    Accessors    //
 
@@ -28,6 +34,13 @@ val HTMachineConvertible.categoryId: CategoryIdentifier<HTMachineRecipeDisplay>
 //    EntryStack    //
 
 fun HTMachineType.createEntryStack(tier: HTMachineTier): EntryStack<ItemStack> = EntryStacks.of(createItemStack(tier))
+
+fun createEnchantedBook(key: RegistryKey<Enchantment>): EntryStack<ItemStack> =
+    dynamicRegistry().get(RegistryKeys.ENCHANTMENT).getEntry(key)
+        .map { EnchantmentLevelEntry(it, 1) }
+        .map(EnchantedBookItem::forEnchantment)
+        .map(EntryStacks::of)
+        .orElse(EntryStacks.of(Items.ENCHANTED_BOOK))
 
 //    WeightedIngredient    //
 

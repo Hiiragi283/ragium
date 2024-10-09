@@ -14,6 +14,7 @@ import hiiragi283.ragium.client.integration.rei.category.HTFluidDrillRecipeCateg
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
 import hiiragi283.ragium.client.integration.rei.display.*
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
@@ -27,6 +28,7 @@ import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandle
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryStack
 import me.shedaniel.rei.api.common.util.EntryStacks
+import me.shedaniel.rei.plugin.common.BuiltinPlugin
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.item.ItemStack
@@ -62,13 +64,26 @@ object RagiumREIClient : REIClientPlugin {
         // Machines
         RagiumAPI.getInstance().machineTypeRegistry.processors.forEach { type: HTMachineType ->
             registry.add(HTMachineRecipeCategory(type))
-            HTMachineTier.entries.mapNotNull(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
+            HTMachineTier.entries.map(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
                 registry.addWorkstations(type.categoryId, stack)
             }
         }
         registry.addWorkstations(
             RagiumMachineTypes.Processor.GRINDER.categoryId,
             EntryStacks.of(RagiumContents.MANUAL_GRINDER),
+        )
+
+        registry.addWorkstations(
+            BuiltinPlugin.SMELTING,
+            createEnchantedBook(RagiumEnchantments.SMELTING),
+        )
+        registry.addWorkstations(
+            RagiumMachineTypes.Processor.GRINDER.categoryId,
+            createEnchantedBook(RagiumEnchantments.SLEDGE_HAMMER),
+        )
+        registry.addWorkstations(
+            RagiumMachineTypes.SAW_MILL.categoryId,
+            createEnchantedBook(RagiumEnchantments.BUZZ_SAW),
         )
         // Fluid Drilling
         registry.add(HTFluidDrillRecipeCategory)

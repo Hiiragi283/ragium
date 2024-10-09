@@ -8,10 +8,8 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.component.ComponentType
-import net.minecraft.entity.EntityType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
@@ -20,13 +18,15 @@ object RagiumComponentTypes {
     val ELEMENT: ComponentType<RagiumContents.Element> =
         register("element", RagiumContents.Element.CODEC, RagiumContents.Element.PACKET_CODEC)
 
-    @JvmField
-    val ENTITY_TYPE: ComponentType<EntityType<*>> =
-        Registries.ENTITY_TYPE.codec.let { register("entity_type", it, PacketCodecs.codec(it)) }
+    //    Armor    //
 
     @JvmField
     val INVENTORY: ComponentType<HTSimpleInventory> =
         register("inventory", HTSimpleInventory.CODEC, HTSimpleInventory.PACKET_CODEC)
+
+    //    Tool    //
+
+    //    Machine    //
 
     @JvmField
     val MACHINE_TYPE: ComponentType<HTMachineType> =
@@ -47,4 +47,7 @@ object RagiumComponentTypes {
                 .packetCodec(packetCodec)
                 .build(),
         )
+
+    @JvmStatic
+    private fun registerUnit(name: String): ComponentType<Unit> = register(name, Codec.unit(Unit), PacketCodec.unit(Unit))
 }

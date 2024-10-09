@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -26,6 +25,8 @@ import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -37,7 +38,9 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
@@ -58,8 +61,10 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockView
 import net.minecraft.world.PersistentState
 import net.minecraft.world.World
+import net.minecraft.world.WorldView
 import java.text.NumberFormat
 import java.util.function.Function
+import kotlin.jvm.optionals.getOrNull
 
 //    Either    //
 
@@ -123,6 +128,11 @@ val ComponentHolder.machineTier: HTMachineTier
 val ComponentMap.machineTier: HTMachineTier
     get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
 
+//    Enchantment    //
+
+fun hasEnchantment(enchantment: RegistryKey<Enchantment>, world: World, stack: ItemStack): Boolean =
+    EnchantmentHelper.getLevel(world.getEntry(RegistryKeys.ENCHANTMENT, enchantment), stack) > 0
+
 //    Item    //
 
 fun itemSettings(): Item.Settings = Item.Settings()
@@ -142,17 +152,10 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     return ItemStack(entry, count, changes)
 }
 
-val ITEM_STACK_CODEC: Codec<ItemStack> = RecordCodecBuilder.create { instance ->
-    instance
-        .group(
-            ItemStack.ITEM_CODEC.fieldOf("id").forGetter(ItemStack::getRegistryEntry),
-            Codec.INT
-                .fieldOf("count")
-                .orElse(1)
-                .forGetter(ItemStack::getCount),
-            ComponentChanges.CODEC.optionalFieldOf("components", ComponentChanges.EMPTY).forGetter(ItemStack::getComponentChanges),
-        ).apply(instance, ::ItemStack)
-}
+fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): Boolean = world.getEnchantment(key)
+    ?.let(EnchantmentHelper.getEnchantments(this)::getLevel)
+    ?.let { it > 0 }
+    ?: false
 
 //    ItemUsageContext    //
 
@@ -258,6 +261,12 @@ fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInst
 //    World    //
 
 fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
+
+fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
+    registryManager.get(registryKey).getEntry(key).getOrNull()
+
+fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = 
+    getEntry(RegistryKeys.ENCHANTMENT, key)
 
 fun dropStackAt(entity: Entity, stack: ItemStack) {
     dropStackAt(entity.world, entity.blockPos, stack)
