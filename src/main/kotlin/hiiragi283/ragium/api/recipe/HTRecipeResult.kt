@@ -109,7 +109,8 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
                             Registries.ITEM.codec
                                 .fieldOf("item")
                                 .forGetter(ItemImpl::asItem),
-                            Codec.INT
+                            Codec
+                                .intRange(1, 99)
                                 .optionalFieldOf("count", 1)
                                 .forGetter(ItemImpl::count),
                             ComponentChanges.CODEC
@@ -143,7 +144,8 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
                     instance
                         .group(
                             TagKey.unprefixedCodec(RegistryKeys.ITEM).fieldOf("tag").forGetter(TagImpl::tagKey),
-                            Codec.INT
+                            Codec
+                                .intRange(1, 99)
                                 .optionalFieldOf("count", 1)
                                 .forGetter(TagImpl::count),
                             ComponentChanges.CODEC

@@ -14,9 +14,9 @@ fun interface HTMachineConvertible {
 
     fun asProcessor(): HTMachineType? = asMachine().takeIf(HTMachineType::isProcessor)
 
-    fun isGenerator(): Boolean = asMachine()[HTMachinePropertyKeys.CATEGORY] == HTMachineType.Category.GENERATOR
+    fun isGenerator(): Boolean = asMachine().category == HTMachineType.Category.GENERATOR
 
-    fun isProcessor(): Boolean = asMachine()[HTMachinePropertyKeys.CATEGORY] == HTMachineType.Category.PROCESSOR
+    fun isProcessor(): Boolean = asMachine().category == HTMachineType.Category.PROCESSOR
 
     fun getBlockOrThrow(tier: HTMachineTier): Block = Blocks.BRICKS
 

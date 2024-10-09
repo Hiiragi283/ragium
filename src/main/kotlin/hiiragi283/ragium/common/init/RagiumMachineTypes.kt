@@ -15,9 +15,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import java.util.function.BiPredicate
 import java.util.function.Consumer
-import java.util.function.UnaryOperator
 
 object RagiumMachineTypes : HTMachineTypeInitializer {
     override fun registerType(register: Consumer<HTMachineConvertible>) {
@@ -36,16 +34,13 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
     @JvmField
     val HEAT_GENERATOR: HTMachineType = HTMachineType.createGenerator(RagiumAPI.id("heat_generator")) {
-        set(
-            HTMachinePropertyKeys.GENERATOR_PREDICATE,
-            BiPredicate { world: World, pos: BlockPos ->
-                world
-                    .getMachineEntity(pos)
-                    ?.let { it as? HTHeatGeneratorMachineEntity }
-                    ?.isBurning
-                    ?: false
-            },
-        )
+        set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
+            world
+                .getMachineEntity(pos)
+                ?.let { it as? HTHeatGeneratorMachineEntity }
+                ?.isBurning
+                ?: false
+        }
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTHeatGeneratorMachineEntity))
     }
 
@@ -76,10 +71,10 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         abstract fun canGenerate(world: World, pos: BlockPos): Boolean
 
         private val machineType: HTMachineType = HTMachineType.createGenerator(RagiumAPI.id(name.lowercase())) {
-            set(HTMachinePropertyKeys.FRONT_MAPPER, UnaryOperator { Direction.UP })
+            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTGeneratorMachineEntity))
-            set(HTMachinePropertyKeys.GENERATOR_PREDICATE, BiPredicate(::canGenerate))
-            fluidTag?.let { set(HTMachinePropertyKeys.FUEL_TAG, it) }
+            set(HTMachinePropertyKeys.GENERATOR_PREDICATE, ::canGenerate)
+            setIfNonNull(HTMachinePropertyKeys.FUEL_TAG, fluidTag)
         }
 
         override fun asMachine(): HTMachineType = machineType
@@ -90,27 +85,34 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
     @JvmField
     val BLAST_FURNACE: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("blast_furnace")) {
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTBlastFurnaceMachineEntity))
-        set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
+        set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
+        set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
     }
 
     @JvmField
     val DISTILLATION_TOWER: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("distillation_tower")) {
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTDistillationTowerMachineEntity))
-        set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
+        set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
+        set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
     }
 
     @JvmField
     val FLUID_DRILL: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("fluid_drill")) {
-        set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
+        set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
+        set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
     }
 
     @JvmField
     val SAW_MILL: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("saw_mill")) {
         set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTSawMillMachineEntity))
-        set(HTMachinePropertyKeys.CONDITION, RagiumMachineConditions.ELECTRIC_CONSUMER)
+        set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
+        set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
     }
 
-    enum class Processor(condition: HTMachineCondition = RagiumMachineConditions.ELECTRIC_CONSUMER) : HTMachineConvertible {
+    enum class Processor(
+        condition: (World, BlockPos, HTMachineType, HTMachineTier) -> Boolean = RagiumMachineConditions.ELECTRIC_CONDITION,
+        succeeded: ((World, BlockPos, HTMachineType, HTMachineTier) -> Unit)? = RagiumMachineConditions.ELECTRIC_SUCCEEDED,
+    ) : HTMachineConvertible {
         ALLOY_FURNACE,
         ASSEMBLER,
         CHEMICAL_REACTOR,
@@ -121,12 +123,13 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         GRINDER,
         METAL_FORMER,
         MIXER,
-        ROCK_GENERATOR(condition = RagiumMachineConditions.ROCK_GENERATOR),
+        ROCK_GENERATOR(condition = RagiumMachineConditions.ROCK_SUCCEEDED, succeeded = null),
         ;
 
         private val machineType: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id(name.lowercase())) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTProcessorMachineEntity))
-            set(HTMachinePropertyKeys.CONDITION, condition)
+            set(HTMachinePropertyKeys.PROCESSOR_CONDITION, condition)
+            setIfNonNull(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, succeeded)
         }
 
         override fun asMachine(): HTMachineType = machineType

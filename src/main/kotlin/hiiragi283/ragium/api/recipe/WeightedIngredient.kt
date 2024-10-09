@@ -24,7 +24,8 @@ class WeightedIngredient private constructor(val ingredient: Ingredient, val cou
                 instance
                     .group(
                         Ingredient.ALLOW_EMPTY_CODEC.fieldOf("ingredient").forGetter(WeightedIngredient::ingredient),
-                        Codec.INT
+                        Codec
+                            .intRange(1, 99)
                             .optionalFieldOf("count", 1)
                             .forGetter(WeightedIngredient::count),
                     ).apply(instance, Companion::of)

@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity.Factory
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
@@ -10,12 +9,10 @@ import hiiragi283.ragium.common.util.HTDynamicPropertyDelegate
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
@@ -103,13 +100,5 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
         }
 
         fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntity
-    }
-
-    //    Default    //
-
-    class Default(machineType: HTMachineType, tier: HTMachineTier) : HTMachineEntity(machineType, tier) {
-        override val parent: HTSimpleInventory = HTSimpleInventory(0)
-
-        override fun createMenu(syncId: Int, playerInventory: PlayerInventory?, player: PlayerEntity?): ScreenHandler? = null
     }
 }

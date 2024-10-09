@@ -20,7 +20,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import java.util.function.UnaryOperator
 
 class HTMachineType private constructor(val id: Identifier, properties: HTPropertyHolder) :
     HTMachineConvertible,
@@ -30,7 +29,7 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             val DEFAULT = HTMachineType(
                 RagiumAPI.id("default"),
                 HTPropertyHolder.create {
-                    set(HTMachinePropertyKeys.FRONT_TEX_ID, UnaryOperator { RagiumAPI.id("block/alloy_furnace_front") })
+                    set(HTMachinePropertyKeys.FRONT_TEX) { RagiumAPI.id("block/alloy_furnace_front") }
                 },
             )
 
@@ -53,9 +52,6 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             )
         }
 
-        val frontTexId: Identifier = getOrDefault(HTMachinePropertyKeys.FRONT_TEX_ID).apply(id)
-
-        val style: Style = getOrDefault(HTMachinePropertyKeys.STYLE)
         val category: Category? = get(HTMachinePropertyKeys.CATEGORY)
 
         val translationKey: String = Util.createTranslationKey("machine_type", id)
@@ -69,8 +65,8 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             consumer(tier.energyCapacityText)
         }
 
-    /*fun createMachine(pos: BlockPos, state: BlockState, tier: HTMachineTier): HTMachineBlockEntityBase? =
-        get(HTMachinePropertyKeys.MACHINE_FACTORY)?.createMachine(pos, state, this, tier)*/
+        fun getFrontTex(machine: HTMachineEntity?): Identifier = machine?.let { getOrDefault(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX)(it) }
+            ?: getOrDefault(HTMachinePropertyKeys.FRONT_TEX)(id)
 
         fun generateEnergy(world: World, pos: BlockPos, tier: HTMachineTier) {
             if (!isGenerator()) return
@@ -95,7 +91,7 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
                             }
                     }
                 // check condition
-                if (getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE).test(world, pos) &&
+                if (getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos) &&
                     generateEnergy(
                         world,
                         tier,
@@ -117,13 +113,6 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
         //    HTMachineConvertible    //
 
         override fun asMachine(): HTMachineType = this
-
-        //    Style    //
-
-        enum class Style {
-            SINGLE,
-            MULTI,
-        }
 
         //    Category    //
 

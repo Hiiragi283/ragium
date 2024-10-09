@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.machine.HTMachineCondition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.world.HTEnergyNetwork
@@ -14,16 +13,17 @@ import net.minecraft.world.World
 import kotlin.enums.EnumEntries
 
 object RagiumMachineConditions {
-    //    Processor    //
-
     @JvmField
-    val ELECTRIC_CONSUMER: HTMachineCondition = HTMachineCondition(
+    val ELECTRIC_CONDITION: (World, BlockPos, HTMachineType, HTMachineTier) -> Boolean =
         { world: World, _: BlockPos, _: HTMachineType, tier: HTMachineTier ->
             world.energyNetwork
                 ?.amount
                 ?.let { it >= tier.recipeCost }
                 ?: false
-        },
+        }
+
+    @JvmField
+    val ELECTRIC_SUCCEEDED: (World, BlockPos, HTMachineType, HTMachineTier) -> Unit =
         { world: World, _: BlockPos, _: HTMachineType, tier: HTMachineTier ->
             world.energyNetwork?.let { network: HTEnergyNetwork ->
                 useTransaction { transaction: Transaction ->
@@ -34,11 +34,10 @@ object RagiumMachineConditions {
                     }
                 }
             }
-        },
-    )
+        }
 
     @JvmField
-    val ROCK_GENERATOR = HTMachineCondition(
+    val ROCK_SUCCEEDED: (World, BlockPos, HTMachineType, HTMachineTier) -> Boolean =
         { world: World, pos: BlockPos, _: HTMachineType, _: HTMachineTier ->
             val directions: EnumEntries<Direction> = Direction.entries
             if (directions.any { world.getBlockState(pos.offset(it)).isOf(Blocks.WATER) }) {
@@ -46,7 +45,5 @@ object RagiumMachineConditions {
             } else {
                 false
             }
-        },
-        HTMachineCondition.Succeeded.EMPTY,
-    )
+        }
 }

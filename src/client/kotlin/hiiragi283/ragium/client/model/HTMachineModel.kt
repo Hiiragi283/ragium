@@ -87,13 +87,13 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         val tier: HTMachineTier = machineEntity.tier
         val frontDir: Direction =
             blockView.getBlockState(pos).getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-        emitMachineQuads(frontDir, type, tier, context) {
+        emitMachineQuads(frontDir, type, tier, machineEntity, context) {
             it.emitBlockQuads(blockView, state, pos, randomSupplier, context)
         }
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        emitMachineQuads(Direction.NORTH, stack.machineType, stack.machineTier, context) {
+        emitMachineQuads(Direction.NORTH, stack.machineType, stack.machineTier, null, context) {
             it.emitItemQuads(stack, randomSupplier, context)
         }
     }
@@ -103,6 +103,7 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         frontDir: Direction,
         type: HTMachineType,
         tier: HTMachineTier,
+        machine: HTMachineEntity?,
         context: RenderContext,
         hullRenderer: (BakedModel) -> Unit,
     ) {
@@ -113,10 +114,10 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         val bakedModelManager: BakedModelManager = client.bakedModelManager
         bakedModelManager.getModel(ModelIdentifier(hullId, ""))?.apply(hullRenderer)
         // render machine front
-        val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.frontTexId)
+        val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.getFrontTex(machine))
         this.frontSprite = this.textureGetter.apply(frontId)
         val emitter: QuadEmitter = context.emitter
-        val texDir: Direction = type.getOrDefault(HTMachinePropertyKeys.FRONT_MAPPER).apply(frontDir)
+        val texDir: Direction = type.getOrDefault(HTMachinePropertyKeys.FRONT_MAPPER)(frontDir)
         emitter.square(texDir, 0.0f, 0.0f, 1.0f, 1.0f, -0.01f)
         emitter.spriteBake(frontSprite, MutableQuadView.BAKE_LOCK_UV)
         emitter.color(-1, -1, -1, -1)

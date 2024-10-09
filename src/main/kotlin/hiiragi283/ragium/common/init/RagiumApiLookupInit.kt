@@ -43,7 +43,7 @@ object RagiumApiLookupInit {
     @JvmStatic
     fun initItemStorage() {
         ItemStorage.SIDED.registerForBlockEntity({ blockEntity: HTMetaMachineBlockEntity, direction: Direction? ->
-            InventoryStorage.of(blockEntity.machineEntity, direction)
+            blockEntity.machineEntity?.let { InventoryStorage.of(it, direction) }
         }, RagiumBlockEntityTypes.META_MACHINE)
     }
 

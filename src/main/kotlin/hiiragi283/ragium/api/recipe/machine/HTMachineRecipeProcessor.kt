@@ -33,8 +33,8 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
         if (!machineType.isProcessor()) return
         if (inventory.size() != 7) return
         processInternal(world, pos, machineType, tier)
-            .ifError { machineType[HTMachinePropertyKeys.CONDITION]?.failed?.onFailed(world, pos, machineType, tier) }
-            .ifSuccess { machineType[HTMachinePropertyKeys.CONDITION]?.succeeded?.onSucceeded(world, pos, machineType, tier) }
+            .ifError { machineType.getOrDefault(HTMachinePropertyKeys.PROCESSOR_FAILED)(world, pos, machineType, tier) }
+            .ifSuccess { machineType.getOrDefault(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED)(world, pos, machineType, tier) }
     }
 
     private fun processInternal(
@@ -49,7 +49,7 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
         val recipe: U = recipeEntry.value
         val recipeId: Identifier = recipeEntry.id
         if (!canAcceptOutputs(recipe)) return DataResult.error { "Could not insert recipe outputs to slots!" }
-        if (machineType[HTMachinePropertyKeys.CONDITION]?.condition?.match(world, pos, machineType, tier) == false) {
+        if (!machineType.getOrDefault(HTMachinePropertyKeys.PROCESSOR_CONDITION)(world, pos, machineType, tier)) {
             return DataResult.error { "Not matching required condition!" }
         }
         if ((recipe as? HTRequireScanRecipe)?.requireScan == true) {
