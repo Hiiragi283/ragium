@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:entity_type": "minecraft:glow_squid"
+  },
+  "inputs": [],
+  "machine_type": "ragium:mob_extractor",
+  "outputs": [
+    {
+      "item": "minecraft:glow_ink_sac"
+    }
+  ]
+}

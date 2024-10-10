@@ -1,7 +1,13 @@
 {
-  "type": "ragium:fluid_drill",
-  "biome": "minecraft:deep_ocean",
-  "result": {
-    "item": "ragium:salt_water_fluid_cube"
-  }
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:biome": "minecraft:deep_ocean"
+  },
+  "inputs": [],
+  "machine_type": "ragium:fluid_drill",
+  "outputs": [
+    {
+      "item": "ragium:salt_water_fluid_cube"
+    }
+  ]
 }

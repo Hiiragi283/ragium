@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.common.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
@@ -16,6 +17,7 @@ object RagiumCommon : ModInitializer {
         RagiumAPI.log { info("Registering game objects...") }
         RagiumConfig.init()
 
+        HTRecipeComponentTypes
         RagiumComponentTypes
 
         RagiumAdvancementCriteria

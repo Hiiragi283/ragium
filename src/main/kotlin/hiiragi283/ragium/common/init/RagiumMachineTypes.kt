@@ -25,6 +25,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             add(BLAST_FURNACE)
             add(DISTILLATION_TOWER)
             add(FLUID_DRILL)
+            add(MOB_EXTRACTOR)
             add(SAW_MILL)
             addAll(RagiumMachineTypes.Processor.entries)
         }.forEach(register::accept)
@@ -98,6 +99,15 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
 
     @JvmField
     val FLUID_DRILL: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("fluid_drill")) {
+        set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
+        set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
+        set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+    }
+
+    @JvmField
+    val MOB_EXTRACTOR: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id("mob_extractor")) {
+        set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
+        set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTMobExtractorMachineEntity))
         set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
         set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
     }

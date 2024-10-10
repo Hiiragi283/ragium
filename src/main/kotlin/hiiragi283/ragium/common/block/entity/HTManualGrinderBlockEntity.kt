@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.util.dropStackAt
 import hiiragi283.ragium.common.util.modifyBlockState
 import net.minecraft.block.BlockState
+import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeEntry
@@ -62,6 +63,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                     ItemStack.EMPTY,
                     ItemStack.EMPTY,
                     ItemStack.EMPTY,
+                    ComponentMap.EMPTY,
                 ),
                 world,
             ).map(RecipeEntry<HTMachineRecipe>::value)

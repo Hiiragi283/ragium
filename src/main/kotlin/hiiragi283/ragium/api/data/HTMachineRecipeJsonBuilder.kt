@@ -6,10 +6,13 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
 import net.minecraft.advancement.AdvancementRewards
 import net.minecraft.advancement.criterion.RecipeUnlockedCriterion
+import net.minecraft.component.ComponentChanges
+import net.minecraft.component.ComponentType
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
@@ -39,6 +42,7 @@ class HTMachineRecipeJsonBuilder private constructor(
     private val inputs: MutableList<WeightedIngredient> = mutableListOf()
     private val outputs: MutableList<HTRecipeResult> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
+    private val customData: ComponentChanges.Builder = ComponentChanges.builder()
     private val criteria: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var suffixCache: Int = 0
 
@@ -80,6 +84,12 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     fun setCatalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = setCatalyst(Ingredient.fromTag(tagKey))
 
+    //    Custom Data    //
+
+    fun <T : Any> setCustomData(type: ComponentType<T>, value: T): HTMachineRecipeJsonBuilder = apply {
+        customData.add(type, value)
+    }
+
     //    Criterion    //
 
     fun criterion(name: String, criterion: AdvancementCriterion<*>): HTMachineRecipeJsonBuilder = apply {
@@ -99,11 +109,14 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier = CraftingRecipeJsonBuilder.getItemId(outputs[0].value)) {
         check(inputs.size in 0..3) { "Invalid input count; ${inputs.size}!" }
         check(outputs.size in 0..3) { "Invalid output count; ${outputs.size}!" }
+        if (requireScan) {
+            setCustomData(HTRecipeComponentTypes.REQUIRE_SCAN, true)
+        }
         val prefix = "${type.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         exporter.accept(
             prefixedId,
-            HTMachineRecipe(type, minTier, requireScan, inputs, outputs, catalyst),
+            HTMachineRecipe(type, minTier, inputs, outputs, catalyst, customData.build()),
             exporter.advancementBuilder
                 .criterion("has_the_recipe", RecipeUnlockedCriterion.create(prefixedId))
                 .rewards(AdvancementRewards.Builder.recipe(prefixedId))

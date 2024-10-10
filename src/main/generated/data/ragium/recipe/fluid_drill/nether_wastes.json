@@ -1,7 +1,13 @@
 {
-  "type": "ragium:fluid_drill",
-  "biome": "minecraft:nether_wastes",
-  "result": {
-    "item": "ragium:lava_fluid_cube"
-  }
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:biome": "minecraft:nether_wastes"
+  },
+  "inputs": [],
+  "machine_type": "ragium:fluid_drill",
+  "outputs": [
+    {
+      "item": "ragium:lava_fluid_cube"
+    }
+  ]
 }

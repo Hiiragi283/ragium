@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe.machine
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.machine.HTMachineConvertible
@@ -12,10 +11,10 @@ import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import net.minecraft.component.*
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
@@ -25,12 +24,13 @@ import net.minecraft.world.World
 class HTMachineRecipe(
     val type: HTMachineType,
     val minTier: HTMachineTier,
-    override val requireScan: Boolean,
     override val inputs: List<WeightedIngredient>,
     override val outputs: List<HTRecipeResult>,
     val catalyst: Ingredient,
+    private val customData: ComponentChanges,
 ) : HTRecipeBase<HTMachineRecipe.Input>,
-    HTRequireScanRecipe {
+    HTRequireScanRecipe,
+    ComponentHolder {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMachineRecipe> =
@@ -43,9 +43,6 @@ class HTMachineRecipe(
                         HTMachineTier.CODEC
                             .optionalFieldOf("min_tier", HTMachineTier.PRIMITIVE)
                             .forGetter(HTMachineRecipe::minTier),
-                        Codec.BOOL
-                            .optionalFieldOf("require_scan", false)
-                            .forGetter(HTMachineRecipe::requireScan),
                         WeightedIngredient.CODEC
                             .listOf()
                             .fieldOf("inputs")
@@ -57,6 +54,9 @@ class HTMachineRecipe(
                         Ingredient.ALLOW_EMPTY_CODEC
                             .optionalFieldOf("catalyst", Ingredient.EMPTY)
                             .forGetter(HTMachineRecipe::catalyst),
+                        ComponentChanges.CODEC
+                            .optionalFieldOf("custom_data", ComponentChanges.EMPTY)
+                            .forGetter(HTMachineRecipe::customData),
                     ).apply(instance, ::HTMachineRecipe)
             }
 
@@ -67,17 +67,22 @@ class HTMachineRecipe(
                 HTMachineRecipe::type,
                 HTMachineTier.PACKET_CODEC,
                 HTMachineRecipe::minTier,
-                PacketCodecs.BOOL,
-                HTMachineRecipe::requireScan,
                 WeightedIngredient.LIST_PACKET_CODEC,
                 HTMachineRecipe::inputs,
                 HTRecipeResult.LIST_PACKET_CODEC,
                 HTMachineRecipe::outputs,
                 Ingredient.PACKET_CODEC,
                 HTMachineRecipe::catalyst,
+                ComponentChanges.PACKET_CODEC,
+                HTMachineRecipe::customData,
                 ::HTMachineRecipe,
             )
     }
+
+    @JvmField
+    val componentMap: ComponentMap = ComponentMapImpl.create(ComponentMap.EMPTY, customData)
+
+    override val requireScan: Boolean = getOrDefault(HTRecipeComponentTypes.REQUIRE_SCAN, false)
 
     //    Recipe    //
 
@@ -88,6 +93,7 @@ class HTMachineRecipe(
         getInput(1),
         getInput(2),
         catalyst,
+        components,
     )
 
     override fun createIcon(): ItemStack = type.createItemStack(minTier)
@@ -95,6 +101,10 @@ class HTMachineRecipe(
     override fun getSerializer(): RecipeSerializer<*> = Serializer
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MACHINE
+
+    //    ComponentHolder    //
+
+    override fun getComponents(): ComponentMap = componentMap
 
     //    Serializer    //
 
@@ -113,6 +123,7 @@ class HTMachineRecipe(
         private val second: ItemStack,
         private val third: ItemStack,
         private val catalyst: ItemStack,
+        private val customData: ComponentMap,
     ) : RecipeInput {
         companion object {
             @JvmStatic
@@ -123,9 +134,10 @@ class HTMachineRecipe(
                 second: ItemStack,
                 third: ItemStack,
                 catalyst: ItemStack,
+                customData: ComponentMap,
             ): Input = currentType
                 .asProcessor()
-                ?.let { Input(it, currentTier, first, second, third, catalyst) }
+                ?.let { Input(it, currentTier, first, second, third, catalyst, customData) }
                 ?: throw IllegalStateException("Machine Type;  ${currentType.asMachine().id} must be Processor!")
         }
 
@@ -136,6 +148,7 @@ class HTMachineRecipe(
             second: WeightedIngredient?,
             third: WeightedIngredient?,
             catalyst: Ingredient?,
+            customData: ComponentMap,
         ): Boolean = matchesInternal(
             type,
             currentTier,
@@ -143,6 +156,7 @@ class HTMachineRecipe(
             second ?: WeightedIngredient.EMPTY,
             third ?: WeightedIngredient.EMPTY,
             catalyst ?: Ingredient.EMPTY,
+            customData,
         )
 
         private fun matchesInternal(
@@ -152,6 +166,7 @@ class HTMachineRecipe(
             second: WeightedIngredient,
             third: WeightedIngredient,
             catalyst: Ingredient,
+            customData: ComponentMap,
         ): Boolean = when {
             type.asMachine() != this.currentType -> false
             this.currentTier < tier -> false
@@ -159,6 +174,7 @@ class HTMachineRecipe(
             !second.test(this.second) -> false
             !third.test(this.third) -> false
             !catalyst.test(this.catalyst) -> false
+            !this.customData.all { component: Component<*> -> customData.get(component.type) == component.value } -> false
             else -> true
         }
 
@@ -173,5 +189,7 @@ class HTMachineRecipe(
         }
 
         override fun getSize(): Int = 4
+
+        override fun isEmpty(): Boolean = super.isEmpty() && customData.isEmpty
     }
 }

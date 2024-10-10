@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "custom_data": {
+    "ragium:require_scan": true
+  },
   "inputs": [
     {
       "count": 5,
@@ -20,6 +23,5 @@
     {
       "item": "minecraft:netherite_ingot"
     }
-  ],
-  "require_scan": true
+  ]
 }

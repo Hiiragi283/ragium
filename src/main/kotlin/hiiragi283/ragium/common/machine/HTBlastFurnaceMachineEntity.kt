@@ -16,12 +16,13 @@ class HTBlastFurnaceMachineEntity(tier: HTMachineTier) :
     HTMultiblockController {
     override var showPreview: Boolean = false
 
-    override fun onValid(
+    override fun onSucceeded(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
     ) {
+        super.onSucceeded(state, world, pos, player)
         RagiumAdvancementCriteria.BUILT_MACHINE.trigger(player, machineType, tier)
     }
 

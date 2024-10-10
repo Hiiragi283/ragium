@@ -1,7 +1,13 @@
 {
-  "type": "ragium:fluid_drill",
-  "biome": "minecraft:soul_sand_valley",
-  "result": {
-    "item": "ragium:oil_fluid_cube"
-  }
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:biome": "minecraft:soul_sand_valley"
+  },
+  "inputs": [],
+  "machine_type": "ragium:fluid_drill",
+  "outputs": [
+    {
+      "item": "ragium:crude_oil_fluid_cube"
+    }
+  ]
 }

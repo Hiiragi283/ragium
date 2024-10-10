@@ -7,10 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumEnchantments
-import hiiragi283.ragium.common.init.RagiumItemGroup
-import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.common.util.HTItemContent
 import hiiragi283.ragium.common.util.HTTranslationFormatter
@@ -172,6 +169,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.DOUGH, "Dough")
             builder.add(RagiumContents.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumContents.PULP, "Pulp")
+
+            builder.add(RagiumFluids.PETROLEUM.bucketItem, "Petroleum Bucket")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
@@ -183,7 +182,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
-            builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "Energy Capacity: %s E")
+            // builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "Energy Capacity: %s E")
 
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
@@ -217,6 +216,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "Large Blast Furnace")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "Distillation Tower")
             builder.add(RagiumMachineTypes.FLUID_DRILL, "Fluid Drill")
+            builder.add(RagiumMachineTypes.MOB_EXTRACTOR, "Mob Extractor")
             builder.add(RagiumMachineTypes.SAW_MILL, "Saw Mill")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
@@ -296,6 +296,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.DOUGH, "生地")
             builder.add(RagiumContents.MINCED_MEAT, "ひき肉")
             builder.add(RagiumContents.PULP, "パルプ")
+
+            builder.add(RagiumFluids.PETROLEUM.bucketItem, "石油バケツ")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
@@ -307,7 +309,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
-            builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "バッテリー容量: %s E")
+            // builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "バッテリー容量: %s E")
 
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")
@@ -341,6 +343,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔")
             builder.add(RagiumMachineTypes.FLUID_DRILL, "液体ドリル")
+            builder.add(RagiumMachineTypes.MOB_EXTRACTOR, "モブ抽出器")
             builder.add(RagiumMachineTypes.SAW_MILL, "製材機")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")

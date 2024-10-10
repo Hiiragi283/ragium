@@ -1,7 +1,13 @@
 {
-  "type": "ragium:fluid_drill",
-  "biome": "minecraft:basalt_deltas",
-  "result": {
-    "item": "ragium:lava_fluid_cube"
-  }
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:biome": "minecraft:basalt_deltas"
+  },
+  "inputs": [],
+  "machine_type": "ragium:fluid_drill",
+  "outputs": [
+    {
+      "item": "ragium:lava_fluid_cube"
+    }
+  ]
 }

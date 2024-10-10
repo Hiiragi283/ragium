@@ -10,7 +10,7 @@ import net.minecraft.world.World
 import java.util.*
 import java.util.function.BiPredicate
 
-sealed class HTMultiblockComponent : BiPredicate<World, BlockPos> {
+abstract class HTMultiblockComponent : BiPredicate<World, BlockPos> {
     abstract val previewStates: List<BlockState>
 
     abstract fun getPreviewState(world: World): BlockState?

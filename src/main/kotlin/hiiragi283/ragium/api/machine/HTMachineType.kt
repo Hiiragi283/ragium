@@ -34,7 +34,7 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             )
 
             @JvmStatic
-            fun createGenerator(id: Identifier, builderAction: HTPropertyHolder.Mutable.() -> Unit): HTMachineType = HTMachineType(
+            fun createGenerator(id: Identifier, builderAction: HTPropertyHolder.Mutable.() -> Unit = {}): HTMachineType = HTMachineType(
                 id,
                 HTPropertyHolder.create {
                     builderAction()
@@ -43,7 +43,7 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             )
 
             @JvmStatic
-            fun createProcessor(id: Identifier, builderAction: HTPropertyHolder.Mutable.() -> Unit): HTMachineType = HTMachineType(
+            fun createProcessor(id: Identifier, builderAction: HTPropertyHolder.Mutable.() -> Unit = {}): HTMachineType = HTMachineType(
                 id,
                 HTPropertyHolder.create {
                     builderAction()
@@ -62,7 +62,6 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
             consumer(nameText)
             consumer(tier.tierText)
             consumer(tier.recipeCostText)
-            consumer(tier.energyCapacityText)
         }
 
         fun getFrontTex(machine: HTMachineEntity?): Identifier = machine?.let { getOrDefault(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX)(it) }

@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:entity_type": "ragium:oblivion_cube"
+  },
+  "inputs": [],
+  "machine_type": "ragium:mob_extractor",
+  "outputs": [
+    {
+      "item": "ragium:oblivion_crystal"
+    }
+  ]
+}

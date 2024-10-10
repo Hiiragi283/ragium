@@ -82,11 +82,6 @@ enum class HTMachineTier(
             RagiumTranslationKeys.MACHINE_RECIPE_COST,
             longText(recipeCost).formatted(Formatting.YELLOW),
         ).formatted(Formatting.GRAY)
-    val energyCapacityText: MutableText = Text
-        .translatable(
-            RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY,
-            longText(energyCapacity).formatted(Formatting.YELLOW),
-        ).formatted(Formatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
 

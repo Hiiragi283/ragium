@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:entity_type": "minecraft:bogged"
+  },
+  "inputs": [],
+  "machine_type": "ragium:mob_extractor",
+  "outputs": [
+    {
+      "item": "minecraft:red_mushroom"
+    },
+    {
+      "item": "minecraft:brown_mushroom"
+    }
+  ]
+}

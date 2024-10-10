@@ -109,14 +109,6 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var showPreview: Boolean = false
 
-    override fun onValid(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity,
-    ) {
-    }
-
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         // tiles
         builder.add(-2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))

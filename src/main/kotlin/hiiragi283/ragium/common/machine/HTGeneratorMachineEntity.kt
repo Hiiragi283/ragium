@@ -35,7 +35,7 @@ open class HTGeneratorMachineEntity(machineType: HTMachineType, tier: HTMachineT
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSimple()
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+    final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTGeneratorScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(parentBE.world, parentBE.pos))
 
     //    SidedStorageBlockEntity    //
@@ -50,5 +50,5 @@ open class HTGeneratorMachineEntity(machineType: HTMachineType, tier: HTMachineT
             machineType[HTMachinePropertyKeys.FUEL_TAG]?.let(variant.registryEntry::isIn) ?: false
     }
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage
+    final override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage
 }

@@ -33,10 +33,10 @@ interface HTMultiblockController {
             true -> ActionResult.SUCCESS
             false -> {
                 if (isValid(state, world, pos, player)) {
-                    player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), false)
-                    player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
-                    onValid(state, world, pos, player)
+                    onSucceeded(state, world, pos, player)
                     showPreview = false
+                } else {
+                    onFailed(state, world, pos, player)
                 }
                 ActionResult.CONSUME
             }
@@ -57,10 +57,20 @@ interface HTMultiblockController {
         return validator.isValid
     }
 
-    fun onValid(
+    fun onSucceeded(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
-    )
+    ) {
+        player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), false)
+        player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
+    }
+
+    fun onFailed(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+    ) {}
 }

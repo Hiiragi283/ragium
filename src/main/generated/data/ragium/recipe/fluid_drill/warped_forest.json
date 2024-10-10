@@ -1,7 +1,13 @@
 {
-  "type": "ragium:fluid_drill",
-  "biome": "minecraft:warped_forest",
-  "result": {
-    "item": "ragium:lava_fluid_cube"
-  }
+  "type": "ragium:machine",
+  "custom_data": {
+    "ragium:biome": "minecraft:warped_forest"
+  },
+  "inputs": [],
+  "machine_type": "ragium:fluid_drill",
+  "outputs": [
+    {
+      "item": "ragium:lava_fluid_cube"
+    }
+  ]
 }

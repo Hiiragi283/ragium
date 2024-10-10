@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.minecraft.block.BlockState
+import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandler
@@ -32,11 +33,19 @@ open class HTProcessorMachineEntity(machineType: HTMachineType, tier: HTMachineT
                 inventory.getStack(1),
                 inventory.getStack(2),
                 inventory.getStack(3),
+                ComponentMap.builder().apply { getCustomData(world, pos, state, this) }.build(),
             )
         }.process(world, pos, machineType, tier)
     }
 
-    override val parent: HTSimpleInventory = HTSidedStorageBuilder(7)
+    open fun getCustomData(
+        world: World,
+        pos: BlockPos,
+        state: BlockState,
+        builder: ComponentMap.Builder,
+    ) {}
+
+    final override val parent: HTSimpleInventory = HTSidedStorageBuilder(7)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -46,6 +55,6 @@ open class HTProcessorMachineEntity(machineType: HTMachineType, tier: HTMachineT
         .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSimple()
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+    final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTProcessorScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(parentBE.world, parentBE.pos))
 }
