@@ -3,6 +3,12 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.RagiumAPI
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+import net.minecraft.enchantment.Enchantment
+import net.minecraft.item.Item
+import net.minecraft.registry.Registerable
+import net.minecraft.registry.RegistryBuilder
+import net.minecraft.registry.RegistryEntryLookup
+import net.minecraft.registry.RegistryKeys
 
 object RagiumDataGenerator : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
@@ -20,5 +26,14 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         RagiumLangProviders.init(pack)
 
         RagiumAPI.log { info("Ragium data generation is done!") }
+    }
+
+    override fun buildRegistry(registryBuilder: RegistryBuilder) {
+        registryBuilder.addRegistry(RegistryKeys.ENCHANTMENT) { registerable: Registerable<Enchantment> ->
+            val enchantmentLookup: RegistryEntryLookup<Enchantment> = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT)
+            val itemLookup: RegistryEntryLookup<Item> = registerable.getRegistryLookup(RegistryKeys.ITEM)
+
+            RagiumEnchantmentProvider.registerEnchantments(registerable::register, enchantmentLookup, itemLookup)
+        }
     }
 }

@@ -22,36 +22,75 @@ class RagiumEnchantmentProvider(output: FabricDataOutput, registriesFuture: Comp
         val enchantmentLookup: RegistryEntryLookup<Enchantment> = entries.getLookup(RegistryKeys.ENCHANTMENT)
         val itemLookup: RegistryEntryLookup<Item> = entries.getLookup(RegistryKeys.ITEM)
 
-        registerModifyEnchantment(entries, RagiumEnchantments.SMELTING, enchantmentLookup, itemLookup)
-        registerModifyEnchantment(entries, RagiumEnchantments.SLEDGE_HAMMER, enchantmentLookup, itemLookup)
-        registerModifyEnchantment(entries, RagiumEnchantments.BUZZ_SAW, enchantmentLookup, itemLookup)
+        registerEnchantments(entries::add, enchantmentLookup, itemLookup)
     }
 
-    private fun registerEnchantment(entries: Entries, key: RegistryKey<Enchantment>, builder: Enchantment.Builder) {
-        entries.add(key, builder.build(key.value))
-    }
+    companion object {
+        @JvmStatic
+        fun registerEnchantments(
+            register: (RegistryKey<Enchantment>, Enchantment) -> Unit,
+            enchantmentLookup: RegistryEntryLookup<Enchantment>,
+            itemLookup: RegistryEntryLookup<Item>,
+        ) {
+            registerModifyEnchantment(register, RagiumEnchantments.SMELTING, enchantmentLookup, itemLookup)
+            registerModifyEnchantment(register, RagiumEnchantments.SLEDGE_HAMMER, enchantmentLookup, itemLookup)
+            registerModifyEnchantment(register, RagiumEnchantments.BUZZ_SAW, enchantmentLookup, itemLookup)
+        }
 
-    private fun registerModifyEnchantment(
-        entries: Entries,
-        key: RegistryKey<Enchantment>,
-        enchantmentLookup: RegistryEntryLookup<Enchantment>,
-        itemLookup: RegistryEntryLookup<Item>,
-    ) {
-        registerEnchantment(
-            entries,
-            key,
-            Enchantment
-                .builder(
-                    Enchantment.definition(
-                        itemLookup.getOrThrow(ItemTags.MINING_ENCHANTABLE),
-                        1,
-                        1,
-                        Enchantment.constantCost(15),
-                        Enchantment.constantCost(65),
-                        8,
-                        AttributeModifierSlot.MAINHAND,
+        @JvmStatic
+        fun registerEnchantment(
+            register: (RegistryKey<Enchantment>, Enchantment) -> Unit,
+            key: RegistryKey<Enchantment>,
+            builder: Enchantment.Builder,
+        ) {
+            register(key, builder.build(key.value))
+        }
+
+        @JvmStatic
+        private fun registerModifyEnchantment(
+            register: (RegistryKey<Enchantment>, Enchantment) -> Unit,
+            key: RegistryKey<Enchantment>,
+            enchantmentLookup: RegistryEntryLookup<Enchantment>,
+            itemLookup: RegistryEntryLookup<Item>,
+        ) {
+            registerEnchantment(
+                register,
+                key,
+                Enchantment
+                    .builder(
+                        Enchantment.definition(
+                            itemLookup.getOrThrow(ItemTags.MINING_ENCHANTABLE),
+                            1,
+                            1,
+                            Enchantment.constantCost(15),
+                            Enchantment.constantCost(65),
+                            8,
+                            AttributeModifierSlot.MAINHAND,
+                        ),
+                    ).exclusiveSet(enchantmentLookup.getOrThrow(RagiumEnchantmentTags.MODIFYING_EXCLUSIVE_SET)),
+                /*.addEffect(
+                    EnchantmentEffectComponentTypes.LOCATION_CHANGED,
+                    ReplaceDiskEnchantmentEffect(
+                        Clamped(EnchantmentLevelBasedValue.linear(3.0f, 1.0f), 0.0f, 16.0f),
+                        EnchantmentLevelBasedValue.constant(1.0f),
+                        Vec3i(0, -1, 0),
+                        Optional.of(
+                            BlockPredicate.allOf(
+                                BlockPredicate.matchingBlockTag(Vec3i(0, 1, 0), BlockTags.AIR),
+                                BlockPredicate.matchingBlocks(Blocks.LAVA),
+                                BlockPredicate.matchingFluids(Fluids.LAVA),
+                                BlockPredicate.unobstructed()
+                            )
+                        ),
+                        BlockStateProvider.of(Blocks.MAGMA_BLOCK),
+                        Optional.of(GameEvent.BLOCK_PLACE)
                     ),
-                ).exclusiveSet(enchantmentLookup.getOrThrow(RagiumEnchantmentTags.MODIFYING_EXCLUSIVE_SET)),
-        )
+                    EntityPropertiesLootCondition.builder(
+                        LootContext.EntityTarget.THIS,
+                        EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onGround(true))
+                    )
+                )*/
+            )
+        }
     }
 }
