@@ -9,6 +9,7 @@ import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
+import hiiragi283.ragium.client.util.registerClient
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -41,6 +42,7 @@ import net.minecraft.client.render.entity.model.EntityModelPartNames
 import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 
 @Environment(EnvType.CLIENT)
@@ -70,13 +72,13 @@ object RagiumClient : ClientModInitializer {
             RagiumContents.META_MACHINE,
         )
 
-        // HTMachineBlockRegistry.forEachBlock(RagiumClient::registerCutoutMipped)
-
         registerCutout(RagiumContents.ITEM_DISPLAY)
 
         RagiumContents.Element.entries
             .map(RagiumContents.Element::clusterBlock)
             .forEach(::registerCutout)
+
+        RagiumFluids.PETROLEUM.registerClient(Identifier.of("block/black_concrete"))
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }

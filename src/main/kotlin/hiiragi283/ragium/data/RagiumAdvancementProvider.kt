@@ -445,13 +445,13 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
 
         val oil: AdvancementEntry = register
             .createChild(
-                "tier3/oil",
+                "tier3/petroleum",
                 distillationTower,
-                RagiumContents.Fluids.OIL,
+                RagiumContents.Fluids.PETROLEUM,
             ) {
-                hasItems(RagiumContents.Fluids.OIL)
+                hasItems(RagiumContents.Fluids.PETROLEUM)
             }.putEnglish("")
-            .putEnglishDesc("Get Oil")
+            .putEnglishDesc("Get Petroleum")
             .putJapanese("")
             .putJapaneseDesc("石油を手に入れる")
             .build()

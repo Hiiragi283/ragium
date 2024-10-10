@@ -35,12 +35,13 @@ val HTMachineConvertible.categoryId: CategoryIdentifier<HTMachineRecipeDisplay>
 
 fun HTMachineType.createEntryStack(tier: HTMachineTier): EntryStack<ItemStack> = EntryStacks.of(createItemStack(tier))
 
-fun createEnchantedBook(key: RegistryKey<Enchantment>): EntryStack<ItemStack> =
-    dynamicRegistry().get(RegistryKeys.ENCHANTMENT).getEntry(key)
-        .map { EnchantmentLevelEntry(it, 1) }
-        .map(EnchantedBookItem::forEnchantment)
-        .map(EntryStacks::of)
-        .orElse(EntryStacks.of(Items.ENCHANTED_BOOK))
+fun createEnchantedBook(key: RegistryKey<Enchantment>): EntryStack<ItemStack> = dynamicRegistry()
+    .get(RegistryKeys.ENCHANTMENT)
+    .getEntry(key)
+    .map { EnchantmentLevelEntry(it, 1) }
+    .map(EnchantedBookItem::forEnchantment)
+    .map(EntryStacks::of)
+    .orElse(EntryStacks.of(Items.ENCHANTED_BOOK))
 
 //    WeightedIngredient    //
 

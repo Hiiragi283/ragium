@@ -21,6 +21,7 @@ object RagiumCommon : ModInitializer {
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
         RagiumEntityTypes.init()
+        RagiumFluids.init()
         RagiumRecipeSerializers
         RagiumRecipeTypes
         registerModifications()

@@ -6,13 +6,14 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
-import hiiragi283.ragium.api.recipe.machine.HTFluidDrillRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.integration.rei.category.HTAlchemyRecipeCategory
-import hiiragi283.ragium.client.integration.rei.category.HTFluidDrillRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
-import hiiragi283.ragium.client.integration.rei.display.*
+import hiiragi283.ragium.client.integration.rei.display.HTDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTInfusionRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -42,10 +43,6 @@ object RagiumREIClient : REIClientPlugin {
     @JvmStatic
     val ALCHEMY: CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> =
         CategoryIdentifier.of(RagiumAPI.MOD_ID, "alchemical_infusion")
-
-    @JvmField
-    val FLUID_DRILL: CategoryIdentifier<HTFluidDrillRecipeDisplay> =
-        CategoryIdentifier.of(RagiumAPI.MOD_ID, "fluid_drill")
 
     @JvmStatic
     fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = RagiumAPI
@@ -85,8 +82,6 @@ object RagiumREIClient : REIClientPlugin {
             RagiumMachineTypes.SAW_MILL.categoryId,
             createEnchantedBook(RagiumEnchantments.BUZZ_SAW),
         )
-        // Fluid Drilling
-        registry.add(HTFluidDrillRecipeCategory)
         // Alchemy Recipe
         registry.add(HTAlchemyRecipeCategory)
         registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.ALCHEMICAL_INFUSER))
@@ -98,12 +93,6 @@ object RagiumREIClient : REIClientPlugin {
             HTMachineRecipe::class.java,
             RagiumRecipeTypes.MACHINE,
             ::HTMachineRecipeDisplay,
-        )
-        // Fluid Drill
-        registry.registerRecipeFiller(
-            HTFluidDrillRecipe::class.java,
-            RagiumRecipeTypes.FLUID_DRILL,
-            ::HTFluidDrillRecipeDisplay,
         )
         // Alchemy Infusion
         registry.registerRecipeFiller(

@@ -29,41 +29,9 @@ object RagiumBlockEntityTypes {
     val META_MACHINE: BlockEntityType<HTMetaMachineBlockEntity> =
         register("meta_machine", ::HTMetaMachineBlockEntity)
 
-    //    Generator    //
-
-    /*@JvmField
-    val GENERATOR_MACHINE: BlockEntityType<HTGeneratorBlockEntity.Simple> =
-        register("generator_machine", HTGeneratorBlockEntity::Simple)
-
-    @JvmField
-    val HEAT_GENERATOR: BlockEntityType<HTHeatGeneratorBlockEntity> =
-        register("heat_generator", ::HTHeatGeneratorBlockEntity)*/
-
-    //    Processor    //
-
-    /*@JvmField
-    val BLAST_FURNACE: BlockEntityType<HTBlastFurnaceBlockEntity> =
-        register("blast_furnace", ::HTBlastFurnaceBlockEntity)
-
-    @JvmField
-    val DISTILLATION_TOWER: BlockEntityType<HTDistillationTowerBlockEntity> =
-        register("distillation_tower", ::HTDistillationTowerBlockEntity)
-
-    @JvmField
-    val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
-        register("fluid_drill", ::HTFluidDrillBlockEntity)*/
-
     @JvmField
     val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
         register("manual_grinder", ::HTManualGrinderBlockEntity)
-
-    /*@JvmField
-    val SAW_MILL: BlockEntityType<HTSawMillBlockEntity> =
-        register("distillation_tower", ::HTSawMillBlockEntity)
-
-    @JvmField
-    val PROCESSOR_MACHINE: BlockEntityType<HTProcessorBlockEntityBase> =
-        register("processor_machine", HTProcessorBlockEntityBase::Simple)*/
 
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
@@ -79,28 +47,5 @@ object RagiumBlockEntityTypes {
         ITEM_DISPLAY.addSupportedBlock(RagiumContents.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumContents.MANUAL_GRINDER)
         META_MACHINE.addSupportedBlock(RagiumContents.META_MACHINE)
-
-        /*addMachineBlocks(RagiumMachineTypes.HEAT_GENERATOR, HEAT_GENERATOR)
-
-        addMachineBlocks(RagiumMachineTypes.BLAST_FURNACE, BLAST_FURNACE)
-        addMachineBlocks(RagiumMachineTypes.DISTILLATION_TOWER, DISTILLATION_TOWER)
-        addMachineBlocks(RagiumMachineTypes.FLUID_DRILL, FLUID_DRILL)
-        addMachineBlocks(RagiumMachineTypes.SAW_MILL, SAW_MILL)
-
-        RagiumMachineTypes.Generator.entries.forEach { generator: RagiumMachineTypes.Generator ->
-            addMachineBlocks(generator, GENERATOR_MACHINE)
-        }
-
-        RagiumMachineTypes.Processor.entries.forEach { processor: RagiumMachineTypes.Processor ->
-            addMachineBlocks(processor, PROCESSOR_MACHINE)
-        }*/
     }
-
-    /*@JvmStatic
-    private fun addMachineBlocks(machineType: HTMachineConvertible, type: BlockEntityType<*>) {
-        HTMachineBlockRegistry
-            .getAllTier(machineType)
-            .values
-            .forEach(type::addSupportedBlock)
-    }*/
 }

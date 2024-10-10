@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.unused
+package hiiragi283.ragium.common.fluid
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

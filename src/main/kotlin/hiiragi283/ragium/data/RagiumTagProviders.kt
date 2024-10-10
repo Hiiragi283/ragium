@@ -1,8 +1,10 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.tags.RagiumBlockTags
+import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -14,6 +16,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.registry.tag.EnchantmentTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
@@ -22,7 +25,7 @@ object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(RagiumTagProviders::BlockProvider)
-        // pack.addProvider(RagiumTagProviders::EnchantmentProvider)
+        pack.addProvider(RagiumTagProviders::EnchantmentProvider)
         // pack.addProvider(RagiumTagProviders::FluidProvider)
         pack.addProvider(RagiumTagProviders::ItemProvider)
     }
@@ -65,25 +68,30 @@ object RagiumTagProviders {
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             // ragium
             RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
-            /*HTMachineBlockRegistry.forEachBlock { block: Block ->
-                add(BlockTags.PICKAXE_MINEABLE, block)
-            }*/
         }
     }
 
     //    Enchantment    //
 
-    /*private class EnchantmentProvider(
-        output: FabricDataOutput,
-        completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
-    ) : FabricTagProvider.EnchantmentTagProvider(output, completableFuture) {
+    private class EnchantmentProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+        FabricTagProvider.EnchantmentTagProvider(output, completableFuture) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
+            getOrCreateTagBuilder(EnchantmentTags.TRADEABLE)
+                .add(RagiumEnchantments.SMELTING)
+                .add(RagiumEnchantments.SLEDGE_HAMMER)
+                .add(RagiumEnchantments.BUZZ_SAW)
+
+            getOrCreateTagBuilder(EnchantmentTags.TREASURE)
+                .add(RagiumEnchantments.SMELTING)
+                .add(RagiumEnchantments.SLEDGE_HAMMER)
+                .add(RagiumEnchantments.BUZZ_SAW)
+
             getOrCreateTagBuilder(RagiumEnchantmentTags.MODIFYING_EXCLUSIVE_SET)
-                .add(RagiumEnchantments.SMELTING.value)
-                .add(RagiumEnchantments.SLEDGE_HAMMER.value)
-                .add(RagiumEnchantments.BUZZ_SAW.value)
+                .add(RagiumEnchantments.SMELTING)
+                .add(RagiumEnchantments.SLEDGE_HAMMER)
+                .add(RagiumEnchantments.BUZZ_SAW)
         }
-    }*/
+    }
 
     //    Fluid    //
 
@@ -151,6 +159,10 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.COOKED_MEAT_FOODS)
                 .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
+
+            RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+                add(RagiumItemTags.FLUID_CUBES, fluid)
+            }
         }
     }
 }

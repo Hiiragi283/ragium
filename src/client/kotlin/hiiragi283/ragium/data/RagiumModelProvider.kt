@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -162,23 +163,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
-        // machines
-        /*HTMachineBlockRegistry.forEachBlock { machineBlock: HTMachineBlock ->
-            register(machineBlock) { block: Block ->
-                accept(
-                    VariantsBlockStateSupplier
-                        .create(
-                            block,
-                            buildModelVariant(RagiumModels.MACHINE_MODEL_ID),
-                        ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-                )
-                RagiumModels.DYNAMIC_MACHINE.upload(
-                    ModelIds.getItemModelId(block.asItem()),
-                    TextureMap(),
-                    generator.modelCollector,
-                )
-            }
-        }*/
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
@@ -186,6 +170,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             // cluster block
             register(element.clusterBlock, generator::registerAmethyst)
         }
+        // fluids
+        accept(VariantsBlockStateSupplier.create(RagiumFluids.PETROLEUM.block))
     }
 
     //    Model    //
@@ -264,5 +250,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         RagiumContents.Fluids.entries
             .map(RagiumContents.Fluids::asItem)
             .forEach { register(it, RagiumModels.FILLED_FLUID_CUBE) }
+
+        register(RagiumFluids.PETROLEUM.bucketItem)
     }
 }

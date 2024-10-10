@@ -2,16 +2,23 @@ package hiiragi283.ragium.client.util
 
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
+import hiiragi283.ragium.common.fluid.HTFluidContent
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
+import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.CustomPayload
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
@@ -92,4 +99,17 @@ fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(
     ClientPlayNetworking.registerGlobalReceiver(this) { payload: T, context: ClientPlayNetworking.Context ->
         handler(payload, context.client(), context.player(), context.responseSender())
     }
+}
+
+//    HTFluidContent    //
+
+fun HTFluidContent.registerClient(stillTex: Identifier, flowingTex: Identifier = stillTex, color: Int = -1) {
+    registerClient(SimpleFluidRenderHandler(stillTex, flowingTex, color))
+}
+
+fun HTFluidContent.registerClient(renderHandler: FluidRenderHandler) {
+    // register render handler
+    FluidRenderHandlerRegistry.INSTANCE.register(still, flowing, renderHandler)
+    // register render layers
+    BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), still, flowing)
 }

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.inventory.HTBackpackInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import hiiragi283.ragium.common.util.*
@@ -781,7 +780,8 @@ object RagiumContents {
 
         // Natural Resources
         SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
-        OIL(Color(0x000000), "Oil", "石油"),
+        PETROLEUM(Color(0x000000), "Petroleum", "石油"),
+        CRUDE_OIL(Color(0x000000), "Crude Oil", "原油"),
 
         // Elements
         HYDROGEN(Color(0x0000cc), "Hydrogen", "水素"),
@@ -818,7 +818,7 @@ object RagiumContents {
 
         val fluidName: String = name.lowercase()
 
-        private val item: HTFluidCubeItem = HTFluidCubeItem.create(fluidName)
+        private val item: Item = Item(itemSettings())
 
         override fun asItem(): Item = item
     }

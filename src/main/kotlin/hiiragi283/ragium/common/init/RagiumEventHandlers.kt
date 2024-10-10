@@ -8,18 +8,13 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.util.getEntry
-import hiiragi283.ragium.common.util.hasEnchantment
-import hiiragi283.ragium.common.util.openEnderChest
-import hiiragi283.ragium.common.util.sendTitle
+import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.EnchantmentHelper
-import net.minecraft.enchantment.Enchantments
+import net.minecraft.component.ComponentMap
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -31,8 +26,6 @@ import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.recipe.input.SingleStackRecipeInput
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
@@ -101,16 +94,22 @@ object RagiumEventHandlers {
             }
         }*/
 
-        PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, _: BlockState, _: BlockEntity? ->
+        // range mining
+        /*PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, _: BlockState, _: BlockEntity? ->
             val enchant: RegistryEntry<Enchantment> =
                 world.getEntry(RegistryKeys.ENCHANTMENT, Enchantments.UNBREAKING) ?: return@register
-            val enchantLevel: Int = EnchantmentHelper.getLevel(enchant, player.getStackInHand(Hand.MAIN_HAND))
+            val stack: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
+            val enchantLevel: Int = EnchantmentHelper.getLevel(enchant, stack)
             if (enchantLevel > 0) {
-                BlockPos.iterate(pos, pos.up(enchantLevel)).forEach { pos1: BlockPos ->
-                    world.breakBlock(pos1, true, player)
-                }
+                breakRangedBlock(
+                    world,
+                    pos,
+                    enchantLevel,
+                    player,
+                    stack
+                )
             }
-        }
+        }*/
 
         // spawn oblivion cube when oblivion cluster broken
         PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
@@ -182,6 +181,7 @@ object RagiumEventHandlers {
             ItemStack.EMPTY,
             ItemStack.EMPTY,
             ItemStack.EMPTY,
+            ComponentMap.EMPTY,
         )
     }
 }

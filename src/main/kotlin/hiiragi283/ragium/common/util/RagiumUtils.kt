@@ -22,6 +22,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.component.Component
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
@@ -63,12 +64,12 @@ import net.minecraft.world.PersistentState
 import net.minecraft.world.World
 import net.minecraft.world.WorldView
 import java.text.NumberFormat
-import java.util.function.Function
+import java.util.stream.Collectors
 import kotlin.jvm.optionals.getOrNull
 
 //    Either    //
 
-fun <T : Any> Either<out T, out T>.mapCast(): T = map(Function.identity(), Function.identity())
+fun <T : Any> Either<out T, out T>.mapCast(): T = map({ it }, { it })
 
 //    Block    //
 
@@ -128,6 +129,8 @@ val ComponentHolder.machineTier: HTMachineTier
 val ComponentMap.machineTier: HTMachineTier
     get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
 
+fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).collect(Collectors.joining(", "))}}"
+
 //    Enchantment    //
 
 fun hasEnchantment(enchantment: RegistryKey<Enchantment>, world: World, stack: ItemStack): Boolean =
@@ -152,7 +155,8 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     return ItemStack(entry, count, changes)
 }
 
-fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): Boolean = world.getEnchantment(key)
+fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): Boolean = world
+    .getEnchantment(key)
     ?.let(EnchantmentHelper.getEnchantments(this)::getLevel)
     ?.let { it > 0 }
     ?: false
@@ -265,15 +269,45 @@ fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity? = (getBlockEntit
 fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
     registryManager.get(registryKey).getEntry(key).getOrNull()
 
-fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = 
-    getEntry(RegistryKeys.ENCHANTMENT, key)
+fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = getEntry(RegistryKeys.ENCHANTMENT, key)
+
+/*fun breakRangedBlock(
+    world: World,
+    pos: BlockPos,
+    range: Int,
+    breaker: Entity,
+    tool: ItemStack
+) {
+    breakRangedBlock(world, pos, breaker.facing, range, breaker, tool::isSuitableFor)
+}
+
+fun breakRangedBlock(
+    world: World,
+    pos: BlockPos,
+    direction: Direction,
+    range: Int,
+    breaker: Entity?,
+    predicate: (BlockState) -> Boolean
+) {
+    when (direction.axis) {
+        Direction.Axis.X -> BlockPos.iterate(pos.add(0, range, -range), pos.add(0, -range, range))
+        Direction.Axis.Y -> BlockPos.iterate(pos.add(-range, 0, -range), pos.add(range, 0, range))
+        Direction.Axis.Z -> BlockPos.iterate(pos.add(-range, range, 0), pos.add(range, -range, 0))
+        else -> listOf()
+    }
+        .filter { predicate(world.getBlockState(it)) }
+        .forEach {
+            world.setBlockState(it, Blocks.BEDROCK.defaultState)
+            // world.breakBlock(it, true, breaker)
+        }
+}*/
 
 fun dropStackAt(entity: Entity, stack: ItemStack) {
     dropStackAt(entity.world, entity.blockPos, stack)
 }
 
 fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack) {
-    val itemEntity = ItemEntity(world, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), stack)
+    val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
     itemEntity.setPickupDelay(0)
     world.spawnEntity(itemEntity)
 }
