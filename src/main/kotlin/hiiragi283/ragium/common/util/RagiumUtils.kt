@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -135,6 +136,10 @@ fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).c
 
 fun hasEnchantment(enchantment: RegistryKey<Enchantment>, world: World, stack: ItemStack): Boolean =
     EnchantmentHelper.getLevel(world.getEntry(RegistryKeys.ENCHANTMENT, enchantment), stack) > 0
+
+//    FabricLoader    //
+
+fun isModLoaded(modId: String): Boolean = FabricLoader.getInstance().isModLoaded(modId)
 
 //    Item    //
 

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.property
 
-interface HTPropertyHolder {
+interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
     operator fun <T : Any> get(id: HTPropertyKey<T>): T?
 
     fun <T : Any> getOrDefault(id: HTPropertyKey.Defaulted<T>): T = get(id) ?: id.getDefaultValue()
@@ -13,7 +13,15 @@ interface HTPropertyHolder {
         get(id)?.let(action)
     }
 
-    fun forEachProperties(action: (HTPropertyKey<*>, Any) -> Unit)
+    interface Delegated : HTPropertyHolder {
+        val delegated: HTPropertyHolder
+
+        override fun <T : Any> get(id: HTPropertyKey<T>): T? = delegated[id]
+
+        override fun contains(id: HTPropertyKey<*>): Boolean = id in delegated
+
+        override fun iterator(): Iterator<Pair<HTPropertyKey<*>, Any>> = delegated.iterator()
+    }
 
     interface Mutable : HTPropertyHolder {
         operator fun <T : Any> set(id: HTPropertyKey<T>, value: T)
@@ -67,26 +75,31 @@ interface HTPropertyHolder {
 
         @JvmStatic
         fun builder(map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf()): Mutable = Builder(map)
+
+        @JvmStatic
+        fun builder(parent: HTPropertyHolder): Mutable = Builder(parent.toMap().toMutableMap())
     }
+
+    //    Empty    //
 
     private object Empty : HTPropertyHolder {
         override fun <T : Any> get(id: HTPropertyKey<T>): T? = null
 
         override fun contains(id: HTPropertyKey<*>): Boolean = false
 
-        override fun forEachProperties(action: (HTPropertyKey<*>, Any) -> Unit) = Unit
+        override fun iterator(): Iterator<Pair<HTPropertyKey<*>, Any>> = listOf<Pair<HTPropertyKey<*>, Any>>().iterator()
     }
+
+    //    Impl    //
 
     private class Impl(delegate: HTPropertyHolder) : HTPropertyHolder by delegate
 
-    open class Builder(private val map: MutableMap<HTPropertyKey<*>, Any>) : Mutable {
+    //    Builder    //
+
+    class Builder(private val map: MutableMap<HTPropertyKey<*>, Any>) : Mutable {
         override fun <T : Any> get(id: HTPropertyKey<T>): T? = id.cast(map[id])
 
         override fun contains(id: HTPropertyKey<*>): Boolean = id in map
-
-        override fun forEachProperties(action: (HTPropertyKey<*>, Any) -> Unit) {
-            map.forEach(action)
-        }
 
         override fun <T : Any> set(id: HTPropertyKey<T>, value: T) {
             map[id] = value
@@ -95,5 +108,7 @@ interface HTPropertyHolder {
         override fun remove(id: HTPropertyKey<*>) {
             map.remove(id)
         }
+
+        override fun iterator(): Iterator<Pair<HTPropertyKey<*>, Any>> = map.toList().iterator()
     }
 }

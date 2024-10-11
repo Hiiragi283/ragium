@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
@@ -36,7 +36,7 @@ interface RagiumAPI {
     val machineTypeRegistry: HTMachineTypeRegistry
 
     fun createBuiltMachineCriterion(
-        machineType: HTMachineType,
+        type: HTMachineConvertible,
         minTier: HTMachineTier,
     ): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 

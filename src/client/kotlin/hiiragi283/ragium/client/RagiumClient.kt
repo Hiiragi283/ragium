@@ -1,9 +1,15 @@
 package hiiragi283.ragium.client
 
+import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTypeKey
+import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
+import hiiragi283.ragium.client.integration.rei.INPUT_ENTRIES
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
@@ -16,8 +22,13 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
+import hiiragi283.ragium.common.util.HTBlockContent
+import hiiragi283.ragium.common.util.isModLoaded
 import hiiragi283.ragium.data.RagiumModels
 import io.wispforest.accessories.api.AccessoriesCapability
+import me.shedaniel.rei.api.common.entry.EntryIngredient
+import me.shedaniel.rei.api.common.util.EntryIngredients
+import me.shedaniel.rei.api.common.util.EntryStacks
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -42,11 +53,17 @@ import net.minecraft.client.render.entity.model.EntityModelPartNames
 import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
+import net.minecraft.item.SpawnEggItem
+import net.minecraft.registry.RegistryKey
+import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.biome.Biome
 
 @Environment(EnvType.CLIENT)
-object RagiumClient : ClientModInitializer {
+object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     override fun onInitializeClient() {
         RagiumKeyBinds
 
@@ -65,14 +82,17 @@ object RagiumClient : ClientModInitializer {
     private fun registerBlocks() {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
-            RagiumContents.RAGINITE_ORE,
-            RagiumContents.DEEPSLATE_RAGINITE_ORE,
             RagiumContents.POROUS_NETHERRACK,
             RagiumContents.OBLIVION_CLUSTER,
             RagiumContents.META_MACHINE,
         )
 
         registerCutout(RagiumContents.ITEM_DISPLAY)
+
+        RagiumContents
+            .getOres()
+            .map(HTBlockContent::block)
+            .forEach(::registerCutoutMipped)
 
         RagiumContents.Element.entries
             .map(RagiumContents.Element::clusterBlock)
@@ -172,6 +192,40 @@ object RagiumClient : ClientModInitializer {
         RagiumNetworks.REMOVE_STACK.registerClientReceiver { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int) = payload
             (context.player().world.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
+        }
+    }
+
+    //    HTMachineTypeInitializer    //
+
+    override val priority: Int = -100
+
+    override fun modifyProperties(key: HTMachineTypeKey, properties: HTPropertyHolder.Mutable) {
+        if (!isModLoaded("roughlyenoughitems")) return
+        if (key == RagiumMachineTypes.FLUID_DRILL) {
+            properties[INPUT_ENTRIES] = { recipe: HTMachineRecipe ->
+                recipe
+                    .get(HTRecipeComponentTypes.BIOME)
+                    ?.let { biome: RegistryKey<Biome> ->
+                        EntryStacks.of(Items.COMPASS).tooltip {
+                            listOf(
+                                Text.literal("Found in the biome; ${biome.value}").formatted(Formatting.YELLOW),
+                            )
+                        }
+                    }?.let(EntryIngredient::of)
+                    ?.let(::listOf)
+                    ?: emptyList()
+            }
+        }
+
+        if (key == RagiumMachineTypes.MOB_EXTRACTOR) {
+            properties[INPUT_ENTRIES] = { recipe: HTMachineRecipe ->
+                recipe
+                    .get(HTRecipeComponentTypes.ENTITY_TYPE)
+                    ?.let(SpawnEggItem::forEntity)
+                    ?.let(EntryIngredients::of)
+                    ?.let(::listOf)
+                    ?: emptyList()
+            }
         }
     }
 }

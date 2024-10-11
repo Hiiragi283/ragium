@@ -47,8 +47,9 @@ object RagiumREIClient : REIClientPlugin {
     @JvmStatic
     fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = RagiumAPI
         .getInstance()
-        .machineTypeRegistry.processors
-        .map { CategoryIdentifier.of(it.id) }
+        .machineTypeRegistry
+        .processors
+        .map(HTMachineType::categoryId)
 
     @JvmStatic
     fun forEachId(action: (CategoryIdentifier<HTMachineRecipeDisplay>) -> Unit) {

@@ -2,16 +2,16 @@ package hiiragi283.ragium.api.recipe.machine
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.recipe.HTRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import net.minecraft.component.*
+import net.minecraft.component.ComponentChanges
+import net.minecraft.component.ComponentHolder
+import net.minecraft.component.ComponentMap
+import net.minecraft.component.ComponentMapImpl
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -63,7 +63,7 @@ class HTMachineRecipe(
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineRecipe> =
             PacketCodec.tuple(
-                HTMachineTypeRegistry.PROCESSOR_PACKET_CODEC,
+                HTMachineTypeRegistry.PACKET_CODEC,
                 HTMachineRecipe::type,
                 HTMachineTier.PACKET_CODEC,
                 HTMachineRecipe::minTier,
@@ -174,7 +174,8 @@ class HTMachineRecipe(
             !second.test(this.second) -> false
             !third.test(this.third) -> false
             !catalyst.test(this.catalyst) -> false
-            !this.customData.all { component: Component<*> -> customData.get(component.type) == component.value } -> false
+            !this.currentType.getOrDefault(HTMachinePropertyKeys.ADDITIONAL_RECIPE_MATCHER)
+                (this.customData, customData) -> false
             else -> true
         }
 

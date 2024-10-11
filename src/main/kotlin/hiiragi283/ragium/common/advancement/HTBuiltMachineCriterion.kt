@@ -17,8 +17,7 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condition>() {
     @JvmStatic
-    fun create(machineType: HTMachineType, minTier: HTMachineTier): AdvancementCriterion<Condition> =
-        create(Condition(null, machineType, minTier))
+    fun create(type: HTMachineConvertible, minTier: HTMachineTier): AdvancementCriterion<Condition> = create(Condition(null, type, minTier))
 
     override fun getConditionsCodec(): Codec<Condition> = Condition.CODEC
 
@@ -57,9 +56,15 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
         constructor(
             predicate: Optional<LootContextPredicate>,
-            machineType: HTMachineType,
+            machineType: HTMachineConvertible,
             minTier: HTMachineTier,
-        ) : this(predicate.getOrNull(), machineType, minTier)
+        ) : this(predicate.getOrNull(), machineType.asMachine(), minTier)
+
+        constructor(
+            predicate: LootContextPredicate?,
+            machineType: HTMachineConvertible,
+            minTier: HTMachineTier,
+        ) : this(predicate, machineType.asMachine(), minTier)
 
         override fun player(): Optional<LootContextPredicate> = Optional.ofNullable(predicate)
 

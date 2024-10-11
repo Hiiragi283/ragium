@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.inventory.HTSidedStorageBuilder
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -20,7 +21,7 @@ import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-open class HTProcessorMachineEntity(machineType: HTMachineType, tier: HTMachineTier) : HTMachineEntity(machineType, tier) {
+open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineTier) : HTMachineEntity(type, tier) {
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         HTMachineRecipeProcessor(
             parent,

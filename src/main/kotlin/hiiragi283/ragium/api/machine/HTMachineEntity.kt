@@ -23,6 +23,8 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
     HTDelegatedInventory.Simple,
     NamedScreenHandlerFactory,
     PropertyDelegateHolder {
+    constructor(type: HTMachineConvertible, tier: HTMachineTier) : this(type.asMachine(), tier)
+
     lateinit var parentBE: HTMetaMachineBlockEntity
         private set
 

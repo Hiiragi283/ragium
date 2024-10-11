@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyKey
+import net.minecraft.component.ComponentMap
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
@@ -45,6 +46,10 @@ object HTMachinePropertyKeys {
     @JvmField
     val PROCESSOR_CONDITION: HTPropertyKey.Defaulted<(World, BlockPos, HTMachineType, HTMachineTier) -> Boolean> =
         HTPropertyKey.Defaulted(RagiumAPI.id("processor_condition")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> false }
+
+    @JvmField
+    val ADDITIONAL_RECIPE_MATCHER: HTPropertyKey.Defaulted<(ComponentMap, ComponentMap) -> Boolean> =
+        HTPropertyKey.Defaulted(RagiumAPI.id("additional_recipe_matcher")) { _: ComponentMap, _: ComponentMap -> true }
 
     @JvmField
     val PROCESSOR_SUCCEEDED: HTPropertyKey.Defaulted<(World, BlockPos, HTMachineType, HTMachineTier) -> Unit> =

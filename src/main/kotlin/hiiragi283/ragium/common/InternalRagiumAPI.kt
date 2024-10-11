@@ -1,26 +1,24 @@
 package hiiragi283.ragium.common
 
+import com.google.common.collect.ImmutableBiMap
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
-import net.minecraft.util.Identifier
 
 internal data object InternalRagiumAPI : RagiumAPI {
     override val config: RagiumAPI.Config = RagiumConfig
     override lateinit var machineTypeRegistry: HTMachineTypeRegistry
 
     override fun createBuiltMachineCriterion(
-        machineType: HTMachineType,
+        type: HTMachineConvertible,
         minTier: HTMachineTier,
-    ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(machineType, minTier)
+    ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(type, minTier)
 
     override fun getHardModeCondition(isHard: Boolean): ResourceCondition = HTHardModeResourceCondition.fromBool(isHard)
 
@@ -28,24 +26,41 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
     @JvmStatic
     fun initMachineType() {
-        val machineTypes: MutableMap<Identifier, HTMachineType> = mutableMapOf()
+        val initializers: List<HTMachineTypeInitializer> = FabricLoader
+            .getInstance()
+            .getEntrypoints(
+                HTMachineTypeInitializer.KEY,
+                HTMachineTypeInitializer::class.java,
+            ).sortedWith(compareBy(HTMachineTypeInitializer::priority).thenBy { it::class.java.canonicalName })
 
-        fun addMachine(convertible: HTMachineConvertible) {
-            val type: HTMachineType = convertible.asMachine()
-            check(type.id !in machineTypes) { "Machine Type; ${type.id} is already registered!" }
-            machineTypes[type.id] = type
+        val keyCache: MutableSet<HTMachineTypeKey> = mutableSetOf()
+        val builder: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
+
+        fun addMachine(key: HTMachineTypeKey, properties: HTPropertyHolder, category: HTMachineType.Category) {
+            check(key !in keyCache) { "Machine Type; ${key.id} is already registered!" }
+            val type: HTMachineType = HTMachineType.create(HTPropertyHolder.builder(properties), category)
+            keyCache.add(key)
+            builder.put(key, type)
         }
 
-        addMachine(HTMachineType.DEFAULT)
+        keyCache.add(HTMachineTypeKey.DEFAULT)
+        builder.put(HTMachineTypeKey.DEFAULT, HTMachineType.DEFAULT)
 
-        FabricLoader.getInstance().invokeEntrypoints(
-            HTMachineTypeInitializer.KEY,
-            HTMachineTypeInitializer::class.java,
-        ) { initializer: HTMachineTypeInitializer ->
-            initializer.registerType(::addMachine)
+        initializers.forEach {
+            it.registerType(HTMachineTypeInitializer.Register(::addMachine))
         }
 
-        this.machineTypeRegistry = HTMachineTypeRegistry(machineTypes)
+        val map: ImmutableBiMap<HTMachineTypeKey, HTMachineType> = builder.build()
+
+        initializers.forEach {
+            map.forEach { (key: HTMachineTypeKey, type: HTMachineType) ->
+                val builder1: HTPropertyHolder.Mutable = HTPropertyHolder.builder(type)
+                it.modifyProperties(key, builder1)
+                type.delegated = builder1
+            }
+        }
+
+        this.machineTypeRegistry = HTMachineTypeRegistry(map)
         RagiumAPI.log { info("HTMachineTypeRegistry initialized!") }
     }
 }

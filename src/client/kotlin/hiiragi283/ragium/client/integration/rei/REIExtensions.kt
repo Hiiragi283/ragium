@@ -1,14 +1,18 @@
 package hiiragi283.ragium.client.integration.rei
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.WeightedIngredient
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.entry.EntryStack
+import me.shedaniel.rei.api.common.util.EntryIngredients
 import me.shedaniel.rei.api.common.util.EntryStacks
 import me.shedaniel.rei.impl.Internals
 import net.minecraft.enchantment.Enchantment
@@ -42,6 +46,35 @@ fun createEnchantedBook(key: RegistryKey<Enchantment>): EntryStack<ItemStack> = 
     .map(EnchantedBookItem::forEnchantment)
     .map(EntryStacks::of)
     .orElse(EntryStacks.of(Items.ENCHANTED_BOOK))
+
+//    Display    //
+
+@JvmField
+val INPUT_ENTRIES: HTPropertyKey.Defaulted<(HTMachineRecipe) -> List<EntryIngredient>> =
+    HTPropertyKey.Defaulted(
+        RagiumAPI.id("input_entries"),
+        value = { recipe: HTMachineRecipe ->
+            buildList {
+                add(recipe.getInput(0)?.entryIngredient ?: EntryIngredient.empty())
+                add(recipe.getInput(1)?.entryIngredient ?: EntryIngredient.empty())
+                add(recipe.getInput(2)?.entryIngredient ?: EntryIngredient.empty())
+                add(EntryIngredients.ofIngredient(recipe.catalyst))
+            }
+        },
+    )
+
+@JvmField
+val OUTPUT_ENTRIES: HTPropertyKey.Defaulted<(HTMachineRecipe) -> List<EntryIngredient>> =
+    HTPropertyKey.Defaulted(
+        RagiumAPI.id("output_entries"),
+        value = { recipe: HTMachineRecipe ->
+            recipe.outputs.map(HTRecipeResult::entryIngredient)
+        },
+    )
+
+fun HTMachineType.getInputEntries(recipe: HTMachineRecipe): List<EntryIngredient> = getOrDefault(INPUT_ENTRIES)(recipe)
+
+fun HTMachineType.getOutputEntries(recipe: HTMachineRecipe): List<EntryIngredient> = getOrDefault(OUTPUT_ENTRIES)(recipe)
 
 //    WeightedIngredient    //
 

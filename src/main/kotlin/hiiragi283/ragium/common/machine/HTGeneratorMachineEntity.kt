@@ -4,10 +4,7 @@ import hiiragi283.ragium.api.inventory.HTSidedStorageBuilder
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
-import hiiragi283.ragium.api.machine.HTMachineEntity
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -23,8 +20,8 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-open class HTGeneratorMachineEntity(machineType: HTMachineType, tier: HTMachineTier) :
-    HTMachineEntity(machineType, tier),
+open class HTGeneratorMachineEntity(type: HTMachineConvertible, tier: HTMachineTier) :
+    HTMachineEntity(type, tier),
     SidedStorageBlockEntity {
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         machineType.generateEnergy(world, pos, tier)

@@ -21,45 +21,39 @@ import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class HTMachineType private constructor(val id: Identifier, properties: HTPropertyHolder) :
+class HTMachineType private constructor(properties: HTPropertyHolder) :
     HTMachineConvertible,
-    HTPropertyHolder by properties {
+    HTPropertyHolder.Delegated {
         companion object {
             @JvmField
             val DEFAULT = HTMachineType(
-                RagiumAPI.id("default"),
                 HTPropertyHolder.create {
                     set(HTMachinePropertyKeys.FRONT_TEX) { RagiumAPI.id("block/alloy_furnace_front") }
                 },
             )
 
             @JvmStatic
-            fun createGenerator(id: Identifier, builderAction: HTPropertyHolder.Mutable.() -> Unit = {}): HTMachineType = HTMachineType(
-                id,
-                HTPropertyHolder.create {
-                    builderAction()
-                    set(HTMachinePropertyKeys.CATEGORY, Category.GENERATOR)
-                },
-            )
-
-            @JvmStatic
-            fun createProcessor(id: Identifier, builderAction: HTPropertyHolder.Mutable.() -> Unit = {}): HTMachineType = HTMachineType(
-                id,
-                HTPropertyHolder.create {
-                    builderAction()
-                    set(HTMachinePropertyKeys.CATEGORY, Category.PROCESSOR)
+            fun create(properties: HTPropertyHolder, category: Category): HTMachineType = HTMachineType(
+                HTPropertyHolder.builder(properties).apply {
+                    set(HTMachinePropertyKeys.CATEGORY, category)
                 },
             )
         }
 
-        val category: Category? = get(HTMachinePropertyKeys.CATEGORY)
+        val id: Identifier
+            get() = RagiumAPI
+                .getInstance()
+                .machineTypeRegistry
+                .getKeyOrThrow(this)
+                .id
 
-        val translationKey: String = Util.createTranslationKey("machine_type", id)
-        val text: MutableText = Text.translatable(translationKey)
-        val nameText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text.formatted(Formatting.WHITE))
+        val translationKey: String
+            get() = Util.createTranslationKey("machine_type", id)
+        val text: MutableText
+            get() = Text.translatable(translationKey)
 
         fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier) {
-            consumer(nameText)
+            consumer(Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text.formatted(Formatting.WHITE)))
             consumer(tier.tierText)
             consumer(tier.recipeCostText)
         }
@@ -112,6 +106,11 @@ class HTMachineType private constructor(val id: Identifier, properties: HTProper
         //    HTMachineConvertible    //
 
         override fun asMachine(): HTMachineType = this
+
+        //    HTPropertyHolder.Delegated    //
+
+        override var delegated: HTPropertyHolder = properties
+            internal set
 
         //    Category    //
 

@@ -5,12 +5,12 @@ import hiiragi283.ragium.api.accessories.HTDefaultAccessorySlots
 import hiiragi283.ragium.api.accessories.HTEmptyAccessory
 import hiiragi283.ragium.api.accessories.HTStatusEffectAccessory
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.util.isModLoaded
 import io.wispforest.accessories.api.AccessoriesAPI
 import io.wispforest.accessories.api.Accessory
 import io.wispforest.accessories.api.components.AccessoriesDataComponents
 import io.wispforest.accessories.api.components.AccessorySlotValidationComponent
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
@@ -22,7 +22,7 @@ object RagiumAccessoriesInit {
 
     @JvmStatic
     fun init() {
-        if (!FabricLoader.getInstance().isModLoaded("accessories")) return
+        if (!isModLoaded("accessories")) return
 
         registerAccessory(
             RagiumContents.DIVING_GOGGLES,
