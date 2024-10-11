@@ -12,6 +12,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.data.client.*
 import net.minecraft.item.Item
 import net.minecraft.item.Items
+import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
 
 class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
@@ -113,6 +114,21 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
+        accept(
+            VariantsBlockStateSupplier
+                .create(RagiumContents.SWEET_BERRIES_CAKE)
+                .coordinate(
+                    BlockStateVariantMap
+                        .create(Properties.BITES)
+                        .register(0, buildModelVariant(ModelIds.getBlockModelId(RagiumContents.SWEET_BERRIES_CAKE)))
+                        .register(1, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice1")))
+                        .register(2, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice2")))
+                        .register(3, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice3")))
+                        .register(4, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice4")))
+                        .register(5, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice5")))
+                        .register(6, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice6"))),
+                ),
+        )
 
         register(RagiumContents.INFESTING) {
             accept(

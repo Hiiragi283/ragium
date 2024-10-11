@@ -117,6 +117,9 @@ object RagiumLangProviders {
             builder.add(RagiumContents.POROUS_NETHERRACK, "Porous Netherrack")
             builder.add(RagiumContents.OBLIVION_CLUSTER, "Oblivion Cluster")
 
+            builder.add(RagiumContents.SPONGE_CAKE, "Sponge Cake")
+            builder.add(RagiumContents.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
+
             builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumContents.BASIC_CASING, "Basic Casing")
             builder.add(RagiumContents.ADVANCED_CASING, "Advanced Casing")
@@ -240,6 +243,9 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumContents.POROUS_NETHERRACK, "多孔質ネザーラック")
             builder.add(RagiumContents.OBLIVION_CLUSTER, "忘却の芽")
+
+            builder.add(RagiumContents.SPONGE_CAKE, "スポンジケーキ")
+            builder.add(RagiumContents.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
             builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumContents.BASIC_CASING, "基本型外装")

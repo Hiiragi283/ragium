@@ -65,7 +65,7 @@ loom {
             runDir = "run/server"
         }
         create("datagen") {
-            client()
+            inherit(getByName("client"))
             name = "Data Generation"
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")

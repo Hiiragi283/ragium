@@ -4,15 +4,15 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTBackpackInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.util.blockSettings
-import hiiragi283.ragium.api.util.element
-import hiiragi283.ragium.api.util.itemSettings
-import hiiragi283.ragium.api.util.tier
+import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
-import hiiragi283.ragium.common.util.*
+import hiiragi283.ragium.common.util.HTBlockContent
+import hiiragi283.ragium.common.util.HTItemContent
+import hiiragi283.ragium.common.util.HTTranslationProvider
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.block.*
@@ -21,6 +21,7 @@ import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.*
@@ -100,7 +101,7 @@ object RagiumContents {
 
     @JvmField
     val SWEET_BERRIES_CAKE: Block =
-        registerBlock("sweet_berries_cake", CakeBlock(blockSettings(Blocks.CAKE)))
+        registerBlock("sweet_berries_cake", HTSweetBerriesCakeBlock)
 
     //    Blocks - Utilities    //
 
@@ -805,9 +806,34 @@ object RagiumContents {
         HTTranslationProvider {
         // Vanilla
         WATER(Color(0x0033ff), "Water", "水"),
-        LAVA(Color(0xff6600), "Lava", "溶岩"),
-        MILK(Color(0xffffff), "Milk", "牛乳"),
-        HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
+        LAVA(Color(0xff6600), "Lava", "溶岩") {
+            override fun createItem(): Item = object : HTFluidCubeItem() {
+                override fun onDrink(stack: ItemStack, world: World, user: LivingEntity) {
+                    if (!world.isClient) {
+                        user.setOnFireFromLava()
+                        dropStackAt(user, Items.OBSIDIAN.defaultStack)
+                    }
+                }
+            }
+        },
+        MILK(Color(0xffffff), "Milk", "牛乳") {
+            override fun createItem(): Item = object : HTFluidCubeItem() {
+                override fun onDrink(stack: ItemStack, world: World, user: LivingEntity) {
+                    if (!world.isClient) {
+                        user.clearStatusEffects()
+                    }
+                }
+            }
+        },
+        HONEY(Color(0xffcc33), "Honey", "蜂蜜") {
+            override fun createItem(): Item = object : HTFluidCubeItem() {
+                override fun onDrink(stack: ItemStack, world: World, user: LivingEntity) {
+                    if (!world.isClient) {
+                        user.removeStatusEffect(StatusEffects.POISON)
+                    }
+                }
+            }
+        },
 
         // Molten Materials
         MOLTEN_BASALT(Color(0x333333), "Molten Basalt", "溶融玄武岩"),
@@ -819,7 +845,18 @@ object RagiumContents {
 
         // Foods
         BATTER(Color(0xffcc66), "Batter", "バッター液"),
-        SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー"),
+        SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー") {
+            override fun createItem(): Item = HTFluidCubeItem(
+                itemSettings().food(
+                    FoodComponent
+                        .Builder()
+                        .alwaysEdible()
+                        .statusEffect(StatusEffectInstance(StatusEffects.SPEED, 20 * 5, 0), 1.0f)
+                        .usingConvertsTo(EMPTY_FLUID_CUBE)
+                        .build(),
+                ),
+            )
+        },
 
         // Natural Resources
         SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
@@ -861,7 +898,10 @@ object RagiumContents {
 
         val fluidName: String = name.lowercase()
 
-        private val item: Item = Item(itemSettings())
+        protected open fun createItem(): Item = Item(itemSettings())
+
+        @Suppress("LeakingThis")
+        private val item: Item = createItem()
 
         override fun asItem(): Item = item
     }
