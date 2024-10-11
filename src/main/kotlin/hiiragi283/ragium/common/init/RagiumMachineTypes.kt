@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumFluidTags
+import hiiragi283.ragium.api.util.getAroundPos
+import hiiragi283.ragium.api.util.getMachineEntity
 import hiiragi283.ragium.common.machine.*
-import hiiragi283.ragium.common.util.getAroundPos
-import hiiragi283.ragium.common.util.getMachineEntity
 import net.minecraft.component.ComponentMap
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState

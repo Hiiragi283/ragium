@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.util.machineTier
+import hiiragi283.ragium.api.util.machineTier
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey

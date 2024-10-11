@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.network
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.util.createCodec
 import hiiragi283.ragium.common.init.RagiumNetworks
-import hiiragi283.ragium.common.util.createCodec
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs

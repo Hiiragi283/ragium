@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.common.util.itemSettings
+import hiiragi283.ragium.api.util.itemSettings
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 

@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessories.HTDefaultAccessorySlots
 import hiiragi283.ragium.api.accessories.HTEmptyAccessory
 import hiiragi283.ragium.api.accessories.HTStatusEffectAccessory
+import hiiragi283.ragium.api.util.isModLoaded
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.util.isModLoaded
 import io.wispforest.accessories.api.AccessoriesAPI
 import io.wispforest.accessories.api.Accessory
 import io.wispforest.accessories.api.components.AccessoriesDataComponents

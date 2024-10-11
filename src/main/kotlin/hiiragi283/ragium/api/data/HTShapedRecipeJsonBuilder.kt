@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.common.util.BothEither
+import hiiragi283.ragium.api.util.BothEither
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements

@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.renderer
 
+import hiiragi283.ragium.api.util.getOrNull
 import hiiragi283.ragium.client.util.renderMultiblock
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
-import hiiragi283.ragium.common.util.getOrNull
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider

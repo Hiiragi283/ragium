@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineTypeKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
+import hiiragi283.ragium.api.util.isModLoaded
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
@@ -23,7 +24,6 @@ import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
 import hiiragi283.ragium.common.util.HTBlockContent
-import hiiragi283.ragium.common.util.isModLoaded
 import hiiragi283.ragium.data.RagiumModels
 import io.wispforest.accessories.api.AccessoriesCapability
 import me.shedaniel.rei.api.common.entry.EntryIngredient

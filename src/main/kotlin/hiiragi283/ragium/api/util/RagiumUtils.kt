@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.util
 
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.ImmutableTable

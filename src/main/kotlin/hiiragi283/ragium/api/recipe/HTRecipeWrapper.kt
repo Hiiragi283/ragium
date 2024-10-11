@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.common.util.DUMMY_LOOKUP
+import hiiragi283.ragium.api.util.DUMMY_LOOKUP
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType

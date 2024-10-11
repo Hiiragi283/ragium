@@ -3,12 +3,12 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.util.dropStackAt
+import hiiragi283.ragium.api.util.modifyBlockState
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.util.dropStackAt
-import hiiragi283.ragium.common.util.modifyBlockState
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity

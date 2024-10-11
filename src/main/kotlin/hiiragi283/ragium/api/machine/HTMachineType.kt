@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.util.useTransaction
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.util.useTransaction
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant

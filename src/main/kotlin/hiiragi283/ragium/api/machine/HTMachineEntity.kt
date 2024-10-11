@@ -3,9 +3,9 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity.Factory
+import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMultiblockController
-import hiiragi283.ragium.common.util.HTDynamicPropertyDelegate
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity

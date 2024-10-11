@@ -2,8 +2,8 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.data.HTMetalItemRecipeRegistry
 import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.api.util.BothEither
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.util.BothEither
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.item.Items
 import net.minecraft.registry.tag.ItemTags

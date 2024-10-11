@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.api.util.blockSettings
 import hiiragi283.ragium.common.block.entity.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks

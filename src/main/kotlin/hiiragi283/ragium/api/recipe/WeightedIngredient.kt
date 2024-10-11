@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.common.util.toList
+import hiiragi283.ragium.api.util.toList
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack

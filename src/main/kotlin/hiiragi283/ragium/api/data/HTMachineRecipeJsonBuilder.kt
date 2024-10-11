@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
-import hiiragi283.ragium.common.util.BothEither
+import hiiragi283.ragium.api.util.BothEither
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
 import net.minecraft.advancement.AdvancementRewards

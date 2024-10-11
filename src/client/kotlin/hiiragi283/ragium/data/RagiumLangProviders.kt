@@ -5,13 +5,13 @@ import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.util.splitWith
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.common.util.HTItemContent
 import hiiragi283.ragium.common.util.HTTranslationFormatter
-import hiiragi283.ragium.common.util.splitWith
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider

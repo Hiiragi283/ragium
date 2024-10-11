@@ -3,9 +3,9 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.util.BothEither
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.util.BothEither
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
 import net.minecraft.item.Item

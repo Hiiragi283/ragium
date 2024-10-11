@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.common.util.sendPacketForPlayers
+import hiiragi283.ragium.api.util.sendPacketForPlayers
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType

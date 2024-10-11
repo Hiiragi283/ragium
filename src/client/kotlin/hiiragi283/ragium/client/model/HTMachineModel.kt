@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.util.getMachineEntity
+import hiiragi283.ragium.api.util.getOrDefault
+import hiiragi283.ragium.api.util.machineTier
+import hiiragi283.ragium.api.util.machineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.util.getMachineEntity
-import hiiragi283.ragium.common.util.getOrDefault
-import hiiragi283.ragium.common.util.machineTier
-import hiiragi283.ragium.common.util.machineType
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel

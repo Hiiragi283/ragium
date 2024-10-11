@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.util.blockSettings
-import hiiragi283.ragium.common.util.getOrNull
+import hiiragi283.ragium.api.util.blockSettings
+import hiiragi283.ragium.api.util.getOrNull
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks

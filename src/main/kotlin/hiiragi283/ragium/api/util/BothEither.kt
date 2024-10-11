@@ -1,4 +1,6 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.util
+
+import com.mojang.datafixers.util.Either
 
 sealed interface BothEither<L : Any, R : Any> {
     companion object {
@@ -10,6 +12,9 @@ sealed interface BothEither<L : Any, R : Any> {
 
         @JvmStatic
         fun <L : Any, R : Any> both(left: L, right: R): BothEither<L, R> = Both(left, right)
+
+        @JvmStatic
+        fun <L : Any, R : Any> from(either: Either<L, R>): Either<L, R> = either.ifLeft { left<L, R>(it) }.ifRight { right<L, R>(it) }
     }
 
     fun getLeft(): L?
@@ -17,6 +22,8 @@ sealed interface BothEither<L : Any, R : Any> {
     fun getRight(): R?
 
     fun getBoth(): Pair<L, R>?
+
+    fun toEither(): Either<L, R>?
 
     fun ifLeft(action: (L) -> Unit): BothEither<L, R>
 
@@ -41,6 +48,8 @@ sealed interface BothEither<L : Any, R : Any> {
 
         override fun getBoth(): Pair<L, R>? = null
 
+        override fun toEither(): Either<L, R>? = Either.left(left)
+
         override fun ifLeft(action: (L) -> Unit): Left<L, R> = apply { action(left) }
 
         override fun ifRight(action: (R) -> Unit): Left<L, R> = this
@@ -64,6 +73,8 @@ sealed interface BothEither<L : Any, R : Any> {
         override fun getRight(): R = right
 
         override fun getBoth(): Pair<L, R>? = null
+
+        override fun toEither(): Either<L, R>? = Either.right(right)
 
         override fun ifLeft(action: (L) -> Unit): Right<L, R> = this
 
@@ -90,6 +101,8 @@ sealed interface BothEither<L : Any, R : Any> {
         override fun getRight(): R = right
 
         override fun getBoth(): Pair<L, R> = left to right
+
+        override fun toEither(): Either<L, R>? = null
 
         override fun ifLeft(action: (L) -> Unit): Both<L, R> = apply { action(left) }
 

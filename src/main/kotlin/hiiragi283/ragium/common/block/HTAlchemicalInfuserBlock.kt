@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.api.util.blockSettings
 import hiiragi283.ragium.common.block.entity.HTAlchemicalInfuserBlockEntity
-import hiiragi283.ragium.common.util.blockSettings
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext

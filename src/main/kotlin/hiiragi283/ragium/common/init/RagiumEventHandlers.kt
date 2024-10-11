@@ -7,6 +7,9 @@ import hiiragi283.ragium.api.inventory.HTBackpackInventory
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.util.hasEnchantment
+import hiiragi283.ragium.api.util.openEnderChest
+import hiiragi283.ragium.api.util.sendTitle
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents

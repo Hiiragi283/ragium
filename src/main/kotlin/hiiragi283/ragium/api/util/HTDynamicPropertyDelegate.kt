@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.util
 
 import net.minecraft.screen.PropertyDelegate
 
