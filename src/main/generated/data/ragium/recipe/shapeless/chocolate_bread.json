@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:bread"
+    },
+    {
+      "item": "ragium:chocolate_fluid_cube"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:chocolate_bread"
+  }
+}

@@ -215,6 +215,17 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
 
+        fun registerLayered(item: Item, layer0: Identifier, layer1: Identifier) {
+            register(
+                item,
+                Models.GENERATED_TWO_LAYERS,
+                textureMap {
+                    put(TextureKey.LAYER0, layer0)
+                    put(TextureKey.LAYER1, layer1)
+                },
+            )
+        }
+
         register(RagiumContents.STEEL_SWORD)
         register(RagiumContents.STEEL_SHOVEL)
         register(RagiumContents.STEEL_PICKAXE)
@@ -230,14 +241,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.NIGHT_VISION_GOGGLES)
         register(RagiumContents.PISTON_BOOTS)
         register(RagiumContents.PARACHUTE)
+        register(RagiumContents.ALCHEMY_STUFF)
 
-        register(
+        registerLayered(
             RagiumContents.RAGI_ALLOY_COMPOUND,
-            Models.GENERATED_TWO_LAYERS,
-            textureMap {
-                put(TextureKey.LAYER0, TextureMap.getId(Items.COPPER_INGOT))
-                put(TextureKey.LAYER1, TextureMap.getId(RagiumContents.RAGI_ALLOY_COMPOUND))
-            },
+            TextureMap.getId(Items.COPPER_INGOT),
+            TextureMap.getId(RagiumContents.RAGI_ALLOY_COMPOUND),
         )
         register(RagiumContents.SOAP_INGOT)
         register(RagiumContents.BASALT_FIBER)
@@ -250,6 +259,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.BEE_WAX)
         register(RagiumContents.BUTTER)
         register(RagiumContents.CHOCOLATE)
+        registerLayered(
+            RagiumContents.CHOCOLATE_APPLE,
+            TextureMap.getId(Items.APPLE),
+            TextureMap.getId(RagiumContents.CHOCOLATE_APPLE),
+        )
+        register(RagiumContents.CHOCOLATE_BREAD)
         register(RagiumContents.FLOUR)
         register(RagiumContents.DOUGH)
         register(RagiumContents.MINCED_MEAT)

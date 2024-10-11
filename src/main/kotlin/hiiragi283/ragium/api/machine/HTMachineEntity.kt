@@ -55,7 +55,7 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult = (this as? HTMultiblockController)
-        ?.onUseController(state, world, pos, player)
+        ?.onUseController(state, world, pos, player, this)
         ?: when (world.isClient) {
             true -> ActionResult.SUCCESS
             else -> {

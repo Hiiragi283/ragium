@@ -269,7 +269,7 @@ object RagiumContents : HTContentRegister {
 
     @JvmField
     val CHOCOLATE_BREAD: Item = registerFoodItem("chocolate_bread", FoodComponents.COOKED_BEEF)
-    
+
     @JvmField
     val FLOUR: Item = registerItem("flour")
 

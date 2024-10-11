@@ -480,6 +480,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .addInput(RagiumContents.CHOCOLATE)
+            .addInput(RagiumContents.EMPTY_FLUID_CUBE)
+            .addOutput(RagiumContents.Fluids.CHOCOLATE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.EXTRACTOR)
             .addInput(Items.SWEET_BERRIES)
             .addInput(RagiumContents.EMPTY_FLUID_CUBE)
             .addOutput(RagiumContents.Fluids.SWEET_BERRIES)
@@ -868,7 +875,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         exporter: RecipeExporter,
         element: RagiumContents.Element,
         ing1: ItemConvertible,
-        count1: Int
+        count1: Int,
     ) {
         HTInfusionRecipeJsonBuilder(element.pendantItem)
             .addInput(RagiumItemTags.SILVER_PLATES, 32)

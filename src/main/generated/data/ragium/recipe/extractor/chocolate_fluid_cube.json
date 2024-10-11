@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:chocolate"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:empty_fluid_cube"
+      }
+    }
+  ],
+  "machine_type": "ragium:extractor",
+  "outputs": [
+    {
+      "item": "ragium:chocolate_fluid_cube"
+    }
+  ]
+}

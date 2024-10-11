@@ -16,53 +16,36 @@ import net.minecraft.registry.Registry
 import kotlin.jvm.optionals.getOrNull
 
 interface HTContentRegister {
-
-    fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T =
-        Registry.register(registry, RagiumAPI.id(name), value)
+    fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T = Registry.register(registry, RagiumAPI.id(name), value)
 
     fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
 
     fun registerBlock(content: HTBlockContent): Block = registerBlock(content.id.path, content.block)
 
-    fun registerBlock(name: String, settings: AbstractBlock.Settings = blockSettings()): Block =
-        registerBlock(name, Block(settings))
+    fun registerBlock(name: String, settings: AbstractBlock.Settings = blockSettings()): Block = registerBlock(name, Block(settings))
 
     fun registerCopy(name: String, parent: Block): Block = registerBlock(name, blockSettings(parent))
 
-    fun registerWithBE(name: String, type: BlockEntityType<*>, parent: Block): Block =
-        registerWithBE(name, type, blockSettings(parent))
+    fun registerWithBE(name: String, type: BlockEntityType<*>, parent: Block): Block = registerWithBE(name, type, blockSettings(parent))
 
-    fun registerWithBE(
-        name: String,
-        type: BlockEntityType<*>,
-        settings: AbstractBlock.Settings = blockSettings()
-    ): Block =
+    fun registerWithBE(name: String, type: BlockEntityType<*>, settings: AbstractBlock.Settings = blockSettings()): Block =
         registerBlock(name, HTBlockWithEntity.build(type, settings))
 
     fun registerHorizontalWithBE(name: String, type: BlockEntityType<*>, parent: Block): Block =
         registerHorizontalWithBE(name, type, blockSettings(parent))
 
-    fun registerHorizontalWithBE(
-        name: String,
-        type: BlockEntityType<*>,
-        settings: AbstractBlock.Settings = blockSettings(),
-    ): Block = registerBlock(name, HTBlockWithEntity.buildHorizontal(type, settings))
+    fun registerHorizontalWithBE(name: String, type: BlockEntityType<*>, settings: AbstractBlock.Settings = blockSettings()): Block =
+        registerBlock(name, HTBlockWithEntity.buildHorizontal(type, settings))
 
     fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
 
-    fun registerItem(name: String, settings: Item.Settings = itemSettings()): Item =
-        registerItem(name, Item(settings))
+    fun registerItem(name: String, settings: Item.Settings = itemSettings()): Item = registerItem(name, Item(settings))
 
     fun registerItem(item: HTItemContent): Item = registerItem(item.id.path, item.item)
 
-    fun registerFoodItem(name: String, component: FoodComponent): Item =
-        registerItem(name, Item(itemSettings().food(component)))
+    fun registerFoodItem(name: String, component: FoodComponent): Item = registerItem(name, Item(itemSettings().food(component)))
 
-    fun registerBlockItem(
-        block: Block,
-        settings: Item.Settings = itemSettings(),
-        factory: (Block, Item.Settings) -> Item = ::BlockItem,
-    ) {
+    fun registerBlockItem(block: Block, settings: Item.Settings = itemSettings(), factory: (Block, Item.Settings) -> Item = ::BlockItem) {
         Registries.BLOCK
             .getKey(block)
             .getOrNull()
@@ -78,50 +61,31 @@ interface HTContentRegister {
         settings: Item.Settings = itemSettings(),
     ): T = registerItem(name, factory(material, settings.attributeModifiers(attributeComponent)))
 
-    fun registerSwordItem(
-        name: String,
-        material: ToolMaterial,
-        settings: Item.Settings = itemSettings()
-    ): SwordItem =
-        registerToolItem(
-            name,
-            material,
-            ::SwordItem,
-            RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.0),
-            settings,
-        )
+    fun registerSwordItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): SwordItem = registerToolItem(
+        name,
+        material,
+        ::SwordItem,
+        RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.0),
+        settings,
+    )
 
-    fun registerShovelItem(
-        name: String,
-        material: ToolMaterial,
-        settings: Item.Settings = itemSettings()
-    ): ShovelItem =
-        registerToolItem(
-            name,
-            material,
-            ::ShovelItem,
-            RagiumToolMaterials.createAttributeComponent(material, -2.0, -3.0),
-            settings,
-        )
+    fun registerShovelItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): ShovelItem = registerToolItem(
+        name,
+        material,
+        ::ShovelItem,
+        RagiumToolMaterials.createAttributeComponent(material, -2.0, -3.0),
+        settings,
+    )
 
-    fun registerPickaxeItem(
-        name: String,
-        material: ToolMaterial,
-        settings: Item.Settings = itemSettings()
-    ): PickaxeItem =
-        registerToolItem(
-            name,
-            material,
-            ::PickaxeItem,
-            RagiumToolMaterials.createAttributeComponent(material, -2.0, -2.8),
-            settings,
-        )
+    fun registerPickaxeItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): PickaxeItem = registerToolItem(
+        name,
+        material,
+        ::PickaxeItem,
+        RagiumToolMaterials.createAttributeComponent(material, -2.0, -2.8),
+        settings,
+    )
 
-    fun registerAxeItem(
-        name: String,
-        material: ToolMaterial,
-        settings: Item.Settings = itemSettings()
-    ): AxeItem = registerToolItem(
+    fun registerAxeItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): AxeItem = registerToolItem(
         name,
         material,
         ::AxeItem,
@@ -129,16 +93,11 @@ interface HTContentRegister {
         settings,
     )
 
-    fun registerHoeItem(
-        name: String,
-        material: ToolMaterial,
-        settings: Item.Settings = itemSettings()
-    ): HoeItem = registerToolItem(
+    fun registerHoeItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): HoeItem = registerToolItem(
         name,
         material,
         ::HoeItem,
         RagiumToolMaterials.createAttributeComponent(material, -4.0, 0.0),
         settings,
     )
-
 }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "ragium:dough"
+  },
+  "result": {
+    "id": "minecraft:bread"
+  }
+}

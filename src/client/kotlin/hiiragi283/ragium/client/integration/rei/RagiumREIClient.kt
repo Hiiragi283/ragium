@@ -86,6 +86,7 @@ object RagiumREIClient : REIClientPlugin {
         // Alchemy Recipe
         registry.add(HTAlchemyRecipeCategory)
         registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.ALCHEMICAL_INFUSER))
+        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.ALCHEMY_STUFF))
     }
 
     override fun registerDisplays(registry: DisplayRegistry) {

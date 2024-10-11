@@ -155,6 +155,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.NIGHT_VISION_GOGGLES, "Night Vision Goggle")
             builder.add(RagiumContents.PISTON_BOOTS, "Piston Boots")
             builder.add(RagiumContents.PARACHUTE, "Parachute")
+            builder.add(RagiumContents.ALCHEMY_STUFF, "Alchemy Stuff")
 
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
@@ -167,6 +168,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.BEE_WAX, "Bee Wax")
             builder.add(RagiumContents.BUTTER, "Butter")
             builder.add(RagiumContents.CHOCOLATE, "Chocolate")
+            builder.add(RagiumContents.CHOCOLATE_APPLE, "Chocolate Apple")
+            builder.add(RagiumContents.CHOCOLATE_BREAD, "Chocolate Bread")
             builder.add(RagiumContents.FLOUR, "Flour")
             builder.add(RagiumContents.DOUGH, "Dough")
             builder.add(RagiumContents.MINCED_MEAT, "Minced Meat")
@@ -282,6 +285,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
             builder.add(RagiumContents.PISTON_BOOTS, "ピストンブーツ")
             builder.add(RagiumContents.PARACHUTE, "パラシュート")
+            builder.add(RagiumContents.ALCHEMY_STUFF, "錬金の杖")
 
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
@@ -294,6 +298,8 @@ object RagiumLangProviders {
             builder.add(RagiumContents.BEE_WAX, "蜜蠟")
             builder.add(RagiumContents.BUTTER, "バター")
             builder.add(RagiumContents.CHOCOLATE, "チョコレート")
+            builder.add(RagiumContents.CHOCOLATE_APPLE, "チョコレートアップル")
+            builder.add(RagiumContents.CHOCOLATE_BREAD, "チョコレートパン")
             builder.add(RagiumContents.FLOUR, "小麦粉")
             builder.add(RagiumContents.DOUGH, "生地")
             builder.add(RagiumContents.MINCED_MEAT, "ひき肉")

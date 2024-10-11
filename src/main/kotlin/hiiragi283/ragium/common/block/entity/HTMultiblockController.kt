@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockValidator
-import hiiragi283.ragium.api.util.getMachineEntity
 import hiiragi283.ragium.api.util.getOrDefault
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.BlockState
@@ -22,11 +21,11 @@ interface HTMultiblockController {
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
+        controller: HTMultiblockController?,
     ): ActionResult {
-        val blockEntity: HTMultiblockController =
-            world.getMachineEntity(pos) as? HTMultiblockController ?: return ActionResult.FAIL
+        if (controller == null) return ActionResult.PASS
         if (player.isSneaking) {
-            blockEntity.showPreview = !blockEntity.showPreview
+            controller.showPreview = !controller.showPreview
             return ActionResult.success(world.isClient)
         }
         return when (world.isClient) {

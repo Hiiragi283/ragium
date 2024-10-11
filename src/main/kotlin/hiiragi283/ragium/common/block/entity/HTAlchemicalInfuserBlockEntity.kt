@@ -14,11 +14,12 @@ import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ItemActionResult
@@ -38,10 +39,10 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = onUseController(state, world, pos, player)
+    ): ActionResult = onUseController(state, world, pos, player, world.getBlockEntity(pos) as? HTAlchemicalInfuserBlockEntity)
 
     fun processRecipe(stack: ItemStack, world: World): ItemActionResult {
-        if (stack.isOf(Items.BLAZE_ROD)) {
+        if (stack.isOf(RagiumContents.ALCHEMY_STUFF)) {
             val input = HTAlchemyRecipe.Input(
                 getStack(0),
                 getStack(1),
@@ -59,6 +60,7 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
             decrementInput(1, recipe)
             decrementInput(2, recipe)
             decrementInput(3, recipe)
+            world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.BLOCKS)
             return ItemActionResult.success(world.isClient)
         }
         return ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
@@ -77,12 +79,6 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     private fun modifyOutput(input: HTAlchemyRecipe.Input, world: World, recipe: HTAlchemyRecipe) {
         parent.modifyStack(4) { stackIn: ItemStack ->
             HTRecipeResult.stack(recipe.craft(input, world.registryManager)).modifyStack(stackIn)
-            /*when {
-                !canAcceptOutput(input, world, recipe) -> null
-                stackIn.isEmpty -> result
-                ItemStack.areItemsAndComponentsEqual(stackIn, result) -> stackIn.apply { count += result.count }
-                else -> null
-            } ?: stackIn*/
         }
     }
 
