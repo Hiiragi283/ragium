@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 32,
+      "ingredient": {
+        "tag": "c:plates/silver"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "ragium:rigium_dust"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "ragium:milk_fluid_cube"
+      }
+    }
+  ],
+  "output": {
+    "item": "ragium:rigium_pendant"
+  }
+}

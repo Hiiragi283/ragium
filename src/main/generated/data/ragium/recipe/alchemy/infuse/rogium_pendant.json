@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 32,
+      "ingredient": {
+        "tag": "c:plates/silver"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "ragium:rogium_dust"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "minecraft:amethyst_block"
+      }
+    }
+  ],
+  "output": {
+    "item": "ragium:rogium_pendant"
+  }
+}

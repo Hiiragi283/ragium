@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:alchemical_infuser"
+            "items": "ragium:rogium_dust"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:chiseled_quartz_block"
+            "items": "#c:plates/silver"
           }
         ]
       },
@@ -25,7 +25,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:red_stained_glass"
+            "items": "ragium:rogium_dust"
           }
         ]
       },
@@ -35,17 +35,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:mangrove_log"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_input3": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:blaze_powder"
+            "items": "minecraft:amethyst_block"
           }
         ]
       },
@@ -53,7 +43,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:alchemy/infuse/budding_ragium"
+        "recipe": "ragium:alchemy/infuse/rogium_pendant"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -64,13 +54,12 @@
       "has_input0",
       "has_input1",
       "has_input2",
-      "has_input3",
       "has_input"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:alchemy/infuse/budding_ragium"
+      "ragium:alchemy/infuse/rogium_pendant"
     ]
   }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "minecraft:prismarine_shard"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "minecraft:prismarine_crystals"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "tag": "c:gems/lapis"
+      }
+    }
+  ],
+  "output": {
+    "item": "minecraft:heart_of_the_sea"
+  }
+}

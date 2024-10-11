@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 32,
+      "ingredient": {
+        "tag": "c:plates/silver"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "ragium:ragium_dust"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "minecraft:magma_block"
+      }
+    }
+  ],
+  "output": {
+    "item": "ragium:ragium_pendant"
+  }
+}

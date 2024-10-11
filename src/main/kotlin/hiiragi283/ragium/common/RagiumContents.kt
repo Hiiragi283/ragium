@@ -11,14 +11,13 @@ import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import hiiragi283.ragium.common.util.HTBlockContent
+import hiiragi283.ragium.common.util.HTContentRegister
 import hiiragi283.ragium.common.util.HTItemContent
 import hiiragi283.ragium.common.util.HTTranslationProvider
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.block.*
-import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.block.piston.PistonBehavior
-import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.LivingEntity
@@ -27,8 +26,6 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
@@ -43,9 +40,8 @@ import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 import java.awt.Color
 import java.util.function.IntFunction
-import kotlin.jvm.optionals.getOrNull
 
-object RagiumContents {
+object RagiumContents : HTContentRegister {
     //    Blocks - Minerals    //
 
     @JvmField
@@ -76,18 +72,7 @@ object RagiumContents {
     val OBLIVION_CLUSTER: Block =
         registerBlock(
             "oblivion_cluster",
-            AmethystClusterBlock(
-                7.0f,
-                3.0f,
-                blockSettings()
-                    .mapColor(MapColor.BLACK)
-                    .strength(1.5f)
-                    .sounds(BlockSoundGroup.AMETHYST_BLOCK)
-                    .solid()
-                    .nonOpaque()
-                    .luminance { 5 }
-                    .pistonBehavior(PistonBehavior.DESTROY),
-            ),
+            AmethystClusterBlock(7.0f, 3.0f, blockSettings(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.BLACK)),
         )
 
     //    Blocks - Foods    //
@@ -149,7 +134,7 @@ object RagiumContents {
     val INFESTING: Block =
         registerBlock("infesting", HTInfectingBlock)
 
-    @JvmField // TODO
+    @JvmField
     val META_MACHINE: Block =
         registerBlock("meta_machine", HTMetaMachineBlock)
 
@@ -198,6 +183,9 @@ object RagiumContents {
             .maxCount(1)
             .fireproof(),
     )
+
+    @JvmField
+    val ALCHEMY_STUFF: Item = registerItem("alchemy_stuff", itemSettings().rarity(Rarity.EPIC).maxCount(1))
 
     //    Items - Armors    //
 
@@ -277,6 +265,12 @@ object RagiumContents {
     )
 
     @JvmField
+    val CHOCOLATE_APPLE: Item = registerFoodItem("chocolate_apple", FoodComponents.COOKED_CHICKEN)
+
+    @JvmField
+    val CHOCOLATE_BREAD: Item = registerFoodItem("chocolate_bread", FoodComponents.COOKED_BEEF)
+    
+    @JvmField
     val FLOUR: Item = registerItem("flour")
 
     @JvmField
@@ -328,140 +322,51 @@ object RagiumContents {
     fun init() {
         initBlockItems()
 
-        initHulls()
-        initCoils()
-        initCircuits()
+        Hulls.entries.forEach { hull: Hulls ->
+            registerBlock(hull)
+            registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
+        }
+        Coils.entries.forEach { coil: Coils ->
+            registerBlock(coil)
+            registerBlockItem(coil.block, itemSettings())
+        }
+        Circuit.entries.forEach { circuit: Circuit ->
+            registerItem("${circuit.name.lowercase()}_circuit", circuit.asItem())
+        }
 
-        initOres()
-        initStorageBlocks()
+        getOres().forEach { ore: HTBlockContent ->
+            registerBlock(ore)
+            registerBlockItem(ore.block, itemSettings())
+        }
+        StorageBlocks.entries.forEach { block: StorageBlocks ->
+            registerBlock(block)
+            registerBlockItem(block.block, itemSettings().tier(block.material.tier))
+        }
 
-        initDusts()
-        initIngots()
-        initPlates()
-        initRaws()
+        Dusts.entries.forEach(::registerItem)
+        Ingots.entries.forEach(::registerItem)
+        Plates.entries.forEach(::registerItem)
+        RawMaterials.entries.forEach(::registerItem)
 
-        initElements()
+        Element.entries.forEach { element: Element ->
+            // Budding Block
+            registerBlock("budding_${element.asString()}", element.buddingBlock)
+            registerBlockItem(element.buddingBlock)
+            // Cluster Block
+            registerBlock("${element.asString()}_cluster", element.clusterBlock)
+            registerBlockItem(element.clusterBlock)
+            // dust item
+            registerItem("${element.asString()}_dust", element.dustItem)
+            // pendant item
+            registerItem("${element.asString()}_pendant", element.pendantItem)
+            // ring item
+            registerItem("${element.asString()}_ring", element.ringItem)
+        }
 
-        initFluids()
+        Fluids.entries.forEach { fluid: Fluids ->
+            registerItem("${fluid.fluidName}_fluid_cube", fluid.asItem())
+        }
     }
-
-    @JvmStatic
-    private fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T =
-        Registry.register(registry, RagiumAPI.id(name), value)
-
-    @JvmStatic
-    private fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
-
-    @JvmStatic
-    private fun registerBlock(content: HTBlockContent): Block = registerBlock(content.id.path, content.block)
-
-    @JvmStatic
-    private fun registerBlock(name: String, settings: AbstractBlock.Settings = blockSettings()): Block =
-        registerBlock(name, Block(settings))
-
-    @JvmStatic
-    private fun registerCopy(name: String, parent: Block): Block = registerBlock(name, blockSettings(parent))
-
-    @JvmStatic
-    private fun registerWithBE(name: String, type: BlockEntityType<*>, parent: Block): Block =
-        registerWithBE(name, type, blockSettings(parent))
-
-    @JvmStatic
-    private fun registerWithBE(name: String, type: BlockEntityType<*>, settings: AbstractBlock.Settings = blockSettings()): Block =
-        registerBlock(name, HTBlockWithEntity.build(type, settings))
-
-    @JvmStatic
-    private fun registerHorizontalWithBE(name: String, type: BlockEntityType<*>, parent: Block): Block =
-        registerHorizontalWithBE(name, type, blockSettings(parent))
-
-    @JvmStatic
-    private fun registerHorizontalWithBE(
-        name: String,
-        type: BlockEntityType<*>,
-        settings: AbstractBlock.Settings = blockSettings(),
-    ): Block = registerBlock(name, HTBlockWithEntity.buildHorizontal(type, settings))
-
-    @JvmStatic
-    private fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
-
-    @JvmStatic
-    private fun registerItem(name: String, settings: Item.Settings = itemSettings()): Item = registerItem(name, Item(settings))
-
-    @JvmStatic
-    private fun registerItem(item: HTItemContent): Item = registerItem(item.id.path, item.item)
-
-    @JvmStatic
-    private fun registerFoodItem(name: String, component: FoodComponent): Item = registerItem(name, Item(itemSettings().food(component)))
-
-    @JvmStatic
-    private fun registerBlockItem(
-        block: Block,
-        settings: Item.Settings = itemSettings(),
-        factory: (Block, Item.Settings) -> Item = ::BlockItem,
-    ) {
-        Registries.BLOCK
-            .getKey(block)
-            .getOrNull()
-            ?.value
-            ?.let { registerItem(it.path, factory(block, settings)) }
-    }
-
-    @JvmStatic
-    private fun <T : ToolItem> registerToolItem(
-        name: String,
-        material: ToolMaterial,
-        factory: (ToolMaterial, Item.Settings) -> T,
-        attributeComponent: AttributeModifiersComponent,
-        settings: Item.Settings = itemSettings(),
-    ): T = registerItem(name, factory(material, settings.attributeModifiers(attributeComponent)))
-
-    @JvmStatic
-    private fun registerSwordItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): SwordItem =
-        registerToolItem(
-            name,
-            material,
-            ::SwordItem,
-            RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.0),
-            settings,
-        )
-
-    @JvmStatic
-    private fun registerShovelItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): ShovelItem =
-        registerToolItem(
-            name,
-            material,
-            ::ShovelItem,
-            RagiumToolMaterials.createAttributeComponent(material, -2.0, -3.0),
-            settings,
-        )
-
-    @JvmStatic
-    private fun registerPickaxeItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): PickaxeItem =
-        registerToolItem(
-            name,
-            material,
-            ::PickaxeItem,
-            RagiumToolMaterials.createAttributeComponent(material, -2.0, -2.8),
-            settings,
-        )
-
-    @JvmStatic
-    private fun registerAxeItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): AxeItem = registerToolItem(
-        name,
-        material,
-        ::AxeItem,
-        RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.9),
-        settings,
-    )
-
-    @JvmStatic
-    private fun registerHoeItem(name: String, material: ToolMaterial, settings: Item.Settings = itemSettings()): HoeItem = registerToolItem(
-        name,
-        material,
-        ::HoeItem,
-        RagiumToolMaterials.createAttributeComponent(material, -4.0, 0.0),
-        settings,
-    )
 
     @JvmStatic
     private fun initBlockItems() {
@@ -501,14 +406,6 @@ object RagiumContents {
         override val jaPattern: String = "%s筐体"
     }
 
-    @JvmStatic
-    fun initHulls() {
-        Hulls.entries.forEach { hull: Hulls ->
-            registerBlock(hull)
-            registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
-        }
-    }
-
     //    Coils    //
 
     enum class Coils(override val material: RagiumMaterials) : HTBlockContent {
@@ -521,14 +418,6 @@ object RagiumContents {
         override val id: Identifier = RagiumAPI.id("${name.lowercase()}_coil")
         override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
-    }
-
-    @JvmStatic
-    fun initCoils() {
-        Coils.entries.forEach { coil: Coils ->
-            registerBlock(coil)
-            registerBlockItem(coil.block, itemSettings())
-        }
     }
 
     //    Circuits    //
@@ -544,13 +433,6 @@ object RagiumContents {
         private val item: Item = Item(itemSettings())
 
         override fun asItem(): Item = item
-    }
-
-    @JvmStatic
-    private fun initCircuits() {
-        Circuit.entries.forEach { circuit: Circuit ->
-            registerItem("${circuit.name.lowercase()}_circuit", circuit.asItem())
-        }
     }
 
     //    Ores    //
@@ -583,14 +465,6 @@ object RagiumContents {
         addAll(DeepOres.entries)
     }
 
-    @JvmStatic
-    fun initOres() {
-        getOres().forEach { ore: HTBlockContent ->
-            registerBlock(ore)
-            registerBlockItem(ore.block, itemSettings())
-        }
-    }
-
     //    Storage Blocks    //
 
     enum class StorageBlocks(override val material: RagiumMaterials) : HTBlockContent {
@@ -607,14 +481,6 @@ object RagiumContents {
         override val id: Identifier = RagiumAPI.id("${name.lowercase()}_block")
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
-    }
-
-    @JvmStatic
-    fun initStorageBlocks() {
-        StorageBlocks.entries.forEach { block: StorageBlocks ->
-            registerBlock(block)
-            registerBlockItem(block.block, itemSettings().tier(block.material.tier))
-        }
     }
 
     //    Dusts    //
@@ -640,11 +506,6 @@ object RagiumContents {
         override val jaPattern: String = "%sの粉"
     }
 
-    @JvmStatic
-    private fun initDusts() {
-        Dusts.entries.forEach(::registerItem)
-    }
-
     //    Ingots    //
 
     enum class Ingots(override val material: RagiumMaterials) : HTItemContent {
@@ -661,11 +522,6 @@ object RagiumContents {
         override val id: Identifier = RagiumAPI.id("${name.lowercase()}_ingot")
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
-    }
-
-    @JvmStatic
-    private fun initIngots() {
-        Ingots.entries.forEach(::registerItem)
     }
 
     //    Plates    //
@@ -698,11 +554,6 @@ object RagiumContents {
         override val jaPattern: String = "%s板"
     }
 
-    @JvmStatic
-    private fun initPlates() {
-        Plates.entries.forEach(::registerItem)
-    }
-
     //    Raw Materials    //
 
     enum class RawMaterials(override val material: RagiumMaterials) : HTItemContent {
@@ -714,11 +565,6 @@ object RagiumContents {
         override val id: Identifier = RagiumAPI.id("raw_${name.lowercase()}")
         override val enPattern: String = "Raw %s"
         override val jaPattern: String = "%sの原石"
-    }
-
-    @JvmStatic
-    private fun initRaws() {
-        RawMaterials.entries.forEach(::registerItem)
     }
 
     //    Elements    //
@@ -781,24 +627,6 @@ object RagiumContents {
         override fun asString(): String = name.lowercase()
     }
 
-    @JvmStatic
-    private fun initElements() {
-        Element.entries.forEach { element: Element ->
-            // Budding Block
-            registerBlock("budding_${element.asString()}", element.buddingBlock)
-            registerBlockItem(element.buddingBlock)
-            // Cluster Block
-            registerBlock("${element.asString()}_cluster", element.clusterBlock)
-            registerBlockItem(element.clusterBlock)
-            // dust item
-            registerItem("${element.asString()}_dust", element.dustItem)
-            // pendant item
-            registerItem("${element.asString()}_pendant", element.pendantItem)
-            // ring item
-            registerItem("${element.asString()}_ring", element.ringItem)
-        }
-    }
-
     //    Fluids    //
 
     enum class Fluids(val color: Color, override val enName: String, override val jaName: String) :
@@ -845,8 +673,20 @@ object RagiumContents {
 
         // Foods
         BATTER(Color(0xffcc66), "Batter", "バッター液"),
+        CHOCOLATE(Color(0x663300), "Chocolate", "チョコレート") {
+            override fun createItem(): Item = Item(
+                itemSettings().food(
+                    FoodComponent
+                        .Builder()
+                        .alwaysEdible()
+                        .statusEffect(StatusEffectInstance(StatusEffects.REGENERATION, 20 * 5, 1), 1.0f)
+                        .usingConvertsTo(EMPTY_FLUID_CUBE)
+                        .build(),
+                ),
+            )
+        },
         SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー") {
-            override fun createItem(): Item = HTFluidCubeItem(
+            override fun createItem(): Item = Item(
                 itemSettings().food(
                     FoodComponent
                         .Builder()
@@ -904,12 +744,5 @@ object RagiumContents {
         private val item: Item = createItem()
 
         override fun asItem(): Item = item
-    }
-
-    @JvmStatic
-    private fun initFluids() {
-        Fluids.entries.forEach { fluid: Fluids ->
-            registerItem("${fluid.fluidName}_fluid_cube", fluid.asItem())
-        }
     }
 }

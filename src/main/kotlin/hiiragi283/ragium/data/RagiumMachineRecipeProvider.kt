@@ -790,11 +790,26 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Alchemical Infusion    //
 
     private fun infusion(exporter: RecipeExporter) {
+        HTInfusionRecipeJsonBuilder(Items.ENCHANTED_GOLDEN_APPLE)
+            .addInput(Items.APPLE)
+            .addInput(ConventionalItemTags.STORAGE_BLOCKS_GOLD, 8)
+            .addInput(Items.ENCHANTED_BOOK)
+            .hasInput(Items.ENCHANTED_GOLDEN_APPLE)
+            .offerTo(exporter)
+
+        HTInfusionRecipeJsonBuilder(Items.HEART_OF_THE_SEA)
+            .addInput(Items.PRISMARINE_SHARD, 64)
+            .addInput(Items.PRISMARINE_CRYSTALS, 64)
+            .addInput(ConventionalItemTags.LAPIS_GEMS, 64)
+            .hasInput(Items.AXOLOTL_BUCKET)
+            .offerTo(exporter)
+
+        // buddings
         registerBudding(
             exporter,
             RagiumContents.Element.RAGIUM,
             Items.RED_STAINED_GLASS,
-            Items.RED_NETHER_BRICKS,
+            Items.MANGROVE_LOG,
             Items.BLAZE_POWDER,
         )
         registerBudding(
@@ -825,6 +840,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             Items.AMETHYST_BLOCK,
             Items.SHULKER_SHELL,
         )
+        // pendant
+        registerPendant(exporter, RagiumContents.Element.RAGIUM, Items.MAGMA_BLOCK, 64)
+        registerPendant(exporter, RagiumContents.Element.RIGIUM, RagiumContents.Fluids.MILK, 64)
+        registerPendant(exporter, RagiumContents.Element.RUGIUM, Items.EMERALD_BLOCK, 32)
+        registerPendant(exporter, RagiumContents.Element.REGIUM, Items.HEART_OF_THE_SEA, 8)
+        registerPendant(exporter, RagiumContents.Element.ROGIUM, Items.AMETHYST_BLOCK, 64)
     }
 
     private fun registerBudding(
@@ -840,6 +861,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(ing1, 16)
             .addInput(ing2, 8)
             .hasInput(RagiumContents.ALCHEMICAL_INFUSER)
+            .offerTo(exporter)
+    }
+
+    private fun registerPendant(
+        exporter: RecipeExporter,
+        element: RagiumContents.Element,
+        ing1: ItemConvertible,
+        count1: Int
+    ) {
+        HTInfusionRecipeJsonBuilder(element.pendantItem)
+            .addInput(RagiumItemTags.SILVER_PLATES, 32)
+            .addInput(element.dustItem, 64)
+            .addInput(ing1, count1)
+            .hasInput(element.dustItem)
             .offerTo(exporter)
     }
 

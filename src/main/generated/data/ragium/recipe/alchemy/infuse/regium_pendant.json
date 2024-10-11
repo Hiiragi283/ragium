@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "count": 32,
+      "ingredient": {
+        "tag": "c:plates/silver"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "ragium:regium_dust"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "minecraft:heart_of_the_sea"
+      }
+    }
+  ],
+  "output": {
+    "item": "ragium:regium_pendant"
+  }
+}

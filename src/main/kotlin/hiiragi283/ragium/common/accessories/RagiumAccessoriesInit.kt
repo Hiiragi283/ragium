@@ -71,7 +71,7 @@ object RagiumAccessoriesInit {
         )
         registerAccessory(
             RagiumContents.Element.RUGIUM.pendantItem,
-            HTStatusEffectAccessory.Provider(StatusEffects.LUCK, level = 7),
+            HTStatusEffectAccessory.Provider(StatusEffects.LUCK, level = 2),
             HTDefaultAccessorySlots.NECKLACE,
         )
         registerAccessory(

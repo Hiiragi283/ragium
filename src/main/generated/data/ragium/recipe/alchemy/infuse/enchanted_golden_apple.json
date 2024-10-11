@@ -1,0 +1,24 @@
+{
+  "type": "ragium:alchemical_infusion",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "minecraft:apple"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "tag": "c:storage_blocks/gold"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:enchanted_book"
+      }
+    }
+  ],
+  "output": {
+    "item": "minecraft:enchanted_golden_apple"
+  }
+}
