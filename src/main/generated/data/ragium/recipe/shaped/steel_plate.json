@@ -12,7 +12,7 @@
       "item": "ragium:forge_hammer"
     },
     "B": {
-      "item": "ragium:steel_ingot"
+      "tag": "c:ingots/steel"
     }
   },
   "pattern": [

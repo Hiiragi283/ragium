@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementRegister
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -39,9 +38,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         registerTier4(register)
     }
 
-    private fun Advancement.Builder.buildMultiblock(machineType: HTMachineType, minTier: HTMachineTier): Advancement.Builder = criterion(
+    private fun Advancement.Builder.buildMultiblock(type: HTMachineConvertible, minTier: HTMachineTier): Advancement.Builder = criterion(
         "build_multiblock",
-        RagiumAPI.getInstance().createBuiltMachineCriterion(machineType, minTier),
+        RagiumAPI.getInstance().createBuiltMachineCriterion(type, minTier),
     )
 
     private fun Advancement.Builder.hasItems(vararg items: ItemConvertible): Advancement.Builder = criterion(
@@ -76,10 +75,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier1/root",
-                RagiumContents.RAGINITE_ORE,
+                RagiumContents.Ores.RAGINITE,
                 Identifier.of("textures/block/bricks.png"),
             ) {
-                hasItems(RagiumContents.RAW_RAGINITE)
+                hasItems(RagiumContents.RawMaterials.RAGINITE)
             }.putEnglish("Ragium - Tier 1")
             .putEnglishDesc("Get Raw Raginite and Start!")
             .putJapaneseDesc("ラギナイトの原石を手に入れて始める")

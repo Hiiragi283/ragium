@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "minecraft:gold_ore"
+        "tag": "minecraft:gold_ores"
       }
     }
   ],
@@ -13,8 +13,11 @@
       "item": "minecraft:raw_gold"
     },
     {
-      "count": 4,
       "item": "minecraft:raw_gold"
+    },
+    {
+      "count": 2,
+      "item": "ragium:silver_dust"
     }
   ]
 }

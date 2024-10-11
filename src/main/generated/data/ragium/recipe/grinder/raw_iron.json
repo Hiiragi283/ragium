@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "minecraft:iron_ore"
+        "tag": "minecraft:iron_ores"
       }
     }
   ],
@@ -13,8 +13,11 @@
       "item": "minecraft:raw_iron"
     },
     {
-      "count": 4,
       "item": "minecraft:raw_iron"
+    },
+    {
+      "count": 2,
+      "item": "ragium:nickel_dust"
     }
   ]
 }

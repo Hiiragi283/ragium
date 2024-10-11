@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:raginite_ore"
+            "items": "#c:ores/raginite"
           }
         ]
       },

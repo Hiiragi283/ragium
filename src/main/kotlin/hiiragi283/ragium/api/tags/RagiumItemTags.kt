@@ -31,19 +31,58 @@ object RagiumItemTags {
     val PLATES: TagKey<Item> = create("plates")
 
     @JvmField
+    val COPPER_DUSTS: TagKey<Item> = create("dusts/copper")
+
+    @JvmField
     val COPPER_PLATES: TagKey<Item> = create("plates/copper")
+
+    @JvmField
+    val GOLD_DUSTS: TagKey<Item> = create("dusts/gold")
 
     @JvmField
     val GOLD_PLATES: TagKey<Item> = create("plates/gold")
 
     @JvmField
+    val INVAR_BLOCKS: TagKey<Item> = create("storage_blocks/invar")
+
+    @JvmField
+    val INVAR_INGOTS: TagKey<Item> = create("ingots/invar")
+
+    @JvmField
+    val INVAR_PLATES: TagKey<Item> = create("plates/invar")
+
+    @JvmField
+    val IRON_DUSTS: TagKey<Item> = create("dusts/iron")
+
+    @JvmField
     val IRON_PLATES: TagKey<Item> = create("plates/iron")
+
+    @JvmField
+    val NICKEL_BLOCKS: TagKey<Item> = create("storage_blocks/nickel")
+
+    @JvmField
+    val NICKEL_DUSTS: TagKey<Item> = create("dusts/nickel")
+
+    @JvmField
+    val NICKEL_INGOTS: TagKey<Item> = create("ingots/nickel")
 
     @JvmField
     val RAGINITE_ORES: TagKey<Item> = create("ores/raginite")
 
     @JvmField
     val SILICON_PLATES: TagKey<Item> = create("plates/silicon")
+
+    @JvmField
+    val SILVER_BLOCKS: TagKey<Item> = create("storage_blocks/silver")
+
+    @JvmField
+    val SILVER_DUSTS: TagKey<Item> = create("dusts/silver")
+
+    @JvmField
+    val SILVER_INGOTS: TagKey<Item> = create("ingots/silver")
+
+    @JvmField
+    val SILVER_PLATES: TagKey<Item> = create("plates/silver")
 
     @JvmField
     val STEEL_BLOCKS: TagKey<Item> = create("storage_blocks/steel")

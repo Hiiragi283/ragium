@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:steel_ingot"
+            "items": "#c:ingots/steel"
           }
         ]
       },

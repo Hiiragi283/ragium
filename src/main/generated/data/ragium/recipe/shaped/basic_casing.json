@@ -6,13 +6,16 @@
       "tag": "c:plates/iron"
     },
     "B": {
-      "item": "minecraft:smooth_stone"
+      "tag": "c:plates/invar"
+    },
+    "C": {
+      "tag": "c:dusts/redstone"
     }
   },
   "pattern": [
-    " A ",
     "ABA",
-    " A "
+    "BCB",
+    "ABA"
   ],
   "result": {
     "count": 3,

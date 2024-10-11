@@ -19,7 +19,10 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
     BASALT_FIBER(HTMachineTier.BASIC, "Basalt Fiber", "玄武岩繊維"),
     GOLD(HTMachineTier.BASIC, "Gold", "金"),
+    INVAR(HTMachineTier.BASIC, "Invar", "インバー"),
+    NICKEL(HTMachineTier.BASIC, "Nickel", "ニッケル"),
     SILICON(HTMachineTier.BASIC, "Silicon", "シリコン"),
+    SILVER(HTMachineTier.BASIC, "Silver", "銀"),
     STEEL(HTMachineTier.BASIC, "Steel", "スチール"),
 
     // tier3
@@ -31,6 +34,10 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
 
     ;
 
+    fun getOre(): RagiumContents.Ores? = RagiumContents.Ores.entries.firstOrNull { it.material == this }
+
+    fun getDeepOre(): RagiumContents.DeepOres? = RagiumContents.DeepOres.entries.firstOrNull { it.material == this }
+
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }
 
     fun getHull(): RagiumContents.Hulls? = RagiumContents.Hulls.entries.firstOrNull { it.material == this }
@@ -38,4 +45,6 @@ enum class RagiumMaterials(val tier: HTMachineTier, override val enName: String,
     fun getIngot(): RagiumContents.Ingots? = RagiumContents.Ingots.entries.firstOrNull { it.material == this }
 
     fun getPlate(): RagiumContents.Plates? = RagiumContents.Plates.entries.firstOrNull { it.material == this }
+
+    fun getRawMaterial(): RagiumContents.RawMaterials? = RagiumContents.RawMaterials.entries.firstOrNull { it.material == this }
 }

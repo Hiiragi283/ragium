@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:ingots/invar"
+      }
+    }
+  ],
+  "machine_type": "ragium:metal_former",
+  "outputs": [
+    {
+      "item": "ragium:invar_plate"
+    }
+  ]
+}

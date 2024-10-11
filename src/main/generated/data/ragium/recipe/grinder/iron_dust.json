@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "tag": "c:raw_materials/iron"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:iron_dust"
+    },
+    {
+      "item": "ragium:iron_dust"
+    }
+  ]
+}

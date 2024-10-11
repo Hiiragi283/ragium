@@ -226,9 +226,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "AAA",
                 "ABA",
                 "AAA",
-            ).input('A', RagiumContents.RAW_RAGINITE)
+            ).input('A', RagiumContents.RawMaterials.RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
-            .unlockedBy(RagiumContents.RAW_RAGINITE)
+            .unlockedBy(RagiumContents.RawMaterials.RAGINITE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -251,7 +251,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "CCC",
             ).input('A', ConventionalItemTags.GLASS_PANES)
             .input('B', RagiumItemTags.SILICON_PLATES)
-            .input('C', RagiumItemTags.COPPER_PLATES)
+            .input('C', RagiumItemTags.SILVER_PLATES)
             .unlockedBy(RagiumItemTags.SILICON_PLATES)
             .offerTo(exporter)
         // foods
@@ -387,12 +387,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.BASIC_CASING, 3)
             .patterns(
-                " A ",
                 "ABA",
-                " A ",
+                "BCB",
+                "ABA",
             ).input('A', RagiumItemTags.IRON_PLATES)
-            .input('B', Items.SMOOTH_STONE)
-            .unlockedBy(RagiumContents.Dusts.RAGINITE)
+            .input('B', RagiumItemTags.INVAR_PLATES)
+            .input('C', ConventionalItemTags.REDSTONE_DUSTS)
+            .unlockedBy(ConventionalItemTags.REDSTONE_DUSTS)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder

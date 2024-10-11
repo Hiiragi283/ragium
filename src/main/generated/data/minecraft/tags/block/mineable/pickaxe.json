@@ -1,7 +1,5 @@
 {
   "values": [
-    "ragium:raginite_ore",
-    "ragium:deepslate_raginite_ore",
     "ragium:porous_netherrack",
     "ragium:oblivion_cluster",
     "ragium:basic_casing",
@@ -13,8 +11,13 @@
     "ragium:shaft",
     "ragium:alchemical_infuser",
     "ragium:meta_machine",
+    "ragium:raginite_ore",
+    "ragium:deepslate_raginite_ore",
     "ragium:ragi_alloy_block",
     "ragium:ragi_steel_block",
+    "ragium:invar_block",
+    "ragium:nickel_block",
+    "ragium:silver_block",
     "ragium:steel_block",
     "ragium:refined_ragi_steel_block",
     "ragium:ragi_alloy_hull",

@@ -39,10 +39,7 @@ import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.*
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
@@ -232,6 +229,13 @@ fun <T : PersistentState> getState(
     type: PersistentState.Type<T>,
     id: Identifier,
 ): T? = server.getWorld(key)?.let { getState(it, type, id) }
+
+//    Registry    //
+
+@JvmField
+val DUMMY_LOOKUP: RegistryWrapper.WrapperLookup = RegistryWrapper.WrapperLookup.of(
+    Registries.REGISTRIES.stream().map(Registry<*>::getReadOnlyWrapper),
+)
 
 //    ScreenHandler    //
 

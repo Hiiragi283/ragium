@@ -7,11 +7,11 @@
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingot": {
+    "has_input": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:steel_ingot"
+            "items": "#c:ingots/steel"
           }
         ]
       },
@@ -27,7 +27,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ingot"
+      "has_input"
     ]
   ],
   "rewards": {

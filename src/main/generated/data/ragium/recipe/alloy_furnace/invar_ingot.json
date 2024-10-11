@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 2,
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      }
+    },
+    {
+      "ingredient": {
+        "tag": "c:ingots/nickel"
+      }
+    }
+  ],
+  "machine_type": "ragium:alloy_furnace",
+  "outputs": [
+    {
+      "count": 3,
+      "item": "ragium:invar_ingot"
+    }
+  ]
+}

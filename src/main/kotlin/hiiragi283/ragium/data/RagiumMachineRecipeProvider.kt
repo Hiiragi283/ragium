@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.data.HTInfusionRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTMetalItemRecipeGroup
+import hiiragi283.ragium.api.data.HTMetalItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -52,10 +52,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         infusion(exporter)
         transform(exporter)
         // patterned
-        RagiumMetalItemRecipeGroups
-        HTMetalItemRecipeGroup.registry.forEach { (_: String, family: HTMetalItemRecipeGroup) ->
-            family.generateRecipes(exporter, ::exporterWrapper)
-        }
+        RagiumMetalItemRecipes.init()
+        HTMetalItemRecipeRegistry.generateRecipes(exporter, ::exporterWrapper)
     }
 
     private fun exporterWrapper(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
@@ -69,6 +67,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(ConventionalItemTags.COPPER_INGOTS)
             .addInput(RagiumContents.Dusts.RAW_RAGINITE, 4)
             .addOutput(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
+            .addInput(ConventionalItemTags.IRON_INGOTS, 2)
+            .addInput(RagiumItemTags.NICKEL_INGOTS)
+            .addOutput(RagiumContents.Ingots.INVAR, 3)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder

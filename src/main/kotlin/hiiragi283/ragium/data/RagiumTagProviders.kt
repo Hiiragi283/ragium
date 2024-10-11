@@ -44,8 +44,6 @@ object RagiumTagProviders {
             }
 
             // vanilla
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.RAGINITE_ORE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DEEPSLATE_RAGINITE_ORE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.POROUS_NETHERRACK)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.OBLIVION_CLUSTER)
 
@@ -61,7 +59,8 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumContents.META_MACHINE)
 
-            buildList<HTBlockContent> {
+            buildList {
+                addAll(RagiumContents.getOres())
                 addAll(RagiumContents.StorageBlocks.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
@@ -124,28 +123,40 @@ object RagiumTagProviders {
             // conventional
             add(ConventionalItemTags.GEMS, RagiumContents.RAGI_CRYSTAL)
             add(ConventionalItemTags.GEMS, RagiumContents.OBLIVION_CRYSTAL)
-            add(ConventionalItemTags.ORES, RagiumContents.RAGINITE_ORE)
-            add(ConventionalItemTags.ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
-            add(ConventionalItemTags.RAW_MATERIALS, RagiumContents.RAW_RAGINITE)
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
+            add(RagiumItemTags.COPPER_DUSTS, RagiumContents.Dusts.COPPER)
             add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
+            add(RagiumItemTags.GOLD_DUSTS, RagiumContents.Dusts.GOLD)
             add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)
+            add(RagiumItemTags.INVAR_BLOCKS, RagiumContents.StorageBlocks.INVAR)
+            add(RagiumItemTags.INVAR_INGOTS, RagiumContents.Ingots.INVAR)
+            add(RagiumItemTags.INVAR_PLATES, RagiumContents.Plates.INVAR)
+            add(RagiumItemTags.IRON_DUSTS, RagiumContents.Dusts.IRON)
             add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.RAGINITE_ORE)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DEEPSLATE_RAGINITE_ORE)
+            add(RagiumItemTags.NICKEL_BLOCKS, RagiumContents.StorageBlocks.NICKEL)
+            add(RagiumItemTags.NICKEL_DUSTS, RagiumContents.Dusts.NICKEL)
+            add(RagiumItemTags.NICKEL_INGOTS, RagiumContents.Ingots.NICKEL)
+            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DeepOres.RAGINITE)
+            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.RAGINITE)
             add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)
+            add(RagiumItemTags.SILVER_BLOCKS, RagiumContents.StorageBlocks.SILVER)
+            add(RagiumItemTags.SILVER_DUSTS, RagiumContents.Dusts.SILVER)
+            add(RagiumItemTags.SILVER_INGOTS, RagiumContents.Ingots.SILVER)
+            add(RagiumItemTags.SILVER_PLATES, RagiumContents.Plates.SILVER)
             add(RagiumItemTags.STEEL_BLOCKS, RagiumContents.StorageBlocks.STEEL)
             add(RagiumItemTags.STEEL_INGOTS, RagiumContents.Ingots.STEEL)
             add(RagiumItemTags.STEEL_PLATES, RagiumContents.Plates.STEEL)
             add(RagiumItemTags.SULFUR_DUSTS, RagiumContents.Dusts.SULFUR)
 
+            RagiumContents.getOres().forEach { add(ConventionalItemTags.ORES, it) }
             RagiumContents.StorageBlocks.entries.forEach { add(ConventionalItemTags.STORAGE_BLOCKS, it) }
             RagiumContents.Dusts.entries.forEach { add(ConventionalItemTags.DUSTS, it) }
             RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             RagiumContents.Ingots.entries.forEach { add(ConventionalItemTags.INGOTS, it) }
             RagiumContents.Plates.entries.forEach { add(RagiumItemTags.PLATES, it) }
+            RagiumContents.RawMaterials.entries.forEach { add(ConventionalItemTags.RAW_MATERIALS, it) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
             add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)

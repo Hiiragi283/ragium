@@ -45,6 +45,7 @@ object RagiumLangProviders {
     private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
         // blocks
         buildList<HTBlockContent> {
+            addAll(RagiumContents.getOres())
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
@@ -76,6 +77,7 @@ object RagiumLangProviders {
             addAll(RagiumContents.Dusts.entries)
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
+            addAll(RagiumContents.RawMaterials.entries)
         }.forEach { item: HTItemContent -> builder.add(item.item, item.getTranslation(type)) }
         // circuits
         RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
@@ -112,8 +114,6 @@ object RagiumLangProviders {
             // Advancements
             RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
             // Blocks
-            builder.add(RagiumContents.RAGINITE_ORE, "Raginite Ore")
-            builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "Deep Raginite Ore")
             builder.add(RagiumContents.POROUS_NETHERRACK, "Porous Netherrack")
             builder.add(RagiumContents.OBLIVION_CLUSTER, "Oblivion Cluster")
 
@@ -153,7 +153,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.PISTON_BOOTS, "Piston Boots")
             builder.add(RagiumContents.PARACHUTE, "Parachute")
 
-            builder.add(RagiumContents.RAW_RAGINITE, "Raw Raginite")
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
             builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
@@ -239,8 +238,6 @@ object RagiumLangProviders {
             // Advancements
             RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
-            builder.add(RagiumContents.RAGINITE_ORE, "ラギナイト鉱石")
-            builder.add(RagiumContents.DEEPSLATE_RAGINITE_ORE, "深層ラギナイト鉱石")
             builder.add(RagiumContents.POROUS_NETHERRACK, "多孔質ネザーラック")
             builder.add(RagiumContents.OBLIVION_CLUSTER, "忘却の芽")
 
@@ -280,7 +277,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.PISTON_BOOTS, "ピストンブーツ")
             builder.add(RagiumContents.PARACHUTE, "パラシュート")
 
-            builder.add(RagiumContents.RAW_RAGINITE, "ラギナイトの原石")
             builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")

@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "ragium:raginite_ore"
+        "tag": "c:ores/raginite"
       }
     }
   ],
@@ -13,8 +13,11 @@
       "item": "ragium:raw_raginite"
     },
     {
-      "count": 4,
       "item": "ragium:raw_raginite"
+    },
+    {
+      "count": 2,
+      "item": "ragium:raginite_dust"
     }
   ]
 }

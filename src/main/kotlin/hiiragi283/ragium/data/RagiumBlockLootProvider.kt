@@ -38,9 +38,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
     override fun generate() {
-        addDrop(RagiumContents.RAGINITE_ORE, ::dropRaginiteOre)
-        addDrop(RagiumContents.DEEPSLATE_RAGINITE_ORE, ::dropRaginiteOre)
-
         addDrop(RagiumContents.SPONGE_CAKE)
 
         addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
@@ -78,6 +75,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                 )
         }
 
+        RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
+            addDrop(ore.block) { _: Block -> dropOre(ore, Items.COBBLESTONE) }
+        }
+        RagiumContents.DeepOres.entries.forEach { deepOre: RagiumContents.DeepOres ->
+            addDrop(deepOre.block) { _: Block -> dropOre(deepOre, Items.COBBLED_DEEPSLATE) }
+        }
+
         buildList<HTBlockContent> {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
@@ -102,13 +106,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         }
     }
 
-    private fun dropRaginiteOre(ore: Block): LootTable.Builder = dropsWithSilkTouch(
-        ore,
+    private fun dropOre(ore: HTBlockContent, base: ItemConvertible): LootTable.Builder = dropsWithSilkTouch(
+        ore.block,
         applyExplosionDecay(
             ore,
             ItemEntry
-                .builder(RagiumContents.RAW_RAGINITE)
-                .applyDropRange(2, 5)
+                .builder(ore.material.getRawMaterial() ?: base)
+                .applyDropRange(2, 3)
                 .applyFortune(),
         ),
     )

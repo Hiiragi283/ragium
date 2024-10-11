@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_block": {
+    "has_input": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:steel_block"
+            "items": "#c:storage_blocks/steel"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_block"
+      "has_input"
     ]
   ],
   "rewards": {

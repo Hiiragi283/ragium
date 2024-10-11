@@ -3,7 +3,7 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "minecraft:copper_ore"
+        "tag": "minecraft:copper_ores"
       }
     }
   ],
@@ -13,8 +13,11 @@
       "item": "minecraft:raw_copper"
     },
     {
-      "count": 4,
       "item": "minecraft:raw_copper"
+    },
+    {
+      "count": 2,
+      "item": "ragium:sulfur_dust"
     }
   ]
 }

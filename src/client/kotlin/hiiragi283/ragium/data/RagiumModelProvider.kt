@@ -34,21 +34,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             generator.blockStateCollector.accept(supplier)
         }
 
-        register(RagiumContents.RAGINITE_ORE) {
-            generator.registerSingleton(
-                it,
-                RagiumModels.createLayered(Identifier.of("block/stone"), TextureMap.getId(it)),
-            )
-        }
-        register(RagiumContents.DEEPSLATE_RAGINITE_ORE) {
-            generator.registerSingleton(
-                it,
-                RagiumModels.createLayered(Identifier.of("block/deepslate"), RagiumAPI.id("block/raginite_ore")),
-            )
-        }
         register(RagiumContents.OBLIVION_CLUSTER, generator::registerAmethyst)
 
-        registerSimple(RagiumContents.CREATIVE_SOURCE, Identifier.of("block/respawn_anchor_top_off"))
+        registerSimple(RagiumContents.CREATIVE_SOURCE)
         register(RagiumContents.MANUAL_GRINDER) {
             accept(
                 buildMultipartState(it) {
@@ -138,6 +126,28 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     ),
             )
         }
+        // ores
+        RagiumContents.Ores.entries
+            .forEach {
+                register(it.block) { block: Block ->
+                    generator.registerSingleton(
+                        block,
+                        RagiumModels.createLayered(Identifier.of("block/stone"), TextureMap.getId(block)),
+                    )
+                }
+            }
+        RagiumContents.DeepOres.entries
+            .forEach { deepOre: RagiumContents.DeepOres ->
+                register(deepOre.block) { block: Block ->
+                    generator.registerSingleton(
+                        block,
+                        RagiumModels.createLayered(
+                            Identifier.of("block/deepslate"),
+                            deepOre.material.getOre()?.let { TextureMap.getId(it.block) } ?: TextureMap.getId(block),
+                        ),
+                    )
+                }
+            }
         // storage blocks
         RagiumContents.StorageBlocks.entries
             .map(RagiumContents.StorageBlocks::block)
@@ -205,7 +215,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.PISTON_BOOTS)
         register(RagiumContents.PARACHUTE)
 
-        register(RagiumContents.RAW_RAGINITE)
         register(
             RagiumContents.RAGI_ALLOY_COMPOUND,
             Models.GENERATED_TWO_LAYERS,
@@ -238,6 +247,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Dusts.entries)
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
+            addAll(RagiumContents.RawMaterials.entries)
         }.map(HTItemContent::asItem).forEach(::register)
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->

@@ -41,15 +41,7 @@ import java.util.function.IntFunction
 import kotlin.jvm.optionals.getOrNull
 
 object RagiumContents {
-    //    Blocks - Ores    //
-
-    @JvmField
-    val RAGINITE_ORE: Block =
-        registerCopy("raginite_ore", Blocks.IRON_ORE)
-
-    @JvmField
-    val DEEPSLATE_RAGINITE_ORE: Block =
-        registerCopy("deepslate_raginite_ore", Blocks.DEEPSLATE_IRON_ORE)
+    //    Blocks - Minerals    //
 
     @JvmField
     val POROUS_NETHERRACK: Block =
@@ -294,9 +286,6 @@ object RagiumContents {
     //    Items - Ingredient    //
 
     @JvmField
-    val RAW_RAGINITE: Item = registerItem("raw_raginite")
-
-    @JvmField
     val RAGI_ALLOY_COMPOUND: Item = registerItem("ragi_alloy_compound")
 
     @JvmField
@@ -333,15 +322,21 @@ object RagiumContents {
     @JvmStatic
     fun init() {
         initBlockItems()
+
         initHulls()
         initCoils()
-        // initMachines()
-        initStorageBlocks()
         initCircuits()
+
+        initOres()
+        initStorageBlocks()
+
         initDusts()
         initIngots()
         initPlates()
+        initRaws()
+
         initElements()
+
         initFluids()
     }
 
@@ -465,8 +460,6 @@ object RagiumContents {
 
     @JvmStatic
     private fun initBlockItems() {
-        registerBlockItem(RAGINITE_ORE)
-        registerBlockItem(DEEPSLATE_RAGINITE_ORE)
         registerBlockItem(POROUS_NETHERRACK)
         registerBlockItem(SNOW_SPONGE)
         registerBlockItem(OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
@@ -533,52 +526,6 @@ object RagiumContents {
         }
     }
 
-    //    Machines    //
-
-    /*@JvmStatic
-    private fun initMachines() {
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            RagiumAPI.getInstance().machineTypeRegistry.types.forEach { type: HTMachineType ->
-                registerMachine(type, tier, ::HTMachineBlock)
-            }
-        }
-    }
-
-    @JvmStatic
-    private fun registerMachine(
-        type: HTMachineConvertible,
-        tier: HTMachineTier,
-        factory: (HTMachineConvertible, HTMachineTier) -> HTMachineBlock,
-    ) {
-        val name: String = tier.createId(type).path
-        val machineBlock: HTMachineBlock = registerBlock(name, factory(type, tier))
-        registerItem(name, HTMachineBlockItem(machineBlock, itemSettings()))
-        HTMachineBlockRegistry.register(machineBlock)
-    }*/
-
-    //    Storage Blocks    //
-
-    enum class StorageBlocks(override val material: RagiumMaterials) : HTBlockContent {
-        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
-        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
-        STEEL(RagiumMaterials.STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
-        ;
-
-        override val block = Block(blockSettings(Blocks.IRON_BLOCK))
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_block")
-        override val enPattern: String = "Block of %s"
-        override val jaPattern: String = "%sブロック"
-    }
-
-    @JvmStatic
-    fun initStorageBlocks() {
-        StorageBlocks.entries.forEach { block: StorageBlocks ->
-            registerBlock(block)
-            registerBlockItem(block.block, itemSettings().tier(block.material.tier))
-        }
-    }
-
     //    Circuits    //
 
     enum class Circuit(val tier: HTMachineTier) :
@@ -601,6 +548,70 @@ object RagiumContents {
         }
     }
 
+    //    Ores    //
+
+    enum class Ores(override val material: RagiumMaterials) : HTBlockContent {
+        RAGINITE(RagiumMaterials.RAGINITE),
+        // NICKEL(RagiumMaterials.NICKEL),
+        ;
+
+        override val block = Block(blockSettings(Blocks.IRON_ORE))
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_ore")
+        override val enPattern: String = "%s Ore"
+        override val jaPattern: String = "%s鉱石"
+    }
+
+    enum class DeepOres(override val material: RagiumMaterials) : HTBlockContent {
+        RAGINITE(RagiumMaterials.RAGINITE),
+        // NICKEL(RagiumMaterials.NICKEL),
+        ;
+
+        override val block = Block(blockSettings(Blocks.IRON_ORE))
+        override val id: Identifier = RagiumAPI.id("deepslate_${name.lowercase()}_ore")
+        override val enPattern: String = "Deep %s Ore"
+        override val jaPattern: String = "深層%s鉱石"
+    }
+
+    @JvmStatic
+    fun getOres(): List<HTBlockContent> = buildList {
+        addAll(Ores.entries)
+        addAll(DeepOres.entries)
+    }
+
+    @JvmStatic
+    fun initOres() {
+        getOres().forEach { ore: HTBlockContent ->
+            registerBlock(ore)
+            registerBlockItem(ore.block, itemSettings())
+        }
+    }
+
+    //    Storage Blocks    //
+
+    enum class StorageBlocks(override val material: RagiumMaterials) : HTBlockContent {
+        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        INVAR(RagiumMaterials.INVAR),
+        NICKEL(RagiumMaterials.NICKEL),
+        SILVER(RagiumMaterials.SILVER),
+        STEEL(RagiumMaterials.STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+        ;
+
+        override val block = Block(blockSettings(Blocks.IRON_BLOCK))
+        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_block")
+        override val enPattern: String = "Block of %s"
+        override val jaPattern: String = "%sブロック"
+    }
+
+    @JvmStatic
+    fun initStorageBlocks() {
+        StorageBlocks.entries.forEach { block: StorageBlocks ->
+            registerBlock(block)
+            registerBlockItem(block.block, itemSettings().tier(block.material.tier))
+        }
+    }
+
     //    Dusts    //
 
     enum class Dusts(override val material: RagiumMaterials) : HTItemContent {
@@ -609,7 +620,12 @@ object RagiumContents {
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
 
         ASH(RagiumMaterials.ASH),
+        COPPER(RagiumMaterials.COPPER),
+        GOLD(RagiumMaterials.GOLD),
+        IRON(RagiumMaterials.IRON),
+        NICKEL(RagiumMaterials.NICKEL),
         NITER(RagiumMaterials.NITER),
+        SILVER(RagiumMaterials.SILVER),
         SULFUR(RagiumMaterials.SULFUR),
         ;
 
@@ -629,6 +645,9 @@ object RagiumContents {
     enum class Ingots(override val material: RagiumMaterials) : HTItemContent {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        INVAR(RagiumMaterials.INVAR),
+        NICKEL(RagiumMaterials.NICKEL),
+        SILVER(RagiumMaterials.SILVER),
         STEEL(RagiumMaterials.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
@@ -656,7 +675,9 @@ object RagiumContents {
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         BASALT_FIBER(RagiumMaterials.BASALT_FIBER),
         GOLD(RagiumMaterials.GOLD),
+        INVAR(RagiumMaterials.INVAR),
         SILICON(RagiumMaterials.SILICON),
+        SILVER(RagiumMaterials.SILVER),
         STEEL(RagiumMaterials.STEEL),
 
         // tier3
@@ -675,6 +696,24 @@ object RagiumContents {
     @JvmStatic
     private fun initPlates() {
         Plates.entries.forEach(::registerItem)
+    }
+
+    //    Raw Materials    //
+
+    enum class RawMaterials(override val material: RagiumMaterials) : HTItemContent {
+        RAGINITE(RagiumMaterials.RAGINITE),
+        // NICKEL(RagiumMaterials.NICKEL),
+        ;
+
+        override val item = Item(itemSettings())
+        override val id: Identifier = RagiumAPI.id("raw_${name.lowercase()}")
+        override val enPattern: String = "Raw %s"
+        override val jaPattern: String = "%sの原石"
+    }
+
+    @JvmStatic
+    private fun initRaws() {
+        RawMaterials.entries.forEach(::registerItem)
     }
 
     //    Elements    //

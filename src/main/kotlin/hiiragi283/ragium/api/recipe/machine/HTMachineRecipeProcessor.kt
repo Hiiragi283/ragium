@@ -86,4 +86,8 @@ class HTMachineRecipeProcessor<T : RecipeInput, U : HTRecipeBase<T>>(
         val delCount: Int = recipe.getInput(slot)?.count ?: return
         inventory.getStack(slot).count -= delCount
     }
+
+    //    Builder    //
+
+    class Builder
 }
