@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.util.isModLoaded
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
+import hiiragi283.ragium.client.integration.patchouli.RagiumPatchouliInit
 import hiiragi283.ragium.client.integration.rei.INPUT_ENTRIES
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
@@ -73,6 +74,10 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         registerScreens()
         registerEvents()
         registerNetworks()
+
+        if (isModLoaded("patchouli")) {
+            RagiumPatchouliInit.init()
+        }
 
         RagiumAPI.log { info("Ragium-Client initialized!") }
     }

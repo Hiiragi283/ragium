@@ -1,0 +1,24 @@
+{
+  "name": "Ragi-Alloy",
+  "icon": "ragium:ragi_alloy_ingot",
+  "category": "ragium:tier1",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This is a test entry, but it should show up!"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "ragium:shaped/ragi_alloy_compound",
+      "recipe2": "ragium:shaped/ragi_alloy_compound_1"
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "ragium:smelting/ragi_alloy_ingot"
+    },
+    {
+      "type": "ragium:machine_recipe",
+      "recipe": "ragium:grinder/raw_raginite_dust"
+    }
+  ]
+}

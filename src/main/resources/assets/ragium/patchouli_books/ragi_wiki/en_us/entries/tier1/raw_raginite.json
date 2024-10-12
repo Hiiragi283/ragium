@@ -1,0 +1,23 @@
+{
+  "name": "Raw Raginite",
+  "icon": "ragium:raw_raginite",
+  "category": "ragium:tier1",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This is a test entry, but it should show up!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "title": "Raginite Ore",
+      "item": "tag:c:ores/raginite",
+      "text": "Found in overworld"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "title": "Raw Raginite",
+      "item": "ragium:raw_raginite",
+      "text": "Drops from Raginite Ores"
+    }
+  ]
+}

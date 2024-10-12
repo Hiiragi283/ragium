@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
@@ -28,6 +29,7 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
+import vazkii.patchouli.common.item.ItemModBook
 import java.util.concurrent.CompletableFuture
 
 class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
@@ -60,6 +62,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         craftingIngredients(exporter)
         craftingMachines(exporter)
         craftingTools(exporter)
+
+        HTShapelessRecipeJsonBuilder
+            .create(ItemModBook.forBook(RagiumAPI.id("ragi_wiki")))
+            .input(Items.BOOK)
+            .input(RagiumContents.RawMaterials.RAGINITE)
+            .input(ConventionalItemTags.IRON_INGOTS)
+            .offerTo(exporter.conditions(ResourceConditions.allModsLoaded("patchouli")))
     }
 
     //    Crafting - Armors    //
