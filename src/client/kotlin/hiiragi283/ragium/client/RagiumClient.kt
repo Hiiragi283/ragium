@@ -2,8 +2,6 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineTypeKey
-import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.util.isModLoaded
@@ -50,6 +48,7 @@ import net.minecraft.client.model.ModelTransform
 import net.minecraft.client.model.TexturedModelData
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.entity.model.EntityModelPartNames
 import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
@@ -121,7 +120,9 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     //    Entities    //
 
     private fun registerEntities() {
+        EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.OBLIVION_CUBE, ::HTOblivionCubeEntityRenderer)
+
         EntityModelLayerRegistry.registerModelLayer(HTOblivionCubeEntityRenderer.ENTITY_MODEL_LAYER) {
             val modelData = ModelData()
             modelData.root.addChild(
@@ -204,10 +205,10 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
     override val priority: Int = -100
 
-    override fun modifyProperties(key: HTMachineTypeKey, properties: HTPropertyHolder.Mutable) {
+    override fun modifyProperties(helper: HTMachineTypeInitializer.Helper) {
         if (!isModLoaded("roughlyenoughitems")) return
-        if (key == RagiumMachineTypes.FLUID_DRILL) {
-            properties[INPUT_ENTRIES] = { recipe: HTMachineRecipe ->
+        helper.modify(RagiumMachineTypes.FLUID_DRILL) {
+            set(INPUT_ENTRIES, { recipe: HTMachineRecipe ->
                 recipe
                     .get(HTRecipeComponentTypes.BIOME)
                     ?.let { biome: RegistryKey<Biome> ->
@@ -219,18 +220,17 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
                     }?.let(EntryIngredient::of)
                     ?.let(::listOf)
                     ?: emptyList()
-            }
+            })
         }
-
-        if (key == RagiumMachineTypes.MOB_EXTRACTOR) {
-            properties[INPUT_ENTRIES] = { recipe: HTMachineRecipe ->
+        helper.modify(RagiumMachineTypes.MOB_EXTRACTOR) {
+            set(INPUT_ENTRIES, { recipe: HTMachineRecipe ->
                 recipe
                     .get(HTRecipeComponentTypes.ENTITY_TYPE)
                     ?.let(SpawnEggItem::forEntity)
                     ?.let(EntryIngredients::of)
                     ?.let(::listOf)
                     ?: emptyList()
-            }
+            })
         }
     }
 }

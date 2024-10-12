@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
@@ -25,6 +26,10 @@ object RagiumComponentTypes {
         register("inventory", HTSimpleInventory.CODEC, HTSimpleInventory.PACKET_CODEC)
 
     //    Tool    //
+
+    @JvmField
+    val EXPLOSION_POWER: ComponentType<Float> =
+        register("explosion_power", Codec.floatRange(0f, 16f), PacketCodecs.FLOAT)
 
     @JvmField
     val MODULAR_TOOL: ComponentType<HTModularToolComponent> =

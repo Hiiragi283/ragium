@@ -55,7 +55,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         initializers.forEach {
             map.forEach { (key: HTMachineTypeKey, type: HTMachineType) ->
                 val builder1: HTPropertyHolder.Mutable = HTPropertyHolder.builder(type)
-                it.modifyProperties(key, builder1)
+                it.modifyProperties(HTMachineTypeInitializer.Helper(key, builder1))
                 type.delegated = builder1
             }
         }

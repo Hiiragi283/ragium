@@ -232,6 +232,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumContents.STEEL_AXE)
         register(RagiumContents.STEEL_HOE)
         register(RagiumContents.FORGE_HAMMER)
+        register(RagiumContents.DYNAMITE)
 
         register(RagiumContents.STEEL_HELMET)
         register(RagiumContents.STEEL_CHESTPLATE)

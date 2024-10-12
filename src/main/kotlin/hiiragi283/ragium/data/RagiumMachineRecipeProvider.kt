@@ -238,6 +238,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.EMPTY_FLUID_CUBE, 3)
             .offerTo(exporter)
 
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .addInput(Items.PAPER)
+            .addInput(ConventionalItemTags.STRINGS)
+            .addInput(RagiumContents.Fluids.NITRO_GLYCERIN)
+            .addOutput(RagiumContents.DYNAMITE, 2)
+            .addOutput(RagiumContents.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
         // TNT
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)

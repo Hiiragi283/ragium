@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.util.itemSettings
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.inventory.HTBackpackInventory
+import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
 import hiiragi283.ragium.common.item.HTModularMiningToolItem
@@ -157,6 +158,9 @@ object RagiumContents : HTContentRegister {
 
     @JvmField
     val STEEL_HOE: Item = registerHoeItem("steel_hoe", RagiumToolMaterials.STEEL)
+
+    @JvmField
+    val DYNAMITE: Item = registerItem("dynamite", HTDynamiteItem)
 
     @JvmField
     val MODULAR_TOOL: Item =

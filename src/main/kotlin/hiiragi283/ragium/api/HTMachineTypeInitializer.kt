@@ -14,7 +14,7 @@ interface HTMachineTypeInitializer {
 
     fun registerType(register: Register) {}
 
-    fun modifyProperties(key: HTMachineTypeKey, properties: HTPropertyHolder.Mutable) {}
+    fun modifyProperties(helper: Helper) {}
 
     //    Register    //
 
@@ -33,6 +33,16 @@ interface HTMachineTypeInitializer {
                 HTPropertyHolder.create(builderAction = builderAction),
                 HTMachineType.Category.PROCESSOR,
             )
+        }
+    }
+
+    //    Helper    //
+
+    class Helper(private val key: HTMachineTypeKey, private val properties: HTPropertyHolder.Mutable) {
+        fun modify(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
+            if (key == this.key) {
+                properties.builderAction()
+            }
         }
     }
 }
