@@ -26,25 +26,15 @@ repositories {
     maven(url = "https://api.modrinth.com/maven") {
         content { includeGroup("maven.modrinth") }
     }
-    // AE2
-    maven(url = "https://modmaven.dev/") {
-        content { includeGroup("appeng") }
-    }
-    maven(url = "https://mod-buildcraft.com/maven") {
-        content { includeGroup("alexiil.mc.lib") }
-    }
-    maven(url = "https://raw.githubusercontent.com/Technici4n/Technici4n-maven/master/") {
-        content {
-            includeGroup("dev.technici4n")
-            includeGroup("net.fabricmc.fabric-api")
-        }
-    }
-    maven(url = "https://maven.architectury.dev")
+    maven(url = "https://maven.architectury.dev") // Arch
     maven(url = "https://maven.shedaniel.me") // REI
     maven(url = "https://maven.terraformersmc.com/releases")
     maven(url = "https://server.bbkr.space/artifactory/libs-release") // LibGui
     maven(url = "https://maven.ladysnake.org/releases") // CCA
     maven(url = "https://maven.wispforest.io") // oωo
+    maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") // Modonomicon
+    maven(url = "https://maven.modmuss50.me/")
+    maven(url = "https://maven.blamejared.com") // Patchouli
 }
 
 loom {
@@ -94,6 +84,7 @@ dependencies {
         exclude(module = "fabric-api")
         exclude(module = "fabric-loader")
     }
+    // modImplementation(libs.modonomicon) { isTransitive = false }
 
     modImplementation(libs.bundles.mods.include) {
         exclude(module = "fabric-api")
