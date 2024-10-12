@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.minecraft.component.ComponentType
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -31,6 +32,13 @@ class HTMachineType private constructor(properties: HTPropertyHolder) :
                     set(HTMachinePropertyKeys.FRONT_TEX) { RagiumAPI.id("block/alloy_furnace_front") }
                 },
             )
+
+            @JvmField
+            val COMPONENT_TYPE: ComponentType<HTMachineType> = ComponentType
+                .builder<HTMachineType>()
+                .codec(HTMachineTypeRegistry.CODEC)
+                .packetCodec(HTMachineTypeRegistry.PACKET_CODEC)
+                .build()
 
             @JvmStatic
             fun create(properties: HTPropertyHolder, category: Category): HTMachineType = HTMachineType(

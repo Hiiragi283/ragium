@@ -145,7 +145,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // ores
         RagiumContents.Ores.entries
             .forEach {
-                register(it.block) { block: Block ->
+                register(it.value) { block: Block ->
                     generator.registerSingleton(
                         block,
                         RagiumModels.createLayered(Identifier.of("block/stone"), TextureMap.getId(block)),
@@ -154,23 +154,23 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         RagiumContents.DeepOres.entries
             .forEach { deepOre: RagiumContents.DeepOres ->
-                register(deepOre.block) { block: Block ->
+                register(deepOre.value) { block: Block ->
                     generator.registerSingleton(
                         block,
                         RagiumModels.createLayered(
                             Identifier.of("block/deepslate"),
-                            deepOre.material.getOre()?.let { TextureMap.getId(it.block) } ?: TextureMap.getId(block),
+                            deepOre.material.getOre()?.let { TextureMap.getId(it.value) } ?: TextureMap.getId(block),
                         ),
                     )
                 }
             }
         // storage blocks
         RagiumContents.StorageBlocks.entries
-            .map(RagiumContents.StorageBlocks::block)
+            .map(RagiumContents.StorageBlocks::value)
             .forEach(::registerSimple)
         // hulls
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            register(hull.block) {
+            register(hull.value) {
                 generator.registerSingleton(
                     it,
                     RagiumModels.HULL_TEXTURE_FACTORY,
@@ -179,7 +179,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         // coils
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
-            register(coil.block) {
+            register(coil.value) {
                 generator.registerAxisRotated(
                     it,
                     TexturedModel.CUBE_COLUMN.upload(

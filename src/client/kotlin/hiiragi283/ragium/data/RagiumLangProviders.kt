@@ -49,7 +49,7 @@ object RagiumLangProviders {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
-        }.forEach { block: HTBlockContent -> builder.add(block.block, block.getTranslation(type)) }
+        }.forEach { block: HTBlockContent -> builder.add(block.value, block.getTranslation(type)) }
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             val translatedName: String = element.getTranslation(type)
@@ -78,7 +78,7 @@ object RagiumLangProviders {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-        }.forEach { item: HTItemContent -> builder.add(item.item, item.getTranslation(type)) }
+        }.forEach { item: HTItemContent -> builder.add(item.value, item.getTranslation(type)) }
         // circuits
         RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
             builder.add(

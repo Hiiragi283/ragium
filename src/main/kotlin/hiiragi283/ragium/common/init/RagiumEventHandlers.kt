@@ -3,14 +3,12 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
-import hiiragi283.ragium.api.inventory.HTBackpackInventory
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.util.hasEnchantment
-import hiiragi283.ragium.api.util.openEnderChest
-import hiiragi283.ragium.api.util.sendTitle
+import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.inventory.HTBackpackInventory
 import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseItemCallback
@@ -18,10 +16,12 @@ import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.EnchantedBookItem
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.recipe.Recipe
@@ -144,6 +144,19 @@ object RagiumEventHandlers {
             } else {
                 TypedActionResult.pass(stack)
             }
+        }
+
+        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
+            val stack: ItemStack = player.getStackInHand(hand)
+            if (stack.hasEnchantments()) {
+                stack.enchantments
+                    .toLevelMap()
+                    .map(EnchantedBookItem::forEnchantment)
+                    .onEach { dropStackAt(player, it) }
+                stack.remove(DataComponentTypes.ENCHANTMENTS)
+                TypedActionResult.success(stack, world.isClient)
+            }
+            TypedActionResult.pass(stack)
         }
     }
 

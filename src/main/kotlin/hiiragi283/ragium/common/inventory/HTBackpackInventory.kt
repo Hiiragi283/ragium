@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.inventory
+package hiiragi283.ragium.common.inventory
 
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -19,6 +20,7 @@ class HTBackpackInventory(isLarge: Boolean) :
         } * 9,
     ) {
     var parent: ItemStack? = null
+        private set
 
     private val factory = SimpleNamedScreenHandlerFactory(
         when (isLarge) {

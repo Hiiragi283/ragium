@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
@@ -17,6 +18,10 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val TRANSFORM: HTTransformRecipe.Serializer = register("alchemical_transform", HTTransformRecipe.Serializer)
+
+    @JvmField
+    val MODULE_INSTALL: HTSmithingModuleRecipe.Serializer =
+        register("module_install", HTSmithingModuleRecipe.Serializer)
 
     @JvmStatic
     private fun <T : RecipeSerializer<*>> register(name: String, serializer: T): T = Registry.register(

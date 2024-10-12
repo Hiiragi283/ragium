@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
@@ -56,16 +55,16 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun readComponents(components: ComponentsAccess) {
         super.readComponents(components)
         val machineType: HTMachineType =
-            components.getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
-        val tier: HTMachineTier = components.getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+            components.getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
+        val tier: HTMachineTier = components.getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
         initMachineEntity(machineType, tier)
     }
 
     override fun addComponents(builder: ComponentMap.Builder) {
         super.addComponents(builder)
         machineEntity?.let {
-            builder.add(RagiumComponentTypes.MACHINE_TYPE, it.machineType)
-            builder.add(RagiumComponentTypes.MACHINE_TIER, it.tier)
+            builder.add(HTMachineType.COMPONENT_TYPE, it.machineType)
+            builder.add(HTMachineTier.COMPONENT_TYPE, it.tier)
         }
     }
 

@@ -28,11 +28,11 @@ class HTSawMillMachineEntity(tier: HTMachineTier) :
     }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.add(-1, 0, 0, HTMultiblockComponent.block(tier.getHull().block))
-        builder.add(1, 0, 0, HTMultiblockComponent.block(tier.getHull().block))
+        builder.add(-1, 0, 0, HTMultiblockComponent.block(tier.getHull().value))
+        builder.add(1, 0, 0, HTMultiblockComponent.block(tier.getHull().value))
         builder.add(-1, 0, 1, HTMultiblockComponent.block(Blocks.STONE_SLAB))
         builder.add(0, 0, 1, HTMultiblockComponent.block(Blocks.STONECUTTER))
         builder.add(1, 0, 1, HTMultiblockComponent.block(Blocks.STONE_SLAB))
-        builder.addLayer(-1..1, 0, 2..2, HTMultiblockComponent.block(tier.getHull().block))
+        builder.addLayer(-1..1, 0, 2..2, HTMultiblockComponent.block(tier.getHull().value))
     }
 }

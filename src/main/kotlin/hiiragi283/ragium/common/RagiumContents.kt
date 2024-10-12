@@ -2,18 +2,18 @@ package hiiragi283.ragium.common
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTBackpackInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.util.*
+import hiiragi283.ragium.api.util.blockSettings
+import hiiragi283.ragium.api.util.dropStackAt
+import hiiragi283.ragium.api.util.element
+import hiiragi283.ragium.api.util.itemSettings
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.inventory.HTBackpackInventory
 import hiiragi283.ragium.common.item.HTFluidCubeItem
 import hiiragi283.ragium.common.item.HTForgeHammerItem
-import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
-import hiiragi283.ragium.common.util.HTBlockContent
-import hiiragi283.ragium.common.util.HTContentRegister
-import hiiragi283.ragium.common.util.HTItemContent
-import hiiragi283.ragium.common.util.HTTranslationProvider
+import hiiragi283.ragium.common.item.HTModularMiningToolItem
+import hiiragi283.ragium.common.util.*
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.minecraft.block.*
@@ -26,12 +26,12 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.*
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.function.ValueLists
@@ -157,6 +157,10 @@ object RagiumContents : HTContentRegister {
 
     @JvmField
     val STEEL_HOE: Item = registerHoeItem("steel_hoe", RagiumToolMaterials.STEEL)
+
+    @JvmField
+    val MODULAR_TOOL: Item =
+        registerItem("modular_tool", HTModularMiningToolItem(RagiumToolMaterials.STEEL, itemSettings()))
 
     @JvmField
     val BACKPACK: Item = registerItem(
@@ -316,82 +320,6 @@ object RagiumContents : HTContentRegister {
         ),
     )
 
-    //    Register    //
-
-    @JvmStatic
-    fun init() {
-        initBlockItems()
-
-        Hulls.entries.forEach { hull: Hulls ->
-            registerBlock(hull)
-            registerBlockItem(hull.block, itemSettings().tier(hull.material.tier))
-        }
-        Coils.entries.forEach { coil: Coils ->
-            registerBlock(coil)
-            registerBlockItem(coil.block, itemSettings())
-        }
-        Circuit.entries.forEach { circuit: Circuit ->
-            registerItem("${circuit.name.lowercase()}_circuit", circuit.asItem())
-        }
-
-        getOres().forEach { ore: HTBlockContent ->
-            registerBlock(ore)
-            registerBlockItem(ore.block, itemSettings())
-        }
-        StorageBlocks.entries.forEach { block: StorageBlocks ->
-            registerBlock(block)
-            registerBlockItem(block.block, itemSettings().tier(block.material.tier))
-        }
-
-        Dusts.entries.forEach(::registerItem)
-        Ingots.entries.forEach(::registerItem)
-        Plates.entries.forEach(::registerItem)
-        RawMaterials.entries.forEach(::registerItem)
-
-        Element.entries.forEach { element: Element ->
-            // Budding Block
-            registerBlock("budding_${element.asString()}", element.buddingBlock)
-            registerBlockItem(element.buddingBlock)
-            // Cluster Block
-            registerBlock("${element.asString()}_cluster", element.clusterBlock)
-            registerBlockItem(element.clusterBlock)
-            // dust item
-            registerItem("${element.asString()}_dust", element.dustItem)
-            // pendant item
-            registerItem("${element.asString()}_pendant", element.pendantItem)
-            // ring item
-            registerItem("${element.asString()}_ring", element.ringItem)
-        }
-
-        Fluids.entries.forEach { fluid: Fluids ->
-            registerItem("${fluid.fluidName}_fluid_cube", fluid.asItem())
-        }
-    }
-
-    @JvmStatic
-    private fun initBlockItems() {
-        registerBlockItem(POROUS_NETHERRACK)
-        registerBlockItem(SNOW_SPONGE)
-        registerBlockItem(OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
-
-        registerBlockItem(SPONGE_CAKE)
-        registerBlockItem(SWEET_BERRIES_CAKE)
-
-        registerBlockItem(CREATIVE_SOURCE)
-        registerBlockItem(BASIC_CASING)
-        registerBlockItem(ADVANCED_CASING)
-        registerBlockItem(MANUAL_GRINDER)
-        registerBlockItem(DATA_DRIVE)
-        registerBlockItem(DRIVE_SCANNER)
-        registerBlockItem(SHAFT)
-        registerBlockItem(ITEM_DISPLAY)
-        registerBlockItem(NETWORK_INTERFACE)
-
-        registerBlockItem(ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
-
-        registerItem("meta_machine", HTMetaMachineBlockItem)
-    }
-
     //    Hulls    //
 
     enum class Hulls(override val material: RagiumMaterials) : HTBlockContent {
@@ -400,8 +328,8 @@ object RagiumContents : HTContentRegister {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val block = Block(blockSettings(material.tier.getBaseBlock()))
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_hull")
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry(Registries.BLOCK, RagiumAPI.id("${name.lowercase()}_hull"))
         override val enPattern: String = "%s Hull"
         override val jaPattern: String = "%s筐体"
     }
@@ -414,8 +342,8 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         ;
 
-        override val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_coil")
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry(Registries.BLOCK, RagiumAPI.id("${name.lowercase()}_coil"))
         override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
     }
@@ -423,6 +351,7 @@ object RagiumContents : HTContentRegister {
     //    Circuits    //
 
     enum class Circuit(val tier: HTMachineTier) :
+        HTEntryDelegated<Item>,
         HTTranslationProvider by tier,
         ItemConvertible {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
@@ -430,9 +359,10 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        private val item: Item = Item(itemSettings())
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry(Registries.ITEM, RagiumAPI.id("${name.lowercase()}_circuit"))
 
-        override fun asItem(): Item = item
+        override fun asItem(): Item = value
     }
 
     //    Ores    //
@@ -442,8 +372,8 @@ object RagiumContents : HTContentRegister {
         // NICKEL(RagiumMaterials.NICKEL),
         ;
 
-        override val block = Block(blockSettings(Blocks.IRON_ORE))
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_ore")
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry(Registries.BLOCK, RagiumAPI.id("${name.lowercase()}_ore"))
         override val enPattern: String = "%s Ore"
         override val jaPattern: String = "%s鉱石"
     }
@@ -453,8 +383,8 @@ object RagiumContents : HTContentRegister {
         // NICKEL(RagiumMaterials.NICKEL),
         ;
 
-        override val block = Block(blockSettings(Blocks.IRON_ORE))
-        override val id: Identifier = RagiumAPI.id("deepslate_${name.lowercase()}_ore")
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry(Registries.BLOCK, RagiumAPI.id("deepslate_${name.lowercase()}_ore"))
         override val enPattern: String = "Deep %s Ore"
         override val jaPattern: String = "深層%s鉱石"
     }
@@ -477,8 +407,8 @@ object RagiumContents : HTContentRegister {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val block = Block(blockSettings(Blocks.IRON_BLOCK))
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_block")
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry(Registries.BLOCK, RagiumAPI.id("${name.lowercase()}_block"))
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
     }
@@ -500,8 +430,8 @@ object RagiumContents : HTContentRegister {
         SULFUR(RagiumMaterials.SULFUR),
         ;
 
-        override val item = Item(itemSettings())
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_dust")
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry(Registries.ITEM, RagiumAPI.id("${name.lowercase()}_dust"))
         override val enPattern: String = "%s Dust"
         override val jaPattern: String = "%sの粉"
     }
@@ -518,8 +448,8 @@ object RagiumContents : HTContentRegister {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val item = Item(itemSettings())
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_ingot")
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry(Registries.ITEM, RagiumAPI.id("${name.lowercase()}_ingot"))
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
     }
@@ -548,8 +478,8 @@ object RagiumContents : HTContentRegister {
         PTFE(RagiumMaterials.PTFE),
         ;
 
-        override val item = Item(itemSettings())
-        override val id: Identifier = RagiumAPI.id("${name.lowercase()}_plate")
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry(Registries.ITEM, RagiumAPI.id("${name.lowercase()}_plate"))
         override val enPattern: String = "%s Plate"
         override val jaPattern: String = "%s板"
     }
@@ -561,8 +491,8 @@ object RagiumContents : HTContentRegister {
         // NICKEL(RagiumMaterials.NICKEL),
         ;
 
-        override val item = Item(itemSettings())
-        override val id: Identifier = RagiumAPI.id("raw_${name.lowercase()}")
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry(Registries.ITEM, RagiumAPI.id("raw_${name.lowercase()}"))
         override val enPattern: String = "Raw %s"
         override val jaPattern: String = "%sの原石"
     }
@@ -630,8 +560,9 @@ object RagiumContents : HTContentRegister {
     //    Fluids    //
 
     enum class Fluids(val color: Color, override val enName: String, override val jaName: String) :
-        ItemConvertible,
-        HTTranslationProvider {
+        HTEntryDelegated<Item>,
+        HTTranslationProvider,
+        ItemConvertible {
         // Vanilla
         WATER(Color(0x0033ff), "Water", "水"),
         LAVA(Color(0xff6600), "Lava", "溶岩") {
@@ -736,13 +667,11 @@ object RagiumContents : HTContentRegister {
         TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
         ;
 
-        val fluidName: String = name.lowercase()
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry(Registries.ITEM, RagiumAPI.id("${name.lowercase()}_fluid_cube"))
 
-        protected open fun createItem(): Item = Item(itemSettings())
+        internal open fun createItem(): Item = Item(itemSettings())
 
-        @Suppress("LeakingThis")
-        private val item: Item = createItem()
-
-        override fun asItem(): Item = item
+        override fun asItem(): Item = entry.value()
     }
 }

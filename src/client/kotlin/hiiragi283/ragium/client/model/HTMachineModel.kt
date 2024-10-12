@@ -23,7 +23,6 @@ import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.Registries
 import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
@@ -109,10 +108,9 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
     ) {
         // render hull model
         val hull: RagiumContents.Hulls = tier.getHull()
-        val hullId: Identifier = Registries.BLOCK.getId(hull.block)
         val client: MinecraftClient = MinecraftClient.getInstance()
         val bakedModelManager: BakedModelManager = client.bakedModelManager
-        bakedModelManager.getModel(ModelIdentifier(hullId, ""))?.apply(hullRenderer)
+        bakedModelManager.getModel(ModelIdentifier(hull.id, ""))?.apply(hullRenderer)
         // render machine front
         val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.getFrontTex(machine))
         this.frontSprite = this.textureGetter.apply(frontId)

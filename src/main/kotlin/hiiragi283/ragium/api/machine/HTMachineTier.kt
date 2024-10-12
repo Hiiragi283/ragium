@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.util.HTTranslationProvider
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.component.ComponentType
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.text.MutableText
@@ -17,7 +18,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.function.ValueLists
-import java.util.function.IntFunction
 
 enum class HTMachineTier(
     private val idPattern: String,
@@ -60,18 +60,25 @@ enum class HTMachineTier(
         val CODEC: Codec<HTMachineTier> = StringIdentifiable.createCodec(HTMachineTier::values)
 
         @JvmField
-        val INT_FUNCTION: IntFunction<HTMachineTier> =
-            ValueLists.createIdToValueFunction(
+        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineTier> =
+            PacketCodecs.indexed(
+                ValueLists.createIdToValueFunction(
+                    HTMachineTier::ordinal,
+                    entries.toTypedArray(),
+                    ValueLists.OutOfBoundsHandling.WRAP,
+                ),
                 HTMachineTier::ordinal,
-                entries.toTypedArray(),
-                ValueLists.OutOfBoundsHandling.WRAP,
             )
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineTier> =
-            PacketCodecs.indexed(INT_FUNCTION, HTMachineTier::ordinal)
+        val COMPONENT_TYPE: ComponentType<HTMachineTier> = ComponentType
+            .builder<HTMachineTier>()
+            .codec(CODEC)
+            .packetCodec(PACKET_CODEC)
+            .build()
     }
 
+    val miningCost: Long = recipeCost / 10
     val energyCapacity: Long = recipeCost * 16
 
     val translationKey: String = "machine_tier.ragium.${asString()}"

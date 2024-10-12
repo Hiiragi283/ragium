@@ -96,7 +96,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
         RagiumContents
             .getOres()
-            .map(HTBlockContent::block)
+            .map(HTBlockContent::value)
             .forEach(::registerCutoutMipped)
 
         RagiumContents.Element.entries

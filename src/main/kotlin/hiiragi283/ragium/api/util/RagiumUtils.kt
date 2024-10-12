@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import io.netty.buffer.ByteBuf
+import it.unimi.dsi.fastutil.objects.Object2IntMap
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
@@ -27,8 +28,10 @@ import net.minecraft.component.Component
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
+import net.minecraft.component.type.ItemEnchantmentsComponent
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.enchantment.EnchantmentLevelEntry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
@@ -99,6 +102,9 @@ operator fun <O : Any, S : Any, T : Comparable<T>, U : State<O, S>> U.set(proper
     with(property, value)
 }
 
+@Suppress("UNCHECKED_CAST")
+fun <T : Any> BlockState.castBlock(): T? = block as? T
+
 //    BlockApiLookup    //
 
 fun <A, C> BlockApiLookup<A, C>.createCache(world: ServerWorld, pos: BlockPos): BlockApiCache<A, C> = BlockApiCache.create(this, world, pos)
@@ -116,16 +122,28 @@ fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direc
 //    Component    //
 
 val ComponentHolder.machineType: HTMachineType
-    get() = getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
+    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
 
 val ComponentMap.machineType: HTMachineType
-    get() = getOrDefault(RagiumComponentTypes.MACHINE_TYPE, HTMachineType.DEFAULT)
+    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
+
+val ComponentHolder.machineTypeOrNull: HTMachineType?
+    get() = get(HTMachineType.COMPONENT_TYPE)
+
+val ComponentMap.machineTypeOrNull: HTMachineType?
+    get() = get(HTMachineType.COMPONENT_TYPE)
 
 val ComponentHolder.machineTier: HTMachineTier
-    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+    get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
 
 val ComponentMap.machineTier: HTMachineTier
-    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+    get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
+
+val ComponentHolder.machineTierOrNull: HTMachineTier?
+    get() = get(HTMachineTier.COMPONENT_TYPE)
+
+val ComponentMap.machineTierOrNull: HTMachineTier?
+    get() = get(HTMachineTier.COMPONENT_TYPE)
 
 fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).collect(Collectors.joining(", "))}}"
 
@@ -133,6 +151,11 @@ fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).c
 
 fun hasEnchantment(enchantment: RegistryKey<Enchantment>, world: World, stack: ItemStack): Boolean =
     EnchantmentHelper.getLevel(world.getEntry(RegistryKeys.ENCHANTMENT, enchantment), stack) > 0
+
+fun ItemEnchantmentsComponent.toLevelMap(): List<EnchantmentLevelEntry> =
+    enchantmentEntries.map(Object2IntMap.Entry<RegistryEntry<Enchantment>>::levelEntry)
+
+fun Map.Entry<RegistryEntry<Enchantment>, Int>.levelEntry(): EnchantmentLevelEntry = EnchantmentLevelEntry(key, value)
 
 //    FabricLoader    //
 
@@ -144,9 +167,9 @@ fun itemSettings(): Item.Settings = Item.Settings()
 
 fun Item.Settings.element(element: RagiumContents.Element): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
-fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(RagiumComponentTypes.MACHINE_TYPE, type.asMachine())
+fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(HTMachineType.COMPONENT_TYPE, type.asMachine())
 
-fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(RagiumComponentTypes.MACHINE_TIER, tier)
+fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachineTier.COMPONENT_TYPE, tier)
 
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
     if (item == null) return ItemStack.EMPTY
@@ -162,6 +185,9 @@ fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): B
     ?.let(EnchantmentHelper.getEnchantments(this)::getLevel)
     ?.let { it > 0 }
     ?: false
+
+@Suppress("UNCHECKED_CAST")
+fun <T : Any> ItemStack.castItem(): T? = item as? T
 
 //    ItemUsageContext    //
 
@@ -233,9 +259,20 @@ fun <T : PersistentState> getState(
 //    Registry    //
 
 @JvmField
-val DUMMY_LOOKUP: RegistryWrapper.WrapperLookup = RegistryWrapper.WrapperLookup.of(
+val STATIC_LOOKUP: RegistryWrapper.WrapperLookup = RegistryWrapper.WrapperLookup.of(
     Registries.REGISTRIES.stream().map(Registry<*>::getReadOnlyWrapper),
 )
+
+fun <T : Any> createEntry(registry: Registry<T>, key: RegistryKey<T>): RegistryEntry.Reference<T> {
+    registry.entryOf(key)
+    return RegistryEntry.Reference.standAlone(registry.entryOwner, key)
+}
+
+fun <T : Any> createEntry(registry: Registry<T>, id: Identifier): RegistryEntry.Reference<T> =
+    createEntry(registry, RegistryKey.of(registry.key, id))
+
+fun <T : Any> createEntry(registry: Registry<T>, namespace: String, path: String): RegistryEntry.Reference<T> =
+    createEntry(registry, Identifier.of(namespace, path))
 
 //    ScreenHandler    //
 

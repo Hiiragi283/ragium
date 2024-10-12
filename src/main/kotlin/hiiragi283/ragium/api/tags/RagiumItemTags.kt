@@ -22,6 +22,9 @@ object RagiumItemTags {
     @JvmField
     val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")
 
+    @JvmField
+    val TOOL_MODULES: TagKey<Item> = create(RagiumAPI.MOD_ID, "tool_modules")
+
     //    Conventional    //
 
     @JvmField

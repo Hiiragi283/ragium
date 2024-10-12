@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
@@ -39,6 +40,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     override fun generate(exporter: RecipeExporter) {
         craftingRecipes(exporter)
         cookingRecipes(exporter)
+        smithingRecipes(exporter)
+
+        exporter.accept(
+            RagiumAPI.id("smithing/install_module"),
+            HTSmithingModuleRecipe,
+            null,
+        )
     }
 
     private fun <T : CraftingRecipeJsonBuilder> T.unlockedBy(item: ItemConvertible): T = apply {
@@ -738,5 +746,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             Items.BREAD,
             RecipeProvider.conditionsFromItem(RagiumContents.DOUGH),
         )
+    }
+
+    //    Smithing    //
+
+    private fun smithingRecipes(exporter: RecipeExporter) {
     }
 }

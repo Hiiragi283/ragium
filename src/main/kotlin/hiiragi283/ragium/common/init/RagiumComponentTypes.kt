@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
+import hiiragi283.ragium.api.tool.HTModularToolComponent
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
@@ -26,21 +26,31 @@ object RagiumComponentTypes {
 
     //    Tool    //
 
+    @JvmField
+    val MODULAR_TOOL: ComponentType<HTModularToolComponent> =
+        register("modular_tool", HTModularToolComponent.COMPONENT_TYPE)
+
     //    Machine    //
 
     @JvmField
     val MACHINE_TYPE: ComponentType<HTMachineType> =
-        register("machine_type", HTMachineTypeRegistry.CODEC, HTMachineTypeRegistry.PACKET_CODEC)
+        register("machine_type", HTMachineType.COMPONENT_TYPE)
 
     @JvmField
     val MACHINE_TIER: ComponentType<HTMachineTier> =
-        register("machine_tier", HTMachineTier.CODEC, HTMachineTier.PACKET_CODEC)
+        register("machine_tier", HTMachineTier.COMPONENT_TYPE)
+
+    @JvmStatic
+    private fun <T : Any> register(name: String, type: ComponentType<T>): ComponentType<T> = Registry.register(
+        Registries.DATA_COMPONENT_TYPE,
+        RagiumAPI.id(name),
+        type,
+    )
 
     @JvmStatic
     private fun <T : Any> register(name: String, codec: Codec<T>, packetCodec: PacketCodec<in RegistryByteBuf, T>): ComponentType<T> =
-        Registry.register(
-            Registries.DATA_COMPONENT_TYPE,
-            RagiumAPI.id(name),
+        register(
+            name,
             ComponentType
                 .builder<T>()
                 .codec(codec)

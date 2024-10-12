@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementRegister
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -62,8 +62,8 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 .component(
                     ComponentPredicate
                         .builder()
-                        .add(RagiumComponentTypes.MACHINE_TYPE, type.asMachine())
-                        .add(RagiumComponentTypes.MACHINE_TIER, tier)
+                        .add(HTMachineType.COMPONENT_TYPE, type.asMachine())
+                        .add(HTMachineTier.COMPONENT_TYPE, tier)
                         .build(),
                 ),
         ),

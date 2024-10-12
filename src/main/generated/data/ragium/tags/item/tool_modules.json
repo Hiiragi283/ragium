@@ -1,0 +1,9 @@
+{
+  "values": [
+    "ragium:default_module",
+    "ragium:axe_stripping_module",
+    "ragium:hoe_tilling_module",
+    "ragium:pickaxe_lighting_module",
+    "ragium:shovel_flattening_module"
+  ]
+}

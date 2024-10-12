@@ -38,7 +38,7 @@ class HTDistillationTowerMachineEntity(tier: HTMachineTier) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.block(tier.getHull().block),
+                HTMultiblockComponent.block(tier.getHull().value),
             ).addCross4(
                 -1..1,
                 1,

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.api.tool.HTModularToolComponent
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.util.HTBlockContent
@@ -40,7 +41,7 @@ object RagiumTagProviders {
             }
 
             fun add(tagKey: TagKey<Block>, block: HTBlockContent) {
-                add(tagKey, block.block)
+                add(tagKey, block.value)
             }
 
             // vanilla
@@ -170,6 +171,10 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.COOKED_MEAT_FOODS)
                 .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
+
+            buildList {
+                addAll(HTModularToolComponent.Behavior.entries)
+            }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
             RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
                 add(RagiumItemTags.FLUID_CUBES, fluid)

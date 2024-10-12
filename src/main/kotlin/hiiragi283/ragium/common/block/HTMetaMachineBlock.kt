@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.util.blockSettings
 import hiiragi283.ragium.api.util.getMachineEntity
 import hiiragi283.ragium.api.util.machineTier
-import hiiragi283.ragium.api.util.machineType
+import hiiragi283.ragium.api.util.machineTypeOrNull
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -36,7 +36,7 @@ object HTMetaMachineBlock : HTBlockWithEntity(blockSettings(Blocks.IRON_BLOCK)) 
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
-        stack.machineType.appendTooltip(tooltip::add, stack.machineTier)
+        stack.machineTypeOrNull?.appendTooltip(tooltip::add, stack.machineTier)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState =

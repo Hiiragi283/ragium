@@ -32,17 +32,17 @@ class HTBlastFurnaceMachineEntity(tier: HTMachineTier) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.block(tier.getHull().block),
+                HTMultiblockComponent.block(tier.getHull().value),
             ).addHollow(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.block(tier.getCoil().block),
+                HTMultiblockComponent.block(tier.getCoil().value),
             ).addHollow(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.block(tier.getCoil().block),
+                HTMultiblockComponent.block(tier.getCoil().value),
             ).addLayer(
                 -1..1,
                 3,
