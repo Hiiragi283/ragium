@@ -2,9 +2,11 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.util.blockSettings
 import hiiragi283.ragium.api.util.getOrNull
+import hiiragi283.ragium.api.util.modifyBlockState
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.block.Waterloggable
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
@@ -30,8 +32,12 @@ object HTInfectingBlock : Block(blockSettings().ticksRandomly().dropsNothing()) 
             val list = listOf(
                 Blocks.SANDSTONE,
             )
-            if (stateTo.isAir && posTo.y < 63) {
-                world.setBlockState(posTo, defaultState.with(Properties.ENABLED, true))
+            if (posTo.y < 63) {
+                if (stateTo.isAir) {
+                    world.setBlockState(posTo, defaultState.with(Properties.ENABLED, true))
+                } else if (stateTo.block is Waterloggable) {
+                    world.modifyBlockState(posTo) { it.with(Properties.WATERLOGGED, true) }
+                }
                 return@forEach
             }
         }

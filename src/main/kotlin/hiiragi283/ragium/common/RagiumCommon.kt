@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTModularToolComponent
+import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
-import hiiragi283.ragium.api.tool.HTModularToolComponent
 import hiiragi283.ragium.api.util.blockSettings
 import hiiragi283.ragium.api.util.itemSettings
 import hiiragi283.ragium.api.util.tier
@@ -10,7 +11,6 @@ import hiiragi283.ragium.common.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
-import hiiragi283.ragium.common.util.HTContentRegister
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
@@ -33,6 +33,7 @@ object RagiumCommon : ModInitializer, HTContentRegister {
 
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
+        RagiumBlocks
         RagiumEntityTypes.init()
         RagiumFluids.init()
         RagiumRecipeSerializers
@@ -65,26 +66,11 @@ object RagiumCommon : ModInitializer, HTContentRegister {
 
         initBlockItems()
 
-        RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            val block = Block(blockSettings(hull.material.tier.getBaseBlock()))
-            registerBlock(hull, block)
-            registerBlockItem(block, itemSettings().tier(hull.material.tier))
-        }
-        RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
-            val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
-            registerBlock(coil, block)
-            registerBlockItem(block, itemSettings())
-        }
-        RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
-            registerItem(circuit, Item(itemSettings()))
-        }
-
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
             val block = Block(blockSettings(Blocks.IRON_ORE))
             registerBlock(ore, block)
             registerBlockItem(block, itemSettings())
         }
-
         RagiumContents.DeepOres.entries.forEach { ore: RagiumContents.DeepOres ->
             val block = Block(blockSettings(Blocks.DEEPSLATE_IRON_ORE))
             registerBlock(ore, block)
@@ -100,6 +86,31 @@ object RagiumCommon : ModInitializer, HTContentRegister {
         RagiumContents.Ingots.entries.forEach { registerItem(it, Item(itemSettings())) }
         RagiumContents.Plates.entries.forEach { registerItem(it, Item(itemSettings())) }
         RagiumContents.RawMaterials.entries.forEach { registerItem(it, Item(itemSettings())) }
+
+        RagiumContents.Armors.entries.forEach { registerItem(it, it.createItem()) }
+        RagiumContents.Tools.entries.forEach { registerItem(it, it.createItem()) }
+        RagiumContents.Accessories.entries.forEach { registerItem(it, it.createItem()) }
+
+        RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
+            val block = Block(blockSettings(hull.material.tier.getBaseBlock()))
+            registerBlock(hull, block)
+            registerBlockItem(block, itemSettings().tier(hull.material.tier))
+        }
+        RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
+            val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
+            registerBlock(coil, block)
+            registerBlockItem(block, itemSettings())
+        }
+        RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
+            registerItem(circuit, Item(itemSettings()))
+        }
+
+        RagiumContents.Misc.entries.forEach { ingredient: RagiumContents.Misc ->
+            registerItem(ingredient, ingredient.createItem())
+        }
+        RagiumContents.Foods.entries.forEach { food: RagiumContents.Foods ->
+            registerItem(food, Item(itemSettings().food(food.food())))
+        }
 
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // Budding Block
@@ -123,24 +134,24 @@ object RagiumCommon : ModInitializer, HTContentRegister {
 
     @JvmStatic
     private fun initBlockItems() {
-        registerBlockItem(RagiumContents.POROUS_NETHERRACK)
-        registerBlockItem(RagiumContents.SNOW_SPONGE)
-        registerBlockItem(RagiumContents.OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
+        registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
+        registerBlockItem(RagiumBlocks.SNOW_SPONGE)
+        registerBlockItem(RagiumBlocks.OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
-        registerBlockItem(RagiumContents.SPONGE_CAKE)
-        registerBlockItem(RagiumContents.SWEET_BERRIES_CAKE)
+        registerBlockItem(RagiumBlocks.SPONGE_CAKE)
+        registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
 
-        registerBlockItem(RagiumContents.CREATIVE_SOURCE)
-        registerBlockItem(RagiumContents.BASIC_CASING)
-        registerBlockItem(RagiumContents.ADVANCED_CASING)
-        registerBlockItem(RagiumContents.MANUAL_GRINDER)
-        registerBlockItem(RagiumContents.DATA_DRIVE)
-        registerBlockItem(RagiumContents.DRIVE_SCANNER)
-        registerBlockItem(RagiumContents.SHAFT)
-        registerBlockItem(RagiumContents.ITEM_DISPLAY)
-        registerBlockItem(RagiumContents.NETWORK_INTERFACE)
+        registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.BASIC_CASING)
+        registerBlockItem(RagiumBlocks.ADVANCED_CASING)
+        registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
+        registerBlockItem(RagiumBlocks.DATA_DRIVE)
+        registerBlockItem(RagiumBlocks.DRIVE_SCANNER)
+        registerBlockItem(RagiumBlocks.SHAFT)
+        registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
+        registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
 
-        registerBlockItem(RagiumContents.ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
+        registerBlockItem(RagiumBlocks.ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
 
         registerItem("meta_machine", HTMetaMachineBlockItem)
     }

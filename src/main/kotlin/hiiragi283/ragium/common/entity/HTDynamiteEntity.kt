@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.entity
 
+import hiiragi283.ragium.api.component.HTDynamiteComponent
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
@@ -17,13 +18,14 @@ class HTDynamiteEntity : ThrownItemEntity {
 
     constructor(world: World, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.DYNAMITE, x, y, z, world)
 
-    override fun getDefaultItem(): Item = RagiumContents.DYNAMITE
+    override fun getDefaultItem(): Item = RagiumContents.Misc.DYNAMITE.value
 
     override fun onCollision(hitResult: HitResult) {
         super.onCollision(hitResult)
         if (!world.isClient) {
-            val power: Float = stack.getOrDefault(RagiumComponentTypes.EXPLOSION_POWER, 2.0f)
-            world.createExplosion(this, x, y, z, power, false, World.ExplosionSourceType.TNT)
+            stack
+                .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
+                .createExplosion(world, this, x, y, z)
             discard()
         }
     }

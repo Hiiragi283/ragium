@@ -1,8 +1,11 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.content
 
 import com.google.common.base.Supplier
 import com.google.common.base.Suppliers
 import com.mojang.datafixers.util.Either
+import net.minecraft.block.Block
+import net.minecraft.item.Item
+import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
@@ -14,6 +17,14 @@ import java.util.function.Predicate
 import java.util.stream.Stream
 
 class HTRegistryEntry<T : Any>(registry: Registry<T>, key: RegistryKey<T>) : RegistryEntry<T> {
+    companion object {
+        @JvmStatic
+        fun ofBlock(id: Identifier): HTRegistryEntry<Block> = HTRegistryEntry(Registries.BLOCK, id)
+
+        @JvmStatic
+        fun ofItem(id: Identifier): HTRegistryEntry<Item> = HTRegistryEntry(Registries.ITEM, id)
+    }
+
     constructor(registry: Registry<T>, id: Identifier) : this(registry, RegistryKey.of(registry.key, id))
 
     val id: Identifier = key.value

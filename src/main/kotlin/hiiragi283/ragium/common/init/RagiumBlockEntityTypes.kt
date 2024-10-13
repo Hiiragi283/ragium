@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.blockEntityType
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -43,9 +42,9 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        ALCHEMICAL_INFUSER.addSupportedBlock(RagiumContents.ALCHEMICAL_INFUSER)
-        ITEM_DISPLAY.addSupportedBlock(RagiumContents.ITEM_DISPLAY)
-        MANUAL_GRINDER.addSupportedBlock(RagiumContents.MANUAL_GRINDER)
-        META_MACHINE.addSupportedBlock(RagiumContents.META_MACHINE)
+        ALCHEMICAL_INFUSER.addSupportedBlock(RagiumBlocks.ALCHEMICAL_INFUSER)
+        ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
+        MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
+        META_MACHINE.addSupportedBlock(RagiumBlocks.META_MACHINE)
     }
 }

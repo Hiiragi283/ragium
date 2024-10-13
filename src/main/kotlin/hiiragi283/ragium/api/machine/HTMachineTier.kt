@@ -1,10 +1,11 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.content.HTTranslationProvider
 import hiiragi283.ragium.api.util.longText
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.util.HTTranslationProvider
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -99,8 +100,8 @@ enum class HTMachineTier(
 
     fun getBaseBlock(): Block = when (this) {
         PRIMITIVE -> Blocks.BRICKS
-        BASIC -> RagiumContents.BASIC_CASING
-        ADVANCED -> RagiumContents.ADVANCED_CASING
+        BASIC -> RagiumBlocks.BASIC_CASING
+        ADVANCED -> RagiumBlocks.ADVANCED_CASING
     }
 
     fun getCircuit(): RagiumContents.Circuit = when (this) {

@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumBlocks
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
@@ -113,7 +113,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         machineEntity?.createMenu(syncId, playerInventory, player)
 
-    override fun getDisplayName(): Text = machineEntity?.displayName ?: RagiumContents.META_MACHINE.name
+    override fun getDisplayName(): Text = machineEntity?.displayName ?: RagiumBlocks.META_MACHINE.name
 
     //    PropertyDelegateHolder    //
 

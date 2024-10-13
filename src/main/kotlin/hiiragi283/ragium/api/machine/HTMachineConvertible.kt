@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.util.buildItemStack
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.ItemStack
@@ -20,7 +20,7 @@ fun interface HTMachineConvertible {
     fun getBlockOrThrow(tier: HTMachineTier): Block = Blocks.BRICKS
 
     fun createItemStack(tier: HTMachineTier): ItemStack = buildItemStack(
-        RagiumContents.META_MACHINE,
+        RagiumBlocks.META_MACHINE,
     ) {
         add(HTMachineType.COMPONENT_TYPE, asMachine())
         add(HTMachineTier.COMPONENT_TYPE, tier)

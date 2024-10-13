@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.inventory.HTBackpackInventory
-import hiiragi283.ragium.common.util.*
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
@@ -117,7 +116,7 @@ object RagiumEventHandlers {
         // spawn oblivion cube when oblivion cluster broken
         PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
             if (!player.isCreative) {
-                if (state.isOf(RagiumContents.OBLIVION_CLUSTER)) {
+                if (state.isOf(RagiumBlocks.OBLIVION_CLUSTER)) {
                     RagiumEntityTypes.OBLIVION_CUBE.create(world)?.let {
                         it.refreshPositionAndAngles(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, 0.0F, 0.0F)
                         world.spawnEntity(it)
@@ -138,7 +137,7 @@ object RagiumEventHandlers {
         // open ender chest
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.isOf(RagiumContents.ENDER_BACKPACK)) {
+            if (stack.isOf(RagiumContents.Accessories.ENDER_BACKPACK.asItem())) {
                 openEnderChest(world, player)
                 TypedActionResult.success(stack, world.isClient)
             } else {

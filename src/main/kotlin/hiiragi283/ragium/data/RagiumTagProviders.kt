@@ -1,12 +1,13 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.component.HTModularToolComponent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.api.tool.HTModularToolComponent
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
-import hiiragi283.ragium.common.util.HTBlockContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -18,7 +19,6 @@ import net.minecraft.item.Items
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.EnchantmentTags
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
 
@@ -45,20 +45,20 @@ object RagiumTagProviders {
             }
 
             // vanilla
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.POROUS_NETHERRACK)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.OBLIVION_CLUSTER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OBLIVION_CLUSTER)
 
-            add(BlockTags.HOE_MINEABLE, RagiumContents.SPONGE_CAKE)
+            add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
 
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.BASIC_CASING)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ADVANCED_CASING)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.MANUAL_GRINDER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DATA_DRIVE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.DRIVE_SCANNER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.NETWORK_INTERFACE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.SHAFT)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.ALCHEMICAL_INFUSER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumContents.META_MACHINE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.BASIC_CASING)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ADVANCED_CASING)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.DATA_DRIVE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.DRIVE_SCANNER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ALCHEMICAL_INFUSER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_MACHINE)
 
             buildList {
                 addAll(RagiumContents.getOres())
@@ -111,19 +111,15 @@ object RagiumTagProviders {
             }
 
             // vanilla
-            add(ItemTags.SWORDS, RagiumContents.STEEL_SWORD)
-            add(ItemTags.SHOVELS, RagiumContents.STEEL_SHOVEL)
-            add(ItemTags.PICKAXES, RagiumContents.STEEL_PICKAXE)
-            add(ItemTags.AXES, RagiumContents.STEEL_AXE)
-            add(ItemTags.HOES, RagiumContents.STEEL_HOE)
-
-            add(ItemTags.HEAD_ARMOR, RagiumContents.STEEL_HELMET)
-            add(ItemTags.CHEST_ARMOR, RagiumContents.STEEL_CHESTPLATE)
-            add(ItemTags.LEG_ARMOR, RagiumContents.STEEL_LEGGINGS)
-            add(ItemTags.FOOT_ARMOR, RagiumContents.STEEL_BOOTS)
+            RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
+                add(tool.toolType.toolTag, tool)
+            }
+            RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
+                add(armor.armorType.armorTag, armor)
+            }
             // conventional
-            add(ConventionalItemTags.GEMS, RagiumContents.RAGI_CRYSTAL)
-            add(ConventionalItemTags.GEMS, RagiumContents.OBLIVION_CRYSTAL)
+            add(ConventionalItemTags.GEMS, RagiumContents.Misc.RAGI_CRYSTAL)
+            add(ConventionalItemTags.GEMS, RagiumContents.Misc.OBLIVION_CRYSTAL)
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)

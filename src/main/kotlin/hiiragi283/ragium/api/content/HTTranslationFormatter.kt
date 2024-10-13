@@ -1,8 +1,6 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.data.HTLangType
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.init.RagiumMaterials
 
 interface HTTranslationFormatter {
     val enPattern: String
@@ -15,13 +13,6 @@ interface HTTranslationFormatter {
 
     interface Holder : HTTranslationFormatter {
         val provider: HTTranslationProvider
-    }
-
-    interface Tier : Holder {
-        val tier: HTMachineTier
-
-        override val provider: HTTranslationProvider
-            get() = tier
     }
 
     interface Material : Holder {

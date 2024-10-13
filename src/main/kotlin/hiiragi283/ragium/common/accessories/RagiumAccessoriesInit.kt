@@ -25,22 +25,22 @@ object RagiumAccessoriesInit {
         if (!isModLoaded("accessories")) return
 
         registerAccessory(
-            RagiumContents.DIVING_GOGGLES,
+            RagiumContents.Accessories.DIVING_GOGGLES,
             HTStatusEffectAccessory.Provider(StatusEffects.WATER_BREATHING),
             HTDefaultAccessorySlots.FACE,
         )
         registerAccessory(
-            RagiumContents.NIGHT_VISION_GOGGLES,
+            RagiumContents.Accessories.NIGHT_VISION_GOGGLES,
             HTStatusEffectAccessory.Provider(StatusEffects.NIGHT_VISION),
             HTDefaultAccessorySlots.FACE,
         )
         registerAccessory(
-            RagiumContents.PISTON_BOOTS,
+            RagiumContents.Accessories.PISTON_BOOTS,
             HTStatusEffectAccessory.Provider(StatusEffects.JUMP_BOOST),
             HTDefaultAccessorySlots.SHOES,
         )
         registerAccessory(
-            RagiumContents.PARACHUTE,
+            RagiumContents.Accessories.PARACHUTE,
             HTStatusEffectAccessory.Provider(StatusEffects.SLOW_FALLING),
             HTDefaultAccessorySlots.CAPE,
         )
@@ -51,9 +51,9 @@ object RagiumAccessoriesInit {
             HTDefaultAccessorySlots.NECKLACE,
         )
 
-        registerAccessory(RagiumContents.BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
-        registerAccessory(RagiumContents.LARGE_BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
-        registerAccessory(RagiumContents.ENDER_BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
+        registerAccessory(RagiumContents.Accessories.BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
+        registerAccessory(RagiumContents.Accessories.LARGE_BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
+        registerAccessory(RagiumContents.Accessories.ENDER_BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
         // pendant
         registerAccessory(
             RagiumContents.Element.RAGIUM.pendantItem,

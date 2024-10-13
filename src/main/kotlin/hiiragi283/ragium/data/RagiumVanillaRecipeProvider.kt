@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
@@ -10,9 +12,8 @@ import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.init.RagiumMaterials
-import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
@@ -83,7 +84,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun craftingArmors(exporter: RecipeExporter) {
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_HELMET)
+            .create(RagiumContents.Armors.STEEL_HELMET)
             .patterns(
                 "AAA",
                 "A A",
@@ -92,7 +93,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_CHESTPLATE)
+            .create(RagiumContents.Armors.STEEL_CHESTPLATE)
             .patterns(
                 "A A",
                 "AAA",
@@ -102,7 +103,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_LEGGINGS)
+            .create(RagiumContents.Armors.STEEL_LEGGINGS)
             .patterns(
                 "AAA",
                 "A A",
@@ -112,7 +113,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_BOOTS)
+            .create(RagiumContents.Armors.STEEL_BOOTS)
             .patterns(
                 "A A",
                 "A A",
@@ -121,7 +122,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.NIGHT_VISION_GOGGLES)
+            .create(RagiumContents.Accessories.NIGHT_VISION_GOGGLES)
             .patterns(
                 "AAA",
                 "BCB",
@@ -133,7 +134,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.DIVING_GOGGLES)
+            .create(RagiumContents.Accessories.DIVING_GOGGLES)
             .patterns(
                 "AAA",
                 "BCB",
@@ -149,7 +150,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun craftingTools(exporter: RecipeExporter) {
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.FORGE_HAMMER)
+            .create(RagiumContents.Misc.FORGE_HAMMER)
             .patterns(
                 " AA",
                 "BBA",
@@ -160,7 +161,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_SWORD)
+            .create(RagiumContents.Tools.STEEL_SWORD)
             .patterns(
                 "B",
                 "A",
@@ -171,7 +172,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_SHOVEL)
+            .create(RagiumContents.Tools.STEEL_SHOVEL)
             .patterns(
                 "B",
                 "B",
@@ -182,7 +183,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_PICKAXE)
+            .create(RagiumContents.Tools.STEEL_PICKAXE)
             .patterns(
                 " B ",
                 " B ",
@@ -193,7 +194,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_AXE)
+            .create(RagiumContents.Tools.STEEL_AXE)
             .patterns(
                 "B ",
                 "BA",
@@ -204,7 +205,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.STEEL_HOE)
+            .create(RagiumContents.Tools.STEEL_HOE)
             .patterns(
                 "B ",
                 "B ",
@@ -219,48 +220,48 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun craftingFoods(exporter: RecipeExporter) {
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.DOUGH, 3)
-            .input(RagiumContents.FLOUR)
-            .input(RagiumContents.FLOUR)
-            .input(RagiumContents.FLOUR)
+            .create(RagiumContents.Foods.DOUGH, 3)
+            .input(RagiumContents.Foods.FLOUR)
+            .input(RagiumContents.Foods.FLOUR)
+            .input(RagiumContents.Foods.FLOUR)
             .input(RagiumContents.Fluids.WATER)
-            .unlockedBy(RagiumContents.FLOUR)
+            .unlockedBy(RagiumContents.Foods.FLOUR)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.SWEET_BERRIES_CAKE)
+            .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .patterns(
                 "ABA",
                 "CDC",
                 "EEE",
             ).input('A', RagiumContents.Fluids.MILK)
             .input('B', Items.SWEET_BERRIES)
-            .input('C', RagiumContents.CHOCOLATE)
+            .input('C', RagiumContents.Foods.CHOCOLATE)
             .input('D', Items.EGG)
-            .input('E', RagiumContents.SPONGE_CAKE)
-            .unlockedBy(RagiumContents.SPONGE_CAKE)
+            .input('E', RagiumBlocks.SPONGE_CAKE)
+            .unlockedBy(RagiumBlocks.SPONGE_CAKE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.CHOCOLATE_BREAD)
+            .create(RagiumContents.Foods.CHOCOLATE_BREAD)
             .input(Items.BREAD)
             .input(RagiumContents.Fluids.CHOCOLATE)
             .unlockedBy(RagiumContents.Fluids.CHOCOLATE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.CHOCOLATE_APPLE)
+            .create(RagiumContents.Foods.CHOCOLATE_APPLE)
             .input(Items.APPLE)
             .input(RagiumContents.Fluids.CHOCOLATE)
             .unlockedBy(RagiumContents.Fluids.CHOCOLATE)
             .offerTo(exporter)
     }
 
-    //    Crafting - Ingredients    //
+    //    Crafting - Misc    //
 
     private fun craftingIngredients(exporter: RecipeExporter) {
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.RAGI_ALLOY_COMPOUND)
+            .create(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .patterns(
                 "AAA",
@@ -272,7 +273,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.RAGI_ALLOY_COMPOUND)
+            .create(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .patterns(
                 " A ",
@@ -284,7 +285,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerSuffix(exporter.hardMode(false), "_1")
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.SOLAR_PANEL)
+            .create(RagiumContents.Misc.SOLAR_PANEL)
             .patterns(
                 "AAA",
                 "BBB",
@@ -333,29 +334,29 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.WATER)
             .input(Items.WATER_BUCKET)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
-            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.LAVA)
             .input(Items.LAVA_BUCKET)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
-            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.MILK)
             .input(Items.MILK_BUCKET)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
-            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.HONEY)
             .input(Items.HONEY_BLOCK)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
-            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
@@ -364,8 +365,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
-            .unlockedBy(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .offerTo(exporter, RagiumAPI.id("honey_fluid_cube_alt"))
     }
 
@@ -376,7 +377,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         suffix: String? = null,
     ) {
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.EMPTY_FLUID_CUBE, count)
+            .create(RagiumContents.Misc.EMPTY_FLUID_CUBE, count)
             .patterns(
                 " A ",
                 "A A",
@@ -422,7 +423,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         }
         // casings
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.BASIC_CASING, 3)
+            .create(RagiumBlocks.BASIC_CASING, 3)
             .patterns(
                 "ABA",
                 "BCB",
@@ -434,19 +435,19 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.ADVANCED_CASING, 3)
+            .create(RagiumBlocks.ADVANCED_CASING, 3)
             .patterns(
                 "ABA",
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Plates.BASALT_FIBER)
             .input('B', RagiumItemTags.STEEL_PLATES)
-            .input('C', RagiumContents.RAGI_CRYSTAL)
-            .unlockedBy(RagiumContents.RAGI_CRYSTAL)
+            .input('C', RagiumContents.Misc.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.Misc.RAGI_CRYSTAL)
             .offerTo(exporter)
         // machines
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.MANUAL_GRINDER)
+            .create(RagiumBlocks.MANUAL_GRINDER)
             .patterns(
                 "A  ",
                 "BBB",
@@ -458,7 +459,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter.hardMode(false))
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.MANUAL_GRINDER)
+            .create(RagiumBlocks.MANUAL_GRINDER)
             .patterns(
                 "A  ",
                 "BBB",
@@ -470,7 +471,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerPrefix(exporter.hardMode(true), "hard/")
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.ALCHEMICAL_INFUSER)
+            .create(RagiumBlocks.ALCHEMICAL_INFUSER)
             .patterns(
                 "AAA",
                 "BCB",
@@ -490,7 +491,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createMachine(
             exporter,
             RagiumMachineTypes.Generator.SOLAR,
-            RagiumContents.SOLAR_PANEL,
+            RagiumContents.Misc.SOLAR_PANEL,
         )
         createMachine(
             exporter,
@@ -564,7 +565,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createMachine(
             exporter,
             RagiumMachineTypes.DISTILLATION_TOWER,
-            RagiumContents.EMPTY_FLUID_CUBE,
+            RagiumContents.Misc.EMPTY_FLUID_CUBE,
         )
         createMachine(
             exporter,
@@ -694,34 +695,34 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A",
                 "B",
             ).input('A', ConventionalItemTags.STRINGS)
-            .input('B', RagiumContents.BEE_WAX)
-            .unlockedBy(RagiumContents.BEE_WAX)
+            .input('B', RagiumContents.Foods.BEE_WAX)
+            .unlockedBy(RagiumContents.Foods.BEE_WAX)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.WATER)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.WATER_BUCKET)
             .unlockedBy(Items.WATER_BUCKET)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.LAVA)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.LAVA_BUCKET)
             .unlockedBy(Items.LAVA_BUCKET)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.MILK)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.MILK_BUCKET)
             .unlockedBy(Items.MILK_BUCKET)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.HONEY)
-            .input(RagiumContents.EMPTY_FLUID_CUBE)
+            .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
@@ -735,16 +736,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun cookingRecipes(exporter: RecipeExporter) {
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
-            Ingredient.ofItems(RagiumContents.RAGI_ALLOY_COMPOUND),
+            Ingredient.ofItems(RagiumContents.Misc.RAGI_ALLOY_COMPOUND),
             RagiumContents.Ingots.RAGI_ALLOY,
-            RecipeProvider.conditionsFromItem(RagiumContents.RAGI_ALLOY_COMPOUND),
+            RecipeProvider.conditionsFromItem(RagiumContents.Misc.RAGI_ALLOY_COMPOUND),
         )
 
         HTCookingRecipeJsonBuilder.smeltAndSmoke(
             exporter,
-            Ingredient.ofItems(RagiumContents.DOUGH),
+            Ingredient.ofItems(RagiumContents.Foods.DOUGH),
             Items.BREAD,
-            RecipeProvider.conditionsFromItem(RagiumContents.DOUGH),
+            RecipeProvider.conditionsFromItem(RagiumContents.Foods.DOUGH),
         )
     }
 

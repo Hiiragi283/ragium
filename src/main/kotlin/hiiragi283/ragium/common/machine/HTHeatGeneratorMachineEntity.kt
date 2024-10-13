@@ -19,7 +19,6 @@ import net.minecraft.world.World
 
 class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEntity(RagiumMachineTypes.HEAT_GENERATOR, tier) {
     var burningTime: Int = 0
-        private set
     val isBurning: Boolean
         get() = burningTime > 0
     private var fuelTime: Int = 0
@@ -67,6 +66,7 @@ class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEnti
                 }
             }
         }
+        // RagiumAPI.log { info("Burning Time; $burningTime") }
     }
 
     override fun getProperty(index: Int): Int = when (index) {

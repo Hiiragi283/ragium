@@ -3,14 +3,15 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.util.HTItemContent
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.data.client.*
 import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
@@ -35,10 +36,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             generator.blockStateCollector.accept(supplier)
         }
 
-        register(RagiumContents.OBLIVION_CLUSTER, generator::registerAmethyst)
+        register(RagiumBlocks.OBLIVION_CLUSTER, generator::registerAmethyst)
 
-        registerSimple(RagiumContents.CREATIVE_SOURCE)
-        register(RagiumContents.MANUAL_GRINDER) {
+        registerSimple(RagiumBlocks.CREATIVE_SOURCE)
+        register(RagiumBlocks.MANUAL_GRINDER) {
             accept(
                 buildMultipartState(it) {
                     RagiumBlockProperties.LEVEL_7.values.forEach { level: Int ->
@@ -68,8 +69,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 },
             )
         }
-        register(RagiumContents.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        register(RagiumContents.ALCHEMICAL_INFUSER) {
+        register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
+        register(RagiumBlocks.ALCHEMICAL_INFUSER) {
             accept(
                 VariantsBlockStateSupplier.create(
                     it,
@@ -77,7 +78,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 ),
             )
         }
-        register(RagiumContents.ITEM_DISPLAY) {
+        register(RagiumBlocks.ITEM_DISPLAY) {
             generator.registerSingleton(
                 it,
                 RagiumModels.createDisplay(
@@ -86,21 +87,21 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 ),
             )
         }
-        register(RagiumContents.DATA_DRIVE) {
+        register(RagiumBlocks.DATA_DRIVE) {
             accept(VariantsBlockStateSupplier.create(it, buildModelVariant(TextureMap.getId(it))))
         }
-        registerSimple(RagiumContents.NETWORK_INTERFACE)
-        registerSimple(RagiumContents.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
-        registerSimple(RagiumContents.ADVANCED_CASING)
-        register(RagiumContents.POROUS_NETHERRACK) {
+        registerSimple(RagiumBlocks.NETWORK_INTERFACE)
+        registerSimple(RagiumBlocks.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
+        registerSimple(RagiumBlocks.ADVANCED_CASING)
+        register(RagiumBlocks.POROUS_NETHERRACK) {
             generator.registerSingleton(
                 it,
                 RagiumModels.createLayered(Identifier.of("block/netherrack"), Identifier.of("block/destroy_stage_5")),
             )
         }
 
-        registerSimple(RagiumContents.SPONGE_CAKE)
-        register(RagiumContents.META_MACHINE) { block: Block ->
+        registerSimple(RagiumBlocks.SPONGE_CAKE)
+        register(RagiumBlocks.META_MACHINE) { block: Block ->
             accept(
                 VariantsBlockStateSupplier
                     .create(
@@ -116,21 +117,21 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         accept(
             VariantsBlockStateSupplier
-                .create(RagiumContents.SWEET_BERRIES_CAKE)
+                .create(RagiumBlocks.SWEET_BERRIES_CAKE)
                 .coordinate(
                     BlockStateVariantMap
                         .create(Properties.BITES)
-                        .register(0, buildModelVariant(ModelIds.getBlockModelId(RagiumContents.SWEET_BERRIES_CAKE)))
-                        .register(1, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice1")))
-                        .register(2, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice2")))
-                        .register(3, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice3")))
-                        .register(4, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice4")))
-                        .register(5, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice5")))
-                        .register(6, buildModelVariant(ModelIds.getBlockSubModelId(RagiumContents.SWEET_BERRIES_CAKE, "_slice6"))),
+                        .register(0, buildModelVariant(ModelIds.getBlockModelId(RagiumBlocks.SWEET_BERRIES_CAKE)))
+                        .register(1, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice1")))
+                        .register(2, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice2")))
+                        .register(3, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice3")))
+                        .register(4, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice4")))
+                        .register(5, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice5")))
+                        .register(6, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice6"))),
                 ),
         )
 
-        register(RagiumContents.INFESTING) {
+        register(RagiumBlocks.INFESTING) {
             accept(
                 VariantsBlockStateSupplier
                     .create(it)
@@ -226,61 +227,49 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
 
-        register(RagiumContents.STEEL_SWORD)
-        register(RagiumContents.STEEL_SHOVEL)
-        register(RagiumContents.STEEL_PICKAXE)
-        register(RagiumContents.STEEL_AXE)
-        register(RagiumContents.STEEL_HOE)
-        register(RagiumContents.FORGE_HAMMER)
-        register(RagiumContents.DYNAMITE)
+        buildList {
+            add(RagiumContents.Accessories.DIVING_GOGGLES)
+            add(RagiumContents.Accessories.NIGHT_VISION_GOGGLES)
+            add(RagiumContents.Accessories.PISTON_BOOTS)
+            add(RagiumContents.Accessories.PARACHUTE)
+        }.map(RagiumContents.Accessories::asItem).forEach(::register)
 
-        register(RagiumContents.STEEL_HELMET)
-        register(RagiumContents.STEEL_CHESTPLATE)
-        register(RagiumContents.STEEL_LEGGINGS)
-        register(RagiumContents.STEEL_BOOTS)
-        register(RagiumContents.DIVING_GOGGLES)
-        register(RagiumContents.NIGHT_VISION_GOGGLES)
-        register(RagiumContents.PISTON_BOOTS)
-        register(RagiumContents.PARACHUTE)
-        register(RagiumContents.ALCHEMY_STUFF)
+        register(RagiumBlocks.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumBlocks.OBLIVION_CLUSTER))
 
-        registerLayered(
-            RagiumContents.RAGI_ALLOY_COMPOUND,
-            TextureMap.getId(Items.COPPER_INGOT),
-            TextureMap.getId(RagiumContents.RAGI_ALLOY_COMPOUND),
-        )
-        register(RagiumContents.SOAP_INGOT)
-        register(RagiumContents.BASALT_FIBER)
-        register(RagiumContents.SOLAR_PANEL, Models.GENERATED, TextureMap.layer0(RagiumAPI.id("block/solar_front")))
-
-        register(RagiumContents.RAGI_CRYSTAL)
-        register(RagiumContents.OBLIVION_CRYSTAL)
-        register(RagiumContents.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumContents.OBLIVION_CLUSTER))
-
-        register(RagiumContents.BEE_WAX)
-        register(RagiumContents.BUTTER)
-        register(RagiumContents.CHOCOLATE)
-        registerLayered(
-            RagiumContents.CHOCOLATE_APPLE,
-            TextureMap.getId(Items.APPLE),
-            TextureMap.getId(RagiumContents.CHOCOLATE_APPLE),
-        )
-        register(RagiumContents.CHOCOLATE_BREAD)
-        register(RagiumContents.FLOUR)
-        register(RagiumContents.DOUGH)
-        register(RagiumContents.MINCED_MEAT)
-        register(RagiumContents.PULP)
-        // circuits
-        RagiumContents.Circuit.entries
-            .map(RagiumContents.Circuit::asItem)
-            .forEach(::register)
         // contents
         buildList {
             addAll(RagiumContents.Dusts.entries)
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-        }.map(HTItemContent::asItem).forEach(::register)
+            addAll(RagiumContents.Tools.entries)
+            addAll(RagiumContents.Armors.entries)
+            addAll(RagiumContents.Circuit.entries)
+            addAll(RagiumContents.Misc.entries)
+            addAll(RagiumContents.Foods.entries)
+
+            remove(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            remove(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)
+            remove(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
+            remove(RagiumContents.Misc.SOLAR_PANEL)
+            remove(RagiumContents.Foods.CHOCOLATE_APPLE)
+        }.map(ItemConvertible::asItem).forEach(::register)
+
+        registerLayered(
+            RagiumContents.Misc.RAGI_ALLOY_COMPOUND.asItem(),
+            TextureMap.getId(Items.COPPER_INGOT),
+            TextureMap.getId(RagiumContents.Misc.RAGI_ALLOY_COMPOUND.asItem()),
+        )
+        register(
+            RagiumContents.Misc.SOLAR_PANEL.asItem(),
+            Models.GENERATED,
+            TextureMap.layer0(RagiumAPI.id("block/solar_front")),
+        )
+        registerLayered(
+            RagiumContents.Foods.CHOCOLATE_APPLE.asItem(),
+            TextureMap.getId(Items.APPLE),
+            TextureMap.getId(RagiumContents.Foods.CHOCOLATE_APPLE.asItem()),
+        )
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))

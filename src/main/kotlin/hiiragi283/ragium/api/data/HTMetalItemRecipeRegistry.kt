@@ -127,7 +127,7 @@ object HTMetalItemRecipeRegistry {
                 "A",
                 "B",
                 "B",
-            ).input('A', RagiumContents.FORGE_HAMMER)
+            ).input('A', RagiumContents.Misc.FORGE_HAMMER)
             .input('B', ingot)
             .criterion(ingot)
             .offerTo(wrapper(exporter, true))

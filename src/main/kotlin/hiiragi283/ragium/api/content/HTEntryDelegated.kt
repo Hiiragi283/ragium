@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.content
 
 import net.minecraft.util.Identifier
 

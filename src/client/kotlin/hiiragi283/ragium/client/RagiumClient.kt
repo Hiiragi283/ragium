@@ -2,6 +2,9 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.util.isModLoaded
@@ -19,10 +22,10 @@ import hiiragi283.ragium.client.util.registerClient
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.machine.HTHeatGeneratorMachineEntity
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
-import hiiragi283.ragium.common.util.HTBlockContent
 import hiiragi283.ragium.data.RagiumModels
 import io.wispforest.accessories.api.AccessoriesCapability
 import me.shedaniel.rei.api.common.entry.EntryIngredient
@@ -86,12 +89,12 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     private fun registerBlocks() {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
-            RagiumContents.POROUS_NETHERRACK,
-            RagiumContents.OBLIVION_CLUSTER,
-            RagiumContents.META_MACHINE,
+            RagiumBlocks.POROUS_NETHERRACK,
+            RagiumBlocks.OBLIVION_CLUSTER,
+            RagiumBlocks.META_MACHINE,
         )
 
-        registerCutout(RagiumContents.ITEM_DISPLAY)
+        registerCutout(RagiumBlocks.ITEM_DISPLAY)
 
         RagiumContents
             .getOres()
@@ -120,6 +123,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     //    Entities    //
 
     private fun registerEntities() {
+        EntityRendererRegistry.register(RagiumEntityTypes.BEDROCK_DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.OBLIVION_CUBE, ::HTOblivionCubeEntityRenderer)
 
@@ -176,7 +180,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
                 val capability: AccessoriesCapability = client.player?.accessoriesCapability() ?: break
                 when {
                     capability.isEquipped { it.contains(RagiumComponentTypes.INVENTORY) } -> HTOpenBackpackPayload.NORMAL
-                    capability.isEquipped(RagiumContents.ENDER_BACKPACK) -> HTOpenBackpackPayload.ENDER
+                    capability.isEquipped(RagiumContents.Accessories.ENDER_BACKPACK.asItem()) -> HTOpenBackpackPayload.ENDER
                     else -> break
                 }.let(ClientPlayNetworking::send)
             }
@@ -206,6 +210,17 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     override val priority: Int = -100
 
     override fun modifyProperties(helper: HTMachineTypeInitializer.Helper) {
+        helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
+            set(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX) { machine: HTMachineEntity ->
+                val generator: HTHeatGeneratorMachineEntity? = machine as? HTHeatGeneratorMachineEntity
+                RagiumAPI.log { info("Burning Time; ${generator?.burningTime}") }
+                when ((machine as? HTHeatGeneratorMachineEntity)?.isBurning == true) {
+                    true -> "block/heat_generator_front_active"
+                    false -> "block/heat_generator_front"
+                }.let(RagiumAPI.Companion::id)
+            }
+        }
+
         if (!isModLoaded("roughlyenoughitems")) return
         helper.modify(RagiumMachineTypes.FLUID_DRILL) {
             set(INPUT_ENTRIES, { recipe: HTMachineRecipe ->

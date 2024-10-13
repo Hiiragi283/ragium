@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.world.energyNetwork
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
@@ -77,12 +76,12 @@ object RagiumApiLookupInit {
     private fun initElectric() {
         ENERGY.registerForBlocks(
             provideStatic(InfiniteEnergyStorage.INSTANCE),
-            RagiumContents.CREATIVE_SOURCE,
+            RagiumBlocks.CREATIVE_SOURCE,
         )
 
         ENERGY.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork
-        }, RagiumContents.NETWORK_INTERFACE)
+        }, RagiumBlocks.NETWORK_INTERFACE)
 
         /*ENERGY.registerForBlocks({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             if (direction != null) {

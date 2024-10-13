@@ -13,10 +13,16 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.UseAction
 import net.minecraft.world.World
 
-open class HTFluidCubeItem(settings: Settings = itemSettings()) : Item(settings.recipeRemainder(RagiumContents.EMPTY_FLUID_CUBE)) {
+open class HTFluidCubeItem(settings: Settings = itemSettings()) :
+    Item(settings.recipeRemainder(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())) {
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         onDrink(stack, world, user)
-        dropStackAt(user, RagiumContents.EMPTY_FLUID_CUBE.defaultStack)
+        dropStackAt(
+            user,
+            RagiumContents.Misc.EMPTY_FLUID_CUBE
+                .asItem()
+                .defaultStack,
+        )
         stack.decrementUnlessCreative(1, user)
         return stack
     }

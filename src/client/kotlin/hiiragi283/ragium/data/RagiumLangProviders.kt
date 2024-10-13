@@ -1,6 +1,10 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTEntryDelegated
+import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -9,14 +13,12 @@ import hiiragi283.ragium.api.util.splitWith
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.util.HTBlockContent
-import hiiragi283.ragium.common.util.HTItemContent
-import hiiragi283.ragium.common.util.HTTranslationFormatter
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.enchantment.Enchantment
+import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import java.util.concurrent.CompletableFuture
@@ -26,6 +28,10 @@ object RagiumLangProviders {
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(RagiumLangProviders::EnglishLang)
         pack.addProvider(RagiumLangProviders::JapaneseLang)
+    }
+
+    fun TranslationBuilder.add(entry: HTEntryDelegated<Item>, value: String) {
+        add(entry.value, value)
     }
 
     fun TranslationBuilder.add(enchantment: RegistryKey<Enchantment>, value: String) {
@@ -44,7 +50,7 @@ object RagiumLangProviders {
     @JvmStatic
     private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
         // blocks
-        buildList<HTBlockContent> {
+        buildList {
             addAll(RagiumContents.getOres())
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
@@ -78,6 +84,8 @@ object RagiumLangProviders {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
+            addAll(RagiumContents.Armors.entries)
+            addAll(RagiumContents.Tools.entries)
         }.forEach { item: HTItemContent -> builder.add(item.value, item.getTranslation(type)) }
         // circuits
         RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
@@ -114,66 +122,57 @@ object RagiumLangProviders {
             // Advancements
             RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
             // Blocks
-            builder.add(RagiumContents.POROUS_NETHERRACK, "Porous Netherrack")
-            builder.add(RagiumContents.OBLIVION_CLUSTER, "Oblivion Cluster")
+            builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
+            builder.add(RagiumBlocks.OBLIVION_CLUSTER, "Oblivion Cluster")
 
-            builder.add(RagiumContents.SPONGE_CAKE, "Sponge Cake")
-            builder.add(RagiumContents.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
+            builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
+            builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
-            builder.add(RagiumContents.CREATIVE_SOURCE, "Creative Power Source")
-            builder.add(RagiumContents.BASIC_CASING, "Basic Casing")
-            builder.add(RagiumContents.ADVANCED_CASING, "Advanced Casing")
-            builder.add(RagiumContents.DATA_DRIVE, "Data Drive")
-            builder.add(RagiumContents.DRIVE_SCANNER, "Drive Scanner")
-            builder.add(RagiumContents.ITEM_DISPLAY, "Item Display")
-            builder.add(RagiumContents.MANUAL_GRINDER, "Manual Grinder")
-            builder.add(RagiumContents.META_MACHINE, "Machine")
-            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
-            builder.add(RagiumContents.SHAFT, "Shaft")
+            builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
+            builder.add(RagiumBlocks.BASIC_CASING, "Basic Casing")
+            builder.add(RagiumBlocks.ADVANCED_CASING, "Advanced Casing")
+            builder.add(RagiumBlocks.DATA_DRIVE, "Data Drive")
+            builder.add(RagiumBlocks.DRIVE_SCANNER, "Drive Scanner")
+            builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
+            builder.add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
+            builder.add(RagiumBlocks.META_MACHINE, "Machine")
+            builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumBlocks.SHAFT, "Shaft")
 
-            builder.add(RagiumContents.ALCHEMICAL_INFUSER, "Alchemical Infuser")
+            builder.add(RagiumBlocks.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
             builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Items
-            builder.add(RagiumContents.FORGE_HAMMER, "Forge Hammer")
-            builder.add(RagiumContents.STEEL_SWORD, "Steel Sword")
-            builder.add(RagiumContents.STEEL_SHOVEL, "Steel Shovel")
-            builder.add(RagiumContents.STEEL_PICKAXE, "Steel Pickaxe")
-            builder.add(RagiumContents.STEEL_AXE, "Steel Axe")
-            builder.add(RagiumContents.STEEL_HOE, "Steel Hoe")
-            builder.add(RagiumContents.BACKPACK, "Backpack")
-            builder.add(RagiumContents.LARGE_BACKPACK, "Large Backpack")
-            builder.add(RagiumContents.ENDER_BACKPACK, "Ender Backpack")
+            builder.add(RagiumContents.Accessories.BACKPACK, "Backpack")
+            builder.add(RagiumContents.Accessories.LARGE_BACKPACK, "Large Backpack")
+            builder.add(RagiumContents.Accessories.ENDER_BACKPACK, "Ender Backpack")
+            builder.add(RagiumContents.Accessories.DIVING_GOGGLES, "Diving Goggle")
+            builder.add(RagiumContents.Accessories.NIGHT_VISION_GOGGLES, "Night Vision Goggle")
+            builder.add(RagiumContents.Accessories.PISTON_BOOTS, "Piston Boots")
+            builder.add(RagiumContents.Accessories.PARACHUTE, "Parachute")
 
-            builder.add(RagiumContents.STEEL_HELMET, "Steel Helmet")
-            builder.add(RagiumContents.STEEL_CHESTPLATE, "Steel Chestplate")
-            builder.add(RagiumContents.STEEL_LEGGINGS, "Steel Leggings")
-            builder.add(RagiumContents.STEEL_BOOTS, "Steel Boots")
-            builder.add(RagiumContents.DIVING_GOGGLES, "Diving Goggle")
-            builder.add(RagiumContents.NIGHT_VISION_GOGGLES, "Night Vision Goggle")
-            builder.add(RagiumContents.PISTON_BOOTS, "Piston Boots")
-            builder.add(RagiumContents.PARACHUTE, "Parachute")
-            builder.add(RagiumContents.ALCHEMY_STUFF, "Alchemy Stuff")
+            builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "Alchemy Stuff")
+            builder.add(RagiumContents.Misc.BASALT_FIBER, "Basalt Fiber")
+            builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
+            builder.add(RagiumContents.Misc.FORGE_HAMMER, "Forge Hammer")
+            builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "Oblivion Crystal")
+            builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "Spawn Oblivion Cube")
+            builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+            builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "Ragi-Crystal")
+            builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
+            builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
 
-            builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-            builder.add(RagiumContents.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
-            builder.add(RagiumContents.SOAP_INGOT, "Soap Ingot")
-            builder.add(RagiumContents.BASALT_FIBER, "Basalt Fiber")
-            builder.add(RagiumContents.SOLAR_PANEL, "Solar Panel")
-            builder.add(RagiumContents.RAGI_CRYSTAL, "Ragi-Crystal")
-            builder.add(RagiumContents.OBLIVION_CRYSTAL, "Oblivion Crystal")
-
-            builder.add(RagiumContents.BEE_WAX, "Bee Wax")
-            builder.add(RagiumContents.BUTTER, "Butter")
-            builder.add(RagiumContents.CHOCOLATE, "Chocolate")
-            builder.add(RagiumContents.CHOCOLATE_APPLE, "Chocolate Apple")
-            builder.add(RagiumContents.CHOCOLATE_BREAD, "Chocolate Bread")
-            builder.add(RagiumContents.FLOUR, "Flour")
-            builder.add(RagiumContents.DOUGH, "Dough")
-            builder.add(RagiumContents.MINCED_MEAT, "Minced Meat")
-            builder.add(RagiumContents.PULP, "Pulp")
+            builder.add(RagiumContents.Foods.BEE_WAX, "Bee Wax")
+            builder.add(RagiumContents.Foods.BUTTER, "Butter")
+            builder.add(RagiumContents.Foods.CHOCOLATE, "Chocolate")
+            builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "Chocolate Apple")
+            builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "Chocolate Bread")
+            builder.add(RagiumContents.Foods.FLOUR, "Flour")
+            builder.add(RagiumContents.Foods.DOUGH, "Dough")
+            builder.add(RagiumContents.Foods.MINCED_MEAT, "Minced Meat")
+            builder.add(RagiumContents.Foods.PULP, "Pulp")
 
             builder.add(RagiumFluids.PETROLEUM.bucketItem, "Petroleum Bucket")
             // Item Group
@@ -244,66 +243,57 @@ object RagiumLangProviders {
             // Advancements
             RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
-            builder.add(RagiumContents.POROUS_NETHERRACK, "多孔質ネザーラック")
-            builder.add(RagiumContents.OBLIVION_CLUSTER, "忘却の芽")
+            builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
+            builder.add(RagiumBlocks.OBLIVION_CLUSTER, "忘却の芽")
 
-            builder.add(RagiumContents.SPONGE_CAKE, "スポンジケーキ")
-            builder.add(RagiumContents.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
+            builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
+            builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
-            builder.add(RagiumContents.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
-            builder.add(RagiumContents.BASIC_CASING, "基本型外装")
-            builder.add(RagiumContents.ADVANCED_CASING, "発展型外装")
-            builder.add(RagiumContents.DATA_DRIVE, "データドライブ")
-            builder.add(RagiumContents.DRIVE_SCANNER, "ドライブスキャナ")
-            builder.add(RagiumContents.ITEM_DISPLAY, "アイテムティスプレイ")
-            builder.add(RagiumContents.MANUAL_GRINDER, "石臼")
-            builder.add(RagiumContents.META_MACHINE, "機械")
-            builder.add(RagiumContents.NETWORK_INTERFACE, "E.N.I.")
-            builder.add(RagiumContents.SHAFT, "シャフト")
+            builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
+            builder.add(RagiumBlocks.BASIC_CASING, "基本型外装")
+            builder.add(RagiumBlocks.ADVANCED_CASING, "発展型外装")
+            builder.add(RagiumBlocks.DATA_DRIVE, "データドライブ")
+            builder.add(RagiumBlocks.DRIVE_SCANNER, "ドライブスキャナ")
+            builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
+            builder.add(RagiumBlocks.MANUAL_GRINDER, "石臼")
+            builder.add(RagiumBlocks.META_MACHINE, "機械")
+            builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumBlocks.SHAFT, "シャフト")
 
-            builder.add(RagiumContents.ALCHEMICAL_INFUSER, "錬金注入機")
+            builder.add(RagiumBlocks.ALCHEMICAL_INFUSER, "錬金注入機")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
             builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
             // Items
-            builder.add(RagiumContents.FORGE_HAMMER, "鍛造ハンマー")
-            builder.add(RagiumContents.STEEL_SWORD, "鋼鉄の剣")
-            builder.add(RagiumContents.STEEL_SHOVEL, "鋼鉄のシャベル")
-            builder.add(RagiumContents.STEEL_PICKAXE, "鋼鉄のツルハシ")
-            builder.add(RagiumContents.STEEL_AXE, "鋼鉄の斧")
-            builder.add(RagiumContents.STEEL_HOE, "鋼鉄のクワ")
-            builder.add(RagiumContents.BACKPACK, "バックパック")
-            builder.add(RagiumContents.LARGE_BACKPACK, "大型パックパック")
-            builder.add(RagiumContents.ENDER_BACKPACK, "エンダーパックパック")
+            builder.add(RagiumContents.Accessories.BACKPACK, "バックパック")
+            builder.add(RagiumContents.Accessories.LARGE_BACKPACK, "大型パックパック")
+            builder.add(RagiumContents.Accessories.ENDER_BACKPACK, "エンダーパックパック")
+            builder.add(RagiumContents.Accessories.DIVING_GOGGLES, "潜水ゴーグル")
+            builder.add(RagiumContents.Accessories.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
+            builder.add(RagiumContents.Accessories.PISTON_BOOTS, "ピストンブーツ")
+            builder.add(RagiumContents.Accessories.PARACHUTE, "パラシュート")
 
-            builder.add(RagiumContents.STEEL_HELMET, "鋼鉄のヘルメット")
-            builder.add(RagiumContents.STEEL_CHESTPLATE, "鋼鉄のチェストプレート")
-            builder.add(RagiumContents.STEEL_LEGGINGS, "鋼鉄のレギンス")
-            builder.add(RagiumContents.STEEL_BOOTS, "鋼鉄のブーツ")
-            builder.add(RagiumContents.DIVING_GOGGLES, "潜水ゴーグル")
-            builder.add(RagiumContents.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
-            builder.add(RagiumContents.PISTON_BOOTS, "ピストンブーツ")
-            builder.add(RagiumContents.PARACHUTE, "パラシュート")
-            builder.add(RagiumContents.ALCHEMY_STUFF, "錬金の杖")
+            builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "錬金の杖")
+            builder.add(RagiumContents.Misc.BASALT_FIBER, "玄武岩繊維")
+            builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
+            builder.add(RagiumContents.Misc.FORGE_HAMMER, "鍛造ハンマー")
+            builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "忘却の結晶")
+            builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "スポーン 忘却の箱")
+            builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+            builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "ラギクリスタリル")
+            builder.add(RagiumContents.Misc.SOAP_INGOT, "石鹸インゴット")
+            builder.add(RagiumContents.Misc.SOLAR_PANEL, "太陽光パネル")
 
-            builder.add(RagiumContents.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-            builder.add(RagiumContents.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
-            builder.add(RagiumContents.SOAP_INGOT, "石鹸インゴット")
-            builder.add(RagiumContents.BASALT_FIBER, "玄武岩繊維")
-            builder.add(RagiumContents.SOLAR_PANEL, "太陽光パネル")
-            builder.add(RagiumContents.RAGI_CRYSTAL, "ラギクリスタリル")
-            builder.add(RagiumContents.OBLIVION_CRYSTAL, "忘却の結晶")
-
-            builder.add(RagiumContents.BEE_WAX, "蜜蠟")
-            builder.add(RagiumContents.BUTTER, "バター")
-            builder.add(RagiumContents.CHOCOLATE, "チョコレート")
-            builder.add(RagiumContents.CHOCOLATE_APPLE, "チョコレートアップル")
-            builder.add(RagiumContents.CHOCOLATE_BREAD, "チョコレートパン")
-            builder.add(RagiumContents.FLOUR, "小麦粉")
-            builder.add(RagiumContents.DOUGH, "生地")
-            builder.add(RagiumContents.MINCED_MEAT, "ひき肉")
-            builder.add(RagiumContents.PULP, "パルプ")
+            builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
+            builder.add(RagiumContents.Foods.BUTTER, "バター")
+            builder.add(RagiumContents.Foods.CHOCOLATE, "チョコレート")
+            builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "チョコレートアップル")
+            builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "チョコレートパン")
+            builder.add(RagiumContents.Foods.FLOUR, "小麦粉")
+            builder.add(RagiumContents.Foods.DOUGH, "生地")
+            builder.add(RagiumContents.Foods.MINCED_MEAT, "ひき肉")
+            builder.add(RagiumContents.Foods.PULP, "パルプ")
 
             builder.add(RagiumFluids.PETROLEUM.bucketItem, "石油バケツ")
             // Item Group

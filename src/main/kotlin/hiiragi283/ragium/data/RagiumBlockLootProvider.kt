@@ -1,9 +1,10 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.util.HTBlockContent
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -39,21 +40,21 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
     override fun generate() {
-        addDrop(RagiumContents.SPONGE_CAKE)
+        addDrop(RagiumBlocks.SPONGE_CAKE)
 
-        addDrop(RagiumContents.CREATIVE_SOURCE, dropsNothing())
-        addDrop(RagiumContents.MANUAL_GRINDER)
-        addDrop(RagiumContents.SHAFT)
-        addDrop(RagiumContents.ALCHEMICAL_INFUSER)
-        addDrop(RagiumContents.ITEM_DISPLAY)
-        addDrop(RagiumContents.DATA_DRIVE)
-        addDrop(RagiumContents.DRIVE_SCANNER)
-        addDrop(RagiumContents.NETWORK_INTERFACE)
-        addDrop(RagiumContents.BASIC_CASING)
-        addDrop(RagiumContents.ADVANCED_CASING)
-        addDrop(RagiumContents.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
+        addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
+        addDrop(RagiumBlocks.MANUAL_GRINDER)
+        addDrop(RagiumBlocks.SHAFT)
+        addDrop(RagiumBlocks.ALCHEMICAL_INFUSER)
+        addDrop(RagiumBlocks.ITEM_DISPLAY)
+        addDrop(RagiumBlocks.DATA_DRIVE)
+        addDrop(RagiumBlocks.DRIVE_SCANNER)
+        addDrop(RagiumBlocks.NETWORK_INTERFACE)
+        addDrop(RagiumBlocks.BASIC_CASING)
+        addDrop(RagiumBlocks.ADVANCED_CASING)
+        addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
-        addDrop(RagiumContents.META_MACHINE) { block: Block ->
+        addDrop(RagiumBlocks.META_MACHINE) { block: Block ->
             LootTable
                 .builder()
                 .pool(

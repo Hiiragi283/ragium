@@ -2,23 +2,18 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTDynamiteComponent
+import hiiragi283.ragium.api.component.HTModularToolComponent
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.tool.HTModularToolComponent
-import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumComponentTypes {
-    @JvmField
-    val ELEMENT: ComponentType<RagiumContents.Element> =
-        register("element", RagiumContents.Element.CODEC, RagiumContents.Element.PACKET_CODEC)
-
     //    Armor    //
 
     @JvmField
@@ -28,8 +23,8 @@ object RagiumComponentTypes {
     //    Tool    //
 
     @JvmField
-    val EXPLOSION_POWER: ComponentType<Float> =
-        register("explosion_power", Codec.floatRange(0f, 16f), PacketCodecs.FLOAT)
+    val DYNAMITE: ComponentType<HTDynamiteComponent> =
+        register("dynamite", HTDynamiteComponent.CODEC, HTDynamiteComponent.PACKET_CODEC)
 
     @JvmField
     val MODULAR_TOOL: ComponentType<HTModularToolComponent> =

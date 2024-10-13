@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.recipe.alchemy
 import hiiragi283.ragium.api.recipe.HTRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.WeightedIngredient
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeType
@@ -18,7 +18,7 @@ interface HTAlchemyRecipe : HTRecipeBase<HTAlchemyRecipe.Input> {
 
     override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = result.toStack()
 
-    override fun createIcon(): ItemStack = RagiumContents.ALCHEMICAL_INFUSER.asItem().defaultStack
+    override fun createIcon(): ItemStack = RagiumBlocks.ALCHEMICAL_INFUSER.asItem().defaultStack
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALCHEMY
 

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.api.util.sendPacketForPlayers
+import hiiragi283.ragium.api.util.sendPacket
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -38,7 +38,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     //    Extensions    //
 
     fun sendS2CPacket() {
-        world?.sendPacketForPlayers { asInventory()?.sendS2CPacket(it, pos) }
+        sendPacket { asInventory()?.sendS2CPacket(it, pos) }
     }
 
     open fun onUse(

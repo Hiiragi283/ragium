@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.jade
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.util.Identifier
 import snownee.jade.api.IWailaClientRegistration
 import snownee.jade.api.IWailaCommonRegistration
@@ -15,12 +15,12 @@ object RagiumJadePlugin : IWailaPlugin {
     val NETWORK_INTERFACE: Identifier = RagiumAPI.id("network_interface")
 
     override fun register(registration: IWailaCommonRegistration) {
-        registration.registerBlock(HTMachineProvider, RagiumContents.META_MACHINE)
+        registration.registerBlock(HTMachineProvider, RagiumBlocks.META_MACHINE)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
-        registration.registerBlock(HTMachineProvider, RagiumContents.META_MACHINE)
-        registration.registerBlock(HTEnergyNetworkProvider, RagiumContents.NETWORK_INTERFACE)
+        registration.registerBlock(HTMachineProvider, RagiumBlocks.META_MACHINE)
+        registration.registerBlock(HTEnergyNetworkProvider, RagiumBlocks.NETWORK_INTERFACE)
 
         RagiumAPI.log { info("Jade integration enabled!") }
     }

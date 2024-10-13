@@ -20,19 +20,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 object RagiumMachineTypes : HTMachineTypeInitializer {
-    /*override fun registerType(register: Consumer<HTMachineConvertible>) {
-        buildList {
-            add(HEAT_GENERATOR)
-            addAll(RagiumMachineTypes.Generator.entries)
-            add(BLAST_FURNACE)
-            add(DISTILLATION_TOWER)
-            add(FLUID_DRILL)
-            add(MOB_EXTRACTOR)
-            add(SAW_MILL)
-            addAll(RagiumMachineTypes.Processor.entries)
-        }.forEach(register::accept)
-    }*/
-
     override val priority: Int = -100
 
     override fun registerType(register: HTMachineTypeInitializer.Register) {

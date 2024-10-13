@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.util.useTransaction
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -66,7 +68,9 @@ class HTMachineType private constructor(properties: HTPropertyHolder) :
             consumer(tier.recipeCostText)
         }
 
-        fun getFrontTex(machine: HTMachineEntity?): Identifier = machine?.let { getOrDefault(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX)(it) }
+        @Environment(EnvType.CLIENT)
+        fun getFrontTex(machine: HTMachineEntity?): Identifier = machine
+            ?.let { getOrDefault(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX)(it) }
             ?: getOrDefault(HTMachinePropertyKeys.FRONT_TEX)(id)
 
         fun generateEnergy(world: World, pos: BlockPos, tier: HTMachineTier) {

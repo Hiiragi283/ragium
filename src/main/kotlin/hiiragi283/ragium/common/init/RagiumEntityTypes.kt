@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.entity.HTBedrockDynamiteEntity
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.entity.HTOblivionCubeEntity
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
@@ -11,6 +12,15 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumEntityTypes {
+    @JvmField
+    val BEDROCK_DYNAMITE: EntityType<HTBedrockDynamiteEntity> = register(
+        "bedrock_dynamite",
+        ::HTBedrockDynamiteEntity,
+        SpawnGroup.MISC,
+    ) {
+        dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
+    }
+
     @JvmField
     val DYNAMITE: EntityType<HTDynamiteEntity> = register(
         "dynamite",

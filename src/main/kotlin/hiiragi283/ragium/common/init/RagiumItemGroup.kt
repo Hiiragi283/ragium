@@ -39,7 +39,7 @@ object RagiumItemGroup {
                     .streamEntries()
                     .filter { it.registryKey().value.namespace == RagiumAPI.MOD_ID }
                     .map(RegistryEntry.Reference<Item>::value)
-                    .filter { it != RagiumContents.META_MACHINE.asItem() }
+                    .filter { it != RagiumBlocks.META_MACHINE.asItem() }
                     .forEach(entries::add)
             }
         }
@@ -47,7 +47,7 @@ object RagiumItemGroup {
         register(MACHINE_KEY) {
             displayName(Text.translatable("itemGroup.ragium.machine"))
             icon {
-                RagiumContents.META_MACHINE
+                RagiumBlocks.META_MACHINE
                     .asItem()
                     .defaultStack
             }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.tool
+package hiiragi283.ragium.api.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder

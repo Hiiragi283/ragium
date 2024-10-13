@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.component.HTModularToolComponent
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.api.tool.HTModularToolComponent
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
@@ -36,13 +36,13 @@ object HTSmithingModuleRecipe : SmithingRecipe {
         return base
     }
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = RagiumContents.MODULAR_TOOL.defaultStack
+    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = RagiumContents.Misc.MODULAR_TOOL.value.defaultStack
 
     override fun getSerializer(): RecipeSerializer<*> = Serializer
 
     override fun testTemplate(stack: ItemStack): Boolean = stack.isIn(RagiumItemTags.TOOL_MODULES)
 
-    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.MODULAR_TOOL)
+    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.Misc.MODULAR_TOOL.value)
 
     override fun testAddition(stack: ItemStack): Boolean = false
 

@@ -86,7 +86,7 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
 
     override fun getPropertyDelegate(): PropertyDelegate = HTDynamicPropertyDelegate(2, ::getProperty)
 
-    open fun getProperty(index: Int): Int = when (index) {
+    protected open fun getProperty(index: Int): Int = when (index) {
         0 -> ticks
         1 -> tickRate
         else -> throw IndexOutOfBoundsException(index)

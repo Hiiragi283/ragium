@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -58,7 +59,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         InventoryChangedCriterion.Conditions.items(
             ItemPredicate.Builder
                 .create()
-                .items(RagiumContents.META_MACHINE)
+                .items(RagiumBlocks.META_MACHINE)
                 .component(
                     ComponentPredicate
                         .builder()
@@ -156,9 +157,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/manual_grinder",
                 ragiAlloy,
-                RagiumContents.MANUAL_GRINDER,
+                RagiumBlocks.MANUAL_GRINDER,
             ) {
-                hasItems(RagiumContents.MANUAL_GRINDER)
+                hasItems(RagiumBlocks.MANUAL_GRINDER)
             }.putEnglish("Traditional One")
             .putEnglishDesc("Craft Manual Grinder")
             .putJapanese("あのクルクル")
@@ -296,9 +297,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/soap",
                 mixer,
-                RagiumContents.SOAP_INGOT,
+                RagiumContents.Misc.SOAP_INGOT,
             ) {
-                hasItems(RagiumContents.SOAP_INGOT)
+                hasItems(RagiumContents.Misc.SOAP_INGOT)
             }.putEnglish("BIG BROTHER IS WASHING YOU...")
             .putEnglishDesc("Craft Soap Ingot")
             .putJapanese("ビッグブラザーはあなたを洗っている...")
@@ -433,7 +434,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/distillation_tower",
                 refinedRagiSteelHull,
-                RagiumContents.EMPTY_FLUID_CUBE,
+                RagiumContents.Misc.EMPTY_FLUID_CUBE,
             ) {
                 buildMultiblock(RagiumMachineTypes.DISTILLATION_TOWER, HTMachineTier.PRIMITIVE)
             }.putEnglish("GregTech is waiting for you :)")
@@ -462,10 +463,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumContents.ALCHEMICAL_INFUSER,
+                RagiumBlocks.ALCHEMICAL_INFUSER,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(RagiumContents.ALCHEMICAL_INFUSER)
+                hasItems(RagiumBlocks.ALCHEMICAL_INFUSER)
             }.putEnglish("Ragium - Tier 4")
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")

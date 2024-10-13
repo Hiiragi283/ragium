@@ -9,9 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import io.netty.buffer.ByteBuf
 import it.unimi.dsi.fastutil.objects.Object2IntMap
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
@@ -28,12 +26,16 @@ import net.minecraft.component.Component
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
+import net.minecraft.component.type.AttributeModifierSlot
+import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.ItemEnchantmentsComponent
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.enchantment.EnchantmentLevelEntry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
+import net.minecraft.entity.attribute.EntityAttributeModifier
+import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
@@ -76,7 +78,10 @@ fun <T : Any> Either<out T, out T>.mapCast(): T = map({ it }, { it })
 
 fun blockSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create()
 
-fun blockSettings(block: AbstractBlock): AbstractBlock.Settings = AbstractBlock.Settings.copy(block)
+fun blockSettings(block: AbstractBlock, isShallow: Boolean = false): AbstractBlock.Settings = when (isShallow) {
+    true -> AbstractBlock.Settings.copyShallow(block)
+    false -> AbstractBlock.Settings.copy(block)
+}
 
 fun <T : BlockEntity> blockEntityType(factory: BlockEntityType.BlockEntityFactory<T>, vararg blocks: Block): BlockEntityType<T> =
     BlockEntityType.Builder.create(factory, *blocks).build()
@@ -121,6 +126,27 @@ fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direc
 
 //    Component    //
 
+fun createAttributeComponent(material: ToolMaterial, baseAttack: Double, attackSpeed: Double): AttributeModifiersComponent =
+    AttributeModifiersComponent
+        .builder()
+        .add(
+            EntityAttributes.GENERIC_ATTACK_DAMAGE,
+            EntityAttributeModifier(
+                Item.BASE_ATTACK_DAMAGE_MODIFIER_ID,
+                baseAttack + material.attackDamage,
+                EntityAttributeModifier.Operation.ADD_VALUE,
+            ),
+            AttributeModifierSlot.MAINHAND,
+        ).add(
+            EntityAttributes.GENERIC_ATTACK_SPEED,
+            EntityAttributeModifier(
+                Item.BASE_ATTACK_SPEED_MODIFIER_ID,
+                attackSpeed,
+                EntityAttributeModifier.Operation.ADD_VALUE,
+            ),
+            AttributeModifierSlot.MAINHAND,
+        ).build()
+
 val ComponentHolder.machineType: HTMachineType
     get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
 
@@ -164,8 +190,6 @@ fun isModLoaded(modId: String): Boolean = FabricLoader.getInstance().isModLoaded
 //    Item    //
 
 fun itemSettings(): Item.Settings = Item.Settings()
-
-fun Item.Settings.element(element: RagiumContents.Element): Item.Settings = component(RagiumComponentTypes.ELEMENT, element)
 
 fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(HTMachineType.COMPONENT_TYPE, type.asMachine())
 
@@ -225,6 +249,19 @@ fun openEnderChest(world: World, player: PlayerEntity) {
         0.5f,
         1.0f,
     )
+}
+
+//    Network    //
+
+fun BlockEntity.sendPacket(action: (ServerPlayerEntity) -> Unit) {
+    val world: World = world ?: return
+    if (!world.isClient) {
+        PlayerLookup.tracking(this)?.firstOrNull()?.let(action)
+    }
+}
+
+fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
+    (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
 }
 
 //    PacketCodec    //
@@ -356,8 +393,4 @@ fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack) {
     val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
     itemEntity.setPickupDelay(0)
     world.spawnEntity(itemEntity)
-}
-
-fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
-    (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
 }

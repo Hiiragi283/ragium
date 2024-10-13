@@ -8,10 +8,8 @@ import hiiragi283.ragium.api.util.getMachineEntity
 import hiiragi283.ragium.api.util.getOrDefault
 import hiiragi283.ragium.api.util.machineTier
 import hiiragi283.ragium.api.util.machineType
-import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
-import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel
 import net.fabricmc.fabric.api.renderer.v1.model.ModelHelper
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext
 import net.minecraft.block.BlockState
@@ -33,7 +31,7 @@ import net.minecraft.world.BlockRenderView
 import java.util.function.Function
 import java.util.function.Supplier
 
-data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
+data object HTMachineModel : UnbakedModel, BakedModel {
     @JvmStatic
     private lateinit var frontSprite: Sprite
 
@@ -107,10 +105,11 @@ data object HTMachineModel : UnbakedModel, BakedModel, FabricBakedModel {
         hullRenderer: (BakedModel) -> Unit,
     ) {
         // render hull model
-        val hull: RagiumContents.Hulls = tier.getHull()
-        val client: MinecraftClient = MinecraftClient.getInstance()
-        val bakedModelManager: BakedModelManager = client.bakedModelManager
-        bakedModelManager.getModel(ModelIdentifier(hull.id, ""))?.apply(hullRenderer)
+        MinecraftClient
+            .getInstance()
+            .bakedModelManager
+            .getModel(ModelIdentifier(tier.getHull().id, ""))
+            ?.apply(hullRenderer)
         // render machine front
         val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.getFrontTex(machine))
         this.frontSprite = this.textureGetter.apply(frontId)

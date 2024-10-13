@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import net.minecraft.block.BlockState
@@ -42,7 +43,7 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     ): ActionResult = onUseController(state, world, pos, player, world.getBlockEntity(pos) as? HTAlchemicalInfuserBlockEntity)
 
     fun processRecipe(stack: ItemStack, world: World): ItemActionResult {
-        if (stack.isOf(RagiumContents.ALCHEMY_STUFF)) {
+        if (stack.isOf(RagiumContents.Misc.ALCHEMY_STUFF.value)) {
             val input = HTAlchemyRecipe.Input(
                 getStack(0),
                 getStack(1),
@@ -139,5 +140,5 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTAlchemicalInfuserHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos))
 
-    override fun getDisplayName(): Text = RagiumContents.ALCHEMICAL_INFUSER.name
+    override fun getDisplayName(): Text = RagiumBlocks.ALCHEMICAL_INFUSER.name
 }

@@ -1,16 +1,15 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.util.blockSettings
 import hiiragi283.ragium.api.util.itemSettings
 import hiiragi283.ragium.common.block.HTBlockWithEntity
-import hiiragi283.ragium.common.init.RagiumToolMaterials
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.FoodComponent
-import net.minecraft.item.*
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import kotlin.jvm.optionals.getOrNull
@@ -57,7 +56,7 @@ interface HTContentRegister {
             ?.let { registerItem(it.path, factory(block, settings)) }
     }
 
-    fun <T : ToolItem> registerToolItem(
+    /*fun <T : ToolItem> registerToolItem(
         name: String,
         material: ToolMaterial,
         factory: (ToolMaterial, Item.Settings) -> T,
@@ -69,7 +68,7 @@ interface HTContentRegister {
         name,
         material,
         ::SwordItem,
-        RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.0),
+        createAttributeComponent(material, 3.0, -2.0),
         settings,
     )
 
@@ -77,7 +76,7 @@ interface HTContentRegister {
         name,
         material,
         ::ShovelItem,
-        RagiumToolMaterials.createAttributeComponent(material, -2.0, -3.0),
+        createAttributeComponent(material, -2.0, -3.0),
         settings,
     )
 
@@ -85,7 +84,7 @@ interface HTContentRegister {
         name,
         material,
         ::PickaxeItem,
-        RagiumToolMaterials.createAttributeComponent(material, -2.0, -2.8),
+        createAttributeComponent(material, -2.0, -2.8),
         settings,
     )
 
@@ -93,7 +92,7 @@ interface HTContentRegister {
         name,
         material,
         ::AxeItem,
-        RagiumToolMaterials.createAttributeComponent(material, 3.0, -2.9),
+        createAttributeComponent(material, 3.0, -2.9),
         settings,
     )
 
@@ -101,7 +100,7 @@ interface HTContentRegister {
         name,
         material,
         ::HoeItem,
-        RagiumToolMaterials.createAttributeComponent(material, -4.0, 0.0),
+        createAttributeComponent(material, -4.0, 0.0),
         settings,
-    )
+    )*/
 }

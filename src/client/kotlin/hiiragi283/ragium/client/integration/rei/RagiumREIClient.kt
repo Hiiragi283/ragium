@@ -15,6 +15,7 @@ import hiiragi283.ragium.client.integration.rei.display.HTInfusionRecipeDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -68,7 +69,7 @@ object RagiumREIClient : REIClientPlugin {
         }
         registry.addWorkstations(
             RagiumMachineTypes.Processor.GRINDER.categoryId,
-            EntryStacks.of(RagiumContents.MANUAL_GRINDER),
+            EntryStacks.of(RagiumBlocks.MANUAL_GRINDER),
         )
 
         registry.addWorkstations(
@@ -85,8 +86,8 @@ object RagiumREIClient : REIClientPlugin {
         )
         // Alchemy Recipe
         registry.add(HTAlchemyRecipeCategory)
-        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.ALCHEMICAL_INFUSER))
-        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.ALCHEMY_STUFF))
+        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumBlocks.ALCHEMICAL_INFUSER))
+        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.Misc.ALCHEMY_STUFF))
     }
 
     override fun registerDisplays(registry: DisplayRegistry) {
