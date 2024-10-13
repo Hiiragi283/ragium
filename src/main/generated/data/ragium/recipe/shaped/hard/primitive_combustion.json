@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": true
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_alloy_plate"
+    },
+    "B": {
+      "item": "ragium:engine"
+    },
+    "C": {
+      "item": "ragium:ragi_alloy_hull"
+    },
+    "D": {
+      "item": "ragium:engine"
+    },
+    "E": {
+      "tag": "c:plates/copper"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "components": {
+      "ragium:machine_tier": "primitive",
+      "ragium:machine_type": "ragium:combustion"
+    },
+    "count": 1,
+    "id": "ragium:meta_machine"
+  }
+}

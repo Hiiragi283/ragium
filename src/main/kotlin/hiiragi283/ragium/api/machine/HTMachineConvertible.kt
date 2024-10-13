@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.machine
 
-import hiiragi283.ragium.api.util.buildItemStack
+import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks

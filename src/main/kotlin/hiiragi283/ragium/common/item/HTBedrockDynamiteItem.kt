@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.util.itemSettings
+import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.entity.HTBedrockDynamiteEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ProjectileEntity

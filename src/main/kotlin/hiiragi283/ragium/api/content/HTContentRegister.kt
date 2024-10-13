@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.blockSettings
-import hiiragi283.ragium.api.util.itemSettings
+import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.block.HTBlockWithEntity
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block

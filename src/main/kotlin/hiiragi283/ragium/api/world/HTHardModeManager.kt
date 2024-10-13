@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.world
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.getState
+import hiiragi283.ragium.api.extension.getState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.MinecraftServer

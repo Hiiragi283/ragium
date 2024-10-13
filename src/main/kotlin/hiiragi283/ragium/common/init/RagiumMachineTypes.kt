@@ -2,12 +2,12 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getAroundPos
+import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumFluidTags
-import hiiragi283.ragium.api.util.getAroundPos
-import hiiragi283.ragium.api.util.getMachineEntity
 import hiiragi283.ragium.common.machine.*
 import net.minecraft.component.ComponentMap
 import net.minecraft.fluid.Fluid

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.util.useTransaction
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys

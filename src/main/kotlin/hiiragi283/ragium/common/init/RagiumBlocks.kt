@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.content.HTContentRegister
-import hiiragi283.ragium.api.util.blockSettings
+import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
 import net.minecraft.block.AmethystClusterBlock
 import net.minecraft.block.Block
@@ -92,7 +92,7 @@ object RagiumBlocks : HTContentRegister {
 
     @JvmField
     val NETWORK_INTERFACE: Block =
-        registerBlock("network_interface")
+        registerBlock("network_interface", HTNetworkInterfaceBlock)
 
     @JvmField
     val SHAFT: Block =

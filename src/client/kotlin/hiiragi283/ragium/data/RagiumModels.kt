@@ -1,8 +1,9 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.util.machineTier
+import hiiragi283.ragium.client.model.HTMachineModel
 import net.minecraft.block.Block
 import net.minecraft.data.client.Model
 import net.minecraft.data.client.TextureKey
@@ -12,9 +13,6 @@ import net.minecraft.util.Identifier
 import java.util.*
 
 object RagiumModels {
-    @JvmField
-    val MACHINE_MODEL_ID: Identifier = RagiumAPI.id("block/dynamic_machine")
-
     //    Block    //
 
     @JvmField
@@ -65,7 +63,7 @@ object RagiumModels {
         )
 
     @JvmField
-    val DYNAMIC_MACHINE: Model = model(MACHINE_MODEL_ID.path)
+    val DYNAMIC_MACHINE: Model = model(HTMachineModel.MODEL_ID.path)
 
     //    Item    //
 

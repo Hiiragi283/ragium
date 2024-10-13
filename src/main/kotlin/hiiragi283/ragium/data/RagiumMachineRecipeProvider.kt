@@ -114,7 +114,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Plates.PE)
             .addInput(RagiumItemTags.COPPER_PLATES)
             .addInput(ConventionalItemTags.REDSTONE_DUSTS)
-            .addOutput(RagiumContents.Circuit.PRIMITIVE)
+            .addOutput(RagiumContents.Circuits.PRIMITIVE)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -122,7 +122,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Plates.PVC)
             .addInput(RagiumItemTags.GOLD_PLATES)
             .addInput(ConventionalItemTags.GLOWSTONE_DUSTS)
-            .addOutput(RagiumContents.Circuit.BASIC)
+            .addOutput(RagiumContents.Circuits.BASIC)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -130,7 +130,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Plates.PTFE)
             .addInput(RagiumContents.Plates.RAGI_ALLOY)
             .addInput(RagiumContents.Dusts.RAGI_CRYSTAL)
-            .addOutput(RagiumContents.Circuit.ADVANCED)
+            .addOutput(RagiumContents.Circuits.ADVANCED)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -144,6 +144,34 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Fluids.MOLTEN_BASALT)
             .addOutput(RagiumContents.Misc.BASALT_FIBER)
             .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
+            .addInput(RagiumItemTags.STEEL_PLATES, 8)
+            .addInput(RagiumContents.Plates.RAGI_STEEL, 8)
+            .addOutput(RagiumContents.Misc.ENGINE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .addInput(RagiumItemTags.IRON_PLATES, 8)
+            .addInput(RagiumContents.Coils.COPPER)
+            .addOutput(RagiumContents.Motors.PRIMITIVE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .addInput(RagiumItemTags.IRON_PLATES, 8)
+            .addInput(RagiumContents.Coils.GOLD)
+            .addOutput(RagiumContents.Motors.BASIC)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .addInput(RagiumItemTags.IRON_PLATES, 8)
+            .addInput(RagiumContents.Coils.RAGI_ALLOY)
+            .addOutput(RagiumContents.Motors.ADVANCED)
             .offerTo(exporter)
     }
 
@@ -496,6 +524,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .addInput(Items.SUGAR, 4)
+            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .addOutput(RagiumContents.Fluids.STARCH_SYRUP)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.EXTRACTOR)
             .addInput(Items.SWEET_BERRIES)
             .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .addOutput(RagiumContents.Fluids.SWEET_BERRIES)
@@ -689,6 +724,15 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Fluids.NITRIC_ACID)
             .addInput(RagiumContents.Fluids.SULFURIC_ACID)
             .addOutput(RagiumContents.Fluids.MIXTURE_ACID, 2)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.MIXER)
+            .addInput(RagiumContents.Foods.BUTTER)
+            .addInput(Items.SUGAR)
+            .addInput(RagiumContents.Fluids.MILK)
+            .addOutput(RagiumContents.Foods.CARAMEL, 4)
+            .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder

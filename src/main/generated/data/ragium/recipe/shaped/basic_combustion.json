@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "ragium:hard_mode",
+      "value": false
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_steel_ingot"
+    },
+    "B": {
+      "item": "ragium:engine"
+    },
+    "C": {
+      "item": "ragium:ragi_steel_hull"
+    },
+    "D": {
+      "item": "ragium:engine"
+    },
+    "E": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "components": {
+      "ragium:machine_tier": "basic",
+      "ragium:machine_type": "ragium:combustion"
+    },
+    "count": 1,
+    "id": "ragium:meta_machine"
+  }
+}

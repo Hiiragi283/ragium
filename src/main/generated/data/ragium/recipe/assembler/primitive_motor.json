@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 8,
+      "ingredient": {
+        "tag": "c:plates/iron"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "ragium:copper_coil"
+      }
+    }
+  ],
+  "machine_type": "ragium:assembler",
+  "outputs": [
+    {
+      "item": "ragium:primitive_motor"
+    }
+  ]
+}

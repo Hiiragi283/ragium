@@ -2,9 +2,10 @@ package hiiragi283.ragium.api.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.codecOf
+import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.util.itemSettings
-import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentType
@@ -15,14 +16,12 @@ import net.minecraft.item.tooltip.TooltipAppender
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.StringIdentifiable
-import net.minecraft.util.function.ValueLists
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -125,17 +124,13 @@ data class HTModularToolComponent(val tier: HTMachineTier, private val behavior:
 
         companion object {
             @JvmField
-            val CODEC: Codec<Behavior> = StringIdentifiable.createCodec(Behavior::values)
+            val CODEC: Codec<Behavior> = codecOf(::fromString)
 
             @JvmField
-            val PACKET_CODEC: PacketCodec<ByteBuf, Behavior> = PacketCodecs.indexed(
-                ValueLists.createIdToValueFunction(
-                    Behavior::ordinal,
-                    Behavior.entries.toTypedArray(),
-                    ValueLists.OutOfBoundsHandling.WRAP,
-                ),
-                Behavior::ordinal,
-            )
+            val PACKET_CODEC: PacketCodec<RegistryByteBuf, Behavior> = packetCodecOf(::fromString)
+
+            @JvmStatic
+            fun fromString(name: String): Behavior = entries.first { it.asString() == name }
         }
 
         abstract fun useOnBlock(context: ItemUsageContext): ActionResult

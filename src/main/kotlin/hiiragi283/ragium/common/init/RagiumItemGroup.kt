@@ -5,13 +5,11 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 
 object RagiumItemGroup {
@@ -35,12 +33,36 @@ object RagiumItemGroup {
                     .defaultStack
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                Registries.ITEM
-                    .streamEntries()
-                    .filter { it.registryKey().value.namespace == RagiumAPI.MOD_ID }
-                    .map(RegistryEntry.Reference<Item>::value)
-                    .filter { it != RagiumBlocks.META_MACHINE.asItem() }
-                    .forEach(entries::add)
+                buildList {
+                    addAll(RagiumContents.Ores.entries)
+                    addAll(RagiumContents.DeepOres.entries)
+                    add(RagiumBlocks.POROUS_NETHERRACK)
+                    add(RagiumBlocks.SNOW_SPONGE)
+                    addAll(RagiumContents.StorageBlocks.entries)
+
+                    addAll(RagiumContents.Dusts.entries)
+                    addAll(RagiumContents.Ingots.entries)
+                    addAll(RagiumContents.Plates.entries)
+                    addAll(RagiumContents.RawMaterials.entries)
+
+                    addAll(RagiumContents.Armors.entries)
+                    addAll(RagiumContents.Tools.entries)
+                    addAll(RagiumContents.Accessories.entries)
+
+                    addAll(RagiumContents.Hulls.entries)
+                    add(RagiumBlocks.BASIC_CASING)
+                    add(RagiumBlocks.ADVANCED_CASING)
+                    addAll(RagiumContents.Coils.entries)
+                    addAll(RagiumContents.Motors.entries)
+                    addAll(RagiumContents.Circuits.entries)
+
+                    addAll(RagiumContents.Foods.entries)
+                    add(RagiumBlocks.SPONGE_CAKE)
+                    add(RagiumBlocks.SWEET_BERRIES_CAKE)
+                    addAll(RagiumContents.Misc.entries)
+
+                    addAll(RagiumContents.Fluids.entries)
+                }.forEach(entries::add)
             }
         }
 
@@ -52,10 +74,24 @@ object RagiumItemGroup {
                     .defaultStack
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                buildList {
+                    add(RagiumBlocks.CREATIVE_SOURCE)
+                    add(RagiumBlocks.MANUAL_GRINDER)
+                    add(RagiumBlocks.DATA_DRIVE)
+                    add(RagiumBlocks.DRIVE_SCANNER)
+                    add(RagiumBlocks.SHAFT)
+                    add(RagiumBlocks.ITEM_DISPLAY)
+                    add(RagiumBlocks.NETWORK_INTERFACE)
+
+                    add(RagiumBlocks.ALCHEMICAL_INFUSER)
+                }.forEach(entries::add)
+                // machines
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->
                     RagiumAPI
                         .getInstance()
-                        .machineTypeRegistry.types
+                        .machineTypeRegistry
+                        .types
+                        .filterNot { it == HTMachineType.DEFAULT }
                         .map { type: HTMachineType -> type.createItemStack(tier) }
                         .forEach(entries::add)
                 }

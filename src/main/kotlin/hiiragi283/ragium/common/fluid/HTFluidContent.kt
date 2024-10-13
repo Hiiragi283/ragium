@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.fluid
 
-import hiiragi283.ragium.api.util.blockSettings
-import hiiragi283.ragium.api.util.itemSettings
+import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.fluid.HTFlowableFluid.Flowing
 import hiiragi283.ragium.common.fluid.HTFlowableFluid.Still
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributeHandler

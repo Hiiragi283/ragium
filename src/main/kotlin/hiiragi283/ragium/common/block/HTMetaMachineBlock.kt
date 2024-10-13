@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.extension.machineTypeOrNull
 import hiiragi283.ragium.api.machine.HTMachineEntity
-import hiiragi283.ragium.api.util.blockSettings
-import hiiragi283.ragium.api.util.getMachineEntity
-import hiiragi283.ragium.api.util.machineTier
-import hiiragi283.ragium.api.util.machineTypeOrNull
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

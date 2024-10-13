@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.api.util.getOrNull
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.client.util.renderItem
 import hiiragi283.ragium.client.util.renderMultiblock
 import hiiragi283.ragium.common.block.entity.HTAlchemicalInfuserBlockEntity

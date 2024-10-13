@@ -2,23 +2,23 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.content.HTTranslationProvider
-import hiiragi283.ragium.api.util.longText
+import hiiragi283.ragium.api.extension.codecOf
+import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
+import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
-import net.minecraft.util.function.ValueLists
 
 enum class HTMachineTier(
     private val idPattern: String,
@@ -58,18 +58,10 @@ enum class HTMachineTier(
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineTier> = StringIdentifiable.createCodec(HTMachineTier::values)
+        val CODEC: Codec<HTMachineTier> = codecOf(::fromString)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineTier> =
-            PacketCodecs.indexed(
-                ValueLists.createIdToValueFunction(
-                    HTMachineTier::ordinal,
-                    entries.toTypedArray(),
-                    ValueLists.OutOfBoundsHandling.WRAP,
-                ),
-                HTMachineTier::ordinal,
-            )
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = packetCodecOf(::fromString)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTMachineTier> = ComponentType
@@ -77,6 +69,9 @@ enum class HTMachineTier(
             .codec(CODEC)
             .packetCodec(PACKET_CODEC)
             .build()
+
+        @JvmStatic
+        fun fromString(name: String): HTMachineTier = entries.first { it.asString() == name }
     }
 
     val miningCost: Long = recipeCost / 10
@@ -104,10 +99,10 @@ enum class HTMachineTier(
         ADVANCED -> RagiumBlocks.ADVANCED_CASING
     }
 
-    fun getCircuit(): RagiumContents.Circuit = when (this) {
-        PRIMITIVE -> RagiumContents.Circuit.PRIMITIVE
-        BASIC -> RagiumContents.Circuit.BASIC
-        ADVANCED -> RagiumContents.Circuit.ADVANCED
+    fun getCircuit(): RagiumContents.Circuits = when (this) {
+        PRIMITIVE -> RagiumContents.Circuits.PRIMITIVE
+        BASIC -> RagiumContents.Circuits.BASIC
+        ADVANCED -> RagiumContents.Circuits.ADVANCED
     }
 
     fun getCoil(): RagiumContents.Coils = when (this) {
@@ -120,6 +115,12 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumContents.Hulls.RAGI_ALLOY
         BASIC -> RagiumContents.Hulls.RAGI_STEEL
         ADVANCED -> RagiumContents.Hulls.REFINED_RAGI_STEEL
+    }
+
+    fun getMotor(): RagiumContents.Motors = when (this) {
+        PRIMITIVE -> RagiumContents.Motors.PRIMITIVE
+        BASIC -> RagiumContents.Motors.BASIC
+        ADVANCED -> RagiumContents.Motors.ADVANCED
     }
 
     fun getIngot(): RagiumContents.Ingots = when (this) {

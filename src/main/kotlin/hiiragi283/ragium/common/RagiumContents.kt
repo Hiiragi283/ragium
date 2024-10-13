@@ -2,10 +2,10 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.*
+import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.util.blockSettings
-import hiiragi283.ragium.api.util.dropStackAt
-import hiiragi283.ragium.api.util.itemSettings
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
@@ -275,9 +275,26 @@ object RagiumContents : HTContentRegister {
         override val jaPattern: String = "%sコイル"
     }
 
+    //    Motors    //
+
+    enum class Motors(val tier: HTMachineTier) :
+        HTEntryDelegated<Block>,
+        HTTranslationProvider by tier,
+        ItemConvertible {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_motor"))
+
+        override fun asItem(): Item = value.asItem()
+    }
+
     //    Circuits    //
 
-    enum class Circuit(val tier: HTMachineTier) :
+    enum class Circuits(val tier: HTMachineTier) :
         HTEntryDelegated<Item>,
         HTTranslationProvider by tier,
         ItemConvertible {
@@ -292,53 +309,6 @@ object RagiumContents : HTContentRegister {
         override fun asItem(): Item = value
     }
 
-    //    Misc    //
-
-    enum class Misc :
-        HTEntryDelegated<Item>,
-        ItemConvertible {
-        ALCHEMY_STUFF {
-            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC).maxCount(1))
-        },
-        BASALT_FIBER,
-        BEDROCK_DYNAMITE {
-            override fun createItem(): Item = HTBedrockDynamiteItem
-        },
-        DYNAMITE {
-            override fun createItem(): Item = HTDynamiteItem
-        },
-        EMPTY_FLUID_CUBE,
-        FORGE_HAMMER {
-            override fun createItem(): Item = HTForgeHammerItem
-        },
-        MODULAR_TOOL {
-            override fun createItem(): Item = HTModularMiningToolItem(RagiumMaterials.STEEL.tool!!, itemSettings())
-        },
-        OBLIVION_CRYSTAL {
-            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC))
-        },
-        OBLIVION_CUBE_SPAWN_EGG {
-            override fun createItem(): Item = SpawnEggItem(
-                RagiumEntityTypes.OBLIVION_CUBE,
-                0x000000,
-                0xffffff,
-                itemSettings(),
-            )
-        },
-        RAGI_ALLOY_COMPOUND,
-        RAGI_CRYSTAL,
-        SOAP_INGOT,
-        SOLAR_PANEL,
-        ;
-
-        internal open fun createItem(): Item = Item(itemSettings())
-
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
-
-        override fun asItem(): Item = value
-    }
-
     //    Foods    //
 
     enum class Foods :
@@ -347,6 +317,10 @@ object RagiumContents : HTContentRegister {
         BEE_WAX,
         BUTTER {
             override fun food(): FoodComponent = FoodComponents.APPLE
+        },
+        CANDY_APPLE,
+        CARAMEL {
+            override fun food(): FoodComponent = FoodComponents.DRIED_KELP
         },
         CHOCOLATE {
             override fun food(): FoodComponent = FoodComponent
@@ -380,6 +354,57 @@ object RagiumContents : HTContentRegister {
         override fun asItem(): Item = value
     }
 
+    //    Misc    //
+
+    enum class Misc :
+        HTEntryDelegated<Item>,
+        ItemConvertible {
+        ALCHEMY_STUFF {
+            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC).maxCount(1))
+        },
+        BASALT_FIBER,
+        BEDROCK_DYNAMITE {
+            override fun createItem(): Item = HTBedrockDynamiteItem
+        },
+        DYNAMITE {
+            override fun createItem(): Item = HTDynamiteItem
+        },
+        EMPTY_FLUID_CUBE,
+        ENGINE,
+        FORGE_HAMMER {
+            override fun createItem(): Item = HTForgeHammerItem
+        },
+        HEART_OF_THE_NETHER {
+            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.UNCOMMON))
+        },
+        MODULAR_TOOL {
+            override fun createItem(): Item = HTModularMiningToolItem(RagiumMaterials.STEEL.tool!!, itemSettings())
+        },
+        OBLIVION_CRYSTAL {
+            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC))
+        },
+        OBLIVION_CUBE_SPAWN_EGG {
+            override fun createItem(): Item = SpawnEggItem(
+                RagiumEntityTypes.OBLIVION_CUBE,
+                0x000000,
+                0xffffff,
+                itemSettings(),
+            )
+        },
+        RAGI_ALLOY_COMPOUND,
+        RAGI_CRYSTAL,
+        SOAP_INGOT,
+        SOLAR_PANEL,
+        ;
+
+        internal open fun createItem(): Item = Item(itemSettings())
+
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+
+        override fun asItem(): Item = value
+    }
+
     //    Elements    //
 
     enum class Element(
@@ -395,23 +420,6 @@ object RagiumContents : HTContentRegister {
         REGIUM(ConventionalBiomeTags.IS_OCEAN, "Regium", "レギウム", MapColor.BLUE),
         ROGIUM(ConventionalBiomeTags.IS_END, "Rogium", "ロギウム", MapColor.PURPLE),
         ;
-
-        /*companion object {
-            @JvmField
-            val CODEC: Codec<Element> = StringIdentifiable.createCodec(Element::values)
-
-            @JvmField
-            val INT_FUNCTION: IntFunction<Element> =
-                ValueLists.createIdToValueFunction(
-                    Element::ordinal,
-                    Element.entries.toTypedArray(),
-                    ValueLists.OutOfBoundsHandling.WRAP
-                )
-
-            @JvmField
-            val PACKET_CODEC: PacketCodec<ByteBuf, Element> =
-                PacketCodecs.indexed(INT_FUNCTION, Element::ordinal)
-        }*/
 
         private val settings: AbstractBlock.Settings =
             blockSettings().mapColor(mapColor).strength(1.5f).sounds(BlockSoundGroup.AMETHYST_BLOCK)
@@ -499,6 +507,7 @@ object RagiumContents : HTContentRegister {
                 ),
             )
         },
+        STARCH_SYRUP(Color(0x99ffff), "Starch Syrup", "水あめ"),
         SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー") {
             override fun createItem(): Item = Item(
                 itemSettings().food(

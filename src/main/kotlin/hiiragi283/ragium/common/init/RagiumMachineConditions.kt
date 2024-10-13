@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.util.useTransaction
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.energyNetwork
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction

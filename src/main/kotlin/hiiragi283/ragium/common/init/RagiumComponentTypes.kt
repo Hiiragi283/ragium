@@ -47,6 +47,12 @@ object RagiumComponentTypes {
         type,
     )
 
+    //    Misc    //
+
+    @JvmField
+    val DAMAGE_INSTEAD_OF_DECREASE: ComponentType<Unit> =
+        registerUnit("damage_instead_of_decrease")
+
     @JvmStatic
     private fun <T : Any> register(name: String, codec: Codec<T>, packetCodec: PacketCodec<in RegistryByteBuf, T>): ComponentType<T> =
         register(

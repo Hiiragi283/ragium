@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.util.castBlock
+import hiiragi283.ragium.api.extension.castBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks

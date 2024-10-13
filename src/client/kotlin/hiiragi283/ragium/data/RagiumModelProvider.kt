@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -106,7 +107,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 VariantsBlockStateSupplier
                     .create(
                         block,
-                        buildModelVariant(RagiumModels.MACHINE_MODEL_ID),
+                        buildModelVariant(HTMachineModel.MODEL_ID),
                     ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
             )
             RagiumModels.DYNAMIC_MACHINE.upload(
@@ -190,6 +191,26 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
+        // motors
+        RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+            register(motor.value) {
+                generator.registerAxisRotated(
+                    it,
+                    TexturedModel.makeFactory({
+                        textureMap {
+                            put(TextureKey.SIDE, RagiumAPI.id("block/motor"))
+                            put(
+                                TextureKey.END,
+                                motor.tier
+                                    .getCoil()
+                                    .id
+                                    .withPath { path: String -> "block/${path}_top" },
+                            )
+                        }
+                    }, Models.CUBE_COLUMN),
+                )
+            }
+        }
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
@@ -244,15 +265,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumContents.Tools.entries)
             addAll(RagiumContents.Armors.entries)
-            addAll(RagiumContents.Circuit.entries)
-            addAll(RagiumContents.Misc.entries)
+            addAll(RagiumContents.Circuits.entries)
             addAll(RagiumContents.Foods.entries)
+            addAll(RagiumContents.Misc.entries)
 
+            remove(RagiumContents.Foods.CHOCOLATE_APPLE)
             remove(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             remove(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)
             remove(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             remove(RagiumContents.Misc.SOLAR_PANEL)
-            remove(RagiumContents.Foods.CHOCOLATE_APPLE)
         }.map(ItemConvertible::asItem).forEach(::register)
 
         registerLayered(

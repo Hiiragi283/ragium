@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block
 
 import com.google.common.collect.Table
-import hiiragi283.ragium.api.util.buildTable
+import hiiragi283.ragium.api.extension.buildTable
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext

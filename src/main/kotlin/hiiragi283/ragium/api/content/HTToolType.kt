@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.content
 
-import hiiragi283.ragium.api.util.createAttributeComponent
+import hiiragi283.ragium.api.extension.createAttributeComponent
 import net.minecraft.item.*
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey

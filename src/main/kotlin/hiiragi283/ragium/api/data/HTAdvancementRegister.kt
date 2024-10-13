@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.data
 
 import com.google.common.collect.Table
+import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.hashTableOf
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.util.forEach
-import hiiragi283.ragium.api.util.hashTableOf
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementDisplay

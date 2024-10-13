@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.util.blockEntityType
+import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.common.block.entity.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries

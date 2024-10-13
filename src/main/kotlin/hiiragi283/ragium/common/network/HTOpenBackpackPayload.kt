@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.network
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.util.createCodec
+import hiiragi283.ragium.api.extension.codecOf
+import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.common.init.RagiumNetworks
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.CustomPayload
 import net.minecraft.util.StringIdentifiable
 
@@ -18,10 +18,13 @@ enum class HTOpenBackpackPayload :
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTOpenBackpackPayload> = HTOpenBackpackPayload.entries.createCodec()
+        val CODEC: Codec<HTOpenBackpackPayload> = codecOf(::fromString)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTOpenBackpackPayload> = PacketCodecs.registryCodec(CODEC)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTOpenBackpackPayload> = packetCodecOf(::fromString)
+
+        @JvmStatic
+        fun fromString(name: String): HTOpenBackpackPayload = entries.first { it.asString() == name }
     }
 
     override fun getId(): CustomPayload.Id<out CustomPayload> = RagiumNetworks.OPEN_BACKPACK

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.util.blockSettings
+import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.entity.HTAlchemicalInfuserBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks

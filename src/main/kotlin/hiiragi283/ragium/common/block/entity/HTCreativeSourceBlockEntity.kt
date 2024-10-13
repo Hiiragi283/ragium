@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.util.useTransaction
+import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.common.init.RagiumApiLookupInit
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction

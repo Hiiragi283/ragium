@@ -83,8 +83,8 @@ object HTMachineProvider : IBlockComponentProvider, IServerDataProvider<BlockAcc
             accessor.writeData(TYPE, machine.machineType)
             accessor.writeData(TIER, machine.tier)
             accessor.writeData(INVENTORY, machine.parent)
-            accessor.writeData(TICK, machine.ticks)
-            accessor.writeData(MAX_TICK, machine.tickRate)
+            accessor.writeData(TICK, machine.propertyDelegate.get(0))
+            accessor.writeData(MAX_TICK, machine.propertyDelegate.get(1))
             if (machine is HTMultiblockController) {
                 accessor.writeData(PREVIEW, machine.showPreview)
             }

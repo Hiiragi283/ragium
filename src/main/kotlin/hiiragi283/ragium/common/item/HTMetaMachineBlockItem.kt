@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.machineTierOrNull
+import hiiragi283.ragium.api.extension.machineTypeOrNull
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.util.itemSettings
-import hiiragi283.ragium.api.util.machineTierOrNull
-import hiiragi283.ragium.api.util.machineTypeOrNull
 import hiiragi283.ragium.common.block.HTMetaMachineBlock
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack

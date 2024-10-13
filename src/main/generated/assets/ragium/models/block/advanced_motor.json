@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ragium:block/ragi_alloy_coil_top",
+    "side": "ragium:block/motor"
+  }
+}

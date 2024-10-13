@@ -1,13 +1,14 @@
 package hiiragi283.ragium.client.model
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.extension.getOrDefault
+import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.extension.machineType
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.util.getMachineEntity
-import hiiragi283.ragium.api.util.getOrDefault
-import hiiragi283.ragium.api.util.machineTier
-import hiiragi283.ragium.api.util.machineType
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.fabricmc.fabric.api.renderer.v1.model.ModelHelper
@@ -32,6 +33,9 @@ import java.util.function.Function
 import java.util.function.Supplier
 
 data object HTMachineModel : UnbakedModel, BakedModel {
+    @JvmField
+    val MODEL_ID: Identifier = RagiumAPI.id("block/dynamic_machine")
+
     @JvmStatic
     private lateinit var frontSprite: Sprite
 

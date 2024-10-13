@@ -3,10 +3,10 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTModularToolComponent
 import hiiragi283.ragium.api.content.HTContentRegister
+import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
-import hiiragi283.ragium.api.util.blockSettings
-import hiiragi283.ragium.api.util.itemSettings
-import hiiragi283.ragium.api.util.tier
 import hiiragi283.ragium.common.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
+import net.minecraft.component.type.FoodComponent
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
@@ -101,15 +102,20 @@ object RagiumCommon : ModInitializer, HTContentRegister {
             registerBlock(coil, block)
             registerBlockItem(block, itemSettings())
         }
-        RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
+        RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+            val block = PillarBlock(blockSettings(Blocks.IRON_BLOCK))
+            registerBlock(motor, block)
+            registerBlockItem(block, itemSettings())
+        }
+        RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
             registerItem(circuit, Item(itemSettings()))
         }
 
-        RagiumContents.Misc.entries.forEach { ingredient: RagiumContents.Misc ->
-            registerItem(ingredient, ingredient.createItem())
-        }
         RagiumContents.Foods.entries.forEach { food: RagiumContents.Foods ->
             registerItem(food, Item(itemSettings().food(food.food())))
+        }
+        RagiumContents.Misc.entries.forEach { ingredient: RagiumContents.Misc ->
+            registerItem(ingredient, ingredient.createItem())
         }
 
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
@@ -139,7 +145,18 @@ object RagiumCommon : ModInitializer, HTContentRegister {
         registerBlockItem(RagiumBlocks.OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
         registerBlockItem(RagiumBlocks.SPONGE_CAKE)
-        registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
+        registerBlockItem(
+            RagiumBlocks.SWEET_BERRIES_CAKE,
+            itemSettings()
+                .food(
+                    FoodComponent
+                        .Builder()
+                        .nutrition(2)
+                        .saturationModifier(0.1f)
+                        .build(),
+                ).maxDamage(7)
+                .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
+        )
 
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)

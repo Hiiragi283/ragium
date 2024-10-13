@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.util.dropStackAt
-import hiiragi283.ragium.api.util.itemSettings
+import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity

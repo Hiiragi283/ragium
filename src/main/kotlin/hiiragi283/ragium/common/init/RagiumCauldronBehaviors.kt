@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.util.dropStackAt
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.BlockState
 import net.minecraft.block.LeveledCauldronBlock

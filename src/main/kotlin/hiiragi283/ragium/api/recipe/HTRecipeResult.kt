@@ -3,8 +3,8 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.util.mapCast
-import hiiragi283.ragium.api.util.toList
+import hiiragi283.ragium.api.extension.mapCast
+import hiiragi283.ragium.api.extension.toList
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible

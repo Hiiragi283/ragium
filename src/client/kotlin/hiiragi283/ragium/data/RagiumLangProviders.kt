@@ -6,10 +6,10 @@ import hiiragi283.ragium.api.content.HTEntryDelegated
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
+import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.util.splitWith
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -87,8 +87,15 @@ object RagiumLangProviders {
             addAll(RagiumContents.Armors.entries)
             addAll(RagiumContents.Tools.entries)
         }.forEach { item: HTItemContent -> builder.add(item.value, item.getTranslation(type)) }
+        // motors
+        RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+            builder.add(
+                motor.value,
+                MotorFormatter.getTranslation(type, motor),
+            )
+        }
         // circuits
-        RagiumContents.Circuit.entries.forEach { circuit: RagiumContents.Circuit ->
+        RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
             builder.add(
                 circuit.asItem(),
                 CircuitFormatter.getTranslation(type, circuit),
@@ -103,8 +110,13 @@ object RagiumLangProviders {
         }
     }
 
+    private data object MotorFormatter : HTTranslationFormatter {
+        override val enPattern: String = "%s Motor"
+        override val jaPattern: String = "%sモーター"
+    }
+
     private data object CircuitFormatter : HTTranslationFormatter {
-        override val enPattern: String = "%s Circuit"
+        override val enPattern: String = "%s Circuits"
         override val jaPattern: String = "%s回路"
     }
 
@@ -153,19 +165,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Accessories.PISTON_BOOTS, "Piston Boots")
             builder.add(RagiumContents.Accessories.PARACHUTE, "Parachute")
 
-            builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "Alchemy Stuff")
-            builder.add(RagiumContents.Misc.BASALT_FIBER, "Basalt Fiber")
-            builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
-            builder.add(RagiumContents.Misc.FORGE_HAMMER, "Forge Hammer")
-            builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "Oblivion Crystal")
-            builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "Spawn Oblivion Cube")
-            builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-            builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "Ragi-Crystal")
-            builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
-            builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
-
             builder.add(RagiumContents.Foods.BEE_WAX, "Bee Wax")
             builder.add(RagiumContents.Foods.BUTTER, "Butter")
+            builder.add(RagiumContents.Foods.CANDY_APPLE, "Candy Apple")
+            builder.add(RagiumContents.Foods.CARAMEL, "Caramel")
             builder.add(RagiumContents.Foods.CHOCOLATE, "Chocolate")
             builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "Chocolate Apple")
             builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "Chocolate Bread")
@@ -173,6 +176,19 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Foods.DOUGH, "Dough")
             builder.add(RagiumContents.Foods.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumContents.Foods.PULP, "Pulp")
+
+            builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "Alchemy Stuff")
+            builder.add(RagiumContents.Misc.BASALT_FIBER, "Basalt Fiber")
+            builder.add(RagiumContents.Misc.DYNAMITE, "Dynamite")
+            builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
+            builder.add(RagiumContents.Misc.FORGE_HAMMER, "Forge Hammer")
+            builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "Heart of the Nether")
+            builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "Oblivion Crystal")
+            builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "Spawn Oblivion Cube")
+            builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+            builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "Ragi-Crystal")
+            builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
+            builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
 
             builder.add(RagiumFluids.PETROLEUM.bucketItem, "Petroleum Bucket")
             // Item Group
@@ -274,26 +290,30 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Accessories.PISTON_BOOTS, "ピストンブーツ")
             builder.add(RagiumContents.Accessories.PARACHUTE, "パラシュート")
 
+            builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
+            builder.add(RagiumContents.Foods.BUTTER, "バター")
+            builder.add(RagiumContents.Foods.CANDY_APPLE, "りんご飴")
+            builder.add(RagiumContents.Foods.CARAMEL, "キャラメル")
+            builder.add(RagiumContents.Foods.CHOCOLATE, "チョコレート")
+            builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "チョコレートリンゴ")
+            builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "チョコレートパン")
+            builder.add(RagiumContents.Foods.FLOUR, "小麦粉")
+            builder.add(RagiumContents.Foods.DOUGH, "生地")
+            builder.add(RagiumContents.Foods.MINCED_MEAT, "ひき肉")
+            builder.add(RagiumContents.Foods.PULP, "パルプ")
+
             builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "錬金の杖")
             builder.add(RagiumContents.Misc.BASALT_FIBER, "玄武岩繊維")
+            builder.add(RagiumContents.Misc.DYNAMITE, "ダイナマイト")
             builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "鍛造ハンマー")
+            builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "地獄の心臓")
             builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "忘却の結晶")
             builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "スポーン 忘却の箱")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "ラギクリスタリル")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "太陽光パネル")
-
-            builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
-            builder.add(RagiumContents.Foods.BUTTER, "バター")
-            builder.add(RagiumContents.Foods.CHOCOLATE, "チョコレート")
-            builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "チョコレートアップル")
-            builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "チョコレートパン")
-            builder.add(RagiumContents.Foods.FLOUR, "小麦粉")
-            builder.add(RagiumContents.Foods.DOUGH, "生地")
-            builder.add(RagiumContents.Foods.MINCED_MEAT, "ひき肉")
-            builder.add(RagiumContents.Foods.PULP, "パルプ")
 
             builder.add(RagiumFluids.PETROLEUM.bucketItem, "石油バケツ")
             // Item Group
