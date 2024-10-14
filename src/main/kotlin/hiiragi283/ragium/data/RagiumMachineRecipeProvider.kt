@@ -66,9 +66,16 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
             .addInput(ConventionalItemTags.COPPER_INGOTS)
-            .addInput(RagiumContents.Dusts.RAW_RAGINITE, 4)
+            .addInput(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
             .addOutput(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
+            .addInput(ConventionalItemTags.COPPER_INGOTS)
+            .addInput(RagiumContents.Dusts.RAGINITE)
+            .addOutput(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerSuffix(exporter, "_alt")
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
@@ -590,7 +597,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ItemTags.WOODEN_STAIRS to 4, RagiumContents.Foods.PULP to 6, suffix = "_from_stair")
         registerGrinder(exporter, ItemTags.WOODEN_TRAPDOORS to 1, RagiumContents.Foods.PULP to 3, suffix = "_from_trap_door")
         registerGrinder(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
-        registerGrinder(exporter, RagiumContents.Misc.RAGI_CRYSTAL to 1, RagiumContents.Dusts.RAGI_CRYSTAL to 1)
         registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumContents.Foods.MINCED_MEAT to 1)
 
         HTMachineRecipeJsonBuilder
@@ -672,7 +678,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun mixer(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.MIXER)
-            .addInput(RagiumContents.Dusts.RAW_RAGINITE, 4)
+            .addInput(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
             .addInput(RagiumContents.Fluids.WATER)
             .addOutput(RagiumContents.Dusts.RAGINITE, 4)
             .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)

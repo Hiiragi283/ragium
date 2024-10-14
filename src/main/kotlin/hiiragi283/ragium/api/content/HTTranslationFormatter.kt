@@ -10,17 +10,4 @@ interface HTTranslationFormatter {
         HTLangType.EN_US -> enPattern
         HTLangType.JA_JP -> jaPattern
     }.replace("%s", provider.getTranslation(type))
-
-    interface Holder : HTTranslationFormatter {
-        val provider: HTTranslationProvider
-    }
-
-    interface Material : Holder {
-        val material: RagiumMaterials
-
-        override val provider: HTTranslationProvider
-            get() = material
-
-        fun getTranslation(type: HTLangType): String = getTranslation(type, material)
-    }
 }

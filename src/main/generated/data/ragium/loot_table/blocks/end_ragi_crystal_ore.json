@@ -26,7 +26,7 @@
                   }
                 }
               ],
-              "name": "ragium:raginite_ore"
+              "name": "ragium:end_ragi_crystal_ore"
             },
             {
               "type": "minecraft:item",
@@ -49,7 +49,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "ragium:raw_crude_raginite"
+              "name": "ragium:ragi_crystal"
             }
           ]
         }

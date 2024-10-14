@@ -67,13 +67,18 @@ object RagiumCommon : ModInitializer, HTContentRegister {
 
         initBlockItems()
 
-        RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
+        /*RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
             val block = Block(blockSettings(Blocks.IRON_ORE))
             registerBlock(ore, block)
             registerBlockItem(block, itemSettings())
         }
         RagiumContents.DeepOres.entries.forEach { ore: RagiumContents.DeepOres ->
             val block = Block(blockSettings(Blocks.DEEPSLATE_IRON_ORE))
+            registerBlock(ore, block)
+            registerBlockItem(block, itemSettings())
+        }*/
+        RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores -> 
+            val block = Block(blockSettings(ore.baseStone))
             registerBlock(ore, block)
             registerBlockItem(block, itemSettings())
         }

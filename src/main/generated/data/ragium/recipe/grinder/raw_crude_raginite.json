@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "ingredient": {
+        "item": "ragium:raginite_ore"
+      }
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:raw_crude_raginite"
+    },
+    {
+      "item": "ragium:raw_crude_raginite"
+    },
+    {
+      "count": 2,
+      "item": "ragium:raginite_dust"
+    }
+  ]
+}

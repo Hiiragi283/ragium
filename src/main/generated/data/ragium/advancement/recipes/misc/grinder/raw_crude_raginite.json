@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:raw_raginite"
+            "items": "ragium:raginite_ore"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:grinder/raw_raginite_dust"
+        "recipe": "ragium:grinder/raw_crude_raginite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:grinder/raw_raginite_dust"
+      "ragium:grinder/raw_crude_raginite"
     ]
   }
 }

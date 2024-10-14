@@ -25,7 +25,7 @@ object RagiumPatchouliInit {
 
         HTCustomCraftingPage.register(
             RagiumAPI.id("raginite_dust"),
-            RagiumContents.Dusts.RAW_RAGINITE,
+            RagiumContents.Dusts.CRUDE_RAGINITE,
             Items.CAULDRON.defaultStack,
             RagiumContents.Dusts.RAGINITE
                 .asItem()

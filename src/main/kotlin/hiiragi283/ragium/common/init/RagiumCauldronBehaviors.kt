@@ -14,10 +14,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 object RagiumCauldronBehaviors {
-    @JvmField
-    val WASH_RAW_RAGINITE =
-        CauldronBehavior { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
-            if (stack.isOf(RagiumContents.Dusts.RAW_RAGINITE.asItem())) {
+    @JvmStatic
+    fun init() {
+        register(
+            CauldronBehavior.WATER_CAULDRON_BEHAVIOR,
+            RagiumContents.Dusts.CRUDE_RAGINITE
+        ) { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
+            if (stack.isOf(RagiumContents.Dusts.CRUDE_RAGINITE.asItem())) {
                 if (!world.isClient) {
                     val count: Int = stack.count
                     stack.count = -1
@@ -29,10 +32,6 @@ object RagiumCauldronBehaviors {
                 ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
             }
         }
-
-    @JvmStatic
-    fun init() {
-        register(CauldronBehavior.WATER_CAULDRON_BEHAVIOR, RagiumContents.Dusts.RAW_RAGINITE, WASH_RAW_RAGINITE)
     }
 
     @JvmStatic

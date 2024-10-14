@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:crude_raginite_dust"
+            "items": "ragium:raginite_dust"
           }
         ]
       },
@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:alloy_furnace/ragi_alloy_ingot"
+        "recipe": "ragium:alloy_furnace/ragi_alloy_ingot_alt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:alloy_furnace/ragi_alloy_ingot"
+      "ragium:alloy_furnace/ragi_alloy_ingot_alt"
     ]
   }
 }

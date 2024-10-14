@@ -1,9 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTEntryDelegated
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
@@ -17,6 +16,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
+import net.minecraft.block.Block
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
@@ -51,11 +51,11 @@ object RagiumLangProviders {
     private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
         // blocks
         buildList {
-            addAll(RagiumContents.getOres())
+            addAll(RagiumContents.Ores.entries)
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
-        }.forEach { block: HTBlockContent -> builder.add(block.value, block.getTranslation(type)) }
+        }.forEach { block: HTContent.Material<Block> -> builder.add(block.value, block.getTranslation(type)) }
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             val translatedName: String = element.getTranslation(type)
@@ -79,14 +79,14 @@ object RagiumLangProviders {
             }
         }
         // items
-        buildList<HTItemContent> {
+        buildList {
             addAll(RagiumContents.Dusts.entries)
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumContents.Armors.entries)
             addAll(RagiumContents.Tools.entries)
-        }.forEach { item: HTItemContent -> builder.add(item.value, item.getTranslation(type)) }
+        }.forEach { item: HTContent.Material<Item> -> builder.add(item.value, item.getTranslation(type)) }
         // motors
         RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
             builder.add(

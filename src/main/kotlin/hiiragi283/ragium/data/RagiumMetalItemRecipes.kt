@@ -50,11 +50,24 @@ object RagiumMetalItemRecipes {
             )
         }
 
+        HTMetalItemRecipeRegistry.register("crude_raginite") {
+            set(HTMetalItemRecipeRegistry.DUST, BothEither.left(RagiumContents.Dusts.CRUDE_RAGINITE))
+            set(HTMetalItemRecipeRegistry.ORE, BothEither.left(RagiumContents.Ores.CRUDE_RAGINITE))
+            set(HTMetalItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.RAGINITE)
+            set(HTMetalItemRecipeRegistry.RAW, BothEither.left(RagiumContents.RawMaterials.CRUDE_RAGINITE))
+        }
+
         HTMetalItemRecipeRegistry.register("raginite") {
-            set(HTMetalItemRecipeRegistry.DUST, BothEither.left(RagiumContents.Dusts.RAW_RAGINITE))
+            set(HTMetalItemRecipeRegistry.DUST, BothEither.left(RagiumContents.Dusts.RAGINITE))
             set(HTMetalItemRecipeRegistry.ORE, BothEither.right(RagiumItemTags.RAGINITE_ORES))
             set(HTMetalItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.RAGINITE)
             set(HTMetalItemRecipeRegistry.RAW, BothEither.left(RagiumContents.RawMaterials.RAGINITE))
+        }
+
+        HTMetalItemRecipeRegistry.register("ragi_crystal") {
+            set(HTMetalItemRecipeRegistry.DUST, BothEither.left(RagiumContents.Dusts.RAGI_CRYSTAL))
+            set(HTMetalItemRecipeRegistry.ORE, BothEither.left(RagiumContents.Ores.END_RAGI_CRYSTAL))
+            set(HTMetalItemRecipeRegistry.RAW, BothEither.left(RagiumContents.Misc.RAGI_CRYSTAL))
         }
 
         HTMetalItemRecipeRegistry.register("ragi_alloy") {

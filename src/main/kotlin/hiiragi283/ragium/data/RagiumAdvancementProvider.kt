@@ -76,7 +76,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier1/root",
-                RagiumContents.Ores.RAGINITE,
+                RagiumContents.Ores.CRUDE_RAGINITE,
                 Identifier.of("textures/block/bricks.png"),
             ) {
                 hasItems(RagiumContents.RawMaterials.RAGINITE)

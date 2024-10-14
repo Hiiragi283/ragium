@@ -155,14 +155,15 @@ object HTMetalItemRecipeRegistry {
     private fun oreToRawRecipe(exporter: RecipeExporter, properties: HTPropertyHolder) {
         val rawMaterial: ItemConvertible = properties[RAW]?.getLeft() ?: return
         val ore: BothEither<ItemConvertible, TagKey<Item>> = properties[ORE] ?: return
-        val subProducts: ItemConvertible = properties[ORE_SUB_PRODUCTS] ?: rawMaterial
         // Grinder Recipe
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .addInput(ore)
             .addOutput(rawMaterial)
             .addOutput(rawMaterial)
-            .addOutput(subProducts, 2)
+            .apply {
+                properties[ORE_SUB_PRODUCTS]?.let { addOutput(it, 2) }
+            }
             .offerSuffix(exporter)
     }
 

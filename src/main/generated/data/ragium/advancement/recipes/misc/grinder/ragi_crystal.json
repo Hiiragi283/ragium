@@ -1,17 +1,11 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": false
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_item": {
+    "has_input0": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:crude_raginite_dust"
+            "items": "ragium:end_ragi_crystal_ore"
           }
         ]
       },
@@ -19,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/ragi_alloy_compound_1"
+        "recipe": "ragium:grinder/ragi_crystal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -27,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_the_item"
+      "has_input0"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/ragi_alloy_compound_1"
+      "ragium:grinder/ragi_crystal"
     ]
   }
 }

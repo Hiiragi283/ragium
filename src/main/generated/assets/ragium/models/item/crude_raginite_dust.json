@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/raw_raginite_dust"
+    "layer0": "ragium:item/crude_raginite_dust"
   }
 }

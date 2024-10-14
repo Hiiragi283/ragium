@@ -5,11 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.Block
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ArmorMaterial
-import net.minecraft.item.ArmorMaterials
-import net.minecraft.item.ToolMaterial
-import net.minecraft.item.ToolMaterials
+import net.minecraft.item.*
 import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -27,7 +23,7 @@ enum class RagiumMaterials(
     val tool: ToolMaterial? = null,
 ) : HTTranslationProvider {
     // tier1
-    RAW_RAGINITE(HTMachineTier.PRIMITIVE, "Raw Raginite", "未加工のラギナイト"),
+    CRUDE_RAGINITE(HTMachineTier.PRIMITIVE, "Crude Raginite", "粗製ラギナイト"),
     RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
     COPPER(HTMachineTier.PRIMITIVE, "Copper", "銅"),
     IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄", ArmorMaterials.IRON, ToolMaterials.IRON),
@@ -55,10 +51,6 @@ enum class RagiumMaterials(
 
     ;
 
-    fun getOre(): RagiumContents.Ores? = RagiumContents.Ores.entries.firstOrNull { it.material == this }
-
-    fun getDeepOre(): RagiumContents.DeepOres? = RagiumContents.DeepOres.entries.firstOrNull { it.material == this }
-
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }
 
     fun getHull(): RagiumContents.Hulls? = RagiumContents.Hulls.entries.firstOrNull { it.material == this }
@@ -69,6 +61,12 @@ enum class RagiumMaterials(
 
     fun getRawMaterial(): RagiumContents.RawMaterials? = RagiumContents.RawMaterials.entries.firstOrNull { it.material == this }
 
+    //    Holder    //
+    
+    interface Holder {
+        val material: RagiumMaterials
+    }
+    
     //    Armor    //
 
     object Armor {

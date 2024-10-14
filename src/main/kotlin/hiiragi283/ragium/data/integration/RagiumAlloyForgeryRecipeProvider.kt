@@ -19,8 +19,8 @@ class RagiumAlloyForgeryRecipeProvider(output: FabricDataOutput, registriesFutur
         AlloyForgeryRecipeBuilder
             .create(RagiumContents.Ingots.RAGI_ALLOY)
             .input(ConventionalItemTags.COPPER_INGOTS, 1)
-            .input(RagiumContents.Dusts.RAW_RAGINITE, 4)
-            .criterion("has_the_input", RecipeProvider.conditionsFromItem(RagiumContents.Dusts.RAW_RAGINITE))
+            .input(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
+            .criterion("has_the_input", RecipeProvider.conditionsFromItem(RagiumContents.Dusts.CRUDE_RAGINITE))
             .offerTo(exporter, RagiumAPI.id("alloy_forgery/ragi_alloy_ingot"))
         // ragi-steel
         AlloyForgeryRecipeBuilder

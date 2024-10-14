@@ -3,17 +3,17 @@
   "inputs": [
     {
       "ingredient": {
-        "item": "ragium:raw_raginite"
+        "item": "ragium:end_ragi_crystal_ore"
       }
     }
   ],
   "machine_type": "ragium:grinder",
   "outputs": [
     {
-      "item": "ragium:raw_raginite_dust"
+      "item": "ragium:ragi_crystal"
     },
     {
-      "item": "ragium:raw_raginite_dust"
+      "item": "ragium:ragi_crystal"
     }
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/layered",
+  "textures": {
+    "layer0": "minecraft:block/end_stone",
+    "layer1": "ragium:block/end_ragi_crystal_ore"
+  }
+}

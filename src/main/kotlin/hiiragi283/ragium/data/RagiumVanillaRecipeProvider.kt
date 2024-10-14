@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
@@ -67,7 +66,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapelessRecipeJsonBuilder
             .create(ItemModBook.forBook(RagiumAPI.id("ragi_wiki")))
             .input(Items.BOOK)
-            .input(RagiumContents.RawMaterials.RAGINITE)
+            .input(RagiumContents.RawMaterials.CRUDE_RAGINITE)
             .input(ConventionalItemTags.IRON_INGOTS)
             .offerTo(exporter.conditions(ResourceConditions.allModsLoaded("patchouli")))
     }
@@ -279,9 +278,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " A ",
                 "ABA",
                 " A ",
-            ).input('A', RagiumContents.Dusts.RAW_RAGINITE)
+            ).input('A', RagiumContents.Dusts.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
-            .unlockedBy(RagiumContents.Dusts.RAW_RAGINITE)
+            .unlockedBy(RagiumContents.Dusts.CRUDE_RAGINITE)
             .offerSuffix(exporter.hardMode(false), "_1")
 
         HTShapedRecipeJsonBuilder
@@ -647,7 +646,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         }
     }
 
-    private fun getMachineMaterial(tier: HTMachineTier, isHard: Boolean): HTItemContent = when (isHard) {
+    private fun getMachineMaterial(tier: HTMachineTier, isHard: Boolean): ItemConvertible = when (isHard) {
         true -> tier.getPlate()
         false -> tier.getIngot()
     }

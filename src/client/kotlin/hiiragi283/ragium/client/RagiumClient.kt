@@ -2,7 +2,6 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -95,9 +94,9 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
         registerCutout(RagiumBlocks.ITEM_DISPLAY)
 
-        RagiumContents
-            .getOres()
-            .map(HTBlockContent::value)
+        RagiumContents.Ores
+            .entries
+            .map(RagiumContents.Ores::value)
             .forEach(::registerCutoutMipped)
 
         RagiumContents.Element.entries

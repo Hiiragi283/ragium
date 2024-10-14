@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
@@ -78,17 +77,14 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         }
 
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-            addDrop(ore.value) { _: Block -> dropOre(ore, Items.COBBLESTONE) }
-        }
-        RagiumContents.DeepOres.entries.forEach { deepOre: RagiumContents.DeepOres ->
-            addDrop(deepOre.value) { _: Block -> dropOre(deepOre, Items.COBBLED_DEEPSLATE) }
+            addDrop(ore.value) { _: Block -> dropOre(ore) }
         }
 
-        buildList<HTBlockContent> {
+        buildList {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
-        }.map(HTBlockContent::value).forEach(::addDrop)
+        }.map { it.value }.forEach(::addDrop)
 
         // HTMachineBlockRegistry.forEachBlock(::addDrop)
 
@@ -108,12 +104,12 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         }
     }
 
-    private fun dropOre(ore: HTBlockContent, base: ItemConvertible): LootTable.Builder = dropsWithSilkTouch(
+    private fun dropOre(ore: RagiumContents.Ores): LootTable.Builder = dropsWithSilkTouch(
         ore.value,
         applyExplosionDecay(
             ore,
             ItemEntry
-                .builder(ore.material.getRawMaterial() ?: base)
+                .builder(ore.dropMineral)
                 .applyDropRange(2, 3)
                 .applyFortune(),
         ),

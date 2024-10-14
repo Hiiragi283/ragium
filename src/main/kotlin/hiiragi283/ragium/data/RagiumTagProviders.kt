@@ -1,8 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.component.HTModularToolComponent
-import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.tags.RagiumBlockTags
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
@@ -39,11 +38,7 @@ object RagiumTagProviders {
             fun add(tagKey: TagKey<Block>, block: Block) {
                 getOrCreateTagBuilder(tagKey).add(block)
             }
-
-            fun add(tagKey: TagKey<Block>, block: HTBlockContent) {
-                add(tagKey, block.value)
-            }
-
+            
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OBLIVION_CLUSTER)
@@ -61,13 +56,11 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_MACHINE)
 
             buildList {
-                addAll(RagiumContents.getOres())
+                addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
-            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
-            // ragium
-            RagiumContents.Coils.entries.forEach { add(RagiumBlockTags.COILS, it) }
+            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
         }
     }
 
@@ -110,16 +103,7 @@ object RagiumTagProviders {
                 getOrCreateTagBuilder(tagKey).add(item.asItem())
             }
 
-            // vanilla
-            RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
-                add(tool.toolType.toolTag, tool)
-            }
-            RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
-                add(armor.armorType.armorTag, armor)
-            }
             // conventional
-            add(ConventionalItemTags.GEMS, RagiumContents.Misc.RAGI_CRYSTAL)
-            add(ConventionalItemTags.GEMS, RagiumContents.Misc.OBLIVION_CRYSTAL)
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
@@ -135,8 +119,8 @@ object RagiumTagProviders {
             add(RagiumItemTags.NICKEL_BLOCKS, RagiumContents.StorageBlocks.NICKEL)
             add(RagiumItemTags.NICKEL_DUSTS, RagiumContents.Dusts.NICKEL)
             add(RagiumItemTags.NICKEL_INGOTS, RagiumContents.Ingots.NICKEL)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.DeepOres.RAGINITE)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.RAGINITE)
+            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.DEEP_RAGINITE)
+            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.NETHER_RAGINITE)
             add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)
             add(RagiumItemTags.SILVER_BLOCKS, RagiumContents.StorageBlocks.SILVER)
             add(RagiumItemTags.SILVER_DUSTS, RagiumContents.Dusts.SILVER)
@@ -147,13 +131,31 @@ object RagiumTagProviders {
             add(RagiumItemTags.STEEL_PLATES, RagiumContents.Plates.STEEL)
             add(RagiumItemTags.SULFUR_DUSTS, RagiumContents.Dusts.SULFUR)
 
-            RagiumContents.getOres().forEach { add(ConventionalItemTags.ORES, it) }
-            RagiumContents.StorageBlocks.entries.forEach { add(ConventionalItemTags.STORAGE_BLOCKS, it) }
-            RagiumContents.Dusts.entries.forEach { add(ConventionalItemTags.DUSTS, it) }
+            buildList {
+                addAll(RagiumContents.Ores.entries)
+                addAll(RagiumContents.StorageBlocks.entries)
+
+                addAll(RagiumContents.Dusts.entries)
+                addAll(RagiumContents.Ingots.entries)
+                addAll(RagiumContents.Plates.entries)
+                addAll(RagiumContents.RawMaterials.entries)
+
+                addAll(RagiumContents.Hulls.entries)
+                addAll(RagiumContents.Coils.entries)
+                addAll(RagiumContents.Motors.entries)
+                addAll(RagiumContents.Circuits.entries)
+
+                addAll(RagiumContents.Armors.entries)
+                addAll(RagiumContents.Tools.entries)
+
+                addAll(RagiumContents.Foods.entries)
+                addAll(RagiumContents.Misc.entries)
+                addAll(RagiumContents.Fluids.entries)
+            }.forEach { content: HTContent<out ItemConvertible> ->
+                content.tagKey?.let { add(it, content) }
+            }
+            
             RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
-            RagiumContents.Ingots.entries.forEach { add(ConventionalItemTags.INGOTS, it) }
-            RagiumContents.Plates.entries.forEach { add(RagiumItemTags.PLATES, it) }
-            RagiumContents.RawMaterials.entries.forEach { add(ConventionalItemTags.RAW_MATERIALS, it) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
             add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)
@@ -171,10 +173,6 @@ object RagiumTagProviders {
             buildList {
                 addAll(HTModularToolComponent.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
-
-            RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
-                add(RagiumItemTags.FLUID_CUBES, fluid)
-            }
         }
     }
 }

@@ -145,7 +145,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
         // ores
-        RagiumContents.Ores.entries
+        RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
+            register(ore.value) { block: Block ->
+                generator.registerSingleton(
+                    block,
+                    RagiumModels.createLayered(TextureMap.getId(ore.baseStone), TextureMap.getId(block))
+                )
+            }
+        }
+        /*RagiumContents.Ores.entries
             .forEach {
                 register(it.value) { block: Block ->
                     generator.registerSingleton(
@@ -165,7 +173,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         ),
                     )
                 }
-            }
+            }*/
         // storage blocks
         RagiumContents.StorageBlocks.entries
             .map(RagiumContents.StorageBlocks::value)
