@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTDynamiteComponent
 import hiiragi283.ragium.api.component.HTModularToolComponent
+import hiiragi283.ragium.api.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -29,6 +30,10 @@ object RagiumComponentTypes {
     @JvmField
     val MODULAR_TOOL: ComponentType<HTModularToolComponent> =
         register("modular_tool", HTModularToolComponent.COMPONENT_TYPE)
+
+    @JvmField
+    val REMOVER_DYNAMITE: ComponentType<HTRemoverDynamiteBehaviors> =
+        register("remover_dynamite", HTRemoverDynamiteBehaviors.CODEC, HTRemoverDynamiteBehaviors.PACKET_CODEC)
 
     //    Machine    //
 

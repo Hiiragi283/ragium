@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
-import com.google.common.collect.ImmutableTable
-import com.google.common.collect.Table
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.loader.api.FabricLoader
@@ -16,6 +16,11 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.*
+import net.minecraft.recipe.Recipe
+import net.minecraft.recipe.RecipeEntry
+import net.minecraft.recipe.RecipeManager
+import net.minecraft.recipe.RecipeType
+import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.registry.*
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.screen.GenericContainerScreenHandler
@@ -27,6 +32,7 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
@@ -42,6 +48,18 @@ fun <T : Any> Either<out T, out T>.mapCast(): T = map({ it }, { it })
 //    BlockPos    //
 
 fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direction.entries.map(this::offset).filter(filter)
+
+//    ChunkPos    //
+
+fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
+    (startX..endX).forEach { x: Int ->
+        (startZ..endZ).forEach { z: Int ->
+            yRange.forEach { y: Int ->
+                action(BlockPos(x, y, z))
+            }
+        }
+    }
+}
 
 //    FabricLoader    //
 
@@ -77,23 +95,19 @@ fun openEnderChest(world: World, player: PlayerEntity) {
     )
 }
 
+//    Recipe    //
+
+fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
+    type: RecipeType<U>,
+    predicate: (RecipeEntry<U>) -> Boolean,
+): RecipeEntry<U>? = listAllOfType(type).firstOrNull(predicate)
+
 //    Registry    //
 
 @JvmField
 val STATIC_LOOKUP: RegistryWrapper.WrapperLookup = RegistryWrapper.WrapperLookup.of(
     Registries.REGISTRIES.stream().map(Registry<*>::getReadOnlyWrapper),
 )
-
-fun <T : Any> createEntry(registry: Registry<T>, key: RegistryKey<T>): RegistryEntry.Reference<T> {
-    registry.entryOf(key)
-    return RegistryEntry.Reference.standAlone(registry.entryOwner, key)
-}
-
-fun <T : Any> createEntry(registry: Registry<T>, id: Identifier): RegistryEntry.Reference<T> =
-    createEntry(registry, RegistryKey.of(registry.key, id))
-
-fun <T : Any> createEntry(registry: Registry<T>, namespace: String, path: String): RegistryEntry.Reference<T> =
-    createEntry(registry, Identifier.of(namespace, path))
 
 //    ScreenHandler    //
 
@@ -103,13 +117,15 @@ fun ScreenHandlerContext.machineInventory(size: Int): Inventory = get { world: W
 
 //    Table    //
 
-fun <R : Any, C : Any, V : Any> hashTableOf(): Table<R, C, V> = HashBasedTable.create()
+fun <R : Any, C : Any, V : Any> tableOf(): HTTable<R, C, V> = HTWrappedTable(HashBasedTable.create())
 
-fun <R : Any, C : Any, V : Any> buildTable(builderAction: ImmutableTable.Builder<R, C, V>.() -> Unit): ImmutableTable<R, C, V> =
-    ImmutableTable.builder<R, C, V>().apply(builderAction).build()
+fun <R : Any, C : Any, V : Any> mutableTableOf(): HTWrappedTable.Mutable<R, C, V> = HTWrappedTable.Mutable(HashBasedTable.create())
 
-fun <R : Any, C : Any, V : Any> Table<R, C, V>.forEach(action: (R, C, V) -> Unit) {
-    cellSet().forEach { action(it.rowKey, it.columnKey, it.value) }
+fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, V>.() -> Unit): HTTable<R, C, V> =
+    HTWrappedTable.Mutable(HashBasedTable.create<R, C, V>()).apply(builderAction)
+
+fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
+    entries.forEach(action)
 }
 
 //    Transaction    //

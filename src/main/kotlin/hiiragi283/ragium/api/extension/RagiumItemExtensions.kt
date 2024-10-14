@@ -39,9 +39,6 @@ fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): B
     ?.let { it > 0 }
     ?: false
 
-@Suppress("UNCHECKED_CAST")
-fun <T : Any> ItemStack.castItem(): T? = item as? T
-
 //    ItemUsageContext    //
 
 val ItemUsageContext.blockState: BlockState

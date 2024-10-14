@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.castBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -65,7 +64,7 @@ class HTSpongeBlock(settings: Settings, val replaced: () -> BlockState, val pred
                             when {
                                 // block is FluidDrainable && block.tryDrainFluid(null, world, currentPos, state).isEmpty -> true
                                 else -> {
-                                    state.castBlock<FluidBlock>()?.let {
+                                    (state.block as? FluidBlock)?.let {
                                         dropStacks(
                                             state,
                                             world,

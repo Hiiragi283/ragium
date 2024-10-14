@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.api.recipe.WeightedIngredient
+import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.ComponentHolder
@@ -98,21 +99,13 @@ class HTMachineRecipe(
 
     override fun createIcon(): ItemStack = type.createItemStack(minTier)
 
-    override fun getSerializer(): RecipeSerializer<*> = Serializer
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MACHINE
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MACHINE
 
     //    ComponentHolder    //
 
     override fun getComponents(): ComponentMap = componentMap
-
-    //    Serializer    //
-
-    data object Serializer : RecipeSerializer<HTMachineRecipe> {
-        override fun codec(): MapCodec<HTMachineRecipe> = CODEC
-
-        override fun packetCodec(): PacketCodec<RegistryByteBuf, HTMachineRecipe> = PACKET_CODEC
-    }
 
     //    Input    //
 

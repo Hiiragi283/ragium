@@ -124,13 +124,10 @@ data class HTModularToolComponent(val tier: HTMachineTier, private val behavior:
 
         companion object {
             @JvmField
-            val CODEC: Codec<Behavior> = codecOf(::fromString)
+            val CODEC: Codec<Behavior> = codecOf(entries)
 
             @JvmField
-            val PACKET_CODEC: PacketCodec<RegistryByteBuf, Behavior> = packetCodecOf(::fromString)
-
-            @JvmStatic
-            fun fromString(name: String): Behavior = entries.first { it.asString() == name }
+            val PACKET_CODEC: PacketCodec<RegistryByteBuf, Behavior> = packetCodecOf(entries)
         }
 
         abstract fun useOnBlock(context: ItemUsageContext): ActionResult

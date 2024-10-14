@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.WeightedIngredient
+import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -59,11 +60,5 @@ class HTTransformRecipe(val target: WeightedIngredient, val upgrades: List<Weigh
         return stack1
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = Serializer
-
-    data object Serializer : RecipeSerializer<HTTransformRecipe> {
-        override fun codec(): MapCodec<HTTransformRecipe> = CODEC
-
-        override fun packetCodec(): PacketCodec<RegistryByteBuf, HTTransformRecipe> = PACKET_CODEC
-    }
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.TRANSFORM
 }

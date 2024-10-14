@@ -121,7 +121,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     //    Entities    //
 
     private fun registerEntities() {
-        EntityRendererRegistry.register(RagiumEntityTypes.BEDROCK_DYNAMITE, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(RagiumEntityTypes.REMOVER_DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.OBLIVION_CUBE, ::HTOblivionCubeEntityRenderer)
 

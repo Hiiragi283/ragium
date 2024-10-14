@@ -38,7 +38,7 @@ object RagiumTagProviders {
             fun add(tagKey: TagKey<Block>, block: Block) {
                 getOrCreateTagBuilder(tagKey).add(block)
             }
-            
+
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OBLIVION_CLUSTER)
@@ -154,7 +154,7 @@ object RagiumTagProviders {
             }.forEach { content: HTContent<out ItemConvertible> ->
                 content.tagKey?.let { add(it, content) }
             }
-            
+
             RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)

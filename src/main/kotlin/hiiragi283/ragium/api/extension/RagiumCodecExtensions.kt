@@ -44,14 +44,24 @@ fun <T : StringIdentifiable> Iterable<T>.matchName(name: String): T = first { it
 
 fun <T : StringIdentifiable> Iterable<T>.matchNameOrNull(name: String): T? = firstOrNull { it.asString() == name }*/
 
-fun <T : StringIdentifiable> codecOf(from: (String) -> T): Codec<T> = Codec.STRING.xmap(from, StringIdentifiable::asString)
+// fun <T : StringIdentifiable> codecOf(from: (String) -> T): Codec<T> = Codec.STRING.xmap(from, StringIdentifiable::asString)
+
+fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.xmap(
+    { name: String -> entries.firstOrNull { it.asString() == name } },
+    StringIdentifiable::asString,
+)
 
 //    PacketCodec    //
 
 fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> = collect(PacketCodecs.toList())
 
-fun <T : StringIdentifiable> packetCodecOf(from: (String) -> T): PacketCodec<RegistryByteBuf, T> =
-    PacketCodec.tuple(PacketCodecs.STRING, StringIdentifiable::asString, from)
+// fun <T : StringIdentifiable> packetCodecOf(from: (String) -> T): PacketCodec<RegistryByteBuf, T> =
+//     PacketCodec.tuple(PacketCodecs.STRING, StringIdentifiable::asString, from)
+
+fun <T : StringIdentifiable> packetCodecOf(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
+    PacketCodecs.STRING,
+    StringIdentifiable::asString,
+) { name: String -> entries.firstOrNull { it.asString() == name } }
 
 //    PersistentState    //
 

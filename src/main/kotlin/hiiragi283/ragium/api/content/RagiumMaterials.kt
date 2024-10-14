@@ -62,11 +62,11 @@ enum class RagiumMaterials(
     fun getRawMaterial(): RagiumContents.RawMaterials? = RagiumContents.RawMaterials.entries.firstOrNull { it.material == this }
 
     //    Holder    //
-    
+
     interface Holder {
         val material: RagiumMaterials
     }
-    
+
     //    Armor    //
 
     object Armor {

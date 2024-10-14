@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.WeightedIngredient
+import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.RecipeSerializer
@@ -42,11 +43,5 @@ class HTInfusionRecipe(override val inputs: List<WeightedIngredient>, override v
         getInput(3),
     )
 
-    override fun getSerializer(): RecipeSerializer<*> = Serializer
-
-    data object Serializer : RecipeSerializer<HTInfusionRecipe> {
-        override fun codec(): MapCodec<HTInfusionRecipe> = CODEC
-
-        override fun packetCodec(): PacketCodec<RegistryByteBuf, HTInfusionRecipe> = PACKET_CODEC
-    }
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.INFUSION
 }

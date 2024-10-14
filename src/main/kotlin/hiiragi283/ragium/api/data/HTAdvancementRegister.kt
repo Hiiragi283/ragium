@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.data
 
-import com.google.common.collect.Table
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.hashTableOf
+import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.HTTable
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementDisplay
@@ -27,8 +27,8 @@ class HTAdvancementRegister(private val modId: String, private val consumer: Con
     }
 
     private val entryCache: MutableMap<Identifier, AdvancementEntry> = mutableMapOf()
-    private val titleCache: Table<String, HTLangType, String> = hashTableOf()
-    private val descriptionCache: Table<String, HTLangType, String> = hashTableOf()
+    private val titleCache: HTTable.Mutable<String, HTLangType, String> = mutableTableOf()
+    private val descriptionCache: HTTable.Mutable<String, HTLangType, String> = mutableTableOf()
 
     fun createRoot(
         name: String,
@@ -112,10 +112,10 @@ class HTAdvancementRegister(private val modId: String, private val consumer: Con
     //    Data Gen    //
 
     fun generateLang(type: HTLangType, builder: TranslationBuilder) {
-        titleCache.forEach { key: String, type1: HTLangType, value: String ->
+        titleCache.forEach { (key: String, type1: HTLangType, value: String) ->
             if (type == type1) builder.add(key, value)
         }
-        descriptionCache.forEach { key: String, type1: HTLangType, value: String ->
+        descriptionCache.forEach { (key: String, type1: HTLangType, value: String) ->
             if (type == type1) builder.add(key, value)
         }
     }

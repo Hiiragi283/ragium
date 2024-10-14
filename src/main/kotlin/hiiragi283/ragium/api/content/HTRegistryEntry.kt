@@ -29,6 +29,12 @@ class HTRegistryEntry<T : Any>(registry: Registry<T>, key: RegistryKey<T>) : Reg
 
     val id: Identifier = key.value
 
+    operator fun component1(): Identifier = id
+
+    operator fun component2(): T = value()
+
+    //    RegistryEntry    //
+
     private val supplier: Supplier<RegistryEntry.Reference<T>> = Suppliers.memoize { registry.entryOf(key) }
 
     override fun value(): T = supplier.get().value()

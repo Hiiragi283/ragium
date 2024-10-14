@@ -163,8 +163,7 @@ object HTMetalItemRecipeRegistry {
             .addOutput(rawMaterial)
             .apply {
                 properties[ORE_SUB_PRODUCTS]?.let { addOutput(it, 2) }
-            }
-            .offerSuffix(exporter)
+            }.offerSuffix(exporter)
     }
 
     @JvmStatic

@@ -58,10 +58,10 @@ enum class HTMachineTier(
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineTier> = codecOf(::fromString)
+        val CODEC: Codec<HTMachineTier> = codecOf(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = packetCodecOf(::fromString)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = packetCodecOf(entries)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTMachineTier> = ComponentType
@@ -69,9 +69,6 @@ enum class HTMachineTier(
             .codec(CODEC)
             .packetCodec(PACKET_CODEC)
             .build()
-
-        @JvmStatic
-        fun fromString(name: String): HTMachineTier = entries.first { it.asString() == name }
     }
 
     val miningCost: Long = recipeCost / 10

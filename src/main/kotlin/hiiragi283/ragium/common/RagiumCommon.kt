@@ -77,7 +77,7 @@ object RagiumCommon : ModInitializer, HTContentRegister {
             registerBlock(ore, block)
             registerBlockItem(block, itemSettings())
         }*/
-        RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores -> 
+        RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
             val block = Block(blockSettings(ore.baseStone))
             registerBlock(ore, block)
             registerBlockItem(block, itemSettings())

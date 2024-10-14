@@ -149,7 +149,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             register(ore.value) { block: Block ->
                 generator.registerSingleton(
                     block,
-                    RagiumModels.createLayered(TextureMap.getId(ore.baseStone), TextureMap.getId(block))
+                    RagiumModels.createLayered(TextureMap.getId(ore.baseStone), TextureMap.getId(block)),
                 )
             }
         }

@@ -8,7 +8,6 @@ import net.minecraft.registry.tag.TagKey
 interface HTContent<T : ItemConvertible> :
     HTEntryDelegated<T>,
     ItemConvertible {
-
     val tagKey: TagKey<Item>?
         get() = null
 
@@ -16,7 +15,10 @@ interface HTContent<T : ItemConvertible> :
 
     //    Material    //
 
-    interface Material<T : ItemConvertible> : HTContent<T>, HTTranslationFormatter, RagiumMaterials.Holder {
+    interface Material<T : ItemConvertible> :
+        HTContent<T>,
+        HTTranslationFormatter,
+        RagiumMaterials.Holder {
         fun getTranslation(type: HTLangType): String = getTranslation(type, material)
     }
 }

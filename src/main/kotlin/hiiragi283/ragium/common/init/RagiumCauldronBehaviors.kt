@@ -18,7 +18,7 @@ object RagiumCauldronBehaviors {
     fun init() {
         register(
             CauldronBehavior.WATER_CAULDRON_BEHAVIOR,
-            RagiumContents.Dusts.CRUDE_RAGINITE
+            RagiumContents.Dusts.CRUDE_RAGINITE,
         ) { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
             if (stack.isOf(RagiumContents.Dusts.CRUDE_RAGINITE.asItem())) {
                 if (!world.isClient) {

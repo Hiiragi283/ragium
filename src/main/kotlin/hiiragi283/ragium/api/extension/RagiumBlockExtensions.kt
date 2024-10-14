@@ -31,9 +31,6 @@ fun World.modifyBlockState(pos: BlockPos, mapping: (BlockState) -> BlockState): 
 
 //    BlockState    //
 
-@Suppress("UNCHECKED_CAST")
-fun <T : Any> BlockState.castBlock(): T? = block as? T
-
 fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrNull(property: Property<T>): T? = when (contains(property)) {
     true -> get(property)
     false -> null

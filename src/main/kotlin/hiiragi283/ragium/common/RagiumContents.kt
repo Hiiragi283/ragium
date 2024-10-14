@@ -35,28 +35,6 @@ import java.awt.Color
 object RagiumContents : HTContentRegister {
     //    Ores    //
 
-    /*enum class Ores(override val material: RagiumMaterials) : HTBlockContent {
-        RAGINITE(RagiumMaterials.RAGINITE),
-        // NICKEL(RagiumMaterials.NICKEL),
-        ;
-
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_ore"))
-        override val enPattern: String = "%s Ore"
-        override val jaPattern: String = "%s鉱石"
-    }
-
-    enum class DeepOres(override val material: RagiumMaterials) : HTBlockContent {
-        RAGINITE(RagiumMaterials.RAGINITE),
-        // NICKEL(RagiumMaterials.NICKEL),
-        ;
-
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("deepslate_${name.lowercase()}_ore"))
-        override val enPattern: String = "Deep %s Ore"
-        override val jaPattern: String = "深層%s鉱石"
-    }*/
-
     enum class Ores(override val material: RagiumMaterials, val baseStone: Block) : HTContent.Material<Block> {
         CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE, Blocks.STONE) {
             override val entry: HTRegistryEntry<Block> =
@@ -81,8 +59,7 @@ object RagiumContents : HTContentRegister {
                 HTRegistryEntry.ofBlock(RagiumAPI.id("end_ragi_crystal_ore"))
             override val enPattern: String = "End Ragi-Crystal Ore"
             override val jaPattern: String = "エンドラギクリスタリル鉱石"
-        }
-        ;
+        }, ;
 
         val dropMineral: ItemConvertible
             get() = when (this) {
@@ -341,8 +318,7 @@ object RagiumContents : HTContentRegister {
 
     //    Foods    //
 
-    enum class Foods :
-        HTContent<Item> {
+    enum class Foods : HTContent<Item> {
         BEE_WAX {
             override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
         },
@@ -391,15 +367,11 @@ object RagiumContents : HTContentRegister {
 
     //    Misc    //
 
-    enum class Misc :
-        HTContent<Item> {
+    enum class Misc : HTContent<Item> {
         ALCHEMY_STUFF {
             override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC).maxCount(1))
         },
         BASALT_FIBER,
-        BEDROCK_DYNAMITE {
-            override fun createItem(): Item = HTBedrockDynamiteItem
-        },
         DYNAMITE {
             override fun createItem(): Item = HTDynamiteItem
         },
@@ -430,6 +402,9 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL {
             override val tagKey: TagKey<Item> = ConventionalItemTags.GEMS
+        },
+        REMOVER_DYNAMITE {
+            override fun createItem(): Item = HTRemoverDynamiteItem
         },
         SOAP_INGOT,
         SOLAR_PANEL,

@@ -15,10 +15,10 @@ object RagiumItemTags {
 
     @JvmField
     val CIRCUITS: TagKey<Item> = create(RagiumAPI.MOD_ID, "circuits")
-    
+
     @JvmField
     val COILS: TagKey<Item> = create(RagiumAPI.MOD_ID, "coils")
-    
+
     @JvmField
     val FLUID_CUBES: TagKey<Item> = create(RagiumAPI.MOD_ID, "fluid_cubes")
 

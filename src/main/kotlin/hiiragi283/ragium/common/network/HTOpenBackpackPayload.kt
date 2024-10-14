@@ -18,10 +18,10 @@ enum class HTOpenBackpackPayload :
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTOpenBackpackPayload> = codecOf(::fromString)
+        val CODEC: Codec<HTOpenBackpackPayload> = codecOf(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTOpenBackpackPayload> = packetCodecOf(::fromString)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTOpenBackpackPayload> = packetCodecOf(entries)
 
         @JvmStatic
         fun fromString(name: String): HTOpenBackpackPayload = entries.first { it.asString() == name }

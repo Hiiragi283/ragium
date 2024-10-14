@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block
 
+import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table
-import hiiragi283.ragium.api.extension.buildTable
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
@@ -35,10 +35,11 @@ class HTQuarterBlock(settings: Settings) :
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
 
         @JvmField
-        val SHAPE_TABLE: Table<Direction, Boolean, VoxelShape> = buildTable {
+        val SHAPE_TABLE: Table<Direction, Boolean, VoxelShape> = HashBasedTable.create()
+            /*buildTable {
             put(Direction.NORTH, false, createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 8.0))
             put(Direction.NORTH, true, createCuboidShape(0.0, 8.0, 0.0, 16.0, 16.0, 8.0))
-        }
+            }*/
     }
 
     init {

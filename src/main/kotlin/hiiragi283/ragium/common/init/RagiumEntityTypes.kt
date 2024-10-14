@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.entity.HTBedrockDynamiteEntity
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.entity.HTOblivionCubeEntity
+import hiiragi283.ragium.common.entity.HTRemoverDynamiteEntity
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricDefaultAttributeRegistry
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -13,9 +13,9 @@ import net.minecraft.registry.Registry
 
 object RagiumEntityTypes {
     @JvmField
-    val BEDROCK_DYNAMITE: EntityType<HTBedrockDynamiteEntity> = register(
-        "bedrock_dynamite",
-        ::HTBedrockDynamiteEntity,
+    val REMOVER_DYNAMITE: EntityType<HTRemoverDynamiteEntity> = register(
+        "remover_dynamite",
+        ::HTRemoverDynamiteEntity,
         SpawnGroup.MISC,
     ) {
         dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
