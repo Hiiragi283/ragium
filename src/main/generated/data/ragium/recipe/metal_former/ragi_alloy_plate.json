@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:ragi_alloy_ingot"
-      }
+      "items": "ragium:ragi_alloy_ingot"
     }
   ],
   "machine_type": "ragium:metal_former",

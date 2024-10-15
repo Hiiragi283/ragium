@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "ragium:organic_oils"
-      }
+      "items": "#ragium:organic_oils"
     },
     {
-      "ingredient": {
-        "tag": "ragium:alkali"
-      }
+      "items": "#ragium:alkali"
     }
   ],
   "machine_type": "ragium:mixer",

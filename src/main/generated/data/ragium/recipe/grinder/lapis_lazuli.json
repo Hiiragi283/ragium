@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:lapis_ores"
-      }
+      "items": "#minecraft:lapis_ores"
     }
   ],
   "machine_type": "ragium:grinder",

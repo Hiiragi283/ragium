@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 3,
-      "ingredient": {
-        "tag": "minecraft:wooden_fences"
-      }
+      "items": "#minecraft:wooden_fences"
     }
   ],
   "machine_type": "ragium:grinder",

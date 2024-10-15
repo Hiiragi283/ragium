@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:ingots/iron"
-      }
+      "items": "#c:ingots/iron"
     }
   ],
   "machine_type": "ragium:grinder",

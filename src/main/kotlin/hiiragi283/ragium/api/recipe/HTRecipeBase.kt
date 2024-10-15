@@ -6,10 +6,10 @@ import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.registry.RegistryWrapper
 
 interface HTRecipeBase<T : RecipeInput> : Recipe<T> {
-    val inputs: List<WeightedIngredient>
+    val inputs: List<HTIngredient>
     val outputs: List<HTRecipeResult>
 
-    fun getInput(index: Int): WeightedIngredient? = inputs.getOrNull(index)
+    fun getInput(index: Int): HTIngredient? = inputs.getOrNull(index)
 
     fun getOutput(index: Int): HTRecipeResult? = outputs.getOrNull(index)
 

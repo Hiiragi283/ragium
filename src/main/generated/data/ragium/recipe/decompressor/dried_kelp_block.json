@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 64,
-      "ingredient": {
-        "tag": "c:storage_blocks/dried_kelp"
-      }
+      "items": "#c:storage_blocks/dried_kelp"
     }
   ],
   "machine_type": "ragium:decompressor",

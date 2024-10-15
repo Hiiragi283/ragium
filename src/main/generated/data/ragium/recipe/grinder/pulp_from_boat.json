@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:boats"
-      }
+      "items": "#minecraft:boats"
     }
   ],
   "machine_type": "ragium:grinder",

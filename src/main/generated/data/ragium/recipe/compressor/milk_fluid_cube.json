@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:empty_fluid_cube"
-      }
+      "items": "ragium:empty_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "minecraft:milk_bucket"
-      }
+      "items": "minecraft:milk_bucket"
     }
   ],
   "machine_type": "ragium:compressor",

@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "minecraft:netherrack"
-      }
+      "items": "minecraft:netherrack"
     }
   ],
   "machine_type": "ragium:grinder",

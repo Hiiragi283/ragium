@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "ragium:crude_oil_fluid_cube"
-      }
+      "items": "ragium:crude_oil_fluid_cube"
     }
   ],
   "machine_type": "ragium:distillation_tower",

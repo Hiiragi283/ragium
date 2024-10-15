@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:wooden_pressure_plates"
-      }
+      "items": "#minecraft:wooden_pressure_plates"
     }
   ],
   "machine_type": "ragium:grinder",

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:wool"
-      }
+      "items": "#minecraft:wool"
     }
   ],
   "machine_type": "ragium:grinder",

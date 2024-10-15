@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:dusts/sulfur"
-      }
+      "items": "#c:dusts/sulfur"
     },
     {
-      "ingredient": {
-        "item": "ragium:water_fluid_cube"
-      }
+      "items": "ragium:water_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "ragium:oxygen_fluid_cube"
-      }
+      "items": "ragium:oxygen_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

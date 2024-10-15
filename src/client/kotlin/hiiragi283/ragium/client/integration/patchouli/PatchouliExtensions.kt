@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.patchouli
 
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
 import vazkii.patchouli.client.book.gui.GuiBookEntry
@@ -14,9 +14,9 @@ fun GuiBookEntry.renderIngredient(
     y: Int,
     mouseX: Int,
     mouseY: Int,
-    ingredient: WeightedIngredient?,
+    ingredient: HTIngredient?,
 ) {
-    val stacks: Array<out ItemStack> = ingredient?.matchingStacks ?: return
+    val stacks: List<ItemStack> = ingredient?.matchingStacks ?: return
     if (stacks.isNotEmpty()) {
         renderItemStack(context, x, y, mouseX, mouseY, stacks[(ticksInBook / 20) % stacks.size])
     }

@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:glass_blocks"
-      }
+      "items": "#c:glass_blocks"
     },
     {
-      "ingredient": {
-        "item": "ragium:chlorine_fluid_cube"
-      }
+      "items": "ragium:chlorine_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

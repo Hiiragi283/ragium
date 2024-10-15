@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": {
-        "tag": "c:ingots/iron"
-      }
+      "items": "#c:ingots/iron"
     },
     {
-      "ingredient": {
-        "tag": "c:ingots/nickel"
-      }
+      "items": "#c:ingots/nickel"
     }
   ],
   "machine_type": "ragium:alloy_furnace",

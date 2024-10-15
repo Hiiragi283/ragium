@@ -2,15 +2,11 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:ethylene_fluid_cube"
-      }
+      "items": "ragium:ethylene_fluid_cube"
     },
     {
       "count": 2,
-      "ingredient": {
-        "item": "ragium:fluorine_fluid_cube"
-      }
+      "items": "ragium:fluorine_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

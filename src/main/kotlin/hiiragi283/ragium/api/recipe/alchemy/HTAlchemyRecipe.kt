@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.recipe.alchemy
 
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.item.ItemStack
@@ -31,22 +31,22 @@ interface HTAlchemyRecipe : HTRecipeBase<HTAlchemyRecipe.Input> {
         private val fourth: ItemStack,
     ) : RecipeInput {
         fun matches(
-            first: WeightedIngredient?,
-            second: WeightedIngredient?,
-            third: WeightedIngredient?,
-            fourth: WeightedIngredient?,
+            first: HTIngredient?,
+            second: HTIngredient?,
+            third: HTIngredient?,
+            fourth: HTIngredient?,
         ): Boolean = matchesInternal(
-            first ?: WeightedIngredient.EMPTY,
-            second ?: WeightedIngredient.EMPTY,
-            third ?: WeightedIngredient.EMPTY,
-            fourth ?: WeightedIngredient.EMPTY,
+            first ?: HTIngredient.EMPTY,
+            second ?: HTIngredient.EMPTY,
+            third ?: HTIngredient.EMPTY,
+            fourth ?: HTIngredient.EMPTY,
         )
 
         private fun matchesInternal(
-            first: WeightedIngredient,
-            second: WeightedIngredient,
-            third: WeightedIngredient,
-            fourth: WeightedIngredient,
+            first: HTIngredient,
+            second: HTIngredient,
+            third: HTIngredient,
+            fourth: HTIngredient,
         ): Boolean = when {
             !first.test(this.first) -> false
             !second.test(this.second) -> false

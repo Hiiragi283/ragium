@@ -6,15 +6,11 @@
   "inputs": [
     {
       "count": 5,
-      "ingredient": {
-        "tag": "c:ingots/gold"
-      }
+      "items": "#c:ingots/gold"
     },
     {
       "count": 3,
-      "ingredient": {
-        "item": "minecraft:netherite_scrap"
-      }
+      "items": "minecraft:netherite_scrap"
     }
   ],
   "machine_type": "ragium:alloy_furnace",

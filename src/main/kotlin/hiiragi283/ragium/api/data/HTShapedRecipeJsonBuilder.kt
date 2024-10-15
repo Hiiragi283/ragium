@@ -44,7 +44,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
     }
 
     fun input(char: Char, either: BothEither<ItemConvertible, TagKey<Item>>): HTShapedRecipeJsonBuilder = apply {
-        either.ifBoth({ input(char, it) }, { input(char, it) }, false)
+        either.ifBoth({ input(char, it) }, { input(char, it) }, BothEither.Priority.RIGHT)
     }
 
     fun input(char: Char, item: ItemConvertible): HTShapedRecipeJsonBuilder = input(char, Ingredient.ofItems(item))
@@ -88,7 +88,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         either.ifBoth(
             { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
             { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
-            false,
+            BothEither.Priority.RIGHT,
         )
     }
 

@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "minecraft:sugar"
-      }
+      "items": "minecraft:sugar"
     },
     {
-      "ingredient": {
-        "item": "ragium:empty_fluid_cube"
-      }
+      "items": "ragium:empty_fluid_cube"
     }
   ],
   "machine_type": "ragium:extractor",

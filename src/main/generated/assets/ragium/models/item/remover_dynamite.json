@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/bedrock_dynamite"
+    "layer0": "ragium:item/remover_dynamite"
   }
 }

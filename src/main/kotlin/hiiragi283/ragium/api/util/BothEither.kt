@@ -29,13 +29,20 @@ sealed interface BothEither<L : Any, R : Any> {
 
     fun ifRight(action: (R) -> Unit): BothEither<L, R>
 
-    fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, flag: Boolean): BothEither<L, R>
+    fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, priority: Priority): BothEither<L, R>
 
     fun <T : Any> leftMap(leftMapper: (L) -> T): BothEither<T, R>
 
     fun <T : Any> rightMap(rightMapper: (R) -> T): BothEither<L, T>
 
-    fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, flag: Boolean): T
+    fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, priority: Priority): T
+
+    //     Priority    //
+
+    enum class Priority {
+        LEFT,
+        RIGHT,
+    }
 
     //    Left    //
 
@@ -54,13 +61,14 @@ sealed interface BothEither<L : Any, R : Any> {
 
         override fun ifRight(action: (R) -> Unit): Left<L, R> = this
 
-        override fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, flag: Boolean): BothEither<L, R> = apply { leftAction(left) }
+        override fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, priority: Priority): BothEither<L, R> =
+            apply { leftAction(left) }
 
         override fun <T : Any> leftMap(leftMapper: (L) -> T): BothEither<T, R> = Left(leftMapper(left))
 
         override fun <T : Any> rightMap(rightMapper: (R) -> T): BothEither<L, T> = Left(left)
 
-        override fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, flag: Boolean): T = leftMapper(left)
+        override fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, priority: Priority): T = leftMapper(left)
     }
 
     //    Right    //
@@ -80,14 +88,14 @@ sealed interface BothEither<L : Any, R : Any> {
 
         override fun ifRight(action: (R) -> Unit): Right<L, R> = apply { action(right) }
 
-        override fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, flag: Boolean): BothEither<L, R> =
+        override fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, priority: Priority): BothEither<L, R> =
             apply { rightAction(right) }
 
         override fun <T : Any> leftMap(leftMapper: (L) -> T): BothEither<T, R> = Right(right)
 
         override fun <T : Any> rightMap(rightMapper: (R) -> T): BothEither<L, T> = Right(rightMapper(right))
 
-        override fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, flag: Boolean): T = rightMapper(right)
+        override fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, priority: Priority): T = rightMapper(right)
     }
 
     //    Both    //
@@ -108,10 +116,10 @@ sealed interface BothEither<L : Any, R : Any> {
 
         override fun ifRight(action: (R) -> Unit): Both<L, R> = apply { action(right) }
 
-        override fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, flag: Boolean): BothEither<L, R> = apply {
-            when (flag) {
-                true -> leftAction(left)
-                false -> rightAction(right)
+        override fun ifBoth(leftAction: (L) -> Unit, rightAction: (R) -> Unit, priority: Priority): BothEither<L, R> = apply {
+            when (priority) {
+                Priority.LEFT -> leftAction(left)
+                Priority.RIGHT -> rightAction(right)
             }
         }
 
@@ -119,9 +127,9 @@ sealed interface BothEither<L : Any, R : Any> {
 
         override fun <T : Any> rightMap(rightMapper: (R) -> T): BothEither<L, T> = Right(rightMapper(right))
 
-        override fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, flag: Boolean): T = when (flag) {
-            true -> leftMapper(left)
-            false -> rightMapper(right)
+        override fun <T : Any> getMapped(leftMapper: (L) -> T, rightMapper: (R) -> T, priority: Priority): T = when (priority) {
+            Priority.LEFT -> leftMapper(left)
+            Priority.RIGHT -> rightMapper(right)
         }
     }
 }

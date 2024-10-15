@@ -3,15 +3,11 @@
   "inputs": [
     {
       "count": 8,
-      "ingredient": {
-        "tag": "c:plates/steel"
-      }
+      "items": "#c:plates/steel"
     },
     {
       "count": 8,
-      "ingredient": {
-        "item": "ragium:ragi_steel_plate"
-      }
+      "items": "ragium:ragi_steel_plate"
     }
   ],
   "machine_type": "ragium:assembler",

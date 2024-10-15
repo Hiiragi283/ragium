@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:gold_ores"
-      }
+      "items": "#minecraft:gold_ores"
     }
   ],
   "machine_type": "ragium:grinder",

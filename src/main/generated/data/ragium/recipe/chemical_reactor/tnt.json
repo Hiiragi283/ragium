@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:trinitrotoluene_fluid_cube"
-      }
+      "items": "ragium:trinitrotoluene_fluid_cube"
     },
     {
-      "ingredient": {
-        "tag": "minecraft:sand"
-      }
+      "items": "#minecraft:sand"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

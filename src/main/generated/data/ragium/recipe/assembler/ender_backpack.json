@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 8,
-      "ingredient": {
-        "item": "ragium:ptfe_plate"
-      }
+      "items": "ragium:ptfe_plate"
     },
     {
-      "ingredient": {
-        "item": "minecraft:ender_eye"
-      }
+      "items": "minecraft:ender_eye"
     }
   ],
   "machine_type": "ragium:assembler",

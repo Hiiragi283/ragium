@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:redstone_ores"
-      }
+      "items": "#minecraft:redstone_ores"
     }
   ],
   "machine_type": "ragium:grinder",

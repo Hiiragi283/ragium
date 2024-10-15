@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:mangrove_logs"
-      }
+      "items": "#minecraft:mangrove_logs"
     }
   ],
   "machine_type": "ragium:saw_mill",

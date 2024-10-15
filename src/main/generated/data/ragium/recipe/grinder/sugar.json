@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:crops/sugar_cane"
-      }
+      "items": "#c:crops/sugar_cane"
     }
   ],
   "machine_type": "ragium:grinder",

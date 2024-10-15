@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:tetra_fluoro_ethylene_fluid_cube"
-      }
+      "items": "ragium:tetra_fluoro_ethylene_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "ragium:oxygen_fluid_cube"
-      }
+      "items": "ragium:oxygen_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

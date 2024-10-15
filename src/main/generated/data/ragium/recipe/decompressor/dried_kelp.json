@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 64,
-      "ingredient": {
-        "item": "minecraft:kelp"
-      }
+      "items": "minecraft:kelp"
     }
   ],
   "machine_type": "ragium:decompressor",

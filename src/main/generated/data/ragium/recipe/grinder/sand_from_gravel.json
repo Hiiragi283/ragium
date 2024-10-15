@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "minecraft:gravel"
-      }
+      "items": "minecraft:gravel"
     }
   ],
   "machine_type": "ragium:grinder",

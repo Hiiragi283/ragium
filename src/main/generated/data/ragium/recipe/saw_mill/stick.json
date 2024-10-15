@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:planks"
-      }
+      "items": "#minecraft:planks"
     }
   ],
   "machine_type": "ragium:saw_mill",

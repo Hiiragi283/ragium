@@ -44,7 +44,7 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
     }
 
     fun input(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
-        either.ifBoth({ input(it) }, { input(it) }, false)
+        either.ifBoth({ input(it) }, { input(it) }, BothEither.Priority.RIGHT)
     }
 
     fun input(item: ItemConvertible): HTShapelessRecipeJsonBuilder = input(Ingredient.ofItems(item))
@@ -73,7 +73,7 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         either.ifBoth(
             { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
             { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
-            false,
+            BothEither.Priority.RIGHT,
         )
     }
 

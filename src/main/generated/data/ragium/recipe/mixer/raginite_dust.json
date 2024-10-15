@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "ragium:crude_raginite_dust"
-      }
+      "items": "ragium:crude_raginite_dust"
     },
     {
-      "ingredient": {
-        "item": "ragium:water_fluid_cube"
-      }
+      "items": "ragium:water_fluid_cube"
     }
   ],
   "machine_type": "ragium:mixer",

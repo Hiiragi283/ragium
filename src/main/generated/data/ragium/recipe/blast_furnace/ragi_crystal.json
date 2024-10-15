@@ -3,15 +3,11 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "tag": "c:dusts/redstone"
-      }
+      "items": "#c:dusts/redstone"
     },
     {
       "count": 5,
-      "ingredient": {
-        "item": "ragium:raginite_dust"
-      }
+      "items": "ragium:raginite_dust"
     }
   ],
   "machine_type": "ragium:blast_furnace",

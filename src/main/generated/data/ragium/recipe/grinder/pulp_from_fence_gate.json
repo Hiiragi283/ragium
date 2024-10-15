@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:fence_gates"
-      }
+      "items": "#minecraft:fence_gates"
     }
   ],
   "machine_type": "ragium:grinder",

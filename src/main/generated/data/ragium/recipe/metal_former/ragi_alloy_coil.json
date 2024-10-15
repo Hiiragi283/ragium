@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 8,
-      "ingredient": {
-        "item": "ragium:ragi_alloy_ingot"
-      }
+      "items": "ragium:ragi_alloy_ingot"
     },
     {
-      "ingredient": {
-        "item": "ragium:shaft"
-      }
+      "items": "ragium:shaft"
     }
   ],
   "machine_type": "ragium:metal_former",

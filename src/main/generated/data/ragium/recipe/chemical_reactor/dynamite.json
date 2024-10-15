@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "minecraft:paper"
-      }
+      "items": "minecraft:paper"
     },
     {
-      "ingredient": {
-        "tag": "c:strings"
-      }
+      "items": "#c:strings"
     },
     {
-      "ingredient": {
-        "item": "ragium:nitro_glycerin_fluid_cube"
-      }
+      "items": "ragium:nitro_glycerin_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

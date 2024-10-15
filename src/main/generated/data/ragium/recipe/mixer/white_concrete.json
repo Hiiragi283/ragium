@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:concretes"
-      }
+      "items": "#c:concretes"
     },
     {
-      "ingredient": {
-        "item": "ragium:soap_ingot"
-      }
+      "items": "ragium:soap_ingot"
     },
     {
-      "ingredient": {
-        "item": "ragium:water_fluid_cube"
-      }
+      "items": "ragium:water_fluid_cube"
     }
   ],
   "machine_type": "ragium:mixer",

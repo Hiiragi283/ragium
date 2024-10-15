@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:pe_plate"
-      }
+      "items": "ragium:pe_plate"
     },
     {
-      "ingredient": {
-        "tag": "c:plates/copper"
-      }
+      "items": "#c:plates/copper"
     },
     {
-      "ingredient": {
-        "tag": "c:dusts/redstone"
-      }
+      "items": "#c:dusts/redstone"
     }
   ],
   "machine_type": "ragium:assembler",

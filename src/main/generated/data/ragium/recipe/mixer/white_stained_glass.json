@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:glass_blocks"
-      }
+      "items": "#c:glass_blocks"
     },
     {
-      "ingredient": {
-        "item": "ragium:soap_ingot"
-      }
+      "items": "ragium:soap_ingot"
     },
     {
-      "ingredient": {
-        "item": "ragium:water_fluid_cube"
-      }
+      "items": "ragium:water_fluid_cube"
     }
   ],
   "machine_type": "ragium:mixer",

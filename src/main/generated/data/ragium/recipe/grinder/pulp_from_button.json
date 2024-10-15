@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:wooden_buttons"
-      }
+      "items": "#minecraft:wooden_buttons"
     }
   ],
   "machine_type": "ragium:grinder",

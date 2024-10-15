@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "ragium:refined_gas_fluid_cube"
-      }
+      "items": "ragium:refined_gas_fluid_cube"
     }
   ],
   "machine_type": "ragium:distillation_tower",

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:crops/wheat"
-      }
+      "items": "#c:crops/wheat"
     }
   ],
   "machine_type": "ragium:grinder",

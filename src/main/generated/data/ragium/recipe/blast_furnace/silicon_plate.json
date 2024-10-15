@@ -3,15 +3,11 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": {
-        "tag": "c:gems/quartz"
-      }
+      "items": "#c:gems/quartz"
     },
     {
       "count": 4,
-      "ingredient": {
-        "tag": "minecraft:coals"
-      }
+      "items": "#minecraft:coals"
     }
   ],
   "machine_type": "ragium:blast_furnace",

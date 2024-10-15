@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:pvc_plate"
-      }
+      "items": "ragium:pvc_plate"
     },
     {
-      "ingredient": {
-        "tag": "c:plates/gold"
-      }
+      "items": "#c:plates/gold"
     },
     {
-      "ingredient": {
-        "tag": "c:dusts/glowstone"
-      }
+      "items": "#c:dusts/glowstone"
     }
   ],
   "machine_type": "ragium:assembler",

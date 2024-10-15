@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:oak_logs"
-      }
+      "items": "#minecraft:oak_logs"
     }
   ],
   "machine_type": "ragium:saw_mill",

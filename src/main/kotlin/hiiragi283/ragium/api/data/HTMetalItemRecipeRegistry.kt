@@ -185,9 +185,13 @@ object HTMetalItemRecipeRegistry {
         val rawMaterial: BothEither<ItemConvertible, TagKey<Item>> = properties[RAW] ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
-            rawMaterial.getMapped(Ingredient::ofItems, Ingredient::fromTag, false),
+            rawMaterial.getMapped(Ingredient::ofItems, Ingredient::fromTag, BothEither.Priority.RIGHT),
             ingot,
-            rawMaterial.getMapped(RecipeProvider::conditionsFromItem, RecipeProvider::conditionsFromTag, false),
+            rawMaterial.getMapped(
+                RecipeProvider::conditionsFromItem,
+                RecipeProvider::conditionsFromTag,
+                BothEither.Priority.RIGHT,
+            ),
             suffix = "_from_raw",
         )
     }
@@ -198,9 +202,13 @@ object HTMetalItemRecipeRegistry {
         val dust: BothEither<ItemConvertible, TagKey<Item>> = properties[DUST] ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
-            dust.getMapped(Ingredient::ofItems, Ingredient::fromTag, false),
+            dust.getMapped(Ingredient::ofItems, Ingredient::fromTag, BothEither.Priority.RIGHT),
             ingot,
-            dust.getMapped(RecipeProvider::conditionsFromItem, RecipeProvider::conditionsFromTag, false),
+            dust.getMapped(
+                RecipeProvider::conditionsFromItem,
+                RecipeProvider::conditionsFromTag,
+                BothEither.Priority.RIGHT,
+            ),
             suffix = "_from_dust",
         )
     }

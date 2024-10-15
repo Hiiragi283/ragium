@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": {
-        "tag": "c:ingots/steel"
-      }
+      "items": "#c:ingots/steel"
     }
   ],
   "machine_type": "ragium:metal_former",

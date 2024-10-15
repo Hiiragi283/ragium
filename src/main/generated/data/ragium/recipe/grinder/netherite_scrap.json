@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "minecraft:ancient_debris"
-      }
+      "items": "minecraft:ancient_debris"
     }
   ],
   "machine_type": "ragium:grinder",

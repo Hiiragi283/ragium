@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -13,12 +13,11 @@ import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 class HTInfusionRecipeJsonBuilder(val output: HTRecipeResult) : CraftingRecipeJsonBuilder {
-    private val inputs: MutableList<WeightedIngredient> = mutableListOf()
+    private val inputs: MutableList<HTIngredient> = mutableListOf()
     private val criteria: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var suffixCache: Int = 0
 
@@ -32,18 +31,16 @@ class HTInfusionRecipeJsonBuilder(val output: HTRecipeResult) : CraftingRecipeJs
 
     //    Input    //
 
-    private fun addInput(ingredient: WeightedIngredient): HTInfusionRecipeJsonBuilder = apply {
+    private fun addInput(ingredient: HTIngredient): HTInfusionRecipeJsonBuilder = apply {
         inputs.add(ingredient)
     }
 
-    fun addInput(ingredient: Ingredient, count: Int = 1): HTInfusionRecipeJsonBuilder = addInput(WeightedIngredient.of(ingredient, count))
-
-    fun addInput(item: ItemConvertible, count: Int = 1): HTInfusionRecipeJsonBuilder = addInput(Ingredient.ofItems(item), count).apply {
+    fun addInput(item: ItemConvertible, count: Int = 1): HTInfusionRecipeJsonBuilder = addInput(HTIngredient.of(item, count)).apply {
         hasInput(item, suffixCache.toString())
         suffixCache++
     }
 
-    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTInfusionRecipeJsonBuilder = addInput(Ingredient.fromTag(tagKey), count).apply {
+    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTInfusionRecipeJsonBuilder = addInput(HTIngredient.of(tagKey, count)).apply {
         hasInput(tagKey, suffixCache.toString())
         suffixCache++
     }

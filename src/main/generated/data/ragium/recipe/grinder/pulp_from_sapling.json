@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": {
-        "tag": "minecraft:saplings"
-      }
+      "items": "#minecraft:saplings"
     }
   ],
   "machine_type": "ragium:grinder",

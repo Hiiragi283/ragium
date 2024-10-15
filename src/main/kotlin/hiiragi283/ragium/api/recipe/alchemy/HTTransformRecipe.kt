@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.recipe.alchemy
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
@@ -12,15 +12,15 @@ import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.world.World
 
-class HTTransformRecipe(val target: WeightedIngredient, val upgrades: List<WeightedIngredient>, override val result: HTRecipeResult) :
+class HTTransformRecipe(val target: HTIngredient, val upgrades: List<HTIngredient>, override val result: HTRecipeResult) :
     HTAlchemyRecipe {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTTransformRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    WeightedIngredient.CODEC.fieldOf("target").forGetter(HTTransformRecipe::target),
-                    WeightedIngredient.CODEC
+                    HTIngredient.CODEC.fieldOf("target").forGetter(HTTransformRecipe::target),
+                    HTIngredient.CODEC
                         .listOf()
                         .fieldOf("upgrades")
                         .forGetter(HTTransformRecipe::upgrades),
@@ -32,9 +32,9 @@ class HTTransformRecipe(val target: WeightedIngredient, val upgrades: List<Weigh
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTransformRecipe> = PacketCodec.tuple(
-            WeightedIngredient.PACKET_CODEC,
+            HTIngredient.PACKET_CODEC,
             HTTransformRecipe::target,
-            WeightedIngredient.LIST_PACKET_CODEC,
+            HTIngredient.LIST_PACKET_CODEC,
             HTTransformRecipe::upgrades,
             HTRecipeResult.PACKET_CODEC,
             HTTransformRecipe::result,
@@ -42,7 +42,7 @@ class HTTransformRecipe(val target: WeightedIngredient, val upgrades: List<Weigh
         )
     }
 
-    override val inputs: List<WeightedIngredient> = buildList {
+    override val inputs: List<HTIngredient> = buildList {
         add(target)
         addAll(upgrades)
     }

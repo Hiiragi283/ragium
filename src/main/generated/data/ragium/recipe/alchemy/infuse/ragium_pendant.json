@@ -3,21 +3,15 @@
   "inputs": [
     {
       "count": 32,
-      "ingredient": {
-        "tag": "c:plates/silver"
-      }
+      "items": "#c:plates/silver"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "ragium:ragium_dust"
-      }
+      "items": "ragium:ragium_dust"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "minecraft:magma_block"
-      }
+      "items": "minecraft:magma_block"
     }
   ],
   "output": {

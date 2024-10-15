@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.machine
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.dataDriveManager
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -9,7 +10,6 @@ import hiiragi283.ragium.api.recipe.HTRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.api.world.HTDataDriveManager
-import hiiragi283.ragium.api.world.dataDriveManager
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType

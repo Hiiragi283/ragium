@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 8,
-      "ingredient": {
-        "tag": "c:plates/iron"
-      }
+      "items": "#c:plates/iron"
     },
     {
-      "ingredient": {
-        "item": "ragium:gold_coil"
-      }
+      "items": "ragium:gold_coil"
     }
   ],
   "machine_type": "ragium:assembler",

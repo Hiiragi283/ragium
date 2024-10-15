@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:milk_fluid_cube"
-      }
+      "items": "ragium:milk_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "ragium:flour"
-      }
+      "items": "ragium:flour"
     },
     {
-      "ingredient": {
-        "item": "minecraft:sugar"
-      }
+      "items": "minecraft:sugar"
     }
   ],
   "machine_type": "ragium:mixer",

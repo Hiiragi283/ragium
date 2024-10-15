@@ -3,21 +3,15 @@
   "inputs": [
     {
       "count": 32,
-      "ingredient": {
-        "tag": "c:plates/silver"
-      }
+      "items": "#c:plates/silver"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "ragium:rugium_dust"
-      }
+      "items": "ragium:rugium_dust"
     },
     {
       "count": 32,
-      "ingredient": {
-        "item": "minecraft:emerald_block"
-      }
+      "items": "minecraft:emerald_block"
     }
   ],
   "output": {

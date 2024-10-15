@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:raw_materials/gold"
-      }
+      "items": "#c:raw_materials/gold"
     }
   ],
   "machine_type": "ragium:grinder",

@@ -3,21 +3,15 @@
   "inputs": [
     {
       "count": 32,
-      "ingredient": {
-        "tag": "c:plates/silver"
-      }
+      "items": "#c:plates/silver"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "ragium:rigium_dust"
-      }
+      "items": "ragium:rigium_dust"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "ragium:milk_fluid_cube"
-      }
+      "items": "ragium:milk_fluid_cube"
     }
   ],
   "output": {

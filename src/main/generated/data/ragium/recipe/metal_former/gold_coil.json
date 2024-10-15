@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 8,
-      "ingredient": {
-        "tag": "c:ingots/gold"
-      }
+      "items": "#c:ingots/gold"
     },
     {
-      "ingredient": {
-        "item": "ragium:shaft"
-      }
+      "items": "ragium:shaft"
     }
   ],
   "machine_type": "ragium:metal_former",

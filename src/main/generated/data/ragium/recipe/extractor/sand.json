@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "minecraft:soul_sand"
-      }
+      "items": "minecraft:soul_sand"
     },
     {
-      "ingredient": {
-        "item": "ragium:empty_fluid_cube"
-      }
+      "items": "ragium:empty_fluid_cube"
     }
   ],
   "machine_type": "ragium:extractor",

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:end_ragi_crystal_ore"
-      }
+      "items": "ragium:end_ragi_crystal_ore"
     }
   ],
   "machine_type": "ragium:grinder",

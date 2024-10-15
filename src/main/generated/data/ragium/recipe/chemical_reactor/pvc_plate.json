@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:vinyl_chloride_fluid_cube"
-      }
+      "items": "ragium:vinyl_chloride_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "ragium:oxygen_fluid_cube"
-      }
+      "items": "ragium:oxygen_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

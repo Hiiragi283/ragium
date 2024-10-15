@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
@@ -78,10 +78,10 @@ fun HTMachineType.getOutputEntries(recipe: HTMachineRecipe): List<EntryIngredien
 
 //    WeightedIngredient    //
 
-val WeightedIngredient.entryStacks: List<EntryStack<ItemStack>>
+val HTIngredient.entryStacks: List<EntryStack<ItemStack>>
     get() = matchingStacks.map(EntryStacks::of)
 
-val WeightedIngredient.entryIngredient: EntryIngredient
+val HTIngredient.entryIngredient: EntryIngredient
     get() = EntryIngredient.of(entryStacks)
 
 //    HTRecipeResult    //

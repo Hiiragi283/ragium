@@ -3,10 +3,10 @@ package hiiragi283.ragium.api.recipe.machine
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.component.ComponentChanges
@@ -25,7 +25,7 @@ import net.minecraft.world.World
 class HTMachineRecipe(
     val type: HTMachineType,
     val minTier: HTMachineTier,
-    override val inputs: List<WeightedIngredient>,
+    override val inputs: List<HTIngredient>,
     override val outputs: List<HTRecipeResult>,
     val catalyst: Ingredient,
     private val customData: ComponentChanges,
@@ -44,7 +44,7 @@ class HTMachineRecipe(
                         HTMachineTier.CODEC
                             .optionalFieldOf("min_tier", HTMachineTier.PRIMITIVE)
                             .forGetter(HTMachineRecipe::minTier),
-                        WeightedIngredient.CODEC
+                        HTIngredient.CODEC
                             .listOf()
                             .fieldOf("inputs")
                             .forGetter(HTMachineRecipe::inputs),
@@ -68,7 +68,7 @@ class HTMachineRecipe(
                 HTMachineRecipe::type,
                 HTMachineTier.PACKET_CODEC,
                 HTMachineRecipe::minTier,
-                WeightedIngredient.LIST_PACKET_CODEC,
+                HTIngredient.LIST_PACKET_CODEC,
                 HTMachineRecipe::inputs,
                 HTRecipeResult.LIST_PACKET_CODEC,
                 HTMachineRecipe::outputs,
@@ -137,17 +137,17 @@ class HTMachineRecipe(
         fun matches(
             type: HTMachineConvertible,
             currentTier: HTMachineTier,
-            first: WeightedIngredient?,
-            second: WeightedIngredient?,
-            third: WeightedIngredient?,
+            first: HTIngredient?,
+            second: HTIngredient?,
+            third: HTIngredient?,
             catalyst: Ingredient?,
             customData: ComponentMap,
         ): Boolean = matchesInternal(
             type,
             currentTier,
-            first ?: WeightedIngredient.EMPTY,
-            second ?: WeightedIngredient.EMPTY,
-            third ?: WeightedIngredient.EMPTY,
+            first ?: HTIngredient.EMPTY,
+            second ?: HTIngredient.EMPTY,
+            third ?: HTIngredient.EMPTY,
             catalyst ?: Ingredient.EMPTY,
             customData,
         )
@@ -155,9 +155,9 @@ class HTMachineRecipe(
         private fun matchesInternal(
             type: HTMachineConvertible,
             tier: HTMachineTier,
-            first: WeightedIngredient,
-            second: WeightedIngredient,
-            third: WeightedIngredient,
+            first: HTIngredient,
+            second: HTIngredient,
+            third: HTIngredient,
             catalyst: Ingredient,
             customData: ComponentMap,
         ): Boolean = when {

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:crimson_stems"
-      }
+      "items": "#minecraft:crimson_stems"
     }
   ],
   "machine_type": "ragium:saw_mill",

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:acacia_logs"
-      }
+      "items": "#minecraft:acacia_logs"
     }
   ],
   "machine_type": "ragium:saw_mill",

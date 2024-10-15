@@ -3,21 +3,15 @@
   "inputs": [
     {
       "count": 64,
-      "ingredient": {
-        "item": "minecraft:prismarine_shard"
-      }
+      "items": "minecraft:prismarine_shard"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "minecraft:prismarine_crystals"
-      }
+      "items": "minecraft:prismarine_crystals"
     },
     {
       "count": 64,
-      "ingredient": {
-        "tag": "c:gems/lapis"
-      }
+      "items": "#c:gems/lapis"
     }
   ],
   "output": {

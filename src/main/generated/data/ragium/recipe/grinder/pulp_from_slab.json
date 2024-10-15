@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": {
-        "tag": "minecraft:wooden_slabs"
-      }
+      "items": "#minecraft:wooden_slabs"
     }
   ],
   "machine_type": "ragium:grinder",

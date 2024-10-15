@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:ores/quartz"
-      }
+      "items": "#c:ores/quartz"
     }
   ],
   "machine_type": "ragium:grinder",

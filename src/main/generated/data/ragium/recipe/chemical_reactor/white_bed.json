@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:beds"
-      }
+      "items": "#minecraft:beds"
     },
     {
-      "ingredient": {
-        "item": "ragium:chlorine_fluid_cube"
-      }
+      "items": "ragium:chlorine_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:coal_ores"
-      }
+      "items": "#minecraft:coal_ores"
     }
   ],
   "machine_type": "ragium:grinder",

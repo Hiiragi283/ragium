@@ -3,21 +3,15 @@
   "inputs": [
     {
       "count": 32,
-      "ingredient": {
-        "tag": "c:plates/silver"
-      }
+      "items": "#c:plates/silver"
     },
     {
       "count": 64,
-      "ingredient": {
-        "item": "ragium:regium_dust"
-      }
+      "items": "ragium:regium_dust"
     },
     {
       "count": 8,
-      "ingredient": {
-        "item": "minecraft:heart_of_the_sea"
-      }
+      "items": "minecraft:heart_of_the_sea"
     }
   ],
   "output": {

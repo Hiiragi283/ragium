@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:jungle_logs"
-      }
+      "items": "#minecraft:jungle_logs"
     }
   ],
   "machine_type": "ragium:saw_mill",

@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:iron_plate"
-      }
+      "items": "ragium:iron_plate"
     }
   ],
   "machine_type": "ragium:grinder",

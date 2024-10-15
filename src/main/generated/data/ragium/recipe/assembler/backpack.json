@@ -3,14 +3,10 @@
   "inputs": [
     {
       "count": 8,
-      "ingredient": {
-        "item": "ragium:pe_plate"
-      }
+      "items": "ragium:pe_plate"
     },
     {
-      "ingredient": {
-        "item": "minecraft:chest"
-      }
+      "items": "minecraft:chest"
     }
   ],
   "machine_type": "ragium:assembler",

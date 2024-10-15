@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:banners"
-      }
+      "items": "#minecraft:banners"
     },
     {
-      "ingredient": {
-        "item": "ragium:chlorine_fluid_cube"
-      }
+      "items": "ragium:chlorine_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

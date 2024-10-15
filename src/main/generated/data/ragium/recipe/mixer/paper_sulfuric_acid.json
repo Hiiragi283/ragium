@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:pulp"
-      }
+      "items": "ragium:pulp"
     },
     {
-      "ingredient": {
-        "item": "ragium:water_fluid_cube"
-      }
+      "items": "ragium:water_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "ragium:sulfuric_acid_fluid_cube"
-      }
+      "items": "ragium:sulfuric_acid_fluid_cube"
     }
   ],
   "machine_type": "ragium:mixer",

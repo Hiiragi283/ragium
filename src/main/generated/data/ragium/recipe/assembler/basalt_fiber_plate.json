@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 4,
-      "ingredient": {
-        "item": "ragium:basalt_fiber"
-      }
+      "items": "ragium:basalt_fiber"
     }
   ],
   "machine_type": "ragium:assembler",

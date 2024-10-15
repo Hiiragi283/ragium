@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:wooden_doors"
-      }
+      "items": "#minecraft:wooden_doors"
     }
   ],
   "machine_type": "ragium:grinder",

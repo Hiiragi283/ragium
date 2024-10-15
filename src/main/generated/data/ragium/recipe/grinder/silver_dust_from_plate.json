@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:plates/silver"
-      }
+      "items": "#c:plates/silver"
     }
   ],
   "machine_type": "ragium:grinder",

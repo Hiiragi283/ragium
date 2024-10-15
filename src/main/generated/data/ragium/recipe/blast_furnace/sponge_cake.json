@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:batter_fluid_cube"
-      }
+      "items": "ragium:batter_fluid_cube"
     },
     {
-      "ingredient": {
-        "item": "ragium:butter"
-      }
+      "items": "ragium:butter"
     }
   ],
   "machine_type": "ragium:blast_furnace",

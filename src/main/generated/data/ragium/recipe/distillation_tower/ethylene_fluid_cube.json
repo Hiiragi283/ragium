@@ -3,9 +3,7 @@
   "inputs": [
     {
       "count": 2,
-      "ingredient": {
-        "item": "ragium:naphtha_fluid_cube"
-      }
+      "items": "ragium:naphtha_fluid_cube"
     }
   ],
   "machine_type": "ragium:distillation_tower",

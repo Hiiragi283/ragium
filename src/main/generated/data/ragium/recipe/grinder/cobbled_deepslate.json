@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "minecraft:deepslate"
-      }
+      "items": "minecraft:deepslate"
     }
   ],
   "machine_type": "ragium:grinder",

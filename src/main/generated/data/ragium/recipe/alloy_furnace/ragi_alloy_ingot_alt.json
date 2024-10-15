@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:ingots/copper"
-      }
+      "items": "#c:ingots/copper"
     },
     {
-      "ingredient": {
-        "item": "ragium:raginite_dust"
-      }
+      "items": "ragium:raginite_dust"
     }
   ],
   "machine_type": "ragium:alloy_furnace",

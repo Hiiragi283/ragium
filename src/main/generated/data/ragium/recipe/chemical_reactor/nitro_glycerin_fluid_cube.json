@@ -2,15 +2,11 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:glycerol_fluid_cube"
-      }
+      "items": "ragium:glycerol_fluid_cube"
     },
     {
       "count": 3,
-      "ingredient": {
-        "item": "ragium:mixture_acid_fluid_cube"
-      }
+      "items": "ragium:mixture_acid_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

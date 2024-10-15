@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:sandstone/red_blocks"
-      }
+      "items": "#c:sandstone/red_blocks"
     }
   ],
   "machine_type": "ragium:grinder",

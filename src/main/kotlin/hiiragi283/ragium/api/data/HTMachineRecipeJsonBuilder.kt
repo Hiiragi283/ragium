@@ -3,8 +3,8 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.WeightedIngredient
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.util.BothEither
@@ -40,7 +40,7 @@ class HTMachineRecipeJsonBuilder private constructor(
             ?: throw IllegalStateException("Machine Type;  ${type.asMachine().id} must be Processor!")
     }
 
-    private val inputs: MutableList<WeightedIngredient> = mutableListOf()
+    private val inputs: MutableList<HTIngredient> = mutableListOf()
     private val outputs: MutableList<HTRecipeResult> = mutableListOf()
     private var catalyst: Ingredient = Ingredient.EMPTY
     private val customData: ComponentChanges.Builder = ComponentChanges.builder()
@@ -49,22 +49,20 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     //    Input    //
 
-    private fun addInput(ingredient: WeightedIngredient): HTMachineRecipeJsonBuilder = apply {
+    private fun addInput(ingredient: HTIngredient): HTMachineRecipeJsonBuilder = apply {
         inputs.add(ingredient)
     }
 
     fun addInput(either: BothEither<ItemConvertible, TagKey<Item>>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
-        either.ifBoth({ addInput(it, count) }, { addInput(it, count) }, false)
+        either.ifBoth({ addInput(it, count) }, { addInput(it, count) }, BothEither.Priority.RIGHT)
     }
 
-    fun addInput(ingredient: Ingredient, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(WeightedIngredient.of(ingredient, count))
-
-    fun addInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(Ingredient.ofItems(item), count).apply {
+    fun addInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(HTIngredient.of(item, count)).apply {
         hasInput(item, suffixCache.toString())
         suffixCache++
     }
 
-    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(Ingredient.fromTag(tagKey), count).apply {
+    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(HTIngredient.of(tagKey, count)).apply {
         hasInput(tagKey, suffixCache.toString())
         suffixCache++
     }

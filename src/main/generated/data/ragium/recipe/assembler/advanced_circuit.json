@@ -2,19 +2,13 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "item": "ragium:ptfe_plate"
-      }
+      "items": "ragium:ptfe_plate"
     },
     {
-      "ingredient": {
-        "item": "ragium:ragi_alloy_plate"
-      }
+      "items": "ragium:ragi_alloy_plate"
     },
     {
-      "ingredient": {
-        "item": "ragium:ragi_crystal_dust"
-      }
+      "items": "ragium:ragi_crystal_dust"
     }
   ],
   "machine_type": "ragium:assembler",

@@ -2,20 +2,14 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:ingots/steel"
-      }
+      "items": "#c:ingots/steel"
     },
     {
       "count": 4,
-      "ingredient": {
-        "item": "ragium:ragi_crystal_dust"
-      }
+      "items": "ragium:ragi_crystal_dust"
     },
     {
-      "ingredient": {
-        "tag": "c:gems/quartz"
-      }
+      "items": "#c:gems/quartz"
     }
   ],
   "machine_type": "ragium:blast_furnace",

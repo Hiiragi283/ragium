@@ -2,14 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "minecraft:wool"
-      }
+      "items": "#minecraft:wool"
     },
     {
-      "ingredient": {
-        "item": "ragium:chlorine_fluid_cube"
-      }
+      "items": "ragium:chlorine_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

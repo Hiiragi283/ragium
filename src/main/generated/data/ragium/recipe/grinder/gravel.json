@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:cobblestones"
-      }
+      "items": "#c:cobblestones"
     }
   ],
   "machine_type": "ragium:grinder",

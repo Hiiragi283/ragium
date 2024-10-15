@@ -2,9 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "ingredient": {
-        "tag": "c:ores/raginite"
-      }
+      "items": "#c:ores/raginite"
     }
   ],
   "machine_type": "ragium:grinder",
