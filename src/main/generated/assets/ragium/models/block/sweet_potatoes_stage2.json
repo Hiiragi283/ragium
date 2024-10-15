@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "ragium:block/sweet_potatoes_stage2"
+  }
+}

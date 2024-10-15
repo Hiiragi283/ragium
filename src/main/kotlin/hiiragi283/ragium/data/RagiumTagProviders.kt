@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.component.HTModularToolComponent
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -61,6 +61,11 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
+
+            RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
+                add(BlockTags.CROPS, crop.cropBlock)
+                add(BlockTags.MAINTAINS_FARMLAND, crop.cropBlock)
+            }
         }
     }
 
@@ -102,8 +107,7 @@ object RagiumTagProviders {
             fun add(tagKey: TagKey<Item>, item: ItemConvertible) {
                 getOrCreateTagBuilder(tagKey).add(item.asItem())
             }
-
-            // conventional
+            
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
@@ -155,6 +159,10 @@ object RagiumTagProviders {
                 content.tagKey?.let { add(it, content) }
             }
 
+            RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops -> 
+                add(ConventionalItemTags.CROPS, crop.seedItem)
+            }
+            
             RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
@@ -171,7 +179,7 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
 
             buildList {
-                addAll(HTModularToolComponent.Behavior.entries)
+                addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
         }
     }

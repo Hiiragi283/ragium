@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
@@ -73,7 +74,7 @@ object HTMachineProvider : IBlockComponentProvider, IServerDataProvider<BlockAcc
         }
 
         val showPreview: Boolean = accessor.readData(PREVIEW).getOrNull() ?: return
-        tooltip.add(Text.literal("Show Preview: $showPreview"))
+        tooltip.add(Text.translatable(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, showPreview))
     }
 
     //    IServerDataProvider    //

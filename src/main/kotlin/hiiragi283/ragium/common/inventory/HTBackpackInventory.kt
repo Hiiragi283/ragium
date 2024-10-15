@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
@@ -46,6 +45,6 @@ class HTBackpackInventory(isLarge: Boolean) :
     override fun getMaxCount(stack: ItemStack): Int = 1024
 
     override fun onClose(player: PlayerEntity) {
-        parent?.set(RagiumComponentTypes.INVENTORY, this)
+        parent?.set(COMPONENT_TYPE, this)
     }
 }

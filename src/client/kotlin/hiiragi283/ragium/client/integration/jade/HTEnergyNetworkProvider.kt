@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.integration.jade
 
 import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.world.HTEnergyNetwork
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.client.MinecraftClient
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
@@ -17,7 +18,7 @@ object HTEnergyNetworkProvider : IBlockComponentProvider {
 
     override fun appendTooltip(tooltip: ITooltip, accessor: BlockAccessor, config: IPluginConfig) {
         MinecraftClient.getInstance().server?.getWorld(accessor.level.registryKey)?.energyNetwork?.let { network: HTEnergyNetwork ->
-            tooltip.add(Text.literal("Stored Energy: ${network.amount} Unit"))
+            tooltip.add(Text.translatable(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, network.amount))
         }
     }
 }

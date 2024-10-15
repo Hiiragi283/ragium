@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -165,6 +166,11 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Accessories.PISTON_BOOTS, "Piston Boots")
             builder.add(RagiumContents.Accessories.PARACHUTE, "Parachute")
 
+            builder.add(RagiumContents.Crops.CANOLA.cropBlock, "Canola")
+            builder.add(RagiumContents.Crops.CANOLA.seedItem, "Canola Seeds")
+            builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "Sweet Potatoes")
+            builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "Sweet Potato")
+            
             builder.add(RagiumContents.Foods.BEE_WAX, "Bee Wax")
             builder.add(RagiumContents.Foods.BUTTER, "Butter")
             builder.add(RagiumContents.Foods.CANDY_APPLE, "Candy Apple")
@@ -179,18 +185,32 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "Alchemy Stuff")
             builder.add(RagiumContents.Misc.BASALT_FIBER, "Basalt Fiber")
+            builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "Crafter's Hammer")
             builder.add(RagiumContents.Misc.DYNAMITE, "Dynamite")
             builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
+            builder.add(RagiumContents.Misc.ENGINE, "V8 Engine")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "Heart of the Nether")
             builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "Oblivion Crystal")
             builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "Spawn Oblivion Cube")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "Ragi-Crystal")
+            builder.add(RagiumContents.Misc.REMOVER_DYNAMITE, "Remover Dynamite")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
 
+            builder.add(HTCrafterHammerItem.Behavior.DEFAULT, "Hammer Module (Default)")
+            builder.add(HTCrafterHammerItem.Behavior.AXE, "Hammer Module (Axe)")
+            builder.add(HTCrafterHammerItem.Behavior.HOE, "Hammer Module (Hoe)")
+            builder.add(HTCrafterHammerItem.Behavior.PICKAXE, "Hammer Module (Pickaxe)")
+            builder.add(HTCrafterHammerItem.Behavior.SHOVEL, "Hammer Module (Shovel)")
+
             builder.add(RagiumFluids.PETROLEUM.bucketItem, "Petroleum Bucket")
+
+            builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "Module: %s")
+            builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
+            builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "Power: %s")
+            builder.add(RagiumTranslationKeys.REMOVER_DYNAMITE_MODE, "Mode: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
@@ -202,6 +222,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
+            builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "Show preview: %s")
             // builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "Energy Capacity: %s E")
 
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
@@ -244,7 +265,10 @@ object RagiumLangProviders {
             // Jade
             builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "Machines")
             builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
+
+            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "Stored Energy: %s Unit")
             // REI
+            builder.add(RagiumTranslationKeys.REI_RECIPE_BIOME, "Found in the biome: %s")
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "Recipe Info")
             builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "Required Scanning!")
         }
@@ -290,13 +314,18 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Accessories.PISTON_BOOTS, "ピストンブーツ")
             builder.add(RagiumContents.Accessories.PARACHUTE, "パラシュート")
 
+            builder.add(RagiumContents.Crops.CANOLA.cropBlock, "アブラナ")
+            builder.add(RagiumContents.Crops.CANOLA.seedItem, "菜種")
+            builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "サツマイモ")
+            builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "サツマイモ")
+            
             builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
             builder.add(RagiumContents.Foods.BUTTER, "バター")
             builder.add(RagiumContents.Foods.CANDY_APPLE, "りんご飴")
             builder.add(RagiumContents.Foods.CARAMEL, "キャラメル")
             builder.add(RagiumContents.Foods.CHOCOLATE, "チョコレート")
-            builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "チョコレートリンゴ")
-            builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "チョコレートパン")
+            builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "チョコリンゴ")
+            builder.add(RagiumContents.Foods.CHOCOLATE_BREAD, "チョコパン")
             builder.add(RagiumContents.Foods.FLOUR, "小麦粉")
             builder.add(RagiumContents.Foods.DOUGH, "生地")
             builder.add(RagiumContents.Foods.MINCED_MEAT, "ひき肉")
@@ -304,18 +333,32 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "錬金の杖")
             builder.add(RagiumContents.Misc.BASALT_FIBER, "玄武岩繊維")
+            builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "クラフターズ・ハンマー")
             builder.add(RagiumContents.Misc.DYNAMITE, "ダイナマイト")
             builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
+            builder.add(RagiumContents.Misc.ENGINE, "V8エンジン")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "地獄の心臓")
             builder.add(RagiumContents.Misc.OBLIVION_CRYSTAL, "忘却の結晶")
             builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "スポーン 忘却の箱")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL, "ラギクリスタリル")
+            builder.add(RagiumContents.Misc.REMOVER_DYNAMITE, "削除用ダイナマイト")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "太陽光パネル")
 
+            builder.add(HTCrafterHammerItem.Behavior.DEFAULT, "ハンマーモジュール（デフォルト）")
+            builder.add(HTCrafterHammerItem.Behavior.AXE, "ハンマーモジュール（アックス）")
+            builder.add(HTCrafterHammerItem.Behavior.HOE, "ハンマーモジュール（クワ）")
+            builder.add(HTCrafterHammerItem.Behavior.PICKAXE, "ハンマーモジュール（ピッケル）")
+            builder.add(HTCrafterHammerItem.Behavior.SHOVEL, "ハンマーモジュール（ショベル）")
+
             builder.add(RagiumFluids.PETROLEUM.bucketItem, "石油バケツ")
+
+            builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "モジュール: %s")
+            builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")
+            builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "威力: %s")
+            builder.add(RagiumTranslationKeys.REMOVER_DYNAMITE_MODE, "モード: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
@@ -327,6 +370,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
+            builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "プレビューの表示: %s")
             // builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "バッテリー容量: %s E")
 
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
@@ -369,7 +413,10 @@ object RagiumLangProviders {
             // Jade
             builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "機械")
             builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
+
+            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "エネルギー量: %s Unit")
             // REI
+            builder.add(RagiumTranslationKeys.REI_RECIPE_BIOME, "次のバイオームで見つかる: %s")
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "レシピ情報")
             builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "スキャンが必要です！")
         }

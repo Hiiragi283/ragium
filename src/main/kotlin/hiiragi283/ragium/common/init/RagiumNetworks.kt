@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.openEnderChest
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.common.inventory.HTBackpackInventory
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
@@ -73,10 +74,10 @@ object RagiumNetworks {
 
     @JvmStatic
     private fun findBackpack(capability: AccessoriesCapability): Pair<ItemStack, HTBackpackInventory>? = capability
-        .getEquipped { it.contains(RagiumComponentTypes.INVENTORY) }
+        .getEquipped { it.contains(HTSimpleInventory.COMPONENT_TYPE) }
         .firstOrNull { it.reference.slotName() == "back" }
         ?.stack
-        ?.let { it to (it.get(RagiumComponentTypes.INVENTORY) as HTBackpackInventory) }
+        ?.let { it to (it.get(HTSimpleInventory.COMPONENT_TYPE) as HTBackpackInventory) }
 
     //    Utils    //
 

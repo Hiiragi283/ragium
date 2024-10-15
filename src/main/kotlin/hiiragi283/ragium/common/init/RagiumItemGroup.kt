@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.ItemGroup
 import net.minecraft.registry.Registries
@@ -46,6 +47,7 @@ object RagiumItemGroup {
 
                     addAll(RagiumContents.Armors.entries)
                     addAll(RagiumContents.Tools.entries)
+                    addAll(HTCrafterHammerItem.Behavior.entries)
                     addAll(RagiumContents.Accessories.entries)
 
                     addAll(RagiumContents.Hulls.entries)

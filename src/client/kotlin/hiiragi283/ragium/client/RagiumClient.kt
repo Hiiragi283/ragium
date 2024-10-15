@@ -3,6 +3,7 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.isModLoaded
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
@@ -85,6 +86,16 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
     //    Blocks    //
 
     private fun registerBlocks() {
+        // cutout
+        registerCutout(RagiumBlocks.ITEM_DISPLAY)
+        RagiumContents.Crops.entries
+            .map(RagiumContents.Crops::cropBlock)
+            .forEach(::registerCutout)
+        
+        RagiumContents.Element.entries
+            .map(RagiumContents.Element::clusterBlock)
+            .forEach(::registerCutout)
+        // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
             RagiumBlocks.POROUS_NETHERRACK,
@@ -92,16 +103,10 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             RagiumBlocks.META_MACHINE,
         )
 
-        registerCutout(RagiumBlocks.ITEM_DISPLAY)
-
         RagiumContents.Ores
             .entries
             .map(RagiumContents.Ores::value)
             .forEach(::registerCutoutMipped)
-
-        RagiumContents.Element.entries
-            .map(RagiumContents.Element::clusterBlock)
-            .forEach(::registerCutout)
 
         RagiumFluids.PETROLEUM.registerClient(Identifier.of("block/black_concrete"))
 
@@ -177,7 +182,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             while (RagiumKeyBinds.OPEN_BACKPACK.wasPressed()) {
                 val capability: AccessoriesCapability = client.player?.accessoriesCapability() ?: break
                 when {
-                    capability.isEquipped { it.contains(RagiumComponentTypes.INVENTORY) } -> HTOpenBackpackPayload.NORMAL
+                    capability.isEquipped { it.contains(HTSimpleInventory.COMPONENT_TYPE) } -> HTOpenBackpackPayload.NORMAL
                     capability.isEquipped(RagiumContents.Accessories.ENDER_BACKPACK.asItem()) -> HTOpenBackpackPayload.ENDER
                     else -> break
                 }.let(ClientPlayNetworking::send)
@@ -227,7 +232,9 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
                     ?.let { biome: RegistryKey<Biome> ->
                         EntryStacks.of(Items.COMPASS).tooltip {
                             listOf(
-                                Text.literal("Found in the biome; ${biome.value}").formatted(Formatting.YELLOW),
+                                Text
+                                    .translatable(RagiumTranslationKeys.REI_RECIPE_BIOME, biome.value)
+                                    .formatted(Formatting.YELLOW),
                             )
                         }
                     }?.let(EntryIngredient::of)

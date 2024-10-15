@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -219,6 +220,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
+        // crops
+        RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
+            generator.registerCrop(crop.cropBlock, Properties.AGE_7, 0, 0, 1, 1, 2, 2, 2, 3)
+        }
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
@@ -272,6 +277,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumContents.Tools.entries)
+            addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.Armors.entries)
             addAll(RagiumContents.Circuits.entries)
             addAll(RagiumContents.Foods.entries)

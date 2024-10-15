@@ -443,6 +443,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.Fluids.REFINED_GAS)
             .addOutput(RagiumContents.Fluids.NAPHTHA, 2)
             .addOutput(RagiumContents.Fluids.TAR)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -451,6 +452,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.Fluids.METHANE, 2)
             .addOutput(RagiumContents.Fluids.LPG)
             .addOutput(RagiumContents.Fluids.HELIUM)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -458,6 +460,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Fluids.NAPHTHA, 2)
             .addOutput(RagiumContents.Fluids.ETHYLENE)
             .addOutput(RagiumContents.Fluids.DIESEL)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -466,6 +469,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(RagiumContents.Fluids.BENZENE)
             .addOutput(RagiumContents.Fluids.TOLUENE)
             .addOutput(RagiumContents.Fluids.PHENOL)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
     }
 
@@ -520,6 +524,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumItemTags.BASALTS)
             .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .addOutput(RagiumContents.Fluids.MOLTEN_BASALT)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -527,6 +532,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Foods.CHOCOLATE)
             .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .addOutput(RagiumContents.Fluids.CHOCOLATE)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -739,6 +745,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Fluids.MILK)
             .addOutput(RagiumContents.Foods.CARAMEL, 4)
             .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder
@@ -748,6 +755,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Fluids.MILK)
             .addOutput(RagiumContents.Foods.CHOCOLATE)
             .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
         HTMachineRecipeJsonBuilder

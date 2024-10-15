@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:heart_of_the_nether"
+  },
   "inputs": [
     {
       "count": 4,

@@ -14,11 +14,7 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
 
-class HTRecipeResult private constructor(
-    val entry: RegistryEntry<Item>,
-    val count: Int,
-    val components: ComponentChanges
-) {
+class HTRecipeResult private constructor(val entry: RegistryEntry<Item>, val count: Int, val components: ComponentChanges) {
     companion object {
         @JvmField
         val EMPTY = HTRecipeResult(RegistryEntry.of(Items.AIR), 0, ComponentChanges.EMPTY)
@@ -70,7 +66,7 @@ class HTRecipeResult private constructor(
             Registries.ITEM
                 .getOrCreateEntryList(tagKey)
                 .let { HTRecipeResult(it, count, components) }
-        */
+         */
     }
 
     val firstItem: Item

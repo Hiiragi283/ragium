@@ -4,7 +4,7 @@
   "group": "ragi_alloy_compound",
   "key": {
     "A": {
-      "item": "ragium:raw_raginite"
+      "item": "ragium:raw_crude_raginite"
     },
     "B": {
       "tag": "c:ingots/copper"

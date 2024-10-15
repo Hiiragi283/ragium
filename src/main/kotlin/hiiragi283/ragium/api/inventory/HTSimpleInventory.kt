@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.inventory
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.init.RagiumNetworks
+import net.minecraft.component.ComponentType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
@@ -26,6 +27,13 @@ open class HTSimpleInventory : Inventory {
             HTSimpleInventory::stacks,
             ::HTSimpleInventory,
         )
+
+        @JvmField
+        val COMPONENT_TYPE: ComponentType<HTSimpleInventory> = ComponentType
+            .builder<HTSimpleInventory>()
+            .codec(CODEC)
+            .packetCodec(PACKET_CODEC)
+            .build()
     }
 
     protected val stacks: DefaultedList<ItemStack>

@@ -5,10 +5,11 @@ import hiiragi283.ragium.api.content.*
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
-import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.block.HTCropsBlock
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.inventory.HTBackpackInventory
 import hiiragi283.ragium.common.item.*
@@ -231,7 +232,7 @@ object RagiumContents : HTContentRegister {
                 itemSettings()
                     .maxCount(1)
                     .fireproof()
-                    .component(RagiumComponentTypes.INVENTORY, HTBackpackInventory(false)),
+                    .component(HTSimpleInventory.COMPONENT_TYPE, HTBackpackInventory(false)),
             )
         },
         LARGE_BACKPACK {
@@ -239,7 +240,7 @@ object RagiumContents : HTContentRegister {
                 itemSettings()
                     .maxCount(1)
                     .fireproof()
-                    .component(RagiumComponentTypes.INVENTORY, HTBackpackInventory(true)),
+                    .component(HTSimpleInventory.COMPONENT_TYPE, HTBackpackInventory(true)),
             )
         },
         ENDER_BACKPACK,
@@ -316,6 +317,19 @@ object RagiumContents : HTContentRegister {
         override val tagKey: TagKey<Item> = RagiumItemTags.CIRCUITS
     }
 
+    //    Crops    //
+
+    enum class Crops(val cropName: String, val seedName: String) : ItemConvertible {
+        CANOLA("canola", "canola_seeds"),
+        SWEET_POTATO("sweet_potatoes", "sweet_potato"),
+        ;
+        
+        val cropBlock = HTCropsBlock()
+        val seedItem = AliasedBlockItem(cropBlock, itemSettings())
+
+        override fun asItem(): Item = seedItem
+    }
+
     //    Foods    //
 
     enum class Foods : HTContent<Item> {
@@ -372,6 +386,9 @@ object RagiumContents : HTContentRegister {
             override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC).maxCount(1))
         },
         BASALT_FIBER,
+        CRAFTER_HAMMER {
+            override fun createItem(): Item = HTCrafterHammerItem
+        },
         DYNAMITE {
             override fun createItem(): Item = HTDynamiteItem
         },
@@ -382,9 +399,6 @@ object RagiumContents : HTContentRegister {
         },
         HEART_OF_THE_NETHER {
             override fun createItem(): Item = Item(itemSettings().rarity(Rarity.UNCOMMON))
-        },
-        MODULAR_TOOL {
-            override fun createItem(): Item = HTModularMiningToolItem(RagiumMaterials.STEEL.tool!!, itemSettings())
         },
         OBLIVION_CRYSTAL {
             override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC))

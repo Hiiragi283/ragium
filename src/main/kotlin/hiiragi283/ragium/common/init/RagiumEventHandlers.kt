@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
@@ -132,7 +133,7 @@ object RagiumEventHandlers {
         // open backpack
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
-            (stack.get(RagiumComponentTypes.INVENTORY) as? HTBackpackInventory)
+            (stack.get(HTSimpleInventory.COMPONENT_TYPE) as? HTBackpackInventory)
                 ?.openInventory(world, player, stack)
                 ?: TypedActionResult.pass(stack)
         }

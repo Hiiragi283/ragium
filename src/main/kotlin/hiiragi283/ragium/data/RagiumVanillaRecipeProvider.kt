@@ -152,6 +152,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Misc.CRAFTER_HAMMER)
+            .patterns(
+                " AA",
+                "BBA",
+                " AA",
+            ).input('A', RagiumItemTags.STEEL_BLOCKS)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .unlockedBy(RagiumItemTags.STEEL_BLOCKS)
+            .offerTo(exporter)
+
+        // steel
+        HTShapedRecipeJsonBuilder
             .create(RagiumContents.Tools.STEEL_SWORD)
             .patterns(
                 "B",
@@ -205,6 +217,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
             .offerTo(exporter)
+        // invar
     }
 
     //    Crafting - Foods    //
@@ -266,7 +279,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "AAA",
                 "ABA",
                 "AAA",
-            ).input('A', RagiumContents.RawMaterials.RAGINITE)
+            ).input('A', RagiumContents.RawMaterials.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
             .unlockedBy(RagiumContents.RawMaterials.RAGINITE)
             .offerTo(exporter)
