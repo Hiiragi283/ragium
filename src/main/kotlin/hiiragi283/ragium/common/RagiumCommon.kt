@@ -7,12 +7,7 @@ import hiiragi283.ragium.common.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.gen.GenerationStep
 
 object RagiumCommon : ModInitializer {
     override fun onInitialize() {
@@ -32,25 +27,21 @@ object RagiumCommon : ModInitializer {
         RagiumRecipeSerializers
         RagiumRecipeTypes
 
-        BiomeModifications.addFeature(
-            BiomeSelectors.foundInOverworld(),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            RegistryKey.of(RegistryKeys.PLACED_FEATURE, RagiumAPI.id("ore_raginite")),
-        )
-
         InternalRagiumAPI.initMachineType()
         RagiumContents
         RagiumContentRegister.registerContents()
 
+        HTHardModeResourceCondition.init()
         RagiumBlockEntityTypes.init()
         RagiumCauldronBehaviors.init()
         RagiumCommands.init()
-        RagiumApiLookupInit.init()
         RagiumEventHandlers.init()
         RagiumItemGroup.init()
-        HTHardModeResourceCondition.init()
         RagiumNetworks.init()
+        RagiumFeatures.init()
 
+        RagiumApiLookupInit.init()
+        
         RagiumAccessoriesInit.init()
 
         RagiumAPI.log { info("Ragium initialized!") }

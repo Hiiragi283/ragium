@@ -10,13 +10,13 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
-import net.minecraft.item.*
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
-import net.minecraft.registry.*
+import net.minecraft.registry.BuiltinRegistries
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory
@@ -30,7 +30,6 @@ import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.text.NumberFormat
-import java.util.*
 
 //    Either    //
 
@@ -95,10 +94,7 @@ fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
 
 //    Registry    //
 
-@JvmField
-val STATIC_LOOKUP: RegistryWrapper.WrapperLookup = RegistryWrapper.WrapperLookup.of(
-    Registries.REGISTRIES.stream().map(Registry<*>::getReadOnlyWrapper),
-)
+fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
 
 //    ScreenHandler    //
 

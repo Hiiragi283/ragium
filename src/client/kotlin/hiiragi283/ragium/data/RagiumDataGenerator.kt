@@ -9,6 +9,7 @@ import net.minecraft.registry.Registerable
 import net.minecraft.registry.RegistryBuilder
 import net.minecraft.registry.RegistryEntryLookup
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.world.gen.feature.ConfiguredFeature
 
 object RagiumDataGenerator : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
@@ -16,11 +17,10 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         // server
         pack.addProvider(::RagiumAdvancementProvider)
         pack.addProvider(::RagiumBlockLootProvider)
-        pack.addProvider(::RagiumEnchantmentProvider)
+        pack.addProvider(::RagiumDynamicRegistryProvider)
         pack.addProvider(::RagiumEntityLootProvider)
         pack.addProvider(::RagiumVanillaRecipeProvider)
         pack.addProvider(::RagiumMachineRecipeProvider)
-        pack.addProvider(::RagiumMultiblockPatternProvider)
         RagiumTagProviders.init(pack)
         // client
         pack.addProvider(::RagiumModelProvider)
@@ -34,7 +34,15 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
             val enchantmentLookup: RegistryEntryLookup<Enchantment> = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT)
             val itemLookup: RegistryEntryLookup<Item> = registerable.getRegistryLookup(RegistryKeys.ITEM)
 
-            RagiumEnchantmentProvider.registerEnchantments(registerable::register, enchantmentLookup, itemLookup)
+            RagiumDynamicRegistryProvider.Bootstraps.registerEnchantments(
+                registerable::register,
+                enchantmentLookup,
+                itemLookup
+            )
+        }
+
+        registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE) { registerable: Registerable<ConfiguredFeature<*, *>> ->
+            RagiumDynamicRegistryProvider.Bootstraps.registerConfigured(registerable::register)
         }
     }
 }

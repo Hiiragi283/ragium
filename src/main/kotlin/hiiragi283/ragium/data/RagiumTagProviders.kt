@@ -62,6 +62,10 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Coils.entries)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
 
+            RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores -> 
+                add(BlockTags.DRAGON_IMMUNE, ore.value)
+            }
+            
             RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
                 add(BlockTags.CROPS, crop.cropBlock)
                 add(BlockTags.MAINTAINS_FARMLAND, crop.cropBlock)

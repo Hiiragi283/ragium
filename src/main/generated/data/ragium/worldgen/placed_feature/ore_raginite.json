@@ -6,22 +6,22 @@
       "count": 8
     },
     {
+      "type": "minecraft:biome"
+    },
+    {
       "type": "minecraft:in_square"
     },
     {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:trapezoid",
-        "min_inclusive": {
-          "absolute": -16
-        },
         "max_inclusive": {
           "absolute": 112
+        },
+        "min_inclusive": {
+          "absolute": -16
         }
       }
-    },
-    {
-      "type": "minecraft:biome"
     }
   ]
 }
