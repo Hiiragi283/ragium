@@ -1,21 +1,22 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.inventory.*
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumMultiblockPatterns
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeEntry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
@@ -106,34 +107,8 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var showPreview: Boolean = false
 
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        // tiles
-        builder.add(-2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        builder.add(-2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        builder.add(2, -1, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        builder.add(2, -1, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILES))
-        // slabs
-        builder.add(-2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        builder.add(-2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        builder.add(2, 0, -2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        builder.add(2, 0, 2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        builder
-            .addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-            .addLayer(-1..1, -1, 2..2, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-            .addLayer(-2..-2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-            .addLayer(2..2, -1, -1..1, HTMultiblockComponent.block(Blocks.DEEPSLATE_TILE_SLAB))
-        // obsidian
-        builder.add(-1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        builder.add(-1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        builder.add(1, -1, -1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        builder.add(1, -1, 1, HTMultiblockComponent.block(Blocks.OBSIDIAN))
-        // crying
-        builder.add(-1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        builder.add(0, -1, -1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        builder.add(0, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        builder.add(0, -1, 1, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-        builder.add(1, -1, 0, HTMultiblockComponent.block(Blocks.CRYING_OBSIDIAN))
-    }
+    override val pattern: RegistryKey<HTMultiblockPattern>
+        get() = RagiumMultiblockPatterns.ALCHEMICAL_INFUSER
 
     //    NamedScreenHandlerFactory    //
 

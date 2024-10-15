@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.util
 
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
-import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import hiiragi283.ragium.common.fluid.HTFluidContent
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -83,7 +83,7 @@ fun <T : HTMultiblockController> renderMultiblock(
 ) {
     if (!controller.showPreview) return
     world?.let {
-        controller.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
+        controller.buildMultiblock(it, HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
     }
 }
 

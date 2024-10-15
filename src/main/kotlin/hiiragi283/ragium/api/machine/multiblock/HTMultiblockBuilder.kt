@@ -6,8 +6,8 @@ fun interface HTMultiblockBuilder {
     /**
      * @see [reborncore.common.blockentity.MultiblockWriter.rotate]
      */
-    private fun rotate(): HTMultiblockBuilder = HTMultiblockBuilder { x: Int, y: Int, z: Int, predicate: HTMultiblockComponent ->
-        add(-z, y, x, predicate)
+    private fun rotate(): HTMultiblockBuilder = HTMultiblockBuilder { x: Int, y: Int, z: Int, component: HTMultiblockComponent ->
+        add(-z, y, x, component)
     }
 
     fun rotate(direction: Direction?): HTMultiblockBuilder = when (direction) {

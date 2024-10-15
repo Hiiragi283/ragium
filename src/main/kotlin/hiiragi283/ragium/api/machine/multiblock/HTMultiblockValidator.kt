@@ -18,7 +18,7 @@ class HTMultiblockValidator(val world: World, val pos: BlockPos, val player: Pla
     ): HTMultiblockBuilder = apply {
         val pos1: BlockPos = pos.add(x, y, z)
         if (isValid) {
-            isValid = component.test(world, pos1)
+            isValid = component.test(world.getBlockState(pos1))
             if (!isValid) {
                 player?.sendMessage(
                     Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, component.toString(), pos1.toString()),

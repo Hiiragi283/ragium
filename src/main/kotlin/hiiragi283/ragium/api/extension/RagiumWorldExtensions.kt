@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.HTHardModeManager
@@ -26,6 +27,9 @@ import kotlin.jvm.optionals.getOrNull
 //    Views    //
 
 fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
+
+fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockController? =
+    (getBlockEntity(pos) as? HTMultiblockController) ?: getMachineEntity(pos) as? HTMultiblockController
 
 fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
     registryManager.get(registryKey).getEntry(key).getOrNull()

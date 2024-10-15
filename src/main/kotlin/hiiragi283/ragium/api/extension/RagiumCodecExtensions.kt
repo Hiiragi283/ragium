@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.extension
 
+import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.minecraft.block.entity.BlockEntity
@@ -45,6 +47,15 @@ fun <T : StringIdentifiable> Iterable<T>.matchNameOrNull(name: String): T? = fir
 fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.xmap(
     { name: String -> entries.firstOrNull { it.asString() == name } },
     StringIdentifiable::asString,
+)
+
+fun <A : Any, B : Any> pairCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Pair<A, B>> = Codec.pair(first.codec(), second.codec())
+
+fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> = pairCodecOf(first, second).toMap()
+
+fun <A : Any, B : Any> Codec<Pair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf().xmap(
+    { pairs: List<Pair<A, B>> -> pairs.associate { it.first to it.second } },
+    { map: Map<A, B> -> map.toList().map { Pair(it.first, it.second) } },
 )
 
 //    PacketCodec    //

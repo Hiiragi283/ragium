@@ -5,16 +5,13 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.LongArgumentType
 import com.mojang.brigadier.context.CommandContext
-import hiiragi283.ragium.api.extension.dataDriveManager
-import hiiragi283.ragium.api.extension.energyNetwork
-import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.extension.networkMap
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockConstructor
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumConfig
-import hiiragi283.ragium.common.block.entity.HTMultiblockController
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
 import net.minecraft.command.CommandRegistryAccess
@@ -188,12 +185,12 @@ object RagiumCommands {
         val pos: BlockPos = BlockPosArgumentType.getBlockPos(context, "pos")
         val world: ServerWorld = context.source.world
         val state: BlockState = world.getBlockState(pos)
-        val controller: HTMultiblockController? = world.getBlockEntity(pos) as? HTMultiblockController
+        val controller: HTMultiblockController? = world.getMultiblockController(pos)
         if (controller != null) {
             val result: Boolean = if (!controller.isValid(state, world, pos)) {
                 val facing: Direction =
                     state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                controller.buildMultiblock(HTMultiblockConstructor(world, pos, replace).rotate(facing))
+                controller.buildMultiblock(world, HTMultiblockConstructor(world, pos, replace).rotate(facing))
                 true
             } else {
                 false

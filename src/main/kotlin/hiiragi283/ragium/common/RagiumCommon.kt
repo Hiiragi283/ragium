@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.extension.tier
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.common.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
@@ -14,6 +15,7 @@ import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
@@ -28,6 +30,8 @@ object RagiumCommon : ModInitializer, HTContentRegister {
     override fun onInitialize() {
         RagiumAPI.log { info("Registering game objects...") }
         RagiumConfig.init()
+
+        DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
 
         HTRecipeComponentTypes
         RagiumComponentTypes

@@ -1,0 +1,274 @@
+[
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      -1,
+      0,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      -1,
+      0,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      -1,
+      0,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      0,
+      0,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      0,
+      0,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      1,
+      0,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      1,
+      0,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:refined_ragi_steel_hull",
+    "pos": [
+      1,
+      0,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      -1,
+      1,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      -1,
+      1,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      -1,
+      1,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      0,
+      1,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      1,
+      1,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      -1,
+      2,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      -1,
+      2,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      -1,
+      2,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      0,
+      2,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      0,
+      2,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      1,
+      2,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_coil",
+    "pos": [
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      -1,
+      3,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      -1,
+      3,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      -1,
+      3,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      0,
+      3,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      0,
+      3,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      0,
+      3,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      1,
+      3,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      1,
+      3,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:advanced_casing",
+    "pos": [
+      1,
+      3,
+      3
+    ]
+  }
+]

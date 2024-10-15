@@ -1,11 +1,10 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.api.machine.multiblock
 
 import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockValidator
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.registry.RegistryKey
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -15,6 +14,12 @@ import net.minecraft.world.World
 
 interface HTMultiblockController {
     var showPreview: Boolean
+    val pattern: RegistryKey<HTMultiblockPattern>
+
+    fun buildMultiblock(world: World, builder: HTMultiblockBuilder): Unit? = world.registryManager
+        .get(HTMultiblockPattern.REGISTRY_KEY)
+        .get(pattern)
+        ?.buildMultiblock(builder)
 
     fun onUseController(
         state: BlockState,
@@ -42,8 +47,6 @@ interface HTMultiblockController {
         }
     }
 
-    fun buildMultiblock(builder: HTMultiblockBuilder)
-
     fun isValid(
         state: BlockState,
         world: World,
@@ -52,8 +55,7 @@ interface HTMultiblockController {
     ): Boolean {
         val direction: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
         val validator = HTMultiblockValidator(world, pos, player)
-        buildMultiblock(validator.rotate(direction))
-        return validator.isValid
+        return buildMultiblock(world, validator.rotate(direction))?.let { validator.isValid } ?: false
     }
 
     fun onSucceeded(
@@ -62,7 +64,7 @@ interface HTMultiblockController {
         pos: BlockPos,
         player: PlayerEntity,
     ) {
-        player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), false)
+        player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), true)
         player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
     }
 

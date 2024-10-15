@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
-import hiiragi283.ragium.common.block.entity.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier

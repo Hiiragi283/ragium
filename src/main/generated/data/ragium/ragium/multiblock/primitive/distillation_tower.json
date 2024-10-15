@@ -1,0 +1,266 @@
+[
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      -1,
+      -1,
+      1
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      -1,
+      -1,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      -1,
+      -1,
+      3
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      0,
+      -1,
+      1
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      0,
+      -1,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      0,
+      -1,
+      3
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      1,
+      -1,
+      1
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      1,
+      -1,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:bricks",
+    "pos": [
+      1,
+      -1,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      -1,
+      0,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      -1,
+      0,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      -1,
+      0,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      0,
+      0,
+      3
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      1,
+      0,
+      1
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      1,
+      0,
+      2
+    ]
+  },
+  {
+    "blocks": "ragium:ragi_alloy_hull",
+    "pos": [
+      1,
+      0,
+      3
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      -1,
+      1,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      0,
+      1,
+      1
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      0,
+      1,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      0,
+      1,
+      3
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      1,
+      1,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:white_concrete",
+    "pos": [
+      -1,
+      2,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:white_concrete",
+    "pos": [
+      0,
+      2,
+      1
+    ]
+  },
+  {
+    "blocks": "minecraft:white_concrete",
+    "pos": [
+      0,
+      2,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:white_concrete",
+    "pos": [
+      0,
+      2,
+      3
+    ]
+  },
+  {
+    "blocks": "minecraft:white_concrete",
+    "pos": [
+      1,
+      2,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      -1,
+      3,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      0,
+      3,
+      1
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      0,
+      3,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      0,
+      3,
+      3
+    ]
+  },
+  {
+    "blocks": "minecraft:red_concrete",
+    "pos": [
+      1,
+      3,
+      2
+    ]
+  },
+  {
+    "blocks": "minecraft:white_concrete",
+    "pos": [
+      0,
+      4,
+      2
+    ]
+  }
+]
