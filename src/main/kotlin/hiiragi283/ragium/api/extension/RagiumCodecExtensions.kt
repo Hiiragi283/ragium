@@ -8,14 +8,10 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket
-import net.minecraft.registry.RegistryKey
-import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
-import net.minecraft.world.PersistentState
 import net.minecraft.world.World
 
 //    Network    //
@@ -62,22 +58,3 @@ fun <T : StringIdentifiable> packetCodecOf(entries: Iterable<T>): PacketCodec<Re
     PacketCodecs.STRING,
     StringIdentifiable::asString,
 ) { name: String -> entries.firstOrNull { it.asString() == name } }
-
-//    PersistentState    //
-
-fun <T : PersistentState> getState(world: ServerWorld, type: PersistentState.Type<T>, id: Identifier): T = world.persistentStateManager
-    .getOrCreate(type, id.splitWith('_'))
-    .apply { markDirty() }
-
-fun <T : PersistentState> getState(world: World, type: PersistentState.Type<T>, id: Identifier): T? {
-    val key: RegistryKey<World> = world.registryKey
-    val server: MinecraftServer = world.server ?: return null
-    return getState(server, key, type, id)
-}
-
-fun <T : PersistentState> getState(
-    server: MinecraftServer,
-    key: RegistryKey<World>,
-    type: PersistentState.Type<T>,
-    id: Identifier,
-): T? = server.getWorld(key)?.let { getState(it, type, id) }

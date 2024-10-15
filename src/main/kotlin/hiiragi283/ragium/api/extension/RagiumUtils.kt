@@ -2,15 +2,10 @@ package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
-import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.entity.Entity
-import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
@@ -22,7 +17,6 @@ import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.registry.*
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory
@@ -34,12 +28,9 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
-import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import net.minecraft.world.WorldView
 import java.text.NumberFormat
 import java.util.*
-import kotlin.jvm.optionals.getOrNull
 
 //    Either    //
 
@@ -136,15 +127,6 @@ inline fun <R> useTransaction(action: (Transaction) -> R): R = Transaction.openO
 
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
-//    World    //
-
-fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
-
-fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
-    registryManager.get(registryKey).getEntry(key).getOrNull()
-
-fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = getEntry(RegistryKeys.ENCHANTMENT, key)
-
 /*fun breakRangedBlock(
     world: World,
     pos: BlockPos,
@@ -175,13 +157,3 @@ fun breakRangedBlock(
             // world.breakBlock(it, true, breaker)
         }
 }*/
-
-fun dropStackAt(entity: Entity, stack: ItemStack) {
-    dropStackAt(entity.world, entity.blockPos, stack)
-}
-
-fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack) {
-    val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
-    itemEntity.setPickupDelay(0)
-    world.spawnEntity(itemEntity)
-}

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.jade
 
+import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.api.world.energyNetwork
 import net.minecraft.client.MinecraftClient
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier

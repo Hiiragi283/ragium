@@ -1,15 +1,10 @@
 package hiiragi283.ragium.api.world
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.MinecraftServer
 import net.minecraft.util.Identifier
 import net.minecraft.world.PersistentState
-
-val MinecraftServer.hardModeManager: HTHardModeManager
-    get() = getState(overworld, HTHardModeManager.TYPE, HTHardModeManager.ID)
 
 class HTHardModeManager() : PersistentState() {
     companion object {

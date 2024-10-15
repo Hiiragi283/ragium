@@ -1,25 +1,12 @@
 package hiiragi283.ragium.api.world
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.MinecraftServer
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.Identifier
 import net.minecraft.world.PersistentState
-import net.minecraft.world.World
-
-val MinecraftServer.dataDriveManager: HTDataDriveManager
-    get() = getState(overworld, HTDataDriveManager.TYPE, HTDataDriveManager.ID)
-
-val ServerWorld.dataDriveManager: HTDataDriveManager
-    get() = server.dataDriveManager
-
-val World.dataDriveManager: HTDataDriveManager?
-    get() = server?.dataDriveManager
 
 class HTDataDriveManager :
     PersistentState(),

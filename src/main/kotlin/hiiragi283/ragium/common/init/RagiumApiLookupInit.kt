@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.world.energyNetwork
+import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage

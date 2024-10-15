@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.world.hardModeManager
+import hiiragi283.ragium.api.extension.hardModeManager
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
