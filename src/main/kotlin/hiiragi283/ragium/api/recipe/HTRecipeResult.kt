@@ -1,9 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.mapCast
 import hiiragi283.ragium.api.extension.toList
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
@@ -12,22 +10,78 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 
-sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
-    abstract val value: Item
+class HTRecipeResult private constructor(private val entryList: RegistryEntryList<Item>, val count: Int, val components: ComponentChanges) {
+    companion object {
+        @JvmField
+        val EMPTY = HTRecipeResult(RegistryEntryList.empty(), 0, ComponentChanges.EMPTY)
 
-    init {
-        check(count > 0) { "Invalid result count; $count" }
+        @JvmField
+        val CODEC: Codec<HTRecipeResult> = RecordCodecBuilder.create { instance ->
+            instance
+                .group(
+                    RegistryCodecs
+                        .entryList(RegistryKeys.ITEM, Registries.ITEM.codec)
+                        .fieldOf("items")
+                        .forGetter(HTRecipeResult::entryList),
+                    Codec
+                        .intRange(1, 99)
+                        .optionalFieldOf("count", 1)
+                        .forGetter(HTRecipeResult::count),
+                    ComponentChanges.CODEC
+                        .optionalFieldOf("components", ComponentChanges.EMPTY)
+                        .forGetter(HTRecipeResult::components),
+                ).apply(instance, ::HTRecipeResult)
+        }
+
+        @JvmField
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult> = PacketCodec.tuple(
+            PacketCodecs.registryEntryList(RegistryKeys.ITEM),
+            HTRecipeResult::entryList,
+            PacketCodecs.INTEGER,
+            HTRecipeResult::count,
+            ComponentChanges.PACKET_CODEC,
+            HTRecipeResult::components,
+            ::HTRecipeResult,
+        )
+
+        @JvmField
+        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<HTRecipeResult>> = PACKET_CODEC.toList()
+
+        @Suppress("DEPRECATION")
+        @JvmStatic
+        fun of(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
+            when (val item1: Item = item.asItem()) {
+                Items.AIR -> EMPTY
+                else -> HTRecipeResult(RegistryEntryList.of(item1.registryEntry), count, components)
+            }
+
+        @JvmStatic
+        fun of(stack: ItemStack): HTRecipeResult = of(stack.item, stack.count, stack.componentChanges)
+
+        @JvmStatic
+        fun of(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
+            Registries.ITEM
+                .getOrCreateEntryList(tagKey)
+                .let { HTRecipeResult(it, count, components) }
     }
 
-    abstract fun writeBuf(buf: RegistryByteBuf)
+    val firstEntry: RegistryEntry<Item>?
+        get() = entryList.firstOrNull()
 
-    fun toStack(): ItemStack = ItemStack(Registries.ITEM.getEntry(value), count, components)
+    val firstItem: Item
+        get() = firstEntry?.value() ?: Items.AIR
+
+    fun toStack(): ItemStack = firstEntry?.let {
+        ItemStack(it, count, components)
+    } ?: ItemStack.EMPTY
 
     fun canAccept(other: ItemStack): Boolean = when {
         other.isEmpty -> true
@@ -47,128 +101,5 @@ sealed class HTRecipeResult(val count: Int, val components: ComponentChanges) {
         }
     }
 
-    companion object {
-        @JvmField
-        val CODEC: Codec<HTRecipeResult> =
-            Codec
-                .xor(ItemImpl.CODEC, TagImpl.CODEC)
-                .xmap(Either<ItemImpl, TagImpl>::mapCast) { result: HTRecipeResult ->
-                    when (result) {
-                        is ItemImpl -> Either.left(result)
-                        is TagImpl -> Either.right(result)
-                    }
-                }
-
-        @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult> =
-            PacketCodec.of(HTRecipeResult::writeBuf) { buf: RegistryByteBuf ->
-                val id: Identifier = buf.readIdentifier()
-                val count: Int = buf.readVarInt()
-                when (buf.readBoolean()) {
-                    true -> {
-                        val item: Item = Registries.ITEM.get(id)
-                        item(item, count)
-                    }
-
-                    false -> {
-                        val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id)
-                        tag(tagKey, count)
-                    }
-                }
-            }
-
-        @JvmField
-        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<HTRecipeResult>> = PACKET_CODEC.toList()
-
-        @JvmStatic
-        fun item(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
-            ItemImpl(item, count, components)
-
-        @JvmStatic
-        fun stack(stack: ItemStack): HTRecipeResult {
-            check(!stack.isEmpty) { "Could not accept empty ItemStack as a recipe result!" }
-            return item(stack.item, stack.count, stack.componentChanges)
-        }
-
-        @JvmStatic
-        fun tag(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
-            TagImpl(tagKey, count, components)
-    }
-
-    //    Item    //
-
-    private class ItemImpl(item: ItemConvertible, count: Int, components: ComponentChanges) :
-        HTRecipeResult(count, components),
-        ItemConvertible by item {
-        companion object {
-            @JvmField
-            val CODEC: Codec<ItemImpl> =
-                RecordCodecBuilder.create { instance ->
-                    instance
-                        .group(
-                            Registries.ITEM.codec
-                                .fieldOf("item")
-                                .forGetter(ItemImpl::asItem),
-                            Codec
-                                .intRange(1, 99)
-                                .optionalFieldOf("count", 1)
-                                .forGetter(ItemImpl::count),
-                            ComponentChanges.CODEC
-                                .optionalFieldOf("components", ComponentChanges.EMPTY)
-                                .forGetter(ItemImpl::components),
-                        ).apply(instance, HTRecipeResult::ItemImpl)
-                }
-        }
-
-        override val value: Item
-
-        init {
-            val item1: Item = item.asItem()
-            check(item1 != Items.AIR) { "Could not accept Items.AIR as a result!" }
-            value = item1
-        }
-
-        override fun writeBuf(buf: RegistryByteBuf) {
-            buf.writeIdentifier(Registries.ITEM.getId(asItem()))
-            buf.writeVarInt(count)
-            buf.writeBoolean(true)
-        }
-    }
-
-    private class TagImpl(private val tagKey: TagKey<Item>, count: Int, components: ComponentChanges) :
-        HTRecipeResult(count, components) {
-        companion object {
-            @JvmField
-            val CODEC: Codec<TagImpl> =
-                RecordCodecBuilder.create { instance ->
-                    instance
-                        .group(
-                            TagKey.unprefixedCodec(RegistryKeys.ITEM).fieldOf("tag").forGetter(TagImpl::tagKey),
-                            Codec
-                                .intRange(1, 99)
-                                .optionalFieldOf("count", 1)
-                                .forGetter(TagImpl::count),
-                            ComponentChanges.CODEC
-                                .optionalFieldOf("components", ComponentChanges.EMPTY)
-                                .forGetter(TagImpl::components),
-                        ).apply(instance, HTRecipeResult::TagImpl)
-                }
-        }
-
-        override val value: Item
-            get() {
-                val item: Item? =
-                    Registries.ITEM
-                        .iterateEntries(tagKey)
-                        .map(RegistryEntry<Item>::value)
-                        .getOrNull(0)
-                return checkNotNull(item) { "TagKey; $tagKey has no elements!" }
-            }
-
-        override fun writeBuf(buf: RegistryByteBuf) {
-            buf.writeIdentifier(tagKey.id)
-            buf.writeVarInt(count)
-            buf.writeBoolean(false)
-        }
-    }
+    override fun toString(): String = "HTRecipeResult[count=$count, item=$entryList, components=$components]"
 }

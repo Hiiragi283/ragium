@@ -80,7 +80,7 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun modifyOutput(input: HTAlchemyRecipe.Input, world: World, recipe: HTAlchemyRecipe) {
         parent.modifyStack(4) { stackIn: ItemStack ->
-            HTRecipeResult.stack(recipe.craft(input, world.registryManager)).modifyStack(stackIn)
+            HTRecipeResult.of(recipe.craft(input, world.registryManager)).modifyStack(stackIn)
         }
     }
 

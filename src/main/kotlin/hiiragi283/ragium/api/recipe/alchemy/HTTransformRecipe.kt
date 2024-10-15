@@ -5,11 +5,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.world.World
 
 class HTTransformRecipe(val target: HTIngredient, val upgrades: List<HTIngredient>, override val result: HTRecipeResult) :
@@ -55,7 +57,9 @@ class HTTransformRecipe(val target: HTIngredient, val upgrades: List<HTIngredien
     )
 
     override fun craft(input: HTAlchemyRecipe.Input, lookup: RegistryWrapper.WrapperLookup): ItemStack {
-        val stack1: ItemStack = input.getStackInSlot(0).copyComponentsToNewStack(result.value, result.count)
+        val parent: ItemStack = input.getStackInSlot(0).copy()
+        val entry: RegistryEntry<Item> = result.firstEntry ?: return parent
+        val stack1 = ItemStack(entry, result.count, parent.componentChanges)
         stack1.applyUnvalidatedChanges(result.components)
         return stack1
     }

@@ -66,7 +66,7 @@ class HTIngredient private constructor(private val entryList: RegistryEntryList<
     val matchingStacks: List<ItemStack>
         get() = entryList.map { ItemStack(it, count) }
 
-    override fun toString(): String = "HTIngredient[count=$count, ingredients=$entryList]"
+    override fun toString(): String = "HTIngredient[count=$count, items=$entryList]"
 
     //    Predicate    //
 

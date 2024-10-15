@@ -73,9 +73,9 @@ class HTMachineRecipeJsonBuilder private constructor(
         outputs.add(result)
     }
 
-    fun addOutput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.item(item, count))
+    fun addOutput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(item, count))
 
-    fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.tag(tagKey, count))
+    fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(tagKey, count))
 
     //    Catalyst    //
 
@@ -106,10 +106,10 @@ class HTMachineRecipeJsonBuilder private constructor(
         criterion("has_input$suffix", RecipeProvider.conditionsFromTag(tagKey))
 
     fun offerSuffix(exporter: RecipeExporter, suffix: String = "") {
-        offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputs[0].value).withSuffixedPath(suffix))
+        offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputs[0].firstItem).withSuffixedPath(suffix))
     }
 
-    fun offerTo(exporter: RecipeExporter, recipeId: Identifier = CraftingRecipeJsonBuilder.getItemId(outputs[0].value)) {
+    fun offerTo(exporter: RecipeExporter, recipeId: Identifier = CraftingRecipeJsonBuilder.getItemId(outputs[0].firstItem)) {
         check(inputs.size in 0..3) { "Invalid input count; ${inputs.size}!" }
         check(outputs.size in 0..3) { "Invalid output count; ${outputs.size}!" }
         if (requireScan) {

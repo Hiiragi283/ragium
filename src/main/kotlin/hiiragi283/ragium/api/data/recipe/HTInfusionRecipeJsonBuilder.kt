@@ -22,11 +22,11 @@ class HTInfusionRecipeJsonBuilder(val output: HTRecipeResult) : CraftingRecipeJs
     private var suffixCache: Int = 0
 
     constructor(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
-        HTRecipeResult.item(item, count, components),
+        HTRecipeResult.of(item, count, components),
     )
 
     constructor(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
-        HTRecipeResult.tag(tagKey, count, components),
+        HTRecipeResult.of(tagKey, count, components),
     )
 
     //    Input    //
@@ -61,7 +61,7 @@ class HTInfusionRecipeJsonBuilder(val output: HTRecipeResult) : CraftingRecipeJs
 
     override fun group(group: String?): CraftingRecipeJsonBuilder = this
 
-    override fun getOutputItem(): Item = output.value
+    override fun getOutputItem(): Item = output.firstItem
 
     fun offerWith(exporter: RecipeExporter, suffix: String = "") {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withSuffixedPath(suffix))
