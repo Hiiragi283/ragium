@@ -1,7 +1,8 @@
-package hiiragi283.ragium.api.component
+package hiiragi283.ragium.common.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraft.item.tooltip.TooltipAppender
@@ -59,7 +60,7 @@ data class HTDynamiteComponent(val power: Float, val canDestroy: Boolean) : Tool
     //    TooltipAppender    //
 
     override fun appendTooltip(context: Item.TooltipContext, tooltip: Consumer<Text>, type: TooltipType) {
-        tooltip.accept(Text.literal("- Power: $power"))
-        tooltip.accept(Text.literal("- Block Destroy: $canDestroy"))
+        tooltip.accept(Text.translatable(RagiumTranslationKeys.DYNAMITE_POWER, power))
+        tooltip.accept(Text.translatable(RagiumTranslationKeys.DYNAMITE_DESTROY, canDestroy))
     }
 }

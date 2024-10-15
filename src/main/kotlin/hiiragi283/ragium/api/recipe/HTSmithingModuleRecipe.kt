@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.component.HTModularToolComponent
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -27,23 +27,24 @@ object HTSmithingModuleRecipe : SmithingRecipe {
     override fun craft(input: SmithingRecipeInput, lookup: RegistryWrapper.WrapperLookup): ItemStack {
         val module: ItemStack = input.template.copy()
         val base: ItemStack = input.base.copy()
-        val baseComponent: HTModularToolComponent =
-            base.getOrDefault(HTModularToolComponent.COMPONENT_TYPE, HTModularToolComponent.DEFAULT)
-        HTModularToolComponent.Behavior.entries
+        val baseComponent: HTCrafterHammerItem.Component =
+            base.getOrDefault(HTCrafterHammerItem.Component.COMPONENT_TYPE, HTCrafterHammerItem.Component.DEFAULT)
+        HTCrafterHammerItem.Behavior.entries
             .firstOrNull { it.asItem() == module.item }
-            ?.let { behavior: HTModularToolComponent.Behavior ->
-                base.set(HTModularToolComponent.COMPONENT_TYPE, baseComponent.copy(behavior = behavior))
+            ?.let { behavior: HTCrafterHammerItem.Behavior ->
+                base.set(HTCrafterHammerItem.Component.COMPONENT_TYPE, baseComponent.copy(behavior = behavior))
             }
         return base
     }
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = RagiumContents.Misc.MODULAR_TOOL.value.defaultStack
+    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack =
+        RagiumContents.Misc.CRAFTER_HAMMER.value.defaultStack
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MODULE_INSTALL
 
     override fun testTemplate(stack: ItemStack): Boolean = stack.isIn(RagiumItemTags.TOOL_MODULES)
 
-    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.Misc.MODULAR_TOOL.value)
+    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.Misc.CRAFTER_HAMMER.value)
 
     override fun testAddition(stack: ItemStack): Boolean = false
 }

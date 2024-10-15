@@ -2,12 +2,12 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.component.HTDynamiteComponent
-import hiiragi283.ragium.api.component.HTModularToolComponent
-import hiiragi283.ragium.api.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.common.component.HTDynamiteComponent
+import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -19,7 +19,7 @@ object RagiumComponentTypes {
 
     @JvmField
     val INVENTORY: ComponentType<HTSimpleInventory> =
-        register("inventory", HTSimpleInventory.CODEC, HTSimpleInventory.PACKET_CODEC)
+        register("inventory", HTSimpleInventory.COMPONENT_TYPE)
 
     //    Tool    //
 
@@ -28,8 +28,8 @@ object RagiumComponentTypes {
         register("dynamite", HTDynamiteComponent.CODEC, HTDynamiteComponent.PACKET_CODEC)
 
     @JvmField
-    val MODULAR_TOOL: ComponentType<HTModularToolComponent> =
-        register("modular_tool", HTModularToolComponent.COMPONENT_TYPE)
+    val CRAFTER_HAMMER: ComponentType<HTCrafterHammerItem.Component> =
+        register("crafter_hammer", HTCrafterHammerItem.Component.COMPONENT_TYPE)
 
     @JvmField
     val REMOVER_DYNAMITE: ComponentType<HTRemoverDynamiteBehaviors> =

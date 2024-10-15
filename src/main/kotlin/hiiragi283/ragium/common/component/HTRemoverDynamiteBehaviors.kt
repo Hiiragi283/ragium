@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.component
+package hiiragi283.ragium.common.component
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.codecOf
@@ -59,7 +59,7 @@ enum class HTRemoverDynamiteBehaviors : StringIdentifiable {
                 Direction.UP -> hitY + 1
                 else -> hitY
             }
-            ChunkPos(hitResult.blockPos).forEach(minY..hitY + 15) { pos: BlockPos ->
+            ChunkPos(hitResult.blockPos).forEach(minY..world.height) { pos: BlockPos ->
                 world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
             }
         }

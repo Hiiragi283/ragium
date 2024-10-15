@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.entity.HTRemoverDynamiteEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
@@ -21,7 +22,7 @@ object HTRemoverDynamiteItem : HTThrowableItem(itemSettings()) {
         type: TooltipType,
     ) {
         stack.get(RagiumComponentTypes.REMOVER_DYNAMITE)?.let {
-            tooltip.add(Text.literal("- Mode: $it"))
+            tooltip.add(Text.translatable(RagiumTranslationKeys.REMOVER_DYNAMITE_MODE, it))
         }
     }
 

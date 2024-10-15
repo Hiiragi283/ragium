@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.api.component.HTDynamiteComponent
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import net.minecraft.entity.EntityType
