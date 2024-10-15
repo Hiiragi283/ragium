@@ -75,7 +75,7 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     fun addOutput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(item, count))
 
-    fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(tagKey, count))
+    // fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(tagKey, count))
 
     //    Catalyst    //
 

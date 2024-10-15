@@ -12,25 +12,24 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.entry.RegistryEntryList
-import net.minecraft.registry.tag.TagKey
 
-class HTRecipeResult private constructor(private val entryList: RegistryEntryList<Item>, val count: Int, val components: ComponentChanges) {
+class HTRecipeResult private constructor(
+    val entry: RegistryEntry<Item>,
+    val count: Int,
+    val components: ComponentChanges
+) {
     companion object {
         @JvmField
-        val EMPTY = HTRecipeResult(RegistryEntryList.empty(), 0, ComponentChanges.EMPTY)
+        val EMPTY = HTRecipeResult(RegistryEntry.of(Items.AIR), 0, ComponentChanges.EMPTY)
 
         @JvmField
         val CODEC: Codec<HTRecipeResult> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    RegistryCodecs
-                        .entryList(RegistryKeys.ITEM, Registries.ITEM.codec)
-                        .fieldOf("items")
-                        .forGetter(HTRecipeResult::entryList),
+                    Registries.ITEM.entryCodec
+                        .fieldOf("item")
+                        .forGetter(HTRecipeResult::entry),
                     Codec
                         .intRange(1, 99)
                         .optionalFieldOf("count", 1)
@@ -43,8 +42,8 @@ class HTRecipeResult private constructor(private val entryList: RegistryEntryLis
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult> = PacketCodec.tuple(
-            PacketCodecs.registryEntryList(RegistryKeys.ITEM),
-            HTRecipeResult::entryList,
+            PacketCodecs.registryCodec(Registries.ITEM.entryCodec),
+            HTRecipeResult::entry,
             PacketCodecs.INTEGER,
             HTRecipeResult::count,
             ComponentChanges.PACKET_CODEC,
@@ -60,28 +59,24 @@ class HTRecipeResult private constructor(private val entryList: RegistryEntryLis
         fun of(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
             when (val item1: Item = item.asItem()) {
                 Items.AIR -> EMPTY
-                else -> HTRecipeResult(RegistryEntryList.of(item1.registryEntry), count, components)
+                else -> HTRecipeResult(item1.registryEntry, count, components)
             }
 
         @JvmStatic
         fun of(stack: ItemStack): HTRecipeResult = of(stack.item, stack.count, stack.componentChanges)
 
-        @JvmStatic
+        /*@JvmStatic
         fun of(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
             Registries.ITEM
                 .getOrCreateEntryList(tagKey)
                 .let { HTRecipeResult(it, count, components) }
+        */
     }
 
-    val firstEntry: RegistryEntry<Item>?
-        get() = entryList.firstOrNull()
-
     val firstItem: Item
-        get() = firstEntry?.value() ?: Items.AIR
+        get() = entry.value()
 
-    fun toStack(): ItemStack = firstEntry?.let {
-        ItemStack(it, count, components)
-    } ?: ItemStack.EMPTY
+    fun toStack(): ItemStack = ItemStack(entry, count, components)
 
     fun canAccept(other: ItemStack): Boolean = when {
         other.isEmpty -> true
@@ -101,5 +96,5 @@ class HTRecipeResult private constructor(private val entryList: RegistryEntryLis
         }
     }
 
-    override fun toString(): String = "HTRecipeResult[count=$count, item=$entryList, components=$components]"
+    override fun toString(): String = "HTRecipeResult[count=$count, item=$entry, components=$components]"
 }

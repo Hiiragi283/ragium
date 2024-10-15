@@ -26,9 +26,9 @@ class HTTransformRecipeJsonBuilder(val result: HTRecipeResult) : CraftingRecipeJ
         HTRecipeResult.of(item, count, components),
     )
 
-    constructor(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
+    /*constructor(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
         HTRecipeResult.of(tagKey, count, components),
-    )
+    )*/
 
     //    Input    //
 
