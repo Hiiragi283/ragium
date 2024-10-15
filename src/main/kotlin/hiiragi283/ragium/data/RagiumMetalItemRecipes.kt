@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.data.HTMetalItemRecipeRegistry
+import hiiragi283.ragium.api.data.recipe.HTMetalItemRecipeRegistry
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.api.util.BothEither
 import hiiragi283.ragium.common.RagiumContents

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.recipe
 
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.criterion.InventoryChangedCriterion

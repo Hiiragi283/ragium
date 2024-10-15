@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.util.BothEither
 import net.minecraft.advancement.Advancement
@@ -14,28 +14,28 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Ingredient
-import net.minecraft.recipe.RawShapedRecipe
-import net.minecraft.recipe.ShapedRecipe
+import net.minecraft.recipe.ShapelessRecipe
 import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import net.minecraft.util.collection.DefaultedList
 
-class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : CraftingRecipeJsonBuilder {
+class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : CraftingRecipeJsonBuilder {
     companion object {
         @JvmStatic
-        fun create(output: ItemStack): HTShapedRecipeJsonBuilder = HTShapedRecipeJsonBuilder(output)
+        fun create(output: ItemStack): HTShapelessRecipeJsonBuilder = HTShapelessRecipeJsonBuilder(output)
 
         @JvmStatic
         fun create(
             output: ItemConvertible,
             count: Int = 1,
             components: ComponentChanges = ComponentChanges.EMPTY,
-        ): HTShapedRecipeJsonBuilder = create(ItemStack(Registries.ITEM.getEntry(output.asItem()), count, components))
+        ): HTShapelessRecipeJsonBuilder = create(ItemStack(Registries.ITEM.getEntry(output.asItem()), count, components))
     }
 
     private lateinit var patterns: Array<out String>
-    private val inputMap: MutableMap<Char, Ingredient> = mutableMapOf()
+    private val inputs: DefaultedList<Ingredient> = DefaultedList.of()
     private val criteriaMap: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var group: String? = null
 
@@ -43,36 +43,21 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    fun input(char: Char, either: BothEither<ItemConvertible, TagKey<Item>>): HTShapedRecipeJsonBuilder = apply {
-        either.ifBoth({ input(char, it) }, { input(char, it) }, BothEither.Priority.RIGHT)
+    fun input(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
+        either.ifBoth({ input(it) }, { input(it) }, BothEither.Priority.RIGHT)
     }
 
-    fun input(char: Char, item: ItemConvertible): HTShapedRecipeJsonBuilder = input(char, Ingredient.ofItems(item))
+    fun input(item: ItemConvertible): HTShapelessRecipeJsonBuilder = input(Ingredient.ofItems(item))
 
-    fun input(char: Char, tagKey: TagKey<Item>): HTShapedRecipeJsonBuilder = input(char, Ingredient.fromTag(tagKey))
+    fun input(tagKey: TagKey<Item>): HTShapelessRecipeJsonBuilder = input(Ingredient.fromTag(tagKey))
 
-    fun input(char: Char, ingredient: Ingredient): HTShapedRecipeJsonBuilder = apply {
-        when {
-            inputMap.contains(char) -> throw IllegalArgumentException("Symbol '$char' is already defined!")
-            char == ' ' -> throw java.lang.IllegalArgumentException("Symbol ' ' (whitespace) is reserved and cannot be defined!")
-            else -> inputMap[char] = ingredient
-        }
+    fun input(ingredient: Ingredient): HTShapelessRecipeJsonBuilder = apply {
+        inputs.add(ingredient)
     }
 
-    fun patterns(vararg patterns: String): HTShapedRecipeJsonBuilder = apply {
-        when {
-            patterns
-                .map(String::length)
-                .toSet()
-                .size > 1 -> throw IllegalArgumentException("Pattern must be the same width on every line!")
+    fun unlockedBy(item: ItemConvertible): HTShapelessRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromItem(item))
 
-            else -> this.patterns = patterns
-        }
-    }
-
-    fun unlockedBy(item: ItemConvertible): HTShapedRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromItem(item))
-
-    fun unlockedBy(tagKey: TagKey<Item>): HTShapedRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromTag(tagKey))
+    fun unlockedBy(tagKey: TagKey<Item>): HTShapelessRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromTag(tagKey))
 
     fun offerPrefix(exporter: RecipeExporter, prefix: String) {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withPrefixedPath(prefix))
@@ -84,7 +69,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
     //    CraftingRecipeJsonBuilder    //
 
-    fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapedRecipeJsonBuilder = apply {
+    fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
         either.ifBoth(
             { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
             { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
@@ -92,30 +77,28 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         )
     }
 
-    override fun criterion(name: String, criterion: AdvancementCriterion<*>): HTShapedRecipeJsonBuilder = apply {
+    override fun criterion(name: String, criterion: AdvancementCriterion<*>): HTShapelessRecipeJsonBuilder = apply {
         criteriaMap[name] = criterion
     }
 
-    override fun group(group: String?): HTShapedRecipeJsonBuilder = apply {
+    override fun group(group: String?): HTShapelessRecipeJsonBuilder = apply {
         this.group = group
     }
 
     override fun getOutputItem(): Item = output.item
 
     override fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
-        val fixedId: Identifier = recipeId.withPrefixedPath("shaped/")
-        val rawRecipe: RawShapedRecipe = RawShapedRecipe.create(inputMap, patterns.toList())
+        val fixedId: Identifier = recipeId.withPrefixedPath("shapeless/")
         val builder: Advancement.Builder = exporter.advancementBuilder
             .criterion("has_the_recipe", RecipeUnlockedCriterion.create(fixedId))
             .rewards(AdvancementRewards.Builder.recipe(fixedId))
             .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
         criteriaMap.forEach(builder::criterion)
-        val recipe = ShapedRecipe(
+        val recipe = ShapelessRecipe(
             group ?: "",
             CraftingRecipeJsonBuilder.toCraftingCategory(RecipeCategory.MISC),
-            rawRecipe,
             output,
-            true,
+            inputs,
         )
         exporter.accept(
             fixedId,

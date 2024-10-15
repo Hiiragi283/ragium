@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.data.HTInfusionRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTMetalItemRecipeRegistry
+import hiiragi283.ragium.api.data.recipe.HTInfusionRecipeJsonBuilder
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.api.data.recipe.HTMetalItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumItemTags
