@@ -97,27 +97,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun assembler(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
-            .addInput(RagiumContents.Plates.PE, 8)
-            .addInput(Items.CHEST)
-            .addOutput(RagiumContents.Accessories.BACKPACK)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .addInput(RagiumContents.Plates.PVC, 8)
-            .addInput(Items.CHEST)
-            .addOutput(RagiumContents.Accessories.LARGE_BACKPACK)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.ADVANCED)
-            .addInput(RagiumContents.Plates.PTFE, 8)
-            .addInput(Items.ENDER_EYE)
-            .addOutput(RagiumContents.Accessories.ENDER_BACKPACK)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .addInput(RagiumContents.Plates.PE)
             .addInput(RagiumItemTags.COPPER_PLATES)
             .addInput(ConventionalItemTags.REDSTONE_DUSTS)

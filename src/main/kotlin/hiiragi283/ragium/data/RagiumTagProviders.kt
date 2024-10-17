@@ -62,10 +62,10 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Coils.entries)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
 
-            RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores -> 
+            RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore.value)
             }
-            
+
             RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
                 add(BlockTags.CROPS, crop.cropBlock)
                 add(BlockTags.MAINTAINS_FARMLAND, crop.cropBlock)
@@ -111,7 +111,7 @@ object RagiumTagProviders {
             fun add(tagKey: TagKey<Item>, item: ItemConvertible) {
                 getOrCreateTagBuilder(tagKey).add(item.asItem())
             }
-            
+
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
@@ -163,10 +163,10 @@ object RagiumTagProviders {
                 content.tagKey?.let { add(it, content) }
             }
 
-            RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops -> 
+            RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
                 add(ConventionalItemTags.CROPS, crop.seedItem)
             }
-            
+
             RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.BlockState
 import net.minecraft.block.LeveledCauldronBlock
@@ -20,7 +21,7 @@ object RagiumCauldronBehaviors {
             CauldronBehavior.WATER_CAULDRON_BEHAVIOR,
             RagiumContents.Dusts.CRUDE_RAGINITE,
         ) { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
-            if (stack.isOf(RagiumContents.Dusts.CRUDE_RAGINITE.asItem())) {
+            if (stack.isOf(RagiumContents.Dusts.CRUDE_RAGINITE)) {
                 if (!world.isClient) {
                     val count: Int = stack.count
                     stack.count = -1

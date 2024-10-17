@@ -5,13 +5,11 @@ import hiiragi283.ragium.api.content.*
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
 import hiiragi283.ragium.common.block.HTCropsBlock
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.inventory.HTBackpackInventory
 import hiiragi283.ragium.common.item.*
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -228,22 +226,8 @@ object RagiumContents : HTContentRegister {
 
     enum class Accessories : HTContent<Item> {
         BACKPACK {
-            override fun createItem(): Item = Item(
-                itemSettings()
-                    .maxCount(1)
-                    .fireproof()
-                    .component(HTSimpleInventory.COMPONENT_TYPE, HTBackpackInventory(false)),
-            )
+            override fun createItem(): Item = HTBackpackItem
         },
-        LARGE_BACKPACK {
-            override fun createItem(): Item = Item(
-                itemSettings()
-                    .maxCount(1)
-                    .fireproof()
-                    .component(HTSimpleInventory.COMPONENT_TYPE, HTBackpackInventory(true)),
-            )
-        },
-        ENDER_BACKPACK,
         DIVING_GOGGLES,
         NIGHT_VISION_GOGGLES,
         PISTON_BOOTS,
@@ -323,7 +307,7 @@ object RagiumContents : HTContentRegister {
         CANOLA("canola", "canola_seeds"),
         SWEET_POTATO("sweet_potatoes", "sweet_potato"),
         ;
-        
+
         val cropBlock = HTCropsBlock()
         val seedItem = AliasedBlockItem(cropBlock, itemSettings())
 
@@ -422,6 +406,7 @@ object RagiumContents : HTContentRegister {
         },
         SOAP_INGOT,
         SOLAR_PANEL,
+        TRADER_CATALOG,
         ;
 
         internal open fun createItem(): Item = Item(itemSettings())

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.content.HTContent
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.AbstractBlock
@@ -46,6 +47,8 @@ operator fun <O : Any, S : Any> State<O, S>.contains(property: Property<*>): Boo
 operator fun <O : Any, S : Any, T : Comparable<T>, U : State<O, S>> U.set(property: Property<T>, value: T): U = apply {
     with(property, value)
 }
+
+fun BlockState.isOf(content: HTContent<Block>): Boolean = isOf(content.value)
 
 //    BlockApiLookup    //
 

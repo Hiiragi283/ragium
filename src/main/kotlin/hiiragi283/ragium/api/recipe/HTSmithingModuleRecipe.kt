@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -44,7 +45,7 @@ object HTSmithingModuleRecipe : SmithingRecipe {
 
     override fun testTemplate(stack: ItemStack): Boolean = stack.isIn(RagiumItemTags.TOOL_MODULES)
 
-    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.Misc.CRAFTER_HAMMER.value)
+    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.Misc.CRAFTER_HAMMER)
 
     override fun testAddition(stack: ItemStack): Boolean = false
 }

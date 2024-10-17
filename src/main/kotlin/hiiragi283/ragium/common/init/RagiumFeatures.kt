@@ -27,7 +27,7 @@ object RagiumFeatures {
     @JvmStatic
     private fun create(name: String): Data = Data(
         RegistryKey.of(RegistryKeys.CONFIGURED_FEATURE, RagiumAPI.id(name)),
-        RegistryKey.of(RegistryKeys.PLACED_FEATURE, RagiumAPI.id(name))
+        RegistryKey.of(RegistryKeys.PLACED_FEATURE, RagiumAPI.id(name)),
     )
 
     @JvmStatic
@@ -58,15 +58,11 @@ object RagiumFeatures {
             PATCH_END_OBLIVION_CLUSTER.featureKey,
         )
     }
-    
+
     //    Data    //
-    
-    data class Data(
-        val configuredKey: RegistryKey<ConfiguredFeature<*, *>>,
-        val featureKey: RegistryKey<PlacedFeature>
-    ) {
+
+    data class Data(val configuredKey: RegistryKey<ConfiguredFeature<*, *>>, val featureKey: RegistryKey<PlacedFeature>) {
         fun getConfiguredEntry(lookup: RegistryEntryLookup<ConfiguredFeature<*, *>>): RegistryEntry.Reference<ConfiguredFeature<*, *>> =
             lookup.getOrThrow(configuredKey)
     }
-
 }

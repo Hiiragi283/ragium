@@ -52,8 +52,6 @@ object RagiumAccessoriesInit {
         )
 
         registerAccessory(RagiumContents.Accessories.BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
-        registerAccessory(RagiumContents.Accessories.LARGE_BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
-        registerAccessory(RagiumContents.Accessories.ENDER_BACKPACK, HTEmptyAccessory, HTDefaultAccessorySlots.BACK)
         // pendant
         registerAccessory(
             RagiumContents.Element.RAGIUM.pendantItem,

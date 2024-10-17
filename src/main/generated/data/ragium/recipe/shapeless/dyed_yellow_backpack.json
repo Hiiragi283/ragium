@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:backpack"
+    },
+    {
+      "tag": "c:dyes/yellow"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "yellow"
+    },
+    "count": 1,
+    "id": "ragium:backpack"
+  }
+}

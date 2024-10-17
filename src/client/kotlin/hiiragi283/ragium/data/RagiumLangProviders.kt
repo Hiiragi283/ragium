@@ -159,8 +159,6 @@ object RagiumLangProviders {
             builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Items
             builder.add(RagiumContents.Accessories.BACKPACK, "Backpack")
-            builder.add(RagiumContents.Accessories.LARGE_BACKPACK, "Large Backpack")
-            builder.add(RagiumContents.Accessories.ENDER_BACKPACK, "Ender Backpack")
             builder.add(RagiumContents.Accessories.DIVING_GOGGLES, "Diving Goggle")
             builder.add(RagiumContents.Accessories.NIGHT_VISION_GOGGLES, "Night Vision Goggle")
             builder.add(RagiumContents.Accessories.PISTON_BOOTS, "Piston Boots")
@@ -170,7 +168,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Crops.CANOLA.seedItem, "Canola Seeds")
             builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "Sweet Potatoes")
             builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "Sweet Potato")
-            
+
             builder.add(RagiumContents.Foods.BEE_WAX, "Bee Wax")
             builder.add(RagiumContents.Foods.BUTTER, "Butter")
             builder.add(RagiumContents.Foods.CANDY_APPLE, "Candy Apple")
@@ -306,9 +304,7 @@ object RagiumLangProviders {
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
             builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
             // Items
-            builder.add(RagiumContents.Accessories.BACKPACK, "バックパック")
-            builder.add(RagiumContents.Accessories.LARGE_BACKPACK, "大型パックパック")
-            builder.add(RagiumContents.Accessories.ENDER_BACKPACK, "エンダーパックパック")
+            builder.add(RagiumContents.Accessories.BACKPACK, "パックパック")
             builder.add(RagiumContents.Accessories.DIVING_GOGGLES, "潜水ゴーグル")
             builder.add(RagiumContents.Accessories.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
             builder.add(RagiumContents.Accessories.PISTON_BOOTS, "ピストンブーツ")
@@ -318,7 +314,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Crops.CANOLA.seedItem, "菜種")
             builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "サツマイモ")
             builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "サツマイモ")
-            
+
             builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
             builder.add(RagiumContents.Foods.BUTTER, "バター")
             builder.add(RagiumContents.Foods.CANDY_APPLE, "りんご飴")

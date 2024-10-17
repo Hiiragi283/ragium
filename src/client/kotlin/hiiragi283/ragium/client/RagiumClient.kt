@@ -3,7 +3,6 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.isModLoaded
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
@@ -91,7 +90,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         RagiumContents.Crops.entries
             .map(RagiumContents.Crops::cropBlock)
             .forEach(::registerCutout)
-        
+
         RagiumContents.Element.entries
             .map(RagiumContents.Element::clusterBlock)
             .forEach(::registerCutout)
@@ -147,6 +146,10 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> fluid.color.rgb }, fluid)
         }
+
+        ColorProviderRegistry.ITEM.register({ stack: ItemStack, tint: Int ->
+            stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
+        }, RagiumContents.Accessories.BACKPACK)
     }
 
     //    Screens    //
@@ -161,14 +164,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
     private fun registerEvents() {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
-            // register block state resolver
-            /*HTMachineBlockRegistry.forEachBlock { block: HTMachineBlock ->
-                context.registerBlockStateResolver(block) { context1: BlockStateResolver.Context ->
-                    context1.block().stateManager.states.forEach { state: BlockState ->
-                        context1.setModel(state, HTMachineModel)
-                    }
-                }
-            }*/
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
                 when (HTMachineModel.MODEL_ID) {
@@ -181,11 +176,9 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         ClientTickEvents.END_CLIENT_TICK.register { client: MinecraftClient ->
             while (RagiumKeyBinds.OPEN_BACKPACK.wasPressed()) {
                 val capability: AccessoriesCapability = client.player?.accessoriesCapability() ?: break
-                when {
-                    capability.isEquipped { it.contains(HTSimpleInventory.COMPONENT_TYPE) } -> HTOpenBackpackPayload.NORMAL
-                    capability.isEquipped(RagiumContents.Accessories.ENDER_BACKPACK.asItem()) -> HTOpenBackpackPayload.ENDER
-                    else -> break
-                }.let(ClientPlayNetworking::send)
+                if (capability.isEquipped(RagiumContents.Accessories.BACKPACK.asItem())) {
+                    ClientPlayNetworking.send(HTOpenBackpackPayload.ENDER)
+                }
             }
         }
     }

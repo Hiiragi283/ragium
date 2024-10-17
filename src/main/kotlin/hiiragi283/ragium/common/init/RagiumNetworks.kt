@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.openEnderChest
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.common.inventory.HTBackpackInventory
+import hiiragi283.ragium.api.extension.openBackpackScreen
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
@@ -58,26 +56,15 @@ object RagiumNetworks {
             val player: ServerPlayerEntity = context.player()
             val world: World = player.world
             val capability: AccessoriesCapability = player.accessoriesCapability() ?: return@registerGlobalReceiver
-            when (payload) {
-                HTOpenBackpackPayload.ENDER -> {
-                    openEnderChest(world, player)
-                }
-
-                else -> {
-                    findBackpack(capability)?.let { (stack: ItemStack, inventory: HTBackpackInventory) ->
-                        inventory.openInventory(world, player, stack)
-                    }
-                }
+            if (payload == HTOpenBackpackPayload.ENDER) {
+                capability
+                    .getEquipped { it.contains(RagiumComponentTypes.COLOR) }
+                    ?.firstOrNull { it.reference.slotName() == "back" }
+                    ?.stack
+                    ?.let { stack: ItemStack -> openBackpackScreen(world, player, stack) }
             }
         }
     }
-
-    @JvmStatic
-    private fun findBackpack(capability: AccessoriesCapability): Pair<ItemStack, HTBackpackInventory>? = capability
-        .getEquipped { it.contains(HTSimpleInventory.COMPONENT_TYPE) }
-        .firstOrNull { it.reference.slotName() == "back" }
-        ?.stack
-        ?.let { it to (it.get(HTSimpleInventory.COMPONENT_TYPE) as HTBackpackInventory) }
 
     //    Utils    //
 

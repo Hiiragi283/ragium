@@ -4,13 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.inventory.HTBackpackInventory
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
@@ -36,6 +34,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.village.*
 import net.minecraft.world.World
 
 object RagiumEventHandlers {
@@ -89,7 +88,6 @@ object RagiumEventHandlers {
         }
 
         // DefaultItemComponentEvents
-
         /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
             if (entityType.spawnGroup == SpawnGroup.MONSTER && reason == SpawnReason.NATURAL) TriState.FALSE else TriState.DEFAULT
         }
@@ -130,25 +128,6 @@ object RagiumEventHandlers {
             }
         }
 
-        // open backpack
-        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
-            val stack: ItemStack = player.getStackInHand(hand)
-            (stack.get(HTSimpleInventory.COMPONENT_TYPE) as? HTBackpackInventory)
-                ?.openInventory(world, player, stack)
-                ?: TypedActionResult.pass(stack)
-        }
-
-        // open ender chest
-        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
-            val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.isOf(RagiumContents.Accessories.ENDER_BACKPACK.asItem())) {
-                openEnderChest(world, player)
-                TypedActionResult.success(stack, world.isClient)
-            } else {
-                TypedActionResult.pass(stack)
-            }
-        }
-
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
             if (stack.hasEnchantments()) {
@@ -160,6 +139,14 @@ object RagiumEventHandlers {
                 TypedActionResult.success(stack, world.isClient)
             }
             TypedActionResult.pass(stack)
+        }
+
+        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
+            val stack: ItemStack = player.getStackInHand(hand)
+            if (stack.isOf(RagiumContents.Misc.TRADER_CATALOG)) {
+                openTraderScreen(player, world)
+            }
+            TypedActionResult.success(stack, world.isClient)
         }
     }
 

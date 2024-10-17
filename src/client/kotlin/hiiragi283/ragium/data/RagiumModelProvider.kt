@@ -132,6 +132,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         .register(6, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice6"))),
                 ),
         )
+        registerSimple(RagiumBlocks.SALT_BLOCK, Identifier.of("block/white_concrete_powder"))
 
         register(RagiumBlocks.INFESTING) {
             accept(
@@ -139,7 +140,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     .create(it)
                     .coordinate(
                         BlockStateVariantMap
-                            .create(net.minecraft.state.property.Properties.ENABLED)
+                            .create(Properties.ENABLED)
                             .register(false, buildModelVariant(TextureMap.getId(Blocks.GRAY_CONCRETE_POWDER)))
                             .register(true, buildModelVariant(TextureMap.getId(Blocks.LIGHT_GRAY_CONCRETE_POWDER))),
                     ),
@@ -261,13 +262,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
 
-        buildList {
-            add(RagiumContents.Accessories.DIVING_GOGGLES)
-            add(RagiumContents.Accessories.NIGHT_VISION_GOGGLES)
-            add(RagiumContents.Accessories.PISTON_BOOTS)
-            add(RagiumContents.Accessories.PARACHUTE)
-        }.map(RagiumContents.Accessories::asItem).forEach(::register)
-
         register(RagiumBlocks.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumBlocks.OBLIVION_CLUSTER))
 
         // contents
@@ -282,6 +276,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Circuits.entries)
             addAll(RagiumContents.Foods.entries)
             addAll(RagiumContents.Misc.entries)
+            addAll(RagiumContents.Accessories.entries)
 
             remove(RagiumContents.Foods.CHOCOLATE_APPLE)
             remove(RagiumContents.Misc.EMPTY_FLUID_CUBE)

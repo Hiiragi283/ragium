@@ -13,11 +13,13 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
@@ -26,9 +28,12 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.DyeColor
+import net.minecraft.util.Identifier
 import vazkii.patchouli.common.item.ItemModBook
 import java.util.concurrent.CompletableFuture
 
@@ -218,7 +223,32 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
             .offerTo(exporter)
         // invar
+
+        // backpack
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Accessories.BACKPACK)
+            .patterns(
+                " A ",
+                "ABA",
+                "AAA",
+            ).input('A', ItemTags.WOOL)
+            .input('B', ConventionalItemTags.CHESTS)
+            .unlockedBy(ItemTags.WOOL)
+            .offerTo(exporter)
+
+        DyeColor.entries.forEach { color: DyeColor -> dyeBackpack(exporter, color) }
     }
+
+    private fun dyeBackpack(exporter: RecipeExporter, color: DyeColor) {
+        HTShapelessRecipeJsonBuilder
+            .create(HTBackpackItem.createStack(color))
+            .input(RagiumContents.Accessories.BACKPACK)
+            .input(createTagKey("dyes/${color.asString()}"))
+            .unlockedBy(RagiumContents.Accessories.BACKPACK)
+            .offerPrefix(exporter, "dyed_${color.asString()}_")
+    }
+
+    private fun createTagKey(path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(TagUtil.C_TAG_NAMESPACE, path))
 
     //    Crafting - Foods    //
 
@@ -327,6 +357,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A",
             ).input('A', ConventionalItemTags.STORAGE_BLOCKS_IRON)
             .unlockedBy(ConventionalItemTags.STORAGE_BLOCKS_IRON)
+            .offerTo(exporter)
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumContents.Misc.TRADER_CATALOG)
+            .input(Items.BOOK)
+            .input(ConventionalItemTags.EMERALD_GEMS)
+            .input(ConventionalItemTags.CHESTS)
+            .unlockedBy(Items.BOOK)
             .offerTo(exporter)
         // circuits
         HTShapedRecipeJsonBuilder

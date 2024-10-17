@@ -82,7 +82,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         RagiumContents.Ores.entries.forEach(::dropOre)
 
         RagiumContents.Crops.entries.forEach(::addCrops)
-        
+
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
@@ -119,32 +119,35 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                         .applyDropRange(1, 3)
                         .applyFortune(),
                 ),
-            )
+            ),
         )
     }
 
     private fun addCrops(crop: RagiumContents.Crops) {
-        val condition: BlockStatePropertyLootCondition.Builder = BlockStatePropertyLootCondition.builder(crop.cropBlock)
+        val condition: BlockStatePropertyLootCondition.Builder = BlockStatePropertyLootCondition
+            .builder(crop.cropBlock)
             .properties(StatePredicate.Builder.create().exactMatch(Properties.AGE_7, 7))
         val dropBuilder: LeafEntry.Builder<*> = ItemEntry.builder(crop.seedItem)
         addDrop(
             crop.cropBlock,
             applyExplosionDecay(
                 crop.cropBlock,
-                LootTable.builder()
+                LootTable
+                    .builder()
                     .pool(LootPool.builder().with(dropBuilder))
                     .pool(
-                        LootPool.builder()
+                        LootPool
+                            .builder()
                             .conditionally(condition)
                             .with(dropBuilder)
                             .apply(
-                                ApplyBonusLootFunction.binomialWithBonusCount(fortune, 0.5714286f, 3)
-                            )
-                    )
-            )
+                                ApplyBonusLootFunction.binomialWithBonusCount(fortune, 0.5714286f, 3),
+                            ),
+                    ),
+            ),
         )
     }
-    
+
     private fun withSilkTouch(with: Block, without: ItemConvertible, amount: Float = 1.0f): LootTable.Builder = dropsWithSilkTouch(
         with,
         applyExplosionDecay(

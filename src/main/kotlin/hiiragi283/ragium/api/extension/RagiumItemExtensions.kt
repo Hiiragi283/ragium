@@ -39,6 +39,8 @@ fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): B
     ?.let { it > 0 }
     ?: false
 
+fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
+
 //    ItemUsageContext    //
 
 val ItemUsageContext.blockState: BlockState

@@ -1,21 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input0": {
+    "has_the_item": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ptfe_plate"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_input1": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:ender_eye"
+            "items": "ragium:backpack"
           }
         ]
       },
@@ -23,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:assembler/ender_backpack"
+        "recipe": "ragium:shapeless/dyed_blue_backpack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input0",
-      "has_input1"
+      "has_the_item"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:assembler/ender_backpack"
+      "ragium:shapeless/dyed_blue_backpack"
     ]
   }
 }

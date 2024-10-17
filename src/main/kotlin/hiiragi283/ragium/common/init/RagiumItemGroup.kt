@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.ItemGroup
@@ -12,6 +13,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.text.Text
+import net.minecraft.util.DyeColor
 
 object RagiumItemGroup {
     @JvmField
@@ -36,6 +38,7 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     addAll(RagiumContents.Ores.entries)
+                    add(RagiumBlocks.SALT_BLOCK)
                     add(RagiumBlocks.POROUS_NETHERRACK)
                     add(RagiumBlocks.SNOW_SPONGE)
                     addAll(RagiumContents.StorageBlocks.entries)
@@ -48,7 +51,9 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Armors.entries)
                     addAll(RagiumContents.Tools.entries)
                     addAll(HTCrafterHammerItem.Behavior.entries)
+
                     addAll(RagiumContents.Accessories.entries)
+                    remove(RagiumContents.Accessories.BACKPACK)
 
                     addAll(RagiumContents.Hulls.entries)
                     add(RagiumBlocks.BASIC_CASING)
@@ -64,6 +69,8 @@ object RagiumItemGroup {
 
                     addAll(RagiumContents.Fluids.entries)
                 }.forEach(entries::add)
+
+                DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
             }
         }
 

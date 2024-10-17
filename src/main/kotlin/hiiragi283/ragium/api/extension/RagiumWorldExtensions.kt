@@ -1,22 +1,33 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.HTHardModeManager
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.screen.GenericContainerScreenHandler
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.text.Text
+import net.minecraft.util.DyeColor
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockView
 import net.minecraft.world.PersistentState
@@ -66,6 +77,35 @@ fun <T : PersistentState> getState(
     type: PersistentState.Type<T>,
     id: Identifier,
 ): T? = server.getWorld(key)?.let { getState(it, type, id) }
+
+// Backpack
+val MinecraftServer.backpackManager: HTBackpackManager
+    get() = getState(overworld, HTBackpackManager.TYPE, HTBackpackManager.ID)
+
+val ServerWorld.backpackManager: HTBackpackManager
+    get() = server.backpackManager
+
+val World.backpackManager: HTBackpackManager?
+    get() = server?.backpackManager
+
+fun openBackpackScreen(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
+    openBackpackScreen(world, player, player.getStackInHand(hand))
+
+fun openBackpackScreen(world: World, player: PlayerEntity, stack: ItemStack): TypedActionResult<ItemStack> =
+    if (stack.contains(RagiumComponentTypes.COLOR)) {
+        // openEnderChest(world, player)
+        val color: DyeColor = stack.getOrDefault(RagiumComponentTypes.COLOR, DyeColor.WHITE)
+        world.backpackManager?.get(color)?.let { inventory: HTSimpleInventory ->
+            player.openHandledScreen(
+                SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
+                    GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
+                }, Text.translatable("container.chest")),
+            )
+        }
+        TypedActionResult.success(stack, world.isClient)
+    } else {
+        TypedActionResult.pass(stack)
+    }
 
 // Data Drive
 val MinecraftServer.dataDriveManager: HTDataDriveManager

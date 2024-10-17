@@ -2,10 +2,13 @@ package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.trade.HTMerchant
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.passive.WanderingTraderEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
@@ -24,6 +27,7 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
@@ -83,6 +87,18 @@ fun openEnderChest(world: World, player: PlayerEntity) {
         0.5f,
         1.0f,
     )
+}
+
+//    Merchant    //
+
+fun openVillagerScreen(player: PlayerEntity, world: World) {
+    if (!world.isClient) {
+        HTMerchant(player).sendOffers(player, Text.literal("Dummy Merchant"), 1)
+    }
+}
+
+fun openTraderScreen(player: PlayerEntity, world: World) {
+    WanderingTraderEntity(EntityType.WANDERING_TRADER, world).interactMob(player, Hand.MAIN_HAND)
 }
 
 //    Recipe    //

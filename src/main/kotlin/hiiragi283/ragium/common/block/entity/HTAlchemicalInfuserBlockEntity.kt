@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
@@ -44,7 +45,7 @@ class HTAlchemicalInfuserBlockEntity(pos: BlockPos, state: BlockState) :
     ): ActionResult = onUseController(state, world, pos, player, world.getBlockEntity(pos) as? HTAlchemicalInfuserBlockEntity)
 
     fun processRecipe(stack: ItemStack, world: World): ItemActionResult {
-        if (stack.isOf(RagiumContents.Misc.ALCHEMY_STUFF.value)) {
+        if (stack.isOf(RagiumContents.Misc.ALCHEMY_STUFF)) {
             val input = HTAlchemyRecipe.Input(
                 getStack(0),
                 getStack(1),

@@ -30,10 +30,7 @@ import net.minecraft.world.gen.placementmodifier.*
 import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import java.util.concurrent.CompletableFuture
 
-class RagiumDynamicRegistryProvider(
-    output: FabricDataOutput,
-    registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>
-) :
+class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
     FabricDynamicRegistryProvider(output, registriesFuture) {
     override fun getName(): String = "Dynamic"
 
@@ -184,20 +181,20 @@ class RagiumDynamicRegistryProvider(
             RagiumFeatures.ORE_RAGINITE,
             HeightRangePlacementModifier.trapezoid(
                 YOffset.fixed(-16),
-                YOffset.fixed(112)
-            )
+                YOffset.fixed(112),
+            ),
         )
         registerOre(
             entries,
             lookup,
             RagiumFeatures.ORE_NETHER_RAGINITE,
-            PlacedFeatures.TEN_ABOVE_AND_BELOW_RANGE
+            PlacedFeatures.TEN_ABOVE_AND_BELOW_RANGE,
         )
         registerOre(
             entries,
             lookup,
             RagiumFeatures.ORE_END_RAGI_CRYSTAL,
-            PlacedFeatures.TEN_ABOVE_AND_BELOW_RANGE
+            PlacedFeatures.TEN_ABOVE_AND_BELOW_RANGE,
         )
         registerFeature(
             entries,
@@ -206,7 +203,7 @@ class RagiumDynamicRegistryProvider(
             BiomePlacementModifier.of(),
             PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
             RarityFilterPlacementModifier.of(100),
-            SquarePlacementModifier.of()
+            SquarePlacementModifier.of(),
         )
     }
 
@@ -214,14 +211,14 @@ class RagiumDynamicRegistryProvider(
         entries: Entries,
         lookup: RegistryEntryLookup<ConfiguredFeature<*, *>>,
         data: RagiumFeatures.Data,
-        vararg modifiers: PlacementModifier
+        vararg modifiers: PlacementModifier,
     ) {
         entries.add(
             data.featureKey,
             PlacedFeature(
                 data.getConfiguredEntry(lookup),
-                listOf(*modifiers)
-            )
+                listOf(*modifiers),
+            ),
         )
     }
 
@@ -229,7 +226,7 @@ class RagiumDynamicRegistryProvider(
         entries: Entries,
         lookup: RegistryEntryLookup<ConfiguredFeature<*, *>>,
         data: RagiumFeatures.Data,
-        vararg modifiers: PlacementModifier
+        vararg modifiers: PlacementModifier,
     ) {
         registerFeature(
             entries,
@@ -245,9 +242,8 @@ class RagiumDynamicRegistryProvider(
     //    Bootstraps    //
 
     data object Bootstraps {
-
         //    Enchantment    //
-        
+
         @JvmStatic
         fun registerEnchantments(
             register: (RegistryKey<Enchantment>, Enchantment) -> Unit,
@@ -337,13 +333,13 @@ class RagiumDynamicRegistryProvider(
                 listOf(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES),
-                        RagiumContents.Ores.CRUDE_RAGINITE.value.defaultState
+                        RagiumContents.Ores.CRUDE_RAGINITE.value.defaultState,
                     ),
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                        RagiumContents.Ores.DEEP_RAGINITE.value.defaultState
-                    )
-                )
+                        RagiumContents.Ores.DEEP_RAGINITE.value.defaultState,
+                    ),
+                ),
             )
             registerOre(
                 register,
@@ -351,9 +347,9 @@ class RagiumDynamicRegistryProvider(
                 listOf(
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.NETHERRACK),
-                        RagiumContents.Ores.NETHER_RAGINITE.value.defaultState
+                        RagiumContents.Ores.NETHER_RAGINITE.value.defaultState,
                     ),
-                )
+                ),
             )
             registerOre(
                 register,
@@ -361,20 +357,21 @@ class RagiumDynamicRegistryProvider(
                 listOf(
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.END_STONE),
-                        RagiumContents.Ores.END_RAGI_CRYSTAL.value.defaultState
+                        RagiumContents.Ores.END_RAGI_CRYSTAL.value.defaultState,
                     ),
-                )
+                ),
             )
             register(
                 RagiumFeatures.PATCH_END_OBLIVION_CLUSTER.configuredKey,
                 ConfiguredFeature(
                     Feature.RANDOM_PATCH,
                     ConfiguredFeatures.createRandomPatchFeatureConfig(
-                        Feature.SIMPLE_BLOCK, SimpleBlockFeatureConfig(
-                            BlockStateProvider.of(RagiumBlocks.OBLIVION_CLUSTER)
-                        )
-                    )
-                )
+                        Feature.SIMPLE_BLOCK,
+                        SimpleBlockFeatureConfig(
+                            BlockStateProvider.of(RagiumBlocks.OBLIVION_CLUSTER),
+                        ),
+                    ),
+                ),
             )
         }
 
@@ -388,8 +385,8 @@ class RagiumDynamicRegistryProvider(
                 data.configuredKey,
                 ConfiguredFeature(
                     Feature.ORE,
-                    OreFeatureConfig(targets, 16)
-                )
+                    OreFeatureConfig(targets, 16),
+                ),
             )
         }
     }
