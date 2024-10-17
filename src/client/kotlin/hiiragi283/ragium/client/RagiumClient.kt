@@ -2,6 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
@@ -41,6 +42,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
@@ -61,6 +63,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.BlockRenderView
 import net.minecraft.world.biome.Biome
 
 @Environment(EnvType.CLIENT)
@@ -112,6 +115,10 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
+
+        ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
+            state.getOrNull(RagiumBlockProperties.COLOR)?.mapColor?.color ?: -1
+        }, RagiumBlocks.BACKPACK_INTERFACE)
     }
 
     private fun registerCutout(block: Block) {

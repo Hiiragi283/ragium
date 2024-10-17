@@ -37,7 +37,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
             RagiumDynamicRegistryProvider.Bootstraps.registerEnchantments(
                 registerable::register,
                 enchantmentLookup,
-                itemLookup
+                itemLookup,
             )
         }
 

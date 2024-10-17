@@ -137,16 +137,19 @@ object RagiumEventHandlers {
                     .onEach { dropStackAt(player, it) }
                 stack.remove(DataComponentTypes.ENCHANTMENTS)
                 TypedActionResult.success(stack, world.isClient)
+            } else {
+                TypedActionResult.pass(stack)
             }
-            TypedActionResult.pass(stack)
         }
 
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
             if (stack.isOf(RagiumContents.Misc.TRADER_CATALOG)) {
                 openTraderScreen(player, world)
+                TypedActionResult.success(stack, world.isClient)
+            } else {
+                TypedActionResult.pass(stack)
             }
-            TypedActionResult.success(stack, world.isClient)
         }
     }
 

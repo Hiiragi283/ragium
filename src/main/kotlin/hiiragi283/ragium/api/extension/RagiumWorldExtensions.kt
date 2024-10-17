@@ -23,16 +23,14 @@ import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.BlockView
-import net.minecraft.world.PersistentState
-import net.minecraft.world.World
-import net.minecraft.world.WorldView
+import net.minecraft.world.*
 import kotlin.jvm.optionals.getOrNull
 
 //    Views    //
@@ -85,27 +83,31 @@ val MinecraftServer.backpackManager: HTBackpackManager
 val ServerWorld.backpackManager: HTBackpackManager
     get() = server.backpackManager
 
-val World.backpackManager: HTBackpackManager?
+val WorldAccess.backpackManager: HTBackpackManager?
     get() = server?.backpackManager
 
-fun openBackpackScreen(world: World, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
+fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
     openBackpackScreen(world, player, player.getStackInHand(hand))
 
-fun openBackpackScreen(world: World, player: PlayerEntity, stack: ItemStack): TypedActionResult<ItemStack> =
+fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, stack: ItemStack): TypedActionResult<ItemStack> =
     if (stack.contains(RagiumComponentTypes.COLOR)) {
-        // openEnderChest(world, player)
-        val color: DyeColor = stack.getOrDefault(RagiumComponentTypes.COLOR, DyeColor.WHITE)
-        world.backpackManager?.get(color)?.let { inventory: HTSimpleInventory ->
-            player.openHandledScreen(
-                SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
-                    GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
-                }, Text.translatable("container.chest")),
-            )
-        }
+        openBackpackScreen(world, player, stack.getOrDefault(RagiumComponentTypes.COLOR, DyeColor.WHITE))
         TypedActionResult.success(stack, world.isClient)
     } else {
         TypedActionResult.pass(stack)
     }
+
+fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor) {
+    world.backpackManager?.get(color)?.let { inventory: HTSimpleInventory ->
+        inventory.setCallback { it.playSound(SoundEvents.BLOCK_VAULT_CLOSE_SHUTTER, 1.0f, 1.0f) }
+        player.openHandledScreen(
+            SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
+                GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
+            }, Text.translatable("container.chest")),
+        )
+        player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
+    }
+}
 
 // Data Drive
 val MinecraftServer.dataDriveManager: HTDataDriveManager
@@ -114,7 +116,7 @@ val MinecraftServer.dataDriveManager: HTDataDriveManager
 val ServerWorld.dataDriveManager: HTDataDriveManager
     get() = server.dataDriveManager
 
-val World.dataDriveManager: HTDataDriveManager?
+val WorldAccess.dataDriveManager: HTDataDriveManager?
     get() = server?.dataDriveManager
 
 // Energy Network

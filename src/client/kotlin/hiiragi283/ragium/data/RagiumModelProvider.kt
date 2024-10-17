@@ -123,16 +123,36 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 .coordinate(
                     BlockStateVariantMap
                         .create(Properties.BITES)
-                        .register(0, buildModelVariant(ModelIds.getBlockModelId(RagiumBlocks.SWEET_BERRIES_CAKE)))
-                        .register(1, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice1")))
-                        .register(2, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice2")))
-                        .register(3, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice3")))
-                        .register(4, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice4")))
-                        .register(5, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice5")))
-                        .register(6, buildModelVariant(ModelIds.getBlockSubModelId(RagiumBlocks.SWEET_BERRIES_CAKE, "_slice6"))),
+                        .register { bite: Int ->
+                            when (bite) {
+                                0 -> ""
+                                else -> "_slice$bite"
+                            }.let {
+                                buildModelVariant(
+                                    ModelIds.getBlockSubModelId(
+                                        RagiumBlocks.SWEET_BERRIES_CAKE,
+                                        it,
+                                    ),
+                                )
+                            }
+                        },
                 ),
         )
         registerSimple(RagiumBlocks.SALT_BLOCK, Identifier.of("block/white_concrete_powder"))
+
+        register(RagiumBlocks.BACKPACK_INTERFACE) {
+            accept(
+                MultipartBlockStateSupplier
+                    .create(it)
+                    .with(
+                        buildModelVariant(
+                            RagiumModels
+                                .createAllTinted(Identifier.of("block/white_wool"))
+                                .upload(it, generator.modelCollector),
+                        ),
+                    ),
+            )
+        }
 
         register(RagiumBlocks.INFESTING) {
             accept(
@@ -155,27 +175,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
-        /*RagiumContents.Ores.entries
-            .forEach {
-                register(it.value) { block: Block ->
-                    generator.registerSingleton(
-                        block,
-                        RagiumModels.createLayered(Identifier.of("block/stone"), TextureMap.getId(block)),
-                    )
-                }
-            }
-        RagiumContents.DeepOres.entries
-            .forEach { deepOre: RagiumContents.DeepOres ->
-                register(deepOre.value) { block: Block ->
-                    generator.registerSingleton(
-                        block,
-                        RagiumModels.createLayered(
-                            Identifier.of("block/deepslate"),
-                            deepOre.material.getOre()?.let { TextureMap.getId(it.value) } ?: TextureMap.getId(block),
-                        ),
-                    )
-                }
-            }*/
         // storage blocks
         RagiumContents.StorageBlocks.entries
             .map(RagiumContents.StorageBlocks::value)

@@ -111,6 +111,7 @@ object RagiumContentRegister : HTContentRegister {
         )
 
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)
         registerBlockItem(RagiumBlocks.ADVANCED_CASING)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)

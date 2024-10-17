@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/all_tinted",
+  "textures": {
+    "all": "minecraft:block/white_wool"
+  }
+}

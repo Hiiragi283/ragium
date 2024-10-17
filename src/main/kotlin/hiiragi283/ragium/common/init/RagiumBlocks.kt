@@ -67,6 +67,9 @@ object RagiumBlocks : HTContentRegister {
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
 
     @JvmField
+    val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
+
+    @JvmField
     val BASIC_CASING: Block =
         registerCopy("basic_casing", Blocks.IRON_BLOCK)
 

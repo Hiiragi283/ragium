@@ -89,4 +89,14 @@ open class HTSimpleInventory : Inventory {
     override fun canPlayerUse(player: PlayerEntity?): Boolean = true
 
     override fun isValid(slot: Int, stack: ItemStack): Boolean = slotFilter(slot, stack)
+
+    private var callback: (PlayerEntity) -> Unit = { }
+
+    fun setCallback(action: (PlayerEntity) -> Unit) {
+        callback = action
+    }
+
+    override fun onClose(player: PlayerEntity) {
+        callback
+    }
 }

@@ -29,6 +29,10 @@ fun buildWhen(action: When.PropertyCondition.() -> Unit): When = When.create().a
 
 fun buildStateVariant(action: BlockStateVariant.() -> Unit): BlockStateVariant = BlockStateVariant.create().apply(action)
 
+fun buildModelVariant(block: Block): BlockStateVariant = buildStateVariant {
+    model(TextureMap.getId(block))
+}
+
 fun buildModelVariant(modelId: Identifier): BlockStateVariant = buildStateVariant {
     model(modelId)
 }

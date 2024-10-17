@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ragium:block/backpack_interface"
+      }
+    }
+  ]
+}
