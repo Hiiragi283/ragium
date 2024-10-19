@@ -1,9 +1,13 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
+import net.minecraft.network.RegistryByteBuf
+import net.minecraft.network.codec.PacketCodec
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.resource.featuretoggle.FeatureFlags
@@ -16,12 +20,23 @@ object RagiumScreenHandlerTypes {
         register("generator", ::HTGeneratorScreenHandler)
 
     @JvmField
-    val PROCESSOR: ScreenHandlerType<HTProcessorScreenHandler> =
-        register("processor", ::HTProcessorScreenHandler)
+    val PROCESSOR: ExtendedScreenHandlerType<HTProcessorScreenHandler, HTMachinePacket> =
+        registerExtended("processor", ::HTProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
     val ALCHEMICAL_INFUSER: ScreenHandlerType<HTAlchemicalInfuserHandler> =
         register("alchemical_infuser", ::HTAlchemicalInfuserHandler)
+
+    @JvmStatic
+    private fun <T : ScreenHandler, D : Any> registerExtended(
+        name: String,
+        factory: ExtendedScreenHandlerType.ExtendedFactory<T, D>,
+        packetCodec: PacketCodec<RegistryByteBuf, D>,
+    ): ExtendedScreenHandlerType<T, D> = Registry.register(
+        Registries.SCREEN_HANDLER,
+        RagiumAPI.id(name),
+        ExtendedScreenHandlerType(factory, packetCodec),
+    )
 
     @JvmStatic
     private fun <T : ScreenHandler> register(name: String, factory: ScreenHandlerType.Factory<T>): ScreenHandlerType<T> = Registry.register(

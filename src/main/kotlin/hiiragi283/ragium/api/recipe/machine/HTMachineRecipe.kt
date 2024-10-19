@@ -110,8 +110,8 @@ class HTMachineRecipe(
     //    Input    //
 
     class Input private constructor(
-        private val currentType: HTMachineType,
-        private val currentTier: HTMachineTier,
+        val currentType: HTMachineType,
+        val currentTier: HTMachineTier,
         private val first: ItemStack,
         private val second: ItemStack,
         private val third: ItemStack,

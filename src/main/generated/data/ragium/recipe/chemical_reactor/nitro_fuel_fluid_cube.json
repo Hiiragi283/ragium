@@ -3,7 +3,7 @@
   "inputs": [
     {
       "count": 4,
-      "items": "ragium:fuel_fluid_cube"
+      "items": "#ragium:fluid_cubes/fuel"
     },
     {
       "items": "ragium:nitric_acid_fluid_cube"

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:fuel_fluid_cube"
+            "items": "#ragium:fluid_cubes/fuel"
           }
         ]
       },

@@ -22,6 +22,7 @@ object RagiumCommon : ModInitializer {
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
         RagiumBlocks
+        RagiumBlockEntityTypes.init()
         RagiumEntityTypes.init()
         RagiumFluids.init()
         RagiumRecipeSerializers
@@ -32,17 +33,15 @@ object RagiumCommon : ModInitializer {
         RagiumContentRegister.registerContents()
 
         HTHardModeResourceCondition.init()
-        RagiumBlockEntityTypes.init()
-        RagiumCauldronBehaviors.init()
+        HTTradeOfferRegistry.init()
         RagiumCommands.init()
         RagiumEventHandlers.init()
-        RagiumItemGroup.init()
-        RagiumNetworks.init()
         RagiumFeatures.init()
-        HTTradeOfferRegistry.init()
-
-        RagiumApiLookupInit.init()
+        RagiumItemGroup.init()
         RagiumMaterialItemRecipes.init()
+        RagiumNetworks.init()
+
+        RagiumContentRegister.initRegistry()
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

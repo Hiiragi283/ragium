@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.machineType
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
@@ -84,37 +83,27 @@ data object HTMachineModel : UnbakedModel, BakedModel {
         context: RenderContext,
     ) {
         val machineEntity: HTMachineEntity = blockView.getMachineEntity(pos) ?: return
-        val type: HTMachineType = machineEntity.machineType
-        val tier: HTMachineTier = machineEntity.tier
         val frontDir: Direction =
             blockView.getBlockState(pos).getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-        emitMachineQuads(frontDir, type, tier, machineEntity, context) {
-            it.emitBlockQuads(blockView, state, pos, randomSupplier, context)
-        }
+        emitMachineFront(frontDir, machineEntity.machineType, machineEntity, context)
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        emitMachineQuads(Direction.NORTH, stack.machineType, stack.machineTier, null, context) {
-            it.emitItemQuads(stack, randomSupplier, context)
-        }
-    }
-
-    @JvmStatic
-    private fun emitMachineQuads(
-        frontDir: Direction,
-        type: HTMachineType,
-        tier: HTMachineTier,
-        machine: HTMachineEntity?,
-        context: RenderContext,
-        hullRenderer: (BakedModel) -> Unit,
-    ) {
-        // render hull model
         MinecraftClient
             .getInstance()
             .bakedModelManager
-            .getModel(ModelIdentifier(tier.getHull().id, ""))
-            ?.apply(hullRenderer)
-        // render machine front
+            .getModel(ModelIdentifier(stack.machineTier.getHull().id, ""))
+            .emitItemQuads(stack, randomSupplier, context)
+        emitMachineFront(Direction.NORTH, stack.machineType, null, context)
+    }
+
+    @JvmStatic
+    private fun emitMachineFront(
+        frontDir: Direction,
+        type: HTMachineType,
+        machine: HTMachineEntity?,
+        context: RenderContext,
+    ) {
         val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.getFrontTex(machine))
         this.frontSprite = this.textureGetter.apply(frontId)
         val emitter: QuadEmitter = context.emitter

@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
-import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.integration.rei.category.HTAlchemyRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTTradeOfferCategory
@@ -19,11 +18,9 @@ import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
-import me.shedaniel.math.Rectangle
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry
-import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry
 import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandler
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
@@ -137,14 +134,14 @@ object RagiumREIClient : REIClientPlugin {
         }*/
     }
 
-    override fun registerScreens(registry: ScreenRegistry) {
+    /*override fun registerScreens(registry: ScreenRegistry) {
         // Machines
         registry.registerContainerClickArea(
             Rectangle(5 + 18 * 4, 5 + 18 * 1, 18, 18),
             HTProcessorScreen::class.java,
-            *getMachineIds().toTypedArray(),
+     *getMachineIds().toTypedArray(),
         )
-    }
+    }*/
 
     @Suppress("UnstableApiUsage")
     override fun registerTransferHandlers(registry: TransferHandlerRegistry) {

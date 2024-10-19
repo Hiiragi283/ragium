@@ -1,5 +1,7 @@
 package hiiragi283.ragium.client.util
 
+import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import hiiragi283.ragium.common.fluid.HTFluidContent
@@ -9,6 +11,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.networking.v1.PacketSender
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
@@ -16,9 +19,11 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.client.world.ClientWorld
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.CustomPayload
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
@@ -100,6 +105,13 @@ fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(
         handler(payload, context.client(), context.player(), context.responseSender())
     }
 }
+
+val ClientPlayNetworking.Context.world: ClientWorld?
+    get() = client().world
+
+fun ClientPlayNetworking.Context.getBlockEntity(pos: BlockPos): BlockEntity? = world?.getBlockEntity(pos)
+
+fun ClientPlayNetworking.Context.getMachineEntity(pos: BlockPos): HTMachineEntity? = world?.getMachineEntity(pos)
 
 //    HTFluidContent    //
 

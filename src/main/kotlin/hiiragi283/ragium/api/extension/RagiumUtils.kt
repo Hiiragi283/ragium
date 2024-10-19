@@ -2,9 +2,13 @@ package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.trade.HTMerchant
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.entity.EntityType
@@ -107,6 +111,16 @@ fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
     type: RecipeType<U>,
     predicate: (RecipeEntry<U>) -> Boolean,
 ): RecipeEntry<U>? = listAllOfType(type).firstOrNull(predicate)
+
+fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getAllMatches(
+    type: RecipeType<U>,
+    predicate: (RecipeEntry<U>) -> Boolean,
+): List<RecipeEntry<U>> = listAllOfType(type).filter(predicate)
+
+fun RecipeManager.getMachineRecipes(type: HTMachineType, tier: HTMachineTier): List<RecipeEntry<HTMachineRecipe>> =
+    getAllMatches(RagiumRecipeTypes.MACHINE) { entry: RecipeEntry<HTMachineRecipe> ->
+        entry.value.let { it.type == type && it.minTier <= tier }
+    }
 
 //    Registry    //
 

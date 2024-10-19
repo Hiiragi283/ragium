@@ -5,10 +5,10 @@
   },
   "inputs": [
     {
-      "items": "ragium:water_fluid_cube"
+      "items": "ragium:methane_fluid_cube"
     },
     {
-      "items": "ragium:methane_fluid_cube"
+      "items": "ragium:water_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",

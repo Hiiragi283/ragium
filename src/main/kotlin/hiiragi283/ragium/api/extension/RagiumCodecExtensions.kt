@@ -25,6 +25,10 @@ fun BlockEntity.sendPacket(action: (ServerPlayerEntity) -> Unit) {
     }
 }
 
+fun World.sendPacket(action: (ServerPlayerEntity) -> Unit) {
+    (this as? ServerWorld)?.let(PlayerLookup::world)?.firstOrNull()?.let(action)
+}
+
 fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
     (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
 }

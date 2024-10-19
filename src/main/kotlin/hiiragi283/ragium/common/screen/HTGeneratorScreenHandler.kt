@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.machineInventory
+import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.widget.WBar
@@ -18,7 +19,7 @@ class HTGeneratorScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scr
         syncId,
         playerInv,
         ctx.machineInventory(2),
-        getBlockPropertyDelegate(ctx, 2),
+        getBlockPropertyDelegate(ctx, HTMachineEntity.MAX_PROPERTIES),
     ) {
     init {
         val root = WGridPanel()

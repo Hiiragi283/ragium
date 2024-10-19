@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.openBackpackScreen
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.network.HTMachineRecipePayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
 import io.wispforest.accessories.api.AccessoriesCapability
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
@@ -21,6 +23,10 @@ object RagiumNetworks {
     @JvmField
     val FLOATING_ITEM: CustomPayload.Id<HTFloatingItemPayload> =
         registerS2C("floating_item", HTFloatingItemPayload.PACKET_CODEC)
+
+    @JvmField
+    val MACHINE_RECIPE: CustomPayload.Id<HTMachineRecipePayload> =
+        registerS2C("machine_recipe", HTMachineRecipePayload.PACKET_CODEC)
 
     @JvmField
     val OPEN_BACKPACK: CustomPayload.Id<HTOpenBackpackPayload> =
@@ -76,6 +82,11 @@ object RagiumNetworks {
         stack: ItemStack,
     ) {
         ServerPlayNetworking.send(player, HTInventoryPayload.createPacket(pos, slot, stack))
+    }
+
+    @JvmStatic
+    fun sendMachineRecipes(player: ServerPlayerEntity, pos: BlockPos, recipe: HTMachineRecipe) {
+        ServerPlayNetworking.send(player, HTMachineRecipePayload(pos, recipe))
     }
 
     @JvmStatic

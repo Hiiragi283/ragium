@@ -192,6 +192,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.REMOVER_DYNAMITE, "Remover Dynamite")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
+            builder.add(RagiumContents.Misc.TRADER_CATALOG, "Trader Catalog")
 
             builder.add(HTCrafterHammerItem.Behavior.DEFAULT, "Hammer Module (Default)")
             builder.add(HTCrafterHammerItem.Behavior.AXE, "Hammer Module (Axe)")
@@ -333,6 +334,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.REMOVER_DYNAMITE, "削除用ダイナマイト")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "太陽光パネル")
+            builder.add(RagiumContents.Misc.TRADER_CATALOG, "行商人カタログ")
 
             builder.add(HTCrafterHammerItem.Behavior.DEFAULT, "ハンマーモジュール（デフォルト）")
             builder.add(HTCrafterHammerItem.Behavior.AXE, "ハンマーモジュール（アックス）")

@@ -19,13 +19,17 @@ import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
+import hiiragi283.ragium.client.util.getBlockEntity
+import hiiragi283.ragium.client.util.getMachineEntity
 import hiiragi283.ragium.client.util.registerClient
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTHeatGeneratorMachineEntity
+import hiiragi283.ragium.common.machine.HTProcessorMachineEntity
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.network.HTMachineRecipePayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
 import io.wispforest.accessories.api.AccessoriesCapability
 import me.shedaniel.rei.api.common.entry.EntryIngredient
@@ -154,7 +158,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> fluid.color.rgb }, fluid)
         }
 
-        ColorProviderRegistry.ITEM.register({ stack: ItemStack, tint: Int ->
+        ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
             stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
         }, RagiumContents.Misc.BACKPACK)
     }
@@ -197,14 +201,20 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             context.client().gameRenderer.showFloatingItem(payload.stack)
         }
 
+        RagiumNetworks.MACHINE_RECIPE.registerClientReceiver { payload: HTMachineRecipePayload, context: ClientPlayNetworking.Context ->
+            val (pos: BlockPos, recipe: HTMachineRecipe) = payload
+            (context.getMachineEntity(pos) as? HTProcessorMachineEntity)?.currentRecipe = recipe
+            RagiumAPI.log { info("Received recipe!") }
+        }
+
         RagiumNetworks.SET_STACK.registerClientReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
-            (context.player().world.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
+            (context.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
         }
 
         RagiumNetworks.REMOVE_STACK.registerClientReceiver { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int) = payload
-            (context.player().world.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
+            (context.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
         }
     }
 
@@ -226,7 +236,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
         if (!isModLoaded("roughlyenoughitems")) return
         helper.modify(RagiumMachineTypes.FLUID_DRILL) {
-            set(INPUT_ENTRIES, { recipe: HTMachineRecipe ->
+            set(INPUT_ENTRIES) { recipe: HTMachineRecipe ->
                 recipe
                     .get(HTRecipeComponentTypes.BIOME)
                     ?.let { biome: RegistryKey<Biome> ->
@@ -240,17 +250,17 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
                     }?.let(EntryIngredient::of)
                     ?.let(::listOf)
                     ?: emptyList()
-            })
+            }
         }
         helper.modify(RagiumMachineTypes.MOB_EXTRACTOR) {
-            set(INPUT_ENTRIES, { recipe: HTMachineRecipe ->
+            set(INPUT_ENTRIES) { recipe: HTMachineRecipe ->
                 recipe
                     .get(HTRecipeComponentTypes.ENTITY_TYPE)
                     ?.let(SpawnEggItem::forEntity)
                     ?.let(EntryIngredients::of)
                     ?.let(::listOf)
                     ?: emptyList()
-            })
+            }
         }
     }
 }

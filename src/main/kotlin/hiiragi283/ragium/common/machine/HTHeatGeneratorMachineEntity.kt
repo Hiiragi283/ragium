@@ -72,7 +72,7 @@ class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEnti
     override fun getProperty(index: Int): Int = when (index) {
         0 -> fuelTime - burningTime
         1 -> fuelTime
-        else -> throw IndexOutOfBoundsException(index)
+        else -> -1
     }
 
     override val parent: HTSidedInventory = HTSidedStorageBuilder(2)

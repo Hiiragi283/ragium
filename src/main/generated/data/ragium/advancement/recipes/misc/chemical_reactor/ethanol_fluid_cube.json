@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:water_fluid_cube"
+            "items": "ragium:ethylene_fluid_cube"
           }
         ]
       },
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ethylene_fluid_cube"
+            "items": "ragium:water_fluid_cube"
           }
         ]
       },

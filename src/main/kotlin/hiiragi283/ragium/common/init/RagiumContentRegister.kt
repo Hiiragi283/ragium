@@ -3,22 +3,34 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContentRegister
-import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.api.extension.tier
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import net.fabricmc.fabric.api.registry.FuelRegistry
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.PillarBlock
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
+import net.minecraft.block.*
+import net.minecraft.block.cauldron.CauldronBehavior
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
+import net.minecraft.util.DyeColor
+import net.minecraft.util.Hand
+import net.minecraft.util.ItemActionResult
 import net.minecraft.util.Rarity
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
+import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
+import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumContentRegister : HTContentRegister {
     @JvmStatic
@@ -94,8 +106,6 @@ object RagiumContentRegister : HTContentRegister {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             registerItem(fluid, fluid.createItem())
         }
-
-        initRegistry()
     }
 
     @JvmStatic
@@ -135,7 +145,27 @@ object RagiumContentRegister : HTContentRegister {
     }
 
     @JvmStatic
-    private fun initRegistry() {
+    fun initRegistry() {
+        // ApiLookup
+        ItemStorage.SIDED.registerForBlockEntity({ blockEntity: HTMetaMachineBlockEntity, direction: Direction? ->
+            blockEntity.machineEntity?.let { InventoryStorage.of(it, direction) }
+        }, RagiumBlockEntityTypes.META_MACHINE)
+
+        ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+            val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerForBlocks null
+            world.backpackManager
+                ?.get(color)
+                ?.let { InventoryStorage.of(it, direction) }
+        }, RagiumBlocks.BACKPACK_INTERFACE)
+
+        EnergyStorage.SIDED.registerForBlocks(
+            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
+            RagiumBlocks.CREATIVE_SOURCE,
+        )
+
+        EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+            world.energyNetwork
+        }, RagiumBlocks.NETWORK_INTERFACE)
         // Accessory
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
@@ -175,8 +205,30 @@ object RagiumContentRegister : HTContentRegister {
             }
             slotType = HTAccessorySlotTypes.FACE
         }
+        // Cauldron
+        registerCauldron(
+            CauldronBehavior.WATER_CAULDRON_BEHAVIOR,
+            RagiumContents.Dusts.CRUDE_RAGINITE,
+        ) { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
+            if (stack.isOf(RagiumContents.Dusts.CRUDE_RAGINITE)) {
+                if (!world.isClient) {
+                    val count: Int = stack.count
+                    stack.count = -1
+                    dropStackAt(player, ItemStack(RagiumContents.Dusts.RAGINITE, count))
+                    LeveledCauldronBlock.decrementFluidLevel(state, world, pos)
+                }
+                ItemActionResult.success(world.isClient)
+            } else {
+                ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+            }
+        }
         // Fuel Time
         FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
         FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)
+    }
+
+    @JvmStatic
+    private fun registerCauldron(map: CauldronBehavior.CauldronBehaviorMap, item: ItemConvertible, behavior: CauldronBehavior) {
+        map.map[item.asItem()] = behavior
     }
 }
