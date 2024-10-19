@@ -27,30 +27,27 @@ enum class RagiumMaterials(
     COPPER(HTMachineTier.PRIMITIVE, "Copper", "銅"),
     IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄", ArmorMaterials.IRON, ToolMaterials.IRON),
     ASH(HTMachineTier.BASIC, "Ash", "灰"),
-    NITER(HTMachineTier.PRIMITIVE, "Niter", "硝石"),
-    SULFUR(HTMachineTier.BASIC, "Sulfur", "硫黄"),
 
     // tier2
     RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
     RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
+    ALUMINA(HTMachineTier.BASIC, "Alumina", "アルミナ"),
     ALUMINUM(HTMachineTier.BASIC, "Aluminum", "アルミニウム"),
-    BASALT_FIBER(HTMachineTier.BASIC, "Basalt Fiber", "玄武岩繊維"),
     BAUXITE(HTMachineTier.BASIC, "Bauxite", "ボーキサイト"),
+    FLUORITE(HTMachineTier.BASIC, "Fluorite", "蛍石"),
     GOLD(HTMachineTier.BASIC, "Gold", "金", ArmorMaterials.GOLD, ToolMaterials.GOLD),
     INVAR(HTMachineTier.BASIC, "Invar", "インバー"),
     NICKEL(HTMachineTier.BASIC, "Nickel", "ニッケル"),
+    PLASTIC(HTMachineTier.BASIC, "Plastic", "プラスチック"), // PE
     SILICON(HTMachineTier.BASIC, "Silicon", "シリコン"),
-    SILVER(HTMachineTier.BASIC, "Silver", "銀"),
     STEEL(HTMachineTier.BASIC, "Steel", "スチール", Armor.STEEL, Tool.STEEL),
 
     // tier3
     RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
     REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
+    OBLIVION_CRYSTAL(HTMachineTier.ADVANCED, "Oblivion Crystal", "忘却の結晶"),
+    ENGINEERING_PLASTIC(HTMachineTier.ADVANCED, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
     STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A", "S.T.E.L.L.A", Armor.STELLA),
-    PE(HTMachineTier.ADVANCED, "PE", "ポリエチレン"),
-    PVC(HTMachineTier.ADVANCED, "PVC", "塩化ビニル"),
-    PTFE(HTMachineTier.ADVANCED, "PTFE", "テフロン"),
-
     ;
 
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }

@@ -11,7 +11,7 @@
   "machine_type": "ragium:electrolyzer",
   "outputs": [
     {
-      "item": "ragium:fluorine_fluid_cube"
+      "item": "ragium:fluorite"
     },
     {
       "item": "minecraft:gold_nugget"

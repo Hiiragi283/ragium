@@ -377,45 +377,6 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("化学反応槽を作る")
             .build()
 
-        val pe: AdvancementEntry = register
-            .createChild(
-                "tier3/pe",
-                chemicalReactor,
-                RagiumContents.Plates.PE,
-            ) {
-                hasItems(RagiumContents.Plates.PE)
-            }.putEnglish("Star of the star of the plastic")
-            .putEnglishDesc("Craft PE Plate")
-            .putJapanese("スター・オブ・ザ・スター・オブ・ザ・プラスチック")
-            .putJapaneseDesc("ポリエチレン板を作る")
-            .build()
-
-        val pvc: AdvancementEntry = register
-            .createChild(
-                "tier3/pvc",
-                pe,
-                RagiumContents.Plates.PVC,
-            ) {
-                hasItems(RagiumContents.Plates.PVC)
-            }.putEnglish("Permanent Void Core")
-            .putEnglishDesc("Craft PVC Plate")
-            .putJapanese("塩ビマヨネーズ")
-            .putJapaneseDesc("塩化ビニル板を作る")
-            .build()
-
-        val ptfe: AdvancementEntry = register
-            .createChild(
-                "tier3/ptfe",
-                pvc,
-                RagiumContents.Plates.PVC,
-            ) {
-                hasItems(RagiumContents.Plates.PVC)
-            }.putEnglish("Polytetrafluoroethylene")
-            .putEnglishDesc("Craft PTFE Plate")
-            .putJapanese("ポリテトラフルオロエチレン")
-            .putJapaneseDesc("テフロン板を作る")
-            .build()
-
         val electrolyzer: AdvancementEntry = register
             .createChild(
                 "tier3/electrolyzer",
@@ -447,11 +408,11 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/petroleum",
                 distillationTower,
-                RagiumContents.Fluids.PETROLEUM,
+                RagiumContents.Fluids.CRUDE_OIL,
             ) {
-                hasItems(RagiumContents.Fluids.PETROLEUM)
+                hasItems(RagiumContents.Fluids.CRUDE_OIL)
             }.putEnglish("")
-            .putEnglishDesc("Get Petroleum")
+            .putEnglishDesc("Get Crude Oil")
             .putJapanese("")
             .putJapaneseDesc("石油を手に入れる")
             .build()

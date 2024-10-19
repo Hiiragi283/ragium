@@ -43,6 +43,7 @@ object RagiumItemGroup {
                     addAll(RagiumContents.StorageBlocks.entries)
 
                     addAll(RagiumContents.Dusts.entries)
+                    addAll(RagiumContents.Gems.entries)
                     addAll(RagiumContents.Ingots.entries)
                     addAll(RagiumContents.Plates.entries)
                     addAll(RagiumContents.RawMaterials.entries)

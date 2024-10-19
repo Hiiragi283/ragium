@@ -5,17 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:tetra_fluoro_ethylene_fluid_cube"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_input1": {
-      "conditions": {
-        "items": [
-          {
-            "items": "ragium:oxygen_fluid_cube"
+            "items": "ragium:residual_oil_fluid_cube"
           }
         ]
       },
@@ -23,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:chemical_reactor/ptfe_plate"
+        "recipe": "ragium:distillation_tower/fuel_fluid_cube"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input0",
-      "has_input1"
+      "has_input0"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:chemical_reactor/ptfe_plate"
+      "ragium:distillation_tower/fuel_fluid_cube"
     ]
   }
 }

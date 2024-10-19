@@ -5,17 +5,20 @@
   },
   "inputs": [
     {
-      "count": 2,
-      "items": "ragium:naphtha_fluid_cube"
+      "count": 3,
+      "items": "ragium:residual_oil_fluid_cube"
     }
   ],
   "machine_type": "ragium:distillation_tower",
   "outputs": [
     {
-      "item": "ragium:ethylene_fluid_cube"
+      "item": "ragium:fuel_fluid_cube"
     },
     {
-      "item": "ragium:diesel_fluid_cube"
+      "item": "ragium:lubricant_fluid_cube"
+    },
+    {
+      "item": "ragium:asphalt_fluid_cube"
     }
   ]
 }

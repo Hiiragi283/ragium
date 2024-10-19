@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:pe_plate"
+      "items": "ragium:plastic_plate"
     },
     {
       "items": "#c:plates/copper"

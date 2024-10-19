@@ -2,9 +2,10 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:niter_dust"
+      "items": "minecraft:breeze_rod"
     },
     {
+      "count": 2,
       "items": "ragium:water_fluid_cube"
     }
   ],
@@ -12,6 +13,7 @@
   "min_tier": "basic",
   "outputs": [
     {
+      "count": 2,
       "item": "ragium:nitric_acid_fluid_cube"
     }
   ]

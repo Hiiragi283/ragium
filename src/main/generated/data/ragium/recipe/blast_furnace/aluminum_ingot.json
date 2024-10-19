@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "ragium:alumina_dust"
+    },
+    {
+      "count": 4,
+      "items": "#minecraft:coals"
+    }
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "min_tier": "advanced",
+  "outputs": [
+    {
+      "item": "ragium:aluminum_ingot"
+    }
+  ]
+}

@@ -7,7 +7,7 @@
   "machine_type": "ragium:mob_extractor",
   "outputs": [
     {
-      "item": "minecraft:wind_charge"
+      "item": "ragium:nitric_acid_fluid_cube"
     }
   ]
 }

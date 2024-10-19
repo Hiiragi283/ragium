@@ -121,13 +121,13 @@ object RagiumTagProviders {
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.DEEP_RAGINITE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.NETHER_RAGINITE)
             add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)
-            add(RagiumItemTags.SULFUR_DUSTS, RagiumContents.Dusts.SULFUR)
 
             buildList {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
 
                 addAll(RagiumContents.Dusts.entries)
+                addAll(RagiumContents.Gems.entries)
                 addAll(RagiumContents.Ingots.entries)
                 addAll(RagiumContents.Plates.entries)
                 addAll(RagiumContents.RawMaterials.entries)
@@ -155,6 +155,13 @@ object RagiumTagProviders {
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
             add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)
+
+            add(RagiumItemTags.ALCOHOL, RagiumContents.Fluids.METHANOL)
+            add(RagiumItemTags.ALCOHOL, RagiumContents.Fluids.ETHANOL)
+
+            add(RagiumItemTags.FUEL_CUBES, RagiumContents.Fluids.BIO_FUEL)
+            add(RagiumItemTags.FUEL_CUBES, RagiumContents.Fluids.FUEL)
+            add(RagiumItemTags.FUEL_CUBES, RagiumContents.Fluids.AROMATIC_COMPOUNDS)
 
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
             add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)

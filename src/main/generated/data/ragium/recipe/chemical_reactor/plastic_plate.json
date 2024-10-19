@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:vinyl_chloride_fluid_cube"
+      "items": "ragium:ethylene_fluid_cube"
     },
     {
       "items": "ragium:oxygen_fluid_cube"
@@ -11,7 +11,7 @@
   "machine_type": "ragium:chemical_reactor",
   "outputs": [
     {
-      "item": "ragium:pvc_plate"
+      "item": "ragium:plastic_plate"
     },
     {
       "item": "ragium:empty_fluid_cube"

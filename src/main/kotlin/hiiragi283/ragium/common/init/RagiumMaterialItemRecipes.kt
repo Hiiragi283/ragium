@@ -35,7 +35,7 @@ object RagiumMaterialItemRecipes {
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.COPPER)
             set(HTMaterialItemRecipeRegistry.INGOT, Items.COPPER_INGOT)
             // set(HTMaterialItemRecipeRegistry.ORE, BothEither.right(ItemTags.COPPER_ORES))
-            set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.SULFUR)
+            // set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.SULFUR)
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.COPPER)
             set(HTMaterialItemRecipeRegistry.RAW, Items.RAW_COPPER)
         }
@@ -56,7 +56,7 @@ object RagiumMaterialItemRecipes {
         HTMaterialItemRecipeRegistry.register("ragi_crystal") {
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.RAGI_CRYSTAL)
             set(HTMaterialItemRecipeRegistry.ORE, RagiumContents.Ores.END_RAGI_CRYSTAL)
-            set(HTMaterialItemRecipeRegistry.RAW, RagiumContents.Misc.RAGI_CRYSTAL)
+            set(HTMaterialItemRecipeRegistry.RAW, RagiumContents.Gems.RAGI_CRYSTAL)
         }
 
         HTMaterialItemRecipeRegistry.register("ragi_alloy") {

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:pvc_plate"
+            "items": "ragium:plastic_plate"
           }
         ]
       },

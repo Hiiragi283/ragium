@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 3,
+      "items": "#ragium:alcohol"
+    },
+    {
+      "items": "#ragium:organic_oils"
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "outputs": [
+    {
+      "count": 3,
+      "item": "ragium:bio_fuel_fluid_cube"
+    },
+    {
+      "item": "ragium:glycerol_fluid_cube"
+    }
+  ]
+}

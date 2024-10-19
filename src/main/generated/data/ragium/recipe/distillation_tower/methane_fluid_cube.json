@@ -5,21 +5,20 @@
   },
   "inputs": [
     {
-      "count": 4,
+      "count": 3,
       "items": "ragium:refined_gas_fluid_cube"
     }
   ],
   "machine_type": "ragium:distillation_tower",
   "outputs": [
     {
-      "count": 2,
       "item": "ragium:methane_fluid_cube"
     },
     {
       "item": "ragium:lpg_fluid_cube"
     },
     {
-      "item": "ragium:helium_fluid_cube"
+      "item": "ragium:ethylene_fluid_cube"
     }
   ]
 }

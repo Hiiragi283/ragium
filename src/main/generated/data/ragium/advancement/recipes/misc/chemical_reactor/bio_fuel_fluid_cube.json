@@ -5,7 +5,17 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:tar_fluid_cube"
+            "items": "#ragium:alcohol"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#ragium:organic_oils"
           }
         ]
       },
@@ -13,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:distillation_tower/benzene_fluid_cube"
+        "recipe": "ragium:chemical_reactor/bio_fuel_fluid_cube"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +31,13 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input0"
+      "has_input0",
+      "has_input1"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:distillation_tower/benzene_fluid_cube"
+      "ragium:chemical_reactor/bio_fuel_fluid_cube"
     ]
   }
 }

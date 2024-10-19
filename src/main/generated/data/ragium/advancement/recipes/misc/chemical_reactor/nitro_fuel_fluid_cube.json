@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:vinyl_chloride_fluid_cube"
+            "items": "ragium:fuel_fluid_cube"
           }
         ]
       },
@@ -15,7 +15,17 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:oxygen_fluid_cube"
+            "items": "ragium:nitric_acid_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input2": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:sulfuric_acid_fluid_cube"
           }
         ]
       },
@@ -23,7 +33,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:chemical_reactor/pvc_plate"
+        "recipe": "ragium:chemical_reactor/nitro_fuel_fluid_cube"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -32,12 +42,13 @@
     [
       "has_the_recipe",
       "has_input0",
-      "has_input1"
+      "has_input1",
+      "has_input2"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:chemical_reactor/pvc_plate"
+      "ragium:chemical_reactor/nitro_fuel_fluid_cube"
     ]
   }
 }

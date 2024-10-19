@@ -7,12 +7,11 @@
     "ragium:aluminum_plate",
     "ragium:gold_plate",
     "ragium:invar_plate",
+    "ragium:plastic_plate",
     "ragium:silicon_plate",
     "ragium:steel_plate",
     "ragium:refined_ragi_steel_plate",
-    "ragium:pe_plate",
-    "ragium:pvc_plate",
-    "ragium:ptfe_plate",
+    "ragium:engineering_plastic_plate",
     "ragium:stella_plate"
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:sulfuric_acid_fluid_cube"
+  },
+  "inputs": [
+    {
+      "items": "ragium:water_fluid_cube"
+    },
+    {
+      "items": "ragium:ethylene_fluid_cube"
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "outputs": [
+    {
+      "item": "ragium:ethanol_fluid_cube"
+    }
+  ]
+}

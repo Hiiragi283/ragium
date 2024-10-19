@@ -23,7 +23,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:chemical_reactor/pe_plate"
+        "recipe": "ragium:chemical_reactor/plastic_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -37,7 +37,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:chemical_reactor/pe_plate"
+      "ragium:chemical_reactor/plastic_plate"
     ]
   }
 }

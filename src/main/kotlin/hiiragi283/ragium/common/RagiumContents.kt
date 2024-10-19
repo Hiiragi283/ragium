@@ -79,7 +79,7 @@ object RagiumContents : HTContentRegister {
                 DEEP_RAGINITE -> RawMaterials.RAGINITE
                 DEEP_BAUXITE -> RawMaterials.BAUXITE
                 NETHER_RAGINITE -> RawMaterials.RAGINITE
-                END_RAGI_CRYSTAL -> Misc.RAGI_CRYSTAL
+                END_RAGI_CRYSTAL -> Gems.RAGI_CRYSTAL
             }
 
         override val tagKey: TagKey<Item> = ConventionalItemTags.ORES
@@ -111,13 +111,12 @@ object RagiumContents : HTContentRegister {
         RAGINITE(RagiumMaterials.RAGINITE),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
 
+        ALUMINA(RagiumMaterials.ALUMINA),
         ASH(RagiumMaterials.ASH),
         COPPER(RagiumMaterials.COPPER),
         GOLD(RagiumMaterials.GOLD),
         IRON(RagiumMaterials.IRON),
         NICKEL(RagiumMaterials.NICKEL),
-        NITER(RagiumMaterials.NITER),
-        SULFUR(RagiumMaterials.SULFUR),
         ;
 
         override val entry: HTRegistryEntry<Item> =
@@ -125,6 +124,21 @@ object RagiumContents : HTContentRegister {
         override val enPattern: String = "%s Dust"
         override val jaPattern: String = "%sの粉"
         override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
+    }
+
+    //    Gems    //
+
+    enum class Gems(override val material: RagiumMaterials) : HTContent.Material<Item> {
+        FLUORITE(RagiumMaterials.FLUORITE),
+        OBLIVION_CRYSTAL(RagiumMaterials.OBLIVION_CRYSTAL),
+        RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
+        ;
+
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+        override val enPattern: String = "%s"
+        override val jaPattern: String = "%s"
+        override val tagKey: TagKey<Item> = ConventionalItemTags.GEMS
     }
 
     //    Ingots    //
@@ -159,14 +173,13 @@ object RagiumContents : HTContentRegister {
         ALUMINUM(RagiumMaterials.ALUMINUM),
         GOLD(RagiumMaterials.GOLD),
         INVAR(RagiumMaterials.INVAR),
+        PLASTIC(RagiumMaterials.PLASTIC),
         SILICON(RagiumMaterials.SILICON),
         STEEL(RagiumMaterials.STEEL),
 
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
-        PE(RagiumMaterials.PE),
-        PVC(RagiumMaterials.PVC),
-        PTFE(RagiumMaterials.PTFE),
+        ENGINEERING_PLASTIC(RagiumMaterials.ENGINEERING_PLASTIC),
         STELLA(RagiumMaterials.STELLA),
         ;
 
@@ -374,7 +387,7 @@ object RagiumContents : HTContentRegister {
 
     enum class Misc : HTContent<Item> {
         ALCHEMY_STUFF {
-            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC).maxCount(1))
+            override fun createSettings(): Item.Settings = super.createSettings().rarity(Rarity.EPIC).maxCount(1)
         },
         BACKPACK {
             override fun createItem(): Item = HTBackpackItem
@@ -392,12 +405,7 @@ object RagiumContents : HTContentRegister {
             override fun createItem(): Item = HTForgeHammerItem
         },
         HEART_OF_THE_NETHER {
-            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.UNCOMMON))
-        },
-        OBLIVION_CRYSTAL {
-            override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC))
-
-            override val tagKey: TagKey<Item> = ConventionalItemTags.GEMS
+            override fun createSettings(): Item.Settings = super.createSettings().rarity(Rarity.UNCOMMON)
         },
         OBLIVION_CUBE_SPAWN_EGG {
             override fun createItem(): Item = SpawnEggItem(
@@ -409,9 +417,6 @@ object RagiumContents : HTContentRegister {
         },
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
-        RAGI_CRYSTAL {
-            override val tagKey: TagKey<Item> = ConventionalItemTags.GEMS
-        },
         RAGI_CRYSTAL_PROCESSOR,
         REMOVER_DYNAMITE {
             override fun createItem(): Item = HTRemoverDynamiteItem
@@ -421,7 +426,9 @@ object RagiumContents : HTContentRegister {
         TRADER_CATALOG,
         ;
 
-        internal open fun createItem(): Item = Item(itemSettings())
+        internal open fun createSettings(): Item.Settings = itemSettings()
+
+        internal open fun createItem(): Item = Item(createSettings())
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -543,38 +550,41 @@ object RagiumContents : HTContentRegister {
 
         // Natural Resources
         SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
-        PETROLEUM(Color(0x000000), "Petroleum", "石油"),
         CRUDE_OIL(Color(0x000000), "Crude Oil", "原油"),
 
         // Elements
         HYDROGEN(Color(0x0000cc), "Hydrogen", "水素"),
         NITROGEN(Color(0x66cccc), "Nitrogen", "窒素"),
         OXYGEN(Color(0x99ccff), "Oxygen", "酸素"),
-        FLUORINE(Color(0x66cc99), "Fluorine", "フッ素"),
         CHLORINE(Color(0xccff33), "Chlorine", "塩素"),
 
         // Non-organic Chemical Compounds
         NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
         SODIUM_HYDROXIDE(Color(0x000099), "Sodium Hydroxide Solution", "水酸化ナトリウム水溶液"),
         SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸"),
-        MIXTURE_ACID(Color(0xcc6633), "Mixture Acid", "混酸"),
 
         // Oil products
         REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス"),
         NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
-        TAR(Color(0x000033), "Tar", "タール"),
+        RESIDUAL_OIL(Color(0x000033), "Residual Oil", "残渣油"),
+
         METHANE(Color(0xcc0099), "Methane", "メタン"),
         METHANOL(Color(0xcc00ff), "Methanol", "メタノール"),
         LPG(Color(0xffff33), "LPG", "LGP"),
-        HELIUM(Color(0xffff99), "Helium", "ヘリウム"),
         ETHYLENE(Color(0x999999), "Ethylene", "エチレン"),
-        VINYL_CHLORIDE(Color(0x99cc99), "Vinyl Chloride", "塩化ビニル"),
-        TETRA_FLUORO_ETHYLENE(Color(0x669999), "Tetra Fluoro Ethylene", "テトラフルオロエチレン"),
-        DIESEL(Color(0xcccc00), "Diesel", "ディーゼル"),
-        BENZENE(Color(0x000066), "Benzene", "ベンゼン"),
-        TOLUENE(Color(0x666699), "Toluene", "トルエン"),
-        PHENOL(Color(0x996633), "Phenol", "フェノール"),
+        ETHANOL(Color(0xccffff), "Ethanol", "エタノール"),
 
+        AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
+
+        LUBRICANT(Color(0x996633), "Lubricant", "潤滑油"),
+        ASPHALT(Color(0x000066), "Asphalt", "アスファルト"),
+
+        // Fuels
+        BIO_FUEL(Color(0x99ff00), "Bio Fuel", "バイオ燃料"),
+        FUEL(Color(0xcc6633), "Fuel", "燃料"),
+        NITRO_FUEL(Color(0xff33333), "Nitro Fuel", "ニトロ燃料"),
+
+        // Explodes
         NITRO_GLYCERIN(Color(0x99cc66), "Nitroglycerin", "ニトログリセリン"),
         TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
         ;

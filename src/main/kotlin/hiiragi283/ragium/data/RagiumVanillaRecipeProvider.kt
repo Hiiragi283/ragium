@@ -386,9 +386,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun craftingFluids(exporter: RecipeExporter) {
         createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
-        createEmptyFluidCube(exporter, RagiumContents.Plates.PE, 8, "_pe")
-        createEmptyFluidCube(exporter, RagiumContents.Plates.PVC, 16, "_pvc")
-        createEmptyFluidCube(exporter, RagiumContents.Plates.PTFE, 32, "_ptfe")
+        createEmptyFluidCube(exporter, RagiumContents.Plates.PLASTIC, 8, "_pe")
+        createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Fluids.WATER)
@@ -494,8 +493,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
             ).input('A', RagiumContents.Plates.STELLA)
             .input('B', RagiumItemTags.STEEL_PLATES)
-            .input('C', RagiumContents.Misc.RAGI_CRYSTAL)
-            .unlockedBy(RagiumContents.Misc.RAGI_CRYSTAL)
+            .input('C', RagiumContents.Gems.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.Gems.RAGI_CRYSTAL)
             .offerTo(exporter)
         // machines
         HTShapedRecipeJsonBuilder

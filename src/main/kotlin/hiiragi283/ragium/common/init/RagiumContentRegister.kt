@@ -6,9 +6,11 @@ import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.extension.tier
+import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
+import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
@@ -35,6 +37,7 @@ object RagiumContentRegister : HTContentRegister {
         }
 
         RagiumContents.Dusts.entries.forEach { registerItem(it, Item(itemSettings())) }
+        RagiumContents.Gems.entries.forEach { registerItem(it, Item(itemSettings())) }
         RagiumContents.Ingots.entries.forEach { registerItem(it, Item(itemSettings())) }
         RagiumContents.Plates.entries.forEach { registerItem(it, Item(itemSettings())) }
         RagiumContents.RawMaterials.entries.forEach { registerItem(it, Item(itemSettings())) }
@@ -92,7 +95,7 @@ object RagiumContentRegister : HTContentRegister {
             registerItem(fluid, fluid.createItem())
         }
 
-        initAccessories()
+        initRegistry()
     }
 
     @JvmStatic
@@ -132,7 +135,8 @@ object RagiumContentRegister : HTContentRegister {
     }
 
     @JvmStatic
-    private fun initAccessories() {
+    private fun initRegistry() {
+        // Accessory
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
@@ -171,5 +175,8 @@ object RagiumContentRegister : HTContentRegister {
             }
             slotType = HTAccessorySlotTypes.FACE
         }
+        // Fuel Time
+        FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
+        FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)
     }
 }

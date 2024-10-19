@@ -6,19 +6,17 @@
   "inputs": [
     {
       "count": 3,
-      "items": "ragium:tar_fluid_cube"
+      "items": "ragium:naphtha_fluid_cube"
     }
   ],
   "machine_type": "ragium:distillation_tower",
   "outputs": [
     {
-      "item": "ragium:benzene_fluid_cube"
+      "item": "ragium:aromatic_compounds_fluid_cube"
     },
     {
-      "item": "ragium:toluene_fluid_cube"
-    },
-    {
-      "item": "ragium:phenol_fluid_cube"
+      "count": 2,
+      "item": "ragium:fuel_fluid_cube"
     }
   ]
 }

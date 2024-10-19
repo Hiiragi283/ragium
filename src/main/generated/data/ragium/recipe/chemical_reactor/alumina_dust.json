@@ -2,19 +2,19 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:ethylene_fluid_cube"
+      "items": "ragium:raw_bauxite"
     },
     {
-      "items": "ragium:oxygen_fluid_cube"
+      "items": "ragium:sodium_hydroxide_fluid_cube"
     }
   ],
   "machine_type": "ragium:chemical_reactor",
   "outputs": [
     {
-      "item": "ragium:pe_plate"
+      "item": "ragium:alumina_dust"
     },
     {
-      "item": "ragium:empty_fluid_cube"
+      "item": "ragium:water_fluid_cube"
     }
   ]
 }

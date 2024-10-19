@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:ptfe_plate"
+      "items": "ragium:engineering_plastic_plate"
     },
     {
       "items": "ragium:ragi_alloy_plate"
