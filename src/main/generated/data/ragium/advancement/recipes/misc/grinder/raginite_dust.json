@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:raw_raginite"
+            "items": "#c:raw_materials/raginite"
           }
         ]
       },

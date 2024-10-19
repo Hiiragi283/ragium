@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:heart_of_the_nether"
+  },
+  "inputs": [
+    {
+      "items": "#c:basalts"
+    }
+  ],
+  "machine_type": "ragium:extractor",
+  "outputs": [
+    {
+      "item": "ragium:basalt_mesh"
+    }
+  ]
+}

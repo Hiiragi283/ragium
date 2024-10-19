@@ -7,7 +7,7 @@
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_the_item": {
       "conditions": {
         "items": [
           {
@@ -27,7 +27,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_the_item"
     ]
   ],
   "rewards": {

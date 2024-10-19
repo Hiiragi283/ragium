@@ -4,15 +4,15 @@
     "ragium:iron_plate",
     "ragium:copper_plate",
     "ragium:ragi_steel_plate",
-    "ragium:basalt_fiber_plate",
+    "ragium:aluminum_plate",
     "ragium:gold_plate",
     "ragium:invar_plate",
     "ragium:silicon_plate",
-    "ragium:silver_plate",
     "ragium:steel_plate",
     "ragium:refined_ragi_steel_plate",
     "ragium:pe_plate",
     "ragium:pvc_plate",
-    "ragium:ptfe_plate"
+    "ragium:ptfe_plate",
+    "ragium:stella_plate"
   ]
 }

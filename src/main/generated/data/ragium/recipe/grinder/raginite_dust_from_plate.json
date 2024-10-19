@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:plates/raginite"
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:raginite_dust"
+    }
+  ]
+}

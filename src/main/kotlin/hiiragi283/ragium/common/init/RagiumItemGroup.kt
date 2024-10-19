@@ -51,9 +51,6 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Tools.entries)
                     addAll(HTCrafterHammerItem.Behavior.entries)
 
-                    addAll(RagiumContents.Accessories.entries)
-                    remove(RagiumContents.Accessories.BACKPACK)
-
                     addAll(RagiumContents.Hulls.entries)
                     add(RagiumBlocks.BASIC_CASING)
                     add(RagiumBlocks.ADVANCED_CASING)
@@ -65,6 +62,7 @@ object RagiumItemGroup {
                     add(RagiumBlocks.SPONGE_CAKE)
                     add(RagiumBlocks.SWEET_BERRIES_CAKE)
                     addAll(RagiumContents.Misc.entries)
+                    remove(RagiumContents.Misc.BACKPACK)
 
                     addAll(RagiumContents.Fluids.entries)
                 }.forEach(entries::add)

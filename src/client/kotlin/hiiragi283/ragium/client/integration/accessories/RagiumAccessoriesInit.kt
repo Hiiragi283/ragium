@@ -25,7 +25,7 @@ object RagiumAccessoriesInit {
             registerAccessory(item, HTWrappedAccessory, slot)
         }
 
-        registerAccessory(RagiumContents.Accessories.BACKPACK, HTEmptyAccessory, HTAccessorySlotTypes.BACK)
+        registerAccessory(RagiumContents.Misc.BACKPACK, HTEmptyAccessory, HTAccessorySlotTypes.BACK)
 
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             context.modify(slotCache::containsKey) { builder: ComponentMap.Builder, item: Item ->

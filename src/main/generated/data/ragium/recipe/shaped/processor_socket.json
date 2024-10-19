@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:advanced_circuit"
+    },
+    "B": {
+      "tag": "c:plates/gold"
+    },
+    "C": {
+      "item": "ragium:stella_plate"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:processor_socket"
+  }
+}

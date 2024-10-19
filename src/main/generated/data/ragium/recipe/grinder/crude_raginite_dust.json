@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:raw_crude_raginite"
+      "items": "#c:raw_materials/crude_raginite"
     }
   ],
   "machine_type": "ragium:grinder",

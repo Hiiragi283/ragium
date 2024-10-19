@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:refined_ragi_steel_ingot"
+      "tag": "c:ingots/refined_ragi_steel"
     }
   },
   "pattern": [

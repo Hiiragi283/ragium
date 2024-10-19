@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "ragium:ragi_alloy_block"
+      "tag": "c:storage_blocks/ragi_alloy"
     }
   ],
   "result": {

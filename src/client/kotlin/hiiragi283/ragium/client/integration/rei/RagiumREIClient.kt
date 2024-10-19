@@ -7,13 +7,12 @@ import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
 import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.integration.rei.category.HTAlchemyRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
-import hiiragi283.ragium.client.integration.rei.display.HTDisplay
-import hiiragi283.ragium.client.integration.rei.display.HTInfusionRecipeDisplay
-import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
-import hiiragi283.ragium.client.integration.rei.display.HTTransformRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.category.HTTradeOfferCategory
+import hiiragi283.ragium.client.integration.rei.display.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
@@ -33,6 +32,7 @@ import me.shedaniel.rei.api.common.util.EntryStacks
 import me.shedaniel.rei.plugin.common.BuiltinPlugin
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.minecraft.client.MinecraftClient
 import net.minecraft.item.ItemStack
 
 @Environment(EnvType.CLIENT)
@@ -41,9 +41,13 @@ object RagiumREIClient : REIClientPlugin {
         RagiumAPI.log { info("REI Integration enabled!") }
     }
 
-    @JvmStatic
+    @JvmField
     val ALCHEMY: CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> =
         CategoryIdentifier.of(RagiumAPI.MOD_ID, "alchemical_infusion")
+
+    @JvmField
+    val TRADE_OFFER: CategoryIdentifier<HTTradeOfferDisplay> =
+        CategoryIdentifier.of(RagiumAPI.MOD_ID, "trade_offer")
 
     @JvmStatic
     fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = RagiumAPI
@@ -88,6 +92,9 @@ object RagiumREIClient : REIClientPlugin {
         registry.add(HTAlchemyRecipeCategory)
         registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumBlocks.ALCHEMICAL_INFUSER))
         registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.Misc.ALCHEMY_STUFF))
+        // Trade Offer
+        registry.add(HTTradeOfferCategory)
+        registry.addWorkstations(TRADE_OFFER, EntryStacks.of(RagiumContents.Ingots.RAGI_STEEL))
     }
 
     override fun registerDisplays(registry: DisplayRegistry) {
@@ -108,7 +115,14 @@ object RagiumREIClient : REIClientPlugin {
             RagiumRecipeTypes.ALCHEMY,
             ::HTTransformRecipeDisplay,
         )
-
+        // Trade Offer
+        HTTradeOfferRegistry.registry
+            .map { (tier: HTMachineTier, factory: List<HTTradeOfferRegistry.Factory>) ->
+                factory
+                    .mapNotNull { it.create(MinecraftClient.getInstance().player) }
+                    .map { HTTradeOfferDisplay(tier, it) }
+            }.flatten()
+            .forEach(registry::add)
         /*registry.registerVisibilityPredicate { _: DisplayCategory<*>, display: Display ->
             if (display is HTDisplay<*>) {
                 val id: Identifier = display.id

@@ -1,7 +1,9 @@
 {
   "values": [
     "ragium:raginite_ore",
+    "ragium:bauxite_ore",
     "ragium:deepslate_raginite_ore",
+    "ragium:deepslate_bauxite_ore",
     "ragium:nether_raginite_ore",
     "ragium:end_ragi_crystal_ore"
   ]

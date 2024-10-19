@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "count": 8,
+      "items": "ragium:ragi_crystal"
+    },
+    {
+      "items": "ragium:processor_socket"
+    }
+  ],
+  "machine_type": "ragium:assembler",
+  "min_tier": "advanced",
+  "outputs": [
+    {
+      "item": "ragium:ragi_crystal_processor"
+    }
+  ]
+}

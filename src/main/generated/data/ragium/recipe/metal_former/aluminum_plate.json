@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:ingots/aluminum"
+    }
+  ],
+  "machine_type": "ragium:metal_former",
+  "outputs": [
+    {
+      "item": "ragium:aluminum_plate"
+    }
+  ]
+}

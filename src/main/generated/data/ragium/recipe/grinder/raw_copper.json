@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "#minecraft:copper_ores"
+      "items": "#c:ores/copper"
     }
   ],
   "machine_type": "ragium:grinder",

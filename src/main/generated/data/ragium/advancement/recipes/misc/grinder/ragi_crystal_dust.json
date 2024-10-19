@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_crystal"
+            "items": "#c:raw_materials/ragi_crystal"
           }
         ]
       },

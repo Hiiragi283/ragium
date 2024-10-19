@@ -42,7 +42,6 @@ object RagiumContentRegister : HTContentRegister {
         RagiumContents.Armors.entries.forEach { registerItem(it, it.createItem()) }
         RagiumContents.Tools.entries.forEach { registerItem(it, it.createItem()) }
         HTCrafterHammerItem.Behavior.entries.forEach { registerItem(it, Item(itemSettings())) }
-        RagiumContents.Accessories.entries.forEach { registerItem(it, it.createItem()) }
 
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val block = Block(blockSettings(hull.material.tier.getBaseBlock()))
@@ -134,14 +133,41 @@ object RagiumContentRegister : HTContentRegister {
 
     @JvmStatic
     private fun initAccessories() {
-        HTAccessoryRegistry.register(
-            RagiumContents.Accessories.NIGHT_VISION_GOGGLES,
-        ) {
+        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
             }
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
                 it.removeStatusEffect(StatusEffects.NIGHT_VISION)
+            }
+            slotType = HTAccessorySlotTypes.FACE
+        }
+        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_JACKET) {
+            equippedAction = HTAccessoryRegistry.EquippedAction {
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1))
+            }
+            unequippedAction = HTAccessoryRegistry.UnequippedAction {
+                it.removeStatusEffect(StatusEffects.RESISTANCE)
+            }
+            slotType = HTAccessorySlotTypes.FACE
+        }
+        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_LEGGINGS) {
+            equippedAction = HTAccessoryRegistry.EquippedAction {
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.SPEED, -1, 1))
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.JUMP_BOOST, -1, 1))
+            }
+            unequippedAction = HTAccessoryRegistry.UnequippedAction {
+                it.removeStatusEffect(StatusEffects.SPEED)
+                it.removeStatusEffect(StatusEffects.JUMP_BOOST)
+            }
+            slotType = HTAccessorySlotTypes.FACE
+        }
+        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_BOOTS) {
+            equippedAction = HTAccessoryRegistry.EquippedAction {
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.SLOW_FALLING, -1, 0))
+            }
+            unequippedAction = HTAccessoryRegistry.UnequippedAction {
+                it.removeStatusEffect(StatusEffects.SLOW_FALLING)
             }
             slotType = HTAccessorySlotTypes.FACE
         }

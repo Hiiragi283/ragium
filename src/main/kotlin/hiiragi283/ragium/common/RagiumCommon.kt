@@ -3,7 +3,7 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
-import hiiragi283.ragium.common.accessories.RagiumAccessoriesInit
+import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.ModInitializer
@@ -39,8 +39,10 @@ object RagiumCommon : ModInitializer {
         RagiumItemGroup.init()
         RagiumNetworks.init()
         RagiumFeatures.init()
+        HTTradeOfferRegistry.init()
 
         RagiumApiLookupInit.init()
+        RagiumMaterialItemRecipes.init()
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
@@ -115,28 +116,11 @@ object RagiumTagProviders {
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
-            add(RagiumItemTags.COPPER_DUSTS, RagiumContents.Dusts.COPPER)
-            add(RagiumItemTags.COPPER_PLATES, RagiumContents.Plates.COPPER)
-            add(RagiumItemTags.GOLD_DUSTS, RagiumContents.Dusts.GOLD)
-            add(RagiumItemTags.GOLD_PLATES, RagiumContents.Plates.GOLD)
-            add(RagiumItemTags.INVAR_BLOCKS, RagiumContents.StorageBlocks.INVAR)
-            add(RagiumItemTags.INVAR_INGOTS, RagiumContents.Ingots.INVAR)
-            add(RagiumItemTags.INVAR_PLATES, RagiumContents.Plates.INVAR)
-            add(RagiumItemTags.IRON_DUSTS, RagiumContents.Dusts.IRON)
-            add(RagiumItemTags.IRON_PLATES, RagiumContents.Plates.IRON)
-            add(RagiumItemTags.NICKEL_BLOCKS, RagiumContents.StorageBlocks.NICKEL)
-            add(RagiumItemTags.NICKEL_DUSTS, RagiumContents.Dusts.NICKEL)
-            add(RagiumItemTags.NICKEL_INGOTS, RagiumContents.Ingots.NICKEL)
+            add(RagiumItemTags.BAUXITE_ORES, RagiumContents.Ores.BAUXITE)
+            add(RagiumItemTags.BAUXITE_ORES, RagiumContents.Ores.DEEP_BAUXITE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.DEEP_RAGINITE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.NETHER_RAGINITE)
             add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)
-            add(RagiumItemTags.SILVER_BLOCKS, RagiumContents.StorageBlocks.SILVER)
-            add(RagiumItemTags.SILVER_DUSTS, RagiumContents.Dusts.SILVER)
-            add(RagiumItemTags.SILVER_INGOTS, RagiumContents.Ingots.SILVER)
-            add(RagiumItemTags.SILVER_PLATES, RagiumContents.Plates.SILVER)
-            add(RagiumItemTags.STEEL_BLOCKS, RagiumContents.StorageBlocks.STEEL)
-            add(RagiumItemTags.STEEL_INGOTS, RagiumContents.Ingots.STEEL)
-            add(RagiumItemTags.STEEL_PLATES, RagiumContents.Plates.STEEL)
             add(RagiumItemTags.SULFUR_DUSTS, RagiumContents.Dusts.SULFUR)
 
             buildList {
@@ -185,6 +169,10 @@ object RagiumTagProviders {
             buildList {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
+
+            HTMaterialItemRecipeRegistry.configureTags { tagKey: TagKey<Item>, item: ItemConvertible? ->
+                item?.asItem()?.let { getOrCreateTagBuilder(tagKey).add(it) }
+            }
         }
     }
 }

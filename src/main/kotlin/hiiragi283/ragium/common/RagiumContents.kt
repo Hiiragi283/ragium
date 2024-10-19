@@ -41,11 +41,23 @@ object RagiumContents : HTContentRegister {
             override val enPattern: String = "Raginite Ore"
             override val jaPattern: String = "ラギナイト鉱石"
         },
+        BAUXITE(RagiumMaterials.BAUXITE, Blocks.STONE) {
+            override val entry: HTRegistryEntry<Block> =
+                HTRegistryEntry.ofBlock(RagiumAPI.id("bauxite_ore"))
+            override val enPattern: String = "Bauxite Ore"
+            override val jaPattern: String = "ボーキサイト鉱石"
+        },
         DEEP_RAGINITE(RagiumMaterials.RAGINITE, Blocks.DEEPSLATE) {
             override val entry: HTRegistryEntry<Block> =
                 HTRegistryEntry.ofBlock(RagiumAPI.id("deepslate_raginite_ore"))
             override val enPattern: String = "Deep Raginite Ore"
             override val jaPattern: String = "深層ラギナイト鉱石"
+        },
+        DEEP_BAUXITE(RagiumMaterials.BAUXITE, Blocks.DEEPSLATE) {
+            override val entry: HTRegistryEntry<Block> =
+                HTRegistryEntry.ofBlock(RagiumAPI.id("deepslate_bauxite_ore"))
+            override val enPattern: String = "Deep Bauxite Ore"
+            override val jaPattern: String = "深層ボーキサイト鉱石"
         },
         NETHER_RAGINITE(RagiumMaterials.RAGINITE, Blocks.NETHERRACK) {
             override val entry: HTRegistryEntry<Block> =
@@ -63,8 +75,11 @@ object RagiumContents : HTContentRegister {
         val dropMineral: ItemConvertible
             get() = when (this) {
                 CRUDE_RAGINITE -> RawMaterials.CRUDE_RAGINITE
+                BAUXITE -> RawMaterials.BAUXITE
+                DEEP_RAGINITE -> RawMaterials.RAGINITE
+                DEEP_BAUXITE -> RawMaterials.BAUXITE
+                NETHER_RAGINITE -> RawMaterials.RAGINITE
                 END_RAGI_CRYSTAL -> Misc.RAGI_CRYSTAL
-                else -> RawMaterials.RAGINITE
             }
 
         override val tagKey: TagKey<Item> = ConventionalItemTags.ORES
@@ -75,9 +90,9 @@ object RagiumContents : HTContentRegister {
     enum class StorageBlocks(override val material: RagiumMaterials) : HTContent.Material<Block> {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        ALUMINUM(RagiumMaterials.ALUMINUM),
         INVAR(RagiumMaterials.INVAR),
         NICKEL(RagiumMaterials.NICKEL),
-        SILVER(RagiumMaterials.SILVER),
         STEEL(RagiumMaterials.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
@@ -102,7 +117,6 @@ object RagiumContents : HTContentRegister {
         IRON(RagiumMaterials.IRON),
         NICKEL(RagiumMaterials.NICKEL),
         NITER(RagiumMaterials.NITER),
-        SILVER(RagiumMaterials.SILVER),
         SULFUR(RagiumMaterials.SULFUR),
         ;
 
@@ -118,9 +132,9 @@ object RagiumContents : HTContentRegister {
     enum class Ingots(override val material: RagiumMaterials) : HTContent.Material<Item> {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
+        ALUMINUM(RagiumMaterials.ALUMINUM),
         INVAR(RagiumMaterials.INVAR),
         NICKEL(RagiumMaterials.NICKEL),
-        SILVER(RagiumMaterials.SILVER),
         STEEL(RagiumMaterials.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
@@ -142,11 +156,10 @@ object RagiumContents : HTContentRegister {
 
         // tier2
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
-        BASALT_FIBER(RagiumMaterials.BASALT_FIBER),
+        ALUMINUM(RagiumMaterials.ALUMINUM),
         GOLD(RagiumMaterials.GOLD),
         INVAR(RagiumMaterials.INVAR),
         SILICON(RagiumMaterials.SILICON),
-        SILVER(RagiumMaterials.SILVER),
         STEEL(RagiumMaterials.STEEL),
 
         // tier3
@@ -154,6 +167,7 @@ object RagiumContents : HTContentRegister {
         PE(RagiumMaterials.PE),
         PVC(RagiumMaterials.PVC),
         PTFE(RagiumMaterials.PTFE),
+        STELLA(RagiumMaterials.STELLA),
         ;
 
         override val entry: HTRegistryEntry<Item> =
@@ -166,6 +180,7 @@ object RagiumContents : HTContentRegister {
     //    Raw Materials    //
 
     enum class RawMaterials(override val material: RagiumMaterials) : HTContent.Material<Item> {
+        BAUXITE(RagiumMaterials.BAUXITE),
         CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE),
         RAGINITE(RagiumMaterials.RAGINITE),
         ;
@@ -179,25 +194,35 @@ object RagiumContents : HTContentRegister {
 
     //    Armors    //
 
-    enum class Armors(override val material: RagiumMaterials, val armorType: HTArmorType, private val multiplier: Int) :
+    enum class Armors(override val material: RagiumMaterials, private val armorType: HTArmorType, private val multiplier: Int) :
         HTContent.Material<Item>,
-        HTTranslationFormatter by armorType {
+        HTTranslationFormatter {
         STEEL_HELMET(RagiumMaterials.STEEL, HTArmorType.HELMET, 25),
         STEEL_CHESTPLATE(RagiumMaterials.STEEL, HTArmorType.CHESTPLATE, 25),
         STEEL_LEGGINGS(RagiumMaterials.STEEL, HTArmorType.LEGGINGS, 25),
         STEEL_BOOTS(RagiumMaterials.STEEL, HTArmorType.BOOTS, 25),
+        STELLA_GOGGLE(RagiumMaterials.STELLA, HTArmorType.HELMET, 33) {
+            override val enPattern: String = "%s Goggles"
+            override val jaPattern: String = "%s ゴーグル"
+        },
+        STELLA_JACKET(RagiumMaterials.STELLA, HTArmorType.CHESTPLATE, 33) {
+            override val enPattern: String = "%s Jacket"
+            override val jaPattern: String = "%s ジャケット"
+        },
+        STELLA_LEGGINGS(RagiumMaterials.STELLA, HTArmorType.LEGGINGS, 33) {
+            override val jaPattern: String = "%s レギンス"
+        },
+        STELLA_BOOTS(RagiumMaterials.STELLA, HTArmorType.BOOTS, 33) {
+            override val jaPattern: String = "%s ブーツ"
+        },
         ;
 
-        internal fun createItem(): ArmorItem = armorType.itemType.let {
-            ArmorItem(
-                material.armor!!,
-                it,
-                itemSettings().maxDamage(it.getMaxDamage(multiplier)),
-            )
-        }
+        internal fun createItem(): ArmorItem = armorType.createItem(material.armor!!, multiplier)
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+        override val enPattern: String by armorType::enPattern
+        override val jaPattern: String by armorType::jaPattern
 
         override val tagKey: TagKey<Item> = armorType.armorTag
     }
@@ -220,24 +245,6 @@ object RagiumContents : HTContentRegister {
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
 
         override val tagKey: TagKey<Item> = toolType.toolTag
-    }
-
-    //    Accessories    //
-
-    enum class Accessories : HTContent<Item> {
-        BACKPACK {
-            override fun createItem(): Item = HTBackpackItem
-        },
-        DIVING_GOGGLES,
-        NIGHT_VISION_GOGGLES,
-        PISTON_BOOTS,
-        PARACHUTE,
-        ;
-
-        internal open fun createItem(): Item = Item(itemSettings().maxCount(1))
-
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
     }
 
     //    Hulls    //
@@ -369,7 +376,10 @@ object RagiumContents : HTContentRegister {
         ALCHEMY_STUFF {
             override fun createItem(): Item = Item(itemSettings().rarity(Rarity.EPIC).maxCount(1))
         },
-        BASALT_FIBER,
+        BACKPACK {
+            override fun createItem(): Item = HTBackpackItem
+        },
+        BASALT_MESH,
         CRAFTER_HAMMER {
             override fun createItem(): Item = HTCrafterHammerItem
         },
@@ -397,10 +407,12 @@ object RagiumContents : HTContentRegister {
                 itemSettings(),
             )
         },
+        PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL {
             override val tagKey: TagKey<Item> = ConventionalItemTags.GEMS
         },
+        RAGI_CRYSTAL_PROCESSOR,
         REMOVER_DYNAMITE {
             override fun createItem(): Item = HTRemoverDynamiteItem
         },
@@ -495,7 +507,6 @@ object RagiumContents : HTContentRegister {
         },
 
         // Molten Materials
-        MOLTEN_BASALT(Color(0x333333), "Molten Basalt", "溶融玄武岩"),
 
         // Organics
         TALLOW(Color(0xcc9933), "Tallow", "獣脂"),

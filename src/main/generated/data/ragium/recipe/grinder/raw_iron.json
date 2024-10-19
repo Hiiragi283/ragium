@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "#minecraft:iron_ores"
+      "items": "#c:ores/iron"
     }
   ],
   "machine_type": "ragium:grinder",

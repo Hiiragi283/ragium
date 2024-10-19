@@ -1,7 +1,10 @@
 package hiiragi283.ragium.api.content
 
+import hiiragi283.ragium.api.extension.itemSettings
 import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.Item
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 
@@ -22,4 +25,8 @@ enum class HTArmorType(val armorTag: TagKey<Item>, val itemType: ArmorItem.Type)
         override val enPattern: String = "%s Boots"
         override val jaPattern: String = "%sのブーツ"
     },
+    ;
+
+    fun createItem(material: RegistryEntry<ArmorMaterial>, multiplier: Int): ArmorItem =
+        ArmorItem(material, itemType, itemSettings().maxDamage(itemType.getMaxDamage(multiplier)))
 }

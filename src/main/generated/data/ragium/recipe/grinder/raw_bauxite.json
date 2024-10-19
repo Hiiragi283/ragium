@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:ores/bauxite"
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:raw_bauxite"
+    },
+    {
+      "item": "ragium:raw_bauxite"
+    }
+  ]
+}

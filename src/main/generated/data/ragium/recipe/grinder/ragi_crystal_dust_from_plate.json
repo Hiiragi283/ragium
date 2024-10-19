@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:plates/ragi_crystal"
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:ragi_crystal_dust"
+    }
+  ]
+}

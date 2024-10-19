@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:plates/aluminum"
+    },
+    {
+      "items": "ragium:basalt_mesh"
+    }
+  ],
+  "machine_type": "ragium:compressor",
+  "min_tier": "basic",
+  "outputs": [
+    {
+      "item": "ragium:stella_plate"
+    }
+  ]
+}

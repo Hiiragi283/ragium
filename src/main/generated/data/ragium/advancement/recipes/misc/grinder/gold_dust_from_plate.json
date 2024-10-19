@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:gold_plate"
+            "items": "#c:plates/gold"
           }
         ]
       },

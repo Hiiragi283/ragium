@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#minecraft:copper_ores"
+            "items": "#c:ores/copper"
           }
         ]
       },

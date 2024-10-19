@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:raw_materials/nickel"
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:nickel_dust"
+    },
+    {
+      "item": "ragium:nickel_dust"
+    }
+  ]
+}

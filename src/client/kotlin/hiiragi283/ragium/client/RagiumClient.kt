@@ -156,7 +156,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, tint: Int ->
             stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
-        }, RagiumContents.Accessories.BACKPACK)
+        }, RagiumContents.Misc.BACKPACK)
     }
 
     //    Screens    //
@@ -183,7 +183,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         ClientTickEvents.END_CLIENT_TICK.register { client: MinecraftClient ->
             while (RagiumKeyBinds.OPEN_BACKPACK.wasPressed()) {
                 val capability: AccessoriesCapability = client.player?.accessoriesCapability() ?: break
-                if (capability.isEquipped(RagiumContents.Accessories.BACKPACK.asItem())) {
+                if (capability.isEquipped(RagiumContents.Misc.BACKPACK.asItem())) {
                     ClientPlayNetworking.send(HTOpenBackpackPayload.ENDER)
                 }
             }

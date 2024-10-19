@@ -116,30 +116,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumItemTags.STEEL_INGOTS)
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
             .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Accessories.NIGHT_VISION_GOGGLES)
-            .patterns(
-                "AAA",
-                "BCB",
-                "A A",
-            ).input('A', RagiumItemTags.IRON_PLATES)
-            .input('B', Items.FERMENTED_SPIDER_EYE)
-            .input('C', Items.GREEN_STAINED_GLASS_PANE)
-            .unlockedBy(Items.FERMENTED_SPIDER_EYE)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Accessories.DIVING_GOGGLES)
-            .patterns(
-                "AAA",
-                "BCB",
-                "A A",
-            ).input('A', RagiumContents.Plates.PE)
-            .input('B', RagiumContents.Fluids.OXYGEN)
-            .input('C', Items.GLASS_PANE)
-            .unlockedBy(RagiumContents.Fluids.OXYGEN)
-            .offerTo(exporter)
     }
 
     //    Crafting - Tools    //
@@ -226,7 +202,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // backpack
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Accessories.BACKPACK)
+            .create(RagiumContents.Misc.BACKPACK)
             .patterns(
                 " A ",
                 "ABA",
@@ -242,9 +218,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun dyeBackpack(exporter: RecipeExporter, color: DyeColor) {
         HTShapelessRecipeJsonBuilder
             .create(HTBackpackItem.createStack(color))
-            .input(RagiumContents.Accessories.BACKPACK)
+            .input(RagiumContents.Misc.BACKPACK)
             .input(createTagKey("dyes/${color.asString()}"))
-            .unlockedBy(RagiumContents.Accessories.BACKPACK)
+            .unlockedBy(RagiumContents.Misc.BACKPACK)
             .offerPrefix(exporter, "dyed_${color.asString()}_")
     }
 
@@ -334,7 +310,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "CCC",
             ).input('A', ConventionalItemTags.GLASS_PANES)
             .input('B', RagiumItemTags.SILICON_PLATES)
-            .input('C', RagiumItemTags.SILVER_PLATES)
+            .input('C', RagiumItemTags.ALUMINUM_PLATES)
             .unlockedBy(RagiumItemTags.SILICON_PLATES)
             .offerTo(exporter)
 
@@ -391,6 +367,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('C', RagiumItemTags.GOLD_PLATES)
             .input('D', RagiumContents.Circuits.PRIMITIVE)
             .unlockedBy(RagiumContents.Dusts.RAGINITE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Misc.PROCESSOR_SOCKET)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumContents.Circuits.ADVANCED)
+            .input('B', RagiumItemTags.GOLD_PLATES)
+            .input('C', RagiumContents.Plates.STELLA)
+            .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
     }
 
@@ -504,7 +492,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumContents.Plates.BASALT_FIBER)
+            ).input('A', RagiumContents.Plates.STELLA)
             .input('B', RagiumItemTags.STEEL_PLATES)
             .input('C', RagiumContents.Misc.RAGI_CRYSTAL)
             .unlockedBy(RagiumContents.Misc.RAGI_CRYSTAL)
@@ -582,7 +570,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createMachine(
             exporter,
             RagiumMachineTypes.Processor.ASSEMBLER,
-            RagiumContents.Circuits.PRIMITIVE,
+            HTMachineTier::getCircuit,
         )
         createMachine(
             exporter,
@@ -649,11 +637,25 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         left: ItemConvertible,
         right: ItemConvertible = left,
     ) {
-        createMachine(
+        createMachineInternal(
             exporter,
             type,
-            Ingredient.ofItems(left),
-            Ingredient.ofItems(right),
+            { Ingredient.ofItems(left) },
+            { Ingredient.ofItems(right) },
+        )
+    }
+
+    private fun createMachine(
+        exporter: RecipeExporter,
+        type: HTMachineConvertible,
+        left: (HTMachineTier) -> ItemConvertible,
+        right: (HTMachineTier) -> ItemConvertible = left,
+    ) {
+        createMachineInternal(
+            exporter,
+            type,
+            { Ingredient.ofItems(left(it)) },
+            { Ingredient.ofItems(right(it)) },
         )
     }
 
@@ -663,19 +665,19 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         left: TagKey<Item>,
         right: TagKey<Item> = left,
     ) {
-        createMachine(
+        createMachineInternal(
             exporter,
             type,
-            Ingredient.fromTag(left),
-            Ingredient.fromTag(right),
+            { Ingredient.fromTag(left) },
+            { Ingredient.fromTag(right) },
         )
     }
 
-    private fun createMachine(
+    private fun createMachineInternal(
         exporter: RecipeExporter,
         type: HTMachineConvertible,
-        left: Ingredient,
-        right: Ingredient = left,
+        left: (HTMachineTier) -> Ingredient,
+        right: (HTMachineTier) -> Ingredient = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             val output: ItemStack = type.createItemStack(tier)
@@ -687,9 +689,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                     "BCD",
                     "EEE",
                 ).input('A', getMachineMaterial(tier, isHard))
-                .input('B', left)
+                .input('B', left(tier))
                 .input('C', tier.getHull())
-                .input('D', right)
+                .input('D', right(tier))
                 .input('E', getMachineBase(tier, isHard))
                 .unlockedBy(tier.getHull())
             createPattern(true).offerTo(exporter.hardMode(true), tier.createId(type).withPrefixedPath("hard/"))
@@ -766,9 +768,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun cookingRecipes(exporter: RecipeExporter) {
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
-            Ingredient.ofItems(RagiumContents.Misc.RAGI_ALLOY_COMPOUND),
+            RagiumContents.Misc.RAGI_ALLOY_COMPOUND,
             RagiumContents.Ingots.RAGI_ALLOY,
-            RecipeProvider.conditionsFromItem(RagiumContents.Misc.RAGI_ALLOY_COMPOUND),
         )
 
         HTCookingRecipeJsonBuilder.smeltAndSmoke(

@@ -12,7 +12,7 @@
       "item": "ragium:forge_hammer"
     },
     "B": {
-      "item": "ragium:ragi_alloy_ingot"
+      "tag": "c:ingots/ragi_alloy"
     }
   },
   "pattern": [

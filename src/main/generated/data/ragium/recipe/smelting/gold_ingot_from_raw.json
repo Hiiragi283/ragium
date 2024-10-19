@@ -1,4 +1,13 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:raw_materials/gold"
+      ]
+    }
+  ],
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 200,

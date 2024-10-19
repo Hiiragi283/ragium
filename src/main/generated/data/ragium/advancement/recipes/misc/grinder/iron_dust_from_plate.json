@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:iron_plate"
+            "items": "#c:plates/iron"
           }
         ]
       },

@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.data.recipe.HTInfusionRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTMetalItemRecipeRegistry
+import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.entity.EntityType
@@ -53,12 +54,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         infusion(exporter)
         transform(exporter)
         // patterned
-        RagiumMetalItemRecipes.init()
-        HTMetalItemRecipeRegistry.generateRecipes(exporter, ::exporterWrapper)
+        HTMaterialItemRecipeRegistry.generateRecipes(exporter, ::exporterWrapper1, ::exporterWrapper2)
     }
 
-    private fun exporterWrapper(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
+    private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
         withConditions(exporter, HTHardModeResourceCondition.fromBool((bool)))
+
+    private fun exporterWrapper2(exporter: RecipeExporter, tagKey: TagKey<Item>): RecipeExporter =
+        withConditions(exporter, ResourceConditions.tagsPopulated(tagKey))
 
     //    Alloy Furnace    //
 
@@ -96,6 +99,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun assembler(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
+            .addInput(RagiumItemTags.STEEL_PLATES, 8)
+            .addInput(RagiumContents.Plates.RAGI_STEEL, 8)
+            .addOutput(RagiumContents.Misc.ENGINE)
+            .offerTo(exporter)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.ADVANCED)
+            .addInput(RagiumContents.Misc.RAGI_CRYSTAL, 8)
+            .addInput(RagiumContents.Misc.PROCESSOR_SOCKET)
+            .addOutput(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR)
+            .offerTo(exporter)
+        // circuits
+        HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .addInput(RagiumContents.Plates.PE)
             .addInput(RagiumItemTags.COPPER_PLATES)
@@ -118,27 +135,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Dusts.RAGI_CRYSTAL)
             .addOutput(RagiumContents.Circuits.ADVANCED)
             .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .addInput(RagiumContents.Misc.BASALT_FIBER, 4)
-            .addOutput(RagiumContents.Plates.BASALT_FIBER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .addInput(RagiumContents.Fluids.MOLTEN_BASALT)
-            .addOutput(RagiumContents.Misc.BASALT_FIBER)
-            .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .addInput(RagiumItemTags.STEEL_PLATES, 8)
-            .addInput(RagiumContents.Plates.RAGI_STEEL, 8)
-            .addOutput(RagiumContents.Misc.ENGINE)
-            .offerTo(exporter)
-
+        // motors
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .addInput(RagiumItemTags.IRON_PLATES, 8)
@@ -383,6 +380,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(Items.HONEY_BLOCK)
             .addOutput(RagiumContents.Fluids.HONEY)
             .offerSuffix(exporter, suffix = "_alt")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.COMPRESSOR, HTMachineTier.BASIC)
+            .addInput(RagiumItemTags.ALUMINUM_PLATES)
+            .addInput(RagiumContents.Misc.BASALT_MESH)
+            .addOutput(RagiumContents.Plates.STELLA)
+            .offerTo(exporter)
     }
 
     //    Decompressor    //
@@ -501,8 +505,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR)
             .addInput(RagiumItemTags.BASALTS)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Fluids.MOLTEN_BASALT)
+            .addOutput(RagiumContents.Misc.BASALT_MESH)
             .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
             .offerTo(exporter)
 
@@ -924,7 +927,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         count1: Int,
     ) {
         HTInfusionRecipeJsonBuilder(element.pendantItem)
-            .addInput(RagiumItemTags.SILVER_PLATES, 32)
+            .addInput(RagiumItemTags.ALUMINUM_PLATES, 32)
             .addInput(element.dustItem, 64)
             .addInput(ing1, count1)
             .hasInput(element.dustItem)

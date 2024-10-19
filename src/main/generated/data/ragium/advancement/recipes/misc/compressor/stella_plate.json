@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_input0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:plates/aluminum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_input1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:basalt_mesh"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:compressor/stella_plate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_input0",
+      "has_input1"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:compressor/stella_plate"
+    ]
+  }
+}

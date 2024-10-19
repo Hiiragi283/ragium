@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "#minecraft:gold_ores"
+      "items": "#c:ores/gold"
     }
   ],
   "machine_type": "ragium:grinder",
@@ -12,10 +12,6 @@
     },
     {
       "item": "minecraft:raw_gold"
-    },
-    {
-      "count": 2,
-      "item": "ragium:silver_dust"
     }
   ]
 }

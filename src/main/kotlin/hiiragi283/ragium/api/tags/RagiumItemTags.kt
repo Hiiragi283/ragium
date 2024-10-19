@@ -40,16 +40,16 @@ object RagiumItemTags {
     //    Conventional    //
 
     @JvmField
+    val ALUMINUM_PLATES: TagKey<Item> = create("plates/aluminum")
+
+    @JvmField
     val BASALTS: TagKey<Item> = create("basalts")
 
     @JvmField
-    val COPPER_DUSTS: TagKey<Item> = create("dusts/copper")
+    val BAUXITE_ORES: TagKey<Item> = create("ores/bauxite")
 
     @JvmField
     val COPPER_PLATES: TagKey<Item> = create("plates/copper")
-
-    @JvmField
-    val GOLD_DUSTS: TagKey<Item> = create("dusts/gold")
 
     @JvmField
     val GOLD_PLATES: TagKey<Item> = create("plates/gold")
@@ -86,18 +86,6 @@ object RagiumItemTags {
 
     @JvmField
     val SILICON_PLATES: TagKey<Item> = create("plates/silicon")
-
-    @JvmField
-    val SILVER_BLOCKS: TagKey<Item> = create("storage_blocks/silver")
-
-    @JvmField
-    val SILVER_DUSTS: TagKey<Item> = create("dusts/silver")
-
-    @JvmField
-    val SILVER_INGOTS: TagKey<Item> = create("ingots/silver")
-
-    @JvmField
-    val SILVER_PLATES: TagKey<Item> = create("plates/silver")
 
     @JvmField
     val STEEL_BLOCKS: TagKey<Item> = create("storage_blocks/steel")

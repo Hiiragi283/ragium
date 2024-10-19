@@ -2,7 +2,7 @@
   "type": "ragium:machine",
   "inputs": [
     {
-      "items": "ragium:ragi_crystal"
+      "items": "#c:raw_materials/ragi_crystal"
     }
   ],
   "machine_type": "ragium:grinder",

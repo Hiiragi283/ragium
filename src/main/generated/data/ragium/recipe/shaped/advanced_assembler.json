@@ -12,13 +12,13 @@
       "item": "ragium:refined_ragi_steel_ingot"
     },
     "B": {
-      "item": "ragium:primitive_circuit"
+      "item": "ragium:advanced_circuit"
     },
     "C": {
       "item": "ragium:refined_ragi_steel_hull"
     },
     "D": {
-      "item": "ragium:primitive_circuit"
+      "item": "ragium:advanced_circuit"
     },
     "E": {
       "tag": "c:ingots/steel"

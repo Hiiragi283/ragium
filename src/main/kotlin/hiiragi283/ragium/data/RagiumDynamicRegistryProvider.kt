@@ -178,6 +178,15 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
         registerOre(
             entries,
             lookup,
+            RagiumFeatures.ORE_BAUXITE,
+            HeightRangePlacementModifier.trapezoid(
+                YOffset.fixed(-16),
+                YOffset.fixed(112),
+            ),
+        )
+        registerOre(
+            entries,
+            lookup,
             RagiumFeatures.ORE_RAGINITE,
             HeightRangePlacementModifier.trapezoid(
                 YOffset.fixed(-16),
@@ -327,6 +336,20 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                     )
                 )
             )*/
+            registerOre(
+                register,
+                RagiumFeatures.ORE_BAUXITE,
+                listOf(
+                    OreFeatureConfig.createTarget(
+                        TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES),
+                        RagiumContents.Ores.BAUXITE.value.defaultState,
+                    ),
+                    OreFeatureConfig.createTarget(
+                        TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+                        RagiumContents.Ores.DEEP_BAUXITE.value.defaultState,
+                    ),
+                ),
+            )
             registerOre(
                 register,
                 RagiumFeatures.ORE_RAGINITE,

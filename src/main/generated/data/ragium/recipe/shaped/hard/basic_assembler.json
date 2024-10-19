@@ -12,13 +12,13 @@
       "item": "ragium:ragi_steel_plate"
     },
     "B": {
-      "item": "ragium:primitive_circuit"
+      "item": "ragium:basic_circuit"
     },
     "C": {
       "item": "ragium:ragi_steel_hull"
     },
     "D": {
-      "item": "ragium:primitive_circuit"
+      "item": "ragium:basic_circuit"
     },
     "E": {
       "tag": "c:plates/iron"

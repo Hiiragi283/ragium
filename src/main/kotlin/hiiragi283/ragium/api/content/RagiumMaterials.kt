@@ -13,7 +13,6 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundEvent
-import net.minecraft.sound.SoundEvents
 
 enum class RagiumMaterials(
     val tier: HTMachineTier,
@@ -34,7 +33,9 @@ enum class RagiumMaterials(
     // tier2
     RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
     RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
+    ALUMINUM(HTMachineTier.BASIC, "Aluminum", "アルミニウム"),
     BASALT_FIBER(HTMachineTier.BASIC, "Basalt Fiber", "玄武岩繊維"),
+    BAUXITE(HTMachineTier.BASIC, "Bauxite", "ボーキサイト"),
     GOLD(HTMachineTier.BASIC, "Gold", "金", ArmorMaterials.GOLD, ToolMaterials.GOLD),
     INVAR(HTMachineTier.BASIC, "Invar", "インバー"),
     NICKEL(HTMachineTier.BASIC, "Nickel", "ニッケル"),
@@ -45,6 +46,7 @@ enum class RagiumMaterials(
     // tier3
     RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
     REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
+    STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A", "S.T.E.L.L.A", Armor.STELLA),
     PE(HTMachineTier.ADVANCED, "PE", "ポリエチレン"),
     PVC(HTMachineTier.ADVANCED, "PVC", "塩化ビニル"),
     PTFE(HTMachineTier.ADVANCED, "PTFE", "テフロン"),
@@ -71,20 +73,33 @@ enum class RagiumMaterials(
 
     object Armor {
         @JvmField
-        val STEEL: RegistryEntry.Reference<ArmorMaterial> = register(
+        val STEEL: RegistryEntry<ArmorMaterial> = register(
             "steel",
-            mapOf(
-                ArmorItem.Type.HELMET to 2,
-                ArmorItem.Type.CHESTPLATE to 6,
-                ArmorItem.Type.LEGGINGS to 5,
-                ArmorItem.Type.BOOTS to 2,
-                ArmorItem.Type.BODY to 5,
-            ),
-            10,
-            SoundEvents.ITEM_ARMOR_EQUIP_IRON,
-            1.0f,
-            0.0f,
+            ArmorMaterials.IRON,
         ) { Ingredient.fromTag(RagiumItemTags.STEEL_INGOTS) }
+
+        @JvmField
+        val STELLA: RegistryEntry<ArmorMaterial> = register(
+            "stella",
+            ArmorMaterials.DIAMOND,
+        ) { Ingredient.fromTag(RagiumItemTags.STEEL_INGOTS) }
+
+        @JvmStatic
+        private fun register(
+            name: String,
+            entry: RegistryEntry<ArmorMaterial>,
+            repairment: () -> Ingredient,
+        ): RegistryEntry<ArmorMaterial> = entry.value().let { parent: ArmorMaterial ->
+            register(
+                name,
+                parent.defense,
+                parent.enchantability,
+                parent.equipSound,
+                parent.toughness,
+                parent.knockbackResistance,
+                repairment,
+            )
+        }
 
         @JvmStatic
         private fun register(
@@ -95,7 +110,7 @@ enum class RagiumMaterials(
             toughness: Float,
             kResistance: Float,
             repairment: () -> Ingredient,
-        ): RegistryEntry.Reference<ArmorMaterial> = RagiumAPI.id(name).let {
+        ): RegistryEntry<ArmorMaterial> = RagiumAPI.id(name).let {
             Registry.registerReference(
                 Registries.ARMOR_MATERIAL,
                 it,

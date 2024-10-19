@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "inputs": [
+    {
+      "items": "#c:plates/nickel"
+    }
+  ],
+  "machine_type": "ragium:grinder",
+  "outputs": [
+    {
+      "item": "ragium:nickel_dust"
+    }
+  ]
+}

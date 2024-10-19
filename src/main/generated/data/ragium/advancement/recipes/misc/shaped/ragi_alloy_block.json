@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_the_item": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_ingot"
+            "items": "#c:ingots/ragi_alloy"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_the_item"
     ]
   ],
   "rewards": {
