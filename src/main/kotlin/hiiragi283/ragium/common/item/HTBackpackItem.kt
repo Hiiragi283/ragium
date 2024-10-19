@@ -11,7 +11,11 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-object HTBackpackItem : Item(itemSettings().maxCount(1).component(RagiumComponentTypes.COLOR, DyeColor.WHITE)) {
+object HTBackpackItem : Item(
+    itemSettings()
+        .maxCount(1)
+        .component(RagiumComponentTypes.COLOR, DyeColor.WHITE),
+) {
     @JvmStatic
     fun createStack(color: DyeColor): ItemStack = defaultStack.apply {
         set(RagiumComponentTypes.COLOR, color)

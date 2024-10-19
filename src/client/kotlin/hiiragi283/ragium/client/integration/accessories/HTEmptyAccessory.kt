@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.accessories
+package hiiragi283.ragium.client.integration.accessories
 
 import io.wispforest.accessories.api.Accessory
 

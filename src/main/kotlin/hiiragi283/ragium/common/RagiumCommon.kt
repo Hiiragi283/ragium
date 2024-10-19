@@ -41,8 +41,6 @@ object RagiumCommon : ModInitializer {
         RagiumFeatures.init()
 
         RagiumApiLookupInit.init()
-        
-        RagiumAccessoriesInit.init()
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

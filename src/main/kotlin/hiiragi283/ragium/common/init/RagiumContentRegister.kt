@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
+import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.itemSettings
@@ -11,6 +13,8 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.PillarBlock
 import net.minecraft.component.type.FoodComponent
+import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
 import net.minecraft.util.Rarity
 
@@ -88,6 +92,8 @@ object RagiumContentRegister : HTContentRegister {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             registerItem(fluid, fluid.createItem())
         }
+
+        initAccessories()
     }
 
     @JvmStatic
@@ -124,5 +130,20 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
 
         registerItem("meta_machine", HTMetaMachineBlockItem)
+    }
+
+    @JvmStatic
+    private fun initAccessories() {
+        HTAccessoryRegistry.register(
+            RagiumContents.Accessories.NIGHT_VISION_GOGGLES,
+        ) {
+            equippedAction = HTAccessoryRegistry.EquippedAction {
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
+            }
+            unequippedAction = HTAccessoryRegistry.UnequippedAction {
+                it.removeStatusEffect(StatusEffects.NIGHT_VISION)
+            }
+            slotType = HTAccessorySlotTypes.FACE
+        }
     }
 }

@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
+import hiiragi283.ragium.client.integration.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.client.integration.patchouli.RagiumPatchouliInit
 import hiiragi283.ragium.client.integration.rei.INPUT_ENTRIES
 import hiiragi283.ragium.client.model.HTMachineModel
@@ -78,9 +79,8 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         registerEvents()
         registerNetworks()
 
-        if (isModLoaded("patchouli")) {
-            RagiumPatchouliInit.init()
-        }
+        RagiumAccessoriesInit.init()
+        RagiumPatchouliInit.init()
 
         RagiumAPI.log { info("Ragium-Client initialized!") }
     }

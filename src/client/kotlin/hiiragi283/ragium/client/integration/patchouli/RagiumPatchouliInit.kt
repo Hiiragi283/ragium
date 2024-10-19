@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.integration.patchouli
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.item.Items
@@ -11,6 +12,7 @@ import vazkii.patchouli.client.book.ClientBookRegistry
 object RagiumPatchouliInit {
     @JvmStatic
     fun init() {
+        if (!isModLoaded("patchouli")) return
         addPageType<HTMachineRecipePage>(RagiumAPI.MOD_ID, "machine_recipe")
         addPageType<HTCustomCraftingPage>(RagiumAPI.MOD_ID, "custom_recipe")
 

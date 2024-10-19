@@ -138,7 +138,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         },
                 ),
         )
-        registerSimple(RagiumBlocks.SALT_BLOCK, Identifier.of("block/white_concrete_powder"))
 
         register(RagiumBlocks.BACKPACK_INTERFACE) {
             accept(

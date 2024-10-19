@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
+import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineConvertible
@@ -57,6 +59,14 @@ object RagiumEventHandlers {
             if (entry.id == RagiumAPI.id("tier4/root")) {
                 player.sendTitle(Text.literal("Welcome to Alchemical Age!"))
                 RagiumNetworks.sendFloatingItem(player, RagiumContents.Element.RAGIUM.dustItem)
+            }
+        }
+
+        HTEquippedArmorCallback.EVENT.register { entity: LivingEntity, _: EquipmentSlot, oldStack: ItemStack, newStack: ItemStack ->
+            if (oldStack.isEmpty && !newStack.isEmpty) {
+                HTAccessoryRegistry.onEquipped(entity, newStack)
+            } else {
+                HTAccessoryRegistry.onUnequipped(entity, oldStack)
             }
         }
 

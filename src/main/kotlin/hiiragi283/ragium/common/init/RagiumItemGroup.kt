@@ -38,7 +38,6 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     addAll(RagiumContents.Ores.entries)
-                    add(RagiumBlocks.SALT_BLOCK)
                     add(RagiumBlocks.POROUS_NETHERRACK)
                     add(RagiumBlocks.SNOW_SPONGE)
                     addAll(RagiumContents.StorageBlocks.entries)

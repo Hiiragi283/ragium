@@ -15,7 +15,6 @@ import net.minecraft.world.World
 
 object RagiumBlocks : HTContentRegister {
     //    Blocks - Minerals    //
-
     @JvmField
     val POROUS_NETHERRACK: Block =
         registerBlock(
