@@ -53,7 +53,6 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.DRIVE_SCANNER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ALCHEMICAL_INFUSER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_MACHINE)
 
             buildList {
@@ -116,8 +115,6 @@ object RagiumTagProviders {
             add(RagiumItemTags.BASALTS, Items.BASALT)
             add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
             add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
-            add(RagiumItemTags.BAUXITE_ORES, RagiumContents.Ores.BAUXITE)
-            add(RagiumItemTags.BAUXITE_ORES, RagiumContents.Ores.DEEP_BAUXITE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.DEEP_RAGINITE)
             add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.NETHER_RAGINITE)
             add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)

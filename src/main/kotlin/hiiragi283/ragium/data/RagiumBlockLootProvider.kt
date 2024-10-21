@@ -47,7 +47,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumBlocks.MANUAL_GRINDER)
         addDrop(RagiumBlocks.SHAFT)
-        addDrop(RagiumBlocks.ALCHEMICAL_INFUSER)
         addDrop(RagiumBlocks.ITEM_DISPLAY)
         addDrop(RagiumBlocks.DATA_DRIVE)
         addDrop(RagiumBlocks.DRIVE_SCANNER)

@@ -520,19 +520,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('C', Items.SMOOTH_STONE)
             .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
             .offerPrefix(exporter.hardMode(true), "hard/")
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.ALCHEMICAL_INFUSER)
-            .patterns(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
-            .input('B', Items.DRAGON_BREATH)
-            .input('C', Items.NETHER_STAR)
-            .input('D', Items.CRYING_OBSIDIAN)
-            .unlockedBy(Items.NETHER_STAR)
-            .offerTo(exporter)
         // generators
         createMachine(
             exporter,

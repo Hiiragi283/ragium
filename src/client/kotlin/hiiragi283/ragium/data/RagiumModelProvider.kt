@@ -72,14 +72,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        register(RagiumBlocks.ALCHEMICAL_INFUSER) {
-            accept(
-                VariantsBlockStateSupplier.create(
-                    it,
-                    buildModelVariant(TextureMap.getId(it)),
-                ),
-            )
-        }
         register(RagiumBlocks.ITEM_DISPLAY) {
             generator.registerSingleton(
                 it,
@@ -170,7 +162,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             register(ore.value) { block: Block ->
                 generator.registerSingleton(
                     block,
-                    RagiumModels.createLayered(TextureMap.getId(ore.baseStone), TextureMap.getId(block)),
+                    RagiumModels.createLayered(
+                        TextureMap.getId(ore.baseStone),
+                        RagiumAPI.id("block/ore/${ore.material.asString()}")
+                    ),
                 )
             }
         }

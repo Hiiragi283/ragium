@@ -89,8 +89,6 @@ object RagiumItemGroup {
                     add(RagiumBlocks.ITEM_DISPLAY)
                     add(RagiumBlocks.NETWORK_INTERFACE)
                     add(RagiumBlocks.BACKPACK_INTERFACE)
-
-                    add(RagiumBlocks.ALCHEMICAL_INFUSER)
                 }.forEach(entries::add)
                 // machines
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->

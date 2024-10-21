@@ -152,8 +152,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.META_MACHINE, "Machine")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
-
-            builder.add(RagiumBlocks.ALCHEMICAL_INFUSER, "Alchemical Infuser")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
@@ -294,8 +292,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.META_MACHINE, "機械")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
-
-            builder.add(RagiumBlocks.ALCHEMICAL_INFUSER, "錬金注入機")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")

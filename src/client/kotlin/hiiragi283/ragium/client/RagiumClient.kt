@@ -15,7 +15,6 @@ import hiiragi283.ragium.client.integration.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.client.integration.patchouli.RagiumPatchouliInit
 import hiiragi283.ragium.client.integration.rei.INPUT_ENTRIES
 import hiiragi283.ragium.client.model.HTMachineModel
-import hiiragi283.ragium.client.renderer.HTAlchemicalInfuserBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
@@ -115,8 +114,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             .forEach(::registerCutoutMipped)
 
         RagiumFluids.PETROLEUM.registerClient(Identifier.of("block/black_concrete"))
-
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ALCHEMICAL_INFUSER) { HTAlchemicalInfuserBlockEntityRenderer }
+        
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
 

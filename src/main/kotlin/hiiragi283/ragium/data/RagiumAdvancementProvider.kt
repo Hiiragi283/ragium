@@ -424,10 +424,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumBlocks.ALCHEMICAL_INFUSER,
+                RagiumBlocks.META_MACHINE,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(RagiumBlocks.ALCHEMICAL_INFUSER)
+                hasItems(RagiumBlocks.META_MACHINE)
             }.putEnglish("Ragium - Tier 4")
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")

@@ -3,9 +3,8 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
-import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
-import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.Recipe
@@ -20,19 +19,12 @@ object RagiumRecipeSerializers {
         HTMachineRecipe.CODEC,
         HTMachineRecipe.PACKET_CODEC,
     )
-
+    
     @JvmField
-    val INFUSION: RecipeSerializer<HTInfusionRecipe> = register(
-        "alchemical_infusion",
-        HTInfusionRecipe.CODEC,
-        HTInfusionRecipe.PACKET_CODEC,
-    )
-
-    @JvmField
-    val TRANSFORM: RecipeSerializer<HTTransformRecipe> = register(
-        "alchemical_transform",
-        HTTransformRecipe.CODEC,
-        HTTransformRecipe.PACKET_CODEC,
+    val MACHINE_NEW: RecipeSerializer<HTMachineRecipeNew> = register(
+        "machine_new",
+        HTMachineRecipeNew.CODEC,
+        HTMachineRecipeNew.PACKET_CODEC
     )
 
     @JvmField

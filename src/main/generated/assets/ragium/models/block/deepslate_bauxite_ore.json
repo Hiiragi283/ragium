@@ -1,7 +1,0 @@
-{
-  "parent": "ragium:block/layered",
-  "textures": {
-    "layer0": "minecraft:block/deepslate",
-    "layer1": "ragium:block/deepslate_bauxite_ore"
-  }
-}

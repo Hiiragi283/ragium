@@ -13,6 +13,7 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundEvent
+import net.minecraft.util.StringIdentifiable
 
 enum class RagiumMaterials(
     val tier: HTMachineTier,
@@ -20,7 +21,7 @@ enum class RagiumMaterials(
     override val jaName: String,
     val armor: RegistryEntry<ArmorMaterial>? = null,
     val tool: ToolMaterial? = null,
-) : HTTranslationProvider {
+) : HTTranslationProvider, StringIdentifiable {
     // tier1
     CRUDE_RAGINITE(HTMachineTier.PRIMITIVE, "Crude Raginite", "粗製ラギナイト"),
     RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
@@ -60,6 +61,10 @@ enum class RagiumMaterials(
 
     fun getRawMaterial(): RagiumContents.RawMaterials? = RagiumContents.RawMaterials.entries.firstOrNull { it.material == this }
 
+    //    StringIdentifiable    //
+
+    override fun asString(): String = name.lowercase()
+    
     //    Holder    //
 
     interface Holder {

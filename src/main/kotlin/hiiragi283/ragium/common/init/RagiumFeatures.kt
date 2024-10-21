@@ -7,15 +7,11 @@ import net.minecraft.registry.RegistryEntryLookup
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.world.gen.GenerationStep
 import net.minecraft.world.gen.feature.ConfiguredFeature
 import net.minecraft.world.gen.feature.PlacedFeature
 
 object RagiumFeatures {
-    @JvmField
-    val ORE_BAUXITE: Data = create("ore_bauxite")
-
     @JvmField
     val ORE_RAGINITE: Data = create("ore_raginite")
 
@@ -41,11 +37,6 @@ object RagiumFeatures {
             GenerationStep.Feature.UNDERGROUND_ORES,
             DISK_SALT.featureKey,
         )*/
-        BiomeModifications.addFeature(
-            BiomeSelectors.tag(BiomeTags.IS_BADLANDS),
-            GenerationStep.Feature.UNDERGROUND_ORES,
-            ORE_BAUXITE.featureKey,
-        )
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,

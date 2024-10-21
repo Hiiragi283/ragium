@@ -138,9 +138,7 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
-
-        registerBlockItem(RagiumBlocks.ALCHEMICAL_INFUSER, itemSettings().rarity(Rarity.EPIC))
-
+        
         registerItem("meta_machine", HTMetaMachineBlockItem)
     }
 
@@ -222,6 +220,9 @@ object RagiumContentRegister : HTContentRegister {
                 ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
             }
         }
+        // Dispenser
+        DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.REMOVER_DYNAMITE)
         // Fuel Time
         FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
         FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)

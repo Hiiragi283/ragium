@@ -1,7 +1,0 @@
-{
-  "parent": "ragium:block/layered",
-  "textures": {
-    "layer0": "minecraft:block/stone",
-    "layer1": "ragium:block/bauxite_ore"
-  }
-}

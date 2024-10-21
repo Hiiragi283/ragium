@@ -101,10 +101,6 @@ object RagiumBlocks : HTContentRegister {
         registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
 
     @JvmField
-    val ALCHEMICAL_INFUSER: Block =
-        registerBlock("alchemical_infuser", HTAlchemicalInfuserBlock)
-
-    @JvmField
     val INFESTING: Block =
         registerBlock("infesting", HTInfectingBlock)
 

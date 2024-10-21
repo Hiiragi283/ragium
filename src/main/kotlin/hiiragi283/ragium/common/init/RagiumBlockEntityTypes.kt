@@ -9,10 +9,6 @@ import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
     @JvmField
-    val ALCHEMICAL_INFUSER: BlockEntityType<HTAlchemicalInfuserBlockEntity> =
-        register("alchemical_infuser", ::HTAlchemicalInfuserBlockEntity)
-
-    @JvmField
     val CREATIVE_SOURCE: BlockEntityType<HTCreativeSourceBlockEntity> =
         register("creative_source", ::HTCreativeSourceBlockEntity)
 

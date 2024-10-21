@@ -41,23 +41,11 @@ object RagiumContents : HTContentRegister {
             override val enPattern: String = "Raginite Ore"
             override val jaPattern: String = "ラギナイト鉱石"
         },
-        BAUXITE(RagiumMaterials.BAUXITE, Blocks.STONE) {
-            override val entry: HTRegistryEntry<Block> =
-                HTRegistryEntry.ofBlock(RagiumAPI.id("bauxite_ore"))
-            override val enPattern: String = "Bauxite Ore"
-            override val jaPattern: String = "ボーキサイト鉱石"
-        },
         DEEP_RAGINITE(RagiumMaterials.RAGINITE, Blocks.DEEPSLATE) {
             override val entry: HTRegistryEntry<Block> =
                 HTRegistryEntry.ofBlock(RagiumAPI.id("deepslate_raginite_ore"))
             override val enPattern: String = "Deep Raginite Ore"
             override val jaPattern: String = "深層ラギナイト鉱石"
-        },
-        DEEP_BAUXITE(RagiumMaterials.BAUXITE, Blocks.DEEPSLATE) {
-            override val entry: HTRegistryEntry<Block> =
-                HTRegistryEntry.ofBlock(RagiumAPI.id("deepslate_bauxite_ore"))
-            override val enPattern: String = "Deep Bauxite Ore"
-            override val jaPattern: String = "深層ボーキサイト鉱石"
         },
         NETHER_RAGINITE(RagiumMaterials.RAGINITE, Blocks.NETHERRACK) {
             override val entry: HTRegistryEntry<Block> =
@@ -75,9 +63,7 @@ object RagiumContents : HTContentRegister {
         val dropMineral: ItemConvertible
             get() = when (this) {
                 CRUDE_RAGINITE -> RawMaterials.CRUDE_RAGINITE
-                BAUXITE -> RawMaterials.BAUXITE
                 DEEP_RAGINITE -> RawMaterials.RAGINITE
-                DEEP_BAUXITE -> RawMaterials.BAUXITE
                 NETHER_RAGINITE -> RawMaterials.RAGINITE
                 END_RAGI_CRYSTAL -> Gems.RAGI_CRYSTAL
             }
