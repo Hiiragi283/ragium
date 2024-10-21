@@ -2,6 +2,6 @@
   "parent": "ragium:block/layered",
   "textures": {
     "layer0": "minecraft:block/netherrack",
-    "layer1": "ragium:block/nether_raginite_ore"
+    "layer1": "ragium:block/ore/raginite"
   }
 }

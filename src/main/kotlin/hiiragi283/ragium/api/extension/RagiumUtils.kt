@@ -5,14 +5,10 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.trade.HTMerchant
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.entity.EntityType
-import net.minecraft.entity.passive.WanderingTraderEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
@@ -31,7 +27,6 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
-import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
@@ -93,18 +88,6 @@ fun openEnderChest(world: World, player: PlayerEntity) {
     )
 }
 
-//    Merchant    //
-
-fun openVillagerScreen(player: PlayerEntity, world: World) {
-    if (!world.isClient) {
-        HTMerchant(player).sendOffers(player, Text.literal("Dummy Merchant"), 1)
-    }
-}
-
-fun openTraderScreen(player: PlayerEntity, world: World) {
-    WanderingTraderEntity(EntityType.WANDERING_TRADER, world).interactMob(player, Hand.MAIN_HAND)
-}
-
 //    Recipe    //
 
 fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
@@ -144,10 +127,6 @@ fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, 
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)
 }
-
-//    Transaction    //
-
-inline fun <R> useTransaction(action: (Transaction) -> R): R = Transaction.openOuter().use(action)
 
 //    Text    //
 

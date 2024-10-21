@@ -114,7 +114,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             .forEach(::registerCutoutMipped)
 
         RagiumFluids.PETROLEUM.registerClient(Identifier.of("block/black_concrete"))
-        
+
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
 

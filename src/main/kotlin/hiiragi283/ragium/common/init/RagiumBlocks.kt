@@ -107,4 +107,8 @@ object RagiumBlocks : HTContentRegister {
     @JvmField
     val META_MACHINE: Block =
         registerBlock("meta_machine", HTMetaMachineBlock)
+
+    @JvmStatic
+    val TRADER_STATION: Block =
+        registerHorizontalWithBE("trader_station", RagiumBlockEntityTypes.TRADER_STATION)
 }

@@ -138,7 +138,7 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
-        
+
         registerItem("meta_machine", HTMetaMachineBlockItem)
     }
 

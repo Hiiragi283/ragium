@@ -19,8 +19,10 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.passive.WanderingTraderEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.EnchantedBookItem
 import net.minecraft.item.ItemStack
@@ -155,7 +157,7 @@ object RagiumEventHandlers {
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
             if (stack.isOf(RagiumContents.Misc.TRADER_CATALOG)) {
-                openTraderScreen(player, world)
+                WanderingTraderEntity(EntityType.WANDERING_TRADER, world).interactMob(player, Hand.MAIN_HAND)
                 TypedActionResult.success(stack, world.isClient)
             } else {
                 TypedActionResult.pass(stack)

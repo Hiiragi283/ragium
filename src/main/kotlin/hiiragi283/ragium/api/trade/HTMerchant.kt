@@ -9,14 +9,16 @@ import net.minecraft.village.Merchant
 import net.minecraft.village.TradeOffer
 import net.minecraft.village.TradeOfferList
 
-class HTMerchant(private val player: PlayerEntity) : Merchant {
+class HTMerchant : Merchant {
+    private var player: PlayerEntity? = null
     private var offers = TradeOfferList()
     private var exp: Int = 0
 
     override fun setCustomer(customer: PlayerEntity?) {
+        player = customer
     }
 
-    override fun getCustomer(): PlayerEntity = player
+    override fun getCustomer(): PlayerEntity? = player
 
     override fun getOffers(): TradeOfferList {
         initOffers()
@@ -54,7 +56,7 @@ class HTMerchant(private val player: PlayerEntity) : Merchant {
 
     override fun onSellingItem(stack: ItemStack) {
         if (!isClient) {
-            player.playSound(
+            player?.playSound(
                 when (stack.isEmpty) {
                     true -> SoundEvents.ENTITY_VILLAGER_NO
                     false -> SoundEvents.ENTITY_VILLAGER_YES
@@ -73,5 +75,5 @@ class HTMerchant(private val player: PlayerEntity) : Merchant {
 
     override fun getYesSound(): SoundEvent = SoundEvents.ENTITY_VILLAGER_YES
 
-    override fun isClient(): Boolean = player.world.isClient
+    override fun isClient(): Boolean = player?.world?.isClient ?: false
 }

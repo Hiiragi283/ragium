@@ -164,7 +164,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     block,
                     RagiumModels.createLayered(
                         TextureMap.getId(ore.baseStone),
-                        RagiumAPI.id("block/ore/${ore.material.asString()}")
+                        RagiumAPI.id("block/ore/${ore.material.asString()}"),
                     ),
                 )
             }

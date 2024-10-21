@@ -21,7 +21,8 @@ enum class RagiumMaterials(
     override val jaName: String,
     val armor: RegistryEntry<ArmorMaterial>? = null,
     val tool: ToolMaterial? = null,
-) : HTTranslationProvider, StringIdentifiable {
+) : HTTranslationProvider,
+    StringIdentifiable {
     // tier1
     CRUDE_RAGINITE(HTMachineTier.PRIMITIVE, "Crude Raginite", "粗製ラギナイト"),
     RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
@@ -64,7 +65,7 @@ enum class RagiumMaterials(
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()
-    
+
     //    Holder    //
 
     interface Holder {

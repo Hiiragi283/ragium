@@ -3,15 +3,12 @@ package hiiragi283.ragium.client.integration.rei
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.alchemy.HTAlchemyRecipe
-import hiiragi283.ragium.api.recipe.alchemy.HTInfusionRecipe
-import hiiragi283.ragium.api.recipe.alchemy.HTTransformRecipe
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
-import hiiragi283.ragium.client.integration.rei.category.HTAlchemyRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
 import hiiragi283.ragium.client.integration.rei.category.HTTradeOfferCategory
-import hiiragi283.ragium.client.integration.rei.display.*
+import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTTradeOfferDisplay
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
@@ -37,10 +34,6 @@ object RagiumREIClient : REIClientPlugin {
     init {
         RagiumAPI.log { info("REI Integration enabled!") }
     }
-
-    @JvmField
-    val ALCHEMY: CategoryIdentifier<HTDisplay<out HTAlchemyRecipe>> =
-        CategoryIdentifier.of(RagiumAPI.MOD_ID, "alchemical_infusion")
 
     @JvmField
     val TRADE_OFFER: CategoryIdentifier<HTTradeOfferDisplay> =
@@ -85,10 +78,6 @@ object RagiumREIClient : REIClientPlugin {
             RagiumMachineTypes.SAW_MILL.categoryId,
             createEnchantedBook(RagiumEnchantments.BUZZ_SAW),
         )
-        // Alchemy Recipe
-        registry.add(HTAlchemyRecipeCategory)
-        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumBlocks.ALCHEMICAL_INFUSER))
-        registry.addWorkstations(ALCHEMY, EntryStacks.of(RagiumContents.Misc.ALCHEMY_STUFF))
         // Trade Offer
         registry.add(HTTradeOfferCategory)
         registry.addWorkstations(TRADE_OFFER, EntryStacks.of(RagiumContents.Ingots.RAGI_STEEL))
@@ -100,17 +89,6 @@ object RagiumREIClient : REIClientPlugin {
             HTMachineRecipe::class.java,
             RagiumRecipeTypes.MACHINE,
             ::HTMachineRecipeDisplay,
-        )
-        // Alchemy Infusion
-        registry.registerRecipeFiller(
-            HTInfusionRecipe::class.java,
-            RagiumRecipeTypes.ALCHEMY,
-            ::HTInfusionRecipeDisplay,
-        )
-        registry.registerRecipeFiller(
-            HTTransformRecipe::class.java,
-            RagiumRecipeTypes.ALCHEMY,
-            ::HTTransformRecipeDisplay,
         )
         // Trade Offer
         HTTradeOfferRegistry.registry

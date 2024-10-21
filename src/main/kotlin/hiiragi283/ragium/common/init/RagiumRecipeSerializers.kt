@@ -19,12 +19,12 @@ object RagiumRecipeSerializers {
         HTMachineRecipe.CODEC,
         HTMachineRecipe.PACKET_CODEC,
     )
-    
+
     @JvmField
     val MACHINE_NEW: RecipeSerializer<HTMachineRecipeNew> = register(
         "machine_new",
         HTMachineRecipeNew.CODEC,
-        HTMachineRecipeNew.PACKET_CODEC
+        HTMachineRecipeNew.PACKET_CODEC,
     )
 
     @JvmField

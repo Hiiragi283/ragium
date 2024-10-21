@@ -28,6 +28,10 @@ object RagiumBlockEntityTypes {
     val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
         register("manual_grinder", ::HTManualGrinderBlockEntity)
 
+    @JvmField
+    val TRADER_STATION: BlockEntityType<HTTraderStationBlockEntity> =
+        register("trader_station", ::HTTraderStationBlockEntity)
+
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
@@ -38,9 +42,9 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        ALCHEMICAL_INFUSER.addSupportedBlock(RagiumBlocks.ALCHEMICAL_INFUSER)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_MACHINE)
+        TRADER_STATION.addSupportedBlock(RagiumBlocks.TRADER_STATION)
     }
 }

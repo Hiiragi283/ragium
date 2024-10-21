@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.data.recipe.HTInfusionRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilderNew
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
@@ -15,8 +15,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.entity.EntityType
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
@@ -39,22 +41,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         blastFurnace(exporter)
         chemicalReactor(exporter)
         compressor(exporter)
-        fluidDrill(exporter)
         decompressor(exporter)
         distillation(exporter)
         electrolyzer(exporter)
         extractor(exporter)
+        fluidDrill(exporter)
         grinder(exporter)
         metalFormer(exporter)
         mixer(exporter)
         mobExtractor(exporter)
         rockGenerator(exporter)
         sawMill(exporter)
-        // alchemy
-        infusion(exporter)
-        transform(exporter)
         // patterned
         HTMaterialItemRecipeRegistry.generateRecipes(exporter, ::exporterWrapper1, ::exporterWrapper2)
+
+        test(exporter)
     }
 
     private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
@@ -554,6 +555,39 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
     }
 
+    //    Fluid Drill    //
+
+    private fun fluidDrill(exporter: RecipeExporter) {
+        registerDrilling(exporter, BiomeKeys.WARM_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.LUKEWARM_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.DEEP_LUKEWARM_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.DEEP_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.COLD_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.DEEP_COLD_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.FROZEN_OCEAN, RagiumContents.Fluids.SALT_WATER)
+        registerDrilling(exporter, BiomeKeys.DEEP_FROZEN_OCEAN, RagiumContents.Fluids.SALT_WATER)
+
+        registerDrilling(exporter, BiomeKeys.NETHER_WASTES, RagiumContents.Fluids.LAVA)
+        registerDrilling(exporter, BiomeKeys.WARPED_FOREST, RagiumContents.Fluids.LAVA)
+        registerDrilling(exporter, BiomeKeys.CRIMSON_FOREST, RagiumContents.Fluids.LAVA)
+        registerDrilling(exporter, BiomeKeys.SOUL_SAND_VALLEY, RagiumContents.Fluids.CRUDE_OIL)
+        registerDrilling(exporter, BiomeKeys.BASALT_DELTAS, RagiumContents.Fluids.LAVA)
+    }
+
+    private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: RagiumContents.Fluids) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.FLUID_DRILL)
+            .addOutput(fluid)
+            .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
+            .offerTo(exporter, biomeKey.value)
+        /*exporter.accept(
+            biomeKey.value.withPrefixedPath("fluid_drill/"),
+            HTFluidDrillRecipe(biomeKey, HTRecipeResult.item(fluid)),
+            null,
+        )*/
+    }
+
     //    Grinder    //
 
     private fun grinder(exporter: RecipeExporter) {
@@ -830,141 +864,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
     }
 
-    //    Alchemical Infusion    //
-
-    private fun infusion(exporter: RecipeExporter) {
-        HTInfusionRecipeJsonBuilder(Items.ENCHANTED_GOLDEN_APPLE)
-            .addInput(Items.APPLE)
-            .addInput(ConventionalItemTags.STORAGE_BLOCKS_GOLD, 8)
-            .addInput(Items.ENCHANTED_BOOK)
-            .hasInput(Items.ENCHANTED_GOLDEN_APPLE)
-            .offerTo(exporter)
-
-        HTInfusionRecipeJsonBuilder(Items.HEART_OF_THE_SEA)
-            .addInput(Items.PRISMARINE_SHARD, 64)
-            .addInput(Items.PRISMARINE_CRYSTALS, 64)
-            .addInput(ConventionalItemTags.LAPIS_GEMS, 64)
-            .hasInput(Items.AXOLOTL_BUCKET)
-            .offerTo(exporter)
-
-        // buddings
-        registerBudding(
-            exporter,
-            RagiumContents.Element.RAGIUM,
-            Items.RED_STAINED_GLASS,
-            Items.MANGROVE_LOG,
-            Items.BLAZE_POWDER,
-        )
-        registerBudding(
-            exporter,
-            RagiumContents.Element.RIGIUM,
-            Items.YELLOW_STAINED_GLASS,
-            Items.GLOWSTONE,
-            Items.GOLDEN_APPLE,
-        )
-        registerBudding(
-            exporter,
-            RagiumContents.Element.RUGIUM,
-            Items.LIME_STAINED_GLASS,
-            Items.MELON,
-            Items.ENDER_PEARL,
-        )
-        registerBudding(
-            exporter,
-            RagiumContents.Element.REGIUM,
-            Items.LIGHT_BLUE_STAINED_GLASS,
-            Items.BLUE_ICE,
-            Items.PRISMARINE_SHARD,
-        )
-        registerBudding(
-            exporter,
-            RagiumContents.Element.ROGIUM,
-            Items.PURPLE_STAINED_GLASS,
-            Items.AMETHYST_BLOCK,
-            Items.SHULKER_SHELL,
-        )
-        // pendant
-        registerPendant(exporter, RagiumContents.Element.RAGIUM, Items.MAGMA_BLOCK, 64)
-        registerPendant(exporter, RagiumContents.Element.RIGIUM, RagiumContents.Fluids.MILK, 64)
-        registerPendant(exporter, RagiumContents.Element.RUGIUM, Items.EMERALD_BLOCK, 32)
-        registerPendant(exporter, RagiumContents.Element.REGIUM, Items.HEART_OF_THE_SEA, 8)
-        registerPendant(exporter, RagiumContents.Element.ROGIUM, Items.AMETHYST_BLOCK, 64)
-    }
-
-    private fun registerBudding(
-        exporter: RecipeExporter,
-        element: RagiumContents.Element,
-        glass: ItemConvertible,
-        ing1: ItemConvertible,
-        ing2: ItemConvertible,
-    ) {
-        HTInfusionRecipeJsonBuilder(element.buddingBlock)
-            .addInput(Items.CHISELED_QUARTZ_BLOCK)
-            .addInput(glass, 64)
-            .addInput(ing1, 16)
-            .addInput(ing2, 8)
-            .hasInput(RagiumBlocks.ALCHEMICAL_INFUSER)
-            .offerTo(exporter)
-    }
-
-    private fun registerPendant(
-        exporter: RecipeExporter,
-        element: RagiumContents.Element,
-        ing1: ItemConvertible,
-        count1: Int,
-    ) {
-        HTInfusionRecipeJsonBuilder(element.pendantItem)
-            .addInput(RagiumItemTags.ALUMINUM_PLATES, 32)
-            .addInput(element.dustItem, 64)
-            .addInput(ing1, count1)
-            .hasInput(element.dustItem)
-            .offerTo(exporter)
-    }
-
-    //    Alchemical Transform    //
-
-    private fun transform(exporter: RecipeExporter) {
-        /*HTTransformRecipeJsonBuilder(Items.DIAMOND, Items.COAL_BLOCK)
-            .addUpgrade(Items.COAL_BLOCK, 7)
-            .hasInput(Items.COAL_BLOCK)
-            .modifyComponents {
-                add(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
-            }.offerTo(exporter)*/
-    }
-
-    //    Fluid Drill    //
-
-    private fun fluidDrill(exporter: RecipeExporter) {
-        registerDrilling(exporter, BiomeKeys.WARM_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.LUKEWARM_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_LUKEWARM_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.COLD_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_COLD_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.FROZEN_OCEAN, RagiumContents.Fluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_FROZEN_OCEAN, RagiumContents.Fluids.SALT_WATER)
-
-        registerDrilling(exporter, BiomeKeys.NETHER_WASTES, RagiumContents.Fluids.LAVA)
-        registerDrilling(exporter, BiomeKeys.WARPED_FOREST, RagiumContents.Fluids.LAVA)
-        registerDrilling(exporter, BiomeKeys.CRIMSON_FOREST, RagiumContents.Fluids.LAVA)
-        registerDrilling(exporter, BiomeKeys.SOUL_SAND_VALLEY, RagiumContents.Fluids.CRUDE_OIL)
-        registerDrilling(exporter, BiomeKeys.BASALT_DELTAS, RagiumContents.Fluids.LAVA)
-    }
-
-    private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: RagiumContents.Fluids) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.FLUID_DRILL)
-            .addOutput(fluid)
-            .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
-            .offerTo(exporter, biomeKey.value)
-        /*exporter.accept(
-            biomeKey.value.withPrefixedPath("fluid_drill/"),
-            HTFluidDrillRecipe(biomeKey, HTRecipeResult.item(fluid)),
-            null,
-        )*/
-    }
-
     //    Mob Extractor    //
 
     private fun mobExtractor(exporter: RecipeExporter) {
@@ -1002,5 +901,16 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(output)
             .setCustomData(HTRecipeComponentTypes.ENTITY_TYPE, entityType)
             .offerTo(exporter, Registries.ENTITY_TYPE.getId(entityType))
+    }
+
+    private fun test(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilderNew
+            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
+            .input(Items.STONE)
+            .input(ConventionalItemTags.DIAMOND_GEMS, 4)
+            .input(Fluids.WATER)
+            .output(Items.DIAMOND_ORE, 4)
+            .output(Fluids.LAVA, FluidConstants.BOTTLE)
+            .offerTo(exporter)
     }
 }

@@ -52,9 +52,6 @@ object RagiumItemTags {
     val BASALTS: TagKey<Item> = create("basalts")
 
     @JvmField
-    val BAUXITE_ORES: TagKey<Item> = create("ores/bauxite")
-
-    @JvmField
     val COPPER_PLATES: TagKey<Item> = create("plates/copper")
 
     @JvmField
