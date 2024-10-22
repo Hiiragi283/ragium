@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:coal_ores"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:coal_ores"
+  },
   "outputs": [
     {
-      "count": 2,
+      "amount": 2,
       "item": "minecraft:coal"
     }
   ]

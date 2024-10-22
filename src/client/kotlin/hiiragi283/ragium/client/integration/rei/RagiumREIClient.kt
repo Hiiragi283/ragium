@@ -4,10 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.machines.HTGrinderRecipe
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
+import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategoryNew
 import hiiragi283.ragium.client.integration.rei.category.HTTradeOfferCategory
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
+import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplayNew
 import hiiragi283.ragium.client.integration.rei.display.HTTradeOfferDisplay
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -66,6 +69,13 @@ object RagiumREIClient : REIClientPlugin {
             EntryStacks.of(RagiumBlocks.MANUAL_GRINDER),
         )
 
+        RagiumAPI.getInstance().machineTypeRegistry.processors.forEach { type: HTMachineType ->
+            registry.add(HTMachineRecipeCategoryNew(type))
+            HTMachineTier.entries.map(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
+                registry.addWorkstations(type.categoryIdNew, stack)
+            }
+        }
+        // Enchantment
         registry.addWorkstations(
             BuiltinPlugin.SMELTING,
             createEnchantedBook(RagiumEnchantments.SMELTING),
@@ -89,6 +99,12 @@ object RagiumREIClient : REIClientPlugin {
             HTMachineRecipe::class.java,
             RagiumRecipeTypes.MACHINE,
             ::HTMachineRecipeDisplay,
+        )
+
+        registry.registerRecipeFiller(
+            HTGrinderRecipe::class.java,
+            RagiumRecipeTypes.GRINDER,
+            ::HTMachineRecipeDisplayNew
         )
         // Trade Offer
         HTTradeOfferRegistry.registry

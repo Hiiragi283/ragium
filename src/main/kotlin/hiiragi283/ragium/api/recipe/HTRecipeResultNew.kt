@@ -19,6 +19,9 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 
+typealias HTItemResult = HTRecipeResultNew<Item, ItemVariant>
+typealias HTFluidResult = HTRecipeResultNew<Fluid, FluidVariant>
+
 @Suppress("DEPRECATION")
 class HTRecipeResultNew<O : Any, T : TransferVariant<O>> private constructor(
     val entry: RegistryEntry<O>,
@@ -105,11 +108,11 @@ class HTRecipeResultNew<O : Any, T : TransferVariant<O>> private constructor(
         ): HTRecipeResultNew<Fluid, FluidVariant> = ofFluid(fluid.registryEntry, amount, components)
     }
 
-    val firstObj: O
+    val entryValue: O
         get() = entry.value()
 
     val variant: T
-        get() = toVariant(firstObj, components)
+        get() = toVariant(entryValue, components)
 
     val resourceAmount: ResourceAmount<T>
         get() = ResourceAmount(variant, amount)

@@ -1,20 +1,14 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:ores/crude_raginite"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:ores/crude_raginite"
+  },
   "outputs": [
     {
+      "amount": 2,
       "item": "ragium:raw_crude_raginite"
     },
     {
-      "item": "ragium:raw_crude_raginite"
-    },
-    {
-      "count": 2,
       "item": "ragium:raginite_dust"
     }
   ]

@@ -1,11 +1,8 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:planks"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:planks"
+  },
   "outputs": [
     {
       "item": "ragium:pulp"

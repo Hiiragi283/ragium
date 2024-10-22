@@ -1,16 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:ores/gold"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:ores/gold"
+  },
   "outputs": [
     {
-      "item": "minecraft:raw_gold"
-    },
-    {
+      "amount": 2,
       "item": "minecraft:raw_gold"
     }
   ]

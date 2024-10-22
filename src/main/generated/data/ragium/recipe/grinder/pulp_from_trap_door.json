@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:wooden_trapdoors"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:wooden_trapdoors"
+  },
   "outputs": [
     {
-      "count": 3,
+      "amount": 3,
       "item": "ragium:pulp"
     }
   ]

@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:logs"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:logs"
+  },
   "outputs": [
     {
-      "count": 4,
+      "amount": 4,
       "item": "ragium:pulp"
     }
   ]

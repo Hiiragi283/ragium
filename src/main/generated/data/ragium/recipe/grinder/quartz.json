@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:ores/quartz"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:ores/quartz"
+  },
   "outputs": [
     {
-      "count": 2,
+      "amount": 2,
       "item": "minecraft:quartz"
     }
   ]

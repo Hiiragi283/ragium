@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:wooden_pressure_plates"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:wooden_pressure_plates"
+  },
   "outputs": [
     {
-      "count": 2,
+      "amount": 2,
       "item": "ragium:pulp"
     }
   ]

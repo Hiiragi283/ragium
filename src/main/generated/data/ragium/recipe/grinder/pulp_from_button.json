@@ -1,11 +1,8 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:wooden_buttons"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:wooden_buttons"
+  },
   "outputs": [
     {
       "item": "ragium:pulp"

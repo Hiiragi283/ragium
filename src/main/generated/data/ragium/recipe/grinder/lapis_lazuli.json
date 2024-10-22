@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:lapis_ores"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:lapis_ores"
+  },
   "outputs": [
     {
-      "count": 8,
+      "amount": 8,
       "item": "minecraft:lapis_lazuli"
     }
   ]

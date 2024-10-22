@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.recipe.HTIngredientNew
+import hiiragi283.ragium.api.recipe.HTRecipeResultNew
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
@@ -130,11 +132,12 @@ object HTMaterialItemRecipeRegistry {
     private fun ingotToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val dust: ItemConvertible = properties[DUST] ?: return
         val ingot: TagKey<Item> = getTagKey(name, INGOT)
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
-            .addInput(ingot)
-            .addOutput(dust)
-            .offerSuffix(exporter, "_from_ingot")
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTIngredientNew.ofItem(ingot),
+            HTRecipeResultNew.ofItem(dust),
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_ingot")
+        )
     }
 
     @JvmStatic
@@ -170,11 +173,12 @@ object HTMaterialItemRecipeRegistry {
     private fun plateToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val dust: ItemConvertible = properties[DUST] ?: return
         val plate: TagKey<Item> = getTagKey(name, PLATE)
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
-            .addInput(plate)
-            .addOutput(dust)
-            .offerSuffix(exporter, "_from_plate")
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTIngredientNew.ofItem(plate),
+            HTRecipeResultNew.ofItem(dust),
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_plate")
+        )
     }
 
     @JvmStatic
@@ -182,14 +186,12 @@ object HTMaterialItemRecipeRegistry {
         val rawMaterial: ItemConvertible = properties[RAW] ?: return
         val ore: TagKey<Item> = getTagKey(name, ORE)
         // Grinder Recipe
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
-            .addInput(ore)
-            .addOutput(rawMaterial)
-            .addOutput(rawMaterial)
-            .apply {
-                properties[ORE_SUB_PRODUCTS]?.let { addOutput(it, 2) }
-            }.offerSuffix(exporter)
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTIngredientNew.ofItem(ore),
+            HTRecipeResultNew.ofItem(rawMaterial ,2),
+            properties[ORE_SUB_PRODUCTS]?.let { HTRecipeResultNew.ofItem(it) },
+        )
     }
 
     @JvmStatic
@@ -197,12 +199,12 @@ object HTMaterialItemRecipeRegistry {
         val dust: ItemConvertible = properties[DUST] ?: return
         val rawMaterial: TagKey<Item> = getTagKey(name, RAW)
         // Grinder Recipe
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
-            .addInput(rawMaterial)
-            .addOutput(dust)
-            .addOutput(dust)
-            .offerSuffix(exporter)
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTIngredientNew.ofItem(rawMaterial),
+            HTRecipeResultNew.ofItem(dust),
+            HTRecipeResultNew.ofItem(dust)
+        )
     }
 
     @JvmStatic

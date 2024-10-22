@@ -73,6 +73,7 @@ enum class HTMachineTier(
 
     val miningCost: Long = recipeCost / 10
     val energyCapacity: Long = recipeCost * 16
+    val tankMultiplier: Long = recipeCost / 20
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
     val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)

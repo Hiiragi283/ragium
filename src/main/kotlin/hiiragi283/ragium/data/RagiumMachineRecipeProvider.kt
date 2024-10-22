@@ -1,9 +1,11 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilderNew
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilders
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTIngredientNew
+import hiiragi283.ragium.api.recipe.HTRecipeResultNew
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
@@ -15,10 +17,8 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.entity.EntityType
-import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
@@ -637,11 +637,17 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         output: Pair<ItemConvertible, Int>,
         suffix: String = "",
     ) {
-        HTMachineRecipeJsonBuilder
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTIngredientNew.ofItem(input.first, input.second.toLong()),
+            HTRecipeResultNew.ofItem(output.first, output.second.toLong()),
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(output.first).withSuffixedPath(suffix)
+        )
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .addInput(input.first, input.second)
             .addOutput(output.first, output.second)
-            .offerSuffix(exporter, suffix)
+            .offerSuffix(exporter, suffix)*/
     }
 
     @JvmName("registerGrinderTag")
@@ -651,11 +657,17 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         output: Pair<ItemConvertible, Int>,
         suffix: String = "",
     ) {
-        HTMachineRecipeJsonBuilder
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTIngredientNew.ofItem(input.first, input.second.toLong()),
+            HTRecipeResultNew.ofItem(output.first, output.second.toLong()),
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(output.first).withSuffixedPath(suffix)
+        )
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .addInput(input.first, input.second)
             .addOutput(output.first, output.second)
-            .offerSuffix(exporter, suffix)
+            .offerSuffix(exporter, suffix)*/
     }
 
     //    Metal Former    //
@@ -903,14 +915,5 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, Registries.ENTITY_TYPE.getId(entityType))
     }
 
-    private fun test(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilderNew
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .input(Items.STONE)
-            .input(ConventionalItemTags.DIAMOND_GEMS, 4)
-            .input(Fluids.WATER)
-            .output(Items.DIAMOND_ORE, 4)
-            .output(Fluids.LAVA, FluidConstants.BOTTLE)
-            .offerTo(exporter)
-    }
+    private fun test(exporter: RecipeExporter) {}
 }

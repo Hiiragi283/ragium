@@ -2,8 +2,10 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.recipe.machines.HTMachineRecipeBase
 import net.minecraft.component.ComponentMap
 import net.minecraft.fluid.Fluid
+import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -36,6 +38,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.Simple(RagiumAPI.id("machine_factory"))
 
     @JvmField
+    val MACHINE_FACTORY_NEW: HTPropertyKey.Simple<HTMachineEntity.Factory> =
+        HTPropertyKey.Simple(RagiumAPI.id("machine_factory_new"))
+
+    @JvmField
     val FUEL_TAG: HTPropertyKey.Simple<TagKey<Fluid>> =
         HTPropertyKey.Simple(RagiumAPI.id("fuel_tag"))
 
@@ -58,4 +64,8 @@ object HTMachinePropertyKeys {
     @JvmField
     val PROCESSOR_FAILED: HTPropertyKey.Defaulted<(World, BlockPos, HTMachineType, HTMachineTier) -> Unit> =
         HTPropertyKey.Defaulted(RagiumAPI.id("processor_failed")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> }
+    
+    @JvmField
+    val RECIPE_TYPE: HTPropertyKey.Simple<RecipeType<out HTMachineRecipeBase<*>>> =
+        HTPropertyKey.Simple(RagiumAPI.id("recipe_type"))
 }

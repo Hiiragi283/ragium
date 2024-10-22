@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
 
-class HTSidedStorageBuilder(val size: Int) {
+class HTStorageBuilder(val size: Int) {
     companion object {
         @JvmField
         val ACCEPT_ALL: (Int, ItemStack) -> Boolean = { _: Int, _: ItemStack -> true }
@@ -19,26 +19,26 @@ class HTSidedStorageBuilder(val size: Int) {
     var slotFilter: (Int, ItemStack) -> Boolean = ACCEPT_ALL
         private set
 
-    operator fun set(index: Int, type: HTStorageIO, sideType: HTStorageSide): HTSidedStorageBuilder = apply {
+    operator fun set(index: Int, type: HTStorageIO, sideType: HTStorageSide): HTStorageBuilder = apply {
         ioTypes[index] = type
         sideType.directions.forEach { direction: Direction ->
             sides.computeIfAbsent(direction) { mutableListOf() }.add(index)
         }
     }
 
-    fun setAll(type: HTStorageIO, sideType: HTStorageSide, indices: IntRange): HTSidedStorageBuilder = apply {
+    fun setAll(type: HTStorageIO, sideType: HTStorageSide, indices: IntRange): HTStorageBuilder = apply {
         indices.forEach { set(it, type, sideType) }
     }
 
-    fun setAll(type: HTStorageIO, sideType: HTStorageSide, vararg indices: Int): HTSidedStorageBuilder = apply {
+    fun setAll(type: HTStorageIO, sideType: HTStorageSide, vararg indices: Int): HTStorageBuilder = apply {
         indices.forEach { set(it, type, sideType) }
     }
 
-    fun filter(filter: (Int, ItemStack) -> Boolean): HTSidedStorageBuilder = apply {
+    fun filter(filter: (Int, ItemStack) -> Boolean): HTStorageBuilder = apply {
         this.slotFilter = filter
     }
 
-    fun <T : Any> build(builder: (HTSidedStorageBuilder) -> T): T = builder(this)
+    fun <T : Any> build(builder: (HTStorageBuilder) -> T): T = builder(this)
 
     fun buildSimple(): HTSimpleInventory = build(::HTSimpleInventory)
 

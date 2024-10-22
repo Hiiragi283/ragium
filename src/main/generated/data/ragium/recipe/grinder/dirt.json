@@ -1,11 +1,8 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "minecraft:coarse_dirt"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "minecraft:coarse_dirt"
+  },
   "outputs": [
     {
       "item": "minecraft:dirt"

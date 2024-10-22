@@ -1,15 +1,14 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.extension.sendPacket
-import hiiragi283.ragium.api.inventory.HTSidedStorageBuilder
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeProcessorNew
 import hiiragi283.ragium.common.init.RagiumNetworks
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.minecraft.block.BlockState
@@ -18,7 +17,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
@@ -35,7 +33,7 @@ open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
     }
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        HTMachineRecipeProcessorNew.process(
+        /*HTMachineRecipeProcessor.process(
             world,
             pos,
             currentRecipe,
@@ -49,21 +47,7 @@ open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
                 ComponentMap.builder().apply { getCustomData(world, pos, state, this) }.build(),
             ),
             parent,
-        )
-        /*HTMachineRecipeProcessor(
-            parent,
-            RagiumRecipeTypes.MACHINE,
-        ) { machineType: HTMachineType, tier: HTMachineTier, inventory: HTSimpleInventory ->
-            HTMachineRecipe.Input.create(
-                machineType,
-                tier,
-                inventory.getStack(0),
-                inventory.getStack(1),
-                inventory.getStack(2),
-                inventory.getStack(3),
-                ComponentMap.builder().apply { getCustomData(world, pos, state, this) }.build(),
-            )
-        }.process(world, pos, machineType, tier)*/
+        )*/
     }
 
     open fun getCustomData(
@@ -73,7 +57,7 @@ open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
         builder: ComponentMap.Builder,
     ) {}
 
-    final override val parent: HTSimpleInventory = HTSidedStorageBuilder(7)
+    final override val parent: HTSimpleInventory = HTStorageBuilder(7)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -88,7 +72,9 @@ open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
             syncId,
             playerInventory,
             packet,
-            ScreenHandlerContext.create(parentBE.world, parentBE.pos),
+            parentBE.ifPresentWorld { world: World ->
+                ScreenHandlerContext.create(world, parentBE.pos)
+            } ?: ScreenHandlerContext.EMPTY,
         )
 
     var currentIndex: Int = 0
@@ -109,23 +95,19 @@ open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
             }
         }
 
-    override fun getPropertyDelegate(): PropertyDelegate = object : PropertyDelegate {
-        override fun get(index: Int): Int = when (index) {
-            0 -> ticks
-            1 -> tickRate
-            2 -> currentIndex
-            3 -> maxIndex
-            else -> -1
-        }
+    override fun getProperty(index: Int): Int = when (index) {
+        0 -> ticks
+        1 -> tickRate
+        2 -> currentIndex
+        3 -> maxIndex
+        else -> -1
+    }
 
-        override fun set(index: Int, value: Int) {
-            when (index) {
-                2 -> currentIndex = value
-                3 -> maxIndex = value
-                else -> Unit
-            }
+    override fun setProperty(index: Int, value: Int) {
+        when (index) {
+            2 -> currentIndex = value
+            3 -> maxIndex = value
+            else -> Unit
         }
-
-        override fun size(): Int = MAX_PROPERTIES
     }
 }

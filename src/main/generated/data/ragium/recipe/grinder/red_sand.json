@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:sandstone/red_blocks"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:sandstone/red_blocks"
+  },
   "outputs": [
     {
-      "count": 4,
+      "amount": 4,
       "item": "minecraft:red_sand"
     }
   ]

@@ -1,11 +1,8 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:ingots/ragi_crystal"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:ingots/ragi_crystal"
+  },
   "outputs": [
     {
       "item": "ragium:ragi_crystal_dust"

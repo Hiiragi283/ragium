@@ -11,7 +11,7 @@ class HTSidedInventory(
     private val slotsMapper: (Direction) -> IntArray,
 ) : HTSimpleInventory(size, slotFilter),
     SidedInventory {
-    constructor(builder: HTSidedStorageBuilder) : this(
+    constructor(builder: HTStorageBuilder) : this(
         builder.size,
         builder.slotFilter,
         builder.ioMapper,

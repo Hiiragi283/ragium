@@ -1,16 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:ores/ragi_crystal"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:ores/ragi_crystal"
+  },
   "outputs": [
     {
-      "item": "ragium:ragi_crystal"
-    },
-    {
+      "amount": 2,
       "item": "ragium:ragi_crystal"
     }
   ]

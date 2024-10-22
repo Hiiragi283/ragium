@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:wool"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:wool"
+  },
   "outputs": [
     {
-      "count": 4,
+      "amount": 4,
       "item": "minecraft:string"
     }
   ]

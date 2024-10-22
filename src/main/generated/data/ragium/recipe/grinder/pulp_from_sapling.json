@@ -1,12 +1,9 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "count": 2,
-      "items": "#minecraft:saplings"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "amount": 2,
+    "items": "#minecraft:saplings"
+  },
   "outputs": [
     {
       "item": "ragium:pulp"

@@ -1,11 +1,8 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "minecraft:stone"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "minecraft:stone"
+  },
   "outputs": [
     {
       "item": "minecraft:cobblestone"

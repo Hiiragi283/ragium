@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:redstone_ores"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:redstone_ores"
+  },
   "outputs": [
     {
-      "count": 8,
+      "amount": 8,
       "item": "minecraft:redstone"
     }
   ]

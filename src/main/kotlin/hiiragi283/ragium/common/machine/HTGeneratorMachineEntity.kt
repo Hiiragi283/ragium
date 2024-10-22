@@ -1,10 +1,13 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.inventory.HTSidedStorageBuilder
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -27,13 +30,19 @@ open class HTGeneratorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
         machineType.generateEnergy(world, pos, tier)
     }
 
-    override val parent: HTSimpleInventory = HTSidedStorageBuilder(2)
+    override val parent: HTSimpleInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSimple()
 
     final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTGeneratorScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(parentBE.world, parentBE.pos))
+        HTGeneratorScreenHandler(
+            syncId,
+            playerInventory,
+            parentBE.ifPresentWorld { world: World ->
+                ScreenHandlerContext.create(world, parentBE.pos)
+            } ?: ScreenHandlerContext.EMPTY,
+        )
 
     //    SidedStorageBlockEntity    //
 

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTSidedStorageBuilder
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -75,7 +75,7 @@ class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEnti
         else -> -1
     }
 
-    override val parent: HTSidedInventory = HTSidedStorageBuilder(2)
+    override val parent: HTSidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .filter { slot: Int, stack: ItemStack ->

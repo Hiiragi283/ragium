@@ -19,6 +19,9 @@ import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import java.util.function.BiPredicate
 
+typealias HTItemIngredient = HTIngredientNew<Item, ItemVariant>
+typealias HTFluidIngredient = HTIngredientNew<Fluid, FluidVariant>
+
 @Suppress("DEPRECATION")
 class HTIngredientNew<O : Any, T : TransferVariant<O>> private constructor(private val entryList: RegistryEntryList<O>, val amount: Long) :
     BiPredicate<T, Long> {
@@ -108,6 +111,9 @@ class HTIngredientNew<O : Any, T : TransferVariant<O>> private constructor(priva
 
         val firstEntry: RegistryEntry<O>?
             get() = entryList.firstOrNull()
+
+        val weightedList: List<Pair<O, Long>>
+            get() = entryList.map { it.value() to amount }
 
         override fun toString(): String = "HTIngredient[entryList=$entryList,amount=$amount]"
 

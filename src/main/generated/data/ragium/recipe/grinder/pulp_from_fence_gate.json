@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#minecraft:fence_gates"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#minecraft:fence_gates"
+  },
   "outputs": [
     {
-      "count": 4,
+      "amount": 4,
       "item": "ragium:pulp"
     }
   ]

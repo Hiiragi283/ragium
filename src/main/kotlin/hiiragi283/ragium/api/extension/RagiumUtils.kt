@@ -33,6 +33,7 @@ import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.text.NumberFormat
+import java.util.*
 
 //    Either    //
 
@@ -52,6 +53,15 @@ fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
             }
         }
     }
+}
+
+//    Color    //
+
+fun toFloatColor(color: Int): Triple<Float, Float, Float> {
+    val red: Float = (color shr 16 and 255) / 255.0f
+    val green: Float = (color shr 8 and 255) / 255.0f
+    val blue: Float = (color and 255) / 255.0f
+    return Triple(red, green, blue)
 }
 
 //    FabricLoader    //
@@ -88,6 +98,10 @@ fun openEnderChest(world: World, player: PlayerEntity) {
     )
 }
 
+//    ServiceLoader    //
+
+inline fun <reified T : Any> collectInstances(): Iterable<T> = ServiceLoader.load(T::class.java)
+
 //    Recipe    //
 
 fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
@@ -104,6 +118,10 @@ fun RecipeManager.getMachineRecipes(type: HTMachineType, tier: HTMachineTier): L
     getAllMatches(RagiumRecipeTypes.MACHINE) { entry: RecipeEntry<HTMachineRecipe> ->
         entry.value.let { it.type == type && it.minTier <= tier }
     }
+
+operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
+
+operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
 
 //    Registry    //
 

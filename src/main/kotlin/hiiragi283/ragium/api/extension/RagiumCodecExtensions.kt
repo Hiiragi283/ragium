@@ -55,12 +55,18 @@ fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STR
 
 fun <A : Any, B : Any> pairCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Pair<A, B>> = Codec.pair(first.codec(), second.codec())
 
-fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> = pairCodecOf(first, second).toMap()
+fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> = pairCodecOf(first, second)
+    .toMap()
 
 fun <A : Any, B : Any> Codec<Pair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf().xmap(
     { pairs: List<Pair<A, B>> -> pairs.associate { it.first to it.second } },
     { map: Map<A, B> -> map.toList().map { Pair(it.first, it.second) } },
 )
+
+fun <T : Any> pairCodecOf(codec: Codec<T>, defaultValue: T, name: String): MapCodec<Pair<T, T>> = pairCodecOf(
+    codec.optionalFieldOf("first", defaultValue),
+    codec.optionalFieldOf("second", defaultValue),
+).optionalFieldOf(name, Pair.of(defaultValue, defaultValue))
 
 //    PacketCodec    //
 
@@ -73,3 +79,8 @@ fun <T : StringIdentifiable> packetCodecOf(entries: Iterable<T>): PacketCodec<Re
     PacketCodecs.STRING,
     StringIdentifiable::asString,
 ) { name: String -> entries.firstOrNull { it.asString() == name } }
+
+fun <A : Any, B : Any> pairPacketCodecOf(
+    first: PacketCodec<RegistryByteBuf, A>,
+    second: PacketCodec<RegistryByteBuf, B>,
+): PacketCodec<RegistryByteBuf, Pair<A, B>> = PacketCodec.tuple(first, Pair<A, B>::getFirst, second, Pair<A, B>::getSecond, ::Pair)

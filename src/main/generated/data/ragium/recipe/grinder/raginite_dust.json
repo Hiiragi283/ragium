@@ -1,11 +1,8 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "#c:raw_materials/raginite"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "#c:raw_materials/raginite"
+  },
   "outputs": [
     {
       "item": "ragium:raginite_dust"

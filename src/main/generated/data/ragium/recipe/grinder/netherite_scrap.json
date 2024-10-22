@@ -1,14 +1,11 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "items": "minecraft:ancient_debris"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "items": "minecraft:ancient_debris"
+  },
   "outputs": [
     {
-      "count": 2,
+      "amount": 2,
       "item": "minecraft:netherite_scrap"
     }
   ]

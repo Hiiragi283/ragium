@@ -1,15 +1,12 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
-    {
-      "count": 4,
-      "items": "#minecraft:wooden_stairs"
-    }
-  ],
-  "machine_type": "ragium:grinder",
+  "type": "ragium:grinder",
+  "input": {
+    "amount": 4,
+    "items": "#minecraft:wooden_stairs"
+  },
   "outputs": [
     {
-      "count": 6,
+      "amount": 6,
       "item": "ragium:pulp"
     }
   ]
