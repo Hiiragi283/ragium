@@ -1,20 +1,22 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
     {
-      "items": "ragium:pulp"
-    },
-    {
-      "items": "ragium:water_fluid_cube"
+      "fluids": "minecraft:water"
     }
   ],
-  "machine_type": "ragium:mixer",
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "ragium:pulp"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "minecraft:paper"
-    },
-    {
-      "item": "ragium:empty_fluid_cube"
     }
   ]
 }

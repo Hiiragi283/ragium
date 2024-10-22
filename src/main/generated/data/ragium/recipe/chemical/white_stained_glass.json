@@ -1,25 +1,22 @@
 {
   "type": "ragium:large_machine",
   "definition": {
-    "type": "ragium:mixer",
+    "type": "ragium:chemical_reactor",
     "tier": "primitive"
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:water"
+      "fluids": "ragium:chlorine"
     }
   ],
   "item_inputs": [
     {
-      "items": "#minecraft:beds"
-    },
-    {
-      "items": "ragium:soap_ingot"
+      "items": "#c:glass_blocks"
     }
   ],
   "item_outputs": [
     {
-      "item": "minecraft:white_bed"
+      "item": "minecraft:white_stained_glass"
     }
   ]
 }

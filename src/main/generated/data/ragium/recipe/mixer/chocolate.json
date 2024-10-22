@@ -1,26 +1,25 @@
 {
-  "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:heart_of_the_nether"
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
   },
-  "inputs": [
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:milk"
+    }
+  ],
+  "item_inputs": [
     {
       "items": "minecraft:cocoa_beans"
     },
     {
       "items": "minecraft:sugar"
-    },
-    {
-      "items": "ragium:milk_fluid_cube"
     }
   ],
-  "machine_type": "ragium:mixer",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:chocolate"
-    },
-    {
-      "item": "ragium:empty_fluid_cube"
     }
   ]
 }

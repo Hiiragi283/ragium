@@ -9,18 +9,14 @@
       "fluids": "ragium:milk"
     }
   ],
-  "item_inputs": [
+  "fluid_outputs": [
     {
-      "items": "ragium:butter"
-    },
-    {
-      "items": "minecraft:sugar"
+      "fluid": "ragium:batter"
     }
   ],
-  "item_outputs": [
+  "item_inputs": [
     {
-      "amount": 4,
-      "item": "ragium:caramel"
+      "items": "ragium:flour"
     }
   ]
 }

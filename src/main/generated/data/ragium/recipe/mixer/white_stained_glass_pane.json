@@ -1,23 +1,25 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:water"
+    }
+  ],
+  "item_inputs": [
     {
       "items": "#c:glass_panes"
     },
     {
       "items": "ragium:soap_ingot"
-    },
-    {
-      "items": "ragium:water_fluid_cube"
     }
   ],
-  "machine_type": "ragium:mixer",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "minecraft:white_stained_glass_pane"
-    },
-    {
-      "item": "ragium:empty_fluid_cube"
     }
   ]
 }

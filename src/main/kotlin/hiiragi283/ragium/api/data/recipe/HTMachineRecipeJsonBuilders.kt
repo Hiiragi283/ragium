@@ -225,6 +225,30 @@ object HTMachineRecipeJsonBuilders {
     }
 
     @JvmStatic
+    fun createMixer(
+        exporter: RecipeExporter,
+        itemInputs: List<HTItemIngredient>,
+        itemOutputs: List<HTItemResult>,
+        recipeId: Identifier,
+        fluidInput: HTFluidIngredient? = null,
+        fluidOutput: HTFluidResult? = null,
+        tier: HTMachineTier = HTMachineTier.PRIMITIVE,
+    ) {
+        createRecipe(
+            exporter,
+            HTMachineRecipeNew.Large(
+                HTMachineDefinition(RagiumMachineTypes.Processor.MIXER, tier),
+                itemInputs,
+                listOfNotNull(fluidInput),
+                HTItemIngredient.EMPTY_ITEM,
+                itemOutputs,
+                listOfNotNull(fluidOutput),
+            ),
+            recipeId.withPrefixedPath("mixer/"),
+        )
+    }
+    
+    @JvmStatic
     fun createRockGen(
         exporter: RecipeExporter,
         output: HTItemResult,

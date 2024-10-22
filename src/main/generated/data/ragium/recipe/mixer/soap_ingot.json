@@ -1,6 +1,15 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:glycerol"
+    }
+  ],
+  "item_inputs": [
     {
       "items": "#ragium:organic_oils"
     },
@@ -8,13 +17,9 @@
       "items": "#ragium:alkali"
     }
   ],
-  "machine_type": "ragium:mixer",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:soap_ingot"
-    },
-    {
-      "item": "ragium:glycerol_fluid_cube"
     }
   ]
 }
