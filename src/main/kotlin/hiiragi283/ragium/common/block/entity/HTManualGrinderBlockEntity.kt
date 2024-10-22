@@ -3,17 +3,15 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.modifyBlockState
 import hiiragi283.ragium.api.inventory.*
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeInputs
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
-import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.RecipeEntry
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
@@ -47,29 +45,22 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTDelegatedInventory    //
 
     override val parent: HTSimpleInventory =
-        HTSidedStorageBuilder(1)
+        HTStorageBuilder(1)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .buildSimple()
 
+    private val recipeCache: HTRecipeCache<HTRecipeInputs.Double, HTMachineRecipeNew.Simple> =
+        HTRecipeCache(RagiumRecipeTypes.SIMPLE_MACHINE)
+
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val recipe: HTMachineRecipe = world.recipeManager
-            .getFirstMatch(
-                RagiumRecipeTypes.MACHINE,
-                HTMachineRecipe.Input.create(
-                    RagiumMachineTypes.Processor.GRINDER,
-                    HTMachineTier.PRIMITIVE,
-                    getStack(0),
-                    ItemStack.EMPTY,
-                    ItemStack.EMPTY,
-                    ItemStack.EMPTY,
-                    ComponentMap.EMPTY,
-                ),
-                world,
-            ).map(RecipeEntry<HTMachineRecipe>::value)
-            .getOrNull() ?: return
+        val recipe: HTMachineRecipeNew.Simple = recipeCache
+            .getFirstMatch(HTRecipeInputs.Double(getStack(0), ItemStack.EMPTY), world)
+            .getOrNull()
+            ?.value
+            ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        parent.getStack(0).decrement(recipe.getInput(0)?.count ?: 0)
+        parent.getStack(0).decrement(recipe.itemInputs[0].amount.toInt())
         world.playSoundAtBlockCenter(
             pos,
             SoundEvents.BLOCK_GRINDSTONE_USE,

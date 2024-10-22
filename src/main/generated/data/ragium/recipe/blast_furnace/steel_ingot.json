@@ -1,16 +1,19 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "#c:ingots/iron"
     },
     {
-      "count": 4,
+      "amount": 4,
       "items": "#minecraft:coals"
     }
   ],
-  "machine_type": "ragium:blast_furnace",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:steel_ingot"
     }

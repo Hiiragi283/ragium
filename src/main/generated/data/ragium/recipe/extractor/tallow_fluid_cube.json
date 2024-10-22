@@ -1,17 +1,18 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
     {
-      "items": "#ragium:foods/protein"
-    },
-    {
-      "items": "ragium:empty_fluid_cube"
+      "fluid": "ragium:tallow"
     }
   ],
-  "machine_type": "ragium:extractor",
-  "outputs": [
+  "item_inputs": [
     {
-      "item": "ragium:tallow_fluid_cube"
+      "amount": 4,
+      "items": "#ragium:foods/protein"
     }
   ]
 }

@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "minecraft:deepslate"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "minecraft:deepslate"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "minecraft:cobbled_deepslate"
     }

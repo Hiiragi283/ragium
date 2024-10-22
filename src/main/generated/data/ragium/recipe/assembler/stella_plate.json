@@ -1,0 +1,20 @@
+{
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "basic"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:plates/aluminum"
+    },
+    {
+      "items": "ragium:basalt_mesh"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:stella_plate"
+    }
+  ]
+}

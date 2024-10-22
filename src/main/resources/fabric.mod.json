@@ -43,6 +43,16 @@
         "adapter": "kotlin"
       }
     ],
+    "ragium.bridge": [
+      {
+        "value": "hiiragi283.ragium.common.RagiumCommon",
+        "adapter": "kotlin"
+      },
+      {
+        "value": "hiiragi283.ragium.client.RagiumClient",
+        "adapter": "kotlin"
+      }
+    ],
     "jade": [
       {
         "value": "hiiragi283.ragium.client.integration.jade.RagiumJadePlugin",

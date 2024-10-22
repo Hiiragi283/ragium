@@ -1,18 +1,18 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "ragium:plastic_plate"
     },
     {
       "items": "#c:plates/copper"
-    },
-    {
-      "items": "#c:dusts/redstone"
     }
   ],
-  "machine_type": "ragium:assembler",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:primitive_circuit"
     }

@@ -2,18 +2,22 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumEnvironmentBridge
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
+import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
+import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
 import hiiragi283.ragium.client.integration.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.client.integration.patchouli.RagiumPatchouliInit
 import hiiragi283.ragium.client.integration.rei.INPUT_ENTRIES
+import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
@@ -42,9 +46,12 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
@@ -58,6 +65,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.entity.model.EntityModelPartNames
 import net.minecraft.client.render.model.UnbakedModel
+import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
@@ -71,12 +79,13 @@ import net.minecraft.world.BlockRenderView
 import net.minecraft.world.biome.Biome
 
 @Environment(EnvType.CLIENT)
-object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
+object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvironmentBridge {
     override fun onInitializeClient() {
         RagiumKeyBinds
 
         registerBlocks()
         registerEntities()
+        registerFluids()
         registerItems()
         registerScreens()
         registerEvents()
@@ -92,6 +101,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
     private fun registerBlocks() {
         // cutout
+        registerCutout(RagiumBlocks.FLUID_PIPE)
         registerCutout(RagiumBlocks.ITEM_DISPLAY)
         RagiumContents.Crops.entries
             .map(RagiumContents.Crops::cropBlock)
@@ -149,6 +159,21 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         }
     }
 
+    //    Fluids    //
+
+    private fun registerFluids() {
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+            FluidRenderHandlerRegistry.INSTANCE.register(
+                fluid.fluidEntry.value(),
+                SimpleFluidRenderHandler(
+                    Identifier.of("block/white_concrete"),
+                    Identifier.of("block/white_concrete"),
+                    fluid.color.rgb,
+                ),
+            )
+        }
+    }
+
     //    Items    //
 
     private fun registerItems() {
@@ -175,9 +200,12 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
-                when (HTMachineModel.MODEL_ID) {
-                    in original.modelDependencies -> HTMachineModel
-                    else -> original
+                if (HTMachineModel.MODEL_ID in original.modelDependencies) {
+                    HTMachineModel
+                } else if (HTFluidCubeModel.MODEL_ID in original.modelDependencies) {
+                    HTFluidCubeModel
+                } else {
+                    original
                 }
             }
         }
@@ -220,6 +248,8 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
 
     override val priority: Int = -100
 
+    override fun shouldLoad(): Boolean = FabricLoader.getInstance().environmentType == EnvType.CLIENT && isModLoaded("roughlyenoughitems")
+
     override fun modifyProperties(helper: HTMachineTypeInitializer.Helper) {
         helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
             set(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX) { machine: HTMachineEntity ->
@@ -261,4 +291,12 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer {
             }
         }
     }
+
+    //    RagiumEnvironmentBridge    //
+
+    override val environment: EnvType = EnvType.CLIENT
+
+    override fun createFluidWidget(fluid: Fluid): HTFluidWidget = HTClientFluidWidget(fluid)
+
+    override fun createFluidWidget(fluid: Fluid, amount: Long): HTFluidWidget = HTClientFluidWidget(fluid, amount)
 }

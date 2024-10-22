@@ -20,6 +20,9 @@ object RagiumItemGroup {
     val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("item"))
 
     @JvmField
+    val FLUID_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("fluid"))
+
+    @JvmField
     val MACHINE_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("machine"))
 
     @JvmStatic
@@ -69,6 +72,21 @@ object RagiumItemGroup {
                 }.forEach(entries::add)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
+            }
+        }
+
+        register(FLUID_KEY) {
+            displayName(Text.translatable("itemGroup.ragium.fluid"))
+            icon {
+                RagiumContents.Misc.EMPTY_FLUID_CUBE
+                    .asItem()
+                    .defaultStack
+            }
+            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                Registries.FLUID
+                    .filter { it.isStill(it.defaultState) }
+                    .map(RagiumContents::createFilledCube)
+                    .forEach(entries::add)
             }
         }
 

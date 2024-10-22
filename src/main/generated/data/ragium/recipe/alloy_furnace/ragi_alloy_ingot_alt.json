@@ -1,6 +1,10 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:alloy_furnace",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "#c:ingots/copper"
     },
@@ -8,8 +12,7 @@
       "items": "ragium:raginite_dust"
     }
   ],
-  "machine_type": "ragium:alloy_furnace",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:ragi_alloy_ingot"
     }

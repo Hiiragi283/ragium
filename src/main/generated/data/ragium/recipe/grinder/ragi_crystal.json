@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "#c:ores/ragi_crystal"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "#c:ores/ragi_crystal"
+    }
+  ],
+  "item_outputs": [
     {
       "amount": 2,
       "item": "ragium:ragi_crystal"

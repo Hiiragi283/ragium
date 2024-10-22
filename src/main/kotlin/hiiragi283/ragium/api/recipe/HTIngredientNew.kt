@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -104,6 +105,10 @@ class HTIngredientNew<O : Any, T : TransferVariant<O>> private constructor(priva
             @JvmStatic
             fun ofFluid(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTIngredientNew<Fluid, FluidVariant> =
                 ofFluid(Registries.FLUID.getOrCreateEntryList(tagKey), amount)
+
+            @JvmStatic
+            fun ofFluid(fluid: RagiumContents.Fluids, amount: Long = FluidConstants.BUCKET): HTIngredientNew<Fluid, FluidVariant> =
+                ofFluid(fluid.fluidEntry.value(), amount)
         }
 
         val isEmpty: Boolean

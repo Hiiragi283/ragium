@@ -12,6 +12,8 @@ interface HTMachineTypeInitializer {
 
     val priority: Int
 
+    fun shouldLoad(): Boolean = true
+
     fun registerType(register: Register) {}
 
     fun modifyProperties(helper: Helper) {}

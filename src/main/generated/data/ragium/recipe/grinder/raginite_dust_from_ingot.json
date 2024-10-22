@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "#c:ingots/raginite"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "#c:ingots/raginite"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "ragium:raginite_dust"
     }

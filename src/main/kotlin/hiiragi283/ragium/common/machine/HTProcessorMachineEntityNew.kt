@@ -10,14 +10,14 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntityNew
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.machines.HTGrinderRecipe
-import hiiragi283.ragium.api.recipe.machines.HTMachineRecipeProcessor
+import hiiragi283.ragium.api.recipe.HTRecipeInputs
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.recipe.input.SingleStackRecipeInput
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.util.Identifier
@@ -25,15 +25,15 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 open class HTProcessorMachineEntityNew(type: HTMachineConvertible, tier: HTMachineTier) : HTMachineEntityNew(type, tier) {
-    private val recipeCache: HTRecipeCache<SingleStackRecipeInput, HTGrinderRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.GRINDER)
+    private val recipeCache: HTRecipeCache<HTRecipeInputs.Double, HTMachineRecipeNew.Simple> =
+        HTRecipeCache(RagiumRecipeTypes.SIMPLE_MACHINE)
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         recipeCache
             .getFirstMatch(
-                SingleStackRecipeInput(getStack(0)),
+                HTRecipeInputs.Double(getStack(0), getStack(1)),
                 world,
-            ).ifPresent { (id: Identifier, recipe: HTGrinderRecipe) ->
+            ).ifPresent { (id: Identifier, recipe: HTMachineRecipeNew.Simple) ->
                 HTMachineRecipeProcessor.process(
                     world,
                     pos,

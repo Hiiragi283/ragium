@@ -12,6 +12,8 @@ inline fun <R> useTransaction(action: (Transaction) -> R): R = Transaction.openO
 
 //    ResourceAmount    //
 
+fun ItemStack.toResourceAmount(): ResourceAmount<ItemVariant> = ResourceAmount(ItemVariant.of(this), count.toLong())
+
 val ResourceAmount<ItemVariant>.itemStack: ItemStack
     get() = resource.toStack(amount.toInt())
 

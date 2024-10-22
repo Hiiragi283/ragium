@@ -1,18 +1,20 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "basic"
+  },
+  "item_inputs": [
     {
-      "count": 2,
+      "amount": 2,
       "items": "#c:gems/quartz"
     },
     {
-      "count": 4,
+      "amount": 4,
       "items": "#minecraft:coals"
     }
   ],
-  "machine_type": "ragium:blast_furnace",
-  "min_tier": "basic",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:silicon_plate"
     }

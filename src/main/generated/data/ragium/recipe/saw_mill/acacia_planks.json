@@ -1,14 +1,17 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:saw_mill",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "#minecraft:acacia_logs"
     }
   ],
-  "machine_type": "ragium:saw_mill",
-  "outputs": [
+  "item_outputs": [
     {
-      "count": 6,
+      "amount": 6,
       "item": "minecraft:acacia_planks"
     },
     {

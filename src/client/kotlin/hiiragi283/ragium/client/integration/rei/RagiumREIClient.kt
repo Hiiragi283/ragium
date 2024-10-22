@@ -1,18 +1,13 @@
 package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.machines.HTGrinderRecipe
-import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
+import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
 import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategory
-import hiiragi283.ragium.client.integration.rei.category.HTMachineRecipeCategoryNew
-import hiiragi283.ragium.client.integration.rei.category.HTTradeOfferCategory
 import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
-import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplayNew
-import hiiragi283.ragium.client.integration.rei.display.HTTradeOfferDisplay
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -24,23 +19,21 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry
 import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandler
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
+import me.shedaniel.rei.api.common.display.Display
 import me.shedaniel.rei.api.common.entry.EntryStack
 import me.shedaniel.rei.api.common.util.EntryStacks
 import me.shedaniel.rei.plugin.common.BuiltinPlugin
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.client.MinecraftClient
 import net.minecraft.item.ItemStack
+import net.minecraft.recipe.RecipeEntry
+import net.minecraft.recipe.RecipeType
 
 @Environment(EnvType.CLIENT)
 object RagiumREIClient : REIClientPlugin {
     init {
         RagiumAPI.log { info("REI Integration enabled!") }
     }
-
-    @JvmField
-    val TRADE_OFFER: CategoryIdentifier<HTTradeOfferDisplay> =
-        CategoryIdentifier.of(RagiumAPI.MOD_ID, "trade_offer")
 
     @JvmStatic
     fun getMachineIds(): List<CategoryIdentifier<HTMachineRecipeDisplay>> = RagiumAPI
@@ -60,8 +53,10 @@ object RagiumREIClient : REIClientPlugin {
         // Machines
         RagiumAPI.getInstance().machineTypeRegistry.processors.forEach { type: HTMachineType ->
             registry.add(HTMachineRecipeCategory(type))
+            registry.add(HTMachineRecipeCategoryNew(type))
             HTMachineTier.entries.map(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
                 registry.addWorkstations(type.categoryId, stack)
+                registry.addWorkstations(type.categoryIdNew, stack)
             }
         }
         registry.addWorkstations(
@@ -69,12 +64,6 @@ object RagiumREIClient : REIClientPlugin {
             EntryStacks.of(RagiumBlocks.MANUAL_GRINDER),
         )
 
-        RagiumAPI.getInstance().machineTypeRegistry.processors.forEach { type: HTMachineType ->
-            registry.add(HTMachineRecipeCategoryNew(type))
-            HTMachineTier.entries.map(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
-                registry.addWorkstations(type.categoryIdNew, stack)
-            }
-        }
         // Enchantment
         registry.addWorkstations(
             BuiltinPlugin.SMELTING,
@@ -88,9 +77,20 @@ object RagiumREIClient : REIClientPlugin {
             RagiumMachineTypes.SAW_MILL.categoryId,
             createEnchantedBook(RagiumEnchantments.BUZZ_SAW),
         )
-        // Trade Offer
-        registry.add(HTTradeOfferCategory)
-        registry.addWorkstations(TRADE_OFFER, EntryStacks.of(RagiumContents.Ingots.RAGI_STEEL))
+    }
+
+    @JvmStatic
+    private fun registerCategory(registry: CategoryRegistry, type: HTMachineConvertible) {
+        val type1: HTMachineType = type.asProcessor() ?: return
+        registry.add(HTMachineRecipeCategoryNew(type1))
+        addWorkstations(registry, type1, type1.categoryIdNew)
+    }
+
+    @JvmStatic
+    private fun <T : Display> addWorkstations(registry: CategoryRegistry, type: HTMachineConvertible, categoryId: CategoryIdentifier<T>) {
+        HTMachineTier.entries.map(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
+            registry.addWorkstations(categoryId, stack)
+        }
     }
 
     override fun registerDisplays(registry: DisplayRegistry) {
@@ -101,31 +101,36 @@ object RagiumREIClient : REIClientPlugin {
             ::HTMachineRecipeDisplay,
         )
 
+        registerLargeDisplays(registry, RagiumMachineTypes.BLAST_FURNACE)
+        registerLargeDisplays(registry, RagiumMachineTypes.DISTILLATION_TOWER)
+        RagiumMachineTypes.Processor.entries.forEach { type: RagiumMachineTypes.Processor ->
+            registerSimpleDisplays(registry, type)
+        }
+    }
+
+    @JvmStatic
+    private fun registerSimpleDisplays(registry: DisplayRegistry, machineType: HTMachineConvertible) {
         registry.registerRecipeFiller(
-            HTGrinderRecipe::class.java,
-            RagiumRecipeTypes.GRINDER,
-            ::HTMachineRecipeDisplayNew
+            HTMachineRecipeNew.Simple::class.java,
+            { type: RecipeType<in HTMachineRecipeNew.Simple> -> type == RagiumRecipeTypes.SIMPLE_MACHINE },
+            { entry: RecipeEntry<HTMachineRecipeNew.Simple> -> machineType.isOf(entry.value.machineType) },
+            { entry: RecipeEntry<HTMachineRecipeNew.Simple> ->
+                HTMachineRecipeDisplayNew.Simple(
+                    entry.value,
+                    entry.id,
+                )
+            },
         )
-        // Trade Offer
-        HTTradeOfferRegistry.registry
-            .map { (tier: HTMachineTier, factory: List<HTTradeOfferRegistry.Factory>) ->
-                factory
-                    .mapNotNull { it.create(MinecraftClient.getInstance().player) }
-                    .map { HTTradeOfferDisplay(tier, it) }
-            }.flatten()
-            .forEach(registry::add)
-        /*registry.registerVisibilityPredicate { _: DisplayCategory<*>, display: Display ->
-            if (display is HTDisplay<*>) {
-                val id: Identifier = display.id
-                val recipe: HTRecipeBase<*> = display.recipe
-                if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                    if (MinecraftClient.getInstance().server?.dataDriveManager?.contains(id) != true) {
-                        EventResult.interruptFalse()
-                    }
-                }
-            }
-            EventResult.pass()
-        }*/
+    }
+
+    @JvmStatic
+    private fun registerLargeDisplays(registry: DisplayRegistry, machineType: HTMachineConvertible) {
+        registry.registerRecipeFiller(
+            HTMachineRecipeNew.Large::class.java,
+            { type: RecipeType<in HTMachineRecipeNew.Large> -> type == RagiumRecipeTypes.LARGE_MACHINE },
+            { entry: RecipeEntry<HTMachineRecipeNew.Large> -> machineType.isOf(entry.value.machineType) },
+            { entry: RecipeEntry<HTMachineRecipeNew.Large> -> HTMachineRecipeDisplayNew.Large(entry.value, entry.id) },
+        )
     }
 
     /*override fun registerScreens(registry: ScreenRegistry) {

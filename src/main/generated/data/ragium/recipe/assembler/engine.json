@@ -1,18 +1,20 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
-      "count": 8,
+      "amount": 8,
       "items": "#c:plates/steel"
     },
     {
-      "count": 8,
+      "amount": 8,
       "items": "ragium:ragi_steel_plate"
     }
   ],
-  "machine_type": "ragium:assembler",
-  "min_tier": "basic",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:engine"
     }

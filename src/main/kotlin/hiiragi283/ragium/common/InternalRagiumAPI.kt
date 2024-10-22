@@ -12,6 +12,8 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 
 internal data object InternalRagiumAPI : RagiumAPI {
+    //    RagiumAPI    //
+
     override val config: RagiumAPI.Config = RagiumConfig
     override lateinit var machineTypeRegistry: HTMachineTypeRegistry
 
@@ -32,6 +34,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 HTMachineTypeInitializer.KEY,
                 HTMachineTypeInitializer::class.java,
             ).sortedWith(compareBy(HTMachineTypeInitializer::priority).thenBy { it::class.java.canonicalName })
+            .filter(HTMachineTypeInitializer::shouldLoad)
 
         val keyCache: MutableSet<HTMachineTypeKey> = mutableSetOf()
         val builder: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()

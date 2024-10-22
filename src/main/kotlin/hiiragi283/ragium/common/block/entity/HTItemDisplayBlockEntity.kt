@@ -31,7 +31,7 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSimpleInventory = HTSidedStorageBuilder(1)
+    override val parent: HTSimpleInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
         .buildSimple()
 

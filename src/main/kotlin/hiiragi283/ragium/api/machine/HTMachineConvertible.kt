@@ -25,4 +25,6 @@ fun interface HTMachineConvertible {
         add(HTMachineType.COMPONENT_TYPE, asMachine())
         add(HTMachineTier.COMPONENT_TYPE, tier)
     }
+
+    fun isOf(other: HTMachineConvertible): Boolean = asMachine() == other.asMachine()
 }

@@ -1,18 +1,21 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:alloy_furnace",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
-      "count": 2,
+      "amount": 2,
       "items": "#c:ingots/iron"
     },
     {
       "items": "#c:ingots/nickel"
     }
   ],
-  "machine_type": "ragium:alloy_furnace",
-  "outputs": [
+  "item_outputs": [
     {
-      "count": 3,
+      "amount": 3,
       "item": "ragium:invar_ingot"
     }
   ]

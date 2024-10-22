@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "#c:ores/crude_raginite"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "#c:ores/crude_raginite"
+    }
+  ],
+  "item_outputs": [
     {
       "amount": 2,
       "item": "ragium:raw_crude_raginite"

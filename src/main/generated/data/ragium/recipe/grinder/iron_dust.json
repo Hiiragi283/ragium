@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "#c:raw_materials/iron"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "#c:raw_materials/iron"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "ragium:iron_dust"
     },

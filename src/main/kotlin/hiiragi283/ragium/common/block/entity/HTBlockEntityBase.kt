@@ -41,19 +41,23 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         sendPacket { asInventory()?.sendS2CPacket(it, pos) }
     }
 
+    fun <T> ifPresentWorld(action: (World) -> T): T? = world?.let(action)
+
     open fun onUse(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = when (world.isClient) {
-        true -> ActionResult.SUCCESS
-        else -> {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
-            ActionResult.CONSUME
+    ): ActionResult = state.createScreenHandlerFactory(world, pos)?.let {
+        when (world.isClient) {
+            true -> ActionResult.SUCCESS
+            else -> {
+                player.openHandledScreen(it)
+                ActionResult.CONSUME
+            }
         }
-    }
+    } ?: ActionResult.PASS
 
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
 

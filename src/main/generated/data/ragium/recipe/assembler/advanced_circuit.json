@@ -1,19 +1,18 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "advanced"
+  },
+  "item_inputs": [
     {
       "items": "ragium:engineering_plastic_plate"
     },
     {
       "items": "ragium:ragi_alloy_plate"
-    },
-    {
-      "items": "ragium:ragi_crystal_dust"
     }
   ],
-  "machine_type": "ragium:assembler",
-  "min_tier": "advanced",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:advanced_circuit"
     }

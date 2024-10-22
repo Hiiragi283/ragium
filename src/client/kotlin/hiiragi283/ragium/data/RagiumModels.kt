@@ -71,8 +71,12 @@ object RagiumModels {
     val CLUSTER_ITEM: Model = model("item/cluster", TextureKey.LAYER0)
 
     @JvmField
+    val FLUID_CUBE_OLD: Model =
+        model("tem/filled_fluid_cube_old")
+
+    @JvmField
     val FILLED_FLUID_CUBE: Model =
-        model("item/filled_fluid_cube")
+        model("item/fluid_cube")
 
     @JvmStatic
     private fun model(path: String, vararg keys: TextureKey): Model = Model(

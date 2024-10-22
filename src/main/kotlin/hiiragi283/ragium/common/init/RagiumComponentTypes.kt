@@ -8,10 +8,14 @@ import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.minecraft.component.ComponentType
+import net.minecraft.fluid.Fluid
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.DyeColor
 
 object RagiumComponentTypes {
@@ -48,6 +52,10 @@ object RagiumComponentTypes {
     @JvmField
     val DAMAGE_INSTEAD_OF_DECREASE: ComponentType<Unit> =
         registerUnit("damage_instead_of_decrease")
+
+    @JvmField
+    val FLUID: ComponentType<RegistryEntry<Fluid>> =
+        register("fluid", Registries.FLUID.entryCodec, PacketCodecs.registryEntry(RegistryKeys.FLUID))
 
     @JvmStatic
     private fun <T : Any> register(name: String, type: ComponentType<T>): ComponentType<T> = Registry.register(

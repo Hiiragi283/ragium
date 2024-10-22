@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "minecraft:gravel"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "minecraft:gravel"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "minecraft:sand"
     }

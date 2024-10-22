@@ -1,11 +1,14 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilders
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.HTIngredientNew
-import hiiragi283.ragium.api.recipe.HTRecipeResultNew
+import hiiragi283.ragium.api.recipe.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.HTFluidResult
+import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
@@ -17,12 +20,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
-import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
@@ -67,150 +70,208 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Alloy Furnace    //
 
     private fun alloyFurnaceRecipes(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
-            .addInput(ConventionalItemTags.COPPER_INGOTS)
-            .addInput(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
-            .addOutput(RagiumContents.Ingots.RAGI_ALLOY)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
-            .addInput(ConventionalItemTags.COPPER_INGOTS)
-            .addInput(RagiumContents.Dusts.RAGINITE)
-            .addOutput(RagiumContents.Ingots.RAGI_ALLOY)
-            .offerSuffix(exporter, "_alt")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
-            .addInput(ConventionalItemTags.IRON_INGOTS, 2)
-            .addInput(RagiumItemTags.NICKEL_INGOTS)
-            .addOutput(RagiumContents.Ingots.INVAR, 3)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE, HTMachineTier.ADVANCED, true)
-            .addInput(ConventionalItemTags.GOLD_INGOTS, 5)
-            .addInput(Items.NETHERITE_SCRAP, 3)
-            .addOutput(Items.NETHERITE_INGOT)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createAlloy(
+            exporter,
+            HTItemIngredient.ofItem(ConventionalItemTags.COPPER_INGOTS),
+            HTItemIngredient.ofItem(RagiumContents.Dusts.CRUDE_RAGINITE, 4),
+            HTItemResult.ofItem(RagiumContents.Ingots.RAGI_ALLOY),
+        )
+        HTMachineRecipeJsonBuilders.createAlloy(
+            exporter,
+            HTItemIngredient.ofItem(ConventionalItemTags.COPPER_INGOTS),
+            HTItemIngredient.ofItem(RagiumContents.Dusts.RAGINITE),
+            HTItemResult.ofItem(RagiumContents.Ingots.RAGI_ALLOY),
+            recipeId = HTMachineRecipeJsonBuilders
+                .createRecipeId(RagiumContents.Ingots.RAGI_ALLOY)
+                .withSuffixedPath("_alt"),
+        )
+        HTMachineRecipeJsonBuilders.createAlloy(
+            exporter,
+            HTItemIngredient.ofItem(ConventionalItemTags.IRON_INGOTS, 2),
+            HTItemIngredient.ofItem(RagiumItemTags.NICKEL_INGOTS),
+            HTItemResult.ofItem(RagiumContents.Ingots.INVAR, 3),
+        )
+        HTMachineRecipeJsonBuilders.createAlloy(
+            exporter,
+            HTItemIngredient.ofItem(ConventionalItemTags.GOLD_INGOTS, 5),
+            HTItemIngredient.ofItem(Items.NETHERITE_SCRAP, 3),
+            HTItemResult.ofItem(Items.NETHERITE_INGOT, 2),
+            HTMachineTier.ADVANCED,
+        )
     }
 
     //    Assembler    //
 
     private fun assembler(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .addInput(RagiumItemTags.STEEL_PLATES, 8)
-            .addInput(RagiumContents.Plates.RAGI_STEEL, 8)
-            .addOutput(RagiumContents.Misc.ENGINE)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.ADVANCED)
-            .addInput(RagiumContents.Gems.RAGI_CRYSTAL, 8)
-            .addInput(RagiumContents.Misc.PROCESSOR_SOCKET)
-            .addOutput(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumItemTags.STEEL_PLATES, 8),
+                HTItemIngredient.ofItem(RagiumContents.Plates.RAGI_STEEL, 8),
+            ),
+            HTItemResult.ofItem(RagiumContents.Misc.ENGINE),
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Gems.RAGI_CRYSTAL, 8),
+                HTItemIngredient.ofItem(RagiumContents.Misc.PROCESSOR_SOCKET),
+            ),
+            HTItemResult.ofItem(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR),
+            tier = HTMachineTier.ADVANCED,
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumItemTags.ALUMINUM_PLATES),
+                HTItemIngredient.ofItem(RagiumContents.Misc.BASALT_MESH),
+            ),
+            HTItemResult.ofItem(RagiumContents.Plates.STELLA),
+            tier = HTMachineTier.BASIC,
+        )
         // circuits
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
-            .addInput(RagiumContents.Plates.PLASTIC)
-            .addInput(RagiumItemTags.COPPER_PLATES)
-            .addInput(ConventionalItemTags.REDSTONE_DUSTS)
-            .addOutput(RagiumContents.Circuits.PRIMITIVE)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
-            .addInput(RagiumContents.Plates.PLASTIC)
-            .addInput(RagiumItemTags.GOLD_PLATES)
-            .addInput(ConventionalItemTags.GLOWSTONE_DUSTS)
-            .addOutput(RagiumContents.Circuits.BASIC)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.ADVANCED)
-            .addInput(RagiumContents.Plates.ENGINEERING_PLASTIC)
-            .addInput(RagiumContents.Plates.RAGI_ALLOY)
-            .addInput(RagiumContents.Dusts.RAGI_CRYSTAL)
-            .addOutput(RagiumContents.Circuits.ADVANCED)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Plates.PLASTIC),
+                HTItemIngredient.ofItem(RagiumItemTags.COPPER_PLATES),
+            ),
+            HTItemResult.ofItem(RagiumContents.Circuits.PRIMITIVE),
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Plates.SILICON),
+                HTItemIngredient.ofItem(RagiumItemTags.GOLD_PLATES),
+            ),
+            HTItemResult.ofItem(RagiumContents.Circuits.BASIC),
+            tier = HTMachineTier.BASIC,
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Plates.ENGINEERING_PLASTIC),
+                HTItemIngredient.ofItem(RagiumContents.Plates.RAGI_ALLOY),
+            ),
+            HTItemResult.ofItem(RagiumContents.Circuits.ADVANCED),
+            tier = HTMachineTier.ADVANCED,
+        )
+        // coils
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(ConventionalItemTags.COPPER_INGOTS, 8),
+                HTItemIngredient.ofItem(RagiumBlocks.SHAFT),
+            ),
+            HTItemResult.ofItem(RagiumContents.Coils.COPPER),
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(ConventionalItemTags.GOLD_INGOTS, 8),
+                HTItemIngredient.ofItem(RagiumBlocks.SHAFT),
+            ),
+            HTItemResult.ofItem(RagiumContents.Coils.GOLD),
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Ingots.RAGI_ALLOY, 8),
+                HTItemIngredient.ofItem(RagiumBlocks.SHAFT),
+            ),
+            HTItemResult.ofItem(RagiumContents.Coils.RAGI_ALLOY),
+        )
         // motors
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
-            .addInput(RagiumItemTags.IRON_PLATES, 8)
-            .addInput(RagiumContents.Coils.COPPER)
-            .addOutput(RagiumContents.Motors.PRIMITIVE)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
-            .addInput(RagiumItemTags.IRON_PLATES, 8)
-            .addInput(RagiumContents.Coils.GOLD)
-            .addOutput(RagiumContents.Motors.BASIC)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
-            .addInput(RagiumItemTags.IRON_PLATES, 8)
-            .addInput(RagiumContents.Coils.RAGI_ALLOY)
-            .addOutput(RagiumContents.Motors.ADVANCED)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumItemTags.IRON_PLATES, 8),
+                HTItemIngredient.ofItem(RagiumContents.Coils.COPPER),
+            ),
+            HTItemResult.ofItem(RagiumContents.Motors.PRIMITIVE),
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumItemTags.IRON_PLATES, 8),
+                HTItemIngredient.ofItem(RagiumContents.Coils.GOLD),
+            ),
+            HTItemResult.ofItem(RagiumContents.Motors.BASIC),
+        )
+        HTMachineRecipeJsonBuilders.createAssembler(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumItemTags.IRON_PLATES, 8),
+                HTItemIngredient.ofItem(RagiumContents.Coils.RAGI_ALLOY),
+            ),
+            HTItemResult.ofItem(RagiumContents.Motors.ADVANCED),
+        )
     }
 
     //    Blast Furnace    //
 
     private fun blastFurnace(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE)
-            .addInput(ConventionalItemTags.IRON_INGOTS)
-            .addInput(RagiumContents.Dusts.RAGINITE, 4)
-            .addOutput(RagiumContents.Ingots.RAGI_STEEL)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE)
-            .addInput(ConventionalItemTags.IRON_INGOTS)
-            .addInput(ItemTags.COALS, 4)
-            .addOutput(RagiumContents.Ingots.STEEL)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
-            .addInput(ConventionalItemTags.REDSTONE_DUSTS, 4)
-            .addInput(RagiumContents.Dusts.RAGINITE, 5)
-            .addOutput(RagiumContents.Gems.RAGI_CRYSTAL)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
-            .addInput(RagiumItemTags.STEEL_INGOTS)
-            .addInput(RagiumContents.Dusts.RAGI_CRYSTAL, 4)
-            .addInput(ConventionalItemTags.QUARTZ_GEMS)
-            .addOutput(RagiumContents.Ingots.REFINED_RAGI_STEEL)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
-            .addInput(ConventionalItemTags.QUARTZ_GEMS, 2)
-            .addInput(ItemTags.COALS, 4)
-            .addOutput(RagiumContents.Plates.SILICON)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE)
-            .addInput(RagiumContents.Fluids.BATTER)
-            .addInput(RagiumContents.Foods.BUTTER)
-            .addOutput(RagiumBlocks.SPONGE_CAKE)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .addInput(RagiumContents.Dusts.ALUMINA)
-            .addInput(ItemTags.COALS, 4)
-            .addOutput(RagiumContents.Ingots.ALUMINUM)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(ConventionalItemTags.IRON_INGOTS),
+                HTItemIngredient.ofItem(RagiumContents.Dusts.RAGINITE, 4),
+            ),
+            HTItemResult.ofItem(RagiumContents.Ingots.RAGI_STEEL),
+        )
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(ConventionalItemTags.IRON_INGOTS),
+                HTItemIngredient.ofItem(ItemTags.COALS, 4),
+            ),
+            HTItemResult.ofItem(RagiumContents.Ingots.STEEL),
+        )
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(ConventionalItemTags.REDSTONE_DUSTS, 4),
+                HTItemIngredient.ofItem(RagiumContents.Dusts.RAGINITE, 5),
+            ),
+            HTItemResult.ofItem(RagiumContents.Gems.RAGI_CRYSTAL),
+            HTMachineTier.BASIC,
+        )
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumItemTags.STEEL_INGOTS),
+                HTItemIngredient.ofItem(RagiumContents.Dusts.RAGI_CRYSTAL, 4),
+                HTItemIngredient.ofItem(ConventionalItemTags.QUARTZ_GEMS),
+            ),
+            HTItemResult.ofItem(RagiumContents.Ingots.REFINED_RAGI_STEEL),
+            HTMachineTier.BASIC,
+        )
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(ConventionalItemTags.QUARTZ_GEMS, 2),
+                HTItemIngredient.ofItem(ItemTags.COALS, 4),
+            ),
+            HTItemResult.ofItem(RagiumContents.Plates.SILICON),
+            HTMachineTier.BASIC,
+        )
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Fluids.BATTER),
+                HTItemIngredient.ofItem(RagiumContents.Foods.BUTTER),
+            ),
+            HTItemResult.ofItem(RagiumBlocks.SPONGE_CAKE),
+        )
+        HTMachineRecipeJsonBuilders.createBlast(
+            exporter,
+            listOf(
+                HTItemIngredient.ofItem(RagiumContents.Dusts.ALUMINA),
+                HTItemIngredient.ofItem(ItemTags.COALS, 4),
+            ),
+            HTItemResult.ofItem(RagiumContents.Ingots.ALUMINUM),
+            HTMachineTier.ADVANCED,
+        )
     }
 
     //    Chemical Reactor    //
@@ -343,7 +404,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Compressor    //
 
     private fun compressor(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.COMPRESSOR)
             .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .addInput(Items.WATER_BUCKET)
@@ -380,14 +441,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .addInput(Items.HONEY_BLOCK)
             .addOutput(RagiumContents.Fluids.HONEY)
-            .offerSuffix(exporter, suffix = "_alt")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.COMPRESSOR, HTMachineTier.BASIC)
-            .addInput(RagiumItemTags.ALUMINUM_PLATES)
-            .addInput(RagiumContents.Misc.BASALT_MESH)
-            .addOutput(RagiumContents.Plates.STELLA)
-            .offerTo(exporter)
+            .offerSuffix(exporter, suffix = "_alt")*/
     }
 
     //    Decompressor    //
@@ -421,40 +475,45 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Distillation Tower    //
 
     private fun distillation(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
-            .addInput(RagiumContents.Fluids.CRUDE_OIL, 4)
-            .addOutput(RagiumContents.Fluids.REFINED_GAS)
-            .addOutput(RagiumContents.Fluids.NAPHTHA, 2)
-            .addOutput(RagiumContents.Fluids.RESIDUAL_OIL)
-            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
-            .addInput(RagiumContents.Fluids.REFINED_GAS, 3)
-            .addOutput(RagiumContents.Fluids.METHANE)
-            .addOutput(RagiumContents.Fluids.LPG)
-            .addOutput(RagiumContents.Fluids.ETHYLENE)
-            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
-            .addInput(RagiumContents.Fluids.NAPHTHA, 3)
-            .addOutput(RagiumContents.Fluids.AROMATIC_COMPOUNDS)
-            .addOutput(RagiumContents.Fluids.FUEL, 2)
-            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
-            .addInput(RagiumContents.Fluids.RESIDUAL_OIL, 3)
-            .addOutput(RagiumContents.Fluids.FUEL)
-            .addOutput(RagiumContents.Fluids.LUBRICANT)
-            .addOutput(RagiumContents.Fluids.ASPHALT)
-            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createDistillation(
+            exporter,
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.CRUDE_OIL, FluidConstants.BUCKET * 3),
+            listOf(
+                HTFluidResult.ofFluid(RagiumContents.Fluids.REFINED_GAS),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.NAPHTHA, FluidConstants.BUCKET * 2),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.RESIDUAL_OIL),
+            ),
+            RagiumAPI.id("crude_oil"),
+        )
+        HTMachineRecipeJsonBuilders.createDistillation(
+            exporter,
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.REFINED_GAS, FluidConstants.BUCKET * 3),
+            listOf(
+                HTFluidResult.ofFluid(RagiumContents.Fluids.METHANE),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.LPG),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.ETHYLENE),
+            ),
+            RagiumAPI.id("refined_gas"),
+        )
+        HTMachineRecipeJsonBuilders.createDistillation(
+            exporter,
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.NAPHTHA, FluidConstants.BUCKET * 3),
+            listOf(
+                HTFluidResult.ofFluid(RagiumContents.Fluids.AROMATIC_COMPOUNDS),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.FUEL, FluidConstants.BUCKET * 2),
+            ),
+            RagiumAPI.id("naphtha"),
+        )
+        HTMachineRecipeJsonBuilders.createDistillation(
+            exporter,
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.RESIDUAL_OIL, FluidConstants.BUCKET * 3),
+            listOf(
+                HTFluidResult.ofFluid(RagiumContents.Fluids.FUEL),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.LUBRICANT),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.ASPHALT),
+            ),
+            RagiumAPI.id("residual_oil"),
+        )
     }
 
     //    Electrolyzer    //
@@ -489,55 +548,55 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Extractor    //
 
     private fun extractor(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(ItemTags.VILLAGER_PLANTABLE_SEEDS, 4)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Fluids.SEED_OIL)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(RagiumItemTags.PROTEIN_FOODS)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Fluids.TALLOW)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(RagiumItemTags.BASALTS)
-            .addOutput(RagiumContents.Misc.BASALT_MESH)
-            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(RagiumContents.Foods.CHOCOLATE)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Fluids.CHOCOLATE)
-            .setCatalyst(RagiumContents.Misc.HEART_OF_THE_NETHER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(Items.SUGAR, 4)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Fluids.STARCH_SYRUP)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(Items.SWEET_BERRIES)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Fluids.SWEET_BERRIES)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
-            .addInput(RagiumContents.Fluids.MILK)
-            .addOutput(RagiumContents.Foods.BUTTER)
-            .offerTo(exporter)
-
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(ItemTags.VILLAGER_PLANTABLE_SEEDS, 4),
+            listOf(HTItemResult.ofItem(RagiumContents.Misc.EMPTY_FLUID_CUBE)),
+            listOf(),
+            HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Misc.EMPTY_FLUID_CUBE),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(RagiumItemTags.PROTEIN_FOODS, 4),
+            listOf(),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.TALLOW)),
+            HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Fluids.TALLOW),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(RagiumItemTags.BASALTS),
+            listOf(HTItemResult.ofItem(RagiumContents.Misc.BASALT_MESH)),
+            listOf(),
+            HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Misc.BASALT_MESH),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(RagiumContents.Foods.CHOCOLATE),
+            listOf(),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.CHOCOLATE)),
+            RagiumAPI.id("chocolate"),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(Items.SUGAR, 4),
+            listOf(),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.STARCH_SYRUP)),
+            RagiumAPI.id("starch_syrup"),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(Items.SWEET_BERRIES),
+            listOf(),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.SWEET_BERRIES)),
+            RagiumAPI.id("sweet_berries"),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(RagiumContents.Fluids.MILK),
+            listOf(HTItemResult.ofItem(RagiumContents.Foods.BUTTER)),
+            listOf(),
+            HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Foods.BUTTER),
+        )
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.EXTRACTOR, HTMachineTier.BASIC)
             .addInput(Items.SOUL_SAND)
@@ -545,14 +604,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .addOutput(Items.SAND)
             .addOutput(RagiumContents.Fluids.CRUDE_OIL)
             .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR, HTMachineTier.BASIC)
-            .addInput(Items.SOUL_SOIL)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(Items.CLAY)
-            .addOutput(RagiumContents.Fluids.CRUDE_OIL)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(Items.SOUL_SAND),
+            listOf(HTItemResult.ofItem(Items.SAND)),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.CRUDE_OIL)),
+            RagiumAPI.id("crude_oil_from_soul_sand"),
+        )
+        HTMachineRecipeJsonBuilders.createExtractor(
+            exporter,
+            HTItemIngredient.ofItem(Items.SOUL_SOIL),
+            listOf(HTItemResult.ofItem(Items.SAND)),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.CRUDE_OIL)),
+            RagiumAPI.id("crude_oil_from_soul_soil"),
+        )
     }
 
     //    Fluid Drill    //
@@ -639,9 +704,9 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     ) {
         HTMachineRecipeJsonBuilders.createGrinder(
             exporter,
-            HTIngredientNew.ofItem(input.first, input.second.toLong()),
-            HTRecipeResultNew.ofItem(output.first, output.second.toLong()),
-            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(output.first).withSuffixedPath(suffix)
+            HTItemIngredient.ofItem(input.first, input.second.toLong()),
+            HTItemResult.ofItem(output.first, output.second.toLong()),
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(output.first).withSuffixedPath(suffix),
         )
         /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
@@ -659,46 +724,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     ) {
         HTMachineRecipeJsonBuilders.createGrinder(
             exporter,
-            HTIngredientNew.ofItem(input.first, input.second.toLong()),
-            HTRecipeResultNew.ofItem(output.first, output.second.toLong()),
-            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(output.first).withSuffixedPath(suffix)
+            HTItemIngredient.ofItem(input.first, input.second.toLong()),
+            HTItemResult.ofItem(output.first, output.second.toLong()),
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(output.first).withSuffixedPath(suffix),
         )
-        /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
-            .addInput(input.first, input.second)
-            .addOutput(output.first, output.second)
-            .offerSuffix(exporter, suffix)*/
     }
 
     //    Metal Former    //
 
     private fun metalFormer(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER)
-            .addInput(RagiumItemTags.STEEL_INGOTS, 2)
-            .addOutput(RagiumBlocks.SHAFT)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER)
-            .addInput(ConventionalItemTags.COPPER_INGOTS, 8)
-            .addInput(RagiumBlocks.SHAFT)
-            .addOutput(RagiumContents.Coils.COPPER)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER)
-            .addInput(ConventionalItemTags.GOLD_INGOTS, 8)
-            .addInput(RagiumBlocks.SHAFT)
-            .addOutput(RagiumContents.Coils.GOLD)
-            .offerTo(exporter)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER)
-            .addInput(RagiumContents.Ingots.RAGI_ALLOY, 8)
-            .addInput(RagiumBlocks.SHAFT)
-            .addOutput(RagiumContents.Coils.RAGI_ALLOY)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createMetalFormer(
+            exporter,
+            HTItemIngredient.ofItem(RagiumItemTags.STEEL_INGOTS, 2),
+            HTItemResult.ofItem(RagiumBlocks.SHAFT),
+        )
     }
 
     //    Mixer    //
@@ -831,19 +870,18 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerRock(exporter, Items.BLACKSTONE)
         registerRock(exporter, Items.END_STONE)
 
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ROCK_GENERATOR)
             .addInput(RagiumContents.Fluids.LAVA)
             .addOutput(Items.OBSIDIAN)
-            .offerTo(exporter)
+            .offerTo(exporter)*/
     }
 
     private fun registerRock(exporter: RecipeExporter, rock: ItemConvertible) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ROCK_GENERATOR)
-            .setCatalyst(rock)
-            .addOutput(rock, 8)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createRockGen(
+            exporter,
+            HTItemResult.ofItem(rock, 8),
+        )
     }
 
     //    Saw Mill    //
@@ -860,20 +898,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerPlank(exporter, ItemTags.CRIMSON_STEMS, Items.CRIMSON_PLANKS)
         registerPlank(exporter, ItemTags.WARPED_STEMS, Items.WARPED_PLANKS)
 
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.SAW_MILL)
-            .addInput(ItemTags.PLANKS)
-            .addOutput(Items.STICK, 4)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createSawMill(
+            exporter,
+            HTItemIngredient.ofItem(ItemTags.PLANKS),
+            HTItemResult.ofItem(Items.STICK, 4),
+        )
     }
 
     private fun registerPlank(exporter: RecipeExporter, log: TagKey<Item>, plank: ItemConvertible) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.SAW_MILL)
-            .addInput(log)
-            .addOutput(plank, 6)
-            .addOutput(RagiumContents.Foods.PULP)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createSawMill(
+            exporter,
+            HTItemIngredient.ofItem(log),
+            HTItemResult.ofItem(plank, 6),
+            HTItemResult.ofItem(RagiumContents.Foods.PULP),
+        )
     }
 
     //    Mob Extractor    //
@@ -908,11 +946,11 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     }
 
     private fun registerMobDrop(exporter: RecipeExporter, output: ItemConvertible, entityType: EntityType<*>) {
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.MOB_EXTRACTOR)
             .addOutput(output)
             .setCustomData(HTRecipeComponentTypes.ENTITY_TYPE, entityType)
-            .offerTo(exporter, Registries.ENTITY_TYPE.getId(entityType))
+            .offerTo(exporter, Registries.ENTITY_TYPE.getId(entityType))*/
     }
 
     private fun test(exporter: RecipeExporter) {}

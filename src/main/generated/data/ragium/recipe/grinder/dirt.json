@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "minecraft:coarse_dirt"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "minecraft:coarse_dirt"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "minecraft:dirt"
     }

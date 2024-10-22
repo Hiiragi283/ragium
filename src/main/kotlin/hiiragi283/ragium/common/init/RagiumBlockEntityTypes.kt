@@ -17,6 +17,10 @@ object RagiumBlockEntityTypes {
         register("drive_scanner", ::HTDriveScannerBlockEntity)
 
     @JvmField
+    val FLUID_PIPE: BlockEntityType<HTFluidPipeBlockEntity> =
+        register("fluid_pipe", ::HTFluidPipeBlockEntity)
+
+    @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
@@ -42,6 +46,7 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
+        FLUID_PIPE.addSupportedBlock(RagiumBlocks.FLUID_PIPE)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_MACHINE)

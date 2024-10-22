@@ -1,18 +1,20 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "basic"
+  },
+  "item_inputs": [
     {
-      "count": 4,
+      "amount": 4,
       "items": "#c:dusts/redstone"
     },
     {
-      "count": 5,
+      "amount": 5,
       "items": "ragium:raginite_dust"
     }
   ],
-  "machine_type": "ragium:blast_furnace",
-  "min_tier": "basic",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:ragi_crystal"
     }

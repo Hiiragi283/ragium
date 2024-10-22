@@ -4,24 +4,36 @@ import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
+import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
+import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import net.fabricmc.fabric.api.registry.FuelRegistry
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
+import net.fabricmc.fabric.api.transfer.v1.fluid.*
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.type.FoodComponent
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Hand
 import net.minecraft.util.ItemActionResult
@@ -104,6 +116,7 @@ object RagiumContentRegister : HTContentRegister {
         }
 
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+            Registry.register(Registries.FLUID, fluid.fluidEntry.id, HTVirtualFluid())
             registerItem(fluid, fluid.createItem())
         }
     }
@@ -128,6 +141,8 @@ object RagiumContentRegister : HTContentRegister {
                 .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
         )
 
+        registerBlockItem(RagiumBlocks.FLUID_PIPE)
+
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)
@@ -148,7 +163,6 @@ object RagiumContentRegister : HTContentRegister {
         ItemStorage.SIDED.registerForBlockEntity({ blockEntity: HTMetaMachineBlockEntity, direction: Direction? ->
             blockEntity.machineEntity?.let { InventoryStorage.of(it, direction) }
         }, RagiumBlockEntityTypes.META_MACHINE)
-
         ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerForBlocks null
             world.backpackManager
@@ -156,11 +170,34 @@ object RagiumContentRegister : HTContentRegister {
                 ?.let { InventoryStorage.of(it, direction) }
         }, RagiumBlocks.BACKPACK_INTERFACE)
 
+        FluidStorage
+            .combinedItemApiProvider(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
+            .register(::HTEmptyFluidCubeStorage)
+        FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
+            if (context.itemVariant.isOf(RagiumContents.Misc.FILLED_FLUID_CUBE.asItem())) {
+                context
+                    .itemVariant
+                    .componentMap
+                    .get(RagiumComponentTypes.FLUID)
+                    ?.value()
+                    ?.let {
+                        FullItemFluidStorage(
+                            context,
+                            RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem(),
+                            FluidVariant.of(it),
+                            FluidConstants.BUCKET,
+                        )
+                    }
+                    ?: return@register null
+            } else {
+                null
+            }
+        }
+
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
             RagiumBlocks.CREATIVE_SOURCE,
         )
-
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork
         }, RagiumBlocks.NETWORK_INTERFACE)
@@ -223,9 +260,43 @@ object RagiumContentRegister : HTContentRegister {
         // Dispenser
         DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.DYNAMITE)
         DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.REMOVER_DYNAMITE)
+        // Fluid Attributes
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+            FluidVariantAttributes.register(
+                fluid.fluidEntry.value(),
+                object : FluidVariantAttributeHandler {
+                    override fun getName(fluidVariant: FluidVariant): Text = Text.literal(fluid.enName)
+                },
+            )
+        }
         // Fuel Time
         FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
         FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)
+
+        // HTFluidDrinkingHandlerRegistry
+        HTFluidDrinkingHandlerRegistry.register(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->
+            if (!world.isClient) {
+                user.setOnFireFromLava()
+                dropStackAt(user, Items.OBSIDIAN.defaultStack)
+            }
+        }
+        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->
+            if (!world.isClient) {
+                user.clearStatusEffects()
+            }
+        }
+        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.HONEY) { _: ItemStack, world: World, user: LivingEntity ->
+            if (!world.isClient) {
+                user.removeStatusEffect(StatusEffects.POISON)
+            }
+        }
+        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.CHOCOLATE) { _: ItemStack, world: World, user: LivingEntity ->
+            if (!world.isClient) {
+                user.addStatusEffect(
+                    StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1),
+                )
+            }
+        }
     }
 
     @JvmStatic

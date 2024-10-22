@@ -13,7 +13,10 @@ object RagiumRecipeTypes {
     val MACHINE: RecipeType<HTMachineRecipe> = register("machine")
 
     @JvmField
-    val MACHINE_NEW: RecipeType<HTMachineRecipeNew> = register("machine_new")
+    val SIMPLE_MACHINE: RecipeType<HTMachineRecipeNew.Simple> = register("simple_machine")
+
+    @JvmField
+    val LARGE_MACHINE: RecipeType<HTMachineRecipeNew.Simple> = register("large_machine")
 
     @JvmStatic
     private fun <T : Recipe<*>> register(name: String): RecipeType<T> = RagiumAPI.id(name).let {

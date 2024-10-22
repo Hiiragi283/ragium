@@ -1,0 +1,22 @@
+{
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:crude_oil"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:soul_soil"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:sand"
+    }
+  ]
+}

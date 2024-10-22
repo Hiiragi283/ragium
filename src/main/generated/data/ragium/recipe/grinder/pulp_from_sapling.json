@@ -1,10 +1,16 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "amount": 2,
-    "items": "#minecraft:saplings"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "amount": 2,
+      "items": "#minecraft:saplings"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "ragium:pulp"
     }

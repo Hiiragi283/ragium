@@ -1,19 +1,18 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "basic"
+  },
+  "item_inputs": [
     {
-      "items": "ragium:plastic_plate"
+      "items": "ragium:silicon_plate"
     },
     {
       "items": "#c:plates/gold"
-    },
-    {
-      "items": "#c:dusts/glowstone"
     }
   ],
-  "machine_type": "ragium:assembler",
-  "min_tier": "basic",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:basic_circuit"
     }

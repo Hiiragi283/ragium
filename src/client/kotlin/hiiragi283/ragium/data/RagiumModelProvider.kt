@@ -145,6 +145,38 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
 
+        register(RagiumBlocks.FLUID_PIPE) {
+            accept(
+                MultipartBlockStateSupplier
+                    .create(it)
+                    .with(buildModelVariant(it))
+                    .with(
+                        When.create().set(Properties.UP, true),
+                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
+                            .rotX(VariantSettings.Rotation.R270),
+                    ).with(
+                        When.create().set(Properties.DOWN, true),
+                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
+                            .rotX(VariantSettings.Rotation.R90),
+                    ).with(
+                        When.create().set(Properties.NORTH, true),
+                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side")),
+                    ).with(
+                        When.create().set(Properties.EAST, true),
+                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
+                            .rotY(VariantSettings.Rotation.R90),
+                    ).with(
+                        When.create().set(Properties.SOUTH, true),
+                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
+                            .rotY(VariantSettings.Rotation.R180),
+                    ).with(
+                        When.create().set(Properties.WEST, true),
+                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
+                            .rotY(VariantSettings.Rotation.R270),
+                    ),
+            )
+        }
+
         register(RagiumBlocks.INFESTING) {
             accept(
                 VariantsBlockStateSupplier
@@ -273,6 +305,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
 
             remove(RagiumContents.Foods.CHOCOLATE_APPLE)
             remove(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+            remove(RagiumContents.Misc.FILLED_FLUID_CUBE)
             remove(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)
             remove(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             remove(RagiumContents.Misc.SOLAR_PANEL)
@@ -293,6 +326,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             TextureMap.getId(Items.APPLE),
             TextureMap.getId(RagiumContents.Foods.CHOCOLATE_APPLE.asItem()),
         )
+        register(RagiumContents.Misc.FILLED_FLUID_CUBE.asItem(), RagiumModels.FILLED_FLUID_CUBE)
         // elements
         RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))
@@ -303,7 +337,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // fluids
         RagiumContents.Fluids.entries
             .map(RagiumContents.Fluids::asItem)
-            .forEach { register(it, RagiumModels.FILLED_FLUID_CUBE) }
+            .forEach { register(it, RagiumModels.FLUID_CUBE_OLD) }
 
         register(RagiumFluids.PETROLEUM.bucketItem)
     }

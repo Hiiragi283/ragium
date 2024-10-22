@@ -1,6 +1,10 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "ragium:batter_fluid_cube"
     },
@@ -8,8 +12,7 @@
       "items": "ragium:butter"
     }
   ],
-  "machine_type": "ragium:blast_furnace",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:sponge_cake"
     }

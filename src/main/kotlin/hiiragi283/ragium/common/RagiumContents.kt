@@ -3,12 +3,13 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.*
 import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
 import hiiragi283.ragium.common.block.HTCropsBlock
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.item.*
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
@@ -17,10 +18,11 @@ import net.minecraft.block.*
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.*
+import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.text.Text
@@ -32,6 +34,15 @@ import net.minecraft.world.biome.Biome
 import java.awt.Color
 
 object RagiumContents : HTContentRegister {
+    @Suppress("DEPRECATION")
+    @JvmStatic
+    fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack = buildItemStack(
+        Misc.FILLED_FLUID_CUBE,
+        count,
+    ) {
+        add(RagiumComponentTypes.FLUID, fluid.registryEntry)
+    }
+
     //    Ores    //
 
     enum class Ores(override val material: RagiumMaterials, val baseStone: Block) : HTContent.Material<Block> {
@@ -386,6 +397,9 @@ object RagiumContents : HTContentRegister {
             override fun createItem(): Item = HTDynamiteItem
         },
         EMPTY_FLUID_CUBE,
+        FILLED_FLUID_CUBE {
+            override fun createItem(): Item = HTFilledFluidCubeItem
+        },
         ENGINE,
         FORGE_HAMMER {
             override fun createItem(): Item = HTForgeHammerItem
@@ -470,34 +484,9 @@ object RagiumContents : HTContentRegister {
         HTTranslationProvider {
         // Vanilla
         WATER(Color(0x0033ff), "Water", "水"),
-        LAVA(Color(0xff6600), "Lava", "溶岩") {
-            override fun createItem(): Item = object : HTFluidCubeItem() {
-                override fun onDrink(stack: ItemStack, world: World, user: LivingEntity) {
-                    if (!world.isClient) {
-                        user.setOnFireFromLava()
-                        dropStackAt(user, Items.OBSIDIAN.defaultStack)
-                    }
-                }
-            }
-        },
-        MILK(Color(0xffffff), "Milk", "牛乳") {
-            override fun createItem(): Item = object : HTFluidCubeItem() {
-                override fun onDrink(stack: ItemStack, world: World, user: LivingEntity) {
-                    if (!world.isClient) {
-                        user.clearStatusEffects()
-                    }
-                }
-            }
-        },
-        HONEY(Color(0xffcc33), "Honey", "蜂蜜") {
-            override fun createItem(): Item = object : HTFluidCubeItem() {
-                override fun onDrink(stack: ItemStack, world: World, user: LivingEntity) {
-                    if (!world.isClient) {
-                        user.removeStatusEffect(StatusEffects.POISON)
-                    }
-                }
-            }
-        },
+        LAVA(Color(0xff6600), "Lava", "溶岩"),
+        MILK(Color(0xffffff), "Milk", "牛乳"),
+        HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
 
         // Molten Materials
 
@@ -508,31 +497,9 @@ object RagiumContents : HTContentRegister {
 
         // Foods
         BATTER(Color(0xffcc66), "Batter", "バッター液"),
-        CHOCOLATE(Color(0x663300), "Chocolate", "チョコレート") {
-            override fun createItem(): Item = Item(
-                itemSettings().food(
-                    FoodComponent
-                        .Builder()
-                        .alwaysEdible()
-                        .statusEffect(StatusEffectInstance(StatusEffects.REGENERATION, 20 * 5, 1), 1.0f)
-                        .usingConvertsTo(Misc.EMPTY_FLUID_CUBE)
-                        .build(),
-                ),
-            )
-        },
+        CHOCOLATE(Color(0x663300), "Chocolate", "チョコレート"),
         STARCH_SYRUP(Color(0x99ffff), "Starch Syrup", "水あめ"),
-        SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー") {
-            override fun createItem(): Item = Item(
-                itemSettings().food(
-                    FoodComponent
-                        .Builder()
-                        .alwaysEdible()
-                        .statusEffect(StatusEffectInstance(StatusEffects.SPEED, 20 * 5, 0), 1.0f)
-                        .usingConvertsTo(Misc.EMPTY_FLUID_CUBE)
-                        .build(),
-                ),
-            )
-        },
+        SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー"),
 
         // Natural Resources
         SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
@@ -581,5 +548,10 @@ object RagiumContents : HTContentRegister {
         internal open fun createItem(): Item = Item(itemSettings())
 
         override val tagKey: TagKey<Item>? = RagiumItemTags.FLUID_CUBES
+
+        // virtual fluids
+
+        val fluidEntry: HTRegistryEntry<Fluid> =
+            HTRegistryEntry(Registries.FLUID, RagiumAPI.id(name.lowercase()))
     }
 }

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.util
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
@@ -17,17 +18,23 @@ import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.render.model.json.JsonUnbakedModel
+import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.client.render.model.json.ModelTransformationMode
+import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.client.world.ClientWorld
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.CustomPayload
+import net.minecraft.resource.Resource
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
 import net.minecraft.world.World
+import java.io.BufferedReader
 
 //    MatrixStack    //
 
@@ -113,7 +120,7 @@ fun ClientPlayNetworking.Context.getBlockEntity(pos: BlockPos): BlockEntity? = w
 
 fun ClientPlayNetworking.Context.getMachineEntity(pos: BlockPos): HTMachineEntity? = world?.getMachineEntity(pos)
 
-//    HTFluidContent    //
+//    Fluid    //
 
 fun HTFluidContent.registerClient(stillTex: Identifier, flowingTex: Identifier = stillTex, color: Int = -1) {
     registerClient(SimpleFluidRenderHandler(stillTex, flowingTex, color))
@@ -125,3 +132,28 @@ fun HTFluidContent.registerClient(renderHandler: FluidRenderHandler) {
     // register render layers
     BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), still, flowing)
 }
+
+fun Fluid.getSpriteAndColor(): Pair<Sprite, Int>? {
+    val handler: FluidRenderHandler = FluidRenderHandlerRegistry.INSTANCE.get(this) ?: return null
+    val sprite: Sprite = handler.getFluidSprites(null, null, defaultState).getOrNull(0) ?: return null
+    val color: Int = handler.getFluidColor(null, null, defaultState)
+    return sprite to color
+}
+
+//    ModelTransformation    //
+
+private fun getModelTransform(id: Identifier): ModelTransformation {
+    val resource: Resource = MinecraftClient
+        .getInstance()
+        .resourceManager
+        .getResource(id)
+        .orElseThrow()
+    val reader: BufferedReader = resource.inputStream.bufferedReader()
+    return JsonUnbakedModel.deserialize(reader).transformations
+}
+
+val DEFAULT_ITEM_TRANSFORM: ModelTransformation by lazy {
+    getModelTransform(Identifier.of("models/item/generated.json"))
+}
+
+val FLUID_CUBE_TRANSFORM: ModelTransformation by lazy { getModelTransform(RagiumAPI.id("models/item/empty_fluid_cube.json")) }

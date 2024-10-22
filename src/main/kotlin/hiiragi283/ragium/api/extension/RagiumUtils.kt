@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
-import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
@@ -34,10 +33,6 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.text.NumberFormat
 import java.util.*
-
-//    Either    //
-
-fun <T : Any> Either<out T, out T>.mapCast(): T = map({ it }, { it })
 
 //    BlockPos    //
 

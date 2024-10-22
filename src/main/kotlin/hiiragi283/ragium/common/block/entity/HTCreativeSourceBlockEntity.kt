@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -21,10 +20,8 @@ class HTCreativeSourceBlockEntity(pos: BlockPos, state: BlockState) :
         if (!world.isClient) {
             Direction.entries.forEach { direction: Direction ->
                 val posTo: BlockPos = pos.offset(direction)
-                val stateTo: BlockState = world.getBlockState(posTo)
-                val blockEntityTo: BlockEntity? = world.getBlockEntity(posTo)
                 val storageTo: EnergyStorage =
-                    EnergyStorage.SIDED.find(world, posTo, stateTo, blockEntityTo, direction.opposite) ?: return@forEach
+                    EnergyStorage.SIDED.find(world, posTo, direction.opposite) ?: return@forEach
                 if (storageTo.supportsInsertion()) {
                     useTransaction { transaction: Transaction ->
                         storageTo.insert(storageTo.capacity, transaction)

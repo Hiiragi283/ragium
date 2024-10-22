@@ -1,9 +1,15 @@
 {
-  "type": "ragium:grinder",
-  "input": {
-    "items": "#minecraft:diamond_ores"
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
   },
-  "outputs": [
+  "item_inputs": [
+    {
+      "items": "#minecraft:diamond_ores"
+    }
+  ],
+  "item_outputs": [
     {
       "amount": 2,
       "item": "minecraft:diamond"

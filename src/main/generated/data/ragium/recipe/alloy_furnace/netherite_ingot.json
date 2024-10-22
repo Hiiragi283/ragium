@@ -1,22 +1,22 @@
 {
-  "type": "ragium:machine",
-  "custom_data": {
-    "ragium:require_scan": true
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:alloy_furnace",
+    "tier": "advanced"
   },
-  "inputs": [
+  "item_inputs": [
     {
-      "count": 5,
+      "amount": 5,
       "items": "#c:ingots/gold"
     },
     {
-      "count": 3,
+      "amount": 3,
       "items": "minecraft:netherite_scrap"
     }
   ],
-  "machine_type": "ragium:alloy_furnace",
-  "min_tier": "advanced",
-  "outputs": [
+  "item_outputs": [
     {
+      "amount": 2,
       "item": "minecraft:netherite_ingot"
     }
   ]

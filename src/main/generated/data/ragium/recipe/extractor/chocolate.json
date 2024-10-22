@@ -1,0 +1,17 @@
+{
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:chocolate"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "ragium:chocolate"
+    }
+  ]
+}

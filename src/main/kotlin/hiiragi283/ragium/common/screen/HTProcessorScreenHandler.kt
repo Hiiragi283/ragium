@@ -155,6 +155,8 @@ class HTProcessorScreenHandler(
         recipePanel.add(recipePreviews[4], 5, 1)
         recipePanel.add(recipePreviews[5], 6, 1)
         recipePanel.add(recipePreviews[6], 7, 1)
+
+        // recipePanel.add(RagiumEnvironmentBridge.getInstance().createFluidWidget(Fluids.WATER, 1000), 4, 1)
         // recipePanel.add(WDynamicLabel { "Current index; ${propertyDelegate.get(2)}" }, 4, 2)
         // next Button
         recipePanel.add(

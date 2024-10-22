@@ -1,16 +1,19 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
-      "count": 8,
+      "amount": 8,
       "items": "#c:plates/iron"
     },
     {
       "items": "ragium:gold_coil"
     }
   ],
-  "machine_type": "ragium:assembler",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:basic_motor"
     }

@@ -136,7 +136,7 @@ object HTMaterialItemRecipeRegistry {
             exporter,
             HTIngredientNew.ofItem(ingot),
             HTRecipeResultNew.ofItem(dust),
-            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_ingot")
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_ingot"),
         )
     }
 
@@ -177,7 +177,7 @@ object HTMaterialItemRecipeRegistry {
             exporter,
             HTIngredientNew.ofItem(plate),
             HTRecipeResultNew.ofItem(dust),
-            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_plate")
+            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_plate"),
         )
     }
 
@@ -189,7 +189,7 @@ object HTMaterialItemRecipeRegistry {
         HTMachineRecipeJsonBuilders.createGrinder(
             exporter,
             HTIngredientNew.ofItem(ore),
-            HTRecipeResultNew.ofItem(rawMaterial ,2),
+            HTRecipeResultNew.ofItem(rawMaterial, 2),
             properties[ORE_SUB_PRODUCTS]?.let { HTRecipeResultNew.ofItem(it) },
         )
     }
@@ -203,7 +203,7 @@ object HTMaterialItemRecipeRegistry {
             exporter,
             HTIngredientNew.ofItem(rawMaterial),
             HTRecipeResultNew.ofItem(dust),
-            HTRecipeResultNew.ofItem(dust)
+            HTRecipeResultNew.ofItem(dust),
         )
     }
 
