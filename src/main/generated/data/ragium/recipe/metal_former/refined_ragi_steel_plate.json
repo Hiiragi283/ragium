@@ -1,12 +1,15 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:metal_former",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "#c:ingots/refined_ragi_steel"
     }
   ],
-  "machine_type": "ragium:metal_former",
-  "outputs": [
+  "item_outputs": [
     {
       "item": "ragium:refined_ragi_steel_plate"
     }

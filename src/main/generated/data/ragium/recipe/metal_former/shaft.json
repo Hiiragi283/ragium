@@ -1,5 +1,5 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:simple_machine",
   "definition": {
     "type": "ragium:metal_former",
     "tier": "primitive"

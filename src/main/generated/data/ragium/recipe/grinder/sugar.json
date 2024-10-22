@@ -1,14 +1,17 @@
 {
-  "type": "ragium:machine",
-  "inputs": [
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
     {
       "items": "#c:crops/sugar_cane"
     }
   ],
-  "machine_type": "ragium:grinder",
-  "outputs": [
+  "item_outputs": [
     {
-      "count": 2,
+      "amount": 2,
       "item": "minecraft:sugar"
     },
     {

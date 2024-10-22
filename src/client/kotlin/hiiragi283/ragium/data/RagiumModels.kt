@@ -72,7 +72,7 @@ object RagiumModels {
 
     @JvmField
     val FLUID_CUBE_OLD: Model =
-        model("tem/filled_fluid_cube_old")
+        model("item/filled_fluid_cube_old")
 
     @JvmField
     val FILLED_FLUID_CUBE: Model =

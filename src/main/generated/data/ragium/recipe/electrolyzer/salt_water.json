@@ -1,0 +1,25 @@
+{
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:electrolyzer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:salt_water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:hydrogen"
+    },
+    {
+      "fluid": "ragium:chlorine"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:sodium_hydroxide_fluid_cube"
+    }
+  ]
+}

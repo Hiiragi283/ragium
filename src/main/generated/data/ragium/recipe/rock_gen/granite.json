@@ -1,7 +1,7 @@
 {
   "type": "ragium:simple_machine",
   "definition": {
-    "type": "ragium:saw_mill",
+    "type": "ragium:rock_generator",
     "tier": "primitive"
   },
   "item_outputs": [

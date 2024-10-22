@@ -1,0 +1,22 @@
+{
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:oxygen"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:copper_door"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:oxidized_copper_door"
+    }
+  ]
+}

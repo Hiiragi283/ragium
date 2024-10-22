@@ -1,0 +1,18 @@
+{
+  "type": "ragium:simple_machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:seed_oil"
+    }
+  ],
+  "item_inputs": [
+    {
+      "amount": 4,
+      "items": "#minecraft:villager_plantable_seeds"
+    }
+  ]
+}

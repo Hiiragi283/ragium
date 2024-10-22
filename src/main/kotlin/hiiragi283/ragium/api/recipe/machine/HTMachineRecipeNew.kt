@@ -8,7 +8,10 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.HTFluidResult
+import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.item.ItemStack
@@ -25,7 +28,15 @@ sealed class HTMachineRecipeNew<T : RecipeInput>(val definition: HTMachineDefini
     companion object {
         @JvmStatic
         fun <T : HTMachineRecipeNew<*>> createCodec(
-            function: Function6<HTMachineDefinition, List<HTItemIngredient>, List<HTFluidIngredient>, HTItemIngredient, List<HTItemResult>, List<HTFluidResult>, T>,
+            function: Function6<
+                HTMachineDefinition,
+                List<HTItemIngredient>,
+                List<HTFluidIngredient>,
+                HTItemIngredient,
+                List<HTItemResult>,
+                List<HTFluidResult>,
+                T,
+            >,
         ): MapCodec<T> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
@@ -56,7 +67,15 @@ sealed class HTMachineRecipeNew<T : RecipeInput>(val definition: HTMachineDefini
 
         @JvmStatic
         fun <T : HTMachineRecipeNew<*>> createPacketCodec(
-            function: Function6<HTMachineDefinition, List<HTItemIngredient>, List<HTFluidIngredient>, HTItemIngredient, List<HTItemResult>, List<HTFluidResult>, T>,
+            function: Function6<
+                HTMachineDefinition,
+                List<HTItemIngredient>,
+                List<HTFluidIngredient>,
+                HTItemIngredient,
+                List<HTItemResult>,
+                List<HTFluidResult>,
+                T,
+            >,
         ): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
             HTMachineDefinition.PACKET_CODEC,
             { it.definition },
@@ -115,7 +134,7 @@ sealed class HTMachineRecipeNew<T : RecipeInput>(val definition: HTMachineDefini
         override val catalyst: HTItemIngredient,
         override val itemOutputs: List<HTItemResult>,
         override val fluidOutputs: List<HTFluidResult>,
-    ) : HTMachineRecipeNew<HTRecipeInputs.Double>(definition) {
+    ) : HTMachineRecipeNew<HTMachineInputs.Simple>(definition) {
         companion object {
             @JvmField
             val CODEC: MapCodec<Simple> = createCodec(::Simple)
@@ -124,7 +143,15 @@ sealed class HTMachineRecipeNew<T : RecipeInput>(val definition: HTMachineDefini
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, Simple> = createPacketCodec(::Simple)
         }
 
-        override fun matches(input: HTRecipeInputs.Double, world: World): Boolean = false
+        override fun matches(input: HTMachineInputs.Simple, world: World): Boolean {
+            val bool1: Boolean =
+                input.firstItem.let { itemInputs.getOrNull(0)?.test(it.resource, it.amount) ?: false }
+            val bool2: Boolean =
+                input.secondItem.let { itemInputs.getOrNull(1)?.test(it.resource, it.amount) ?: true }
+            val bool3: Boolean =
+                input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it.resource, it.amount) ?: true }
+            return bool1 && bool2 && bool3
+        }
 
         override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SIMPLE_MACHINE
 
@@ -140,7 +167,7 @@ sealed class HTMachineRecipeNew<T : RecipeInput>(val definition: HTMachineDefini
         override val catalyst: HTItemIngredient,
         override val itemOutputs: List<HTItemResult>,
         override val fluidOutputs: List<HTFluidResult>,
-    ) : HTMachineRecipeNew<HTRecipeInputs.Double>(definition) {
+    ) : HTMachineRecipeNew<HTMachineInputs.Large>(definition) {
         companion object {
             @JvmField
             val CODEC: MapCodec<Large> = createCodec(::Large)
@@ -149,10 +176,19 @@ sealed class HTMachineRecipeNew<T : RecipeInput>(val definition: HTMachineDefini
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, Large> = createPacketCodec(::Large)
         }
 
-        init {
+        override fun matches(input: HTMachineInputs.Large, world: World): Boolean {
+            val bool1: Boolean =
+                input.firstItem.let { itemInputs.getOrNull(0)?.test(it.resource, it.amount) ?: false }
+            val bool2: Boolean =
+                input.secondItem.let { itemInputs.getOrNull(1)?.test(it.resource, it.amount) ?: true }
+            val bool3: Boolean =
+                input.thirdItem.let { itemInputs.getOrNull(2)?.test(it.resource, it.amount) ?: true }
+            val bool4: Boolean =
+                input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it.resource, it.amount) ?: true }
+            val bool5: Boolean =
+                input.secondFluid.let { fluidInputs.getOrNull(1)?.test(it.resource, it.amount) ?: true }
+            return bool1 && bool2 && bool3 && bool4 && bool5
         }
-
-        override fun matches(input: HTRecipeInputs.Double, world: World): Boolean = false
 
         override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.LARGE_MACHINE
 

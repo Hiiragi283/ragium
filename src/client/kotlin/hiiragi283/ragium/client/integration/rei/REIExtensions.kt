@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.client.integration.rei.display.HTMachineRecipeDisplay
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.entry.EntryStack

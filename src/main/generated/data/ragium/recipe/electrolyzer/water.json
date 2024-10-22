@@ -1,0 +1,21 @@
+{
+  "type": "ragium:large_machine",
+  "definition": {
+    "type": "ragium:electrolyzer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 162000,
+      "fluid": "ragium:hydrogen"
+    },
+    {
+      "fluid": "ragium:oxygen"
+    }
+  ]
+}

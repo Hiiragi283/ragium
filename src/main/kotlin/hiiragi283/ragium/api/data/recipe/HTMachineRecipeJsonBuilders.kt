@@ -8,10 +8,13 @@ import hiiragi283.ragium.api.recipe.HTFluidResult
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemConvertible
+import net.minecraft.registry.Registries
 import net.minecraft.util.Identifier
 
 // typealias AdvBuilder = Advancement.Builder.() -> Unit
@@ -86,6 +89,30 @@ object HTMachineRecipeJsonBuilders {
     }
 
     @JvmStatic
+    fun createChemical(
+        exporter: RecipeExporter,
+        itemInputs: List<HTItemIngredient>,
+        itemOutputs: List<HTItemResult>,
+        recipeId: Identifier,
+        fluidInput: HTFluidIngredient? = null,
+        fluidOutput: HTFluidResult? = null,
+        tier: HTMachineTier = HTMachineTier.PRIMITIVE,
+    ) {
+        createRecipe(
+            exporter,
+            HTMachineRecipeNew.Large(
+                HTMachineDefinition(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, tier),
+                itemInputs,
+                listOfNotNull(fluidInput),
+                HTItemIngredient.EMPTY_ITEM,
+                itemOutputs,
+                listOfNotNull(fluidOutput),
+            ),
+            recipeId.withPrefixedPath("chemical/"),
+        )
+    }
+
+    @JvmStatic
     fun createDistillation(
         exporter: RecipeExporter,
         input: HTFluidIngredient,
@@ -102,6 +129,30 @@ object HTMachineRecipeJsonBuilders {
             ),
             recipeId.withPrefixedPath("distillation/"),
         )*/
+    }
+
+    @JvmStatic
+    fun createElectrolyzer(
+        exporter: RecipeExporter,
+        itemInputs: List<HTItemIngredient>,
+        fluidInputs: List<HTFluidIngredient>,
+        itemOutputs: List<HTItemResult>,
+        fluidOutputs: List<HTFluidResult>,
+        recipeId: Identifier,
+        tier: HTMachineTier = HTMachineTier.PRIMITIVE,
+    ) {
+        createRecipe(
+            exporter,
+            HTMachineRecipeNew.Large(
+                HTMachineDefinition(RagiumMachineTypes.Processor.ELECTROLYZER, tier),
+                itemInputs,
+                fluidInputs,
+                HTItemIngredient.EMPTY_ITEM,
+                itemOutputs,
+                fluidOutputs,
+            ),
+            recipeId.withPrefixedPath("electrolyzer/"),
+        )
     }
 
     @JvmStatic
@@ -161,7 +212,7 @@ object HTMachineRecipeJsonBuilders {
     ) {
         createRecipe(
             exporter,
-            HTMachineRecipeNew.Large(
+            HTMachineRecipeNew.Simple(
                 HTMachineDefinition(RagiumMachineTypes.Processor.METAL_FORMER, tier),
                 listOf(input),
                 listOf(),
@@ -183,7 +234,7 @@ object HTMachineRecipeJsonBuilders {
         createRecipe(
             exporter,
             HTMachineRecipeNew.Simple(
-                HTMachineDefinition(RagiumMachineTypes.SAW_MILL, tier),
+                HTMachineDefinition(RagiumMachineTypes.Processor.ROCK_GENERATOR, tier),
                 listOf(),
                 listOf(),
                 HTItemIngredient.EMPTY_ITEM,
@@ -225,6 +276,15 @@ object HTMachineRecipeJsonBuilders {
         .getItemId(item)
         .path
         .let { RagiumAPI.id(it) }
+
+    @JvmStatic
+    fun createRecipeId(fluid: Fluid): Identifier = Registries.FLUID
+        .getId(fluid)
+        .path
+        .let { RagiumAPI.id(it) }
+
+    @JvmStatic
+    fun createRecipeId(fluid: RagiumContents.Fluids): Identifier = createRecipeId(fluid.fluidEntry.value())
 
     @JvmStatic
     fun createRecipe(exporter: RecipeExporter, recipe: HTMachineRecipeNew<*>, recipeId: Identifier = createRecipeId(recipe)) {

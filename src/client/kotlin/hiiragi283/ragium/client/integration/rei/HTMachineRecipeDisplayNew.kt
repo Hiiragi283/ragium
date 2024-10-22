@@ -21,6 +21,8 @@ sealed class HTMachineRecipeDisplayNew(val recipe: HTMachineRecipeNew<*>, val id
 
     val catalyst: EntryIngredient = recipe.catalyst.entryIngredient
 
+    override fun getCategoryIdentifier(): CategoryIdentifier<*> = recipe.machineType.categoryIdNew
+
     final override fun getDisplayLocation(): Optional<Identifier> = Optional.of(id)
 
     //    Simple    //
@@ -37,8 +39,6 @@ sealed class HTMachineRecipeDisplayNew(val recipe: HTMachineRecipeNew<*>, val id
             add(getItemOutput(1))
             add(getFluidOutput(0))
         }
-
-        override fun getCategoryIdentifier(): CategoryIdentifier<*> = recipe.machineType.categoryIdNew
     }
 
     //    Large    //
@@ -59,7 +59,5 @@ sealed class HTMachineRecipeDisplayNew(val recipe: HTMachineRecipeNew<*>, val id
             add(getFluidOutput(0))
             add(getFluidOutput(1))
         }
-
-        override fun getCategoryIdentifier(): CategoryIdentifier<*> = recipe.machineType.categoryIdNew
     }
 }

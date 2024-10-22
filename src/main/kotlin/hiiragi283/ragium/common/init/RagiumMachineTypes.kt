@@ -43,11 +43,13 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTBlastFurnaceMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
         register.registerProcessor(DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTDistillationTowerMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
         register.registerProcessor(FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
@@ -56,6 +58,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             set(HTMachinePropertyKeys.ADDITIONAL_RECIPE_MATCHER) { input: ComponentMap, recipe: ComponentMap ->
                 input.get(HTRecipeComponentTypes.BIOME) == recipe.get(HTRecipeComponentTypes.BIOME)
             }
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
         register.registerProcessor(MOB_EXTRACTOR) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
@@ -71,6 +74,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTSawMillMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
 
         RagiumMachineTypes.Processor.entries.forEach {
@@ -151,7 +155,12 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         CHEMICAL_REACTOR,
         COMPRESSOR,
         DECOMPRESSOR,
-        ELECTROLYZER,
+        ELECTROLYZER {
+            override fun buildProperties(builder: HTPropertyHolder.Mutable) {
+                super.buildProperties(builder)
+                builder[HTMachinePropertyKeys.RECIPE_TYPE] = RagiumRecipeTypes.LARGE_MACHINE
+            }
+        },
         EXTRACTOR,
         GRINDER,
         METAL_FORMER,

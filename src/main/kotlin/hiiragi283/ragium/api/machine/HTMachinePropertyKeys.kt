@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.component.ComponentMap
 import net.minecraft.fluid.Fluid
 import net.minecraft.recipe.RecipeType
@@ -66,6 +67,6 @@ object HTMachinePropertyKeys {
         HTPropertyKey.Defaulted(RagiumAPI.id("processor_failed")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> }
 
     @JvmField
-    val RECIPE_TYPE: HTPropertyKey.Simple<RecipeType<out HTMachineRecipeNew<*>>> =
-        HTPropertyKey.Simple(RagiumAPI.id("recipe_type"))
+    val RECIPE_TYPE: HTPropertyKey.Defaulted<RecipeType<out HTMachineRecipeNew<*>>> =
+        HTPropertyKey.Defaulted(RagiumAPI.id("recipe_type")) { RagiumRecipeTypes.SIMPLE_MACHINE }
 }

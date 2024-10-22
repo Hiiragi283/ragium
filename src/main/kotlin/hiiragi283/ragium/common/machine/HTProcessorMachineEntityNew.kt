@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntityNew
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.HTRecipeInputs
+import hiiragi283.ragium.api.recipe.machine.HTMachineInputs
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
 import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -25,13 +25,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 open class HTProcessorMachineEntityNew(type: HTMachineConvertible, tier: HTMachineTier) : HTMachineEntityNew(type, tier) {
-    private val recipeCache: HTRecipeCache<HTRecipeInputs.Double, HTMachineRecipeNew.Simple> =
+    private val recipeCache: HTRecipeCache<HTMachineInputs.Simple, HTMachineRecipeNew.Simple> =
         HTRecipeCache(RagiumRecipeTypes.SIMPLE_MACHINE)
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         recipeCache
             .getFirstMatch(
-                HTRecipeInputs.Double(getStack(0), getStack(1)),
+                HTMachineInputs.Simple(getStack(0), getStack(1)),
                 world,
             ).ifPresent { (id: Identifier, recipe: HTMachineRecipeNew.Simple) ->
                 HTMachineRecipeProcessor.process(

@@ -370,13 +370,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         // PE
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
             .addInput(RagiumContents.Fluids.ETHYLENE)
             .addInput(RagiumContents.Fluids.OXYGEN)
             .addOutput(RagiumContents.Plates.PLASTIC)
             .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .offerTo(exporter)
+            .offerTo(exporter)*/
 
         // PC
 
@@ -392,13 +392,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     }
 
     private fun registerOxidize(exporter: RecipeExporter, before: ItemConvertible, after: ItemConvertible) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
-            .addInput(before)
-            .addInput(RagiumContents.Fluids.OXYGEN)
-            .addOutput(after)
-            .addOutput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createChemical(
+            exporter,
+            listOf(HTItemIngredient.ofItem(before)),
+            listOf(HTItemResult.ofItem(after)),
+            HTMachineRecipeJsonBuilders.createRecipeId(after),
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.OXYGEN),
+        )
     }
 
     //    Compressor    //
@@ -447,7 +447,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Decompressor    //
 
     private fun decompressor(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.DECOMPRESSOR)
             .addInput(Items.KELP, 64)
             .addOutput(Items.DRIED_KELP, 64)
@@ -469,7 +469,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineTypes.Processor.DECOMPRESSOR)
             .addInput(Items.MUD)
             .addOutput(Items.CLAY)
-            .offerTo(exporter)
+            .offerTo(exporter)*/
     }
 
     //    Distillation Tower    //
@@ -519,30 +519,35 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Electrolyzer    //
 
     private fun electrolyzer(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ELECTROLYZER)
-            .addInput(RagiumContents.Fluids.WATER)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE, 2)
-            .addOutput(RagiumContents.Fluids.HYDROGEN, 2)
-            .addOutput(RagiumContents.Fluids.OXYGEN)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createElectrolyzer(
+            exporter,
+            listOf(),
+            listOf(
+                HTFluidIngredient.ofFluid(RagiumContents.Fluids.WATER),
+            ),
+            listOf(),
+            listOf(
+                HTFluidResult.ofFluid(RagiumContents.Fluids.HYDROGEN, FluidConstants.BUCKET * 2),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.OXYGEN),
+            ),
+            RagiumAPI.id("water"),
+        )
 
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ELECTROLYZER)
-            .addInput(RagiumContents.Fluids.SALT_WATER)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE, 2)
-            .addOutput(RagiumContents.Fluids.HYDROGEN)
-            .addOutput(RagiumContents.Fluids.CHLORINE)
-            .addOutput(RagiumContents.Fluids.SODIUM_HYDROXIDE)
-            .offerSuffix(exporter, suffix = "_salty")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ELECTROLYZER)
-            .addInput(Items.GLOWSTONE_DUST)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(RagiumContents.Gems.FLUORITE)
-            .addOutput(Items.GOLD_NUGGET)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createElectrolyzer(
+            exporter,
+            listOf(),
+            listOf(
+                HTFluidIngredient.ofFluid(RagiumContents.Fluids.SALT_WATER),
+            ),
+            listOf(
+                HTItemResult.ofItem(RagiumContents.Fluids.SODIUM_HYDROXIDE),
+            ),
+            listOf(
+                HTFluidResult.ofFluid(RagiumContents.Fluids.HYDROGEN),
+                HTFluidResult.ofFluid(RagiumContents.Fluids.CHLORINE),
+            ),
+            RagiumAPI.id("salt_water"),
+        )
     }
 
     //    Extractor    //
@@ -551,9 +556,9 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilders.createExtractor(
             exporter,
             HTItemIngredient.ofItem(ItemTags.VILLAGER_PLANTABLE_SEEDS, 4),
-            listOf(HTItemResult.ofItem(RagiumContents.Misc.EMPTY_FLUID_CUBE)),
             listOf(),
-            HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Misc.EMPTY_FLUID_CUBE),
+            listOf(HTFluidResult.ofFluid(RagiumContents.Fluids.SEED_OIL)),
+            HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Fluids.SEED_OIL),
         )
         HTMachineRecipeJsonBuilders.createExtractor(
             exporter,
@@ -597,13 +602,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             listOf(),
             HTMachineRecipeJsonBuilders.createRecipeId(RagiumContents.Foods.BUTTER),
         )
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR, HTMachineTier.BASIC)
-            .addInput(Items.SOUL_SAND)
-            .addInput(RagiumContents.Misc.EMPTY_FLUID_CUBE)
-            .addOutput(Items.SAND)
-            .addOutput(RagiumContents.Fluids.CRUDE_OIL)
-            .offerTo(exporter)
         HTMachineRecipeJsonBuilders.createExtractor(
             exporter,
             HTItemIngredient.ofItem(Items.SOUL_SAND),
@@ -641,16 +639,11 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     }
 
     private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: RagiumContents.Fluids) {
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.FLUID_DRILL)
             .addOutput(fluid)
             .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
-            .offerTo(exporter, biomeKey.value)
-        /*exporter.accept(
-            biomeKey.value.withPrefixedPath("fluid_drill/"),
-            HTFluidDrillRecipe(biomeKey, HTRecipeResult.item(fluid)),
-            null,
-        )*/
+            .offerTo(exporter, biomeKey.value)*/
     }
 
     //    Grinder    //
@@ -687,12 +680,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
         registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumContents.Foods.MINCED_MEAT to 1)
 
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
-            .addInput(ConventionalItemTags.SUGAR_CANE_CROPS)
-            .addOutput(Items.SUGAR, 2)
-            .addOutput(RagiumContents.Foods.PULP)
-            .offerTo(exporter)
+        HTMachineRecipeJsonBuilders.createGrinder(
+            exporter,
+            HTItemIngredient.ofItem(ConventionalItemTags.SUGAR_CANE_CROPS),
+            HTItemResult.ofItem(Items.SUGAR, 2),
+            HTItemResult.ofItem(RagiumContents.Foods.PULP),
+        )
     }
 
     @JvmName("registerGrinderItem")
