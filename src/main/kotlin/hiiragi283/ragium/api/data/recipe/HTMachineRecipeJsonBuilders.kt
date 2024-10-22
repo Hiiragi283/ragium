@@ -247,7 +247,7 @@ object HTMachineRecipeJsonBuilders {
             recipeId.withPrefixedPath("mixer/"),
         )
     }
-    
+
     @JvmStatic
     fun createRockGen(
         exporter: RecipeExporter,

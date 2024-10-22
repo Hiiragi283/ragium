@@ -741,18 +741,18 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             listOf(HTItemIngredient.ofItem(RagiumContents.Dusts.CRUDE_RAGINITE, 4)),
             listOf(HTItemResult.ofItem(RagiumContents.Dusts.RAGINITE, 4)),
             RagiumAPI.id("raginite_dust"),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.WATER)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.WATER),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
             exporter,
             listOf(
                 HTItemIngredient.ofItem(RagiumItemTags.ORGANIC_OILS),
-                HTItemIngredient.ofItem(RagiumItemTags.ALKALI)
+                HTItemIngredient.ofItem(RagiumItemTags.ALKALI),
             ),
             listOf(HTItemResult.ofItem(RagiumContents.Misc.SOAP_INGOT)),
             RagiumAPI.id("soap_ingot"),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.GLYCEROL)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.GLYCEROL),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
@@ -760,7 +760,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             listOf(HTItemIngredient.ofItem(RagiumContents.Foods.FLOUR, 3)),
             listOf(HTItemResult.ofItem(RagiumContents.Foods.DOUGH, 3)),
             RagiumAPI.id("dough"),
-            HTFluidIngredient.ofFluid(Fluids.WATER)
+            HTFluidIngredient.ofFluid(Fluids.WATER),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
@@ -768,51 +768,51 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             listOf(HTItemIngredient.ofItem(RagiumContents.Foods.PULP)),
             listOf(HTItemResult.ofItem(Items.PAPER)),
             RagiumAPI.id("paper"),
-            HTFluidIngredient.ofFluid(Fluids.WATER)
+            HTFluidIngredient.ofFluid(Fluids.WATER),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
             exporter,
             listOf(
                 HTItemIngredient.ofItem(RagiumContents.Foods.PULP),
-                HTItemIngredient.ofItem(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+                HTItemIngredient.ofItem(RagiumContents.Misc.EMPTY_FLUID_CUBE),
             ),
             listOf(HTItemResult.ofItem(Items.PAPER, 2)),
             RagiumAPI.id("paper_alkali"),
-            HTFluidIngredient.ofFluid(Fluids.WATER)
+            HTFluidIngredient.ofFluid(Fluids.WATER),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
             exporter,
             listOf(
                 HTItemIngredient.ofItem(RagiumContents.Foods.PULP),
-                HTItemIngredient.ofItem(RagiumContents.Misc.EMPTY_FLUID_CUBE)
+                HTItemIngredient.ofItem(RagiumContents.Misc.EMPTY_FLUID_CUBE),
             ),
             listOf(HTItemResult.ofItem(Items.PAPER, 4)),
             RagiumAPI.id("paper_sulfuric_acid"),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.SULFURIC_ACID)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.SULFURIC_ACID),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
             exporter,
             listOf(
                 HTItemIngredient.ofItem(RagiumContents.Foods.BUTTER),
-                HTItemIngredient.ofItem(Items.SUGAR)
+                HTItemIngredient.ofItem(Items.SUGAR),
             ),
             listOf(HTItemResult.ofItem(RagiumContents.Foods.CARAMEL, 4)),
             RagiumAPI.id("caramel"),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.MILK)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.MILK),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
             exporter,
             listOf(
                 HTItemIngredient.ofItem(Items.COCOA_BEANS),
-                HTItemIngredient.ofItem(Items.SUGAR)
+                HTItemIngredient.ofItem(Items.SUGAR),
             ),
             listOf(HTItemResult.ofItem(RagiumContents.Foods.CHOCOLATE)),
             RagiumAPI.id("chocolate"),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.MILK)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.MILK),
         )
 
         HTMachineRecipeJsonBuilders.createMixer(
@@ -821,7 +821,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             listOf(),
             RagiumAPI.id("batter"),
             HTFluidIngredient.ofFluid(RagiumContents.Fluids.MILK),
-            HTFluidResult.ofFluid(RagiumContents.Fluids.BATTER)
+            HTFluidResult.ofFluid(RagiumContents.Fluids.BATTER),
         )
 
         registerBreaching(exporter, ConventionalItemTags.CONCRETE_POWDERS, Items.WHITE_CONCRETE_POWDER)
@@ -842,11 +842,11 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             listOf(
                 HTItemIngredient.ofItem(input),
-                HTItemIngredient.ofItem(RagiumContents.Misc.SOAP_INGOT)
+                HTItemIngredient.ofItem(RagiumContents.Misc.SOAP_INGOT),
             ),
             listOf(HTItemResult.ofItem(output)),
             HTMachineRecipeJsonBuilders.createRecipeId(output),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.WATER)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.WATER),
         )
 
         HTMachineRecipeJsonBuilders.createChemical(
@@ -854,7 +854,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             listOf(HTItemIngredient.ofItem(input)),
             listOf(HTItemResult.ofItem(output)),
             HTMachineRecipeJsonBuilders.createRecipeId(output),
-            HTFluidIngredient.ofFluid(RagiumContents.Fluids.CHLORINE)
+            HTFluidIngredient.ofFluid(RagiumContents.Fluids.CHLORINE),
         )
     }
 
