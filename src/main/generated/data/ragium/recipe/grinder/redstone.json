@@ -1,5 +1,5 @@
 {
-  "type": "ragium:simple_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:grinder",
     "tier": "primitive"

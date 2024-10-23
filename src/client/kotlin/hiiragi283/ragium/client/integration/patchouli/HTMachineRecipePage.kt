@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.integration.patchouli
 
 import com.mojang.blaze3d.systems.RenderSystem
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.item.ItemStack
@@ -33,13 +33,55 @@ class HTMachineRecipePage : PageDoubleRecipeRegistry<HTMachineRecipe>(RagiumReci
         // catalyst
         parent.renderIngredient(graphics, recipeX + 79, recipeY + 22, mouseX, mouseY, recipe.catalyst)
         // input
-        parent.renderIngredient(graphics, recipeX + 0 * 19 + 3, recipeY + 0 * 19 + 3, mouseX, mouseY, recipe.getInput(0))
-        parent.renderIngredient(graphics, recipeX + 1 * 19 + 3, recipeY + 0 * 19 + 3, mouseX, mouseY, recipe.getInput(1))
-        parent.renderIngredient(graphics, recipeX + 2 * 19 + 3, recipeY + 0 * 19 + 3, mouseX, mouseY, recipe.getInput(2))
+        parent.renderIngredient(
+            graphics,
+            recipeX + 0 * 19 + 3,
+            recipeY + 0 * 19 + 3,
+            mouseX,
+            mouseY,
+            recipe.itemInputs.getOrNull(0),
+        )
+        parent.renderIngredient(
+            graphics,
+            recipeX + 1 * 19 + 3,
+            recipeY + 0 * 19 + 3,
+            mouseX,
+            mouseY,
+            recipe.itemInputs.getOrNull(1),
+        )
+        parent.renderIngredient(
+            graphics,
+            recipeX + 2 * 19 + 3,
+            recipeY + 0 * 19 + 3,
+            mouseX,
+            mouseY,
+            recipe.itemInputs.getOrNull(2),
+        )
         // output
-        parent.renderResult(graphics, recipeX + 0 * 19 + 3, recipeY + 2 * 19 + 3, mouseX, mouseY, recipe.getOutput(0))
-        parent.renderResult(graphics, recipeX + 1 * 19 + 3, recipeY + 2 * 19 + 3, mouseX, mouseY, recipe.getOutput(1))
-        parent.renderResult(graphics, recipeX + 2 * 19 + 3, recipeY + 2 * 19 + 3, mouseX, mouseY, recipe.getOutput(2))
+        parent.renderResult(
+            graphics,
+            recipeX + 0 * 19 + 3,
+            recipeY + 2 * 19 + 3,
+            mouseX,
+            mouseY,
+            recipe.itemOutputs.getOrNull(0),
+        )
+        parent.renderResult(
+            graphics,
+            recipeX + 1 * 19 + 3,
+            recipeY + 2 * 19 + 3,
+            mouseX,
+            mouseY,
+            recipe.itemOutputs.getOrNull(1),
+        )
+        parent.renderResult(
+            graphics,
+            recipeX + 2 * 19 + 3,
+            recipeY + 2 * 19 + 3,
+            mouseX,
+            mouseY,
+            recipe.itemOutputs.getOrNull(2),
+        )
         // icon
         parent.renderItemStack(graphics, recipeX + 79, recipeY + 41, mouseX, mouseY, recipe.createIcon())
     }

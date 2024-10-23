@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.modifyBlockState
 import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.machine.HTMachineInputs
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -48,13 +48,13 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .buildSimple()
 
-    private val recipeCache: HTRecipeCache<HTMachineInputs.Simple, HTMachineRecipeNew.Simple> =
-        HTRecipeCache(RagiumRecipeTypes.SIMPLE_MACHINE)
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+        HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val recipe: HTMachineRecipeNew.Simple = recipeCache
-            .getFirstMatch(HTMachineInputs.Simple(getStack(0)), world)
+        val recipe: HTMachineRecipe = recipeCache
+            .getFirstMatch(HTMachineInput.Simple(getStack(0)), world)
             .getOrNull()
             ?.value
             ?: return

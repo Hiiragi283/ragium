@@ -103,13 +103,6 @@ object RagiumLangProviders {
                 CircuitFormatter.getTranslation(type, circuit),
             )
         }
-        // fluids
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
-            builder.add(
-                fluid.asItem(),
-                FluidFormatter.getTranslation(type, fluid),
-            )
-        }
     }
 
     private data object MotorFormatter : HTTranslationFormatter {
@@ -120,11 +113,6 @@ object RagiumLangProviders {
     private data object CircuitFormatter : HTTranslationFormatter {
         override val enPattern: String = "%s Circuits"
         override val jaPattern: String = "%s回路"
-    }
-
-    private data object FluidFormatter : HTTranslationFormatter {
-        override val enPattern: String = "Fluid Cube (%s)"
-        override val jaPattern: String = "液体キューブ（%s）"
     }
 
     //    English    //
@@ -198,8 +186,6 @@ object RagiumLangProviders {
             builder.add(HTCrafterHammerItem.Behavior.PICKAXE, "Hammer Module (Pickaxe)")
             builder.add(HTCrafterHammerItem.Behavior.SHOVEL, "Hammer Module (Shovel)")
 
-            builder.add(RagiumFluids.PETROLEUM.bucketItem, "Petroleum Bucket")
-
             builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "Module: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "Power: %s")
@@ -225,7 +211,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
-            // Machine Type
+            // Machine SizeType
             builder.add(HTMachineType.DEFAULT, "Default Machine")
 
             builder.add(RagiumMachineTypes.Generator.COMBUSTION, "Combustion Generator")
@@ -338,8 +324,6 @@ object RagiumLangProviders {
             builder.add(HTCrafterHammerItem.Behavior.PICKAXE, "ハンマーモジュール（ピッケル）")
             builder.add(HTCrafterHammerItem.Behavior.SHOVEL, "ハンマーモジュール（ショベル）")
 
-            builder.add(RagiumFluids.PETROLEUM.bucketItem, "石油バケツ")
-
             builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "モジュール: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "威力: %s")
@@ -365,7 +349,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.PRIMITIVE, "簡易", "簡易型%s")
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
-            // Machine Type
+            // Machine SizeType
             builder.add(HTMachineType.DEFAULT, "デフォルト機械")
 
             builder.add(RagiumMachineTypes.Generator.COMBUSTION, "燃焼発電機")

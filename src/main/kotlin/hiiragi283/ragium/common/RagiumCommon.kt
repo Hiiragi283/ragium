@@ -3,7 +3,6 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumEnvironmentBridge
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
@@ -20,7 +19,6 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
 
         DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
 
-        HTRecipeComponentTypes
         RagiumComponentTypes
 
         RagiumAdvancementCriteria
@@ -28,7 +26,6 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
         RagiumBlocks
         RagiumBlockEntityTypes.init()
         RagiumEntityTypes.init()
-        RagiumFluids.init()
         RagiumRecipeSerializers
         RagiumRecipeTypes
 

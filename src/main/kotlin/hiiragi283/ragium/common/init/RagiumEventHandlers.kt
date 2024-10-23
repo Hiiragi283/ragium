@@ -7,8 +7,7 @@ import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
@@ -16,7 +15,6 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -195,14 +193,6 @@ object RagiumEventHandlers {
         tool: ItemStack,
         machineType: HTMachineConvertible,
     ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
-        HTMachineRecipe.Input.create(
-            machineType,
-            HTMachineTier.PRIMITIVE,
-            it,
-            ItemStack.EMPTY,
-            ItemStack.EMPTY,
-            ItemStack.EMPTY,
-            ComponentMap.EMPTY,
-        )
+        HTMachineInput.Simple(it)
     }
 }

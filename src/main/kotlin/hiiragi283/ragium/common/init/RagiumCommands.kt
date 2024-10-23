@@ -5,11 +5,12 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.LongArgumentType
 import com.mojang.brigadier.context.CommandContext
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.energyNetwork
+import hiiragi283.ragium.api.extension.getMultiblockController
+import hiiragi283.ragium.api.extension.getOrDefault
+import hiiragi283.ragium.api.extension.networkMap
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockConstructor
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.recipe.HTRequireScanRecipe
-import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumConfig
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
@@ -31,6 +32,9 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.forEach
 import kotlin.jvm.optionals.getOrNull
 
 object RagiumCommands {
@@ -124,7 +128,7 @@ object RagiumCommands {
         val recipeEntry: RecipeEntry<*>? = context.source.world.recipeManager
             .get(id)
             ?.getOrNull()
-        if (recipeEntry != null) {
+        /*if (recipeEntry != null) {
             val recipe: Recipe<*> = recipeEntry.value
             if (recipe is HTRequireScanRecipe && recipe.requireScan) {
                 val manager: HTDataDriveManager = context.source.server.dataDriveManager
@@ -139,7 +143,7 @@ object RagiumCommands {
             }
         } else {
             context.source.sendError(Text.literal("Could not find recipe; $id"))
-        }
+        }*/
         return Command.SINGLE_SUCCESS
     }
 
@@ -151,7 +155,7 @@ object RagiumCommands {
             ?.getOrNull()
         if (recipeEntry != null) {
             val recipe: Recipe<*> = recipeEntry.value
-            if (recipe is HTRequireScanRecipe && recipe.requireScan) {
+            /*if (recipe is HTRequireScanRecipe && recipe.requireScan) {
                 val manager: HTDataDriveManager = context.source.server.dataDriveManager
                 if (id in manager) {
                     manager.remove(id)
@@ -161,7 +165,7 @@ object RagiumCommands {
                 }
             } else {
                 context.source.sendError(Text.literal("The recipe; $id does not require scanning!"))
-            }
+            }*/
         } else {
             context.source.sendError(Text.literal("Could not find recipe; $id"))
         }

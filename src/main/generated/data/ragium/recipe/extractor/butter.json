@@ -1,12 +1,12 @@
 {
-  "type": "ragium:simple_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:extractor",
     "tier": "primitive"
   },
-  "item_inputs": [
+  "fluid_inputs": [
     {
-      "items": "ragium:milk_fluid_cube"
+      "fluids": "#c:milk"
     }
   ],
   "item_outputs": [

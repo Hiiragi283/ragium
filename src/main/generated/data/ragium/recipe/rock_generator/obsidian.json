@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:rock_generator",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "minecraft:lava"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ]
+}

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:crude_oil_fluid_cube"
+            "items": "minecraft:soul_sand"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:crude_oil_fluid_cube"
+      "id": "minecraft:soul_sand"
     },
     "title": {
       "translate": "advancement.ragium.tier3.petroleum"

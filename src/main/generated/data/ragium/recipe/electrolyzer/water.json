@@ -1,12 +1,12 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:electrolyzer",
     "tier": "primitive"
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:water"
+      "fluids": "minecraft:water"
     }
   ],
   "fluid_outputs": [

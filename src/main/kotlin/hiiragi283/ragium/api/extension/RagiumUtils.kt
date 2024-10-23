@@ -3,7 +3,9 @@ package hiiragi283.ragium.api.extension
 import com.google.common.collect.HashBasedTable
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
@@ -12,6 +14,8 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
@@ -111,12 +115,18 @@ fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getAllMatches(
 
 fun RecipeManager.getMachineRecipes(type: HTMachineType, tier: HTMachineTier): List<RecipeEntry<HTMachineRecipe>> =
     getAllMatches(RagiumRecipeTypes.MACHINE) { entry: RecipeEntry<HTMachineRecipe> ->
-        entry.value.let { it.type == type && it.minTier <= tier }
+        entry.value.let { it.machineType == type && it.tier <= tier }
     }
 
 operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
 
 operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
+
+val HTItemIngredient.matchingStacks: List<ItemStack>
+    get() = weightedList.map { (item: Item, amount: Long) -> ItemStack(item, amount.toInt()) }
+
+val HTItemResult.itemStack: ItemStack
+    get() = resourceAmount.itemStack
 
 //    Registry    //
 

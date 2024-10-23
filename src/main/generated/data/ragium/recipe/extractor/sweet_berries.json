@@ -1,5 +1,5 @@
 {
-  "type": "ragium:simple_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:extractor",
     "tier": "primitive"
@@ -11,6 +11,7 @@
   ],
   "item_inputs": [
     {
+      "amount": 4,
       "items": "minecraft:sweet_berries"
     }
   ]

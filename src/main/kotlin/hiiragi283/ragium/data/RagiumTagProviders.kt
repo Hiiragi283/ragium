@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
+import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -13,6 +14,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
@@ -27,7 +29,7 @@ object RagiumTagProviders {
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(RagiumTagProviders::BlockProvider)
         pack.addProvider(RagiumTagProviders::EnchantmentProvider)
-        // pack.addProvider(RagiumTagProviders::FluidProvider)
+        pack.addProvider(RagiumTagProviders::FluidProvider)
         pack.addProvider(RagiumTagProviders::ItemProvider)
     }
 
@@ -97,11 +99,28 @@ object RagiumTagProviders {
 
     //    Fluid    //
 
-    /*private class FluidProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    private class FluidProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.FluidTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
+            fun add(tagKey: TagKey<Fluid>, fluid: Fluid) {
+                getOrCreateTagBuilder(tagKey).add(fluid)
+            }
+
+            fun add(tagKey: TagKey<Fluid>, fluid: RagiumContents.Fluids) {
+                add(tagKey, fluid.asFluid())
+            }
+
+            add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.METHANOL)
+            add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.ETHANOL)
+
+            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.BIO_FUEL)
+            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.FUEL)
+            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.AROMATIC_COMPOUNDS)
+
+            add(RagiumFluidTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
+            add(RagiumFluidTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
         }
-    }*/
+    }
 
     //    Item    //
 
@@ -139,7 +158,6 @@ object RagiumTagProviders {
 
                 addAll(RagiumContents.Foods.entries)
                 addAll(RagiumContents.Misc.entries)
-                addAll(RagiumContents.Fluids.entries)
             }.forEach { content: HTContent<out ItemConvertible> ->
                 content.tagKey?.let { add(it, content) }
             }
@@ -151,17 +169,7 @@ object RagiumTagProviders {
             RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
-            add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)
-
-            add(RagiumItemTags.ALCOHOL, RagiumContents.Fluids.METHANOL)
-            add(RagiumItemTags.ALCOHOL, RagiumContents.Fluids.ETHANOL)
-
-            add(RagiumItemTags.FUEL_CUBES, RagiumContents.Fluids.BIO_FUEL)
-            add(RagiumItemTags.FUEL_CUBES, RagiumContents.Fluids.FUEL)
-            add(RagiumItemTags.FUEL_CUBES, RagiumContents.Fluids.AROMATIC_COMPOUNDS)
-
-            add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
-            add(RagiumItemTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
+            // add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)

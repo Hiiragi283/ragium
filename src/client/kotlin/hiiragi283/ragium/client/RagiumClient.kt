@@ -7,8 +7,6 @@ import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
@@ -16,28 +14,20 @@ import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
 import hiiragi283.ragium.client.integration.accessories.RagiumAccessoriesInit
 import hiiragi283.ragium.client.integration.patchouli.RagiumPatchouliInit
-import hiiragi283.ragium.client.integration.rei.INPUT_ENTRIES
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
 import hiiragi283.ragium.client.util.getBlockEntity
-import hiiragi283.ragium.client.util.getMachineEntity
-import hiiragi283.ragium.client.util.registerClient
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTHeatGeneratorMachineEntity
-import hiiragi283.ragium.common.machine.HTProcessorMachineEntity
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
-import hiiragi283.ragium.common.network.HTMachineRecipePayload
 import hiiragi283.ragium.common.network.HTOpenBackpackPayload
 import io.wispforest.accessories.api.AccessoriesCapability
-import me.shedaniel.rei.api.common.entry.EntryIngredient
-import me.shedaniel.rei.api.common.util.EntryIngredients
-import me.shedaniel.rei.api.common.util.EntryStacks
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -68,15 +58,9 @@ import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
-import net.minecraft.item.SpawnEggItem
-import net.minecraft.registry.RegistryKey
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
-import net.minecraft.world.biome.Biome
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvironmentBridge {
@@ -122,8 +106,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
             .entries
             .map(RagiumContents.Ores::value)
             .forEach(::registerCutoutMipped)
-
-        RagiumFluids.PETROLEUM.registerClient(Identifier.of("block/black_concrete"))
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
@@ -177,10 +159,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
     //    Items    //
 
     private fun registerItems() {
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
-            ColorProviderRegistry.ITEM.register({ _: ItemStack, _: Int -> fluid.color.rgb }, fluid)
-        }
-
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
             stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
         }, RagiumContents.Misc.BACKPACK)
@@ -227,12 +205,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
             context.client().gameRenderer.showFloatingItem(payload.stack)
         }
 
-        RagiumNetworks.MACHINE_RECIPE.registerClientReceiver { payload: HTMachineRecipePayload, context: ClientPlayNetworking.Context ->
-            val (pos: BlockPos, recipe: HTMachineRecipe) = payload
-            (context.getMachineEntity(pos) as? HTProcessorMachineEntity)?.currentRecipe = recipe
-            RagiumAPI.log { info("Received recipe!") }
-        }
-
         RagiumNetworks.SET_STACK.registerClientReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
             (context.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
@@ -263,7 +235,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
         }
 
         if (!isModLoaded("roughlyenoughitems")) return
-        helper.modify(RagiumMachineTypes.FLUID_DRILL) {
+        /*helper.modify(RagiumMachineTypes.FLUID_DRILL) {
             set(INPUT_ENTRIES) { recipe: HTMachineRecipe ->
                 recipe
                     .get(HTRecipeComponentTypes.BIOME)
@@ -289,7 +261,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
                     ?.let(::listOf)
                     ?: emptyList()
             }
-        }
+        }*/
     }
 
     //    RagiumEnvironmentBridge    //

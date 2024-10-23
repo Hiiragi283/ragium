@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:empty_fluid_cube"
+    },
+    {
+      "item": "minecraft:milk_bucket"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:fluid": "ragium:milk"
+    },
+    "count": 1,
+    "id": "ragium:filled_fluid_cube"
+  }
+}

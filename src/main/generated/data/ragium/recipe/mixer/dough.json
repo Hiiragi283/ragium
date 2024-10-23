@@ -1,23 +1,22 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:mixer",
     "tier": "primitive"
   },
   "fluid_inputs": [
     {
+      "amount": 27000,
       "fluids": "minecraft:water"
     }
   ],
   "item_inputs": [
     {
-      "amount": 3,
       "items": "ragium:flour"
     }
   ],
   "item_outputs": [
     {
-      "amount": 3,
       "item": "ragium:dough"
     }
   ]

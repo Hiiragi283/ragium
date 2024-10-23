@@ -1,12 +1,12 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:mixer",
     "tier": "primitive"
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:milk"
+      "fluids": "#c:milk"
     }
   ],
   "fluid_outputs": [

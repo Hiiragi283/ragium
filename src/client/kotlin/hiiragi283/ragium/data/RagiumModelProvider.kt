@@ -5,7 +5,6 @@ import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
@@ -257,8 +256,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             // cluster block
             register(element.clusterBlock, generator::registerAmethyst)
         }
-        // fluids
-        accept(VariantsBlockStateSupplier.create(RagiumFluids.PETROLEUM.block))
     }
 
     //    Model    //
@@ -334,11 +331,5 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             register(element.pendantItem)
             register(element.ringItem)
         }
-        // fluids
-        RagiumContents.Fluids.entries
-            .map(RagiumContents.Fluids::asItem)
-            .forEach { register(it, RagiumModels.FLUID_CUBE_OLD) }
-
-        register(RagiumFluids.PETROLEUM.bucketItem)
     }
 }

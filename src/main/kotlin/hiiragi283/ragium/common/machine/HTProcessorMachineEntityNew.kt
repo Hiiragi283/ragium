@@ -9,10 +9,10 @@ import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntityNew
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.api.recipe.machine.HTMachineInputs
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.minecraft.block.BlockState
@@ -25,15 +25,15 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 open class HTProcessorMachineEntityNew(type: HTMachineConvertible, tier: HTMachineTier) : HTMachineEntityNew(type, tier) {
-    private val recipeCache: HTRecipeCache<HTMachineInputs.Simple, HTMachineRecipeNew.Simple> =
-        HTRecipeCache(RagiumRecipeTypes.SIMPLE_MACHINE)
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+        HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         recipeCache
             .getFirstMatch(
-                HTMachineInputs.Simple(getStack(0), getStack(1)),
+                HTMachineInput.Simple(getStack(0), getStack(1)),
                 world,
-            ).ifPresent { (id: Identifier, recipe: HTMachineRecipeNew.Simple) ->
+            ).ifPresent { (id: Identifier, recipe: HTMachineRecipe) ->
                 HTMachineRecipeProcessor.process(
                     world,
                     pos,

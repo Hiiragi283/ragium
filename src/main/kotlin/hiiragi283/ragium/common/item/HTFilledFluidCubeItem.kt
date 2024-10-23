@@ -26,7 +26,6 @@ object HTFilledFluidCubeItem : Item(itemSettings()) {
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         stack
             .get(RagiumComponentTypes.FLUID)
-            ?.value()
             ?.let { HTFluidDrinkingHandlerRegistry.onDrink(it, stack, world, user) }
         dropStackAt(
             user,
@@ -51,7 +50,7 @@ object HTFilledFluidCubeItem : Item(itemSettings()) {
         tooltip: MutableList<Text>,
         type: TooltipType,
     ) {
-        val entry: RegistryEntry<Fluid> = stack.get(RagiumComponentTypes.FLUID) ?: return
+        val entry: RegistryEntry.Reference<Fluid> = stack.get(RagiumComponentTypes.FLUID)?.registryEntry ?: return
         entry
             .value()
             .let(FluidVariant::of)

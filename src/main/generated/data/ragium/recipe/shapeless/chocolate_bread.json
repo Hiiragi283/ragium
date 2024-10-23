@@ -6,7 +6,13 @@
       "item": "minecraft:bread"
     },
     {
-      "item": "ragium:chocolate_fluid_cube"
+      "fabric:type": "fabric:components",
+      "base": {
+        "item": "ragium:filled_fluid_cube"
+      },
+      "components": {
+        "ragium:fluid": "ragium:chocolate"
+      }
     }
   ],
   "result": {

@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:chlorine"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#c:concrete_powders"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:white_concrete_powder"
+    }
+  ]
+}

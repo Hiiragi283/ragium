@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:heart_of_the_sea"
+  },
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:methane"
+    },
+    {
+      "fluids": "minecraft:water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:hydrogen"
+    },
+    {
+      "fluid": "ragium:methanol"
+    }
+  ]
+}

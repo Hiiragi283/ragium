@@ -75,7 +75,7 @@ data object HTFluidCubeModel : UnbakedModel, BakedModel {
             .getModel(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
             ?.emitItemQuads(stack, randomSupplier, context)
         // render fluid
-        val (sprite: Sprite, color: Int) = stack.get(RagiumComponentTypes.FLUID)?.value()?.getSpriteAndColor() ?: return
+        val (sprite: Sprite, color: Int) = stack.get(RagiumComponentTypes.FLUID)?.getSpriteAndColor() ?: return
         Direction.entries.forEach { dir: Direction ->
             val emitter: QuadEmitter = context.emitter
             emitter.square(dir, 0.3f, 0.3f, 0.7f, 0.7f, 0.7f)

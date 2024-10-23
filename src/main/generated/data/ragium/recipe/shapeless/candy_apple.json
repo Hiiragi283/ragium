@@ -6,7 +6,13 @@
       "item": "minecraft:apple"
     },
     {
-      "item": "ragium:starch_syrup_fluid_cube"
+      "fabric:type": "fabric:components",
+      "base": {
+        "item": "ragium:filled_fluid_cube"
+      },
+      "components": {
+        "ragium:fluid": "ragium:starch_syrup"
+      }
     },
     {
       "tag": "c:rods/wooden"

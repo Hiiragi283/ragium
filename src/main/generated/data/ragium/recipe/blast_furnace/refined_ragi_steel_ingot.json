@@ -1,5 +1,5 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:blast_furnace",
     "tier": "basic"

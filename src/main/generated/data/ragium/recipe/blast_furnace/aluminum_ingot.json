@@ -1,5 +1,5 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:blast_furnace",
     "tier": "advanced"
@@ -9,7 +9,7 @@
       "items": "ragium:alumina_dust"
     },
     {
-      "amount": 4,
+      "amount": 8,
       "items": "#minecraft:coals"
     }
   ],

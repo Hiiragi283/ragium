@@ -1,96 +1,122 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.toList
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.component.ComponentChanges
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 
-class HTRecipeResult private constructor(val entry: RegistryEntry<Item>, val count: Int, val components: ComponentChanges) {
-    companion object {
-        @JvmField
-        val EMPTY = HTRecipeResult(RegistryEntry.of(Items.AIR), 0, ComponentChanges.EMPTY)
+typealias HTItemResult = HTRecipeResult<Item, ItemVariant>
+typealias HTFluidResult = HTRecipeResult<Fluid, FluidVariant>
 
-        @JvmField
-        val CODEC: Codec<HTRecipeResult> = RecordCodecBuilder.create { instance ->
+@Suppress("DEPRECATION")
+class HTRecipeResult<O : Any, T : TransferVariant<O>> private constructor(
+    val entry: RegistryEntry<O>,
+    val amount: Long,
+    val components: ComponentChanges,
+    private val toVariant: (O, ComponentChanges) -> T,
+) {
+    companion object {
+        @JvmStatic
+        private fun <O : Any, T : TransferVariant<O>> createCodec(
+            objCodec: MapCodec<RegistryEntry<O>>,
+            defaultAmount: Long,
+            toResult: (RegistryEntry<O>, Long, ComponentChanges) -> HTRecipeResult<O, T>,
+        ): Codec<HTRecipeResult<O, T>> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    Registries.ITEM.entryCodec
-                        .fieldOf("item")
-                        .forGetter(HTRecipeResult::entry),
-                    Codec
-                        .intRange(1, 99)
-                        .optionalFieldOf("count", 1)
-                        .forGetter(HTRecipeResult::count),
+                    objCodec.forGetter(HTRecipeResult<O, T>::entry),
+                    Codec.LONG.optionalFieldOf("amount", defaultAmount).forGetter(HTRecipeResult<O, T>::amount),
                     ComponentChanges.CODEC
                         .optionalFieldOf("components", ComponentChanges.EMPTY)
-                        .forGetter(HTRecipeResult::components),
-                ).apply(instance, ::HTRecipeResult)
+                        .forGetter(HTRecipeResult<O, T>::components),
+                ).apply(instance, toResult)
         }
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult> = PacketCodec.tuple(
-            PacketCodecs.registryCodec(Registries.ITEM.entryCodec),
-            HTRecipeResult::entry,
-            PacketCodecs.INTEGER,
-            HTRecipeResult::count,
-            ComponentChanges.PACKET_CODEC,
-            HTRecipeResult::components,
-            ::HTRecipeResult,
+        val ITEM_CODEC: Codec<HTRecipeResult<Item, ItemVariant>> = createCodec(
+            Registries.ITEM.entryCodec.fieldOf("item"),
+            1,
+            ::ofItem,
         )
 
         @JvmField
-        val LIST_PACKET_CODEC: PacketCodec<RegistryByteBuf, List<HTRecipeResult>> = PACKET_CODEC.toList()
-
-        @Suppress("DEPRECATION")
-        @JvmStatic
-        fun of(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
-            when (val item1: Item = item.asItem()) {
-                Items.AIR -> EMPTY
-                else -> HTRecipeResult(item1.registryEntry, count, components)
-            }
+        val FLUID_CODEC: Codec<HTRecipeResult<Fluid, FluidVariant>> = createCodec(
+            Registries.FLUID.entryCodec.fieldOf("fluid"),
+            FluidConstants.BUCKET,
+            ::ofFluid,
+        )
 
         @JvmStatic
-        fun of(stack: ItemStack): HTRecipeResult = of(stack.item, stack.count, stack.componentChanges)
+        private fun <O : Any, T : TransferVariant<O>> createPacketCodec(
+            registry: Registry<O>,
+            toResult: (RegistryEntry<O>, Long, ComponentChanges) -> HTRecipeResult<O, T>,
+        ): PacketCodec<RegistryByteBuf, HTRecipeResult<O, T>> = PacketCodec.tuple(
+            PacketCodecs.registryCodec(registry.entryCodec),
+            HTRecipeResult<O, T>::entry,
+            PacketCodecs.VAR_LONG,
+            HTRecipeResult<O, T>::amount,
+            ComponentChanges.PACKET_CODEC,
+            HTRecipeResult<O, T>::components,
+            toResult,
+        )
 
-        /*@JvmStatic
-        fun of(tagKey: TagKey<Item>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): HTRecipeResult =
-            Registries.ITEM
-                .getOrCreateEntryList(tagKey)
-                .let { HTRecipeResult(it, count, components) }
-         */
+        @JvmField
+        val ITEM_PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult<Item, ItemVariant>> =
+            createPacketCodec(Registries.ITEM, ::ofItem)
+
+        @JvmField
+        val FLUID_PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRecipeResult<Fluid, FluidVariant>> =
+            createPacketCodec(Registries.FLUID, ::ofFluid)
+
+        @JvmStatic
+        private fun ofItem(entry: RegistryEntry<Item>, amount: Long, components: ComponentChanges): HTRecipeResult<Item, ItemVariant> =
+            HTRecipeResult(entry, amount, components, ItemVariant::of)
+
+        @JvmStatic
+        fun ofItem(
+            item: ItemConvertible,
+            amount: Long = 1,
+            components: ComponentChanges = ComponentChanges.EMPTY,
+        ): HTRecipeResult<Item, ItemVariant> = ofItem(item.asItem().registryEntry, amount, components)
+
+        @JvmStatic
+        fun ofItem(stack: ItemStack): HTRecipeResult<Item, ItemVariant> = ofItem(stack.item, stack.count.toLong(), stack.componentChanges)
+
+        @JvmStatic
+        private fun ofFluid(entry: RegistryEntry<Fluid>, amount: Long, components: ComponentChanges): HTRecipeResult<Fluid, FluidVariant> =
+            HTRecipeResult(entry, amount, components, FluidVariant::of)
+
+        @JvmStatic
+        fun ofFluid(
+            fluid: Fluid,
+            amount: Long = FluidConstants.BUCKET,
+            components: ComponentChanges = ComponentChanges.EMPTY,
+        ): HTRecipeResult<Fluid, FluidVariant> = ofFluid(fluid.registryEntry, amount, components)
     }
 
-    val firstItem: Item
+    val entryValue: O
         get() = entry.value()
 
-    fun toStack(): ItemStack = ItemStack(entry, count, components)
+    val variant: T
+        get() = toVariant(entryValue, components)
 
-    fun canAccept(other: ItemStack): Boolean = when {
-        other.isEmpty -> true
-        ItemStack.areItemsAndComponentsEqual(toStack(), other) -> true
-        other.count + this.count > other.maxCount -> false
-        else -> false
-    }
+    val resourceAmount: ResourceAmount<T>
+        get() = ResourceAmount(variant, amount)
 
-    fun modifyStack(other: ItemStack): ItemStack {
-        val stack: ItemStack = toStack()
-        return when {
-            !canAccept(other) -> other
-            other.isEmpty -> stack
-            other.count + this.count > other.maxCount -> other.apply { count = other.maxCount }
-            ItemStack.areItemsAndComponentsEqual(stack, other) -> other.apply { count += stack.count }
-            else -> other
-        }
-    }
-
-    override fun toString(): String = "HTRecipeResult[count=$count, item=$entry, components=$components]"
+    override fun toString(): String = "HTRecipeResult[entry=$entry, amount=$amount, components=$components]"
 }

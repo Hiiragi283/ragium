@@ -1,23 +1,22 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:mixer",
     "tier": "primitive"
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:water"
+      "amount": 27000,
+      "fluids": "minecraft:water"
     }
   ],
   "item_inputs": [
     {
-      "amount": 4,
       "items": "ragium:crude_raginite_dust"
     }
   ],
   "item_outputs": [
     {
-      "amount": 4,
       "item": "ragium:raginite_dust"
     }
   ]

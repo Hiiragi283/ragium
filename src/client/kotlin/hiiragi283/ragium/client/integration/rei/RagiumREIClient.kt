@@ -1,10 +1,11 @@
 package hiiragi283.ragium.client.integration.rei
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.component1
+import hiiragi283.ragium.api.extension.component2
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -23,6 +24,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeEntry
+import net.minecraft.util.Identifier
 
 @Environment(EnvType.CLIENT)
 object RagiumREIClient : REIClientPlugin {
@@ -36,10 +38,8 @@ object RagiumREIClient : REIClientPlugin {
         // Machines
         RagiumAPI.getInstance().machineTypeRegistry.processors.forEach { type: HTMachineType ->
             registry.add(HTMachineRecipeCategory(type))
-            registry.add(HTMachineRecipeCategoryNew(type))
             HTMachineTier.entries.map(type::createEntryStack).forEach { stack: EntryStack<ItemStack> ->
                 registry.addWorkstations(type.categoryId, stack)
-                registry.addWorkstations(type.categoryIdNew, stack)
             }
         }
         registry.addWorkstations(
@@ -67,27 +67,12 @@ object RagiumREIClient : REIClientPlugin {
         registry.registerRecipeFiller(
             HTMachineRecipe::class.java,
             RagiumRecipeTypes.MACHINE,
-            ::HTMachineRecipeDisplay,
-        )
-
-        registry.registerRecipeFiller(
-            HTMachineRecipeNew.Large::class.java,
-            RagiumRecipeTypes.LARGE_MACHINE,
-        ) { entry: RecipeEntry<HTMachineRecipeNew.Large> ->
-            HTMachineRecipeDisplayNew.Large(
-                entry.value,
-                entry.id,
-            )
-        }
-
-        registry.registerRecipeFiller(
-            HTMachineRecipeNew.Simple::class.java,
-            RagiumRecipeTypes.SIMPLE_MACHINE,
-        ) { entry: RecipeEntry<HTMachineRecipeNew.Simple> ->
-            HTMachineRecipeDisplayNew.Simple(
-                entry.value,
-                entry.id,
-            )
+        ) { entry: RecipeEntry<HTMachineRecipe> ->
+            val (id: Identifier, recipe: HTMachineRecipe) = entry
+            when (recipe.sizeType) {
+                HTMachineRecipe.SizeType.SIMPLE -> HTMachineRecipeDisplay.Simple(recipe, id)
+                HTMachineRecipe.SizeType.LARGE -> HTMachineRecipeDisplay.Large(recipe, id)
+            }
         }
     }
 
@@ -107,8 +92,8 @@ object RagiumREIClient : REIClientPlugin {
             .getInstance()
             .machineTypeRegistry
             .processors
-            .map(HTMachineType::categoryIdNew)
-            .forEach { id: CategoryIdentifier<HTMachineRecipeDisplayNew> ->
+            .map(HTMachineType::categoryId)
+            .forEach { id: CategoryIdentifier<HTMachineRecipeDisplay> ->
                 registry.register(
                     SimpleTransferHandler.create(
                         HTProcessorScreenHandler::class.java,

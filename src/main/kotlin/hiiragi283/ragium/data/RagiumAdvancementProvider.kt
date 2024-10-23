@@ -16,6 +16,7 @@ import net.minecraft.advancement.AdvancementFrame
 import net.minecraft.advancement.criterion.InventoryChangedCriterion
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.Items
 import net.minecraft.predicate.ComponentPredicate
 import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryWrapper
@@ -408,9 +409,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/petroleum",
                 distillationTower,
-                RagiumContents.Fluids.CRUDE_OIL,
+                Items.SOUL_SAND,
             ) {
-                hasItems(RagiumContents.Fluids.CRUDE_OIL)
+                hasItems(Items.SOUL_SAND)
             }.putEnglish("")
             .putEnglishDesc("Get Crude Oil")
             .putJapanese("")

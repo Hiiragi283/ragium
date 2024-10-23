@@ -5,18 +5,14 @@ import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
-import hiiragi283.ragium.common.fluid.HTFluidContent
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
-import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.json.JsonUnbakedModel
 import net.minecraft.client.render.model.json.ModelTransformation
@@ -121,17 +117,6 @@ fun ClientPlayNetworking.Context.getBlockEntity(pos: BlockPos): BlockEntity? = w
 fun ClientPlayNetworking.Context.getMachineEntity(pos: BlockPos): HTMachineEntity? = world?.getMachineEntity(pos)
 
 //    Fluid    //
-
-fun HTFluidContent.registerClient(stillTex: Identifier, flowingTex: Identifier = stillTex, color: Int = -1) {
-    registerClient(SimpleFluidRenderHandler(stillTex, flowingTex, color))
-}
-
-fun HTFluidContent.registerClient(renderHandler: FluidRenderHandler) {
-    // register render handler
-    FluidRenderHandlerRegistry.INSTANCE.register(still, flowing, renderHandler)
-    // register render layers
-    BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(), still, flowing)
-}
 
 fun Fluid.getSpriteAndColor(): Pair<Sprite, Int>? {
     val handler: FluidRenderHandler = FluidRenderHandlerRegistry.INSTANCE.get(this) ?: return null

@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:alloy_furnace",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:batter"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "ragium:butter"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:sponge_cake"
+    }
+  ]
+}

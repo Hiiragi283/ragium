@@ -34,13 +34,12 @@ import net.minecraft.world.biome.Biome
 import java.awt.Color
 
 object RagiumContents : HTContentRegister {
-    @Suppress("DEPRECATION")
     @JvmStatic
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack = buildItemStack(
         Misc.FILLED_FLUID_CUBE,
         count,
     ) {
-        add(RagiumComponentTypes.FLUID, fluid.registryEntry)
+        add(RagiumComponentTypes.FLUID, fluid)
     }
 
     //    Ores    //
@@ -479,12 +478,8 @@ object RagiumContents : HTContentRegister {
 
     //    Fluids    //
 
-    enum class Fluids(val color: Color, override val enName: String, override val jaName: String) :
-        HTContent<Item>,
-        HTTranslationProvider {
+    enum class Fluids(val color: Color, override val enName: String, override val jaName: String) : HTTranslationProvider {
         // Vanilla
-        WATER(Color(0x0033ff), "Water", "水"),
-        LAVA(Color(0xff6600), "Lava", "溶岩"),
         MILK(Color(0xffffff), "Milk", "牛乳"),
         HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
 
@@ -542,16 +537,9 @@ object RagiumContents : HTContentRegister {
         TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_fluid_cube"))
-
-        internal open fun createItem(): Item = Item(itemSettings())
-
-        override val tagKey: TagKey<Item>? = RagiumItemTags.FLUID_CUBES
-
-        // virtual fluids
-
         val fluidEntry: HTRegistryEntry<Fluid> =
             HTRegistryEntry(Registries.FLUID, RagiumAPI.id(name.lowercase()))
+
+        fun asFluid() = fluidEntry.value()
     }
 }

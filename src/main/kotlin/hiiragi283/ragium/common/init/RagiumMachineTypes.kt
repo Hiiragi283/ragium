@@ -6,10 +6,8 @@ import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.common.machine.*
-import net.minecraft.component.ComponentMap
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.registry.tag.BiomeTags
@@ -43,38 +41,28 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTBlastFurnaceMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
         register.registerProcessor(DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTDistillationTowerMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
         register.registerProcessor(FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-            set(HTMachinePropertyKeys.ADDITIONAL_RECIPE_MATCHER) { input: ComponentMap, recipe: ComponentMap ->
-                input.get(HTRecipeComponentTypes.BIOME) == recipe.get(HTRecipeComponentTypes.BIOME)
-            }
-            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
         register.registerProcessor(MOB_EXTRACTOR) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTMobExtractorMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-            set(HTMachinePropertyKeys.ADDITIONAL_RECIPE_MATCHER) { input: ComponentMap, recipe: ComponentMap ->
-                input.get(HTRecipeComponentTypes.ENTITY_TYPE) == recipe.get(HTRecipeComponentTypes.ENTITY_TYPE)
-            }
         }
         register.registerProcessor(SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTSawMillMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.LARGE_MACHINE)
         }
 
         RagiumMachineTypes.Processor.entries.forEach {
@@ -88,7 +76,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
     val HEAT_GENERATOR: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("heat_generator"))
 
     enum class Generator(private val fluidTag: TagKey<Fluid>? = null) : HTMachineConvertible {
-        COMBUSTION(RagiumFluidTags.COMBUSTION_FUEL) {
+        COMBUSTION(RagiumFluidTags.FUEL) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = false
         },
         SOLAR {
@@ -158,7 +146,6 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         ELECTROLYZER {
             override fun buildProperties(builder: HTPropertyHolder.Mutable) {
                 super.buildProperties(builder)
-                builder[HTMachinePropertyKeys.RECIPE_TYPE] = RagiumRecipeTypes.LARGE_MACHINE
             }
         },
         EXTRACTOR,

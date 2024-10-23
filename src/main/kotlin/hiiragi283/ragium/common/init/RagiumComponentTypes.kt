@@ -14,8 +14,6 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.DyeColor
 
 object RagiumComponentTypes {
@@ -54,8 +52,8 @@ object RagiumComponentTypes {
         registerUnit("damage_instead_of_decrease")
 
     @JvmField
-    val FLUID: ComponentType<RegistryEntry<Fluid>> =
-        register("fluid", Registries.FLUID.entryCodec, PacketCodecs.registryEntry(RegistryKeys.FLUID))
+    val FLUID: ComponentType<Fluid> =
+        register("fluid", Registries.FLUID.codec, PacketCodecs.codec(Registries.FLUID.codec))
 
     @JvmStatic
     private fun <T : Any> register(name: String, type: ComponentType<T>): ComponentType<T> = Registry.register(

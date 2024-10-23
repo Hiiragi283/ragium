@@ -12,17 +12,22 @@ import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
+import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.block.Block
+import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
+import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -228,23 +233,20 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     //    Crafting - Foods    //
 
-    private fun craftingFoods(exporter: RecipeExporter) {
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.Foods.DOUGH, 3)
-            .input(RagiumContents.Foods.FLOUR)
-            .input(RagiumContents.Foods.FLOUR)
-            .input(RagiumContents.Foods.FLOUR)
-            .input(RagiumContents.Fluids.WATER)
-            .unlockedBy(RagiumContents.Foods.FLOUR)
-            .offerTo(exporter)
+    private fun fluidIngredient(fluid: Fluid): Ingredient = DefaultCustomIngredients.components(
+        Ingredient.ofItems(RagiumContents.Misc.FILLED_FLUID_CUBE),
+    ) { builder: ComponentChanges.Builder ->
+        builder.add(RagiumComponentTypes.FLUID, fluid)
+    }
 
+    private fun craftingFoods(exporter: RecipeExporter) {
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .patterns(
                 "ABA",
                 "CDC",
                 "EEE",
-            ).input('A', RagiumContents.Fluids.MILK)
+            ).input('A', fluidIngredient(RagiumContents.Fluids.MILK.asFluid()))
             .input('B', Items.SWEET_BERRIES)
             .input('C', RagiumContents.Foods.CHOCOLATE)
             .input('D', Items.EGG)
@@ -255,23 +257,23 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Foods.CHOCOLATE_BREAD)
             .input(Items.BREAD)
-            .input(RagiumContents.Fluids.CHOCOLATE)
-            .unlockedBy(RagiumContents.Fluids.CHOCOLATE)
+            .input(fluidIngredient(RagiumContents.Fluids.CHOCOLATE.asFluid()))
+            .unlockedBy(Items.BREAD)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Foods.CHOCOLATE_APPLE)
             .input(Items.APPLE)
-            .input(RagiumContents.Fluids.CHOCOLATE)
-            .unlockedBy(RagiumContents.Fluids.CHOCOLATE)
+            .input(fluidIngredient(RagiumContents.Fluids.CHOCOLATE.asFluid()))
+            .unlockedBy(Items.APPLE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Foods.CANDY_APPLE)
             .input(Items.APPLE)
-            .input(RagiumContents.Fluids.STARCH_SYRUP)
+            .input(fluidIngredient(RagiumContents.Fluids.STARCH_SYRUP.asFluid()))
             .input(ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Fluids.STARCH_SYRUP)
+            .unlockedBy(Items.APPLE)
             .offerTo(exporter)
     }
 
@@ -390,35 +392,35 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.Fluids.WATER)
+            .create(RagiumContents.createFilledCube(Fluids.WATER))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.WATER_BUCKET)
             .unlockedBy(Items.WATER_BUCKET)
-            .offerTo(exporter)
+            .offerTo(exporter, RagiumAPI.id("water_cube"))
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.Fluids.LAVA)
+            .create(RagiumContents.createFilledCube(Fluids.LAVA))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.LAVA_BUCKET)
             .unlockedBy(Items.LAVA_BUCKET)
-            .offerTo(exporter)
+            .offerTo(exporter, RagiumAPI.id("lava_cube"))
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.Fluids.MILK)
+            .create(RagiumContents.createFilledCube(RagiumContents.Fluids.MILK.asFluid()))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.MILK_BUCKET)
             .unlockedBy(Items.MILK_BUCKET)
-            .offerTo(exporter)
+            .offerTo(exporter, RagiumAPI.id("milk_cube"))
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.Fluids.HONEY)
+            .create(RagiumContents.createFilledCube(RagiumContents.Fluids.HONEY.asFluid()))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)
             .unlockedBy(Items.HONEY_BOTTLE)
-            .offerTo(exporter)
+            .offerTo(exporter, RagiumAPI.id("honey_cube"))
     }
 
     private fun createEmptyFluidCube(

@@ -1,133 +1,148 @@
 package hiiragi283.ragium.api.data.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTIngredient
-import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.machine.HTRecipeComponentTypes
-import hiiragi283.ragium.api.util.BothEither
-import net.minecraft.advancement.AdvancementCriterion
-import net.minecraft.advancement.AdvancementRequirements
-import net.minecraft.advancement.AdvancementRewards
-import net.minecraft.advancement.criterion.RecipeUnlockedCriterion
+import hiiragi283.ragium.api.recipe.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.HTFluidResult
+import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.common.RagiumContents
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
-import net.minecraft.component.ComponentType
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.data.server.recipe.RecipeProvider
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.recipe.Ingredient
+import net.minecraft.item.ItemStack
+import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 class HTMachineRecipeJsonBuilder private constructor(
     private val type: HTMachineType,
-    private val minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
-    private val requireScan: Boolean = false,
+    private val tier: HTMachineTier = HTMachineTier.PRIMITIVE,
 ) {
     companion object {
         @JvmStatic
-        fun create(
-            type: HTMachineConvertible,
-            minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
-            requireScan: Boolean = false,
-        ): HTMachineRecipeJsonBuilder = type
+        fun create(type: HTMachineConvertible, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder = type
             .asProcessor()
-            ?.let { HTMachineRecipeJsonBuilder(it, minTier, requireScan) }
-            ?: throw IllegalStateException("Machine Type;  ${type.asMachine().id} must be Processor!")
+            ?.let { HTMachineRecipeJsonBuilder(it, minTier) }
+            ?: throw IllegalStateException("Machine SizeType;  ${type.asMachine().id} must be Processor!")
+
+        @JvmStatic
+        fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
+            .getItemId(item)
+            .path
+            .let { RagiumAPI.id(it) }
+
+        @JvmStatic
+        fun createRecipeId(fluid: Fluid): Identifier = Registries.FLUID
+            .getId(fluid)
+            .path
+            .let { RagiumAPI.id(it) }
+
+        @JvmStatic
+        fun createRecipeId(fluid: RagiumContents.Fluids): Identifier = createRecipeId(fluid.fluidEntry.value())
     }
 
-    private val inputs: MutableList<HTIngredient> = mutableListOf()
-    private val outputs: MutableList<HTRecipeResult> = mutableListOf()
-    private var catalyst: Ingredient = Ingredient.EMPTY
-    private val customData: ComponentChanges.Builder = ComponentChanges.builder()
-    private val criteria: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
-    private var suffixCache: Int = 0
+    private val itemInputs: MutableList<HTItemIngredient> = mutableListOf()
+    private val fluidInputs: MutableList<HTFluidIngredient> = mutableListOf()
+    private val itemOutputs: MutableList<HTItemResult> = mutableListOf()
+    private val fluidOutputs: MutableList<HTFluidResult> = mutableListOf()
+    private var catalyst: HTItemIngredient = HTItemIngredient.EMPTY_ITEM
 
     //    Input    //
 
-    private fun addInput(ingredient: HTIngredient): HTMachineRecipeJsonBuilder = apply {
-        inputs.add(ingredient)
+    fun itemInput(item: ItemConvertible, amount: Long = 1): HTMachineRecipeJsonBuilder = apply {
+        itemInputs.add(HTItemIngredient.ofItem(item, amount))
     }
 
-    fun addInput(either: BothEither<ItemConvertible, TagKey<Item>>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
-        either.ifBoth({ addInput(it, count) }, { addInput(it, count) }, BothEither.Priority.RIGHT)
+    fun itemInput(tagKey: TagKey<Item>, amount: Long = 1): HTMachineRecipeJsonBuilder = apply {
+        itemInputs.add(HTItemIngredient.ofItem(tagKey, amount))
     }
 
-    fun addInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(HTIngredient.of(item, count)).apply {
-        hasInput(item, suffixCache.toString())
-        suffixCache++
+    fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+        fluidInputs.add(HTFluidIngredient.ofFluid(fluid, amount))
     }
 
-    fun addInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addInput(HTIngredient.of(tagKey, count)).apply {
-        hasInput(tagKey, suffixCache.toString())
-        suffixCache++
+    fun fluidInput(fluid: RagiumContents.Fluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+        fluidInputs.add(HTFluidIngredient.ofFluid(fluid.fluidEntry.value(), amount))
+    }
+
+    fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+        fluidInputs.add(HTFluidIngredient.ofFluid(tagKey, amount))
     }
 
     //    Output    //
 
-    private fun addOutput(result: HTRecipeResult): HTMachineRecipeJsonBuilder = apply {
-        outputs.add(result)
+    fun itemOutput(
+        item: ItemConvertible,
+        amount: Long = 1,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = apply {
+        itemOutputs.add(HTItemResult.ofItem(item, amount, components))
     }
 
-    fun addOutput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(item, count))
+    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult.ofItem(stack)) }
 
-    // fun addOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = addOutput(HTRecipeResult.of(tagKey, count))
+    fun fluidOutput(
+        fluid: Fluid,
+        amount: Long = FluidConstants.BUCKET,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = apply {
+        fluidOutputs.add(HTFluidResult.ofFluid(fluid, amount, components))
+    }
+
+    fun fluidOutput(
+        fluid: RagiumContents.Fluids,
+        amount: Long = FluidConstants.BUCKET,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = apply {
+        fluidOutputs.add(HTFluidResult.ofFluid(fluid.fluidEntry.value(), amount, components))
+    }
 
     //    Catalyst    //
 
-    fun setCatalyst(catalyst: Ingredient): HTMachineRecipeJsonBuilder = apply {
-        this.catalyst = catalyst
+    fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = apply {
+        catalyst = HTItemIngredient.ofItem(item)
     }
 
-    fun setCatalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = setCatalyst(Ingredient.ofItems(item))
-
-    fun setCatalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = setCatalyst(Ingredient.fromTag(tagKey))
-
-    //    Custom Data    //
-
-    fun <T : Any> setCustomData(type: ComponentType<T>, value: T): HTMachineRecipeJsonBuilder = apply {
-        customData.add(type, value)
+    fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {
+        catalyst = HTItemIngredient.ofItem(tagKey)
     }
 
-    //    Criterion    //
-
-    fun criterion(name: String, criterion: AdvancementCriterion<*>): HTMachineRecipeJsonBuilder = apply {
-        criteria[name] = criterion
+    fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {
+        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
-    fun hasInput(item: ItemConvertible, suffix: String = ""): HTMachineRecipeJsonBuilder =
-        criterion("has_input$suffix", RecipeProvider.conditionsFromItem(item))
-
-    fun hasInput(tagKey: TagKey<Item>, suffix: String = ""): HTMachineRecipeJsonBuilder =
-        criterion("has_input$suffix", RecipeProvider.conditionsFromTag(tagKey))
-
-    fun offerSuffix(exporter: RecipeExporter, suffix: String = "") {
-        offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputs[0].firstItem).withSuffixedPath(suffix))
+    fun offerTo(exporter: RecipeExporter, output: Fluid, suffix: String = "") {
+        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
-    fun offerTo(exporter: RecipeExporter, recipeId: Identifier = CraftingRecipeJsonBuilder.getItemId(outputs[0].firstItem)) {
-        check(inputs.size in 0..3) { "Invalid input count; ${inputs.size}!" }
-        check(outputs.size in 0..3) { "Invalid output count; ${outputs.size}!" }
-        if (requireScan) {
-            setCustomData(HTRecipeComponentTypes.REQUIRE_SCAN, true)
-        }
+    fun offerTo(exporter: RecipeExporter, output: RagiumContents.Fluids, suffix: String = "") {
+        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
+    }
+
+    fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${type.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
+        val recipe: HTMachineRecipe = HTMachineRecipe.createRecipe(
+            HTMachineDefinition(type, tier),
+            itemInputs,
+            fluidInputs,
+            catalyst,
+            itemOutputs,
+            fluidOutputs,
+        )
         exporter.accept(
             prefixedId,
-            HTMachineRecipe(type, minTier, inputs, outputs, catalyst, customData.build()),
-            exporter.advancementBuilder
-                .criterion("has_the_recipe", RecipeUnlockedCriterion.create(prefixedId))
-                .rewards(AdvancementRewards.Builder.recipe(prefixedId))
-                .criteriaMerger(AdvancementRequirements.CriterionMerger.OR)
-                .apply { criteria.forEach(this::criterion) }
-                .build(
-                    recipeId.withPrefixedPath("recipes/misc/$prefix"),
-                ),
+            recipe,
+            null,
         )
     }
 }

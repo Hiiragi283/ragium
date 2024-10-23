@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 162000,
+      "fluids": "minecraft:water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 162000,
+      "fluid": "ragium:nitric_acid"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:breeze_rod"
+    }
+  ]
+}

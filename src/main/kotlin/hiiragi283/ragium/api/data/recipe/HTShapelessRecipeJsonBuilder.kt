@@ -34,7 +34,6 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         ): HTShapelessRecipeJsonBuilder = create(ItemStack(Registries.ITEM.getEntry(output.asItem()), count, components))
     }
 
-    private lateinit var patterns: Array<out String>
     private val inputs: DefaultedList<Ingredient> = DefaultedList.of()
     private val criteriaMap: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var group: String? = null

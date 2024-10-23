@@ -25,7 +25,7 @@ class HTEmptyFluidCubeStorage(val context: ContainerItemContext) : InsertionOnly
                 RagiumContents.Misc.FILLED_FLUID_CUBE,
                 ComponentChanges
                     .builder()
-                    .add(RagiumComponentTypes.FLUID, resource.registryEntry)
+                    .add(RagiumComponentTypes.FLUID, resource.fluid)
                     .build(),
             )
             if (context.exchange(newVariant, 1, transaction) == 1L) {

@@ -3,11 +3,8 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.api.recipe.HTIngredientNew
-import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.recipe.HTItemResult
-import hiiragi283.ragium.api.recipe.HTRecipeResultNew
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
@@ -133,12 +130,11 @@ object HTMaterialItemRecipeRegistry {
     private fun ingotToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val dust: ItemConvertible = properties[DUST] ?: return
         val ingot: TagKey<Item> = getTagKey(name, INGOT)
-        HTMachineRecipeJsonBuilders.createGrinder(
-            exporter,
-            HTIngredientNew.ofItem(ingot),
-            HTRecipeResultNew.ofItem(dust),
-            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_ingot"),
-        )
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .itemInput(ingot)
+            .itemOutput(dust)
+            .offerTo(exporter, dust, "_from_ingot")
     }
 
     @JvmStatic
@@ -162,23 +158,22 @@ object HTMaterialItemRecipeRegistry {
             .unlockedBy(ingot)
             .offerTo(wrapper(exporter, true))
         // Metal Former Recipe
-        HTMachineRecipeJsonBuilders.createMetalFormer(
-            exporter,
-            HTItemIngredient.ofItem(ingot),
-            HTItemResult.ofItem(plate),
-        )
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.METAL_FORMER)
+            .itemInput(ingot)
+            .itemOutput(plate)
+            .offerTo(exporter, plate)
     }
 
     @JvmStatic
     private fun plateToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val dust: ItemConvertible = properties[DUST] ?: return
         val plate: TagKey<Item> = getTagKey(name, PLATE)
-        HTMachineRecipeJsonBuilders.createGrinder(
-            exporter,
-            HTIngredientNew.ofItem(plate),
-            HTRecipeResultNew.ofItem(dust),
-            recipeId = HTMachineRecipeJsonBuilders.createRecipeId(dust).withSuffixedPath("_from_plate"),
-        )
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .itemInput(plate)
+            .itemOutput(dust)
+            .offerTo(exporter, dust, "_from_plate")
     }
 
     @JvmStatic
@@ -186,12 +181,12 @@ object HTMaterialItemRecipeRegistry {
         val rawMaterial: ItemConvertible = properties[RAW] ?: return
         val ore: TagKey<Item> = getTagKey(name, ORE)
         // Grinder Recipe
-        HTMachineRecipeJsonBuilders.createGrinder(
-            exporter,
-            HTIngredientNew.ofItem(ore),
-            HTRecipeResultNew.ofItem(rawMaterial, 2),
-            properties[ORE_SUB_PRODUCTS]?.let { HTRecipeResultNew.ofItem(it) },
-        )
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .itemInput(ore)
+            .itemOutput(rawMaterial, 2)
+            .apply { properties[ORE_SUB_PRODUCTS]?.let(::itemOutput) }
+            .offerTo(exporter, rawMaterial)
     }
 
     @JvmStatic
@@ -199,12 +194,12 @@ object HTMaterialItemRecipeRegistry {
         val dust: ItemConvertible = properties[DUST] ?: return
         val rawMaterial: TagKey<Item> = getTagKey(name, RAW)
         // Grinder Recipe
-        HTMachineRecipeJsonBuilders.createGrinder(
-            exporter,
-            HTIngredientNew.ofItem(rawMaterial),
-            HTRecipeResultNew.ofItem(dust),
-            HTRecipeResultNew.ofItem(dust),
-        )
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .itemInput(rawMaterial)
+            .itemOutput(dust)
+            .itemOutput(dust)
+            .offerTo(exporter, dust, "_from_raw")
     }
 
     @JvmStatic

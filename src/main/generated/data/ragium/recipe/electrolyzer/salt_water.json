@@ -1,5 +1,5 @@
 {
-  "type": "ragium:large_machine",
+  "type": "ragium:machine",
   "definition": {
     "type": "ragium:electrolyzer",
     "tier": "primitive"
@@ -19,7 +19,10 @@
   ],
   "item_outputs": [
     {
-      "item": "ragium:sodium_hydroxide_fluid_cube"
+      "components": {
+        "ragium:fluid": "ragium:sodium_hydroxide"
+      },
+      "item": "ragium:filled_fluid_cube"
     }
   ]
 }

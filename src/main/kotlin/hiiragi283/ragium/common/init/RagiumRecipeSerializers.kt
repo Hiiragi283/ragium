@@ -2,9 +2,8 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipeNew
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.Recipe
@@ -18,20 +17,6 @@ object RagiumRecipeSerializers {
         "machine",
         HTMachineRecipe.CODEC,
         HTMachineRecipe.PACKET_CODEC,
-    )
-
-    @JvmField
-    val SIMPLE_MACHINE: RecipeSerializer<HTMachineRecipeNew.Simple> = register(
-        "simple_machine",
-        HTMachineRecipeNew.Simple.CODEC,
-        HTMachineRecipeNew.Simple.PACKET_CODEC,
-    )
-
-    @JvmField
-    val LARGE_MACHINE: RecipeSerializer<HTMachineRecipeNew.Large> = register(
-        "large_machine",
-        HTMachineRecipeNew.Large.CODEC,
-        HTMachineRecipeNew.Large.PACKET_CODEC,
     )
 
     @JvmField

@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "ragium:oxygen"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:copper_bulb"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:oxidized_copper_bulb"
+    }
+  ]
+}

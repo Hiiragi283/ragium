@@ -1,23 +1,21 @@
 package hiiragi283.ragium.client.integration.rei
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.matchingStacks
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.HTFluidResult
+import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
 import me.shedaniel.rei.api.common.category.CategoryIdentifier
 import me.shedaniel.rei.api.common.entry.EntryIngredient
 import me.shedaniel.rei.api.common.entry.EntryStack
-import me.shedaniel.rei.api.common.util.EntryIngredients
 import me.shedaniel.rei.api.common.util.EntryStacks
 import me.shedaniel.rei.impl.Internals
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentLevelEntry
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.EnchantedBookItem
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.registry.DynamicRegistryManager
@@ -35,9 +33,6 @@ val dynamicRegistry: () -> DynamicRegistryManager
 val HTMachineConvertible.categoryId: CategoryIdentifier<HTMachineRecipeDisplay>
     get() = CategoryIdentifier.of(asMachine().id)
 
-val HTMachineConvertible.categoryIdNew: CategoryIdentifier<HTMachineRecipeDisplayNew>
-    get() = CategoryIdentifier.of(asMachine().id.withSuffixedPath("_new"))
-
 //    EntryStack    //
 
 fun HTMachineConvertible.createEntryStack(tier: HTMachineTier): EntryStack<ItemStack> = EntryStacks.of(createItemStack(tier))
@@ -52,7 +47,7 @@ fun createEnchantedBook(key: RegistryKey<Enchantment>): EntryStack<ItemStack> = 
 
 //    Display    //
 
-@JvmField
+/*@JvmField
 val INPUT_ENTRIES: HTPropertyKey.Defaulted<(HTMachineRecipe) -> List<EntryIngredient>> =
     HTPropertyKey.Defaulted(
         RagiumAPI.id("input_entries"),
@@ -73,23 +68,17 @@ val OUTPUT_ENTRIES: HTPropertyKey.Defaulted<(HTMachineRecipe) -> List<EntryIngre
         value = { recipe: HTMachineRecipe ->
             recipe.outputs.map(HTRecipeResult::entryIngredient)
         },
-    )
+    )*/
 
-fun HTMachineType.getInputEntries(recipe: HTMachineRecipe): List<EntryIngredient> = getOrDefault(INPUT_ENTRIES)(recipe)
+// fun HTMachineType.getInputEntries(recipe: HTMachineRecipe): List<EntryIngredient> = getOrDefault(INPUT_ENTRIES)(recipe)
 
-fun HTMachineType.getOutputEntries(recipe: HTMachineRecipe): List<EntryIngredient> = getOrDefault(OUTPUT_ENTRIES)(recipe)
+// fun HTMachineType.getOutputEntries(recipe: HTMachineRecipe): List<EntryIngredient> = getOrDefault(OUTPUT_ENTRIES)(recipe)
 
 //    WeightedIngredient    //
 
-val HTIngredient.entryStacks: List<EntryStack<*>>
-    get() = matchingStacks.map(EntryStacks::of)
-
-val HTIngredient.entryIngredient: EntryIngredient
-    get() = EntryIngredient.of(entryStacks)
-
 val HTItemIngredient.entryStacks: List<EntryStack<*>>
     @JvmName("itemEntryStacks")
-    get() = weightedList.map { (item: Item, amount: Long) -> EntryStacks.of(item, amount.toInt()) }
+    get() = matchingStacks.map(EntryStacks::of)
 
 val HTItemIngredient.entryIngredient: EntryIngredient
     @JvmName("itemEntryIngredient")
@@ -104,12 +93,6 @@ val HTFluidIngredient.entryIngredient: EntryIngredient
     get() = EntryIngredient.of(entryStacks)
 
 //    HTRecipeResult    //
-
-val HTRecipeResult.entryStack: EntryStack<*>
-    get() = EntryStacks.of(toStack())
-
-val HTRecipeResult.entryIngredient: EntryIngredient
-    get() = EntryIngredient.of(entryStack)
 
 val HTItemResult.entryStack: EntryStack<*>
     @JvmName("itemEntryStacks")

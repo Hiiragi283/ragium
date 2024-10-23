@@ -1,20 +1,27 @@
 {
   "type": "ragium:machine",
-  "inputs": [
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
     {
-      "items": "ragium:raw_bauxite"
-    },
-    {
-      "items": "ragium:sodium_hydroxide_fluid_cube"
+      "fluids": "ragium:sodium_hydroxide"
     }
   ],
-  "machine_type": "ragium:chemical_reactor",
-  "outputs": [
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "ragium:raw_bauxite"
+    }
+  ],
+  "item_outputs": [
     {
       "item": "ragium:alumina_dust"
-    },
-    {
-      "item": "ragium:water_fluid_cube"
     }
   ]
 }

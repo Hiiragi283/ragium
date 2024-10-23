@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "minecraft:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "ragium:pulp"
+    },
+    {
+      "items": "#ragium:alkali"
+    }
+  ],
+  "item_outputs": [
+    {
+      "amount": 2,
+      "item": "minecraft:paper"
+    }
+  ]
+}

@@ -8,8 +8,7 @@ import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
-import hiiragi283.ragium.common.init.RagiumNetworks
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
@@ -86,11 +85,11 @@ open class HTProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
             field = value
             if (value != null) {
                 world?.sendPacket { player: ServerPlayerEntity ->
-                    RagiumNetworks.sendMachineRecipes(
+                    /*RagiumNetworks.sendMachineRecipes(
                         player,
                         pos,
                         value,
-                    )
+                    )*/
                 }
             }
         }

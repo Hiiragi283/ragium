@@ -14,28 +14,16 @@ object RagiumItemTags {
     val ALKALI: TagKey<Item> = create(RagiumAPI.MOD_ID, "alkali")
 
     @JvmField
-    val ALCOHOL: TagKey<Item> = create(RagiumAPI.MOD_ID, "alcohol")
-
-    @JvmField
     val CIRCUITS: TagKey<Item> = create(RagiumAPI.MOD_ID, "circuits")
 
     @JvmField
     val COILS: TagKey<Item> = create(RagiumAPI.MOD_ID, "coils")
 
     @JvmField
-    val FUEL_CUBES: TagKey<Item> = create(RagiumAPI.MOD_ID, "fluid_cubes/fuel")
-
-    @JvmField
-    val FLUID_CUBES: TagKey<Item> = create(RagiumAPI.MOD_ID, "fluid_cubes")
-
-    @JvmField
     val HULLS: TagKey<Item> = create(RagiumAPI.MOD_ID, "hulls")
 
     @JvmField
     val MOTORS: TagKey<Item> = create(RagiumAPI.MOD_ID, "motors")
-
-    @JvmField
-    val ORGANIC_OILS: TagKey<Item> = create(RagiumAPI.MOD_ID, "organic_oils")
 
     @JvmField
     val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")

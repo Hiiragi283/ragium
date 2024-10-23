@@ -6,13 +6,11 @@ import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
-import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -117,7 +115,6 @@ object RagiumContentRegister : HTContentRegister {
 
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             Registry.register(Registries.FLUID, fluid.fluidEntry.id, HTVirtualFluid())
-            registerItem(fluid, fluid.createItem())
         }
     }
 
@@ -179,7 +176,6 @@ object RagiumContentRegister : HTContentRegister {
                     .itemVariant
                     .componentMap
                     .get(RagiumComponentTypes.FLUID)
-                    ?.value()
                     ?.let {
                         FullItemFluidStorage(
                             context,
@@ -270,8 +266,8 @@ object RagiumContentRegister : HTContentRegister {
             )
         }
         // Fuel Time
-        FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
-        FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)
+        // FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
+        // FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)
 
         // HTFluidDrinkingHandlerRegistry
         HTFluidDrinkingHandlerRegistry.register(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->

@@ -2,16 +2,14 @@ package hiiragi283.ragium.common.screen
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.getMachineRecipes
-import hiiragi283.ragium.api.extension.machineInventory
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTIngredient
-import hiiragi283.ragium.api.recipe.HTRecipeResult
-import hiiragi283.ragium.api.recipe.machine.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import hiiragi283.ragium.common.machine.HTProcessorMachineEntity
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
@@ -60,24 +58,24 @@ class HTProcessorScreenHandler(
             get() = listOf(Items.GLASS_PANE.defaultStack)
 
         @JvmStatic
-        private fun itemOf(input: HTIngredient?): WItem = WItem(input?.matchingStacks ?: defaultPreview)
+        private fun itemOf(input: HTItemIngredient?): WItem = WItem(input?.matchingStacks ?: defaultPreview)
 
         @JvmStatic
         private fun itemOf(catalyst: Ingredient?): WItem =
             WItem(catalyst?.matchingStacks?.takeIf(Array<ItemStack>::isNotEmpty)?.toList() ?: defaultPreview)
 
         @JvmStatic
-        private fun itemOf(output: HTRecipeResult?): WItem = WItem(output?.toStack()?.let(::listOf) ?: defaultPreview)
+        private fun itemOf(output: HTItemResult?): WItem = WItem(output?.itemStack?.let(::listOf) ?: defaultPreview)
 
         @JvmStatic
         private fun createPreview(recipe: HTMachineRecipe?): Array<WItem> = arrayOf(
-            itemOf(recipe?.getInput(0)),
-            itemOf(recipe?.getInput(1)),
-            itemOf(recipe?.getInput(2)),
+            itemOf(recipe?.itemInputs?.get(0)),
+            itemOf(recipe?.itemInputs?.get(1)),
+            itemOf(recipe?.itemInputs?.get(2)),
             itemOf(recipe?.catalyst),
-            itemOf(recipe?.getOutput(2)),
-            itemOf(recipe?.getOutput(2)),
-            itemOf(recipe?.getOutput(2)),
+            itemOf(recipe?.itemOutputs?.getOrNull(0)),
+            itemOf(recipe?.itemOutputs?.getOrNull(1)),
+            itemOf(recipe?.itemOutputs?.getOrNull(2)),
         )
     }
 

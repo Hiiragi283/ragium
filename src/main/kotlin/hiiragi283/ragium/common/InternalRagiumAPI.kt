@@ -40,7 +40,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         val builder: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
 
         fun addMachine(key: HTMachineTypeKey, properties: HTPropertyHolder, category: HTMachineType.Category) {
-            check(key !in keyCache) { "Machine Type; ${key.id} is already registered!" }
+            check(key !in keyCache) { "Machine SizeType; ${key.id} is already registered!" }
             val type: HTMachineType = HTMachineType.create(HTPropertyHolder.builder(properties), category)
             keyCache.add(key)
             builder.put(key, type)
