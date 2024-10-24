@@ -19,7 +19,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.block.Block
@@ -39,7 +38,6 @@ import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import vazkii.patchouli.common.item.ItemModBook
 import java.util.concurrent.CompletableFuture
 
 class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
@@ -72,13 +70,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         craftingIngredients(exporter)
         craftingMachines(exporter)
         craftingTools(exporter)
-
-        HTShapelessRecipeJsonBuilder
-            .create(ItemModBook.forBook(RagiumAPI.id("ragi_wiki")))
-            .input(Items.BOOK)
-            .input(RagiumContents.RawMaterials.CRUDE_RAGINITE)
-            .input(ConventionalItemTags.IRON_INGOTS)
-            .offerTo(exporter.conditions(ResourceConditions.allModsLoaded("patchouli")))
     }
 
     //    Crafting - Armors    //
@@ -392,28 +383,28 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.createFilledCube(Fluids.WATER))
+            .create(RagiumAPI.getInstance().createFilledCube(Fluids.WATER))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.WATER_BUCKET)
             .unlockedBy(Items.WATER_BUCKET)
             .offerTo(exporter, RagiumAPI.id("water_cube"))
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.createFilledCube(Fluids.LAVA))
+            .create(RagiumAPI.getInstance().createFilledCube(Fluids.LAVA))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.LAVA_BUCKET)
             .unlockedBy(Items.LAVA_BUCKET)
             .offerTo(exporter, RagiumAPI.id("lava_cube"))
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.createFilledCube(RagiumContents.Fluids.MILK.asFluid()))
+            .create(RagiumAPI.getInstance().createFilledCube(RagiumContents.Fluids.MILK.asFluid()))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.MILK_BUCKET)
             .unlockedBy(Items.MILK_BUCKET)
             .offerTo(exporter, RagiumAPI.id("milk_cube"))
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumContents.createFilledCube(RagiumContents.Fluids.HONEY.asFluid()))
+            .create(RagiumAPI.getInstance().createFilledCube(RagiumContents.Fluids.HONEY.asFluid()))
             .input(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             .input(Items.HONEY_BOTTLE)
             .input(Items.HONEY_BOTTLE)

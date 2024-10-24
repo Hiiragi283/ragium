@@ -114,7 +114,7 @@ object RagiumContentRegister : HTContentRegister {
         }
 
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
-            Registry.register(Registries.FLUID, fluid.fluidEntry.id, HTVirtualFluid())
+            Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
         }
     }
 
@@ -171,7 +171,7 @@ object RagiumContentRegister : HTContentRegister {
             .combinedItemApiProvider(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
             .register(::HTEmptyFluidCubeStorage)
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            if (context.itemVariant.isOf(RagiumContents.Misc.FILLED_FLUID_CUBE.asItem())) {
+            if (context.itemVariant.isOf(RagiumContents.Misc.FILLED_FLUID_CUBE)) {
                 context
                     .itemVariant
                     .componentMap
@@ -259,7 +259,7 @@ object RagiumContentRegister : HTContentRegister {
         // Fluid Attributes
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             FluidVariantAttributes.register(
-                fluid.fluidEntry.value(),
+                fluid.asFluid(),
                 object : FluidVariantAttributeHandler {
                     override fun getName(fluidVariant: FluidVariant): Text = Text.literal(fluid.enName)
                 },

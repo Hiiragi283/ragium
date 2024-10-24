@@ -40,9 +40,11 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
         RagiumFeatures.init()
         RagiumItemGroup.init()
         RagiumMaterialItemRecipes.init()
-        RagiumNetworks.init()
+        RagiumNetworks
 
         RagiumContentRegister.initRegistry()
+
+        InternalRagiumAPI.integrationCache.forEach(Runnable::run)
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

@@ -7,6 +7,8 @@ import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.minecraft.advancement.AdvancementCriterion
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import org.jetbrains.annotations.ApiStatus
 import org.slf4j.Logger
@@ -40,7 +42,11 @@ interface RagiumAPI {
         minTier: HTMachineTier,
     ): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 
+    fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
+
     fun getHardModeCondition(isHard: Boolean): ResourceCondition
+
+    fun registerIntegration(action: () -> Unit)
 
     //    Config    //
 

@@ -3,13 +3,11 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.*
 import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
 import hiiragi283.ragium.common.block.HTCropsBlock
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.item.*
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
@@ -26,6 +24,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.text.Text
+import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.BlockPos
@@ -34,14 +33,6 @@ import net.minecraft.world.biome.Biome
 import java.awt.Color
 
 object RagiumContents : HTContentRegister {
-    @JvmStatic
-    fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack = buildItemStack(
-        Misc.FILLED_FLUID_CUBE,
-        count,
-    ) {
-        add(RagiumComponentTypes.FLUID, fluid)
-    }
-
     //    Ores    //
 
     enum class Ores(override val material: RagiumMaterials, val baseStone: Block) : HTContent.Material<Block> {
@@ -537,9 +528,9 @@ object RagiumContents : HTContentRegister {
         TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
         ;
 
-        val fluidEntry: HTRegistryEntry<Fluid> =
-            HTRegistryEntry(Registries.FLUID, RagiumAPI.id(name.lowercase()))
+        val id: Identifier = RagiumAPI.id(name.lowercase())
+        private val fluidEntry: HTRegistryEntry<Fluid> = HTRegistryEntry(Registries.FLUID, id)
 
-        fun asFluid() = fluidEntry.value()
+        fun asFluid(): Fluid = fluidEntry.value()
     }
 }

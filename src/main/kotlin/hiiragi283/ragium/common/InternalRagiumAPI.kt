@@ -3,13 +3,18 @@ package hiiragi283.ragium.common
 import com.google.common.collect.ImmutableBiMap
 import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.common.RagiumContents.Misc
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.ItemStack
 
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
@@ -22,7 +27,20 @@ internal data object InternalRagiumAPI : RagiumAPI {
         minTier: HTMachineTier,
     ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(type, minTier)
 
+    override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
+        Misc.FILLED_FLUID_CUBE,
+        count,
+    ) {
+        add(RagiumComponentTypes.FLUID, fluid)
+    }
+
     override fun getHardModeCondition(isHard: Boolean): ResourceCondition = HTHardModeResourceCondition.fromBool(isHard)
+
+    internal val integrationCache: MutableList<Runnable> = mutableListOf()
+
+    override fun registerIntegration(action: () -> Unit) {
+        integrationCache.add(action)
+    }
 
     //    Init    //
 

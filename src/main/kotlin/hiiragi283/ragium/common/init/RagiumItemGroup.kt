@@ -83,7 +83,7 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 Registries.FLUID
                     .filter { it.isStill(it.defaultState) }
-                    .map(RagiumContents::createFilledCube)
+                    .map(RagiumAPI.getInstance()::createFilledCube)
                     .forEach(entries::add)
             }
         }

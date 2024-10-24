@@ -52,18 +52,6 @@
         "value": "hiiragi283.ragium.client.RagiumClient",
         "adapter": "kotlin"
       }
-    ],
-    "jade": [
-      {
-        "value": "hiiragi283.ragium.client.integration.jade.RagiumJadePlugin",
-        "adapter": "kotlin"
-      }
-    ],
-    "rei_client": [
-      {
-        "value": "hiiragi283.ragium.client.integration.rei.RagiumREIClient",
-        "adapter": "kotlin"
-      }
     ]
   },
   "mixins": [

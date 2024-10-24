@@ -12,8 +12,6 @@ import hiiragi283.ragium.client.gui.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
-import hiiragi283.ragium.client.integration.accessories.RagiumAccessoriesInit
-import hiiragi283.ragium.client.integration.patchouli.RagiumPatchouliInit
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
@@ -26,13 +24,10 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTHeatGeneratorMachineEntity
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
-import hiiragi283.ragium.common.network.HTOpenBackpackPayload
-import io.wispforest.accessories.api.AccessoriesCapability
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -44,7 +39,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
 import net.minecraft.client.model.ModelPartBuilder
@@ -65,8 +59,6 @@ import net.minecraft.world.BlockRenderView
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvironmentBridge {
     override fun onInitializeClient() {
-        RagiumKeyBinds
-
         registerBlocks()
         registerEntities()
         registerFluids()
@@ -74,9 +66,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
         registerScreens()
         registerEvents()
         registerNetworks()
-
-        RagiumAccessoriesInit.init()
-        RagiumPatchouliInit.init()
 
         RagiumAPI.log { info("Ragium-Client initialized!") }
     }
@@ -146,7 +135,7 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
     private fun registerFluids() {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             FluidRenderHandlerRegistry.INSTANCE.register(
-                fluid.fluidEntry.value(),
+                fluid.asFluid(),
                 SimpleFluidRenderHandler(
                     Identifier.of("block/white_concrete"),
                     Identifier.of("block/white_concrete"),
@@ -184,15 +173,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
                     HTFluidCubeModel
                 } else {
                     original
-                }
-            }
-        }
-
-        ClientTickEvents.END_CLIENT_TICK.register { client: MinecraftClient ->
-            while (RagiumKeyBinds.OPEN_BACKPACK.wasPressed()) {
-                val capability: AccessoriesCapability = client.player?.accessoriesCapability() ?: break
-                if (capability.isEquipped(RagiumContents.Misc.BACKPACK.asItem())) {
-                    ClientPlayNetworking.send(HTOpenBackpackPayload.ENDER)
                 }
             }
         }

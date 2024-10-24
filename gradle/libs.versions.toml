@@ -52,11 +52,7 @@ mods-fabric = [
     "fabric-api",
     "fabric-kotlin",
     "fabric-loader",
-    "accessories",
-    "jade",
     "mod-modmenu",
-    "patchouli",
-    "rei",
     "tech-reborn"
 ]
 mods-include = [
@@ -66,7 +62,10 @@ mods-include = [
 mods-compile = [
     
 ]
-mods-runtime = []
+mods-runtime = [
+    "jade",
+    "rei"
+]
 
 [plugins]
 fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }

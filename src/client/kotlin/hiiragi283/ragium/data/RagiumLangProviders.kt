@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTEntryDelegated
 import hiiragi283.ragium.api.content.HTTranslationFormatter
@@ -9,7 +8,6 @@ import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.client.RagiumKeyBinds
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
@@ -194,9 +192,9 @@ object RagiumLangProviders {
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
             // Key Binds
-            builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
+            // builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
 
-            builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "Open Backpack")
+            // builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "Open Backpack")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
@@ -332,9 +330,9 @@ object RagiumLangProviders {
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
             // Key Binds
-            builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
+            // builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
 
-            builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "バックパックを開く")
+            // builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "バックパックを開く")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
