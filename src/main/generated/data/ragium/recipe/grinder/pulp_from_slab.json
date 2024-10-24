@@ -6,7 +6,7 @@
   },
   "item_inputs": [
     {
-      "amount": 2,
+      "count": 2,
       "items": "#minecraft:wooden_slabs"
     }
   ],

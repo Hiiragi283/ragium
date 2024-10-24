@@ -9,7 +9,7 @@
       "items": "#c:ingots/iron"
     },
     {
-      "amount": 2,
+      "count": 2,
       "items": "#minecraft:coals"
     }
   ],

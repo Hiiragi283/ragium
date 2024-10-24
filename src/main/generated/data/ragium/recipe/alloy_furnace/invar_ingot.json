@@ -6,7 +6,7 @@
   },
   "item_inputs": [
     {
-      "amount": 2,
+      "count": 2,
       "items": "#c:ingots/iron"
     },
     {
@@ -15,7 +15,7 @@
   ],
   "item_outputs": [
     {
-      "amount": 3,
+      "count": 3,
       "item": "ragium:invar_ingot"
     }
   ]

@@ -9,7 +9,7 @@
       "items": "#c:ingots/iron"
     },
     {
-      "amount": 4,
+      "count": 4,
       "items": "ragium:raginite_dust"
     }
   ],

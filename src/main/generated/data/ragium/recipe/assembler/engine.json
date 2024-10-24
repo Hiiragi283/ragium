@@ -6,11 +6,11 @@
   },
   "item_inputs": [
     {
-      "amount": 8,
+      "count": 8,
       "items": "#c:plates/steel"
     },
     {
-      "amount": 8,
+      "count": 8,
       "items": "ragium:ragi_steel_plate"
     }
   ],

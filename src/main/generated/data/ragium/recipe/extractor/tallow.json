@@ -11,7 +11,7 @@
   ],
   "item_inputs": [
     {
-      "amount": 4,
+      "count": 4,
       "items": "#ragium:foods/protein"
     }
   ]

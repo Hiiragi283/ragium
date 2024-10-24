@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
@@ -15,6 +16,8 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.world.World
+import java.util.*
+import java.util.function.Function
 
 //    Network    //
 
@@ -68,9 +71,19 @@ fun <T : Any> pairCodecOf(codec: Codec<T>, defaultValue: T, name: String): MapCo
     codec.optionalFieldOf("second", defaultValue),
 ).optionalFieldOf(name, Pair.of(defaultValue, defaultValue))
 
+fun longRangeCodec(min: Long, max: Long): Codec<Long> {
+    val func: Function<Long, DataResult<Long>> = Codec.checkRange(min, max)
+    return Codec.LONG.flatXmap(func, func)
+}
+
 //    PacketCodec    //
 
 fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> = collect(PacketCodecs.toList())
+
+fun <B : ByteBuf, V : Any> PacketCodec<B, V>.validate(checker: (V) -> DataResult<V>): PacketCodec<B, V> = xmap(
+    { checker(it).orThrow },
+    { checker(it).orThrow },
+)
 
 // fun <T : StringIdentifiable> packetCodecOf(from: (String) -> T): PacketCodec<RegistryByteBuf, T> =
 //     PacketCodec.tuple(PacketCodecs.STRING, StringIdentifiable::asString, from)

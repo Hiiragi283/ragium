@@ -6,17 +6,17 @@
   },
   "item_inputs": [
     {
-      "amount": 5,
+      "count": 5,
       "items": "#c:ingots/gold"
     },
     {
-      "amount": 3,
+      "count": 3,
       "items": "minecraft:netherite_scrap"
     }
   ],
   "item_outputs": [
     {
-      "amount": 2,
+      "count": 2,
       "item": "minecraft:netherite_ingot"
     }
   ]

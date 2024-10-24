@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -488,7 +489,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ELECTROLYZER)
             .fluidInput(RagiumContents.Fluids.SALT_WATER)
-            .itemOutput(RagiumContents.createFilledCube(RagiumContents.Fluids.SODIUM_HYDROXIDE.asFluid()))
+            .itemOutput(RagiumAPI.getInstance().createFilledCube(RagiumContents.Fluids.SODIUM_HYDROXIDE.asFluid()))
             .fluidOutput(RagiumContents.Fluids.HYDROGEN)
             .fluidOutput(RagiumContents.Fluids.CHLORINE)
             .offerTo(exporter, RagiumContents.Fluids.SALT_WATER)
@@ -641,8 +642,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     ) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
-            .itemInput(input.first, input.second.toLong())
-            .itemOutput(output.first, output.second.toLong())
+            .itemInput(input.first, input.second)
+            .itemOutput(output.first, output.second)
             .offerTo(exporter, output.first, suffix)
     }
 
@@ -655,8 +656,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     ) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
-            .itemInput(input.first, input.second.toLong())
-            .itemOutput(output.first, output.second.toLong())
+            .itemInput(input.first, input.second)
+            .itemOutput(output.first, output.second)
             .offerTo(exporter, output.first, suffix)
     }
 

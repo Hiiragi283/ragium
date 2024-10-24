@@ -6,13 +6,13 @@
   },
   "item_inputs": [
     {
-      "amount": 4,
+      "count": 4,
       "items": "#minecraft:wooden_stairs"
     }
   ],
   "item_outputs": [
     {
-      "amount": 6,
+      "count": 6,
       "item": "ragium:pulp"
     }
   ]

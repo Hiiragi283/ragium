@@ -6,11 +6,11 @@
   },
   "item_inputs": [
     {
-      "amount": 4,
+      "count": 4,
       "items": "#c:dusts/redstone"
     },
     {
-      "amount": 5,
+      "count": 5,
       "items": "ragium:raginite_dust"
     }
   ],

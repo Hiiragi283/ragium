@@ -16,7 +16,7 @@
   ],
   "item_outputs": [
     {
-      "amount": 12,
+      "count": 12,
       "item": "minecraft:tnt"
     }
   ]

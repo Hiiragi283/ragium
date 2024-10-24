@@ -6,13 +6,13 @@
   },
   "item_inputs": [
     {
-      "amount": 3,
+      "count": 3,
       "items": "#minecraft:wooden_fences"
     }
   ],
   "item_outputs": [
     {
-      "amount": 5,
+      "count": 5,
       "item": "ragium:pulp"
     }
   ]

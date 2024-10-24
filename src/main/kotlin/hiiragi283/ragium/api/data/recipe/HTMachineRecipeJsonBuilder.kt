@@ -5,11 +5,9 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTFluidIngredient
-import hiiragi283.ragium.api.recipe.HTFluidResult
-import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
@@ -22,6 +20,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
+import java.util.*
 
 class HTMachineRecipeJsonBuilder private constructor(
     private val type: HTMachineType,
@@ -47,55 +46,55 @@ class HTMachineRecipeJsonBuilder private constructor(
             .let { RagiumAPI.id(it) }
 
         @JvmStatic
-        fun createRecipeId(fluid: RagiumContents.Fluids): Identifier = createRecipeId(fluid.fluidEntry.value())
+        fun createRecipeId(fluid: RagiumContents.Fluids): Identifier = createRecipeId(fluid.asFluid())
     }
 
-    private val itemInputs: MutableList<HTItemIngredient> = mutableListOf()
-    private val fluidInputs: MutableList<HTFluidIngredient> = mutableListOf()
-    private val itemOutputs: MutableList<HTItemResult> = mutableListOf()
-    private val fluidOutputs: MutableList<HTFluidResult> = mutableListOf()
-    private var catalyst: HTItemIngredient = HTItemIngredient.EMPTY_ITEM
+    private val itemInputs: MutableList<HTIngredient.Item> = mutableListOf()
+    private val fluidInputs: MutableList<HTIngredient.Fluid> = mutableListOf()
+    private val itemOutputs: MutableList<HTRecipeResult.Item> = mutableListOf()
+    private val fluidOutputs: MutableList<HTRecipeResult.Fluid> = mutableListOf()
+    private var catalyst: HTIngredient.Item? = null
 
     //    Input    //
 
-    fun itemInput(item: ItemConvertible, amount: Long = 1): HTMachineRecipeJsonBuilder = apply {
-        itemInputs.add(HTItemIngredient.ofItem(item, amount))
+    fun itemInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
+        itemInputs.add(HTIngredient.ofItem(item, count))
     }
 
-    fun itemInput(tagKey: TagKey<Item>, amount: Long = 1): HTMachineRecipeJsonBuilder = apply {
-        itemInputs.add(HTItemIngredient.ofItem(tagKey, amount))
+    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
+        itemInputs.add(HTIngredient.ofItem(tagKey, count))
     }
 
     fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.ofFluid(fluid, amount))
+        fluidInputs.add(HTIngredient.ofFluid(fluid, amount))
     }
 
     fun fluidInput(fluid: RagiumContents.Fluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.ofFluid(fluid.fluidEntry.value(), amount))
+        fluidInputs.add(HTIngredient.ofFluid(fluid.asFluid(), amount))
     }
 
     fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.ofFluid(tagKey, amount))
+        fluidInputs.add(HTIngredient.ofFluid(tagKey, amount))
     }
 
     //    Output    //
 
     fun itemOutput(
         item: ItemConvertible,
-        amount: Long = 1,
+        count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTItemResult.ofItem(item, amount, components))
+        itemOutputs.add(HTRecipeResult.ofItem(item, count, components))
     }
 
-    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult.ofItem(stack)) }
+    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTRecipeResult.ofItem(stack)) }
 
     fun fluidOutput(
         fluid: Fluid,
         amount: Long = FluidConstants.BUCKET,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTFluidResult.ofFluid(fluid, amount, components))
+        fluidOutputs.add(HTRecipeResult.ofFluid(fluid, amount, components))
     }
 
     fun fluidOutput(
@@ -103,17 +102,17 @@ class HTMachineRecipeJsonBuilder private constructor(
         amount: Long = FluidConstants.BUCKET,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTFluidResult.ofFluid(fluid.fluidEntry.value(), amount, components))
+        fluidOutputs.add(HTRecipeResult.ofFluid(fluid.asFluid(), amount, components))
     }
 
     //    Catalyst    //
 
     fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = apply {
-        catalyst = HTItemIngredient.ofItem(item)
+        catalyst = HTIngredient.ofItem(item)
     }
 
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {
-        catalyst = HTItemIngredient.ofItem(tagKey)
+        catalyst = HTIngredient.ofItem(tagKey)
     }
 
     fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {
@@ -135,7 +134,7 @@ class HTMachineRecipeJsonBuilder private constructor(
             HTMachineDefinition(type, tier),
             itemInputs,
             fluidInputs,
-            catalyst,
+            Optional.ofNullable(catalyst),
             itemOutputs,
             fluidOutputs,
         )

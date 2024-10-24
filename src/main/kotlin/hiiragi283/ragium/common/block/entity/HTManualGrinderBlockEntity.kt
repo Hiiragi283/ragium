@@ -59,7 +59,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             ?.value
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        parent.getStack(0).decrement(recipe.itemInputs[0].amount.toInt())
+        parent.getStack(0).decrement(recipe.itemInputs[0].amount)
         world.playSoundAtBlockCenter(
             pos,
             SoundEvents.BLOCK_GRINDSTONE_USE,

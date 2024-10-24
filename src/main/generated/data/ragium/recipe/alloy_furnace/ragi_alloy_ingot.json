@@ -9,7 +9,7 @@
       "items": "#c:ingots/copper"
     },
     {
-      "amount": 4,
+      "count": 4,
       "items": "ragium:crude_raginite_dust"
     }
   ],

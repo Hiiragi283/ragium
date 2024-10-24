@@ -16,7 +16,7 @@
   ],
   "item_outputs": [
     {
-      "amount": 4,
+      "count": 4,
       "item": "minecraft:paper"
     }
   ]

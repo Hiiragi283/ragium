@@ -1,126 +1,142 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
-import net.minecraft.fluid.Fluid
-import net.minecraft.item.Item
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.registry.*
+import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
-import java.util.function.BiPredicate
+import java.util.function.Predicate
+import net.minecraft.fluid.Fluid as MCFluid
+import net.minecraft.item.Item as MCItem
 
-typealias HTItemIngredient = HTIngredient<Item, ItemVariant>
-typealias HTFluidIngredient = HTIngredient<Fluid, FluidVariant>
+sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList: RegistryEntryList<O>, val amount: V) : Predicate<S> {
+    val isEmpty: Boolean
+        get() = (entryList !is RegistryEntryList.Named<O> && entryList.size() == 0) || amount.toInt() <= 0
 
-@Suppress("DEPRECATION")
-class HTIngredient<O : Any, T : TransferVariant<O>> private constructor(private val entryList: RegistryEntryList<O>, val amount: Long) :
-    BiPredicate<T, Long> {
-        companion object {
-            @JvmField
-            val EMPTY_ITEM: HTIngredient<Item, ItemVariant> = HTIngredient(RegistryEntryList.empty(), 0)
+    val firstEntry: RegistryEntry<O>?
+        get() = entryList.firstOrNull()
 
-            @JvmField
-            val EMPTY_FLUID: HTIngredient<Fluid, FluidVariant> = HTIngredient(RegistryEntryList.empty(), 0)
+    val entryMap: Map<RegistryEntry<O>, V>
+        get() = entryList.associateWith { amount }
 
-            @JvmStatic
-            private fun <O : Any, T : TransferVariant<O>> createCodec(
-                objCodec: MapCodec<RegistryEntryList<O>>,
-                defaultAmount: Long,
-                toIngredient: (RegistryEntryList<O>, Long) -> HTIngredient<O, T>,
-            ): Codec<HTIngredient<O, T>> = RecordCodecBuilder.create { instance ->
+    override fun toString(): String = "HTIngredient[entryList=$entryList,amount=$amount]"
+
+    companion object {
+        @JvmStatic
+        private fun <T : HTIngredient<*, *, *>> validate(ingredient: T): DataResult<T> = when {
+            ingredient.isEmpty -> DataResult.error { "Could not encode empty ingredient!" }
+            else -> DataResult.success(ingredient)
+        }
+
+        @JvmField
+        val ITEM_CODEC: Codec<Item> = RecordCodecBuilder
+            .create { instance ->
                 instance
                     .group(
-                        objCodec.forGetter(HTIngredient<O, T>::entryList),
-                        Codec.LONG.optionalFieldOf("amount", defaultAmount).forGetter(HTIngredient<O, T>::amount),
-                    ).apply(instance, toIngredient)
+                        RegistryCodecs
+                            .entryList(RegistryKeys.ITEM)
+                            .fieldOf("items")
+                            .forGetter(Item::entryList),
+                        Codec
+                            .intRange(1, Int.MAX_VALUE)
+                            .optionalFieldOf("count", 1)
+                            .forGetter(Item::amount),
+                    ).apply(instance, ::Item)
+            }.validate(::validate)
+
+        @JvmField
+        val FLUID_CODEC: Codec<Fluid> = RecordCodecBuilder
+            .create { instance ->
+                instance
+                    .group(
+                        RegistryCodecs
+                            .entryList(RegistryKeys.FLUID)
+                            .fieldOf("fluids")
+                            .forGetter(Fluid::entryList),
+                        longRangeCodec(1, Long.MAX_VALUE)
+                            .optionalFieldOf("amount", FluidConstants.BUCKET)
+                            .forGetter(Fluid::amount),
+                    ).apply(instance, ::Fluid)
+            }.validate(::validate)
+
+        @JvmField
+        val ITEM_PACKET_CODEC: PacketCodec<RegistryByteBuf, Item> = PacketCodec
+            .tuple(
+                PacketCodecs.registryEntryList(RegistryKeys.ITEM),
+                Item::entryList,
+                PacketCodecs.VAR_INT,
+                Item::amount,
+                ::Item,
+            ).validate(::validate)
+
+        @JvmField
+        val FLUID_PACKET_CODEC: PacketCodec<RegistryByteBuf, Fluid> = PacketCodec
+            .tuple(
+                PacketCodecs.registryEntryList(RegistryKeys.FLUID),
+                Fluid::entryList,
+                PacketCodecs.VAR_LONG,
+                Fluid::amount,
+                ::Fluid,
+            ).validate(::validate)
+
+        // val EMPTY_ITEM = Item(RegistryEntryList.empty(), 0)
+
+        // val EMPTY_FLUID = Fluid(RegistryEntryList.empty(), 0)
+
+        @JvmStatic
+        fun ofItem(item: ItemConvertible, count: Int = 1): Item = Item(RegistryEntryList.of(item.asItem().registryEntry), count)
+
+        @JvmStatic
+        fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1): Item = Item(Registries.ITEM.getOrCreateEntryList(tagKey), count)
+
+        @JvmStatic
+        fun ofFluid(fluid: MCFluid, amount: Long = FluidConstants.BUCKET): Fluid = Fluid(RegistryEntryList.of(fluid.registryEntry), amount)
+
+        @JvmStatic
+        fun ofFluid(tagKey: TagKey<MCFluid>, amount: Long = FluidConstants.BUCKET): Fluid =
+            Fluid(Registries.FLUID.getOrCreateEntryList(tagKey), amount)
+    }
+
+    //    Item    //
+
+    class Item(entryList: RegistryEntryList<MCItem>, amount: Int) : HTIngredient<MCItem, Int, ItemStack>(entryList, amount) {
+        val matchingStacks: List<ItemStack>
+            get() = entryMap.map { (entry: RegistryEntry<net.minecraft.item.Item>, count: Int) ->
+                ItemStack(
+                    entry,
+                    count,
+                )
             }
 
-            @JvmField
-            val ITEM_CODEC: Codec<HTIngredient<Item, ItemVariant>> =
-                createCodec(
-                    RegistryCodecs.entryList(RegistryKeys.ITEM).fieldOf("items"),
-                    1,
-                    ::ofItem,
-                )
-
-            @JvmField
-            val FLUID_CODEC: Codec<HTIngredient<Fluid, FluidVariant>> =
-                createCodec(
-                    RegistryCodecs.entryList(RegistryKeys.FLUID).fieldOf("fluids"),
-                    FluidConstants.BUCKET,
-                    ::ofFluid,
-                )
-
-            @JvmStatic
-            private fun <O : Any, T : TransferVariant<O>> createPacketCodec(
-                registryKey: RegistryKey<Registry<O>>,
-                toIngredient: (RegistryEntryList<O>, Long) -> HTIngredient<O, T>,
-            ): PacketCodec<RegistryByteBuf, HTIngredient<O, T>> = PacketCodec.tuple(
-                PacketCodecs.registryEntryList(registryKey),
-                HTIngredient<O, T>::entryList,
-                PacketCodecs.VAR_LONG,
-                HTIngredient<O, T>::amount,
-                toIngredient,
-            )
-
-            @JvmField
-            val ITEM_PACKET_CODEC: PacketCodec<RegistryByteBuf, HTIngredient<Item, ItemVariant>> =
-                createPacketCodec(RegistryKeys.ITEM, ::ofItem)
-
-            @JvmField
-            val FLUID_PACKET_CODEC: PacketCodec<RegistryByteBuf, HTIngredient<Fluid, FluidVariant>> =
-                createPacketCodec(RegistryKeys.FLUID, ::ofFluid)
-
-            @JvmStatic
-            private fun ofItem(entryList: RegistryEntryList<Item>, amount: Long): HTIngredient<Item, ItemVariant> =
-                HTIngredient(entryList, amount)
-
-            @JvmStatic
-            fun ofItem(item: ItemConvertible, amount: Long = 1): HTIngredient<Item, ItemVariant> =
-                ofItem(RegistryEntryList.of(item.asItem().registryEntry), amount)
-
-            @JvmStatic
-            fun ofItem(tagKey: TagKey<Item>, amount: Long = 1): HTIngredient<Item, ItemVariant> =
-                ofItem(Registries.ITEM.getOrCreateEntryList(tagKey), amount)
-
-            @JvmStatic
-            private fun ofFluid(entryList: RegistryEntryList<Fluid>, amount: Long): HTIngredient<Fluid, FluidVariant> =
-                HTIngredient(entryList, amount)
-
-            @JvmStatic
-            fun ofFluid(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTIngredient<Fluid, FluidVariant> =
-                ofFluid(RegistryEntryList.of(fluid.registryEntry), amount)
-
-            @JvmStatic
-            fun ofFluid(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTIngredient<Fluid, FluidVariant> =
-                ofFluid(Registries.FLUID.getOrCreateEntryList(tagKey), amount)
-        }
-
-        val isEmpty: Boolean
-            get() = entryList.size() == 0 || amount <= 0
-
-        val firstEntry: RegistryEntry<O>?
-            get() = entryList.firstOrNull()
-
-        val weightedList: List<Pair<O, Long>>
-            get() = entryList.map { it.value() to amount }
-
-        override fun toString(): String = "HTIngredient[entryList=$entryList,amount=$amount]"
-
-        //    BiPredicate    //
-
-        override fun test(variant: T, amount: Long): Boolean = when (isEmpty) {
-            true -> variant.isBlank
-            false -> entryList.any { variant.isOf(it.value()) } && amount >= this.amount
+        override fun test(stack: ItemStack): Boolean = when (stack.isEmpty) {
+            true -> this.isEmpty
+            false -> stack.isIn(entryList) && stack.count >= this.amount
         }
     }
+
+    //    Fluid    //
+
+    class Fluid(entryList: RegistryEntryList<MCFluid>, amount: Long) :
+        HTIngredient<MCFluid, Long, ResourceAmount<FluidVariant>>(entryList, amount) {
+        override fun test(resourceAmount: ResourceAmount<FluidVariant>): Boolean {
+            val (variant: FluidVariant, amount: Long) = resourceAmount
+            return when {
+                resourceAmount.isBlank() -> this.isEmpty
+                else -> entryList.any(variant::isOf) && amount >= this.amount
+            }
+        }
+    }
+}

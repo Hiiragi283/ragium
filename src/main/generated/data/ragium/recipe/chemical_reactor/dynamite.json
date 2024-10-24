@@ -19,7 +19,7 @@
   ],
   "item_outputs": [
     {
-      "amount": 2,
+      "count": 2,
       "item": "ragium:dynamite"
     }
   ]

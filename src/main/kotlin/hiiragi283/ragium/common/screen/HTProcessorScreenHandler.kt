@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTRecipeResult
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import hiiragi283.ragium.common.machine.HTProcessorMachineEntity
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
@@ -58,14 +58,14 @@ class HTProcessorScreenHandler(
             get() = listOf(Items.GLASS_PANE.defaultStack)
 
         @JvmStatic
-        private fun itemOf(input: HTItemIngredient?): WItem = WItem(input?.matchingStacks ?: defaultPreview)
+        private fun itemOf(input: HTIngredient.Item?): WItem = WItem(input?.matchingStacks ?: defaultPreview)
 
         @JvmStatic
         private fun itemOf(catalyst: Ingredient?): WItem =
             WItem(catalyst?.matchingStacks?.takeIf(Array<ItemStack>::isNotEmpty)?.toList() ?: defaultPreview)
 
         @JvmStatic
-        private fun itemOf(output: HTItemResult?): WItem = WItem(output?.itemStack?.let(::listOf) ?: defaultPreview)
+        private fun itemOf(output: HTRecipeResult.Item?): WItem = WItem(output?.stack?.let(::listOf) ?: defaultPreview)
 
         @JvmStatic
         private fun createPreview(recipe: HTMachineRecipe?): Array<WItem> = arrayOf(
