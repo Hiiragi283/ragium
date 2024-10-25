@@ -59,7 +59,6 @@ object RagiumItemGroup {
                     add(RagiumBlocks.BASIC_CASING)
                     add(RagiumBlocks.ADVANCED_CASING)
                     addAll(RagiumContents.Coils.entries)
-                    // addAll(RagiumContents.Motors.entries)
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)
 
@@ -107,6 +106,9 @@ object RagiumItemGroup {
                     add(RagiumBlocks.ITEM_DISPLAY)
                     add(RagiumBlocks.NETWORK_INTERFACE)
                     add(RagiumBlocks.BACKPACK_INTERFACE)
+
+                    addAll(RagiumContents.Exporters.entries)
+                    addAll(RagiumContents.Pipes.entries)
                 }.forEach(entries::add)
                 // machines
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->

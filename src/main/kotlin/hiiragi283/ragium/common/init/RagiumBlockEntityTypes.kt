@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockEntityType
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -17,8 +18,12 @@ object RagiumBlockEntityTypes {
         register("drive_scanner", ::HTDriveScannerBlockEntity)
 
     @JvmField
-    val FLUID_PIPE: BlockEntityType<HTFluidPipeBlockEntity> =
-        register("fluid_pipe", ::HTFluidPipeBlockEntity)
+    val EXPORTER: BlockEntityType<HTExporterBlockEntity> =
+        register("exporter", ::HTExporterBlockEntity)
+
+    @JvmField
+    val FLUID_PIPE: BlockEntityType<HTPipeBlockEntity> =
+        register("fluid_pipe", ::HTPipeBlockEntity)
 
     @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
@@ -46,7 +51,12 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        FLUID_PIPE.addSupportedBlock(RagiumBlocks.FLUID_PIPE)
+        RagiumContents.Exporters.entries
+            .map(RagiumContents.Exporters::value)
+            .forEach(EXPORTER::addSupportedBlock)
+        RagiumContents.Pipes.entries
+            .map(RagiumContents.Pipes::value)
+            .forEach(FLUID_PIPE::addSupportedBlock)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_MACHINE)

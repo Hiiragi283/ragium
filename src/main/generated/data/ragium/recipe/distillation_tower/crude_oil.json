@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:distillation_tower",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 648000,
+      "fluids": "ragium:crude_oil"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 324000,
+      "fluid": "ragium:fuel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:polymer_resin"
+    }
+  ]
+}

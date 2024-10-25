@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "ragium:polymer_resin"
+    },
+    {
+      "items": "ragium:basalt_mesh"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:engineering_plastic_plate"
+    }
+  ]
+}

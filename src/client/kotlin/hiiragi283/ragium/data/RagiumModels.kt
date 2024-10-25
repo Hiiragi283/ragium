@@ -28,6 +28,13 @@ object RagiumModels {
     )
 
     @JvmField
+    val EXPORTER: Model = model(
+        "block/exporter",
+        TextureKey.SIDE,
+        TextureKey.BOTTOM,
+    )
+
+    @JvmField
     val DISPLAY: Model = model(
         "block/display",
         TextureKey.TOP,
@@ -36,6 +43,20 @@ object RagiumModels {
 
     @JvmField
     val EMPTY: Model = model("block/empty")
+
+    @JvmField
+    val PIPE: Model =
+        model(
+            "block/pipe",
+            TextureKey.ALL,
+        )
+
+    @JvmField
+    val PIPE_SIDE: Model =
+        model(
+            "block/pipe_side",
+            TextureKey.ALL,
+        )
 
     @JvmField
     val HULL: Model =
@@ -71,10 +92,6 @@ object RagiumModels {
     val CLUSTER_ITEM: Model = model("item/cluster", TextureKey.LAYER0)
 
     @JvmField
-    val FLUID_CUBE_OLD: Model =
-        model("item/filled_fluid_cube_old")
-
-    @JvmField
     val FILLED_FLUID_CUBE: Model =
         model("item/fluid_cube")
 
@@ -86,9 +103,6 @@ object RagiumModels {
     )
 
     //    Factory    //
-
-    @JvmField
-    val EMPTY_FACTORY: TexturedModel.Factory = TexturedModel.makeFactory({ TextureMap() }, EMPTY)
 
     @JvmField
     val HULL_TEXTURE_FACTORY: TexturedModel.Factory =
@@ -111,16 +125,6 @@ object RagiumModels {
     fun createAllTinted(all: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
         TextureMap.of(TextureKey.ALL, all)
     }, ALL_TINTED)
-
-    @JvmStatic
-    fun createCluster(layer0: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap.of(TextureKey.LAYER0, layer0)
-    }, CLUSTER_ITEM)
-
-    @JvmStatic
-    fun createCrossTinted(cross: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap.of(TextureKey.CROSS, cross)
-    }, CROSS_TINTED)
 
     @JvmStatic
     fun createDisplay(top: Identifier, side: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({

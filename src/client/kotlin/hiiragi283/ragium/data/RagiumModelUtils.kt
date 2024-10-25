@@ -4,6 +4,7 @@ import net.minecraft.block.Block
 import net.minecraft.data.client.*
 import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.Direction
 
 //   VariantsBlockStateSupplier    //
 
@@ -27,21 +28,21 @@ fun buildWhen(action: When.PropertyCondition.() -> Unit): When = When.create().a
 
 //    BlockStateVariant    //
 
-fun buildStateVariant(action: BlockStateVariant.() -> Unit): BlockStateVariant = BlockStateVariant.create().apply(action)
+fun stateVariantOf(action: BlockStateVariant.() -> Unit): BlockStateVariant = BlockStateVariant.create().apply(action)
 
-fun buildModelVariant(block: Block): BlockStateVariant = buildStateVariant {
+fun stateVariantOf(block: Block): BlockStateVariant = stateVariantOf {
     model(TextureMap.getId(block))
 }
 
-fun buildModelVariant(modelId: Identifier): BlockStateVariant = buildStateVariant {
+fun stateVariantOf(modelId: Identifier): BlockStateVariant = stateVariantOf {
     model(modelId)
 }
 
-fun buildModelVariant(namespace: String, path: String): BlockStateVariant = buildStateVariant {
+fun stateVariantOf(namespace: String, path: String): BlockStateVariant = stateVariantOf {
     model(namespace, path)
 }
 
-fun buildModelVariant(path: String): BlockStateVariant = buildStateVariant {
+fun stateVariantOf(path: String): BlockStateVariant = stateVariantOf {
     model(path)
 }
 
@@ -54,6 +55,15 @@ fun BlockStateVariant.model(modelId: Identifier): BlockStateVariant = put(Varian
 fun BlockStateVariant.model(namespace: String, path: String): BlockStateVariant = model(Identifier.of(namespace, path))
 
 fun BlockStateVariant.model(path: String): BlockStateVariant = model(Identifier.ofVanilla(path))
+
+fun BlockStateVariant.rot(direction: Direction): BlockStateVariant = when (direction) {
+    Direction.DOWN -> rotX(VariantSettings.Rotation.R90)
+    Direction.UP -> rotX(VariantSettings.Rotation.R270)
+    Direction.NORTH -> this
+    Direction.SOUTH -> rotY(VariantSettings.Rotation.R180)
+    Direction.WEST -> rotY(VariantSettings.Rotation.R270)
+    Direction.EAST -> rotY(VariantSettings.Rotation.R90)
+}
 
 //    TextureMap    //
 

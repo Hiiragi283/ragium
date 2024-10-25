@@ -26,6 +26,11 @@
     "ragium:refined_ragi_steel_hull",
     "ragium:copper_coil",
     "ragium:gold_coil",
-    "ragium:ragi_alloy_coil"
+    "ragium:ragi_alloy_coil",
+    "ragium:iron_pipe",
+    "ragium:wooden_pipe",
+    "ragium:steel_pipe",
+    "ragium:copper_pipe",
+    "ragium:universal_pipe"
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "#ragium:fuel"
+    },
+    {
+      "amount": 20250,
+      "fluids": "ragium:mixture_acid"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 20250,
+      "fluid": "ragium:nitro_fuel"
+    }
+  ]
+}

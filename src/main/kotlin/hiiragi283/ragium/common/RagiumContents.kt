@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.common.block.HTPipeType
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -201,8 +202,6 @@ object RagiumContents : HTContentRegister {
         },
         ;
 
-        // internal fun createItem(): ArmorItem = armorType.createItem(material.armor!!, multiplier)
-
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
         override val enPattern: String by armorType::enPattern
@@ -222,8 +221,6 @@ object RagiumContents : HTContentRegister {
         STEEL_SHOVEL(RagiumMaterials.STEEL, HTToolType.SHOVEL),
         STEEL_SWORD(RagiumMaterials.STEEL, HTToolType.SWORD),
         ;
-
-        // internal fun createItem(): ToolItem = toolType.createToolItem(material.tool!!, itemSettings())
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -261,26 +258,35 @@ object RagiumContents : HTContentRegister {
         override val tagKey: TagKey<Item> = RagiumItemTags.COILS
     }
 
-    //    Motors    //
+    //    Exporter    //
 
-    /*enum class Motors(val tier: HTMachineTier) :
-        HTContent<Block>,
-        HTTranslationProvider by tier {
+    enum class Exporters(override val tier: HTMachineTier) : HTContent.Tier<Block> {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
         override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_motor"))
-        override val tagKey: TagKey<Item> = RagiumItemTags.MOTORS
-    }*/
+            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_exporter"))
+    }
+
+    //    Pipes    //
+
+    enum class Pipes(override val tier: HTMachineTier, val pipeType: HTPipeType) : HTContent.Tier<Block> {
+        IRON(HTMachineTier.PRIMITIVE, HTPipeType.ITEM),
+        WOODEN(HTMachineTier.PRIMITIVE, HTPipeType.FLUID),
+        STEEL(HTMachineTier.BASIC, HTPipeType.ITEM),
+        COPPER(HTMachineTier.BASIC, HTPipeType.FLUID),
+        UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
+        ;
+
+        override val entry: HTRegistryEntry<Block> =
+            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+    }
 
     //    Circuits    //
 
-    enum class CircuitBoards(val tier: HTMachineTier) :
-        HTContent<Item>,
-        HTTranslationProvider by tier {
+    enum class CircuitBoards(override val tier: HTMachineTier) : HTContent.Tier<Item> {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -290,9 +296,7 @@ object RagiumContents : HTContentRegister {
             HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_circuit_board"))
     }
 
-    enum class Circuits(val tier: HTMachineTier) :
-        HTContent<Item>,
-        HTTranslationProvider by tier {
+    enum class Circuits(override val tier: HTMachineTier) : HTContent.Tier<Item> {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -303,19 +307,6 @@ object RagiumContents : HTContentRegister {
 
         override val tagKey: TagKey<Item> = RagiumItemTags.CIRCUITS
     }
-
-    //    Crops    //
-
-    /*enum class Crops(val cropName: String, val seedName: String) : ItemConvertible {
-        CANOLA("canola", "canola_seeds"),
-        SWEET_POTATO("sweet_potatoes", "sweet_potato"),
-        ;
-
-        val cropBlock = HTCropsBlock()
-        val seedItem = AliasedBlockItem(cropBlock, itemSettings())
-
-        override fun asItem(): Item = seedItem
-    }*/
 
     //    Foods    //
 
@@ -340,8 +331,6 @@ object RagiumContents : HTContentRegister {
             override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
         },
         ;
-
-        // internal open fun food(): FoodComponent? = null
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -370,10 +359,6 @@ object RagiumContents : HTContentRegister {
         SOLAR_PANEL,
         TRADER_CATALOG,
         ;
-
-        // internal open fun createSettings(): Item.Settings = itemSettings()
-
-        // internal open fun createItem(): Item = Item(createSettings())
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))

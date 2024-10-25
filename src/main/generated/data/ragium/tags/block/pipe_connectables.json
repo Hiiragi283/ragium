@@ -1,0 +1,12 @@
+{
+  "values": [
+    "ragium:primitive_exporter",
+    "ragium:basic_exporter",
+    "ragium:advanced_exporter",
+    "ragium:iron_pipe",
+    "ragium:wooden_pipe",
+    "ragium:steel_pipe",
+    "ragium:copper_pipe",
+    "ragium:universal_pipe"
+  ]
+}

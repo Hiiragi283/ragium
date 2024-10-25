@@ -434,6 +434,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Crafting - Machines    //
 
     private fun craftingMachines(exporter: RecipeExporter) {
+        // pipe
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Pipes.WOODEN, 3)
+            .patterns(
+                "AAA",
+                " B ",
+                "AAA",
+            ).input('A', ItemTags.PLANKS)
+            .input('B', RagiumContents.Misc.FORGE_HAMMER)
+            .unlockedBy(ItemTags.PLANKS)
+            .offerTo(exporter)
         // hulls
         listOf(
             RagiumMaterials.RAGI_ALLOY,

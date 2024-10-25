@@ -73,15 +73,10 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
 
     private fun registerBlocks() {
         // cutout
-        registerCutout(RagiumBlocks.FLUID_PIPE)
-        registerCutout(RagiumBlocks.ITEM_DISPLAY)
-        /*RagiumContents.Crops.entries
-            .map(RagiumContents.Crops::cropBlock)
+        RagiumContents.Pipes.entries
+            .map(RagiumContents.Pipes::value)
             .forEach(::registerCutout)
-
-        RagiumContents.Element.entries
-            .map(RagiumContents.Element::clusterBlock)
-            .forEach(::registerCutout)*/
+        registerCutout(RagiumBlocks.ITEM_DISPLAY)
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),

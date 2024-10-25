@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:primitive_circuit"
+  },
+  "definition": {
+    "type": "ragium:distillation_tower",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 648000,
+      "fluids": "ragium:residual_oil"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 243000,
+      "fluid": "ragium:fuel"
+    },
+    {
+      "amount": 405000,
+      "fluid": "ragium:aromatic_compounds"
+    }
+  ]
+}

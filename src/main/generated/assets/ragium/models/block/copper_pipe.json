@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/pipe",
+  "textures": {
+    "all": "ragium:block/copper_pipe"
+  }
+}

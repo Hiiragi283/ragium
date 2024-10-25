@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:metal_former",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:plates/iron"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:iron_pipe"
+    }
+  ]
+}

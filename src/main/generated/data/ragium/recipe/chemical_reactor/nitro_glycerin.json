@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:glycerol"
+    },
+    {
+      "amount": 243000,
+      "fluids": "ragium:mixture_acid"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:nitro_glycerin"
+    }
+  ]
+}

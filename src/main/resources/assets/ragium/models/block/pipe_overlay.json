@@ -1,0 +1,20 @@
+{
+	"credit": "Made by Hiiragi Russell Tsubasa",
+	"textures": {
+		"all": "ragium:block/pipe_overlay",
+		"particle": "ragium:block/pipe_overlay"
+	},
+	"elements": [
+		{
+			"from": [3.99, 3.99, 0],
+			"to": [12.01, 12.01, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [3, 0, 0]},
+			"faces": {
+				"east": {"uv": [0, 0, 8, 4], "rotation": 90, "texture": "#all"},
+				"west": {"uv": [0, 0, 8, 4], "rotation": 270, "texture": "#all"},
+				"up": {"uv": [0, 0, 8, 4], "texture": "#all"},
+				"down": {"uv": [0, 0, 8, 4], "rotation": 180, "texture": "#all"}
+			}
+		}
+	]
+}

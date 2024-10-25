@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "ragium:block/basic_exporter",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "ragium:block/basic_exporter",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/basic_exporter"
+    },
+    "facing=south": {
+      "model": "ragium:block/basic_exporter",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "ragium:block/basic_exporter",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "ragium:block/basic_exporter",
+      "y": 270
+    }
+  }
+}

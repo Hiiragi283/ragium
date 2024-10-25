@@ -29,7 +29,7 @@ object HTFilledFluidCubeItem : Item(itemSettings()) {
         ?.let(FluidVariantAttributes::getName)
         ?.let { Text.translatable(translationKey, it) }
         ?: super.getName(stack)
-    
+
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         stack
             .get(RagiumComponentTypes.FLUID)

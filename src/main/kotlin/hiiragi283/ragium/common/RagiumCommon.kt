@@ -22,7 +22,6 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
         RagiumBlocks
-        RagiumBlockEntityTypes.init()
         RagiumEntityTypes.init()
         RagiumRecipeSerializers
         RagiumRecipeTypes
@@ -32,6 +31,7 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
 
         HTHardModeResourceCondition.init()
         HTTradeOfferRegistry.init()
+        RagiumBlockEntityTypes.init()
         RagiumCommands.init()
         RagiumEventHandlers.init()
         RagiumFeatures.init()

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.block.entity.HTFluidPipeBlockEntity
-import hiiragi283.ragium.common.init.RagiumBlocks
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
+import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.common.block.entity.HTPipeBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ConnectingBlock
@@ -12,26 +12,9 @@ import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-class HTFluidPipeBlock(settings: Settings) : HTBlockWithEntity(settings) {
-    companion object {
-        @JvmStatic
-        fun canConnect(world: World, pos: BlockPos, dir: Direction): Boolean {
-            val posTo: BlockPos = pos.offset(dir)
-            val stateTo: BlockState = world.getBlockState(posTo)
-            return when {
-                stateTo.isOf(RagiumBlocks.FLUID_PIPE) -> true
-                else -> ItemStorage.SIDED.find(
-                    world,
-                    posTo,
-                    dir.opposite,
-                ) != null
-            }
-        }
-    }
-
+class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType) : HTBlockWithEntity(blockSettings().solid().nonOpaque()) {
     init {
         defaultState = stateManager.defaultState
             .with(Properties.DOWN, false)
@@ -66,8 +49,8 @@ class HTFluidPipeBlock(settings: Settings) : HTBlockWithEntity(settings) {
         neighborPos: BlockPos,
     ): BlockState = state.with(
         ConnectingBlock.FACING_PROPERTIES[direction],
-        (world.getBlockEntity(pos) as? HTFluidPipeBlockEntity)?.canConnect(direction) ?: false,
+        (world.getBlockEntity(pos) as? HTPipeBlockEntity)?.canConnect(direction) ?: false,
     )
 
-    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTFluidPipeBlockEntity(pos, state)
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTPipeBlockEntity(pos, state, tier, type)
 }

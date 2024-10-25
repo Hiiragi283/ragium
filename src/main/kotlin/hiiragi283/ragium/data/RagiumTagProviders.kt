@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
+import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -62,16 +63,17 @@ object RagiumTagProviders {
                 addAll(RagiumContents.StorageBlocks.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
+                addAll(RagiumContents.Pipes.entries)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore.value)
             }
 
-            /*RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
-                add(BlockTags.CROPS, crop.cropBlock)
-                add(BlockTags.MAINTAINS_FARMLAND, crop.cropBlock)
-            }*/
+            buildList {
+                addAll(RagiumContents.Exporters.entries)
+                addAll(RagiumContents.Pipes.entries)
+            }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it.value) }
         }
     }
 

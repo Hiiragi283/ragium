@@ -10,12 +10,14 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.ConnectingBlock
 import net.minecraft.data.client.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
+import net.minecraft.util.math.Direction
 
 class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     //   BlockState    //
@@ -46,7 +48,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     RagiumBlockProperties.LEVEL_7.values.forEach { level: Int ->
                         with(
                             buildWhen(RagiumBlockProperties.LEVEL_7, level),
-                            buildStateVariant {
+                            stateVariantOf {
                                 model(
                                     RagiumAPI.id(
                                         when (level % 2 == 0) {
@@ -81,7 +83,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
         register(RagiumBlocks.DATA_DRIVE) {
-            accept(VariantsBlockStateSupplier.create(it, buildModelVariant(TextureMap.getId(it))))
+            accept(VariantsBlockStateSupplier.create(it, stateVariantOf(TextureMap.getId(it))))
         }
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
@@ -99,7 +101,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 VariantsBlockStateSupplier
                     .create(
                         block,
-                        buildModelVariant(HTMachineModel.MODEL_ID),
+                        stateVariantOf(HTMachineModel.MODEL_ID),
                     ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
             )
             RagiumModels.DYNAMIC_MACHINE.upload(
@@ -119,7 +121,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                                 0 -> ""
                                 else -> "_slice$bite"
                             }.let {
-                                buildModelVariant(
+                                stateVariantOf(
                                     ModelIds.getBlockSubModelId(
                                         RagiumBlocks.SWEET_BERRIES_CAKE,
                                         it,
@@ -135,7 +137,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 MultipartBlockStateSupplier
                     .create(it)
                     .with(
-                        buildModelVariant(
+                        stateVariantOf(
                             RagiumModels
                                 .createAllTinted(Identifier.of("block/white_wool"))
                                 .upload(it, generator.modelCollector),
@@ -143,36 +145,57 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     ),
             )
         }
-
-        register(RagiumBlocks.FLUID_PIPE) {
+        // exporters
+        RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
+            val modelId: Identifier = RagiumModels.EXPORTER.upload(
+                exporter.value,
+                textureMap {
+                    put(TextureKey.SIDE, ModelIds.getBlockModelId(exporter.value))
+                    put(TextureKey.BOTTOM, ModelIds.getBlockModelId(exporter.tier.getStorageBlock().value))
+                },
+                generator.modelCollector,
+            )
             accept(
-                MultipartBlockStateSupplier
-                    .create(it)
-                    .with(buildModelVariant(it))
-                    .with(
-                        When.create().set(Properties.UP, true),
-                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
-                            .rotX(VariantSettings.Rotation.R270),
-                    ).with(
-                        When.create().set(Properties.DOWN, true),
-                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
-                            .rotX(VariantSettings.Rotation.R90),
-                    ).with(
-                        When.create().set(Properties.NORTH, true),
-                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side")),
-                    ).with(
-                        When.create().set(Properties.EAST, true),
-                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
-                            .rotY(VariantSettings.Rotation.R90),
-                    ).with(
-                        When.create().set(Properties.SOUTH, true),
-                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
-                            .rotY(VariantSettings.Rotation.R180),
-                    ).with(
-                        When.create().set(Properties.WEST, true),
-                        buildModelVariant(RagiumAPI.id("block/fluid_pipe_side"))
-                            .rotY(VariantSettings.Rotation.R270),
-                    ),
+                VariantsBlockStateSupplier
+                    .create(exporter.value, stateVariantOf(modelId))
+                    .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
+            )
+        }
+        // pipes
+        RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
+            val block: Block = pipe.value
+            // blockstate
+            register(block) {
+                accept(
+                    MultipartBlockStateSupplier
+                        .create(it)
+                        .with(stateVariantOf(it))
+                        .apply {
+                            Direction.entries.forEach { direction: Direction ->
+                                // pipe connection
+                                this.with(
+                                    When.create().set(ConnectingBlock.FACING_PROPERTIES[direction], true),
+                                    stateVariantOf(ModelIds.getBlockSubModelId(it, "_side")).rot(direction),
+                                )
+                                // pipe facing
+                                this.with(
+                                    When.create().set(Properties.FACING, direction),
+                                    stateVariantOf(RagiumAPI.id("block/pipe_overlay")).rot(direction),
+                                )
+                            }
+                        },
+                )
+            }
+            // model
+            RagiumModels.PIPE.upload(
+                block,
+                TextureMap.all(block),
+                generator.modelCollector,
+            )
+            RagiumModels.PIPE_SIDE.upload(
+                ModelIds.getBlockSubModelId(block, "_side"),
+                TextureMap.all(block),
+                generator.modelCollector,
             )
         }
 
@@ -183,8 +206,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     .coordinate(
                         BlockStateVariantMap
                             .create(Properties.ENABLED)
-                            .register(false, buildModelVariant(TextureMap.getId(Blocks.GRAY_CONCRETE_POWDER)))
-                            .register(true, buildModelVariant(TextureMap.getId(Blocks.LIGHT_GRAY_CONCRETE_POWDER))),
+                            .register(
+                                false,
+                                stateVariantOf(TextureMap.getId(Blocks.GRAY_CONCRETE_POWDER)),
+                            ).register(
+                                true,
+                                stateVariantOf(TextureMap.getId(Blocks.LIGHT_GRAY_CONCRETE_POWDER)),
+                            ),
                     ),
             )
         }

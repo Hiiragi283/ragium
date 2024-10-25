@@ -9,7 +9,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:methane"
+      "fluids": "ragium:refined_gas"
     },
     {
       "fluids": "minecraft:water"
@@ -20,7 +20,7 @@
       "fluid": "ragium:hydrogen"
     },
     {
-      "fluid": "ragium:methanol"
+      "fluid": "ragium:alcohol"
     }
   ]
 }

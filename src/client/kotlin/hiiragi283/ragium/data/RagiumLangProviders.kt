@@ -29,6 +29,12 @@ object RagiumLangProviders {
         pack.addProvider(RagiumLangProviders::JapaneseLang)
     }
 
+    @JvmName("addBlock")
+    fun TranslationBuilder.add(entry: HTEntryDelegated<Block>, value: String) {
+        add(entry.value, value)
+    }
+
+    @JvmName("addItem")
     fun TranslationBuilder.add(entry: HTEntryDelegated<Item>, value: String) {
         add(entry.value, value)
     }
@@ -54,29 +60,7 @@ object RagiumLangProviders {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
-        }.forEach { block: HTContent.Material<Block> -> builder.add(block.value, block.getTranslation(type)) }
-        // elements
-        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
-            val translatedName: String = element.getTranslation(type)
-            builder.add(element.translationKey, translatedName)
-            when (type) {
-                HTLangType.EN_US -> {
-                    builder.add(element.buddingBlock, "Budding $translatedName")
-                    builder.add(element.clusterBlock, "$translatedName Cluster")
-                    builder.add(element.dustItem, "$translatedName Dust")
-                    builder.add(element.pendantItem, "$translatedName Pendant")
-                    builder.add(element.ringItem, "$translatedName Ring")
-                }
-
-                HTLangType.JA_JP -> {
-                    builder.add(element.buddingBlock, "芽生えた$translatedName")
-                    builder.add(element.clusterBlock, "${translatedName}の塊")
-                    builder.add(element.dustItem, "${translatedName}の粉")
-                    builder.add(element.pendantItem, "${translatedName}のペンダント")
-                    builder.add(element.ringItem, "${translatedName}の指輪")
-                }
-            }
-        }*/
+        }.forEach { block: HTContent.Material<Block> -> builder.add(block, block.getTranslation(type)) }
         // items
         buildList {
             addAll(RagiumContents.Dusts.entries)
@@ -86,40 +70,40 @@ object RagiumLangProviders {
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumContents.Armors.entries)
             addAll(RagiumContents.Tools.entries)
-        }.forEach { item: HTContent.Material<Item> -> builder.add(item.value, item.getTranslation(type)) }
-        // motors
-        /*RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+        }.forEach { item: HTContent.Material<Item> -> builder.add(item, item.getTranslation(type)) }
+        // exporters
+        RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             builder.add(
-                motor.value,
-                MotorFormatter.getTranslation(type, motor),
+                exporter,
+                ExporterFormatter.getTranslation(type, exporter),
             )
-        }*/
+        }
         // circuits
         RagiumContents.CircuitBoards.entries.forEach { boards: RagiumContents.CircuitBoards ->
             builder.add(
-                boards.asItem(),
+                boards,
                 BoardFormatter.getTranslation(type, boards),
             )
         }
         RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
             builder.add(
-                circuit.asItem(),
+                circuit,
                 CircuitFormatter.getTranslation(type, circuit),
             )
         }
         // fluids
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids -> 
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             builder.add(
                 fluid.translationKey,
-                fluid.getTranslation(type)
+                fluid.getTranslation(type),
             )
         }
     }
 
-    /*private data object MotorFormatter : HTTranslationFormatter {
-        override val enPattern: String = "%s Motor"
-        override val jaPattern: String = "%sモーター"
-    }*/
+    private data object ExporterFormatter : HTTranslationFormatter {
+        override val enPattern: String = "%s Exporter"
+        override val jaPattern: String = "%s搬出機"
+    }
 
     private data object BoardFormatter : HTTranslationFormatter {
         override val enPattern: String = "%s Circuit Board"
@@ -156,6 +140,12 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.META_MACHINE, "Machine")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
+
+            builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
+            builder.add(RagiumContents.Pipes.WOODEN, "Wooden Pipe")
+            builder.add(RagiumContents.Pipes.STEEL, "Steel Pipe")
+            builder.add(RagiumContents.Pipes.COPPER, "Copper Pipe")
+            builder.add(RagiumContents.Pipes.UNIVERSAL, "Universal Pipe")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
@@ -295,6 +285,12 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.META_MACHINE, "機械")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
+
+            builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
+            builder.add(RagiumContents.Pipes.WOODEN, "木製パイプ")
+            builder.add(RagiumContents.Pipes.STEEL, "鋼鉄パイプ")
+            builder.add(RagiumContents.Pipes.COPPER, "銅パイプ")
+            builder.add(RagiumContents.Pipes.UNIVERSAL, "万能パイプ")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")

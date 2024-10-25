@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.unused
 
 import com.google.common.collect.HashBasedTable
 import com.google.common.collect.Table

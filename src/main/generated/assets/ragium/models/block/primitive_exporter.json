@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/exporter",
+  "textures": {
+    "bottom": "ragium:block/ragi_alloy_block",
+    "side": "ragium:block/primitive_exporter"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:metal_former",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "ragium:refined_ragi_steel_plate"
+    },
+    {
+      "items": "ragium:ragi_crystal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:universal_pipe"
+    }
+  ]
+}

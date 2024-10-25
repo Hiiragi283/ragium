@@ -59,18 +59,6 @@ object RagiumBlocks : HTContentRegister {
     val SWEET_BERRIES_CAKE: Block =
         registerBlock("sweet_berries_cake", HTSweetBerriesCakeBlock)
 
-    //    Blocks - Pipes    //
-
-    @JvmField
-    val FLUID_PIPE: Block = registerBlock(
-        "fluid_pipe",
-        HTFluidPipeBlock(
-            blockSettings()
-                .solid()
-                .nonOpaque(),
-        ),
-    )
-
     //    Blocks - Utilities    //
 
     @JvmField

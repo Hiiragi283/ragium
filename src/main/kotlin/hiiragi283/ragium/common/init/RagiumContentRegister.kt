@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
-import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.content.HTToolType
@@ -16,6 +15,8 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.HTExporterBlock
+import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.*
@@ -101,10 +102,6 @@ object RagiumContentRegister : HTContentRegister {
             addAll(RagiumContents.Misc.entries)
         }.forEach(::createAndRegisterItem)
 
-        // RagiumContents.Armors.entries.forEach { registerItem(it, it.createItem()) }
-        // RagiumContents.Tools.entries.forEach { registerItem(it, it.createItem()) }
-        // HTCrafterHammerItem.Behavior.entries.forEach { registerItem(it, Item(itemSettings())) }
-
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val block = Block(blockSettings(hull.material.tier.getBaseBlock()))
             registerBlock(hull, block)
@@ -115,43 +112,16 @@ object RagiumContentRegister : HTContentRegister {
             registerBlock(coil, block)
             registerBlockItem(block, itemSettings())
         }
-        /*RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
-            val block = PillarBlock(blockSettings(Blocks.IRON_BLOCK))
-            registerBlock(motor, block)
+        RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
+            val block = HTExporterBlock(exporter.tier)
+            registerBlock(exporter, block)
             registerBlockItem(block, itemSettings())
         }
-        RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
-            registerItem(board, Item(itemSettings()))
+        RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
+            val block = HTPipeBlock(pipe.tier, pipe.pipeType)
+            registerBlock(pipe, block)
+            registerBlockItem(block, itemSettings())
         }
-        RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
-            registerItem(circuit, Item(itemSettings()))
-        }
-
-        RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
-            registerBlock(crop.cropName, crop.cropBlock)
-            registerItem(crop.seedName, crop.seedItem)
-        }
-        RagiumContents.Foods.entries.forEach { food: RagiumContents.Foods ->
-            registerItem(food, Item(itemSettings().food(food.food())))
-        }
-        RagiumContents.Misc.entries.forEach { ingredient: RagiumContents.Misc ->
-            registerItem(ingredient, ingredient.createItem())
-        }*/
-
-        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
-            // Budding Block
-            registerBlock("budding_${element.asString()}", element.buddingBlock)
-            registerBlockItem(element.buddingBlock)
-            // Cluster Block
-            registerBlock("${element.asString()}_cluster", element.clusterBlock)
-            registerBlockItem(element.clusterBlock)
-            // dust item
-            registerItem("${element.asString()}_dust", element.dustItem)
-            // pendant item
-            registerItem("${element.asString()}_pendant", element.pendantItem)
-            // ring item
-            registerItem("${element.asString()}_ring", element.ringItem)
-        }*/
 
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
@@ -162,10 +132,8 @@ object RagiumContentRegister : HTContentRegister {
     private fun initProperties() {
         // armors
         RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
-            val type: HTArmorType = armor.armorType
             val material: RegistryEntry<ArmorMaterial> = armor.material.armor ?: return@forEach
-            val multiplier: Int = armor.multiplier
-            getProperties(armor)[itemKey] = { type.createItem(material, multiplier) }
+            getProperties(armor)[itemKey] = { armor.armorType.createItem(material, armor.multiplier) }
         }
         // tools
         RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
@@ -231,8 +199,6 @@ object RagiumContentRegister : HTContentRegister {
                 ).maxDamage(7)
                 .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
         )
-
-        registerBlockItem(RagiumBlocks.FLUID_PIPE)
 
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
@@ -360,9 +326,6 @@ object RagiumContentRegister : HTContentRegister {
                 },
             )
         }
-        // Fuel Time
-        // FuelRegistry.INSTANCE.add(RagiumItemTags.FUEL_CUBES, 200 * 8)
-        // FuelRegistry.INSTANCE.add(RagiumContents.Fluids.NITRO_FUEL, 200 * 16)
 
         // HTFluidDrinkingHandlerRegistry
         HTFluidDrinkingHandlerRegistry.register(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->
