@@ -373,9 +373,6 @@ object RagiumContents : HTContentRegister {
     //    Misc    //
 
     enum class Misc : HTContent<Item> {
-        ALCHEMY_STUFF {
-            override fun createSettings(): Item.Settings = super.createSettings().rarity(Rarity.EPIC).maxCount(1)
-        },
         BACKPACK {
             override fun createItem(): Item = HTBackpackItem
         },
@@ -426,7 +423,7 @@ object RagiumContents : HTContentRegister {
 
     //    Elements    //
 
-    enum class Element(
+    /*enum class Element(
         private val suitableBiome: TagKey<Biome>,
         override val enName: String,
         override val jaName: String,
@@ -465,7 +462,7 @@ object RagiumContents : HTContentRegister {
         //    StringIdentifiable    //
 
         override fun asString(): String = name.lowercase()
-    }
+    }*/
 
     //    Fluids    //
 

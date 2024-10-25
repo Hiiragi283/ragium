@@ -56,7 +56,7 @@ object RagiumLangProviders {
             addAll(RagiumContents.Coils.entries)
         }.forEach { block: HTContent.Material<Block> -> builder.add(block.value, block.getTranslation(type)) }
         // elements
-        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
+        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             val translatedName: String = element.getTranslation(type)
             builder.add(element.translationKey, translatedName)
             when (type) {
@@ -76,7 +76,7 @@ object RagiumLangProviders {
                     builder.add(element.ringItem, "${translatedName}の指輪")
                 }
             }
-        }
+        }*/
         // items
         buildList {
             addAll(RagiumContents.Dusts.entries)

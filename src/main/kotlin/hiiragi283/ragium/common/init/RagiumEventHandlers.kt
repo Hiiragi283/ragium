@@ -58,7 +58,7 @@ object RagiumEventHandlers {
             }
             if (entry.id == RagiumAPI.id("tier4/root")) {
                 player.sendTitle(Text.literal("Welcome to Alchemical Age!"))
-                RagiumNetworks.sendFloatingItem(player, RagiumContents.Element.RAGIUM.dustItem)
+                RagiumNetworks.sendFloatingItem(player, RagiumContents.Misc.RAGIUM)
             }
         }
 

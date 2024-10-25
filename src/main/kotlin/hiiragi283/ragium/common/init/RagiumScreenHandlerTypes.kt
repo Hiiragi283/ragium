@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.screen.HTAlchemicalInfuserHandler
 import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
 import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
@@ -22,10 +21,6 @@ object RagiumScreenHandlerTypes {
     @JvmField
     val PROCESSOR: ExtendedScreenHandlerType<HTProcessorScreenHandler, HTMachinePacket> =
         registerExtended("processor", ::HTProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
-
-    @JvmField
-    val ALCHEMICAL_INFUSER: ScreenHandlerType<HTAlchemicalInfuserHandler> =
-        register("alchemical_infuser", ::HTAlchemicalInfuserHandler)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(

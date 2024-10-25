@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.common.unused
 
 import com.mojang.datafixers.util.Either
 

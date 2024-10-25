@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.client.gui.HTGeneratorScreen
-import hiiragi283.ragium.client.gui.HTGenericScreen
 import hiiragi283.ragium.client.gui.HTProcessorScreen
 import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
 import hiiragi283.ragium.client.model.HTFluidCubeModel
@@ -80,9 +79,9 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
             .map(RagiumContents.Crops::cropBlock)
             .forEach(::registerCutout)
 
-        RagiumContents.Element.entries
+        /*RagiumContents.Element.entries
             .map(RagiumContents.Element::clusterBlock)
-            .forEach(::registerCutout)
+            .forEach(::registerCutout)*/
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
@@ -158,7 +157,6 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
     private fun registerScreens() {
         HandledScreens.register(RagiumScreenHandlerTypes.GENERATOR, ::HTGeneratorScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.PROCESSOR, ::HTProcessorScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.ALCHEMICAL_INFUSER, ::HTGenericScreen)
     }
 
     //    Events    //

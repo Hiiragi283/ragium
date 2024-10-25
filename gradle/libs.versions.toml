@@ -52,7 +52,6 @@ mods-fabric = [
     "fabric-api",
     "fabric-kotlin",
     "fabric-loader",
-    "mod-modmenu",
     "tech-reborn"
 ]
 mods-include = [
@@ -64,6 +63,7 @@ mods-compile = [
 ]
 mods-runtime = [
     "jade",
+    "mod-modmenu",
     "rei"
 ]
 

@@ -434,7 +434,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("チュートリアルは終わりだ。")
             .build()
 
-        val ragium: AdvancementEntry = register
+        /*val ragium: AdvancementEntry = register
             .createChild(
                 "tier4/ragium",
                 root,
@@ -497,6 +497,6 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapanese(RagiumContents.Element.ROGIUM.jaName)
             .putJapaneseDesc("エンドまたは---で成長する")
-            .build()
+            .build()*/
     }
 }

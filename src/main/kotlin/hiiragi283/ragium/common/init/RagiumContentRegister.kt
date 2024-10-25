@@ -98,7 +98,7 @@ object RagiumContentRegister : HTContentRegister {
             registerItem(ingredient, ingredient.createItem())
         }
 
-        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
+        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // Budding Block
             registerBlock("budding_${element.asString()}", element.buddingBlock)
             registerBlockItem(element.buddingBlock)
@@ -111,7 +111,7 @@ object RagiumContentRegister : HTContentRegister {
             registerItem("${element.asString()}_pendant", element.pendantItem)
             // ring item
             registerItem("${element.asString()}_ring", element.ringItem)
-        }
+        }*/
 
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())

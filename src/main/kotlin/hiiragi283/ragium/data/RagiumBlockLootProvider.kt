@@ -90,7 +90,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         // HTMachineBlockRegistry.forEachBlock(::addDrop)
 
-        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
+        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
             addDrop(element.buddingBlock)
             // cluster block
@@ -103,7 +103,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                         .applyFortune(),
                 )
             }
-        }
+        }*/
     }
 
     private fun dropOre(ore: RagiumContents.Ores) {

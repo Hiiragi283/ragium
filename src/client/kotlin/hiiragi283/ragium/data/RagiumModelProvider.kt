@@ -250,12 +250,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             generator.registerCrop(crop.cropBlock, Properties.AGE_7, 0, 0, 1, 1, 2, 2, 2, 3)
         }
         // elements
-        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
+        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
             registerSimple(element.buddingBlock)
             // cluster block
             register(element.clusterBlock, generator::registerAmethyst)
-        }
+        }*/
     }
 
     //    Model    //
@@ -325,11 +325,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         )
         register(RagiumContents.Misc.FILLED_FLUID_CUBE.asItem(), RagiumModels.FILLED_FLUID_CUBE)
         // elements
-        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
+        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             register(element.clusterBlock.asItem(), Models.GENERATED, TextureMap.layer0(element.clusterBlock))
             register(element.dustItem)
             register(element.pendantItem)
             register(element.ringItem)
-        }
+        }*/
     }
 }

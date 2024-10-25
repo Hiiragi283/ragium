@@ -166,7 +166,7 @@ object RagiumTagProviders {
                 add(ConventionalItemTags.CROPS, crop.seedItem)
             }
 
-            RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
+            // RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
             // add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)

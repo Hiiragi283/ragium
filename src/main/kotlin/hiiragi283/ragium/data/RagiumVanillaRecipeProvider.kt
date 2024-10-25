@@ -699,7 +699,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Crafting - Alternatives    //
 
     private fun craftingAlternatives(exporter: RecipeExporter) {
-        HTShapedRecipeJsonBuilder
+        /*HTShapedRecipeJsonBuilder
             .create(Items.NETHER_STAR)
             .patterns(
                 " A ",
@@ -711,7 +711,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('D', RagiumContents.Element.REGIUM.dustItem)
             .input('E', RagiumContents.Element.ROGIUM.dustItem)
             .unlockedBy(Items.NETHER_STAR)
-            .offerTo(exporter)
+            .offerTo(exporter)*/
 
         HTShapelessRecipeJsonBuilder
             .create(Items.STICKY_PISTON)
