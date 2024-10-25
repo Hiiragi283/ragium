@@ -23,6 +23,7 @@ import java.util.function.Predicate
 import net.minecraft.fluid.Fluid as MCFluid
 import net.minecraft.item.Item as MCItem
 
+@Suppress("DEPRECATION")
 sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList: RegistryEntryList<O>, val amount: V) : Predicate<S> {
     val isEmpty: Boolean
         get() = (entryList !is RegistryEntryList.Named<O> && entryList.size() == 0) || amount.toInt() <= 0

@@ -68,6 +68,7 @@ object RagiumItemGroup {
                     add(RagiumBlocks.SWEET_BERRIES_CAKE)
                     addAll(RagiumContents.Misc.entries)
                     remove(RagiumContents.Misc.BACKPACK)
+                    remove(RagiumContents.Misc.FILLED_FLUID_CUBE)
                 }.forEach(entries::add)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)

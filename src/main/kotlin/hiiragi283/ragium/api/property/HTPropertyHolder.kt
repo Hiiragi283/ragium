@@ -74,7 +74,10 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
         ): T = Builder(map).apply(builderAction).let(build)
 
         @JvmStatic
-        fun builder(map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf()): Mutable = Builder(map)
+        fun builder(): Builder = Builder()
+
+        @JvmStatic
+        fun builder(map: MutableMap<HTPropertyKey<*>, Any>): Mutable = Builder(map)
 
         @JvmStatic
         fun builder(parent: HTPropertyHolder): Mutable = Builder(parent.toMap().toMutableMap())
@@ -96,7 +99,7 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
 
     //    Builder    //
 
-    class Builder(private val map: MutableMap<HTPropertyKey<*>, Any>) : Mutable {
+    class Builder(private val map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf()) : Mutable {
         override fun <T : Any> get(id: HTPropertyKey<T>): T? = id.cast(map[id])
 
         override fun contains(id: HTPropertyKey<*>): Boolean = id in map

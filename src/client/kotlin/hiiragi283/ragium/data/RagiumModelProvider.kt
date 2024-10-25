@@ -246,11 +246,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }*/
         // crops
-        RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
+        /*RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
             generator.registerCrop(crop.cropBlock, Properties.AGE_7, 0, 0, 1, 1, 2, 2, 2, 3)
         }
         // elements
-        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
+        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // budding block
             registerSimple(element.buddingBlock)
             // cluster block

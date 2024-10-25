@@ -68,10 +68,10 @@ object RagiumTagProviders {
                 add(BlockTags.DRAGON_IMMUNE, ore.value)
             }
 
-            RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
+            /*RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
                 add(BlockTags.CROPS, crop.cropBlock)
                 add(BlockTags.MAINTAINS_FARMLAND, crop.cropBlock)
-            }
+            }*/
         }
     }
 
@@ -110,8 +110,8 @@ object RagiumTagProviders {
                 add(tagKey, fluid.asFluid())
             }
 
-            add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.METHANOL)
-            add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.ETHANOL)
+            // add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.METHANOL)
+            // add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.ALCOHOL)
 
             add(RagiumFluidTags.FUEL, RagiumContents.Fluids.BIO_FUEL)
             add(RagiumFluidTags.FUEL, RagiumContents.Fluids.FUEL)
@@ -162,9 +162,9 @@ object RagiumTagProviders {
                 content.tagKey?.let { add(it, content) }
             }
 
-            RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
+            /*RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
                 add(ConventionalItemTags.CROPS, crop.seedItem)
-            }
+            }*/
 
             // RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium

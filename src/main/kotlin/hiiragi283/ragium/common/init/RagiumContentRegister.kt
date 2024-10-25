@@ -1,19 +1,24 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
+import hiiragi283.ragium.api.content.HTArmorType
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTContentRegister
+import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.energy.HTCreativeEnergyStorage
 import hiiragi283.ragium.api.energy.HTEnergyStorage
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
-import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
+import hiiragi283.ragium.common.item.*
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
@@ -24,17 +29,16 @@ import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.type.FoodComponent
+import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Hand
@@ -45,9 +49,29 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 object RagiumContentRegister : HTContentRegister {
+    private val itemBuilders: MutableMap<HTContent<Item>, HTPropertyHolder.Mutable> = mutableMapOf()
+
+    private val settingsKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item.Settings> =
+        HTPropertyKey.Defaulted(RagiumAPI.id("settings"), value = { it })
+
+    private val itemKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item> =
+        HTPropertyKey.Defaulted(RagiumAPI.id("item"), value = ::Item)
+
+    private fun getProperties(content: HTContent<Item>): HTPropertyHolder.Mutable =
+        itemBuilders.computeIfAbsent(content) { HTPropertyHolder.builder() }
+
+    private fun createAndRegisterItem(content: HTContent<Item>) {
+        val properties: HTPropertyHolder.Mutable = getProperties(content)
+        val settings: Item.Settings = properties.getOrDefault(settingsKey)(itemSettings())
+        val item: Item = properties.getOrDefault(itemKey)(settings)
+        registerItem(content, item)
+    }
+
     @JvmStatic
     fun registerContents() {
         DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
+
+        initProperties()
 
         initBlockItems()
 
@@ -62,15 +86,24 @@ object RagiumContentRegister : HTContentRegister {
             registerBlockItem(block, itemSettings().tier(storage.material.tier))
         }
 
-        RagiumContents.Dusts.entries.forEach { registerItem(it, Item(itemSettings())) }
-        RagiumContents.Gems.entries.forEach { registerItem(it, Item(itemSettings())) }
-        RagiumContents.Ingots.entries.forEach { registerItem(it, Item(itemSettings())) }
-        RagiumContents.Plates.entries.forEach { registerItem(it, Item(itemSettings())) }
-        RagiumContents.RawMaterials.entries.forEach { registerItem(it, Item(itemSettings())) }
+        buildList {
+            addAll(RagiumContents.Dusts.entries)
+            addAll(RagiumContents.Gems.entries)
+            addAll(RagiumContents.Ingots.entries)
+            addAll(RagiumContents.Plates.entries)
+            addAll(RagiumContents.RawMaterials.entries)
+            addAll(RagiumContents.Armors.entries)
+            addAll(RagiumContents.Tools.entries)
+            addAll(HTCrafterHammerItem.Behavior.entries)
+            addAll(RagiumContents.CircuitBoards.entries)
+            addAll(RagiumContents.Circuits.entries)
+            addAll(RagiumContents.Foods.entries)
+            addAll(RagiumContents.Misc.entries)
+        }.forEach(::createAndRegisterItem)
 
-        RagiumContents.Armors.entries.forEach { registerItem(it, it.createItem()) }
-        RagiumContents.Tools.entries.forEach { registerItem(it, it.createItem()) }
-        HTCrafterHammerItem.Behavior.entries.forEach { registerItem(it, Item(itemSettings())) }
+        // RagiumContents.Armors.entries.forEach { registerItem(it, it.createItem()) }
+        // RagiumContents.Tools.entries.forEach { registerItem(it, it.createItem()) }
+        // HTCrafterHammerItem.Behavior.entries.forEach { registerItem(it, Item(itemSettings())) }
 
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val block = Block(blockSettings(hull.material.tier.getBaseBlock()))
@@ -86,7 +119,7 @@ object RagiumContentRegister : HTContentRegister {
             val block = PillarBlock(blockSettings(Blocks.IRON_BLOCK))
             registerBlock(motor, block)
             registerBlockItem(block, itemSettings())
-        }*/
+        }
         RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
             registerItem(board, Item(itemSettings()))
         }
@@ -103,7 +136,7 @@ object RagiumContentRegister : HTContentRegister {
         }
         RagiumContents.Misc.entries.forEach { ingredient: RagiumContents.Misc ->
             registerItem(ingredient, ingredient.createItem())
-        }
+        }*/
 
         /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
             // Budding Block
@@ -123,6 +156,60 @@ object RagiumContentRegister : HTContentRegister {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
         }
+    }
+
+    @JvmStatic
+    private fun initProperties() {
+        // armors
+        RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
+            val type: HTArmorType = armor.armorType
+            val material: RegistryEntry<ArmorMaterial> = armor.material.armor ?: return@forEach
+            val multiplier: Int = armor.multiplier
+            getProperties(armor)[itemKey] = { type.createItem(material, multiplier) }
+        }
+        // tools
+        RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
+            val type: HTToolType = tool.toolType
+            val material: ToolMaterial = tool.material.tool ?: return@forEach
+            getProperties(tool)[itemKey] = { type.createToolItem(material, it) }
+        }
+        // foods
+        getProperties(RagiumContents.Foods.BUTTER)[settingsKey] = { it.food(FoodComponents.APPLE) }
+        getProperties(RagiumContents.Foods.CANDY_APPLE)[settingsKey] = { it.food(FoodComponents.COOKED_BEEF) }
+        getProperties(RagiumContents.Foods.CARAMEL)[settingsKey] = { it.food(FoodComponents.DRIED_KELP) }
+        getProperties(RagiumContents.Foods.CHOCOLATE)[settingsKey] = {
+            it.food(
+                FoodComponent
+                    .Builder()
+                    .nutrition(3)
+                    .saturationModifier(0.3f)
+                    .statusEffect(
+                        StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
+                        1.0f,
+                    ).snack()
+                    .alwaysEdible()
+                    .build(),
+            )
+        }
+        getProperties(RagiumContents.Foods.CHOCOLATE_APPLE)[settingsKey] = { it.food(FoodComponents.COOKED_CHICKEN) }
+        getProperties(RagiumContents.Foods.CHOCOLATE_BREAD)[settingsKey] = { it.food(FoodComponents.COOKED_BEEF) }
+        // ingredients
+        getProperties(RagiumContents.Misc.BACKPACK)[itemKey] = { HTBackpackItem }
+        getProperties(RagiumContents.Misc.CRAFTER_HAMMER)[itemKey] = { HTCrafterHammerItem }
+        getProperties(RagiumContents.Misc.DYNAMITE)[itemKey] = { HTDynamiteItem }
+        getProperties(RagiumContents.Misc.FILLED_FLUID_CUBE)[itemKey] = { HTFilledFluidCubeItem }
+        getProperties(RagiumContents.Misc.FORGE_HAMMER)[itemKey] = { HTForgeHammerItem }
+        getProperties(RagiumContents.Misc.HEART_OF_THE_NETHER)[settingsKey] = { it.rarity(Rarity.UNCOMMON) }
+        getProperties(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)[itemKey] = {
+            SpawnEggItem(
+                RagiumEntityTypes.OBLIVION_CUBE,
+                0x000000,
+                0xffffff,
+                itemSettings(),
+            )
+        }
+        getProperties(RagiumContents.Misc.RAGIUM)[settingsKey] = { it.rarity(Rarity.EPIC) }
+        getProperties(RagiumContents.Misc.REMOVER_DYNAMITE)[itemKey] = { HTRemoverDynamiteItem }
     }
 
     @JvmStatic
@@ -269,7 +356,7 @@ object RagiumContentRegister : HTContentRegister {
             FluidVariantAttributes.register(
                 fluid.asFluid(),
                 object : FluidVariantAttributeHandler {
-                    override fun getName(fluidVariant: FluidVariant): Text = Text.literal(fluid.enName)
+                    override fun getName(fluidVariant: FluidVariant): Text = Text.translatable(fluid.translationKey)
                 },
             )
         }

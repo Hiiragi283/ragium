@@ -75,11 +75,11 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
         // cutout
         registerCutout(RagiumBlocks.FLUID_PIPE)
         registerCutout(RagiumBlocks.ITEM_DISPLAY)
-        RagiumContents.Crops.entries
+        /*RagiumContents.Crops.entries
             .map(RagiumContents.Crops::cropBlock)
             .forEach(::registerCutout)
 
-        /*RagiumContents.Element.entries
+        RagiumContents.Element.entries
             .map(RagiumContents.Element::clusterBlock)
             .forEach(::registerCutout)*/
         // cutout mipped

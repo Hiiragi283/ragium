@@ -2,25 +2,18 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.*
-import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.common.block.HTCropsBlock
-import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.item.*
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.component.type.FoodComponent
-import net.minecraft.component.type.FoodComponents
-import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.fluid.Fluid
-import net.minecraft.item.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import net.minecraft.util.Rarity
+import net.minecraft.util.Util
 import java.awt.Color
 
 object RagiumContents : HTContentRegister {
@@ -185,7 +178,7 @@ object RagiumContents : HTContentRegister {
 
     //    Armors    //
 
-    enum class Armors(override val material: RagiumMaterials, private val armorType: HTArmorType, private val multiplier: Int) :
+    enum class Armors(override val material: RagiumMaterials, val armorType: HTArmorType, val multiplier: Int) :
         HTContent.Material<Item>,
         HTTranslationFormatter {
         STEEL_HELMET(RagiumMaterials.STEEL, HTArmorType.HELMET, 25),
@@ -208,7 +201,7 @@ object RagiumContents : HTContentRegister {
         },
         ;
 
-        internal fun createItem(): ArmorItem = armorType.createItem(material.armor!!, multiplier)
+        // internal fun createItem(): ArmorItem = armorType.createItem(material.armor!!, multiplier)
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -230,7 +223,7 @@ object RagiumContents : HTContentRegister {
         STEEL_SWORD(RagiumMaterials.STEEL, HTToolType.SWORD),
         ;
 
-        internal fun createItem(): ToolItem = toolType.createToolItem(material.tool!!, itemSettings())
+        // internal fun createItem(): ToolItem = toolType.createToolItem(material.tool!!, itemSettings())
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -313,7 +306,7 @@ object RagiumContents : HTContentRegister {
 
     //    Crops    //
 
-    enum class Crops(val cropName: String, val seedName: String) : ItemConvertible {
+    /*enum class Crops(val cropName: String, val seedName: String) : ItemConvertible {
         CANOLA("canola", "canola_seeds"),
         SWEET_POTATO("sweet_potatoes", "sweet_potato"),
         ;
@@ -322,7 +315,7 @@ object RagiumContents : HTContentRegister {
         val seedItem = AliasedBlockItem(cropBlock, itemSettings())
 
         override fun asItem(): Item = seedItem
-    }
+    }*/
 
     //    Foods    //
 
@@ -330,31 +323,12 @@ object RagiumContents : HTContentRegister {
         BEE_WAX {
             override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
         },
-        BUTTER {
-            override fun food(): FoodComponent = FoodComponents.APPLE
-        },
+        BUTTER,
         CANDY_APPLE,
-        CARAMEL {
-            override fun food(): FoodComponent = FoodComponents.DRIED_KELP
-        },
-        CHOCOLATE {
-            override fun food(): FoodComponent = FoodComponent
-                .Builder()
-                .nutrition(3)
-                .saturationModifier(0.3f)
-                .statusEffect(
-                    StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
-                    1.0f,
-                ).snack()
-                .alwaysEdible()
-                .build()
-        },
-        CHOCOLATE_APPLE {
-            override fun food(): FoodComponent = FoodComponents.COOKED_CHICKEN
-        },
-        CHOCOLATE_BREAD {
-            override fun food(): FoodComponent = FoodComponents.COOKED_BEEF
-        },
+        CARAMEL,
+        CHOCOLATE,
+        CHOCOLATE_APPLE,
+        CHOCOLATE_BREAD,
         FLOUR {
             override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
         },
@@ -367,7 +341,7 @@ object RagiumContents : HTContentRegister {
         },
         ;
 
-        internal open fun food(): FoodComponent? = null
+        // internal open fun food(): FoodComponent? = null
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -376,52 +350,30 @@ object RagiumContents : HTContentRegister {
     //    Misc    //
 
     enum class Misc : HTContent<Item> {
-        BACKPACK {
-            override fun createItem(): Item = HTBackpackItem
-        },
+        BACKPACK,
         BASALT_MESH,
-        CRAFTER_HAMMER {
-            override fun createItem(): Item = HTCrafterHammerItem
-        },
-        DYNAMITE {
-            override fun createItem(): Item = HTDynamiteItem
-        },
+        CRAFTER_HAMMER,
+        DYNAMITE,
         EMPTY_FLUID_CUBE,
-        FILLED_FLUID_CUBE {
-            override fun createItem(): Item = HTFilledFluidCubeItem
-        },
+        FILLED_FLUID_CUBE,
         ENGINE,
-        FORGE_HAMMER {
-            override fun createItem(): Item = HTForgeHammerItem
-        },
-        HEART_OF_THE_NETHER {
-            override fun createSettings(): Item.Settings = super.createSettings().rarity(Rarity.UNCOMMON)
-        },
-        OBLIVION_CUBE_SPAWN_EGG {
-            override fun createItem(): Item = SpawnEggItem(
-                RagiumEntityTypes.OBLIVION_CUBE,
-                0x000000,
-                0xffffff,
-                itemSettings(),
-            )
-        },
+        FORGE_HAMMER,
+        HEART_OF_THE_NETHER,
+        OBLIVION_CUBE_SPAWN_EGG,
+        POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
-        RAGIUM {
-            override fun createSettings(): Item.Settings = super.createSettings().rarity(Rarity.EPIC)
-        },
-        REMOVER_DYNAMITE {
-            override fun createItem(): Item = HTRemoverDynamiteItem
-        },
+        RAGIUM,
+        REMOVER_DYNAMITE,
         SOAP_INGOT,
         SOLAR_PANEL,
         TRADER_CATALOG,
         ;
 
-        internal open fun createSettings(): Item.Settings = itemSettings()
+        // internal open fun createSettings(): Item.Settings = itemSettings()
 
-        internal open fun createItem(): Item = Item(createSettings())
+        // internal open fun createItem(): Item = Item(createSettings())
 
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
@@ -504,21 +456,22 @@ object RagiumContents : HTContentRegister {
         NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
         SODIUM_HYDROXIDE(Color(0x000099), "Sodium Hydroxide Solution", "水酸化ナトリウム水溶液"),
         SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸"),
+        MIXTURE_ACID(Color(0xff3300), "Mixture Acid", "混酸"),
 
         // Oil products
         REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス"),
         NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
         RESIDUAL_OIL(Color(0x000033), "Residual Oil", "残渣油"),
 
-        METHANE(Color(0xcc0099), "Methane", "メタン"),
-        METHANOL(Color(0xcc00ff), "Methanol", "メタノール"),
-        LPG(Color(0xffff33), "LPG", "LGP"),
-        ETHYLENE(Color(0x999999), "Ethylene", "エチレン"),
-        ETHANOL(Color(0xccffff), "Ethanol", "エタノール"),
+        // METHANE(Color(0xcc0099), "Methane", "メタン"),
+        // METHANOL(Color(0xcc00ff), "Methanol", "メタノール"),
+        // LPG(Color(0xffff33), "LPG", "LGP"),
+        // ETHYLENE(Color(0x999999), "Ethylene", "エチレン"),
+        ALCOHOL(Color(0xccffff), "alcohol", "アルコール"),
 
         AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
 
-        LUBRICANT(Color(0x996633), "Lubricant", "潤滑油"),
+        // LUBRICANT(Color(0x996633), "Lubricant", "潤滑油"),
         ASPHALT(Color(0x000066), "Asphalt", "アスファルト"),
 
         // Fuels
@@ -532,6 +485,7 @@ object RagiumContents : HTContentRegister {
         ;
 
         val id: Identifier = RagiumAPI.id(name.lowercase())
+        val translationKey: String = Util.createTranslationKey("fluid", id)
         private val fluidEntry: HTRegistryEntry<Fluid> = HTRegistryEntry(Registries.FLUID, id)
 
         fun asFluid(): Fluid = fluidEntry.value()

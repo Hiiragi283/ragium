@@ -13,7 +13,6 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
-import net.minecraft.loot.condition.BlockStatePropertyLootCondition
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LeafEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
@@ -21,13 +20,11 @@ import net.minecraft.loot.function.CopyComponentsLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
-import net.minecraft.predicate.StatePredicate
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.state.property.Properties
 import java.util.concurrent.CompletableFuture
 
 class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
@@ -80,7 +77,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         RagiumContents.Ores.entries.forEach(::dropOre)
 
-        RagiumContents.Crops.entries.forEach(::addCrops)
+        // RagiumContents.Crops.entries.forEach(::addCrops)
 
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)
@@ -122,7 +119,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         )
     }
 
-    private fun addCrops(crop: RagiumContents.Crops) {
+    /*private fun addCrops(crop: RagiumContents.Crops) {
         val condition: BlockStatePropertyLootCondition.Builder = BlockStatePropertyLootCondition
             .builder(crop.cropBlock)
             .properties(StatePredicate.Builder.create().exactMatch(Properties.AGE_7, 7))
@@ -145,7 +142,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                     ),
             ),
         )
-    }
+    }*/
 
     private fun withSilkTouch(with: Block, without: ItemConvertible, amount: Float = 1.0f): LootTable.Builder = dropsWithSilkTouch(
         with,

@@ -107,6 +107,13 @@ object RagiumLangProviders {
                 CircuitFormatter.getTranslation(type, circuit),
             )
         }
+        // fluids
+        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids -> 
+            builder.add(
+                fluid.translationKey,
+                fluid.getTranslation(type)
+            )
+        }
     }
 
     /*private data object MotorFormatter : HTTranslationFormatter {
@@ -154,10 +161,10 @@ object RagiumLangProviders {
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
             builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Items
-            builder.add(RagiumContents.Crops.CANOLA.cropBlock, "Canola")
-            builder.add(RagiumContents.Crops.CANOLA.seedItem, "Canola Seeds")
-            builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "Sweet Potatoes")
-            builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "Sweet Potato")
+            // builder.add(RagiumContents.Crops.CANOLA.cropBlock, "Canola")
+            // builder.add(RagiumContents.Crops.CANOLA.seedItem, "Canola Seeds")
+            // builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "Sweet Potatoes")
+            // builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "Sweet Potato")
 
             builder.add(RagiumContents.Foods.BEE_WAX, "Bee Wax")
             builder.add(RagiumContents.Foods.BUTTER, "Butter")
@@ -176,6 +183,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "Crafter's Hammer")
             builder.add(RagiumContents.Misc.DYNAMITE, "Dynamite")
             builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
+            builder.add(RagiumContents.Misc.FILLED_FLUID_CUBE, "Fluid Cube (%s)")
             builder.add(RagiumContents.Misc.ENGINE, "V8 Engine")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "Heart of the Nether")
@@ -292,10 +300,10 @@ object RagiumLangProviders {
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
             builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
             // Items
-            builder.add(RagiumContents.Crops.CANOLA.cropBlock, "アブラナ")
-            builder.add(RagiumContents.Crops.CANOLA.seedItem, "菜種")
-            builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "サツマイモ")
-            builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "サツマイモ")
+            // builder.add(RagiumContents.Crops.CANOLA.cropBlock, "アブラナ")
+            // builder.add(RagiumContents.Crops.CANOLA.seedItem, "菜種")
+            // builder.add(RagiumContents.Crops.SWEET_POTATO.cropBlock, "サツマイモ")
+            // builder.add(RagiumContents.Crops.SWEET_POTATO.seedItem, "サツマイモ")
 
             builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
             builder.add(RagiumContents.Foods.BUTTER, "バター")
@@ -314,6 +322,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "クラフターズ・ハンマー")
             builder.add(RagiumContents.Misc.DYNAMITE, "ダイナマイト")
             builder.add(RagiumContents.Misc.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
+            builder.add(RagiumContents.Misc.FILLED_FLUID_CUBE, "液体キューブ（%s）")
             builder.add(RagiumContents.Misc.ENGINE, "V8エンジン")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "地獄の心臓")

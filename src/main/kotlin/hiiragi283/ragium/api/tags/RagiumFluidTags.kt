@@ -9,11 +9,9 @@ import net.minecraft.util.Identifier
 
 object RagiumFluidTags {
     //    Custom    //
-    @JvmField
-    val ALKALI: TagKey<Fluid> = create(RagiumAPI.MOD_ID, "alkali")
-
-    @JvmField
-    val ALCOHOL: TagKey<Fluid> = create(RagiumAPI.MOD_ID, "alcohol")
+    // val ALKALI: TagKey<Fluid> = create(RagiumAPI.MOD_ID, "alkali")
+    
+    // val ALCOHOL: TagKey<Fluid> = create(RagiumAPI.MOD_ID, "alcohol")
 
     @JvmField
     val FUEL: TagKey<Fluid> = create(RagiumAPI.MOD_ID, "fuel")

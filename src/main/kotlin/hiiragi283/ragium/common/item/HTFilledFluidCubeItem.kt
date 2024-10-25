@@ -23,6 +23,13 @@ import net.minecraft.util.UseAction
 import net.minecraft.world.World
 
 object HTFilledFluidCubeItem : Item(itemSettings()) {
+    override fun getName(stack: ItemStack): Text = stack
+        .get(RagiumComponentTypes.FLUID)
+        ?.let(FluidVariant::of)
+        ?.let(FluidVariantAttributes::getName)
+        ?.let { Text.translatable(translationKey, it) }
+        ?: super.getName(stack)
+    
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         stack
             .get(RagiumComponentTypes.FLUID)
@@ -51,14 +58,14 @@ object HTFilledFluidCubeItem : Item(itemSettings()) {
         type: TooltipType,
     ) {
         val entry: RegistryEntry.Reference<Fluid> = stack.get(RagiumComponentTypes.FLUID)?.registryEntry ?: return
-        entry
+        /*entry
             .value()
             .let(FluidVariant::of)
             .let(FluidVariantAttributes::getName)
             .string
             .let {
                 tooltip.add(Text.literal("Stored Fluid: $it").formatted(Formatting.GRAY))
-            }
+            }*/
         if (type.isAdvanced) {
             tooltip.add(Text.literal("Fluid Id: ${entry.idAsString}").formatted(Formatting.DARK_GRAY))
         }
