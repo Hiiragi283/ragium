@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -27,7 +28,7 @@ object RagiumMachineConditions {
         { world: World, _: BlockPos, _: HTMachineType, tier: HTMachineTier ->
             world.energyNetwork?.let { network: HTEnergyNetwork ->
                 useTransaction { transaction: Transaction ->
-                    val extracted: Long = network.extract(tier.recipeCost, transaction)
+                    val extracted: Long = network.extract(HTEnergyType.ELECTRICITY, tier.recipeCost, transaction)
                     when {
                         extracted > 0 -> transaction.commit()
                         else -> transaction.abort()

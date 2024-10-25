@@ -150,7 +150,7 @@ object RagiumTagProviders {
 
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
-                addAll(RagiumContents.Motors.entries)
+                // addAll(RagiumContents.Motors.entries)
                 addAll(RagiumContents.Circuits.entries)
 
                 addAll(RagiumContents.Armors.entries)

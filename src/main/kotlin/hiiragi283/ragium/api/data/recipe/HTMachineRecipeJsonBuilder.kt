@@ -57,13 +57,13 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     //    Input    //
 
-    fun itemInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
-        itemInputs.add(HTIngredient.ofItem(item, count))
+    fun itemInput(ingredient: HTIngredient.Item): HTMachineRecipeJsonBuilder = apply {
+        itemInputs.add(ingredient)
     }
 
-    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
-        itemInputs.add(HTIngredient.ofItem(tagKey, count))
-    }
+    fun itemInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(item, count))
+
+    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(tagKey, count))
 
     fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
         fluidInputs.add(HTIngredient.ofFluid(fluid, amount))

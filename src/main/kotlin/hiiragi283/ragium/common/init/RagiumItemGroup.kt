@@ -34,7 +34,7 @@ object RagiumItemGroup {
         register(ITEM_KEY) {
             displayName(Text.translatable("itemGroup.ragium.item"))
             icon {
-                RagiumContents.Ingots.RAGI_STEEL
+                RagiumContents.Misc.RAGIUM
                     .asItem()
                     .defaultStack
             }
@@ -59,7 +59,8 @@ object RagiumItemGroup {
                     add(RagiumBlocks.BASIC_CASING)
                     add(RagiumBlocks.ADVANCED_CASING)
                     addAll(RagiumContents.Coils.entries)
-                    addAll(RagiumContents.Motors.entries)
+                    // addAll(RagiumContents.Motors.entries)
+                    addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)
 
                     addAll(RagiumContents.Foods.entries)

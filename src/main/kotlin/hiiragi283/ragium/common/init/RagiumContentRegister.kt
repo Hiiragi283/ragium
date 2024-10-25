@@ -3,14 +3,18 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContentRegister
+import hiiragi283.ragium.api.energy.HTCreativeEnergyStorage
+import hiiragi283.ragium.api.energy.HTEnergyStorage
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -39,12 +43,12 @@ import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import team.reborn.energy.api.EnergyStorage
-import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumContentRegister : HTContentRegister {
     @JvmStatic
     fun registerContents() {
+        DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
+
         initBlockItems()
 
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
@@ -78,10 +82,13 @@ object RagiumContentRegister : HTContentRegister {
             registerBlock(coil, block)
             registerBlockItem(block, itemSettings())
         }
-        RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+        /*RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
             val block = PillarBlock(blockSettings(Blocks.IRON_BLOCK))
             registerBlock(motor, block)
             registerBlockItem(block, itemSettings())
+        }*/
+        RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
+            registerItem(board, Item(itemSettings()))
         }
         RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
             registerItem(circuit, Item(itemSettings()))
@@ -190,11 +197,12 @@ object RagiumContentRegister : HTContentRegister {
             }
         }
 
-        EnergyStorage.SIDED.registerForBlocks(
-            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
+        HTEnergyStorage.SIDED.registerForBlocks(
+            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTCreativeEnergyStorage },
             RagiumBlocks.CREATIVE_SOURCE,
         )
-        EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+
+        HTEnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork
         }, RagiumBlocks.NETWORK_INTERFACE)
         // Accessory

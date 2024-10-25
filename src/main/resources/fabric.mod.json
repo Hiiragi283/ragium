@@ -9,10 +9,11 @@
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/Hiiragi283/ragium",
+    "issues": "https://github.com/Hiiragi283/ragium/issue"
   },
   "license": "MPL-2.0",
-  "icon": "assets/ragium/textures/item/refined_ragi_steel_ingot.png",
+  "icon": "assets/ragium/textures/item/ragium.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -58,15 +59,10 @@
     "ragium.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.4",
+    "fabricloader": ">=0.16",
     "minecraft": ">=1.21- <1.22-",
     "java": ">=21",
     "fabric-api": "*",
     "fabric-language-kotlin": "*"
-  },
-  "recommends": {
-    "accessories": "*",
-    "modmenu": "*",
-    "roughlyenoughitems": "*"
   }
 }

@@ -2,14 +2,13 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumEnvironmentBridge
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.minecraft.fluid.Fluid
 
 object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
@@ -17,9 +16,8 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
         RagiumAPI.log { info("Registering game objects...") }
         RagiumConfig.init()
 
-        DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
-
         RagiumComponentTypes
+        HTEnergyType
 
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes
@@ -30,7 +28,6 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
         RagiumRecipeTypes
 
         InternalRagiumAPI.initMachineType()
-        RagiumContents
         RagiumContentRegister.registerContents()
 
         HTHardModeResourceCondition.init()

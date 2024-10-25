@@ -6,10 +6,10 @@
   },
   "item_inputs": [
     {
-      "items": "ragium:plastic_plate"
+      "items": "ragium:primitive_circuit_board"
     },
     {
-      "items": "#c:plates/copper"
+      "items": "#c:dusts/redstone"
     }
   ],
   "item_outputs": [

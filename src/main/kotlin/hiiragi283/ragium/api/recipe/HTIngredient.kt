@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -101,6 +102,12 @@ sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList:
 
         @JvmStatic
         fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1): Item = Item(Registries.ITEM.getOrCreateEntryList(tagKey), count)
+
+        @JvmStatic
+        fun ofItem(either: Either<TagKey<MCItem>, ItemConvertible>, count: Int = 1): Item = Item(
+            either.map(Registries.ITEM::getOrCreateEntryList) { RegistryEntryList.of(it.asItem().registryEntry) },
+            count,
+        )
 
         @JvmStatic
         fun ofFluid(fluid: MCFluid, amount: Long = FluidConstants.BUCKET): Fluid = Fluid(RegistryEntryList.of(fluid.registryEntry), amount)

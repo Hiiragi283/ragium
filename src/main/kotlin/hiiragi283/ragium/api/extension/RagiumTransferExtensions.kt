@@ -9,7 +9,9 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.tag.TagKey
 import java.util.function.Function
 
 //    ResourceAmount    //
@@ -52,6 +54,8 @@ fun <T : TransferVariant<*>> Storage<T>.extract(resourceAmount: ResourceAmount<T
 //    TransferVariant    //
 
 fun <T : Any> TransferVariant<T>.isOf(entry: RegistryEntry<T>): Boolean = isOf(entry.value())
+
+fun <T : Any> TransferVariant<T>.isIn(registry: Registry<T>, tagKey: TagKey<T>): Boolean = registry.iterateEntries(tagKey).any(this::isOf)
 
 fun ItemVariant.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 

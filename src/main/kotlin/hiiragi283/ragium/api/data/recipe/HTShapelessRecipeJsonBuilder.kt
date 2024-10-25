@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data.recipe
 
-import hiiragi283.ragium.api.util.BothEither
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -42,9 +41,9 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    fun input(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
+    /*fun input(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
         either.ifBoth({ input(it) }, { input(it) }, BothEither.Priority.RIGHT)
-    }
+    }*/
 
     fun input(item: ItemConvertible): HTShapelessRecipeJsonBuilder = input(Ingredient.ofItems(item))
 
@@ -68,13 +67,13 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
 
     //    CraftingRecipeJsonBuilder    //
 
-    fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
+    /*fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
         either.ifBoth(
             { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
             { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
             BothEither.Priority.RIGHT,
         )
-    }
+    }*/
 
     override fun criterion(name: String, criterion: AdvancementCriterion<*>): HTShapelessRecipeJsonBuilder = apply {
         criteriaMap[name] = criterion

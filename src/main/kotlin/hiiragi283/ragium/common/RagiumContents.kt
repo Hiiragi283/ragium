@@ -2,18 +2,15 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.*
-import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.common.block.HTBuddingCrystalBlock
 import hiiragi283.ragium.common.block.HTCropsBlock
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.item.*
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.block.*
-import net.minecraft.block.piston.PistonBehavior
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.effect.StatusEffectInstance
@@ -22,14 +19,8 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
-import net.minecraft.util.StringIdentifiable
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
-import net.minecraft.world.biome.Biome
 import java.awt.Color
 
 object RagiumContents : HTContentRegister {
@@ -279,7 +270,7 @@ object RagiumContents : HTContentRegister {
 
     //    Motors    //
 
-    enum class Motors(val tier: HTMachineTier) :
+    /*enum class Motors(val tier: HTMachineTier) :
         HTContent<Block>,
         HTTranslationProvider by tier {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
@@ -290,9 +281,21 @@ object RagiumContents : HTContentRegister {
         override val entry: HTRegistryEntry<Block> =
             HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_motor"))
         override val tagKey: TagKey<Item> = RagiumItemTags.MOTORS
-    }
+    }*/
 
     //    Circuits    //
+
+    enum class CircuitBoards(val tier: HTMachineTier) :
+        HTContent<Item>,
+        HTTranslationProvider by tier {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val entry: HTRegistryEntry<Item> =
+            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_circuit_board"))
+    }
 
     enum class Circuits(val tier: HTMachineTier) :
         HTContent<Item>,
@@ -405,6 +408,9 @@ object RagiumContents : HTContentRegister {
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
+        RAGIUM {
+            override fun createSettings(): Item.Settings = super.createSettings().rarity(Rarity.EPIC)
+        },
         REMOVER_DYNAMITE {
             override fun createItem(): Item = HTRemoverDynamiteItem
         },

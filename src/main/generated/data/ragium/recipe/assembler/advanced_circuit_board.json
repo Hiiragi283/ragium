@@ -2,20 +2,19 @@
   "type": "ragium:machine",
   "definition": {
     "type": "ragium:assembler",
-    "tier": "primitive"
+    "tier": "advanced"
   },
   "item_inputs": [
     {
-      "count": 8,
-      "items": "#c:plates/iron"
+      "items": "ragium:engineering_plastic_plate"
     },
     {
-      "items": "ragium:copper_coil"
+      "items": "ragium:ragi_alloy_plate"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:primitive_motor"
+      "item": "ragium:advanced_circuit_board"
     }
   ]
 }

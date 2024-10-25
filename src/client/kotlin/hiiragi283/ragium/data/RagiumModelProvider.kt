@@ -226,7 +226,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // motors
-        RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+        /*RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
             register(motor.value) {
                 generator.registerAxisRotated(
                     it,
@@ -244,7 +244,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     }, Models.CUBE_COLUMN),
                 )
             }
-        }
+        }*/
         // crops
         RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
             generator.registerCrop(crop.cropBlock, Properties.AGE_7, 0, 0, 1, 1, 2, 2, 2, 3)
@@ -296,6 +296,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Tools.entries)
             addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.Armors.entries)
+            addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
             addAll(RagiumContents.Foods.entries)
             addAll(RagiumContents.Misc.entries)

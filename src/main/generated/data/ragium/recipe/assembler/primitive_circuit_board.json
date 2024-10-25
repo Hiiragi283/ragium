@@ -6,16 +6,15 @@
   },
   "item_inputs": [
     {
-      "count": 8,
-      "items": "#c:plates/iron"
+      "items": "ragium:silicon_plate"
     },
     {
-      "items": "ragium:ragi_alloy_coil"
+      "items": "#c:plates/copper"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:advanced_motor"
+      "item": "ragium:primitive_circuit_board"
     }
   ]
 }

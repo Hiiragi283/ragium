@@ -6,10 +6,10 @@
   },
   "item_inputs": [
     {
-      "items": "ragium:silicon_plate"
+      "items": "ragium:basic_circuit_board"
     },
     {
-      "items": "#c:plates/gold"
+      "items": "#c:dusts/glowstone"
     }
   ],
   "item_outputs": [

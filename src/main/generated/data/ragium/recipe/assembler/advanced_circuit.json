@@ -6,10 +6,10 @@
   },
   "item_inputs": [
     {
-      "items": "ragium:engineering_plastic_plate"
+      "items": "ragium:advanced_circuit_board"
     },
     {
-      "items": "ragium:ragi_alloy_plate"
+      "items": "ragium:ragi_crystal_dust"
     }
   ],
   "item_outputs": [

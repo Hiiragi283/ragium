@@ -34,7 +34,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import kotlin.collections.component1
 import kotlin.collections.component2
-import kotlin.collections.forEach
 import kotlin.jvm.optionals.getOrNull
 
 object RagiumCommands {

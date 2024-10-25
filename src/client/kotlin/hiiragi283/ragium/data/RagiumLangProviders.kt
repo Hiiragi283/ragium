@@ -88,13 +88,19 @@ object RagiumLangProviders {
             addAll(RagiumContents.Tools.entries)
         }.forEach { item: HTContent.Material<Item> -> builder.add(item.value, item.getTranslation(type)) }
         // motors
-        RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
+        /*RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
             builder.add(
                 motor.value,
                 MotorFormatter.getTranslation(type, motor),
             )
-        }
+        }*/
         // circuits
+        RagiumContents.CircuitBoards.entries.forEach { boards: RagiumContents.CircuitBoards ->
+            builder.add(
+                boards.asItem(),
+                BoardFormatter.getTranslation(type, boards),
+            )
+        }
         RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
             builder.add(
                 circuit.asItem(),
@@ -103,9 +109,14 @@ object RagiumLangProviders {
         }
     }
 
-    private data object MotorFormatter : HTTranslationFormatter {
+    /*private data object MotorFormatter : HTTranslationFormatter {
         override val enPattern: String = "%s Motor"
         override val jaPattern: String = "%sモーター"
+    }*/
+
+    private data object BoardFormatter : HTTranslationFormatter {
+        override val enPattern: String = "%s Circuit Board"
+        override val jaPattern: String = "%s回路基板"
     }
 
     private data object CircuitFormatter : HTTranslationFormatter {
@@ -160,7 +171,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Foods.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumContents.Foods.PULP, "Pulp")
 
-            builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "Alchemy Stuff")
             builder.add(RagiumContents.Misc.BACKPACK, "Backpack")
             builder.add(RagiumContents.Misc.BASALT_MESH, "Basalt Mesh")
             builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "Crafter's Hammer")
@@ -173,6 +183,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.PROCESSOR_SOCKET, "Processor Socket")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR, "Ragi-Crystal Processor")
+            builder.add(RagiumContents.Misc.RAGIUM, "Ragium")
             builder.add(RagiumContents.Misc.REMOVER_DYNAMITE, "Remover Dynamite")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
@@ -298,7 +309,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Foods.MINCED_MEAT, "ひき肉")
             builder.add(RagiumContents.Foods.PULP, "パルプ")
 
-            builder.add(RagiumContents.Misc.ALCHEMY_STUFF, "錬金の杖")
             builder.add(RagiumContents.Misc.BACKPACK, "パックパック")
             builder.add(RagiumContents.Misc.BASALT_MESH, "玄武岩メッシュ")
             builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "クラフターズ・ハンマー")
@@ -311,6 +321,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.PROCESSOR_SOCKET, "プロセッサソケット")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR, "ラギクリスタリルプロセッサ")
+            builder.add(RagiumContents.Misc.RAGIUM, "ラギウム")
             builder.add(RagiumContents.Misc.REMOVER_DYNAMITE, "削除用ダイナマイト")
             builder.add(RagiumContents.Misc.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "太陽光パネル")

@@ -97,6 +97,12 @@ enum class HTMachineTier(
         ADVANCED -> RagiumBlocks.ADVANCED_CASING
     }
 
+    fun getCircuitBoard(): RagiumContents.CircuitBoards = when (this) {
+        PRIMITIVE -> RagiumContents.CircuitBoards.PRIMITIVE
+        BASIC -> RagiumContents.CircuitBoards.BASIC
+        ADVANCED -> RagiumContents.CircuitBoards.ADVANCED
+    }
+
     fun getCircuit(): RagiumContents.Circuits = when (this) {
         PRIMITIVE -> RagiumContents.Circuits.PRIMITIVE
         BASIC -> RagiumContents.Circuits.BASIC
@@ -113,12 +119,6 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumContents.Hulls.RAGI_ALLOY
         BASIC -> RagiumContents.Hulls.RAGI_STEEL
         ADVANCED -> RagiumContents.Hulls.REFINED_RAGI_STEEL
-    }
-
-    fun getMotor(): RagiumContents.Motors = when (this) {
-        PRIMITIVE -> RagiumContents.Motors.PRIMITIVE
-        BASIC -> RagiumContents.Motors.BASIC
-        ADVANCED -> RagiumContents.Motors.ADVANCED
     }
 
     fun getIngot(): RagiumContents.Ingots = when (this) {

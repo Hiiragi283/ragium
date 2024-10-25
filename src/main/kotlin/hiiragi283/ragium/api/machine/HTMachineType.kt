@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.property.HTPropertyHolder
@@ -112,7 +113,7 @@ class HTMachineType private constructor(properties: HTPropertyHolder) :
 
         private fun generateEnergy(world: World, tier: HTMachineTier, transaction: Transaction): Boolean =
             world.energyNetwork?.let { network: HTEnergyNetwork ->
-                network.insert(tier.recipeCost, transaction) > 0
+                network.insert(HTEnergyType.ELECTRICITY, tier.recipeCost, transaction) > 0
             } ?: false
 
         //    HTMachineConvertible    //
