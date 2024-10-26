@@ -1,15 +1,9 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": false
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_alloy_ingot"
+      "item": "ragium:ragi_alloy_plate"
     },
     "B": {
       "item": "ragium:solar_panel"
@@ -21,7 +15,7 @@
       "item": "ragium:solar_panel"
     },
     "E": {
-      "tag": "c:ingots/copper"
+      "tag": "c:plates/copper"
     }
   },
   "pattern": [

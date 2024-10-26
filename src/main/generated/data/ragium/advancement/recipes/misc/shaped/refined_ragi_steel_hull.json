@@ -1,17 +1,11 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": false
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_the_item": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:refined_ragi_steel_ingot"
+            "items": "ragium:refined_ragi_steel_plate"
           }
         ]
       },

@@ -1,9 +1,10 @@
 package hiiragi283.ragium.client
 
-import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumEnvironmentBridge
+import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
@@ -37,7 +38,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.client.gui.screen.ingame.HandledScreens
@@ -57,7 +57,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 
 @Environment(EnvType.CLIENT)
-object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvironmentBridge {
+object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridge {
     override fun onInitializeClient() {
         registerBlocks()
         registerEntities()
@@ -203,13 +203,13 @@ object RagiumClient : ClientModInitializer, HTMachineTypeInitializer, RagiumEnvi
         }
     }
 
-    //    HTMachineTypeInitializer    //
+    //    RagiumPlugin    //
 
     override val priority: Int = -100
 
-    override fun shouldLoad(): Boolean = FabricLoader.getInstance().environmentType == EnvType.CLIENT && isModLoaded("roughlyenoughitems")
+    override fun shouldLoad(): Boolean = isClientEnv() && isModLoaded("roughlyenoughitems")
 
-    override fun modifyProperties(helper: HTMachineTypeInitializer.Helper) {
+    override fun modifyMachineProperties(helper: RagiumPlugin.PropertyHelper) {
         helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
             set(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX) { machine: HTMachineEntity ->
                 val generator: HTHeatGeneratorMachineEntity? = machine as? HTHeatGeneratorMachineEntity

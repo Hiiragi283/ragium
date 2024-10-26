@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.data.server.recipe.RecipeExporter
@@ -48,7 +47,7 @@ object HTMaterialItemRecipeRegistry {
     @JvmField
     val EXCLUDED_KEYS: List<HTPropertyKey.Simple<out Any>> = listOf(DISABLE_BLOCK_RECIPE, ORE_SUB_PRODUCTS)
 
-    //    Register    //
+    //    MachineRegister    //
 
     @JvmStatic
     private val registry: MutableMap<String, HTPropertyHolder> = mutableMapOf()
@@ -147,7 +146,7 @@ object HTMaterialItemRecipeRegistry {
         val plate: ItemConvertible = properties[PLATE] ?: return
         val ingot: TagKey<Item> = getTagKey(name, INGOT)
         // Shaped Crafting (only hard mode)
-        HTShapedRecipeJsonBuilder
+        /*HTShapedRecipeJsonBuilder
             .create(plate)
             .patterns(
                 "A",
@@ -156,7 +155,7 @@ object HTMaterialItemRecipeRegistry {
             ).input('A', RagiumContents.Misc.FORGE_HAMMER)
             .input('B', ingot)
             .unlockedBy(ingot)
-            .offerTo(wrapper(exporter, true))
+            .offerTo(wrapper(exporter, true))*/
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.METAL_FORMER)

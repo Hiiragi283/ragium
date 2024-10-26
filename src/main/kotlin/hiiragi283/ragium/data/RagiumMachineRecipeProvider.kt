@@ -58,8 +58,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMaterialItemRecipeRegistry.generateRecipes(exporter, ::exporterWrapper1, ::exporterWrapper2)
     }
 
-    private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
-        withConditions(exporter, RagiumAPI.getInstance().getHardModeCondition(bool))
+    private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter = exporter
 
     private fun exporterWrapper2(exporter: RecipeExporter, tagKey: TagKey<Item>): RecipeExporter =
         withConditions(exporter, ResourceConditions.tagsPopulated(tagKey))

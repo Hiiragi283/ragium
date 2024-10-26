@@ -1,10 +1,4 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": false
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_the_item": {

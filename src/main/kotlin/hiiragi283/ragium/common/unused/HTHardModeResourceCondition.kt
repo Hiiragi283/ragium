@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.data
+package hiiragi283.ragium.common.unused
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder

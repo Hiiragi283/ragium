@@ -1,15 +1,9 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": false
-    }
-  ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:refined_ragi_steel_ingot"
+      "item": "ragium:refined_ragi_steel_plate"
     },
     "B": {
       "item": "ragium:engine"
@@ -21,7 +15,7 @@
       "item": "ragium:engine"
     },
     "E": {
-      "tag": "c:ingots/steel"
+      "tag": "c:plates/steel"
     }
   },
   "pattern": [

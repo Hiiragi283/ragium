@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.block.Block
@@ -56,9 +55,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
     }
 
-    private fun RecipeExporter.conditions(vararg conditions: ResourceCondition): RecipeExporter = withConditions(this, *conditions)
+    // private fun RecipeExporter.conditions(vararg conditions: ResourceCondition): RecipeExporter = withConditions(this, *conditions)
 
-    private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter = conditions(RagiumAPI.getInstance().getHardModeCondition(isHard))
+    // private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter = this
 
     //    Crafting    //
 
@@ -283,7 +282,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumContents.RawMaterials.RAGINITE)
             .offerTo(exporter)
 
-        HTShapedRecipeJsonBuilder
+        /*HTShapedRecipeJsonBuilder
             .create(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .patterns(
@@ -293,7 +292,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumContents.Dusts.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
             .unlockedBy(RagiumContents.Dusts.CRUDE_RAGINITE)
-            .offerSuffix(exporter.hardMode(false), "_1")
+            .offerSuffix(exporter.hardMode(false), "_1")*/
 
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.Misc.SOLAR_PANEL)
@@ -452,9 +451,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumMaterials.REFINED_RAGI_STEEL,
         ).forEach { material: RagiumMaterials ->
             val base: Block = material.tier.getBaseBlock()
-            val ingot: RagiumContents.Ingots = material.getIngot() ?: return@forEach
+            // val ingot: RagiumContents.Ingots = material.getIngot() ?: return@forEach
             val hull: RagiumContents.Hulls = material.getHull() ?: return@forEach
-            HTShapedRecipeJsonBuilder
+            /*HTShapedRecipeJsonBuilder
                 .create(hull)
                 .patterns(
                     "AAA",
@@ -463,7 +462,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input('A', ingot)
                 .input('B', base)
                 .unlockedBy(ingot)
-                .offerTo(exporter.hardMode(false))
+                .offerTo(exporter.hardMode(false))*/
             val plate: RagiumContents.Plates = material.getPlate() ?: return@forEach
             HTShapedRecipeJsonBuilder
                 .create(hull)
@@ -474,7 +473,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input('A', plate)
                 .input('B', base)
                 .unlockedBy(plate)
-                .offerPrefix(exporter.hardMode(true), "hard/")
+                .offerTo(exporter)
         }
         // casings
         HTShapedRecipeJsonBuilder
@@ -694,8 +693,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input('D', right(tier))
                 .input('E', getMachineBase(tier, isHard))
                 .unlockedBy(tier.getHull())
-            createPattern(true).offerTo(exporter.hardMode(true), tier.createId(type).withPrefixedPath("hard/"))
-            createPattern(false).offerTo(exporter.hardMode(false), tier.createId(type))
+            createPattern(true).offerTo(exporter, tier.createId(type))
+            // createPattern(false).offerTo(exporter.hardMode(false), tier.createId(type))
         }
     }
 

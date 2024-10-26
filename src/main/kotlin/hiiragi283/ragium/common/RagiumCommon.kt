@@ -2,11 +2,11 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumEnvironmentBridge
+import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.api.widget.HTServerFluidWidget
-import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.ModInitializer
@@ -31,7 +31,6 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
         InternalRagiumAPI.initMachineType()
         RagiumContentRegister.registerContents()
 
-        HTHardModeResourceCondition.init()
         HTTradeOfferRegistry.init()
         RagiumBlockEntityTypes.init()
         RagiumCommands.init()
