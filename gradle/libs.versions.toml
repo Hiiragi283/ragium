@@ -55,7 +55,6 @@ mods-fabric = [
     "tech-reborn"
 ]
 mods-include = [
-    "energy",
     "libgui"
 ]
 mods-compile = [

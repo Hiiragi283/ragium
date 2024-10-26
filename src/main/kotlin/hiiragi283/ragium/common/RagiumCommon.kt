@@ -42,7 +42,7 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
 
         RagiumContentRegister.initRegistry()
 
-        InternalRagiumAPI.integrationCache.forEach(Runnable::run)
+        RagiumAPI.getPlugins().forEach(RagiumPlugin::afterRagiumInit)
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

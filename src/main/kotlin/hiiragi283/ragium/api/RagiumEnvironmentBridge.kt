@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.extension.getEnvType
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import net.fabricmc.api.EnvType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -12,7 +13,7 @@ interface RagiumEnvironmentBridge {
 
         fun getInstance(): RagiumEnvironmentBridge =
             FabricLoader.getInstance().getEntrypoints(KEY, RagiumEnvironmentBridge::class.java).first {
-                it.environment == FabricLoader.getInstance().environmentType
+                it.environment == getEnvType()
             }
     }
 

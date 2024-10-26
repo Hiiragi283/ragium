@@ -5,22 +5,24 @@ import hiiragi283.ragium.api.machine.HTMachineTypeKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
 
 @JvmDefaultWithCompatibility
-interface HTMachineTypeInitializer {
+interface RagiumPlugin {
     companion object {
-        const val KEY = "ragium.machine_type"
+        const val KEY = "ragium.plugin"
     }
 
     val priority: Int
 
     fun shouldLoad(): Boolean = true
 
-    fun registerType(register: Register) {}
+    fun registerMachineType(register: MachineRegister) {}
 
-    fun modifyProperties(helper: Helper) {}
+    fun modifyMachineProperties(helper: PropertyHelper) {}
 
-    //    Register    //
+    fun afterRagiumInit()
 
-    class Register(private val register: (HTMachineTypeKey, HTPropertyHolder, HTMachineType.Category) -> Unit) {
+    //    MachineRegister    //
+
+    class MachineRegister(private val register: (HTMachineTypeKey, HTPropertyHolder, HTMachineType.Category) -> Unit) {
         fun registerGenerator(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
             register(
                 key,
@@ -38,9 +40,9 @@ interface HTMachineTypeInitializer {
         }
     }
 
-    //    Helper    //
+    //    PropertyHelper    //
 
-    class Helper(private val key: HTMachineTypeKey, private val properties: HTPropertyHolder.Mutable) {
+    class PropertyHelper(private val key: HTMachineTypeKey, private val properties: HTPropertyHolder.Mutable) {
         fun modify(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
             if (key == this.key) {
                 properties.builderAction()

@@ -1,17 +1,14 @@
 package hiiragi283.ragium.common
 
 import com.google.common.collect.ImmutableBiMap
-import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.RagiumContents.Misc
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
-import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -34,26 +31,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
         add(RagiumComponentTypes.FLUID, fluid)
     }
 
-    override fun getHardModeCondition(isHard: Boolean): ResourceCondition = HTHardModeResourceCondition.fromBool(isHard)
-
-    internal val integrationCache: MutableList<Runnable> = mutableListOf()
-
-    override fun registerIntegration(action: () -> Unit) {
-        integrationCache.add(action)
-    }
+    // override fun getHardModeCondition(isHard: Boolean): ResourceCondition = HTHardModeResourceCondition.fromBool(isHard)
 
     //    Init    //
 
     @JvmStatic
     fun initMachineType() {
-        val initializers: List<HTMachineTypeInitializer> = FabricLoader
-            .getInstance()
-            .getEntrypoints(
-                HTMachineTypeInitializer.KEY,
-                HTMachineTypeInitializer::class.java,
-            ).sortedWith(compareBy(HTMachineTypeInitializer::priority).thenBy { it::class.java.canonicalName })
-            .filter(HTMachineTypeInitializer::shouldLoad)
-
         val keyCache: MutableSet<HTMachineTypeKey> = mutableSetOf()
         val builder: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
 
@@ -67,16 +50,16 @@ internal data object InternalRagiumAPI : RagiumAPI {
         keyCache.add(HTMachineTypeKey.DEFAULT)
         builder.put(HTMachineTypeKey.DEFAULT, HTMachineType.DEFAULT)
 
-        initializers.forEach {
-            it.registerType(HTMachineTypeInitializer.Register(::addMachine))
+        RagiumAPI.getPlugins().forEach {
+            it.registerMachineType(RagiumPlugin.MachineRegister(::addMachine))
         }
 
         val map: ImmutableBiMap<HTMachineTypeKey, HTMachineType> = builder.build()
 
-        initializers.forEach {
+        RagiumAPI.getPlugins().forEach {
             map.forEach { (key: HTMachineTypeKey, type: HTMachineType) ->
                 val builder1: HTPropertyHolder.Mutable = HTPropertyHolder.builder(type)
-                it.modifyProperties(HTMachineTypeInitializer.Helper(key, builder1))
+                it.modifyMachineProperties(RagiumPlugin.PropertyHelper(key, builder1))
                 type.delegated = builder1
             }
         }

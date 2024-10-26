@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -33,6 +33,29 @@ interface RagiumAPI {
 
         @JvmStatic
         fun getInstance(): RagiumAPI = InternalRagiumAPI
+
+        private lateinit var plugins: List<RagiumPlugin>
+
+        @JvmStatic
+        fun getPlugins(): List<RagiumPlugin> {
+            if (!::plugins.isInitialized) {
+                plugins = FabricLoader
+                    .getInstance()
+                    .getEntrypoints(
+                        RagiumPlugin.KEY,
+                        RagiumPlugin::class.java,
+                    ).sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
+                    .filter(RagiumPlugin::shouldLoad)
+                log {
+                    info("=== Loaded Ragium Plugins ===")
+                    plugins.forEach { plugin: RagiumPlugin ->
+                        info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
+                    }
+                    info("=============================")
+                }
+            }
+            return plugins
+        }
     }
 
     val config: Config
@@ -45,9 +68,7 @@ interface RagiumAPI {
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 
-    fun getHardModeCondition(isHard: Boolean): ResourceCondition
-
-    fun registerIntegration(action: () -> Unit)
+    // fun getHardModeCondition(isHard: Boolean): ResourceCondition
 
     //    Config    //
 

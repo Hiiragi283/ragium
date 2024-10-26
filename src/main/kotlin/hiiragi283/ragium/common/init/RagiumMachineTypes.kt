@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.HTMachineTypeInitializer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.*
@@ -20,10 +20,12 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-object RagiumMachineTypes : HTMachineTypeInitializer {
+object RagiumMachineTypes : RagiumPlugin {
     override val priority: Int = -100
 
-    override fun registerType(register: HTMachineTypeInitializer.Register) {
+    override fun afterRagiumInit() {}
+
+    override fun registerMachineType(register: RagiumPlugin.MachineRegister) {
         // generators
         register.registerGenerator(HEAT_GENERATOR) {
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->

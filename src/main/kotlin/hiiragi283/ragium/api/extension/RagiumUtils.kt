@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -63,6 +64,12 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
 //    FabricLoader    //
 
 fun isModLoaded(modId: String): Boolean = FabricLoader.getInstance().isModLoaded(modId)
+
+fun getEnvType(): EnvType = FabricLoader.getInstance().environmentType
+
+fun isClientEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.CLIENT
+
+fun isServerEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.SERVER
 
 //    Identifier    //
 

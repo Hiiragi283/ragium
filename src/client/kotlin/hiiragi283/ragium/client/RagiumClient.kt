@@ -207,7 +207,9 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
 
     override val priority: Int = -100
 
-    override fun shouldLoad(): Boolean = isClientEnv() && isModLoaded("roughlyenoughitems")
+    override fun afterRagiumInit() {}
+
+    override fun shouldLoad(): Boolean = isClientEnv()
 
     override fun modifyMachineProperties(helper: RagiumPlugin.PropertyHelper) {
         helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
