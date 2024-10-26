@@ -95,24 +95,6 @@ object RagiumMaterialItemRecipes {
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.NICKEL)
             set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.NICKEL)
         }
-        /*HTMaterialItemRecipeRegistry.register("silver") {
-            set(
-                HTMaterialItemRecipeRegistry.BLOCK,
-                BothEither.both(RagiumContents.StorageBlocks.SILVER, RagiumItemTags.SILVER_BLOCKS),
-            )
-            set(
-                HTMaterialItemRecipeRegistry.DUST,
-                BothEither.both(RagiumContents.Dusts.SILVER, RagiumItemTags.SILVER_DUSTS),
-            )
-            set(
-                HTMaterialItemRecipeRegistry.INGOT,
-                BothEither.both(RagiumContents.Ingots.SILVER, RagiumItemTags.SILVER_INGOTS),
-            )
-            set(
-                HTMaterialItemRecipeRegistry.PLATE,
-                BothEither.both(RagiumContents.Plates.SILVER, RagiumItemTags.SILVER_PLATES),
-            )
-        }*/
         HTMaterialItemRecipeRegistry.register("steel") {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.STEEL)
             set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.STEEL)

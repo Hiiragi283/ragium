@@ -1,4 +1,13 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:plates/gold"
+      ]
+    }
+  ],
   "type": "ragium:machine",
   "definition": {
     "type": "ragium:grinder",

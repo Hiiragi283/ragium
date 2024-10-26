@@ -75,23 +75,22 @@ object HTMaterialItemRecipeRegistry {
 
     //    Data Gen - Recipe    //
 
+    private lateinit var tagValidator: (RecipeExporter, TagKey<Item>) -> RecipeExporter
+
     @JvmStatic
-    fun generateRecipes(
-        exporter: RecipeExporter,
-        wrapper1: (RecipeExporter, Boolean) -> RecipeExporter,
-        wrapper2: (RecipeExporter, TagKey<Item>) -> RecipeExporter,
-    ) {
+    fun generateRecipes(exporter: RecipeExporter, tagValidator: (RecipeExporter, TagKey<Item>) -> RecipeExporter) {
+        this.tagValidator = tagValidator
         registry.forEach { (name: String, properties: HTPropertyHolder) ->
             ingotToBlockRecipe(exporter, name, properties)
             blockToIngotRecipe(exporter, name, properties)
             ingotToDustRecipe(exporter, name, properties)
-            ingotToPlateRecipe(exporter, wrapper1, name, properties)
+            ingotToPlateRecipe(exporter, name, properties)
             plateToDustRecipe(exporter, name, properties)
 
             oreToRawRecipe(exporter, name, properties)
             rawToDustRecipe(exporter, name, properties)
-            rawToIngotRecipe(exporter, wrapper2, name, properties)
-            dustToIngotRecipe(exporter, wrapper2, name, properties)
+            rawToIngotRecipe(exporter, name, properties)
+            dustToIngotRecipe(exporter, name, properties)
         }
     }
 
@@ -109,7 +108,7 @@ object HTMaterialItemRecipeRegistry {
                 "AAA",
             ).input('A', ingot)
             .unlockedBy(ingot)
-            .offerTo(exporter)
+            .offerTo(tagValidator(exporter, ingot))
     }
 
     @JvmStatic
@@ -122,7 +121,7 @@ object HTMaterialItemRecipeRegistry {
             .create(ingot, 9)
             .input(block)
             .unlockedBy(block)
-            .offerTo(exporter)
+            .offerTo(tagValidator(exporter, block))
     }
 
     @JvmStatic
@@ -133,16 +132,11 @@ object HTMaterialItemRecipeRegistry {
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ingot)
             .itemOutput(dust)
-            .offerTo(exporter, dust, "_from_ingot")
+            .offerTo(tagValidator(exporter, ingot), dust, "_from_ingot")
     }
 
     @JvmStatic
-    private fun ingotToPlateRecipe(
-        exporter: RecipeExporter,
-        wrapper: (RecipeExporter, Boolean) -> RecipeExporter,
-        name: String,
-        properties: HTPropertyHolder,
-    ) {
+    private fun ingotToPlateRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val plate: ItemConvertible = properties[PLATE] ?: return
         val ingot: TagKey<Item> = getTagKey(name, INGOT)
         // Shaped Crafting (only hard mode)
@@ -161,7 +155,7 @@ object HTMaterialItemRecipeRegistry {
             .create(RagiumMachineTypes.Processor.METAL_FORMER)
             .itemInput(ingot)
             .itemOutput(plate)
-            .offerTo(exporter, plate)
+            .offerTo(tagValidator(exporter, ingot), plate)
     }
 
     @JvmStatic
@@ -172,7 +166,7 @@ object HTMaterialItemRecipeRegistry {
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(plate)
             .itemOutput(dust)
-            .offerTo(exporter, dust, "_from_plate")
+            .offerTo(tagValidator(exporter, plate), dust, "_from_plate")
     }
 
     @JvmStatic
@@ -185,7 +179,7 @@ object HTMaterialItemRecipeRegistry {
             .itemInput(ore)
             .itemOutput(rawMaterial, 2)
             .apply { properties[ORE_SUB_PRODUCTS]?.let(::itemOutput) }
-            .offerTo(exporter, rawMaterial)
+            .offerTo(tagValidator(exporter, ore), rawMaterial)
     }
 
     @JvmStatic
@@ -198,16 +192,11 @@ object HTMaterialItemRecipeRegistry {
             .itemInput(rawMaterial)
             .itemOutput(dust)
             .itemOutput(dust)
-            .offerTo(exporter, dust, "_from_raw")
+            .offerTo(tagValidator(exporter, rawMaterial), dust, "_from_raw")
     }
 
     @JvmStatic
-    private fun rawToIngotRecipe(
-        exporter: RecipeExporter,
-        wrapper: (RecipeExporter, TagKey<Item>) -> RecipeExporter,
-        name: String,
-        properties: HTPropertyHolder,
-    ) {
+    private fun rawToIngotRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val ingot: ItemConvertible = properties[INGOT] ?: return
         val rawMaterial: TagKey<Item> = getTagKey(name, RAW)
         HTCookingRecipeJsonBuilder.smeltAndBlast(
@@ -215,17 +204,12 @@ object HTMaterialItemRecipeRegistry {
             rawMaterial,
             ingot,
             suffix = "_from_raw",
-            wrapper = wrapper,
+            wrapper = tagValidator,
         )
     }
 
     @JvmStatic
-    private fun dustToIngotRecipe(
-        exporter: RecipeExporter,
-        wrapper: (RecipeExporter, TagKey<Item>) -> RecipeExporter,
-        name: String,
-        properties: HTPropertyHolder,
-    ) {
+    private fun dustToIngotRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val ingot: ItemConvertible = properties[INGOT] ?: return
         val dust: TagKey<Item> = getTagKey(name, DUST)
         HTCookingRecipeJsonBuilder.smeltAndBlast(
@@ -233,7 +217,7 @@ object HTMaterialItemRecipeRegistry {
             dust,
             ingot,
             suffix = "_from_dust",
-            wrapper = wrapper,
+            wrapper = tagValidator,
         )
     }
 }

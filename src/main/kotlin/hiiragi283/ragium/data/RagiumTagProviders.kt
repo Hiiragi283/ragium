@@ -183,7 +183,8 @@ object RagiumTagProviders {
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
             HTMaterialItemRecipeRegistry.configureTags { tagKey: TagKey<Item>, item: ItemConvertible? ->
-                item?.asItem()?.let { getOrCreateTagBuilder(tagKey).add(it) }
+                val builder: FabricTagBuilder = getOrCreateTagBuilder(tagKey)
+                item?.asItem()?.let { builder.add(it) }
             }
         }
     }

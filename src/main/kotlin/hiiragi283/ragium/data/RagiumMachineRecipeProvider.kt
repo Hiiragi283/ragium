@@ -55,12 +55,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         rockGenerator(exporter)
         sawMill(exporter)
         // patterned
-        HTMaterialItemRecipeRegistry.generateRecipes(exporter, ::exporterWrapper1, ::exporterWrapper2)
+        HTMaterialItemRecipeRegistry.generateRecipes(exporter, ::tagValidator)
     }
 
-    private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter = exporter
+    // private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter = exporter
 
-    private fun exporterWrapper2(exporter: RecipeExporter, tagKey: TagKey<Item>): RecipeExporter =
+    private fun tagValidator(exporter: RecipeExporter, tagKey: TagKey<Item>): RecipeExporter =
         withConditions(exporter, ResourceConditions.tagsPopulated(tagKey))
 
     //    Alloy Furnace    //
