@@ -3,12 +3,11 @@
   "id": "ragium",
   "version": "${version}",
   "name": "Ragium",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "A simple tech mod for Fabric",
   "authors": [
     "Hiiragi283"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/Hiiragi283/ragium",
     "issues": "https://github.com/Hiiragi283/ragium/issue"
   },

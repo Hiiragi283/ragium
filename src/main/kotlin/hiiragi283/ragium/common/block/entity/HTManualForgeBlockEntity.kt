@@ -1,30 +1,33 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.modifyBlockState
-import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
+import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
-    HTDelegatedInventory.Simple {
+class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_FORGE, pos, state) {
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+        HTRecipeCache(RagiumRecipeTypes.MACHINE)
+
     override fun onUse(
         state: BlockState,
         world: World,
@@ -32,56 +35,38 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        val step: Int = state.get(RagiumBlockProperties.LEVEL_7)
-        if (step == 7) {
-            (world.getBlockEntity(pos) as? HTManualGrinderBlockEntity)?.process(player)
-        }
-        if (!world.isClient) {
-            world.modifyBlockState(pos) { stateIn: BlockState ->
-                stateIn.with(RagiumBlockProperties.LEVEL_7, (step + 1) % 8)
-            }
-        }
+        process(player)
         return ActionResult.success(world.isClient)
     }
 
-    //    HTDelegatedInventory    //
-
-    override val parent: HTSimpleInventory =
-        HTStorageBuilder(1)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .buildSimple()
-
-    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
-        HTRecipeCache(RagiumRecipeTypes.MACHINE)
-
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
+        val stackMain: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
+        if (!stackMain.isOf(RagiumContents.Misc.FORGE_HAMMER)) return
+        val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
                 HTMachineInput.Simple(
                     HTMachineDefinition(
-                        RagiumMachineTypes.Processor.GRINDER,
+                        RagiumMachineTypes.Processor.METAL_FORMER,
                         HTMachineTier.PRIMITIVE,
                     ),
-                    getStack(0),
+                    stackOff,
                 ),
                 world,
             ).getOrNull()
             ?.value
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        parent.getStack(0).decrement(recipe.itemInputs[0].amount)
+        stackMain.damage(1, player, EquipmentSlot.MAINHAND)
+        stackOff.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
         world.playSoundAtBlockCenter(
             pos,
-            SoundEvents.BLOCK_GRINDSTONE_USE,
+            SoundEvents.BLOCK_ANVIL_USE,
             SoundCategory.BLOCKS,
             1.0f,
             1.0f,
             false,
         )
-    }
-
-    override fun markDirty() {
-        super<HTBlockEntityBase>.markDirty()
     }
 }

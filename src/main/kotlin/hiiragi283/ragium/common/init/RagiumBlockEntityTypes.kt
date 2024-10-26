@@ -14,10 +14,6 @@ object RagiumBlockEntityTypes {
         register("creative_source", ::HTCreativeSourceBlockEntity)
 
     @JvmField
-    val DRIVE_SCANNER: BlockEntityType<HTDriveScannerBlockEntity> =
-        register("drive_scanner", ::HTDriveScannerBlockEntity)
-
-    @JvmField
     val EXPORTER: BlockEntityType<HTExporterBlockEntity> =
         register("exporter", ::HTExporterBlockEntity)
 
@@ -34,8 +30,16 @@ object RagiumBlockEntityTypes {
         register("meta_machine", ::HTMetaMachineBlockEntity)
 
     @JvmField
+    val MANUAL_FORGE: BlockEntityType<HTManualForgeBlockEntity> =
+        register("manual_forge", ::HTManualForgeBlockEntity)
+
+    @JvmField
     val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
         register("manual_grinder", ::HTManualGrinderBlockEntity)
+
+    @JvmField
+    val MANUAL_MIXER: BlockEntityType<HTManualMixerBlockEntity> =
+        register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
     val TRADER_STATION: BlockEntityType<HTTraderStationBlockEntity> =
@@ -58,7 +62,9 @@ object RagiumBlockEntityTypes {
             .map(RagiumContents.Pipes::value)
             .forEach(FLUID_PIPE::addSupportedBlock)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
+        MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
+        MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_MACHINE)
         TRADER_STATION.addSupportedBlock(RagiumBlocks.TRADER_STATION)
     }

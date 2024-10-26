@@ -2,16 +2,14 @@ package hiiragi283.ragium.client.util
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
-import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.model.json.JsonUnbakedModel
@@ -101,13 +99,13 @@ fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(handler: Clie
     ClientPlayNetworking.registerGlobalReceiver(this, handler)
 }
 
-fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(
+/*fun <T : CustomPayload> CustomPayload.Id<T>.registerClientReceiver(
     handler: (T, MinecraftClient, ClientPlayerEntity, PacketSender) -> Unit,
 ) {
     ClientPlayNetworking.registerGlobalReceiver(this) { payload: T, context: ClientPlayNetworking.Context ->
         handler(payload, context.client(), context.player(), context.responseSender())
     }
-}
+}*/
 
 val ClientPlayNetworking.Context.world: ClientWorld?
     get() = client().world

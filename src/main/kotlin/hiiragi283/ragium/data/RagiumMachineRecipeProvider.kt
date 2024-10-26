@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -60,7 +59,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     }
 
     private fun exporterWrapper1(exporter: RecipeExporter, bool: Boolean): RecipeExporter =
-        withConditions(exporter, HTHardModeResourceCondition.fromBool((bool)))
+        withConditions(exporter, RagiumAPI.getInstance().getHardModeCondition(bool))
 
     private fun exporterWrapper2(exporter: RecipeExporter, tagKey: TagKey<Item>): RecipeExporter =
         withConditions(exporter, ResourceConditions.tagsPopulated(tagKey))

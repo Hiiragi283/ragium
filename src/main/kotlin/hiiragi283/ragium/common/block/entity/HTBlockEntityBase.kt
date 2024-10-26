@@ -32,12 +32,12 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     override fun markDirty() {
         super.markDirty()
-        sendS2CPacket()
+        syncInventory()
     }
 
     //    Extensions    //
 
-    fun sendS2CPacket() {
+    fun syncInventory() {
         sendPacket { asInventory()?.sendS2CPacket(it, pos) }
     }
 

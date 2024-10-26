@@ -5,8 +5,6 @@
     "ragium:basic_casing",
     "ragium:advanced_casing",
     "ragium:manual_grinder",
-    "ragium:data_drive",
-    "ragium:drive_scanner",
     "ragium:network_interface",
     "ragium:shaft",
     "ragium:meta_machine",

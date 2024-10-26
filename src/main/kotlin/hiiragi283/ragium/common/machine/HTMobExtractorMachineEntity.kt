@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.machine
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 
-class HTMobExtractorMachineEntity(tier: HTMachineTier) : HTProcessorMachineEntity(RagiumMachineTypes.MOB_EXTRACTOR, tier) {
+class HTMobExtractorMachineEntity(tier: HTMachineTier) : HTLargeProcessorMachineEntity(RagiumMachineTypes.MOB_EXTRACTOR, tier) {
     /*override fun getCustomData(
         world: World,
         pos: BlockPos,

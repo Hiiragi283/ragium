@@ -139,12 +139,11 @@ sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList:
 
     class Fluid(entryList: RegistryEntryList<MCFluid>, amount: Long) :
         HTIngredient<MCFluid, Long, ResourceAmount<FluidVariant>>(entryList, amount) {
-        override fun test(resourceAmount: ResourceAmount<FluidVariant>): Boolean {
-            val (variant: FluidVariant, amount: Long) = resourceAmount
-            return when {
-                resourceAmount.isBlank() -> this.isEmpty
-                else -> entryList.any(variant::isOf) && amount >= this.amount
-            }
+        override fun test(resourceAmount: ResourceAmount<FluidVariant>): Boolean = test(resourceAmount.resource, resourceAmount.amount)
+
+        fun test(variant: FluidVariant, amount: Long): Boolean = when {
+            variant.isBlank || amount <= 0 -> this.isEmpty
+            else -> entryList.any(variant::isOf) && amount >= this.amount
         }
     }
 }

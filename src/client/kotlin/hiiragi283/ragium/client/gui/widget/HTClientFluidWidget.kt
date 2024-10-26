@@ -4,15 +4,16 @@ import com.mojang.blaze3d.systems.RenderSystem
 import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.client.util.getSpriteAndColor
+import io.github.cottonmc.cotton.gui.client.BackgroundPainter
 import io.github.cottonmc.cotton.gui.widget.TooltipBuilder
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
+import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.texture.Sprite
-import net.minecraft.fluid.Fluid
 import net.minecraft.registry.Registries
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -20,10 +21,21 @@ import net.minecraft.util.Identifier
 import kotlin.jvm.optionals.getOrNull
 
 @Environment(EnvType.CLIENT)
-class HTClientFluidWidget : HTFluidWidget {
-    constructor(fluid: Fluid) : super(fluid)
+class HTClientFluidWidget(storage: SlottedStorage<FluidVariant>, index: Int) : HTFluidWidget(storage, index) {
+    override var variant: FluidVariant = storage.getSlot(index).resource
 
-    constructor(fluid: Fluid, amount: Long) : super(fluid, amount)
+    override var amount: Long = storage.getSlot(index).amount
+
+    private var tick: Int = 0
+
+    override fun tick() {
+        if (tick >= 20) {
+            onTick()
+            tick = 0
+        } else {
+            tick++
+        }
+    }
 
     override fun paint(
         context: DrawContext,
@@ -32,9 +44,11 @@ class HTClientFluidWidget : HTFluidWidget {
         mouseX: Int,
         mouseY: Int,
     ) {
-        RenderSystem.enableDepthTest()
+        // render slot
+        BackgroundPainter.SLOT.paintBackground(context, x, y, this)
         // render fluid sprite
-        val (sprite: Sprite, color: Int) = fluid.getSpriteAndColor() ?: return
+        RenderSystem.enableDepthTest()
+        val (sprite: Sprite, color: Int) = variant.fluid.getSpriteAndColor() ?: return
         val floatColor: Triple<Float, Float, Float> = toFloatColor(color)
 
         context.drawSprite(
@@ -53,13 +67,13 @@ class HTClientFluidWidget : HTFluidWidget {
 
     override fun addTooltip(tooltip: TooltipBuilder) {
         // render fluid name
-        tooltip.add(FluidVariantAttributes.getName(FluidVariant.of(fluid)))
+        tooltip.add(FluidVariantAttributes.getName(variant))
         // render fluid amount
         if (amount >= 0) {
             tooltip.add(Text.literal("Amount: $amount Units").formatted(Formatting.GRAY))
         }
         // render fluid id
-        val id: Identifier = Registries.FLUID.getId(fluid)
+        val id: Identifier = Registries.FLUID.getId(variant.fluid)
         tooltip.add(Text.literal(id.toString()).formatted(Formatting.DARK_GRAY))
         // render mod name
         FabricLoader

@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import com.google.common.collect.HashBasedTable
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
@@ -124,9 +125,12 @@ fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.cre
 
 //    ScreenHandler    //
 
-fun ScreenHandlerContext.machineInventory(size: Int): Inventory = get { world: World, pos: BlockPos ->
-    world.getMachineEntity(pos)?.parent ?: SimpleInventory(size)
-}.orElseGet { SimpleInventory(size) }
+fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity? = get(World::getMachineEntity, null)
+
+fun ScreenHandlerContext.machineInventory(size: Int): Inventory = getMachineEntity()?.parent ?: SimpleInventory(size)
+
+fun ScreenHandlerContext.machineInventory(sizeType: HTMachineRecipe.SizeType): Inventory =
+    getMachineEntity()?.parent ?: SimpleInventory(sizeType.invSize)
 
 //    Table    //
 

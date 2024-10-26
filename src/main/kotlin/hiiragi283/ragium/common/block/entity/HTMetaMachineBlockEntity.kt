@@ -3,10 +3,15 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
@@ -22,12 +27,14 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.META_MACHINE, pos, state),
     ExtendedScreenHandlerFactory<HTMachinePacket>,
-    PropertyDelegateHolder {
+    PropertyDelegateHolder,
+    SidedStorageBlockEntity {
     var machineEntity: HTMachineEntity? = null
         private set
 
@@ -37,6 +44,11 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun setWorld(world: World) {
         super.setWorld(world)
         machineEntity?.onWorldUpdated(world)
+    }
+
+    override fun markDirty() {
+        super.markDirty()
+        machineEntity?.markDirty()
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
@@ -126,4 +138,10 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getPropertyDelegate(): PropertyDelegate =
         machineEntity?.propertyDelegate ?: ArrayPropertyDelegate(HTMachineEntity.MAX_PROPERTIES)
+
+    //    SidedStorageBlockEntity    //
+
+    override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = machineEntity?.getItemStorage(side)
+
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = machineEntity?.getFluidStorage(side)
 }

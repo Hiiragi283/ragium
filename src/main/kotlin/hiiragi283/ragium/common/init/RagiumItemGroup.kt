@@ -99,9 +99,9 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     add(RagiumBlocks.CREATIVE_SOURCE)
+                    add(RagiumBlocks.MANUAL_FORGE)
                     add(RagiumBlocks.MANUAL_GRINDER)
-                    add(RagiumBlocks.DATA_DRIVE)
-                    add(RagiumBlocks.DRIVE_SCANNER)
+                    add(RagiumBlocks.MANUAL_MIXER)
                     add(RagiumBlocks.SHAFT)
                     add(RagiumBlocks.ITEM_DISPLAY)
                     add(RagiumBlocks.NETWORK_INTERFACE)

@@ -3,9 +3,11 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.fluid.HTFluidStack
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -50,6 +52,11 @@ fun <T : TransferVariant<*>> Storage<T>.insert(resourceAmount: ResourceAmount<T>
 
 fun <T : TransferVariant<*>> Storage<T>.extract(resourceAmount: ResourceAmount<T>, transaction: Transaction): Long =
     extract(resourceAmount.resource, resourceAmount.amount, transaction)
+
+val <T : Any> SingleSlotStorage<T>.resourceAmount: ResourceAmount<T>
+    get() = ResourceAmount(resource, amount)
+
+fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? = if (slot in 0..slotCount) getSlot(slot) else null
 
 //    TransferVariant    //
 

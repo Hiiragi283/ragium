@@ -6,6 +6,7 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -75,6 +76,15 @@ fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     val func: Function<Long, DataResult<Long>> = Codec.checkRange(min, max)
     return Codec.LONG.flatXmap(func, func)
 }
+
+fun <T : Any> resourcePacketCodec(resourceCodec: PacketCodec<RegistryByteBuf, T>): PacketCodec<RegistryByteBuf, ResourceAmount<T>> =
+    PacketCodec.tuple(
+        resourceCodec,
+        ResourceAmount<T>::resource,
+        PacketCodecs.VAR_LONG,
+        ResourceAmount<T>::amount,
+        ::ResourceAmount,
+    )
 
 //    PacketCodec    //
 

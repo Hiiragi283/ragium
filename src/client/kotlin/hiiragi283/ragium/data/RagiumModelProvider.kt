@@ -82,9 +82,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 ),
             )
         }
-        register(RagiumBlocks.DATA_DRIVE) {
-            accept(VariantsBlockStateSupplier.create(it, stateVariantOf(TextureMap.getId(it))))
-        }
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
         registerSimple(RagiumBlocks.ADVANCED_CASING)
@@ -131,7 +128,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         },
                 ),
         )
-
         register(RagiumBlocks.BACKPACK_INTERFACE) {
             accept(
                 MultipartBlockStateSupplier
@@ -145,6 +141,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     ),
             )
         }
+        register(RagiumBlocks.MANUAL_FORGE) { accept(VariantsBlockStateSupplier.create(it, stateVariantOf(it))) }
         // exporters
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val modelId: Identifier = RagiumModels.EXPORTER.upload(

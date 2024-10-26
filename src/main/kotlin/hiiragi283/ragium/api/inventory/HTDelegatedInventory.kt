@@ -6,7 +6,7 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
 
-interface HTDelegatedInventory<T : HTSimpleInventory> : Inventory {
+sealed interface HTDelegatedInventory<T : HTSimpleInventory> : Inventory {
     val parent: T
 
     override fun clear() {

@@ -77,16 +77,16 @@ object RagiumBlocks : HTContentRegister {
         registerCopy("advanced_casing", Blocks.IRON_BLOCK)
 
     @JvmField
+    val MANUAL_FORGE: Block =
+        registerWithBE("manual_forge", RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.ANVIL).nonOpaque())
+
+    @JvmField
     val MANUAL_GRINDER: Block =
         registerBlock("manual_grinder", HTManualGrinderBlock)
 
     @JvmField
-    val DATA_DRIVE: Block =
-        registerBlock("data_drive")
-
-    @JvmStatic
-    val DRIVE_SCANNER: Block =
-        registerWithBE("drive_scanner", RagiumBlockEntityTypes.DRIVE_SCANNER)
+    val MANUAL_MIXER: Block =
+        registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER)
 
     @JvmField
     val ITEM_DISPLAY: Block =

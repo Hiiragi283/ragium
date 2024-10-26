@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTSawMillMachineEntity(tier: HTMachineTier) :
-    HTProcessorMachineEntity(RagiumMachineTypes.SAW_MILL, tier),
+    HTLargeProcessorMachineEntity(RagiumMachineTypes.SAW_MILL, tier),
     HTMultiblockController {
     override var showPreview: Boolean = false
 

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumTranslationKeys

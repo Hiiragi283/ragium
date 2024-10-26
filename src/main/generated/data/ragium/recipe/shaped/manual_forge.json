@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:rods/wooden"
+      "item": "ragium:ragi_alloy_block"
     },
     "B": {
-      "item": "ragium:ragi_alloy_plate"
-    },
-    "C": {
       "item": "minecraft:smooth_stone"
     }
   },
   "pattern": [
-    "A  ",
-    "BBB",
-    "CCC"
+    "AAA",
+    " B ",
+    "BBB"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:manual_grinder"
+    "id": "ragium:manual_forge"
   }
 }

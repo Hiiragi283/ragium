@@ -1,17 +1,11 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "ragium:hard_mode",
-      "value": true
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_the_item": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_plate"
+            "items": "ragium:ragi_alloy_block"
           }
         ]
       },
@@ -19,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/hard/manual_grinder"
+        "recipe": "ragium:shaped/manual_forge"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -32,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/hard/manual_grinder"
+      "ragium:shaped/manual_forge"
     ]
   }
 }

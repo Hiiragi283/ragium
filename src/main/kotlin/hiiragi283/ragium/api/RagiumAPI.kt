@@ -23,6 +23,7 @@ interface RagiumAPI {
         @JvmStatic
         fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 
+        @JvmStatic
         val logger: Logger = LoggerFactory.getLogger(MOD_NAME)
 
         @JvmStatic

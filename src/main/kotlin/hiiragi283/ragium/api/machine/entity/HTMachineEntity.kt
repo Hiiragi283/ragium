@@ -1,20 +1,16 @@
-package hiiragi283.ragium.api.machine
+package hiiragi283.ragium.api.machine.entity
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
-import hiiragi283.ragium.api.machine.HTMachineEntityNew.Factory
+import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedSlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -29,7 +25,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTMachineEntityNew(val definition: HTMachineDefinition) :
+abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachineTier) :
     HTDelegatedInventory.Simple,
     ExtendedScreenHandlerFactory<HTMachinePacket>,
     PropertyDelegateHolder,
@@ -38,41 +34,36 @@ abstract class HTMachineEntityNew(val definition: HTMachineDefinition) :
         const val MAX_PROPERTIES = 4
     }
 
-    constructor(type: HTMachineType, tier: HTMachineTier) : this(HTMachineDefinition(type, tier))
+    constructor(type: HTMachineConvertible, tier: HTMachineTier) : this(type.asMachine(), tier)
 
-    constructor(type: HTMachineConvertible, tier: HTMachineTier) : this(HTMachineDefinition(type, tier))
-
-    val type: HTMachineType = definition.type
-    val tier: HTMachineTier = definition.tier
-
+    val definition = HTMachineDefinition(machineType, tier)
     lateinit var parentBE: HTMetaMachineBlockEntity
         private set
-
     val world: World?
         get() = parentBE.world
     val pos: BlockPos
         get() = parentBE.pos
     val packet: HTMachinePacket
-        get() = HTMachinePacket(type, tier, parentBE.pos)
+        get() = HTMachinePacket(machineType, tier, parentBE.pos)
 
     fun setParentBE(parentBE: HTMetaMachineBlockEntity) {
         check(parentBE.machineEntity == this)
         this.parentBE = parentBE
     }
 
-    protected open fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {}
+    protected open fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {}
 
-    fun writeToNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        writeNbt(nbt, registryLookup)
-        nbt.putString("machine_type", type.id.toString())
+    fun writeToNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        writeNbt(nbt, wrapperLookup)
+        nbt.putString("machine_type", machineType.id.toString())
         nbt.putString("tier", tier.asString())
     }
 
-    open fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {}
+    open fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {}
 
-    fun readFromNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        readNbt(nbt, registryLookup)
-        RagiumAPI.log { info(nbt.toString()) }
+    fun readFromNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        readNbt(nbt, wrapperLookup)
+        // RagiumAPI.log { info(nbt.toString()) }
     }
 
     open fun onWorldUpdated(world: World) {}
@@ -98,14 +89,13 @@ abstract class HTMachineEntityNew(val definition: HTMachineDefinition) :
         pos: BlockPos,
         state: BlockState,
         ticks: Int,
-    ) {
-    }
+    ) {}
 
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
 
     //    ExtendedScreenHandlerFactory    //
 
-    override fun getDisplayName(): Text = tier.createPrefixedText(type)
+    override fun getDisplayName(): Text = tier.createPrefixedText(machineType)
 
     override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = packet
 
@@ -126,46 +116,19 @@ abstract class HTMachineEntityNew(val definition: HTMachineDefinition) :
 
     protected open fun setProperty(index: Int, value: Int) {}
 
-    //    SidedStorageBlockEntity    //
-
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = InventoryStorage.of(parent, side)
-
-    protected val fluidStorages: List<SingleFluidStorage> = listOf(
-        // inputs
-        object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * tier.tankMultiplier
-
-            override fun canExtract(variant: FluidVariant): Boolean = false
-        },
-        object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * tier.tankMultiplier
-
-            override fun canExtract(variant: FluidVariant): Boolean = false
-        },
-        // outputs
-        object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * tier.tankMultiplier
-
-            override fun canInsert(variant: FluidVariant): Boolean = false
-        },
-        object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * tier.tankMultiplier
-
-            override fun canInsert(variant: FluidVariant): Boolean = false
-        },
-    )
-
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = CombinedSlottedStorage(fluidStorages)
-
     //    Factory    //
 
     fun interface Factory {
         companion object {
             @JvmStatic
-            fun of(factory: (HTMachineTier) -> HTMachineEntityNew): Factory =
+            fun of(factory: (HTMachineTier) -> HTMachineEntity): Factory =
                 Factory { _: HTMachineType, tier: HTMachineTier -> factory(tier) }
         }
 
-        fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntityNew
+        fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntity
     }
+
+    //    SidedStorageBlockEntity    //
+
+    final override fun getItemStorage(side: Direction?): Storage<ItemVariant> = InventoryStorage.of(this, side)
 }

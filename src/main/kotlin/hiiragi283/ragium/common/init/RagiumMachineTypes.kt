@@ -5,7 +5,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.common.machine.*
 import net.minecraft.fluid.Fluid
@@ -41,11 +43,13 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTBlastFurnaceMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineRecipe.SizeType.LARGE)
         }
         register.registerProcessor(DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTDistillationTowerMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineRecipe.SizeType.LARGE)
         }
         register.registerProcessor(FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
@@ -63,6 +67,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTSawMillMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
+            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineRecipe.SizeType.LARGE)
         }
 
         RagiumMachineTypes.Processor.entries.forEach {
@@ -143,11 +148,7 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         CHEMICAL_REACTOR,
         COMPRESSOR,
         DECOMPRESSOR,
-        ELECTROLYZER {
-            override fun buildProperties(builder: HTPropertyHolder.Mutable) {
-                super.buildProperties(builder)
-            }
-        },
+        ELECTROLYZER,
         EXTRACTOR,
         GRINDER,
         METAL_FORMER,
@@ -162,13 +163,14 @@ object RagiumMachineTypes : HTMachineTypeInitializer {
         ;
 
         open fun buildProperties(builder: HTPropertyHolder.Mutable) {
-            builder[HTMachinePropertyKeys.MACHINE_FACTORY] = HTMachineEntity.Factory(::HTProcessorMachineEntity)
+            builder[HTMachinePropertyKeys.MACHINE_FACTORY] = HTMachineEntity.Factory(::HTSimpleProcessorMachineEntity)
             builder[HTMachinePropertyKeys.PROCESSOR_CONDITION] = RagiumMachineConditions.ELECTRIC_CONDITION
+            builder[HTMachinePropertyKeys.RECIPE_SIZE] = HTMachineRecipe.SizeType.SIMPLE
             builder.setIfNonNull(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
         }
 
         /*private val machineType: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id(name.lowercase())) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTProcessorMachineEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTSimpleProcessorMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, condition)
             setIfNonNull(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, succeeded)
         }*/

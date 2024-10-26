@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTDistillationTowerMachineEntity(tier: HTMachineTier) :
-    HTProcessorMachineEntity(RagiumMachineTypes.DISTILLATION_TOWER, tier),
+    HTLargeProcessorMachineEntity(RagiumMachineTypes.DISTILLATION_TOWER, tier),
     HTMultiblockController {
     override var showPreview: Boolean = false
 

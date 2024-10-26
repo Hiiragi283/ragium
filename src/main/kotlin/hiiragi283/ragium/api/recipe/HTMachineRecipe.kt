@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
@@ -17,7 +18,7 @@ import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.world.World
-import java.util.Optional
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 class HTMachineRecipe(
@@ -85,7 +86,9 @@ class HTMachineRecipe(
             itemOutputs: List<HTRecipeResult.Item>,
             fluidOutputs: List<HTRecipeResult.Fluid>,
         ): HTMachineRecipe {
-            check(definition.type.isProcessor()) { "Only accepts processor machine!" }
+            val type: HTMachineType = definition.type
+            check(type.isProcessor()) { "Only accepts processor machine!" }
+            check(type.contains(HTMachinePropertyKeys.RECIPE_SIZE)) { "Machine type must have recipe size property!" }
             check(fluidInputs.size <= 2) { "Fluid inputs must be 2 or less!" }
             check(fluidOutputs.size <= 2) { "Fluid outputs must be 2 or less!" }
             check(itemInputs.size <= 3) { "Item inputs must be 3 or less!" }
@@ -94,8 +97,9 @@ class HTMachineRecipe(
             val bool2: Boolean = fluidOutputs.size == 2
             val bool3: Boolean = itemInputs.size == 3
             val bool4: Boolean = itemOutputs.size == 3
+            val bool5: Boolean = type[HTMachinePropertyKeys.RECIPE_SIZE] == SizeType.LARGE
             val sizeType: SizeType = when {
-                bool1 || bool2 || bool3 || bool4 -> SizeType.LARGE
+                bool1 || bool2 || bool3 || bool4 || bool5 -> SizeType.LARGE
                 else -> SizeType.SIMPLE
             }
             return HTMachineRecipe(
@@ -119,31 +123,35 @@ class HTMachineRecipe(
 
     //    Recipe    //
 
-    override fun matches(input: HTMachineInput, world: World): Boolean = when (input) {
-        is HTMachineInput.Simple -> {
-            val bool1: Boolean = sizeType == SizeType.SIMPLE
-            val bool2: Boolean =
-                input.firstItem.let { itemInputs.getOrNull(0)?.test(it) ?: false }
-            val bool3: Boolean =
-                input.secondItem.let { itemInputs.getOrNull(1)?.test(it) ?: true }
-            val bool4: Boolean =
-                input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it) ?: true }
-            bool1 && bool2 && bool3 && bool4
-        }
+    override fun matches(input: HTMachineInput, world: World): Boolean {
+        val bool1: Boolean = input.type == this.machineType
+        val bool2: Boolean = input.tier >= this.tier
+        return when (input) {
+            is HTMachineInput.Simple -> {
+                val bool3: Boolean = sizeType == SizeType.SIMPLE
+                val bool4: Boolean =
+                    input.firstItem.let { itemInputs.getOrNull(0)?.test(it) ?: false }
+                val bool5: Boolean =
+                    input.secondItem.let { itemInputs.getOrNull(1)?.test(it) ?: true }
+                val bool6: Boolean =
+                    input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it) ?: true }
+                bool1 && bool2 && bool3 && bool4 && bool5 && bool6
+            }
 
-        is HTMachineInput.Large -> {
-            val bool1: Boolean = sizeType == SizeType.LARGE
-            val bool2: Boolean =
-                input.firstItem.let { itemInputs.getOrNull(0)?.test(it) ?: false }
-            val bool3: Boolean =
-                input.secondItem.let { itemInputs.getOrNull(1)?.test(it) ?: true }
-            val bool4: Boolean =
-                input.thirdItem.let { itemInputs.getOrNull(2)?.test(it) ?: true }
-            val bool5: Boolean =
-                input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it) ?: true }
-            val bool6: Boolean =
-                input.secondFluid.let { fluidInputs.getOrNull(1)?.test(it) ?: true }
-            bool1 && bool2 && bool3 && bool4 && bool5 && bool6
+            is HTMachineInput.Large -> {
+                val bool3: Boolean = sizeType == SizeType.LARGE
+                val bool4: Boolean =
+                    input.firstItem.let { itemInputs.getOrNull(0)?.test(it) ?: false }
+                val bool5: Boolean =
+                    input.secondItem.let { itemInputs.getOrNull(1)?.test(it) ?: true }
+                val bool6: Boolean =
+                    input.thirdItem.let { itemInputs.getOrNull(2)?.test(it) ?: true }
+                val bool7: Boolean =
+                    input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it) ?: true }
+                val bool8: Boolean =
+                    input.secondFluid.let { fluidInputs.getOrNull(1)?.test(it) ?: true }
+                bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool7 && bool8
+            }
         }
     }
 
@@ -167,8 +175,8 @@ class HTMachineRecipe(
 
     //    SizeType    //
 
-    enum class SizeType {
-        SIMPLE,
-        LARGE,
+    enum class SizeType(val invSize: Int, val storageSize: Int) {
+        SIMPLE(5, 2),
+        LARGE(7, 4),
     }
 }

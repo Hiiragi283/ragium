@@ -5,11 +5,13 @@ import hiiragi283.ragium.api.RagiumEnvironmentBridge
 import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.api.widget.HTFluidWidget
+import hiiragi283.ragium.api.widget.HTServerFluidWidget
 import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.ModInitializer
-import net.minecraft.fluid.Fluid
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 
 object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
     override fun onInitialize() {
@@ -50,7 +52,5 @@ object RagiumCommon : ModInitializer, RagiumEnvironmentBridge {
 
     override val environment: EnvType = EnvType.SERVER
 
-    override fun createFluidWidget(fluid: Fluid): HTFluidWidget = HTFluidWidget(fluid)
-
-    override fun createFluidWidget(fluid: Fluid, amount: Long): HTFluidWidget = HTFluidWidget(fluid, amount)
+    override fun createFluidWidget(storage: SlottedStorage<FluidVariant>, index: Int): HTFluidWidget = HTServerFluidWidget(storage, index)
 }

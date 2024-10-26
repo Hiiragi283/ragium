@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.machineInventory
-import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.widget.WBar

@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant

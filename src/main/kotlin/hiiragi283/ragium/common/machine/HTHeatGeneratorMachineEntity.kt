@@ -23,13 +23,13 @@ class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEnti
         get() = burningTime > 0
     private var fuelTime: Int = 0
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        super.writeNbt(nbt, registryLookup)
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, wrapperLookup)
         nbt.putInt("BurningTime", burningTime)
     }
 
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        super.readNbt(nbt, registryLookup)
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, wrapperLookup)
         burningTime = nbt.getInt("BurningTime")
     }
 

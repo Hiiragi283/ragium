@@ -3,7 +3,8 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
-import hiiragi283.ragium.common.screen.HTProcessorScreenHandler
+import hiiragi283.ragium.common.screen.HTLargeProcessorScreenHandler
+import hiiragi283.ragium.common.screen.HTSimpleProcessorScreenHandler
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -19,8 +20,12 @@ object RagiumScreenHandlerTypes {
         register("generator", ::HTGeneratorScreenHandler)
 
     @JvmField
-    val PROCESSOR: ExtendedScreenHandlerType<HTProcessorScreenHandler, HTMachinePacket> =
-        registerExtended("processor", ::HTProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val LARGE_PROCESSOR: ExtendedScreenHandlerType<HTLargeProcessorScreenHandler, HTMachinePacket> =
+        registerExtended("large_processor", ::HTLargeProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
+
+    @JvmField
+    val SIMPLE_PROCESSOR: ExtendedScreenHandlerType<HTSimpleProcessorScreenHandler, HTMachinePacket> =
+        registerExtended("simple_processor", ::HTSimpleProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(

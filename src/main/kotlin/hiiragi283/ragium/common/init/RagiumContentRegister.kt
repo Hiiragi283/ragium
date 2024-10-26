@@ -17,7 +17,6 @@ import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
-import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.*
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries
@@ -204,9 +203,9 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)
         registerBlockItem(RagiumBlocks.ADVANCED_CASING)
+        registerBlockItem(RagiumBlocks.MANUAL_FORGE)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
-        registerBlockItem(RagiumBlocks.DATA_DRIVE)
-        registerBlockItem(RagiumBlocks.DRIVE_SCANNER)
+        registerBlockItem(RagiumBlocks.MANUAL_MIXER)
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
@@ -217,9 +216,6 @@ object RagiumContentRegister : HTContentRegister {
     @JvmStatic
     fun initRegistry() {
         // ApiLookup
-        ItemStorage.SIDED.registerForBlockEntity({ blockEntity: HTMetaMachineBlockEntity, direction: Direction? ->
-            blockEntity.machineEntity?.let { InventoryStorage.of(it, direction) }
-        }, RagiumBlockEntityTypes.META_MACHINE)
         ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerForBlocks null
             world.backpackManager

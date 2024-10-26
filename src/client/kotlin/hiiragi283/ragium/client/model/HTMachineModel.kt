@@ -5,9 +5,9 @@ import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.machineType
-import hiiragi283.ragium.api.machine.HTMachineEntity
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.fabricmc.fabric.api.renderer.v1.model.ModelHelper

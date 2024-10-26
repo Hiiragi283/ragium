@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTDataDriveManager

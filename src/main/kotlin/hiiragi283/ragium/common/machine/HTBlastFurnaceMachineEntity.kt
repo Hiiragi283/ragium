@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTBlastFurnaceMachineEntity(tier: HTMachineTier) :
-    HTProcessorMachineEntity(RagiumMachineTypes.BLAST_FURNACE, tier),
+    HTLargeProcessorMachineEntity(RagiumMachineTypes.BLAST_FURNACE, tier),
     HTMultiblockController {
     override var showPreview: Boolean = false
 

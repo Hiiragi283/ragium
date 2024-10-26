@@ -52,8 +52,6 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.BASIC_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ADVANCED_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.DATA_DRIVE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.DRIVE_SCANNER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_MACHINE)

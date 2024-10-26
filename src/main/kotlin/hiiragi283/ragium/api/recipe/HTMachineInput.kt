@@ -1,18 +1,25 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
-sealed interface HTMachineInput : RecipeInput {
+sealed class HTMachineInput(val definition: HTMachineDefinition) : RecipeInput {
+    val type: HTMachineType = definition.type
+    val tier: HTMachineTier = definition.tier
+
     //    Simple    //
 
     class Simple(
+        definition: HTMachineDefinition,
         val firstItem: ItemStack,
         val secondItem: ItemStack = ItemStack.EMPTY,
         val firstFluid: ResourceAmount<FluidVariant> = ResourceAmount(FluidVariant.blank(), 0),
-    ) : HTMachineInput {
+    ) : HTMachineInput(definition) {
         override fun getStackInSlot(slot: Int): ItemStack = when (slot) {
             0 -> firstItem
             1 -> secondItem
@@ -25,12 +32,13 @@ sealed interface HTMachineInput : RecipeInput {
     //    Large    //
 
     class Large(
+        definition: HTMachineDefinition,
         val firstItem: ItemStack,
         val secondItem: ItemStack,
         val thirdItem: ItemStack,
         val firstFluid: ResourceAmount<FluidVariant>,
         val secondFluid: ResourceAmount<FluidVariant>,
-    ) : HTMachineInput {
+    ) : HTMachineInput(definition) {
         override fun getStackInSlot(slot: Int): ItemStack = when (slot) {
             0 -> firstItem
             1 -> secondItem

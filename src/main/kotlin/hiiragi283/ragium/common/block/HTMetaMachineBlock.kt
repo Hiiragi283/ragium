@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.machineTypeOrNull
-import hiiragi283.ragium.api.machine.HTMachineEntity
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

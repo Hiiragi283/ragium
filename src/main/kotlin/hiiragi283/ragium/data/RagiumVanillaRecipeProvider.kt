@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.data.HTHardModeResourceCondition
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -22,6 +21,7 @@ import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
@@ -58,7 +58,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun RecipeExporter.conditions(vararg conditions: ResourceCondition): RecipeExporter = withConditions(this, *conditions)
 
-    private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter = conditions(HTHardModeResourceCondition.fromBool(isHard))
+    private fun RecipeExporter.hardMode(isHard: Boolean): RecipeExporter = conditions(RagiumAPI.getInstance().getHardModeCondition(isHard))
 
     //    Crafting    //
 
@@ -502,16 +502,15 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
         // machines
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.MANUAL_GRINDER)
+            .create(RagiumBlocks.MANUAL_FORGE)
             .patterns(
-                "A  ",
+                "AAA",
+                " B ",
                 "BBB",
-                "CCC",
-            ).input('A', ConventionalItemTags.WOODEN_RODS)
-            .input('B', RagiumContents.Ingots.RAGI_ALLOY)
-            .input('C', Items.SMOOTH_STONE)
-            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
-            .offerTo(exporter.hardMode(false))
+            ).input('A', RagiumContents.StorageBlocks.RAGI_ALLOY)
+            .input('B', Blocks.SMOOTH_STONE)
+            .unlockedBy(RagiumContents.StorageBlocks.RAGI_ALLOY)
+            .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.MANUAL_GRINDER)
@@ -523,7 +522,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', RagiumContents.Plates.RAGI_ALLOY)
             .input('C', Items.SMOOTH_STONE)
             .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
-            .offerPrefix(exporter.hardMode(true), "hard/")
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.MANUAL_MIXER)
+            .patterns(
+                "A A",
+                "A A",
+                "BBB",
+            ).input('A', RagiumContents.Plates.RAGI_ALLOY)
+            .input('B', ItemTags.TERRACOTTA)
+            .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
+            .offerTo(exporter)
         // generators
         createMachine(
             exporter,
