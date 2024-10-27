@@ -9,21 +9,21 @@ import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.entity.HTProcessorMachineEntityBase
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
-import hiiragi283.ragium.common.screen.HTLargeProcessorScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
+import hiiragi283.ragium.common.init.RagiumAdvancementCriteria
+import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
+import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.util.math.Direction
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 
-open class HTLargeProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineTier) : HTProcessorMachineEntityBase(type, tier) {
+abstract class HTLargeProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineTier) :
+    HTProcessorMachineEntityBase(type, tier),
+    HTMultiblockController {
     final override val parent: HTSimpleInventory = HTStorageBuilder(7)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -34,29 +34,9 @@ open class HTLargeProcessorMachineEntity(type: HTMachineConvertible, tier: HTMac
         .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSimple()
 
-    final override val fluidStorage: HTMachineFluidStorage =
-        HTMachineFluidStorage.of(HTMachineRecipe.SizeType.LARGE) { index: Int, storage: SingleFluidStorage ->
-            /*parentBE.sendPacket {
-                RagiumNetworks.syncFluidStorage(
-                    it,
-                    pos,
-                    index,
-                    storage.resource,
-                    storage.amount,
-                )
-            }*/
-        }
+    final override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Large()
 
-    final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
-        listOf(
-            FilteringStorage.insertOnlyOf(fluidStorage[0]),
-            FilteringStorage.insertOnlyOf(fluidStorage[1]),
-            FilteringStorage.extractOnlyOf(fluidStorage[2]),
-            FilteringStorage.extractOnlyOf(fluidStorage[3]),
-        ),
-    )
-
-    final override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.ofLarge(parent, fluidStorage)
+    final override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, fluidStorage)
 
     override fun createInput(): HTMachineInput = HTMachineInput.Large(
         definition,
@@ -68,10 +48,24 @@ open class HTLargeProcessorMachineEntity(type: HTMachineConvertible, tier: HTMac
     )
 
     final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTLargeProcessorScreenHandler(
+        HTLargeMachineScreenHandler(
             syncId,
             playerInventory,
             packet,
             createContext(),
         )
+
+    //    HTMultiblockController    //
+
+    final override var showPreview: Boolean = false
+
+    override fun onSucceeded(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+    ) {
+        super.onSucceeded(state, world, pos, player)
+        RagiumAdvancementCriteria.BUILT_MACHINE.trigger(player, machineType, tier)
+    }
 }

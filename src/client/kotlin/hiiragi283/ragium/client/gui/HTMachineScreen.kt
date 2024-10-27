@@ -9,7 +9,7 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 
 @Environment(EnvType.CLIENT)
-class HTProcessorScreen(gui: HTProcessorScreenHandlerBase, player: PlayerEntity, title: Text) :
+class HTMachineScreen(gui: HTProcessorScreenHandlerBase, player: PlayerEntity, title: Text) :
     CottonInventoryScreen<HTProcessorScreenHandlerBase>(gui, player, title) {
     constructor(gui: HTProcessorScreenHandlerBase, inventory: PlayerInventory, title: Text) :
         this(gui, inventory.player, title)

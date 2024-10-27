@@ -20,7 +20,9 @@ import io.github.cottonmc.cotton.gui.networking.ScreenNetworking
 import io.github.cottonmc.cotton.gui.widget.WBar
 import io.github.cottonmc.cotton.gui.widget.WGridPanel
 import io.github.cottonmc.cotton.gui.widget.WItemSlot
+import io.github.cottonmc.cotton.gui.widget.WLabel
 import io.github.cottonmc.cotton.gui.widget.WTabPanel
+import io.github.cottonmc.cotton.gui.widget.data.Insets
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.entity.player.PlayerInventory
@@ -70,7 +72,7 @@ abstract class HTProcessorScreenHandlerBase(
         .getMachineEntity()
         ?.let { it as? HTProcessorMachineEntityBase }
         ?.fluidStorage
-        ?: HTMachineFluidStorage.of(sizeType)
+        ?: HTMachineFluidStorage.create(sizeType)
 
     init {
         val rootTab = WTabPanel()
@@ -85,6 +87,11 @@ abstract class HTProcessorScreenHandlerBase(
     abstract fun initMainPanel(rootTab: WTabPanel)
 
     abstract fun initFluidPanel(rootTab: WTabPanel)
+
+    protected fun createPanel(): WGridPanel = WGridPanel().apply {
+        setInsets(Insets.ROOT_PANEL)
+        add(WLabel(machineText), 0, 0)
+    }
 
     protected fun addItemSlot(
         gridPanel: WGridPanel,

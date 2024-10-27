@@ -10,18 +10,11 @@ import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.entity.HTProcessorMachineEntityBase
 import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
-import hiiragi283.ragium.common.screen.HTSimpleProcessorScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
+import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.util.math.Direction
 
 class HTSimpleProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachineTier) : HTProcessorMachineEntityBase(type, tier) {
     override val parent: HTSimpleInventory = HTStorageBuilder(5)
@@ -32,27 +25,9 @@ class HTSimpleProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachine
         .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSimple()
 
-    override val fluidStorage: HTMachineFluidStorage =
-        HTMachineFluidStorage.of(HTMachineRecipe.SizeType.SIMPLE) { index: Int, storage: SingleFluidStorage ->
-            /*parentBE.sendPacket {
-                RagiumNetworks.syncFluidStorage(
-                    it,
-                    pos,
-                    index,
-                    storage.resource,
-                    storage.amount,
-                )
-            }*/
-        }
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Simple()
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
-        listOf(
-            FilteringStorage.insertOnlyOf(fluidStorage[0]),
-            FilteringStorage.extractOnlyOf(fluidStorage[1]),
-        ),
-    )
-
-    override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.ofSimple(parent, fluidStorage)
+    override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, fluidStorage)
 
     override fun createInput(): HTMachineInput = HTMachineInput.Simple(
         definition,
@@ -62,7 +37,7 @@ class HTSimpleProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachine
     )
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSimpleProcessorScreenHandler(
+        HTSimpleMachineScreenHandler(
             syncId,
             playerInventory,
             packet,

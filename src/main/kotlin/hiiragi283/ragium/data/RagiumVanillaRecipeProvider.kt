@@ -433,17 +433,41 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Crafting - Machines    //
 
     private fun craftingMachines(exporter: RecipeExporter) {
-        // pipe
-        HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Pipes.WOODEN, 3)
-            .patterns(
-                "AAA",
-                " B ",
-                "AAA",
-            ).input('A', ItemTags.PLANKS)
-            .input('B', RagiumContents.Misc.FORGE_HAMMER)
-            .unlockedBy(ItemTags.PLANKS)
-            .offerTo(exporter)
+        // exporters
+        RagiumContents.Exporters.entries.forEach { exporter1: RagiumContents.Exporters ->
+            HTShapedRecipeJsonBuilder
+                .create(exporter1)
+                .patterns(
+                    "AAA",
+                    " B ",
+                    "CDC",
+                ).input('A', exporter1.tier.getPlate())
+                .input('B', ConventionalItemTags.GLASS_BLOCKS)
+                .input('C', exporter1.tier.getCoil())
+                .input('D', RagiumItemTags.PIPES)
+                .unlockedBy(exporter1.tier.getCoil())
+                .offerTo(exporter)
+        }
+        // pipes
+        RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
+            val input: TagKey<Item> = when (pipe) {
+                RagiumContents.Pipes.IRON -> RagiumItemTags.IRON_PLATES
+                RagiumContents.Pipes.WOODEN -> ItemTags.PLANKS
+                RagiumContents.Pipes.STEEL -> RagiumItemTags.STEEL_PLATES
+                RagiumContents.Pipes.COPPER -> RagiumItemTags.COPPER_PLATES
+                RagiumContents.Pipes.UNIVERSAL -> RagiumItemTags.REFINED_RAGI_STEEL_PLATES
+            }
+            HTShapedRecipeJsonBuilder
+                .create(pipe, 3)
+                .patterns(
+                    "AAA",
+                    " B ",
+                    "AAA",
+                ).input('A', input)
+                .input('B', RagiumContents.Misc.FORGE_HAMMER)
+                .unlockedBy(ItemTags.PLANKS)
+                .offerTo(exporter)
+        }
         // hulls
         listOf(
             RagiumMaterials.RAGI_ALLOY,
@@ -451,18 +475,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumMaterials.REFINED_RAGI_STEEL,
         ).forEach { material: RagiumMaterials ->
             val base: Block = material.tier.getBaseBlock()
-            // val ingot: RagiumContents.Ingots = material.getIngot() ?: return@forEach
             val hull: RagiumContents.Hulls = material.getHull() ?: return@forEach
-            /*HTShapedRecipeJsonBuilder
-                .create(hull)
-                .patterns(
-                    "AAA",
-                    "A A",
-                    "BBB",
-                ).input('A', ingot)
-                .input('B', base)
-                .unlockedBy(ingot)
-                .offerTo(exporter.hardMode(false))*/
             val plate: RagiumContents.Plates = material.getPlate() ?: return@forEach
             HTShapedRecipeJsonBuilder
                 .create(hull)
@@ -576,11 +589,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumMachineTypes.Processor.CHEMICAL_REACTOR,
             Items.GLASS,
         )
-        createMachine(
+        /*createMachine(
             exporter,
             RagiumMachineTypes.Processor.COMPRESSOR,
             Items.PISTON,
-        )
+        )*/
         createMachine(
             exporter,
             RagiumMachineTypes.Processor.ELECTROLYZER,
@@ -599,7 +612,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createMachine(
             exporter,
             RagiumMachineTypes.Processor.METAL_FORMER,
-            Items.ANVIL,
+            RagiumBlocks.MANUAL_FORGE,
+            RagiumContents.Misc.FORGE_HAMMER,
         )
         createMachine(
             exporter,

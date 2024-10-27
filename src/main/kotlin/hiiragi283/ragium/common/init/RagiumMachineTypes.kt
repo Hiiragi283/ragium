@@ -53,17 +53,17 @@ object RagiumMachineTypes : RagiumPlugin {
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
             set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineRecipe.SizeType.LARGE)
         }
-        register.registerProcessor(FLUID_DRILL) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
+        /*register.registerProcessor(FLUID_DRILL) {
+            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
         }
         register.registerProcessor(MOB_EXTRACTOR) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTMobExtractorMachineEntity))
+            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTMobExtractorMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-        }
+        }*/
         register.registerProcessor(SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTSawMillMachineEntity))
@@ -135,11 +135,9 @@ object RagiumMachineTypes : RagiumPlugin {
     @JvmField
     val DISTILLATION_TOWER: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("distillation_tower"))
 
-    @JvmField
-    val FLUID_DRILL: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("fluid_drill"))
+    // val FLUID_DRILL: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("fluid_drill"))
 
-    @JvmField
-    val MOB_EXTRACTOR: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("mob_extractor"))
+    // val MOB_EXTRACTOR: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("mob_extractor"))
 
     @JvmField
     val SAW_MILL: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("saw_mill"))
@@ -148,8 +146,9 @@ object RagiumMachineTypes : RagiumPlugin {
         ALLOY_FURNACE,
         ASSEMBLER,
         CHEMICAL_REACTOR,
-        COMPRESSOR,
-        DECOMPRESSOR,
+
+        // COMPRESSOR,
+        // DECOMPRESSOR,
         ELECTROLYZER,
         EXTRACTOR,
         GRINDER,

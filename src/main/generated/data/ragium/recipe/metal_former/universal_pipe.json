@@ -7,10 +7,7 @@
   "item_inputs": [
     {
       "count": 2,
-      "items": "ragium:refined_ragi_steel_plate"
-    },
-    {
-      "items": "ragium:ragi_crystal"
+      "items": "#c:plates/refined_ragi_steel"
     }
   ],
   "item_outputs": [

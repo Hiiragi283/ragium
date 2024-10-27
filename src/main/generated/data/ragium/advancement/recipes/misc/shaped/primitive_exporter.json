@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_hull"
+            "items": "ragium:copper_coil"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/primitive_compressor"
+        "recipe": "ragium:shaped/primitive_exporter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/primitive_compressor"
+      "ragium:shaped/primitive_exporter"
     ]
   }
 }

@@ -27,12 +27,8 @@ class HTMachineRecipeProcessor private constructor(
 ) {
     companion object {
         @JvmStatic
-        fun ofSimple(inventory: HTSimpleInventory, fluidStorage: HTMachineFluidStorage): HTMachineRecipeProcessor =
-            HTMachineRecipeProcessor(inventory, fluidStorage, HTMachineRecipe.SizeType.SIMPLE)
-
-        @JvmStatic
-        fun ofLarge(inventory: HTSimpleInventory, fluidStorage: HTMachineFluidStorage): HTMachineRecipeProcessor =
-            HTMachineRecipeProcessor(inventory, fluidStorage, HTMachineRecipe.SizeType.LARGE)
+        fun of(inventory: HTSimpleInventory, fluidStorage: HTMachineFluidStorage): HTMachineRecipeProcessor =
+            HTMachineRecipeProcessor(inventory, fluidStorage, fluidStorage.sizeType)
     }
 
     private val outputIndex: Pair<Int, Int> = when (sizeType) {

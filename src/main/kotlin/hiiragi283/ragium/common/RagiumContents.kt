@@ -282,6 +282,7 @@ object RagiumContents : HTContentRegister {
 
         override val entry: HTRegistryEntry<Block> =
             HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+        override val tagKey: TagKey<Item> = RagiumItemTags.PIPES
     }
 
     //    Circuits    //
@@ -452,7 +453,7 @@ object RagiumContents : HTContentRegister {
         // METHANOL(Color(0xcc00ff), "Methanol", "メタノール"),
         // LPG(Color(0xffff33), "LPG", "LGP"),
         // ETHYLENE(Color(0x999999), "Ethylene", "エチレン"),
-        ALCOHOL(Color(0xccffff), "alcohol", "アルコール"),
+        ALCOHOL(Color(0xccffff), "Alcohol", "アルコール"),
 
         AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
 

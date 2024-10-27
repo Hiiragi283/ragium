@@ -30,8 +30,8 @@ object RagiumModels {
     @JvmField
     val EXPORTER: Model = model(
         "block/exporter",
+        TextureKey.TOP,
         TextureKey.SIDE,
-        TextureKey.BOTTOM,
     )
 
     @JvmField

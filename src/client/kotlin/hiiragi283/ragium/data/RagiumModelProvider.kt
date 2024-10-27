@@ -144,11 +144,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumBlocks.MANUAL_FORGE) { accept(VariantsBlockStateSupplier.create(it, stateVariantOf(it))) }
         // exporters
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
+            val coil: Block = exporter.tier.getCoil().value
             val modelId: Identifier = RagiumModels.EXPORTER.upload(
                 exporter.value,
                 textureMap {
-                    put(TextureKey.SIDE, ModelIds.getBlockModelId(exporter.value))
-                    put(TextureKey.BOTTOM, ModelIds.getBlockModelId(exporter.tier.getStorageBlock().value))
+                    put(TextureKey.TOP, ModelIds.getBlockSubModelId(coil, "_top"))
+                    put(TextureKey.SIDE, ModelIds.getBlockSubModelId(coil, "_side"))
                 },
                 generator.modelCollector,
             )

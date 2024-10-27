@@ -23,10 +23,10 @@ object RagiumItemTags {
     val HULLS: TagKey<Item> = create(RagiumAPI.MOD_ID, "hulls")
 
     @JvmField
-    val MOTORS: TagKey<Item> = create(RagiumAPI.MOD_ID, "motors")
+    val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")
 
     @JvmField
-    val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")
+    val PIPES: TagKey<Item> = create(RagiumAPI.MOD_ID, "pipes")
 
     @JvmField
     val TOOL_MODULES: TagKey<Item> = create(RagiumAPI.MOD_ID, "tool_modules")
@@ -74,6 +74,9 @@ object RagiumItemTags {
 
     @JvmField
     val RAGINITE_ORES: TagKey<Item> = create("ores/raginite")
+
+    @JvmField
+    val REFINED_RAGI_STEEL_PLATES: TagKey<Item> = create("plates/refined_ragi_steel")
 
     @JvmField
     val SILICON_PLATES: TagKey<Item> = create("plates/silicon")

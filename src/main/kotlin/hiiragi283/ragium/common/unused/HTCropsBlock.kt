@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.unused
 
 import hiiragi283.ragium.api.extension.blockSettings
 import net.minecraft.block.BlockState

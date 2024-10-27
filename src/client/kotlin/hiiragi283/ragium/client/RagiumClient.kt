@@ -3,14 +3,14 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumEnvironmentBridge
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.content.HTEntryDelegated
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.widget.HTFluidWidget
-import hiiragi283.ragium.client.gui.HTGeneratorScreen
-import hiiragi283.ragium.client.gui.HTProcessorScreen
+import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
@@ -74,9 +74,10 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
 
     private fun registerBlocks() {
         // cutout
-        RagiumContents.Pipes.entries
-            .map(RagiumContents.Pipes::value)
-            .forEach(::registerCutout)
+        buildList {
+            addAll(RagiumContents.Exporters.entries)
+            addAll(RagiumContents.Pipes.entries)
+        }.map(HTEntryDelegated<Block>::value).forEach(::registerCutout)
         registerCutout(RagiumBlocks.ITEM_DISPLAY)
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
@@ -151,9 +152,8 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
     //    Screens    //
 
     private fun registerScreens() {
-        HandledScreens.register(RagiumScreenHandlerTypes.GENERATOR, ::HTGeneratorScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.LARGE_PROCESSOR, ::HTProcessorScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_PROCESSOR, ::HTProcessorScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTMachineScreen)
     }
 
     //    Events    //

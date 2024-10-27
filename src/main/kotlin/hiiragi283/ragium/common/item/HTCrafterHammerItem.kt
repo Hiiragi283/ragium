@@ -33,12 +33,10 @@ import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import team.reborn.energy.api.base.SimpleEnergyItem
 import java.util.function.Consumer
 
 object HTCrafterHammerItem :
-    MiningToolItem(RagiumMaterials.STEEL.tool!!, BlockTags.AIR, itemSettings().rarity(Rarity.RARE)),
-    SimpleEnergyItem {
+    MiningToolItem(RagiumMaterials.STEEL.tool!!, BlockTags.AIR, itemSettings().rarity(Rarity.RARE)) {
     private fun getComponent(stack: ItemStack): Component = stack.getOrDefault(Component.COMPONENT_TYPE, Component.DEFAULT)
 
     private fun setComponent(stack: ItemStack, component: Component? = null) {
@@ -120,11 +118,11 @@ object HTCrafterHammerItem :
 
     //    SimpleEnergyItem    //
 
-    override fun getEnergyCapacity(stack: ItemStack): Long = getComponent(stack).tier.energyCapacity
+    // override fun getEnergyCapacity(stack: ItemStack): Long = getComponent(stack).tier.energyCapacity
 
-    override fun getEnergyMaxInput(stack: ItemStack): Long = getEnergyCapacity(stack)
+    // override fun getEnergyMaxInput(stack: ItemStack): Long = getEnergyCapacity(stack)
 
-    override fun getEnergyMaxOutput(stack: ItemStack): Long = 0
+    // override fun getEnergyMaxOutput(stack: ItemStack): Long = 0
 
     //    Component    //
 

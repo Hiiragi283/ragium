@@ -23,6 +23,7 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
         ticks: Int,
     ) {
         if (world.isClient) return
+        if (world.isReceivingRedstonePower(pos)) return
         // transfer containment
         StorageUtil.move(
             getBackStorage(world, pos, state, ItemStorage.SIDED),

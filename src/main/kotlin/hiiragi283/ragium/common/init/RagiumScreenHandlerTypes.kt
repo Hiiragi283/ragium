@@ -2,30 +2,23 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.screen.HTGeneratorScreenHandler
-import hiiragi283.ragium.common.screen.HTLargeProcessorScreenHandler
-import hiiragi283.ragium.common.screen.HTSimpleProcessorScreenHandler
+import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.resource.featuretoggle.FeatureFlags
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
     @JvmField
-    val GENERATOR: ScreenHandlerType<HTGeneratorScreenHandler> =
-        register("generator", ::HTGeneratorScreenHandler)
+    val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =
+        registerExtended("large_machine", ::HTLargeMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
-    val LARGE_PROCESSOR: ExtendedScreenHandlerType<HTLargeProcessorScreenHandler, HTMachinePacket> =
-        registerExtended("large_processor", ::HTLargeProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
-
-    @JvmField
-    val SIMPLE_PROCESSOR: ExtendedScreenHandlerType<HTSimpleProcessorScreenHandler, HTMachinePacket> =
-        registerExtended("simple_processor", ::HTSimpleProcessorScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val SIMPLE_MACHINE: ExtendedScreenHandlerType<HTSimpleMachineScreenHandler, HTMachinePacket> =
+        registerExtended("simple_machine", ::HTSimpleMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(
@@ -38,10 +31,10 @@ object RagiumScreenHandlerTypes {
         ExtendedScreenHandlerType(factory, packetCodec),
     )
 
-    @JvmStatic
+    /*@JvmStatic
     private fun <T : ScreenHandler> register(name: String, factory: ScreenHandlerType.Factory<T>): ScreenHandlerType<T> = Registry.register(
         Registries.SCREEN_HANDLER,
         RagiumAPI.id(name),
         ScreenHandlerType(factory, FeatureFlags.VANILLA_FEATURES),
-    )
+    )*/
 }

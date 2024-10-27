@@ -111,7 +111,7 @@ object RagiumLangProviders {
     }
 
     private data object CircuitFormatter : HTTranslationFormatter {
-        override val enPattern: String = "%s Circuits"
+        override val enPattern: String = "%s Circuit"
         override val jaPattern: String = "%s回路"
     }
 
@@ -231,8 +231,8 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "Alloy Furnace")
             builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "Assembler")
             builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "Chemical Reactor")
-            builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "Compressor")
-            builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "Decompressor")
+            // builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "Compressor")
+            // builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "Decompressor")
             builder.add(RagiumMachineTypes.Processor.ELECTROLYZER, "Electrolyzer")
             builder.add(RagiumMachineTypes.Processor.EXTRACTOR, "Extractor")
             builder.add(RagiumMachineTypes.Processor.GRINDER, "Grinder")
@@ -242,8 +242,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "Large Blast Furnace")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "Distillation Tower")
-            builder.add(RagiumMachineTypes.FLUID_DRILL, "Fluid Drill")
-            builder.add(RagiumMachineTypes.MOB_EXTRACTOR, "Mob Extractor")
+            // builder.add(RagiumMachineTypes.FLUID_DRILL, "Fluid Drill")
+            // builder.add(RagiumMachineTypes.MOB_EXTRACTOR, "Mob Extractor")
             builder.add(RagiumMachineTypes.SAW_MILL, "Saw Mill")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
@@ -313,7 +313,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Foods.MINCED_MEAT, "ひき肉")
             builder.add(RagiumContents.Foods.PULP, "パルプ")
 
-            builder.add(RagiumContents.Misc.BACKPACK, "パックパック")
+            builder.add(RagiumContents.Misc.BACKPACK, "バックパック")
             builder.add(RagiumContents.Misc.BASALT_MESH, "玄武岩メッシュ")
             builder.add(RagiumContents.Misc.CRAFTER_HAMMER, "クラフターズ・ハンマー")
             builder.add(RagiumContents.Misc.DYNAMITE, "ダイナマイト")
@@ -376,8 +376,8 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "合金かまど")
             builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "組立機")
             builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "化学反応槽")
-            builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "圧縮機")
-            builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "減圧機")
+            // builder.add(RagiumMachineTypes.Processor.COMPRESSOR, "圧縮機")
+            // builder.add(RagiumMachineTypes.Processor.DECOMPRESSOR, "減圧機")
             builder.add(RagiumMachineTypes.Processor.ELECTROLYZER, "電解槽")
             builder.add(RagiumMachineTypes.Processor.EXTRACTOR, "抽出器")
             builder.add(RagiumMachineTypes.Processor.GRINDER, "粉砕機")
@@ -387,8 +387,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔")
-            builder.add(RagiumMachineTypes.FLUID_DRILL, "液体ドリル")
-            builder.add(RagiumMachineTypes.MOB_EXTRACTOR, "モブ抽出器")
+            // builder.add(RagiumMachineTypes.FLUID_DRILL, "液体ドリル")
+            // builder.add(RagiumMachineTypes.MOB_EXTRACTOR, "モブ抽出器")
             builder.add(RagiumMachineTypes.SAW_MILL, "製材機")
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")

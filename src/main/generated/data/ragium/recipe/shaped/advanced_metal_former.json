@@ -6,13 +6,13 @@
       "item": "ragium:refined_ragi_steel_plate"
     },
     "B": {
-      "item": "minecraft:anvil"
+      "item": "ragium:manual_forge"
     },
     "C": {
       "item": "ragium:refined_ragi_steel_hull"
     },
     "D": {
-      "item": "minecraft:anvil"
+      "item": "ragium:forge_hammer"
     },
     "E": {
       "tag": "c:plates/steel"

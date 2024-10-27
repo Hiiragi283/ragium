@@ -587,13 +587,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerPipe(exporter, RagiumItemTags.IRON_PLATES, RagiumContents.Pipes.IRON)
         registerPipe(exporter, RagiumItemTags.STEEL_PLATES, RagiumContents.Pipes.STEEL)
         registerPipe(exporter, RagiumItemTags.COPPER_PLATES, RagiumContents.Pipes.COPPER)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumContents.Plates.REFINED_RAGI_STEEL, 2)
-            .itemInput(RagiumContents.Gems.RAGI_CRYSTAL)
-            .itemOutput(RagiumContents.Pipes.UNIVERSAL)
-            .offerTo(exporter, RagiumContents.Pipes.UNIVERSAL)
+        registerPipe(exporter, RagiumItemTags.REFINED_RAGI_STEEL_PLATES, RagiumContents.Pipes.UNIVERSAL)
     }
 
     private fun registerPipe(exporter: RecipeExporter, input: TagKey<Item>, output: RagiumContents.Pipes) {

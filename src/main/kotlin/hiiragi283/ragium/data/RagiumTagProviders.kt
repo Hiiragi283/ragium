@@ -150,7 +150,8 @@ object RagiumTagProviders {
 
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
-                // addAll(RagiumContents.Motors.entries)
+                addAll(RagiumContents.Exporters.entries)
+                addAll(RagiumContents.CircuitBoards.entries)
                 addAll(RagiumContents.Circuits.entries)
 
                 addAll(RagiumContents.Armors.entries)
@@ -162,14 +163,8 @@ object RagiumTagProviders {
                 content.tagKey?.let { add(it, content) }
             }
 
-            /*RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
-                add(ConventionalItemTags.CROPS, crop.seedItem)
-            }*/
-
-            // RagiumContents.Element.entries.forEach { add(ConventionalItemTags.DUSTS, it.dustItem) }
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
-            // add(RagiumItemTags.ALKALI, RagiumContents.Fluids.SODIUM_HYDROXIDE)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)

@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
@@ -71,6 +72,8 @@ fun isClientEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvTy
 
 fun isServerEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.SERVER
 
+fun isDataGen(): Boolean = System.getProperty("fabric-api.datagen") != null
+
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
@@ -100,6 +103,8 @@ fun openEnderChest(world: World, player: PlayerEntity) {
         1.0f,
     )
 }
+
+fun Inventory.getStackOrNull(slot: Int): ItemStack? = if (slot in 0..size()) getStack(slot) else null
 
 //    ServiceLoader    //
 

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_steel_hull"
+            "items": "ragium:gold_coil"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/basic_compressor"
+        "recipe": "ragium:shaped/basic_exporter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/basic_compressor"
+      "ragium:shaped/basic_exporter"
     ]
   }
 }

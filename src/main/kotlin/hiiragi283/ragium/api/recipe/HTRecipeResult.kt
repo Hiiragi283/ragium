@@ -20,6 +20,7 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.fluid.Fluid as MCFluid
 import net.minecraft.item.Item as MCItem
 
+@Suppress("DEPRECATION")
 sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEntry<O>, val amount: V, val components: ComponentChanges) {
     companion object {
         @JvmStatic

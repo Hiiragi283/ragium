@@ -1,46 +1,49 @@
 {
 	"credit": "Made by Hiiragi Russell Tsubasa",
 	"textures": {
-		"particle": "#side"
+		"particle": "#side",
+		"tube": "ragium:block/exporter_tube"
 	},
 	"elements": [
+		{
+			"name": "top",
+			"from": [0, 0, 2],
+			"to": [16, 16, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 2]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"east": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"west": {"uv": [0, 0, 16, 4], "rotation": 270, "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 4], "texture": "#side"},
+				"down": {"uv": [0, 0, 16, 4], "rotation": 180, "texture": "#side"}
+			}
+		},
 		{
 			"name": "bottom",
 			"from": [0, 0, 12],
 			"to": [16, 16, 16],
 			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 12]},
 			"faces": {
-				"east": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#side"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#bottom"},
-				"west": {"uv": [0, 0, 16, 4], "rotation": 270, "texture": "#side"},
-				"up": {"uv": [0, 0, 16, 4], "texture": "#side"},
-				"down": {"uv": [0, 0, 16, 4], "texture": "#side"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"east": {"uv": [0, 12, 16, 16], "rotation": 90, "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#top"},
+				"west": {"uv": [0, 12, 16, 16], "rotation": 270, "texture": "#side"},
+				"up": {"uv": [0, 12, 16, 16], "texture": "#side"},
+				"down": {"uv": [0, 12, 16, 16], "rotation": 180, "texture": "#side"}
 			}
 		},
 		{
-			"name": "top",
-			"from": [0, 0, 8],
-			"to": [16, 16, 12],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 8]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#bottom"},
-				"east": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#side"},
-				"west": {"uv": [0, 0, 16, 4], "rotation": 270, "texture": "#side"},
-				"up": {"uv": [0, 0, 16, 4], "texture": "#side"},
-				"down": {"uv": [0, 0, 16, 4], "texture": "#side"}
-			}
-		},
-		{
-			"name": "pipe",
+			"name": "coil",
 			"from": [4, 4, 0],
-			"to": [12, 12, 8],
+			"to": [12, 12, 12],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4, 4, 0]},
 			"faces": {
-				"north": {"uv": [0, 4, 8, 12], "texture": "#side"},
-				"east": {"uv": [8, 4, 16, 12], "rotation": 90, "texture": "#side"},
-				"west": {"uv": [8, 4, 16, 12], "rotation": 90, "texture": "#side"},
-				"up": {"uv": [8, 4, 16, 12], "texture": "#side"},
-				"down": {"uv": [8, 4, 16, 12], "texture": "#side"}
+				"north": {"uv": [4, 4, 12, 12], "texture": "#tube"},
+				"east": {"uv": [4, 2, 12, 14], "rotation": 90, "texture": "#tube"},
+				"west": {"uv": [4, 2, 12, 14], "rotation": 270, "texture": "#tube"},
+				"up": {"uv": [4, 2, 12, 14], "texture": "#tube"},
+				"down": {"uv": [4, 2, 12, 14], "rotation": 180, "texture": "#tube"}
 			}
 		}
 	],

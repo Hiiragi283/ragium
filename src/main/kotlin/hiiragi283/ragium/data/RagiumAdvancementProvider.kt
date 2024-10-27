@@ -238,7 +238,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("組立機を作る")
             .build()
 
-        val compressor: AdvancementEntry = register
+        /*val compressor: AdvancementEntry = register
             .createChild(
                 "tier2/compressor",
                 ragiSteelHull,
@@ -250,7 +250,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putEnglishDesc("Craft Compressor")
             .putJapanese("saves.zip.zip.zip")
             .putJapaneseDesc("圧縮機を作る")
-            .build()
+            .build()*/
 
         val extractor: AdvancementEntry = register
             .createChild(

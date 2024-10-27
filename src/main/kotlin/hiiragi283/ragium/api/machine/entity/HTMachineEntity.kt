@@ -17,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.PropertyDelegate
+import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -98,6 +99,10 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
     override fun getDisplayName(): Text = tier.createPrefixedText(machineType)
 
     override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = packet
+
+    protected fun createContext(): ScreenHandlerContext = parentBE.ifPresentWorld { world: World ->
+        ScreenHandlerContext.create(world, parentBE.pos)
+    } ?: ScreenHandlerContext.EMPTY
 
     //    PropertyDelegateHolder    //
 
