@@ -1,26 +1,16 @@
 [versions]
-kotlin = "2.0.20"
+kotlin = "2.0.+"
 minecraft = "1.21.1"
 fabric-loom = "1.8-SNAPSHOT"
 fabric-loader = "0.16.+"
-fabric-api = "0.105.0+1.21.1"
+fabric-api = "0.107.0+1.21.1"
 fabric-yarn = "1.21.1+build.3"
-fabric-kotlin = "1.12.1+kotlin.2.0.20"
+fabric-kotlin = "1.12.+"
 
-cca = "6.1.1"
-energy = "4.1.0"
+jade = "15.8.2+fabric"
 lib-gui = "11.1.0+1.21"
-
-accessories = "1.0.0-beta.35+1.21"
-alloy-forgery = "2.4.1+1.21"
-cloth-config = "15.0.130"
-fiber = "0.23.0-2"
-jade = "15.3.3+fabric"
-mod-menu = "11.0.2"
-modonomicon = "1.108.1"
-owo = "0.12.11+1.21"
-patchouli = "1.21-87-FABRIC"
-rei = "16.0.777"
+mod-menu = "11.0.3"
+rei = "16.0.788"
 
 [libraries]
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
@@ -28,31 +18,16 @@ fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = 
 fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
 fabric-kotlin = { group = "net.fabricmc", name = "fabric-language-kotlin", version.ref = "fabric-kotlin" }
 
-cca-api = { group = "org.ladysnake.cardinal-components-api", name = "cardinal-components-api", version.ref = "cca" }
-cca-base = { group = "org.ladysnake.cardinal-components-api", name = "cardinal-components-base", version.ref = "cca" }
-cca-entity = { group = "org.ladysnake.cardinal-components-api", name = "cardinal-components-entity", version.ref = "cca" }
-energy = { group = "teamreborn", name = "energy", version.ref = "energy" }
-libgui = { group = "io.github.cottonmc", name = "LibGui", version.ref = "lib-gui" }
-
-accessories = { group = "io.wispforest", name = "accessories-fabric", version.ref = "accessories" }
-alloy-forgely = { group = "maven.modrinth", name = "alloy-forgery", version.ref = "alloy-forgery" }
-cloth-config = { group = "me.shedaniel.cloth", name = "cloth-config-fabric", version.ref = "cloth-config" }
-fiber = { group = "me.zeroeightsix", name = "fiber", version.ref = "fiber" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+libgui = { group = "io.github.cottonmc", name = "LibGui", version.ref = "lib-gui" }
 mod-modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "mod-menu" }
-modonomicon = { group = "com.klikli_dev", name = "modonomicon-1.21.1-fabric", version.ref = "modonomicon" }
-patchouli = { group = "vazkii.patchouli", name = "Patchouli", version.ref = "patchouli" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version.ref = "rei" }
-tech-reborn = { group = "TechReborn", name = "TechReborn-1.21", version = "5.11.10" }
-
-owo = { group = "io.wispforest", name = "owo-lib", version.ref = "owo" }
 
 [bundles]
 mods-fabric = [
     "fabric-api",
     "fabric-kotlin",
-    "fabric-loader",
-    "tech-reborn"
+    "fabric-loader"
 ]
 mods-include = [
     "libgui"
