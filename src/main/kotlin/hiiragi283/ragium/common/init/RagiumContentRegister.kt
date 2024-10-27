@@ -228,7 +228,7 @@ object RagiumContentRegister : HTContentRegister {
                 override fun getCapacity(variant: ItemVariant): Long = Long.MAX_VALUE
             }
         }, RagiumBlocks.TRASH_BOX)
-        
+
         FluidStorage
             .combinedItemApiProvider(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
             .register(::HTEmptyFluidCubeStorage)

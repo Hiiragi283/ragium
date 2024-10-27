@@ -57,7 +57,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
             .getFirstMatch(
                 HTMachineInput.create(
                     RagiumMachineTypes.Processor.MIXER,
-                    HTMachineTier.PRIMITIVE
+                    HTMachineTier.PRIMITIVE,
                 ) {
                     add(stackMain)
                     add(stackOff)

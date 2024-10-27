@@ -13,7 +13,7 @@ class HTMachineInput private constructor(
     val type: HTMachineType,
     val tier: HTMachineTier,
     val itemInputs: List<ItemStack>,
-    val fluidInputs: List<ResourceAmount<FluidVariant>>
+    val fluidInputs: List<ResourceAmount<FluidVariant>>,
 ) : RecipeInput {
     companion object {
         @JvmStatic
@@ -36,7 +36,7 @@ class HTMachineInput private constructor(
                 type.asMachine(),
                 tier,
                 itemInputs,
-                fluidInputs.map { (variant: FluidVariant, amount: Long) -> ResourceAmount(variant, amount) }
+                fluidInputs.map { (variant: FluidVariant, amount: Long) -> ResourceAmount(variant, amount) },
             )
         }
     }
@@ -49,10 +49,7 @@ class HTMachineInput private constructor(
 
     //    Builder    //
 
-    class Builder(
-        private val itemInputs: MutableList<ItemStack>,
-        private val fluidInputs: MutableMap<FluidVariant, Long>
-    ) {
+    class Builder(private val itemInputs: MutableList<ItemStack>, private val fluidInputs: MutableMap<FluidVariant, Long>) {
         fun add(stack: ItemStack): Builder = apply {
             itemInputs.add(stack)
         }
@@ -61,7 +58,6 @@ class HTMachineInput private constructor(
             fluidInputs[fluid] = amount
         }
 
-        fun add(resourceAmount: ResourceAmount<FluidVariant>): Builder =
-            add(resourceAmount.resource, resourceAmount.amount)
+        fun add(resourceAmount: ResourceAmount<FluidVariant>): Builder = add(resourceAmount.resource, resourceAmount.amount)
     }
 }

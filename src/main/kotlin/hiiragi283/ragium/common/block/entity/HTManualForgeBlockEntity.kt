@@ -47,7 +47,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
             .getFirstMatch(
                 HTMachineInput.create(
                     RagiumMachineTypes.Processor.METAL_FORMER,
-                    HTMachineTier.PRIMITIVE
+                    HTMachineTier.PRIMITIVE,
                 ) { add(stackOff) },
                 world,
             ).getOrNull()

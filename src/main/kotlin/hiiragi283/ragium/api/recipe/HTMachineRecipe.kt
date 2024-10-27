@@ -128,15 +128,18 @@ class HTMachineRecipe(
         val bool2: Boolean = input.tier >= this.tier
         val bool3: Boolean = sizeType == input.sizeType
         val bool4: Boolean =
-            input.itemInputs.getOrNull(0)
+            input.itemInputs
+                .getOrNull(0)
                 ?.let { itemInputs.getOrNull(0)?.test(it) }
                 ?: true
         val bool5: Boolean =
-            input.itemInputs.getOrNull(1)
+            input.itemInputs
+                .getOrNull(1)
                 ?.let { itemInputs.getOrNull(1)?.test(it) }
                 ?: true
         val bool6: Boolean =
-            input.fluidInputs.getOrNull(0)
+            input.fluidInputs
+                .getOrNull(0)
                 ?.let { fluidInputs.getOrNull(0)?.test(it) }
                 ?: true
         return when (input.sizeType) {
@@ -146,11 +149,13 @@ class HTMachineRecipe(
 
             SizeType.LARGE -> {
                 val bool7: Boolean =
-                    input.itemInputs.getOrNull(2)
+                    input.itemInputs
+                        .getOrNull(2)
                         ?.let { itemInputs.getOrNull(2)?.test(it) }
                         ?: true
                 val bool8: Boolean =
-                    input.fluidInputs.getOrNull(1)
+                    input.fluidInputs
+                        .getOrNull(1)
                         ?.let { fluidInputs.getOrNull(1)?.test(it) }
                         ?: true
                 bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool7 && bool8
