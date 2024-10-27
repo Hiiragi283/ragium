@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.util.*
@@ -195,6 +194,6 @@ object RagiumEventHandlers {
         tool: ItemStack,
         machineType: HTMachineConvertible,
     ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
-        HTMachineInput.Simple(HTMachineDefinition(machineType, HTMachineTier.PRIMITIVE), it)
+        HTMachineInput.create(machineType, HTMachineTier.PRIMITIVE) { add(it) }
     }
 }

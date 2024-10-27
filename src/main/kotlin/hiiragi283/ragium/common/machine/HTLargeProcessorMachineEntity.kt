@@ -38,14 +38,13 @@ abstract class HTLargeProcessorMachineEntity(type: HTMachineConvertible, tier: H
 
     final override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, fluidStorage)
 
-    override fun createInput(): HTMachineInput = HTMachineInput.Large(
-        definition,
-        parent.getStack(0),
-        parent.getStack(1),
-        parent.getStack(2),
-        fluidStorage.getSlot(0).resourceAmount,
-        fluidStorage.getSlot(1).resourceAmount,
-    )
+    override fun createInput(): HTMachineInput = HTMachineInput.create(machineType, tier) {
+        add(parent.getStack(0))
+        add(parent.getStack(1))
+        add(parent.getStack(2))
+        add(fluidStorage.getSlot(0).resourceAmount)
+        add(fluidStorage.getSlot(1).resourceAmount)
+    }
 
     final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTLargeMachineScreenHandler(

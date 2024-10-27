@@ -23,8 +23,11 @@ import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
@@ -33,7 +36,6 @@ import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
@@ -41,8 +43,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
-import net.minecraft.util.Hand
-import net.minecraft.util.ItemActionResult
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -209,6 +209,7 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
+        registerBlockItem(RagiumBlocks.TRASH_BOX)
 
         registerItem("meta_machine", HTMetaMachineBlockItem)
     }
@@ -222,7 +223,12 @@ object RagiumContentRegister : HTContentRegister {
                 ?.get(color)
                 ?.let { InventoryStorage.of(it, direction) }
         }, RagiumBlocks.BACKPACK_INTERFACE)
-
+        ItemStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+            object : SingleItemStorage() {
+                override fun getCapacity(variant: ItemVariant): Long = Long.MAX_VALUE
+            }
+        }, RagiumBlocks.TRASH_BOX)
+        
         FluidStorage
             .combinedItemApiProvider(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
             .register(::HTEmptyFluidCubeStorage)
@@ -245,15 +251,18 @@ object RagiumContentRegister : HTContentRegister {
                 null
             }
         }
+        FluidStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+            SingleFluidStorage.withFixedCapacity(Long.MAX_VALUE) {}
+        }, RagiumBlocks.TRASH_BOX)
 
         HTEnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTCreativeEnergyStorage },
             RagiumBlocks.CREATIVE_SOURCE,
         )
-
         HTEnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork
         }, RagiumBlocks.NETWORK_INTERFACE)
+
         // Accessory
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
@@ -271,7 +280,7 @@ object RagiumContentRegister : HTContentRegister {
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
                 it.removeStatusEffect(StatusEffects.RESISTANCE)
             }
-            slotType = HTAccessorySlotTypes.FACE
+            slotType = HTAccessorySlotTypes.CAPE
         }
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_LEGGINGS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
@@ -282,7 +291,7 @@ object RagiumContentRegister : HTContentRegister {
                 it.removeStatusEffect(StatusEffects.SPEED)
                 it.removeStatusEffect(StatusEffects.JUMP_BOOST)
             }
-            slotType = HTAccessorySlotTypes.FACE
+            slotType = HTAccessorySlotTypes.CHARM
         }
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_BOOTS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
@@ -291,10 +300,10 @@ object RagiumContentRegister : HTContentRegister {
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
                 it.removeStatusEffect(StatusEffects.SLOW_FALLING)
             }
-            slotType = HTAccessorySlotTypes.FACE
+            slotType = HTAccessorySlotTypes.SHOES
         }
         // Cauldron
-        registerCauldron(
+        /*registerCauldron(
             CauldronBehavior.WATER_CAULDRON_BEHAVIOR,
             RagiumContents.Dusts.CRUDE_RAGINITE,
         ) { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
@@ -309,7 +318,7 @@ object RagiumContentRegister : HTContentRegister {
             } else {
                 ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
             }
-        }
+        }*/
         // Dispenser
         DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.DYNAMITE)
         DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.REMOVER_DYNAMITE)

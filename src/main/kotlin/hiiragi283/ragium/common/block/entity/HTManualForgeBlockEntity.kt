@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -46,13 +45,10 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
-                HTMachineInput.Simple(
-                    HTMachineDefinition(
-                        RagiumMachineTypes.Processor.METAL_FORMER,
-                        HTMachineTier.PRIMITIVE,
-                    ),
-                    stackOff,
-                ),
+                HTMachineInput.create(
+                    RagiumMachineTypes.Processor.METAL_FORMER,
+                    HTMachineTier.PRIMITIVE
+                ) { add(stackOff) },
                 world,
             ).getOrNull()
             ?.value

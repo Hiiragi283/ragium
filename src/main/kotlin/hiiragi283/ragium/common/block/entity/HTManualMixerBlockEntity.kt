@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.extract
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
-import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineInput
@@ -18,7 +17,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -57,15 +55,14 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
-                HTMachineInput.Simple(
-                    HTMachineDefinition(
-                        RagiumMachineTypes.Processor.MIXER,
-                        HTMachineTier.PRIMITIVE,
-                    ),
-                    stackMain,
-                    stackOff,
-                    fluidStorage.resourceAmount,
-                ),
+                HTMachineInput.create(
+                    RagiumMachineTypes.Processor.MIXER,
+                    HTMachineTier.PRIMITIVE
+                ) {
+                    add(stackMain)
+                    add(stackOff)
+                    add(fluidStorage.resourceAmount)
+                },
                 world,
             ).getOrNull()
             ?.value
@@ -87,13 +84,13 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
     private fun extractFluid(recipe: HTMachineRecipe) {
         val fluidInput: HTIngredient.Fluid = recipe.fluidInputs.getOrNull(0) ?: return
         useTransaction { transaction: Transaction ->
-            val foundResource: ResourceAmount<FluidVariant> = StorageUtil.findExtractableContent(
+            val foundVariant: FluidVariant = StorageUtil.findExtractableResource(
                 fluidStorage,
-                { fluidInput.test(it, fluidInput.amount) },
+                { fluidInput.test(it, fluidStorage.amount) },
                 transaction,
             ) ?: return@useTransaction
-            if (fluidInput.test(foundResource)) {
-                val extracted: Long = fluidStorage.extract(foundResource, transaction)
+            if (fluidInput.test(foundVariant, fluidInput.amount)) {
+                val extracted: Long = fluidStorage.extract(foundVariant, fluidInput.amount, transaction)
                 if (extracted > 0) {
                     transaction.commit()
                 } else {

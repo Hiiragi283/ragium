@@ -126,30 +126,33 @@ class HTMachineRecipe(
     override fun matches(input: HTMachineInput, world: World): Boolean {
         val bool1: Boolean = input.type == this.machineType
         val bool2: Boolean = input.tier >= this.tier
-        return when (input) {
-            is HTMachineInput.Simple -> {
-                val bool3: Boolean = sizeType == SizeType.SIMPLE
-                val bool4: Boolean =
-                    input.firstItem.let { itemInputs.getOrNull(0)?.test(it) ?: false }
-                val bool5: Boolean =
-                    input.secondItem.let { itemInputs.getOrNull(1)?.test(it) ?: true }
-                val bool6: Boolean =
-                    input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it) ?: true }
+        val bool3: Boolean = sizeType == input.sizeType
+        val bool4: Boolean =
+            input.itemInputs.getOrNull(0)
+                ?.let { itemInputs.getOrNull(0)?.test(it) }
+                ?: true
+        val bool5: Boolean =
+            input.itemInputs.getOrNull(1)
+                ?.let { itemInputs.getOrNull(1)?.test(it) }
+                ?: true
+        val bool6: Boolean =
+            input.fluidInputs.getOrNull(0)
+                ?.let { fluidInputs.getOrNull(0)?.test(it) }
+                ?: true
+        return when (input.sizeType) {
+            SizeType.SIMPLE -> {
                 bool1 && bool2 && bool3 && bool4 && bool5 && bool6
             }
 
-            is HTMachineInput.Large -> {
-                val bool3: Boolean = sizeType == SizeType.LARGE
-                val bool4: Boolean =
-                    input.firstItem.let { itemInputs.getOrNull(0)?.test(it) ?: false }
-                val bool5: Boolean =
-                    input.secondItem.let { itemInputs.getOrNull(1)?.test(it) ?: true }
-                val bool6: Boolean =
-                    input.thirdItem.let { itemInputs.getOrNull(2)?.test(it) ?: true }
+            SizeType.LARGE -> {
                 val bool7: Boolean =
-                    input.firstFluid.let { fluidInputs.getOrNull(0)?.test(it) ?: true }
+                    input.itemInputs.getOrNull(2)
+                        ?.let { itemInputs.getOrNull(2)?.test(it) }
+                        ?: true
                 val bool8: Boolean =
-                    input.secondFluid.let { fluidInputs.getOrNull(1)?.test(it) ?: true }
+                    input.fluidInputs.getOrNull(1)
+                        ?.let { fluidInputs.getOrNull(1)?.test(it) }
+                        ?: true
                 bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool7 && bool8
             }
         }

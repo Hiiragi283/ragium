@@ -111,4 +111,7 @@ object RagiumBlocks : HTContentRegister {
     @JvmStatic
     val TRADER_STATION: Block =
         registerHorizontalWithBE("trader_station", RagiumBlockEntityTypes.TRADER_STATION)
+    
+    @JvmField
+    val TRASH_BOX: Block = registerBlock("trash_box")
 }

@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.modifyBlockState
 import hiiragi283.ragium.api.inventory.*
-import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -58,13 +57,10 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         val world: World = world ?: return
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
-                HTMachineInput.Simple(
-                    HTMachineDefinition(
-                        RagiumMachineTypes.Processor.GRINDER,
-                        HTMachineTier.PRIMITIVE,
-                    ),
-                    getStack(0),
-                ),
+                HTMachineInput.create(
+                    RagiumMachineTypes.Processor.GRINDER,
+                    HTMachineTier.PRIMITIVE,
+                ) { add(getStack(0)) },
                 world,
             ).getOrNull()
             ?.value

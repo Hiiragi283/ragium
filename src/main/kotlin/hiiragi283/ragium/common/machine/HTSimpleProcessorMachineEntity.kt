@@ -29,12 +29,11 @@ class HTSimpleProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachine
 
     override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, fluidStorage)
 
-    override fun createInput(): HTMachineInput = HTMachineInput.Simple(
-        definition,
-        parent.getStack(0),
-        parent.getStack(1),
-        fluidStorage.getSlot(0).resourceAmount,
-    )
+    override fun createInput(): HTMachineInput = HTMachineInput.create(machineType, tier) {
+        add(parent.getStack(0))
+        add(parent.getStack(1))
+        add(fluidStorage.getSlot(0).resourceAmount)
+    }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSimpleMachineScreenHandler(

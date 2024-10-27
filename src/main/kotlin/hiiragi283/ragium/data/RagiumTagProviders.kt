@@ -151,6 +151,7 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
                 addAll(RagiumContents.Exporters.entries)
+                addAll(RagiumContents.Pipes.entries)
                 addAll(RagiumContents.CircuitBoards.entries)
                 addAll(RagiumContents.Circuits.entries)
 
