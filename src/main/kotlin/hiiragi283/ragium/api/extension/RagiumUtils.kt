@@ -1,13 +1,10 @@
 package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.entity.player.PlayerEntity
@@ -122,11 +119,6 @@ fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getAllMatches(
     predicate: (RecipeEntry<U>) -> Boolean,
 ): List<RecipeEntry<U>> = listAllOfType(type).filter(predicate)
 
-fun RecipeManager.getMachineRecipes(type: HTMachineType, tier: HTMachineTier): List<RecipeEntry<HTMachineRecipe>> =
-    getAllMatches(RagiumRecipeTypes.MACHINE) { entry: RecipeEntry<HTMachineRecipe> ->
-        entry.value.let { it.machineType == type && it.tier <= tier }
-    }
-
 operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
 
 operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
@@ -137,12 +129,12 @@ fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.cre
 
 //    ScreenHandler    //
 
-fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity? = get(World::getMachineEntity, null)
+fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity<*>? = get(World::getMachineEntity, null)
 
 fun ScreenHandlerContext.machineInventory(size: Int): Inventory = getMachineEntity()?.parent ?: SimpleInventory(size)
 
-fun ScreenHandlerContext.machineInventory(sizeType: HTMachineRecipe.SizeType): Inventory =
-    getMachineEntity()?.parent ?: SimpleInventory(sizeType.invSize)
+fun ScreenHandlerContext.machineInventory(typeSize: HTMachineType.Size): Inventory =
+    getMachineEntity()?.parent ?: SimpleInventory(typeSize.invSize)
 
 //    Table    //
 

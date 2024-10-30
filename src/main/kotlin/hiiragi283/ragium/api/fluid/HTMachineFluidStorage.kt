@@ -1,80 +1,71 @@
 package hiiragi283.ragium.api.fluid
 
-import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedSlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.registry.RegistryWrapper
 
-abstract class HTMachineFluidStorage(val sizeType: HTMachineRecipe.SizeType, parts: List<SingleFluidStorage>) :
-    CombinedSlottedStorage<FluidVariant, SingleFluidStorage>(parts) {
+sealed class HTMachineFluidStorage(val typeSize: HTMachineType.Size) {
     companion object {
+        @JvmField
+        val CODEC: Codec<HTMachineFluidStorage> =
+            HTSingleFluidStorage.CODEC.listOf().xmap(::fromParts, HTMachineFluidStorage::parts)
+
         @JvmStatic
-        private fun createStorage(multiplier: Int): SingleFluidStorage = object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * multiplier
+        fun fromParts(parts: List<HTSingleFluidStorage>): HTMachineFluidStorage = when (parts.size) {
+            2 -> Simple(parts[0], parts[1])
+            4 -> Large(parts[0], parts[1], parts[2], parts[3])
+            else -> throw IllegalStateException()
         }
 
         @JvmStatic
-        fun create(sizeType: HTMachineRecipe.SizeType): HTMachineFluidStorage = when (sizeType) {
-            HTMachineRecipe.SizeType.SIMPLE -> Simple()
-            HTMachineRecipe.SizeType.LARGE -> Large()
+        private fun createStorage(multiplier: Int): HTSingleFluidStorage = HTSingleFluidStorage(FluidConstants.BUCKET * multiplier)
+
+        @JvmStatic
+        fun create(typeSize: HTMachineType.Size): HTMachineFluidStorage = when (typeSize) {
+            HTMachineType.Size.SIMPLE -> Simple()
+            HTMachineType.Size.LARGE -> Large()
         }
     }
 
-    operator fun get(index: Int): SingleFluidStorage = parts[index]
+    abstract val parts: List<HTSingleFluidStorage>
+
+    operator fun get(index: Int): HTSingleFluidStorage = parts[index]
 
     abstract fun createWrapped(): Storage<FluidVariant>
 
-    abstract fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup)
-
-    abstract fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup)
-
     //    Simple    //
 
-    class Simple :
-        HTMachineFluidStorage(
-            HTMachineRecipe.SizeType.SIMPLE,
-            listOf(
-                createStorage(16),
-                createStorage(16),
-            ),
-        ) {
+    private class Simple(input: HTSingleFluidStorage = createStorage(16), output: HTSingleFluidStorage = createStorage(16)) :
+        HTMachineFluidStorage(HTMachineType.Size.SIMPLE) {
+        override val parts: List<HTSingleFluidStorage> = listOf(input, output)
+
         override fun createWrapped(): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
             listOf(
                 FilteringStorage.insertOnlyOf(get(0)),
                 FilteringStorage.extractOnlyOf(get(1)),
             ),
         )
-
-        override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-            nbt.put("input", buildNbt { parts[0].writeNbt(this, wrapperLookup) })
-            nbt.put("output", buildNbt { parts[1].writeNbt(this, wrapperLookup) })
-        }
-
-        override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-            parts[0].readNbt(nbt.getCompound("input"), wrapperLookup)
-            parts[1].readNbt(nbt.getCompound("output"), wrapperLookup)
-        }
     }
 
     //    Large    //
 
-    class Large :
-        HTMachineFluidStorage(
-            HTMachineRecipe.SizeType.SIMPLE,
-            listOf(
-                createStorage(64),
-                createStorage(64),
-                createStorage(64),
-                createStorage(64),
-            ),
-        ) {
+    private class Large(
+        firstInput: HTSingleFluidStorage = createStorage(64),
+        secondInput: HTSingleFluidStorage = createStorage(64),
+        firstOutput: HTSingleFluidStorage = createStorage(64),
+        secondOutput: HTSingleFluidStorage = createStorage(64),
+    ) : HTMachineFluidStorage(HTMachineType.Size.LARGE) {
+        override val parts: List<HTSingleFluidStorage> = listOf(
+            firstInput,
+            secondInput,
+            firstOutput,
+            secondOutput,
+        )
+
         override fun createWrapped(): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
             listOf(
                 FilteringStorage.insertOnlyOf(get(0)),
@@ -83,19 +74,5 @@ abstract class HTMachineFluidStorage(val sizeType: HTMachineRecipe.SizeType, par
                 FilteringStorage.extractOnlyOf(get(3)),
             ),
         )
-
-        override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-            nbt.put("first_input", buildNbt { parts[0].writeNbt(this, wrapperLookup) })
-            nbt.put("second_output", buildNbt { parts[1].writeNbt(this, wrapperLookup) })
-            nbt.put("first_output", buildNbt { parts[2].writeNbt(this, wrapperLookup) })
-            nbt.put("second_output", buildNbt { parts[3].writeNbt(this, wrapperLookup) })
-        }
-
-        override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-            parts[0].readNbt(nbt.getCompound("first_input"), wrapperLookup)
-            parts[1].readNbt(nbt.getCompound("second_output"), wrapperLookup)
-            parts[1].readNbt(nbt.getCompound("first_output"), wrapperLookup)
-            parts[1].readNbt(nbt.getCompound("second_output"), wrapperLookup)
-        }
     }
 }

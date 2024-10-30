@@ -35,7 +35,7 @@ import kotlin.jvm.optionals.getOrNull
 
 //    Views    //
 
-fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
+fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity<*>? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
 
 fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockController? =
     (getBlockEntity(pos) as? HTMultiblockController) ?: getMachineEntity(pos) as? HTMultiblockController

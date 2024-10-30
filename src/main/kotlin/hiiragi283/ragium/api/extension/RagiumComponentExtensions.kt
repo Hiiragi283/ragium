@@ -57,10 +57,10 @@ fun foodComponent(
 )
 
 val ComponentHolder.machineType: HTMachineType
-    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
+    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.Default)
 
 val ComponentMap.machineType: HTMachineType
-    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
+    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.Default)
 
 val ComponentHolder.machineTypeOrNull: HTMachineType?
     get() = get(HTMachineType.COMPONENT_TYPE)

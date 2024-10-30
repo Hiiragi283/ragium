@@ -112,7 +112,7 @@ val ClientPlayNetworking.Context.world: ClientWorld?
 
 fun ClientPlayNetworking.Context.getBlockEntity(pos: BlockPos): BlockEntity? = world?.getBlockEntity(pos)
 
-fun ClientPlayNetworking.Context.getMachineEntity(pos: BlockPos): HTMachineEntity? = world?.getMachineEntity(pos)
+fun ClientPlayNetworking.Context.getMachineEntity(pos: BlockPos): HTMachineEntity<*>? = world?.getMachineEntity(pos)
 
 //    Fluid    //
 

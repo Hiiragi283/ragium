@@ -116,7 +116,7 @@ object RagiumItemGroup {
                         .getInstance()
                         .machineTypeRegistry
                         .types
-                        .filterNot { it == HTMachineType.DEFAULT }
+                        .filterNot(HTMachineType.Default::isOf)
                         .map { type: HTMachineType -> type.createItemStack(tier) }
                         .forEach(entries::add)
                 }

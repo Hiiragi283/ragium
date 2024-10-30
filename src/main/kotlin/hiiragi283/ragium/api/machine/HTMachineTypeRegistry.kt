@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.machine
 
 import com.google.common.collect.BiMap
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -20,14 +19,6 @@ class HTMachineTypeRegistry(val registry: BiMap<HTMachineTypeKey, HTMachineType>
             )
 
         @JvmField
-        val PROCESSOR_CODEC: Codec<HTMachineType> = CODEC.validate {
-            when (it.isProcessor()) {
-                true -> DataResult.success(it)
-                false -> DataResult.error { "Given machine type; ${it.id} is not a processor!" }
-            }
-        }
-
-        @JvmField
         val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType> =
             HTMachineTypeKey.PACKET_CODEC.xmap(
                 { RagiumAPI.getInstance().machineTypeRegistry.getOrThrow(it) },
@@ -40,11 +31,11 @@ class HTMachineTypeRegistry(val registry: BiMap<HTMachineTypeKey, HTMachineType>
     val types: Collection<HTMachineType>
         get() = registry.values
 
-    val generators: Collection<HTMachineType>
-        get() = types.filter(HTMachineType::isGenerator)
+    val generators: Collection<HTMachineType.Generator>
+        get() = types.mapNotNull(HTMachineType::asGeneratorOrNull)
 
-    val processors: Collection<HTMachineType>
-        get() = types.filter(HTMachineType::isProcessor)
+    val processors: Collection<HTMachineType.Processor>
+        get() = types.mapNotNull(HTMachineType::asProcessorOrNull)
 
     fun get(key: HTMachineTypeKey): HTMachineType? = registry[key]
 
@@ -53,10 +44,6 @@ class HTMachineTypeRegistry(val registry: BiMap<HTMachineTypeKey, HTMachineType>
     fun getOrThrow(key: HTMachineTypeKey): HTMachineType = checkNotNull(get(key))
 
     fun getOrThrow(id: Identifier): HTMachineType = checkNotNull(get(id))
-
-    fun getProcessorOrThrow(key: HTMachineTypeKey): HTMachineType = checkNotNull(getOrThrow(key).takeIf(HTMachineType::isProcessor))
-
-    fun getProcessorOrThrow(id: Identifier): HTMachineType = checkNotNull(getOrThrow(id).takeIf(HTMachineType::isProcessor))
 
     fun getKey(type: HTMachineType): HTMachineTypeKey? = registry.inverse()[type]
 

@@ -82,10 +82,10 @@ data object HTMachineModel : UnbakedModel, BakedModel {
         randomSupplier: Supplier<Random>,
         context: RenderContext,
     ) {
-        val machineEntity: HTMachineEntity = blockView.getMachineEntity(pos) ?: return
+        val machineEntity: HTMachineEntity<*> = blockView.getMachineEntity(pos) ?: return
         val frontDir: Direction =
             blockView.getBlockState(pos).getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-        emitMachineFront(frontDir, machineEntity.machineType, machineEntity, context)
+        emitMachineFront(frontDir, machineEntity.machineType, context)
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
@@ -94,17 +94,15 @@ data object HTMachineModel : UnbakedModel, BakedModel {
             .bakedModelManager
             .getModel(ModelIdentifier(stack.machineTier.getHull().id, ""))
             .emitItemQuads(stack, randomSupplier, context)
-        emitMachineFront(Direction.NORTH, stack.machineType, null, context)
+        emitMachineFront(Direction.NORTH, stack.machineType, context)
     }
 
     @JvmStatic
-    private fun emitMachineFront(
-        frontDir: Direction,
-        type: HTMachineType,
-        machine: HTMachineEntity?,
-        context: RenderContext,
-    ) {
-        val frontId = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, type.getFrontTex(machine))
+    private fun emitMachineFront(frontDir: Direction, type: HTMachineType, context: RenderContext) {
+        val frontId = SpriteIdentifier(
+            PlayerScreenHandler.BLOCK_ATLAS_TEXTURE,
+            type.getOrDefault(HTMachinePropertyKeys.FRONT_TEX)(type.id),
+        )
         this.frontSprite = this.textureGetter.apply(frontId)
         val emitter: QuadEmitter = context.emitter
         val texDir: Direction = type.getOrDefault(HTMachinePropertyKeys.FRONT_MAPPER)(frontDir)

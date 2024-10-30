@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
 class HTMachineInput private constructor(
-    val sizeType: HTMachineRecipe.SizeType,
+    val typeSize: HTMachineType.Size,
     val type: HTMachineType,
     val tier: HTMachineTier,
     val itemInputs: List<ItemStack>,
@@ -27,12 +27,12 @@ class HTMachineInput private constructor(
             check(itemInputs.size <= 3) { "Item inputs must be 3 or less!" }
             val bool1: Boolean = fluidInputs.size == 2
             val bool2: Boolean = itemInputs.size == 3
-            val sizeType: HTMachineRecipe.SizeType = when {
-                bool1 || bool2 -> HTMachineRecipe.SizeType.LARGE
-                else -> HTMachineRecipe.SizeType.SIMPLE
+            val typeSize: HTMachineType.Size = when {
+                bool1 || bool2 -> HTMachineType.Size.LARGE
+                else -> HTMachineType.Size.SIMPLE
             }
             return HTMachineInput(
-                sizeType,
+                typeSize,
                 type.asMachine(),
                 tier,
                 itemInputs,

@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
@@ -13,20 +12,16 @@ import net.minecraft.world.World
 
 object HTMachinePropertyKeys {
     @JvmField
-    val CATEGORY: HTPropertyKey.Simple<HTMachineType.Category> =
-        HTPropertyKey.Simple(RagiumAPI.id("category"))
-
-    @JvmField
     val FRONT_TEX: HTPropertyKey.Defaulted<(Identifier) -> Identifier> =
         HTPropertyKey.Defaulted(
             RagiumAPI.id("front_tex"),
         ) { id: Identifier -> id.withPath { "block/${it}_front" } }
 
     @JvmField
-    val DYNAMIC_FRONT_TEX: HTPropertyKey.Defaulted<(HTMachineEntity) -> Identifier> =
+    val DYNAMIC_FRONT_TEX: HTPropertyKey.Defaulted<(HTMachineEntity<*>) -> Identifier> =
         HTPropertyKey.Defaulted(
             RagiumAPI.id("dynamic_front_tex"),
-        ) { machine: HTMachineEntity -> machine.machineType.id.withPath { "block/${it}_front" } }
+        ) { machine: HTMachineEntity<*> -> machine.machineType.id.withPath { "block/${it}_front" } }
 
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =
@@ -57,6 +52,6 @@ object HTMachinePropertyKeys {
         HTPropertyKey.Defaulted(RagiumAPI.id("processor_failed")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> }
 
     @JvmField
-    val RECIPE_SIZE: HTPropertyKey.Simple<HTMachineRecipe.SizeType> =
+    val RECIPE_SIZE: HTPropertyKey.Simple<HTMachineType.Size> =
         HTPropertyKey.Simple(RagiumAPI.id("processor_failed"))
 }

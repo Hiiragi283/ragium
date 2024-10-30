@@ -1,10 +1,9 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.extension.getEnvType
+import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import net.fabricmc.api.EnvType
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.loader.api.FabricLoader
 
 interface RagiumEnvironmentBridge {
@@ -19,5 +18,5 @@ interface RagiumEnvironmentBridge {
 
     val environment: EnvType
 
-    fun createFluidWidget(storage: SlottedStorage<FluidVariant>, index: Int): HTFluidWidget
+    fun createFluidWidget(storage: HTMachineFluidStorage, index: Int): HTFluidWidget
 }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.gui.widget
 
 import com.mojang.blaze3d.systems.RenderSystem
 import hiiragi283.ragium.api.extension.toFloatColor
+import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.client.util.getSpriteAndColor
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter
@@ -10,7 +11,6 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
-import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.texture.Sprite
@@ -21,10 +21,10 @@ import net.minecraft.util.Identifier
 import kotlin.jvm.optionals.getOrNull
 
 @Environment(EnvType.CLIENT)
-class HTClientFluidWidget(storage: SlottedStorage<FluidVariant>, index: Int) : HTFluidWidget(storage, index) {
-    override var variant: FluidVariant = storage.getSlot(index).resource
+class HTClientFluidWidget(storage: HTMachineFluidStorage, index: Int) : HTFluidWidget(storage, index) {
+    override var variant: FluidVariant = storage[index].resource
 
-    override var amount: Long = storage.getSlot(index).amount
+    override var amount: Long = storage[index].amount
 
     private var tick: Int = 0
 

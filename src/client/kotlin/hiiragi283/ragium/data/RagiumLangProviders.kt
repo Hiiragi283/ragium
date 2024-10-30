@@ -219,7 +219,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine SizeType
-            builder.add(HTMachineType.DEFAULT, "Default Machine")
+            builder.add(HTMachineType.Default, "Default Machine")
 
             builder.add(RagiumMachineTypes.Generator.COMBUSTION, "Combustion Generator")
             builder.add(RagiumMachineTypes.Generator.THERMAL, "Thermal Generator")
@@ -364,7 +364,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine SizeType
-            builder.add(HTMachineType.DEFAULT, "デフォルト機械")
+            builder.add(HTMachineType.Default, "デフォルト機械")
 
             builder.add(RagiumMachineTypes.Generator.COMBUSTION, "燃焼発電機")
             builder.add(RagiumMachineTypes.Generator.SOLAR, "太陽光発電機")

@@ -23,13 +23,13 @@ import net.minecraft.util.Identifier
 import java.util.*
 
 class HTMachineRecipeJsonBuilder private constructor(
-    private val type: HTMachineType,
+    private val type: HTMachineType.Processor,
     private val tier: HTMachineTier = HTMachineTier.PRIMITIVE,
 ) {
     companion object {
         @JvmStatic
         fun create(type: HTMachineConvertible, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder = type
-            .asProcessor()
+            .asProcessorOrNull()
             ?.let { HTMachineRecipeJsonBuilder(it, minTier) }
             ?: throw IllegalStateException("Machine SizeType;  ${type.asMachine().id} must be Processor!")
 

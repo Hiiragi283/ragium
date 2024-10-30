@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos
 data class HTMachinePacket(val machineType: HTMachineType, val tier: HTMachineTier, val pos: BlockPos) {
     companion object {
         @JvmField
-        val DEFAULT = HTMachinePacket(HTMachineType.DEFAULT, HTMachineTier.PRIMITIVE, BlockPos.ORIGIN)
+        val DEFAULT = HTMachinePacket(HTMachineType.Default, HTMachineTier.PRIMITIVE, BlockPos.ORIGIN)
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachinePacket> = PacketCodec.tuple(

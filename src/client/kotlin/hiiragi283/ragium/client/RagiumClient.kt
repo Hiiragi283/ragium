@@ -6,9 +6,7 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTEntryDelegated
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isClientEnv
-import hiiragi283.ragium.api.extension.isModLoaded
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
@@ -21,7 +19,6 @@ import hiiragi283.ragium.client.util.getBlockEntity
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.machine.HTHeatGeneratorMachineEntity
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
@@ -36,8 +33,6 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.client.gui.screen.ingame.HandledScreens
@@ -212,8 +207,8 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
     override fun shouldLoad(): Boolean = isClientEnv()
 
     override fun modifyMachineProperties(helper: RagiumPlugin.PropertyHelper) {
-        helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
-            set(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX) { machine: HTMachineEntity ->
+        /*helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
+            set(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX) { machine: HTMachineEntity<*> ->
                 val generator: HTHeatGeneratorMachineEntity? = machine as? HTHeatGeneratorMachineEntity
                 RagiumAPI.log { info("Burning Time; ${generator?.burningTime}") }
                 when ((machine as? HTHeatGeneratorMachineEntity)?.isBurning == true) {
@@ -222,9 +217,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
                 }.let(RagiumAPI.Companion::id)
             }
         }
-
-        if (!isModLoaded("roughlyenoughitems")) return
-        /*helper.modify(RagiumMachineTypes.FLUID_DRILL) {
+        helper.modify(RagiumMachineTypes.FLUID_DRILL) {
             set(INPUT_ENTRIES) { recipe: HTMachineRecipe ->
                 recipe
                     .get(HTRecipeComponentTypes.BIOME)
@@ -257,5 +250,5 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
 
     override val environment: EnvType = EnvType.CLIENT
 
-    override fun createFluidWidget(storage: SlottedStorage<FluidVariant>, index: Int): HTFluidWidget = HTClientFluidWidget(storage, index)
+    override fun createFluidWidget(storage: HTMachineFluidStorage, index: Int): HTFluidWidget = HTClientFluidWidget(storage, index)
 }

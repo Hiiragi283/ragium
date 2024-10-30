@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTFluidStoragePayload
+import hiiragi283.ragium.common.network.HTFluidSyncPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -22,6 +23,10 @@ object RagiumNetworks {
     @JvmField
     val FLUID_STORAGE: CustomPayload.Id<HTFluidStoragePayload> =
         registerS2C("fluid_storage", HTFluidStoragePayload.PACKET_CODEC)
+
+    @JvmField
+    val FLUID_SYNC: CustomPayload.Id<HTFluidSyncPayload> =
+        registerS2C("fluid_sync", HTFluidSyncPayload.PACKET_CODEC)
 
     @JvmField
     val SET_STACK: CustomPayload.Id<HTInventoryPayload.Setter> =
@@ -66,15 +71,4 @@ object RagiumNetworks {
     fun sendFloatingItem(player: ServerPlayerEntity, item: ItemConvertible, count: Int = 1) {
         ServerPlayNetworking.send(player, HTFloatingItemPayload(item, count))
     }
-
-    /*@JvmStatic
-    fun syncFluidStorage(
-        player: ServerPlayerEntity,
-        pos: BlockPos,
-        index: Int,
-        variant: FluidVariant,
-        amount: Long,
-    ) {
-        ServerPlayNetworking.send(player, HTFluidStoragePayload(pos, index, variant, amount))
-    }*/
 }

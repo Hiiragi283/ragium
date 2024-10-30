@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import io.github.cottonmc.cotton.gui.widget.WGridPanel
 import io.github.cottonmc.cotton.gui.widget.WTabPanel
@@ -20,7 +20,7 @@ class HTSimpleMachineScreenHandler(
         syncId,
         playerInv,
         packet,
-        HTMachineRecipe.SizeType.SIMPLE,
+        HTMachineType.Size.SIMPLE,
         ctx,
     ) {
     override fun initMainPanel(rootTab: WTabPanel) {

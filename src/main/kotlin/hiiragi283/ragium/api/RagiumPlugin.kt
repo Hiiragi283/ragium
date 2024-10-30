@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeKey
 import hiiragi283.ragium.api.property.HTPropertyHolder
 
@@ -22,12 +21,12 @@ interface RagiumPlugin {
 
     //    MachineRegister    //
 
-    class MachineRegister(private val register: (HTMachineTypeKey, HTPropertyHolder, HTMachineType.Category) -> Unit) {
+    class MachineRegister(private val register: (HTMachineTypeKey, HTPropertyHolder, Boolean) -> Unit) {
         fun registerGenerator(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
             register(
                 key,
                 HTPropertyHolder.create(builderAction = builderAction),
-                HTMachineType.Category.GENERATOR,
+                true,
             )
         }
 
@@ -35,7 +34,7 @@ interface RagiumPlugin {
             register(
                 key,
                 HTPropertyHolder.create(builderAction = builderAction),
-                HTMachineType.Category.PROCESSOR,
+                false,
             )
         }
     }

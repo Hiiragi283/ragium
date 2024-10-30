@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.entity.HTProcessorMachineEntityBase
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.widget.HTFluidWidget
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription
 import io.github.cottonmc.cotton.gui.networking.NetworkSide
@@ -38,13 +37,13 @@ abstract class HTProcessorScreenHandlerBase(
     syncId: Int,
     playerInv: PlayerInventory,
     packet: HTMachinePacket,
-    sizeType: HTMachineRecipe.SizeType,
+    typeSize: HTMachineType.Size,
     ctx: ScreenHandlerContext,
 ) : SyncedGuiDescription(
         type,
         syncId,
         playerInv,
-        ctx.machineInventory(sizeType),
+        ctx.machineInventory(typeSize),
         getBlockPropertyDelegate(ctx, HTMachineEntity.MAX_PROPERTIES),
     ) {
     companion object {
@@ -72,7 +71,7 @@ abstract class HTProcessorScreenHandlerBase(
         .getMachineEntity()
         ?.let { it as? HTProcessorMachineEntityBase }
         ?.fluidStorage
-        ?: HTMachineFluidStorage.create(sizeType)
+        ?: HTMachineFluidStorage.create(typeSize)
 
     init {
         val rootTab = WTabPanel()

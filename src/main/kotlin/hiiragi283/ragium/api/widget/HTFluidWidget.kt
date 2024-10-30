@@ -3,13 +3,13 @@ package hiiragi283.ragium.api.widget
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import io.github.cottonmc.cotton.gui.widget.WWidget
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.util.Identifier
 
-abstract class HTFluidWidget(val storage: SlottedStorage<FluidVariant>, val index: Int) : WWidget() {
+abstract class HTFluidWidget(val storage: HTMachineFluidStorage, val index: Int) : WWidget() {
     companion object {
         @JvmField
         val FLUID_UPDATE: Identifier = RagiumAPI.id("fluid_update")

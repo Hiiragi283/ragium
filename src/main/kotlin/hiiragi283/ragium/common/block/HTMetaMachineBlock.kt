@@ -50,7 +50,7 @@ object HTMetaMachineBlock : HTBlockWithEntity(blockSettings(Blocks.IRON_BLOCK)) 
         moved: Boolean,
     ) {
         if (!state.isOf(newState.block)) {
-            world.getMachineEntity(pos)?.let { machine: HTMachineEntity ->
+            world.getMachineEntity(pos)?.let { machine: HTMachineEntity<*> ->
                 ItemScatterer.spawn(world, pos, machine)
                 world.updateComparators(pos, state.block)
             }

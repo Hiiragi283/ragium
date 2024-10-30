@@ -40,15 +40,18 @@ internal data object InternalRagiumAPI : RagiumAPI {
         val keyCache: MutableSet<HTMachineTypeKey> = mutableSetOf()
         val builder: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
 
-        fun addMachine(key: HTMachineTypeKey, properties: HTPropertyHolder, category: HTMachineType.Category) {
+        fun addMachine(key: HTMachineTypeKey, properties: HTPropertyHolder, flag: Boolean) {
             check(key !in keyCache) { "Machine SizeType; ${key.id} is already registered!" }
-            val type: HTMachineType = HTMachineType.create(HTPropertyHolder.builder(properties), category)
+            val type: HTMachineType = when (flag) {
+                true -> HTMachineType.Generator(properties)
+                false -> HTMachineType.Processor(properties)
+            }
             keyCache.add(key)
             builder.put(key, type)
         }
 
         keyCache.add(HTMachineTypeKey.DEFAULT)
-        builder.put(HTMachineTypeKey.DEFAULT, HTMachineType.DEFAULT)
+        builder.put(HTMachineTypeKey.DEFAULT, HTMachineType.Default)
 
         RagiumAPI.getPlugins().forEach {
             it.registerMachineType(RagiumPlugin.MachineRegister(::addMachine))

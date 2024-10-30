@@ -35,7 +35,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     ExtendedScreenHandlerFactory<HTMachinePacket>,
     PropertyDelegateHolder,
     SidedStorageBlockEntity {
-    var machineEntity: HTMachineEntity? = null
+    var machineEntity: HTMachineEntity<*>? = null
         private set
 
     val definition: HTMachinePacket
@@ -61,7 +61,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
             .getInstance()
             .machineTypeRegistry
             .get(Identifier.of(nbt.getString("machine_type")))
-            ?: HTMachineType.DEFAULT
+            ?: HTMachineType.Default
         val tier: HTMachineTier = HTMachineTier.entries
             .firstOrNull { it.asString() == nbt.getString("tier") }
             ?: HTMachineTier.PRIMITIVE
@@ -73,7 +73,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun readComponents(components: ComponentsAccess) {
         super.readComponents(components)
         val machineType: HTMachineType =
-            components.getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.DEFAULT)
+            components.getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.Default)
         val tier: HTMachineTier = components.getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
         initMachineEntity(machineType, tier)
     }

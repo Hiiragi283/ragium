@@ -1,7 +1,10 @@
 package hiiragi283.ragium.api.machine.entity
 
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
@@ -26,7 +29,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachineTier) :
+abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: HTMachineTier) :
     HTDelegatedInventory.Simple,
     ExtendedScreenHandlerFactory<HTMachinePacket>,
     PropertyDelegateHolder,
@@ -34,8 +37,6 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
     companion object {
         const val MAX_PROPERTIES = 4
     }
-
-    constructor(type: HTMachineConvertible, tier: HTMachineTier) : this(type.asMachine(), tier)
 
     val definition = HTMachineDefinition(machineType, tier)
     lateinit var parentBE: HTMetaMachineBlockEntity
@@ -126,11 +127,23 @@ abstract class HTMachineEntity(val machineType: HTMachineType, val tier: HTMachi
     fun interface Factory {
         companion object {
             @JvmStatic
-            fun of(factory: (HTMachineTier) -> HTMachineEntity): Factory =
+            fun ofStatic(factory: (HTMachineTier) -> HTMachineEntity<*>?): Factory =
                 Factory { _: HTMachineType, tier: HTMachineTier -> factory(tier) }
+
+            @JvmStatic
+            fun ofGenerator(factory: (HTMachineType.Generator, HTMachineTier) -> HTMachineEntity<*>?): Factory =
+                Factory { machineType: HTMachineType, tier: HTMachineTier ->
+                    machineType.asGeneratorOrNull()?.let { factory(it, tier) }
+                }
+
+            @JvmStatic
+            fun ofProcessor(factory: (HTMachineType.Processor, HTMachineTier) -> HTMachineEntity<*>?): Factory =
+                Factory { machineType: HTMachineType, tier: HTMachineTier ->
+                    machineType.asProcessorOrNull()?.let { factory(it, tier) }
+                }
         }
 
-        fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntity
+        fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntity<*>?
     }
 
     //    SidedStorageBlockEntity    //

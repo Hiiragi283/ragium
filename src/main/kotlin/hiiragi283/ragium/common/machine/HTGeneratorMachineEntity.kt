@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -21,7 +22,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 open class HTGeneratorMachineEntity(type: HTMachineConvertible, tier: HTMachineTier) :
-    HTMachineEntity(type, tier),
+    HTMachineEntity<HTMachineType.Generator>(type.asGenerator(), tier),
     SidedStorageBlockEntity {
     override val parent: HTSimpleInventory = HTStorageBuilder(5)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -35,7 +36,7 @@ open class HTGeneratorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
         machineType.generateEnergy(world, pos, tier)
     }
 
-    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Simple()
+    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(HTMachineType.Size.SIMPLE)
 
     final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
