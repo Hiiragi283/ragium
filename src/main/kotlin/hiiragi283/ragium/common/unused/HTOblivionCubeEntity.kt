@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.entity
+package hiiragi283.ragium.common.unused
 
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.ai.goal.*

@@ -39,7 +39,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             generator.blockStateCollector.accept(supplier)
         }
 
-        register(RagiumBlocks.OBLIVION_CLUSTER, generator::registerAmethyst)
+        // register(RagiumBlocks.OBLIVION_CLUSTER, generator::registerAmethyst)
 
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         register(RagiumBlocks.MANUAL_GRINDER) {
@@ -310,7 +310,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
 
-        register(RagiumBlocks.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumBlocks.OBLIVION_CLUSTER))
+        // register(RagiumBlocks.OBLIVION_CLUSTER.asItem(), Models.GENERATED, TextureMap.layer0(RagiumBlocks.OBLIVION_CLUSTER))
 
         // contents
         buildList {
@@ -330,7 +330,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             remove(RagiumContents.Foods.CHOCOLATE_APPLE)
             remove(RagiumContents.Misc.EMPTY_FLUID_CUBE)
             remove(RagiumContents.Misc.FILLED_FLUID_CUBE)
-            remove(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)
+            // remove(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)
             remove(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             remove(RagiumContents.Misc.SOLAR_PANEL)
         }.map(ItemConvertible::asItem).forEach(::register)

@@ -125,7 +125,7 @@ object RagiumLangProviders {
             RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
-            builder.add(RagiumBlocks.OBLIVION_CLUSTER, "Oblivion Cluster")
+            // builder.add(RagiumBlocks.OBLIVION_CLUSTER, "Oblivion Cluster")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -177,7 +177,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.ENGINE, "V8 Engine")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "Heart of the Nether")
-            builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "Spawn Oblivion Cube")
+            // builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "Spawn Oblivion Cube")
             builder.add(RagiumContents.Misc.PROCESSOR_SOCKET, "Processor Socket")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR, "Ragi-Crystal Processor")
@@ -270,7 +270,7 @@ object RagiumLangProviders {
             RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
-            builder.add(RagiumBlocks.OBLIVION_CLUSTER, "忘却の芽")
+            // builder.add(RagiumBlocks.OBLIVION_CLUSTER, "忘却の芽")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -322,7 +322,7 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.ENGINE, "V8エンジン")
             builder.add(RagiumContents.Misc.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumContents.Misc.HEART_OF_THE_NETHER, "地獄の心臓")
-            builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "スポーン 忘却の箱")
+            // builder.add(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG, "スポーン 忘却の箱")
             builder.add(RagiumContents.Misc.PROCESSOR_SOCKET, "プロセッサソケット")
             builder.add(RagiumContents.Misc.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR, "ラギクリスタリルプロセッサ")

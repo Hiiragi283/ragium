@@ -1,8 +1,10 @@
-package hiiragi283.ragium.client.renderer
+package hiiragi283.ragium.client.unused
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.entity.HTOblivionCubeEntity
-import net.minecraft.client.model.ModelPart
+import hiiragi283.ragium.common.unused.HTOblivionCubeEntity
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.minecraft.client.model.*
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.entity.EntityRendererFactory
 import net.minecraft.client.render.entity.MobEntityRenderer
@@ -21,6 +23,20 @@ class HTOblivionCubeEntityRenderer(ctx: EntityRendererFactory.Context) :
     companion object {
         @JvmField
         val ENTITY_MODEL_LAYER = EntityModelLayer(RagiumAPI.id("oblivion_cube"), "main")
+        
+        fun init() {
+            EntityRendererRegistry.register(null, ::HTOblivionCubeEntityRenderer)
+
+            EntityModelLayerRegistry.registerModelLayer(ENTITY_MODEL_LAYER) {
+                val modelData = ModelData()
+                modelData.root.addChild(
+                    EntityModelPartNames.CUBE,
+                    ModelPartBuilder.create().uv(0, 0).cuboid(-6F, 12F, -6F, 12F, 12F, 12F),
+                    ModelTransform.pivot(0F, 0F, 0F),
+                )
+                TexturedModelData.of(modelData, 64, 64)
+            }
+        }
     }
 
     override fun getTexture(entity: HTOblivionCubeEntity): Identifier = RagiumAPI.id("textures/entity/oblivion_cube.png")

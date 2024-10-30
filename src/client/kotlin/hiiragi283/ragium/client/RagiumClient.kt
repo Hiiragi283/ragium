@@ -12,7 +12,6 @@ import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTOblivionCubeEntityRenderer
 import hiiragi283.ragium.client.util.getBlockEntity
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
@@ -30,21 +29,15 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.screen.ingame.HandledScreens
-import net.minecraft.client.model.ModelData
-import net.minecraft.client.model.ModelPartBuilder
-import net.minecraft.client.model.ModelTransform
-import net.minecraft.client.model.TexturedModelData
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
-import net.minecraft.client.render.entity.model.EntityModelPartNames
 import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
@@ -79,7 +72,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
             RagiumBlocks.POROUS_NETHERRACK,
-            RagiumBlocks.OBLIVION_CLUSTER,
+            // RagiumBlocks.OBLIVION_CLUSTER,
             RagiumBlocks.META_MACHINE,
         )
 
@@ -109,17 +102,6 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
     private fun registerEntities() {
         EntityRendererRegistry.register(RagiumEntityTypes.REMOVER_DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
-        EntityRendererRegistry.register(RagiumEntityTypes.OBLIVION_CUBE, ::HTOblivionCubeEntityRenderer)
-
-        EntityModelLayerRegistry.registerModelLayer(HTOblivionCubeEntityRenderer.ENTITY_MODEL_LAYER) {
-            val modelData = ModelData()
-            modelData.root.addChild(
-                EntityModelPartNames.CUBE,
-                ModelPartBuilder.create().uv(0, 0).cuboid(-6F, 12F, -6F, 12F, 12F, 12F),
-                ModelTransform.pivot(0F, 0F, 0F),
-            )
-            TexturedModelData.of(modelData, 64, 64)
-        }
     }
 
     //    Fluids    //

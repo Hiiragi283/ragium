@@ -167,14 +167,14 @@ object RagiumContentRegister : HTContentRegister {
         getProperties(RagiumContents.Misc.FILLED_FLUID_CUBE)[itemKey] = { HTFilledFluidCubeItem }
         getProperties(RagiumContents.Misc.FORGE_HAMMER)[itemKey] = { HTForgeHammerItem }
         getProperties(RagiumContents.Misc.HEART_OF_THE_NETHER)[settingsKey] = { it.rarity(Rarity.UNCOMMON) }
-        getProperties(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)[itemKey] = {
+        /*getProperties(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)[itemKey] = {
             SpawnEggItem(
                 RagiumEntityTypes.OBLIVION_CUBE,
                 0x000000,
                 0xffffff,
                 itemSettings(),
             )
-        }
+        }*/
         getProperties(RagiumContents.Misc.RAGIUM)[settingsKey] = { it.rarity(Rarity.EPIC) }
         getProperties(RagiumContents.Misc.REMOVER_DYNAMITE)[itemKey] = { HTRemoverDynamiteItem }
     }
@@ -183,7 +183,7 @@ object RagiumContentRegister : HTContentRegister {
     private fun initBlockItems() {
         registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
         registerBlockItem(RagiumBlocks.SNOW_SPONGE)
-        registerBlockItem(RagiumBlocks.OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
+        // registerBlockItem(RagiumBlocks.OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
         registerBlockItem(RagiumBlocks.SPONGE_CAKE)
         registerBlockItem(

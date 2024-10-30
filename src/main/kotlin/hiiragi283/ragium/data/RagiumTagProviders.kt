@@ -45,7 +45,7 @@ object RagiumTagProviders {
 
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OBLIVION_CLUSTER)
+            // add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OBLIVION_CLUSTER)
 
             add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
 

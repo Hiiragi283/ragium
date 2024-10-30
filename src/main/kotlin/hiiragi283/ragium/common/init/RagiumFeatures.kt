@@ -21,8 +21,7 @@ object RagiumFeatures {
     @JvmField
     val ORE_END_RAGI_CRYSTAL: Data = create("ore_end_ragi_crystal")
 
-    @JvmField
-    val PATCH_END_OBLIVION_CLUSTER: Data = create("patch_end_oblivion_cluster")
+    // val PATCH_END_OBLIVION_CLUSTER: Data = create("patch_end_oblivion_cluster")
 
     @JvmStatic
     private fun create(name: String): Data = Data(
@@ -52,11 +51,11 @@ object RagiumFeatures {
             GenerationStep.Feature.UNDERGROUND_ORES,
             ORE_END_RAGI_CRYSTAL.featureKey,
         )
-        BiomeModifications.addFeature(
+        /*BiomeModifications.addFeature(
             BiomeSelectors.foundInTheEnd(),
             GenerationStep.Feature.VEGETAL_DECORATION,
             PATCH_END_OBLIVION_CLUSTER.featureKey,
-        )
+        )*/
     }
 
     //    Data    //

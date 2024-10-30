@@ -102,7 +102,7 @@ object RagiumContents : HTContentRegister {
 
     enum class Gems(override val material: RagiumMaterials) : HTContent.Material<Item> {
         FLUORITE(RagiumMaterials.FLUORITE),
-        OBLIVION_CRYSTAL(RagiumMaterials.OBLIVION_CRYSTAL),
+        // OBLIVION_CRYSTAL(RagiumMaterials.OBLIVION_CRYSTAL),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
         ;
 
@@ -349,7 +349,7 @@ object RagiumContents : HTContentRegister {
         ENGINE,
         FORGE_HAMMER,
         HEART_OF_THE_NETHER,
-        OBLIVION_CUBE_SPAWN_EGG,
+        // OBLIVION_CUBE_SPAWN_EGG,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
@@ -364,49 +364,6 @@ object RagiumContents : HTContentRegister {
         override val entry: HTRegistryEntry<Item> =
             HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
     }
-
-    //    Elements    //
-
-    /*enum class Element(
-        private val suitableBiome: TagKey<Biome>,
-        override val enName: String,
-        override val jaName: String,
-        mapColor: MapColor,
-    ) : HTTranslationProvider,
-        StringIdentifiable {
-        RAGIUM(ConventionalBiomeTags.IS_NETHER, "Ragium", "ラギウム", MapColor.RED),
-        RIGIUM(ConventionalBiomeTags.IS_WASTELAND, "Rigium", "リギウム", MapColor.YELLOW),
-        RUGIUM(ConventionalBiomeTags.IS_JUNGLE, "Rugium", "ルギウム", MapColor.GREEN),
-        REGIUM(ConventionalBiomeTags.IS_OCEAN, "Regium", "レギウム", MapColor.BLUE),
-        ROGIUM(ConventionalBiomeTags.IS_END, "Rogium", "ロギウム", MapColor.PURPLE),
-        ;
-
-        private val settings: AbstractBlock.Settings =
-            blockSettings().mapColor(mapColor).strength(1.5f).sounds(BlockSoundGroup.AMETHYST_BLOCK)
-        val buddingBlock: HTBuddingCrystalBlock = HTBuddingCrystalBlock(this, settings.ticksRandomly().requiresTool())
-        val clusterBlock: AmethystClusterBlock = AmethystClusterBlock(
-            7.0f,
-            3.0f,
-            settings
-                .solid()
-                .nonOpaque()
-                .luminance { 5 }
-                .pistonBehavior(PistonBehavior.DESTROY),
-        )
-        val dustItem = Item(itemSettings())
-
-        val pendantItem = Item(itemSettings().maxDamage(63))
-        val ringItem = Item(itemSettings().maxDamage(63))
-
-        val translationKey = "element.${asString()}"
-        val text: Text = Text.translatable(translationKey)
-
-        fun isSuitableBiome(world: World, pos: BlockPos): Boolean = world.getBiome(pos).isIn(suitableBiome)
-
-        //    StringIdentifiable    //
-
-        override fun asString(): String = name.lowercase()
-    }*/
 
     //    Fluids    //
 

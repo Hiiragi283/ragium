@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFeatures
 import hiiragi283.ragium.common.init.RagiumMultiblockPatterns
@@ -27,7 +26,6 @@ import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.world.gen.YOffset
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.placementmodifier.*
-import net.minecraft.world.gen.stateprovider.BlockStateProvider
 import java.util.concurrent.CompletableFuture
 
 class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
@@ -196,7 +194,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
             RagiumFeatures.ORE_END_RAGI_CRYSTAL,
             PlacedFeatures.TEN_ABOVE_AND_BELOW_RANGE,
         )
-        registerFeature(
+        /*registerFeature(
             entries,
             lookup,
             RagiumFeatures.PATCH_END_OBLIVION_CLUSTER,
@@ -204,7 +202,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
             PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
             RarityFilterPlacementModifier.of(100),
             SquarePlacementModifier.of(),
-        )
+        )*/
     }
 
     private fun registerFeature(
@@ -361,7 +359,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                     ),
                 ),
             )
-            register(
+            /*register(
                 RagiumFeatures.PATCH_END_OBLIVION_CLUSTER.configuredKey,
                 ConfiguredFeature(
                     Feature.RANDOM_PATCH,
@@ -372,7 +370,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                         ),
                     ),
                 ),
-            )
+            )*/
         }
 
         @JvmStatic

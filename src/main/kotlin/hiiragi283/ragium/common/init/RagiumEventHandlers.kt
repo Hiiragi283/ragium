@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
@@ -132,7 +131,7 @@ object RagiumEventHandlers {
         }*/
 
         // spawn oblivion cube when oblivion cluster broken
-        PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
+        /*PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
             if (!player.isCreative) {
                 if (state.isOf(RagiumBlocks.OBLIVION_CLUSTER)) {
                     RagiumEntityTypes.OBLIVION_CUBE.create(world)?.let {
@@ -142,7 +141,7 @@ object RagiumEventHandlers {
                     }
                 }
             }
-        }
+        }*/
 
         ServerTickEvents.END_SERVER_TICK.register { server: MinecraftServer ->
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
