@@ -1,15 +1,13 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumEnvironmentBridge
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTEntryDelegated
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isClientEnv
-import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
-import hiiragi283.ragium.api.widget.HTFluidWidget
-import hiiragi283.ragium.client.gui.HTMachineScreen
-import hiiragi283.ragium.client.gui.widget.HTClientFluidWidget
+import hiiragi283.ragium.client.gui.HTLargeMachineScreen
+import hiiragi283.ragium.client.gui.HTMachineScreenBase
+import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
@@ -20,6 +18,7 @@ import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
+import hiiragi283.ragium.common.network.HTFluidSyncPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
@@ -33,8 +32,10 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.model.ModelData
 import net.minecraft.client.model.ModelPartBuilder
@@ -52,7 +53,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 
 @Environment(EnvType.CLIENT)
-object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridge {
+object RagiumClient : ClientModInitializer, RagiumPlugin {
     override fun onInitializeClient() {
         registerBlocks()
         registerEntities()
@@ -147,8 +148,8 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
     //    Screens    //
 
     private fun registerScreens() {
-        HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
     }
 
     //    Events    //
@@ -175,17 +176,14 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
             context.client().gameRenderer.showFloatingItem(payload.stack)
         }
 
-        /*RagiumNetworks.FLUID_STORAGE.registerClientReceiver { payload: HTFluidStoragePayload, context: ClientPlayNetworking.Context ->
-            val (pos: BlockPos, index: Int, variant: FluidVariant, amount: Long) = payload
-            context.getMachineEntity(pos)
-                ?.let { it as? HTProcessorMachineEntityBase }
-                ?.fluidStorage
-                ?.get(index)
-                ?.let { storageIn: SingleFluidStorage ->
-                    storageIn.variant = variant
-                    storageIn.amount = amount
-                }
-        }*/
+        RagiumNetworks.FLUID_SYNC.registerClientReceiver { payload: HTFluidSyncPayload, context: ClientPlayNetworking.Context ->
+            val (index: Int, variant: FluidVariant, amount: Long) = payload
+            val screen: Screen = context.client().currentScreen ?: return@registerClientReceiver
+            if (screen is HTMachineScreenBase<*>) {
+                screen.fluidCache[index] = variant
+                screen.amountCache[index] = amount
+            }
+        }
 
         RagiumNetworks.SET_STACK.registerClientReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
@@ -245,10 +243,4 @@ object RagiumClient : ClientModInitializer, RagiumPlugin, RagiumEnvironmentBridg
             }
         }*/
     }
-
-    //    RagiumEnvironmentBridge    //
-
-    override val environment: EnvType = EnvType.CLIENT
-
-    override fun createFluidWidget(storage: HTMachineFluidStorage, index: Int): HTFluidWidget = HTClientFluidWidget(storage, index)
 }

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
+import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
@@ -33,6 +34,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.text.NumberFormat
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 //    BlockPos    //
 
@@ -70,6 +72,14 @@ fun isClientEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvTy
 fun isServerEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.SERVER
 
 fun isDataGen(): Boolean = System.getProperty("fabric-api.datagen") != null
+
+fun getModMetadata(modId: String): ModMetadata? = FabricLoader
+    .getInstance()
+    .getModContainer(modId)
+    .getOrNull()
+    ?.metadata
+
+fun getModName(modId: String): String? = getModMetadata(modId)?.name
 
 //    Identifier    //
 
@@ -129,7 +139,9 @@ fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.cre
 
 //    ScreenHandler    //
 
-fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity<*>? = get(World::getMachineEntity, null)
+fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T? = get(getter, null)
+
+fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity<*>? = getOrNull(World::getMachineEntity)
 
 fun ScreenHandlerContext.machineInventory(size: Int): Inventory = getMachineEntity()?.parent ?: SimpleInventory(size)
 

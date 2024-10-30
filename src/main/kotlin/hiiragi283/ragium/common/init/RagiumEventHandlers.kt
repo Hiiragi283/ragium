@@ -6,11 +6,15 @@ import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.fluid.HTSingleFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.entity.HTProcessorMachineEntityBase
 import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.advancement.AdvancementEntry
@@ -31,6 +35,7 @@ import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.recipe.input.SingleStackRecipeInput
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
@@ -135,6 +140,18 @@ object RagiumEventHandlers {
                         world.spawnEntity(it)
                         it.playSpawnEffects()
                     }
+                }
+            }
+        }
+
+        ServerTickEvents.END_SERVER_TICK.register { server: MinecraftServer ->
+            server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
+                val screen: HTMachineScreenHandlerBase =
+                    player.currentScreenHandler as? HTMachineScreenHandlerBase ?: return@forEach
+                val machine: HTProcessorMachineEntityBase =
+                    player.world.getMachineEntity(screen.pos) as? HTProcessorMachineEntityBase ?: return@forEach
+                machine.fluidStorage.parts.forEachIndexed { index: Int, storage: HTSingleFluidStorage ->
+                    RagiumNetworks.sendFluidSync(player, index, storage.variant, storage.amount)
                 }
             }
         }

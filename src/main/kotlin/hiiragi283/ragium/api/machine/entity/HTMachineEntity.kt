@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
-import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -32,7 +31,6 @@ import net.minecraft.world.World
 abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: HTMachineTier) :
     HTDelegatedInventory.Simple,
     ExtendedScreenHandlerFactory<HTMachinePacket>,
-    PropertyDelegateHolder,
     SidedStorageBlockEntity {
     companion object {
         const val MAX_PROPERTIES = 4
@@ -112,7 +110,7 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
     open val tickRate: Int
         get() = tier.tickRate
 
-    override fun getPropertyDelegate(): PropertyDelegate = HTDynamicPropertyDelegate(MAX_PROPERTIES, ::getProperty, ::setProperty)
+    val property: PropertyDelegate = HTDynamicPropertyDelegate(MAX_PROPERTIES, ::getProperty, ::setProperty)
 
     protected open fun getProperty(index: Int): Int = when (index) {
         0 -> ticks

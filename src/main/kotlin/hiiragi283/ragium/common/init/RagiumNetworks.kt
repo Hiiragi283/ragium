@@ -7,6 +7,7 @@ import hiiragi283.ragium.common.network.HTFluidSyncPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
@@ -51,6 +52,16 @@ object RagiumNetworks {
     }
 
     //    Utils    //
+
+    @JvmStatic
+    fun sendFluidSync(
+        player: ServerPlayerEntity,
+        index: Int,
+        variant: FluidVariant,
+        amount: Long,
+    ) {
+        ServerPlayNetworking.send(player, HTFluidSyncPayload(index, variant, amount))
+    }
 
     @JvmStatic
     fun sendItemSync(

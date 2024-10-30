@@ -42,16 +42,6 @@
         "value": "hiiragi283.ragium.client.RagiumClient",
         "adapter": "kotlin"
       }
-    ],
-    "ragium.bridge": [
-      {
-        "value": "hiiragi283.ragium.common.RagiumCommon",
-        "adapter": "kotlin"
-      },
-      {
-        "value": "hiiragi283.ragium.client.RagiumClient",
-        "adapter": "kotlin"
-      }
     ]
   },
   "mixins": [

@@ -3,10 +3,6 @@ package hiiragi283.ragium.api.fluid
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.longRangeCodec
-import hiiragi283.ragium.common.network.HTFluidSyncPayload
-import net.fabricmc.api.EnvType
-import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
@@ -16,7 +12,6 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.server.network.ServerPlayerEntity
 import kotlin.math.min
 
 class HTSingleFluidStorage(private val capacity: Long) :
@@ -56,20 +51,11 @@ class HTSingleFluidStorage(private val capacity: Long) :
         this.variant = variant
     }
 
-    fun sendPacket(player: ServerPlayerEntity) {
-        ServerPlayNetworking.send(player, HTFluidSyncPayload(variant, amount))
-    }
-
-    @Environment(EnvType.CLIENT)
-    fun receivePacket(payload: HTFluidSyncPayload) {
-        readSnapshot(payload.resourceAmount)
-    }
-
     //    Storage    //
 
     override fun insert(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long {
         StoragePreconditions.notBlankNotNegative(resource, maxAmount)
-        if (resource.isBlank || variant.isBlank) {
+        if (variant.isBlank || resource == variant) {
             val inserted: Long = min(maxAmount, capacity - amount)
             if (inserted > 0) {
                 updateSnapshots(transaction)

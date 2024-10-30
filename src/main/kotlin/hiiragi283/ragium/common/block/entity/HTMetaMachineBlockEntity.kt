@@ -2,11 +2,13 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
-import io.github.cottonmc.cotton.gui.PropertyDelegateHolder
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -18,8 +20,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.ArrayPropertyDelegate
-import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
@@ -33,7 +33,6 @@ import net.minecraft.world.World
 class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.META_MACHINE, pos, state),
     ExtendedScreenHandlerFactory<HTMachinePacket>,
-    PropertyDelegateHolder,
     SidedStorageBlockEntity {
     var machineEntity: HTMachineEntity<*>? = null
         private set
@@ -133,11 +132,6 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getDisplayName(): Text = machineEntity?.displayName ?: RagiumBlocks.META_MACHINE.name
 
     override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = definition
-
-    //    PropertyDelegateHolder    //
-
-    override fun getPropertyDelegate(): PropertyDelegate =
-        machineEntity?.propertyDelegate ?: ArrayPropertyDelegate(HTMachineEntity.MAX_PROPERTIES)
 
     //    SidedStorageBlockEntity    //
 

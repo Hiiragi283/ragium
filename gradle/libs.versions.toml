@@ -8,7 +8,7 @@ fabric-yarn = "1.21.1+build.3"
 fabric-kotlin = "1.12.+"
 
 jade = "15.8.2+fabric"
-lib-gui = "11.1.0+1.21"
+#lib-gui = "11.1.0+1.21"
 mod-menu = "11.0.3"
 rei = "16.0.788"
 
@@ -19,7 +19,7 @@ fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.r
 fabric-kotlin = { group = "net.fabricmc", name = "fabric-language-kotlin", version.ref = "fabric-kotlin" }
 
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
-libgui = { group = "io.github.cottonmc", name = "LibGui", version.ref = "lib-gui" }
+#libgui = { group = "io.github.cottonmc", name = "LibGui", version.ref = "lib-gui" }
 mod-modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "mod-menu" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version.ref = "rei" }
 
@@ -29,12 +29,8 @@ mods-fabric = [
     "fabric-kotlin",
     "fabric-loader"
 ]
-mods-include = [
-    "libgui"
-]
-mods-compile = [
-    
-]
+mods-include = []
+mods-compile = []
 mods-runtime = [
     "jade",
     "mod-modmenu",
