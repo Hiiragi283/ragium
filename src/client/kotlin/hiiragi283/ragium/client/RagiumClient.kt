@@ -77,10 +77,10 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
             RagiumBlocks.META_PROCESSOR,
         )
 
-        RagiumContents.Ores
-            .entries
-            .map(RagiumContents.Ores::value)
-            .forEach(::registerCutoutMipped)
+        buildList {
+            addAll(RagiumContents.Ores.entries)
+            addAll(RagiumContents.Hulls.entries)
+        }.map(HTEntryDelegated<Block>::value).forEach(::registerCutoutMipped)
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }

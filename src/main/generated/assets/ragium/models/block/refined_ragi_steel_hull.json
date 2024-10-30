@@ -1,7 +1,8 @@
 {
   "parent": "ragium:block/hull",
   "textures": {
-    "bottom": "ragium:block/advanced_casing",
+    "inside": "ragium:block/advanced_casing",
+    "side": "ragium:block/refined_ragi_steel_hull",
     "top": "ragium:block/refined_ragi_steel_block"
   }
 }

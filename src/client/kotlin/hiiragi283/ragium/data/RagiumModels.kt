@@ -5,10 +5,7 @@ import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.client.model.HTMachineModel
 import net.minecraft.block.Block
-import net.minecraft.data.client.Model
-import net.minecraft.data.client.TextureKey
-import net.minecraft.data.client.TextureMap
-import net.minecraft.data.client.TexturedModel
+import net.minecraft.data.client.*
 import net.minecraft.util.Identifier
 import java.util.*
 
@@ -63,7 +60,8 @@ object RagiumModels {
         model(
             "block/hull",
             TextureKey.TOP,
-            TextureKey.BOTTOM,
+            TextureKey.SIDE,
+            TextureKey.INSIDE,
         )
 
     @JvmField
@@ -109,15 +107,16 @@ object RagiumModels {
         TexturedModel.makeFactory({ block: Block ->
             val tier: HTMachineTier = block.asItem().components.machineTier
             textureMap {
-                put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
                 put(
-                    TextureKey.BOTTOM,
+                    TextureKey.INSIDE,
                     when (tier) {
                         HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
                         HTMachineTier.BASIC -> Identifier.of("block/blast_furnace_top")
                         HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
                     },
                 )
+                put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
+                put(TextureKey.SIDE, ModelIds.getBlockModelId(block))
             }
         }, HULL)
 
