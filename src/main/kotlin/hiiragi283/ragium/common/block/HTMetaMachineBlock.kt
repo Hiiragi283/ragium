@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.machineTypeOrNull
@@ -8,7 +7,6 @@ import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
@@ -25,7 +23,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.WorldView
 
-object HTMetaMachineBlock : HTBlockWithEntity(blockSettings(Blocks.IRON_BLOCK)) {
+class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }

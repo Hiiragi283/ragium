@@ -137,7 +137,8 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_FORGE, "Ragi-Anvil")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "Ragi-Grinder")
             builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Mixing Basin")
-            builder.add(RagiumBlocks.META_MACHINE, "Machine")
+            builder.add(RagiumBlocks.META_GENERATOR, "Generator")
+            builder.add(RagiumBlocks.META_PROCESSOR, "Processor")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
 
@@ -282,7 +283,8 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_FORGE, "らぎ金床")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
             builder.add(RagiumBlocks.MANUAL_MIXER, "らぎ釜")
-            builder.add(RagiumBlocks.META_MACHINE, "機械")
+            builder.add(RagiumBlocks.META_GENERATOR, "発電機")
+            builder.add(RagiumBlocks.META_PROCESSOR, "加工機械")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
 

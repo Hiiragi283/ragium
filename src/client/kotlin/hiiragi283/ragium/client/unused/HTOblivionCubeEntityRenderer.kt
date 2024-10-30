@@ -23,7 +23,7 @@ class HTOblivionCubeEntityRenderer(ctx: EntityRendererFactory.Context) :
     companion object {
         @JvmField
         val ENTITY_MODEL_LAYER = EntityModelLayer(RagiumAPI.id("oblivion_cube"), "main")
-        
+
         fun init() {
             EntityRendererRegistry.register(null, ::HTOblivionCubeEntityRenderer)
 

@@ -18,7 +18,7 @@
         "ragium:machine_type": "ragium:blast_furnace"
       },
       "count": 1,
-      "id": "ragium:meta_machine"
+      "id": "ragium:processor"
     },
     "title": {
       "translate": "advancement.ragium.tier1.brick_blast_furnace"

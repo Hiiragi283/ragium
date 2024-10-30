@@ -50,55 +50,16 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.ADVANCED_CASING)
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
-        addDrop(RagiumBlocks.META_MACHINE) { block: Block ->
-            LootTable
-                .builder()
-                .pool(
-                    addSurvivesExplosionCondition(
-                        block,
-                        LootPool
-                            .builder()
-                            .rolls(ConstantLootNumberProvider.create(1.0f))
-                            .with(
-                                ItemEntry
-                                    .builder(block)
-                                    .apply(
-                                        CopyComponentsLootFunction
-                                            .builder(CopyComponentsLootFunction.Source.BLOCK_ENTITY)
-                                            .include(HTMachineType.COMPONENT_TYPE)
-                                            .include(HTMachineTier.COMPONENT_TYPE),
-                                    ),
-                            ),
-                    ),
-                )
-        }
+        dropMachine(RagiumBlocks.META_GENERATOR)
+        dropMachine(RagiumBlocks.META_PROCESSOR)
 
         RagiumContents.Ores.entries.forEach(::dropOre)
-
-        // RagiumContents.Crops.entries.forEach(::addCrops)
 
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
         }.map { it.value }.forEach(::addDrop)
-
-        // HTMachineBlockRegistry.forEachBlock(::addDrop)
-
-        /*RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
-            // budding block
-            addDrop(element.buddingBlock)
-            // cluster block
-            addDrop(element.clusterBlock) { block: Block ->
-                dropsWithSilkTouch(
-                    block,
-                    ItemEntry
-                        .builder(element.dustItem)
-                        .applyDrop(4.0f)
-                        .applyFortune(),
-                )
-            }
-        }*/
     }
 
     private fun dropOre(ore: RagiumContents.Ores) {
@@ -115,6 +76,31 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                 ),
             ),
         )
+    }
+
+    private fun dropMachine(block: Block) {
+        addDrop(block) { block1: Block ->
+            LootTable
+                .builder()
+                .pool(
+                    addSurvivesExplosionCondition(
+                        block1,
+                        LootPool
+                            .builder()
+                            .rolls(ConstantLootNumberProvider.create(1.0f))
+                            .with(
+                                ItemEntry
+                                    .builder(block1)
+                                    .apply(
+                                        CopyComponentsLootFunction
+                                            .builder(CopyComponentsLootFunction.Source.BLOCK_ENTITY)
+                                            .include(HTMachineType.COMPONENT_TYPE)
+                                            .include(HTMachineTier.COMPONENT_TYPE),
+                                    ),
+                            ),
+                    ),
+                )
+        }
     }
 
     /*private fun addCrops(crop: RagiumContents.Crops) {

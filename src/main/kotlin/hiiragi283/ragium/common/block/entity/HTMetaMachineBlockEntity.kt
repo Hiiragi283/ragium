@@ -129,7 +129,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         machineEntity?.createMenu(syncId, playerInventory, player)
 
-    override fun getDisplayName(): Text = machineEntity?.displayName ?: RagiumBlocks.META_MACHINE.name
+    override fun getDisplayName(): Text = machineEntity?.displayName ?: RagiumBlocks.META_PROCESSOR.name
 
     override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = definition
 

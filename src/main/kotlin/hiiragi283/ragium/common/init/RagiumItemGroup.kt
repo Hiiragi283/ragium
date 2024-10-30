@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
@@ -91,11 +90,7 @@ object RagiumItemGroup {
 
         register(MACHINE_KEY) {
             displayName(Text.translatable("itemGroup.ragium.machine"))
-            icon {
-                RagiumBlocks.META_MACHINE
-                    .asItem()
-                    .defaultStack
-            }
+            icon { RagiumMachineTypes.Processor.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     add(RagiumBlocks.CREATIVE_SOURCE)
@@ -110,16 +105,20 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)
                 }.forEach(entries::add)
-                // machines
-                HTMachineTier.entries.forEach { tier: HTMachineTier ->
-                    RagiumAPI
-                        .getInstance()
-                        .machineTypeRegistry
-                        .types
-                        .filterNot(HTMachineType.Default::isOf)
-                        .map { type: HTMachineType -> type.createItemStack(tier) }
-                        .forEach(entries::add)
-                }
+                // generators
+                RagiumAPI
+                    .getInstance()
+                    .machineTypeRegistry
+                    .generators
+                    .flatMap { HTMachineTier.entries.map(it::createItemStack) }
+                    .forEach(entries::add)
+                // processors
+                RagiumAPI
+                    .getInstance()
+                    .machineTypeRegistry
+                    .processors
+                    .flatMap { HTMachineTier.entries.map(it::createItemStack) }
+                    .forEach(entries::add)
             }
         }
     }

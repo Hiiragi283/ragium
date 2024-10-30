@@ -60,7 +60,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         InventoryChangedCriterion.Conditions.items(
             ItemPredicate.Builder
                 .create()
-                .items(RagiumBlocks.META_MACHINE)
+                .items(RagiumBlocks.META_PROCESSOR)
                 .component(
                     ComponentPredicate
                         .builder()
@@ -425,10 +425,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumBlocks.META_MACHINE,
+                RagiumBlocks.META_PROCESSOR,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(RagiumBlocks.META_MACHINE)
+                hasItems(RagiumBlocks.META_PROCESSOR)
             }.putEnglish("Ragium - Tier 4")
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")

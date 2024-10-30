@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.item.ItemStack
 
 fun interface HTMachineConvertible {
@@ -21,10 +20,14 @@ fun interface HTMachineConvertible {
 
     fun isProcessor(): Boolean = asMachine() is HTMachineType.Processor
 
-    fun getBlockOrThrow(tier: HTMachineTier): Block = Blocks.BRICKS
+    fun getBaseBlock(): Block = when (asMachine()) {
+        HTMachineType.Default -> throw IllegalStateException("Default machine type have no block!")
+        is HTMachineType.Generator -> RagiumBlocks.META_GENERATOR
+        is HTMachineType.Processor -> RagiumBlocks.META_PROCESSOR
+    }
 
     fun createItemStack(tier: HTMachineTier): ItemStack = buildItemStack(
-        RagiumBlocks.META_MACHINE,
+        getBaseBlock(),
     ) {
         add(HTMachineType.COMPONENT_TYPE, asMachine())
         add(HTMachineTier.COMPONENT_TYPE, tier)

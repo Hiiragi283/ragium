@@ -17,9 +17,9 @@ import net.minecraft.fluid.FluidState
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 object RagiumMachineTypes : RagiumPlugin {
@@ -41,6 +41,7 @@ object RagiumMachineTypes : RagiumPlugin {
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntity.Factory.ofStatic(::HTHeatGeneratorMachineEntity),
             )
+            set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.RED)
         }
         RagiumMachineTypes.Generator.entries.forEach {
             register.registerGenerator(it.key, it::buildProperties)
@@ -64,17 +65,6 @@ object RagiumMachineTypes : RagiumPlugin {
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
             set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
-        /*register.registerProcessor(FLUID_DRILL) {
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTFluidDrillMachineEntity))
-            set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
-            set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-        }
-        register.registerProcessor(MOB_EXTRACTOR) {
-            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.of(::HTMobExtractorMachineEntity))
-            set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
-            set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
-        }*/
         register.registerProcessor(SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTSawMillMachineEntity))
@@ -93,14 +83,14 @@ object RagiumMachineTypes : RagiumPlugin {
     @JvmField
     val HEAT_GENERATOR: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("heat_generator"))
 
-    enum class Generator(private val fluidTag: TagKey<Fluid>? = null) : HTMachineConvertible {
-        COMBUSTION(RagiumFluidTags.FUEL) {
+    enum class Generator(val color: DyeColor, private val fluidTag: TagKey<Fluid>? = null) : HTMachineConvertible {
+        COMBUSTION(DyeColor.BLUE, RagiumFluidTags.FUEL) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = false
         },
-        SOLAR {
+        SOLAR(DyeColor.LIGHT_BLUE) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = world.isDay
         },
-        THERMAL(FluidTags.LAVA) {
+        THERMAL(DyeColor.ORANGE, FluidTags.LAVA) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean = when {
                 world.getBiome(pos).isIn(BiomeTags.IS_NETHER) -> true
                 else ->
@@ -111,28 +101,21 @@ object RagiumMachineTypes : RagiumPlugin {
                         }.size >= 4
             }
         },
-        WATER(FluidTags.WATER) {
+        WATER(DyeColor.CYAN, FluidTags.WATER) {
             override fun canGenerate(world: World, pos: BlockPos): Boolean =
                 pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
         },
         ;
 
         fun buildProperties(builder: HTPropertyHolder.Mutable) {
-            builder[HTMachinePropertyKeys.FRONT_MAPPER] = { Direction.UP }
             builder[HTMachinePropertyKeys.MACHINE_FACTORY] =
                 HTMachineEntity.Factory.ofGenerator(::HTGeneratorMachineEntity)
             builder[HTMachinePropertyKeys.GENERATOR_PREDICATE] = ::canGenerate
+            builder[HTMachinePropertyKeys.GENERATOR_COLOR] = color
             builder.setIfNonNull(HTMachinePropertyKeys.FUEL_TAG, fluidTag)
         }
 
         abstract fun canGenerate(world: World, pos: BlockPos): Boolean
-
-        /*private val machineType: HTMachineType = HTMachineType.createGenerator(RagiumAPI.id(name.lowercase())) {
-            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTGeneratorMachineEntity))
-            set(HTMachinePropertyKeys.GENERATOR_PREDICATE, ::canGenerate)
-            setIfNonNull(HTMachinePropertyKeys.FUEL_TAG, fluidTag)
-        }*/
 
         val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id(name.lowercase()))
 
@@ -158,9 +141,6 @@ object RagiumMachineTypes : RagiumPlugin {
         ALLOY_FURNACE,
         ASSEMBLER,
         CHEMICAL_REACTOR,
-
-        // COMPRESSOR,
-        // DECOMPRESSOR,
         ELECTROLYZER,
         EXTRACTOR,
         GRINDER,
@@ -182,12 +162,6 @@ object RagiumMachineTypes : RagiumPlugin {
             builder[HTMachinePropertyKeys.RECIPE_SIZE] = HTMachineType.Size.SIMPLE
             builder.setIfNonNull(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
         }
-
-        /*private val machineType: HTMachineType = HTMachineType.createProcessor(RagiumAPI.id(name.lowercase())) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTSimpleProcessorMachineEntity))
-            set(HTMachinePropertyKeys.PROCESSOR_CONDITION, condition)
-            setIfNonNull(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, succeeded)
-        }*/
 
         val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id(name.lowercase()))
 

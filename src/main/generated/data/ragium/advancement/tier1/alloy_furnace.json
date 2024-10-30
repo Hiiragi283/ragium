@@ -9,7 +9,7 @@
               "ragium:machine_tier": "primitive",
               "ragium:machine_type": "ragium:alloy_furnace"
             },
-            "items": "ragium:meta_machine"
+            "items": "ragium:processor"
           }
         ]
       },
@@ -26,7 +26,7 @@
         "ragium:machine_type": "ragium:alloy_furnace"
       },
       "count": 1,
-      "id": "ragium:meta_machine"
+      "id": "ragium:processor"
     },
     "title": {
       "translate": "advancement.ragium.tier1.alloy_furnace"

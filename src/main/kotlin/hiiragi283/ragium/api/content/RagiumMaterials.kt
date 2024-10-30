@@ -47,6 +47,7 @@ enum class RagiumMaterials(
     // tier3
     RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
     REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
+
     // OBLIVION_CRYSTAL(HTMachineTier.ADVANCED, "Oblivion Crystal", "忘却の結晶"),
     ENGINEERING_PLASTIC(HTMachineTier.ADVANCED, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
     STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A", "S.T.E.L.L.A", Armor.STELLA),

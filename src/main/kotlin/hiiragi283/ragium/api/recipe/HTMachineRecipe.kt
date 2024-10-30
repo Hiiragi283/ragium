@@ -86,8 +86,7 @@ class HTMachineRecipe(
             itemOutputs: List<HTRecipeResult.Item>,
             fluidOutputs: List<HTRecipeResult.Fluid>,
         ): HTMachineRecipe {
-            val type: HTMachineType.Processor =
-                checkNotNull(definition.type.asProcessorOrNull()) { "Only accepts processor machine!" }
+            val type: HTMachineType.Processor = definition.type.asProcessor()
             check(type.contains(HTMachinePropertyKeys.RECIPE_SIZE)) { "Machine type must have recipe size property!" }
             check(fluidInputs.size <= 2) { "Fluid inputs must be 2 or less!" }
             check(fluidOutputs.size <= 2) { "Fluid outputs must be 2 or less!" }

@@ -3,8 +3,10 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTEntryDelegated
+import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isClientEnv
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.client.gui.HTLargeMachineScreen
 import hiiragi283.ragium.client.gui.HTMachineScreenBase
 import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
@@ -72,8 +74,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
             RagiumBlocks.POROUS_NETHERRACK,
-            // RagiumBlocks.OBLIVION_CLUSTER,
-            RagiumBlocks.META_MACHINE,
+            RagiumBlocks.META_PROCESSOR,
         )
 
         RagiumContents.Ores
@@ -85,8 +86,17 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
-            state.getOrNull(RagiumBlockProperties.COLOR)?.mapColor?.color ?: -1
+            state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
         }, RagiumBlocks.BACKPACK_INTERFACE)
+
+        ColorProviderRegistry.BLOCK.register({ _: BlockState, view: BlockRenderView?, pos: BlockPos?, _: Int ->
+            pos
+                ?.let { view?.getMachineEntity(it) }
+                ?.machineType
+                ?.get(HTMachinePropertyKeys.GENERATOR_COLOR)
+                ?.fireworkColor
+                ?: -1
+        }, RagiumBlocks.META_GENERATOR)
     }
 
     private fun registerCutout(block: Block) {
@@ -123,8 +133,16 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
 
     private fun registerItems() {
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
-            stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
+            stack.get(RagiumComponentTypes.COLOR)?.fireworkColor ?: -1
         }, RagiumContents.Misc.BACKPACK)
+
+        ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
+            stack
+                .get(RagiumComponentTypes.MACHINE_TYPE)
+                ?.get(HTMachinePropertyKeys.GENERATOR_COLOR)
+                ?.fireworkColor
+                ?: -1
+        }, RagiumBlocks.META_GENERATOR)
     }
 
     //    Screens    //

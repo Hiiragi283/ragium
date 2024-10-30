@@ -93,7 +93,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         registerSimple(RagiumBlocks.SPONGE_CAKE)
-        register(RagiumBlocks.META_MACHINE) { block: Block ->
+        register(RagiumBlocks.META_GENERATOR) { block: Block ->
+            accept(
+                VariantsBlockStateSupplier
+                    .create(
+                        block,
+                        stateVariantOf(block),
+                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+            )
+        }
+        register(RagiumBlocks.META_PROCESSOR) { block: Block ->
             accept(
                 VariantsBlockStateSupplier
                     .create(
@@ -251,37 +260,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
             }
         }
-        // motors
-        /*RagiumContents.Motors.entries.forEach { motor: RagiumContents.Motors ->
-            register(motor.value) {
-                generator.registerAxisRotated(
-                    it,
-                    TexturedModel.makeFactory({
-                        textureMap {
-                            put(TextureKey.SIDE, RagiumAPI.id("block/motor"))
-                            put(
-                                TextureKey.END,
-                                motor.tier
-                                    .getCoil()
-                                    .id
-                                    .withPath { path: String -> "block/${path}_top" },
-                            )
-                        }
-                    }, Models.CUBE_COLUMN),
-                )
-            }
-        }*/
-        // crops
-        /*RagiumContents.Crops.entries.forEach { crop: RagiumContents.Crops ->
-            generator.registerCrop(crop.cropBlock, Properties.AGE_7, 0, 0, 1, 1, 2, 2, 2, 3)
-        }
-        // elements
-        RagiumContents.Element.entries.forEach { element: RagiumContents.Element ->
-            // budding block
-            registerSimple(element.buddingBlock)
-            // cluster block
-            register(element.clusterBlock, generator::registerAmethyst)
-        }*/
     }
 
     //    Model    //

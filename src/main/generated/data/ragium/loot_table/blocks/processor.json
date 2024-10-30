@@ -21,7 +21,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:meta_machine"
+          "name": "ragium:processor"
         }
       ],
       "rolls": 1.0

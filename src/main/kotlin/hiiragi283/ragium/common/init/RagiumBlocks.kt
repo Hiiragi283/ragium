@@ -105,8 +105,12 @@ object RagiumBlocks : HTContentRegister {
         registerBlock("infesting", HTInfectingBlock)
 
     @JvmField
-    val META_MACHINE: Block =
-        registerBlock("meta_machine", HTMetaMachineBlock)
+    val META_GENERATOR: Block =
+        registerBlock("generator", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK).nonOpaque()))
+
+    @JvmField
+    val META_PROCESSOR: Block =
+        registerBlock("processor", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))
 
     @JvmStatic
     val TRADER_STATION: Block =

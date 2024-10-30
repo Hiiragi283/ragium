@@ -29,6 +29,6 @@
       "ragium:machine_type": "ragium:distillation_tower"
     },
     "count": 1,
-    "id": "ragium:meta_machine"
+    "id": "ragium:processor"
   }
 }

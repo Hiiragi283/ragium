@@ -29,6 +29,6 @@
       "ragium:machine_type": "ragium:solar"
     },
     "count": 1,
-    "id": "ragium:meta_machine"
+    "id": "ragium:generator"
   }
 }

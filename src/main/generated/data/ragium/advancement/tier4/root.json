@@ -4,7 +4,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:meta_machine"
+            "items": "ragium:processor"
           }
         ]
       },
@@ -19,7 +19,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:meta_machine"
+      "id": "ragium:processor"
     },
     "show_toast": false,
     "title": {

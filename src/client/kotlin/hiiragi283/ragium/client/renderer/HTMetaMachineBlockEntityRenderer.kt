@@ -29,7 +29,8 @@ object HTMetaMachineBlockEntityRenderer : BlockEntityRenderer<HTMetaMachineBlock
         overlay: Int,
     ) {
         val world: World = entity.world ?: return
-        val (_: HTMachineType, tier: HTMachineTier) = entity.definition
+        val (machineType: HTMachineType, tier: HTMachineTier) = entity.definition
+        if (machineType.isGenerator()) return
         // render hull model
         val state: BlockState = tier.getHull().value.defaultState
         MinecraftClient.getInstance().blockRenderManager.renderBlock(

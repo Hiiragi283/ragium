@@ -211,7 +211,8 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
 
-        registerItem("meta_machine", HTMetaMachineBlockItem)
+        registerBlockItem(RagiumBlocks.META_GENERATOR, itemSettings(), ::HTMetaMachineBlockItem)
+        registerBlockItem(RagiumBlocks.META_PROCESSOR, itemSettings(), ::HTMetaMachineBlockItem)
     }
 
     @JvmStatic
