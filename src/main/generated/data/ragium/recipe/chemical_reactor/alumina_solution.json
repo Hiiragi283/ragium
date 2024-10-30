@@ -11,17 +11,12 @@
   ],
   "fluid_outputs": [
     {
-      "fluid": "minecraft:water"
+      "fluid": "ragium:alumina_solution"
     }
   ],
   "item_inputs": [
     {
       "items": "ragium:raw_bauxite"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:alumina_dust"
     }
   ]
 }

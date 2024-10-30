@@ -33,7 +33,6 @@ enum class RagiumMaterials(
     // tier2
     RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
     RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
-    ALUMINA(HTMachineTier.BASIC, "Alumina", "アルミナ"),
     ALUMINUM(HTMachineTier.BASIC, "Aluminum", "アルミニウム"),
     BAUXITE(HTMachineTier.BASIC, "Bauxite", "ボーキサイト"),
     FLUORITE(HTMachineTier.BASIC, "Fluorite", "蛍石"),

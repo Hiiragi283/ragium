@@ -83,7 +83,6 @@ object RagiumContents : HTContentRegister {
         RAGINITE(RagiumMaterials.RAGINITE),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
 
-        ALUMINA(RagiumMaterials.ALUMINA),
         ASH(RagiumMaterials.ASH),
         COPPER(RagiumMaterials.COPPER),
         GOLD(RagiumMaterials.GOLD),
@@ -402,6 +401,7 @@ object RagiumContents : HTContentRegister {
         SODIUM_HYDROXIDE(Color(0x000099), "Sodium Hydroxide Solution", "水酸化ナトリウム水溶液"),
         SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸"),
         MIXTURE_ACID(Color(0xff3300), "Mixture Acid", "混酸"),
+        ALUMINA_SOLUTION(Color(0xcccccc), "Alumina Solution", "アルミナ溶液"),
 
         // Oil products
         REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス"),

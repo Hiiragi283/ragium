@@ -4,10 +4,12 @@
     "type": "ragium:blast_furnace",
     "tier": "advanced"
   },
-  "item_inputs": [
+  "fluid_inputs": [
     {
-      "items": "ragium:alumina_dust"
-    },
+      "fluids": "ragium:alumina_solution"
+    }
+  ],
+  "item_inputs": [
     {
       "count": 8,
       "items": "#minecraft:coals"

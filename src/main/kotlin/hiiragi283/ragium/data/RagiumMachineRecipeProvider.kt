@@ -222,8 +222,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(RagiumContents.Dusts.ALUMINA)
             .itemInput(ItemTags.COALS, 8)
+            .fluidInput(RagiumContents.Fluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumContents.Ingots.ALUMINUM)
             .offerTo(exporter, RagiumContents.Ingots.ALUMINUM)
     }
@@ -258,9 +258,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
             .itemInput(RagiumContents.RawMaterials.BAUXITE)
             .fluidInput(RagiumContents.Fluids.SODIUM_HYDROXIDE)
-            .itemOutput(RagiumContents.Dusts.ALUMINA)
-            .fluidOutput(Fluids.WATER)
-            .offerTo(exporter, RagiumContents.Dusts.ALUMINA)
+            .fluidOutput(RagiumContents.Fluids.ALUMINA_SOLUTION)
+            .offerTo(exporter, RagiumContents.Fluids.ALUMINA_SOLUTION)
 
         // Fuels
         HTMachineRecipeJsonBuilder
