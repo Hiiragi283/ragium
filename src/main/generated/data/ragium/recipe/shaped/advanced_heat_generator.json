@@ -3,25 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:refined_ragi_steel_plate"
+      "item": "ragium:stella_plate"
     },
     "B": {
       "item": "minecraft:furnace"
     },
     "C": {
-      "item": "ragium:refined_ragi_steel_hull"
-    },
-    "D": {
-      "item": "minecraft:water_bucket"
-    },
-    "E": {
-      "tag": "c:plates/steel"
+      "item": "ragium:advanced_circuit"
     }
   },
   "pattern": [
     "AAA",
-    "BCD",
-    "EEE"
+    "ABA",
+    "ACA"
   ],
   "result": {
     "components": {

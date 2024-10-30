@@ -3,25 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_alloy_plate"
+      "tag": "c:plates/iron"
     },
     "B": {
       "item": "minecraft:furnace"
     },
     "C": {
-      "item": "ragium:ragi_alloy_hull"
-    },
-    "D": {
-      "item": "minecraft:water_bucket"
-    },
-    "E": {
-      "tag": "c:plates/copper"
+      "item": "ragium:primitive_circuit"
     }
   },
   "pattern": [
     "AAA",
-    "BCD",
-    "EEE"
+    "ABA",
+    "ACA"
   ],
   "result": {
     "components": {

@@ -3,25 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_steel_plate"
+      "tag": "c:plates/steel"
     },
     "B": {
       "item": "ragium:engine"
     },
     "C": {
-      "item": "ragium:ragi_steel_hull"
-    },
-    "D": {
-      "item": "ragium:engine"
-    },
-    "E": {
-      "tag": "c:plates/iron"
+      "item": "ragium:basic_circuit"
     }
   },
   "pattern": [
     "AAA",
-    "BCD",
-    "EEE"
+    "ABA",
+    "ACA"
   ],
   "result": {
     "components": {
