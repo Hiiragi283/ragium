@@ -18,6 +18,8 @@ object RagiumTranslationKeys {
     const val MACHINE_TIER = "tooltip.ragium.machine.tier"
     const val MACHINE_RECIPE_COST = "tooltip.ragium.machine.cost"
     const val MACHINE_SHOW_PREVIEW = "tooltip.ragium.machine.show_preview"
+    const val MACHINE_SLOT_COUNTS = "tooltip.ragium.machine.slot_counts"
+    const val MACHINE_TANK_CAPACITY = "tooltip.ragium.machine.tank_capacity"
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"

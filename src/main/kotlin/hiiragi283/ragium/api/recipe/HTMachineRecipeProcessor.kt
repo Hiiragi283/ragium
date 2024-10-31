@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.fluid.HTSingleFluidStorage
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount

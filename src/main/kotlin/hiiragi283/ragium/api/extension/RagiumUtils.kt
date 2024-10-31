@@ -163,6 +163,8 @@ fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V
 
 //    Text    //
 
+fun intText(value: Int): MutableText = longText(value.toLong())
+
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
 /*fun breakRangedBlock(

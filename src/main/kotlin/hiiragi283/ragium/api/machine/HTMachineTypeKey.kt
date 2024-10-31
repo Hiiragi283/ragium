@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.fabricmc.api.EnvType
@@ -44,6 +45,8 @@ class HTMachineTypeKey private constructor(val id: Identifier) : HTMachineConver
         consumer(Text.translatable(RagiumTranslationKeys.MACHINE_NAME, text.formatted(Formatting.WHITE)))
         consumer(tier.tierText)
         consumer(tier.recipeCostText)
+        consumer(tier.recipeCostText)
+        asMachine()[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer, asMachine(), tier)
     }
 
     private lateinit var cache: HTMachineType

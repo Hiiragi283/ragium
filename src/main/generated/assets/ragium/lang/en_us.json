@@ -246,6 +246,8 @@
   "tooltip.ragium.machine.cost": "Recipe cost: %s E",
   "tooltip.ragium.machine.name": "Name: %s",
   "tooltip.ragium.machine.show_preview": "Show preview: %s",
+  "tooltip.ragium.machine.slot_counts": "Input/Output Slots: %s",
+  "tooltip.ragium.machine.tank_capacity": "Each Tank Capacity: %s Buckets",
   "tooltip.ragium.machine.tier": "Tier: %s",
   "tooltip.ragium.recipe_info": "Recipe Info",
   "tooltip.ragium.require_scan": "Required Scanning!"

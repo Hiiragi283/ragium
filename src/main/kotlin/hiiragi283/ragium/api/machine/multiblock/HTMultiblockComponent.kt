@@ -10,15 +10,13 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
+import net.minecraft.text.MutableText
 import net.minecraft.world.World
 import java.util.function.Predicate
-import kotlin.jvm.optionals.getOrNull
 
 class HTMultiblockComponent private constructor(private val entryList: RegistryEntryList<Block>) : Predicate<BlockState> {
     companion object {
@@ -64,11 +62,11 @@ class HTMultiblockComponent private constructor(private val entryList: RegistryE
         else -> ((world.time % (20 * size)) / 20).toInt()
     }
 
-    override fun toString(): String = "HTMultiblockComponent[${entryList
-        .mapNotNull { it.key.getOrNull() }
-        .map(RegistryKey<Block>::getValue)
-        .map(Identifier::getPath)
-    }]"
+    override fun toString(): String = "HTMultiblockComponent${entryList
+        .mapNotNull(RegistryEntry<Block>::value)
+        .map(Block::getName)
+        .map(MutableText::getString)
+    }"
 
     //    Predicate    //
 

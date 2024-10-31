@@ -242,6 +242,8 @@
   "tooltip.ragium.machine.cost": "処理コスト: %s E",
   "tooltip.ragium.machine.name": "名称: %s",
   "tooltip.ragium.machine.show_preview": "プレビューの表示: %s",
+  "tooltip.ragium.machine.slot_counts": "入力/出力スロット数: %s",
+  "tooltip.ragium.machine.tank_capacity": "各液体タンクの容量: %s バケツ",
   "tooltip.ragium.machine.tier": "ティア: %s",
   "tooltip.ragium.recipe_info": "レシピ情報",
   "tooltip.ragium.require_scan": "スキャンが必要です！"

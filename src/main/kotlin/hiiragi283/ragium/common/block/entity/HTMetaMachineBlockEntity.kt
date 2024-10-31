@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory

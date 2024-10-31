@@ -9,10 +9,10 @@ import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -88,7 +88,7 @@ open class HTGeneratorMachineEntity(type: HTMachineConvertible, tier: HTMachineT
             network.insert(HTEnergyType.ELECTRICITY, tier.recipeCost, transaction) > 0
         } ?: false
 
-    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(HTMachineType.Size.SIMPLE)
+    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(tier, HTMachineType.Size.SIMPLE)
 
     final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 

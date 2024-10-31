@@ -1,6 +1,8 @@
-package hiiragi283.ragium.api.machine
+package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.property.HTPropertyKey
 import net.minecraft.fluid.Fluid
@@ -15,6 +17,10 @@ object HTMachinePropertyKeys {
     @JvmField
     val MACHINE_FACTORY: HTPropertyKey.Simple<HTMachineEntity.Factory> =
         HTPropertyKey.Simple(RagiumAPI.id("machine_factory"))
+
+    @JvmField
+    val TOOLTIP_BUILDER: HTPropertyKey.Simple<HTMachineTooltipAppender> =
+        HTPropertyKey.Simple(RagiumAPI.id("tooltip_builder"))
 
     //    Generator    //
 

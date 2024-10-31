@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.extract
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -13,6 +12,7 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -45,6 +45,9 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
+        if (FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)) {
+            return ActionResult.success(world.isClient)
+        }
         process(player)
         return ActionResult.success(world.isClient)
     }

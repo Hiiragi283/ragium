@@ -4,9 +4,9 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.item.ItemStack

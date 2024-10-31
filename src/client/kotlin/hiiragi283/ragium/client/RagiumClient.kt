@@ -6,14 +6,18 @@ import hiiragi283.ragium.api.content.HTEntryDelegated
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isClientEnv
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTypeKey
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.client.gui.HTLargeMachineScreen
 import hiiragi283.ragium.client.gui.HTMachineScreenBase
 import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
+import hiiragi283.ragium.client.machine.HTClientMachinePropertyKeys
+import hiiragi283.ragium.client.model.HTDefaultProcessorModel
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.HTMultiblockPreviewRenderer
 import hiiragi283.ragium.client.util.getBlockEntity
 import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
@@ -158,12 +162,10 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
-                if (HTMachineModel.MODEL_ID in original.modelDependencies) {
-                    HTMachineModel
-                } else if (HTFluidCubeModel.MODEL_ID in original.modelDependencies) {
-                    HTFluidCubeModel
-                } else {
-                    original
+                when {
+                    HTMachineModel.MODEL_ID in original.modelDependencies -> HTMachineModel
+                    HTFluidCubeModel.MODEL_ID in original.modelDependencies -> HTFluidCubeModel
+                    else -> original
                 }
             }
         }
@@ -205,5 +207,17 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
     override fun shouldLoad(): Boolean = isClientEnv()
 
     override fun setupClientMachineProperties(helper: RagiumPlugin.PropertyHelper) {
+        helper.modify(HTMachineTypeKey::isProcessor) {
+            set(HTClientMachinePropertyKeys.STATIC_RENDERER, HTDefaultProcessorModel)
+        }
+        helper.modify(RagiumMachineTypes.BLAST_FURNACE) {
+            set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
+        }
+        helper.modify(RagiumMachineTypes.DISTILLATION_TOWER) {
+            set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
+        }
+        helper.modify(RagiumMachineTypes.SAW_MILL) {
+            set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
+        }
     }
 }

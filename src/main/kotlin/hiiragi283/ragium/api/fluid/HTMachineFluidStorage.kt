@@ -1,33 +1,28 @@
 package hiiragi283.ragium.api.fluid
 
-import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 
-sealed class HTMachineFluidStorage(val typeSize: HTMachineType.Size) {
+sealed class HTMachineFluidStorage(val tier: HTMachineTier, val typeSize: HTMachineType.Size) {
     companion object {
-        @JvmField
-        val CODEC: Codec<HTMachineFluidStorage> =
-            HTSingleFluidStorage.CODEC.listOf().xmap(::fromParts, HTMachineFluidStorage::parts)
-
         @JvmStatic
-        fun fromParts(parts: List<HTSingleFluidStorage>): HTMachineFluidStorage = when (parts.size) {
-            2 -> Simple(parts[0], parts[1])
-            4 -> Large(parts[0], parts[1], parts[2], parts[3])
+        fun fromParts(tier: HTMachineTier, parts: List<HTSingleFluidStorage>): HTMachineFluidStorage = when (parts.size) {
+            2 -> Simple(tier, parts[0], parts[1])
+            4 -> Large(tier, parts[0], parts[1], parts[2], parts[3])
             else -> throw IllegalStateException()
         }
 
         @JvmStatic
-        private fun createStorage(multiplier: Int): HTSingleFluidStorage = HTSingleFluidStorage(FluidConstants.BUCKET * multiplier)
+        private fun createStorage(tier: HTMachineTier): HTSingleFluidStorage = HTSingleFluidStorage(tier.tankCapacity)
 
         @JvmStatic
-        fun create(typeSize: HTMachineType.Size): HTMachineFluidStorage = when (typeSize) {
-            HTMachineType.Size.SIMPLE -> Simple()
-            HTMachineType.Size.LARGE -> Large()
+        fun create(tier: HTMachineTier, typeSize: HTMachineType.Size): HTMachineFluidStorage = when (typeSize) {
+            HTMachineType.Size.SIMPLE -> Simple(tier)
+            HTMachineType.Size.LARGE -> Large(tier)
         }
     }
 
@@ -39,8 +34,11 @@ sealed class HTMachineFluidStorage(val typeSize: HTMachineType.Size) {
 
     //    Simple    //
 
-    private class Simple(input: HTSingleFluidStorage = createStorage(16), output: HTSingleFluidStorage = createStorage(16)) :
-        HTMachineFluidStorage(HTMachineType.Size.SIMPLE) {
+    private class Simple(
+        tier: HTMachineTier,
+        input: HTSingleFluidStorage = createStorage(tier),
+        output: HTSingleFluidStorage = createStorage(tier),
+    ) : HTMachineFluidStorage(tier, HTMachineType.Size.SIMPLE) {
         override val parts: List<HTSingleFluidStorage> = listOf(input, output)
 
         override fun createWrapped(): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
@@ -54,11 +52,12 @@ sealed class HTMachineFluidStorage(val typeSize: HTMachineType.Size) {
     //    Large    //
 
     private class Large(
-        firstInput: HTSingleFluidStorage = createStorage(64),
-        secondInput: HTSingleFluidStorage = createStorage(64),
-        firstOutput: HTSingleFluidStorage = createStorage(64),
-        secondOutput: HTSingleFluidStorage = createStorage(64),
-    ) : HTMachineFluidStorage(HTMachineType.Size.LARGE) {
+        tier: HTMachineTier,
+        firstInput: HTSingleFluidStorage = createStorage(tier),
+        secondInput: HTSingleFluidStorage = createStorage(tier),
+        firstOutput: HTSingleFluidStorage = createStorage(tier),
+        secondOutput: HTSingleFluidStorage = createStorage(tier),
+    ) : HTMachineFluidStorage(tier, HTMachineType.Size.LARGE) {
         override val parts: List<HTSingleFluidStorage> = listOf(
             firstInput,
             secondInput,

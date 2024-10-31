@@ -35,7 +35,7 @@ abstract class HTProcessorMachineEntityBase(typeSize: HTMachineType.Size, type: 
             .listOf()
             .parse(NbtOps.INSTANCE, nbt.getCompound("fluid_storage"))
             .result()
-            .ifPresent { fluidStorage = HTMachineFluidStorage.fromParts(it) }
+            .ifPresent { fluidStorage = HTMachineFluidStorage.fromParts(tier, it) }
     }
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
@@ -46,7 +46,7 @@ abstract class HTProcessorMachineEntityBase(typeSize: HTMachineType.Size, type: 
 
     final override val parent: HTSimpleInventory = typeSize.createInventory()
 
-    var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(typeSize)
+    var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(tier, typeSize)
         protected set
 
     val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, fluidStorage)

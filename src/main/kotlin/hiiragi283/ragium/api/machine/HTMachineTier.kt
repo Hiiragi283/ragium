@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
@@ -71,9 +72,8 @@ enum class HTMachineTier(
             .build()
     }
 
-    val miningCost: Long = recipeCost / 10
-    val energyCapacity: Long = recipeCost * 16
-    val tankMultiplier: Long = recipeCost / 20
+    val bucketUnit: Long = recipeCost / 40
+    val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
     val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)

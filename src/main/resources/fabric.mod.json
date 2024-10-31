@@ -35,7 +35,7 @@
     ],
     "ragium.plugin": [
       {
-        "value": "hiiragi283.ragium.common.init.RagiumMachineTypes",
+        "value": "hiiragi283.ragium.common.RagiumDefaultPlugin",
         "adapter": "kotlin"
       },
       {

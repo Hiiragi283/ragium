@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
@@ -211,12 +210,12 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "Show preview: %s")
-            // builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "Energy Capacity: %s E")
+            builder.add(RagiumTranslationKeys.MACHINE_SLOT_COUNTS, "Input/Output Slots: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_TANK_CAPACITY, "Each Tank Capacity: %s Buckets")
 
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The structure is valid!")
             // Machine Tier
-            // builder.add(HTMachineTier.NONE, "None", "%s")
             builder.add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
@@ -358,12 +357,12 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "プレビューの表示: %s")
-            // builder.add(RagiumTranslationKeys.MACHINE_ENERGY_CAPACITY, "バッテリー容量: %s E")
+            builder.add(RagiumTranslationKeys.MACHINE_SLOT_COUNTS, "入力/出力スロット数: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_TANK_CAPACITY, "各液体タンクの容量: %s バケツ")
 
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")
             // Machine Tier
-            // builder.add(HTMachineTier.NONE, "なし", "%s")
             builder.add(HTMachineTier.PRIMITIVE, "簡易", "簡易型%s")
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")

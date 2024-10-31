@@ -2,25 +2,30 @@ package hiiragi283.ragium.client.util
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
+import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.json.JsonUnbakedModel
 import net.minecraft.client.render.model.json.ModelTransformation
 import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.texture.Sprite
+import net.minecraft.client.util.ModelIdentifier
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.network.packet.CustomPayload
+import net.minecraft.registry.Registries
 import net.minecraft.resource.Resource
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -140,3 +145,16 @@ val DEFAULT_ITEM_TRANSFORM: ModelTransformation by lazy {
 }
 
 val FLUID_CUBE_TRANSFORM: ModelTransformation by lazy { getModelTransform(RagiumAPI.id("models/item/empty_fluid_cube.json")) }
+
+//    BakedModel    //
+
+fun getBlockModel(block: Block): BakedModel = MinecraftClient
+    .getInstance()
+    .bakedModelManager
+    .getModel(ModelIdentifier(Registries.BLOCK.getId(block), ""))
+
+val HTMachineTier.hullModel: BakedModel
+    get() = MinecraftClient
+        .getInstance()
+        .bakedModelManager
+        .getModel(ModelIdentifier(this.getHull().id, ""))
