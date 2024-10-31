@@ -133,7 +133,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
 
     private fun registerItems() {
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
-            stack.get(RagiumComponentTypes.COLOR)?.fireworkColor ?: -1
+            stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
         }, RagiumContents.Misc.BACKPACK)
 
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
@@ -204,43 +204,6 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
 
     override fun shouldLoad(): Boolean = isClientEnv()
 
-    override fun modifyMachineProperties(helper: RagiumPlugin.PropertyHelper) {
-        /*helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
-            set(HTMachinePropertyKeys.DYNAMIC_FRONT_TEX) { machine: HTMachineEntity<*> ->
-                val generator: HTHeatGeneratorMachineEntity? = machine as? HTHeatGeneratorMachineEntity
-                RagiumAPI.log { info("Burning Time; ${generator?.burningTime}") }
-                when ((machine as? HTHeatGeneratorMachineEntity)?.isBurning == true) {
-                    true -> "block/heat_generator_front_active"
-                    false -> "block/heat_generator_front"
-                }.let(RagiumAPI.Companion::id)
-            }
-        }
-        helper.modify(RagiumMachineTypes.FLUID_DRILL) {
-            set(INPUT_ENTRIES) { recipe: HTMachineRecipe ->
-                recipe
-                    .get(HTRecipeComponentTypes.BIOME)
-                    ?.let { biome: RegistryKey<Biome> ->
-                        EntryStacks.of(Items.COMPASS).tooltip {
-                            listOf(
-                                Text
-                                    .translatable(RagiumTranslationKeys.REI_RECIPE_BIOME, biome.value)
-                                    .formatted(Formatting.YELLOW),
-                            )
-                        }
-                    }?.let(EntryIngredient::of)
-                    ?.let(::listOf)
-                    ?: emptyList()
-            }
-        }
-        helper.modify(RagiumMachineTypes.MOB_EXTRACTOR) {
-            set(INPUT_ENTRIES) { recipe: HTMachineRecipe ->
-                recipe
-                    .get(HTRecipeComponentTypes.ENTITY_TYPE)
-                    ?.let(SpawnEggItem::forEntity)
-                    ?.let(EntryIngredients::of)
-                    ?.let(::listOf)
-                    ?: emptyList()
-            }
-        }*/
+    override fun setupClientMachineProperties(helper: RagiumPlugin.PropertyHelper) {
     }
 }
