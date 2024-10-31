@@ -10,6 +10,9 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -23,6 +26,7 @@ import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -55,7 +59,7 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
 
     fun writeToNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         writeNbt(nbt, wrapperLookup)
-        nbt.putString("machine_type", machineType.id.toString())
+        nbt.putString("machine_type", machineType.key.id.toString())
         nbt.putString("tier", tier.asString())
     }
 
@@ -74,15 +78,26 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = (this as? HTMultiblockController)
-        ?.onUseController(state, world, pos, player, this)
-        ?: when (world.isClient) {
+    ): ActionResult {
+        // Validate multiblock
+        if (this is HTMultiblockController) {
+            return onUseController(state, world, pos, player, this)
+        }
+        // Insert fluid from holding stack
+        FluidStorage.SIDED.find(world, pos, null)?.let { storage: Storage<FluidVariant> ->
+            if (FluidStorageUtil.interactWithFluidStorage(storage, player, Hand.MAIN_HAND)) {
+                return ActionResult.success(world.isClient)
+            }
+        }
+        // open machine screen
+        return when (world.isClient) {
             true -> ActionResult.SUCCESS
             else -> {
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
                 ActionResult.CONSUME
             }
         }
+    }
 
     open fun tickEach(
         world: World,

@@ -34,7 +34,7 @@ class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
-        stack.machineTypeOrNull?.appendTooltip(tooltip::add, stack.machineTier)
+        stack.machineTypeOrNull?.key?.appendTooltip(tooltip::add, stack.machineTier)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState =

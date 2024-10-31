@@ -22,7 +22,8 @@ object RagiumCommon : ModInitializer {
         RagiumRecipeSerializers
         RagiumRecipeTypes
 
-        InternalRagiumAPI.initMachineType()
+        InternalRagiumAPI.registerMachines()
+        InternalRagiumAPI.registerProperties()
         RagiumContentRegister.registerContents()
 
         HTTradeOfferRegistry.init()

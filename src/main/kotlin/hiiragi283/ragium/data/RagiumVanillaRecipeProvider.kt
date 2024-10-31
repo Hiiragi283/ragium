@@ -278,7 +278,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumContents.RawMaterials.RAGINITE)
             .offerTo(exporter)
 
-        /*HTShapedRecipeJsonBuilder
+        HTShapedRecipeJsonBuilder
             .create(RagiumContents.Misc.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .patterns(
@@ -288,7 +288,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumContents.Dusts.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
             .unlockedBy(RagiumContents.Dusts.CRUDE_RAGINITE)
-            .offerSuffix(exporter.hardMode(false), "_1")*/
+            .offerSuffix(exporter, "_1")
 
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.Misc.SOLAR_PANEL)
@@ -515,9 +515,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "AAA",
                 " B ",
                 "BBB",
-            ).input('A', RagiumContents.StorageBlocks.RAGI_ALLOY)
+            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
             .input('B', Blocks.SMOOTH_STONE)
-            .unlockedBy(RagiumContents.StorageBlocks.RAGI_ALLOY)
+            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder

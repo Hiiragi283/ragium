@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_ingot"
+            "items": "ragium:crude_raginite_dust"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/manual_forge"
+        "recipe": "ragium:shaped/ragi_alloy_compound_1"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/manual_forge"
+      "ragium:shaped/ragi_alloy_compound_1"
     ]
   }
 }

@@ -1,11 +1,12 @@
 package hiiragi283.ragium.api.machine
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.Block
 import net.minecraft.item.ItemStack
 
-fun interface HTMachineConvertible {
+interface HTMachineConvertible {
     fun asMachine(): HTMachineType
 
     fun asGenerator(): HTMachineType.Generator = checkNotNull(asMachine() as? HTMachineType.Generator)
@@ -34,4 +35,10 @@ fun interface HTMachineConvertible {
     }
 
     fun isOf(other: HTMachineConvertible): Boolean = asMachine() == other.asMachine()
+
+    val key: HTMachineTypeKey
+        get() = RagiumAPI
+            .getInstance()
+            .machineTypeRegistry
+            .getKeyOrThrow(asMachine())
 }

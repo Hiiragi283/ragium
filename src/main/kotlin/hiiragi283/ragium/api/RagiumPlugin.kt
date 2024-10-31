@@ -15,27 +15,21 @@ interface RagiumPlugin {
 
     fun registerMachineType(register: MachineRegister) {}
 
-    fun modifyMachineProperties(helper: PropertyHelper) {}
+    fun setupCommonMachineProperties(helper: PropertyHelper) {}
+
+    fun setupClientMachineProperties(helper: PropertyHelper) {}
 
     fun afterRagiumInit()
 
     //    MachineRegister    //
 
-    class MachineRegister(private val register: (HTMachineTypeKey, HTPropertyHolder, Boolean) -> Unit) {
-        fun registerGenerator(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
-            register(
-                key,
-                HTPropertyHolder.create(builderAction = builderAction),
-                true,
-            )
+    class MachineRegister(private val register: (HTMachineTypeKey, Boolean) -> Unit) {
+        fun registerGenerator(key: HTMachineTypeKey) {
+            register(key, true)
         }
 
-        fun registerProcessor(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
-            register(
-                key,
-                HTPropertyHolder.create(builderAction = builderAction),
-                false,
-            )
+        fun registerProcessor(key: HTMachineTypeKey) {
+            register(key, false)
         }
     }
 

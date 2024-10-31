@@ -101,7 +101,7 @@ data object HTMachineModel : UnbakedModel, BakedModel {
     private fun emitMachineFront(frontDir: Direction, type: HTMachineType, context: RenderContext) {
         val frontId = SpriteIdentifier(
             PlayerScreenHandler.BLOCK_ATLAS_TEXTURE,
-            type.getOrDefault(HTMachinePropertyKeys.FRONT_TEX)(type.id),
+            type.getOrDefault(HTMachinePropertyKeys.FRONT_TEX)(type.key.id),
         )
         this.frontSprite = this.textureGetter.apply(frontId)
         val emitter: QuadEmitter = context.emitter

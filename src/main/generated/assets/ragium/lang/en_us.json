@@ -221,7 +221,6 @@
   "machine_type.ragium.blast_furnace": "Large Blast Furnace",
   "machine_type.ragium.chemical_reactor": "Chemical Reactor",
   "machine_type.ragium.combustion": "Combustion Generator",
-  "machine_type.ragium.default": "Default Machine",
   "machine_type.ragium.distillation_tower": "Distillation Tower",
   "machine_type.ragium.electrolyzer": "Electrolyzer",
   "machine_type.ragium.extractor": "Extractor",

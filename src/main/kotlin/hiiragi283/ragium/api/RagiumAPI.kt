@@ -1,10 +1,12 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachinePropertyRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
+import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
@@ -68,7 +70,7 @@ interface RagiumAPI {
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 
-    // fun getHardModeCondition(isHard: Boolean): ResourceCondition
+    fun getMachineRegistry(envType: EnvType): HTMachinePropertyRegistry
 
     //    Config    //
 

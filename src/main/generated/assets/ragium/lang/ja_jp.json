@@ -217,7 +217,6 @@
   "machine_type.ragium.blast_furnace": "大型高炉",
   "machine_type.ragium.chemical_reactor": "化学反応槽",
   "machine_type.ragium.combustion": "燃焼発電機",
-  "machine_type.ragium.default": "デフォルト機械",
   "machine_type.ragium.distillation_tower": "蒸留塔",
   "machine_type.ragium.electrolyzer": "電解槽",
   "machine_type.ragium.extractor": "抽出器",

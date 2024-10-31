@@ -4,11 +4,13 @@ import com.google.common.collect.ImmutableBiMap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.buildItemStack
+import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.RagiumContents.Misc
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import net.fabricmc.api.EnvType
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -18,6 +20,10 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
     override val config: RagiumAPI.Config = RagiumConfig
     override lateinit var machineTypeRegistry: HTMachineTypeRegistry
+        private set
+
+    private var commonMachineRegistry: HTMachinePropertyRegistry = HTMachinePropertyRegistry(mapOf())
+    private var clientMachineRegistry: HTMachinePropertyRegistry = HTMachinePropertyRegistry(mapOf())
 
     override fun createBuiltMachineCriterion(
         type: HTMachineConvertible,
@@ -31,43 +37,62 @@ internal data object InternalRagiumAPI : RagiumAPI {
         add(RagiumComponentTypes.FLUID, fluid)
     }
 
-    // override fun getHardModeCondition(isHard: Boolean): ResourceCondition = HTHardModeResourceCondition.fromBool(isHard)
+    override fun getMachineRegistry(envType: EnvType): HTMachinePropertyRegistry = when (envType) {
+        EnvType.CLIENT -> clientMachineRegistry
+        EnvType.SERVER -> commonMachineRegistry
+    }
 
     //    Init    //
 
-    @JvmStatic
-    fun initMachineType() {
-        val keyCache: MutableSet<HTMachineTypeKey> = mutableSetOf()
-        val builder: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
+    private val keyCache: MutableSet<HTMachineTypeKey> = mutableSetOf()
 
-        fun addMachine(key: HTMachineTypeKey, properties: HTPropertyHolder, flag: Boolean) {
+    @JvmStatic
+    fun registerMachines() {
+        val typeCache: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
+
+        fun addMachine(key: HTMachineTypeKey, flag: Boolean) {
             check(key !in keyCache) { "Machine SizeType; ${key.id} is already registered!" }
             val type: HTMachineType = when (flag) {
-                true -> HTMachineType.Generator(properties)
-                false -> HTMachineType.Processor(properties)
+                true -> HTMachineType.Generator()
+                false -> HTMachineType.Processor()
             }
             keyCache.add(key)
-            builder.put(key, type)
+            typeCache.put(key, type)
         }
-
-        keyCache.add(HTMachineTypeKey.DEFAULT)
-        builder.put(HTMachineTypeKey.DEFAULT, HTMachineType.Default)
 
         RagiumAPI.getPlugins().forEach {
             it.registerMachineType(RagiumPlugin.MachineRegister(::addMachine))
         }
 
-        val map: ImmutableBiMap<HTMachineTypeKey, HTMachineType> = builder.build()
+        this.machineTypeRegistry = HTMachineTypeRegistry(typeCache.build())
+        RagiumAPI.log { info("Registered machine types!") }
+    }
 
-        RagiumAPI.getPlugins().forEach {
-            map.forEach { (key: HTMachineTypeKey, type: HTMachineType) ->
-                val builder1: HTPropertyHolder.Mutable = HTPropertyHolder.builder(type)
-                it.modifyMachineProperties(RagiumPlugin.PropertyHelper(key, builder1))
-                type.delegated = builder1
+    @JvmStatic
+    private fun buildMachinePropertyMap(
+        action: (RagiumPlugin, RagiumPlugin.PropertyHelper) -> Unit,
+    ): Map<HTMachineTypeKey, HTPropertyHolder> {
+        val map: MutableMap<HTMachineTypeKey, HTPropertyHolder> = mutableMapOf()
+        RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
+            keyCache.forEach { key: HTMachineTypeKey ->
+                val builder: HTPropertyHolder.Mutable =
+                    map.computeIfAbsent(key) { HTPropertyHolder.builder() }.let(HTPropertyHolder.Companion::builder)
+                action(plugin, RagiumPlugin.PropertyHelper(key, builder))
+                map[key] = builder
             }
         }
+        return map
+    }
 
-        this.machineTypeRegistry = HTMachineTypeRegistry(map)
-        RagiumAPI.log { info("HTMachineTypeRegistry initialized!") }
+    @JvmStatic
+    fun registerProperties() {
+        this.commonMachineRegistry =
+            HTMachinePropertyRegistry(buildMachinePropertyMap(RagiumPlugin::setupCommonMachineProperties))
+        RagiumAPI.log { info("Registered common machine properties!") }
+        if (isClientEnv()) {
+            this.clientMachineRegistry =
+                HTMachinePropertyRegistry(buildMachinePropertyMap(RagiumPlugin::setupClientMachineProperties))
+            RagiumAPI.log { info("Registered client machine properties!") }
+        }
     }
 }

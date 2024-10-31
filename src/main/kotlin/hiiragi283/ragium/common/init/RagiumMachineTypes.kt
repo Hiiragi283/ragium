@@ -29,7 +29,22 @@ object RagiumMachineTypes : RagiumPlugin {
 
     override fun registerMachineType(register: RagiumPlugin.MachineRegister) {
         // generators
-        register.registerGenerator(HEAT_GENERATOR) {
+        register.registerGenerator(HEAT_GENERATOR)
+        RagiumMachineTypes.Generator.entries
+            .map(Generator::key)
+            .forEach(register::registerGenerator)
+        // processors
+        register.registerProcessor(BLAST_FURNACE)
+        register.registerProcessor(DISTILLATION_TOWER)
+        register.registerProcessor(SAW_MILL)
+        RagiumMachineTypes.Processor.entries
+            .map(Processor::key)
+            .forEach(register::registerProcessor)
+    }
+
+    override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper) {
+        // generators
+        helper.modify(HEAT_GENERATOR) {
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 world
                     .getMachineEntity(pos)
@@ -44,10 +59,10 @@ object RagiumMachineTypes : RagiumPlugin {
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.RED)
         }
         RagiumMachineTypes.Generator.entries.forEach {
-            register.registerGenerator(it.key, it::buildProperties)
+            helper.modify(it.key, it::buildProperties)
         }
         // processors
-        register.registerProcessor(BLAST_FURNACE) {
+        helper.modify(BLAST_FURNACE) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),
@@ -56,7 +71,7 @@ object RagiumMachineTypes : RagiumPlugin {
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
             set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
-        register.registerProcessor(DISTILLATION_TOWER) {
+        helper.modify(DISTILLATION_TOWER) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntity.Factory.ofStatic(::HTDistillationTowerMachineEntity),
@@ -65,16 +80,15 @@ object RagiumMachineTypes : RagiumPlugin {
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
             set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
-        register.registerProcessor(SAW_MILL) {
+        helper.modify(SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTSawMillMachineEntity))
             set(HTMachinePropertyKeys.PROCESSOR_CONDITION, RagiumMachineConditions.ELECTRIC_CONDITION)
             set(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
             set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
-
         RagiumMachineTypes.Processor.entries.forEach {
-            register.registerProcessor(it.key, it::buildProperties)
+            helper.modify(it.key, it::buildProperties)
         }
     }
 
@@ -117,7 +131,7 @@ object RagiumMachineTypes : RagiumPlugin {
 
         abstract fun canGenerate(world: World, pos: BlockPos): Boolean
 
-        val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id(name.lowercase()))
+        override val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id(name.lowercase()))
 
         override fun asMachine(): HTMachineType = key.asMachine()
     }
@@ -163,7 +177,7 @@ object RagiumMachineTypes : RagiumPlugin {
             builder.setIfNonNull(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED, RagiumMachineConditions.ELECTRIC_SUCCEEDED)
         }
 
-        val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id(name.lowercase()))
+        override val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id(name.lowercase()))
 
         override fun asMachine(): HTMachineType = key.asMachine()
     }

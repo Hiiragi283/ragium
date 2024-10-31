@@ -13,16 +13,6 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
         get(id)?.let(action)
     }
 
-    interface Delegated : HTPropertyHolder {
-        val delegated: HTPropertyHolder
-
-        override fun <T : Any> get(id: HTPropertyKey<T>): T? = delegated[id]
-
-        override fun contains(id: HTPropertyKey<*>): Boolean = id in delegated
-
-        override fun iterator(): Iterator<Pair<HTPropertyKey<*>, Any>> = delegated.iterator()
-    }
-
     interface Mutable : HTPropertyHolder {
         operator fun <T : Any> set(id: HTPropertyKey<T>, value: T)
 

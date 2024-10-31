@@ -45,13 +45,14 @@ object RagiumTagProviders {
 
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
-            // add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OBLIVION_CLUSTER)
 
             add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.BASIC_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ADVANCED_CASING)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_GENERATOR)

@@ -13,7 +13,7 @@ class HTMachineTypeRegistry(val registry: BiMap<HTMachineTypeKey, HTMachineType>
 
         @JvmField
         val CODEC: Codec<HTMachineType> =
-            HTMachineTypeKey.CODEC.xmap(
+            HTMachineTypeKey.VALIDATED_CODEC.xmap(
                 { RagiumAPI.getInstance().machineTypeRegistry.getOrThrow(it) },
                 { RagiumAPI.getInstance().machineTypeRegistry.getKeyOrThrow(it) },
             )

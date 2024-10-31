@@ -31,7 +31,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         fun create(type: HTMachineConvertible, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder = type
             .asProcessorOrNull()
             ?.let { HTMachineRecipeJsonBuilder(it, minTier) }
-            ?: throw IllegalStateException("Machine SizeType;  ${type.asMachine().id} must be Processor!")
+            ?: throw IllegalStateException("Machine SizeType;  ${type.key.id} must be Processor!")
 
         @JvmStatic
         fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
@@ -128,7 +128,7 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
-        val prefix = "${type.id.path}/"
+        val prefix = "${type.key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         val recipe: HTMachineRecipe = HTMachineRecipe.createRecipe(
             HTMachineDefinition(type, tier),

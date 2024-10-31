@@ -86,10 +86,9 @@ enum class HTMachineTier(
 
     val prefixKey = "$translationKey.prefix"
 
-    fun createPrefixedText(type: HTMachineConvertible): MutableText = Text.translatable(prefixKey, type.asMachine().text)
+    fun createPrefixedText(type: HTMachineConvertible): MutableText = Text.translatable(prefixKey, type.asMachine().key.text)
 
-    fun createId(type: HTMachineConvertible): Identifier =
-        type.asMachine().id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
+    fun createId(type: HTMachineConvertible): Identifier = type.key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
     fun getBaseBlock(): Block = when (this) {
         PRIMITIVE -> Blocks.BRICKS
