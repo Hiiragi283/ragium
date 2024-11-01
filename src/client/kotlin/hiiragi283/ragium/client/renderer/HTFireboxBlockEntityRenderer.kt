@@ -21,7 +21,7 @@ object HTFireboxBlockEntityRenderer : BlockEntityRenderer<HTFireboxBlockEntity> 
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
         light: Int,
-        overlay: Int
+        overlay: Int,
     ) {
         val pos: BlockPos = entity.pos
         val world: World = entity.world ?: return
@@ -31,7 +31,9 @@ object HTFireboxBlockEntityRenderer : BlockEntityRenderer<HTFireboxBlockEntity> 
             ?.getBaseBlock()
             ?: Blocks.BRICKS
         val state: BlockState = baseBlock.defaultState
-        MinecraftClient.getInstance().blockRenderManager
+        MinecraftClient
+            .getInstance()
+            .blockRenderManager
             .renderBlock(
                 state,
                 pos,
@@ -39,7 +41,7 @@ object HTFireboxBlockEntityRenderer : BlockEntityRenderer<HTFireboxBlockEntity> 
                 matrices,
                 vertexConsumers.getBuffer(RenderLayers.getBlockLayer(state)),
                 false,
-                Random.create()
+                Random.create(),
             )
     }
 }
