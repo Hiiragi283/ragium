@@ -57,12 +57,12 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
         asInventory()?.markDirty()
     }
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        machineEntity?.writeToNbt(nbt, registryLookup)
-        super.writeNbt(nbt, registryLookup)
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        machineEntity?.writeToNbt(nbt, wrapperLookup)
+        super.writeNbt(nbt, wrapperLookup)
     }
 
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         val machineType: HTMachineType = RagiumAPI
             .getInstance()
             .machineTypeRegistry
@@ -72,8 +72,8 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
             .firstOrNull { it.asString() == nbt.getString("tier") }
             ?: HTMachineTier.PRIMITIVE
         initMachineEntity(machineType, tier)
-        machineEntity?.readFromNbt(nbt, registryLookup)
-        super.readNbt(nbt, registryLookup)
+        machineEntity?.readFromNbt(nbt, wrapperLookup)
+        super.readNbt(nbt, wrapperLookup)
     }
 
     override fun readComponents(components: ComponentsAccess) {

@@ -39,16 +39,18 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
     override fun generate() {
+        addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
+
         addDrop(RagiumBlocks.SPONGE_CAKE)
 
-        addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
-        addDrop(RagiumBlocks.MANUAL_GRINDER)
-        addDrop(RagiumBlocks.SHAFT)
-        addDrop(RagiumBlocks.ITEM_DISPLAY)
-        addDrop(RagiumBlocks.NETWORK_INTERFACE)
-        addDrop(RagiumBlocks.BASIC_CASING)
         addDrop(RagiumBlocks.ADVANCED_CASING)
-        addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
+        addDrop(RagiumBlocks.BASIC_CASING)
+        addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
+        addDrop(RagiumBlocks.FIREBOX)
+        addDrop(RagiumBlocks.ITEM_DISPLAY)
+        addDrop(RagiumBlocks.MANUAL_GRINDER)
+        addDrop(RagiumBlocks.NETWORK_INTERFACE)
+        addDrop(RagiumBlocks.SHAFT)
 
         dropMachine(RagiumBlocks.META_CONSUMER)
         dropMachine(RagiumBlocks.META_GENERATOR)

@@ -26,16 +26,16 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         this.type = type
     }
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        super.writeNbt(nbt, registryLookup)
-        itemStorage.writeNbt(nbt, registryLookup)
-        fluidStorage.writeNbt(nbt, registryLookup)
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, wrapperLookup)
+        itemStorage.writeNbt(nbt, wrapperLookup)
+        fluidStorage.writeNbt(nbt, wrapperLookup)
     }
 
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        super.readNbt(nbt, registryLookup)
-        itemStorage.readNbt(nbt, registryLookup)
-        fluidStorage.readNbt(nbt, registryLookup)
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, wrapperLookup)
+        itemStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup)
     }
 
     fun canConnect(dir: Direction): Boolean = ifPresentWorld { world: World ->

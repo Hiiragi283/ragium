@@ -15,6 +15,7 @@ import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 object RagiumDefaultPlugin : RagiumPlugin {
@@ -74,6 +75,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntity.Factory.ofStatic(::HTSteamGeneratorMachineEntity),
             )
+            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
         }
         helper.modify(RagiumMachineTypes.Generator.THERMAL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(HTGeneratorMachineEntityBase::Simple))

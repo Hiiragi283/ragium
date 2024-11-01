@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.common.screen.HTFireboxMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
@@ -10,9 +11,15 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.resource.featuretoggle.FeatureFlags
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
+    @JvmField
+    val FIREBOX: ScreenHandlerType<HTFireboxMachineScreenHandler> =
+        register("firebox", ::HTFireboxMachineScreenHandler)
+
     @JvmField
     val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =
         registerExtended("large_machine", ::HTLargeMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
@@ -36,10 +43,10 @@ object RagiumScreenHandlerTypes {
         ExtendedScreenHandlerType(factory, packetCodec),
     )
 
-    /*@JvmStatic
+    @JvmStatic
     private fun <T : ScreenHandler> register(name: String, factory: ScreenHandlerType.Factory<T>): ScreenHandlerType<T> = Registry.register(
         Registries.SCREEN_HANDLER,
         RagiumAPI.id(name),
         ScreenHandlerType(factory, FeatureFlags.VANILLA_FEATURES),
-    )*/
+    )
 }

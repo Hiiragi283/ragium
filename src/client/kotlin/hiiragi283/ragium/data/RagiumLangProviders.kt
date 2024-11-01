@@ -130,6 +130,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.ADVANCED_CASING, "Advanced Casing")
             builder.add(RagiumBlocks.BASIC_CASING, "Basic Casing")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
+            builder.add(RagiumBlocks.FIREBOX, "Firebox")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.MANUAL_FORGE, "Ragi-Anvil")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "Ragi-Grinder")
@@ -297,7 +298,6 @@ object RagiumLangProviders {
             RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
-            // builder.add(RagiumBlocks.OBLIVION_CLUSTER, "忘却の芽")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -305,6 +305,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.ADVANCED_CASING, "発展型外装")
             builder.add(RagiumBlocks.BASIC_CASING, "基本型外装")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
+            builder.add(RagiumBlocks.FIREBOX, "火室")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.MANUAL_FORGE, "らぎ金床")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")

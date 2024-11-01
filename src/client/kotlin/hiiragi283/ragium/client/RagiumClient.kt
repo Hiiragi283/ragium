@@ -15,10 +15,13 @@ import hiiragi283.ragium.api.model.HTDefaultProcessorModel
 import hiiragi283.ragium.api.renderer.HTMultiblockPreviewRenderer
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
+import hiiragi283.ragium.client.gui.HTFireboxMachineScreen
 import hiiragi283.ragium.client.gui.HTLargeMachineScreen
 import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
+import hiiragi283.ragium.client.gui.HTSteamMachineScreen
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
+import hiiragi283.ragium.client.renderer.HTFireboxBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.common.RagiumContents
@@ -78,8 +81,11 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
+            RagiumBlocks.META_CONSUMER,
+            RagiumBlocks.META_GENERATOR,
             RagiumBlocks.META_PROCESSOR,
             RagiumBlocks.POROUS_NETHERRACK,
+            RagiumBlocks.FIREBOX,
         )
 
         buildList {
@@ -87,6 +93,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
             addAll(RagiumContents.Hulls.entries)
         }.map(HTRegistryContent<Block>::value).forEach(::registerCutoutMipped)
 
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.FIREBOX) { HTFireboxBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
 
@@ -153,8 +160,10 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
     //    Screens    //
 
     private fun registerScreens() {
+        HandledScreens.register(RagiumScreenHandlerTypes.FIREBOX, ::HTFireboxMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.STEAM, ::HTSteamMachineScreen)
     }
 
     //    Events    //
@@ -227,6 +236,9 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
 
         helper.modify(HTMachineTypeKey::isGenerator) {
             set(HTClientMachinePropertyKeys.STATIC_RENDERER, HTAliasedModel(RagiumAPI.id("block/generator")))
+        }
+        helper.modify(RagiumMachineTypes.Generator.STEAM) {
+            set(HTClientMachinePropertyKeys.STATIC_RENDERER, HTDefaultProcessorModel)
         }
         helper.modify(RagiumMachineTypes.Generator.SOLAR) {
             set(HTClientMachinePropertyKeys.STATIC_RENDERER, HTAliasedModel(RagiumAPI.id("block/solar_generator")))

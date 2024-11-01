@@ -18,6 +18,10 @@ object RagiumBlockEntityTypes {
         register("exporter", ::HTExporterBlockEntity)
 
     @JvmField
+    val FIREBOX: BlockEntityType<HTFireboxBlockEntity> =
+        register("firebox", ::HTFireboxBlockEntity)
+
+    @JvmField
     val FLUID_PIPE: BlockEntityType<HTPipeBlockEntity> =
         register("fluid_pipe", ::HTPipeBlockEntity)
 
@@ -61,6 +65,7 @@ object RagiumBlockEntityTypes {
         RagiumContents.Pipes.entries
             .map(RagiumContents.Pipes::value)
             .forEach(FLUID_PIPE::addSupportedBlock)
+        FIREBOX.addSupportedBlock(RagiumBlocks.FIREBOX)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)

@@ -20,7 +20,7 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
     protected var tier: HTMachineTier = HTMachineTier.PRIMITIVE
     protected var type: HTPipeType = HTPipeType.NONE
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .encodeStart(NbtOps.INSTANCE, tier)
             .result()
@@ -31,7 +31,7 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
             .ifPresent { nbt.put("type", it) }
     }
 
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("tier"))
             .result()

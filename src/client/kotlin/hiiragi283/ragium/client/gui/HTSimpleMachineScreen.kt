@@ -44,14 +44,14 @@ class HTSimpleMachineScreen(handler: HTSimpleMachineScreenHandler, inventory: Pl
         drawFluid(context, fluidCache[1], 6, 2)
 
         context.drawGuiTexture(
-            Identifier.ofVanilla("container/furnace/burn_progress"),
-            24,
+            RagiumAPI.id("progress_bar"),
+            16,
             16,
             0,
             0,
-            startX + getSlotPosX(4) - 3,
+            startX + getSlotPosX(4),
             startY + getSlotPosY(1),
-            MathHelper.ceil(handler.getProgress() * 24f),
+            MathHelper.ceil(handler.getProgress() * 16f),
             16,
         )
     }

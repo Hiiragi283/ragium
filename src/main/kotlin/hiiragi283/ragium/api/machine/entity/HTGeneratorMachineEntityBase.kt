@@ -19,8 +19,10 @@ abstract class HTGeneratorMachineEntityBase(type: HTMachineConvertible, tier: HT
             useTransaction { transaction: Transaction ->
                 val inserted: Long = world.energyNetwork?.insert(energy, transaction) ?: 0
                 if (inserted > 0) {
+                    onSucceeded(world, pos)
                     transaction.commit()
                 } else {
+                    onFailed(world, pos)
                     transaction.abort()
                 }
             }
@@ -28,6 +30,10 @@ abstract class HTGeneratorMachineEntityBase(type: HTMachineConvertible, tier: HT
     }
 
     abstract fun generateEnergy(world: World, pos: BlockPos): Long
+
+    open fun onSucceeded(world: World, pos: BlockPos) {}
+
+    open fun onFailed(world: World, pos: BlockPos) {}
 
     //    Simple    //
 

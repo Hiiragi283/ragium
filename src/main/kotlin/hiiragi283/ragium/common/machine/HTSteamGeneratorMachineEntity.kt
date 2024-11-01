@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.entity.HTFluidSyncable
 import hiiragi283.ragium.api.machine.entity.HTGeneratorMachineEntityBase
+import hiiragi283.ragium.common.block.entity.HTFireboxBlockEntity
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -26,6 +29,8 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.Fluids
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -62,6 +67,14 @@ class HTSteamGeneratorMachineEntity(tier: HTMachineTier) :
             registerHeat(100, Blocks.SOUL_CAMPFIRE)
             registerHeat(100, Blocks.LAVA)
             registerHeat(100, Blocks.MAGMA_BLOCK)
+
+            HEAT_LOOKUP.registerForBlockEntity({ blockEntity: HTFireboxBlockEntity, direction: Direction? ->
+                if (direction == Direction.UP) {
+                    if (blockEntity.isBurning) 100 else 0
+                } else {
+                    0
+                }
+            }, RagiumBlockEntityTypes.FIREBOX)
         }
     }
 
@@ -80,6 +93,10 @@ class HTSteamGeneratorMachineEntity(tier: HTMachineTier) :
             }
         }
         return 0
+    }
+
+    override fun onSucceeded(world: World, pos: BlockPos) {
+        world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS)
     }
 
     //    SidedStorageBlockEntity    //
@@ -109,7 +126,13 @@ class HTSteamGeneratorMachineEntity(tier: HTMachineTier) :
 
     override fun getDisplayName(): Text = tier.createPrefixedText(machineType)
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
+        HTSteamMachineScreenHandler(
+            syncId,
+            playerInventory,
+            packet,
+            createContext(),
+        )
 
     override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = packet
 }

@@ -149,6 +149,24 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
         register(RagiumBlocks.MANUAL_FORGE) { accept(VariantsBlockStateSupplier.create(it, stateVariantOf(it))) }
+
+        register(RagiumBlocks.FIREBOX) {
+            generator.excludeFromSimpleItemModelGeneration(it)
+            accept(
+                VariantsBlockStateSupplier
+                    .create(it)
+                    .coordinate(
+                        BlockStateVariantMap
+                            .create(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
+                            .register { direction: Direction, isActive: Boolean ->
+                                when (isActive) {
+                                    true -> stateVariantOf(ModelIds.getBlockSubModelId(it, "_active"))
+                                    false -> stateVariantOf(ModelIds.getBlockModelId(it))
+                                }.rot(direction)
+                            },
+                    ),
+            )
+        }
         // exporters
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val coil: Block = exporter.tier.getCoil().value

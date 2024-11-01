@@ -8,6 +8,9 @@ import net.minecraft.util.math.Direction
 
 object RagiumBlockProperties {
     @JvmField
+    val ACTIVE: BooleanProperty = BooleanProperty.of("active")
+
+    @JvmField
     val COLOR: EnumProperty<DyeColor> = EnumProperty.of("color", DyeColor::class.java)
 
     @JvmField

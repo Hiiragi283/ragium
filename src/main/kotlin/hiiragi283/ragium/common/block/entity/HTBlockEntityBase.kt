@@ -18,12 +18,12 @@ import net.minecraft.world.World
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
     protected open fun asInventory(): HTSimpleInventory? = (this as? HTDelegatedInventory<*>)?.parent
 
-    override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        asInventory()?.writeNbt(nbt, registryLookup)
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        asInventory()?.writeNbt(nbt, wrapperLookup)
     }
 
-    override fun readNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
-        asInventory()?.readNbt(nbt, registryLookup)
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        asInventory()?.readNbt(nbt, wrapperLookup)
     }
 
     override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = createNbt(registryLookup)

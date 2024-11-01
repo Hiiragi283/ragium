@@ -39,9 +39,6 @@ object RagiumModels {
     )
 
     @JvmField
-    val EMPTY: Model = model("block/empty")
-
-    @JvmField
     val PIPE: Model =
         model(
             "block/pipe",
@@ -73,21 +70,9 @@ object RagiumModels {
         )
 
     @JvmField
-    val MACHINE: Model =
-        model(
-            "block/machine",
-            TextureKey.TOP,
-            TextureKey.BOTTOM,
-            TextureKey.FRONT,
-        )
-
-    @JvmField
     val DYNAMIC_MACHINE: Model = model(HTMachineModel.MODEL_ID.path)
 
     //    Item    //
-
-    @JvmField
-    val CLUSTER_ITEM: Model = model("item/cluster", TextureKey.LAYER0)
 
     @JvmField
     val FILLED_FLUID_CUBE: Model =
@@ -140,17 +125,4 @@ object RagiumModels {
             put(TextureKey.LAYER1, outer)
         }
     }, LAYERED)
-
-    @JvmStatic
-    fun createMachine(top: Identifier, bottom: Identifier, front: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        textureMap {
-            put(TextureKey.TOP, top)
-            put(TextureKey.BOTTOM, bottom)
-            put(TextureKey.FRONT, front)
-        }
-    }, MACHINE)
-
-    @JvmStatic
-    fun createMachine(top: Block, bottom: Block, front: Identifier): TexturedModel.Factory =
-        createMachine(TextureMap.getId(top), TextureMap.getId(bottom), front)
 }

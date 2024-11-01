@@ -72,6 +72,10 @@ object RagiumBlocks : HTContentRegister {
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
 
     @JvmField
+    val FIREBOX: Block =
+        registerBlock("firebox", HTFireboxBlock(blockSettings(Blocks.BRICKS)))
+
+    @JvmField
     val ITEM_DISPLAY: Block =
         registerBlock("item_display", HTItemDisplayBlock)
 

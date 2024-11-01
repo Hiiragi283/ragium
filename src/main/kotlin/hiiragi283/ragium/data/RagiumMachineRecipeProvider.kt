@@ -163,21 +163,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .itemInput(ConventionalItemTags.COPPER_INGOTS, 8)
             .itemInput(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumContents.Coils.COPPER)
+            .itemOutput(RagiumContents.Coils.COPPER, 2)
             .offerTo(exporter, RagiumContents.Coils.COPPER)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .itemInput(ConventionalItemTags.GOLD_INGOTS, 8)
             .itemInput(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumContents.Coils.GOLD)
+            .itemOutput(RagiumContents.Coils.GOLD, 2)
             .offerTo(exporter, RagiumContents.Coils.GOLD)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .itemInput(RagiumContents.Ingots.RAGI_ALLOY, 8)
             .itemInput(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumContents.Coils.RAGI_ALLOY)
+            .itemOutput(RagiumContents.Coils.RAGI_ALLOY, 2)
             .offerTo(exporter, RagiumContents.Coils.RAGI_ALLOY)
     }
 
