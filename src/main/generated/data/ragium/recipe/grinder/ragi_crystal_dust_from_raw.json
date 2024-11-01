@@ -20,9 +20,7 @@
   ],
   "item_outputs": [
     {
-      "item": "ragium:ragi_crystal_dust"
-    },
-    {
+      "count": 2,
       "item": "ragium:ragi_crystal_dust"
     }
   ]

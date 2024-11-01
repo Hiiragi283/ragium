@@ -185,14 +185,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun blastFurnace(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
+            .create(RagiumMachineTypes.BLAST_FURNACE)
             .itemInput(ConventionalItemTags.IRON_INGOTS)
             .itemInput(RagiumContents.Dusts.RAGINITE, 4)
             .itemOutput(RagiumContents.Ingots.RAGI_STEEL)
             .offerTo(exporter, RagiumContents.Ingots.RAGI_STEEL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
+            .create(RagiumMachineTypes.BLAST_FURNACE)
             .itemInput(ConventionalItemTags.IRON_INGOTS)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(RagiumContents.Ingots.STEEL)

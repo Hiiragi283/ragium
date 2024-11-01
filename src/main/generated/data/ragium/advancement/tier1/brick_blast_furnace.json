@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:tier1/ragi_alloy_hull",
+  "parent": "ragium:tier1/raginite_dust",
   "criteria": {
     "build_multiblock": {
       "conditions": {

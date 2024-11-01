@@ -80,10 +80,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 RagiumContents.Ores.CRUDE_RAGINITE,
                 Identifier.of("textures/block/bricks.png"),
             ) {
-                hasItems(RagiumContents.RawMaterials.RAGINITE)
+                hasItems(RagiumContents.RawMaterials.CRUDE_RAGINITE)
             }.putEnglish("Ragium - Tier 1")
-            .putEnglishDesc("Get Raw Raginite and Start!")
-            .putJapaneseDesc("ラギナイトの原石を手に入れて始める")
+            .putEnglishDesc("Get Raw Crude Raginite and Start!")
+            .putJapaneseDesc("粗製ラギナイトの原石を手に入れて始める")
             .build()
 
         val ragiAlloy: AdvancementEntry = register
@@ -91,7 +91,6 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
                 "tier1/ragi_alloy",
                 root,
                 RagiumContents.Ingots.RAGI_ALLOY,
-                AdvancementFrame.GOAL,
             ) {
                 hasItems(RagiumContents.Ingots.RAGI_ALLOY)
             }.putEnglish("Not a Red Alloy")
@@ -100,10 +99,49 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("ラギ合金インゴットを作る")
             .build()
 
+        val manualGrinder: AdvancementEntry = register
+            .createChild(
+                "tier1/manual_grinder",
+                ragiAlloy,
+                RagiumBlocks.MANUAL_GRINDER,
+            ) {
+                hasItems(RagiumBlocks.MANUAL_GRINDER)
+            }.putEnglish("Traditional One")
+            .putEnglishDesc("Craft Ragi-Grinder")
+            .putJapanese("あのクルクル")
+            .putJapaneseDesc("らぎ臼を作る")
+            .build()
+
+        val manualForge: AdvancementEntry = register
+            .createChild(
+                "tier1/manual_forge",
+                manualGrinder,
+                RagiumBlocks.MANUAL_FORGE,
+            ) {
+                hasItems(RagiumBlocks.MANUAL_FORGE)
+            }.putEnglish("NeoForge")
+            .putEnglishDesc("Craft Ragi-Anvil")
+            .putJapanese("")
+            .putJapaneseDesc("らぎ金床を作る")
+            .build()
+
+        val ragiAlloyPlate: AdvancementEntry = register
+            .createChild(
+                "tier1/ragi_alloy_plate",
+                manualForge,
+                RagiumContents.Misc.FORGE_HAMMER,
+            ) {
+                hasItems(RagiumContents.Misc.FORGE_HAMMER)
+            }.putEnglish("")
+            .putEnglishDesc("Obtain Ragi-Alloy Plate")
+            .putJapanese("")
+            .putJapaneseDesc("ラギ合金板を手に入れる")
+            .build()
+
         val ragiAlloyHull: AdvancementEntry = register
             .createChild(
                 "tier1/ragi_alloy_hull",
-                ragiAlloy,
+                ragiAlloyPlate,
                 RagiumContents.Hulls.RAGI_ALLOY,
             ) {
                 hasItems(RagiumContents.Hulls.RAGI_ALLOY)
@@ -112,19 +150,6 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapanese("ブロンズ製ではない")
             .putJapaneseDesc("ラギ合金筐体を作る")
             .build()
-
-        /*val brickAlloyFurnace: AdvancementEntry = register
-            .createChild(
-                "tier1/brick_alloy_furnace",
-                ragiAlloyHull,
-                RagiumContents.BRICK_ALLOY_FURNACE,
-            ) {
-                hasItems(RagiumContents.BRICK_ALLOY_FURNACE)
-            }.putEnglish("Pen Pineapple Apple Pen")
-            .putEnglishDesc("Craft Alloy Furnace")
-            .putJapanese("ペンパイナッポーアッポーペン")
-            .putJapaneseDesc("合金かまどを作る")
-            .build()*/
 
         val alloyFurnace: AdvancementEntry = register
             .createChild(
@@ -140,10 +165,50 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("合金かまどを作る")
             .build()
 
+        val heatGenerator: AdvancementEntry = register
+            .createChild(
+                "tier1/heat_generator",
+                ragiAlloyHull,
+                RagiumMachineTypes.HEAT_GENERATOR,
+                HTMachineTier.PRIMITIVE,
+            ) {
+                hasMachine(RagiumMachineTypes.HEAT_GENERATOR, HTMachineTier.PRIMITIVE)
+            }.putEnglish("Wireless Energy Transmission")
+            .putEnglishDesc("Craft Heat Generator")
+            .putJapanese("無線送電")
+            .putJapaneseDesc("火力発電機を作る")
+            .build()
+
+        val manualMixer: AdvancementEntry = register
+            .createChild(
+                "tier1/manual_mixer",
+                ragiAlloyPlate,
+                RagiumBlocks.MANUAL_MIXER,
+            ) {
+                hasItems(RagiumBlocks.MANUAL_MIXER)
+            }.putEnglish("")
+            .putEnglishDesc("Craft Ragi-Basin")
+            .putJapanese("")
+            .putJapaneseDesc("らぎ釜を作る")
+            .build()
+
+        val raginiteDust: AdvancementEntry = register
+            .createChild(
+                "tier1/raginite_dust",
+                manualMixer,
+                RagiumContents.Dusts.RAGINITE,
+            ) {
+                hasItems(RagiumContents.Dusts.RAGINITE)
+            }.putEnglish("Rascal the Raccoon")
+            .putEnglishDesc("Wash Raw Raginite Dust with Ragi-Basin")
+            .putJapanese("あらいぐまラスカル")
+            .putJapaneseDesc("ラギナイトの原石の粉をらぎ釜で洗う")
+            .build()
+
         val brickBlastFurnace: AdvancementEntry = register
             .createChild(
                 "tier1/brick_blast_furnace",
-                ragiAlloyHull,
+                raginiteDust,
                 RagiumMachineTypes.BLAST_FURNACE,
                 HTMachineTier.PRIMITIVE,
             ) {
@@ -154,45 +219,18 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapaneseDesc("レンガ高炉を建てる")
             .build()
 
-        val manualGrinder: AdvancementEntry = register
+        val ragiSteelIngot: AdvancementEntry = register
             .createChild(
-                "tier1/manual_grinder",
-                ragiAlloy,
-                RagiumBlocks.MANUAL_GRINDER,
-            ) {
-                hasItems(RagiumBlocks.MANUAL_GRINDER)
-            }.putEnglish("Traditional One")
-            .putEnglishDesc("Craft Manual Grinder")
-            .putJapanese("あのクルクル")
-            .putJapaneseDesc("石臼を作る")
-            .build()
-
-        val raginiteDust: AdvancementEntry = register
-            .createChild(
-                "tier1/raginite_dust",
-                manualGrinder,
-                RagiumContents.Dusts.RAGINITE,
+                "tier1/ragi_steel_ingot",
+                brickBlastFurnace,
+                RagiumContents.Ingots.RAGI_STEEL,
                 AdvancementFrame.GOAL,
             ) {
-                hasItems(RagiumContents.Dusts.RAGINITE)
-            }.putEnglish("Rascal the Raccoon")
-            .putEnglishDesc("Wash Raw Raginite Dust with Cauldron")
-            .putJapanese("あらいぐまラスカル")
-            .putJapaneseDesc("ラギナイトの原石の粉を大釜で洗う")
-            .build()
-
-        val grinder: AdvancementEntry = register
-            .createChild(
-                "tier1/grinder",
-                manualGrinder,
-                RagiumMachineTypes.Processor.GRINDER,
-                HTMachineTier.BASIC,
-            ) {
-                hasMachine(RagiumMachineTypes.Processor.GRINDER, HTMachineTier.BASIC)
-            }.putEnglish("True Grinder")
-            .putEnglishDesc("Craft Grinder")
-            .putJapanese("本物の粉砕機")
-            .putJapaneseDesc("粉砕機を作る")
+                hasItems(RagiumContents.Ingots.RAGI_STEEL)
+            }.putEnglish("The Red Comet")
+            .putEnglishDesc("Obtain Ragi-Steel Ingot")
+            .putJapanese("赤い彗星")
+            .putJapaneseDesc("ラギスチールインゴットを手に入れる")
             .build()
     }
 
@@ -203,7 +241,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createRoot(
                 "tier2/root",
                 RagiumContents.Ingots.RAGI_STEEL,
-                Identifier.of("textures/block/polished_blackstone_bricks.png"),
+                Identifier.of("textures/block/blast_furnace_top.png"),
             ) {
                 hasItems(RagiumContents.Ingots.RAGI_STEEL)
             }.putEnglish("Ragium - Tier 2")
@@ -237,20 +275,6 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .putJapanese("アベンジャーズ，アッセンブル！")
             .putJapaneseDesc("組立機を作る")
             .build()
-
-        /*val compressor: AdvancementEntry = register
-            .createChild(
-                "tier2/compressor",
-                ragiSteelHull,
-                RagiumMachineTypes.Processor.COMPRESSOR,
-                HTMachineTier.BASIC,
-            ) {
-                hasMachine(RagiumMachineTypes.Processor.COMPRESSOR, HTMachineTier.BASIC)
-            }.putEnglish("saves.zip.zip.zip")
-            .putEnglishDesc("Craft Compressor")
-            .putJapanese("saves.zip.zip.zip")
-            .putJapaneseDesc("圧縮機を作る")
-            .build()*/
 
         val extractor: AdvancementEntry = register
             .createChild(
@@ -343,7 +367,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createRoot(
                 "tier3/root",
                 RagiumContents.Ingots.REFINED_RAGI_STEEL,
-                Identifier.of("textures/block/end_stone_bricks.png"),
+                RagiumAPI.id("textures/block/advanced_casing.png"),
             ) {
                 hasItems(RagiumContents.Ingots.REFINED_RAGI_STEEL)
             }.putEnglish("Ragium - Tier 3")
@@ -425,78 +449,13 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumBlocks.META_PROCESSOR,
+                RagiumContents.Misc.RAGIUM,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(RagiumBlocks.META_PROCESSOR)
+                hasItems(RagiumContents.Misc.RAGIUM)
             }.putEnglish("Ragium - Tier 4")
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")
             .build()
-
-        /*val ragium: AdvancementEntry = register
-            .createChild(
-                "tier4/ragium",
-                root,
-                RagiumContents.Element.RAGIUM.dustItem,
-            ) {
-                hasItems(RagiumContents.Element.RAGIUM.dustItem)
-            }.putEnglish(RagiumContents.Element.RAGIUM.enName)
-            .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiumContents.Element.RAGIUM.jaName)
-            .putJapaneseDesc("ネザーまたは燃焼室の上で成長する")
-            .build()
-
-        val rigium: AdvancementEntry = register
-            .createChild(
-                "tier4/rigium",
-                root,
-                RagiumContents.Element.RIGIUM.dustItem,
-            ) {
-                hasItems(RagiumContents.Element.RAGIUM.dustItem)
-            }.putEnglish(RagiumContents.Element.RIGIUM.enName)
-            .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiumContents.Element.RIGIUM.jaName)
-            .putJapaneseDesc("荒地またはy=192より高い場所で成長する")
-            .build()
-
-        val rugium: AdvancementEntry = register
-            .createChild(
-                "tier4/rugium",
-                root,
-                RagiumContents.Element.RUGIUM.dustItem,
-            ) {
-                hasItems(RagiumContents.Element.RAGIUM.dustItem)
-            }.putEnglish(RagiumContents.Element.RUGIUM.enName)
-            .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiumContents.Element.RUGIUM.jaName)
-            .putJapaneseDesc("ジャングルまたは---で成長する")
-            .build()
-
-        val regium: AdvancementEntry = register
-            .createChild(
-                "tier4/regium",
-                root,
-                RagiumContents.Element.REGIUM.dustItem,
-            ) {
-                hasItems(RagiumContents.Element.RAGIUM.dustItem)
-            }.putEnglish(RagiumContents.Element.REGIUM.enName)
-            .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiumContents.Element.REGIUM.jaName)
-            .putJapaneseDesc("海洋または---で成長する")
-            .build()
-
-        val rogium: AdvancementEntry = register
-            .createChild(
-                "tier4/rogium",
-                root,
-                RagiumContents.Element.ROGIUM.dustItem,
-            ) {
-                hasItems(RagiumContents.Element.RAGIUM.dustItem)
-            }.putEnglish(RagiumContents.Element.ROGIUM.enName)
-            .putEnglishDesc("IT'S THE END OF TUTORIAL")
-            .putJapanese(RagiumContents.Element.ROGIUM.jaName)
-            .putJapaneseDesc("エンドまたは---で成長する")
-            .build()*/
     }
 }

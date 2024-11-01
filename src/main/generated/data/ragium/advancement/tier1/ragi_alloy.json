@@ -16,7 +16,6 @@
     "description": {
       "translate": "advancement.ragium.tier1.ragi_alloy.description"
     },
-    "frame": "goal",
     "icon": {
       "count": 1,
       "id": "ragium:ragi_alloy_ingot"

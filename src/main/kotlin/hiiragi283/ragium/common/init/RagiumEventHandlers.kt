@@ -28,7 +28,6 @@ import net.minecraft.entity.passive.WanderingTraderEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.EnchantedBookItem
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType
@@ -50,19 +49,19 @@ object RagiumEventHandlers {
         // send title and floating item packet when unlock advancement
         HTAdvancementRewardCallback.EVENT.register { player: ServerPlayerEntity, entry: AdvancementEntry ->
             if (entry.id == RagiumAPI.id("tier1/root")) {
-                player.sendTitle(Text.literal("Welcome to Heat Age!"))
-                RagiumNetworks.sendFloatingItem(player, Items.BRICKS)
+                player.sendTitle(Text.literal("Welcome to Tier1!"))
+                RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.RAGI_ALLOY)
             }
             if (entry.id == RagiumAPI.id("tier2/root")) {
-                player.sendTitle(Text.literal("Welcome to Kinetic Age!"))
-                RagiumNetworks.sendFloatingItem(player, Items.POLISHED_BLACKSTONE_BRICKS)
+                player.sendTitle(Text.literal("Welcome to Tier2!"))
+                RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier3/root")) {
-                player.sendTitle(Text.literal("Welcome to Electric Age!"))
-                RagiumNetworks.sendFloatingItem(player, Items.END_STONE_BRICKS)
+                player.sendTitle(Text.literal("Welcome to Tier3!"))
+                RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.REFINED_RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier4/root")) {
-                player.sendTitle(Text.literal("Welcome to Alchemical Age!"))
+                player.sendTitle(Text.literal("Welcome to Tier4!"))
                 RagiumNetworks.sendFloatingItem(player, RagiumContents.Misc.RAGIUM)
             }
         }

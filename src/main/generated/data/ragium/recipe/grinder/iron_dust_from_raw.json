@@ -20,9 +20,7 @@
   ],
   "item_outputs": [
     {
-      "item": "ragium:iron_dust"
-    },
-    {
+      "count": 2,
       "item": "ragium:iron_dust"
     }
   ]

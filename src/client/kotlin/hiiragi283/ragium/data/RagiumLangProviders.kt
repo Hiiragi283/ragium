@@ -135,7 +135,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.MANUAL_FORGE, "Ragi-Anvil")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "Ragi-Grinder")
-            builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Mixing Basin")
+            builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Basin")
             builder.add(RagiumBlocks.META_GENERATOR, "Generator")
             builder.add(RagiumBlocks.META_PROCESSOR, "Processor")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")

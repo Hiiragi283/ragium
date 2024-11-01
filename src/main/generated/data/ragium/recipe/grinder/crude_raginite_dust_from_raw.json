@@ -20,9 +20,7 @@
   ],
   "item_outputs": [
     {
-      "item": "ragium:crude_raginite_dust"
-    },
-    {
+      "count": 2,
       "item": "ragium:crude_raginite_dust"
     }
   ]

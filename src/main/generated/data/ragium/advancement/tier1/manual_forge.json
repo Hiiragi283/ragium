@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:tier1/ragi_alloy_plate",
+  "parent": "ragium:tier1/manual_grinder",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_hull"
+            "items": "ragium:manual_forge"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier1.ragi_alloy_hull.description"
+      "translate": "advancement.ragium.tier1.manual_forge.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_alloy_hull"
+      "id": "ragium:manual_forge"
     },
     "title": {
-      "translate": "advancement.ragium.tier1.ragi_alloy_hull"
+      "translate": "advancement.ragium.tier1.manual_forge"
     }
   },
   "requirements": [

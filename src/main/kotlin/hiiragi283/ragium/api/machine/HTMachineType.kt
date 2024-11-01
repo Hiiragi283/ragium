@@ -46,8 +46,7 @@ sealed class HTMachineType :
     //    Default    //
 
     data object Default : HTMachineType() {
-        override val key: HTMachineTypeKey
-            get() = throw UnsupportedOperationException()
+        override val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("default"))
     }
 
     //    Generator    //

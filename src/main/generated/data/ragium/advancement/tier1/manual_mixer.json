@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_hull"
+            "items": "ragium:manual_mixer"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier1.ragi_alloy_hull.description"
+      "translate": "advancement.ragium.tier1.manual_mixer.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_alloy_hull"
+      "id": "ragium:manual_mixer"
     },
     "title": {
-      "translate": "advancement.ragium.tier1.ragi_alloy_hull"
+      "translate": "advancement.ragium.tier1.manual_mixer"
     }
   },
   "requirements": [

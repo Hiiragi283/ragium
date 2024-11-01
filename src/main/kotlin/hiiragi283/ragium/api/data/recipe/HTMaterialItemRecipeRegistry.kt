@@ -140,17 +140,6 @@ object HTMaterialItemRecipeRegistry {
     private fun ingotToPlateRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
         val plate: ItemConvertible = properties[PLATE] ?: return
         val ingot: TagKey<Item> = getTagKey(name, INGOT)
-        // Shaped Crafting (only hard mode)
-        /*HTShapedRecipeJsonBuilder
-            .create(plate)
-            .patterns(
-                "A",
-                "B",
-                "B",
-            ).input('A', RagiumContents.Misc.FORGE_HAMMER)
-            .input('B', ingot)
-            .unlockedBy(ingot)
-            .offerTo(wrapper(exporter, true))*/
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.METAL_FORMER)
@@ -191,8 +180,7 @@ object HTMaterialItemRecipeRegistry {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(rawMaterial)
-            .itemOutput(dust)
-            .itemOutput(dust)
+            .itemOutput(dust, 2)
             .offerTo(tagValidator(exporter, rawMaterial), dust, "_from_raw")
     }
 

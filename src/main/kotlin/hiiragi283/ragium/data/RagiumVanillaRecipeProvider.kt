@@ -515,9 +515,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "AAA",
                 " B ",
                 "BBB",
-            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
+            ).input('A', RagiumContents.StorageBlocks.RAGI_ALLOY)
             .input('B', Blocks.SMOOTH_STONE)
-            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
+            .unlockedBy(RagiumContents.StorageBlocks.RAGI_ALLOY)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -527,9 +527,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "BBB",
                 "CCC",
             ).input('A', ConventionalItemTags.WOODEN_RODS)
-            .input('B', RagiumContents.Plates.RAGI_ALLOY)
+            .input('B', RagiumContents.Ingots.RAGI_ALLOY)
             .input('C', Items.SMOOTH_STONE)
-            .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
+            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder

@@ -1,13 +1,13 @@
 {
-  "parent": "ragium:tier1/manual_grinder",
+  "parent": "ragium:tier1/ragi_alloy_hull",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
             "components": {
-              "ragium:machine_tier": "basic",
-              "ragium:machine_type": "ragium:grinder"
+              "ragium:machine_tier": "primitive",
+              "ragium:machine_type": "ragium:heat_generator"
             },
             "items": "ragium:processor"
           }
@@ -18,18 +18,18 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.tier1.grinder.description"
+      "translate": "advancement.ragium.tier1.heat_generator.description"
     },
     "icon": {
       "components": {
-        "ragium:machine_tier": "basic",
-        "ragium:machine_type": "ragium:grinder"
+        "ragium:machine_tier": "primitive",
+        "ragium:machine_type": "ragium:heat_generator"
       },
       "count": 1,
-      "id": "ragium:processor"
+      "id": "ragium:generator"
     },
     "title": {
-      "translate": "advancement.ragium.tier1.grinder"
+      "translate": "advancement.ragium.tier1.heat_generator"
     }
   },
   "requirements": [
