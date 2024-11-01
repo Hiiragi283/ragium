@@ -1,23 +1,9 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.unused
 
-import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
-import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumMachineTypes
-import net.fabricmc.fabric.api.registry.FuelRegistry
-import net.minecraft.block.BlockState
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 
-class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEntity(RagiumMachineTypes.HEAT_GENERATOR, tier) {
+class HTHeatGeneratorMachineEntity(tier: HTMachineTier)
+/* : HTGeneratorMachineEntity(TODO(), tier) {
     var burningTime: Int = 0
     val isBurning: Boolean
         get() = burningTime > 0
@@ -84,4 +70,4 @@ class HTHeatGeneratorMachineEntity(tier: HTMachineTier) : HTGeneratorMachineEnti
             }
             true
         }.buildSided()
-}
+}*/

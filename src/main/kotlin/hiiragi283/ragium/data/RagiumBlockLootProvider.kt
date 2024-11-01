@@ -50,6 +50,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.ADVANCED_CASING)
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
+        dropMachine(RagiumBlocks.META_CONSUMER)
         dropMachine(RagiumBlocks.META_GENERATOR)
         dropMachine(RagiumBlocks.META_PROCESSOR)
 

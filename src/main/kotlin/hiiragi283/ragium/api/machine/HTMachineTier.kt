@@ -2,13 +2,14 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.content.HTTranslationProvider
-import hiiragi283.ragium.api.extension.codecOf
-import hiiragi283.ragium.api.extension.longText
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.energy.HTEnergyType
+import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
@@ -20,6 +21,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
+import net.minecraft.world.World
 
 enum class HTMachineTier(
     private val idPattern: String,
@@ -136,6 +138,18 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumContents.StorageBlocks.RAGI_ALLOY
         BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
+    }
+
+    fun consumerEnergy(world: World) {
+        world.energyNetwork?.let { network: HTEnergyNetwork ->
+            useTransaction { transaction: Transaction ->
+                val extracted: Long = network.extract(HTEnergyType.ELECTRICITY, recipeCost, transaction)
+                when {
+                    extracted > 0 -> transaction.commit()
+                    else -> transaction.abort()
+                }
+            }
+        }
     }
 
     //    StringIdentifiable    //

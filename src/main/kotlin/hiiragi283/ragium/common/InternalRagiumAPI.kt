@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.RagiumContents.Misc
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.fabricmc.api.EnvType
+import net.fabricmc.fabric.api.util.TriState
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -51,11 +52,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
     fun registerMachines() {
         val typeCache: ImmutableBiMap.Builder<HTMachineTypeKey, HTMachineType> = ImmutableBiMap.builder()
 
-        fun addMachine(key: HTMachineTypeKey, flag: Boolean) {
+        fun addMachine(key: HTMachineTypeKey, flag: TriState) {
             check(key !in keyCache) { "Machine SizeType; ${key.id} is already registered!" }
             val type: HTMachineType = when (flag) {
-                true -> HTMachineType.Generator(key)
-                false -> HTMachineType.Processor(key)
+                TriState.TRUE -> HTMachineType.Generator(key)
+                TriState.FALSE -> HTMachineType.Processor(key)
+                TriState.DEFAULT -> HTMachineType.Consumer(key)
             }
             keyCache.add(key)
             typeCache.put(key, type)

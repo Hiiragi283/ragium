@@ -7,7 +7,7 @@
           {
             "components": {
               "ragium:machine_tier": "primitive",
-              "ragium:machine_type": "ragium:heat_generator"
+              "ragium:machine_type": "ragium:steam"
             },
             "items": "ragium:processor"
           }
@@ -23,7 +23,7 @@
     "icon": {
       "components": {
         "ragium:machine_tier": "primitive",
-        "ragium:machine_type": "ragium:heat_generator"
+        "ragium:machine_type": "ragium:steam"
       },
       "count": 1,
       "id": "ragium:generator"

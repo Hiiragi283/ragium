@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
@@ -9,7 +10,6 @@ import hiiragi283.ragium.api.fluid.HTSingleFluidStorage
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
@@ -48,37 +48,20 @@ class HTMachineRecipeProcessor private constructor(
         if (!machineType.isProcessor()) return
         if (inventory.size() != typeSize.invSize) return
         if (fluidStorage.typeSize != typeSize) return
-        processInternal(world, pos, machineType, tier, input)
-            .ifError {
-                machineType.getOrDefault(HTMachinePropertyKeys.PROCESSOR_FAILED)(
-                    world,
-                    pos,
-                    machineType,
-                    tier,
-                )
-            }.ifSuccess {
-                machineType.getOrDefault(HTMachinePropertyKeys.PROCESSOR_SUCCEEDED)(
-                    world,
-                    pos,
-                    machineType,
-                    tier,
-                )
+        processInternal(world, tier, input)
+            .ifSuccess {
+                tier.consumerEnergy(world)
             }
     }
 
-    private fun processInternal(
-        world: World,
-        pos: BlockPos,
-        machineType: HTMachineType.Processor,
-        tier: HTMachineTier,
-        input: HTMachineInput,
-    ): DataResult<HTMachineRecipe> {
+    private fun processInternal(world: World, tier: HTMachineTier, input: HTMachineInput): DataResult<HTMachineRecipe> {
         val recipeEntry: RecipeEntry<HTMachineRecipe> = matchGetter
             .getFirstMatch(input, world)
             .getOrNull() ?: return DataResult.error { "Could not find matching recipe!" }
         val recipe: HTMachineRecipe = recipeEntry.value
         if (!canAcceptOutputs(recipe)) return DataResult.error { "Could not insert recipe outputs to slots!" }
-        if (!machineType.getOrDefault(HTMachinePropertyKeys.PROCESSOR_CONDITION)(world, pos, machineType, tier)) {
+        val energyRequest: Boolean = world.energyNetwork?.amount?.let { it >= tier.recipeCost } ?: false
+        if (!energyRequest) {
             return DataResult.error { "Not matching required condition!" }
         }
         modifyOutputs(recipe)

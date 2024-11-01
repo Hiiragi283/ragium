@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/iron"
+      "tag": "c:plates/steel"
     },
     "B": {
       "item": "minecraft:furnace"
     },
     "C": {
-      "item": "ragium:primitive_circuit"
+      "item": "ragium:basic_circuit"
     }
   },
   "pattern": [
@@ -19,8 +19,8 @@
   ],
   "result": {
     "components": {
-      "ragium:machine_tier": "primitive",
-      "ragium:machine_type": "ragium:heat_generator"
+      "ragium:machine_tier": "basic",
+      "ragium:machine_type": "ragium:steam"
     },
     "count": 1,
     "id": "ragium:generator"

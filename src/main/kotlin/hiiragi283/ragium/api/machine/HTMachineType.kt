@@ -43,11 +43,9 @@ sealed class HTMachineType :
             }
         }
 
-    //    Default    //
+    //    Consumer    //
 
-    data object Default : HTMachineType() {
-        override val key: HTMachineTypeKey = HTMachineTypeKey.of(RagiumAPI.id("default"))
-    }
+    class Consumer(override val key: HTMachineTypeKey) : HTMachineType()
 
     //    Generator    //
 

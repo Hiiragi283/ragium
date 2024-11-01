@@ -1,12 +1,9 @@
 package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.property.HTPropertyKey
-import net.minecraft.fluid.Fluid
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -29,10 +26,6 @@ object HTMachinePropertyKeys {
         HTPropertyKey.Simple(RagiumAPI.id("generator_color"))
 
     @JvmField
-    val FUEL_TAG: HTPropertyKey.Simple<TagKey<Fluid>> =
-        HTPropertyKey.Simple(RagiumAPI.id("fuel_tag"))
-
-    @JvmField
     val GENERATOR_PREDICATE: HTPropertyKey.Defaulted<(World, BlockPos) -> Boolean> =
         HTPropertyKey.Defaulted(RagiumAPI.id("generator_predicate")) { _: World, _: BlockPos -> false }
 
@@ -47,18 +40,6 @@ object HTMachinePropertyKeys {
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =
         HTPropertyKey.Defaulted(RagiumAPI.id("front_mapper"), value = { it })
-
-    @JvmField
-    val PROCESSOR_CONDITION: HTPropertyKey.Defaulted<(World, BlockPos, HTMachineType, HTMachineTier) -> Boolean> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("processor_condition")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> false }
-
-    @JvmField
-    val PROCESSOR_SUCCEEDED: HTPropertyKey.Defaulted<(World, BlockPos, HTMachineType, HTMachineTier) -> Unit> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("processor_succeeded")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> }
-
-    @JvmField
-    val PROCESSOR_FAILED: HTPropertyKey.Defaulted<(World, BlockPos, HTMachineType, HTMachineTier) -> Unit> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("processor_failed")) { _: World, _: BlockPos, _: HTMachineType, _: HTMachineTier -> }
 
     @JvmField
     val RECIPE_SIZE: HTPropertyKey.Simple<HTMachineType.Size> =

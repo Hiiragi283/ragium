@@ -1,14 +1,12 @@
 package hiiragi283.ragium.common.screen
 
+import hiiragi283.ragium.api.extension.machineInventory
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.item.ItemStack
 import net.minecraft.screen.ScreenHandlerContext
-import net.minecraft.screen.slot.Slot
 
 class HTLargeMachineScreenHandler(
     syncId: Int,
@@ -21,7 +19,7 @@ class HTLargeMachineScreenHandler(
         playerInv,
         packet,
         ctx,
-        HTMachineType.Size.LARGE,
+        ctx.machineInventory(HTMachineType.Size.LARGE),
     ) {
     init {
         inventory.onOpen(player)
@@ -41,7 +39,9 @@ class HTLargeMachineScreenHandler(
         addProperties(property)
     }
 
-    override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
+    override val machineSlotRange: IntRange = (0..6)
+
+    /*override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
         val slotIn: Slot = slots[slot]
         if (slotIn.hasStack()) {
@@ -78,5 +78,5 @@ class HTLargeMachineScreenHandler(
             }
         }
         return result
-    }
+    }*/
 }

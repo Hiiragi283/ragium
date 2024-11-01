@@ -35,11 +35,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             register(block) { generator.registerSingleton(it) { TexturedModel.getCubeAll(id) } }
         }
 
+        fun registerLayered(block: Block, layer0: Identifier, layer1: Identifier) {
+            register(block) { generator.registerSingleton(it, RagiumModels.createLayered(layer0, layer1)) }
+        }
+
         fun accept(supplier: BlockStateSupplier) {
             generator.blockStateCollector.accept(supplier)
         }
-
-        // register(RagiumBlocks.OBLIVION_CLUSTER, generator::registerAmethyst)
 
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         register(RagiumBlocks.MANUAL_GRINDER) {
@@ -85,15 +87,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
         registerSimple(RagiumBlocks.ADVANCED_CASING)
-        register(RagiumBlocks.POROUS_NETHERRACK) {
-            generator.registerSingleton(
-                it,
-                RagiumModels.createLayered(Identifier.of("block/netherrack"), Identifier.of("block/destroy_stage_5")),
-            )
-        }
+        registerLayered(
+            RagiumBlocks.POROUS_NETHERRACK,
+            Identifier.of("block/netherrack"),
+            Identifier.of("block/destroy_stage_5"),
+        )
 
         registerSimple(RagiumBlocks.SPONGE_CAKE)
         listOf(
+            RagiumBlocks.META_CONSUMER,
             RagiumBlocks.META_GENERATOR,
             RagiumBlocks.META_PROCESSOR,
         ).forEach { metaMachine: Block ->
@@ -221,15 +223,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         // ores
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-            register(ore.value) { block: Block ->
-                generator.registerSingleton(
-                    block,
-                    RagiumModels.createLayered(
-                        TextureMap.getId(ore.baseStone),
-                        RagiumAPI.id("block/ore/${ore.material.asString()}"),
-                    ),
-                )
-            }
+            registerLayered(
+                ore.value,
+                TextureMap.getId(ore.baseStone),
+                RagiumAPI.id("block/ore/${ore.material.asString()}"),
+            )
         }
         // storage blocks
         RagiumContents.StorageBlocks.entries

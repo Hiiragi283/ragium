@@ -8,6 +8,7 @@
     "ragium:manual_mixer",
     "ragium:network_interface",
     "ragium:shaft",
+    "ragium:consumer",
     "ragium:generator",
     "ragium:processor",
     "ragium:raginite_ore",

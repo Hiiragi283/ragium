@@ -6,10 +6,9 @@ import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.fluid.HTSingleFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.entity.HTProcessorMachineEntityBase
+import hiiragi283.ragium.api.machine.entity.HTFluidSyncable
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
@@ -149,11 +148,8 @@ object RagiumEventHandlers {
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 val screen: HTMachineScreenHandlerBase =
                     player.currentScreenHandler as? HTMachineScreenHandlerBase ?: return@forEach
-                val machine: HTProcessorMachineEntityBase =
-                    player.world.getMachineEntity(screen.pos) as? HTProcessorMachineEntityBase ?: return@forEach
-                machine.fluidStorage.parts.forEachIndexed { index: Int, storage: HTSingleFluidStorage ->
-                    RagiumNetworks.sendFluidSync(player, index, storage.variant, storage.amount)
-                }
+                (player.world.getMachineEntity(screen.pos) as? HTFluidSyncable)
+                    ?.sendPacket(player, RagiumNetworks::sendFluidSync)
             }
         }
 

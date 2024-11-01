@@ -169,10 +169,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/heat_generator",
                 ragiAlloyHull,
-                RagiumMachineTypes.HEAT_GENERATOR,
+                RagiumMachineTypes.Generator.STEAM,
                 HTMachineTier.PRIMITIVE,
             ) {
-                hasMachine(RagiumMachineTypes.HEAT_GENERATOR, HTMachineTier.PRIMITIVE)
+                hasMachine(RagiumMachineTypes.Generator.STEAM, HTMachineTier.PRIMITIVE)
             }.putEnglish("Wireless Energy Transmission")
             .putEnglishDesc("Craft Heat Generator")
             .putJapanese("無線送電")

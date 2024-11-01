@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.model
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.machineType
+import hiiragi283.ragium.api.extension.machineTypeOrNull
 import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.client.util.getBlockModel
@@ -77,7 +77,7 @@ data object HTMachineModel : UnbakedModel, BakedModel {
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        stack.machineType.ifPresent(HTClientMachinePropertyKeys.STATIC_RENDERER) {
+        stack.machineTypeOrNull?.ifPresent(HTClientMachinePropertyKeys.STATIC_RENDERER) {
             it.emitItemQuads(stack, randomSupplier, context)
         }
     }

@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
@@ -49,7 +50,7 @@ class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
     ) {
         if (!state.isOf(newState.block)) {
             world.getMachineEntity(pos)?.let { machine: HTMachineEntity<*> ->
-                ItemScatterer.spawn(world, pos, machine)
+                (machine as? Inventory)?.let { ItemScatterer.spawn(world, pos, it) }
                 world.updateComparators(pos, state.block)
             }
         }

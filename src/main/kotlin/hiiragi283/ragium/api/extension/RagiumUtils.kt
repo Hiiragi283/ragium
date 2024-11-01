@@ -27,7 +27,9 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import net.minecraft.text.TranslatableTextContent
 import net.minecraft.util.Identifier
+import net.minecraft.util.Language
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
@@ -143,10 +145,10 @@ fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T
 
 fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity<*>? = getOrNull(World::getMachineEntity)
 
-fun ScreenHandlerContext.machineInventory(size: Int): Inventory = getMachineEntity()?.parent ?: SimpleInventory(size)
+fun ScreenHandlerContext.machineInventory(size: Int): Inventory = getMachineEntity() as? Inventory ?: SimpleInventory(size)
 
 fun ScreenHandlerContext.machineInventory(typeSize: HTMachineType.Size): Inventory =
-    getMachineEntity()?.parent ?: SimpleInventory(typeSize.invSize)
+    getMachineEntity() as? Inventory ?: SimpleInventory(typeSize.invSize)
 
 //    Table    //
 
@@ -166,6 +168,11 @@ fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V
 fun intText(value: Int): MutableText = longText(value.toLong())
 
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
+
+fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
+    ?.let(TranslatableTextContent::getKey)
+    ?.let(Language.getInstance()::hasTranslation)
+    ?: false
 
 /*fun breakRangedBlock(
     world: World,

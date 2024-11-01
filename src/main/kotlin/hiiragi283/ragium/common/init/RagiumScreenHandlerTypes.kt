@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -19,6 +20,10 @@ object RagiumScreenHandlerTypes {
     @JvmField
     val SIMPLE_MACHINE: ExtendedScreenHandlerType<HTSimpleMachineScreenHandler, HTMachinePacket> =
         registerExtended("simple_machine", ::HTSimpleMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+
+    @JvmField
+    val STEAM: ExtendedScreenHandlerType<HTSteamMachineScreenHandler, HTMachinePacket> =
+        registerExtended("stean", ::HTSteamMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(

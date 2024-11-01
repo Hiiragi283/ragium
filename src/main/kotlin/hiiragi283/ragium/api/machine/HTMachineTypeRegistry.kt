@@ -31,11 +31,14 @@ class HTMachineTypeRegistry(val registry: BiMap<HTMachineTypeKey, HTMachineType>
     val types: Collection<HTMachineType>
         get() = registry.values
 
+    val consumers: Collection<HTMachineType.Consumer>
+        get() = types.mapNotNull { it.asMachine() as? HTMachineType.Consumer }
+
     val generators: Collection<HTMachineType.Generator>
-        get() = types.mapNotNull(HTMachineType::asGeneratorOrNull)
+        get() = types.mapNotNull { it.asMachine() as? HTMachineType.Generator }
 
     val processors: Collection<HTMachineType.Processor>
-        get() = types.mapNotNull(HTMachineType::asProcessorOrNull)
+        get() = types.mapNotNull { it.asMachine() as? HTMachineType.Processor }
 
     fun get(key: HTMachineTypeKey): HTMachineType? = registry[key]
 

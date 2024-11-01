@@ -9,20 +9,23 @@ import net.minecraft.item.ItemStack
 interface HTMachineConvertible {
     fun asMachine(): HTMachineType
 
-    fun asGenerator(): HTMachineType.Generator = checkNotNull(asMachine() as? HTMachineType.Generator)
+    fun asConsumer(): HTMachineType.Consumer =
+        checkNotNull(asMachine() as? HTMachineType.Consumer) { "Machine Type; $key is not Consumer!" }
 
-    fun asProcessor(): HTMachineType.Processor = checkNotNull(asMachine() as? HTMachineType.Processor)
+    fun asGenerator(): HTMachineType.Generator =
+        checkNotNull(asMachine() as? HTMachineType.Generator) { "Machine Type; $key is not Generator!" }
 
-    fun asGeneratorOrNull(): HTMachineType.Generator? = asMachine() as? HTMachineType.Generator
+    fun asProcessor(): HTMachineType.Processor =
+        checkNotNull(asMachine() as? HTMachineType.Processor) { "Machine Type; $key is not Processor!" }
 
-    fun asProcessorOrNull(): HTMachineType.Processor? = asMachine() as? HTMachineType.Processor
+    fun isConsumer(): Boolean = asMachine() is HTMachineType.Consumer
 
     fun isGenerator(): Boolean = asMachine() is HTMachineType.Generator
 
     fun isProcessor(): Boolean = asMachine() is HTMachineType.Processor
 
     fun getBaseBlock(): Block = when (asMachine()) {
-        HTMachineType.Default -> throw IllegalStateException("Default machine type have no block!")
+        is HTMachineType.Consumer -> RagiumBlocks.META_CONSUMER
         is HTMachineType.Generator -> RagiumBlocks.META_GENERATOR
         is HTMachineType.Processor -> RagiumBlocks.META_PROCESSOR
     }

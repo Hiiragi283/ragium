@@ -28,10 +28,8 @@ class HTMachineRecipeJsonBuilder private constructor(
 ) {
     companion object {
         @JvmStatic
-        fun create(type: HTMachineConvertible, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder = type
-            .asProcessorOrNull()
-            ?.let { HTMachineRecipeJsonBuilder(it, minTier) }
-            ?: throw IllegalStateException("Machine SizeType;  ${type.key.id} must be Processor!")
+        fun create(type: HTMachineConvertible, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
+            HTMachineRecipeJsonBuilder(type.asProcessor(), minTier)
 
         @JvmStatic
         fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder

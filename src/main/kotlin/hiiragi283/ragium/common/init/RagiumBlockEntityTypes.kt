@@ -65,6 +65,7 @@ object RagiumBlockEntityTypes {
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
+        META_MACHINE.addSupportedBlock(RagiumBlocks.META_CONSUMER)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_GENERATOR)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_PROCESSOR)
         TRADER_STATION.addSupportedBlock(RagiumBlocks.TRADER_STATION)

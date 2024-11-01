@@ -78,8 +78,8 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
-            RagiumBlocks.POROUS_NETHERRACK,
             RagiumBlocks.META_PROCESSOR,
+            RagiumBlocks.POROUS_NETHERRACK,
         )
 
         buildList {
@@ -228,7 +228,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         helper.modify(HTMachineTypeKey::isGenerator) {
             set(HTClientMachinePropertyKeys.STATIC_RENDERER, HTAliasedModel(RagiumAPI.id("block/generator")))
         }
-        helper.modify(RagiumMachineTypes.Generator.SOLAR.key) {
+        helper.modify(RagiumMachineTypes.Generator.SOLAR) {
             set(HTClientMachinePropertyKeys.STATIC_RENDERER, HTAliasedModel(RagiumAPI.id("block/solar_generator")))
         }
     }

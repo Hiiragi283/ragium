@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.math.BlockPos
@@ -25,8 +24,7 @@ object RagiumBlocks : HTContentRegister {
             },
         )
 
-    @JvmField
-    val SNOW_SPONGE: Block =
+    /*val SNOW_SPONGE: Block =
         registerBlock(
             "snow_sponge",
             HTSpongeBlock(
@@ -35,7 +33,7 @@ object RagiumBlocks : HTContentRegister {
             ) { world: World, pos: BlockPos ->
                 world.getBlockState(pos).isIn(BlockTags.SNOW)
             },
-        )
+        )*/
 
     /*val OBLIVION_CLUSTER: Block =
         registerBlock(
@@ -59,8 +57,8 @@ object RagiumBlocks : HTContentRegister {
     //    Blocks - Utilities    //
 
     @JvmField
-    val CREATIVE_SOURCE: Block =
-        registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
+    val ADVANCED_CASING: Block =
+        registerCopy("advanced_casing", Blocks.IRON_BLOCK)
 
     @JvmField
     val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
@@ -70,8 +68,12 @@ object RagiumBlocks : HTContentRegister {
         registerCopy("basic_casing", Blocks.IRON_BLOCK)
 
     @JvmField
-    val ADVANCED_CASING: Block =
-        registerCopy("advanced_casing", Blocks.IRON_BLOCK)
+    val CREATIVE_SOURCE: Block =
+        registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
+
+    @JvmField
+    val ITEM_DISPLAY: Block =
+        registerBlock("item_display", HTItemDisplayBlock)
 
     @JvmField
     val MANUAL_FORGE: Block =
@@ -86,20 +88,8 @@ object RagiumBlocks : HTContentRegister {
         registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER)
 
     @JvmField
-    val ITEM_DISPLAY: Block =
-        registerBlock("item_display", HTItemDisplayBlock)
-
-    @JvmField
-    val NETWORK_INTERFACE: Block =
-        registerBlock("network_interface", HTNetworkInterfaceBlock)
-
-    @JvmField
-    val SHAFT: Block =
-        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
-
-    @JvmField
-    val INFESTING: Block =
-        registerBlock("infesting", HTInfectingBlock)
+    val META_CONSUMER: Block =
+        registerBlock("consumer", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))
 
     @JvmField
     val META_GENERATOR: Block =
@@ -109,10 +99,23 @@ object RagiumBlocks : HTContentRegister {
     val META_PROCESSOR: Block =
         registerBlock("processor", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))
 
+    @JvmField
+    val NETWORK_INTERFACE: Block =
+        registerBlock("network_interface", HTNetworkInterfaceBlock)
+
+    @JvmField
+    val SHAFT: Block =
+        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
+
     @JvmStatic
     val TRADER_STATION: Block =
         registerHorizontalWithBE("trader_station", RagiumBlockEntityTypes.TRADER_STATION)
 
     @JvmField
-    val TRASH_BOX: Block = registerBlock("trash_box")
+    val TRASH_BOX: Block =
+        registerBlock("trash_box")
+
+    @JvmField
+    val INFESTING: Block =
+        registerBlock("infesting", HTInfectingBlock)
 }

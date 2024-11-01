@@ -40,8 +40,6 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     addAll(RagiumContents.Ores.entries)
-                    add(RagiumBlocks.POROUS_NETHERRACK)
-                    add(RagiumBlocks.SNOW_SPONGE)
                     addAll(RagiumContents.StorageBlocks.entries)
 
                     addAll(RagiumContents.Dusts.entries)
@@ -97,10 +95,12 @@ object RagiumItemGroup {
                     add(RagiumBlocks.MANUAL_FORGE)
                     add(RagiumBlocks.MANUAL_GRINDER)
                     add(RagiumBlocks.MANUAL_MIXER)
-                    add(RagiumBlocks.SHAFT)
+                    add(RagiumBlocks.BACKPACK_INTERFACE)
                     add(RagiumBlocks.ITEM_DISPLAY)
                     add(RagiumBlocks.NETWORK_INTERFACE)
-                    add(RagiumBlocks.BACKPACK_INTERFACE)
+                    add(RagiumBlocks.SHAFT)
+                    add(RagiumBlocks.TRADER_STATION)
+                    add(RagiumBlocks.TRASH_BOX)
 
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)
@@ -117,6 +117,13 @@ object RagiumItemGroup {
                     .getInstance()
                     .machineTypeRegistry
                     .processors
+                    .flatMap { HTMachineTier.entries.map(it::createItemStack) }
+                    .forEach(entries::add)
+                // consumers
+                RagiumAPI
+                    .getInstance()
+                    .machineTypeRegistry
+                    .consumers
                     .flatMap { HTMachineTier.entries.map(it::createItemStack) }
                     .forEach(entries::add)
             }

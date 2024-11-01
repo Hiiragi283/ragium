@@ -56,12 +56,6 @@ fun foodComponent(
     },
 )
 
-val ComponentHolder.machineType: HTMachineType
-    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.Default)
-
-val ComponentMap.machineType: HTMachineType
-    get() = getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.Default)
-
 val ComponentHolder.machineTypeOrNull: HTMachineType?
     get() = get(HTMachineType.COMPONENT_TYPE)
 
@@ -73,11 +67,5 @@ val ComponentHolder.machineTier: HTMachineTier
 
 val ComponentMap.machineTier: HTMachineTier
     get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
-
-val ComponentHolder.machineTierOrNull: HTMachineTier?
-    get() = get(HTMachineTier.COMPONENT_TYPE)
-
-val ComponentMap.machineTierOrNull: HTMachineTier?
-    get() = get(HTMachineTier.COMPONENT_TYPE)
 
 fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).collect(Collectors.joining(", "))}}"

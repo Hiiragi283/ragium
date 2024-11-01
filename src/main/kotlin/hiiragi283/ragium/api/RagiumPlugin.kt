@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineTypeKey
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
+import net.fabricmc.fabric.api.util.TriState
 import java.util.function.Predicate
 
 @JvmDefaultWithCompatibility
@@ -24,19 +26,27 @@ interface RagiumPlugin {
 
     //    MachineRegister    //
 
-    class MachineRegister(private val register: (HTMachineTypeKey, Boolean) -> Unit) {
+    class MachineRegister(private val register: (HTMachineTypeKey, TriState) -> Unit) {
+        fun registerConsumer(key: HTMachineTypeKey) {
+            register(key, TriState.DEFAULT)
+        }
+
         fun registerGenerator(key: HTMachineTypeKey) {
-            register(key, true)
+            register(key, TriState.TRUE)
         }
 
         fun registerProcessor(key: HTMachineTypeKey) {
-            register(key, false)
+            register(key, TriState.FALSE)
         }
     }
 
     //    PropertyHelper    //
 
     class PropertyHelper(private val key: HTMachineTypeKey, private val properties: HTMutablePropertyHolder) {
+        fun modify(type: HTMachineConvertible, builderAction: HTMutablePropertyHolder.() -> Unit) {
+            modify(type.key, builderAction)
+        }
+
         fun modify(key: HTMachineTypeKey, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify({ it == key }, builderAction)
         }

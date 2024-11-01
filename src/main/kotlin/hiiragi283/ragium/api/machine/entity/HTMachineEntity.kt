@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.machine.entity
 
-import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -9,12 +8,9 @@ import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
@@ -23,19 +19,13 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandlerContext
-import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: HTMachineTier) :
-    HTDelegatedInventory.Simple,
-    ExtendedScreenHandlerFactory<HTMachinePacket>,
-    SidedStorageBlockEntity {
+abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: HTMachineTier) : SidedStorageBlockEntity {
     companion object {
         const val MAX_PROPERTIES = 4
     }
@@ -108,12 +98,6 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
 
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
 
-    //    ExtendedScreenHandlerFactory    //
-
-    override fun getDisplayName(): Text = tier.createPrefixedText(machineType)
-
-    override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = packet
-
     protected fun createContext(): ScreenHandlerContext = parentBE.ifPresentWorld { world: World ->
         ScreenHandlerContext.create(world, parentBE.pos)
     } ?: ScreenHandlerContext.EMPTY
@@ -142,24 +126,8 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
             @JvmStatic
             fun ofStatic(factory: (HTMachineTier) -> HTMachineEntity<*>?): Factory =
                 Factory { _: HTMachineType, tier: HTMachineTier -> factory(tier) }
-
-            @JvmStatic
-            fun ofGenerator(factory: (HTMachineType.Generator, HTMachineTier) -> HTMachineEntity<*>?): Factory =
-                Factory { machineType: HTMachineType, tier: HTMachineTier ->
-                    machineType.asGeneratorOrNull()?.let { factory(it, tier) }
-                }
-
-            @JvmStatic
-            fun ofProcessor(factory: (HTMachineType.Processor, HTMachineTier) -> HTMachineEntity<*>?): Factory =
-                Factory { machineType: HTMachineType, tier: HTMachineTier ->
-                    machineType.asProcessorOrNull()?.let { factory(it, tier) }
-                }
         }
 
         fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntity<*>?
     }
-
-    //    SidedStorageBlockEntity    //
-
-    final override fun getItemStorage(side: Direction?): Storage<ItemVariant> = InventoryStorage.of(this, side)
 }

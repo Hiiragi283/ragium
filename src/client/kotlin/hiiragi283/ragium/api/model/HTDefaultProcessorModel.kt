@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.model
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.machineTier
-import hiiragi283.ragium.api.extension.machineType
+import hiiragi283.ragium.api.extension.machineTypeOrNull
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
@@ -46,7 +46,8 @@ object HTDefaultProcessorModel : FabricBakedModel {
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
         stack.machineTier.hullModel.emitItemQuads(stack, randomSupplier, context)
-        emitMachineFront(Direction.NORTH, stack.machineType, context)
+        val machineTier: HTMachineType = stack.machineTypeOrNull ?: return
+        emitMachineFront(Direction.NORTH, machineTier, context)
     }
 
     @JvmStatic

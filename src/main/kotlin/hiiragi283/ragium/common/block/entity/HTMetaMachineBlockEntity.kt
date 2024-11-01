@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
@@ -20,6 +22,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
@@ -37,8 +40,12 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     var machineEntity: HTMachineEntity<*>? = null
         private set
 
-    val definition: HTMachinePacket
-        get() = machineEntity?.packet ?: HTMachinePacket.DEFAULT
+    val definition: HTMachineDefinition?
+        get() = machineEntity?.definition
+    val machineType: HTMachineType?
+        get() = machineEntity?.machineType
+    val tier: HTMachineTier?
+        get() = machineEntity?.tier
 
     override fun setWorld(world: World) {
         super.setWorld(world)
@@ -47,7 +54,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun markDirty() {
         super.markDirty()
-        machineEntity?.markDirty()
+        asInventory()?.markDirty()
     }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup) {
@@ -60,7 +67,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
             .getInstance()
             .machineTypeRegistry
             .get(Identifier.of(nbt.getString("machine_type")))
-            ?: HTMachineType.Default
+            ?: return
         val tier: HTMachineTier = HTMachineTier.entries
             .firstOrNull { it.asString() == nbt.getString("tier") }
             ?: HTMachineTier.PRIMITIVE
@@ -71,8 +78,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readComponents(components: ComponentsAccess) {
         super.readComponents(components)
-        val machineType: HTMachineType =
-            components.getOrDefault(HTMachineType.COMPONENT_TYPE, HTMachineType.Default)
+        val machineType: HTMachineType = components.get(HTMachineType.COMPONENT_TYPE) ?: return
         val tier: HTMachineTier = components.getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
         initMachineEntity(machineType, tier)
     }
@@ -92,7 +98,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTBlockEntityBase    //
 
-    override fun asInventory(): HTSimpleInventory? = machineEntity?.parent
+    override fun asInventory(): HTSimpleInventory? = (machineEntity as? HTDelegatedInventory<*>)?.parent
 
     override fun onUse(
         state: BlockState,
@@ -126,12 +132,14 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    NamedScreenHandlerFactory    //
 
+    private fun asScreenFactory(): NamedScreenHandlerFactory? = machineEntity as? NamedScreenHandlerFactory
+
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        machineEntity?.createMenu(syncId, playerInventory, player)
+        asScreenFactory()?.createMenu(syncId, playerInventory, player)
 
-    override fun getDisplayName(): Text = machineEntity?.displayName ?: RagiumBlocks.META_PROCESSOR.name
+    override fun getDisplayName(): Text = asScreenFactory()?.displayName ?: RagiumBlocks.META_PROCESSOR.name
 
-    override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = definition
+    override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = checkNotNull(machineEntity?.packet)
 
     //    SidedStorageBlockEntity    //
 

@@ -603,7 +603,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         createGenerator(
             exporter,
-            RagiumMachineTypes.HEAT_GENERATOR,
+            RagiumMachineTypes.Generator.STEAM,
             Items.FURNACE,
         )
         // processors

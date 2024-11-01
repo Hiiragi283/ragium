@@ -2,35 +2,30 @@ package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.extension.machineInventory
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTSimpleMachineScreenHandler(
+class HTSteamMachineScreenHandler(
     syncId: Int,
     playerInv: PlayerInventory,
     packet: HTMachinePacket,
     ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
 ) : HTMachineScreenHandlerBase(
-        RagiumScreenHandlerTypes.SIMPLE_MACHINE,
+        RagiumScreenHandlerTypes.STEAM,
         syncId,
         playerInv,
         packet,
         ctx,
-        ctx.machineInventory(HTMachineType.Size.SIMPLE),
+        ctx.machineInventory(2),
     ) {
     init {
         inventory.onOpen(player)
-        // inputs
-        addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
-        // catalyst
-        addSlot(2, 4, 2)
-        // outputs
-        addOutputSlot(3, 6, 1)
-        addOutputSlot(4, 7, 1)
+        // input
+        addSlot(0, 2, 1)
+        // output
+        addOutputSlot(1, 6, 1)
         // player inventory
         addPlayerInv()
         // register property

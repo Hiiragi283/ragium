@@ -179,8 +179,6 @@ object RagiumContentRegister : HTContentRegister {
     @JvmStatic
     private fun initBlockItems() {
         registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
-        registerBlockItem(RagiumBlocks.SNOW_SPONGE)
-        // registerBlockItem(RagiumBlocks.OBLIVION_CLUSTER, itemSettings().rarity(Rarity.EPIC))
 
         registerBlockItem(RagiumBlocks.SPONGE_CAKE)
         registerBlockItem(
@@ -196,18 +194,20 @@ object RagiumContentRegister : HTContentRegister {
                 .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
         )
 
-        registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.ADVANCED_CASING)
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)
-        registerBlockItem(RagiumBlocks.ADVANCED_CASING)
+        registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
         registerBlockItem(RagiumBlocks.MANUAL_MIXER)
-        registerBlockItem(RagiumBlocks.SHAFT)
-        registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
+        registerBlockItem(RagiumBlocks.SHAFT)
+        registerBlockItem(RagiumBlocks.TRADER_STATION)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
 
+        registerBlockItem(RagiumBlocks.META_CONSUMER, itemSettings(), ::HTMetaMachineBlockItem)
         registerBlockItem(RagiumBlocks.META_GENERATOR, itemSettings(), ::HTMetaMachineBlockItem)
         registerBlockItem(RagiumBlocks.META_PROCESSOR, itemSettings(), ::HTMetaMachineBlockItem)
     }
