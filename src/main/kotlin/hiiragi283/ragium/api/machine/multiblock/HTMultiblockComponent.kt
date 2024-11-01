@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.machine.multiblock
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.content.HTEntryDelegated
+import hiiragi283.ragium.api.content.HTRegistryContent
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -38,7 +38,7 @@ class HTMultiblockComponent private constructor(private val entryList: RegistryE
         )
 
         @JvmStatic
-        fun of(delegated: HTEntryDelegated<Block>): HTMultiblockComponent = of(delegated.value)
+        fun of(content: HTRegistryContent<Block>): HTMultiblockComponent = of(content.value)
 
         @Suppress("DEPRECATION")
         @JvmStatic

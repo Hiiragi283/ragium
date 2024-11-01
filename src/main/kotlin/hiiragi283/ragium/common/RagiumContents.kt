@@ -12,8 +12,10 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import java.awt.Color
 
@@ -22,26 +24,25 @@ object RagiumContents : HTContentRegister {
 
     enum class Ores(override val material: RagiumMaterials, val baseStone: Block) : HTContent.Material<Block> {
         CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE, Blocks.STONE) {
-            override val entry: HTRegistryEntry<Block> =
-                HTRegistryEntry.ofBlock(RagiumAPI.id("raginite_ore"))
+            override val key: RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("raginite_ore"))
             override val enPattern: String = "Raginite Ore"
             override val jaPattern: String = "ラギナイト鉱石"
         },
         DEEP_RAGINITE(RagiumMaterials.RAGINITE, Blocks.DEEPSLATE) {
-            override val entry: HTRegistryEntry<Block> =
-                HTRegistryEntry.ofBlock(RagiumAPI.id("deepslate_raginite_ore"))
+            override val key: RegistryKey<Block> =
+                RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("deepslate_raginite_ore"))
             override val enPattern: String = "Deep Raginite Ore"
             override val jaPattern: String = "深層ラギナイト鉱石"
         },
         NETHER_RAGINITE(RagiumMaterials.RAGINITE, Blocks.NETHERRACK) {
-            override val entry: HTRegistryEntry<Block> =
-                HTRegistryEntry.ofBlock(RagiumAPI.id("nether_raginite_ore"))
+            override val key: RegistryKey<Block> =
+                RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("nether_raginite_ore"))
             override val enPattern: String = "Nether Raginite Ore"
             override val jaPattern: String = "ネザーラギナイト鉱石"
         },
         END_RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL, Blocks.END_STONE) {
-            override val entry: HTRegistryEntry<Block> =
-                HTRegistryEntry.ofBlock(RagiumAPI.id("end_ragi_crystal_ore"))
+            override val key: RegistryKey<Block> =
+                RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("end_ragi_crystal_ore"))
             override val enPattern: String = "End Ragi-Crystal Ore"
             override val jaPattern: String = "エンドラギクリスタリル鉱石"
         }, ;
@@ -54,6 +55,7 @@ object RagiumContents : HTContentRegister {
                 END_RAGI_CRYSTAL -> Gems.RAGI_CRYSTAL
             }
 
+        override val registry: Registry<Block> = Registries.BLOCK
         override val tagKey: TagKey<Item> = ConventionalItemTags.ORES
     }
 
@@ -69,8 +71,9 @@ object RagiumContents : HTContentRegister {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_block"))
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_block"))
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
         override val tagKey: TagKey<Item> = ConventionalItemTags.STORAGE_BLOCKS
@@ -90,8 +93,9 @@ object RagiumContents : HTContentRegister {
         NICKEL(RagiumMaterials.NICKEL),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_dust"))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_dust"))
         override val enPattern: String = "%s Dust"
         override val jaPattern: String = "%sの粉"
         override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
@@ -101,13 +105,12 @@ object RagiumContents : HTContentRegister {
 
     enum class Gems(override val material: RagiumMaterials) : HTContent.Material<Item> {
         FLUORITE(RagiumMaterials.FLUORITE),
-
-        // OBLIVION_CRYSTAL(RagiumMaterials.OBLIVION_CRYSTAL),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
         override val enPattern: String = "%s"
         override val jaPattern: String = "%s"
         override val tagKey: TagKey<Item> = ConventionalItemTags.GEMS
@@ -125,8 +128,9 @@ object RagiumContents : HTContentRegister {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_ingot"))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_ingot"))
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
         override val tagKey: TagKey<Item> = ConventionalItemTags.INGOTS
@@ -155,8 +159,9 @@ object RagiumContents : HTContentRegister {
         STELLA(RagiumMaterials.STELLA),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_plate"))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_plate"))
         override val enPattern: String = "%s Plate"
         override val jaPattern: String = "%s板"
         override val tagKey: TagKey<Item> = RagiumItemTags.PLATES
@@ -170,8 +175,9 @@ object RagiumContents : HTContentRegister {
         RAGINITE(RagiumMaterials.RAGINITE),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("raw_${name.lowercase()}"))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("raw_${name.lowercase()}"))
         override val enPattern: String = "Raw %s"
         override val jaPattern: String = "%sの原石"
         override val tagKey: TagKey<Item> = ConventionalItemTags.RAW_MATERIALS
@@ -202,8 +208,9 @@ object RagiumContents : HTContentRegister {
         },
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
         override val enPattern: String by armorType::enPattern
         override val jaPattern: String by armorType::jaPattern
 
@@ -222,9 +229,9 @@ object RagiumContents : HTContentRegister {
         STEEL_SWORD(RagiumMaterials.STEEL, HTToolType.SWORD),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
-
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
         override val tagKey: TagKey<Item> = toolType.toolTag
     }
 
@@ -236,8 +243,9 @@ object RagiumContents : HTContentRegister {
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
 
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_hull"))
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_hull"))
         override val enPattern: String = "%s Hull"
         override val jaPattern: String = "%s筐体"
         override val tagKey: TagKey<Item> = RagiumItemTags.HULLS
@@ -251,8 +259,9 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         ;
 
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_coil"))
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_coil"))
         override val enPattern: String = "%s Coil"
         override val jaPattern: String = "%sコイル"
         override val tagKey: TagKey<Item> = RagiumItemTags.COILS
@@ -266,8 +275,9 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_exporter"))
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_exporter"))
     }
 
     //    Pipes    //
@@ -280,8 +290,9 @@ object RagiumContents : HTContentRegister {
         UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
         ;
 
-        override val entry: HTRegistryEntry<Block> =
-            HTRegistryEntry.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_pipe"))
         override val tagKey: TagKey<Item> = RagiumItemTags.PIPES
     }
 
@@ -293,8 +304,9 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_circuit_board"))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_circuit_board"))
     }
 
     enum class Circuits(override val tier: HTMachineTier) : HTContent.Tier<Item> {
@@ -303,9 +315,9 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id("${name.lowercase()}_circuit"))
-
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_circuit"))
         override val tagKey: TagKey<Item> = RagiumItemTags.CIRCUITS
     }
 
@@ -333,8 +345,9 @@ object RagiumContents : HTContentRegister {
         },
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
     }
 
     //    Misc    //
@@ -362,13 +375,16 @@ object RagiumContents : HTContentRegister {
         TRADER_CATALOG,
         ;
 
-        override val entry: HTRegistryEntry<Item> =
-            HTRegistryEntry.ofItem(RagiumAPI.id(name.lowercase()))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> =
+            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
     }
 
     //    Fluids    //
 
-    enum class Fluids(val color: Color, override val enName: String, override val jaName: String) : HTTranslationProvider {
+    enum class Fluids(val color: Color, override val enName: String, override val jaName: String) :
+        HTRegistryContent<Fluid>,
+        HTTranslationProvider {
         // Vanilla
         MILK(Color(0xffffff), "Milk", "牛乳"),
         HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
@@ -429,10 +445,9 @@ object RagiumContents : HTContentRegister {
         TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
         ;
 
-        val id: Identifier = RagiumAPI.id(name.lowercase())
-        val translationKey: String = Util.createTranslationKey("fluid", id)
-        private val fluidEntry: HTRegistryEntry<Fluid> = HTRegistryEntry(Registries.FLUID, id)
+        override val registry: Registry<Fluid> = Registries.FLUID
+        override val key: RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, RagiumAPI.id(name.lowercase()))
 
-        fun asFluid(): Fluid = fluidEntry.value()
+        val translationKey: String = Util.createTranslationKey("fluid", id)
     }
 }

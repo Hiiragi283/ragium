@@ -109,7 +109,7 @@ object RagiumTagProviders {
             }
 
             fun add(tagKey: TagKey<Fluid>, fluid: RagiumContents.Fluids) {
-                add(tagKey, fluid.asFluid())
+                add(tagKey, fluid.value)
             }
 
             // add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.METHANOL)

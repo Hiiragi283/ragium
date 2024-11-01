@@ -7,7 +7,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.tag.TagKey
 
 interface HTContent<T : ItemConvertible> :
-    HTEntryDelegated<T>,
+    HTRegistryContent<T>,
     ItemConvertible {
     val tagKey: TagKey<Item>?
         get() = null

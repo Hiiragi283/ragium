@@ -2,7 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.HTEntryDelegated
+import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.isClientEnv
@@ -72,7 +72,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         buildList {
             addAll(RagiumContents.Exporters.entries)
             addAll(RagiumContents.Pipes.entries)
-        }.map(HTEntryDelegated<Block>::value).forEach(::registerCutout)
+        }.map(HTRegistryContent<Block>::value).forEach(::registerCutout)
         registerCutout(RagiumBlocks.ITEM_DISPLAY)
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
@@ -84,7 +84,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
         buildList {
             addAll(RagiumContents.Ores.entries)
             addAll(RagiumContents.Hulls.entries)
-        }.map(HTEntryDelegated<Block>::value).forEach(::registerCutoutMipped)
+        }.map(HTRegistryContent<Block>::value).forEach(::registerCutoutMipped)
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
@@ -123,7 +123,7 @@ object RagiumClient : ClientModInitializer, RagiumPlugin {
     private fun registerFluids() {
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             FluidRenderHandlerRegistry.INSTANCE.register(
-                fluid.asFluid(),
+                fluid.value,
                 SimpleFluidRenderHandler(
                     Identifier.of("block/white_concrete"),
                     Identifier.of("block/white_concrete"),

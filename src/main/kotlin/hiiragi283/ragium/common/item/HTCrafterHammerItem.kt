@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTRegistryEntry
 import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.dropStackAt
@@ -23,6 +22,10 @@ import net.minecraft.item.tooltip.TooltipAppender
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.slot.Slot
@@ -247,9 +250,10 @@ object HTCrafterHammerItem :
         val tooltipText: MutableText
             get() = Text.translatable(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, text).formatted(Formatting.GRAY)
 
-        //    HTEntryDelegated    //
+        //    HTRegistryContent    //
 
-        override val entry: HTRegistryEntry<Item> = HTRegistryEntry.ofItem(RagiumAPI.id("${asString()}_module"))
+        override val registry: Registry<Item> = Registries.ITEM
+        override val key: RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${asString()}_module"))
 
         //    StringIdentifiable    //
 

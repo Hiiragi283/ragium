@@ -12,7 +12,7 @@ object HTFluidDrinkingHandlerRegistry {
 
     @JvmStatic
     fun register(fluid: RagiumContents.Fluids, handler: HTFluidDrinkingHandler) {
-        register(fluid.asFluid(), handler)
+        register(fluid.value, handler)
     }
 
     @JvmStatic

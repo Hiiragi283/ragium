@@ -21,7 +21,7 @@ interface HTContentRegister {
 
     fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
 
-    fun registerBlock(delegated: HTEntryDelegated<Block>, block: Block): Block = registerBlock(delegated.id.path, block)
+    fun registerBlock(content: HTRegistryContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
 
     fun registerBlock(name: String, settings: AbstractBlock.Settings = blockSettings()): Block = registerBlock(name, Block(settings))
 
@@ -44,7 +44,7 @@ interface HTContentRegister {
 
     fun registerItem(name: String, settings: Item.Settings = itemSettings()): Item = registerItem(name, Item(settings))
 
-    fun registerItem(delegated: HTEntryDelegated<Item>, item: Item): Item = registerItem(delegated.id.path, item)
+    fun registerItem(content: HTRegistryContent<Item>, item: Item): Item = registerItem(content.id.path, item)
 
     fun registerFoodItem(name: String, component: FoodComponent): Item = registerItem(name, Item(itemSettings().food(component)))
 

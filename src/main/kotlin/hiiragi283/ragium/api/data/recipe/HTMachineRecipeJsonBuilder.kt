@@ -46,7 +46,7 @@ class HTMachineRecipeJsonBuilder private constructor(
             .let { RagiumAPI.id(it) }
 
         @JvmStatic
-        fun createRecipeId(fluid: RagiumContents.Fluids): Identifier = createRecipeId(fluid.asFluid())
+        fun createRecipeId(fluid: RagiumContents.Fluids): Identifier = createRecipeId(fluid.value)
     }
 
     private val itemInputs: MutableList<HTIngredient.Item> = mutableListOf()
@@ -70,7 +70,7 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     fun fluidInput(fluid: RagiumContents.Fluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTIngredient.ofFluid(fluid.asFluid(), amount))
+        fluidInputs.add(HTIngredient.ofFluid(fluid.value, amount))
     }
 
     fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
@@ -102,7 +102,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         amount: Long = FluidConstants.BUCKET,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTRecipeResult.ofFluid(fluid.asFluid(), amount, components))
+        fluidOutputs.add(HTRecipeResult.ofFluid(fluid.value, amount, components))
     }
 
     //    Catalyst    //

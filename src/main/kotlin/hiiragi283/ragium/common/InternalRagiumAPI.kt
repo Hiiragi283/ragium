@@ -54,8 +54,8 @@ internal data object InternalRagiumAPI : RagiumAPI {
         fun addMachine(key: HTMachineTypeKey, flag: Boolean) {
             check(key !in keyCache) { "Machine SizeType; ${key.id} is already registered!" }
             val type: HTMachineType = when (flag) {
-                true -> HTMachineType.Generator()
-                false -> HTMachineType.Processor()
+                true -> HTMachineType.Generator(key)
+                false -> HTMachineType.Processor(key)
             }
             keyCache.add(key)
             typeCache.put(key, type)

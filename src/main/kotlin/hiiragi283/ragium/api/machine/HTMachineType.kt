@@ -52,13 +52,11 @@ sealed class HTMachineType :
 
     //    Generator    //
 
-    @Suppress("CanSealedSubClassBeObject")
-    class Generator : HTMachineType()
+    class Generator(override val key: HTMachineTypeKey) : HTMachineType()
 
     //    Processor    //
 
-    @Suppress("CanSealedSubClassBeObject")
-    class Processor : HTMachineType()
+    class Processor(override val key: HTMachineTypeKey) : HTMachineType()
 
     //    Size    //
 

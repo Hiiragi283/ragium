@@ -400,7 +400,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ELECTROLYZER)
             .fluidInput(RagiumContents.Fluids.SALT_WATER)
-            .itemOutput(RagiumAPI.getInstance().createFilledCube(RagiumContents.Fluids.SODIUM_HYDROXIDE.asFluid()))
+            .itemOutput(RagiumAPI.getInstance().createFilledCube(RagiumContents.Fluids.SODIUM_HYDROXIDE.value))
             .fluidOutput(RagiumContents.Fluids.HYDROGEN)
             .fluidOutput(RagiumContents.Fluids.CHLORINE)
             .offerTo(exporter, RagiumContents.Fluids.SALT_WATER)

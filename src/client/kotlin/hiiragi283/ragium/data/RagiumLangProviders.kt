@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTEntryDelegated
+import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
@@ -29,12 +29,12 @@ object RagiumLangProviders {
     }
 
     @JvmName("addBlock")
-    fun TranslationBuilder.add(entry: HTEntryDelegated<Block>, value: String) {
+    fun TranslationBuilder.add(entry: HTRegistryContent<Block>, value: String) {
         add(entry.value, value)
     }
 
     @JvmName("addItem")
-    fun TranslationBuilder.add(entry: HTEntryDelegated<Item>, value: String) {
+    fun TranslationBuilder.add(entry: HTRegistryContent<Item>, value: String) {
         add(entry.value, value)
     }
 

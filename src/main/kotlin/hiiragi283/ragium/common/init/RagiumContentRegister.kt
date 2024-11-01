@@ -325,7 +325,7 @@ object RagiumContentRegister : HTContentRegister {
         // Fluid Attributes
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             FluidVariantAttributes.register(
-                fluid.asFluid(),
+                fluid.value,
                 object : FluidVariantAttributeHandler {
                     override fun getName(fluidVariant: FluidVariant): Text = Text.translatable(fluid.translationKey)
                 },
