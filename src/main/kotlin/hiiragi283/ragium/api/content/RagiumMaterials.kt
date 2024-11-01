@@ -28,7 +28,9 @@ enum class RagiumMaterials(
     RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
     COPPER(HTMachineTier.PRIMITIVE, "Copper", "銅"),
     IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄", ArmorMaterials.IRON, ToolMaterials.IRON),
-    ASH(HTMachineTier.BASIC, "Ash", "灰"),
+    ASH(HTMachineTier.PRIMITIVE, "Ash", "灰"),
+    NITER(HTMachineTier.PRIMITIVE, "Niter", "硝石"),
+    SULFUR(HTMachineTier.PRIMITIVE, "Sulfur", "硫黄"),
 
     // tier2
     RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
@@ -44,8 +46,6 @@ enum class RagiumMaterials(
     // tier3
     RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
     REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
-
-    // OBLIVION_CRYSTAL(HTMachineTier.ADVANCED, "Oblivion Crystal", "忘却の結晶"),
     ENGINEERING_PLASTIC(HTMachineTier.ADVANCED, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
     STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A", "S.T.E.L.L.A", Armor.STELLA),
     ;

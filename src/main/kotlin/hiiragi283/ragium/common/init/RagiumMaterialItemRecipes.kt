@@ -41,7 +41,6 @@ object RagiumMaterialItemRecipes {
         }
         HTMaterialItemRecipeRegistry.register("raginite") {
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.RAGINITE)
-            set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.RAGINITE)
             set(HTMaterialItemRecipeRegistry.RAW, RagiumContents.RawMaterials.RAGINITE)
         }
 

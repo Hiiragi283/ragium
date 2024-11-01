@@ -89,6 +89,8 @@ object RagiumContents : HTContentRegister {
         COPPER(RagiumMaterials.COPPER),
         GOLD(RagiumMaterials.GOLD),
         IRON(RagiumMaterials.IRON),
+        NITER(RagiumMaterials.NITER),
+        SULFUR(RagiumMaterials.SULFUR),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM

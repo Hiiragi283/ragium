@@ -6,16 +6,17 @@
   },
   "item_inputs": [
     {
-      "items": "#c:sandstone/uncolored_blocks"
+      "count": 8,
+      "items": "minecraft:netherrack"
     }
   ],
   "item_outputs": [
     {
       "count": 4,
-      "item": "minecraft:sand"
+      "item": "minecraft:gravel"
     },
     {
-      "item": "ragium:niter_dust"
+      "item": "ragium:sulfur_dust"
     }
   ]
 }
