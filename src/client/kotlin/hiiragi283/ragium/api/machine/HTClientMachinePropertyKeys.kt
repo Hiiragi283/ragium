@@ -1,8 +1,8 @@
-package hiiragi283.ragium.client.machine
+package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.client.renderer.HTMachineEntityRenderer
+import hiiragi283.ragium.api.renderer.HTMachineEntityRenderer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel

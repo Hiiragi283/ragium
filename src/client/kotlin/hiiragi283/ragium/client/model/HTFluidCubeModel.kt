@@ -5,6 +5,8 @@ import hiiragi283.ragium.client.util.FLUID_CUBE_TRANSFORM
 import hiiragi283.ragium.client.util.getSpriteAndColor
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext
@@ -22,6 +24,7 @@ import net.minecraft.util.math.random.Random
 import java.util.function.Function
 import java.util.function.Supplier
 
+@Environment(EnvType.CLIENT)
 data object HTFluidCubeModel : UnbakedModel, BakedModel {
     @JvmField
     val MODEL_ID: Identifier = RagiumAPI.id("item/fluid_cube")

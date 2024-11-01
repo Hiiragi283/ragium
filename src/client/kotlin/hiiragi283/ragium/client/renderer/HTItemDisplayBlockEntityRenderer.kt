@@ -2,11 +2,14 @@ package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.client.util.renderItem
 import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.Vec3d
 
+@Environment(EnvType.CLIENT)
 object HTItemDisplayBlockEntityRenderer : BlockEntityRenderer<HTItemDisplayBlockEntity> {
     override fun render(
         entity: HTItemDisplayBlockEntity,

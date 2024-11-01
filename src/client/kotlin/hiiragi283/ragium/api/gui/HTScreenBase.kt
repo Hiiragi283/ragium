@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.gui
+package hiiragi283.ragium.api.gui
 
 import hiiragi283.ragium.api.extension.getModName
 import hiiragi283.ragium.api.extension.toFloatColor

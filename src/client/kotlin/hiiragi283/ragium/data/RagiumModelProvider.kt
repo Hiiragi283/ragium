@@ -93,28 +93,24 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         registerSimple(RagiumBlocks.SPONGE_CAKE)
-        register(RagiumBlocks.META_GENERATOR) { block: Block ->
-            accept(
-                VariantsBlockStateSupplier
-                    .create(
-                        block,
-                        stateVariantOf(block),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
-        }
-        register(RagiumBlocks.META_PROCESSOR) { block: Block ->
-            accept(
-                VariantsBlockStateSupplier
-                    .create(
-                        block,
-                        stateVariantOf(HTMachineModel.MODEL_ID),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
-            RagiumModels.DYNAMIC_MACHINE.upload(
-                ModelIds.getItemModelId(block.asItem()),
-                TextureMap(),
-                generator.modelCollector,
-            )
+        listOf(
+            RagiumBlocks.META_GENERATOR,
+            RagiumBlocks.META_PROCESSOR,
+        ).forEach { metaMachine: Block ->
+            register(metaMachine) { block: Block ->
+                accept(
+                    VariantsBlockStateSupplier
+                        .create(
+                            block,
+                            stateVariantOf(HTMachineModel.MODEL_ID),
+                        ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+                )
+                RagiumModels.DYNAMIC_MACHINE.upload(
+                    ModelIds.getItemModelId(block.asItem()),
+                    TextureMap(),
+                    generator.modelCollector,
+                )
+            }
         }
         accept(
             VariantsBlockStateSupplier

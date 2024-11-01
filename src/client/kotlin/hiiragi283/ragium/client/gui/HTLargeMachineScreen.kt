@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.gui
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.gui.HTMachineScreenBase
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

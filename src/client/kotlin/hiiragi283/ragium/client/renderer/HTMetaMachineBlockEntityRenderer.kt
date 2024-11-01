@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.renderer
 
+import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
-import hiiragi283.ragium.client.machine.HTClientMachinePropertyKeys
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

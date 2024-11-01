@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.renderer
+package hiiragi283.ragium.api.renderer
 
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity

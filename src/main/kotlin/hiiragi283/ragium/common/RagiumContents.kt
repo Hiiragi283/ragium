@@ -203,6 +203,10 @@ object RagiumContents : HTContentRegister {
         STELLA_BOOTS(RagiumMaterials.STELLA, HTArmorType.BOOTS, 33) {
             override val jaPattern: String = "%s ブーツ"
         },
+        RAGIUM_HELMET(RagiumMaterials.RAGIUM, HTArmorType.HELMET, 37),
+        RAGIUM_CHESTPLATE(RagiumMaterials.RAGIUM, HTArmorType.CHESTPLATE, 37),
+        RAGIUM_LEGGINGS(RagiumMaterials.RAGIUM, HTArmorType.LEGGINGS, 37),
+        RAGIUM_BOOTS(RagiumMaterials.RAGIUM, HTArmorType.BOOTS, 37),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM

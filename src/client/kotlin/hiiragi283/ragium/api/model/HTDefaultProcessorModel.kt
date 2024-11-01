@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.model
+package hiiragi283.ragium.api.model
 
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrDefault
@@ -29,8 +29,6 @@ import java.util.function.Supplier
 
 @Environment(EnvType.CLIENT)
 object HTDefaultProcessorModel : FabricBakedModel {
-    override fun isVanillaAdapter(): Boolean = false
-
     override fun emitBlockQuads(
         blockView: BlockRenderView,
         state: BlockState,
