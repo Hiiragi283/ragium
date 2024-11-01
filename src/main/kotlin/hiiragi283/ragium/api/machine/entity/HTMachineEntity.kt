@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
@@ -27,7 +26,7 @@ import net.minecraft.world.World
 
 abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: HTMachineTier) : SidedStorageBlockEntity {
     companion object {
-        const val MAX_PROPERTIES = 4
+        const val MAX_PROPERTIES = 3
     }
 
     val definition = HTMachineDefinition(machineType, tier)

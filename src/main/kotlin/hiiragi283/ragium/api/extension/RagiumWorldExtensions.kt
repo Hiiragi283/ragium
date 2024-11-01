@@ -120,8 +120,8 @@ val WorldAccess.dataDriveManager: HTDataDriveManager?
     get() = server?.dataDriveManager
 
 // Energy Network
-val MinecraftServer.networkMap: Map<ServerWorld, HTEnergyNetwork>
-    get() = worlds.associateWith { it.energyNetwork }
+val MinecraftServer.networkMap: Map<RegistryKey<World>, HTEnergyNetwork>
+    get() = worlds.associate { it.registryKey to it.energyNetwork }
 
 val ServerWorld.energyNetwork: HTEnergyNetwork
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)

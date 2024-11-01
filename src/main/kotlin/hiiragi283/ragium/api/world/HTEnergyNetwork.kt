@@ -1,19 +1,17 @@
 package hiiragi283.ragium.api.world
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.energy.HTEnergyType
-import hiiragi283.ragium.api.energy.HTSingleEnergyStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.Identifier
 import net.minecraft.world.PersistentState
+import team.reborn.energy.api.EnergyStorage
+import team.reborn.energy.api.base.SimpleEnergyStorage
 
 class HTEnergyNetwork() :
     PersistentState(),
-    SingleSlotStorage<HTEnergyType> {
+    EnergyStorage {
     companion object {
         const val KEY = "network"
 
@@ -31,8 +29,7 @@ class HTEnergyNetwork() :
         )
     }
 
-    private val storage: HTSingleEnergyStorage =
-        HTSingleEnergyStorage.ofFiltered(Long.MAX_VALUE, HTEnergyType.ELECTRICITY)
+    private val storage = SimpleEnergyStorage(Long.MAX_VALUE, Long.MAX_VALUE, Long.MAX_VALUE)
 
     constructor(amount: Long) : this() {
         storage.amount = amount
@@ -49,21 +46,9 @@ class HTEnergyNetwork() :
 
     //    Storage    //
 
-    override fun iterator(): MutableIterator<StorageView<HTEnergyType>> = storage.iterator()
+    override fun extract(maxAmount: Long, transaction: TransactionContext): Long = storage.extract(maxAmount, transaction)
 
-    override fun extract(resource: HTEnergyType, maxAmount: Long, transaction: TransactionContext): Long = when (resource) {
-        HTEnergyType.ELECTRICITY -> storage.extract(resource, maxAmount, transaction)
-        else -> 0
-    }
-
-    override fun insert(resource: HTEnergyType, maxAmount: Long, transaction: TransactionContext): Long = when (resource) {
-        HTEnergyType.ELECTRICITY -> storage.insert(resource, maxAmount, transaction)
-        else -> 0
-    }
-
-    override fun isResourceBlank(): Boolean = false
-
-    override fun getResource(): HTEnergyType = HTEnergyType.ELECTRICITY
+    override fun insert(maxAmount: Long, transaction: TransactionContext): Long = storage.insert(maxAmount, transaction)
 
     override fun getAmount(): Long = storage.amount
 

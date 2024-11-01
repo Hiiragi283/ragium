@@ -16,6 +16,9 @@ object RagiumTranslationKeys {
 
     const val MACHINE_NAME = "tooltip.ragium.machine.name"
     const val MACHINE_TIER = "tooltip.ragium.machine.tier"
+
+    const val MACHINE_FLUID_AMOUNT = "tooltip.ragium.machine.fluid_amount"
+    const val MACHINE_NETWORK_ENERGY = "tooltip.ragium.machine.network_energy"
     const val MACHINE_RECIPE_COST = "tooltip.ragium.machine.cost"
     const val MACHINE_SHOW_PREVIEW = "tooltip.ragium.machine.show_preview"
     const val MACHINE_SLOT_COUNTS = "tooltip.ragium.machine.slot_counts"

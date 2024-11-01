@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.content.HTTranslationProvider
-import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
@@ -143,7 +142,7 @@ enum class HTMachineTier(
     fun consumerEnergy(world: World) {
         world.energyNetwork?.let { network: HTEnergyNetwork ->
             useTransaction { transaction: Transaction ->
-                val extracted: Long = network.extract(HTEnergyType.ELECTRICITY, recipeCost, transaction)
+                val extracted: Long = network.extract(recipeCost, transaction)
                 when {
                     extracted > 0 -> transaction.commit()
                     else -> transaction.abort()

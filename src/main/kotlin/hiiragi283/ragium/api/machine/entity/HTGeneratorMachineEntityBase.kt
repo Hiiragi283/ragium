@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.machine.entity
 
-import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineConvertible
@@ -18,7 +17,7 @@ abstract class HTGeneratorMachineEntityBase(type: HTMachineConvertible, tier: HT
         val energy: Long = generateEnergy(world, pos)
         if (energy > 0) {
             useTransaction { transaction: Transaction ->
-                val inserted: Long = world.energyNetwork?.insert(HTEnergyType.ELECTRICITY, energy, transaction) ?: 0
+                val inserted: Long = world.energyNetwork?.insert(energy, transaction) ?: 0
                 if (inserted > 0) {
                     transaction.commit()
                 } else {

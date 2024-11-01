@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.content.HTToolType
-import hiiragi283.ragium.api.energy.HTCreativeEnergyStorage
-import hiiragi283.ragium.api.energy.HTEnergyStorage
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
@@ -46,6 +44,8 @@ import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
+import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumContentRegister : HTContentRegister {
     private val itemBuilders: MutableMap<HTContent<Item>, HTMutablePropertyHolder> = mutableMapOf()
@@ -253,11 +253,11 @@ object RagiumContentRegister : HTContentRegister {
             SingleFluidStorage.withFixedCapacity(Long.MAX_VALUE) {}
         }, RagiumBlocks.TRASH_BOX)
 
-        HTEnergyStorage.SIDED.registerForBlocks(
-            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTCreativeEnergyStorage },
+        EnergyStorage.SIDED.registerForBlocks(
+            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
             RagiumBlocks.CREATIVE_SOURCE,
         )
-        HTEnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+        EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork
         }, RagiumBlocks.NETWORK_INTERFACE)
 

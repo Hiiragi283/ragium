@@ -2,7 +2,6 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.energy.HTEnergyType
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.ModInitializer
@@ -13,7 +12,6 @@ object RagiumCommon : ModInitializer {
         RagiumConfig.init()
 
         RagiumComponentTypes
-        HTEnergyType
 
         RagiumAdvancementCriteria
         RagiumBlockEntityTypes

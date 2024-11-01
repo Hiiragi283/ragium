@@ -37,6 +37,7 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.Hand
+import net.minecraft.util.Rarity
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.village.*
@@ -48,19 +49,19 @@ object RagiumEventHandlers {
         // send title and floating item packet when unlock advancement
         HTAdvancementRewardCallback.EVENT.register { player: ServerPlayerEntity, entry: AdvancementEntry ->
             if (entry.id == RagiumAPI.id("tier1/root")) {
-                player.sendTitle(Text.literal("Welcome to Tier1!"))
+                player.sendTitle(Text.literal("Welcome to Tier1!").formatted(Rarity.COMMON.formatting))
                 RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.RAGI_ALLOY)
             }
             if (entry.id == RagiumAPI.id("tier2/root")) {
-                player.sendTitle(Text.literal("Welcome to Tier2!"))
+                player.sendTitle(Text.literal("Welcome to Tier2!").formatted(Rarity.UNCOMMON.formatting))
                 RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier3/root")) {
-                player.sendTitle(Text.literal("Welcome to Tier3!"))
+                player.sendTitle(Text.literal("Welcome to Tier3!").formatted(Rarity.RARE.formatting))
                 RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.REFINED_RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier4/root")) {
-                player.sendTitle(Text.literal("Welcome to Tier4!"))
+                player.sendTitle(Text.literal("Welcome to Tier4!").formatted(Rarity.EPIC.formatting))
                 RagiumNetworks.sendFloatingItem(player, RagiumContents.Gems.RAGIUM)
             }
         }
