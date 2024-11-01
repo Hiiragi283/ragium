@@ -65,8 +65,6 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         ALUMINUM(RagiumMaterials.ALUMINUM),
-        INVAR(RagiumMaterials.INVAR),
-        NICKEL(RagiumMaterials.NICKEL),
         STEEL(RagiumMaterials.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
@@ -87,10 +85,10 @@ object RagiumContents : HTContentRegister {
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
 
         ASH(RagiumMaterials.ASH),
+        BAUXITE(RagiumMaterials.BAUXITE),
         COPPER(RagiumMaterials.COPPER),
         GOLD(RagiumMaterials.GOLD),
         IRON(RagiumMaterials.IRON),
-        NICKEL(RagiumMaterials.NICKEL),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -122,8 +120,6 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         ALUMINUM(RagiumMaterials.ALUMINUM),
-        INVAR(RagiumMaterials.INVAR),
-        NICKEL(RagiumMaterials.NICKEL),
         STEEL(RagiumMaterials.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
         ;
@@ -148,7 +144,6 @@ object RagiumContents : HTContentRegister {
         RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
         ALUMINUM(RagiumMaterials.ALUMINUM),
         GOLD(RagiumMaterials.GOLD),
-        INVAR(RagiumMaterials.INVAR),
         PLASTIC(RagiumMaterials.PLASTIC),
         SILICON(RagiumMaterials.SILICON),
         STEEL(RagiumMaterials.STEEL),
@@ -170,7 +165,6 @@ object RagiumContents : HTContentRegister {
     //    Raw Materials    //
 
     enum class RawMaterials(override val material: RagiumMaterials) : HTContent.Material<Item> {
-        BAUXITE(RagiumMaterials.BAUXITE),
         CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE),
         RAGINITE(RagiumMaterials.RAGINITE),
         ;

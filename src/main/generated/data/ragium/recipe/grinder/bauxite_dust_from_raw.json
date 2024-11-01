@@ -4,23 +4,24 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
-        "c:ingots/invar"
+        "c:raw_materials/bauxite"
       ]
     }
   ],
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:metal_former",
+    "type": "ragium:grinder",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "items": "#c:ingots/invar"
+      "items": "#c:raw_materials/bauxite"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:invar_plate"
+      "count": 2,
+      "item": "ragium:bauxite_dust"
     }
   ]
 }

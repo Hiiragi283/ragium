@@ -79,12 +79,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY, "_alt")
 
-        HTMachineRecipeJsonBuilder
+        /*HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
             .itemInput(ConventionalItemTags.IRON_INGOTS, 2)
             .itemInput(RagiumItemTags.NICKEL_INGOTS)
             .itemOutput(RagiumContents.Ingots.INVAR, 3)
-            .offerTo(exporter, RagiumContents.Ingots.INVAR)
+            .offerTo(exporter, RagiumContents.Ingots.INVAR)*/
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ALLOY_FURNACE, HTMachineTier.ADVANCED)
@@ -256,7 +256,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
-            .itemInput(RagiumContents.RawMaterials.BAUXITE)
+            .itemInput(RagiumContents.Dusts.BAUXITE)
             .fluidInput(RagiumContents.Fluids.SODIUM_HYDROXIDE)
             .fluidOutput(RagiumContents.Fluids.ALUMINA_SOLUTION)
             .offerTo(exporter, RagiumContents.Fluids.ALUMINA_SOLUTION)
@@ -507,7 +507,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun grinder(exporter: RecipeExporter) {
         registerGrinder(exporter, ConventionalItemTags.COBBLESTONES to 1, Items.GRAVEL to 1)
         registerGrinder(exporter, ConventionalItemTags.QUARTZ_ORES to 1, Items.QUARTZ to 2)
-        registerGrinder(exporter, ConventionalItemTags.RED_SANDSTONE_BLOCKS to 1, Items.RED_SAND to 4)
         registerGrinder(exporter, ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS to 1, Items.SAND to 1)
         registerGrinder(exporter, ConventionalItemTags.WHEAT_CROPS to 1, RagiumContents.Foods.FLOUR to 1)
         registerGrinder(exporter, Items.ANCIENT_DEBRIS to 1, Items.NETHERITE_SCRAP to 2)
@@ -535,6 +534,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ItemTags.WOODEN_TRAPDOORS to 1, RagiumContents.Foods.PULP to 3, suffix = "_from_trap_door")
         registerGrinder(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
         registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumContents.Foods.MINCED_MEAT to 1)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineTypes.Processor.GRINDER)
+            .itemInput(ConventionalItemTags.RED_SANDSTONE_BLOCKS)
+            .itemOutput(Items.RED_SAND, 4)
+            .itemOutput(RagiumContents.Dusts.BAUXITE)
+            .offerTo(exporter, Items.RED_SAND)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)

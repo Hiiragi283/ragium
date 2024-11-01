@@ -8,34 +8,27 @@ object RagiumMaterialItemRecipes {
     @JvmStatic
     fun init() {
         HTMaterialItemRecipeRegistry.register("iron") {
-            // set(HTMaterialItemRecipeRegistry.BLOCK, BothEither.right(ConventionalItemTags.STORAGE_BLOCKS_IRON))
             set(HTMaterialItemRecipeRegistry.DISABLE_BLOCK_RECIPE, Unit)
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.IRON)
             set(HTMaterialItemRecipeRegistry.INGOT, Items.IRON_INGOT)
-            // set(HTMaterialItemRecipeRegistry.ORE, BothEither.right(ItemTags.IRON_ORES))
-            set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.NICKEL)
+            // set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.NICKEL)
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.IRON)
             set(HTMaterialItemRecipeRegistry.RAW, Items.RAW_IRON)
         }
 
         HTMaterialItemRecipeRegistry.register("gold") {
-            // set(HTMaterialItemRecipeRegistry.BLOCK, BothEither.right(ConventionalItemTags.STORAGE_BLOCKS_GOLD))
             set(HTMaterialItemRecipeRegistry.DISABLE_BLOCK_RECIPE, Unit)
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.GOLD)
             set(HTMaterialItemRecipeRegistry.INGOT, Items.GOLD_INGOT)
-            // set(HTMaterialItemRecipeRegistry.ORE, BothEither.right(ItemTags.GOLD_ORES))
-            // set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.SILVER)
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.GOLD)
             set(HTMaterialItemRecipeRegistry.RAW, Items.RAW_GOLD)
         }
 
         HTMaterialItemRecipeRegistry.register("copper") {
-            // set(HTMaterialItemRecipeRegistry.BLOCK, BothEither.right(ConventionalItemTags.STORAGE_BLOCKS_COPPER))
             set(HTMaterialItemRecipeRegistry.DISABLE_BLOCK_RECIPE, Unit)
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.COPPER)
             set(HTMaterialItemRecipeRegistry.INGOT, Items.COPPER_INGOT)
-            // set(HTMaterialItemRecipeRegistry.ORE, BothEither.right(ItemTags.COPPER_ORES))
-            // set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.SULFUR)
+            set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.BAUXITE)
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.COPPER)
             set(HTMaterialItemRecipeRegistry.RAW, Items.RAW_COPPER)
         }
@@ -48,7 +41,6 @@ object RagiumMaterialItemRecipes {
         }
         HTMaterialItemRecipeRegistry.register("raginite") {
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.RAGINITE)
-            // set(HTMaterialItemRecipeRegistry.ORE, RagiumItemTags.RAGINITE_ORES)
             set(HTMaterialItemRecipeRegistry.ORE_SUB_PRODUCTS, RagiumContents.Dusts.RAGINITE)
             set(HTMaterialItemRecipeRegistry.RAW, RagiumContents.RawMaterials.RAGINITE)
         }
@@ -83,9 +75,9 @@ object RagiumMaterialItemRecipes {
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.ALUMINUM)
         }
         HTMaterialItemRecipeRegistry.register("bauxite") {
-            set(HTMaterialItemRecipeRegistry.RAW, RagiumContents.RawMaterials.BAUXITE)
+            set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.BAUXITE)
         }
-        HTMaterialItemRecipeRegistry.register("invar") {
+        /*HTMaterialItemRecipeRegistry.register("invar") {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.INVAR)
             set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.INVAR)
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.INVAR)
@@ -94,7 +86,7 @@ object RagiumMaterialItemRecipes {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.NICKEL)
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.NICKEL)
             set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.NICKEL)
-        }
+        }*/
         HTMaterialItemRecipeRegistry.register("steel") {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.STEEL)
             set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.STEEL)

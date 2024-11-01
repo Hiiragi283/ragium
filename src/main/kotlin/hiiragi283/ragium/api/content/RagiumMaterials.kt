@@ -37,8 +37,6 @@ enum class RagiumMaterials(
     BAUXITE(HTMachineTier.BASIC, "Bauxite", "ボーキサイト"),
     FLUORITE(HTMachineTier.BASIC, "Fluorite", "蛍石"),
     GOLD(HTMachineTier.BASIC, "Gold", "金", ArmorMaterials.GOLD, ToolMaterials.GOLD),
-    INVAR(HTMachineTier.BASIC, "Invar", "インバー"),
-    NICKEL(HTMachineTier.BASIC, "Nickel", "ニッケル"),
     PLASTIC(HTMachineTier.BASIC, "Plastic", "プラスチック"), // PE
     SILICON(HTMachineTier.BASIC, "Silicon", "シリコン"),
     STEEL(HTMachineTier.BASIC, "Steel", "スチール", Armor.STEEL, Tool.STEEL),

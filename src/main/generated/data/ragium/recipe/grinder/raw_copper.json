@@ -22,6 +22,9 @@
     {
       "count": 2,
       "item": "minecraft:raw_copper"
+    },
+    {
+      "item": "ragium:bauxite_dust"
     }
   ]
 }

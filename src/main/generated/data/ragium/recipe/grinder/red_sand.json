@@ -13,6 +13,9 @@
     {
       "count": 4,
       "item": "minecraft:red_sand"
+    },
+    {
+      "item": "ragium:bauxite_dust"
     }
   ]
 }

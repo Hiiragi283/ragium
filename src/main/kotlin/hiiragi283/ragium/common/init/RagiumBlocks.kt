@@ -3,10 +3,8 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
-import net.minecraft.block.AmethystClusterBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.block.MapColor
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
@@ -39,12 +37,11 @@ object RagiumBlocks : HTContentRegister {
             },
         )
 
-    @JvmField
-    val OBLIVION_CLUSTER: Block =
+    /*val OBLIVION_CLUSTER: Block =
         registerBlock(
             "oblivion_cluster",
             AmethystClusterBlock(7.0f, 3.0f, blockSettings(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.BLACK)),
-        )
+        )*/
 
     //    Blocks - Foods    //
 

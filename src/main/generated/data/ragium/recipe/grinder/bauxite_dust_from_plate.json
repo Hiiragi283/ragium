@@ -4,7 +4,7 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
-        "c:raw_materials/nickel"
+        "c:plates/bauxite"
       ]
     }
   ],
@@ -15,13 +15,12 @@
   },
   "item_inputs": [
     {
-      "items": "#c:raw_materials/nickel"
+      "items": "#c:plates/bauxite"
     }
   ],
   "item_outputs": [
     {
-      "count": 2,
-      "item": "ragium:nickel_dust"
+      "item": "ragium:bauxite_dust"
     }
   ]
 }
