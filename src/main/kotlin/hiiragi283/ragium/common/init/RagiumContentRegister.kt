@@ -141,7 +141,6 @@ object RagiumContentRegister : HTContentRegister {
         }
         // foods
         getProperties(RagiumContents.Foods.BUTTER)[settingsKey] = { it.food(FoodComponents.APPLE) }
-        getProperties(RagiumContents.Foods.CANDY_APPLE)[settingsKey] = { it.food(FoodComponents.COOKED_BEEF) }
         getProperties(RagiumContents.Foods.CARAMEL)[settingsKey] = { it.food(FoodComponents.DRIED_KELP) }
         getProperties(RagiumContents.Foods.CHOCOLATE)[settingsKey] = {
             it.food(
@@ -275,32 +274,31 @@ object RagiumContentRegister : HTContentRegister {
         }
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_JACKET) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1))
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.HASTE, -1, 1))
             }
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
-                it.removeStatusEffect(StatusEffects.RESISTANCE)
+                it.removeStatusEffect(StatusEffects.HASTE)
             }
-            slotType = HTAccessorySlotTypes.CAPE
         }
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_LEGGINGS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1))
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.SPEED, -1, 1))
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.JUMP_BOOST, -1, 1))
             }
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
+                it.removeStatusEffect(StatusEffects.RESISTANCE)
                 it.removeStatusEffect(StatusEffects.SPEED)
-                it.removeStatusEffect(StatusEffects.JUMP_BOOST)
             }
-            slotType = HTAccessorySlotTypes.CHARM
         }
         HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_BOOTS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.SLOW_FALLING, -1, 0))
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.JUMP_BOOST, -1, 1))
             }
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
                 it.removeStatusEffect(StatusEffects.SLOW_FALLING)
+                it.removeStatusEffect(StatusEffects.JUMP_BOOST)
             }
-            slotType = HTAccessorySlotTypes.SHOES
         }
         // Cauldron
         /*registerCauldron(

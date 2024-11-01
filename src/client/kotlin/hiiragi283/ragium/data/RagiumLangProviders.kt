@@ -158,7 +158,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.Foods.BEE_WAX, "Bee Wax")
             builder.add(RagiumContents.Foods.BUTTER, "Butter")
-            builder.add(RagiumContents.Foods.CANDY_APPLE, "Candy Apple")
             builder.add(RagiumContents.Foods.CARAMEL, "Caramel")
             builder.add(RagiumContents.Foods.CHOCOLATE, "Chocolate")
             builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "Chocolate Apple")
@@ -305,7 +304,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.Foods.BEE_WAX, "蜜蠟")
             builder.add(RagiumContents.Foods.BUTTER, "バター")
-            builder.add(RagiumContents.Foods.CANDY_APPLE, "りんご飴")
             builder.add(RagiumContents.Foods.CARAMEL, "キャラメル")
             builder.add(RagiumContents.Foods.CHOCOLATE, "チョコレート")
             builder.add(RagiumContents.Foods.CHOCOLATE_APPLE, "チョコリンゴ")

@@ -324,7 +324,6 @@ object RagiumContents : HTContentRegister {
             override val tagKey: TagKey<Item> = ConventionalItemTags.DUSTS
         },
         BUTTER,
-        CANDY_APPLE,
         CARAMEL,
         CHOCOLATE,
         CHOCOLATE_APPLE,

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:apple"
+            "items": "ragium:stella_plate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/candy_apple"
+        "recipe": "ragium:shaped/stella_jacket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/candy_apple"
+      "ragium:shaped/stella_jacket"
     ]
   }
 }

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.HTHardModeManager
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.enchantment.Enchantment
@@ -24,7 +25,6 @@ import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundEvents
-import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
@@ -103,7 +103,7 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor
         player.openHandledScreen(
             SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
                 GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
-            }, Text.translatable("container.chest")),
+            }, RagiumContents.Misc.BACKPACK.value.name),
         )
         player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
     }

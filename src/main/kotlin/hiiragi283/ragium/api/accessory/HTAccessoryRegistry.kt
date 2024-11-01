@@ -1,22 +1,23 @@
 package hiiragi283.ragium.api.accessory
 
 import net.minecraft.entity.LivingEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 
 object HTAccessoryRegistry {
     @JvmStatic
-    private val equipped: MutableMap<ItemConvertible, EquippedAction> = mutableMapOf()
+    private val equipped: MutableMap<Item, EquippedAction> = mutableMapOf()
 
     @JvmStatic
-    private val unequipped: MutableMap<ItemConvertible, UnequippedAction> = mutableMapOf()
+    private val unequipped: MutableMap<Item, UnequippedAction> = mutableMapOf()
 
     @JvmStatic
-    val slotTypes: Map<ItemConvertible, HTAccessorySlotTypes>
+    val slotTypes: Map<Item, HTAccessorySlotTypes>
         get() = slotTypes1
 
     @JvmStatic
-    private val slotTypes1: MutableMap<ItemConvertible, HTAccessorySlotTypes> = mutableMapOf()
+    private val slotTypes1: MutableMap<Item, HTAccessorySlotTypes> = mutableMapOf()
 
     @JvmStatic
     fun onEquipped(entity: LivingEntity, stack: ItemStack) {
@@ -30,10 +31,11 @@ object HTAccessoryRegistry {
 
     @JvmStatic
     fun register(item: ItemConvertible, builderAction: Builder.() -> Unit) {
+        val item1: Item = item.asItem()
         Builder().apply(builderAction).apply {
-            equipped[item] = equippedAction
-            unequipped[item] = unequippedAction
-            slotTypes1[item] = slotType
+            equipped[item1] = equippedAction
+            unequipped[item1] = unequippedAction
+            slotType?.let { slotTypes1[item1] = it }
         }
     }
 
@@ -54,6 +56,6 @@ object HTAccessoryRegistry {
     class Builder {
         lateinit var equippedAction: EquippedAction
         lateinit var unequippedAction: UnequippedAction
-        lateinit var slotType: HTAccessorySlotTypes
+        var slotType: HTAccessorySlotTypes? = null
     }
 }

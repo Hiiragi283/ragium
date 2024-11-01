@@ -546,7 +546,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(Items.SAND, 4)
             .itemOutput(RagiumContents.Dusts.NITER)
             .offerTo(exporter, Items.SAND)
-        
+
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ConventionalItemTags.RED_SANDSTONE_BLOCKS)

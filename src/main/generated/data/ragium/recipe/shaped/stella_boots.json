@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:stella_plate"
+    },
+    "B": {
+      "item": "ragium:ragi_crystal"
+    }
+  },
+  "pattern": [
+    "A A",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:stella_boots"
+  }
+}

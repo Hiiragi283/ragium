@@ -70,6 +70,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Crafting - Armors    //
 
     private fun craftingArmors(exporter: RecipeExporter) {
+        // steel
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.Armors.STEEL_HELMET)
             .patterns(
@@ -106,6 +107,48 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A A",
             ).input('A', RagiumItemTags.STEEL_INGOTS)
             .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .offerTo(exporter)
+        // stella
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Armors.STELLA_GOGGLE)
+            .patterns(
+                "ABA",
+                "A A",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.Plates.STELLA)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Armors.STELLA_JACKET)
+            .patterns(
+                "A A",
+                "ABA",
+                "AAA",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.Plates.STELLA)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Armors.STELLA_LEGGINGS)
+            .patterns(
+                "ABA",
+                "A A",
+                "A A",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.Plates.STELLA)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Armors.STELLA_BOOTS)
+            .patterns(
+                "A A",
+                "ABA",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
     }
 
@@ -254,13 +297,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(Items.APPLE)
             .offerTo(exporter)
 
-        HTShapelessRecipeJsonBuilder
+        /*HTShapelessRecipeJsonBuilder
             .create(RagiumContents.Foods.CANDY_APPLE)
             .input(Items.APPLE)
             .input(fluidIngredient(RagiumContents.Fluids.STARCH_SYRUP.value))
             .input(ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(Items.APPLE)
-            .offerTo(exporter)
+            .offerTo(exporter)*/
     }
 
     //    Crafting - Misc    //

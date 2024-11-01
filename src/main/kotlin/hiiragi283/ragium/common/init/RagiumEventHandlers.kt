@@ -66,11 +66,19 @@ object RagiumEventHandlers {
             }
         }
 
-        HTEquippedArmorCallback.EVENT.register { entity: LivingEntity, _: EquipmentSlot, oldStack: ItemStack, newStack: ItemStack ->
+        HTEquippedArmorCallback.EVENT.register { entity: LivingEntity, slot: EquipmentSlot, oldStack: ItemStack, newStack: ItemStack ->
+            RagiumAPI.log {
+                info("Current slot; ${slot.asString()}")
+                info("Old stack; $oldStack")
+                info("New stack; $newStack")
+            }
             if (oldStack.isEmpty && !newStack.isEmpty) {
                 HTAccessoryRegistry.onEquipped(entity, newStack)
-            } else {
+                return@register
+            }
+            if (!oldStack.isEmpty && newStack.isEmpty) {
                 HTAccessoryRegistry.onUnequipped(entity, oldStack)
+                return@register
             }
         }
 
