@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
-import hiiragi283.ragium.client.util.hullModel
+import hiiragi283.ragium.client.extension.hullModel
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView

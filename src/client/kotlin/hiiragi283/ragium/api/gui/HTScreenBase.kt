@@ -1,9 +1,12 @@
 package hiiragi283.ragium.api.gui
 
 import hiiragi283.ragium.api.extension.getModName
+import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.screen.HTScreenHandlerBase
-import hiiragi283.ragium.client.util.getSpriteAndColor
+import hiiragi283.ragium.client.extension.CLIENT_NETWORK_MAP
+import hiiragi283.ragium.client.extension.getSpriteAndColor
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering
@@ -14,9 +17,11 @@ import net.minecraft.client.texture.Sprite
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKey
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
+import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
 abstract class HTScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: PlayerInventory, title: Text) :
@@ -96,6 +101,22 @@ abstract class HTScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: Play
         )
     }
 
+    protected fun drawTooltip(
+        x: Int,
+        y: Int,
+        mouseX: Int,
+        mouseY: Int,
+        action: () -> Unit,
+    ) {
+        val startX1: Int = startX + getSlotPosX(x)
+        val startY1: Int = startY + getSlotPosY(y)
+        val xRange: IntRange = (startX1..startX1 + 18)
+        val yRange: IntRange = (startY1..startY1 + 18)
+        if (mouseX in xRange && mouseY in yRange) {
+            action()
+        }
+    }
+
     protected fun drawFluidTooltip(
         context: DrawContext,
         variant: FluidVariant,
@@ -105,19 +126,19 @@ abstract class HTScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: Play
         mouseX: Int,
         mouseY: Int,
     ) {
-        if (variant.isBlank) return
-        val startX1: Int = startX + getSlotPosX(x)
-        val startY1: Int = startY + getSlotPosY(y)
-        val xRange: IntRange = (startX1..startX1 + 18)
-        val yRange: IntRange = (startY1..startY1 + 18)
-        if (mouseX in xRange && mouseY in yRange) {
+        drawTooltip(x, y, mouseX, mouseY) {
+            if (variant.isBlank) return@drawTooltip
             context.drawTooltip(
                 textRenderer,
                 buildList {
                     // Tooltips
                     addAll(FluidVariantRendering.getTooltip(variant))
                     // Fluid Amount
-                    add(Text.literal("Amount: $amount Units").formatted(Formatting.GRAY))
+                    add(
+                        Text
+                            .translatable(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, longText(amount))
+                            .formatted(Formatting.GRAY),
+                    )
                     // Mod Name
                     val id: Identifier = Registries.FLUID.getId(variant.fluid)
                     getModName(id.namespace)?.let { name: String ->
@@ -127,6 +148,34 @@ abstract class HTScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: Play
                 mouseX,
                 mouseY,
             )
+        }
+    }
+
+    protected fun drawEnergyTooltip(
+        context: DrawContext,
+        key: RegistryKey<World>,
+        x: Int,
+        y: Int,
+        mouseX: Int,
+        mouseY: Int,
+    ) {
+        drawTooltip(x, y, mouseX, mouseY) {
+            CLIENT_NETWORK_MAP[key]?.let {
+                context.drawTooltip(
+                    textRenderer,
+                    buildList {
+                        add(
+                            Text
+                                .translatable(
+                                    RagiumTranslationKeys.MACHINE_NETWORK_ENERGY,
+                                    longText(it.amount).formatted(Formatting.RED),
+                                ).formatted(Formatting.GRAY),
+                        )
+                    },
+                    mouseX,
+                    mouseY,
+                )
+            }
         }
     }
 }

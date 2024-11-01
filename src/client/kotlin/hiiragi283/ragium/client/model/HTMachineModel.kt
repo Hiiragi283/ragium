@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineTypeOrNull
 import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
-import hiiragi283.ragium.client.util.getBlockModel
+import hiiragi283.ragium.client.extension.getBlockModel
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

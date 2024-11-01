@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.model
 
-import hiiragi283.ragium.client.util.getModel
+import hiiragi283.ragium.client.extension.getModel
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel

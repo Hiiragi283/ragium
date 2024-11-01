@@ -30,6 +30,8 @@ class HTLargeMachineScreen(handler: HTLargeMachineScreenHandler, inventory: Play
         drawFluidTooltip(context, fluidCache[1], amountCache[1], 3, 2, x, y)
         drawFluidTooltip(context, fluidCache[2], amountCache[2], 5, 2, x, y)
         drawFluidTooltip(context, fluidCache[3], amountCache[3], 6, 2, x, y)
+
+        drawEnergyTooltip(context, handler.player.world.registryKey, 4, 1, x, y)
     }
 
     override fun drawBackground(

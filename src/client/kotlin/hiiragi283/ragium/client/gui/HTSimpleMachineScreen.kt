@@ -28,6 +28,8 @@ class HTSimpleMachineScreen(handler: HTSimpleMachineScreenHandler, inventory: Pl
 
         drawFluidTooltip(context, fluidCache[0], amountCache[0], 2, 2, x, y)
         drawFluidTooltip(context, fluidCache[1], amountCache[1], 6, 2, x, y)
+
+        drawEnergyTooltip(context, handler.player.world.registryKey, 4, 1, x, y)
     }
 
     override fun drawBackground(

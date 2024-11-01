@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.client.util.translate
+import hiiragi283.ragium.client.extension.translate
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.BlockState

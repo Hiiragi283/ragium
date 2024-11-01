@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.client.util.renderItem
+import hiiragi283.ragium.client.extension.renderItem
 import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

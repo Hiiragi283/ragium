@@ -13,14 +13,14 @@ import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.model.HTAliasedModel
 import hiiragi283.ragium.api.model.HTDefaultProcessorModel
 import hiiragi283.ragium.api.renderer.HTMultiblockPreviewRenderer
+import hiiragi283.ragium.client.extension.getBlockEntity
+import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.gui.HTLargeMachineScreen
 import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
-import hiiragi283.ragium.client.util.getBlockEntity
-import hiiragi283.ragium.client.util.registerClientReceiver
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload

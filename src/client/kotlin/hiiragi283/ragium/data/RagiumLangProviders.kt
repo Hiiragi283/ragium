@@ -201,6 +201,8 @@ object RagiumLangProviders {
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "Amount: %s Units")
+            builder.add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "Network Energy: %s Units")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "Show preview: %s")
             builder.add(RagiumTranslationKeys.MACHINE_SLOT_COUNTS, "Input/Output Slots: %s")
@@ -375,6 +377,8 @@ object RagiumLangProviders {
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
+            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "液体量: %s ユニット")
+            builder.add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "ネットワーク上のエネルギー量: %s ユニット")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "プレビューの表示: %s")
             builder.add(RagiumTranslationKeys.MACHINE_SLOT_COUNTS, "入力/出力スロット数: %s")
@@ -386,7 +390,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.PRIMITIVE, "簡易", "簡易型%s")
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
-            // Machine SizeType
+            // Machine Type
             builder.add(RagiumMachineTypes.Consumer.DRAIN, "排水溝", "各面から液体を吸い取る")
 
             builder.add(RagiumMachineTypes.Generator.COMBUSTION, "燃焼発電機", "液体燃料から発電する")
@@ -408,6 +412,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
             builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
             builder.add(RagiumMachineTypes.SAW_MILL, "製材機", "より効率的に原木を加工する")
+
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")

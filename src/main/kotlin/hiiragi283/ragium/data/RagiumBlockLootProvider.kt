@@ -60,6 +60,8 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
+            addAll(RagiumContents.Exporters.entries)
+            addAll(RagiumContents.Pipes.entries)
         }.map { it.value }.forEach(::addDrop)
     }
 

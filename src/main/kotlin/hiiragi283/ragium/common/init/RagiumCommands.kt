@@ -24,6 +24,7 @@ import net.minecraft.command.suggestion.SuggestionProviders
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.world.ServerWorld
@@ -32,6 +33,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.world.World
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.jvm.optionals.getOrNull
@@ -214,8 +216,8 @@ object RagiumCommands {
     @JvmStatic
     private fun showEnergy(context: CommandContext<ServerCommandSource>): Int {
         context.source.run {
-            server.networkMap.forEach { (world: ServerWorld, network: HTEnergyNetwork) ->
-                sendFeedback({ Text.literal("${world.registryKey.value} - ${network.amount} E") }, true)
+            server.networkMap.forEach { (key: RegistryKey<World>, network: HTEnergyNetwork) ->
+                sendFeedback({ Text.literal("${key.value} - ${network.amount} E") }, true)
             }
         }
         return Command.SINGLE_SUCCESS
