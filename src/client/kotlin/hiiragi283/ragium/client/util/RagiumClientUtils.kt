@@ -94,7 +94,7 @@ fun <T : HTMultiblockController> renderMultiblock(
 ) {
     if (!controller.showPreview) return
     world?.let {
-        controller.buildMultiblock(it, HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
+        controller.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
     }
 }
 

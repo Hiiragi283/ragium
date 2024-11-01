@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.energy.HTEnergyStorage
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.RagiumContents
@@ -19,7 +19,6 @@ import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.*
-import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -49,7 +48,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 object RagiumContentRegister : HTContentRegister {
-    private val itemBuilders: MutableMap<HTContent<Item>, HTPropertyHolder.Mutable> = mutableMapOf()
+    private val itemBuilders: MutableMap<HTContent<Item>, HTMutablePropertyHolder> = mutableMapOf()
 
     private val settingsKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item.Settings> =
         HTPropertyKey.Defaulted(RagiumAPI.id("settings"), value = { it })
@@ -57,11 +56,11 @@ object RagiumContentRegister : HTContentRegister {
     private val itemKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item> =
         HTPropertyKey.Defaulted(RagiumAPI.id("item"), value = ::Item)
 
-    private fun getProperties(content: HTContent<Item>): HTPropertyHolder.Mutable =
+    private fun getProperties(content: HTContent<Item>): HTMutablePropertyHolder =
         itemBuilders.computeIfAbsent(content) { HTPropertyHolder.builder() }
 
     private fun createAndRegisterItem(content: HTContent<Item>) {
-        val properties: HTPropertyHolder.Mutable = getProperties(content)
+        val properties: HTMutablePropertyHolder = getProperties(content)
         val settings: Item.Settings = properties.getOrDefault(settingsKey)(itemSettings())
         val item: Item = properties.getOrDefault(itemKey)(settings)
         registerItem(content, item)
@@ -69,7 +68,7 @@ object RagiumContentRegister : HTContentRegister {
 
     @JvmStatic
     fun registerContents() {
-        DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
+        // DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
 
         initProperties()
 

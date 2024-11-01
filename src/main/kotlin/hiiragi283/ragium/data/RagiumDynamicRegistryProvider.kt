@@ -1,14 +1,9 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.data.HTMultiblockExporter
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFeatures
-import hiiragi283.ragium.common.init.RagiumMultiblockPatterns
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.block.Blocks
@@ -39,13 +34,13 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
         Bootstraps.registerEnchantments(entries::add, enchantmentLookup, itemLookup)
         Bootstraps.registerConfigured(entries::add)
 
-        registerPatterns(entries)
+        // registerPatterns(entries)
         registerPlaced(entries)
     }
 
     //    Multiblock Pattern    //
 
-    private fun registerPatterns(entries: Entries) {
+    /*private fun registerPatterns(entries: Entries) {
         // blast furnace
         registerPattern(entries, RagiumMultiblockPatterns.BLAST_FURNACE) { tier: HTMachineTier ->
             addLayer(
@@ -145,9 +140,9 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 add(1, -1, 0, HTMultiblockComponent.of(Blocks.CRYING_OBSIDIAN))
             },
         )
-    }
+    }*/
 
-    private fun registerPattern(
+    /*private fun registerPattern(
         entries: Entries,
         keyMap: Map<HTMachineTier, RegistryKey<HTMultiblockPattern>>,
         builderAction: HTMultiblockExporter.(HTMachineTier) -> Unit,
@@ -158,7 +153,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 HTMultiblockExporter.create { builderAction(tier) },
             )
         }
-    }
+    }*/
 
     //    Placed Features    //
 

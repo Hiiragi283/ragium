@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.registry.RegistryKey
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -14,12 +13,8 @@ import net.minecraft.world.World
 
 interface HTMultiblockController {
     var showPreview: Boolean
-    val pattern: RegistryKey<HTMultiblockPattern>
 
-    fun buildMultiblock(world: World, builder: HTMultiblockBuilder): Unit? = world.registryManager
-        .get(HTMultiblockPattern.REGISTRY_KEY)
-        .get(pattern)
-        ?.buildMultiblock(builder)
+    fun buildMultiblock(builder: HTMultiblockBuilder)
 
     fun onUseController(
         state: BlockState,
@@ -55,7 +50,8 @@ interface HTMultiblockController {
     ): Boolean {
         val direction: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
         val validator = HTMultiblockValidator(world, pos, player)
-        return buildMultiblock(world, validator.rotate(direction))?.let { validator.isValid } ?: false
+        buildMultiblock(validator.rotate(direction))
+        return validator.isValid
     }
 
     fun onSucceeded(

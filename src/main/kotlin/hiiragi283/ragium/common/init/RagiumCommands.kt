@@ -193,7 +193,7 @@ object RagiumCommands {
             val result: Boolean = if (!controller.isValid(state, world, pos)) {
                 val facing: Direction =
                     state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                controller.buildMultiblock(world, HTMultiblockConstructor(world, pos, replace).rotate(facing))
+                controller.buildMultiblock(HTMultiblockConstructor(world, pos, replace).rotate(facing))
                 true
             } else {
                 false
