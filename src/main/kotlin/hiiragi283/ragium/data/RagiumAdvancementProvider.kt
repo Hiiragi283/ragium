@@ -449,10 +449,10 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         val root: AdvancementEntry = register
             .createRoot(
                 "tier4/root",
-                RagiumContents.Misc.RAGIUM,
+                RagiumContents.Gems.RAGIUM,
                 Identifier.of("textures/block/crying_obsidian.png"),
             ) {
-                hasItems(RagiumContents.Misc.RAGIUM)
+                hasItems(RagiumContents.Gems.RAGIUM)
             }.putEnglish("Ragium - Tier 4")
             .putEnglishDesc("IT'S THE END OF TUTORIAL")
             .putJapaneseDesc("チュートリアルは終わりだ。")

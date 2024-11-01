@@ -33,7 +33,7 @@ object RagiumItemGroup {
         register(ITEM_KEY) {
             displayName(Text.translatable("itemGroup.ragium.item"))
             icon {
-                RagiumContents.Misc.RAGIUM
+                RagiumContents.Gems.RAGIUM
                     .asItem()
                     .defaultStack
             }

@@ -106,6 +106,7 @@ object RagiumContents : HTContentRegister {
     enum class Gems(override val material: RagiumMaterials) : HTContent.Material<Item> {
         FLUORITE(RagiumMaterials.FLUORITE),
         RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
+        RAGIUM(RagiumMaterials.RAGIUM),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -357,13 +358,10 @@ object RagiumContents : HTContentRegister {
         ENGINE,
         FORGE_HAMMER,
         HEART_OF_THE_NETHER,
-
-        // OBLIVION_CUBE_SPAWN_EGG,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
-        RAGIUM,
         REMOVER_DYNAMITE,
         SOAP_INGOT,
         SOLAR_PANEL,

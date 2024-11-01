@@ -173,7 +173,6 @@ object RagiumContentRegister : HTContentRegister {
                 itemSettings(),
             )
         }*/
-        getProperties(RagiumContents.Misc.RAGIUM)[settingsKey] = { it.rarity(Rarity.EPIC) }
         getProperties(RagiumContents.Misc.REMOVER_DYNAMITE)[itemKey] = { HTRemoverDynamiteItem }
     }
 

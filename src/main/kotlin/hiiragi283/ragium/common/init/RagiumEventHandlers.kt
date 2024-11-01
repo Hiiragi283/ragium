@@ -62,16 +62,11 @@ object RagiumEventHandlers {
             }
             if (entry.id == RagiumAPI.id("tier4/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier4!"))
-                RagiumNetworks.sendFloatingItem(player, RagiumContents.Misc.RAGIUM)
+                RagiumNetworks.sendFloatingItem(player, RagiumContents.Gems.RAGIUM)
             }
         }
 
-        HTEquippedArmorCallback.EVENT.register { entity: LivingEntity, slot: EquipmentSlot, oldStack: ItemStack, newStack: ItemStack ->
-            RagiumAPI.log {
-                info("Current slot; ${slot.asString()}")
-                info("Old stack; $oldStack")
-                info("New stack; $newStack")
-            }
+        HTEquippedArmorCallback.EVENT.register { entity: LivingEntity, _: EquipmentSlot, oldStack: ItemStack, newStack: ItemStack ->
             if (oldStack.isEmpty && !newStack.isEmpty) {
                 HTAccessoryRegistry.onEquipped(entity, newStack)
                 return@register

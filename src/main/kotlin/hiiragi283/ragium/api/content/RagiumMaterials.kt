@@ -47,7 +47,10 @@ enum class RagiumMaterials(
     RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
     REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
     ENGINEERING_PLASTIC(HTMachineTier.ADVANCED, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
-    STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A", "S.T.E.L.L.A", Armor.STELLA),
+    STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A.", "S.T.E.L.L.A.", Armor.STELLA),
+
+    // tier4
+    RAGIUM(HTMachineTier.ADVANCED, "Ragium", "ラギウム", Armor.RAGIUM),
     ;
 
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }
@@ -84,6 +87,12 @@ enum class RagiumMaterials(
             "stella",
             ArmorMaterials.DIAMOND,
         ) { Ingredient.fromTag(RagiumItemTags.STEEL_INGOTS) }
+
+        @JvmField
+        val RAGIUM: RegistryEntry<ArmorMaterial> = register(
+            "ragium",
+            ArmorMaterials.NETHERITE,
+        ) { Ingredient.ofItems(RagiumContents.Gems.RAGIUM) }
 
         @JvmStatic
         private fun register(
