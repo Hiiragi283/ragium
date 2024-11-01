@@ -13,64 +13,28 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
         get(id)?.let(action)
     }
 
-    interface Mutable : HTPropertyHolder {
-        operator fun <T : Any> set(id: HTPropertyKey<T>, value: T)
-
-        fun <T : Any> setIfNonNull(id: HTPropertyKey<T>, value: T?) {
-            value?.let { set(id, it) }
-        }
-
-        fun remove(id: HTPropertyKey<*>)
-
-        fun <T : Any> removeIf(id: HTPropertyKey<T>, filter: (T) -> Boolean) {
-            val existValue: T = get(id) ?: return
-            if (filter(existValue)) {
-                remove(id)
-            }
-        }
-
-        fun <T : Any> removeIfNull(id: HTPropertyKey<T>, mapping: (T) -> Any?) {
-            val existValue: T = get(id) ?: return
-            if (mapping(existValue) == null) {
-                remove(id)
-            }
-        }
-
-        fun <T : Any> computeIfAbsent(id: HTPropertyKey<T>, mapping: () -> T): T {
-            val value: T? = get(id)
-            if (value == null) {
-                val newValue: T = mapping()
-                set(id, newValue)
-                return newValue
-            } else {
-                return value
-            }
-        }
-    }
-
     companion object {
         @JvmField
         val EMPTY: HTPropertyHolder = Empty
 
         @JvmStatic
-        fun create(map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf(), builderAction: Mutable.() -> Unit = {}): HTPropertyHolder =
-            create(map, HTPropertyHolder::Impl, builderAction)
+        fun create(
+            map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf(),
+            builderAction: HTMutablePropertyHolder.() -> Unit = {},
+        ): HTPropertyHolder = create(map, HTPropertyHolder::Impl, builderAction)
 
         @JvmStatic
         fun <T : Any> create(
             map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf(),
             build: (HTPropertyHolder) -> T,
-            builderAction: Mutable.() -> Unit = {},
+            builderAction: HTMutablePropertyHolder.() -> Unit = {},
         ): T = Builder(map).apply(builderAction).let(build)
 
         @JvmStatic
-        fun builder(): Builder = Builder()
+        fun builder(): HTMutablePropertyHolder = Builder()
 
         @JvmStatic
-        fun builder(map: MutableMap<HTPropertyKey<*>, Any>): Mutable = Builder(map)
-
-        @JvmStatic
-        fun builder(parent: HTPropertyHolder): Mutable = Builder(parent.toMap().toMutableMap())
+        fun builder(parent: HTPropertyHolder): HTMutablePropertyHolder = Builder(parent.toMap().toMutableMap())
     }
 
     //    Empty    //
@@ -85,11 +49,11 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
 
     //    Impl    //
 
-    private class Impl(delegate: HTPropertyHolder) : HTPropertyHolder by delegate
+    private class Impl(override val delegated: HTPropertyHolder) : HTDelegatedPropertyHolder
 
     //    Builder    //
 
-    class Builder(private val map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf()) : Mutable {
+    private class Builder(private val map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf()) : HTMutablePropertyHolder {
         override fun <T : Any> get(id: HTPropertyKey<T>): T? = id.cast(map[id])
 
         override fun contains(id: HTPropertyKey<*>): Boolean = id in map

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.init.RagiumMachineTypes
@@ -57,7 +58,7 @@ object HTMaterialItemRecipeRegistry {
         TagKey.of(RegistryKeys.ITEM, Identifier.of(TagUtil.C_TAG_NAMESPACE, "${key.id.path}s/$name"))
 
     @JvmStatic
-    fun register(name: String, builderAction: HTPropertyHolder.Mutable.() -> Unit = {}) {
+    fun register(name: String, builderAction: HTMutablePropertyHolder.() -> Unit = {}) {
         registry[name] = HTPropertyHolder.create(builderAction = builderAction)
     }
 

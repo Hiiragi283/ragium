@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.machine.HTMachineTypeKey
-import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import java.util.function.Predicate
 
 @JvmDefaultWithCompatibility
@@ -36,12 +36,12 @@ interface RagiumPlugin {
 
     //    PropertyHelper    //
 
-    class PropertyHelper(private val key: HTMachineTypeKey, private val properties: HTPropertyHolder.Mutable) {
-        fun modify(key: HTMachineTypeKey, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
+    class PropertyHelper(private val key: HTMachineTypeKey, private val properties: HTMutablePropertyHolder) {
+        fun modify(key: HTMachineTypeKey, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify({ it == key }, builderAction)
         }
 
-        fun modify(filter: Predicate<HTMachineTypeKey>, builderAction: HTPropertyHolder.Mutable.() -> Unit) {
+        fun modify(filter: Predicate<HTMachineTypeKey>, builderAction: HTMutablePropertyHolder.() -> Unit) {
             if (filter.test(this.key)) {
                 properties.builderAction()
             }

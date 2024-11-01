@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.RagiumContents.Misc
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
@@ -75,7 +76,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         val map: MutableMap<HTMachineTypeKey, HTPropertyHolder> = mutableMapOf()
         RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
             keyCache.forEach { key: HTMachineTypeKey ->
-                val builder: HTPropertyHolder.Mutable =
+                val builder: HTMutablePropertyHolder =
                     map.computeIfAbsent(key) { HTPropertyHolder.builder() }.let(HTPropertyHolder.Companion::builder)
                 action(plugin, RagiumPlugin.PropertyHelper(key, builder))
                 map[key] = builder

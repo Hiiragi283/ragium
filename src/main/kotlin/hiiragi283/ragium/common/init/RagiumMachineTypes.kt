@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.HTMachineTypeKey
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
-import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.common.machine.HTGeneratorMachineEntity
 import net.minecraft.fluid.Fluid
@@ -49,7 +49,7 @@ object RagiumMachineTypes {
         },
         ;
 
-        fun buildProperties(builder: HTPropertyHolder.Mutable) {
+        fun buildProperties(builder: HTMutablePropertyHolder) {
             builder[HTMachinePropertyKeys.MACHINE_FACTORY] =
                 HTMachineEntity.Factory.ofGenerator(::HTGeneratorMachineEntity)
             builder[HTMachinePropertyKeys.GENERATOR_PREDICATE] = ::canGenerate
