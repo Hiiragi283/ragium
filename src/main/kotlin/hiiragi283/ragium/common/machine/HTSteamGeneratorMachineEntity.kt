@@ -40,7 +40,7 @@ import kotlin.math.max
 class HTSteamGeneratorMachineEntity(tier: HTMachineTier) :
     HTGeneratorMachineEntityBase(RagiumMachineTypes.Generator.STEAM, tier),
     ExtendedScreenHandlerFactory<HTMachinePacket>,
-    HTDelegatedInventory.Simple,
+    HTDelegatedInventory.Sided,
     HTFluidSyncable {
     companion object {
         @JvmField
@@ -101,10 +101,10 @@ class HTSteamGeneratorMachineEntity(tier: HTMachineTier) :
 
     //    SidedStorageBlockEntity    //
 
-    override val parent: HTSimpleInventory = HTStorageBuilder(2)
+    override val parent: HTSidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSimple()
+        .buildSided()
 
     private val fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity

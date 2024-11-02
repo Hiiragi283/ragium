@@ -45,6 +45,7 @@ abstract class HTLargeProcessorMachineEntity(type: HTMachineConvertible, tier: H
         pos: BlockPos,
         player: PlayerEntity,
     ) {
+        if (interactWithFluidStorage(player)) return
         super.onSucceeded(state, world, pos, player)
         RagiumAdvancementCriteria.BUILT_MACHINE.trigger(player, machineType, tier)
     }

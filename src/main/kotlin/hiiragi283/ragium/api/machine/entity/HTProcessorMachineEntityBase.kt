@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.machine.entity
 import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.fluid.HTSingleFluidStorage
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.inventory.HTSidedInventory
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -11,15 +11,18 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
+import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -27,7 +30,7 @@ import net.minecraft.world.World
 abstract class HTProcessorMachineEntityBase(typeSize: HTMachineType.Size, type: HTMachineConvertible, tier: HTMachineTier) :
     HTMachineEntity<HTMachineType.Processor>(type.asProcessor(), tier),
     ExtendedScreenHandlerFactory<HTMachinePacket>,
-    HTDelegatedInventory.Simple,
+    HTDelegatedInventory.Sided,
     HTFluidSyncable {
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         parent.writeNbt(nbt, wrapperLookup)
@@ -51,11 +54,14 @@ abstract class HTProcessorMachineEntityBase(typeSize: HTMachineType.Size, type: 
         processor.process(world, pos, machineType, tier, createInput())
     }
 
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
+        fluidStorage.parts.any { FluidStorageUtil.interactWithFluidStorage(it, player, Hand.MAIN_HAND) }
+
     abstract fun createInput(): HTMachineInput
 
     //    SidedStorageBlockEntity    //
 
-    final override val parent: HTSimpleInventory = typeSize.createInventory()
+    final override val parent: HTSidedInventory = typeSize.createInventory()
 
     var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(tier, typeSize)
         protected set

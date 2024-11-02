@@ -4,13 +4,10 @@ import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -19,7 +16,6 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -73,10 +69,8 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
             return onUseController(state, world, pos, player, this)
         }
         // Insert fluid from holding stack
-        FluidStorage.SIDED.find(world, pos, null)?.let { storage: Storage<FluidVariant> ->
-            if (FluidStorageUtil.interactWithFluidStorage(storage, player, Hand.MAIN_HAND)) {
-                return ActionResult.success(world.isClient)
-            }
+        if (interactWithFluidStorage(player)) {
+            return ActionResult.success(world.isClient)
         }
         // open machine screen
         return when (world.isClient) {
@@ -87,6 +81,8 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
             }
         }
     }
+
+    open fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
 
     open fun tickEach(
         world: World,

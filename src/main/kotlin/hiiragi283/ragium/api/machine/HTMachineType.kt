@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.packetCodecOf
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.inventory.HTSidedInventory
 import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
@@ -59,16 +59,16 @@ sealed class HTMachineType :
 
     enum class Size(val invSize: Int) : StringIdentifiable {
         SIMPLE(5) {
-            override fun createInventory(): HTSimpleInventory = HTStorageBuilder(5)
+            override fun createInventory(): HTSidedInventory = HTStorageBuilder(5)
                 .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
                 .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
                 .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
                 .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
                 .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-                .buildSimple()
+                .buildSided()
         },
         LARGE(7) {
-            override fun createInventory(): HTSimpleInventory = HTStorageBuilder(7)
+            override fun createInventory(): HTSidedInventory = HTStorageBuilder(7)
                 .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
                 .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
                 .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -76,7 +76,7 @@ sealed class HTMachineType :
                 .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
                 .set(5, HTStorageIO.OUTPUT, HTStorageSide.ANY)
                 .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-                .buildSimple()
+                .buildSided()
         },
         ;
 
@@ -88,7 +88,7 @@ sealed class HTMachineType :
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, Size> = packetCodecOf(entries)
         }
 
-        abstract fun createInventory(): HTSimpleInventory
+        abstract fun createInventory(): HTSidedInventory
 
         override fun asString(): String = name.lowercase()
     }
