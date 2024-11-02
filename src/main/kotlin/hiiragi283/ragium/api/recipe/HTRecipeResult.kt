@@ -1,8 +1,10 @@
 package hiiragi283.ragium.api.recipe
 
+import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -16,12 +18,19 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.fluid.Fluid as MCFluid
 import net.minecraft.item.Item as MCItem
 
 @Suppress("DEPRECATION")
-sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEntry<O>, val amount: V, val components: ComponentChanges) {
+sealed class HTRecipeResult<O : Any, V : Number, S : Any>(
+    val entry: Either<RegistryEntry<O>, TagKey<O>>,
+    val amount: V,
+    val components: ComponentChanges,
+) {
     companion object {
         @JvmStatic
         private fun <T : HTRecipeResult<*, *, *>> validate(result: T): DataResult<T> = when {
@@ -29,12 +38,22 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEnt
             else -> DataResult.success(result)
         }
 
+        @JvmStatic
+        fun <T : Any> entryCodec(registry: Registry<T>): Codec<Either<RegistryEntry<T>, TagKey<T>>> =
+            Codec.xor(registry.entryCodec, TagKey.codec(registry.key))
+
+        @JvmField
+        val ITEM_ENTRY_CODEC: Codec<Either<RegistryEntry<MCItem>, TagKey<MCItem>>> = entryCodec(Registries.ITEM)
+
+        @JvmField
+        val FLUID_ENTRY_CODEC: Codec<Either<RegistryEntry<MCFluid>, TagKey<MCFluid>>> = entryCodec(Registries.FLUID)
+
         @JvmField
         val ITEM_CODEC: Codec<Item> = RecordCodecBuilder
             .create { instance ->
                 instance
                     .group(
-                        Registries.ITEM.entryCodec
+                        ITEM_ENTRY_CODEC
                             .fieldOf("item")
                             .forGetter(Item::entry),
                         Codec
@@ -45,14 +64,14 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEnt
                             .optionalFieldOf("components", ComponentChanges.EMPTY)
                             .forGetter(Item::components),
                     ).apply(instance, ::Item)
-            }.validate(::validate)
+            }
 
         @JvmField
         val FLUID_CODEC: Codec<Fluid> = RecordCodecBuilder
             .create { instance ->
                 instance
                     .group(
-                        Registries.FLUID.entryCodec
+                        FLUID_ENTRY_CODEC
                             .fieldOf("fluid")
                             .forGetter(Fluid::entry),
                         longRangeCodec(1, Long.MAX_VALUE)
@@ -62,42 +81,55 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEnt
                             .optionalFieldOf("components", ComponentChanges.EMPTY)
                             .forGetter(Fluid::components),
                     ).apply(instance, ::Fluid)
-            }.validate(::validate)
+            }
 
         @JvmField
         val ITEM_PACKET_CODEC: PacketCodec<RegistryByteBuf, Item> = PacketCodec
             .tuple(
-                PacketCodecs.registryCodec(Registries.ITEM.entryCodec),
+                PacketCodecs.registryCodec(ITEM_ENTRY_CODEC),
                 Item::entry,
                 PacketCodecs.VAR_INT,
                 Item::amount,
                 ComponentChanges.PACKET_CODEC,
                 Item::components,
                 ::Item,
-            ).validate(::validate)
+            )
 
         @JvmField
         val FLUID_PACKET_CODEC: PacketCodec<RegistryByteBuf, Fluid> = PacketCodec
             .tuple(
-                PacketCodecs.registryCodec(Registries.FLUID.entryCodec),
+                PacketCodecs.registryCodec(FLUID_ENTRY_CODEC),
                 Fluid::entry,
                 PacketCodecs.VAR_LONG,
                 Fluid::amount,
                 ComponentChanges.PACKET_CODEC,
                 Fluid::components,
                 ::Fluid,
-            ).validate(::validate)
+            )
 
         @JvmStatic
         fun ofItem(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): Item =
-            Item(item.asItem().registryEntry, count, components)
+            Item(Either.left(item.asItem().registryEntry), count, components)
 
         @JvmStatic
-        fun ofItem(stack: ItemStack): Item = Item(stack.registryEntry, stack.count, stack.componentChanges)
+        fun ofItem(stack: ItemStack): Item = Item(Either.left(stack.registryEntry), stack.count, stack.componentChanges)
+
+        @Deprecated("Experimental Feature")
+        @JvmStatic
+        fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): Item =
+            Item(Either.right(tagKey), count, components)
 
         @JvmStatic
         fun ofFluid(fluid: MCFluid, amount: Long = FluidConstants.BUCKET, components: ComponentChanges = ComponentChanges.EMPTY): Fluid =
-            Fluid(fluid.registryEntry, amount, components)
+            Fluid(Either.left(fluid.registryEntry), amount, components)
+
+        @Deprecated("Experimental Feature")
+        @JvmStatic
+        fun ofFluid(
+            tagKey: TagKey<MCFluid>,
+            amount: Long = FluidConstants.BUCKET,
+            components: ComponentChanges = ComponentChanges.EMPTY,
+        ): Fluid = Fluid(Either.right(tagKey), amount, components)
     }
 
     abstract val isEmpty: Boolean
@@ -106,19 +138,37 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEnt
 
     abstract fun merge(other: S): S
 
+    abstract val registry: Registry<O>
+
+    fun findFirstEntry(): RegistryEntry<O> = entry.left().orElseGet {
+        val entries: RegistryEntryList.Named<O> = entry
+            .right()
+            .flatMap(registry::getEntryList)
+            .orElseThrow { NoSuchElementException("TagKey; $entry has no entry!") }
+        entries.firstOrNull { entry: RegistryEntry<O> -> entry.matches { it.value.namespace == "minecraft" } }
+            ?: entries.firstOrNull { entry: RegistryEntry<O> -> entry.matches { it.value.namespace == RagiumAPI.MOD_ID } }
+            ?: entries.first()
+    }
+
+    fun findFirst(): O = findFirstEntry().value()
+
     //    Item    //
 
-    class Item(entry: RegistryEntry<MCItem>, amount: Int, components: ComponentChanges) :
+    class Item(entry: Either<RegistryEntry<MCItem>, TagKey<MCItem>>, amount: Int, components: ComponentChanges) :
         HTRecipeResult<MCItem, Int, ItemStack>(
             entry,
             amount,
             components,
         ) {
         val stack: ItemStack
-            get() = ItemStack(entry, amount, components)
+            get() = ItemStack(findFirstEntry(), amount, components)
 
         override val isEmpty: Boolean
-            get() = entry.value() == Items.AIR || amount <= 0
+            get() = entry.map(
+                { it.value() == Items.AIR },
+                { Registries.ITEM.iterateEntries(it).firstOrNull() == null },
+            ) ||
+                amount <= 0
 
         override fun canMerge(other: ItemStack): Boolean = when {
             other.isEmpty -> true
@@ -134,21 +184,28 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEnt
             ItemStack.areItemsAndComponentsEqual(stack, other) -> other.apply { count += stack.count }
             else -> other
         }
+
+        override val registry: Registry<MCItem>
+            get() = Registries.ITEM
     }
 
     //    Fluid    //
 
-    class Fluid(entry: RegistryEntry<MCFluid>, amount: Long, components: ComponentChanges) :
+    class Fluid(entry: Either<RegistryEntry<MCFluid>, TagKey<MCFluid>>, amount: Long, components: ComponentChanges) :
         HTRecipeResult<MCFluid, Long, ResourceAmount<FluidVariant>>(
             entry,
             amount,
             components,
         ) {
         val resourceAmount: ResourceAmount<FluidVariant> =
-            ResourceAmount(FluidVariant.of(entry.value(), components), amount)
+            ResourceAmount(FluidVariant.of(findFirst(), components), amount)
 
         override val isEmpty: Boolean
-            get() = entry.value() == Fluids.EMPTY || amount <= 0
+            get() = entry.map(
+                { it.value() == Fluids.EMPTY },
+                { Registries.FLUID.iterateEntries(it).firstOrNull() == null },
+            ) ||
+                amount <= 0
 
         override fun canMerge(other: ResourceAmount<FluidVariant>): Boolean = when {
             other.isBlank() -> true
@@ -161,5 +218,8 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(val entry: RegistryEnt
             other.equalsResource(resourceAmount) -> other + this.amount
             else -> other
         }
+
+        override val registry: Registry<MCFluid>
+            get() = Registries.FLUID
     }
 }

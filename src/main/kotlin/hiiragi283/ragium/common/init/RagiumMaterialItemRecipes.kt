@@ -78,13 +78,13 @@ object RagiumMaterialItemRecipes {
         }
         /*HTMaterialItemRecipeRegistry.register("invar") {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.INVAR)
-            set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.INVAR)
+            set(HTMaterialItemRecipeRegistry.METAL, RagiumContents.Ingots.INVAR)
             set(HTMaterialItemRecipeRegistry.PLATE, RagiumContents.Plates.INVAR)
         }
         HTMaterialItemRecipeRegistry.register("nickel") {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.NICKEL)
             set(HTMaterialItemRecipeRegistry.DUST, RagiumContents.Dusts.NICKEL)
-            set(HTMaterialItemRecipeRegistry.INGOT, RagiumContents.Ingots.NICKEL)
+            set(HTMaterialItemRecipeRegistry.METAL, RagiumContents.Ingots.NICKEL)
         }*/
         HTMaterialItemRecipeRegistry.register("steel") {
             set(HTMaterialItemRecipeRegistry.BLOCK, RagiumContents.StorageBlocks.STEEL)

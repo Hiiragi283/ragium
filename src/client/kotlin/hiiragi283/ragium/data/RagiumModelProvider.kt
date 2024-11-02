@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.client.model.HTMachineModel
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
@@ -253,10 +254,23 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             .forEach(::registerSimple)
         // hulls
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
+            val tier: HTMachineTier = HTMachineTier.entries[hull.ordinal]
             register(hull.value) {
                 generator.registerSingleton(
                     it,
-                    RagiumModels.HULL_TEXTURE_FACTORY,
+                    textureMap {
+                        put(
+                            TextureKey.INSIDE,
+                            when (tier) {
+                                HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
+                                HTMachineTier.BASIC -> Identifier.of("block/blast_furnace_top")
+                                HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
+                            },
+                        )
+                        put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
+                        put(TextureKey.SIDE, ModelIds.getBlockModelId(it))
+                    },
+                    RagiumModels.HULL,
                 )
             }
         }

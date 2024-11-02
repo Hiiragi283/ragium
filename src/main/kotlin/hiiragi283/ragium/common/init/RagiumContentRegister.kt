@@ -5,10 +5,10 @@ import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTContentRegister
-import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
@@ -34,10 +34,12 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Rarity
@@ -82,7 +84,7 @@ object RagiumContentRegister : HTContentRegister {
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
             val block = Block(blockSettings(Blocks.IRON_BLOCK))
             registerBlock(storage, block)
-            registerBlockItem(block, itemSettings().tier(storage.material.tier))
+            registerBlockItem(block, itemSettings())
         }
 
         buildList {
@@ -101,9 +103,10 @@ object RagiumContentRegister : HTContentRegister {
         }.forEach(::createAndRegisterItem)
 
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            val block = Block(blockSettings(hull.material.tier.getBaseBlock()))
+            val tier: HTMachineTier = HTMachineTier.entries[hull.ordinal]
+            val block = Block(blockSettings(tier.getBaseBlock()))
             registerBlock(hull, block)
-            registerBlockItem(block, itemSettings().tier(hull.material.tier))
+            registerBlockItem(block, itemSettings())
         }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
             val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
@@ -130,14 +133,11 @@ object RagiumContentRegister : HTContentRegister {
     private fun initProperties() {
         // armors
         RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
-            val material: RegistryEntry<ArmorMaterial> = armor.material.armor ?: return@forEach
-            getProperties(armor)[itemKey] = { armor.armorType.createItem(material, armor.multiplier) }
+            getProperties(armor)[itemKey] = { armor.armorType.createItem(armor.material, armor.multiplier) }
         }
         // tools
         RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
-            val type: HTToolType = tool.toolType
-            val material: ToolMaterial = tool.material.tool ?: return@forEach
-            getProperties(tool)[itemKey] = { type.createToolItem(material, it) }
+            getProperties(tool)[itemKey] = { tool.toolType.createToolItem(tool.material, it) }
         }
         // foods
         getProperties(RagiumContents.Foods.BUTTER)[settingsKey] = { it.food(FoodComponents.APPLE) }

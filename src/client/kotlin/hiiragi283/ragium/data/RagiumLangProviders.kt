@@ -68,8 +68,6 @@ object RagiumLangProviders {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-            addAll(RagiumContents.Armors.entries)
-            addAll(RagiumContents.Tools.entries)
         }.forEach { item: HTContent.Material<Item> -> builder.add(item, item.getTranslation(type)) }
         // exporters
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
@@ -142,6 +140,15 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SHAFT, "Shaft")
             builder.add(RagiumBlocks.TRADER_STATION, "Trader Station")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
+
+            builder.add(RagiumContents.Armors.STEEL_HELMET, "Steel Helmet")
+            builder.add(RagiumContents.Armors.STEEL_CHESTPLATE, "Steel Chestplate")
+            builder.add(RagiumContents.Armors.STEEL_LEGGINGS, "Steel Leggings")
+            builder.add(RagiumContents.Armors.STEEL_BOOTS, "Steel Boots")
+            builder.add(RagiumContents.Armors.STELLA_GOGGLE, "S.T.E.L.L.A. Goggles")
+            builder.add(RagiumContents.Armors.STELLA_JACKET, "S.T.E.L.L.A. Jacket")
+            builder.add(RagiumContents.Armors.STELLA_LEGGINGS, "S.T.E.L.L.A. Leggings")
+            builder.add(RagiumContents.Armors.STELLA_BOOTS, "S.T.E.L.L.A. Boots")
 
             builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
             builder.add(RagiumContents.Pipes.WOODEN, "Wooden Pipe")
@@ -317,6 +324,15 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SHAFT, "シャフト")
             builder.add(RagiumBlocks.TRADER_STATION, "貿易ステーション")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")
+
+            builder.add(RagiumContents.Armors.STEEL_HELMET, "スチールのヘルメット")
+            builder.add(RagiumContents.Armors.STEEL_CHESTPLATE, "スチールのチェストプレート")
+            builder.add(RagiumContents.Armors.STEEL_LEGGINGS, "スチールのレギンス")
+            builder.add(RagiumContents.Armors.STEEL_BOOTS, "スチールのブーツ")
+            builder.add(RagiumContents.Armors.STELLA_GOGGLE, "S.T.E.L.L.A.ゴーグル")
+            builder.add(RagiumContents.Armors.STELLA_JACKET, "S.T.E.L.L.A.ジャケット")
+            builder.add(RagiumContents.Armors.STELLA_LEGGINGS, "S.T.E.L.L.A.レギンス")
+            builder.add(RagiumContents.Armors.STELLA_BOOTS, "S.T.E.L.L.A.ブーツ")
 
             builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
             builder.add(RagiumContents.Pipes.WOODEN, "木製パイプ")
