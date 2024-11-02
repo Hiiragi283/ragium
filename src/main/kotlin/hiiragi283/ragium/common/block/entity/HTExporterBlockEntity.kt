@@ -16,12 +16,7 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    override fun tickEach(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        ticks: Int,
-    ) {
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
         if (world.isReceivingRedstonePower(pos)) return
         // transfer containment
@@ -29,14 +24,22 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
             getBackStorage(world, pos, state, ItemStorage.SIDED),
             getFrontStorage(world, pos, state, ItemStorage.SIDED),
             { true },
-            8,
+            when (tier) {
+                HTMachineTier.PRIMITIVE -> 8
+                HTMachineTier.BASIC -> 16
+                HTMachineTier.ADVANCED -> 32
+            },
             null,
         )
         StorageUtil.move(
             getBackStorage(world, pos, state, FluidStorage.SIDED),
             getFrontStorage(world, pos, state, FluidStorage.SIDED),
             { true },
-            FluidConstants.BUCKET,
+            when (tier) {
+                HTMachineTier.PRIMITIVE -> FluidConstants.INGOT
+                HTMachineTier.BASIC -> FluidConstants.BOTTLE
+                HTMachineTier.ADVANCED -> FluidConstants.BUCKET
+            },
             null,
         )
     }

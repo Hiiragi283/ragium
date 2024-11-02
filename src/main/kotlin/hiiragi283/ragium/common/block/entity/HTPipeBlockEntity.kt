@@ -42,20 +42,8 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         HTPipeType.canConnect(world, pos, dir, type)
     } ?: false
 
-    override fun tickEach(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        ticks: Int,
-    ) {
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
-        // update connection
-        /*world.modifyBlockState(pos) {
-            Direction.entries.forEach { dir: Direction ->
-                state.with(ConnectingBlock.FACING_PROPERTIES[dir], HTPipeBlock.canConnect(world, pos, dir, type))
-            }
-            state
-        }*/
         // export containment
         if (type.isItem) {
             StorageUtil.move(

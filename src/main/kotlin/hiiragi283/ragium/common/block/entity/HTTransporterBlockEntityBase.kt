@@ -42,12 +42,7 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
             .ifPresent { type = it }
     }
 
-    final override val tickRate: Int
-        get() = when (tier) {
-            HTMachineTier.PRIMITIVE -> 4
-            HTMachineTier.BASIC -> 2
-            HTMachineTier.ADVANCED -> 1
-        } * 20
+    final override val tickRate: Int = 20
 
     protected fun <A : Any> getBackStorage(
         world: World,

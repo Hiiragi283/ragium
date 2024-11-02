@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.fluid.HTFluidStack
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -10,14 +8,13 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
-import java.util.function.Function
 
 //    ResourceAmount    //
 
+/*
 fun <O : TransferVariant<*>, S : Any> stackMapper(objGetter: (S) -> O, numGetter: (S) -> Long): Function<S, ResourceAmount<O>> =
     Function { stack: S -> ResourceAmount(objGetter(stack), numGetter(stack)) }
 
@@ -28,6 +25,7 @@ val ITEM_STACK_MAPPER: Function<ItemStack, ResourceAmount<ItemVariant>> =
 @JvmField
 val FLUID_STACK_MAPPER: Function<HTFluidStack, ResourceAmount<FluidVariant>> =
     stackMapper({ FluidVariant.of(it.fluid, it.getComponentChanges()) }) { it.amount }
+*/
 
 operator fun <T : Any> ResourceAmount<T>.plus(amount: Long): ResourceAmount<T> = ResourceAmount(resource, this.amount + amount)
 
