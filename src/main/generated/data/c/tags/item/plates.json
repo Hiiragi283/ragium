@@ -1,16 +1,16 @@
 {
   "values": [
-    "ragium:ragi_alloy_plate",
-    "ragium:iron_plate",
-    "ragium:copper_plate",
-    "ragium:ragi_steel_plate",
     "ragium:aluminum_plate",
+    "ragium:copper_plate",
+    "ragium:engineering_plastic_plate",
     "ragium:gold_plate",
+    "ragium:iron_plate",
     "ragium:plastic_plate",
+    "ragium:ragi_alloy_plate",
+    "ragium:ragi_steel_plate",
+    "ragium:refined_ragi_steel_plate",
     "ragium:silicon_plate",
     "ragium:steel_plate",
-    "ragium:refined_ragi_steel_plate",
-    "ragium:engineering_plastic_plate",
     "ragium:stella_plate"
   ]
 }

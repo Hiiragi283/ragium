@@ -1,9 +1,9 @@
 {
   "values": [
+    "ragium:aluminum_ingot",
     "ragium:ragi_alloy_ingot",
     "ragium:ragi_steel_ingot",
-    "ragium:aluminum_ingot",
-    "ragium:steel_ingot",
-    "ragium:refined_ragi_steel_ingot"
+    "ragium:refined_ragi_steel_ingot",
+    "ragium:steel_ingot"
   ]
 }
