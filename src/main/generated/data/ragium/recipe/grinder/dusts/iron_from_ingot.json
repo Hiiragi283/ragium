@@ -1,0 +1,26 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:dusts/iron"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:ingots/iron"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:dusts/iron"
+    }
+  ]
+}

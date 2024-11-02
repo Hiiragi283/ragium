@@ -7,7 +7,7 @@
   "item_inputs": [
     {
       "count": 8,
-      "items": "ragium:ragi_alloy_ingot"
+      "items": "#c:ingots/ragi_alloy"
     },
     {
       "items": "ragium:shaft"

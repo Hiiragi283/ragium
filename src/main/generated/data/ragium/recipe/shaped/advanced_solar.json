@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:stella_plate"
+      "tag": "c:plates/stella"
     },
     "B": {
       "item": "ragium:solar_panel"

@@ -9,7 +9,7 @@
       "items": "#c:ingots/copper"
     },
     {
-      "items": "ragium:raginite_dust"
+      "items": "#c:dusts/raginite"
     }
   ],
   "item_outputs": [

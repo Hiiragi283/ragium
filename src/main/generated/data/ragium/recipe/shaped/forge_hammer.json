@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_alloy_ingot"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
       "tag": "c:rods/wooden"

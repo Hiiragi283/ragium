@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_steel_plate"
+      "tag": "c:plates/ragi_steel"
     },
     "B": {
       "item": "ragium:empty_fluid_cube"

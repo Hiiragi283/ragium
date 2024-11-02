@@ -6,7 +6,7 @@
   },
   "item_inputs": [
     {
-      "items": "#c:basalts"
+      "items": "minecraft:smooth_basalt"
     }
   ],
   "item_outputs": [

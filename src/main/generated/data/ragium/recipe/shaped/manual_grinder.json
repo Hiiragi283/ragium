@@ -6,7 +6,7 @@
       "tag": "c:rods/wooden"
     },
     "B": {
-      "item": "ragium:ragi_alloy_ingot"
+      "tag": "c:ingots/ragi_alloy"
     },
     "C": {
       "item": "minecraft:smooth_stone"

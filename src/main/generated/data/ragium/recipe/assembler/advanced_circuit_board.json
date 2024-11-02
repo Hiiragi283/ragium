@@ -6,10 +6,10 @@
   },
   "item_inputs": [
     {
-      "items": "ragium:engineering_plastic_plate"
+      "items": "#c:plates/engineering_plastic"
     },
     {
-      "items": "ragium:ragi_alloy_plate"
+      "items": "#c:plates/ragi_alloy"
     }
   ],
   "item_outputs": [

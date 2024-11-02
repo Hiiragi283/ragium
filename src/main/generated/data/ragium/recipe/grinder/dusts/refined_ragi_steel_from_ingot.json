@@ -1,0 +1,26 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:dusts/refined_ragi_steel"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:ingots/refined_ragi_steel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:dusts/refined_ragi_steel"
+    }
+  ]
+}

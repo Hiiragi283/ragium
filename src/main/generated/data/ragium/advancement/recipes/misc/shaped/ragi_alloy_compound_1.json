@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:crude_raginite_dust"
+            "items": "#c:dusts/crude_raginite"
           }
         ]
       },

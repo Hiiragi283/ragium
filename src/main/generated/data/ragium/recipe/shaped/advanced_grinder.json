@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:refined_ragi_steel_plate"
+      "tag": "c:plates/refined_ragi_steel"
     },
     "B": {
       "item": "minecraft:flint"

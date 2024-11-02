@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:raginite_dust"
+      "tag": "c:dusts/raginite"
     },
     "B": {
       "tag": "c:plates/steel"

@@ -6,7 +6,7 @@
   },
   "item_inputs": [
     {
-      "items": "ragium:silicon_plate"
+      "items": "#c:plates/silicon"
     },
     {
       "items": "#c:plates/copper"

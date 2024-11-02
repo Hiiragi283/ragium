@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:shaft"
+  },
   "definition": {
     "type": "ragium:metal_former",
     "tier": "primitive"

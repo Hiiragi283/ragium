@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_alloy_block"
+            "items": "#c:storage_blocks/ragi_alloy"
           }
         ]
       },

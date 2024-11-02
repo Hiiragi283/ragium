@@ -9,7 +9,7 @@
       "tag": "c:plates/gold"
     },
     "C": {
-      "item": "ragium:stella_plate"
+      "tag": "c:plates/stella"
     }
   },
   "pattern": [

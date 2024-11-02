@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:stella_plate"
+      "tag": "c:plates/stella"
     },
     "B": {
-      "item": "ragium:ragi_crystal"
+      "tag": "c:gems/ragi_crystal"
     }
   },
   "pattern": [

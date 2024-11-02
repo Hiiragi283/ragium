@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_crystal"
+            "items": "#c:gems/ragi_crystal"
           }
         ]
       },
