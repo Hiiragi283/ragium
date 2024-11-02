@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
+import hiiragi283.ragium.api.content.HTContent
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -42,9 +43,10 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    /*fun input(char: Char, either: BothEither<ItemConvertible, TagKey<Item>>): HTShapedRecipeJsonBuilder = apply {
-        either.ifBoth({ input(char, it) }, { input(char, it) }, BothEither.Priority.RIGHT)
-    }*/
+    fun input(char: Char, content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = when (content.usePrefixedTag) {
+        true -> input(char, content.prefixedTagKey)
+        false -> input(char, content.asItem())
+    }
 
     fun input(char: Char, item: ItemConvertible): HTShapedRecipeJsonBuilder = input(char, Ingredient.ofItems(item))
 
@@ -67,6 +69,11 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
             else -> this.patterns = patterns
         }
+    }
+
+    fun unlockedBy(content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = when (content.usePrefixedTag) {
+        true -> unlockedBy(content.prefixedTagKey)
+        false -> unlockedBy(content.asItem())
     }
 
     fun unlockedBy(item: ItemConvertible): HTShapedRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromItem(item))

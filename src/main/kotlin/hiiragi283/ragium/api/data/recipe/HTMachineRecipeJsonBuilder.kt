@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -59,6 +60,11 @@ class HTMachineRecipeJsonBuilder private constructor(
         itemInputs.add(ingredient)
     }
 
+    fun itemInput(content: HTContent.Material<*>, count: Int = 1): HTMachineRecipeJsonBuilder = when (content.usePrefixedTag) {
+        true -> itemInput(content.prefixedTagKey, count)
+        false -> itemInput(content.asItem(), count)
+    }
+
     fun itemInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(item, count))
 
     fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(tagKey, count))
@@ -87,6 +93,15 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTRecipeResult.ofItem(stack)) }
 
+    @Deprecated("Experimental Feature")
+    fun itemOutput(
+        tagKey: TagKey<Item>,
+        count: Int = 1,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = apply {
+        itemOutputs.add(HTRecipeResult.ofItem(tagKey, count, components))
+    }
+
     fun fluidOutput(
         fluid: Fluid,
         amount: Long = FluidConstants.BUCKET,
@@ -103,6 +118,15 @@ class HTMachineRecipeJsonBuilder private constructor(
         fluidOutputs.add(HTRecipeResult.ofFluid(fluid.value, amount, components))
     }
 
+    @Deprecated("Experimental Feature")
+    fun fluidOutput(
+        fluid: TagKey<Fluid>,
+        amount: Long = FluidConstants.BUCKET,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = apply {
+        fluidOutputs.add(HTRecipeResult.ofFluid(fluid, amount, components))
+    }
+
     //    Catalyst    //
 
     fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = apply {
@@ -111,6 +135,17 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {
         catalyst = HTIngredient.ofItem(tagKey)
+    }
+
+    @Deprecated(
+        "Experimental Feature",
+        ReplaceWith(
+            "offerTo(exporter, RagiumAPI.id(output.id.path).withSuffixedPath(suffix))",
+            "hiiragi283.ragium.api.RagiumAPI",
+        ),
+    )
+    fun offerTo(exporter: RecipeExporter, output: TagKey<*>, suffix: String = "") {
+        offerTo(exporter, RagiumAPI.id(output.id.path).withSuffixedPath(suffix))
     }
 
     fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {

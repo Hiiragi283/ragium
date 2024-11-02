@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.recipe
 
+import hiiragi283.ragium.api.content.HTContent
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -41,9 +42,10 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    /*fun input(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
-        either.ifBoth({ input(it) }, { input(it) }, BothEither.Priority.RIGHT)
-    }*/
+    fun input(content: HTContent.Material<*>): HTShapelessRecipeJsonBuilder = when (content.usePrefixedTag) {
+        true -> input(content.prefixedTagKey)
+        false -> input(content.asItem())
+    }
 
     fun input(item: ItemConvertible): HTShapelessRecipeJsonBuilder = input(Ingredient.ofItems(item))
 
@@ -51,6 +53,11 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
 
     fun input(ingredient: Ingredient): HTShapelessRecipeJsonBuilder = apply {
         inputs.add(ingredient)
+    }
+
+    fun unlockedBy(content: HTContent.Material<*>): HTShapelessRecipeJsonBuilder = when (content.usePrefixedTag) {
+        true -> unlockedBy(content.prefixedTagKey)
+        false -> unlockedBy(content.asItem())
     }
 
     fun unlockedBy(item: ItemConvertible): HTShapelessRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromItem(item))
@@ -66,14 +73,6 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
     }
 
     //    CraftingRecipeJsonBuilder    //
-
-    /*fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapelessRecipeJsonBuilder = apply {
-        either.ifBoth(
-            { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
-            { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
-            BothEither.Priority.RIGHT,
-        )
-    }*/
 
     override fun criterion(name: String, criterion: AdvancementCriterion<*>): HTShapelessRecipeJsonBuilder = apply {
         criteriaMap[name] = criterion

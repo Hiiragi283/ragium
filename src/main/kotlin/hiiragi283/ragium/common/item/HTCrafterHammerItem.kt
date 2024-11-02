@@ -39,7 +39,7 @@ import net.minecraft.world.World
 import java.util.function.Consumer
 
 object HTCrafterHammerItem :
-    MiningToolItem(RagiumMaterials.STEEL.tool!!, BlockTags.AIR, itemSettings().rarity(Rarity.RARE)) {
+    MiningToolItem(RagiumMaterials.Tool.STEEL, BlockTags.AIR, itemSettings().rarity(Rarity.RARE)) {
     private fun getComponent(stack: ItemStack): Component = stack.getOrDefault(Component.COMPONENT_TYPE, Component.DEFAULT)
 
     private fun setComponent(stack: ItemStack, component: Component? = null) {

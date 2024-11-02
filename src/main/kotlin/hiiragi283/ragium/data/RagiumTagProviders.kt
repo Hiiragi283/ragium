@@ -1,5 +1,7 @@
 package hiiragi283.ragium.data
 
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.tags.RagiumBlockTags
@@ -19,6 +21,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
+import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.EnchantmentTags
@@ -114,9 +117,6 @@ object RagiumTagProviders {
                 add(tagKey, fluid.value)
             }
 
-            // add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.METHANOL)
-            // add(RagiumFluidTags.ALCOHOL, RagiumContents.Fluids.ALCOHOL)
-
             add(RagiumFluidTags.FUEL, RagiumContents.Fluids.BIO_FUEL)
             add(RagiumFluidTags.FUEL, RagiumContents.Fluids.FUEL)
             add(RagiumFluidTags.FUEL, RagiumContents.Fluids.AROMATIC_COMPOUNDS)
@@ -131,16 +131,13 @@ object RagiumTagProviders {
     private class ItemProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.ItemTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            fun add(tagKey: TagKey<Item>, item: ItemConvertible) {
-                getOrCreateTagBuilder(tagKey).add(item.asItem())
-            }
+            val tagCache: Multimap<TagKey<Item>, Item> = HashMultimap.create()
 
-            add(RagiumItemTags.BASALTS, Items.BASALT)
-            add(RagiumItemTags.BASALTS, Items.POLISHED_BASALT)
-            add(RagiumItemTags.BASALTS, Items.SMOOTH_BASALT)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.DEEP_RAGINITE)
-            add(RagiumItemTags.RAGINITE_ORES, RagiumContents.Ores.NETHER_RAGINITE)
-            add(RagiumItemTags.SILICON_PLATES, RagiumContents.Plates.SILICON)
+            fun add(tagKey: TagKey<Item>?, item: ItemConvertible?) {
+                val item1: Item = item?.asItem() ?: return
+                if (tagKey == null) return
+                tagCache.put(tagKey, item1)
+            }
 
             buildList {
                 addAll(RagiumContents.Ores.entries)
@@ -165,7 +162,10 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Foods.entries)
                 addAll(RagiumContents.Misc.entries)
             }.forEach { content: HTContent<out ItemConvertible> ->
-                content.tagKey?.let { add(it, content) }
+                add(content.commonTagKey, content)
+                if (content is HTContent.Material<*> && content.usePrefixedTag) {
+                    add(content.prefixedTagKey, content)
+                }
             }
 
             // ragium
@@ -182,9 +182,12 @@ object RagiumTagProviders {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
-            HTMaterialItemRecipeRegistry.configureTags { tagKey: TagKey<Item>, item: ItemConvertible? ->
-                val builder: FabricTagBuilder = getOrCreateTagBuilder(tagKey)
-                item?.asItem()?.let { builder.add(it) }
+            HTMaterialItemRecipeRegistry.configureTags(::add)
+
+            tagCache.asMap().forEach { (tagKey: TagKey<Item>, items: Collection<Item>) ->
+                items.sortedBy(Registries.ITEM::getId).forEach { item: Item ->
+                    getOrCreateTagBuilder(tagKey).add(item)
+                }
             }
         }
     }

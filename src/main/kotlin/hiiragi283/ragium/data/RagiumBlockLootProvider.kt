@@ -42,15 +42,21 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
+        addDrop(RagiumBlocks.SWEET_BERRIES_CAKE, dropsNothing())
 
         addDrop(RagiumBlocks.ADVANCED_CASING)
+        addDrop(RagiumBlocks.BACKPACK_INTERFACE)
         addDrop(RagiumBlocks.BASIC_CASING)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumBlocks.FIREBOX)
         addDrop(RagiumBlocks.ITEM_DISPLAY)
+        addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)
+        addDrop(RagiumBlocks.MANUAL_MIXER)
         addDrop(RagiumBlocks.NETWORK_INTERFACE)
         addDrop(RagiumBlocks.SHAFT)
+        addDrop(RagiumBlocks.TRADER_STATION)
+        addDrop(RagiumBlocks.TRASH_BOX)
 
         dropMachine(RagiumBlocks.META_CONSUMER)
         dropMachine(RagiumBlocks.META_GENERATOR)

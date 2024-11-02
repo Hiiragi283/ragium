@@ -76,8 +76,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .patterns(
                 "AAA",
                 "A A",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -86,8 +86,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A A",
                 "AAA",
                 "AAA",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -96,8 +96,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "AAA",
                 "A A",
                 "A A",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -105,8 +105,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .patterns(
                 "A A",
                 "A A",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
         // stella
         HTShapedRecipeJsonBuilder
@@ -172,9 +172,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " AA",
                 "BBA",
                 " AA",
-            ).input('A', RagiumItemTags.STEEL_BLOCKS)
+            ).input('A', RagiumContents.StorageBlocks.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItemTags.STEEL_BLOCKS)
+            .unlockedBy(RagiumContents.StorageBlocks.STEEL)
             .offerTo(exporter)
 
         // steel
@@ -184,9 +184,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B",
                 "A",
                 "A",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -195,9 +195,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B",
                 "B",
                 "A",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -206,9 +206,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " B ",
                 " B ",
                 "AAA",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -217,9 +217,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B ",
                 "BA",
                 "AA",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -228,9 +228,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B ",
                 "B ",
                 "AA",
-            ).input('A', RagiumItemTags.STEEL_INGOTS)
+            ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItemTags.STEEL_INGOTS)
+            .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
         // invar
 
@@ -340,9 +340,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "BBB",
                 "CCC",
             ).input('A', ConventionalItemTags.GLASS_PANES)
-            .input('B', RagiumItemTags.SILICON_PLATES)
-            .input('C', RagiumItemTags.ALUMINUM_PLATES)
-            .unlockedBy(RagiumItemTags.SILICON_PLATES)
+            .input('B', RagiumContents.Plates.SILICON)
+            .input('C', RagiumContents.Plates.ALUMINUM)
+            .unlockedBy(RagiumContents.Plates.SILICON)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -394,8 +394,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "CDC",
                 "ABA",
             ).input('A', RagiumContents.Dusts.RAGINITE)
-            .input('B', RagiumItemTags.STEEL_PLATES)
-            .input('C', RagiumItemTags.GOLD_PLATES)
+            .input('B', RagiumContents.Plates.STEEL)
+            .input('C', RagiumContents.Plates.GOLD)
             .input('D', RagiumContents.Circuits.PRIMITIVE)
             .unlockedBy(RagiumContents.Dusts.RAGINITE)
             .offerTo(exporter)
@@ -407,7 +407,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Circuits.ADVANCED)
-            .input('B', RagiumItemTags.GOLD_PLATES)
+            .input('B', RagiumContents.Plates.GOLD)
             .input('C', RagiumContents.Plates.STELLA)
             .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
@@ -490,11 +490,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // pipes
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val input: TagKey<Item> = when (pipe) {
-                RagiumContents.Pipes.IRON -> RagiumItemTags.IRON_PLATES
+                RagiumContents.Pipes.IRON -> RagiumContents.Plates.IRON.prefixedTagKey
                 RagiumContents.Pipes.WOODEN -> ItemTags.PLANKS
-                RagiumContents.Pipes.STEEL -> RagiumItemTags.STEEL_PLATES
-                RagiumContents.Pipes.COPPER -> RagiumItemTags.COPPER_PLATES
-                RagiumContents.Pipes.UNIVERSAL -> RagiumItemTags.REFINED_RAGI_STEEL_PLATES
+                RagiumContents.Pipes.STEEL -> RagiumContents.Plates.STEEL.prefixedTagKey
+                RagiumContents.Pipes.COPPER -> RagiumContents.Plates.COPPER.prefixedTagKey
+                RagiumContents.Pipes.UNIVERSAL -> RagiumContents.Plates.REFINED_RAGI_STEEL.prefixedTagKey
             }
             HTShapedRecipeJsonBuilder
                 .create(pipe, 3)
@@ -512,10 +512,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumMaterials.RAGI_ALLOY,
             RagiumMaterials.RAGI_STEEL,
             RagiumMaterials.REFINED_RAGI_STEEL,
-        ).forEach { material: RagiumMaterials ->
-            val base: Block = material.tier.getBaseBlock()
-            val hull: RagiumContents.Hulls = material.getHull() ?: return@forEach
-            val plate: RagiumContents.Plates = material.getPlate() ?: return@forEach
+        ).forEachIndexed { index: Int, material: RagiumMaterials ->
+            val base: Block = HTMachineTier.entries[index].getBaseBlock()
+            val hull: RagiumContents.Hulls = material.getHull() ?: return@forEachIndexed
+            val plate: RagiumContents.Plates = material.getPlate() ?: return@forEachIndexed
             HTShapedRecipeJsonBuilder
                 .create(hull)
                 .patterns(
@@ -534,8 +534,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumItemTags.IRON_PLATES)
-            .input('B', RagiumItemTags.INVAR_PLATES)
+            ).input('A', RagiumContents.Plates.IRON)
+            .input('B', RagiumContents.Plates.STEEL)
             .input('C', ConventionalItemTags.REDSTONE_DUSTS)
             .unlockedBy(ConventionalItemTags.REDSTONE_DUSTS)
             .offerTo(exporter)
@@ -547,7 +547,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Plates.STELLA)
-            .input('B', RagiumItemTags.STEEL_PLATES)
+            .input('B', RagiumContents.Plates.ALUMINUM)
             .input('C', RagiumContents.Gems.RAGI_CRYSTAL)
             .unlockedBy(RagiumContents.Gems.RAGI_CRYSTAL)
             .offerTo(exporter)
@@ -706,9 +706,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input(
                     'A',
                     when (tier) {
-                        HTMachineTier.PRIMITIVE -> Ingredient.fromTag(RagiumItemTags.IRON_PLATES)
-                        HTMachineTier.BASIC -> Ingredient.fromTag(RagiumItemTags.STEEL_PLATES)
-                        HTMachineTier.ADVANCED -> Ingredient.ofItems(RagiumContents.Plates.STELLA)
+                        HTMachineTier.PRIMITIVE -> RagiumContents.Plates.IRON
+                        HTMachineTier.BASIC -> RagiumContents.Plates.STEEL
+                        HTMachineTier.ADVANCED -> RagiumContents.Plates.STELLA
                     },
                 ).input('B', core)
                 .input('C', tier.getCircuit())
@@ -781,9 +781,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input(
                     'E',
                     when (tier) {
-                        HTMachineTier.PRIMITIVE -> RagiumItemTags.COPPER_PLATES
-                        HTMachineTier.BASIC -> RagiumItemTags.IRON_PLATES
-                        HTMachineTier.ADVANCED -> RagiumItemTags.STEEL_PLATES
+                        HTMachineTier.PRIMITIVE -> RagiumContents.Plates.COPPER
+                        HTMachineTier.BASIC -> RagiumContents.Plates.IRON
+                        HTMachineTier.ADVANCED -> RagiumContents.Plates.STEEL
                     },
                 ).unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(type))

@@ -1,11 +1,14 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.api.tags.HTTagPrefix
+import hiiragi283.ragium.api.tags.HTTagPrefixes
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.Block
-import net.minecraft.item.*
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterial
+import net.minecraft.item.ArmorMaterials
+import net.minecraft.item.ToolMaterial
 import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -15,49 +18,48 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.StringIdentifiable
 
-enum class RagiumMaterials(
-    val tier: HTMachineTier,
-    override val enName: String,
-    override val jaName: String,
-    val armor: RegistryEntry<ArmorMaterial>? = null,
-    val tool: ToolMaterial? = null,
-) : HTTranslationProvider,
+enum class RagiumMaterials(val type: Type, override val enName: String, override val jaName: String) :
+    HTTranslationProvider,
     StringIdentifiable {
     // tier1
-    CRUDE_RAGINITE(HTMachineTier.PRIMITIVE, "Crude Raginite", "粗製ラギナイト"),
-    RAGI_ALLOY(HTMachineTier.PRIMITIVE, "Ragi-Alloy", "ラギ合金"),
-    COPPER(HTMachineTier.PRIMITIVE, "Copper", "銅"),
-    IRON(HTMachineTier.PRIMITIVE, "Iron", "鉄", ArmorMaterials.IRON, ToolMaterials.IRON),
-    ASH(HTMachineTier.PRIMITIVE, "Ash", "灰"),
-    NITER(HTMachineTier.PRIMITIVE, "Niter", "硝石"),
-    SULFUR(HTMachineTier.PRIMITIVE, "Sulfur", "硫黄"),
+    CRUDE_RAGINITE(Type.MINERAL, "Crude Raginite", "粗製ラギナイト"),
+    RAGI_ALLOY(Type.ALLOY, "Ragi-Alloy", "ラギ合金"),
+    COPPER(Type.METAL, "Copper", "銅"),
+    IRON(Type.METAL, "Iron", "鉄"),
+    ASH(Type.DUST, "Ash", "灰"),
+    NITER(Type.MINERAL, "Niter", "硝石"),
+    SULFUR(Type.MINERAL, "Sulfur", "硫黄"),
 
     // tier2
-    RAGINITE(HTMachineTier.BASIC, "Raginite", "ラギナイト"),
-    RAGI_STEEL(HTMachineTier.BASIC, "Ragi-Steel", "ラギスチール"),
-    ALUMINUM(HTMachineTier.BASIC, "Aluminum", "アルミニウム"),
-    BAUXITE(HTMachineTier.BASIC, "Bauxite", "ボーキサイト"),
-    FLUORITE(HTMachineTier.BASIC, "Fluorite", "蛍石"),
-    GOLD(HTMachineTier.BASIC, "Gold", "金", ArmorMaterials.GOLD, ToolMaterials.GOLD),
-    PLASTIC(HTMachineTier.BASIC, "Plastic", "プラスチック"), // PE
-    SILICON(HTMachineTier.BASIC, "Silicon", "シリコン"),
-    STEEL(HTMachineTier.BASIC, "Steel", "スチール", Armor.STEEL, Tool.STEEL),
+    RAGINITE(Type.MINERAL, "Raginite", "ラギナイト"),
+    RAGI_STEEL(Type.ALLOY, "Ragi-Steel", "ラギスチール"),
+    BAUXITE(Type.MINERAL, "Bauxite", "ボーキサイト"),
+    FLUORITE(Type.GEM, "Fluorite", "蛍石"),
+    GOLD(Type.METAL, "Gold", "金"),
+    PLASTIC(Type.PLASTIC, "Plastic", "プラスチック"), // PE
+    SILICON(Type.METAL, "Silicon", "シリコン"),
+    STEEL(Type.ALLOY, "Steel", "スチール"),
 
     // tier3
-    RAGI_CRYSTAL(HTMachineTier.ADVANCED, "Ragi-Crystal", "ラギクリスタリル"),
-    REFINED_RAGI_STEEL(HTMachineTier.ADVANCED, "Refined Ragi-Steel", "精製ラギスチール"),
-    ENGINEERING_PLASTIC(HTMachineTier.ADVANCED, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
-    STELLA(HTMachineTier.ADVANCED, "S.T.E.L.L.A.", "S.T.E.L.L.A.", Armor.STELLA),
+    RAGI_CRYSTAL(Type.GEM, "Ragi-Crystal", "ラギクリスタリル"),
+    REFINED_RAGI_STEEL(Type.ALLOY, "Refined Ragi-Steel", "精製ラギスチール"),
+    ALUMINUM(Type.METAL, "Aluminum", "アルミニウム"),
+    ENGINEERING_PLASTIC(Type.PLASTIC, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
+    STELLA(Type.PLASTIC, "S.T.E.L.L.A.", "S.T.E.L.L.A."),
 
     // tier4
-    RAGIUM(HTMachineTier.ADVANCED, "Ragium", "ラギウム", Armor.RAGIUM),
+    RAGIUM(Type.GEM, "Ragium", "ラギウム"),
     ;
+
+    fun isValidPrefix(prefix: HTTagPrefix): Boolean = prefix in type.validPrefixes
 
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }
 
     fun getHull(): RagiumContents.Hulls? = RagiumContents.Hulls.entries.firstOrNull { it.material == this }
 
     fun getIngot(): RagiumContents.Ingots? = RagiumContents.Ingots.entries.firstOrNull { it.material == this }
+
+    fun getGem(): RagiumContents.Gems? = RagiumContents.Gems.entries.firstOrNull { it.material == this }
 
     fun getPlate(): RagiumContents.Plates? = RagiumContents.Plates.entries.firstOrNull { it.material == this }
 
@@ -66,6 +68,27 @@ enum class RagiumMaterials(
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()
+
+    //    Type    //
+
+    enum class Type(val validPrefixes: List<HTTagPrefix>) {
+        ALLOY(HTTagPrefixes.DUSTS, HTTagPrefixes.INGOTS, HTTagPrefixes.PLATES, HTTagPrefixes.STORAGE_BLOCKS),
+        DUST(HTTagPrefixes.DUSTS),
+        GEM(HTTagPrefixes.DUSTS, HTTagPrefixes.GEMS, HTTagPrefixes.ORES, HTTagPrefixes.STORAGE_BLOCKS),
+        METAL(
+            HTTagPrefixes.DUSTS,
+            HTTagPrefixes.INGOTS,
+            HTTagPrefixes.ORES,
+            HTTagPrefixes.PLATES,
+            HTTagPrefixes.RAW_MATERIALS,
+            HTTagPrefixes.STORAGE_BLOCKS,
+        ),
+        MINERAL(HTTagPrefixes.DUSTS, HTTagPrefixes.ORES, HTTagPrefixes.RAW_MATERIALS),
+        PLASTIC(HTTagPrefixes.PLATES),
+        ;
+
+        constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toList())
+    }
 
     //    Holder    //
 
@@ -80,13 +103,13 @@ enum class RagiumMaterials(
         val STEEL: RegistryEntry<ArmorMaterial> = register(
             "steel",
             ArmorMaterials.IRON,
-        ) { Ingredient.fromTag(RagiumItemTags.STEEL_INGOTS) }
+        ) { Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey) }
 
         @JvmField
         val STELLA: RegistryEntry<ArmorMaterial> = register(
             "stella",
             ArmorMaterials.DIAMOND,
-        ) { Ingredient.fromTag(RagiumItemTags.STEEL_INGOTS) }
+        ) { Ingredient.ofItems(RagiumContents.Plates.STELLA) }
 
         @JvmField
         val RAGIUM: RegistryEntry<ArmorMaterial> = register(
@@ -147,7 +170,14 @@ enum class RagiumMaterials(
         private val enchantability: Int,
         private val repairment: Ingredient,
     ) : ToolMaterial {
-        STEEL(BlockTags.INCORRECT_FOR_IRON_TOOL, 750, 8.0f, 3.0f, 14, Ingredient.fromTag(RagiumItemTags.STEEL_INGOTS)),
+        STEEL(
+            BlockTags.INCORRECT_FOR_IRON_TOOL,
+            750,
+            8.0f,
+            3.0f,
+            14,
+            Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey),
+        ),
         ;
 
         constructor(from: ToolMaterial) : this(

@@ -1,9 +1,11 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.tags.HTTagPrefixes
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.data.server.recipe.RecipeExporter
@@ -13,6 +15,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
+@Suppress("DEPRECATION")
 object HTMaterialItemRecipeRegistry {
     //    keys    //
 
@@ -81,17 +84,28 @@ object HTMaterialItemRecipeRegistry {
     @JvmStatic
     fun generateRecipes(exporter: RecipeExporter, tagValidator: (RecipeExporter, TagKey<Item>) -> RecipeExporter) {
         this.tagValidator = tagValidator
+        RagiumMaterials.entries.forEach { material: RagiumMaterials ->
+            ingotToDustRecipe(exporter, material)
+            ingotToPlateRecipe(exporter, material)
+            plateToDustRecipe(exporter, material)
+
+            oreToRawRecipe(exporter, material)
+            rawToDustRecipe(exporter, material)
+
+            rawToIngotRecipe(exporter, material)
+            dustToIngotRecipe(exporter, material)
+        }
+
         registry.forEach { (name: String, properties: HTPropertyHolder) ->
             ingotToBlockRecipe(exporter, name, properties)
             blockToIngotRecipe(exporter, name, properties)
-            ingotToDustRecipe(exporter, name, properties)
-            ingotToPlateRecipe(exporter, name, properties)
-            plateToDustRecipe(exporter, name, properties)
-
-            oreToRawRecipe(exporter, name, properties)
-            rawToDustRecipe(exporter, name, properties)
-            rawToIngotRecipe(exporter, name, properties)
-            dustToIngotRecipe(exporter, name, properties)
+            // ingotToDustRecipe(exporter, name, properties)
+            // ingotToPlateRecipe(exporter, name, properties)
+            // plateToDustRecipe(exporter, name, properties)
+            // oreToRawRecipe(exporter, name, properties)
+            // rawToDustRecipe(exporter, name, properties)
+            // rawToIngotRecipe(exporter, name, properties)
+            // dustToIngotRecipe(exporter, name, properties)
         }
     }
 
@@ -126,56 +140,60 @@ object HTMaterialItemRecipeRegistry {
     }
 
     @JvmStatic
-    private fun ingotToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val dust: ItemConvertible = properties[DUST] ?: return
-        val ingot: TagKey<Item> = getTagKey(name, INGOT)
+    private fun ingotToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.INGOTS) || !material.isValidPrefix(HTTagPrefixes.DUSTS)) return
+        val ingot: TagKey<Item> = HTTagPrefixes.INGOTS.createTag(material)
+        val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ingot)
             .itemOutput(dust)
-            .offerTo(tagValidator(exporter, ingot), dust, "_from_ingot")
+            .offerTo(tagValidator(exporter, dust), dust, "_from_ingot")
     }
 
     @JvmStatic
-    private fun ingotToPlateRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val plate: ItemConvertible = properties[PLATE] ?: return
-        val ingot: TagKey<Item> = getTagKey(name, INGOT)
+    private fun ingotToPlateRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.INGOTS) || !material.isValidPrefix(HTTagPrefixes.PLATES)) return
+        val ingot: TagKey<Item> = HTTagPrefixes.INGOTS.createTag(material)
+        val plate: TagKey<Item> = HTTagPrefixes.PLATES.createTag(material)
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.METAL_FORMER)
             .itemInput(ingot)
             .itemOutput(plate)
-            .offerTo(tagValidator(exporter, ingot), plate)
+            .offerTo(tagValidator(exporter, plate), plate)
     }
 
     @JvmStatic
-    private fun plateToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val dust: ItemConvertible = properties[DUST] ?: return
-        val plate: TagKey<Item> = getTagKey(name, PLATE)
+    private fun plateToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.PLATES) || !material.isValidPrefix(HTTagPrefixes.DUSTS)) return
+        val plate: TagKey<Item> = HTTagPrefixes.PLATES.createTag(material)
+        val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(plate)
             .itemOutput(dust)
-            .offerTo(tagValidator(exporter, plate), dust, "_from_plate")
+            .offerTo(tagValidator(exporter, dust), dust, "_from_plate")
     }
 
     @JvmStatic
-    private fun oreToRawRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val rawMaterial: ItemConvertible = properties[RAW] ?: return
-        val ore: TagKey<Item> = getTagKey(name, ORE)
+    private fun oreToRawRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.ORES) || !material.isValidPrefix(HTTagPrefixes.RAW_MATERIALS)) return
+        val ore: TagKey<Item> = HTTagPrefixes.ORES.createTag(material)
+        val rawMaterial: TagKey<Item> = HTTagPrefixes.RAW_MATERIALS.createTag(material)
         // Grinder Recipe
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ore)
             .itemOutput(rawMaterial, 2)
-            .apply { properties[ORE_SUB_PRODUCTS]?.let(::itemOutput) }
-            .offerTo(tagValidator(exporter, ore), rawMaterial)
+            .offerTo(tagValidator(exporter, rawMaterial), rawMaterial)
     }
 
     @JvmStatic
-    private fun rawToDustRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val dust: ItemConvertible = properties[DUST] ?: return
-        val rawMaterial: TagKey<Item> = getTagKey(name, RAW)
+    private fun rawToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.RAW_MATERIALS) || !material.isValidPrefix(HTTagPrefixes.DUSTS)) return
+        val rawMaterial: TagKey<Item> = HTTagPrefixes.RAW_MATERIALS.createTag(material)
+        val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         // Grinder Recipe
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.GRINDER)
@@ -185,26 +203,28 @@ object HTMaterialItemRecipeRegistry {
     }
 
     @JvmStatic
-    private fun rawToIngotRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val ingot: ItemConvertible = properties[INGOT] ?: return
-        val rawMaterial: TagKey<Item> = getTagKey(name, RAW)
+    private fun rawToIngotRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.RAW_MATERIALS)) return
+        val rawMaterial: TagKey<Item> = HTTagPrefixes.RAW_MATERIALS.createTag(material)
+        val result: ItemConvertible = material.getIngot() ?: material.getGem() ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
             rawMaterial,
-            ingot,
+            result,
             suffix = "_from_raw",
             wrapper = tagValidator,
         )
     }
 
     @JvmStatic
-    private fun dustToIngotRecipe(exporter: RecipeExporter, name: String, properties: HTPropertyHolder) {
-        val ingot: ItemConvertible = properties[INGOT] ?: return
-        val dust: TagKey<Item> = getTagKey(name, DUST)
+    private fun dustToIngotRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
+        if (!material.isValidPrefix(HTTagPrefixes.RAW_MATERIALS)) return
+        val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
+        val result: ItemConvertible = material.getIngot() ?: material.getGem() ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
             dust,
-            ingot,
+            result,
             suffix = "_from_dust",
             wrapper = tagValidator,
         )
