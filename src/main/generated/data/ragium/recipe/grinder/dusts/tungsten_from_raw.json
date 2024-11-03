@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:raw_materials/tungsten",
+        "c:dusts/tungsten"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:raw_materials/tungsten"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "#c:dusts/tungsten"
+    }
+  ]
+}

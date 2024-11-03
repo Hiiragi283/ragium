@@ -1,0 +1,27 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:plates/titanium",
+        "c:dusts/titanium"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:plates/titanium"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:dusts/titanium"
+    }
+  ]
+}

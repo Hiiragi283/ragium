@@ -1,0 +1,27 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:plates/electrum",
+        "c:dusts/electrum"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:plates/electrum"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:dusts/electrum"
+    }
+  ]
+}

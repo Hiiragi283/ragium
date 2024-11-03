@@ -54,14 +54,24 @@ enum class RagiumMaterials(val type: Type, override val enName: String, override
     EMERALD(Type.GEM, "Emerald", "エメラルド"),
     DIAMOND(Type.GEM, "Diamond", "ダイヤモンド"),
     LAPIS(Type.GEM, "Lapis", "ラピス"),
+    PERIDOT(Type.GEM, "Peridot", "ペリドット"),
     QUARTZ(Type.GEM, "Quartz", "クォーツ"),
+    RUBY(Type.GEM, "Ruby", "ルビー"),
+    SAPPHIRE(Type.GEM, "Sapphire", "サファイア"),
 
+    IRIDIUM(Type.METAL, "Iridium", "イリジウム"),
     LEAD(Type.METAL, "Lead", "鉛"),
     NICKEL(Type.METAL, "Nickel", "ニッケル"),
+    PLATINUM(Type.METAL, "Platinum", "プラチナ"),
     SILVER(Type.METAL, "Silver", "シルバー"),
     TIN(Type.METAL, "Tin", "スズ"),
+    TITANIUM(Type.METAL, "Titanium", "チタン"),
+    TUNGSTEN(Type.METAL, "Tungsten", "タングステン"),
+    ZINC(Type.METAL, "Zinc", "亜鉛"),
 
+    BRASS(Type.ALLOY, "Brass", "真鍮"),
     BRONZE(Type.ALLOY, "Bronze", "青銅"),
+    ELECTRUM(Type.ALLOY, "Electrum", "琥珀金"),
     INVAR(Type.ALLOY, "Invar", "インバー"),
     ;
 

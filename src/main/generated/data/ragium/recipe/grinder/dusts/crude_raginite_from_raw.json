@@ -4,6 +4,7 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
+        "c:raw_materials/crude_raginite",
         "c:dusts/crude_raginite"
       ]
     }

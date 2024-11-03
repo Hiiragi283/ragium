@@ -7,7 +7,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
-class HTTagPrefix(private val prefix: String) {
+class HTTagPrefix private constructor(private val prefix: String) {
     companion object {
         @JvmStatic
         val registry: Map<String, HTTagPrefix>

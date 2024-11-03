@@ -2,23 +2,23 @@ package hiiragi283.ragium.api.tags
 
 object HTTagPrefixes {
     @JvmField
-    val DUSTS = HTTagPrefix("dusts")
+    val DUSTS: HTTagPrefix = HTTagPrefix.of("dusts")
 
     @JvmField
-    val GEMS = HTTagPrefix("gems")
+    val GEMS: HTTagPrefix = HTTagPrefix.of("gems")
 
     @JvmField
-    val INGOTS = HTTagPrefix("ingots")
+    val INGOTS: HTTagPrefix = HTTagPrefix.of("ingots")
 
     @JvmField
-    val ORES = HTTagPrefix("ores")
+    val ORES: HTTagPrefix = HTTagPrefix.of("ores")
 
     @JvmField
-    val PLATES = HTTagPrefix("plates")
+    val PLATES: HTTagPrefix = HTTagPrefix.of("plates")
 
     @JvmField
-    val RAW_MATERIALS = HTTagPrefix("raw_materials")
+    val RAW_MATERIALS: HTTagPrefix = HTTagPrefix.of("raw_materials")
 
     @JvmField
-    val STORAGE_BLOCKS = HTTagPrefix("storage_blocks")
+    val STORAGE_BLOCKS: HTTagPrefix = HTTagPrefix.of("storage_blocks")
 }

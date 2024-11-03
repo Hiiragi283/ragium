@@ -4,6 +4,7 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
+        "c:ingots/refined_ragi_steel",
         "c:plates/refined_ragi_steel"
       ]
     }

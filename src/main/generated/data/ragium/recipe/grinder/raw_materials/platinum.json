@@ -1,0 +1,28 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:ores/platinum",
+        "c:raw_materials/platinum"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:ores/platinum"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "#c:raw_materials/platinum"
+    }
+  ]
+}

@@ -5,11 +5,23 @@
     "ragium:minced_meat",
     "ragium:pulp",
     {
+      "id": "#c:dusts/aluminum",
+      "required": false
+    },
+    {
       "id": "#c:dusts/ash",
       "required": false
     },
     {
       "id": "#c:dusts/bauxite",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/brass",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/bronze",
       "required": false
     },
     {
@@ -21,7 +33,31 @@
       "required": false
     },
     {
+      "id": "#c:dusts/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/electrum",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/emerald",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/fluorite",
+      "required": false
+    },
+    {
       "id": "#c:dusts/gold",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/invar",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/iridium",
       "required": false
     },
     {
@@ -29,7 +65,35 @@
       "required": false
     },
     {
+      "id": "#c:dusts/lapis",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/lead",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/nickel",
+      "required": false
+    },
+    {
       "id": "#c:dusts/niter",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/peridot",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/platinum",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/quartz",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/ragi_alloy",
       "required": false
     },
     {
@@ -37,11 +101,59 @@
       "required": false
     },
     {
+      "id": "#c:dusts/ragi_steel",
+      "required": false
+    },
+    {
       "id": "#c:dusts/raginite",
       "required": false
     },
     {
+      "id": "#c:dusts/ragium",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/ruby",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/sapphire",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/silicon",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/silver",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/steel",
+      "required": false
+    },
+    {
       "id": "#c:dusts/sulfur",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/tin",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/titanium",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/zinc",
       "required": false
     }
   ]

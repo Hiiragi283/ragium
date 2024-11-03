@@ -4,6 +4,7 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
+        "c:ingots/ragi_steel",
         "c:dusts/ragi_steel"
       ]
     }

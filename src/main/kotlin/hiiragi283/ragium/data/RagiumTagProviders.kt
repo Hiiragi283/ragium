@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.tags.*
@@ -183,10 +182,6 @@ object RagiumTagProviders {
 
             RagiumMaterials.entries.forEach { material: RagiumMaterials ->
                 HTTagPrefix.registry.values.forEach { prefix: HTTagPrefix ->
-                    RagiumAPI.log {
-                        info("Current material; ${material.asString()}")
-                        info("Current prefix; $prefix")
-                    }
                     if (material.isValidPrefix(prefix)) {
                         add(prefix.commonTagKey, prefix.createTag(material))
                     }

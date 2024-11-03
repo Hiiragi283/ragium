@@ -20,13 +20,8 @@ import java.util.concurrent.CompletableFuture
 @Suppress("DEPRECATION")
 class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
     FabricRecipeProvider(output, registriesFuture) {
-    private val tagValidator: (RecipeExporter, TagKey<Item>) -> RecipeExporter =
-        { exporter: RecipeExporter, tagKey: TagKey<Item> ->
-            withConditions(
-                exporter,
-                ResourceConditions.tagsPopulated(tagKey),
-            )
-        }
+    private fun tagValidator(exporter: RecipeExporter, vararg tagKey: TagKey<Item>): RecipeExporter =
+        withConditions(exporter, ResourceConditions.tagsPopulated(*tagKey))
 
     override fun getName(): String = "Recipes/Material"
 
@@ -87,7 +82,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.METAL_FORMER)
             .itemInput(ingot)
             .itemOutput(plate)
-            .offerTo(tagValidator(exporter, plate), plate)
+            .offerTo(tagValidator(exporter, ingot, plate), plate)
     }
 
     private fun ingotToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -98,7 +93,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ingot)
             .itemOutput(dust)
-            .offerTo(tagValidator(exporter, dust), dust, "_from_ingot")
+            .offerTo(tagValidator(exporter, ingot, dust), dust, "_from_ingot")
     }
 
     private fun gemToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -109,7 +104,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(gem)
             .itemOutput(dust)
-            .offerTo(tagValidator(exporter, dust), dust, "_from_gem")
+            .offerTo(tagValidator(exporter, gem, dust), dust, "_from_gem")
     }
 
     private fun plateToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -120,7 +115,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(plate)
             .itemOutput(dust)
-            .offerTo(tagValidator(exporter, dust), dust, "_from_plate")
+            .offerTo(tagValidator(exporter, plate, dust), dust, "_from_plate")
     }
 
     private fun oreToRawRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -132,7 +127,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ore)
             .itemOutput(rawMaterial, 2)
-            .offerTo(tagValidator(exporter, rawMaterial), rawMaterial)
+            .offerTo(tagValidator(exporter, ore, rawMaterial), rawMaterial)
     }
 
     private fun oreToGemRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -144,7 +139,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(ore)
             .itemOutput(gem, 2)
-            .offerTo(tagValidator(exporter, gem), gem)
+            .offerTo(tagValidator(exporter, ore, gem), gem)
     }
 
     private fun rawToDustRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -156,7 +151,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineTypes.Processor.GRINDER)
             .itemInput(rawMaterial)
             .itemOutput(dust, 2)
-            .offerTo(tagValidator(exporter, dust), dust, "_from_raw")
+            .offerTo(tagValidator(exporter, rawMaterial, dust), dust, "_from_raw")
     }
 
     private fun rawToIngotRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
@@ -168,7 +163,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             rawMaterial,
             result,
             suffix = "_from_raw",
-            wrapper = tagValidator,
+            wrapper = ::tagValidator,
         )
     }
 
@@ -181,7 +176,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
             dust,
             result,
             suffix = "_from_dust",
-            wrapper = tagValidator,
+            wrapper = ::tagValidator,
         )
     }
 }

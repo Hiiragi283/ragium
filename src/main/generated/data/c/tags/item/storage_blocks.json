@@ -5,7 +5,79 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/brass",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/bronze",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/copper",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/electrum",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/emerald",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/fluorite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/gold",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/invar",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/iridium",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/lapis",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/lead",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/peridot",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/platinum",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/quartz",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/ragi_alloy",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/ragi_crystal",
       "required": false
     },
     {
@@ -13,11 +85,47 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/ragium",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/refined_ragi_steel",
       "required": false
     },
     {
+      "id": "#c:storage_blocks/ruby",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/sapphire",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/silicon",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/silver",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/steel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tin",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/titanium",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/zinc",
       "required": false
     }
   ]

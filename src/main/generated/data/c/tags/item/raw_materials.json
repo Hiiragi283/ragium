@@ -1,7 +1,15 @@
 {
   "values": [
     {
+      "id": "#c:raw_materials/aluminum",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/bauxite",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/copper",
       "required": false
     },
     {
@@ -9,7 +17,63 @@
       "required": false
     },
     {
+      "id": "#c:raw_materials/gold",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/iridium",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/iron",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/lead",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/niter",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/platinum",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/raginite",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/silicon",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/silver",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/sulfur",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/tin",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/titanium",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/zinc",
       "required": false
     }
   ]

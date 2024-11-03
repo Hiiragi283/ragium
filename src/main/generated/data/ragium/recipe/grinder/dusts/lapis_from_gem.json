@@ -4,6 +4,7 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
+        "c:gems/lapis",
         "c:dusts/lapis"
       ]
     }

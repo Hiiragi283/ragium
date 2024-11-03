@@ -4,6 +4,7 @@
       "condition": "fabric:tags_populated",
       "registry": "minecraft:item",
       "values": [
+        "c:ores/fluorite",
         "c:gems/fluorite"
       ]
     }

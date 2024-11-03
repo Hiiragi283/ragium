@@ -1,0 +1,27 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:gems/sapphire",
+        "c:dusts/sapphire"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:gems/sapphire"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:dusts/sapphire"
+    }
+  ]
+}
