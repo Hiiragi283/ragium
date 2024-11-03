@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/refined_ragi_steel"
+    },
+    "B": {
+      "item": "ragium:advanced_casing"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_hull"
+  }
+}

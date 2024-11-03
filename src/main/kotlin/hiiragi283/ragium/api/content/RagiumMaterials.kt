@@ -55,8 +55,6 @@ enum class RagiumMaterials(val type: Type, override val enName: String, override
 
     fun getBlock(): RagiumContents.StorageBlocks? = RagiumContents.StorageBlocks.entries.firstOrNull { it.material == this }
 
-    fun getHull(): RagiumContents.Hulls? = RagiumContents.Hulls.entries.firstOrNull { it.material == this }
-
     fun getIngot(): RagiumContents.Ingots? = RagiumContents.Ingots.entries.firstOrNull { it.material == this }
 
     fun getGem(): RagiumContents.Gems? = RagiumContents.Gems.entries.firstOrNull { it.material == this }

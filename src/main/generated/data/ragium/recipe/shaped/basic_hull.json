@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/ragi_steel"
+    },
+    "B": {
+      "item": "ragium:basic_casing"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "A A",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_hull"
+  }
+}

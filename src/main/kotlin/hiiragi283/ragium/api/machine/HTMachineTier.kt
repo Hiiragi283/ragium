@@ -110,15 +110,15 @@ enum class HTMachineTier(
     }
 
     fun getCoil(): RagiumContents.Coils = when (this) {
-        PRIMITIVE -> RagiumContents.Coils.COPPER
-        BASIC -> RagiumContents.Coils.GOLD
-        ADVANCED -> RagiumContents.Coils.RAGI_ALLOY
+        PRIMITIVE -> RagiumContents.Coils.PRIMITIVE
+        BASIC -> RagiumContents.Coils.BASIC
+        ADVANCED -> RagiumContents.Coils.ADVANCED
     }
 
     fun getHull(): RagiumContents.Hulls = when (this) {
-        PRIMITIVE -> RagiumContents.Hulls.RAGI_ALLOY
-        BASIC -> RagiumContents.Hulls.RAGI_STEEL
-        ADVANCED -> RagiumContents.Hulls.REFINED_RAGI_STEEL
+        PRIMITIVE -> RagiumContents.Hulls.PRIMITIVE
+        BASIC -> RagiumContents.Hulls.BASIC
+        ADVANCED -> RagiumContents.Hulls.ADVANCED
     }
 
     fun getIngot(): RagiumContents.Ingots = when (this) {

@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#c:ingots/ragi_alloy"
+    },
+    {
+      "items": "ragium:shaft"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "ragium:advanced_coil"
+    }
+  ]
+}

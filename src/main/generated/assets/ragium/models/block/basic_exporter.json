@@ -1,7 +1,7 @@
 {
   "parent": "ragium:block/exporter",
   "textures": {
-    "side": "ragium:block/gold_coil_side",
-    "top": "ragium:block/gold_coil_top"
+    "side": "ragium:block/basic_coil_side",
+    "top": "ragium:block/basic_coil_top"
   }
 }

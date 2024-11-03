@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:copper_coil"
+            "items": "ragium:primitive_coil"
           }
         ]
       },

@@ -13,6 +13,8 @@ interface HTContent<T : ItemConvertible> :
     val commonTagKey: TagKey<Item>?
         get() = null
 
+    fun getTranslation(type: HTLangType): String
+
     override fun asItem(): Item = value.asItem()
 
     //    Material    //
@@ -21,7 +23,7 @@ interface HTContent<T : ItemConvertible> :
         HTContent<T>,
         HTTranslationFormatter,
         RagiumMaterials.Holder {
-        fun getTranslation(type: HTLangType): String = getTranslation(type, material)
+        override fun getTranslation(type: HTLangType): String = getTranslation(type, material)
 
         val tagPrefix: HTTagPrefix
 
@@ -39,12 +41,9 @@ interface HTContent<T : ItemConvertible> :
 
     interface Tier<T : ItemConvertible> :
         HTContent<T>,
-        HTTranslationProvider {
+        HTTranslationFormatter {
         val tier: HTMachineTier
 
-        override val enName: String
-            get() = tier.enName
-        override val jaName: String
-            get() = tier.jaName
+        override fun getTranslation(type: HTLangType): String = getTranslation(type, tier)
     }
 }

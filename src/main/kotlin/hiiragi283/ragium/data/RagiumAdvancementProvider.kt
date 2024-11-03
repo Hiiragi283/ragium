@@ -142,9 +142,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/ragi_alloy_hull",
                 ragiAlloyPlate,
-                RagiumContents.Hulls.RAGI_ALLOY,
+                RagiumContents.Hulls.PRIMITIVE,
             ) {
-                hasItems(RagiumContents.Hulls.RAGI_ALLOY)
+                hasItems(RagiumContents.Hulls.PRIMITIVE)
             }.putEnglish("Not made of bronze")
             .putEnglishDesc("Craft Ragi-Alloy Hull")
             .putJapanese("ブロンズ製ではない")
@@ -253,9 +253,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/ragi_steel_hull",
                 root,
-                RagiumContents.Hulls.RAGI_STEEL,
+                RagiumContents.Hulls.BASIC,
             ) {
-                hasItems(RagiumContents.Hulls.RAGI_STEEL)
+                hasItems(RagiumContents.Hulls.BASIC)
             }.putEnglish("Not made of steel...")
             .putEnglishDesc("Craft Ragi-Steel Hull")
             .putJapanese("スチール製ではない...")
@@ -379,9 +379,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/refined_steel_hull",
                 root,
-                RagiumContents.Hulls.REFINED_RAGI_STEEL,
+                RagiumContents.Hulls.ADVANCED,
             ) {
-                hasItems(RagiumContents.Hulls.REFINED_RAGI_STEEL)
+                hasItems(RagiumContents.Hulls.ADVANCED)
             }.putEnglish("Not made of steeeeel!!")
             .putEnglishDesc("Craft Refined Ragi-Steel Hull")
             .putJapanese("スチール製ではなあああい!!")

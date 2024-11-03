@@ -514,7 +514,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumMaterials.REFINED_RAGI_STEEL,
         ).forEachIndexed { index: Int, material: RagiumMaterials ->
             val base: Block = HTMachineTier.entries[index].getBaseBlock()
-            val hull: RagiumContents.Hulls = material.getHull() ?: return@forEachIndexed
+            val hull: RagiumContents.Hulls = RagiumContents.Hulls.entries[index]
             val plate: RagiumContents.Plates = material.getPlate() ?: return@forEachIndexed
             HTShapedRecipeJsonBuilder
                 .create(hull)

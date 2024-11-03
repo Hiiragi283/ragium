@@ -151,22 +151,22 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .itemInput(ConventionalItemTags.COPPER_INGOTS, 8)
             .itemInput(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumContents.Coils.COPPER, 2)
-            .offerTo(exporter, RagiumContents.Coils.COPPER)
+            .itemOutput(RagiumContents.Coils.PRIMITIVE, 2)
+            .offerTo(exporter, RagiumContents.Coils.PRIMITIVE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .itemInput(ConventionalItemTags.GOLD_INGOTS, 8)
             .itemInput(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumContents.Coils.GOLD, 2)
-            .offerTo(exporter, RagiumContents.Coils.GOLD)
+            .itemOutput(RagiumContents.Coils.BASIC, 2)
+            .offerTo(exporter, RagiumContents.Coils.BASIC)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.ASSEMBLER)
             .itemInput(RagiumContents.Ingots.RAGI_ALLOY, 8)
             .itemInput(RagiumBlocks.SHAFT)
-            .itemOutput(RagiumContents.Coils.RAGI_ALLOY, 2)
-            .offerTo(exporter, RagiumContents.Coils.RAGI_ALLOY)
+            .itemOutput(RagiumContents.Coils.ADVANCED, 2)
+            .offerTo(exporter, RagiumContents.Coils.ADVANCED)
     }
 
     //    Blast Furnace    //

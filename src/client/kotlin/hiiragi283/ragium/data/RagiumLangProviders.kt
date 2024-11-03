@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTRegistryContent
-import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineConvertible
@@ -58,9 +57,11 @@ object RagiumLangProviders {
         buildList {
             addAll(RagiumContents.Ores.entries)
             addAll(RagiumContents.StorageBlocks.entries)
+
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
-        }.forEach { block: HTContent.Material<Block> -> builder.add(block, block.getTranslation(type)) }
+            addAll(RagiumContents.Exporters.entries)
+        }.forEach { block: HTContent<Block> -> builder.add(block, block.getTranslation(type)) }
         // items
         buildList {
             addAll(RagiumContents.Dusts.entries)
@@ -68,27 +69,12 @@ object RagiumLangProviders {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-        }.forEach { item: HTContent.Material<Item> -> builder.add(item, item.getTranslation(type)) }
-        // exporters
-        RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
-            builder.add(
-                exporter,
-                ExporterFormatter.getTranslation(type, exporter),
-            )
-        }
-        // circuits
-        RagiumContents.CircuitBoards.entries.forEach { boards: RagiumContents.CircuitBoards ->
-            builder.add(
-                boards,
-                BoardFormatter.getTranslation(type, boards),
-            )
-        }
-        RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
-            builder.add(
-                circuit,
-                CircuitFormatter.getTranslation(type, circuit),
-            )
-        }
+
+            addAll(RagiumContents.CircuitBoards.entries)
+            addAll(RagiumContents.Circuits.entries)
+
+            addAll(HTCrafterHammerItem.Behavior.entries)
+        }.forEach { item: HTContent<Item> -> builder.add(item, item.getTranslation(type)) }
         // fluids
         RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
             builder.add(
@@ -96,21 +82,6 @@ object RagiumLangProviders {
                 fluid.getTranslation(type),
             )
         }
-    }
-
-    private data object ExporterFormatter : HTTranslationFormatter {
-        override val enPattern: String = "%s Exporter"
-        override val jaPattern: String = "%s搬出機"
-    }
-
-    private data object BoardFormatter : HTTranslationFormatter {
-        override val enPattern: String = "%s Circuit Board"
-        override val jaPattern: String = "%s回路基板"
-    }
-
-    private data object CircuitFormatter : HTTranslationFormatter {
-        override val enPattern: String = "%s Circuit"
-        override val jaPattern: String = "%s回路"
     }
 
     //    English    //
@@ -188,12 +159,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "Solar Panel")
             builder.add(RagiumContents.Misc.TRADER_CATALOG, "Trader Catalog")
-
-            builder.add(HTCrafterHammerItem.Behavior.DEFAULT, "Hammer Module (Default)")
-            builder.add(HTCrafterHammerItem.Behavior.AXE, "Hammer Module (Axe)")
-            builder.add(HTCrafterHammerItem.Behavior.HOE, "Hammer Module (Hoe)")
-            builder.add(HTCrafterHammerItem.Behavior.PICKAXE, "Hammer Module (Pickaxe)")
-            builder.add(HTCrafterHammerItem.Behavior.SHOVEL, "Hammer Module (Shovel)")
 
             builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "Module: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
@@ -309,8 +274,8 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
-            builder.add(RagiumBlocks.ADVANCED_CASING, "発展型外装")
-            builder.add(RagiumBlocks.BASIC_CASING, "基本型外装")
+            builder.add(RagiumBlocks.ADVANCED_CASING, "発展外装")
+            builder.add(RagiumBlocks.BASIC_CASING, "基本外装")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.FIREBOX, "火室")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
@@ -373,12 +338,6 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Misc.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumContents.Misc.SOLAR_PANEL, "太陽光パネル")
             builder.add(RagiumContents.Misc.TRADER_CATALOG, "行商人カタログ")
-
-            builder.add(HTCrafterHammerItem.Behavior.DEFAULT, "ハンマーモジュール（デフォルト）")
-            builder.add(HTCrafterHammerItem.Behavior.AXE, "ハンマーモジュール（アックス）")
-            builder.add(HTCrafterHammerItem.Behavior.HOE, "ハンマーモジュール（クワ）")
-            builder.add(HTCrafterHammerItem.Behavior.PICKAXE, "ハンマーモジュール（ピッケル）")
-            builder.add(HTCrafterHammerItem.Behavior.SHOVEL, "ハンマーモジュール（ショベル）")
 
             builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "モジュール: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")

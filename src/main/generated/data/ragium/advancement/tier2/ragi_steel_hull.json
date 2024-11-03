@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_steel_hull"
+            "items": "ragium:basic_hull"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_steel_hull"
+      "id": "ragium:basic_hull"
     },
     "title": {
       "translate": "advancement.ragium.tier2.ragi_steel_hull"
