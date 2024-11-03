@@ -49,6 +49,20 @@ enum class RagiumMaterials(val type: Type, override val enName: String, override
 
     // tier4
     RAGIUM(Type.GEM, "Ragium", "ラギウム"),
+
+    // integration
+    EMERALD(Type.GEM, "Emerald", "エメラルド"),
+    DIAMOND(Type.GEM, "Diamond", "ダイヤモンド"),
+    LAPIS(Type.GEM, "Lapis", "ラピス"),
+    QUARTZ(Type.GEM, "Quartz", "クォーツ"),
+
+    LEAD(Type.METAL, "Lead", "鉛"),
+    NICKEL(Type.METAL, "Nickel", "ニッケル"),
+    SILVER(Type.METAL, "Silver", "シルバー"),
+    TIN(Type.METAL, "Tin", "スズ"),
+
+    BRONZE(Type.ALLOY, "Bronze", "青銅"),
+    INVAR(Type.ALLOY, "Invar", "インバー"),
     ;
 
     fun isValidPrefix(prefix: HTTagPrefix): Boolean = prefix in type.validPrefixes

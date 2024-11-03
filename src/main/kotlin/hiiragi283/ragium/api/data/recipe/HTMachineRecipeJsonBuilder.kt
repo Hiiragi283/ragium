@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.machine.HTMachineConvertible
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -9,6 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeResult
+import hiiragi283.ragium.api.tags.HTTagPrefix
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
@@ -60,10 +62,10 @@ class HTMachineRecipeJsonBuilder private constructor(
         itemInputs.add(ingredient)
     }
 
-    fun itemInput(content: HTContent.Material<*>, count: Int = 1): HTMachineRecipeJsonBuilder = when (content.usePrefixedTag) {
-        true -> itemInput(content.prefixedTagKey, count)
-        false -> itemInput(content.asItem(), count)
-    }
+    fun itemInput(prefix: HTTagPrefix, material: RagiumMaterials, count: Int = 1): HTMachineRecipeJsonBuilder =
+        itemInput(prefix.createTag(material), count)
+
+    fun itemInput(content: HTContent.Material<*>, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count)
 
     fun itemInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(item, count))
 

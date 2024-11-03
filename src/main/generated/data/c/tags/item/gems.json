@@ -1,7 +1,16 @@
 {
   "values": [
-    "ragium:fluorite",
-    "ragium:ragi_crystal",
-    "ragium:ragium"
+    {
+      "id": "#c:gems/fluorite",
+      "required": false
+    },
+    {
+      "id": "#c:gems/ragi_crystal",
+      "required": false
+    },
+    {
+      "id": "#c:gems/ragium",
+      "required": false
+    }
   ]
 }

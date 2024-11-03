@@ -25,4 +25,6 @@ class HTTagPrefix(private val prefix: String) {
     val commonTagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId(prefix))
 
     fun createTag(value: StringIdentifiable): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${value.asString()}"))
+
+    override fun toString(): String = "HTTagPrefix[$prefix]"
 }

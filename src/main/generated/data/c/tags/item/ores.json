@@ -1,8 +1,16 @@
 {
   "values": [
-    "ragium:deepslate_raginite_ore",
-    "ragium:end_ragi_crystal_ore",
-    "ragium:nether_raginite_ore",
-    "ragium:raginite_ore"
+    {
+      "id": "#c:ores/crude_raginite",
+      "required": false
+    },
+    {
+      "id": "#c:ores/ragi_crystal",
+      "required": false
+    },
+    {
+      "id": "#c:ores/raginite",
+      "required": false
+    }
   ]
 }

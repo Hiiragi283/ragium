@@ -1,4 +1,13 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:gems/quartz"
+      ]
+    }
+  ],
   "type": "ragium:machine",
   "definition": {
     "type": "ragium:grinder",
@@ -12,7 +21,7 @@
   "item_outputs": [
     {
       "count": 2,
-      "item": "minecraft:quartz"
+      "item": "#c:gems/quartz"
     }
   ]
 }

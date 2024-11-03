@@ -3,7 +3,6 @@ package hiiragi283.ragium.data
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.tags.RagiumFluidTags
@@ -13,7 +12,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineTypes
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -51,12 +49,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         mobExtractor(exporter)
         rockGenerator(exporter)
         sawMill(exporter)
-        // patterned
-        HTMaterialItemRecipeRegistry.generateRecipes(exporter, ::tagValidator)
     }
-
-    private fun tagValidator(exporter: RecipeExporter, tagKey: TagKey<Item>): RecipeExporter =
-        withConditions(exporter, ResourceConditions.tagsPopulated(tagKey))
 
     //    Alloy Furnace    //
 
@@ -494,7 +487,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun grinder(exporter: RecipeExporter) {
         registerGrinder(exporter, ConventionalItemTags.COBBLESTONES to 1, Items.GRAVEL to 1)
-        registerGrinder(exporter, ConventionalItemTags.QUARTZ_ORES to 1, Items.QUARTZ to 2)
         registerGrinder(exporter, ConventionalItemTags.WHEAT_CROPS to 1, RagiumContents.Foods.FLOUR to 1)
         registerGrinder(exporter, Items.ANCIENT_DEBRIS to 1, Items.NETHERITE_SCRAP to 2)
         registerGrinder(exporter, Items.COARSE_DIRT to 1, Items.DIRT to 1)

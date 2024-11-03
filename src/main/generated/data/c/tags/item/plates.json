@@ -1,16 +1,52 @@
 {
   "values": [
-    "ragium:aluminum_plate",
-    "ragium:copper_plate",
-    "ragium:engineering_plastic_plate",
-    "ragium:gold_plate",
-    "ragium:iron_plate",
-    "ragium:plastic_plate",
-    "ragium:ragi_alloy_plate",
-    "ragium:ragi_steel_plate",
-    "ragium:refined_ragi_steel_plate",
-    "ragium:silicon_plate",
-    "ragium:steel_plate",
-    "ragium:stella_plate"
+    {
+      "id": "#c:plates/aluminum",
+      "required": false
+    },
+    {
+      "id": "#c:plates/copper",
+      "required": false
+    },
+    {
+      "id": "#c:plates/engineering_plastic",
+      "required": false
+    },
+    {
+      "id": "#c:plates/gold",
+      "required": false
+    },
+    {
+      "id": "#c:plates/iron",
+      "required": false
+    },
+    {
+      "id": "#c:plates/plastic",
+      "required": false
+    },
+    {
+      "id": "#c:plates/ragi_alloy",
+      "required": false
+    },
+    {
+      "id": "#c:plates/ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:plates/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:plates/silicon",
+      "required": false
+    },
+    {
+      "id": "#c:plates/steel",
+      "required": false
+    },
+    {
+      "id": "#c:plates/stella",
+      "required": false
+    }
   ]
 }

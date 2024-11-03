@@ -1,18 +1,48 @@
 {
   "values": [
-    "ragium:ash_dust",
-    "ragium:bauxite_dust",
     "ragium:bee_wax",
-    "ragium:copper_dust",
-    "ragium:crude_raginite_dust",
     "ragium:flour",
-    "ragium:gold_dust",
-    "ragium:iron_dust",
     "ragium:minced_meat",
-    "ragium:niter_dust",
     "ragium:pulp",
-    "ragium:ragi_crystal_dust",
-    "ragium:raginite_dust",
-    "ragium:sulfur_dust"
+    {
+      "id": "#c:dusts/ash",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/bauxite",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/copper",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/crude_raginite",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/gold",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/iron",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/niter",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/ragi_crystal",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/raginite",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/sulfur",
+      "required": false
+    }
   ]
 }

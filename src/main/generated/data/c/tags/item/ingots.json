@@ -1,9 +1,24 @@
 {
   "values": [
-    "ragium:aluminum_ingot",
-    "ragium:ragi_alloy_ingot",
-    "ragium:ragi_steel_ingot",
-    "ragium:refined_ragi_steel_ingot",
-    "ragium:steel_ingot"
+    {
+      "id": "#c:ingots/aluminum",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/ragi_alloy",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/steel",
+      "required": false
+    }
   ]
 }

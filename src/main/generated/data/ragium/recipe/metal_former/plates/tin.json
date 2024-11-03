@@ -1,0 +1,26 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:plates/tin"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:metal_former",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:ingots/tin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:plates/tin"
+    }
+  ]
+}

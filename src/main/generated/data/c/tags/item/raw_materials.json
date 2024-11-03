@@ -1,7 +1,16 @@
 {
   "values": [
-    "ragium:raw_bauxite",
-    "ragium:raw_crude_raginite",
-    "ragium:raw_raginite"
+    {
+      "id": "#c:raw_materials/bauxite",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/crude_raginite",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/raginite",
+      "required": false
+    }
   ]
 }

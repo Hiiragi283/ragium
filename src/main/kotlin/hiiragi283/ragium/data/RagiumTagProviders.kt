@@ -2,12 +2,10 @@ package hiiragi283.ragium.data
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.data.recipe.HTMaterialItemRecipeRegistry
-import hiiragi283.ragium.api.tags.RagiumBlockTags
-import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
-import hiiragi283.ragium.api.tags.RagiumFluidTags
-import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.api.content.RagiumMaterials
+import hiiragi283.ragium.api.tags.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
@@ -131,12 +129,19 @@ object RagiumTagProviders {
     private class ItemProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.ItemTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            val tagCache: Multimap<TagKey<Item>, Item> = HashMultimap.create()
+            val itemCache: Multimap<TagKey<Item>, Item> = HashMultimap.create()
+            val tagCache: Multimap<TagKey<Item>, TagKey<Item>> = HashMultimap.create()
 
             fun add(tagKey: TagKey<Item>?, item: ItemConvertible?) {
                 val item1: Item = item?.asItem() ?: return
                 if (tagKey == null) return
-                tagCache.put(tagKey, item1)
+                itemCache.put(tagKey, item1)
+            }
+
+            fun add(tagKey: TagKey<Item>?, child: TagKey<Item>?) {
+                if (child == null) return
+                if (tagKey == null) return
+                tagCache.put(tagKey, child)
             }
 
             buildList {
@@ -149,22 +154,16 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Plates.entries)
                 addAll(RagiumContents.RawMaterials.entries)
 
-                addAll(RagiumContents.Hulls.entries)
-                addAll(RagiumContents.Coils.entries)
-                addAll(RagiumContents.Exporters.entries)
-                addAll(RagiumContents.Pipes.entries)
-                addAll(RagiumContents.CircuitBoards.entries)
-                addAll(RagiumContents.Circuits.entries)
-
                 addAll(RagiumContents.Armors.entries)
                 addAll(RagiumContents.Tools.entries)
 
                 addAll(RagiumContents.Foods.entries)
-                addAll(RagiumContents.Misc.entries)
             }.forEach { content: HTContent<out ItemConvertible> ->
-                add(content.commonTagKey, content)
-                if (content is HTContent.Material<*> && content.usePrefixedTag) {
+                if (content is HTContent.Material<*>) {
                     add(content.prefixedTagKey, content)
+                    add(content.commonTagKey, content.prefixedTagKey)
+                } else {
+                    add(content.commonTagKey, content)
                 }
             }
 
@@ -182,11 +181,26 @@ object RagiumTagProviders {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
-            HTMaterialItemRecipeRegistry.configureTags(::add)
+            RagiumMaterials.entries.forEach { material: RagiumMaterials ->
+                HTTagPrefix.registry.values.forEach { prefix: HTTagPrefix ->
+                    RagiumAPI.log {
+                        info("Current material; ${material.asString()}")
+                        info("Current prefix; $prefix")
+                    }
+                    if (material.isValidPrefix(prefix)) {
+                        add(prefix.commonTagKey, prefix.createTag(material))
+                    }
+                }
+            }
 
-            tagCache.asMap().forEach { (tagKey: TagKey<Item>, items: Collection<Item>) ->
+            itemCache.asMap().forEach { (tagKey: TagKey<Item>, items: Collection<Item>) ->
                 items.sortedBy(Registries.ITEM::getId).forEach { item: Item ->
                     getOrCreateTagBuilder(tagKey).add(item)
+                }
+            }
+            tagCache.asMap().forEach { (tagKey: TagKey<Item>, children: Collection<TagKey<Item>>) ->
+                children.sortedBy(TagKey<Item>::id).forEach { child: TagKey<Item> ->
+                    getOrCreateTagBuilder(tagKey).addOptionalTag(child)
                 }
             }
         }

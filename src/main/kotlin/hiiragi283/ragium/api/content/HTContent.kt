@@ -27,9 +27,6 @@ interface HTContent<T : ItemConvertible> :
 
         val tagPrefix: HTTagPrefix
 
-        val usePrefixedTag: Boolean
-            get() = true
-
         val prefixedTagKey: TagKey<Item>
             get() = tagPrefix.createTag(material)
 

@@ -1,0 +1,26 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:tags_populated",
+      "registry": "minecraft:item",
+      "values": [
+        "c:dusts/nickel"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:ingots/nickel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "#c:dusts/nickel"
+    }
+  ]
+}
