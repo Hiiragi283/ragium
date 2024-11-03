@@ -48,11 +48,10 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
         nbt.putString("tier", tier.asString())
     }
 
-    open fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {}
+    protected open fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {}
 
     fun readFromNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         readNbt(nbt, wrapperLookup)
-        // RagiumAPI.log { info(nbt.toString()) }
     }
 
     open fun onWorldUpdated(world: World) {}

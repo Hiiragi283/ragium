@@ -45,7 +45,7 @@ abstract class HTProcessorMachineEntityBase(typeSize: HTMachineType.Size, type: 
         parent.readNbt(nbt, wrapperLookup)
         HTSingleFluidStorage.CODEC
             .listOf()
-            .parse(NbtOps.INSTANCE, nbt.getCompound("fluid_storage"))
+            .parse(NbtOps.INSTANCE, nbt.getCompound("fluid_storages"))
             .result()
             .ifPresent { fluidStorage = HTMachineFluidStorage.fromParts(tier, it) }
     }
@@ -64,9 +64,14 @@ abstract class HTProcessorMachineEntityBase(typeSize: HTMachineType.Size, type: 
     final override val parent: HTSidedInventory = typeSize.createInventory()
 
     var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.create(tier, typeSize)
-        protected set
+        protected set(value) {
+            field = value
+            processor.fluidStorage = value
+        }
 
-    val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, fluidStorage)
+    val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor.of(parent, typeSize).apply {
+        this.fluidStorage = this@HTProcessorMachineEntityBase.fluidStorage
+    }
 
     final override fun getItemStorage(side: Direction?): Storage<ItemVariant> = parent.wrapStorage(side)
 

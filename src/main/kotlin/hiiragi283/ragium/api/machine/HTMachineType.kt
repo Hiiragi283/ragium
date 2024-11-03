@@ -29,6 +29,8 @@ sealed class HTMachineType :
             .build()
     }
 
+    override fun toString(): String = "MachineType[${key.id}]"
+
     //    HTMachineConvertible    //
 
     override fun asMachine(): HTMachineType = this

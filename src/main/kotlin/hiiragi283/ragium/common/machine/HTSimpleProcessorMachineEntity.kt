@@ -17,6 +17,7 @@ class HTSimpleProcessorMachineEntity(type: HTMachineConvertible, tier: HTMachine
         add(parent.getStack(0))
         add(parent.getStack(1))
         add(fluidStorage[0].resourceAmount)
+        catalyst = parent.getStack(2)
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =

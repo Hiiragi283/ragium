@@ -127,37 +127,33 @@ class HTMachineRecipe(
         val bool2: Boolean = input.tier >= this.tier
         val bool3: Boolean = typeSize == input.typeSize
         val bool4: Boolean =
-            input.itemInputs
-                .getOrNull(0)
-                ?.let { itemInputs.getOrNull(0)?.test(it) }
-                ?: true
+            input
+                .getItem(0)
+                .let { itemInputs.getOrNull(0)?.test(it) ?: true }
         val bool5: Boolean =
-            input.itemInputs
-                .getOrNull(1)
-                ?.let { itemInputs.getOrNull(1)?.test(it) }
-                ?: true
+            input
+                .getItem(1)
+                .let { itemInputs.getOrNull(1)?.test(it) ?: true }
         val bool6: Boolean =
-            input.fluidInputs
-                .getOrNull(0)
-                ?.let { fluidInputs.getOrNull(0)?.test(it) }
-                ?: true
+            input
+                .getFluid(0)
+                .let { fluidInputs.getOrNull(0)?.test(it) ?: true }
+        val bool9: Boolean = catalyst?.test(input.catalyst) ?: true
         return when (input.typeSize) {
             HTMachineType.Size.SIMPLE -> {
-                bool1 && bool2 && bool3 && bool4 && bool5 && bool6
+                bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool9
             }
 
             HTMachineType.Size.LARGE -> {
                 val bool7: Boolean =
-                    input.itemInputs
-                        .getOrNull(2)
-                        ?.let { itemInputs.getOrNull(2)?.test(it) }
-                        ?: true
+                    input
+                        .getItem(2)
+                        .let { itemInputs.getOrNull(2)?.test(it) ?: true }
                 val bool8: Boolean =
-                    input.fluidInputs
-                        .getOrNull(1)
-                        ?.let { fluidInputs.getOrNull(1)?.test(it) }
-                        ?: true
-                bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool7 && bool8
+                    input
+                        .getFluid(1)
+                        .let { fluidInputs.getOrNull(1)?.test(it) ?: true }
+                bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool7 && bool8 && bool9
             }
         }
     }

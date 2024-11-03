@@ -20,16 +20,14 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
-class HTMachineRecipeProcessor private constructor(
-    private val inventory: HTSimpleInventory,
-    private val fluidStorage: HTMachineFluidStorage,
-    private val typeSize: HTMachineType.Size,
-) {
+class HTMachineRecipeProcessor private constructor(private val inventory: HTSimpleInventory, private val typeSize: HTMachineType.Size) {
     companion object {
         @JvmStatic
-        fun of(inventory: HTSimpleInventory, fluidStorage: HTMachineFluidStorage): HTMachineRecipeProcessor =
-            HTMachineRecipeProcessor(inventory, fluidStorage, fluidStorage.typeSize)
+        fun of(inventory: HTSimpleInventory, typeSize: HTMachineType.Size): HTMachineRecipeProcessor =
+            HTMachineRecipeProcessor(inventory, typeSize)
     }
+
+    lateinit var fluidStorage: HTMachineFluidStorage
 
     private val outputIndex: Pair<Int, Int> = when (typeSize) {
         HTMachineType.Size.SIMPLE -> 3 to 1
