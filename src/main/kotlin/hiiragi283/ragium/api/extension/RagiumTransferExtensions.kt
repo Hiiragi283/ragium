@@ -9,7 +9,10 @@ import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
@@ -68,6 +71,10 @@ fun <T : Any> TransferVariant<T>.isOf(entry: RegistryEntry<T>): Boolean = isOf(e
 fun <T : Any> TransferVariant<T>.isIn(registry: Registry<T>, tagKey: TagKey<T>): Boolean = registry.iterateEntries(tagKey).any(this::isOf)
 
 fun ItemVariant.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
+
+fun ItemVariant.isIn(tagKey: TagKey<Item>): Boolean = isIn(Registries.ITEM, tagKey)
+
+fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID, tagKey)
 
 //    Transaction    //
 

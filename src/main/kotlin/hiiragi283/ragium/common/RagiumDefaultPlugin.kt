@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.machine.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.HTDrainBlockEntity
 import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
 import net.minecraft.block.Block
@@ -56,7 +57,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.RED)
         }*/
         helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.BLUE)
         }
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {

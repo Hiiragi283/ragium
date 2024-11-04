@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
+import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.common.block.entity.HTFireboxBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys

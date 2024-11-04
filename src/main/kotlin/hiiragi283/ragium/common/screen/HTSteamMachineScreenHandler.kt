@@ -18,7 +18,7 @@ class HTSteamMachineScreenHandler(
         playerInv,
         packet,
         ctx,
-    ctx.getInventory(2),
+        ctx.getInventory(2),
     ) {
     init {
         inventory.onOpen(player)

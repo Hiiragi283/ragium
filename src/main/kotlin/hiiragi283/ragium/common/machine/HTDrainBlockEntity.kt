@@ -31,13 +31,12 @@ import net.minecraft.world.World
 class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
     HTConsumerBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state),
     SidedStorageBlockEntity {
-
     override var key: HTMachineKey = RagiumMachineKeys.DRAIN
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
         this.tier = tier
     }
-    
+
     override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
         Direction.entries.forEach { dir: Direction ->
             val posTo: BlockPos = pos.offset(dir)
@@ -64,7 +63,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null
-    
+
     //    SidedStorageBlockEntity    //
 
     private val fluidStorage = HTSingleFluidStorage(HTMachineTier.BASIC.tankCapacity)

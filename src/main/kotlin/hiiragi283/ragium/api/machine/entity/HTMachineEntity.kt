@@ -19,6 +19,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
+@Deprecated("May be removed")
 abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: HTMachineTier) : SidedStorageBlockEntity {
     companion object {
         const val MAX_PROPERTIES = 3

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine.block
 
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.energyNetwork
+import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
@@ -11,8 +12,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -51,20 +50,8 @@ abstract class HTGeneratorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             this.tier = tier
         }
 
-        override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-            super.writeNbt(nbt, wrapperLookup)
-            nbt.putMachineKey(MACHINE_KEY, key)
-            nbt.putTier(TIER_KEY, tier)
-        }
-
-        override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-            super.readNbt(nbt, wrapperLookup)
-            key = nbt.getMachineKey(MACHINE_KEY)
-            tier = nbt.getTier(TIER_KEY)
-        }
-
         override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
-        
+
         override fun generateEnergy(world: World, pos: BlockPos): Long = when {
             key.asProperties().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(
                 world,

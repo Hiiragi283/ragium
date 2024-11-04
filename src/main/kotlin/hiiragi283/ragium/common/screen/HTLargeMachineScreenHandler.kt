@@ -19,7 +19,7 @@ class HTLargeMachineScreenHandler(
         playerInv,
         packet,
         ctx,
-    ctx.getInventory(HTMachineType.Size.LARGE),
+        ctx.getInventory(HTMachineType.Size.LARGE),
     ) {
     init {
         inventory.onOpen(player)

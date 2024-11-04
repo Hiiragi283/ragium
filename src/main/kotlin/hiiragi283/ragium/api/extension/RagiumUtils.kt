@@ -146,8 +146,7 @@ fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T
 
 fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
 
-fun ScreenHandlerContext.getInventory(size: Int): Inventory =
-    getBlockEntity() as? Inventory ?: SimpleInventory(size)
+fun ScreenHandlerContext.getInventory(size: Int): Inventory = getBlockEntity() as? Inventory ?: SimpleInventory(size)
 
 fun ScreenHandlerContext.getInventory(typeSize: HTMachineType.Size): Inventory = getInventory(typeSize.invSize)
 

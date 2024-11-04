@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.machine.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.HTDrainBlockEntity
 import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -16,6 +17,10 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
+    @JvmField
+    val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
+        register("combustion_generator", ::HTCombustionGeneratorBlockEntity)
+
     @JvmField
     val CREATIVE_SOURCE: BlockEntityType<HTCreativeSourceBlockEntity> =
         register("creative_source", ::HTCreativeSourceBlockEntity)
@@ -40,6 +45,7 @@ object RagiumBlockEntityTypes {
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
+    @Deprecated("May be removed")
     @JvmField
     val META_MACHINE: BlockEntityType<HTMetaMachineBlockEntity> =
         register("meta_machine", ::HTMetaMachineBlockEntity)
@@ -93,15 +99,18 @@ object RagiumBlockEntityTypes {
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_GENERATOR)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_PROCESSOR)
         TRADER_STATION.addSupportedBlock(RagiumBlocks.TRADER_STATION)
-        
+
         val blockTable: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock> = RagiumAPI.getInstance().machineRegistry.blocks
-        buildList { 
-            addAll(blockTable.row(RagiumMachineKeys.COMBUSTION_GENERATOR).values)
+        // consumers
+        blockTable.row(RagiumMachineKeys.DRAIN).values.forEach(DRAIN::addSupportedBlock)
+        // generators
+        buildList {
             addAll(blockTable.row(RagiumMachineKeys.SOLAR_PANEL).values)
             addAll(blockTable.row(RagiumMachineKeys.THERMAL_GENERATOR).values)
             addAll(blockTable.row(RagiumMachineKeys.WATER_GENERATOR).values)
         }.forEach(SIMPLE_GENERATOR::addSupportedBlock)
-        blockTable.row(RagiumMachineKeys.STEAM_GENERATOR).values
-            .forEach(STEAM_GENERATOR::addSupportedBlock)
+        blockTable.row(RagiumMachineKeys.COMBUSTION_GENERATOR).values.forEach(COMBUSTION_GENERATOR::addSupportedBlock)
+        blockTable.row(RagiumMachineKeys.STEAM_GENERATOR).values.forEach(STEAM_GENERATOR::addSupportedBlock)
+        // processors
     }
 }

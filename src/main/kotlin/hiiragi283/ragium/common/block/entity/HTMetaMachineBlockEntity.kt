@@ -29,6 +29,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
+@Deprecated("May be removed")
 class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.META_MACHINE, pos, state),
     ExtendedScreenHandlerFactory<HTMachinePacket>,
