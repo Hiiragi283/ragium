@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity.Factory
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
@@ -63,13 +62,13 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        // Validate multiblock
-        if (this is HTMultiblockController) {
-            return onUseController(state, world, pos, player, this)
-        }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
+        }
+        // Validate multiblock
+        if (this is HTMultiblockController) {
+            return onUseController(state, world, pos, player, this)
         }
         // open machine screen
         return when (world.isClient) {
@@ -115,7 +114,7 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
 
     //    Factory    //
 
-    fun interface Factory {
+    /*fun interface Factory {
         companion object {
             @JvmStatic
             fun ofStatic(factory: (HTMachineTier) -> HTMachineEntity<*>?): Factory =
@@ -123,5 +122,5 @@ abstract class HTMachineEntity<T : HTMachineType>(val machineType: T, val tier: 
         }
 
         fun create(machineType: HTMachineType, tier: HTMachineTier): HTMachineEntity<*>?
-    }
+    }*/
 }

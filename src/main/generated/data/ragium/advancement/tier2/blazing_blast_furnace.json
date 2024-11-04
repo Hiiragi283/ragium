@@ -14,12 +14,8 @@
       "translate": "advancement.ragium.tier2.blazing_blast_furnace.description"
     },
     "icon": {
-      "components": {
-        "ragium:machine_tier": "basic",
-        "ragium:machine_type": "ragium:blast_furnace"
-      },
       "count": 1,
-      "id": "ragium:processor"
+      "id": "ragium:basic_blast_furnace"
     },
     "title": {
       "translate": "advancement.ragium.tier2.blazing_blast_furnace"

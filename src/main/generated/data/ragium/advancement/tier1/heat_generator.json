@@ -5,11 +5,7 @@
       "conditions": {
         "items": [
           {
-            "components": {
-              "ragium:machine_tier": "primitive",
-              "ragium:machine_type": "ragium:steam"
-            },
-            "items": "ragium:processor"
+            "items": "ragium:primitive_steam_generator"
           }
         ]
       },
@@ -21,12 +17,8 @@
       "translate": "advancement.ragium.tier1.heat_generator.description"
     },
     "icon": {
-      "components": {
-        "ragium:machine_tier": "primitive",
-        "ragium:machine_type": "ragium:steam"
-      },
       "count": 1,
-      "id": "ragium:generator"
+      "id": "ragium:primitive_steam_generator"
     },
     "title": {
       "translate": "advancement.ragium.tier1.heat_generator"

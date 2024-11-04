@@ -2,10 +2,8 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTRegistryContent
-import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.gui.HTMachineScreenBase
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.gui.HTFireboxMachineScreen
@@ -13,10 +11,9 @@ import hiiragi283.ragium.client.gui.HTLargeMachineScreen
 import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
 import hiiragi283.ragium.client.gui.HTSteamMachineScreen
 import hiiragi283.ragium.client.model.HTFluidCubeModel
-import hiiragi283.ragium.client.model.HTMachineModel
+import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.HTFireboxBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
@@ -74,12 +71,13 @@ object RagiumClient : ClientModInitializer {
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
-            RagiumBlocks.META_CONSUMER,
-            RagiumBlocks.META_GENERATOR,
-            RagiumBlocks.META_PROCESSOR,
             RagiumBlocks.POROUS_NETHERRACK,
             RagiumBlocks.FIREBOX,
         )
+        RagiumAPI
+            .getInstance()
+            .machineRegistry.blocks.values
+            .forEach(::registerCutoutMipped)
 
         buildList {
             addAll(RagiumContents.Ores.entries)
@@ -88,20 +86,10 @@ object RagiumClient : ClientModInitializer {
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.FIREBOX) { HTFireboxBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
         }, RagiumBlocks.BACKPACK_INTERFACE)
-
-        ColorProviderRegistry.BLOCK.register({ _: BlockState, view: BlockRenderView?, pos: BlockPos?, _: Int ->
-            pos
-                ?.let { view?.getMachineEntity(it) }
-                ?.machineType
-                ?.get(HTMachinePropertyKeys.GENERATOR_COLOR)
-                ?.fireworkColor
-                ?: -1
-        }, RagiumBlocks.META_GENERATOR)
     }
 
     private fun registerCutout(block: Block) {
@@ -140,14 +128,6 @@ object RagiumClient : ClientModInitializer {
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
             stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
         }, RagiumContents.Misc.BACKPACK)
-
-        ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
-            stack
-                .get(RagiumComponentTypes.MACHINE_TYPE)
-                ?.get(HTMachinePropertyKeys.GENERATOR_COLOR)
-                ?.fireworkColor
-                ?: -1
-        }, RagiumBlocks.META_GENERATOR)
     }
 
     //    Screens    //
@@ -166,7 +146,7 @@ object RagiumClient : ClientModInitializer {
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
                 when {
-                    HTMachineModel.MODEL_ID in original.modelDependencies -> HTMachineModel
+                    HTProcessorMachineModel.MODEL_ID in original.modelDependencies -> HTProcessorMachineModel
                     HTFluidCubeModel.MODEL_ID in original.modelDependencies -> HTFluidCubeModel
                     else -> original
                 }

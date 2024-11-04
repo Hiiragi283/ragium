@@ -24,11 +24,7 @@
     "EEE"
   ],
   "result": {
-    "components": {
-      "ragium:machine_tier": "basic",
-      "ragium:machine_type": "ragium:chemical_reactor"
-    },
     "count": 1,
-    "id": "ragium:processor"
+    "id": "ragium:basic_chemical_reactor"
   }
 }

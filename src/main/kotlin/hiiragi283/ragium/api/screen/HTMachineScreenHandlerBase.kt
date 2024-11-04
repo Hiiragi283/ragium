@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.screen
 
-import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.extension.getMachine
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -26,7 +26,7 @@ abstract class HTMachineScreenHandlerBase(
     ) {
     val pos: BlockPos = packet.pos
     protected val property: PropertyDelegate =
-        ctx.getMachineEntity()?.property ?: ArrayPropertyDelegate(HTMachineEntity.MAX_PROPERTIES)
+        ctx.getMachine()?.property ?: ArrayPropertyDelegate(HTMachineEntity.MAX_PROPERTIES)
 
     fun getProgress(): Float = property.get(0).toFloat() / property.get(1).toFloat()
 }

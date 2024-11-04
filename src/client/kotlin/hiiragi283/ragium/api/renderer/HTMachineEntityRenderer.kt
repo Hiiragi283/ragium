@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.renderer
 
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.machine.HTMachine
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider
@@ -11,7 +11,7 @@ import net.minecraft.world.World
 @Environment(EnvType.CLIENT)
 fun interface HTMachineEntityRenderer {
     fun render(
-        machine: HTMachineEntity<*>,
+        machine: HTMachine,
         world: World,
         pos: BlockPos,
         tickDelta: Float,

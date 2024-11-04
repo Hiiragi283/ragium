@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine.property
 
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -12,9 +13,9 @@ fun interface HTMachineTooltipAppender {
     companion object {
         @JvmField
         val DEFAULT_PROCESSOR =
-            HTMachineTooltipAppender { consumer: (Text) -> Unit, machineType: HTMachineType, tier: HTMachineTier ->
+            HTMachineTooltipAppender { consumer: (Text) -> Unit, machine: HTMachine, tier: HTMachineTier ->
                 val sizeType: HTMachineType.Size =
-                    machineType[HTMachinePropertyKeys.RECIPE_SIZE] ?: return@HTMachineTooltipAppender
+                    machine.asProperties()[HTMachinePropertyKeys.RECIPE_SIZE] ?: return@HTMachineTooltipAppender
                 consumer(
                     Text
                         .translatable(
@@ -32,5 +33,5 @@ fun interface HTMachineTooltipAppender {
             }
     }
 
-    fun appendTooltip(consumer: (Text) -> Unit, machineType: HTMachineType, tier: HTMachineTier)
+    fun appendTooltip(consumer: (Text) -> Unit, machine: HTMachine, tier: HTMachineTier)
 }

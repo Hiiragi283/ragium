@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
@@ -86,8 +87,10 @@ class HTMachineRecipe(
             itemOutputs: List<HTRecipeResult.Item>,
             fluidOutputs: List<HTRecipeResult.Fluid>,
         ): HTMachineRecipe {
-            val type: HTMachineType.Processor = definition.type.asProcessor()
-            check(type.contains(HTMachinePropertyKeys.RECIPE_SIZE)) { "Machine type must have recipe size property!" }
+            val key: HTMachineKey = definition.key
+            check(
+                key.asProperties().contains(HTMachinePropertyKeys.RECIPE_SIZE),
+            ) { "Machine type must have recipe size property!" }
             check(fluidInputs.size <= 2) { "Fluid inputs must be 2 or less!" }
             check(fluidOutputs.size <= 2) { "Fluid outputs must be 2 or less!" }
             check(itemInputs.size <= 3) { "Item inputs must be 3 or less!" }
@@ -96,7 +99,7 @@ class HTMachineRecipe(
             val bool2: Boolean = fluidOutputs.size == 2
             val bool3: Boolean = itemInputs.size == 3
             val bool4: Boolean = itemOutputs.size == 3
-            val bool5: Boolean = type[HTMachinePropertyKeys.RECIPE_SIZE] == HTMachineType.Size.LARGE
+            val bool5: Boolean = key.asProperties()[HTMachinePropertyKeys.RECIPE_SIZE] == HTMachineType.Size.LARGE
             val typeSize: HTMachineType.Size = when {
                 bool1 || bool2 || bool3 || bool4 || bool5 -> HTMachineType.Size.LARGE
                 else -> HTMachineType.Size.SIMPLE
@@ -113,8 +116,8 @@ class HTMachineRecipe(
         }
     }
 
-    val machineType: HTMachineType
-        get() = definition.type
+    val key: HTMachineKey
+        get() = definition.key
     val tier: HTMachineTier
         get() = definition.tier
     val firstOutput: ItemStack
@@ -123,7 +126,7 @@ class HTMachineRecipe(
     //    Recipe    //
 
     override fun matches(input: HTMachineInput, world: World): Boolean {
-        val bool1: Boolean = input.type == this.machineType
+        val bool1: Boolean = input.key == this.key
         val bool2: Boolean = input.tier >= this.tier
         val bool3: Boolean = typeSize == input.typeSize
         val bool4: Boolean =

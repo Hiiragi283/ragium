@@ -13,12 +13,8 @@
       "translate": "advancement.ragium.tier1.brick_blast_furnace.description"
     },
     "icon": {
-      "components": {
-        "ragium:machine_tier": "primitive",
-        "ragium:machine_type": "ragium:blast_furnace"
-      },
       "count": 1,
-      "id": "ragium:processor"
+      "id": "ragium:primitive_blast_furnace"
     },
     "title": {
       "translate": "advancement.ragium.tier1.brick_blast_furnace"

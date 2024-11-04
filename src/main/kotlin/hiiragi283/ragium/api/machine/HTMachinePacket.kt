@@ -4,12 +4,12 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.util.math.BlockPos
 
-data class HTMachinePacket(val machineType: HTMachineType, val tier: HTMachineTier, val pos: BlockPos) {
+data class HTMachinePacket(val key: HTMachineKey, val tier: HTMachineTier, val pos: BlockPos) {
     companion object {
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachinePacket> = PacketCodec.tuple(
-            HTMachineTypeRegistry.PACKET_CODEC,
-            HTMachinePacket::machineType,
+            HTMachineKey.PACKET_CODEC,
+            HTMachinePacket::key,
             HTMachineTier.PACKET_CODEC,
             HTMachinePacket::tier,
             BlockPos.PACKET_CODEC,
@@ -17,4 +17,6 @@ data class HTMachinePacket(val machineType: HTMachineType, val tier: HTMachineTi
             ::HTMachinePacket,
         )
     }
+
+    constructor(type: HTMachine, tier: HTMachineTier, pos: BlockPos) : this(type.key, tier, pos)
 }

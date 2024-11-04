@@ -24,6 +24,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.WorldView
 
+@Deprecated("May be removed")
 class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)

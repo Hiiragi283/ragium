@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.screen
 
-import hiiragi283.ragium.api.extension.machineInventory
+import hiiragi283.ragium.api.extension.getInventory
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
@@ -19,7 +19,7 @@ class HTSimpleMachineScreenHandler(
         playerInv,
         packet,
         ctx,
-        ctx.machineInventory(HTMachineType.Size.SIMPLE),
+    ctx.getInventory(HTMachineType.Size.SIMPLE),
     ) {
     init {
         inventory.onOpen(player)

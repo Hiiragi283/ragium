@@ -1,10 +1,8 @@
 package hiiragi283.ragium.client.model
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.machineTypeOrNull
-import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.extension.getMachine
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockModel
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.api.EnvType
@@ -70,15 +68,15 @@ data object HTMachineModel : UnbakedModel, BakedModel {
         randomSupplier: Supplier<Random>,
         context: RenderContext,
     ) {
-        val machineEntity: HTMachineEntity<*> = blockView.getMachineEntity(pos) ?: return
-        machineEntity.machineType.ifPresent(HTClientMachinePropertyKeys.STATIC_RENDERER) {
+        val machineEntity: HTMachineBlockEntityBase = blockView.getMachine(pos) ?: return
+        /*machineEntity.key.asProperties().ifPresent(HTClientMachinePropertyKeys.STATIC_RENDERER) {
             it.emitBlockQuads(blockView, state, pos, randomSupplier, context)
-        }
+        }*/
     }
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
-        stack.machineTypeOrNull?.ifPresent(HTClientMachinePropertyKeys.STATIC_RENDERER) {
+        /*stack.machineKeyOrNull?.asProperties()?.ifPresent(HTClientMachinePropertyKeys.STATIC_RENDERER) {
             it.emitItemQuads(stack, randomSupplier, context)
-        }
+        }*/
     }
 }

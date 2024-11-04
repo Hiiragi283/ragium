@@ -43,7 +43,6 @@ class HTMachineRecipeProcessor private constructor(private val inventory: HTSimp
         tier: HTMachineTier,
         input: HTMachineInput,
     ) {
-        if (!machineType.isProcessor()) return
         if (inventory.size() != typeSize.invSize) return
         if (fluidStorage.typeSize != typeSize) return
         processInternal(world, tier, input)

@@ -91,14 +91,17 @@ object RagiumBlocks : HTContentRegister {
     val MANUAL_MIXER: Block =
         registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER)
 
+    @Deprecated("May be removed")
     @JvmField
     val META_CONSUMER: Block =
         registerBlock("consumer", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))
 
+    @Deprecated("May be removed")
     @JvmField
     val META_GENERATOR: Block =
         registerBlock("generator", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK).nonOpaque()))
 
+    @Deprecated("May be removed")
     @JvmField
     val META_PROCESSOR: Block =
         registerBlock("processor", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))

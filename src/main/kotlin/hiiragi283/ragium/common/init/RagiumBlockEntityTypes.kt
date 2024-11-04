@@ -2,8 +2,15 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockEntityType
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineBlock
+import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.machine.HTDrainBlockEntity
+import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -12,6 +19,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CREATIVE_SOURCE: BlockEntityType<HTCreativeSourceBlockEntity> =
         register("creative_source", ::HTCreativeSourceBlockEntity)
+
+    @JvmField
+    val DRAIN: BlockEntityType<HTDrainBlockEntity> =
+        register("drain", ::HTDrainBlockEntity)
 
     @JvmField
     val EXPORTER: BlockEntityType<HTExporterBlockEntity> =
@@ -46,6 +57,14 @@ object RagiumBlockEntityTypes {
         register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
+    val SIMPLE_GENERATOR: BlockEntityType<HTGeneratorBlockEntityBase.Simple> =
+        register("simple_generator", HTGeneratorBlockEntityBase::Simple)
+
+    @JvmField
+    val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =
+        register("steam_generator", ::HTSteamGeneratorBlockEntity)
+
+    @JvmField
     val TRADER_STATION: BlockEntityType<HTTraderStationBlockEntity> =
         register("trader_station", ::HTTraderStationBlockEntity)
 
@@ -74,5 +93,15 @@ object RagiumBlockEntityTypes {
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_GENERATOR)
         META_MACHINE.addSupportedBlock(RagiumBlocks.META_PROCESSOR)
         TRADER_STATION.addSupportedBlock(RagiumBlocks.TRADER_STATION)
+        
+        val blockTable: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock> = RagiumAPI.getInstance().machineRegistry.blocks
+        buildList { 
+            addAll(blockTable.row(RagiumMachineKeys.COMBUSTION_GENERATOR).values)
+            addAll(blockTable.row(RagiumMachineKeys.SOLAR_PANEL).values)
+            addAll(blockTable.row(RagiumMachineKeys.THERMAL_GENERATOR).values)
+            addAll(blockTable.row(RagiumMachineKeys.WATER_GENERATOR).values)
+        }.forEach(SIMPLE_GENERATOR::addSupportedBlock)
+        blockTable.row(RagiumMachineKeys.STEAM_GENERATOR).values
+            .forEach(STEAM_GENERATOR::addSupportedBlock)
     }
 }

@@ -1,14 +1,17 @@
 package hiiragi283.ragium.common
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.entity.HTGeneratorMachineEntityBase
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
-import hiiragi283.ragium.common.init.RagiumMachineTypes
-import hiiragi283.ragium.common.machine.*
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.machine.HTDrainBlockEntity
+import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
+import net.minecraft.block.Block
 import net.minecraft.fluid.FluidState
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
@@ -21,34 +24,24 @@ import net.minecraft.world.World
 object RagiumDefaultPlugin : RagiumPlugin {
     override val priority: Int = -100
 
-    override fun afterRagiumInit() {}
+    override fun afterRagiumInit(instance: RagiumAPI) {}
 
     override fun registerMachineType(register: RagiumPlugin.MachineRegister) {
         // consumer
-        RagiumMachineTypes.Consumer.entries
-            .map(RagiumMachineTypes.Consumer::key)
-            .forEach(register::registerConsumer)
+        RagiumMachineKeys.CONSUMERS.forEach(register::registerConsumer)
         // generators
-        // register.registerGenerator(RagiumMachineTypes.HEAT_GENERATOR)
-        RagiumMachineTypes.Generator.entries
-            .map(RagiumMachineTypes.Generator::key)
-            .forEach(register::registerGenerator)
+        RagiumMachineKeys.GENERATORS.forEach(register::registerGenerator)
         // processors
-        register.registerProcessor(RagiumMachineTypes.BLAST_FURNACE)
-        register.registerProcessor(RagiumMachineTypes.DISTILLATION_TOWER)
-        register.registerProcessor(RagiumMachineTypes.SAW_MILL)
-        RagiumMachineTypes.Processor.entries
-            .map(RagiumMachineTypes.Processor::key)
-            .forEach(register::registerProcessor)
+        RagiumMachineKeys.PROCESSORS.forEach(register::registerProcessor)
     }
 
     override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper) {
         // consumers
-        helper.modify(RagiumMachineTypes.Consumer.DRAIN) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTDrainMachineEntity))
+        helper.modify(RagiumMachineKeys.DRAIN) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
         }
         // generators
-        /*helper.modify(RagiumMachineTypes.HEAT_GENERATOR) {
+        /*helper.modify(RagiumMachineKeys.HEAT_GENERATOR) {
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 world
                     .getMachineEntity(pos)
@@ -62,23 +55,21 @@ object RagiumDefaultPlugin : RagiumPlugin {
             )
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.RED)
         }*/
-        helper.modify(RagiumMachineTypes.Generator.COMBUSTION) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(HTGeneratorMachineEntityBase::Simple))
+        helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.BLUE)
         }
-        helper.modify(RagiumMachineTypes.Generator.SOLAR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(HTGeneratorMachineEntityBase::Simple))
+        helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
+            set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
         }
-        helper.modify(RagiumMachineTypes.Generator.STEAM) {
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntity.Factory.ofStatic(::HTSteamGeneratorMachineEntity),
-            )
+        helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSteamGeneratorBlockEntity))
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
         }
-        helper.modify(RagiumMachineTypes.Generator.THERMAL) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(HTGeneratorMachineEntityBase::Simple))
+        helper.modify(RagiumMachineKeys.THERMAL_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.ORANGE)
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 when {
@@ -92,39 +83,36 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 }
             }
         }
-        helper.modify(RagiumMachineTypes.Generator.WATER) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(HTGeneratorMachineEntityBase::Simple))
+        helper.modify(RagiumMachineKeys.WATER_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.CYAN)
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
             }
         }
         // processors
-        helper.modify(RagiumMachineTypes.BLAST_FURNACE) {
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),
-            )
-            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
-        }
-        helper.modify(RagiumMachineTypes.DISTILLATION_TOWER) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTDistillationTowerMachineEntity))
-            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
-        }
-        helper.modify(RagiumMachineTypes.SAW_MILL) {
-            set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
-            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTSawMillMachineEntity))
-            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
-        }
-        RagiumMachineTypes.Processor.entries.forEach {
-            helper.modify(it.key) {
-                set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTSimpleProcessorMachineEntity))
+        RagiumMachineKeys.PROCESSORS.forEach {
+            helper.modify(it) {
+                // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTSimpleProcessorMachineEntity))
                 set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
                 set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.SIMPLE)
             }
+        }
+        helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
+            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),)
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
+        }
+        helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
+            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTDistillationTowerMachineEntity))
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
+        }
+        helper.modify(RagiumMachineKeys.SAW_MILL) {
+            set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTSawMillMachineEntity))
+            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
     }
 }

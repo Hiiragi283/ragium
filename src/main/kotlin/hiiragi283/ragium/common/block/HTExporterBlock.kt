@@ -27,7 +27,7 @@ class HTExporterBlock(private val tier: HTMachineTier) : HTBlockWithEntity(block
         stack: ItemStack,
         context: Item.TooltipContext,
         tooltip: MutableList<Text>,
-        options: TooltipType
+        options: TooltipType,
     ) {
         tooltip.add(Text.literal("- Item Speed; ${HTPipeType.ALL.getItemCount(tier)} / s"))
         tooltip.add(Text.literal("- Fluid Speed; ${HTPipeType.ALL.getFluidCount(tier)} Units / s"))

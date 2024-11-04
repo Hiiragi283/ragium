@@ -5,14 +5,15 @@ import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
@@ -28,7 +29,6 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.RegistryKeys
@@ -600,103 +600,102 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // generators
         createGenerator(
             exporter,
-            RagiumMachineTypes.Generator.THERMAL,
+            RagiumMachineKeys.THERMAL_GENERATOR,
             Items.MAGMA_BLOCK,
         )
         createGenerator(
             exporter,
-            RagiumMachineTypes.Generator.COMBUSTION,
+            RagiumMachineKeys.COMBUSTION_GENERATOR,
             RagiumContents.Misc.ENGINE,
         )
         createGenerator(
             exporter,
-            RagiumMachineTypes.Generator.SOLAR,
+            RagiumMachineKeys.SOLAR_PANEL,
             RagiumContents.Misc.SOLAR_PANEL,
         )
         createGenerator(
             exporter,
-            RagiumMachineTypes.Generator.STEAM,
+            RagiumMachineKeys.STEAM_GENERATOR,
             Items.FURNACE,
         )
         // processors
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.ALLOY_FURNACE,
+            RagiumMachineKeys.ALLOY_FURNACE,
             Items.FURNACE,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.ASSEMBLER,
+            RagiumMachineKeys.ASSEMBLER,
             HTMachineTier::getCircuit,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.CHEMICAL_REACTOR,
+            RagiumMachineKeys.CHEMICAL_REACTOR,
             Items.GLASS,
         )
         /*createMachine(
             exporter,
-            RagiumMachineTypes.Processor.COMPRESSOR,
+            RagiumMachineKeys.COMPRESSOR,
             Items.PISTON,
         )*/
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.ELECTROLYZER,
+            RagiumMachineKeys.ELECTROLYZER,
             Items.LIGHTNING_ROD,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.EXTRACTOR,
+            RagiumMachineKeys.EXTRACTOR,
             Items.HOPPER,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.GRINDER,
+            RagiumMachineKeys.GRINDER,
             Items.FLINT,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.METAL_FORMER,
+            RagiumMachineKeys.METAL_FORMER,
             RagiumBlocks.MANUAL_FORGE,
             RagiumContents.Misc.FORGE_HAMMER,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.MIXER,
+            RagiumMachineKeys.MIXER,
             Items.CAULDRON,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.Processor.ROCK_GENERATOR,
+            RagiumMachineKeys.ROCK_GENERATOR,
             Items.LAVA_BUCKET,
             Items.WATER_BUCKET,
         )
 
         createProcessor(
             exporter,
-            RagiumMachineTypes.BLAST_FURNACE,
+            RagiumMachineKeys.BLAST_FURNACE,
             Items.BLAST_FURNACE,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.DISTILLATION_TOWER,
+            RagiumMachineKeys.DISTILLATION_TOWER,
             RagiumContents.Misc.EMPTY_FLUID_CUBE,
         )
         createProcessor(
             exporter,
-            RagiumMachineTypes.SAW_MILL,
+            RagiumMachineKeys.SAW_MILL,
             Items.STONECUTTER,
         )
     }
 
-    private fun createGenerator(exporter: RecipeExporter, type: HTMachineConvertible, core: ItemConvertible) {
+    private fun createGenerator(exporter: RecipeExporter, type: HTMachine, core: ItemConvertible) {
         createGenerator(exporter, type, Ingredient.ofItems(core))
     }
 
-    private fun createGenerator(exporter: RecipeExporter, type: HTMachineConvertible, core: Ingredient) {
+    private fun createGenerator(exporter: RecipeExporter, type: HTMachine, core: Ingredient) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val output: ItemStack = type.createItemStack(tier)
-
+            val output: HTMachineBlock = type.getBlock(tier) ?: return
             HTShapedRecipeJsonBuilder
                 .create(output)
                 .patterns(
@@ -719,7 +718,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun createProcessor(
         exporter: RecipeExporter,
-        type: HTMachineConvertible,
+        type: HTMachine,
         left: ItemConvertible,
         right: ItemConvertible = left,
     ) {
@@ -733,7 +732,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun createProcessor(
         exporter: RecipeExporter,
-        type: HTMachineConvertible,
+        type: HTMachine,
         left: (HTMachineTier) -> ItemConvertible,
         right: (HTMachineTier) -> ItemConvertible = left,
     ) {
@@ -747,7 +746,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun createProcessor(
         exporter: RecipeExporter,
-        type: HTMachineConvertible,
+        type: HTMachine,
         left: TagKey<Item>,
         right: TagKey<Item> = left,
     ) {
@@ -761,13 +760,12 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun createMachineInternal(
         exporter: RecipeExporter,
-        type: HTMachineConvertible,
+        type: HTMachine,
         left: (HTMachineTier) -> Ingredient,
         right: (HTMachineTier) -> Ingredient = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val output: ItemStack = type.createItemStack(tier)
-
+            val output: HTMachineBlock = type.getBlock(tier) ?: return
             HTShapedRecipeJsonBuilder
                 .create(output)
                 .patterns(

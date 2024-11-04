@@ -6,6 +6,8 @@ sealed class HTPropertyKey<T : Any>(val id: Identifier) {
     @Suppress("UNCHECKED_CAST")
     fun cast(obj: Any?): T? = obj as? T
 
+    override fun toString(): String = "HTPropertyKey[$id]"
+
     //    Simple    //
 
     class Simple<T : Any>(id: Identifier) : HTPropertyKey<T>(id)

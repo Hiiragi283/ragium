@@ -39,7 +39,7 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
         stack: ItemStack,
         context: Item.TooltipContext,
         tooltip: MutableList<Text>,
-        options: TooltipType
+        options: TooltipType,
     ) {
         if (type.isItem) {
             tooltip.add(Text.literal("- Item Speed; ${HTPipeType.ALL.getItemCount(tier)} / s"))

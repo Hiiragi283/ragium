@@ -10,7 +10,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState, tier: HTMachineT
         TODO(),
         pos,
         state,
-        RagiumMachineTypes.FLUID_DRILL,
+        RagiumMachineKeys.FLUID_DRILL,
         tier,
     ),
     HTMultiblockController {

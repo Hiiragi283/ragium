@@ -9,8 +9,7 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.property.HTMutablePropertyHolder
-import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTExporterBlock
@@ -50,7 +49,7 @@ import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumContentRegister : HTContentRegister {
-    private val itemBuilders: MutableMap<HTContent<Item>, HTMutablePropertyHolder> = mutableMapOf()
+    private val itemBuilders: MutableMap<HTContent<Item>, HTPropertyHolderBuilder> = mutableMapOf()
 
     private val settingsKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item.Settings> =
         HTPropertyKey.Defaulted(RagiumAPI.id("settings"), value = { it })
@@ -58,11 +57,11 @@ object RagiumContentRegister : HTContentRegister {
     private val itemKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item> =
         HTPropertyKey.Defaulted(RagiumAPI.id("item"), value = ::Item)
 
-    private fun getProperties(content: HTContent<Item>): HTMutablePropertyHolder =
-        itemBuilders.computeIfAbsent(content) { HTPropertyHolder.builder() }
+    private fun getProperties(content: HTContent<Item>): HTPropertyHolderBuilder =
+        itemBuilders.computeIfAbsent(content) { HTPropertyHolderBuilder() }
 
     private fun createAndRegisterItem(content: HTContent<Item>) {
-        val properties: HTMutablePropertyHolder = getProperties(content)
+        val properties: HTPropertyHolderBuilder = getProperties(content)
         val settings: Item.Settings = properties.getOrDefault(settingsKey)(itemSettings())
         val item: Item = properties.getOrDefault(itemKey)(settings)
         registerItem(content, item)

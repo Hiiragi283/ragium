@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineTypeKey
+import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTypeNew
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
-import net.fabricmc.fabric.api.util.TriState
 import java.util.function.Predicate
 
 @JvmDefaultWithCompatibility
@@ -22,36 +22,36 @@ interface RagiumPlugin {
 
     fun setupClientMachineProperties(helper: PropertyHelper) {}
 
-    fun afterRagiumInit()
+    fun afterRagiumInit(instance: RagiumAPI)
 
     //    MachineRegister    //
 
-    class MachineRegister(private val register: (HTMachineTypeKey, TriState) -> Unit) {
-        fun registerConsumer(key: HTMachineTypeKey) {
-            register(key, TriState.DEFAULT)
+    class MachineRegister(private val register: (HTMachineKey, HTMachineTypeNew) -> Unit) {
+        fun registerConsumer(key: HTMachineKey) {
+            register(key, HTMachineTypeNew.CONSUMER)
         }
 
-        fun registerGenerator(key: HTMachineTypeKey) {
-            register(key, TriState.TRUE)
+        fun registerGenerator(key: HTMachineKey) {
+            register(key, HTMachineTypeNew.GENERATOR)
         }
 
-        fun registerProcessor(key: HTMachineTypeKey) {
-            register(key, TriState.FALSE)
+        fun registerProcessor(key: HTMachineKey) {
+            register(key, HTMachineTypeNew.PROCESSOR)
         }
     }
 
     //    PropertyHelper    //
 
-    class PropertyHelper(private val key: HTMachineTypeKey, private val properties: HTMutablePropertyHolder) {
-        fun modify(type: HTMachineConvertible, builderAction: HTMutablePropertyHolder.() -> Unit) {
+    class PropertyHelper(private val key: HTMachineKey, private val properties: HTMutablePropertyHolder) {
+        fun modify(type: HTMachine, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify(type.key, builderAction)
         }
 
-        fun modify(key: HTMachineTypeKey, builderAction: HTMutablePropertyHolder.() -> Unit) {
+        fun modify(key: HTMachineKey, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify({ it == key }, builderAction)
         }
 
-        fun modify(filter: Predicate<HTMachineTypeKey>, builderAction: HTMutablePropertyHolder.() -> Unit) {
+        fun modify(filter: Predicate<HTMachineKey>, builderAction: HTMutablePropertyHolder.() -> Unit) {
             if (filter.test(this.key)) {
                 properties.builderAction()
             }

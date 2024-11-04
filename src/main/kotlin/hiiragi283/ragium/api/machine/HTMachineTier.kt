@@ -28,7 +28,7 @@ enum class HTMachineTier(
     override val jaName: String,
     val recipeCost: Long,
     val tickRate: Int,
-    rarity: Rarity,
+    val rarity: Rarity,
 ) : StringIdentifiable,
     HTTranslationProvider {
     // NONE(RagiumAPI.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
@@ -87,9 +87,9 @@ enum class HTMachineTier(
 
     val prefixKey = "$translationKey.prefix"
 
-    fun createPrefixedText(type: HTMachineConvertible): MutableText = Text.translatable(prefixKey, type.asMachine().key.text)
+    fun createPrefixedText(type: HTMachine): MutableText = Text.translatable(prefixKey, type.key.text)
 
-    fun createId(type: HTMachineConvertible): Identifier = type.key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
+    fun createId(type: HTMachine): Identifier = type.key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
     fun getBaseBlock(): Block = when (this) {
         PRIMITIVE -> Blocks.BRICKS

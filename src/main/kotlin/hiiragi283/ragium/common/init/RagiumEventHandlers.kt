@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.entity.HTFluidSyncable
+import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
@@ -93,11 +93,11 @@ object RagiumEventHandlers {
                 }
 
                 hasEnchantment(RagiumEnchantments.SLEDGE_HAMMER, world, tool) -> drops.map { drop: ItemStack ->
-                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineTypes.Processor.GRINDER)
+                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineKeys.GRINDER)
                 }
 
                 hasEnchantment(RagiumEnchantments.BUZZ_SAW, world, tool) -> drops.map { drop: ItemStack ->
-                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineTypes.SAW_MILL)
+                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineKeys.SAW_MILL)
                 }
 
                 else -> drops
@@ -149,7 +149,7 @@ object RagiumEventHandlers {
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 val screen: HTMachineScreenHandlerBase =
                     player.currentScreenHandler as? HTMachineScreenHandlerBase ?: return@forEach
-                (player.world.getMachineEntity(screen.pos) as? HTFluidSyncable)
+                (player.world.getMachine(screen.pos) as? HTFluidSyncable)
                     ?.sendPacket(player, RagiumNetworks::sendFluidSync)
             }
         }
@@ -207,7 +207,7 @@ object RagiumEventHandlers {
         world: World,
         breaker: Entity?,
         tool: ItemStack,
-        machineType: HTMachineConvertible,
+        machineType: HTMachine,
     ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
         HTMachineInput.create(machineType, HTMachineTier.PRIMITIVE) { add(it) }
     }

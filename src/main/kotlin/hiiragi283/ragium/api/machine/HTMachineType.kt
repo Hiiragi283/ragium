@@ -1,61 +1,55 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.api.inventory.HTSidedInventory
 import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
 import hiiragi283.ragium.api.inventory.HTStorageSide
-import hiiragi283.ragium.api.property.HTCombinedPropertyHolder
-import hiiragi283.ragium.api.property.HTDelegatedPropertyHolder
-import hiiragi283.ragium.api.property.HTPropertyHolder
-import net.fabricmc.api.EnvType
+import io.netty.buffer.ByteBuf
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.util.StringIdentifiable
 
-sealed class HTMachineType :
-    HTMachineConvertible,
-    HTDelegatedPropertyHolder {
+sealed class HTMachineType : HTMachine {
     companion object {
+        @JvmField
+        val CODEC: Codec<HTMachineType> =
+            HTMachineKey.CODEC.xmap(
+                HTMachineType::Processor,
+                HTMachineType::key,
+            )
+
+        @JvmField
+        val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineType> =
+            HTMachineKey.PACKET_CODEC.xmap(
+                HTMachineType::Processor,
+                HTMachineType::key,
+            )
+
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTMachineType> = ComponentType
             .builder<HTMachineType>()
-            .codec(HTMachineTypeRegistry.CODEC)
-            .packetCodec(HTMachineTypeRegistry.PACKET_CODEC)
+            .codec(CODEC)
+            .packetCodec(PACKET_CODEC)
             .build()
     }
 
     override fun toString(): String = "MachineType[${key.id}]"
 
-    //    HTMachineConvertible    //
-
-    override fun asMachine(): HTMachineType = this
-
-    //    HTPropertyHolder.Delegated    //
-
-    override val delegated: HTPropertyHolder
-        get() = object : HTCombinedPropertyHolder {
-            override val properties: List<HTPropertyHolder> = buildList {
-                add(RagiumAPI.getInstance().getMachineRegistry(EnvType.SERVER).getOrEmpty(key))
-                add(RagiumAPI.getInstance().getMachineRegistry(EnvType.CLIENT).getOrEmpty(key))
-            }
-        }
-
     //    Consumer    //
 
-    class Consumer(override val key: HTMachineTypeKey) : HTMachineType()
+    class Consumer(override val key: HTMachineKey) : HTMachineType()
 
     //    Generator    //
 
-    class Generator(override val key: HTMachineTypeKey) : HTMachineType()
+    class Generator(override val key: HTMachineKey) : HTMachineType()
 
     //    Processor    //
 
-    class Processor(override val key: HTMachineTypeKey) : HTMachineType()
+    class Processor(override val key: HTMachineKey) : HTMachineType()
 
     //    Size    //
 

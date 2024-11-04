@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
@@ -59,28 +59,28 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun alloyFurnaceRecipes(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
+            .create(RagiumMachineKeys.ALLOY_FURNACE)
             .itemInput(ConventionalItemTags.COPPER_INGOTS)
             .itemInput(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
             .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
+            .create(RagiumMachineKeys.ALLOY_FURNACE)
             .itemInput(ConventionalItemTags.COPPER_INGOTS)
             .itemInput(RagiumContents.Dusts.RAGINITE)
             .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY, "_alt")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.ALLOY_FURNACE, HTMachineTier.ADVANCED)
             .itemInput(ConventionalItemTags.GOLD_INGOTS, 5)
             .itemInput(Items.NETHERITE_SCRAP, 3)
             .itemOutput(Items.NETHERITE_INGOT, 2)
             .offerTo(exporter, Items.NETHERITE_INGOT)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ALLOY_FURNACE)
+            .create(RagiumMachineKeys.ALLOY_FURNACE)
             .fluidInput(RagiumContents.Fluids.BATTER)
             .itemInput(RagiumContents.Foods.BUTTER)
             .itemOutput(RagiumBlocks.SPONGE_CAKE)
@@ -91,21 +91,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun assembler(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumContents.Plates.STEEL, 8)
             .itemInput(RagiumContents.Plates.RAGI_STEEL, 8)
             .itemOutput(RagiumContents.Misc.ENGINE)
             .offerTo(exporter, RagiumContents.Misc.ENGINE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumContents.Gems.RAGI_CRYSTAL, 8)
             .itemInput(RagiumContents.Misc.PROCESSOR_SOCKET)
             .itemOutput(RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR)
             .offerTo(exporter, RagiumContents.Misc.RAGI_CRYSTAL_PROCESSOR)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.BASIC)
             .itemInput(RagiumContents.Plates.ALUMINUM, 4)
             .itemInput(RagiumContents.Misc.BASALT_MESH, 4)
             .itemOutput(RagiumContents.Plates.STELLA)
@@ -129,14 +129,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             val circuit: RagiumContents.Circuits = tier.getCircuit()
             // board
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineTypes.Processor.ASSEMBLER, tier)
+                .create(RagiumMachineKeys.ASSEMBLER, tier)
                 .itemInput(first)
                 .itemInput(second)
                 .itemOutput(board)
                 .offerTo(exporter, board)
             // circuit
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineTypes.Processor.ASSEMBLER, tier)
+                .create(RagiumMachineKeys.ASSEMBLER, tier)
                 .itemInput(board)
                 .itemInput(HTIngredient.ofItem(dope))
                 .itemOutput(circuit)
@@ -145,21 +145,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // coils
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(ConventionalItemTags.COPPER_INGOTS, 8)
             .itemInput(RagiumBlocks.SHAFT)
             .itemOutput(RagiumContents.Coils.PRIMITIVE, 2)
             .offerTo(exporter, RagiumContents.Coils.PRIMITIVE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(ConventionalItemTags.GOLD_INGOTS, 8)
             .itemInput(RagiumBlocks.SHAFT)
             .itemOutput(RagiumContents.Coils.BASIC, 2)
             .offerTo(exporter, RagiumContents.Coils.BASIC)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ASSEMBLER)
+            .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumContents.Ingots.RAGI_ALLOY, 8)
             .itemInput(RagiumBlocks.SHAFT)
             .itemOutput(RagiumContents.Coils.ADVANCED, 2)
@@ -170,28 +170,28 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun blastFurnace(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE)
+            .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(ConventionalItemTags.IRON_INGOTS)
             .itemInput(RagiumContents.Dusts.RAGINITE, 4)
             .itemOutput(RagiumContents.Ingots.RAGI_STEEL)
             .offerTo(exporter, RagiumContents.Ingots.RAGI_STEEL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE)
+            .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(ConventionalItemTags.IRON_INGOTS)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(RagiumContents.Ingots.STEEL)
             .offerTo(exporter, RagiumContents.Ingots.STEEL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(ConventionalItemTags.REDSTONE_DUSTS, 4)
             .itemInput(RagiumContents.Dusts.RAGINITE, 5)
             .itemOutput(RagiumContents.Gems.RAGI_CRYSTAL)
             .offerTo(exporter, RagiumContents.Gems.RAGI_CRYSTAL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(RagiumContents.Ingots.STEEL)
             .itemInput(RagiumContents.Dusts.RAGI_CRYSTAL, 4)
             .itemInput(ConventionalItemTags.QUARTZ_GEMS)
@@ -199,14 +199,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Ingots.REFINED_RAGI_STEEL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(ConventionalItemTags.QUARTZ_GEMS, 2)
             .itemInput(ItemTags.COALS, 4)
             .itemOutput(RagiumContents.Plates.SILICON)
             .offerTo(exporter, RagiumContents.Plates.SILICON)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
             .itemInput(ItemTags.COALS, 8)
             .fluidInput(RagiumContents.Fluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumContents.Ingots.ALUMINUM)
@@ -217,7 +217,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun chemicalReactor(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumContents.Fluids.REFINED_GAS)
             .fluidInput(Fluids.WATER)
             .catalyst(Items.HEART_OF_THE_SEA)
@@ -226,21 +226,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Fluids.ALCOHOL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
             .itemInput(RagiumContents.Dusts.SULFUR)
             .fluidInput(Fluids.WATER)
             .fluidOutput(RagiumContents.Fluids.SULFURIC_ACID)
             .offerTo(exporter, RagiumContents.Fluids.SULFURIC_ACID)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
             .itemInput(RagiumContents.Dusts.NITER)
             .fluidInput(Fluids.WATER)
             .fluidOutput(RagiumContents.Fluids.NITRIC_ACID)
             .offerTo(exporter, RagiumContents.Fluids.NITRIC_ACID)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumContents.Dusts.BAUXITE)
             .fluidInput(RagiumContents.Fluids.SODIUM_HYDROXIDE)
             .fluidOutput(RagiumContents.Fluids.ALUMINA_SOLUTION)
@@ -248,7 +248,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // Fuels
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumContents.Fluids.ALCOHOL, FluidConstants.BUCKET * 3)
             .fluidInput(RagiumFluidTags.ORGANIC_OILS)
             .fluidOutput(RagiumContents.Fluids.BIO_FUEL, FluidConstants.BUCKET * 3)
@@ -256,21 +256,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Fluids.BIO_FUEL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluidTags.FUEL)
             .fluidInput(RagiumContents.Fluids.MIXTURE_ACID, FluidConstants.BUCKET / 4)
             .fluidOutput(RagiumContents.Fluids.NITRO_FUEL, FluidConstants.BUCKET / 4)
             .offerTo(exporter, RagiumContents.Fluids.NITRO_FUEL)
         // Dynamite
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
             .fluidInput(RagiumContents.Fluids.GLYCEROL)
             .fluidInput(RagiumContents.Fluids.MIXTURE_ACID, FluidConstants.BUCKET * 3)
             .fluidOutput(RagiumContents.Fluids.NITRO_GLYCERIN)
             .offerTo(exporter, RagiumContents.Fluids.NITRO_GLYCERIN)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(Items.PAPER)
             .itemInput(ConventionalItemTags.STRINGS)
             .fluidInput(RagiumContents.Fluids.NITRO_GLYCERIN)
@@ -278,14 +278,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Misc.DYNAMITE)
         // TNT
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .fluidInput(RagiumContents.Fluids.AROMATIC_COMPOUNDS)
             .fluidInput(RagiumContents.Fluids.MIXTURE_ACID, FluidConstants.BUCKET * 3)
             .fluidOutput(RagiumContents.Fluids.TRINITROTOLUENE)
             .offerTo(exporter, RagiumContents.Fluids.TRINITROTOLUENE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .fluidInput(RagiumContents.Fluids.TRINITROTOLUENE)
             .itemInput(ItemTags.SAND)
             .itemOutput(Items.TNT, 12)
@@ -293,13 +293,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // Plastics
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumContents.Misc.POLYMER_RESIN)
             .itemOutput(RagiumContents.Plates.PLASTIC)
             .offerTo(exporter, RagiumContents.Plates.PLASTIC)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumContents.Misc.POLYMER_RESIN, 4)
             .itemInput(RagiumContents.Misc.BASALT_MESH)
             .itemOutput(RagiumContents.Plates.ENGINEERING_PLASTIC)
@@ -318,7 +318,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerOxidize(exporter: RecipeExporter, before: ItemConvertible, after: ItemConvertible) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(before)
             .fluidInput(RagiumContents.Fluids.OXYGEN, FluidConstants.INGOT)
             .itemOutput(after)
@@ -330,7 +330,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun distillation(exporter: RecipeExporter) {
         // crude oil -> polymer resin + fuel
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumContents.Fluids.CRUDE_OIL, FluidConstants.BUCKET * 8)
             .itemOutput(RagiumContents.Misc.POLYMER_RESIN, 4)
             .fluidOutput(RagiumContents.Fluids.FUEL, FluidConstants.BUCKET * 4)
@@ -338,7 +338,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // crude oil -> refined gas
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumContents.Fluids.CRUDE_OIL, FluidConstants.BUCKET * 8)
             .catalyst(RagiumContents.Circuits.BASIC)
             .fluidOutput(RagiumContents.Fluids.REFINED_GAS, FluidConstants.BUCKET * 5)
@@ -347,7 +347,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // crude oil -> naphtha
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumContents.Fluids.CRUDE_OIL, FluidConstants.BUCKET * 8)
             .catalyst(RagiumContents.Circuits.ADVANCED)
             .fluidOutput(RagiumContents.Fluids.NAPHTHA, FluidConstants.BUCKET * 5)
@@ -356,7 +356,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // residual oil -> fuel + aromatic compound
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumContents.Fluids.RESIDUAL_OIL, FluidConstants.BUCKET * 8)
             .catalyst(RagiumContents.Circuits.PRIMITIVE)
             .fluidOutput(RagiumContents.Fluids.FUEL, FluidConstants.BUCKET * 3)
@@ -365,7 +365,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // residual oil -> fuel + asphalt
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.DISTILLATION_TOWER)
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumContents.Fluids.RESIDUAL_OIL, FluidConstants.BUCKET * 8)
             .fluidOutput(RagiumContents.Fluids.FUEL, FluidConstants.BUCKET * 3)
             .fluidOutput(RagiumContents.Fluids.ASPHALT, FluidConstants.BUCKET * 5)
@@ -376,14 +376,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun electrolyzer(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ELECTROLYZER)
+            .create(RagiumMachineKeys.ELECTROLYZER)
             .fluidInput(Fluids.WATER)
             .fluidOutput(RagiumContents.Fluids.HYDROGEN, FluidConstants.BUCKET * 2)
             .fluidOutput(RagiumContents.Fluids.OXYGEN)
             .offerTo(exporter, Fluids.WATER)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ELECTROLYZER)
+            .create(RagiumMachineKeys.ELECTROLYZER)
             .fluidInput(RagiumContents.Fluids.SALT_WATER)
             .itemOutput(RagiumAPI.getInstance().createFilledCube(RagiumContents.Fluids.SODIUM_HYDROXIDE.value))
             .fluidOutput(RagiumContents.Fluids.HYDROGEN)
@@ -395,56 +395,56 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun extractor(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(ItemTags.VILLAGER_PLANTABLE_SEEDS, 4)
             .fluidOutput(RagiumContents.Fluids.SEED_OIL)
             .offerTo(exporter, RagiumContents.Fluids.SEED_OIL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(RagiumItemTags.PROTEIN_FOODS, 4)
             .fluidOutput(RagiumContents.Fluids.TALLOW)
             .offerTo(exporter, RagiumContents.Fluids.TALLOW)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SMOOTH_BASALT)
             .itemOutput(RagiumContents.Misc.BASALT_MESH)
             .offerTo(exporter, RagiumContents.Misc.BASALT_MESH)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(RagiumContents.Foods.CHOCOLATE)
             .fluidOutput(RagiumContents.Fluids.CHOCOLATE)
             .offerTo(exporter, RagiumContents.Fluids.CHOCOLATE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SUGAR, 4)
             .fluidOutput(RagiumContents.Fluids.STARCH_SYRUP)
             .offerTo(exporter, RagiumContents.Fluids.STARCH_SYRUP)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SWEET_BERRIES, 4)
             .fluidOutput(RagiumContents.Fluids.SWEET_BERRIES)
             .offerTo(exporter, RagiumContents.Fluids.SWEET_BERRIES)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .fluidInput(ConventionalFluidTags.MILK)
             .itemOutput(RagiumContents.Foods.BUTTER)
             .offerTo(exporter, RagiumContents.Foods.BUTTER)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SOUL_SAND)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumContents.Fluids.CRUDE_OIL)
             .offerTo(exporter, RagiumContents.Fluids.CRUDE_OIL, "_from_soul_sand")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.EXTRACTOR)
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SOUL_SOIL)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumContents.Fluids.CRUDE_OIL)
@@ -473,7 +473,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: Fluid) {
         /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.FLUID_DRILL)
+            .create(RagiumMachineKeys.FLUID_DRILL)
             .addOutput(fluid)
             .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
             .offerTo(exporter, biomeKey.value)*/
@@ -481,7 +481,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: RagiumContents.Fluids) {
         /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.FLUID_DRILL)
+            .create(RagiumMachineKeys.FLUID_DRILL)
             .addOutput(fluid)
             .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
             .offerTo(exporter, biomeKey.value)*/
@@ -518,28 +518,28 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumContents.Foods.MINCED_MEAT to 1)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(Items.NETHERRACK, 8)
             .itemOutput(Items.GRAVEL, 4)
             .itemOutput(RagiumContents.Dusts.SULFUR)
             .offerTo(exporter, Items.GRAVEL, "_from_nether")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(ConventionalItemTags.UNCOLORED_SANDSTONE_BLOCKS)
             .itemOutput(Items.SAND, 4)
             .itemOutput(RagiumContents.Dusts.NITER)
             .offerTo(exporter, Items.SAND)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(ConventionalItemTags.RED_SANDSTONE_BLOCKS)
             .itemOutput(Items.RED_SAND, 4)
             .itemOutput(RagiumContents.Dusts.BAUXITE)
             .offerTo(exporter, Items.RED_SAND)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(ConventionalItemTags.SUGAR_CANE_CROPS)
             .itemOutput(Items.SUGAR, 2)
             .itemOutput(RagiumContents.Foods.PULP)
@@ -554,7 +554,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         suffix: String = "",
     ) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(input.first, input.second)
             .itemOutput(output.first, output.second)
             .offerTo(exporter, output.first, suffix)
@@ -568,7 +568,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         suffix: String = "",
     ) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(input.first, input.second)
             .itemOutput(output.first, output.second)
             .offerTo(exporter, output.first, suffix)
@@ -578,7 +578,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun metalFormer(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER)
+            .create(RagiumMachineKeys.METAL_FORMER)
             .itemInput(RagiumContents.Ingots.STEEL, 2)
             .itemOutput(RagiumBlocks.SHAFT)
             .catalyst(RagiumBlocks.SHAFT)
@@ -593,7 +593,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerPipe(exporter: RecipeExporter, input: RagiumContents.Plates, output: RagiumContents.Pipes) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER, output.tier)
+            .create(RagiumMachineKeys.METAL_FORMER, output.tier)
             .itemInput(input, 2)
             .itemOutput(output)
             .offerTo(exporter, output)
@@ -603,14 +603,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun mixer(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Dusts.CRUDE_RAGINITE)
             .fluidInput(Fluids.WATER, FluidConstants.BOTTLE)
             .itemOutput(RagiumContents.Dusts.RAGINITE)
             .offerTo(exporter, RagiumContents.Dusts.RAGINITE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumItemTags.ALKALI)
             .fluidInput(RagiumFluidTags.ORGANIC_OILS)
             .itemOutput(RagiumContents.Misc.SOAP_INGOT)
@@ -618,21 +618,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Misc.SOAP_INGOT)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Foods.FLOUR)
             .fluidInput(Fluids.WATER, FluidConstants.BOTTLE)
             .itemOutput(RagiumContents.Foods.DOUGH)
             .offerTo(exporter, RagiumContents.Foods.DOUGH)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Foods.PULP)
             .fluidInput(Fluids.WATER)
             .itemOutput(Items.PAPER)
             .offerTo(exporter, Items.PAPER)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Foods.PULP)
             .itemInput(RagiumItemTags.ALKALI)
             .fluidInput(Fluids.WATER)
@@ -640,14 +640,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, Items.PAPER, "_from_alkali")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Foods.PULP)
             .fluidInput(RagiumContents.Fluids.SULFURIC_ACID)
             .itemOutput(Items.PAPER, 4)
             .offerTo(exporter, Items.PAPER, "_from_acid")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Foods.BUTTER)
             .itemInput(Items.SUGAR)
             .fluidInput(ConventionalFluidTags.MILK)
@@ -655,7 +655,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Foods.CARAMEL)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(Items.COCOA_BEANS)
             .itemInput(Items.SUGAR)
             .fluidInput(ConventionalFluidTags.MILK)
@@ -663,14 +663,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Foods.CHOCOLATE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumContents.Foods.FLOUR)
             .fluidInput(ConventionalFluidTags.MILK)
             .fluidOutput(RagiumContents.Fluids.BATTER)
             .offerTo(exporter, RagiumContents.Fluids.BATTER)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .fluidInput(RagiumContents.Fluids.NITRIC_ACID)
             .fluidInput(RagiumContents.Fluids.SULFURIC_ACID)
             .fluidOutput(RagiumContents.Fluids.MIXTURE_ACID, FluidConstants.BUCKET * 2)
@@ -687,12 +687,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerBreaching(exporter, ItemTags.TERRACOTTA, Items.WHITE_TERRACOTTA)
         registerBreaching(exporter, ItemTags.WOOL, Items.WHITE_WOOL)
         registerBreaching(exporter, ItemTags.WOOL_CARPETS, Items.WHITE_CARPET)
-        
-        DyeColor.entries.forEach { color: DyeColor -> 
+
+        DyeColor.entries.forEach { color: DyeColor ->
             val powder: Block = Registries.BLOCK.get(Identifier.of("${color.asString()}_concrete_powder"))
             val concrete: Block = Registries.BLOCK.get(Identifier.of("${color.asString()}_concrete"))
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineTypes.Processor.MIXER)
+                .create(RagiumMachineKeys.MIXER)
                 .itemInput(powder)
                 .fluidInput(Fluids.WATER, FluidConstants.INGOT)
                 .itemOutput(concrete)
@@ -702,7 +702,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerBreaching(exporter: RecipeExporter, input: TagKey<Item>, output: Item) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.MIXER)
+            .create(RagiumMachineKeys.MIXER)
             .itemInput(input)
             .itemInput(RagiumContents.Misc.SOAP_INGOT)
             .fluidInput(Fluids.WATER)
@@ -710,7 +710,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, output, "_breaching")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(input)
             .fluidInput(RagiumContents.Fluids.CHLORINE)
             .itemOutput(output)
@@ -736,7 +736,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerRock(exporter, Items.END_STONE)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ROCK_GENERATOR)
+            .create(RagiumMachineKeys.ROCK_GENERATOR)
             .fluidInput(Fluids.LAVA)
             .itemOutput(Items.OBSIDIAN)
             .offerTo(exporter, Items.OBSIDIAN)
@@ -744,7 +744,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerRock(exporter: RecipeExporter, rock: ItemConvertible) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.ROCK_GENERATOR)
+            .create(RagiumMachineKeys.ROCK_GENERATOR)
             .itemOutput(rock, 8)
             .offerTo(exporter, rock)
     }
@@ -764,7 +764,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerPlank(exporter, ItemTags.WARPED_STEMS, Items.WARPED_PLANKS)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.SAW_MILL)
+            .create(RagiumMachineKeys.SAW_MILL)
             .itemInput(ItemTags.PLANKS)
             .itemOutput(Items.STICK, 4)
             .offerTo(exporter, Items.STICK)
@@ -772,7 +772,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerPlank(exporter: RecipeExporter, log: TagKey<Item>, plank: ItemConvertible) {
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.SAW_MILL)
+            .create(RagiumMachineKeys.SAW_MILL)
             .itemInput(log)
             .itemOutput(plank, 6)
             .itemOutput(RagiumContents.Foods.PULP)
@@ -803,7 +803,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // registerMobDrop(exporter, RagiumContents.Gems.OBLIVION_CRYSTAL, RagiumEntityTypes.OBLIVION_CUBE)
 
         /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.MOB_EXTRACTOR)
+            .create(RagiumMachineKeys.MOB_EXTRACTOR)
             .addOutput(Items.RED_MUSHROOM)
             .addOutput(Items.BROWN_MUSHROOM)
             .setCustomData(HTRecipeComponentTypes.ENTITY_TYPE, EntityType.BOGGED)
@@ -812,7 +812,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     private fun registerMobDrop(exporter: RecipeExporter, output: ItemConvertible, entityType: EntityType<*>) {
         /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.MOB_EXTRACTOR)
+            .create(RagiumMachineKeys.MOB_EXTRACTOR)
             .addOutput(output)
             .setCustomData(HTRecipeComponentTypes.ENTITY_TYPE, entityType)
             .offerTo(exporter, Registries.ENTITY_TYPE.getId(entityType))*/

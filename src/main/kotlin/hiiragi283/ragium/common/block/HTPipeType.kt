@@ -66,12 +66,12 @@ enum class HTPipeType(val isItem: Boolean, val isFluid: Boolean) : StringIdentif
         HTMachineTier.BASIC -> 16
         HTMachineTier.ADVANCED -> 32
     }
-    
+
     fun getFluidCount(tier: HTMachineTier): Long = when (tier) {
         HTMachineTier.PRIMITIVE -> FluidConstants.INGOT
         HTMachineTier.BASIC -> FluidConstants.BOTTLE
         HTMachineTier.ADVANCED -> FluidConstants.BUCKET
     }
-    
+
     override fun asString(): String = name.lowercase()
 }

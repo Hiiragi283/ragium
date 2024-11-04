@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.tags.HTTagPrefixes
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.common.init.*
@@ -23,7 +22,6 @@ object RagiumCommon : ModInitializer {
         RagiumRecipeTypes
 
         InternalRagiumAPI.registerMachines()
-        InternalRagiumAPI.registerProperties()
         RagiumContentRegister.registerContents()
 
         HTTradeOfferRegistry.init()
@@ -36,7 +34,7 @@ object RagiumCommon : ModInitializer {
 
         RagiumContentRegister.initRegistry()
 
-        RagiumAPI.getPlugins().forEach(RagiumPlugin::afterRagiumInit)
+        RagiumAPI.getPlugins().forEach { it.afterRagiumInit(RagiumAPI.getInstance()) }
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

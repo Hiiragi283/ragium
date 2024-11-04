@@ -88,7 +88,7 @@ object RagiumItemGroup {
 
         register(MACHINE_KEY) {
             displayName(Text.translatable("itemGroup.ragium.machine"))
-            icon { RagiumMachineTypes.Processor.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
+            icon { RagiumMachineKeys.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     add(RagiumBlocks.CREATIVE_SOURCE)
@@ -107,26 +107,11 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)
                 }.forEach(entries::add)
-                // generators
                 RagiumAPI
                     .getInstance()
-                    .machineTypeRegistry
-                    .generators
-                    .flatMap { HTMachineTier.entries.map(it::createItemStack) }
-                    .forEach(entries::add)
-                // processors
-                RagiumAPI
-                    .getInstance()
-                    .machineTypeRegistry
-                    .processors
-                    .flatMap { HTMachineTier.entries.map(it::createItemStack) }
-                    .forEach(entries::add)
-                // consumers
-                RagiumAPI
-                    .getInstance()
-                    .machineTypeRegistry
-                    .consumers
-                    .flatMap { HTMachineTier.entries.map(it::createItemStack) }
+                    .machineRegistry
+                    .blocks
+                    .values
                     .forEach(entries::add)
             }
         }

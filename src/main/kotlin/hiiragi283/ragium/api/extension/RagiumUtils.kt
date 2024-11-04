@@ -2,12 +2,13 @@ package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
@@ -143,12 +144,14 @@ fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.cre
 
 fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T? = get(getter, null)
 
-fun ScreenHandlerContext.getMachineEntity(): HTMachineEntity<*>? = getOrNull(World::getMachineEntity)
+fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
 
-fun ScreenHandlerContext.machineInventory(size: Int): Inventory = getMachineEntity() as? Inventory ?: SimpleInventory(size)
+fun ScreenHandlerContext.getInventory(size: Int): Inventory =
+    getBlockEntity() as? Inventory ?: SimpleInventory(size)
 
-fun ScreenHandlerContext.machineInventory(typeSize: HTMachineType.Size): Inventory =
-    getMachineEntity() as? Inventory ?: SimpleInventory(typeSize.invSize)
+fun ScreenHandlerContext.getInventory(typeSize: HTMachineType.Size): Inventory = getInventory(typeSize.invSize)
+
+fun ScreenHandlerContext.getMachine(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase
 
 //    Table    //
 

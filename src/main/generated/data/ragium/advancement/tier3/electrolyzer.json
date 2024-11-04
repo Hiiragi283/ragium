@@ -5,11 +5,7 @@
       "conditions": {
         "items": [
           {
-            "components": {
-              "ragium:machine_tier": "basic",
-              "ragium:machine_type": "ragium:electrolyzer"
-            },
-            "items": "ragium:processor"
+            "items": "ragium:basic_electrolyzer"
           }
         ]
       },
@@ -21,12 +17,8 @@
       "translate": "advancement.ragium.tier3.electrolyzer.description"
     },
     "icon": {
-      "components": {
-        "ragium:machine_tier": "basic",
-        "ragium:machine_type": "ragium:electrolyzer"
-      },
       "count": 1,
-      "id": "ragium:processor"
+      "id": "ragium:basic_electrolyzer"
     },
     "title": {
       "translate": "advancement.ragium.tier3.electrolyzer"

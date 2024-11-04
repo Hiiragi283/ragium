@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.HTMachineDefinition
@@ -8,9 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlocks
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -27,7 +24,6 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
-import net.minecraft.util.Identifier
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -63,11 +59,12 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        val machineType: HTMachineType = RagiumAPI
+        /*val machineType: HTMachineType = RagiumAPI
             .getInstance()
             .machineTypeRegistry
             .get(Identifier.of(nbt.getString("machine_type")))
-            ?: return
+            ?: return*/
+        val machineType: HTMachineType = null ?: return
         val tier: HTMachineTier = HTMachineTier.entries
             .firstOrNull { it.asString() == nbt.getString("tier") }
             ?: HTMachineTier.PRIMITIVE
@@ -92,7 +89,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private fun initMachineEntity(machineType: HTMachineType, tier: HTMachineTier) {
-        this.machineEntity = machineType[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(machineType, tier)
+        // this.machineEntity = machineType.asProperties()[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(machineType, tier)
         this.machineEntity?.setParentBE(this)
     }
 
@@ -137,7 +134,7 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         asScreenFactory()?.createMenu(syncId, playerInventory, player)
 
-    override fun getDisplayName(): Text = asScreenFactory()?.displayName ?: RagiumBlocks.META_PROCESSOR.name
+    override fun getDisplayName(): Text = asScreenFactory()?.displayName ?: Text.literal("Deprecated :)")
 
     override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = checkNotNull(machineEntity?.packet)
 

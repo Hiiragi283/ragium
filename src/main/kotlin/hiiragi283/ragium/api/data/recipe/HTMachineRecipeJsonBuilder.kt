@@ -3,10 +3,7 @@ package hiiragi283.ragium.api.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.RagiumMaterials
-import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeResult
@@ -26,13 +23,13 @@ import net.minecraft.util.Identifier
 import java.util.*
 
 class HTMachineRecipeJsonBuilder private constructor(
-    private val type: HTMachineType.Processor,
+    private val key: HTMachineKey,
     private val tier: HTMachineTier = HTMachineTier.PRIMITIVE,
 ) {
     companion object {
         @JvmStatic
-        fun create(type: HTMachineConvertible, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
-            HTMachineRecipeJsonBuilder(type.asProcessor(), minTier)
+        fun create(machine: HTMachine, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
+            HTMachineRecipeJsonBuilder(machine.key, minTier)
 
         @JvmStatic
         fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
@@ -163,10 +160,10 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
-        val prefix = "${type.key.id.path}/"
+        val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         val recipe: HTMachineRecipe = HTMachineRecipe.createRecipe(
-            HTMachineDefinition(type, tier),
+            HTMachineDefinition(key, tier),
             itemInputs,
             fluidInputs,
             Optional.ofNullable(catalyst),

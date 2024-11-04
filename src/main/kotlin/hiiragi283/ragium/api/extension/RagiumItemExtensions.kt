@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentChanges
@@ -18,7 +17,7 @@ import net.minecraft.world.WorldView
 
 fun itemSettings(): Item.Settings = Item.Settings()
 
-fun Item.Settings.machineType(type: HTMachineConvertible): Item.Settings = component(HTMachineType.COMPONENT_TYPE, type.asMachine())
+fun Item.Settings.machineKey(key: HTMachineKey): Item.Settings = component(HTMachineKey.COMPONENT_TYPE, key)
 
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachineTier.COMPONENT_TYPE, tier)
 

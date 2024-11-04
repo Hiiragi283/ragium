@@ -1,12 +1,10 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachinePropertyRegistry
+import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
-import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
@@ -61,16 +59,11 @@ interface RagiumAPI {
     }
 
     val config: Config
-    val machineTypeRegistry: HTMachineTypeRegistry
+    val machineRegistry: HTMachineRegistry
 
-    fun createBuiltMachineCriterion(
-        type: HTMachineConvertible,
-        minTier: HTMachineTier,
-    ): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
+    fun createBuiltMachineCriterion(type: HTMachine, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
-
-    fun getMachineRegistry(envType: EnvType): HTMachinePropertyRegistry
 
     //    Config    //
 

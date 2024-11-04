@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.tags.HTTagPrefixes
-import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
@@ -79,7 +79,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val plate: TagKey<Item> = HTTagPrefixes.PLATES.createTag(material)
         // Metal Former Recipe
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.METAL_FORMER)
+            .create(RagiumMachineKeys.METAL_FORMER)
             .itemInput(ingot)
             .itemOutput(plate)
             .offerTo(tagValidator(exporter, ingot, plate), plate)
@@ -90,7 +90,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val ingot: TagKey<Item> = HTTagPrefixes.INGOTS.createTag(material)
         val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(ingot)
             .itemOutput(dust)
             .offerTo(tagValidator(exporter, ingot, dust), dust, "_from_ingot")
@@ -101,7 +101,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val gem: TagKey<Item> = HTTagPrefixes.GEMS.createTag(material)
         val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(gem)
             .itemOutput(dust)
             .offerTo(tagValidator(exporter, gem, dust), dust, "_from_gem")
@@ -112,7 +112,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val plate: TagKey<Item> = HTTagPrefixes.PLATES.createTag(material)
         val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(plate)
             .itemOutput(dust)
             .offerTo(tagValidator(exporter, plate, dust), dust, "_from_plate")
@@ -124,7 +124,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val rawMaterial: TagKey<Item> = HTTagPrefixes.RAW_MATERIALS.createTag(material)
         // Grinder Recipe
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(ore)
             .itemOutput(rawMaterial, 2)
             .offerTo(tagValidator(exporter, ore, rawMaterial), rawMaterial)
@@ -136,7 +136,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val gem: TagKey<Item> = HTTagPrefixes.GEMS.createTag(material)
         // Grinder Recipe
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(ore)
             .itemOutput(gem, 2)
             .offerTo(tagValidator(exporter, ore, gem), gem)
@@ -148,7 +148,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
         val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         // Grinder Recipe
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineTypes.Processor.GRINDER)
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(rawMaterial)
             .itemOutput(dust, 2)
             .offerTo(tagValidator(exporter, rawMaterial, dust), dust, "_from_raw")

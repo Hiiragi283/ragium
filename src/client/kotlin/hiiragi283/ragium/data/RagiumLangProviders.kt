@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -28,8 +28,10 @@ object RagiumLangProviders {
     }
 
     @JvmName("addBlock")
-    fun TranslationBuilder.add(entry: HTRegistryContent<Block>, value: String) {
-        add(entry.value, value)
+    fun TranslationBuilder.add(entry: HTRegistryContent<Block>, value: String, desc: String? = null) {
+        val block: Block = entry.value
+        add(block, value)
+        desc?.let { add("${block.translationKey}.description", it) }
     }
 
     @JvmName("addItem")
@@ -46,7 +48,7 @@ object RagiumLangProviders {
         add(tier.prefixKey, prefix)
     }
 
-    fun TranslationBuilder.add(type: HTMachineConvertible, value: String, desc: String? = null) {
+    fun TranslationBuilder.add(type: HTMachine, value: String, desc: String? = null) {
         add(type.key.translationKey, value)
         desc?.let { add(type.key.descriptionKey, it) }
     }
@@ -104,9 +106,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_FORGE, "Ragi-Anvil")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "Ragi-Grinder")
             builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Basin")
-            builder.add(RagiumBlocks.META_CONSUMER, "Consumer")
-            builder.add(RagiumBlocks.META_GENERATOR, "Generator")
-            builder.add(RagiumBlocks.META_PROCESSOR, "Processor")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
             builder.add(RagiumBlocks.TRADER_STATION, "Trader Station")
@@ -189,59 +188,59 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine SizeType
             builder.add(
-                RagiumMachineTypes.Consumer.DRAIN,
+                RagiumMachineKeys.DRAIN,
                 "Drain",
                 "Drains fluids from each side",
             )
 
             builder.add(
-                RagiumMachineTypes.Generator.COMBUSTION,
+                RagiumMachineKeys.COMBUSTION_GENERATOR,
                 "Combustion Generator",
                 "Generate energy from liquid fuels",
             )
             builder.add(
-                RagiumMachineTypes.Generator.SOLAR,
+                RagiumMachineKeys.SOLAR_PANEL,
                 "Solar Generator",
                 "Generate energy in daytime",
             )
             builder.add(
-                RagiumMachineTypes.Generator.STEAM,
+                RagiumMachineKeys.STEAM_GENERATOR,
                 "Steam Generator",
                 "Generate energy from water and below heat source",
             )
             builder.add(
-                RagiumMachineTypes.Generator.THERMAL,
+                RagiumMachineKeys.THERMAL_GENERATOR,
                 "Thermal Generator",
                 "Generate energy from hot fluids",
             )
-            builder.add(RagiumMachineTypes.Generator.WATER, "Water Generator")
+            builder.add(RagiumMachineKeys.WATER_GENERATOR, "Water Generator")
 
             builder.add(
-                RagiumMachineTypes.Processor.ALLOY_FURNACE,
+                RagiumMachineKeys.ALLOY_FURNACE,
                 "Alloy Furnace",
                 "Smelt two ingredients into one",
             )
-            builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "Assembler")
-            builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "Chemical Reactor")
-            builder.add(RagiumMachineTypes.Processor.ELECTROLYZER, "Electrolyzer")
-            builder.add(RagiumMachineTypes.Processor.EXTRACTOR, "Extractor")
-            builder.add(RagiumMachineTypes.Processor.GRINDER, "Grinder")
-            builder.add(RagiumMachineTypes.Processor.METAL_FORMER, "Metal Former")
-            builder.add(RagiumMachineTypes.Processor.MIXER, "Mixer")
-            builder.add(RagiumMachineTypes.Processor.ROCK_GENERATOR, "Rock Generator")
+            builder.add(RagiumMachineKeys.ASSEMBLER, "Assembler")
+            builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor")
+            builder.add(RagiumMachineKeys.ELECTROLYZER, "Electrolyzer")
+            builder.add(RagiumMachineKeys.EXTRACTOR, "Extractor")
+            builder.add(RagiumMachineKeys.GRINDER, "Grinder")
+            builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former")
+            builder.add(RagiumMachineKeys.MIXER, "Mixer")
+            builder.add(RagiumMachineKeys.ROCK_GENERATOR, "Rock Generator")
 
             builder.add(
-                RagiumMachineTypes.BLAST_FURNACE,
+                RagiumMachineKeys.BLAST_FURNACE,
                 "Large Blast Furnace",
                 "Smelt multiple ingredients into one",
             )
             builder.add(
-                RagiumMachineTypes.DISTILLATION_TOWER,
+                RagiumMachineKeys.DISTILLATION_TOWER,
                 "Distillation Tower",
                 "Process Crude Oil",
             )
             builder.add(
-                RagiumMachineTypes.SAW_MILL,
+                RagiumMachineKeys.SAW_MILL,
                 "Saw Mill",
                 "Process Logs more efficiently",
             )
@@ -282,9 +281,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_FORGE, "らぎ金床")
             builder.add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
             builder.add(RagiumBlocks.MANUAL_MIXER, "らぎ釜")
-            builder.add(RagiumBlocks.META_CONSUMER, "消費機械")
-            builder.add(RagiumBlocks.META_GENERATOR, "発電機")
-            builder.add(RagiumBlocks.META_PROCESSOR, "加工機械")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
             builder.add(RagiumBlocks.TRADER_STATION, "貿易ステーション")
@@ -367,27 +363,27 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine Type
-            builder.add(RagiumMachineTypes.Consumer.DRAIN, "排水溝", "各面から液体を吸い取る")
+            builder.add(RagiumMachineKeys.DRAIN, "排水溝", "各面から液体を吸い取る")
 
-            builder.add(RagiumMachineTypes.Generator.COMBUSTION, "燃焼発電機", "液体燃料から発電する")
-            builder.add(RagiumMachineTypes.Generator.SOLAR, "太陽光発電機", "日中に発電する")
-            builder.add(RagiumMachineTypes.Generator.STEAM, "蒸気発電機", "水と下部の熱源から発電する")
-            builder.add(RagiumMachineTypes.Generator.THERMAL, "地熱発電機", "高温の液体から発電する")
-            builder.add(RagiumMachineTypes.Generator.WATER, "水力発電機")
+            builder.add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
+            builder.add(RagiumMachineKeys.SOLAR_PANEL, "太陽光発電機", "日中に発電する")
+            builder.add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と下部の熱源から発電する")
+            builder.add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
+            builder.add(RagiumMachineKeys.WATER_GENERATOR, "水力発電機")
 
-            builder.add(RagiumMachineTypes.Processor.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
-            builder.add(RagiumMachineTypes.Processor.ASSEMBLER, "組立機")
-            builder.add(RagiumMachineTypes.Processor.CHEMICAL_REACTOR, "化学反応槽")
-            builder.add(RagiumMachineTypes.Processor.ELECTROLYZER, "電解槽")
-            builder.add(RagiumMachineTypes.Processor.EXTRACTOR, "抽出器")
-            builder.add(RagiumMachineTypes.Processor.GRINDER, "粉砕機")
-            builder.add(RagiumMachineTypes.Processor.METAL_FORMER, "金属加工機")
-            builder.add(RagiumMachineTypes.Processor.MIXER, "ミキサー")
-            builder.add(RagiumMachineTypes.Processor.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
+            builder.add(RagiumMachineKeys.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
+            builder.add(RagiumMachineKeys.ASSEMBLER, "組立機")
+            builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽")
+            builder.add(RagiumMachineKeys.ELECTROLYZER, "電解槽")
+            builder.add(RagiumMachineKeys.EXTRACTOR, "抽出器")
+            builder.add(RagiumMachineKeys.GRINDER, "粉砕機")
+            builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機")
+            builder.add(RagiumMachineKeys.MIXER, "ミキサー")
+            builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
 
-            builder.add(RagiumMachineTypes.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
-            builder.add(RagiumMachineTypes.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
-            builder.add(RagiumMachineTypes.SAW_MILL, "製材機", "より効率的に原木を加工する")
+            builder.add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
+            builder.add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
+            builder.add(RagiumMachineKeys.SAW_MILL, "製材機", "より効率的に原木を加工する")
 
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")

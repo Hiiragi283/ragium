@@ -6,29 +6,29 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 
-data class HTMachineDefinition(val type: HTMachineType, val tier: HTMachineTier) {
+data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
     companion object {
         @JvmField
         val CODEC: Codec<HTMachineDefinition> = RecordCodecBuilder.create { instance ->
             instance
                 .group(
-                    HTMachineTypeRegistry.CODEC.fieldOf("type").forGetter(HTMachineDefinition::type),
+                    HTMachineKey.CODEC.fieldOf("type").forGetter(HTMachineDefinition::key),
                     HTMachineTier.CODEC.fieldOf("tier").forGetter(HTMachineDefinition::tier),
                 ).apply(instance, ::HTMachineDefinition)
         }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineDefinition> = PacketCodec.tuple(
-            HTMachineTypeRegistry.PACKET_CODEC,
-            HTMachineDefinition::type,
+            HTMachineKey.PACKET_CODEC,
+            HTMachineDefinition::key,
             HTMachineTier.PACKET_CODEC,
             HTMachineDefinition::tier,
             ::HTMachineDefinition,
         )
     }
 
-    constructor(type: HTMachineConvertible, tier: HTMachineTier) : this(type.asMachine(), tier)
+    constructor(type: HTMachine, tier: HTMachineTier) : this(type.key, tier)
 
     val iconStack: ItemStack
-        get() = type.createItemStack(tier)
+        get() = key.createItemStack(tier)
 }
