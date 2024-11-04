@@ -12,12 +12,12 @@
   ],
   "item_inputs": [
     {
-      "items": "minecraft:white_concrete_powder"
+      "items": "minecraft:blue_concrete_powder"
     }
   ],
   "item_outputs": [
     {
-      "item": "minecraft:white_concrete"
+      "item": "minecraft:blue_concrete"
     }
   ]
 }

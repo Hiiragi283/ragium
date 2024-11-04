@@ -3,7 +3,9 @@ package hiiragi283.ragium.common.block
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumBlockTags
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.minecraft.block.BlockState
@@ -59,5 +61,17 @@ enum class HTPipeType(val isItem: Boolean, val isFluid: Boolean) : StringIdentif
         }
     }
 
+    fun getItemCount(tier: HTMachineTier): Long = when (tier) {
+        HTMachineTier.PRIMITIVE -> 8
+        HTMachineTier.BASIC -> 16
+        HTMachineTier.ADVANCED -> 32
+    }
+    
+    fun getFluidCount(tier: HTMachineTier): Long = when (tier) {
+        HTMachineTier.PRIMITIVE -> FluidConstants.INGOT
+        HTMachineTier.BASIC -> FluidConstants.BOTTLE
+        HTMachineTier.ADVANCED -> FluidConstants.BUCKET
+    }
+    
     override fun asString(): String = name.lowercase()
 }

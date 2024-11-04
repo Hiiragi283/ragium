@@ -50,7 +50,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
                 itemStorage,
                 getFrontStorage(world, pos, state, ItemStorage.SIDED),
                 { true },
-                8,
+                type.getItemCount(tier),
                 null,
             )
         }
@@ -59,7 +59,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
                 fluidStorage,
                 getFrontStorage(world, pos, state, FluidStorage.SIDED),
                 { true },
-                FluidConstants.BUCKET,
+                type.getFluidCount(tier),
                 null,
             )
         }

@@ -6,9 +6,13 @@ import hiiragi283.ragium.common.block.entity.HTExporterBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.item.ItemStack
+import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
+import net.minecraft.text.Text
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
@@ -17,6 +21,16 @@ import net.minecraft.util.math.Direction
 class HTExporterBlock(private val tier: HTMachineTier) : HTBlockWithEntity(blockSettings().solid().nonOpaque()) {
     init {
         defaultState = stateManager.defaultState.with(Properties.FACING, Direction.NORTH)
+    }
+
+    override fun appendTooltip(
+        stack: ItemStack,
+        context: Item.TooltipContext,
+        tooltip: MutableList<Text>,
+        options: TooltipType
+    ) {
+        tooltip.add(Text.literal("- Item Speed; ${HTPipeType.ALL.getItemCount(tier)} / s"))
+        tooltip.add(Text.literal("- Fluid Speed; ${HTPipeType.ALL.getFluidCount(tier)} Units / s"))
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

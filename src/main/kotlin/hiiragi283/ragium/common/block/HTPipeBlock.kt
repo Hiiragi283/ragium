@@ -10,9 +10,13 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ConnectingBlock
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.item.ItemStack
+import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
+import net.minecraft.text.Text
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -29,6 +33,20 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
             .with(Properties.WEST, false)
             .with(Properties.EAST, false)
             .with(Properties.FACING, Direction.DOWN)
+    }
+
+    override fun appendTooltip(
+        stack: ItemStack,
+        context: Item.TooltipContext,
+        tooltip: MutableList<Text>,
+        options: TooltipType
+    ) {
+        if (type.isItem) {
+            tooltip.add(Text.literal("- Item Speed; ${HTPipeType.ALL.getItemCount(tier)} / s"))
+        }
+        if (type.isFluid) {
+            tooltip.add(Text.literal("- Fluid Speed; ${HTPipeType.ALL.getFluidCount(tier)} Units / s"))
+        }
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
@@ -22,10 +23,13 @@ import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
+import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.DyeColor
+import net.minecraft.util.Identifier
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.BiomeKeys
 import java.util.concurrent.CompletableFuture
@@ -683,6 +687,17 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerBreaching(exporter, ItemTags.TERRACOTTA, Items.WHITE_TERRACOTTA)
         registerBreaching(exporter, ItemTags.WOOL, Items.WHITE_WOOL)
         registerBreaching(exporter, ItemTags.WOOL_CARPETS, Items.WHITE_CARPET)
+        
+        DyeColor.entries.forEach { color: DyeColor -> 
+            val powder: Block = Registries.BLOCK.get(Identifier.of("${color.asString()}_concrete_powder"))
+            val concrete: Block = Registries.BLOCK.get(Identifier.of("${color.asString()}_concrete"))
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineTypes.Processor.MIXER)
+                .itemInput(powder)
+                .fluidInput(Fluids.WATER, FluidConstants.INGOT)
+                .itemOutput(concrete)
+                .offerTo(exporter, concrete)
+        }
     }
 
     private fun registerBreaching(exporter: RecipeExporter, input: TagKey<Item>, output: Item) {
@@ -692,14 +707,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumContents.Misc.SOAP_INGOT)
             .fluidInput(Fluids.WATER)
             .itemOutput(output)
-            .offerTo(exporter, output)
+            .offerTo(exporter, output, "_breaching")
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineTypes.Processor.CHEMICAL_REACTOR)
             .itemInput(input)
             .fluidInput(RagiumContents.Fluids.CHLORINE)
             .itemOutput(output)
-            .offerTo(exporter, output)
+            .offerTo(exporter, output, "_breaching")
     }
 
     //    Rock Generator    //
