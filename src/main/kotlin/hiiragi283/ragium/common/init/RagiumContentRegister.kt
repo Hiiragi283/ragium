@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
-import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -152,10 +151,6 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.TRADER_STATION)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
-
-        registerBlockItem(RagiumBlocks.META_CONSUMER, itemSettings(), ::HTMetaMachineBlockItem)
-        registerBlockItem(RagiumBlocks.META_GENERATOR, itemSettings(), ::HTMetaMachineBlockItem)
-        registerBlockItem(RagiumBlocks.META_PROCESSOR, itemSettings(), ::HTMetaMachineBlockItem)
     }
 
     @JvmStatic

@@ -96,26 +96,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         )
 
         registerSimple(RagiumBlocks.SPONGE_CAKE)
-        listOf(
-            RagiumBlocks.META_CONSUMER,
-            RagiumBlocks.META_GENERATOR,
-            RagiumBlocks.META_PROCESSOR,
-        ).forEach { metaMachine: Block ->
-            register(metaMachine) { block: Block ->
-                accept(
-                    VariantsBlockStateSupplier
-                        .create(
-                            block,
-                            stateVariantOf(RagiumAPI.id("block/dynamic_machine")),
-                        ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-                )
-                RagiumModels.model("block/dynamic_machine").upload(
-                    ModelIds.getItemModelId(block.asItem()),
-                    TextureMap(),
-                    generator.modelCollector,
-                )
-            }
-        }
+
         accept(
             VariantsBlockStateSupplier
                 .create(RagiumBlocks.SWEET_BERRIES_CAKE)

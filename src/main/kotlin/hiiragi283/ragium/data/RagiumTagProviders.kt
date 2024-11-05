@@ -59,9 +59,6 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_CONSUMER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_GENERATOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_PROCESSOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
 
