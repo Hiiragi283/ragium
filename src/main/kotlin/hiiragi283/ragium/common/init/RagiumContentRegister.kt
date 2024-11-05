@@ -69,8 +69,6 @@ object RagiumContentRegister : HTContentRegister {
     fun registerContents() {
         // DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
 
-        initProperties()
-
         initBlockItems()
 
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
@@ -90,8 +88,6 @@ object RagiumContentRegister : HTContentRegister {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-            addAll(RagiumContents.Armors.entries)
-            addAll(RagiumContents.Tools.entries)
             addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
@@ -121,18 +117,6 @@ object RagiumContentRegister : HTContentRegister {
 
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
-        }
-    }
-
-    @JvmStatic
-    private fun initProperties() {
-        // armors
-        RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
-            getProperties(armor)[itemKey] = { armor.armorType.createItem(armor.material, armor.multiplier) }
-        }
-        // tools
-        RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
-            getProperties(tool)[itemKey] = { tool.toolType.createToolItem(tool.material, it) }
         }
     }
 
@@ -224,7 +208,7 @@ object RagiumContentRegister : HTContentRegister {
         }, RagiumBlocks.NETWORK_INTERFACE)
 
         // Accessory
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_GOGGLE) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
             }
@@ -233,7 +217,7 @@ object RagiumContentRegister : HTContentRegister {
             }
             slotType = HTAccessorySlotTypes.FACE
         }
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_JACKET) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_JACKET) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.HASTE, -1, 1))
             }
@@ -241,7 +225,7 @@ object RagiumContentRegister : HTContentRegister {
                 it.removeStatusEffect(StatusEffects.HASTE)
             }
         }
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_LEGGINGS) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_LEGGINGS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1))
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.SPEED, -1, 1))
@@ -251,7 +235,7 @@ object RagiumContentRegister : HTContentRegister {
                 it.removeStatusEffect(StatusEffects.SPEED)
             }
         }
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_BOOTS) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_BOOTS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.SLOW_FALLING, -1, 0))
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.JUMP_BOOST, -1, 1))

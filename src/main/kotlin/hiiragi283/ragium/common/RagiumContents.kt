@@ -1,24 +1,21 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.*
-import hiiragi283.ragium.api.data.HTLangType
+import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTContentRegister
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.material.HTTagPrefixes
 import hiiragi283.ragium.common.block.HTPipeType
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
-import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ToolMaterial
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.tag.TagKey
 
 object RagiumContents : HTContentRegister {
     //    Ores    //
@@ -180,54 +177,6 @@ object RagiumContents : HTContentRegister {
         override val enPattern: String = "Raw %s"
         override val jaPattern: String = "%sの原石"
         override val tagPrefix: HTTagPrefix = HTTagPrefixes.RAW_MATERIALS
-    }
-
-    //    Armors    //
-
-    enum class Armors(val material: RegistryEntry<ArmorMaterial>, val armorType: HTArmorType, val multiplier: Int) :
-        HTContent<Item> {
-        STEEL_HELMET(RagiumMaterials.Armor.STEEL, HTArmorType.HELMET, 25),
-        STEEL_CHESTPLATE(RagiumMaterials.Armor.STEEL, HTArmorType.CHESTPLATE, 25),
-        STEEL_LEGGINGS(RagiumMaterials.Armor.STEEL, HTArmorType.LEGGINGS, 25),
-        STEEL_BOOTS(RagiumMaterials.Armor.STEEL, HTArmorType.BOOTS, 25),
-        STELLA_GOGGLE(RagiumMaterials.Armor.STELLA, HTArmorType.HELMET, 33),
-        STELLA_JACKET(RagiumMaterials.Armor.STELLA, HTArmorType.CHESTPLATE, 33),
-        STELLA_LEGGINGS(RagiumMaterials.Armor.STELLA, HTArmorType.LEGGINGS, 33),
-        STELLA_BOOTS(RagiumMaterials.Armor.STELLA, HTArmorType.BOOTS, 33),
-        RAGIUM_HELMET(RagiumMaterials.Armor.RAGIUM, HTArmorType.HELMET, 37),
-        RAGIUM_CHESTPLATE(RagiumMaterials.Armor.RAGIUM, HTArmorType.CHESTPLATE, 37),
-        RAGIUM_LEGGINGS(RagiumMaterials.Armor.RAGIUM, HTArmorType.LEGGINGS, 37),
-        RAGIUM_BOOTS(RagiumMaterials.Armor.RAGIUM, HTArmorType.BOOTS, 37),
-        ;
-
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
-
-        override fun getTranslation(type: HTLangType): String = throw UnsupportedOperationException()
-
-        override val commonTagKey: TagKey<Item> = armorType.armorTag
-    }
-
-    //    Tools    //
-
-    enum class Tools(val material: ToolMaterial, val toolType: HTToolType) :
-        HTContent<Item>,
-        HTTranslationFormatter by toolType {
-        STEEL_AXE(RagiumMaterials.Tool.STEEL, HTToolType.AXE),
-        STEEL_HOE(RagiumMaterials.Tool.STEEL, HTToolType.HOE),
-        STEEL_PICKAXE(RagiumMaterials.Tool.STEEL, HTToolType.PICKAXE),
-        STEEL_SHOVEL(RagiumMaterials.Tool.STEEL, HTToolType.SHOVEL),
-        STEEL_SWORD(RagiumMaterials.Tool.STEEL, HTToolType.SWORD),
-        ;
-
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
-
-        override fun getTranslation(type: HTLangType): String = throw UnsupportedOperationException()
-
-        override val commonTagKey: TagKey<Item> = toolType.toolTag
     }
 
     //    Hulls    //

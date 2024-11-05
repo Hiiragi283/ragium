@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTContentRegister
+import hiiragi283.ragium.api.content.HTToolType
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.item.*
 import net.minecraft.component.type.FoodComponent
@@ -11,6 +14,98 @@ import net.minecraft.item.Item
 import net.minecraft.util.Rarity
 
 object RagiumItems : HTContentRegister {
+    //    Armors    //
+
+    @JvmField
+    val STEEL_HELMET: Item =
+        registerArmorItem("steel_helmet", HTArmorType.HELMET, RagiumMaterials.Armor.STEEL, 25)
+
+    @JvmField
+    val STEEL_CHESTPLATE: Item =
+        registerArmorItem("steel_chestplate", HTArmorType.CHESTPLATE, RagiumMaterials.Armor.STEEL, 25)
+
+    @JvmField
+    val STEEL_LEGGINGS: Item =
+        registerArmorItem("steel_leggings", HTArmorType.LEGGINGS, RagiumMaterials.Armor.STEEL, 25)
+
+    @JvmField
+    val STEEL_BOOTS: Item =
+        registerArmorItem("steel_boots", HTArmorType.BOOTS, RagiumMaterials.Armor.STEEL, 25)
+
+    @JvmField
+    val STELLA_GOGGLE: Item =
+        registerArmorItem("stella_goggle", HTArmorType.HELMET, RagiumMaterials.Armor.STELLA, 33)
+
+    @JvmField
+    val STELLA_JACKET: Item =
+        registerArmorItem("stella_jacket", HTArmorType.CHESTPLATE, RagiumMaterials.Armor.STELLA, 33)
+
+    @JvmField
+    val STELLA_LEGGINGS: Item =
+        registerArmorItem("stella_leggings", HTArmorType.LEGGINGS, RagiumMaterials.Armor.STELLA, 33)
+
+    @JvmField
+    val STELLA_BOOTS: Item =
+        registerArmorItem("stella_boots", HTArmorType.BOOTS, RagiumMaterials.Armor.STELLA, 33)
+
+    @JvmField
+    val RAGIUM_HELMET: Item =
+        registerArmorItem("ragium_helmet", HTArmorType.HELMET, RagiumMaterials.Armor.RAGIUM, 37)
+
+    @JvmField
+    val RAGIUM_CHESTPLATE: Item =
+        registerArmorItem("ragium_chestplate", HTArmorType.CHESTPLATE, RagiumMaterials.Armor.RAGIUM, 37)
+
+    @JvmField
+    val RAGIUM_LEGGINGS: Item =
+        registerArmorItem("ragium_leggings", HTArmorType.LEGGINGS, RagiumMaterials.Armor.RAGIUM, 37)
+
+    @JvmField
+    val RAGIUM_BOOTS: Item =
+        registerArmorItem("ragium_boots", HTArmorType.BOOTS, RagiumMaterials.Armor.RAGIUM, 37)
+
+    @JvmField
+    val ARMORS: List<Item> = listOf(
+        STEEL_HELMET,
+        STEEL_CHESTPLATE,
+        STEEL_LEGGINGS,
+        STEEL_BOOTS,
+        STELLA_GOGGLE,
+        STELLA_JACKET,
+        STELLA_LEGGINGS,
+        STELLA_BOOTS,
+        RAGIUM_HELMET,
+        RAGIUM_CHESTPLATE,
+        RAGIUM_LEGGINGS,
+        RAGIUM_BOOTS,
+    )
+
+    //    Tools    //
+
+    @JvmField
+    val STEEL_AXE: Item = registerToolItem("steel_axe", HTToolType.AXE, RagiumMaterials.Tool.STEEL)
+
+    @JvmField
+    val STEEL_HOE: Item = registerToolItem("steel_hoe", HTToolType.HOE, RagiumMaterials.Tool.STEEL)
+
+    @JvmField
+    val STEEL_PICKAXE: Item = registerToolItem("steel_pickaxe", HTToolType.PICKAXE, RagiumMaterials.Tool.STEEL)
+
+    @JvmField
+    val STEEL_SHOVEL: Item = registerToolItem("steel_shovel", HTToolType.SHOVEL, RagiumMaterials.Tool.STEEL)
+
+    @JvmField
+    val STEEL_SWORD: Item = registerToolItem("steel_sword", HTToolType.SWORD, RagiumMaterials.Tool.STEEL)
+
+    @JvmField
+    val TOOLS: List<Item> = listOf(
+        STEEL_AXE,
+        STEEL_HOE,
+        STEEL_PICKAXE,
+        STEEL_SHOVEL,
+        STEEL_SWORD,
+    )
+
     //    Foods    //
 
     @JvmField

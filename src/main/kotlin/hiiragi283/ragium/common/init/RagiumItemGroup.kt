@@ -48,8 +48,8 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Plates.entries)
                     addAll(RagiumContents.RawMaterials.entries)
 
-                    addAll(RagiumContents.Armors.entries)
-                    addAll(RagiumContents.Tools.entries)
+                    addAll(RagiumItems.ARMORS)
+                    addAll(RagiumItems.TOOLS)
                     addAll(HTCrafterHammerItem.Behavior.entries)
 
                     addAll(RagiumContents.Hulls.entries)

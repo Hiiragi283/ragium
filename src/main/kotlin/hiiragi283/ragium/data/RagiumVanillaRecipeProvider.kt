@@ -70,7 +70,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingArmors(exporter: RecipeExporter) {
         // steel
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STEEL_HELMET)
+            .create(RagiumItems.STEEL_HELMET)
             .patterns(
                 "AAA",
                 "A A",
@@ -79,7 +79,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STEEL_CHESTPLATE)
+            .create(RagiumItems.STEEL_CHESTPLATE)
             .patterns(
                 "A A",
                 "AAA",
@@ -89,7 +89,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STEEL_LEGGINGS)
+            .create(RagiumItems.STEEL_LEGGINGS)
             .patterns(
                 "AAA",
                 "A A",
@@ -99,7 +99,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STEEL_BOOTS)
+            .create(RagiumItems.STEEL_BOOTS)
             .patterns(
                 "A A",
                 "A A",
@@ -108,7 +108,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
         // stella
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STELLA_GOGGLE)
+            .create(RagiumItems.STELLA_GOGGLE)
             .patterns(
                 "ABA",
                 "A A",
@@ -118,7 +118,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STELLA_JACKET)
+            .create(RagiumItems.STELLA_JACKET)
             .patterns(
                 "A A",
                 "ABA",
@@ -129,7 +129,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STELLA_LEGGINGS)
+            .create(RagiumItems.STELLA_LEGGINGS)
             .patterns(
                 "ABA",
                 "A A",
@@ -140,7 +140,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Armors.STELLA_BOOTS)
+            .create(RagiumItems.STELLA_BOOTS)
             .patterns(
                 "A A",
                 "ABA",
@@ -177,7 +177,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         // steel
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Tools.STEEL_SWORD)
+            .create(RagiumItems.STEEL_SWORD)
             .patterns(
                 "B",
                 "A",
@@ -188,7 +188,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Tools.STEEL_SHOVEL)
+            .create(RagiumItems.STEEL_SHOVEL)
             .patterns(
                 "B",
                 "B",
@@ -199,7 +199,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Tools.STEEL_PICKAXE)
+            .create(RagiumItems.STEEL_PICKAXE)
             .patterns(
                 " B ",
                 " B ",
@@ -210,7 +210,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Tools.STEEL_AXE)
+            .create(RagiumItems.STEEL_AXE)
             .patterns(
                 "B ",
                 "BA",
@@ -221,7 +221,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumContents.Tools.STEEL_HOE)
+            .create(RagiumItems.STEEL_HOE)
             .patterns(
                 "B ",
                 "B ",

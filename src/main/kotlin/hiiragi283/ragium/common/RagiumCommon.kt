@@ -18,6 +18,7 @@ object RagiumCommon : ModInitializer {
         RagiumBlockEntityTypes
         RagiumBlocks
         RagiumEntityTypes
+        RagiumItems
         RagiumRecipeSerializers
         RagiumRecipeTypes
 

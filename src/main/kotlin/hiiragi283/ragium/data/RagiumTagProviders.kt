@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -25,6 +26,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.EnchantmentTags
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
 
@@ -160,9 +162,6 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Ingots.entries)
                 addAll(RagiumContents.Plates.entries)
                 addAll(RagiumContents.RawMaterials.entries)
-
-                addAll(RagiumContents.Armors.entries)
-                addAll(RagiumContents.Tools.entries)
             }.forEach { content: HTContent<out ItemConvertible> ->
                 if (content is HTContent.Material<*>) {
                     add(content.prefixedTagKey, content)
@@ -171,6 +170,33 @@ object RagiumTagProviders {
                     add(content.commonTagKey, content)
                 }
             }
+
+            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(
+                RagiumItems.STEEL_HELMET,
+                RagiumItems.STELLA_GOGGLE,
+                RagiumItems.RAGIUM_HELMET,
+            )
+            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(
+                RagiumItems.STEEL_CHESTPLATE,
+                RagiumItems.STELLA_JACKET,
+                RagiumItems.RAGIUM_CHESTPLATE,
+            )
+            getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(
+                RagiumItems.STEEL_LEGGINGS,
+                RagiumItems.STELLA_LEGGINGS,
+                RagiumItems.RAGIUM_LEGGINGS,
+            )
+            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(
+                RagiumItems.STEEL_BOOTS,
+                RagiumItems.STELLA_BOOTS,
+                RagiumItems.RAGIUM_BOOTS,
+            )
+
+            add(ItemTags.AXES, RagiumItems.STEEL_AXE)
+            add(ItemTags.HOES, RagiumItems.STEEL_HOE)
+            add(ItemTags.PICKAXES, RagiumItems.STEEL_PICKAXE)
+            add(ItemTags.SHOVELS, RagiumItems.STEEL_SHOVEL)
+            add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
 
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
