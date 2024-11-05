@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.RagiumMaterials
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
@@ -45,7 +45,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    fun input(char: Char, prefix: HTTagPrefix, material: RagiumMaterials): HTShapedRecipeJsonBuilder =
+    fun input(char: Char, prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder =
         input(char, prefix.createTag(material))
 
     fun input(char: Char, content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = input(char, content.prefixedTagKey)
@@ -73,7 +73,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         }
     }
 
-    fun unlockedBy(prefix: HTTagPrefix, material: RagiumMaterials): HTShapedRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
+    fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
 
     fun unlockedBy(content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = unlockedBy(content.prefixedTagKey)
 

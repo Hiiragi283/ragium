@@ -4,7 +4,7 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.RagiumMaterials
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.*
 import hiiragi283.ragium.common.RagiumContents
@@ -212,11 +212,9 @@ object RagiumTagProviders {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
-            RagiumMaterials.entries.forEach { material: RagiumMaterials ->
-                HTTagPrefix.registry.values.forEach { prefix: HTTagPrefix ->
-                    if (material.isValidPrefix(prefix)) {
-                        add(prefix.commonTagKey, prefix.createTag(material))
-                    }
+            RagiumAPI.getInstance().materialRegistry.types.forEach { (key: HTMaterialKey, type: HTMaterialKey.Type) ->
+                type.validPrefixes.forEach { prefix: HTTagPrefix ->
+                    add(prefix.commonTagKey, prefix.createTag(key))
                 }
             }
 

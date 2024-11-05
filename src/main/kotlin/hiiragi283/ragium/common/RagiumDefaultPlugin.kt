@@ -2,7 +2,6 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTypeNew
@@ -13,6 +12,7 @@ import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.machine.*
 import net.minecraft.block.Block
 import net.minecraft.fluid.FluidState
@@ -39,7 +39,33 @@ object RagiumDefaultPlugin : RagiumPlugin {
         RagiumMachineKeys.PROCESSORS.forEach { register.accept(it, HTMachineTypeNew.PROCESSOR) }
     }
 
-    override fun registerMaterial(register: BiConsumer<HTMaterialKey, RagiumMaterials.Type>) {
+    override fun registerMaterial(register: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {
+        // tier 1
+        register.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
+        register.accept(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY)
+        register.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL)
+        register.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL)
+        register.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST)
+        register.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
+        register.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
+        // tier 2
+        register.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL)
+        register.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY)
+        register.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM)
+        register.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL)
+        register.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLASTIC)
+        register.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL)
+        register.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY)
+        // tier 3
+        register.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM)
+        register.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY)
+        register.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL)
+        register.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL)
+        register.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLASTIC)
+        register.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLASTIC)
+        // tier 4
+        register.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM)
+        // integration
     }
 
     override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {

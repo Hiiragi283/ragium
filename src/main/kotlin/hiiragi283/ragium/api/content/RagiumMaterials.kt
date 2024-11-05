@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.material.HTTagPrefixes
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.Block
 import net.minecraft.item.ArmorItem
@@ -18,61 +18,61 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.StringIdentifiable
 
-enum class RagiumMaterials(val type: Type, override val enName: String, override val jaName: String) :
+enum class RagiumMaterials(val type: HTMaterialKey.Type, override val enName: String, override val jaName: String) :
     HTTranslationProvider,
     StringIdentifiable {
     // tier1
-    CRUDE_RAGINITE(Type.MINERAL, "Crude Raginite", "粗製ラギナイト"),
-    RAGI_ALLOY(Type.ALLOY, "Ragi-Alloy", "ラギ合金"),
-    COPPER(Type.METAL, "Copper", "銅"),
-    IRON(Type.METAL, "Iron", "鉄"),
-    ASH(Type.DUST, "Ash", "灰"),
-    NITER(Type.MINERAL, "Niter", "硝石"),
-    SULFUR(Type.MINERAL, "Sulfur", "硫黄"),
+    CRUDE_RAGINITE(HTMaterialKey.Type.MINERAL, "Crude Raginite", "粗製ラギナイト"),
+    RAGI_ALLOY(HTMaterialKey.Type.ALLOY, "Ragi-Alloy", "ラギ合金"),
+    COPPER(HTMaterialKey.Type.METAL, "Copper", "銅"),
+    IRON(HTMaterialKey.Type.METAL, "Iron", "鉄"),
+    ASH(HTMaterialKey.Type.DUST, "Ash", "灰"),
+    NITER(HTMaterialKey.Type.MINERAL, "Niter", "硝石"),
+    SULFUR(HTMaterialKey.Type.MINERAL, "Sulfur", "硫黄"),
 
     // tier2
-    RAGINITE(Type.MINERAL, "Raginite", "ラギナイト"),
-    RAGI_STEEL(Type.ALLOY, "Ragi-Steel", "ラギスチール"),
-    BAUXITE(Type.MINERAL, "Bauxite", "ボーキサイト"),
-    FLUORITE(Type.GEM, "Fluorite", "蛍石"),
-    GOLD(Type.METAL, "Gold", "金"),
-    PLASTIC(Type.PLASTIC, "Plastic", "プラスチック"), // PE
-    SILICON(Type.METAL, "Silicon", "シリコン"),
-    STEEL(Type.ALLOY, "Steel", "スチール"),
+    RAGINITE(HTMaterialKey.Type.MINERAL, "Raginite", "ラギナイト"),
+    RAGI_STEEL(HTMaterialKey.Type.ALLOY, "Ragi-Steel", "ラギスチール"),
+    BAUXITE(HTMaterialKey.Type.MINERAL, "Bauxite", "ボーキサイト"),
+    FLUORITE(HTMaterialKey.Type.GEM, "Fluorite", "蛍石"),
+    GOLD(HTMaterialKey.Type.METAL, "Gold", "金"),
+    PLASTIC(HTMaterialKey.Type.PLASTIC, "Plastic", "プラスチック"), // PE
+    SILICON(HTMaterialKey.Type.METAL, "Silicon", "シリコン"),
+    STEEL(HTMaterialKey.Type.ALLOY, "Steel", "スチール"),
 
     // tier3
-    RAGI_CRYSTAL(Type.GEM, "Ragi-Crystal", "ラギクリスタリル"),
-    REFINED_RAGI_STEEL(Type.ALLOY, "Refined Ragi-Steel", "精製ラギスチール"),
-    ALUMINUM(Type.METAL, "Aluminum", "アルミニウム"),
-    ENGINEERING_PLASTIC(Type.PLASTIC, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
-    STELLA(Type.PLASTIC, "S.T.E.L.L.A.", "S.T.E.L.L.A."),
+    RAGI_CRYSTAL(HTMaterialKey.Type.GEM, "Ragi-Crystal", "ラギクリスタリル"),
+    REFINED_RAGI_STEEL(HTMaterialKey.Type.ALLOY, "Refined Ragi-Steel", "精製ラギスチール"),
+    ALUMINUM(HTMaterialKey.Type.METAL, "Aluminum", "アルミニウム"),
+    ENGINEERING_PLASTIC(HTMaterialKey.Type.PLASTIC, "Engineering Plastic", "エンジニアリングプラスチック"), // PC
+    STELLA(HTMaterialKey.Type.PLASTIC, "S.T.E.L.L.A.", "S.T.E.L.L.A."),
 
     // tier4
-    RAGIUM(Type.GEM, "Ragium", "ラギウム"),
+    RAGIUM(HTMaterialKey.Type.GEM, "Ragium", "ラギウム"),
 
     // integration
-    EMERALD(Type.GEM, "Emerald", "エメラルド"),
-    DIAMOND(Type.GEM, "Diamond", "ダイヤモンド"),
-    LAPIS(Type.GEM, "Lapis", "ラピス"),
-    PERIDOT(Type.GEM, "Peridot", "ペリドット"),
-    QUARTZ(Type.GEM, "Quartz", "クォーツ"),
-    RUBY(Type.GEM, "Ruby", "ルビー"),
-    SAPPHIRE(Type.GEM, "Sapphire", "サファイア"),
+    EMERALD(HTMaterialKey.Type.GEM, "Emerald", "エメラルド"),
+    DIAMOND(HTMaterialKey.Type.GEM, "Diamond", "ダイヤモンド"),
+    LAPIS(HTMaterialKey.Type.GEM, "Lapis", "ラピス"),
+    PERIDOT(HTMaterialKey.Type.GEM, "Peridot", "ペリドット"),
+    QUARTZ(HTMaterialKey.Type.GEM, "Quartz", "クォーツ"),
+    RUBY(HTMaterialKey.Type.GEM, "Ruby", "ルビー"),
+    SAPPHIRE(HTMaterialKey.Type.GEM, "Sapphire", "サファイア"),
 
-    IRIDIUM(Type.METAL, "Iridium", "イリジウム"),
-    LEAD(Type.METAL, "Lead", "鉛"),
-    NICKEL(Type.METAL, "Nickel", "ニッケル"),
-    PLATINUM(Type.METAL, "Platinum", "プラチナ"),
-    SILVER(Type.METAL, "Silver", "シルバー"),
-    TIN(Type.METAL, "Tin", "スズ"),
-    TITANIUM(Type.METAL, "Titanium", "チタン"),
-    TUNGSTEN(Type.METAL, "Tungsten", "タングステン"),
-    ZINC(Type.METAL, "Zinc", "亜鉛"),
+    IRIDIUM(HTMaterialKey.Type.METAL, "Iridium", "イリジウム"),
+    LEAD(HTMaterialKey.Type.METAL, "Lead", "鉛"),
+    NICKEL(HTMaterialKey.Type.METAL, "Nickel", "ニッケル"),
+    PLATINUM(HTMaterialKey.Type.METAL, "Platinum", "プラチナ"),
+    SILVER(HTMaterialKey.Type.METAL, "Silver", "シルバー"),
+    TIN(HTMaterialKey.Type.METAL, "Tin", "スズ"),
+    TITANIUM(HTMaterialKey.Type.METAL, "Titanium", "チタン"),
+    TUNGSTEN(HTMaterialKey.Type.METAL, "Tungsten", "タングステン"),
+    ZINC(HTMaterialKey.Type.METAL, "Zinc", "亜鉛"),
 
-    BRASS(Type.ALLOY, "Brass", "真鍮"),
-    BRONZE(Type.ALLOY, "Bronze", "青銅"),
-    ELECTRUM(Type.ALLOY, "Electrum", "琥珀金"),
-    INVAR(Type.ALLOY, "Invar", "インバー"),
+    BRASS(HTMaterialKey.Type.ALLOY, "Brass", "真鍮"),
+    BRONZE(HTMaterialKey.Type.ALLOY, "Bronze", "青銅"),
+    ELECTRUM(HTMaterialKey.Type.ALLOY, "Electrum", "琥珀金"),
+    INVAR(HTMaterialKey.Type.ALLOY, "Invar", "インバー"),
     ;
 
     fun isValidPrefix(prefix: HTTagPrefix): Boolean = prefix in type.validPrefixes
@@ -90,27 +90,6 @@ enum class RagiumMaterials(val type: Type, override val enName: String, override
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()
-
-    //    Type    //
-
-    enum class Type(val validPrefixes: List<HTTagPrefix>) {
-        ALLOY(HTTagPrefixes.DUSTS, HTTagPrefixes.INGOTS, HTTagPrefixes.PLATES, HTTagPrefixes.STORAGE_BLOCKS),
-        DUST(HTTagPrefixes.DUSTS),
-        GEM(HTTagPrefixes.DUSTS, HTTagPrefixes.GEMS, HTTagPrefixes.ORES, HTTagPrefixes.STORAGE_BLOCKS),
-        METAL(
-            HTTagPrefixes.DUSTS,
-            HTTagPrefixes.INGOTS,
-            HTTagPrefixes.ORES,
-            HTTagPrefixes.PLATES,
-            HTTagPrefixes.RAW_MATERIALS,
-            HTTagPrefixes.STORAGE_BLOCKS,
-        ),
-        MINERAL(HTTagPrefixes.DUSTS, HTTagPrefixes.ORES, HTTagPrefixes.RAW_MATERIALS),
-        PLASTIC(HTTagPrefixes.PLATES),
-        ;
-
-        constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toList())
-    }
 
     //    Holder    //
 

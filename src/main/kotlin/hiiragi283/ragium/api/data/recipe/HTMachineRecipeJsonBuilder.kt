@@ -2,11 +2,11 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -61,7 +61,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         itemInputs.add(ingredient)
     }
 
-    fun itemInput(prefix: HTTagPrefix, material: RagiumMaterials, count: Int = 1): HTMachineRecipeJsonBuilder =
+    fun itemInput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): HTMachineRecipeJsonBuilder =
         itemInput(prefix.createTag(material), count)
 
     fun itemInput(content: HTContent.Material<*>, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count)
@@ -100,7 +100,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTRecipeResult.ofItem(tagKey, count, components))
+        itemOutputs.add(HTRecipeResult.ofDynamic(tagKey, count, components))
     }
 
     fun fluidOutput(
@@ -117,15 +117,6 @@ class HTMachineRecipeJsonBuilder private constructor(
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
         fluidOutputs.add(HTRecipeResult.ofFluid(fluid.value, amount, components))
-    }
-
-    @Deprecated("Experimental Feature")
-    fun fluidOutput(
-        fluid: TagKey<Fluid>,
-        amount: Long = FluidConstants.BUCKET,
-        components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTRecipeResult.ofFluid(fluid, amount, components))
     }
 
     //    Catalyst    //

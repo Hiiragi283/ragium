@@ -1,27 +1,7 @@
 {
   "values": [
     {
-      "id": "#c:gems/diamond",
-      "required": false
-    },
-    {
-      "id": "#c:gems/emerald",
-      "required": false
-    },
-    {
       "id": "#c:gems/fluorite",
-      "required": false
-    },
-    {
-      "id": "#c:gems/lapis",
-      "required": false
-    },
-    {
-      "id": "#c:gems/peridot",
-      "required": false
-    },
-    {
-      "id": "#c:gems/quartz",
       "required": false
     },
     {
@@ -30,14 +10,6 @@
     },
     {
       "id": "#c:gems/ragium",
-      "required": false
-    },
-    {
-      "id": "#c:gems/ruby",
-      "required": false
-    },
-    {
-      "id": "#c:gems/sapphire",
       "required": false
     }
   ]

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.material.HTTagPrefixes
 import hiiragi283.ragium.common.block.HTPipeType
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -54,7 +53,7 @@ object RagiumContents : HTContentRegister {
             }
 
         override val registry: Registry<Block> = Registries.BLOCK
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.ORES
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
     }
 
     //    Storage Blocks    //
@@ -72,7 +71,7 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_block"))
         override val enPattern: String = "Block of %s"
         override val jaPattern: String = "%sブロック"
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.STORAGE_BLOCKS
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
     //    Dusts    //
@@ -96,7 +95,7 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_dust"))
         override val enPattern: String = "%s Dust"
         override val jaPattern: String = "%sの粉"
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.DUSTS
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
     //    Gems    //
@@ -112,7 +111,7 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
         override val enPattern: String = "%s"
         override val jaPattern: String = "%s"
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.GEMS
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.GEM
     }
 
     //    Ingots    //
@@ -130,7 +129,7 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_ingot"))
         override val enPattern: String = "%s Ingot"
         override val jaPattern: String = "%sインゴット"
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.INGOTS
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
     //    Plates    //
@@ -160,7 +159,7 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_plate"))
         override val enPattern: String = "%s Plate"
         override val jaPattern: String = "%s板"
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.PLATES
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.PLATE
     }
 
     //    Raw Materials    //
@@ -176,7 +175,7 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("raw_${name.lowercase()}"))
         override val enPattern: String = "Raw %s"
         override val jaPattern: String = "%sの原石"
-        override val tagPrefix: HTTagPrefix = HTTagPrefixes.RAW_MATERIALS
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
     //    Hulls    //

@@ -1,8 +1,7 @@
-package hiiragi283.ragium.common
+package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.extension.itemSettings
@@ -10,13 +9,11 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockItem
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.common.RagiumConfig
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -26,7 +23,6 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.util.Rarity
 
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
@@ -97,21 +93,21 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
     @JvmStatic
     fun registerMaterials() {
-        val keyCache: MutableMap<HTMaterialKey, RagiumMaterials.Type> = mutableMapOf()
+        val keyCache: MutableMap<HTMaterialKey, HTMaterialKey.Type> = mutableMapOf()
 
         // collect keys from plugins
-        fun addMaterial(key: HTMaterialKey, type: RagiumMaterials.Type) {
+        fun addMaterial(key: HTMaterialKey, type: HTMaterialKey.Type) {
             check(keyCache.put(key, type) == null) { "Material; ${key.name} is already registered!" }
         }
         RagiumAPI.getPlugins().forEach {
             it.registerMaterial(::addMaterial)
         }
         // sort keys based on its type and id
-        val sortedKeys: Map<HTMaterialKey, RagiumMaterials.Type> = keyCache
+        val sortedKeys: Map<HTMaterialKey, HTMaterialKey.Type> = keyCache
             .toList()
             .sortedWith(
-                compareBy(Pair<HTMaterialKey, RagiumMaterials.Type>::second)
-                    .thenBy(Pair<HTMaterialKey, RagiumMaterials.Type>::first),
+                compareBy(Pair<HTMaterialKey, HTMaterialKey.Type>::second)
+                    .thenBy(Pair<HTMaterialKey, HTMaterialKey.Type>::first),
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
@@ -125,14 +121,14 @@ internal data object InternalRagiumAPI : RagiumAPI {
         }
         // register items
         val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Item> = mutableTableOf()
-        sortedKeys.keys.forEach { key: HTMaterialKey ->
+        /*sortedKeys.keys.forEach { key: HTMaterialKey ->
             val rarity: Rarity = propertyCache[key]!!.getOrDefault(HTMaterialPropertyKeys.RARITY)
-            HTTagPrefix.registry.values.forEach { prefix: HTTagPrefix ->
+            HTTagPrefix.entries.forEach { prefix: HTTagPrefix ->
                 val item = Item(itemSettings().rarity(rarity))
                 Registry.register(Registries.ITEM, prefix.createId(key), item)
                 itemTable.put(prefix, key, item)
             }
-        }
+        }*/
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
         RagiumAPI.log { info("Registered material types and properties!") }

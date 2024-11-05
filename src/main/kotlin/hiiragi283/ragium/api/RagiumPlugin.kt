@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTypeNew
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -20,7 +19,7 @@ interface RagiumPlugin {
 
     fun registerMachineType(register: BiConsumer<HTMachineKey, HTMachineTypeNew>) {}
 
-    fun registerMaterial(register: BiConsumer<HTMaterialKey, RagiumMaterials.Type>) {}
+    fun registerMaterial(register: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {}
 
     fun setupCommonMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 

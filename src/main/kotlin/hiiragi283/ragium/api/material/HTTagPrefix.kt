@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTTranslationFormatter
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
@@ -8,18 +9,25 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
-class HTTagPrefix private constructor(private val prefix: String) {
-    companion object {
-        @JvmStatic
-        val registry: Map<String, HTTagPrefix>
-            get() = registry1
+enum class HTTagPrefix(val prefix: String, override val enPattern: String, override val jaPattern: String) :
+    HTTranslationFormatter,
+    StringIdentifiable {
+    DUST("dusts", "%s Dust", "%sの粉"),
+    GEM("gems", "%s", "%s"),
+    INGOT("ingots", "%s Ingot", "%sインゴット"),
+    ORE("ores", "%s Ore", "%s鉱石"),
+    PLATE("plates", "%s Plate", "%s板"),
+    RAW_MATERIAL("raw_materials", "Raw %s", "%sの原石") {
+        override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
+    },
+    STORAGE_BLOCK("storage_blocks", "Block of %s", "%sブロック") {
+        override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
+    },
+    ;
 
-        @JvmStatic
-        private val registry1: MutableMap<String, HTTagPrefix> = mutableMapOf()
+    open fun createPath(key: HTMaterialKey): String = "${key.name}_${asString()}"
 
-        @JvmStatic
-        fun of(prefix: String): HTTagPrefix = registry1.computeIfAbsent(prefix, ::HTTagPrefix)
-    }
+    fun createId(key: HTMaterialKey, namespace: String = RagiumAPI.MOD_ID): Identifier = Identifier.of(namespace, createPath(key))
 
     private fun commonId(path: String): Identifier = Identifier.of(TagUtil.C_TAG_NAMESPACE, path)
 
@@ -27,8 +35,5 @@ class HTTagPrefix private constructor(private val prefix: String) {
 
     fun createTag(value: StringIdentifiable): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${value.asString()}"))
 
-    fun createId(key: HTMaterialKey, namespace: String = RagiumAPI.MOD_ID): Identifier =
-        Identifier.of(namespace, "${key.name}_${prefix.removeSuffix("s")}")
-
-    override fun toString(): String = "HTTagPrefix[$prefix]"
+    override fun asString(): String = name.lowercase()
 }

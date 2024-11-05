@@ -5,50 +5,6 @@
       "required": false
     },
     {
-      "id": "#c:ingots/brass",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/bronze",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/copper",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/electrum",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/gold",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/invar",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/iridium",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/iron",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/lead",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/nickel",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/platinum",
-      "required": false
-    },
-    {
       "id": "#c:ingots/ragi_alloy",
       "required": false
     },
@@ -61,31 +17,7 @@
       "required": false
     },
     {
-      "id": "#c:ingots/silicon",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/silver",
-      "required": false
-    },
-    {
       "id": "#c:ingots/steel",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/tin",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/titanium",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/tungsten",
-      "required": false
-    },
-    {
-      "id": "#c:ingots/zinc",
       "required": false
     }
   ]

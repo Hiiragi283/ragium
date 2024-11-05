@@ -116,20 +116,12 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(
 
         @Deprecated("Experimental Feature")
         @JvmStatic
-        fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): Item =
+        fun ofDynamic(tagKey: TagKey<MCItem>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): Item =
             Item(Either.right(tagKey), count, components)
 
         @JvmStatic
         fun ofFluid(fluid: MCFluid, amount: Long = FluidConstants.BUCKET, components: ComponentChanges = ComponentChanges.EMPTY): Fluid =
             Fluid(Either.left(fluid.registryEntry), amount, components)
-
-        @Deprecated("Experimental Feature")
-        @JvmStatic
-        fun ofFluid(
-            tagKey: TagKey<MCFluid>,
-            amount: Long = FluidConstants.BUCKET,
-            components: ComponentChanges = ComponentChanges.EMPTY,
-        ): Fluid = Fluid(Either.right(tagKey), amount, components)
     }
 
     abstract val isEmpty: Boolean

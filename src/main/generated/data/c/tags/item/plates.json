@@ -5,19 +5,7 @@
       "required": false
     },
     {
-      "id": "#c:plates/brass",
-      "required": false
-    },
-    {
-      "id": "#c:plates/bronze",
-      "required": false
-    },
-    {
       "id": "#c:plates/copper",
-      "required": false
-    },
-    {
-      "id": "#c:plates/electrum",
       "required": false
     },
     {
@@ -29,31 +17,11 @@
       "required": false
     },
     {
-      "id": "#c:plates/invar",
-      "required": false
-    },
-    {
-      "id": "#c:plates/iridium",
-      "required": false
-    },
-    {
       "id": "#c:plates/iron",
       "required": false
     },
     {
-      "id": "#c:plates/lead",
-      "required": false
-    },
-    {
-      "id": "#c:plates/nickel",
-      "required": false
-    },
-    {
       "id": "#c:plates/plastic",
-      "required": false
-    },
-    {
-      "id": "#c:plates/platinum",
       "required": false
     },
     {
@@ -73,31 +41,11 @@
       "required": false
     },
     {
-      "id": "#c:plates/silver",
-      "required": false
-    },
-    {
       "id": "#c:plates/steel",
       "required": false
     },
     {
       "id": "#c:plates/stella",
-      "required": false
-    },
-    {
-      "id": "#c:plates/tin",
-      "required": false
-    },
-    {
-      "id": "#c:plates/titanium",
-      "required": false
-    },
-    {
-      "id": "#c:plates/tungsten",
-      "required": false
-    },
-    {
-      "id": "#c:plates/zinc",
       "required": false
     }
   ]
