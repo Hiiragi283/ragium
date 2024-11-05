@@ -6,13 +6,13 @@
       "tag": "c:plates/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:blaze_powder"
+      "item": "ragium:heart_of_the_nether"
     },
     "C": {
       "item": "ragium:primitive_hull"
     },
     "D": {
-      "item": "minecraft:blaze_powder"
+      "item": "ragium:heart_of_the_nether"
     },
     "E": {
       "tag": "c:plates/copper"

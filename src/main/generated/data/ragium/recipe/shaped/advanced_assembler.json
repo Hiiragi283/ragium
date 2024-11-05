@@ -6,13 +6,13 @@
       "tag": "c:plates/refined_ragi_steel"
     },
     "B": {
-      "item": "ragium:advanced_circuit"
+      "item": "ragium:primitive_circuit"
     },
     "C": {
       "item": "ragium:advanced_hull"
     },
     "D": {
-      "item": "ragium:advanced_circuit"
+      "item": "ragium:primitive_circuit"
     },
     "E": {
       "tag": "c:plates/steel"

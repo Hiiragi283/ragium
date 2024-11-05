@@ -623,7 +623,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createProcessor(
             exporter,
             RagiumMachineKeys.ASSEMBLER,
-            HTMachineTier::getCircuit,
+            RagiumContents.Circuits.PRIMITIVE,
         )
         createProcessor(
             exporter,
@@ -669,13 +669,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createProcessor(
             exporter,
             RagiumMachineKeys.MULTI_SMELTER,
-            {
-                when (it) {
-                    HTMachineTier.PRIMITIVE -> Items.BLAZE_POWDER
-                    HTMachineTier.BASIC -> Items.GHAST_TEAR
-                    HTMachineTier.ADVANCED -> RagiumItems.HEART_OF_THE_NETHER
-                }
-            },
+            RagiumItems.HEART_OF_THE_NETHER,
         )
         createProcessor(
             exporter,
@@ -723,48 +717,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         left: ItemConvertible,
         right: ItemConvertible = left,
     ) {
-        createMachineInternal(
-            exporter,
-            type,
-            { Ingredient.ofItems(left) },
-            { Ingredient.ofItems(right) },
-        )
-    }
-
-    private fun createProcessor(
-        exporter: RecipeExporter,
-        type: HTMachine,
-        left: (HTMachineTier) -> ItemConvertible,
-        right: (HTMachineTier) -> ItemConvertible = left,
-    ) {
-        createMachineInternal(
-            exporter,
-            type,
-            { Ingredient.ofItems(left(it)) },
-            { Ingredient.ofItems(right(it)) },
-        )
-    }
-
-    private fun createProcessor(
-        exporter: RecipeExporter,
-        type: HTMachine,
-        left: TagKey<Item>,
-        right: TagKey<Item> = left,
-    ) {
-        createMachineInternal(
-            exporter,
-            type,
-            { Ingredient.fromTag(left) },
-            { Ingredient.fromTag(right) },
-        )
-    }
-
-    private fun createMachineInternal(
-        exporter: RecipeExporter,
-        type: HTMachine,
-        left: (HTMachineTier) -> Ingredient,
-        right: (HTMachineTier) -> Ingredient = left,
-    ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             val output: HTMachineBlock = type.getBlock(tier) ?: return
             HTShapedRecipeJsonBuilder
@@ -774,9 +726,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                     "BCD",
                     "EEE",
                 ).input('A', tier.getPlate())
-                .input('B', left(tier))
+                .input('B', left)
                 .input('C', tier.getHull())
-                .input('D', right(tier))
+                .input('D', right)
                 .input(
                     'E',
                     when (tier) {
