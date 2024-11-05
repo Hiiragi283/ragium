@@ -1,11 +1,9 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.extension.getMachineKey
 import hiiragi283.ragium.api.inventory.HTDelegatedInventory
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
-import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
@@ -37,12 +35,13 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     var machineEntity: HTMachineEntity<*>? = null
         private set
 
+    lateinit var key: HTMachineKey
+    lateinit var tier: HTMachineTier
+
     val definition: HTMachineDefinition?
         get() = machineEntity?.definition
     val machineType: HTMachineType?
         get() = machineEntity?.machineType
-    val tier: HTMachineTier?
-        get() = machineEntity?.tier
 
     override fun setWorld(world: World) {
         super.setWorld(world)
@@ -60,16 +59,11 @@ class HTMetaMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        /*val machineType: HTMachineType = RagiumAPI
-            .getInstance()
-            .machineTypeRegistry
-            .get(Identifier.of(nbt.getString("machine_type")))
-            ?: return*/
-        val machineType: HTMachineType = null ?: return
-        val tier: HTMachineTier = HTMachineTier.entries
+        key = nbt.getMachineKey("machine_type")
+        tier = HTMachineTier.entries
             .firstOrNull { it.asString() == nbt.getString("tier") }
             ?: HTMachineTier.PRIMITIVE
-        initMachineEntity(machineType, tier)
+
         machineEntity?.readFromNbt(nbt, wrapperLookup)
         super.readNbt(nbt, wrapperLookup)
     }

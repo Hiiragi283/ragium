@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -72,6 +73,11 @@ object RagiumTagProviders {
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore.value)
+            }
+
+            // ragium
+            RagiumAPI.getInstance().machineRegistry.blocks.values.forEach {
+                add(RagiumBlockTags.MACHINES, it)
             }
 
             buildList {

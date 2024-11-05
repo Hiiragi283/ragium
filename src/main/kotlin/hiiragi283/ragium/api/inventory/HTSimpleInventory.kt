@@ -5,6 +5,7 @@ import hiiragi283.ragium.common.init.RagiumNetworks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
+import net.minecraft.inventory.InventoryChangedListener
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.RegistryByteBuf
@@ -79,7 +80,19 @@ open class HTSimpleInventory : Inventory {
         stacks[slot] = stack
     }
 
-    override fun markDirty() = Unit
+    private val listeners: MutableList<InventoryChangedListener> = mutableListOf()
+
+    fun addListener(listener: InventoryChangedListener) {
+        listeners.add(listener)
+    }
+
+    fun removeListener(listener: InventoryChangedListener) {
+        listeners.remove(listener)
+    }
+
+    override fun markDirty() {
+        listeners.forEach { it.onInventoryChanged(this) }
+    }
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = true
 

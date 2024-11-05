@@ -111,6 +111,10 @@ object RagiumBlocks : HTContentRegister {
         registerBlock("network_interface", HTNetworkInterfaceBlock)
 
     @JvmField
+    val LARGE_PROCESSOR: Block =
+        registerHorizontalWithBE("large_processor", RagiumBlockEntityTypes.LARGE_PROCESSOR)
+
+    @JvmField
     val SHAFT: Block =
         registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
 

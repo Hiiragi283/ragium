@@ -1,7 +1,10 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
-import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.inventory.HTSidedInventory
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
+import hiiragi283.ragium.api.inventory.HTStorageIO
+import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
@@ -59,7 +62,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.of(tier.getBaseBlock()))
-        builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.of(tier.getHull()))
+        builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.of(tier.getCoil()))
         builder.addLayer(-1..1, 1, 1..3, HTMultiblockComponent.of(tier.getStorageBlock()))
     }
 }

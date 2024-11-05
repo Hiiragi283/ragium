@@ -62,11 +62,19 @@ class HTMultiblockComponent private constructor(private val entryList: RegistryE
         else -> ((world.time % (20 * size)) / 20).toInt()
     }
 
-    override fun toString(): String = "HTMultiblockComponent${entryList
-        .mapNotNull(RegistryEntry<Block>::value)
-        .map(Block::getName)
-        .map(MutableText::getString)
-    }"
+    override fun toString(): String = "HTMultiblockComponent${asString(entryList)}"
+
+    fun asString(entryList: RegistryEntryList<Block>): String = when (entryList) {
+        is RegistryEntryList.Named<Block> -> "[${entryList.tag.id}]"
+
+        else ->
+            "${
+                entryList
+                    .mapNotNull(RegistryEntry<Block>::value)
+                    .map(Block::getName)
+                    .map(MutableText::getString)
+            }"
+    }
 
     //    Predicate    //
 

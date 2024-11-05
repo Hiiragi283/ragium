@@ -2,13 +2,11 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.HTHardModeManager
-import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.enchantment.Enchantment
@@ -37,8 +35,6 @@ import kotlin.jvm.optionals.getOrNull
 //    Views    //
 
 fun BlockView.getMachine(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
-
-fun BlockView.getMachineEntity(pos: BlockPos): HTMachineEntity<*>? = (getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.machineEntity
 
 fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockController? = getBlockEntity(pos) as? HTMultiblockController
 

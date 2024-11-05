@@ -41,6 +41,8 @@ class HTMachineInput private constructor(
 
     override fun getSize(): Int = itemInputs.size
 
+    override fun isEmpty(): Boolean = itemInputs.isEmpty() && fluidInputs.isEmpty()
+
     //    Builder    //
 
     class Builder(private val itemInputs: MutableList<ItemStack>, private val fluidInputs: MutableList<ResourceAmount<FluidVariant>>) {

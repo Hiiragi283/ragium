@@ -127,7 +127,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
     abstract class Large(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntityBase(type, pos, state),
         HTMultiblockController {
-        override var showPreview: Boolean = false
+        final override var showPreview: Boolean = false
 
         override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
             HTLargeMachineScreenHandler(syncId, playerInventory, packet, createContext())
@@ -136,7 +136,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
         //    HTDelegatedInventory    //
 
-        override val parent: HTSidedInventory = HTStorageBuilder(7)
+        final override val parent: HTSidedInventory = HTStorageBuilder(7)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -146,7 +146,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildSided()
 
-        override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
+        final override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)

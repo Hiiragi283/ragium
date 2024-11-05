@@ -1,14 +1,11 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.machineTypeOrNull
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
@@ -22,7 +19,6 @@ import net.minecraft.util.ItemScatterer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import net.minecraft.world.WorldView
 
 @Deprecated("May be removed")
 class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
@@ -50,9 +46,14 @@ class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
         moved: Boolean,
     ) {
         if (!state.isOf(newState.block)) {
-            world.getMachineEntity(pos)?.let { machine: HTMachineEntity<*> ->
-                (machine as? Inventory)?.let { ItemScatterer.spawn(world, pos, it) }
-                world.updateComparators(pos, state.block)
+            (world.getBlockEntity(pos) as? HTMetaMachineBlockEntity)?.let {
+                ItemScatterer.spawn(
+                    world,
+                    pos.x.toDouble(),
+                    pos.y.toDouble(),
+                    pos.z.toDouble(),
+                    it.key.createItemStack(it.tier),
+                )
             }
         }
     }
@@ -60,10 +61,6 @@ class HTMetaMachineBlock(settings: Settings) : HTBlockWithEntity(settings) {
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(Properties.HORIZONTAL_FACING)
     }
-
-    override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack =
-        world.getMachineEntity(pos)?.let { it.machineType.createItemStack(it.tier) }
-            ?: super.getPickStack(world, pos, state)
 
     override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
         state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)))

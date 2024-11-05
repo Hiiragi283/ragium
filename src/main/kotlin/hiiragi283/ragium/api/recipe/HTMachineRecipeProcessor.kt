@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
@@ -71,7 +71,7 @@ class HTMachineRecipeProcessor(
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
             recipe.fluidOutputs.getOrNull(index)?.let { result: HTRecipeResult.Fluid ->
-                val storageIn: SingleFluidStorage = fluidStorage?.get(slot) ?: return@let
+                val storageIn: SingleSlotStorage<FluidVariant> = fluidStorage?.get(slot) ?: return@let
                 useTransaction { transaction: Transaction ->
                     val inserted: Long = storageIn.insert(result.variant, result.amount, transaction)
                     if (inserted > 0) {
@@ -92,9 +92,9 @@ class HTMachineRecipeProcessor(
         }
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
             recipe.fluidInputs.getOrNull(index)?.let { ingredient: HTIngredient.Fluid ->
-                val storageIn: SingleFluidStorage = fluidStorage?.get(slot) ?: return@let
+                val storageIn: SingleSlotStorage<FluidVariant> = fluidStorage?.get(slot) ?: return@let
                 useTransaction { transaction: Transaction ->
-                    val variantIn: FluidVariant = storageIn.variant
+                    val variantIn: FluidVariant = storageIn.resource
                     val extracted: Long = storageIn.extract(variantIn, ingredient.amount, transaction)
                     if (extracted > 0) {
                         transaction.commit()

@@ -49,6 +49,10 @@ object RagiumBlockEntityTypes {
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
+    @JvmField
+    val LARGE_PROCESSOR: BlockEntityType<HTLargeProcessorBlockEntity> =
+        register("large_processor", ::HTLargeProcessorBlockEntity)
+
     @Deprecated("May be removed")
     @JvmField
     val META_MACHINE: BlockEntityType<HTMetaMachineBlockEntity> =
@@ -108,6 +112,7 @@ object RagiumBlockEntityTypes {
             .forEach(FLUID_PIPE::addSupportedBlock)
         FIREBOX.addSupportedBlock(RagiumBlocks.FIREBOX)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
+        LARGE_PROCESSOR.addSupportedBlock(RagiumBlocks.LARGE_PROCESSOR)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
@@ -127,7 +132,9 @@ object RagiumBlockEntityTypes {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, BLAST_FURNACE)
+        registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
+        registerMachineBlocks(RagiumMachineKeys.SAW_MILL, SAW_MILL)
     }
 
     @JvmStatic

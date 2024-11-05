@@ -35,6 +35,10 @@ interface RagiumPlugin {
     //    PropertyHelper    //
 
     class PropertyHelper<T : Any>(private val key: T, private val properties: HTMutablePropertyHolder) {
+        fun modify(vararg keys: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
+            modify(keys::contains, builderAction)
+        }
+
         fun modify(key: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify({ it == key }, builderAction)
         }

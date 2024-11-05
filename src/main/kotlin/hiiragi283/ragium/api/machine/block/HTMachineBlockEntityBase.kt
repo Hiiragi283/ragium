@@ -1,9 +1,6 @@
 package hiiragi283.ragium.api.machine.block
 
-import hiiragi283.ragium.api.extension.getMachineKey
-import hiiragi283.ragium.api.extension.getTier
-import hiiragi283.ragium.api.extension.putMachineKey
-import hiiragi283.ragium.api.extension.putTier
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
@@ -20,10 +17,12 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
@@ -47,6 +46,9 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         get() = HTMachineDefinition(key, tier)
     val packet: HTMachinePacket
         get() = HTMachinePacket(key, tier, pos)
+
+    val facing: Direction
+        get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
