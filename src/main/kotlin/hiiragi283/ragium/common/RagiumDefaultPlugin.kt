@@ -13,10 +13,7 @@ import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.machine.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.HTDrainBlockEntity
-import hiiragi283.ragium.common.machine.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.*
 import net.minecraft.block.Block
 import net.minecraft.fluid.FluidState
 import net.minecraft.registry.tag.BiomeTags
@@ -94,22 +91,21 @@ object RagiumDefaultPlugin : RagiumPlugin {
             }
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),)
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTDistillationTowerMachineEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),)
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTSawMillMachineEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
         }
     }
 }

@@ -7,15 +7,16 @@ import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
-import hiiragi283.ragium.common.machine.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.HTDrainBlockEntity
-import hiiragi283.ragium.common.machine.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
+    @JvmField
+    val BLAST_FURNACE: BlockEntityType<HTBlastFurnaceBlockEntity> =
+        register("blast_furnace", ::HTBlastFurnaceBlockEntity)
+
     @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
         register("combustion_generator", ::HTCombustionGeneratorBlockEntity)
@@ -23,6 +24,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CREATIVE_SOURCE: BlockEntityType<HTCreativeSourceBlockEntity> =
         register("creative_source", ::HTCreativeSourceBlockEntity)
+
+    @JvmField
+    val DISTILLATION_TOWER: BlockEntityType<HTDistillationTowerBlockEntity> =
+        register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
     @JvmField
     val DRAIN: BlockEntityType<HTDrainBlockEntity> =
@@ -64,6 +69,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val MANUAL_MIXER: BlockEntityType<HTManualMixerBlockEntity> =
         register("manual_mixer", ::HTManualMixerBlockEntity)
+
+    @JvmField
+    val SAW_MILL: BlockEntityType<HTSawmillBlockEntity> =
+        register("saw_mill", ::HTSawmillBlockEntity)
 
     @JvmField
     val SIMPLE_GENERATOR: BlockEntityType<HTGeneratorBlockEntityBase.Simple> =
@@ -117,6 +126,7 @@ object RagiumBlockEntityTypes {
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
+        registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, BLAST_FURNACE)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
     }
 

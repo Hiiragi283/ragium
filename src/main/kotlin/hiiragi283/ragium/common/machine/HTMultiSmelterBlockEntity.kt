@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.machine
 
+import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -22,7 +23,6 @@ import net.minecraft.world.World
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
-    HTDelegatedInventory.Sided,
     HTMultiblockController {
     override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
@@ -37,16 +37,14 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world)
 
+    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildFluidStorage()
+
     //    HTDelegatedInventory.Sided    //
 
     override val parent: HTSidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSided()
-
-    override fun markDirty() {
-        super<HTProcessorBlockEntityBase>.markDirty()
-    }
 
     private var processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, parent, 0, 1, tier.smelterMulti)

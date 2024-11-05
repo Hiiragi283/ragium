@@ -91,7 +91,10 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.FIREBOX) { HTFireboxBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
 
+        registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
+        registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
+        registerMachineRenderer(RagiumBlockEntityTypes.SAW_MILL)
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
