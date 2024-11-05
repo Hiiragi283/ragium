@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.unused
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -13,15 +13,12 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.UseAction
 import net.minecraft.world.World
 
-open class HTFluidCubeItem(settings: Settings = itemSettings()) :
-    Item(settings.recipeRemainder(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())) {
+open class HTFluidCubeItem(settings: Settings = itemSettings()) : Item(settings.recipeRemainder(RagiumItems.EMPTY_FLUID_CUBE)) {
     override fun finishUsing(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         onDrink(stack, world, user)
         dropStackAt(
             user,
-            RagiumContents.Misc.EMPTY_FLUID_CUBE
-                .asItem()
-                .defaultStack,
+            RagiumItems.EMPTY_FLUID_CUBE.defaultStack,
         )
         stack.decrementUnlessCreative(1, user)
         return stack

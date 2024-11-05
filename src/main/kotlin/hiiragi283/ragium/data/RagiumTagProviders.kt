@@ -4,10 +4,12 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.RagiumMaterials
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -110,16 +112,16 @@ object RagiumTagProviders {
                 getOrCreateTagBuilder(tagKey).add(fluid)
             }
 
-            fun add(tagKey: TagKey<Fluid>, fluid: RagiumContents.Fluids) {
+            fun add(tagKey: TagKey<Fluid>, fluid: RagiumFluids) {
                 add(tagKey, fluid.value)
             }
 
-            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.BIO_FUEL)
-            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.FUEL)
-            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.AROMATIC_COMPOUNDS)
+            add(RagiumFluidTags.FUEL, RagiumFluids.BIO_FUEL)
+            add(RagiumFluidTags.FUEL, RagiumFluids.FUEL)
+            add(RagiumFluidTags.FUEL, RagiumFluids.AROMATIC_COMPOUNDS)
 
-            add(RagiumFluidTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
-            add(RagiumFluidTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
+            add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.TALLOW)
+            add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.SEED_OIL)
         }
     }
 
@@ -155,8 +157,6 @@ object RagiumTagProviders {
 
                 addAll(RagiumContents.Armors.entries)
                 addAll(RagiumContents.Tools.entries)
-
-                addAll(RagiumContents.Foods.entries)
             }.forEach { content: HTContent<out ItemConvertible> ->
                 if (content is HTContent.Material<*>) {
                     add(content.prefixedTagKey, content)

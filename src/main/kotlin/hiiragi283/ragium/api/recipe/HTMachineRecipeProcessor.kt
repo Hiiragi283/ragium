@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.insert
+import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
@@ -39,7 +39,7 @@ class HTMachineRecipeProcessor private constructor(private val inventory: HTSimp
     fun process(
         world: World,
         pos: BlockPos,
-        machineType: HTMachineType.Processor,
+        machineType: Nothing,
         tier: HTMachineTier,
         input: HTMachineInput,
     ) {
@@ -57,8 +57,7 @@ class HTMachineRecipeProcessor private constructor(private val inventory: HTSimp
             .getOrNull() ?: return DataResult.error { "Could not find matching recipe!" }
         val recipe: HTMachineRecipe = recipeEntry.value
         if (!canAcceptOutputs(recipe)) return DataResult.error { "Could not insert recipe outputs to slots!" }
-        val energyRequest: Boolean = world.energyNetwork?.amount?.let { it >= tier.recipeCost } ?: false
-        if (!energyRequest) {
+        if (!tier.canProcess(world)) {
             return DataResult.error { "Not matching required condition!" }
         }
         modifyOutputs(recipe)

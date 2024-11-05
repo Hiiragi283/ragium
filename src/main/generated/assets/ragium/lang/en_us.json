@@ -232,6 +232,7 @@
   "machine_type.ragium.grinder": "Grinder",
   "machine_type.ragium.metal_former": "Metal Former",
   "machine_type.ragium.mixer": "Mixer",
+  "machine_type.ragium.multi_smelter": "Multi Smelter",
   "machine_type.ragium.rock_generator": "Rock Generator",
   "machine_type.ragium.saw_mill": "Saw Mill",
   "machine_type.ragium.saw_mill.description": "Process Logs more efficiently",

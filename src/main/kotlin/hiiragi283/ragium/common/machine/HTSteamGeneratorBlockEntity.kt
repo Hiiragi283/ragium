@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.toStorage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.inventory.*
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -136,7 +137,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
     }
 
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = parent.wrapStorage(side)
+    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = parent.toStorage(side)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = FilteringStorage.insertOnlyOf(fluidStorage)
 

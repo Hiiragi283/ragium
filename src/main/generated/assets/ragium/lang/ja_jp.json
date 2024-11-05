@@ -229,6 +229,7 @@
   "machine_type.ragium.grinder": "粉砕機",
   "machine_type.ragium.metal_former": "金属加工機",
   "machine_type.ragium.mixer": "ミキサー",
+  "machine_type.ragium.multi_smelter": "並列精錬機",
   "machine_type.ragium.rock_generator": "岩石生成機",
   "machine_type.ragium.rock_generator.description": "岩石を生成する",
   "machine_type.ragium.saw_mill": "製材機",

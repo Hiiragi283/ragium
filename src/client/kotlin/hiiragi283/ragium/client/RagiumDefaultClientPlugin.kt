@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.renderer.HTMultiblockPreviewRenderer
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 
@@ -14,7 +15,7 @@ object RagiumDefaultClientPlugin : RagiumPlugin {
 
     override fun shouldLoad(): Boolean = isClientEnv()
 
-    override fun setupClientMachineProperties(helper: RagiumPlugin.PropertyHelper) {
+    override fun setupClientMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
         }

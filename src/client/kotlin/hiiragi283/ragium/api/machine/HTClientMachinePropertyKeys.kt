@@ -12,9 +12,9 @@ import net.minecraft.util.Identifier
 object HTClientMachinePropertyKeys {
     @JvmField
     val DYNAMIC_RENDERER: HTPropertyKey.Simple<HTMachineEntityRenderer> =
-        HTPropertyKey.Simple(RagiumAPI.id("dynamic_renderer"))
+        HTPropertyKey.ofSimple(RagiumAPI.id("dynamic_renderer"))
 
     @JvmField
     val MODEL_ID: HTPropertyKey.Defaulted<Identifier> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("model_id")) { HTProcessorMachineModel.MODEL_ID }
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("model_id")) { HTProcessorMachineModel.MODEL_ID }
 }

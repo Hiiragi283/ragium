@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.fluid.HTAmountedFluid
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
@@ -59,8 +58,8 @@ fun <T : TransferVariant<*>> Storage<T>.extract(resourceAmount: ResourceAmount<T
 val <T : Any> SingleSlotStorage<T>.resourceAmount: ResourceAmount<T>
     get() = ResourceAmount(resource, amount)
 
-val SingleSlotStorage<FluidVariant>.amountedFluid: HTAmountedFluid
-    get() = HTAmountedFluid(resource.fluid, amount)
+val SingleSlotStorage<FluidVariant>.amountedFluid: Pair<Fluid, Long>
+    get() = resource.fluid to amount
 
 fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? = if (slot in 0..slotCount) getSlot(slot) else null
 

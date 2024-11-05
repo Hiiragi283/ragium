@@ -2,15 +2,19 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.getAroundPos
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTypeNew
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.machine.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.HTDrainBlockEntity
+import hiiragi283.ragium.common.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.machine.HTSteamGeneratorBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.fluid.FluidState
@@ -21,41 +25,31 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import java.util.function.BiConsumer
 
 object RagiumDefaultPlugin : RagiumPlugin {
     override val priority: Int = -100
 
     override fun afterRagiumInit(instance: RagiumAPI) {}
 
-    override fun registerMachineType(register: RagiumPlugin.MachineRegister) {
+    override fun registerMachineType(register: BiConsumer<HTMachineKey, HTMachineTypeNew>) {
         // consumer
-        RagiumMachineKeys.CONSUMERS.forEach(register::registerConsumer)
+        RagiumMachineKeys.CONSUMERS.forEach { register.accept(it, HTMachineTypeNew.CONSUMER) }
         // generators
-        RagiumMachineKeys.GENERATORS.forEach(register::registerGenerator)
+        RagiumMachineKeys.GENERATORS.forEach { register.accept(it, HTMachineTypeNew.GENERATOR) }
         // processors
-        RagiumMachineKeys.PROCESSORS.forEach(register::registerProcessor)
+        RagiumMachineKeys.PROCESSORS.forEach { register.accept(it, HTMachineTypeNew.PROCESSOR) }
     }
 
-    override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper) {
+    override fun registerMaterial(register: BiConsumer<HTMaterialKey, RagiumMaterials.Type>) {
+    }
+
+    override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
         // consumers
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
         }
         // generators
-        /*helper.modify(RagiumMachineKeys.HEAT_GENERATOR) {
-            set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
-                world
-                    .getMachineEntity(pos)
-                    ?.let { it as? HTHeatGeneratorMachineEntity }
-                    ?.isBurning
-                    ?: false
-            }
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntity.Factory.ofStatic(::HTHeatGeneratorMachineEntity),
-            )
-            set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.RED)
-        }*/
         helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.BLUE)
@@ -96,24 +90,25 @@ object RagiumDefaultPlugin : RagiumPlugin {
             helper.modify(it) {
                 // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory(::HTSimpleProcessorMachineEntity))
                 set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-                set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.SIMPLE)
             }
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),)
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTDistillationTowerMachineEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
+        }
+        helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
+            // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTBlastFurnaceMachineEntity),)
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
             // set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntity.Factory.ofStatic(::HTSawMillMachineEntity))
-            set(HTMachinePropertyKeys.RECIPE_SIZE, HTMachineType.Size.LARGE)
         }
     }
 }

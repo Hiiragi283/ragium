@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.api.world.HTHardModeManager
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTMetaMachineBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
@@ -105,7 +105,7 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor
         player.openHandledScreen(
             SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
                 GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
-            }, RagiumContents.Misc.BACKPACK.value.name),
+            }, RagiumItems.BACKPACK.name),
         )
         player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
     }

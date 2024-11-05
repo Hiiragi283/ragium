@@ -170,7 +170,7 @@ object RagiumEventHandlers {
 
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.isOf(RagiumContents.Misc.TRADER_CATALOG)) {
+            if (stack.isOf(RagiumItems.TRADER_CATALOG)) {
                 WanderingTraderEntity(EntityType.WANDERING_TRADER, world).interactMob(player, Hand.MAIN_HAND)
                 TypedActionResult.success(stack, world.isClient)
             } else {

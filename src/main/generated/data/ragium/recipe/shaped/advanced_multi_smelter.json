@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/refined_ragi_steel"
+    },
+    "B": {
+      "item": "ragium:heart_of_the_nether"
+    },
+    "C": {
+      "item": "ragium:advanced_hull"
+    },
+    "D": {
+      "item": "ragium:heart_of_the_nether"
+    },
+    "E": {
+      "tag": "c:plates/steel"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_multi_smelter"
+  }
+}

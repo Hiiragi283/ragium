@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.tags
+package hiiragi283.ragium.api.material
 
 object HTTagPrefixes {
     @JvmField

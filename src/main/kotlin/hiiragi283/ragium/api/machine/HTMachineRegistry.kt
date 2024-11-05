@@ -14,6 +14,4 @@ class HTMachineRegistry(
     fun getType(key: HTMachineKey): HTMachineTypeNew = checkNotNull(types[key]) { "Invalid machine key; $key found!" }
 
     fun getProperty(key: HTMachineKey): HTPropertyHolder = properties.getOrDefault(key, HTPropertyHolder.Empty)
-
-    internal fun copy(map: Map<HTMachineKey, HTPropertyHolder>): HTMachineRegistry = HTMachineRegistry(types, blocks, map)
 }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.RagiumMaterials
-import hiiragi283.ragium.api.tags.HTTagPrefix
+import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements

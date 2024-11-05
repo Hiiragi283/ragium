@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
@@ -116,9 +117,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier1/ragi_alloy_plate",
                 manualForge,
-                RagiumContents.Misc.FORGE_HAMMER,
+                RagiumItems.FORGE_HAMMER,
             ) {
-                hasItems(RagiumContents.Misc.FORGE_HAMMER)
+                hasItems(RagiumItems.FORGE_HAMMER)
             }.putEnglish("")
             .putEnglishDesc("Obtain Ragi-Alloy Plate")
             .putJapanese("")
@@ -309,9 +310,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier2/soap",
                 mixer,
-                RagiumContents.Misc.SOAP_INGOT,
+                RagiumItems.SOAP_INGOT,
             ) {
-                hasItems(RagiumContents.Misc.SOAP_INGOT)
+                hasItems(RagiumItems.SOAP_INGOT)
             }.putEnglish("BIG BROTHER IS WASHING YOU...")
             .putEnglishDesc("Craft Soap Ingot")
             .putJapanese("ビッグブラザーはあなたを洗っている...")
@@ -407,7 +408,7 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
             .createChild(
                 "tier3/distillation_tower",
                 refinedRagiSteelHull,
-                RagiumContents.Misc.EMPTY_FLUID_CUBE,
+                RagiumItems.EMPTY_FLUID_CUBE,
             ) {
                 buildMultiblock(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.PRIMITIVE)
             }.putEnglish("GregTech is waiting for you :)")

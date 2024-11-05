@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.tags
+package hiiragi283.ragium.api.material
 
+import hiiragi283.ragium.api.RagiumAPI
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
@@ -25,6 +26,9 @@ class HTTagPrefix private constructor(private val prefix: String) {
     val commonTagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId(prefix))
 
     fun createTag(value: StringIdentifiable): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${value.asString()}"))
+
+    fun createId(key: HTMaterialKey, namespace: String = RagiumAPI.MOD_ID): Identifier =
+        Identifier.of(namespace, "${key.name}_${prefix.removeSuffix("s")}")
 
     override fun toString(): String = "HTTagPrefix[$prefix]"
 }

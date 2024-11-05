@@ -15,7 +15,8 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
-import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
+import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -28,7 +29,6 @@ import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.type.FoodComponent
-import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -41,7 +41,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
-import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -52,10 +51,10 @@ object RagiumContentRegister : HTContentRegister {
     private val itemBuilders: MutableMap<HTContent<Item>, HTPropertyHolderBuilder> = mutableMapOf()
 
     private val settingsKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item.Settings> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("settings"), value = { it })
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("settings"), value = { it })
 
     private val itemKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("item"), value = ::Item)
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("item"), value = ::Item)
 
     private fun getProperties(content: HTContent<Item>): HTPropertyHolderBuilder =
         itemBuilders.computeIfAbsent(content) { HTPropertyHolderBuilder() }
@@ -97,8 +96,6 @@ object RagiumContentRegister : HTContentRegister {
             addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
-            addAll(RagiumContents.Foods.entries)
-            addAll(RagiumContents.Misc.entries)
         }.forEach(::createAndRegisterItem)
 
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
@@ -123,7 +120,7 @@ object RagiumContentRegister : HTContentRegister {
             registerBlockItem(block, itemSettings())
         }
 
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
         }
     }
@@ -138,41 +135,6 @@ object RagiumContentRegister : HTContentRegister {
         RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
             getProperties(tool)[itemKey] = { tool.toolType.createToolItem(tool.material, it) }
         }
-        // foods
-        getProperties(RagiumContents.Foods.BUTTER)[settingsKey] = { it.food(FoodComponents.APPLE) }
-        getProperties(RagiumContents.Foods.CARAMEL)[settingsKey] = { it.food(FoodComponents.DRIED_KELP) }
-        getProperties(RagiumContents.Foods.CHOCOLATE)[settingsKey] = {
-            it.food(
-                FoodComponent
-                    .Builder()
-                    .nutrition(3)
-                    .saturationModifier(0.3f)
-                    .statusEffect(
-                        StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
-                        1.0f,
-                    ).snack()
-                    .alwaysEdible()
-                    .build(),
-            )
-        }
-        getProperties(RagiumContents.Foods.CHOCOLATE_APPLE)[settingsKey] = { it.food(FoodComponents.COOKED_CHICKEN) }
-        getProperties(RagiumContents.Foods.CHOCOLATE_BREAD)[settingsKey] = { it.food(FoodComponents.COOKED_BEEF) }
-        // ingredients
-        getProperties(RagiumContents.Misc.BACKPACK)[itemKey] = { HTBackpackItem }
-        getProperties(RagiumContents.Misc.CRAFTER_HAMMER)[itemKey] = { HTCrafterHammerItem }
-        getProperties(RagiumContents.Misc.DYNAMITE)[itemKey] = { HTDynamiteItem }
-        getProperties(RagiumContents.Misc.FILLED_FLUID_CUBE)[itemKey] = { HTFilledFluidCubeItem }
-        getProperties(RagiumContents.Misc.FORGE_HAMMER)[itemKey] = { HTForgeHammerItem }
-        getProperties(RagiumContents.Misc.HEART_OF_THE_NETHER)[settingsKey] = { it.rarity(Rarity.UNCOMMON) }
-        /*getProperties(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)[itemKey] = {
-            SpawnEggItem(
-                RagiumEntityTypes.OBLIVION_CUBE,
-                0x000000,
-                0xffffff,
-                itemSettings(),
-            )
-        }*/
-        getProperties(RagiumContents.Misc.REMOVER_DYNAMITE)[itemKey] = { HTRemoverDynamiteItem }
     }
 
     @JvmStatic
@@ -228,10 +190,10 @@ object RagiumContentRegister : HTContentRegister {
         }, RagiumBlocks.TRASH_BOX)
 
         FluidStorage
-            .combinedItemApiProvider(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
+            .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            if (context.itemVariant.isOf(RagiumContents.Misc.FILLED_FLUID_CUBE)) {
+            if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context
                     .itemVariant
                     .componentMap
@@ -239,7 +201,7 @@ object RagiumContentRegister : HTContentRegister {
                     ?.let {
                         FullItemFluidStorage(
                             context,
-                            RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem(),
+                            RagiumItems.EMPTY_FLUID_CUBE,
                             FluidVariant.of(it),
                             FluidConstants.BUCKET,
                         )
@@ -317,10 +279,10 @@ object RagiumContentRegister : HTContentRegister {
             }
         }*/
         // Dispenser
-        DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.REMOVER_DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.REMOVER_DYNAMITE)
         // Fluid Attributes
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidVariantAttributes.register(
                 fluid.value,
                 object : FluidVariantAttributeHandler {
@@ -336,17 +298,17 @@ object RagiumContentRegister : HTContentRegister {
                 dropStackAt(user, Items.OBSIDIAN.defaultStack)
             }
         }
-        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->
+        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.clearStatusEffects()
             }
         }
-        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.HONEY) { _: ItemStack, world: World, user: LivingEntity ->
+        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.HONEY) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.removeStatusEffect(StatusEffects.POISON)
             }
         }
-        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.CHOCOLATE) { _: ItemStack, world: World, user: LivingEntity ->
+        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.CHOCOLATE) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.addStatusEffect(
                     StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1),

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tags.HTTagPrefixes
+import hiiragi283.ragium.api.material.HTTagPrefixes
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.api.ModInitializer

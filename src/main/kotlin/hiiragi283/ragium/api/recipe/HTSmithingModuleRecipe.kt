@@ -1,9 +1,8 @@
 package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.minecraft.item.ItemStack
@@ -38,14 +37,13 @@ object HTSmithingModuleRecipe : SmithingRecipe {
         return base
     }
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack =
-        RagiumContents.Misc.CRAFTER_HAMMER.value.defaultStack
+    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = RagiumItems.CRAFTER_HAMMER.defaultStack
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MODULE_INSTALL
 
     override fun testTemplate(stack: ItemStack): Boolean = stack.isIn(RagiumItemTags.TOOL_MODULES)
 
-    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumContents.Misc.CRAFTER_HAMMER)
+    override fun testBase(stack: ItemStack): Boolean = stack.isOf(RagiumItems.CRAFTER_HAMMER)
 
     override fun testAddition(stack: ItemStack): Boolean = false
 }

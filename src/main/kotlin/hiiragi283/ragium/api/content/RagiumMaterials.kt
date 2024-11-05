@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tags.HTTagPrefix
-import hiiragi283.ragium.api.tags.HTTagPrefixes
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.HTTagPrefixes
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.Block
 import net.minecraft.item.ArmorItem

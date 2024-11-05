@@ -2,6 +2,7 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.extension.itemSettings
@@ -9,23 +10,31 @@ import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockItem
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
+import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.RagiumContents.Misc
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.util.Rarity
 
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
 
     override val config: RagiumAPI.Config = RagiumConfig
     override lateinit var machineRegistry: HTMachineRegistry
+        private set
+    override lateinit var materialRegistry: HTMaterialRegistry
         private set
 
     override fun createBuiltMachineCriterion(
@@ -34,7 +43,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
     ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(type, minTier)
 
     override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
-        Misc.FILLED_FLUID_CUBE,
+        RagiumItems.FILLED_FLUID_CUBE,
         count,
     ) {
         add(RagiumComponentTypes.FLUID, fluid)
@@ -48,10 +57,10 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
         // collect keys from plugins
         fun addMachine(key: HTMachineKey, type: HTMachineTypeNew) {
-            check(keyCache.put(key, type) == null) { "Machine SizeType; ${key.id} is already registered!" }
+            check(keyCache.put(key, type) == null) { "Machine; ${key.id} is already registered!" }
         }
         RagiumAPI.getPlugins().forEach {
-            it.registerMachineType(RagiumPlugin.MachineRegister(::addMachine))
+            it.registerMachineType(::addMachine)
         }
         // sort keys based on its type and id
         val sortedKeys: Map<HTMachineKey, HTMachineTypeNew> = keyCache
@@ -60,6 +69,16 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 compareBy(Pair<HTMachineKey, HTMachineTypeNew>::second)
                     .thenBy(Pair<HTMachineKey, HTMachineTypeNew>::first),
             ).toMap()
+        // register properties
+        val propertyCache: MutableMap<HTMachineKey, HTPropertyHolderBuilder> = mutableMapOf()
+        RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
+            sortedKeys.keys.forEach { key: HTMachineKey ->
+                val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
+                val helper: RagiumPlugin.PropertyHelper<HTMachineKey> = RagiumPlugin.PropertyHelper(key, builder)
+                plugin.setupCommonMachineProperties(helper)
+                if (isClientEnv()) plugin.setupClientMachineProperties(helper)
+            }
+        }
         // register blocks
         val blockTable: HTTable.Mutable<HTMachineKey, HTMachineTier, HTMachineBlock> = mutableTableOf()
         sortedKeys.keys.forEach { key: HTMachineKey ->
@@ -71,18 +90,51 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 Registry.register(Registries.ITEM, tier.createId(key), item)
             }
         }
-        // register properties
-        val propertyCache: MutableMap<HTMachineKey, HTPropertyHolderBuilder> = mutableMapOf()
-        RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
-            sortedKeys.keys.forEach { key: HTMachineKey ->
-                val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
-                val helper = RagiumPlugin.PropertyHelper(key, builder)
-                plugin.setupCommonMachineProperties(helper)
-                if (isClientEnv()) plugin.setupClientMachineProperties(helper)
-            }
-        }
         // complete
         machineRegistry = HTMachineRegistry(sortedKeys, blockTable, propertyCache)
         RagiumAPI.log { info("Registered machine types and properties!") }
+    }
+
+    @JvmStatic
+    fun registerMaterials() {
+        val keyCache: MutableMap<HTMaterialKey, RagiumMaterials.Type> = mutableMapOf()
+
+        // collect keys from plugins
+        fun addMaterial(key: HTMaterialKey, type: RagiumMaterials.Type) {
+            check(keyCache.put(key, type) == null) { "Material; ${key.name} is already registered!" }
+        }
+        RagiumAPI.getPlugins().forEach {
+            it.registerMaterial(::addMaterial)
+        }
+        // sort keys based on its type and id
+        val sortedKeys: Map<HTMaterialKey, RagiumMaterials.Type> = keyCache
+            .toList()
+            .sortedWith(
+                compareBy(Pair<HTMaterialKey, RagiumMaterials.Type>::second)
+                    .thenBy(Pair<HTMaterialKey, RagiumMaterials.Type>::first),
+            ).toMap()
+        // register properties
+        val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
+        RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
+            sortedKeys.keys.forEach { key: HTMaterialKey ->
+                val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
+                val helper: RagiumPlugin.PropertyHelper<HTMaterialKey> = RagiumPlugin.PropertyHelper(key, builder)
+                plugin.setupCommonMaterialProperties(helper)
+                if (isClientEnv()) plugin.setupClientMaterialProperties(helper)
+            }
+        }
+        // register items
+        val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Item> = mutableTableOf()
+        sortedKeys.keys.forEach { key: HTMaterialKey ->
+            val rarity: Rarity = propertyCache[key]!!.getOrDefault(HTMaterialPropertyKeys.RARITY)
+            HTTagPrefix.registry.values.forEach { prefix: HTTagPrefix ->
+                val item = Item(itemSettings().rarity(rarity))
+                Registry.register(Registries.ITEM, prefix.createId(key), item)
+                itemTable.put(prefix, key, item)
+            }
+        }
+        // complete
+        materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
+        RagiumAPI.log { info("Registered material types and properties!") }
     }
 }

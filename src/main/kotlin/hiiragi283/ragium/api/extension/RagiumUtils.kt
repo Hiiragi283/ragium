@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import net.fabricmc.api.EnvType
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.block.entity.BlockEntity
@@ -114,6 +114,13 @@ fun openEnderChest(world: World, player: PlayerEntity) {
     )
 }
 
+fun Inventory.modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
+    val stackIn: ItemStack = getStack(slot)
+    setStack(slot, mapping(stackIn))
+}
+
+fun Inventory.toStorage(side: Direction?): InventoryStorage = InventoryStorage.of(this, side)
+
 fun Inventory.getStackOrNull(slot: Int): ItemStack? = if (slot in 0..size()) getStack(slot) else null
 
 //    ServiceLoader    //
@@ -147,8 +154,6 @@ fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T
 fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
 
 fun ScreenHandlerContext.getInventory(size: Int): Inventory = getBlockEntity() as? Inventory ?: SimpleInventory(size)
-
-fun ScreenHandlerContext.getInventory(typeSize: HTMachineType.Size): Inventory = getInventory(typeSize.invSize)
 
 fun ScreenHandlerContext.getMachine(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase
 

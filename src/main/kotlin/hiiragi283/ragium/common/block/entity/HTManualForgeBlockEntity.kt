@@ -1,13 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
@@ -41,7 +40,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
         val stackMain: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
-        if (!stackMain.isOf(RagiumContents.Misc.FORGE_HAMMER)) return
+        if (!stackMain.isOf(RagiumItems.FORGE_HAMMER)) return
         val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(

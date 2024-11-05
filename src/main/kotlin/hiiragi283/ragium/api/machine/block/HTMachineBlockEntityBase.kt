@@ -38,11 +38,17 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     abstract var key: HTMachineKey
         protected set
     var tier: HTMachineTier = HTMachineTier.PRIMITIVE
-        protected set
+        protected set(value) {
+            val old: HTMachineTier = field
+            field = value
+            onTierUpdated(old, value)
+        }
     val definition: HTMachineDefinition
         get() = HTMachineDefinition(key, tier)
     val packet: HTMachinePacket
         get() = HTMachinePacket(key, tier, pos)
+
+    open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

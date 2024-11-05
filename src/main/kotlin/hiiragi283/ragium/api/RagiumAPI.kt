@@ -3,6 +3,7 @@ package hiiragi283.ragium.api
 import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import net.fabricmc.loader.api.FabricLoader
@@ -60,6 +61,7 @@ interface RagiumAPI {
 
     val config: Config
     val machineRegistry: HTMachineRegistry
+    val materialRegistry: HTMaterialRegistry
 
     fun createBuiltMachineCriterion(type: HTMachine, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 

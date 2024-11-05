@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.fluid
 
-import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -20,10 +19,10 @@ class HTEmptyFluidCubeStorage(val context: ContainerItemContext) : InsertionOnly
 
     override fun insert(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long {
         StoragePreconditions.notBlankNotNegative(resource, maxAmount)
-        if (!context.itemVariant.isOf(RagiumContents.Misc.EMPTY_FLUID_CUBE)) return 0
+        if (!context.itemVariant.isOf(RagiumItems.EMPTY_FLUID_CUBE)) return 0
         if (maxAmount >= FluidConstants.BUCKET) {
             val newVariant: ItemVariant = ItemVariant.of(
-                RagiumContents.Misc.FILLED_FLUID_CUBE,
+                RagiumItems.FILLED_FLUID_CUBE,
                 ComponentChanges
                     .builder()
                     .add(RagiumComponentTypes.FLUID, resource.fluid)

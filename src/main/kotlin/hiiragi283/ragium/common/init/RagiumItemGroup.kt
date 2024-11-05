@@ -59,12 +59,11 @@ object RagiumItemGroup {
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)
 
-                    addAll(RagiumContents.Foods.entries)
                     add(RagiumBlocks.SPONGE_CAKE)
                     add(RagiumBlocks.SWEET_BERRIES_CAKE)
-                    addAll(RagiumContents.Misc.entries)
-                    remove(RagiumContents.Misc.BACKPACK)
-                    remove(RagiumContents.Misc.FILLED_FLUID_CUBE)
+                    addAll(RagiumItems.MISC)
+                    remove(RagiumItems.BACKPACK)
+                    remove(RagiumItems.FILLED_FLUID_CUBE)
                 }.forEach(entries::add)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
@@ -73,11 +72,7 @@ object RagiumItemGroup {
 
         register(FLUID_KEY) {
             displayName(Text.translatable("itemGroup.ragium.fluid"))
-            icon {
-                RagiumContents.Misc.EMPTY_FLUID_CUBE
-                    .asItem()
-                    .defaultStack
-            }
+            icon { RagiumItems.EMPTY_FLUID_CUBE.defaultStack }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 Registries.FLUID
                     .filter { it.isStill(it.defaultState) }

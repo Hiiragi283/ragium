@@ -1,9 +1,5 @@
 {
   "values": [
-    "ragium:bee_wax",
-    "ragium:flour",
-    "ragium:minced_meat",
-    "ragium:pulp",
     {
       "id": "#c:dusts/aluminum",
       "required": false
