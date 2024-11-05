@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.recipe.HTMachineInput
@@ -149,7 +149,7 @@ object RagiumEventHandlers {
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 val screen: HTMachineScreenHandlerBase =
                     player.currentScreenHandler as? HTMachineScreenHandlerBase ?: return@forEach
-                (player.world.getMachine(screen.pos) as? HTFluidSyncable)
+                (player.world.getBlockEntity(screen.pos) as? HTFluidSyncable)
                     ?.sendPacket(player, RagiumNetworks::sendFluidSync)
             }
         }
@@ -207,8 +207,8 @@ object RagiumEventHandlers {
         world: World,
         breaker: Entity?,
         tool: ItemStack,
-        machineType: HTMachine,
+        key: HTMachineKey,
     ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
-        HTMachineInput.create(machineType, HTMachineTier.PRIMITIVE) { add(it) }
+        HTMachineInput.create(key, HTMachineTier.PRIMITIVE) { add(it) }
     }
 }

@@ -1,7 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.extension.amountedFluid
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.fluidStorageOf
+import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTIngredient
@@ -64,7 +65,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
                 ) {
                     add(stackMain)
                     add(stackOff)
-                    add(fluidStorage.amountedFluid)
+                    add(fluidStorage.resourceAmount)
                 },
                 world,
             ).getOrNull()
@@ -105,7 +106,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage: SingleFluidStorage = SingleFluidStorage.withFixedCapacity(FluidConstants.BUCKET * 4) {}
+    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 4)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

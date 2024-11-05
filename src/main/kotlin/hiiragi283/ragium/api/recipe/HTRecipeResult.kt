@@ -5,10 +5,10 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.isOf
+import hiiragi283.ragium.api.extension.longRangeCodec
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.component.ComponentChanges
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemConvertible
@@ -165,7 +165,7 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(
 
         override val isEmpty: Boolean
             get() = entry.map(
-                { it.value() == Items.AIR },
+                { it.isOf(Items.AIR) },
                 { Registries.ITEM.iterateEntries(it).firstOrNull() == null },
             ) ||
                 amount <= 0
@@ -192,30 +192,33 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(
     //    Fluid    //
 
     class Fluid(entry: Either<RegistryEntry<MCFluid>, TagKey<MCFluid>>, amount: Long, components: ComponentChanges) :
-        HTRecipeResult<MCFluid, Long, ResourceAmount<FluidVariant>>(
+        HTRecipeResult<MCFluid, Long, Pair<MCFluid, Long>>(
             entry,
             amount,
             components,
         ) {
-        val resourceAmount: ResourceAmount<FluidVariant> =
-            ResourceAmount(FluidVariant.of(findFirst(), components), amount)
+        val variant: FluidVariant
+            get() = FluidVariant.of(findFirst())
+
+        val amounted: Pair<MCFluid, Long>
+            get() = findFirst() to amount
 
         override val isEmpty: Boolean
             get() = entry.map(
-                { it.value() == Fluids.EMPTY },
+                { it.isOf(Fluids.EMPTY) },
                 { Registries.FLUID.iterateEntries(it).firstOrNull() == null },
             ) ||
                 amount <= 0
 
-        override fun canMerge(other: ResourceAmount<FluidVariant>): Boolean = when {
-            other.isBlank() -> true
-            else -> other.equalsResource(resourceAmount)
+        override fun canMerge(other: Pair<MCFluid, Long>): Boolean = when {
+            other.first == Fluids.EMPTY || other.second <= 0 -> true
+            else -> other.first == this.findFirst()
         }
 
-        override fun merge(other: ResourceAmount<FluidVariant>): ResourceAmount<FluidVariant> = when {
+        override fun merge(other: Pair<MCFluid, Long>): Pair<MCFluid, Long> = when {
             !canMerge(other) -> other
-            other.isBlank() -> resourceAmount
-            other.equalsResource(resourceAmount) -> other + this.amount
+            other.first == Fluids.EMPTY || other.second <= 0 -> amounted
+            other.first == this.findFirst() -> other.first to (other.second + this.amount)
             else -> other
         }
 

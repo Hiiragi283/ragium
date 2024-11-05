@@ -1,77 +1,64 @@
 package hiiragi283.ragium.api.fluid
 
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.extension.buildNbtList
+import hiiragi283.ragium.api.extension.fluidStorageOf
+import hiiragi283.ragium.api.extension.resourceAmount
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
+import hiiragi283.ragium.api.inventory.HTStorageIO
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtElement
+import net.minecraft.nbt.NbtList
+import net.minecraft.registry.RegistryWrapper
 
-sealed class HTMachineFluidStorage(val tier: HTMachineTier, val typeSize: HTMachineType.Size) {
+class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageIO) {
     companion object {
-        @JvmStatic
-        fun fromParts(tier: HTMachineTier, parts: List<HTSingleFluidStorage>): HTMachineFluidStorage = when (parts.size) {
-            2 -> Simple(tier, parts[0], parts[1])
-            4 -> Large(tier, parts[0], parts[1], parts[2], parts[3])
-            else -> throw IllegalStateException()
-        }
+        const val NBT_KEY = "fluid_storages"
+    }
 
-        @JvmStatic
-        private fun createStorage(tier: HTMachineTier): HTSingleFluidStorage = HTSingleFluidStorage(tier.tankCapacity)
+    constructor(builder: HTStorageBuilder) : this(
+        builder.size,
+        builder.ioMapper,
+    )
 
-        @JvmStatic
-        fun create(tier: HTMachineTier, typeSize: HTMachineType.Size): HTMachineFluidStorage = when (typeSize) {
-            HTMachineType.Size.SIMPLE -> Simple(tier)
-            HTMachineType.Size.LARGE -> Large(tier)
+    val parts: Array<SingleFluidStorage>
+        get() = parts1
+
+    private val parts1: Array<SingleFluidStorage> = Array(size) { fluidStorageOf(FluidConstants.BUCKET * 16) }
+
+    fun get(index: Int): SingleFluidStorage = parts1[index]
+
+    fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> = get(index).resourceAmount
+
+    fun createWrapped(): Storage<FluidVariant> = CombinedStorage(
+        buildList {
+            parts1.forEachIndexed { index: Int, storage: SingleFluidStorage ->
+                add(ioMapper(index).wrapStorage(storage))
+            }
+        },
+    )
+
+    fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        val list: NbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE.toInt())
+        list.forEachIndexed { index: Int, nbtElement: NbtElement ->
+            if (nbtElement is NbtCompound) {
+                parts1[index].readNbt(nbtElement, wrapperLookup)
+            }
         }
     }
 
-    abstract val parts: List<HTSingleFluidStorage>
-
-    operator fun get(index: Int): HTSingleFluidStorage = parts[index]
-
-    abstract fun createWrapped(): Storage<FluidVariant>
-
-    //    Simple    //
-
-    private class Simple(
-        tier: HTMachineTier,
-        input: HTSingleFluidStorage = createStorage(tier),
-        output: HTSingleFluidStorage = createStorage(tier),
-    ) : HTMachineFluidStorage(tier, HTMachineType.Size.SIMPLE) {
-        override val parts: List<HTSingleFluidStorage> = listOf(input, output)
-
-        override fun createWrapped(): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
-            listOf(
-                FilteringStorage.insertOnlyOf(get(0)),
-                FilteringStorage.extractOnlyOf(get(1)),
-            ),
-        )
-    }
-
-    //    Large    //
-
-    private class Large(
-        tier: HTMachineTier,
-        firstInput: HTSingleFluidStorage = createStorage(tier),
-        secondInput: HTSingleFluidStorage = createStorage(tier),
-        firstOutput: HTSingleFluidStorage = createStorage(tier),
-        secondOutput: HTSingleFluidStorage = createStorage(tier),
-    ) : HTMachineFluidStorage(tier, HTMachineType.Size.LARGE) {
-        override val parts: List<HTSingleFluidStorage> = listOf(
-            firstInput,
-            secondInput,
-            firstOutput,
-            secondOutput,
-        )
-
-        override fun createWrapped(): Storage<FluidVariant> = CombinedStorage<FluidVariant, Storage<FluidVariant>>(
-            listOf(
-                FilteringStorage.insertOnlyOf(get(0)),
-                FilteringStorage.insertOnlyOf(get(1)),
-                FilteringStorage.extractOnlyOf(get(2)),
-                FilteringStorage.extractOnlyOf(get(3)),
-            ),
+    fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        nbt.put(
+            NBT_KEY,
+            buildNbtList {
+                parts1.forEach { add(buildNbt { it.writeNbt(this, wrapperLookup) }) }
+            },
         )
     }
 }

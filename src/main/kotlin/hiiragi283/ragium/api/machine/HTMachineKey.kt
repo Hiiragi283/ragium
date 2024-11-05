@@ -70,6 +70,8 @@ class HTMachineKey private constructor(val id: Identifier) :
 
         override val key: HTMachineKey = this
 
+        override fun toString(): String = "HTMachineKey[$id]"
+
         //    Comparable    //
 
         override fun compareTo(other: HTMachineKey): Int = id.compareTo(other.id)

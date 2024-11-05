@@ -69,7 +69,7 @@ open class HTSimpleInventory : Inventory {
 
     override fun isEmpty(): Boolean = stacks.isEmpty() || stacks.all(ItemStack::isEmpty)
 
-    override fun getStack(slot: Int): ItemStack = stacks.getOrNull(slot) ?: ItemStack.EMPTY
+    override fun getStack(slot: Int): ItemStack = stacks.getOrNull(slot) ?: ItemStack.EMPTY.copy()
 
     override fun removeStack(slot: Int, amount: Int): ItemStack = Inventories.splitStack(stacks, slot, amount)
 

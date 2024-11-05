@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.machine.HTCombustionGeneratorBlockEntity
@@ -69,6 +70,10 @@ object RagiumBlockEntityTypes {
         register("simple_generator", HTGeneratorBlockEntityBase::Simple)
 
     @JvmField
+    val SIMPLE_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Simple> =
+        register("simple_processor", HTProcessorBlockEntityBase::Simple)
+
+    @JvmField
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =
         register("steam_generator", ::HTSteamGeneratorBlockEntity)
 
@@ -104,12 +109,14 @@ object RagiumBlockEntityTypes {
         // consumers
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         // generators
-        registerMachineBlocks(RagiumMachineKeys.SOLAR_PANEL, SIMPLE_GENERATOR)
-        registerMachineBlocks(RagiumMachineKeys.THERMAL_GENERATOR, SIMPLE_GENERATOR)
-        registerMachineBlocks(RagiumMachineKeys.WATER_GENERATOR, SIMPLE_GENERATOR)
-        registerMachineBlocks(RagiumMachineKeys.COMBUSTION_GENERATOR, COMBUSTION_GENERATOR)
+        RagiumMachineKeys.GENERATORS.forEach {
+            registerMachineBlocks(it, SIMPLE_GENERATOR)
+        }
         registerMachineBlocks(RagiumMachineKeys.STEAM_GENERATOR, STEAM_GENERATOR)
         // processors
+        RagiumMachineKeys.PROCESSORS.forEach {
+            registerMachineBlocks(it, SIMPLE_PROCESSOR)
+        }
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
     }
 

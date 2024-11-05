@@ -114,7 +114,7 @@ class HTMachineRecipe(
                 return false
             }
         }
-        return catalyst?.test(input.catalyst) ?: true
+        return catalyst?.test(input.catalyst) ?: input.catalyst.isEmpty
     }
 
     override fun craft(input: HTMachineInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)

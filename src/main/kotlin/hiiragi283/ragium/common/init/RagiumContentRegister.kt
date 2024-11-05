@@ -20,7 +20,6 @@ import hiiragi283.ragium.common.item.HTMetaMachineBlockItem
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -212,7 +211,7 @@ object RagiumContentRegister : HTContentRegister {
             }
         }
         FluidStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            SingleFluidStorage.withFixedCapacity(Long.MAX_VALUE) {}
+            fluidStorageOf(Long.MAX_VALUE)
         }, RagiumBlocks.TRASH_BOX)
 
         EnergyStorage.SIDED.registerForBlocks(

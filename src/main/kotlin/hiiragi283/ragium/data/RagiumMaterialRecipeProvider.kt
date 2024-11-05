@@ -168,7 +168,7 @@ class RagiumMaterialRecipeProvider(output: FabricDataOutput, registriesFuture: C
     }
 
     private fun dustToIngotRecipe(exporter: RecipeExporter, material: RagiumMaterials) {
-        if (!material.isValidPrefix(HTTagPrefixes.RAW_MATERIALS)) return
+        if (!material.isValidPrefix(HTTagPrefixes.DUSTS)) return
         val dust: TagKey<Item> = HTTagPrefixes.DUSTS.createTag(material)
         val result: ItemConvertible = material.getIngot() ?: material.getGem() ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(

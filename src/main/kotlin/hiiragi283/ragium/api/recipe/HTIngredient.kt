@@ -4,9 +4,12 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.longRangeCodec
 import hiiragi283.ragium.api.extension.validate
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -145,11 +148,11 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
     class Fluid(entryList: RegistryEntryList<MCFluid>, amount: Long) :
         HTIngredient<MCFluid, Long>(entryList, amount),
         BiPredicate<MCFluid, Long> {
-        fun test(pair: Pair<MCFluid, Long>): Boolean = test(pair.first, pair.second)
+        fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
 
         override fun test(fluid: MCFluid, amount: Long): Boolean = when {
             fluid == Fluids.EMPTY || amount <= 0 -> this.isEmpty
-            else -> entryList.any { it == fluid } && amount >= this.amount
+            else -> entryList.isIn(fluid) && amount >= this.amount
         }
     }
 }

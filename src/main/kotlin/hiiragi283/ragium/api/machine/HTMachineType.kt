@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import io.netty.buffer.ByteBuf
 import net.minecraft.component.ComponentType
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.util.StringIdentifiable
 
 class HTMachineType(override val key: HTMachineKey) : HTMachine {
     companion object {
@@ -31,14 +30,4 @@ class HTMachineType(override val key: HTMachineKey) : HTMachine {
     }
 
     override fun toString(): String = "MachineType[${key.id}]"
-
-    //    Size    //
-
-    enum class Size(val invSize: Int) : StringIdentifiable {
-        SIMPLE(5),
-        LARGE(7),
-        ;
-
-        override fun asString(): String = name.lowercase()
-    }
 }

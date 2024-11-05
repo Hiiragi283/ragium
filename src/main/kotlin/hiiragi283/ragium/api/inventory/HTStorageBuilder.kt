@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.inventory
 
+import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
 
@@ -43,4 +44,6 @@ class HTStorageBuilder(val size: Int) {
     fun buildSimple(): HTSimpleInventory = build(::HTSimpleInventory)
 
     fun buildSided(): HTSidedInventory = build(::HTSidedInventory)
+
+    fun buildFluidStorage(): HTMachineFluidStorage = build(::HTMachineFluidStorage)
 }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.machine
 
 import com.google.common.base.Predicates
-import hiiragi283.ragium.api.fluid.HTSingleFluidStorage
+import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
@@ -66,7 +67,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage = HTSingleFluidStorage(HTMachineTier.BASIC.tankCapacity)
+    private val fluidStorage: SingleFluidStorage = fluidStorageOf(tier.tankCapacity)
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)

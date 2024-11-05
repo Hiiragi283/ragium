@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -71,9 +72,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         override fun getCapacity(variant: ItemVariant): Long = 64
     }
 
-    private val fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
-        override fun getCapacity(variant: FluidVariant): Long = FluidConstants.BUCKET * 16
-    }
+    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = if (type.isItem) itemStorage else null
 

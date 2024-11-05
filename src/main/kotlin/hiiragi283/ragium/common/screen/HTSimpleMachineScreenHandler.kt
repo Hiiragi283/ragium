@@ -18,7 +18,7 @@ class HTSimpleMachineScreenHandler(
         playerInv,
         packet,
         ctx,
-        ctx.getInventory(2),
+        ctx.getInventory(5),
     ) {
     init {
         inventory.onOpen(player)

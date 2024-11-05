@@ -21,6 +21,8 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.registry.BuiltinRegistries
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory
@@ -146,6 +148,10 @@ operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
 //    Registry    //
 
 fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
+
+fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
+
+fun <T : Any> RegistryEntryList<T>.isIn(value: T): Boolean = any { it.isOf(value) }
 
 //    ScreenHandler    //
 

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -48,6 +49,8 @@ fun <T : TransferVariant<*>> ResourceAmount<T>.isBlank(): Boolean = resource.isB
 fun <T : Any> ResourceAmount<T>.equalsResource(other: ResourceAmount<T>): Boolean = resource == other.resource
 
 //    Storage    //
+
+fun fluidStorageOf(capacity: Long): SingleFluidStorage = SingleFluidStorage.withFixedCapacity(capacity) {}
 
 fun <T : TransferVariant<*>> Storage<T>.insert(resourceAmount: ResourceAmount<T>, transaction: Transaction): Long =
     insert(resourceAmount.resource, resourceAmount.amount, transaction)

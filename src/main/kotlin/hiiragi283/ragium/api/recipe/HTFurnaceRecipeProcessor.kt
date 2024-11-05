@@ -20,19 +20,19 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
 ) {
     private val matchGetter: HTRecipeCache<SingleStackRecipeInput, T> = HTRecipeCache(recipeType)
 
-    fun process(world: World): Boolean {
+    fun process(world: World): Boolean = runCatching {
         val inputStack: ItemStack = inventory.getStack(inputIndex)
         val processCount: Int = min(inputStack.count, multiplier)
         val recipeEntry: RecipeEntry<T> = matchGetter
             .getFirstMatch(SingleStackRecipeInput(inventory.getStack(inputIndex)), world)
-            .getOrNull() ?: return false
+            .getOrNull() ?: return@runCatching false
         val recipe: T = recipeEntry.value
         val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
         resultStack.count *= processCount
         val output: HTRecipeResult.Item = HTRecipeResult.ofItem(resultStack)
-        if (!output.canMerge(inventory.getStack(outputIndex))) return false
+        if (!output.canMerge(inventory.getStack(outputIndex))) return@runCatching false
         inventory.modifyStack(outputIndex, output::merge)
         inventory.getStack(inputIndex).count -= processCount
-        return true
-    }
+        return@runCatching true
+    }.getOrDefault(false)
 }
