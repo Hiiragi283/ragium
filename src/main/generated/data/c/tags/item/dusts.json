@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "#c:dusts/aluminum",
+      "required": false
+    },
+    {
       "id": "#c:dusts/ash",
       "required": false
     },
@@ -17,6 +21,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/fluorite",
+      "required": false
+    },
+    {
       "id": "#c:dusts/gold",
       "required": false
     },
@@ -29,11 +37,35 @@
       "required": false
     },
     {
+      "id": "#c:dusts/ragi_alloy",
+      "required": false
+    },
+    {
       "id": "#c:dusts/ragi_crystal",
       "required": false
     },
     {
+      "id": "#c:dusts/ragi_steel",
+      "required": false
+    },
+    {
       "id": "#c:dusts/raginite",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/ragium",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/silicon",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/steel",
       "required": false
     },
     {

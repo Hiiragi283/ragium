@@ -5,7 +5,27 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/copper",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/fluorite",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/gold",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/iron",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/ragi_alloy",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/ragi_crystal",
       "required": false
     },
     {
@@ -13,7 +33,15 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/ragium",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/silicon",
       "required": false
     },
     {

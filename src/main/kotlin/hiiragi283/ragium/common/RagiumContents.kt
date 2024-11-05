@@ -3,10 +3,11 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTContentRegister
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.block.HTPipeType
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
@@ -19,25 +20,25 @@ import net.minecraft.registry.RegistryKeys
 object RagiumContents : HTContentRegister {
     //    Ores    //
 
-    enum class Ores(override val material: RagiumMaterials, val baseStone: Block) : HTContent.Material<Block> {
-        CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE, Blocks.STONE) {
+    enum class Ores(override val material: HTMaterialKey, val baseStone: Block) : HTContent.Material<Block> {
+        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE) {
             override val key: RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("raginite_ore"))
             override val enPattern: String = "Raginite Ore"
             override val jaPattern: String = "ラギナイト鉱石"
         },
-        DEEP_RAGINITE(RagiumMaterials.RAGINITE, Blocks.DEEPSLATE) {
+        DEEP_RAGINITE(RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE) {
             override val key: RegistryKey<Block> =
                 RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("deepslate_raginite_ore"))
             override val enPattern: String = "Deep Raginite Ore"
             override val jaPattern: String = "深層ラギナイト鉱石"
         },
-        NETHER_RAGINITE(RagiumMaterials.RAGINITE, Blocks.NETHERRACK) {
+        NETHER_RAGINITE(RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK) {
             override val key: RegistryKey<Block> =
                 RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("nether_raginite_ore"))
             override val enPattern: String = "Nether Raginite Ore"
             override val jaPattern: String = "ネザーラギナイト鉱石"
         },
-        END_RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL, Blocks.END_STONE) {
+        END_RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE) {
             override val key: RegistryKey<Block> =
                 RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("end_ragi_crystal_ore"))
             override val enPattern: String = "End Ragi-Crystal Ore"
@@ -58,12 +59,12 @@ object RagiumContents : HTContentRegister {
 
     //    Storage Blocks    //
 
-    enum class StorageBlocks(override val material: RagiumMaterials) : HTContent.Material<Block> {
-        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
-        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
-        ALUMINUM(RagiumMaterials.ALUMINUM),
-        STEEL(RagiumMaterials.STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+    enum class StorageBlocks(override val material: HTMaterialKey) : HTContent.Material<Block> {
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        STEEL(RagiumMaterialKeys.STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         ;
 
         override val registry: Registry<Block> = Registries.BLOCK
@@ -76,18 +77,18 @@ object RagiumContents : HTContentRegister {
 
     //    Dusts    //
 
-    enum class Dusts(override val material: RagiumMaterials) : HTContent.Material<Item> {
-        CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE),
-        RAGINITE(RagiumMaterials.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
+    enum class Dusts(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
+        RAGINITE(RagiumMaterialKeys.RAGINITE),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
 
-        ASH(RagiumMaterials.ASH),
-        BAUXITE(RagiumMaterials.BAUXITE),
-        COPPER(RagiumMaterials.COPPER),
-        GOLD(RagiumMaterials.GOLD),
-        IRON(RagiumMaterials.IRON),
-        NITER(RagiumMaterials.NITER),
-        SULFUR(RagiumMaterials.SULFUR),
+        ASH(RagiumMaterialKeys.ASH),
+        BAUXITE(RagiumMaterialKeys.BAUXITE),
+        COPPER(RagiumMaterialKeys.COPPER),
+        GOLD(RagiumMaterialKeys.GOLD),
+        IRON(RagiumMaterialKeys.IRON),
+        NITER(RagiumMaterialKeys.NITER),
+        SULFUR(RagiumMaterialKeys.SULFUR),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -100,10 +101,10 @@ object RagiumContents : HTContentRegister {
 
     //    Gems    //
 
-    enum class Gems(override val material: RagiumMaterials) : HTContent.Material<Item> {
-        FLUORITE(RagiumMaterials.FLUORITE),
-        RAGI_CRYSTAL(RagiumMaterials.RAGI_CRYSTAL),
-        RAGIUM(RagiumMaterials.RAGIUM),
+    enum class Gems(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        FLUORITE(RagiumMaterialKeys.FLUORITE),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -116,12 +117,12 @@ object RagiumContents : HTContentRegister {
 
     //    Ingots    //
 
-    enum class Ingots(override val material: RagiumMaterials) : HTContent.Material<Item> {
-        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
-        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
-        ALUMINUM(RagiumMaterials.ALUMINUM),
-        STEEL(RagiumMaterials.STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
+    enum class Ingots(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        STEEL(RagiumMaterialKeys.STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -134,24 +135,24 @@ object RagiumContents : HTContentRegister {
 
     //    Plates    //
 
-    enum class Plates(override val material: RagiumMaterials) : HTContent.Material<Item> {
+    enum class Plates(override val material: HTMaterialKey) : HTContent.Material<Item> {
         // tier1
-        RAGI_ALLOY(RagiumMaterials.RAGI_ALLOY),
-        IRON(RagiumMaterials.IRON),
-        COPPER(RagiumMaterials.COPPER),
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        IRON(RagiumMaterialKeys.IRON),
+        COPPER(RagiumMaterialKeys.COPPER),
 
         // tier2
-        RAGI_STEEL(RagiumMaterials.RAGI_STEEL),
-        ALUMINUM(RagiumMaterials.ALUMINUM),
-        GOLD(RagiumMaterials.GOLD),
-        PLASTIC(RagiumMaterials.PLASTIC),
-        SILICON(RagiumMaterials.SILICON),
-        STEEL(RagiumMaterials.STEEL),
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        GOLD(RagiumMaterialKeys.GOLD),
+        PLASTIC(RagiumMaterialKeys.PLASTIC),
+        SILICON(RagiumMaterialKeys.SILICON),
+        STEEL(RagiumMaterialKeys.STEEL),
 
         // tier3
-        REFINED_RAGI_STEEL(RagiumMaterials.REFINED_RAGI_STEEL),
-        ENGINEERING_PLASTIC(RagiumMaterials.ENGINEERING_PLASTIC),
-        STELLA(RagiumMaterials.STELLA),
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        ENGINEERING_PLASTIC(RagiumMaterialKeys.ENGINEERING_PLASTIC),
+        STELLA(RagiumMaterialKeys.STELLA),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -164,10 +165,10 @@ object RagiumContents : HTContentRegister {
 
     //    Raw Materials    //
 
-    enum class RawMaterials(override val material: RagiumMaterials) : HTContent.Material<Item> {
-        BAUXITE(RagiumMaterials.BAUXITE),
-        CRUDE_RAGINITE(RagiumMaterials.CRUDE_RAGINITE),
-        RAGINITE(RagiumMaterials.RAGINITE),
+    enum class RawMaterials(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        BAUXITE(RagiumMaterialKeys.BAUXITE),
+        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
+        RAGINITE(RagiumMaterialKeys.RAGINITE),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM

@@ -48,6 +48,8 @@ class HTMaterialKey private constructor(val name: String) :
             .materialRegistry.items
             .get(prefix, this)
 
+        fun getItemOrThrow(prefix: HTTagPrefix): Item = checkNotNull(getItem(prefix))
+
         //    Comparable    //
 
         override fun compareTo(other: HTMaterialKey): Int = name.compareTo(other.name)
@@ -55,6 +57,8 @@ class HTMaterialKey private constructor(val name: String) :
         //    StringIdentifiable    //
 
         override fun asString(): String = name
+
+        override fun toString(): String = "HTMaterialKey[$name]"
 
         //    Type    //
 

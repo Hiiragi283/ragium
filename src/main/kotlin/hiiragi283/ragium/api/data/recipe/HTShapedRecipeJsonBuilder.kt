@@ -45,8 +45,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    fun input(char: Char, prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder =
-        input(char, prefix.createTag(material))
+    fun input(char: Char, prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = input(char, prefix.createTag(material))
 
     fun input(char: Char, content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = input(char, content.prefixedTagKey)
 

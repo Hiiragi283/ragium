@@ -1,7 +1,15 @@
 {
   "values": [
     {
+      "id": "#c:raw_materials/aluminum",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/bauxite",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/copper",
       "required": false
     },
     {
@@ -9,7 +17,27 @@
       "required": false
     },
     {
+      "id": "#c:raw_materials/gold",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/iron",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/niter",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/raginite",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/silicon",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/sulfur",
       "required": false
     }
   ]

@@ -14,6 +14,7 @@ object RagiumCommon : ModInitializer {
         RagiumComponentTypes
 
         RagiumAdvancementCriteria
+        RagiumArmorMaterials
         RagiumBlockEntityTypes
         RagiumBlocks
         RagiumEntityTypes
@@ -21,9 +22,9 @@ object RagiumCommon : ModInitializer {
         RagiumRecipeSerializers
         RagiumRecipeTypes
 
+        RagiumContentRegister.registerContents()
         InternalRagiumAPI.registerMachines()
         InternalRagiumAPI.registerMaterials()
-        RagiumContentRegister.registerContents()
 
         HTTradeOfferRegistry.init()
         RagiumBlockEntityTypes.init()

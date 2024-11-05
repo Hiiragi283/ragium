@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
@@ -507,13 +506,12 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         }
         // hulls
         listOf(
-            RagiumMaterials.RAGI_ALLOY,
-            RagiumMaterials.RAGI_STEEL,
-            RagiumMaterials.REFINED_RAGI_STEEL,
-        ).forEachIndexed { index: Int, material: RagiumMaterials ->
+            RagiumContents.Plates.RAGI_ALLOY,
+            RagiumContents.Plates.RAGI_STEEL,
+            RagiumContents.Plates.REFINED_RAGI_STEEL,
+        ).forEachIndexed { index: Int, plate: RagiumContents.Plates ->
             val base: Block = HTMachineTier.entries[index].getBaseBlock()
             val hull: RagiumContents.Hulls = RagiumContents.Hulls.entries[index]
-            val plate: RagiumContents.Plates = material.getPlate() ?: return@forEachIndexed
             HTShapedRecipeJsonBuilder
                 .create(hull)
                 .patterns(

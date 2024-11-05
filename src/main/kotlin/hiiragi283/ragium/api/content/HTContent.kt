@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -21,9 +22,14 @@ interface HTContent<T : ItemConvertible> :
 
     interface Material<T : ItemConvertible> :
         HTContent<T>,
-        HTTranslationFormatter,
-        RagiumMaterials.Holder {
-        override fun getTranslation(type: HTLangType): String = getTranslation(type, material)
+        HTTranslationFormatter {
+        val material: HTMaterialKey
+
+        override fun getTranslation(type: HTLangType): String = getTranslation(
+            type,
+            RagiumMaterialTranslations.entries.firstOrNull { it.key == material }
+                ?: RagiumMaterialTranslations.UNDEFINED,
+        )
 
         val tagPrefix: HTTagPrefix
 

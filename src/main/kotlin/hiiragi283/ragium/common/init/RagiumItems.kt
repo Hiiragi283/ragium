@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.content.HTToolType
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.item.*
 import net.minecraft.component.type.FoodComponent
@@ -18,51 +17,51 @@ object RagiumItems : HTContentRegister {
 
     @JvmField
     val STEEL_HELMET: Item =
-        registerArmorItem("steel_helmet", HTArmorType.HELMET, RagiumMaterials.Armor.STEEL, 25)
+        registerArmorItem("steel_helmet", HTArmorType.HELMET, RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
     val STEEL_CHESTPLATE: Item =
-        registerArmorItem("steel_chestplate", HTArmorType.CHESTPLATE, RagiumMaterials.Armor.STEEL, 25)
+        registerArmorItem("steel_chestplate", HTArmorType.CHESTPLATE, RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
     val STEEL_LEGGINGS: Item =
-        registerArmorItem("steel_leggings", HTArmorType.LEGGINGS, RagiumMaterials.Armor.STEEL, 25)
+        registerArmorItem("steel_leggings", HTArmorType.LEGGINGS, RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
     val STEEL_BOOTS: Item =
-        registerArmorItem("steel_boots", HTArmorType.BOOTS, RagiumMaterials.Armor.STEEL, 25)
+        registerArmorItem("steel_boots", HTArmorType.BOOTS, RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
     val STELLA_GOGGLE: Item =
-        registerArmorItem("stella_goggle", HTArmorType.HELMET, RagiumMaterials.Armor.STELLA, 33)
+        registerArmorItem("stella_goggle", HTArmorType.HELMET, RagiumArmorMaterials.STELLA, 33)
 
     @JvmField
     val STELLA_JACKET: Item =
-        registerArmorItem("stella_jacket", HTArmorType.CHESTPLATE, RagiumMaterials.Armor.STELLA, 33)
+        registerArmorItem("stella_jacket", HTArmorType.CHESTPLATE, RagiumArmorMaterials.STELLA, 33)
 
     @JvmField
     val STELLA_LEGGINGS: Item =
-        registerArmorItem("stella_leggings", HTArmorType.LEGGINGS, RagiumMaterials.Armor.STELLA, 33)
+        registerArmorItem("stella_leggings", HTArmorType.LEGGINGS, RagiumArmorMaterials.STELLA, 33)
 
     @JvmField
     val STELLA_BOOTS: Item =
-        registerArmorItem("stella_boots", HTArmorType.BOOTS, RagiumMaterials.Armor.STELLA, 33)
+        registerArmorItem("stella_boots", HTArmorType.BOOTS, RagiumArmorMaterials.STELLA, 33)
 
     @JvmField
     val RAGIUM_HELMET: Item =
-        registerArmorItem("ragium_helmet", HTArmorType.HELMET, RagiumMaterials.Armor.RAGIUM, 37)
+        registerArmorItem("ragium_helmet", HTArmorType.HELMET, RagiumArmorMaterials.RAGIUM, 37)
 
     @JvmField
     val RAGIUM_CHESTPLATE: Item =
-        registerArmorItem("ragium_chestplate", HTArmorType.CHESTPLATE, RagiumMaterials.Armor.RAGIUM, 37)
+        registerArmorItem("ragium_chestplate", HTArmorType.CHESTPLATE, RagiumArmorMaterials.RAGIUM, 37)
 
     @JvmField
     val RAGIUM_LEGGINGS: Item =
-        registerArmorItem("ragium_leggings", HTArmorType.LEGGINGS, RagiumMaterials.Armor.RAGIUM, 37)
+        registerArmorItem("ragium_leggings", HTArmorType.LEGGINGS, RagiumArmorMaterials.RAGIUM, 37)
 
     @JvmField
     val RAGIUM_BOOTS: Item =
-        registerArmorItem("ragium_boots", HTArmorType.BOOTS, RagiumMaterials.Armor.RAGIUM, 37)
+        registerArmorItem("ragium_boots", HTArmorType.BOOTS, RagiumArmorMaterials.RAGIUM, 37)
 
     @JvmField
     val ARMORS: List<Item> = listOf(
@@ -83,19 +82,19 @@ object RagiumItems : HTContentRegister {
     //    Tools    //
 
     @JvmField
-    val STEEL_AXE: Item = registerToolItem("steel_axe", HTToolType.AXE, RagiumMaterials.Tool.STEEL)
+    val STEEL_AXE: Item = registerToolItem("steel_axe", HTToolType.AXE, RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_HOE: Item = registerToolItem("steel_hoe", HTToolType.HOE, RagiumMaterials.Tool.STEEL)
+    val STEEL_HOE: Item = registerToolItem("steel_hoe", HTToolType.HOE, RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_PICKAXE: Item = registerToolItem("steel_pickaxe", HTToolType.PICKAXE, RagiumMaterials.Tool.STEEL)
+    val STEEL_PICKAXE: Item = registerToolItem("steel_pickaxe", HTToolType.PICKAXE, RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_SHOVEL: Item = registerToolItem("steel_shovel", HTToolType.SHOVEL, RagiumMaterials.Tool.STEEL)
+    val STEEL_SHOVEL: Item = registerToolItem("steel_shovel", HTToolType.SHOVEL, RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_SWORD: Item = registerToolItem("steel_sword", HTToolType.SWORD, RagiumMaterials.Tool.STEEL)
+    val STEEL_SWORD: Item = registerToolItem("steel_sword", HTToolType.SWORD, RagiumToolMaterials.STEEL)
 
     @JvmField
     val TOOLS: List<Item> = listOf(

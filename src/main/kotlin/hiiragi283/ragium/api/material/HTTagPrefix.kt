@@ -9,18 +9,24 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
-enum class HTTagPrefix(val prefix: String, override val enPattern: String, override val jaPattern: String) :
-    HTTranslationFormatter,
+enum class HTTagPrefix(
+    val prefix: String,
+    override val enPattern: String,
+    override val jaPattern: String,
+    val enableAutoGen: Boolean = true,
+) : HTTranslationFormatter,
     StringIdentifiable {
     DUST("dusts", "%s Dust", "%sの粉"),
-    GEM("gems", "%s", "%s"),
+    GEM("gems", "%s", "%s") {
+        override fun createPath(key: HTMaterialKey): String = key.name
+    },
     INGOT("ingots", "%s Ingot", "%sインゴット"),
-    ORE("ores", "%s Ore", "%s鉱石"),
+    ORE("ores", "%s Ore", "%s鉱石", false),
     PLATE("plates", "%s Plate", "%s板"),
     RAW_MATERIAL("raw_materials", "Raw %s", "%sの原石") {
         override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
     },
-    STORAGE_BLOCK("storage_blocks", "Block of %s", "%sブロック") {
+    STORAGE_BLOCK("storage_blocks", "Block of %s", "%sブロック", false) {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },
     ;

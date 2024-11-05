@@ -12,19 +12,30 @@ object RagiumMaterialKeys {
     val RAGI_ALLOY: HTMaterialKey = HTMaterialKey.of("ragi_alloy")
 
     @JvmField
+    val ASH: HTMaterialKey = HTMaterialKey.of("ash")
+
+    @JvmField
     val COPPER: HTMaterialKey = HTMaterialKey.of("copper")
 
     @JvmField
     val IRON: HTMaterialKey = HTMaterialKey.of("iron")
 
     @JvmField
-    val ASH: HTMaterialKey = HTMaterialKey.of("ash")
-
-    @JvmField
     val NITER: HTMaterialKey = HTMaterialKey.of("niter")
 
     @JvmField
     val SULFUR: HTMaterialKey = HTMaterialKey.of("sulfur")
+
+    @JvmField
+    val TIER_ONE: List<HTMaterialKey> = listOf(
+        CRUDE_RAGINITE,
+        RAGI_ALLOY,
+        ASH,
+        COPPER,
+        IRON,
+        NITER,
+        SULFUR,
+    )
 
     //    Tier 2    //
 
@@ -49,6 +60,17 @@ object RagiumMaterialKeys {
     @JvmField
     val STEEL: HTMaterialKey = HTMaterialKey.of("steel")
 
+    @JvmField
+    val TIER_TWO: List<HTMaterialKey> = listOf(
+        RAGINITE,
+        RAGI_STEEL,
+        FLUORITE,
+        GOLD,
+        PLASTIC,
+        SILICON,
+        STEEL,
+    )
+
     //    Tier 3    //
 
     @JvmField
@@ -64,10 +86,20 @@ object RagiumMaterialKeys {
     val BAUXITE: HTMaterialKey = HTMaterialKey.of("bauxite")
 
     @JvmField
-    val ENGINEERING_PLASTIC: HTMaterialKey = HTMaterialKey.of("engineering_plasitc")
+    val ENGINEERING_PLASTIC: HTMaterialKey = HTMaterialKey.of("engineering_plastic")
 
     @JvmField
     val STELLA: HTMaterialKey = HTMaterialKey.of("stella")
+
+    @JvmField
+    val TIER_THREE: List<HTMaterialKey> = listOf(
+        RAGI_CRYSTAL,
+        REFINED_RAGI_STEEL,
+        ALUMINUM,
+        BAUXITE,
+        ENGINEERING_PLASTIC,
+        STELLA,
+    )
 
     //    Tier 4    //
 

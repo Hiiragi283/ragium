@@ -119,16 +119,27 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 if (isClientEnv()) plugin.setupClientMaterialProperties(helper)
             }
         }
-        // register items
-        val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Item> = mutableTableOf()
-        /*sortedKeys.keys.forEach { key: HTMaterialKey ->
-            val rarity: Rarity = propertyCache[key]!!.getOrDefault(HTMaterialPropertyKeys.RARITY)
-            HTTagPrefix.entries.forEach { prefix: HTTagPrefix ->
-                val item = Item(itemSettings().rarity(rarity))
-                Registry.register(Registries.ITEM, prefix.createId(key), item)
-                itemTable.put(prefix, key, item)
+        // bind items
+        val itemCache: MutableMap<Pair<HTTagPrefix, HTMaterialKey>, Item> = mutableMapOf()
+        RagiumAPI.getPlugins().forEach {
+            it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: Item ->
+                check(itemCache.put(prefix to key, item) == null)
             }
-        }*/
+        }
+
+        val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Item> = mutableTableOf()
+        itemCache
+            .toSortedMap(
+                compareBy(Pair<HTTagPrefix, HTMaterialKey>::second)
+                    .thenBy(Pair<HTTagPrefix, HTMaterialKey>::first),
+            ).forEach { (pair: Pair<HTTagPrefix, HTMaterialKey>, item: Item) ->
+                itemTable.put(
+                    pair.first,
+                    pair.second,
+                    item,
+                )
+            }
+
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
         RagiumAPI.log { info("Registered material types and properties!") }

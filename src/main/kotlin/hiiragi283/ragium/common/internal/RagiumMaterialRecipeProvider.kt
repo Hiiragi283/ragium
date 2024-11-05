@@ -174,6 +174,7 @@ object RagiumMaterialRecipeProvider {
     private fun rawToIngotRecipe(exporter: RecipeExporter, key: HTMaterialKey, type: HTMaterialKey.Type) {
         if (!type.isValidPrefix(HTTagPrefix.RAW_MATERIAL)) return
         val rawMaterial: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
+        if (!isPopulated(rawMaterial)) return
         val result: ItemConvertible = key.getItem(HTTagPrefix.INGOT) ?: key.getItem(HTTagPrefix.GEM) ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
@@ -187,6 +188,7 @@ object RagiumMaterialRecipeProvider {
     private fun dustToIngotRecipe(exporter: RecipeExporter, key: HTMaterialKey, type: HTMaterialKey.Type) {
         if (!type.isValidPrefix(HTTagPrefix.DUST)) return
         val dust: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
+        if (!isPopulated(dust)) return
         val result: ItemConvertible = key.getItem(HTTagPrefix.INGOT) ?: key.getItem(HTTagPrefix.GEM) ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
