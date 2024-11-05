@@ -118,6 +118,7 @@ object RagiumBlockEntityTypes {
         RagiumMachineKeys.GENERATORS.forEach {
             registerMachineBlocks(it, SIMPLE_GENERATOR)
         }
+        registerMachineBlocks(RagiumMachineKeys.COMBUSTION_GENERATOR, COMBUSTION_GENERATOR)
         registerMachineBlocks(RagiumMachineKeys.STEAM_GENERATOR, STEAM_GENERATOR)
         // processors
         RagiumMachineKeys.PROCESSORS.forEach {

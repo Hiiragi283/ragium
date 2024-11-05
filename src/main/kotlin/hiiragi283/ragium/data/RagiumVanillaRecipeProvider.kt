@@ -416,6 +416,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
         createEmptyFluidCube(exporter, RagiumContents.Plates.PLASTIC, 8, "_pe")
         createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
+        
+        HTShapelessRecipeJsonBuilder.create(RagiumItems.EMPTY_FLUID_CUBE)
+            .input(RagiumItems.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter, RagiumAPI.id("clear_fluid_cube"))
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumAPI.getInstance().createFilledCube(Fluids.WATER))

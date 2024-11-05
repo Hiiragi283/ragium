@@ -226,24 +226,24 @@ object RagiumLangProviders {
                 "Alloy Furnace",
                 "Smelt two ingredients into one",
             )
-            builder.add(RagiumMachineKeys.ASSEMBLER, "Assembler")
+            builder.add(RagiumMachineKeys.ASSEMBLER, "Assembler", "Dr.Doom, Assemble!")
             builder.add(
                 RagiumMachineKeys.BLAST_FURNACE,
                 "Large Blast Furnace",
                 "Smelt multiple ingredients into one",
             )
-            builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor")
+            builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
             builder.add(
                 RagiumMachineKeys.DISTILLATION_TOWER,
                 "Distillation Tower",
                 "Process Crude Oil",
             )
-            builder.add(RagiumMachineKeys.ELECTROLYZER, "Electrolyzer")
-            builder.add(RagiumMachineKeys.EXTRACTOR, "Extractor")
-            builder.add(RagiumMachineKeys.GRINDER, "Grinder")
-            builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former")
-            builder.add(RagiumMachineKeys.MIXER, "Mixer")
-            builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter")
+            builder.add(RagiumMachineKeys.ELECTROLYZER, "Electrolyzer", "Elek On")
+            builder.add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Extract")
+            builder.add(RagiumMachineKeys.GRINDER, "Grinder", "Grind ingredients")
+            builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
+            builder.add(RagiumMachineKeys.MIXER, "Mixer", "Genomix")
+            builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
             builder.add(RagiumMachineKeys.ROCK_GENERATOR, "Rock Generator")
             builder.add(
                 RagiumMachineKeys.SAW_MILL,
@@ -257,11 +257,10 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "Machines")
             builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
 
-            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "Stored Energy: %s Unit")
+            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "Stored Energy: %s E")
             // REI
             builder.add(RagiumTranslationKeys.REI_RECIPE_BIOME, "Found in the biome: %s")
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "Recipe Info")
-            builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "Required Scanning!")
         }
     }
 
@@ -337,7 +336,6 @@ object RagiumLangProviders {
             builder.add(RagiumItems.ENGINE, "V8エンジン")
             builder.add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "地獄の心臓")
-            // builder.add(RagiumItems.OBLIVION_CUBE_SPAWN_EGG, "スポーン 忘却の箱")
             builder.add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "プロセッサソケット")
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
@@ -384,16 +382,16 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.WATER_GENERATOR, "水力発電機")
 
             builder.add(RagiumMachineKeys.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
-            builder.add(RagiumMachineKeys.ASSEMBLER, "組立機")
+            builder.add(RagiumMachineKeys.ASSEMBLER, "組立機", "悪魔博士，アッセンブル！")
             builder.add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
-            builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽")
+            builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
             builder.add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
-            builder.add(RagiumMachineKeys.ELECTROLYZER, "電解槽")
+            builder.add(RagiumMachineKeys.ELECTROLYZER, "電解槽", "エレキ オン")
             builder.add(RagiumMachineKeys.EXTRACTOR, "抽出器")
             builder.add(RagiumMachineKeys.GRINDER, "粉砕機")
-            builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機")
-            builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機")
-            builder.add(RagiumMachineKeys.MIXER, "ミキサー")
+            builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
+            builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
+            builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス")
             builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
             builder.add(RagiumMachineKeys.SAW_MILL, "製材機", "より効率的に原木を加工する")
             // Mod Menu
@@ -403,11 +401,10 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "機械")
             builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
 
-            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "エネルギー量: %s Unit")
+            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "エネルギー量: %s E")
             // REI
             builder.add(RagiumTranslationKeys.REI_RECIPE_BIOME, "次のバイオームで見つかる: %s")
             builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "レシピ情報")
-            builder.add(RagiumTranslationKeys.REI_RECIPE_REQUIRE_SCAN, "スキャンが必要です！")
         }
     }
 }

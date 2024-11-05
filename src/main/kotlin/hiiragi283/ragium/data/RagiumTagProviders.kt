@@ -76,6 +76,7 @@ object RagiumTagProviders {
 
             // ragium
             RagiumAPI.getInstance().machineRegistry.blocks.values.forEach {
+                add(BlockTags.PICKAXE_MINEABLE, it)
                 add(RagiumBlockTags.MACHINES, it)
             }
 
