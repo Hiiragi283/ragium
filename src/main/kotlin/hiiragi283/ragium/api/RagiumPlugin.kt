@@ -1,9 +1,12 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.machine.HTMachineConvertible
-import hiiragi283.ragium.api.machine.HTMachineTypeKey
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTypeNew
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
-import net.fabricmc.fabric.api.util.TriState
+import net.minecraft.item.Item
+import java.util.function.BiConsumer
 import java.util.function.Predicate
 
 @JvmDefaultWithCompatibility
@@ -16,42 +19,34 @@ interface RagiumPlugin {
 
     fun shouldLoad(): Boolean = true
 
-    fun registerMachineType(register: MachineRegister) {}
+    fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineTypeNew>) {}
 
-    fun setupCommonMachineProperties(helper: PropertyHelper) {}
+    fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {}
 
-    fun setupClientMachineProperties(helper: PropertyHelper) {}
+    fun setupCommonMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 
-    fun afterRagiumInit()
+    fun setupClientMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 
-    //    MachineRegister    //
+    fun setupCommonMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
 
-    class MachineRegister(private val register: (HTMachineTypeKey, TriState) -> Unit) {
-        fun registerConsumer(key: HTMachineTypeKey) {
-            register(key, TriState.DEFAULT)
-        }
+    fun setupClientMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
 
-        fun registerGenerator(key: HTMachineTypeKey) {
-            register(key, TriState.TRUE)
-        }
+    fun bindMaterialToItem(consumer: (HTTagPrefix, HTMaterialKey, Item) -> Unit) {}
 
-        fun registerProcessor(key: HTMachineTypeKey) {
-            register(key, TriState.FALSE)
-        }
-    }
+    fun afterRagiumInit(instance: RagiumAPI)
 
     //    PropertyHelper    //
 
-    class PropertyHelper(private val key: HTMachineTypeKey, private val properties: HTMutablePropertyHolder) {
-        fun modify(type: HTMachineConvertible, builderAction: HTMutablePropertyHolder.() -> Unit) {
-            modify(type.key, builderAction)
+    class PropertyHelper<T : Any>(private val key: T, private val properties: HTMutablePropertyHolder) {
+        fun modify(vararg keys: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
+            modify(keys::contains, builderAction)
         }
 
-        fun modify(key: HTMachineTypeKey, builderAction: HTMutablePropertyHolder.() -> Unit) {
+        fun modify(key: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify({ it == key }, builderAction)
         }
 
-        fun modify(filter: Predicate<HTMachineTypeKey>, builderAction: HTMutablePropertyHolder.() -> Unit) {
+        fun modify(filter: Predicate<T>, builderAction: HTMutablePropertyHolder.() -> Unit) {
             if (filter.test(this.key)) {
                 properties.builderAction()
             }

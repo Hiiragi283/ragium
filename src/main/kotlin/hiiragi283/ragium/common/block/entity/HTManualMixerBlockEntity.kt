@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -9,7 +10,7 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
@@ -59,7 +60,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
                 HTMachineInput.create(
-                    RagiumMachineTypes.Processor.MIXER,
+                    RagiumMachineKeys.MIXER,
                     HTMachineTier.PRIMITIVE,
                 ) {
                     add(stackMain)
@@ -89,10 +90,10 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         useTransaction { transaction: Transaction ->
             val foundVariant: FluidVariant = StorageUtil.findExtractableResource(
                 fluidStorage,
-                { fluidInput.test(it, fluidStorage.amount) },
+                { fluidInput.test(it.fluid, fluidStorage.amount) },
                 transaction,
             ) ?: return@useTransaction
-            if (fluidInput.test(foundVariant, fluidInput.amount)) {
+            if (fluidInput.test(foundVariant.fluid, fluidInput.amount)) {
                 val extracted: Long = fluidStorage.extract(foundVariant, fluidInput.amount, transaction)
                 if (extracted > 0) {
                     transaction.commit()
@@ -105,7 +106,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage: SingleFluidStorage = SingleFluidStorage.withFixedCapacity(FluidConstants.BUCKET * 4) {}
+    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 4)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

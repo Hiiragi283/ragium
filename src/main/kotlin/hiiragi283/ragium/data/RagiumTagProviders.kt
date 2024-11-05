@@ -2,12 +2,16 @@ package hiiragi283.ragium.data
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.RagiumMaterials
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
+import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -22,6 +26,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.EnchantmentTags
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
 
@@ -54,9 +59,6 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_CONSUMER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_GENERATOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.META_PROCESSOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
 
@@ -70,6 +72,11 @@ object RagiumTagProviders {
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore.value)
+            }
+
+            // ragium
+            RagiumAPI.getInstance().machineRegistry.blocks.values.forEach {
+                add(RagiumBlockTags.MACHINES, it)
             }
 
             buildList {
@@ -110,16 +117,16 @@ object RagiumTagProviders {
                 getOrCreateTagBuilder(tagKey).add(fluid)
             }
 
-            fun add(tagKey: TagKey<Fluid>, fluid: RagiumContents.Fluids) {
+            fun add(tagKey: TagKey<Fluid>, fluid: RagiumFluids) {
                 add(tagKey, fluid.value)
             }
 
-            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.BIO_FUEL)
-            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.FUEL)
-            add(RagiumFluidTags.FUEL, RagiumContents.Fluids.AROMATIC_COMPOUNDS)
+            add(RagiumFluidTags.FUEL, RagiumFluids.BIO_FUEL)
+            add(RagiumFluidTags.FUEL, RagiumFluids.FUEL)
+            add(RagiumFluidTags.FUEL, RagiumFluids.AROMATIC_COMPOUNDS)
 
-            add(RagiumFluidTags.ORGANIC_OILS, RagiumContents.Fluids.TALLOW)
-            add(RagiumFluidTags.ORGANIC_OILS, RagiumContents.Fluids.SEED_OIL)
+            add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.TALLOW)
+            add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.SEED_OIL)
         }
     }
 
@@ -152,11 +159,6 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Ingots.entries)
                 addAll(RagiumContents.Plates.entries)
                 addAll(RagiumContents.RawMaterials.entries)
-
-                addAll(RagiumContents.Armors.entries)
-                addAll(RagiumContents.Tools.entries)
-
-                addAll(RagiumContents.Foods.entries)
             }.forEach { content: HTContent<out ItemConvertible> ->
                 if (content is HTContent.Material<*>) {
                     add(content.prefixedTagKey, content)
@@ -165,6 +167,33 @@ object RagiumTagProviders {
                     add(content.commonTagKey, content)
                 }
             }
+
+            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(
+                RagiumItems.STEEL_HELMET,
+                RagiumItems.STELLA_GOGGLE,
+                RagiumItems.RAGIUM_HELMET,
+            )
+            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(
+                RagiumItems.STEEL_CHESTPLATE,
+                RagiumItems.STELLA_JACKET,
+                RagiumItems.RAGIUM_CHESTPLATE,
+            )
+            getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(
+                RagiumItems.STEEL_LEGGINGS,
+                RagiumItems.STELLA_LEGGINGS,
+                RagiumItems.RAGIUM_LEGGINGS,
+            )
+            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(
+                RagiumItems.STEEL_BOOTS,
+                RagiumItems.STELLA_BOOTS,
+                RagiumItems.RAGIUM_BOOTS,
+            )
+
+            add(ItemTags.AXES, RagiumItems.STEEL_AXE)
+            add(ItemTags.HOES, RagiumItems.STEEL_HOE)
+            add(ItemTags.PICKAXES, RagiumItems.STEEL_PICKAXE)
+            add(ItemTags.SHOVELS, RagiumItems.STEEL_SHOVEL)
+            add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
 
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
@@ -180,11 +209,9 @@ object RagiumTagProviders {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
-            RagiumMaterials.entries.forEach { material: RagiumMaterials ->
-                HTTagPrefix.registry.values.forEach { prefix: HTTagPrefix ->
-                    if (material.isValidPrefix(prefix)) {
-                        add(prefix.commonTagKey, prefix.createTag(material))
-                    }
+            RagiumAPI.getInstance().materialRegistry.types.forEach { (key: HTMaterialKey, type: HTMaterialKey.Type) ->
+                type.validPrefixes.forEach { prefix: HTTagPrefix ->
+                    add(prefix.commonTagKey, prefix.createTag(key))
                 }
             }
 

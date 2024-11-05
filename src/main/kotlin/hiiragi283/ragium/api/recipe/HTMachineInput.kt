@@ -1,45 +1,39 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
 class HTMachineInput private constructor(
-    val typeSize: HTMachineType.Size,
-    val type: HTMachineType,
+    val key: HTMachineKey,
     val tier: HTMachineTier,
-    val itemInputs: List<ItemStack>,
-    val fluidInputs: List<ResourceAmount<FluidVariant>>,
+    private val itemInputs: List<ItemStack>,
+    private val fluidInputs: List<ResourceAmount<FluidVariant>>,
+    val catalyst: ItemStack,
 ) : RecipeInput {
     companion object {
         @JvmStatic
-        fun create(type: HTMachineConvertible, tier: HTMachineTier, builderAction: Builder.() -> Unit): HTMachineInput {
+        fun create(key: HTMachineKey, tier: HTMachineTier, builderAction: Builder.() -> Unit): HTMachineInput {
             val itemInputs: MutableList<ItemStack> = mutableListOf()
-            val fluidInputs: MutableMap<FluidVariant, Long> = mutableMapOf()
-
-            Builder(itemInputs, fluidInputs).apply(builderAction)
-
-            check(fluidInputs.size <= 2) { "Fluid inputs must be 2 or less!" }
-            check(itemInputs.size <= 3) { "Item inputs must be 3 or less!" }
-            val bool1: Boolean = fluidInputs.size == 2
-            val bool2: Boolean = itemInputs.size == 3
-            val typeSize: HTMachineType.Size = when {
-                bool1 || bool2 -> HTMachineType.Size.LARGE
-                else -> HTMachineType.Size.SIMPLE
-            }
+            val fluidInputs: MutableList<ResourceAmount<FluidVariant>> = mutableListOf()
+            val catalyst: ItemStack = Builder(itemInputs, fluidInputs).apply(builderAction).catalyst
             return HTMachineInput(
-                typeSize,
-                type.asMachine(),
+                key.key,
                 tier,
                 itemInputs,
-                fluidInputs.map { (variant: FluidVariant, amount: Long) -> ResourceAmount(variant, amount) },
+                fluidInputs,
+                catalyst,
             )
         }
     }
+
+    fun getItem(index: Int): ItemStack = itemInputs.getOrNull(index) ?: ItemStack.EMPTY
+
+    fun getFluid(index: Int): ResourceAmount<FluidVariant> = fluidInputs.getOrNull(index) ?: ResourceAmount(FluidVariant.blank(), 0)
 
     //    RecipeInput    //
 
@@ -47,17 +41,23 @@ class HTMachineInput private constructor(
 
     override fun getSize(): Int = itemInputs.size
 
+    override fun isEmpty(): Boolean = itemInputs.isEmpty() && fluidInputs.isEmpty()
+
     //    Builder    //
 
-    class Builder(private val itemInputs: MutableList<ItemStack>, private val fluidInputs: MutableMap<FluidVariant, Long>) {
+    class Builder(private val itemInputs: MutableList<ItemStack>, private val fluidInputs: MutableList<ResourceAmount<FluidVariant>>) {
+        var catalyst: ItemStack = ItemStack.EMPTY
+
         fun add(stack: ItemStack): Builder = apply {
             itemInputs.add(stack)
         }
 
-        fun add(fluid: FluidVariant, amount: Long): Builder = apply {
-            fluidInputs[fluid] = amount
-        }
+        fun add(fluid: Fluid, amount: Long): Builder = add(FluidVariant.of(fluid), amount)
 
-        fun add(resourceAmount: ResourceAmount<FluidVariant>): Builder = add(resourceAmount.resource, resourceAmount.amount)
+        fun add(variant: FluidVariant, amount: Long): Builder = add(ResourceAmount(variant, amount))
+
+        fun add(resource: ResourceAmount<FluidVariant>): Builder = apply {
+            fluidInputs.add(resource)
+        }
     }
 }

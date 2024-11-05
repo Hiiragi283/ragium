@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumEntityTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.entity.EntityStatuses
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -26,7 +26,7 @@ class HTRemoverDynamiteEntity : ThrownItemEntity {
         world,
     )
 
-    override fun getDefaultItem(): Item = RagiumContents.Misc.REMOVER_DYNAMITE.value
+    override fun getDefaultItem(): Item = RagiumItems.REMOVER_DYNAMITE
 
     override fun handleStatus(status: Byte) {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {

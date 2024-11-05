@@ -6,15 +6,13 @@
   },
   "fluid_inputs": [
     {
+      "amount": 9000,
       "fluids": "minecraft:water"
     }
   ],
   "item_inputs": [
     {
-      "items": "#c:concretes"
-    },
-    {
-      "items": "ragium:soap_ingot"
+      "items": "minecraft:white_concrete_powder"
     }
   ],
   "item_outputs": [

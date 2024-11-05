@@ -28,7 +28,7 @@ enum class HTMachineTier(
     override val jaName: String,
     val recipeCost: Long,
     val tickRate: Int,
-    rarity: Rarity,
+    val rarity: Rarity,
 ) : StringIdentifiable,
     HTTranslationProvider {
     // NONE(RagiumAPI.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
@@ -36,7 +36,7 @@ enum class HTMachineTier(
         "primitive_%s",
         "Primitive",
         "簡易",
-        320,
+        160,
         200,
         Rarity.COMMON,
     ),
@@ -44,7 +44,7 @@ enum class HTMachineTier(
         "basic_%s",
         "Basic",
         "基本",
-        1280,
+        640,
         150,
         Rarity.UNCOMMON,
     ),
@@ -52,7 +52,7 @@ enum class HTMachineTier(
         "advanced_%s",
         "Advanced",
         "発展",
-        5120,
+        2560,
         100,
         Rarity.RARE,
     ),
@@ -73,7 +73,8 @@ enum class HTMachineTier(
             .build()
     }
 
-    val bucketUnit: Long = recipeCost / 40
+    val smelterMulti: Int = (recipeCost / 20).toInt()
+    val bucketUnit: Long = recipeCost / 20
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
@@ -87,9 +88,9 @@ enum class HTMachineTier(
 
     val prefixKey = "$translationKey.prefix"
 
-    fun createPrefixedText(type: HTMachineConvertible): MutableText = Text.translatable(prefixKey, type.asMachine().key.text)
+    fun createPrefixedText(type: HTMachine): MutableText = Text.translatable(prefixKey, type.key.text)
 
-    fun createId(type: HTMachineConvertible): Identifier = type.key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
+    fun createId(type: HTMachine): Identifier = type.key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
     fun getBaseBlock(): Block = when (this) {
         PRIMITIVE -> Blocks.BRICKS
@@ -138,6 +139,10 @@ enum class HTMachineTier(
         BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
+
+    fun canProcess(world: World): Boolean = canProcess(world.energyNetwork)
+
+    fun canProcess(network: HTEnergyNetwork?): Boolean = network?.amount?.let { it >= recipeCost } ?: false
 
     fun consumerEnergy(world: World) {
         world.energyNetwork?.let { network: HTEnergyNetwork ->

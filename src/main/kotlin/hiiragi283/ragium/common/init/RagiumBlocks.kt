@@ -92,20 +92,12 @@ object RagiumBlocks : HTContentRegister {
         registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER)
 
     @JvmField
-    val META_CONSUMER: Block =
-        registerBlock("consumer", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))
-
-    @JvmField
-    val META_GENERATOR: Block =
-        registerBlock("generator", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK).nonOpaque()))
-
-    @JvmField
-    val META_PROCESSOR: Block =
-        registerBlock("processor", HTMetaMachineBlock(blockSettings(Blocks.IRON_BLOCK)))
-
-    @JvmField
     val NETWORK_INTERFACE: Block =
         registerBlock("network_interface", HTNetworkInterfaceBlock)
+
+    @JvmField
+    val LARGE_PROCESSOR: Block =
+        registerHorizontalWithBE("large_processor", RagiumBlockEntityTypes.LARGE_PROCESSOR)
 
     @JvmField
     val SHAFT: Block =

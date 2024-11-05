@@ -8,10 +8,13 @@ import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.type.FoodComponent
+import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.ToolMaterial
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.entry.RegistryEntry
 import kotlin.jvm.optionals.getOrNull
 
 interface HTContentRegister {
@@ -55,6 +58,20 @@ interface HTContentRegister {
             ?.value
             ?.let { registerItem(it.path, factory(block, settings)) }
     }
+
+    fun registerToolItem(
+        name: String,
+        type: HTToolType,
+        material: ToolMaterial,
+        settings: Item.Settings = itemSettings(),
+    ): Item = registerItem(name, type.createToolItem(material, settings))
+
+    fun registerArmorItem(
+        name: String,
+        type: HTArmorType,
+        material: RegistryEntry<ArmorMaterial>,
+        multiplier: Int,
+    ): Item = registerItem(name, type.createItem(material, multiplier))
 
     /*fun <T : ToolItem> registerToolItem(
         name: String,

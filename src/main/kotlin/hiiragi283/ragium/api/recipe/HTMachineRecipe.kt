@@ -4,9 +4,8 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.item.ItemStack
@@ -28,7 +27,6 @@ class HTMachineRecipe(
     val catalyst: HTIngredient.Item?,
     val itemOutputs: List<HTRecipeResult.Item>,
     val fluidOutputs: List<HTRecipeResult.Fluid>,
-    val typeSize: HTMachineType.Size,
 ) : Recipe<HTMachineInput> {
     companion object {
         @JvmField
@@ -57,7 +55,7 @@ class HTMachineRecipe(
                         .listOf()
                         .optionalFieldOf("fluid_outputs", listOf())
                         .forGetter(HTMachineRecipe::fluidOutputs),
-                ).apply(instance, Companion::createRecipe)
+                ).apply(instance, ::HTMachineRecipe)
         }
 
         @JvmField
@@ -74,47 +72,28 @@ class HTMachineRecipe(
             HTMachineRecipe::itemOutputs,
             HTRecipeResult.FLUID_PACKET_CODEC.toList(),
             HTMachineRecipe::fluidOutputs,
-            Companion::createRecipe,
+            ::HTMachineRecipe,
         )
-
-        @JvmStatic
-        fun createRecipe(
-            definition: HTMachineDefinition,
-            itemInputs: List<HTIngredient.Item>,
-            fluidInputs: List<HTIngredient.Fluid>,
-            catalyst: Optional<HTIngredient.Item>,
-            itemOutputs: List<HTRecipeResult.Item>,
-            fluidOutputs: List<HTRecipeResult.Fluid>,
-        ): HTMachineRecipe {
-            val type: HTMachineType.Processor = definition.type.asProcessor()
-            check(type.contains(HTMachinePropertyKeys.RECIPE_SIZE)) { "Machine type must have recipe size property!" }
-            check(fluidInputs.size <= 2) { "Fluid inputs must be 2 or less!" }
-            check(fluidOutputs.size <= 2) { "Fluid outputs must be 2 or less!" }
-            check(itemInputs.size <= 3) { "Item inputs must be 3 or less!" }
-            check(itemOutputs.size <= 3) { "Item outputs must be 3 or less!" }
-            val bool1: Boolean = fluidInputs.size == 2
-            val bool2: Boolean = fluidOutputs.size == 2
-            val bool3: Boolean = itemInputs.size == 3
-            val bool4: Boolean = itemOutputs.size == 3
-            val bool5: Boolean = type[HTMachinePropertyKeys.RECIPE_SIZE] == HTMachineType.Size.LARGE
-            val typeSize: HTMachineType.Size = when {
-                bool1 || bool2 || bool3 || bool4 || bool5 -> HTMachineType.Size.LARGE
-                else -> HTMachineType.Size.SIMPLE
-            }
-            return HTMachineRecipe(
-                definition,
-                itemInputs,
-                fluidInputs,
-                catalyst.getOrNull(),
-                itemOutputs,
-                fluidOutputs,
-                typeSize,
-            )
-        }
     }
 
-    val machineType: HTMachineType
-        get() = definition.type
+    constructor(
+        definition: HTMachineDefinition,
+        itemInputs: List<HTIngredient.Item>,
+        fluidInputs: List<HTIngredient.Fluid>,
+        catalyst: Optional<HTIngredient.Item>,
+        itemOutputs: List<HTRecipeResult.Item>,
+        fluidOutputs: List<HTRecipeResult.Fluid>,
+    ) : this(
+        definition,
+        itemInputs,
+        fluidInputs,
+        catalyst.getOrNull(),
+        itemOutputs,
+        fluidOutputs,
+    )
+
+    val key: HTMachineKey
+        get() = definition.key
     val tier: HTMachineTier
         get() = definition.tier
     val firstOutput: ItemStack
@@ -123,43 +102,19 @@ class HTMachineRecipe(
     //    Recipe    //
 
     override fun matches(input: HTMachineInput, world: World): Boolean {
-        val bool1: Boolean = input.type == this.machineType
-        val bool2: Boolean = input.tier >= this.tier
-        val bool3: Boolean = typeSize == input.typeSize
-        val bool4: Boolean =
-            input.itemInputs
-                .getOrNull(0)
-                ?.let { itemInputs.getOrNull(0)?.test(it) }
-                ?: true
-        val bool5: Boolean =
-            input.itemInputs
-                .getOrNull(1)
-                ?.let { itemInputs.getOrNull(1)?.test(it) }
-                ?: true
-        val bool6: Boolean =
-            input.fluidInputs
-                .getOrNull(0)
-                ?.let { fluidInputs.getOrNull(0)?.test(it) }
-                ?: true
-        return when (input.typeSize) {
-            HTMachineType.Size.SIMPLE -> {
-                bool1 && bool2 && bool3 && bool4 && bool5 && bool6
-            }
-
-            HTMachineType.Size.LARGE -> {
-                val bool7: Boolean =
-                    input.itemInputs
-                        .getOrNull(2)
-                        ?.let { itemInputs.getOrNull(2)?.test(it) }
-                        ?: true
-                val bool8: Boolean =
-                    input.fluidInputs
-                        .getOrNull(1)
-                        ?.let { fluidInputs.getOrNull(1)?.test(it) }
-                        ?: true
-                bool1 && bool2 && bool3 && bool4 && bool5 && bool6 && bool7 && bool8
+        if (!input.key.isOf(this.key)) return false
+        if (input.tier < this.tier) return false
+        itemInputs.forEachIndexed { index: Int, item: HTIngredient.Item ->
+            if (!item.test(input.getItem(index))) {
+                return false
             }
         }
+        fluidInputs.forEachIndexed { index: Int, fluid: HTIngredient.Fluid ->
+            if (!fluid.test(input.getFluid(index))) {
+                return false
+            }
+        }
+        return catalyst?.test(input.catalyst) ?: input.catalyst.isEmpty
     }
 
     override fun craft(input: HTMachineInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)

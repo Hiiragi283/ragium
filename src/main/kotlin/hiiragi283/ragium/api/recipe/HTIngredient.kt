@@ -4,10 +4,13 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.isIn
+import hiiragi283.ragium.api.extension.longRangeCodec
+import hiiragi283.ragium.api.extension.validate
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
@@ -19,12 +22,15 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
+import java.util.function.BiPredicate
 import java.util.function.Predicate
+import kotlin.collections.component1
+import kotlin.collections.component2
 import net.minecraft.fluid.Fluid as MCFluid
 import net.minecraft.item.Item as MCItem
 
 @Suppress("DEPRECATION")
-sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList: RegistryEntryList<O>, val amount: V) : Predicate<S> {
+sealed class HTIngredient<O : Any, V : Number>(protected val entryList: RegistryEntryList<O>, val amount: V) {
     val isEmpty: Boolean
         get() = (entryList !is RegistryEntryList.Named<O> && entryList.size() == 0) || amount.toInt() <= 0
 
@@ -38,7 +44,7 @@ sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList:
 
     companion object {
         @JvmStatic
-        private fun <T : HTIngredient<*, *, *>> validate(ingredient: T): DataResult<T> = when {
+        private fun <T : HTIngredient<*, *>> validate(ingredient: T): DataResult<T> = when {
             ingredient.isEmpty -> DataResult.error { "Could not encode empty ingredient!" }
             else -> DataResult.success(ingredient)
         }
@@ -120,9 +126,11 @@ sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList:
 
     //    Item    //
 
-    class Item(entryList: RegistryEntryList<MCItem>, amount: Int) : HTIngredient<MCItem, Int, ItemStack>(entryList, amount) {
+    class Item(entryList: RegistryEntryList<MCItem>, amount: Int) :
+        HTIngredient<MCItem, Int>(entryList, amount),
+        Predicate<ItemStack> {
         val matchingStacks: List<ItemStack>
-            get() = entryMap.map { (entry: RegistryEntry<net.minecraft.item.Item>, count: Int) ->
+            get() = entryMap.map { (entry: RegistryEntry<MCItem>, count: Int) ->
                 ItemStack(
                     entry,
                     count,
@@ -138,12 +146,13 @@ sealed class HTIngredient<O : Any, V : Number, S : Any>(protected val entryList:
     //    Fluid    //
 
     class Fluid(entryList: RegistryEntryList<MCFluid>, amount: Long) :
-        HTIngredient<MCFluid, Long, ResourceAmount<FluidVariant>>(entryList, amount) {
-        override fun test(resourceAmount: ResourceAmount<FluidVariant>): Boolean = test(resourceAmount.resource, resourceAmount.amount)
+        HTIngredient<MCFluid, Long>(entryList, amount),
+        BiPredicate<MCFluid, Long> {
+        fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
 
-        fun test(variant: FluidVariant, amount: Long): Boolean = when {
-            variant.isBlank || amount <= 0 -> this.isEmpty
-            else -> entryList.any(variant::isOf) && amount >= this.amount
+        override fun test(fluid: MCFluid, amount: Long): Boolean = when {
+            fluid == Fluids.EMPTY || amount <= 0 -> this.isEmpty
+            else -> entryList.isIn(fluid) && amount >= this.amount
         }
     }
 }

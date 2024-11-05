@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTTable
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
@@ -82,7 +82,7 @@ class HTAdvancementRegister(private val modId: String, private val consumer: Con
     fun createChild(
         name: String,
         parent: AdvancementEntry,
-        type: HTMachineConvertible,
+        type: HTMachine,
         tier: HTMachineTier,
         frame: AdvancementFrame = AdvancementFrame.TASK,
         showToast: Boolean = true,

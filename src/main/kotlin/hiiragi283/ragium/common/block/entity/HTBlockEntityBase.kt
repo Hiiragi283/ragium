@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -83,4 +84,8 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     ) {}
 
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
+
+    protected fun createContext(): ScreenHandlerContext = ifPresentWorld { world: World ->
+        ScreenHandlerContext.create(world, pos)
+    } ?: ScreenHandlerContext.EMPTY
 }

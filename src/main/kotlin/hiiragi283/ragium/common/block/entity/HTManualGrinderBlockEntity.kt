@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.init.RagiumMachineTypes
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -33,7 +33,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     ): ActionResult {
         val step: Int = state.get(RagiumBlockProperties.LEVEL_7)
         if (step == 7) {
-            (world.getBlockEntity(pos) as? HTManualGrinderBlockEntity)?.process(player)
+            process(player)
         }
         if (!world.isClient) {
             world.modifyBlockState(pos) { stateIn: BlockState ->
@@ -58,7 +58,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
                 HTMachineInput.create(
-                    RagiumMachineTypes.Processor.GRINDER,
+                    RagiumMachineKeys.GRINDER,
                     HTMachineTier.PRIMITIVE,
                 ) { add(getStack(0)) },
                 world,

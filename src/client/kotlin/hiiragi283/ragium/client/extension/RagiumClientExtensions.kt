@@ -1,8 +1,6 @@
 package hiiragi283.ragium.client.extension
 
-import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.networkMap
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.block.entity.BlockEntity
@@ -23,8 +21,6 @@ val ClientPlayNetworking.Context.world: ClientWorld?
     get() = client().world
 
 fun ClientPlayNetworking.Context.getBlockEntity(pos: BlockPos): BlockEntity? = world?.getBlockEntity(pos)
-
-fun ClientPlayNetworking.Context.getMachineEntity(pos: BlockPos): HTMachineEntity<*>? = world?.getMachineEntity(pos)
 
 //    PersistentState    //
 

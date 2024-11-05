@@ -58,10 +58,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.TRADER_STATION)
         addDrop(RagiumBlocks.TRASH_BOX)
 
-        dropMachine(RagiumBlocks.META_CONSUMER)
-        dropMachine(RagiumBlocks.META_GENERATOR)
-        dropMachine(RagiumBlocks.META_PROCESSOR)
-
         RagiumContents.Ores.entries.forEach(::dropOre)
 
         buildList {

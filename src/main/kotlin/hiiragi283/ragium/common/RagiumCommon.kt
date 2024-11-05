@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.tags.HTTagPrefixes
 import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import net.fabricmc.api.ModInitializer
 
 object RagiumCommon : ModInitializer {
@@ -12,19 +11,20 @@ object RagiumCommon : ModInitializer {
         RagiumAPI.log { info("Registering game objects...") }
         RagiumConfig.init()
 
-        HTTagPrefixes
         RagiumComponentTypes
 
         RagiumAdvancementCriteria
+        RagiumArmorMaterials
         RagiumBlockEntityTypes
         RagiumBlocks
         RagiumEntityTypes
+        RagiumItems
         RagiumRecipeSerializers
         RagiumRecipeTypes
 
-        InternalRagiumAPI.registerMachines()
-        InternalRagiumAPI.registerProperties()
         RagiumContentRegister.registerContents()
+        InternalRagiumAPI.registerMachines()
+        InternalRagiumAPI.registerMaterials()
 
         HTTradeOfferRegistry.init()
         RagiumBlockEntityTypes.init()
@@ -36,7 +36,7 @@ object RagiumCommon : ModInitializer {
 
         RagiumContentRegister.initRegistry()
 
-        RagiumAPI.getPlugins().forEach(RagiumPlugin::afterRagiumInit)
+        RagiumAPI.getPlugins().forEach { it.afterRagiumInit(RagiumAPI.getInstance()) }
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

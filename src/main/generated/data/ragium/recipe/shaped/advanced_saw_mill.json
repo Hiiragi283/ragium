@@ -24,11 +24,7 @@
     "EEE"
   ],
   "result": {
-    "components": {
-      "ragium:machine_tier": "advanced",
-      "ragium:machine_type": "ragium:saw_mill"
-    },
     "count": 1,
-    "id": "ragium:processor"
+    "id": "ragium:advanced_saw_mill"
   }
 }

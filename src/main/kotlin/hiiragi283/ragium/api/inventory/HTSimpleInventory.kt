@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.inventory
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.common.init.RagiumNetworks
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
+import net.minecraft.inventory.InventoryChangedListener
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.RegistryByteBuf
@@ -14,7 +14,6 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 
 open class HTSimpleInventory : Inventory {
     companion object {
@@ -55,18 +54,11 @@ open class HTSimpleInventory : Inventory {
         Inventories.readNbt(nbt, stacks, lookup)
     }
 
-    fun modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
-        val stackIn: ItemStack = getStack(slot)
-        setStack(slot, mapping(stackIn))
-    }
-
     fun sendS2CPacket(player: ServerPlayerEntity, pos: BlockPos) {
         stacks.forEachIndexed { slot: Int, stack: ItemStack ->
             RagiumNetworks.sendItemSync(player, pos, slot, stack)
         }
     }
-
-    fun wrapStorage(side: Direction?): InventoryStorage = InventoryStorage.of(this, side)
 
     //    Inventory    //
 
@@ -78,7 +70,7 @@ open class HTSimpleInventory : Inventory {
 
     override fun isEmpty(): Boolean = stacks.isEmpty() || stacks.all(ItemStack::isEmpty)
 
-    override fun getStack(slot: Int): ItemStack = stacks.getOrNull(slot) ?: ItemStack.EMPTY
+    override fun getStack(slot: Int): ItemStack = stacks.getOrNull(slot) ?: ItemStack.EMPTY.copy()
 
     override fun removeStack(slot: Int, amount: Int): ItemStack = Inventories.splitStack(stacks, slot, amount)
 
@@ -88,7 +80,19 @@ open class HTSimpleInventory : Inventory {
         stacks[slot] = stack
     }
 
-    override fun markDirty() = Unit
+    private val listeners: MutableList<InventoryChangedListener> = mutableListOf()
+
+    fun addListener(listener: InventoryChangedListener) {
+        listeners.add(listener)
+    }
+
+    fun removeListener(listener: InventoryChangedListener) {
+        listeners.remove(listener)
+    }
+
+    override fun markDirty() {
+        listeners.forEach { it.onInventoryChanged(this) }
+    }
 
     override fun canPlayerUse(player: PlayerEntity?): Boolean = true
 

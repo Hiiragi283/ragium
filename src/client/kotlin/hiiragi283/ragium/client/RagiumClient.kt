@@ -2,10 +2,9 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTRegistryContent
-import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.gui.HTMachineScreenBase
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.gui.HTFireboxMachineScreen
@@ -13,10 +12,10 @@ import hiiragi283.ragium.client.gui.HTLargeMachineScreen
 import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
 import hiiragi283.ragium.client.gui.HTSteamMachineScreen
 import hiiragi283.ragium.client.model.HTFluidCubeModel
-import hiiragi283.ragium.client.model.HTMachineModel
+import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.HTFireboxBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTMetaMachineBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.HTMachineBlockEntityRenderer
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
@@ -36,6 +35,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
@@ -64,6 +64,7 @@ object RagiumClient : ClientModInitializer {
 
     //    Blocks    //
 
+    @JvmStatic
     private fun registerBlocks() {
         // cutout
         buildList {
@@ -74,12 +75,13 @@ object RagiumClient : ClientModInitializer {
         // cutout mipped
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
-            RagiumBlocks.META_CONSUMER,
-            RagiumBlocks.META_GENERATOR,
-            RagiumBlocks.META_PROCESSOR,
             RagiumBlocks.POROUS_NETHERRACK,
             RagiumBlocks.FIREBOX,
         )
+        RagiumAPI
+            .getInstance()
+            .machineRegistry.blocks.values
+            .forEach(::registerCutoutMipped)
 
         buildList {
             addAll(RagiumContents.Ores.entries)
@@ -88,32 +90,36 @@ object RagiumClient : ClientModInitializer {
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.FIREBOX) { HTFireboxBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.META_MACHINE) { HTMetaMachineBlockEntityRenderer }
+
+        registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
+        registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
+        registerMachineRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
+        registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
+        registerMachineRenderer(RagiumBlockEntityTypes.SAW_MILL)
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
         }, RagiumBlocks.BACKPACK_INTERFACE)
-
-        ColorProviderRegistry.BLOCK.register({ _: BlockState, view: BlockRenderView?, pos: BlockPos?, _: Int ->
-            pos
-                ?.let { view?.getMachineEntity(it) }
-                ?.machineType
-                ?.get(HTMachinePropertyKeys.GENERATOR_COLOR)
-                ?.fireworkColor
-                ?: -1
-        }, RagiumBlocks.META_GENERATOR)
     }
 
+    @JvmStatic
     private fun registerCutout(block: Block) {
         BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
     }
 
+    @JvmStatic
     private fun registerCutoutMipped(block: Block) {
         BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
     }
 
+    @JvmStatic
+    private fun <T : HTMachineBlockEntityBase> registerMachineRenderer(type: BlockEntityType<T>) {
+        BlockEntityRendererFactories.register(type) { HTMachineBlockEntityRenderer }
+    }
+
     //    Entities    //
 
+    @JvmStatic
     private fun registerEntities() {
         EntityRendererRegistry.register(RagiumEntityTypes.REMOVER_DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
@@ -121,8 +127,9 @@ object RagiumClient : ClientModInitializer {
 
     //    Fluids    //
 
+    @JvmStatic
     private fun registerFluids() {
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidRenderHandlerRegistry.INSTANCE.register(
                 fluid.value,
                 SimpleFluidRenderHandler(
@@ -136,22 +143,16 @@ object RagiumClient : ClientModInitializer {
 
     //    Items    //
 
+    @JvmStatic
     private fun registerItems() {
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
             stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
-        }, RagiumContents.Misc.BACKPACK)
-
-        ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
-            stack
-                .get(RagiumComponentTypes.MACHINE_TYPE)
-                ?.get(HTMachinePropertyKeys.GENERATOR_COLOR)
-                ?.fireworkColor
-                ?: -1
-        }, RagiumBlocks.META_GENERATOR)
+        }, RagiumItems.BACKPACK)
     }
 
     //    Screens    //
 
+    @JvmStatic
     private fun registerScreens() {
         HandledScreens.register(RagiumScreenHandlerTypes.FIREBOX, ::HTFireboxMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
@@ -161,12 +162,13 @@ object RagiumClient : ClientModInitializer {
 
     //    Events    //
 
+    @JvmStatic
     private fun registerEvents() {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
                 when {
-                    HTMachineModel.MODEL_ID in original.modelDependencies -> HTMachineModel
+                    HTProcessorMachineModel.MODEL_ID in original.modelDependencies -> HTProcessorMachineModel
                     HTFluidCubeModel.MODEL_ID in original.modelDependencies -> HTFluidCubeModel
                     else -> original
                 }
@@ -180,6 +182,7 @@ object RagiumClient : ClientModInitializer {
 
     //    Networks    //
 
+    @JvmStatic
     private fun registerNetworks() {
         RagiumNetworks.FLOATING_ITEM.registerClientReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
             context.client().gameRenderer.showFloatingItem(payload.stack)

@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.model.HTMachineModel
-import net.minecraft.data.client.Model
-import net.minecraft.data.client.TextureKey
-import net.minecraft.data.client.TextureMap
-import net.minecraft.data.client.TexturedModel
+import hiiragi283.ragium.api.machine.HTMachineTier
+import net.minecraft.block.Block
+import net.minecraft.data.client.*
 import net.minecraft.util.Identifier
 import java.util.*
 
@@ -69,9 +67,6 @@ object RagiumModels {
             TextureKey.LAYER1,
         )
 
-    @JvmField
-    val DYNAMIC_MACHINE: Model = model(HTMachineModel.MODEL_ID.path)
-
     //    Item    //
 
     @JvmField
@@ -79,8 +74,11 @@ object RagiumModels {
         model("item/fluid_cube")
 
     @JvmStatic
-    private fun model(path: String, vararg keys: TextureKey): Model = Model(
-        Optional.of(RagiumAPI.id(path)),
+    fun model(path: String, vararg keys: TextureKey): Model = model(RagiumAPI.id(path), *keys)
+
+    @JvmStatic
+    fun model(id: Identifier, vararg keys: TextureKey): Model = Model(
+        Optional.of(id),
         Optional.empty(),
         *keys,
     )
@@ -107,4 +105,24 @@ object RagiumModels {
             put(TextureKey.LAYER1, outer)
         }
     }, LAYERED)
+
+    @JvmStatic
+    fun createHull(generator: BlockStateModelGenerator, block: Block, tier: HTMachineTier) {
+        generator.registerSingleton(
+            block,
+            textureMap {
+                put(
+                    TextureKey.INSIDE,
+                    when (tier) {
+                        HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
+                        HTMachineTier.BASIC -> Identifier.of("block/blast_furnace_top")
+                        HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
+                    },
+                )
+                put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
+                put(TextureKey.SIDE, ModelIds.getBlockModelId(block))
+            },
+            HULL,
+        )
+    }
 }

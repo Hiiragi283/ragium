@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.screen
 
-import hiiragi283.ragium.api.extension.machineInventory
+import hiiragi283.ragium.api.extension.getInventory
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
@@ -19,7 +18,7 @@ class HTSimpleMachineScreenHandler(
         playerInv,
         packet,
         ctx,
-        ctx.machineInventory(HTMachineType.Size.SIMPLE),
+        ctx.getInventory(5),
     ) {
     init {
         inventory.onOpen(player)

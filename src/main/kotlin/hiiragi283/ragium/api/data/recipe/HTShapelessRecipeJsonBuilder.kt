@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.RagiumMaterials
-import hiiragi283.ragium.api.tags.HTTagPrefix
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -44,7 +44,7 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         check(!output.isEmpty) { "Invalid output found!" }
     }
 
-    fun input(prefix: HTTagPrefix, material: RagiumMaterials): HTShapelessRecipeJsonBuilder = input(prefix.createTag(material))
+    fun input(prefix: HTTagPrefix, material: HTMaterialKey): HTShapelessRecipeJsonBuilder = input(prefix.createTag(material))
 
     fun input(content: HTContent.Material<*>): HTShapelessRecipeJsonBuilder = input(content.prefixedTagKey)
 
@@ -56,7 +56,7 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         inputs.add(ingredient)
     }
 
-    fun unlockedBy(prefix: HTTagPrefix, material: RagiumMaterials): HTShapelessRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
+    fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapelessRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
 
     fun unlockedBy(content: HTContent.Material<*>): HTShapelessRecipeJsonBuilder = unlockedBy(content.prefixedTagKey)
 

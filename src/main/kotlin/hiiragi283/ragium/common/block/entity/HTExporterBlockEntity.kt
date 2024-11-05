@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
@@ -24,22 +23,14 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
             getBackStorage(world, pos, state, ItemStorage.SIDED),
             getFrontStorage(world, pos, state, ItemStorage.SIDED),
             { true },
-            when (tier) {
-                HTMachineTier.PRIMITIVE -> 8
-                HTMachineTier.BASIC -> 16
-                HTMachineTier.ADVANCED -> 32
-            },
+            type.getItemCount(tier),
             null,
         )
         StorageUtil.move(
             getBackStorage(world, pos, state, FluidStorage.SIDED),
             getFrontStorage(world, pos, state, FluidStorage.SIDED),
             { true },
-            when (tier) {
-                HTMachineTier.PRIMITIVE -> FluidConstants.INGOT
-                HTMachineTier.BASIC -> FluidConstants.BOTTLE
-                HTMachineTier.ADVANCED -> FluidConstants.BUCKET
-            },
+            type.getFluidCount(tier),
             null,
         )
     }

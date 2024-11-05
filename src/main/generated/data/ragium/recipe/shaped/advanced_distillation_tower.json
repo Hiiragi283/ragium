@@ -24,11 +24,7 @@
     "EEE"
   ],
   "result": {
-    "components": {
-      "ragium:machine_tier": "advanced",
-      "ragium:machine_type": "ragium:distillation_tower"
-    },
     "count": 1,
-    "id": "ragium:processor"
+    "id": "ragium:advanced_distillation_tower"
   }
 }

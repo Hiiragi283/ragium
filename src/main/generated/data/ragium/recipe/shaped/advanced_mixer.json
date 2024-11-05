@@ -24,11 +24,7 @@
     "EEE"
   ],
   "result": {
-    "components": {
-      "ragium:machine_tier": "advanced",
-      "ragium:machine_type": "ragium:mixer"
-    },
     "count": 1,
-    "id": "ragium:processor"
+    "id": "ragium:advanced_mixer"
   }
 }

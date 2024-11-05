@@ -11,6 +11,9 @@ object RagiumBlockTags {
     //    Custom    //
 
     @JvmField
+    val MACHINES: TagKey<Block> = create(RagiumAPI.MOD_ID, "machines")
+
+    @JvmField
     val PIPE_CONNECTABLES: TagKey<Block> = create(RagiumAPI.MOD_ID, "pipe_connectables")
 
     @JvmStatic

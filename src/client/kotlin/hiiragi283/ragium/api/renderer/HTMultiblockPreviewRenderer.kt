@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.renderer
 
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.machine.entity.HTMachineEntity
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.client.extension.renderMultiblock
 import net.fabricmc.api.EnvType
@@ -15,7 +15,7 @@ import net.minecraft.world.World
 @Environment(EnvType.CLIENT)
 object HTMultiblockPreviewRenderer : HTMachineEntityRenderer {
     override fun render(
-        machine: HTMachineEntity<*>,
+        entity: HTMachineBlockEntityBase,
         world: World,
         pos: BlockPos,
         tickDelta: Float,
@@ -24,9 +24,9 @@ object HTMultiblockPreviewRenderer : HTMachineEntityRenderer {
         light: Int,
         overlay: Int,
     ) {
-        if (machine is HTMultiblockController) {
+        if (entity is HTMultiblockController) {
             renderMultiblock(
-                machine,
+                entity,
                 world,
                 world.getBlockState(pos).getOrNull(Properties.HORIZONTAL_FACING),
                 matrices,

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/stella"
+    },
+    "B": {
+      "item": "minecraft:magma_block"
+    },
+    "C": {
+      "item": "ragium:advanced_circuit"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "ACA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_thermal_generator"
+  }
+}

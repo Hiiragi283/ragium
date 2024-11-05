@@ -9,18 +9,16 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.property.HTMutablePropertyHolder
-import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
-import hiiragi283.ragium.common.item.*
+import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -29,7 +27,6 @@ import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.type.FoodComponent
-import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -42,7 +39,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
-import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -50,19 +46,19 @@ import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumContentRegister : HTContentRegister {
-    private val itemBuilders: MutableMap<HTContent<Item>, HTMutablePropertyHolder> = mutableMapOf()
+    private val itemBuilders: MutableMap<HTContent<Item>, HTPropertyHolderBuilder> = mutableMapOf()
 
     private val settingsKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item.Settings> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("settings"), value = { it })
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("settings"), value = { it })
 
     private val itemKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item> =
-        HTPropertyKey.Defaulted(RagiumAPI.id("item"), value = ::Item)
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("item"), value = ::Item)
 
-    private fun getProperties(content: HTContent<Item>): HTMutablePropertyHolder =
-        itemBuilders.computeIfAbsent(content) { HTPropertyHolder.builder() }
+    private fun getProperties(content: HTContent<Item>): HTPropertyHolderBuilder =
+        itemBuilders.computeIfAbsent(content) { HTPropertyHolderBuilder() }
 
     private fun createAndRegisterItem(content: HTContent<Item>) {
-        val properties: HTMutablePropertyHolder = getProperties(content)
+        val properties: HTPropertyHolderBuilder = getProperties(content)
         val settings: Item.Settings = properties.getOrDefault(settingsKey)(itemSettings())
         val item: Item = properties.getOrDefault(itemKey)(settings)
         registerItem(content, item)
@@ -71,8 +67,6 @@ object RagiumContentRegister : HTContentRegister {
     @JvmStatic
     fun registerContents() {
         // DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
-
-        initProperties()
 
         initBlockItems()
 
@@ -93,13 +87,9 @@ object RagiumContentRegister : HTContentRegister {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-            addAll(RagiumContents.Armors.entries)
-            addAll(RagiumContents.Tools.entries)
             addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
-            addAll(RagiumContents.Foods.entries)
-            addAll(RagiumContents.Misc.entries)
         }.forEach(::createAndRegisterItem)
 
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
@@ -124,56 +114,9 @@ object RagiumContentRegister : HTContentRegister {
             registerBlockItem(block, itemSettings())
         }
 
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
         }
-    }
-
-    @JvmStatic
-    private fun initProperties() {
-        // armors
-        RagiumContents.Armors.entries.forEach { armor: RagiumContents.Armors ->
-            getProperties(armor)[itemKey] = { armor.armorType.createItem(armor.material, armor.multiplier) }
-        }
-        // tools
-        RagiumContents.Tools.entries.forEach { tool: RagiumContents.Tools ->
-            getProperties(tool)[itemKey] = { tool.toolType.createToolItem(tool.material, it) }
-        }
-        // foods
-        getProperties(RagiumContents.Foods.BUTTER)[settingsKey] = { it.food(FoodComponents.APPLE) }
-        getProperties(RagiumContents.Foods.CARAMEL)[settingsKey] = { it.food(FoodComponents.DRIED_KELP) }
-        getProperties(RagiumContents.Foods.CHOCOLATE)[settingsKey] = {
-            it.food(
-                FoodComponent
-                    .Builder()
-                    .nutrition(3)
-                    .saturationModifier(0.3f)
-                    .statusEffect(
-                        StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
-                        1.0f,
-                    ).snack()
-                    .alwaysEdible()
-                    .build(),
-            )
-        }
-        getProperties(RagiumContents.Foods.CHOCOLATE_APPLE)[settingsKey] = { it.food(FoodComponents.COOKED_CHICKEN) }
-        getProperties(RagiumContents.Foods.CHOCOLATE_BREAD)[settingsKey] = { it.food(FoodComponents.COOKED_BEEF) }
-        // ingredients
-        getProperties(RagiumContents.Misc.BACKPACK)[itemKey] = { HTBackpackItem }
-        getProperties(RagiumContents.Misc.CRAFTER_HAMMER)[itemKey] = { HTCrafterHammerItem }
-        getProperties(RagiumContents.Misc.DYNAMITE)[itemKey] = { HTDynamiteItem }
-        getProperties(RagiumContents.Misc.FILLED_FLUID_CUBE)[itemKey] = { HTFilledFluidCubeItem }
-        getProperties(RagiumContents.Misc.FORGE_HAMMER)[itemKey] = { HTForgeHammerItem }
-        getProperties(RagiumContents.Misc.HEART_OF_THE_NETHER)[settingsKey] = { it.rarity(Rarity.UNCOMMON) }
-        /*getProperties(RagiumContents.Misc.OBLIVION_CUBE_SPAWN_EGG)[itemKey] = {
-            SpawnEggItem(
-                RagiumEntityTypes.OBLIVION_CUBE,
-                0x000000,
-                0xffffff,
-                itemSettings(),
-            )
-        }*/
-        getProperties(RagiumContents.Misc.REMOVER_DYNAMITE)[itemKey] = { HTRemoverDynamiteItem }
     }
 
     @JvmStatic
@@ -204,13 +147,10 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
         registerBlockItem(RagiumBlocks.MANUAL_MIXER)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
+        registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.TRADER_STATION)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
-
-        registerBlockItem(RagiumBlocks.META_CONSUMER, itemSettings(), ::HTMetaMachineBlockItem)
-        registerBlockItem(RagiumBlocks.META_GENERATOR, itemSettings(), ::HTMetaMachineBlockItem)
-        registerBlockItem(RagiumBlocks.META_PROCESSOR, itemSettings(), ::HTMetaMachineBlockItem)
     }
 
     @JvmStatic
@@ -229,10 +169,10 @@ object RagiumContentRegister : HTContentRegister {
         }, RagiumBlocks.TRASH_BOX)
 
         FluidStorage
-            .combinedItemApiProvider(RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem())
+            .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            if (context.itemVariant.isOf(RagiumContents.Misc.FILLED_FLUID_CUBE)) {
+            if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context
                     .itemVariant
                     .componentMap
@@ -240,7 +180,7 @@ object RagiumContentRegister : HTContentRegister {
                     ?.let {
                         FullItemFluidStorage(
                             context,
-                            RagiumContents.Misc.EMPTY_FLUID_CUBE.asItem(),
+                            RagiumItems.EMPTY_FLUID_CUBE,
                             FluidVariant.of(it),
                             FluidConstants.BUCKET,
                         )
@@ -251,7 +191,7 @@ object RagiumContentRegister : HTContentRegister {
             }
         }
         FluidStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            SingleFluidStorage.withFixedCapacity(Long.MAX_VALUE) {}
+            fluidStorageOf(Long.MAX_VALUE)
         }, RagiumBlocks.TRASH_BOX)
 
         EnergyStorage.SIDED.registerForBlocks(
@@ -263,7 +203,7 @@ object RagiumContentRegister : HTContentRegister {
         }, RagiumBlocks.NETWORK_INTERFACE)
 
         // Accessory
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_GOGGLE) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
             }
@@ -272,7 +212,7 @@ object RagiumContentRegister : HTContentRegister {
             }
             slotType = HTAccessorySlotTypes.FACE
         }
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_JACKET) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_JACKET) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.HASTE, -1, 1))
             }
@@ -280,7 +220,7 @@ object RagiumContentRegister : HTContentRegister {
                 it.removeStatusEffect(StatusEffects.HASTE)
             }
         }
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_LEGGINGS) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_LEGGINGS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1))
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.SPEED, -1, 1))
@@ -290,7 +230,7 @@ object RagiumContentRegister : HTContentRegister {
                 it.removeStatusEffect(StatusEffects.SPEED)
             }
         }
-        HTAccessoryRegistry.register(RagiumContents.Armors.STELLA_BOOTS) {
+        HTAccessoryRegistry.register(RagiumItems.STELLA_BOOTS) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.SLOW_FALLING, -1, 0))
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.JUMP_BOOST, -1, 1))
@@ -318,10 +258,10 @@ object RagiumContentRegister : HTContentRegister {
             }
         }*/
         // Dispenser
-        DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumContents.Misc.REMOVER_DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.REMOVER_DYNAMITE)
         // Fluid Attributes
-        RagiumContents.Fluids.entries.forEach { fluid: RagiumContents.Fluids ->
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidVariantAttributes.register(
                 fluid.value,
                 object : FluidVariantAttributeHandler {
@@ -337,17 +277,17 @@ object RagiumContentRegister : HTContentRegister {
                 dropStackAt(user, Items.OBSIDIAN.defaultStack)
             }
         }
-        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->
+        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.clearStatusEffects()
             }
         }
-        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.HONEY) { _: ItemStack, world: World, user: LivingEntity ->
+        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.HONEY) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.removeStatusEffect(StatusEffects.POISON)
             }
         }
-        HTFluidDrinkingHandlerRegistry.register(RagiumContents.Fluids.CHOCOLATE) { _: ItemStack, world: World, user: LivingEntity ->
+        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.CHOCOLATE) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.addStatusEffect(
                     StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1),

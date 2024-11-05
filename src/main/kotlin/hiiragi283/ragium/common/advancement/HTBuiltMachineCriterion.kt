@@ -2,10 +2,9 @@ package hiiragi283.ragium.common.advancement
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.machine.HTMachineConvertible
+import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.HTMachineTypeRegistry
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.criterion.AbstractCriterion
 import net.minecraft.entity.player.PlayerEntity
@@ -17,11 +16,11 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condition>() {
     @JvmStatic
-    fun create(type: HTMachineConvertible, minTier: HTMachineTier): AdvancementCriterion<Condition> = create(Condition(null, type, minTier))
+    fun create(type: HTMachine, minTier: HTMachineTier): AdvancementCriterion<Condition> = create(Condition(null, type, minTier))
 
     override fun getConditionsCodec(): Codec<Condition> = Condition.CODEC
 
-    fun trigger(player: PlayerEntity?, machineType: HTMachineConvertible, tier: HTMachineTier) {
+    fun trigger(player: PlayerEntity?, machineType: HTMachine, tier: HTMachineTier) {
         (player as? ServerPlayerEntity)?.let {
             trigger(it) { condition: Condition ->
                 condition.matches(machineType, tier)
@@ -31,11 +30,8 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
     //    Condition    //
 
-    class Condition(
-        private val predicate: LootContextPredicate?,
-        private val machineType: HTMachineType,
-        private val minTier: HTMachineTier,
-    ) : Conditions {
+    class Condition(private val predicate: LootContextPredicate?, private val key: HTMachineKey, private val minTier: HTMachineTier) :
+        Conditions {
         companion object {
             @JvmField
             val CODEC: Codec<Condition> = RecordCodecBuilder.create { instance ->
@@ -44,9 +40,9 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
                         EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC
                             .optionalFieldOf("player")
                             .forGetter(Condition::player),
-                        HTMachineTypeRegistry.CODEC
+                        HTMachineKey.CODEC
                             .fieldOf("machine_type")
-                            .forGetter(Condition::machineType),
+                            .forGetter(Condition::key),
                         HTMachineTier.CODEC
                             .optionalFieldOf("min_tier", HTMachineTier.PRIMITIVE)
                             .forGetter(Condition::minTier),
@@ -56,19 +52,18 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
         constructor(
             predicate: Optional<LootContextPredicate>,
-            machineType: HTMachineConvertible,
+            machineType: HTMachine,
             minTier: HTMachineTier,
-        ) : this(predicate.getOrNull(), machineType.asMachine(), minTier)
+        ) : this(predicate.getOrNull(), machineType.key, minTier)
 
         constructor(
             predicate: LootContextPredicate?,
-            machineType: HTMachineConvertible,
+            machineType: HTMachine,
             minTier: HTMachineTier,
-        ) : this(predicate, machineType.asMachine(), minTier)
+        ) : this(predicate, machineType.key, minTier)
 
         override fun player(): Optional<LootContextPredicate> = Optional.ofNullable(predicate)
 
-        fun matches(machineType: HTMachineConvertible, tier: HTMachineTier): Boolean =
-            machineType.asMachine() == this.machineType && tier >= minTier
+        fun matches(machineType: HTMachine, tier: HTMachineTier): Boolean = machineType.key == this.key && tier >= minTier
     }
 }

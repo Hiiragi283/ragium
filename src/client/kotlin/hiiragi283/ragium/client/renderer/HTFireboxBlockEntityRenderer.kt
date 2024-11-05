@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.api.extension.getMachineEntity
+import hiiragi283.ragium.api.extension.getMachine
 import hiiragi283.ragium.common.block.entity.HTFireboxBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -26,7 +26,7 @@ object HTFireboxBlockEntityRenderer : BlockEntityRenderer<HTFireboxBlockEntity> 
         val pos: BlockPos = entity.pos
         val world: World = entity.world ?: return
         val baseBlock: Block = world
-            .getMachineEntity(pos.up())
+            .getMachine(pos.up())
             ?.tier
             ?.getBaseBlock()
             ?: Blocks.BRICKS

@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "minecraft:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#c:concretes"
+    },
+    {
+      "items": "ragium:soap_ingot"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:white_concrete"
+    }
+  ]
+}

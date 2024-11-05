@@ -1,7 +1,7 @@
 {
   "values": [
-    "ragium:ragium_boots",
     "ragium:steel_boots",
-    "ragium:stella_boots"
+    "ragium:stella_boots",
+    "ragium:ragium_boots"
   ]
 }

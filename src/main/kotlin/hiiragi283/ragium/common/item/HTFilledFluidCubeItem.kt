@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.minecraft.entity.LivingEntity
@@ -36,9 +36,7 @@ object HTFilledFluidCubeItem : Item(itemSettings()) {
             handler.onDrink(stack, world, user)
             dropStackAt(
                 user,
-                RagiumContents.Misc.EMPTY_FLUID_CUBE
-                    .asItem()
-                    .defaultStack,
+                RagiumItems.EMPTY_FLUID_CUBE.defaultStack,
             )
             stack.decrementUnlessCreative(1, user)
         }

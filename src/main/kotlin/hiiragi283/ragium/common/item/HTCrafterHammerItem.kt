@@ -4,13 +4,13 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.RagiumMaterials
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.common.init.RagiumToolMaterials
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -40,7 +40,7 @@ import net.minecraft.world.World
 import java.util.function.Consumer
 
 object HTCrafterHammerItem :
-    MiningToolItem(RagiumMaterials.Tool.STEEL, BlockTags.AIR, itemSettings().rarity(Rarity.RARE)) {
+    MiningToolItem(RagiumToolMaterials.STEEL, BlockTags.AIR, itemSettings().rarity(Rarity.RARE)) {
     private fun getComponent(stack: ItemStack): Component = stack.getOrDefault(Component.COMPONENT_TYPE, Component.DEFAULT)
 
     private fun setComponent(stack: ItemStack, component: Component? = null) {

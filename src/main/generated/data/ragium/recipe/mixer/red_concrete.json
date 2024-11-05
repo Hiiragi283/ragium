@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "minecraft:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:red_concrete_powder"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:red_concrete"
+    }
+  ]
+}

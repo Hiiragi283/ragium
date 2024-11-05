@@ -50,9 +50,17 @@ interface HTMultiblockController {
     ): Boolean {
         val direction: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
         val validator = HTMultiblockValidator(world, pos, player)
+        beforeValidation(state, world, pos, player)
         buildMultiblock(validator.rotate(direction))
         return validator.isValid
     }
+
+    fun beforeValidation(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity?,
+    ) {}
 
     fun onSucceeded(
         state: BlockState,

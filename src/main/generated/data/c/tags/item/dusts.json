@@ -1,9 +1,5 @@
 {
   "values": [
-    "ragium:bee_wax",
-    "ragium:flour",
-    "ragium:minced_meat",
-    "ragium:pulp",
     {
       "id": "#c:dusts/aluminum",
       "required": false
@@ -17,31 +13,11 @@
       "required": false
     },
     {
-      "id": "#c:dusts/brass",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/bronze",
-      "required": false
-    },
-    {
       "id": "#c:dusts/copper",
       "required": false
     },
     {
       "id": "#c:dusts/crude_raginite",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/diamond",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/electrum",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/emerald",
       "required": false
     },
     {
@@ -53,43 +29,11 @@
       "required": false
     },
     {
-      "id": "#c:dusts/invar",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/iridium",
-      "required": false
-    },
-    {
       "id": "#c:dusts/iron",
       "required": false
     },
     {
-      "id": "#c:dusts/lapis",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/lead",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/nickel",
-      "required": false
-    },
-    {
       "id": "#c:dusts/niter",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/peridot",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/platinum",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/quartz",
       "required": false
     },
     {
@@ -117,19 +61,7 @@
       "required": false
     },
     {
-      "id": "#c:dusts/ruby",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/sapphire",
-      "required": false
-    },
-    {
       "id": "#c:dusts/silicon",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/silver",
       "required": false
     },
     {
@@ -138,22 +70,6 @@
     },
     {
       "id": "#c:dusts/sulfur",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/tin",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/titanium",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/tungsten",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/zinc",
       "required": false
     }
   ]
