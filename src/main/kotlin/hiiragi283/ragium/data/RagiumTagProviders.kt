@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.*
 import hiiragi283.ragium.common.RagiumContents
@@ -75,7 +76,7 @@ object RagiumTagProviders {
             }
 
             // ragium
-            RagiumAPI.getInstance().machineRegistry.blocks.values.forEach {
+            RagiumAPI.getInstance().machineRegistry.blocks.forEach {
                 add(BlockTags.PICKAXE_MINEABLE, it)
                 add(RagiumBlockTags.MACHINES, it)
             }
@@ -206,12 +207,14 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
 
+            RagiumContents.Pipes.entries.forEach { add(RagiumItemTags.PIPES, it) }
+
             buildList {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
-            RagiumAPI.getInstance().materialRegistry.types.forEach { (key: HTMaterialKey, type: HTMaterialKey.Type) ->
-                type.validPrefixes.forEach { prefix: HTTagPrefix ->
+            RagiumAPI.getInstance().materialRegistry.entryMap.forEach { (key: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
+                entry.type.validPrefixes.forEach { prefix: HTTagPrefix ->
                     add(prefix.commonTagKey, prefix.createTag(key))
                 }
             }

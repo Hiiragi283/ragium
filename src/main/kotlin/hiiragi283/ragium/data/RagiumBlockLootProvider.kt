@@ -1,8 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -12,12 +10,10 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
-import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.entry.ItemEntry
 import net.minecraft.loot.entry.LeafEntry
 import net.minecraft.loot.function.ApplyBonusLootFunction
-import net.minecraft.loot.function.CopyComponentsLootFunction
 import net.minecraft.loot.function.SetCountLootFunction
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider
 import net.minecraft.loot.provider.number.UniformLootNumberProvider
@@ -71,7 +67,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         RagiumAPI
             .getInstance()
-            .machineRegistry.blocks.values
+            .machineRegistry.blocks
             .forEach(::addDrop)
     }
 
@@ -91,7 +87,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         )
     }
 
-    private fun dropMachine(block: Block) {
+    /*private fun dropMachine(block: Block) {
         addDrop(block) { block1: Block ->
             LootTable
                 .builder()
@@ -116,7 +112,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         }
     }
 
-    /*private fun addCrops(crop: RagiumContents.Crops) {
+    private fun addCrops(crop: RagiumContents.Crops) {
         val condition: BlockStatePropertyLootCondition.Builder = BlockStatePropertyLootCondition
             .builder(crop.cropBlock)
             .properties(StatePredicate.Builder.create().exactMatch(Properties.AGE_7, 7))

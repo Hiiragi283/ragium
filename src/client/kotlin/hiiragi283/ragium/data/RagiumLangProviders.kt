@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
-import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -48,9 +48,9 @@ object RagiumLangProviders {
         add(tier.prefixKey, prefix)
     }
 
-    fun TranslationBuilder.add(type: HTMachine, value: String, desc: String? = null) {
-        add(type.key.translationKey, value)
-        desc?.let { add(type.key.descriptionKey, it) }
+    fun TranslationBuilder.add(key: HTMachineKey, value: String, desc: String? = null) {
+        add(key.translationKey, value)
+        desc?.let { add(key.descriptionKey, it) }
     }
 
     @JvmStatic

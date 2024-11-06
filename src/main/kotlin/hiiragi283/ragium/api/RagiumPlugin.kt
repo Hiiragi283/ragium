@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTypeNew
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
@@ -19,7 +19,7 @@ interface RagiumPlugin {
 
     fun shouldLoad(): Boolean = true
 
-    fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineTypeNew>) {}
+    fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
     fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {}
 

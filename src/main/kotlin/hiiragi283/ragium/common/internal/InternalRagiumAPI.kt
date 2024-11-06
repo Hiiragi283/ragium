@@ -1,11 +1,10 @@
 package hiiragi283.ragium.common.internal
 
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.extension.buildItemStack
-import hiiragi283.ragium.api.extension.isClientEnv
-import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.api.extension.mutableTableOf
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockItem
@@ -34,9 +33,9 @@ internal data object InternalRagiumAPI : RagiumAPI {
         private set
 
     override fun createBuiltMachineCriterion(
-        type: HTMachine,
+        key: HTMachineKey,
         minTier: HTMachineTier,
-    ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(type, minTier)
+    ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(key, minTier)
 
     override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
         RagiumItems.FILLED_FLUID_CUBE,
@@ -49,21 +48,21 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
     @JvmStatic
     fun registerMachines() {
-        val keyCache: MutableMap<HTMachineKey, HTMachineTypeNew> = mutableMapOf()
+        val keyCache: MutableMap<HTMachineKey, HTMachineType> = mutableMapOf()
 
         // collect keys from plugins
-        fun addMachine(key: HTMachineKey, type: HTMachineTypeNew) {
+        fun addMachine(key: HTMachineKey, type: HTMachineType) {
             check(keyCache.put(key, type) == null) { "Machine; ${key.id} is already registered!" }
         }
         RagiumAPI.getPlugins().forEach {
             it.registerMachineType(::addMachine)
         }
         // sort keys based on its type and id
-        val sortedKeys: Map<HTMachineKey, HTMachineTypeNew> = keyCache
+        val sortedKeys: Map<HTMachineKey, HTMachineType> = keyCache
             .toList()
             .sortedWith(
-                compareBy(Pair<HTMachineKey, HTMachineTypeNew>::second)
-                    .thenBy(Pair<HTMachineKey, HTMachineTypeNew>::first),
+                compareBy(Pair<HTMachineKey, HTMachineType>::second)
+                    .thenBy(Pair<HTMachineKey, HTMachineType>::first),
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMachineKey, HTPropertyHolderBuilder> = mutableMapOf()
@@ -120,23 +119,24 @@ internal data object InternalRagiumAPI : RagiumAPI {
             }
         }
         // bind items
-        val itemCache: MutableMap<Pair<HTTagPrefix, HTMaterialKey>, Item> = mutableMapOf()
+        val itemCache: Multimap<Pair<HTTagPrefix, HTMaterialKey>, Item> = HashMultimap.create()
         RagiumAPI.getPlugins().forEach {
             it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: Item ->
-                check(itemCache.put(prefix to key, item) == null)
+                itemCache.put(prefix to key, item)
             }
         }
 
-        val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Item> = mutableTableOf()
+        val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Set<Item>> = mutableTableOf()
         itemCache
+            .asMap()
             .toSortedMap(
                 compareBy(Pair<HTTagPrefix, HTMaterialKey>::second)
                     .thenBy(Pair<HTTagPrefix, HTMaterialKey>::first),
-            ).forEach { (pair: Pair<HTTagPrefix, HTMaterialKey>, item: Item) ->
+            ).forEach { (pair: Pair<HTTagPrefix, HTMaterialKey>, items: Collection<Item>) ->
                 itemTable.put(
                     pair.first,
                     pair.second,
-                    item,
+                    items.toSortedSet(idComparator(Registries.ITEM)),
                 )
             }
 

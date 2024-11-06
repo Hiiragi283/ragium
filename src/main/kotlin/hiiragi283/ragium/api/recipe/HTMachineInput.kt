@@ -22,7 +22,7 @@ class HTMachineInput private constructor(
             val fluidInputs: MutableList<ResourceAmount<FluidVariant>> = mutableListOf()
             val catalyst: ItemStack = Builder(itemInputs, fluidInputs).apply(builderAction).catalyst
             return HTMachineInput(
-                key.key,
+                key,
                 tier,
                 itemInputs,
                 fluidInputs,

@@ -41,5 +41,15 @@ interface HTTable<R : Any, C : Any, V : Any> {
         fun putAll(other: Table<R, C, V>)
 
         fun remove(row: R, column: C): V?
+
+        fun computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V? {
+            val value: V? = get(row, column)
+            if (value == null) {
+                val newValue: V = mapper(row, column)
+                put(row, column, newValue)
+                return newValue
+            }
+            return value
+        }
     }
 }

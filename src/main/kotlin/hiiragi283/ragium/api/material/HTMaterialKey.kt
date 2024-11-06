@@ -2,10 +2,8 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.property.HTPropertyHolder
 import io.netty.buffer.ByteBuf
 import net.minecraft.component.ComponentType
-import net.minecraft.item.Item
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.text.MutableText
@@ -41,14 +39,7 @@ class HTMaterialKey private constructor(val name: String) :
         val text: MutableText
             get() = Text.translatable(translationKey)
 
-        fun asProperties(): HTPropertyHolder = RagiumAPI.getInstance().materialRegistry.getProperty(this)
-
-        fun getItem(prefix: HTTagPrefix): Item? = RagiumAPI
-            .getInstance()
-            .materialRegistry.items
-            .get(prefix, this)
-
-        fun getItemOrThrow(prefix: HTTagPrefix): Item = checkNotNull(getItem(prefix))
+        val entry: HTMaterialRegistry.Entry by lazy { RagiumAPI.getInstance().materialRegistry.getEntry(this) }
 
         //    Comparable    //
 

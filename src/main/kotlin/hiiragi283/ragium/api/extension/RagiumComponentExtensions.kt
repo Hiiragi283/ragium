@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import net.minecraft.component.Component
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
@@ -59,9 +58,6 @@ fun foodComponent(
 
 val ComponentHolder.machineKeyOrNull: HTMachineKey?
     get() = get(HTMachineKey.COMPONENT_TYPE)
-
-val ComponentHolder.machineTypeOrNull: HTMachineType?
-    get() = get(HTMachineType.COMPONENT_TYPE)
 
 val ComponentHolder.machineTier: HTMachineTier
     get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)

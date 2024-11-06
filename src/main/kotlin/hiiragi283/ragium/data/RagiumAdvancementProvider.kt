@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTAdvancementRegister
-import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -39,9 +39,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         registerTier4(register)
     }
 
-    private fun Advancement.Builder.buildMultiblock(type: HTMachine, minTier: HTMachineTier): Advancement.Builder = criterion(
+    private fun Advancement.Builder.buildMultiblock(key: HTMachineKey, minTier: HTMachineTier): Advancement.Builder = criterion(
         "build_multiblock",
-        RagiumAPI.getInstance().createBuiltMachineCriterion(type, minTier),
+        RagiumAPI.getInstance().createBuiltMachineCriterion(key, minTier),
     )
 
     private fun Advancement.Builder.hasItems(vararg items: ItemConvertible): Advancement.Builder = criterion(
@@ -54,9 +54,9 @@ class RagiumAdvancementProvider(output: FabricDataOutput, registryLookup: Comple
         InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(tagKey)),
     )
 
-    private fun Advancement.Builder.hasMachine(type: HTMachine, tier: HTMachineTier): Advancement.Builder = criterion(
+    private fun Advancement.Builder.hasMachine(key: HTMachineKey, tier: HTMachineTier): Advancement.Builder = criterion(
         "has_items",
-        InventoryChangedCriterion.Conditions.items(type.createItemStack(tier).item),
+        InventoryChangedCriterion.Conditions.items(key.createItemStack(tier).item),
     )
 
     //    Tier 1    //

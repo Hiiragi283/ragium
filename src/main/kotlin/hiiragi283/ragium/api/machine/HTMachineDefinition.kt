@@ -27,8 +27,6 @@ data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
         )
     }
 
-    constructor(type: HTMachine, tier: HTMachineTier) : this(type.key, tier)
-
     val iconStack: ItemStack
         get() = key.createItemStack(tier)
 }

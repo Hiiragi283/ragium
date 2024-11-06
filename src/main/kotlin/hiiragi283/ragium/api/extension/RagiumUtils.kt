@@ -20,6 +20,7 @@ import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.registry.BuiltinRegistries
+import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
@@ -148,6 +149,10 @@ operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
 //    Registry    //
 
 fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
+
+fun <T : Any> idComparator(registry: Registry<T>): Comparator<T> = compareBy(registry::getId)
+
+fun <T : Any> entryComparator(registry: Registry<T>): Comparator<RegistryEntry<T>> = compareBy { it.key.orElseThrow().value }
 
 fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/refined_ragi_steel"
+    },
+    "B": {
+      "item": "ragium:laser_emitter"
+    },
+    "C": {
+      "item": "ragium:advanced_hull"
+    },
+    "D": {
+      "item": "ragium:laser_emitter"
+    },
+    "E": {
+      "tag": "c:plates/steel"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCD",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:advanced_laser_transformer"
+  }
+}

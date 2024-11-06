@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
-import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
@@ -416,8 +416,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
         createEmptyFluidCube(exporter, RagiumContents.Plates.PLASTIC, 8, "_pe")
         createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
-        
-        HTShapelessRecipeJsonBuilder.create(RagiumItems.EMPTY_FLUID_CUBE)
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.EMPTY_FLUID_CUBE)
             .input(RagiumItems.EMPTY_FLUID_CUBE)
             .unlockedBy(RagiumItems.EMPTY_FLUID_CUBE)
             .offerTo(exporter, RagiumAPI.id("clear_fluid_cube"))
@@ -598,6 +599,30 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('C', Items.BRICKS)
             .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
             .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.NETWORK_INTERFACE)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumContents.Plates.STEEL)
+            .input('C', RagiumContents.Circuits.ADVANCED)
+            .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.LARGE_PROCESSOR)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+            .input('C', RagiumBlocks.ADVANCED_CASING)
+            .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+            .offerTo(exporter)
         // generators
         createGenerator(
             exporter,
@@ -662,6 +687,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         createProcessor(
             exporter,
+            RagiumMachineKeys.LASER_TRANSFORMER,
+            RagiumItems.LASER_EMITTER,
+        )
+        createProcessor(
+            exporter,
             RagiumMachineKeys.METAL_FORMER,
             RagiumBlocks.MANUAL_FORGE,
             RagiumItems.FORGE_HAMMER,
@@ -689,13 +719,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
     }
 
-    private fun createGenerator(exporter: RecipeExporter, type: HTMachine, core: ItemConvertible) {
-        createGenerator(exporter, type, Ingredient.ofItems(core))
+    private fun createGenerator(exporter: RecipeExporter, key: HTMachineKey, core: ItemConvertible) {
+        createGenerator(exporter, key, Ingredient.ofItems(core))
     }
 
-    private fun createGenerator(exporter: RecipeExporter, type: HTMachine, core: Ingredient) {
+    private fun createGenerator(exporter: RecipeExporter, key: HTMachineKey, core: Ingredient) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val output: HTMachineBlock = type.getBlock(tier) ?: return
+            val output: HTMachineBlock = key.entry.getBlock(tier)
             HTShapedRecipeJsonBuilder
                 .create(output)
                 .patterns(
@@ -712,18 +742,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input('B', core)
                 .input('C', tier.getCircuit())
                 .unlockedBy(tier.getCircuit())
-                .offerTo(exporter, tier.createId(type))
+                .offerTo(exporter, tier.createId(key))
         }
     }
 
     private fun createProcessor(
         exporter: RecipeExporter,
-        type: HTMachine,
+        key: HTMachineKey,
         left: ItemConvertible,
         right: ItemConvertible = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val output: HTMachineBlock = type.getBlock(tier) ?: return
+            val output: HTMachineBlock = key.entry.getBlock(tier)
             HTShapedRecipeJsonBuilder
                 .create(output)
                 .patterns(
@@ -742,7 +772,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                         HTMachineTier.ADVANCED -> RagiumContents.Plates.STEEL
                     },
                 ).unlockedBy(tier.getHull())
-                .offerTo(exporter, tier.createId(type))
+                .offerTo(exporter, tier.createId(key))
         }
     }
 

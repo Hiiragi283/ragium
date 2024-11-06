@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:laser_transformer",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#c:gems/ragi_crystal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:ragium"
+    }
+  ]
+}

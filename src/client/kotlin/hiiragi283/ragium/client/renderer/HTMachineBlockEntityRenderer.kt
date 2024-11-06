@@ -22,7 +22,7 @@ object HTMachineBlockEntityRenderer : BlockEntityRenderer<HTMachineBlockEntityBa
     ) {
         val world: World = entity.world ?: return
         val key: HTMachineKey = entity.key
-        key.asProperties().ifPresent(HTClientMachinePropertyKeys.DYNAMIC_RENDERER) {
+        key.entry.ifPresent(HTClientMachinePropertyKeys.DYNAMIC_RENDERER) {
             it.render(entity, world, entity.pos, tickDelta, matrices, vertexConsumers, light, overlay)
         }
     }

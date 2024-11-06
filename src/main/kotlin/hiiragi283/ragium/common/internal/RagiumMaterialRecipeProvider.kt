@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl
@@ -20,7 +21,8 @@ object RagiumMaterialRecipeProvider {
     @JvmStatic
     fun generate(exporter: RecipeExporter) {
         RagiumAPI.log { info("Registering Runtime Material Recipes...") }
-        RagiumAPI.getInstance().materialRegistry.types.forEach { (key: HTMaterialKey, type: HTMaterialKey.Type) ->
+        RagiumAPI.getInstance().materialRegistry.entryMap.forEach { (key: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
+            val type: HTMaterialKey.Type = entry.type
             ingotToBlockRecipe(exporter, key, type)
             blockToIngotRecipe(exporter, key, type)
 
@@ -48,7 +50,7 @@ object RagiumMaterialRecipeProvider {
     @JvmStatic
     private fun ingotToBlockRecipe(exporter: RecipeExporter, key: HTMaterialKey, type: HTMaterialKey.Type) {
         if (!type.isValidPrefix(HTTagPrefix.INGOT)) return
-        val block: ItemConvertible = key.getItem(HTTagPrefix.STORAGE_BLOCK) ?: return
+        val block: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.STORAGE_BLOCK) ?: return
         val ingot: TagKey<Item> = HTTagPrefix.INGOT.createTag(key)
         // Shaped Crafting
         HTShapedRecipeJsonBuilder
@@ -65,7 +67,7 @@ object RagiumMaterialRecipeProvider {
     @JvmStatic
     private fun blockToIngotRecipe(exporter: RecipeExporter, key: HTMaterialKey, type: HTMaterialKey.Type) {
         if (!type.isValidPrefix(HTTagPrefix.STORAGE_BLOCK)) return
-        val ingot: ItemConvertible = key.getItem(HTTagPrefix.INGOT) ?: return
+        val ingot: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT) ?: return
         val block: TagKey<Item> = HTTagPrefix.STORAGE_BLOCK.createTag(key)
         // Shapeless Crafting
         HTShapelessRecipeJsonBuilder
@@ -175,7 +177,8 @@ object RagiumMaterialRecipeProvider {
         if (!type.isValidPrefix(HTTagPrefix.RAW_MATERIAL)) return
         val rawMaterial: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
         if (!isPopulated(rawMaterial)) return
-        val result: ItemConvertible = key.getItem(HTTagPrefix.INGOT) ?: key.getItem(HTTagPrefix.GEM) ?: return
+        val result: ItemConvertible =
+            key.entry.getFirstItem(HTTagPrefix.INGOT) ?: key.entry.getFirstItem(HTTagPrefix.GEM) ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
             rawMaterial,
@@ -189,7 +192,8 @@ object RagiumMaterialRecipeProvider {
         if (!type.isValidPrefix(HTTagPrefix.DUST)) return
         val dust: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
         if (!isPopulated(dust)) return
-        val result: ItemConvertible = key.getItem(HTTagPrefix.INGOT) ?: key.getItem(HTTagPrefix.GEM) ?: return
+        val result: ItemConvertible =
+            key.entry.getFirstItem(HTTagPrefix.INGOT) ?: key.entry.getFirstItem(HTTagPrefix.GEM) ?: return
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
             dust,

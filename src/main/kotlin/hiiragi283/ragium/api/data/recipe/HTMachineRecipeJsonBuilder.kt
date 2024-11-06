@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -30,8 +29,8 @@ class HTMachineRecipeJsonBuilder private constructor(
 ) {
     companion object {
         @JvmStatic
-        fun create(machine: HTMachine, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
-            HTMachineRecipeJsonBuilder(machine.key, minTier)
+        fun create(key: HTMachineKey, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
+            HTMachineRecipeJsonBuilder(key, minTier)
 
         @JvmStatic
         fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder

@@ -17,6 +17,4 @@ data class HTMachinePacket(val key: HTMachineKey, val tier: HTMachineTier, val p
             ::HTMachinePacket,
         )
     }
-
-    constructor(type: HTMachine, tier: HTMachineTier, pos: BlockPos) : this(type.key, tier, pos)
 }

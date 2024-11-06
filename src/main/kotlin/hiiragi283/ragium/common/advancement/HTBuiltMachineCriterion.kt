@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.advancement
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.machine.HTMachine
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.advancement.AdvancementCriterion
@@ -16,14 +15,14 @@ import kotlin.jvm.optionals.getOrNull
 
 object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condition>() {
     @JvmStatic
-    fun create(type: HTMachine, minTier: HTMachineTier): AdvancementCriterion<Condition> = create(Condition(null, type, minTier))
+    fun create(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<Condition> = create(Condition(null, key, minTier))
 
     override fun getConditionsCodec(): Codec<Condition> = Condition.CODEC
 
-    fun trigger(player: PlayerEntity?, machineType: HTMachine, tier: HTMachineTier) {
+    fun trigger(player: PlayerEntity?, key: HTMachineKey, tier: HTMachineTier) {
         (player as? ServerPlayerEntity)?.let {
             trigger(it) { condition: Condition ->
-                condition.matches(machineType, tier)
+                condition.matches(key, tier)
             }
         }
     }
@@ -52,18 +51,12 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
 
         constructor(
             predicate: Optional<LootContextPredicate>,
-            machineType: HTMachine,
+            key: HTMachineKey,
             minTier: HTMachineTier,
-        ) : this(predicate.getOrNull(), machineType.key, minTier)
-
-        constructor(
-            predicate: LootContextPredicate?,
-            machineType: HTMachine,
-            minTier: HTMachineTier,
-        ) : this(predicate, machineType.key, minTier)
+        ) : this(predicate.getOrNull(), key, minTier)
 
         override fun player(): Optional<LootContextPredicate> = Optional.ofNullable(predicate)
 
-        fun matches(machineType: HTMachine, tier: HTMachineTier): Boolean = machineType.key == this.key && tier >= minTier
+        fun matches(key: HTMachineKey, tier: HTMachineTier): Boolean = key == this.key && tier >= minTier
     }
 }

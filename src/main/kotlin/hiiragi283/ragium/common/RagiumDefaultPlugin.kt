@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTypeNew
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.machine.*
 import net.minecraft.block.Block
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
+import net.minecraft.item.Items
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.DyeColor
@@ -35,13 +36,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
     override fun afterRagiumInit(instance: RagiumAPI) {}
 
-    override fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineTypeNew>) {
+    override fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineType>) {
         // consumer
-        RagiumMachineKeys.CONSUMERS.forEach { consumer.accept(it, HTMachineTypeNew.CONSUMER) }
+        RagiumMachineKeys.CONSUMERS.forEach { consumer.accept(it, HTMachineType.CONSUMER) }
         // generators
-        RagiumMachineKeys.GENERATORS.forEach { consumer.accept(it, HTMachineTypeNew.GENERATOR) }
+        RagiumMachineKeys.GENERATORS.forEach { consumer.accept(it, HTMachineType.GENERATOR) }
         // processors
-        RagiumMachineKeys.PROCESSORS.forEach { consumer.accept(it, HTMachineTypeNew.PROCESSOR) }
+        RagiumMachineKeys.PROCESSORS.forEach { consumer.accept(it, HTMachineType.PROCESSOR) }
     }
 
     override fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {
@@ -160,6 +161,25 @@ object RagiumDefaultPlugin : RagiumPlugin {
         fun bindContents(contents: List<HTContent.Material<*>>) {
             contents.forEach { consumer(it.tagPrefix, it.material, it.asItem()) }
         }
+
+        consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
+        consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD, Items.GOLD_INGOT)
+        consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, Items.IRON_INGOT)
+
+        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
+        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
+        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
+        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
+        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
+
+        consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
+        consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
+        consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.IRON, Items.RAW_IRON)
+
+        consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER, Items.COPPER_BLOCK)
+        consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
+        consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
 
         // bindContents(RagiumContents.Ores.entries)
         bindContents(RagiumContents.StorageBlocks.entries)

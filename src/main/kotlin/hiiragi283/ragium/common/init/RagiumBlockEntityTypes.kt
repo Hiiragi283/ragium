@@ -135,9 +135,8 @@ object RagiumBlockEntityTypes {
         RagiumAPI
             .getInstance()
             .machineRegistry
+            .getEntry(key)
             .blocks
-            .row(key)
-            .values
             .forEach(type::addSupportedBlock)
     }
 }

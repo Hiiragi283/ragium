@@ -53,16 +53,10 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
     RESIDUAL_OIL(Color(0x000033), "Residual Oil", "残渣油"),
 
-    // METHANE(Color(0xcc0099), "Methane", "メタン"),
-    // METHANOL(Color(0xcc00ff), "Methanol", "メタノール"),
-    // LPG(Color(0xffff33), "LPG", "LGP"),
-    // ETHYLENE(Color(0x999999), "Ethylene", "エチレン"),
     ALCOHOL(Color(0xccffff), "Alcohol", "アルコール"),
-
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
-
-    // LUBRICANT(Color(0x996633), "Lubricant", "潤滑油"),
     ASPHALT(Color(0x000066), "Asphalt", "アスファルト"),
+    NOBLE_GAS(Color(0xff00ff), "Noble Gas", "希ガス"),
 
     // Fuels
     BIO_FUEL(Color(0x99ff00), "Bio Fuel", "バイオ燃料"),

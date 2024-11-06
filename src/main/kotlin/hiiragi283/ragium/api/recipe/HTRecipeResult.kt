@@ -4,7 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.entryComparator
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.longRangeCodec
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -20,7 +20,6 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.fluid.Fluid as MCFluid
 import net.minecraft.item.Item as MCItem
@@ -114,7 +113,14 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(
         @JvmStatic
         fun ofItem(stack: ItemStack): Item = Item(Either.left(stack.registryEntry), stack.count, stack.componentChanges)
 
-        @Deprecated("Experimental Feature")
+        @Deprecated(
+            "Experimental Feature",
+            ReplaceWith(
+                "Item(Either.right(tagKey), count, components)",
+                "hiiragi283.ragium.api.recipe.HTRecipeResult.Item",
+                "com.mojang.datafixers.util.Either",
+            ),
+        )
         @JvmStatic
         fun ofDynamic(tagKey: TagKey<MCItem>, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY): Item =
             Item(Either.right(tagKey), count, components)
@@ -133,13 +139,12 @@ sealed class HTRecipeResult<O : Any, V : Number, S : Any>(
     abstract val registry: Registry<O>
 
     fun findFirstEntry(): RegistryEntry<O> = entry.left().orElseGet {
-        val entries: RegistryEntryList.Named<O> = entry
+        entry
             .right()
             .flatMap(registry::getEntryList)
             .orElseThrow { NoSuchElementException("TagKey; $entry has no entry!") }
-        entries.firstOrNull { entry: RegistryEntry<O> -> entry.matches { it.value.namespace == "minecraft" } }
-            ?: entries.firstOrNull { entry: RegistryEntry<O> -> entry.matches { it.value.namespace == RagiumAPI.MOD_ID } }
-            ?: entries.first()
+            .sortedWith(entryComparator(registry))
+            .first()
     }
 
     fun findFirst(): O = findFirstEntry().value()

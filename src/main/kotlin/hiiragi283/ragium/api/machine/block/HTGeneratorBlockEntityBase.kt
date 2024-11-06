@@ -53,7 +53,7 @@ abstract class HTGeneratorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
         override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
 
         override fun generateEnergy(world: World, pos: BlockPos): Long = when {
-            key.asProperties().getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(
+            key.entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(
                 world,
                 pos,
             ) -> tier.recipeCost

@@ -43,5 +43,4 @@ object RagiumTranslationKeys {
 
     const val REI_RECIPE_BIOME = "tooltip.ragium.found_in_biome"
     const val REI_RECIPE_INFO = "tooltip.ragium.recipe_info"
-    const val REI_RECIPE_REQUIRE_SCAN = "tooltip.ragium.require_scan"
 }

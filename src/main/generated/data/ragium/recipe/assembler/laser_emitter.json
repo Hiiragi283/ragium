@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:noble_gas"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "#c:plates/steel"
+    },
+    {
+      "count": 4,
+      "items": "#c:plates/engineering_plastic"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:laser_emitter"
+    }
+  ]
+}

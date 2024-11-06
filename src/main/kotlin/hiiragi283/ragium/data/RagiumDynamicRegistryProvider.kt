@@ -34,140 +34,13 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
         Bootstraps.registerEnchantments(entries::add, enchantmentLookup, itemLookup)
         Bootstraps.registerConfigured(entries::add)
 
-        // registerPatterns(entries)
         registerPlaced(entries)
     }
-
-    //    Multiblock Pattern    //
-
-    /*private fun registerPatterns(entries: Entries) {
-        // blast furnace
-        registerPattern(entries, RagiumMultiblockPatterns.BLAST_FURNACE) { tier: HTMachineTier ->
-            addLayer(
-                -1..1,
-                0,
-                1..3,
-                HTMultiblockComponent.of(tier.getHull()),
-            ).addHollow(
-                -1..1,
-                1,
-                1..3,
-                HTMultiblockComponent.of(tier.getCoil()),
-            ).addHollow(
-                -1..1,
-                2,
-                1..3,
-                HTMultiblockComponent.of(tier.getCoil()),
-            ).addLayer(
-                -1..1,
-                3,
-                1..3,
-                HTMultiblockComponent.of(tier.getBaseBlock()),
-            )
-        }
-        // distillation tower
-        registerPattern(entries, RagiumMultiblockPatterns.DISTILLATION_TOWER) { tier: HTMachineTier ->
-            addLayer(
-                -1..1,
-                -1,
-                1..3,
-                HTMultiblockComponent.of(tier.getBaseBlock()),
-            ).addHollow(
-                -1..1,
-                0,
-                1..3,
-                HTMultiblockComponent.of(tier.getHull()),
-            ).addCross4(
-                -1..1,
-                1,
-                1..3,
-                HTMultiblockComponent.of(Blocks.RED_CONCRETE),
-            ).addCross4(
-                -1..1,
-                2,
-                1..3,
-                HTMultiblockComponent.of(Blocks.WHITE_CONCRETE),
-            ).addCross4(
-                -1..1,
-                3,
-                1..3,
-                HTMultiblockComponent.of(Blocks.RED_CONCRETE),
-            ).add(
-                0,
-                4,
-                2,
-                HTMultiblockComponent.of(Blocks.WHITE_CONCRETE),
-            )
-        }
-        // saw mill
-        registerPattern(entries, RagiumMultiblockPatterns.SAW_MILL) { tier: HTMachineTier ->
-            add(-1, 0, 0, HTMultiblockComponent.of(tier.getHull()))
-            add(1, 0, 0, HTMultiblockComponent.of(tier.getHull()))
-            add(-1, 0, 1, HTMultiblockComponent.of(Blocks.STONE_SLAB))
-            add(0, 0, 1, HTMultiblockComponent.of(Blocks.STONECUTTER))
-            add(1, 0, 1, HTMultiblockComponent.of(Blocks.STONE_SLAB))
-            addLayer(-1..1, 0, 2..2, HTMultiblockComponent.of(tier.getHull()))
-        }
-
-        // alchemical infuser
-        entries.add(
-            RagiumMultiblockPatterns.ALCHEMICAL_INFUSER,
-            HTMultiblockExporter.create {
-                // tiles
-                add(-2, -1, -2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILES))
-                add(-2, -1, 2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILES))
-                add(2, -1, -2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILES))
-                add(2, -1, 2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILES))
-                // slabs
-                add(-2, 0, -2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                add(-2, 0, 2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                add(2, 0, -2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                add(2, 0, 2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                addLayer(-1..1, -1, -2..-2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                    .addLayer(-1..1, -1, 2..2, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                    .addLayer(-2..-2, -1, -1..1, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                    .addLayer(2..2, -1, -1..1, HTMultiblockComponent.of(Blocks.DEEPSLATE_TILE_SLAB))
-                // obsidian
-                add(-1, -1, -1, HTMultiblockComponent.of(Blocks.OBSIDIAN))
-                add(-1, -1, 1, HTMultiblockComponent.of(Blocks.OBSIDIAN))
-                add(1, -1, -1, HTMultiblockComponent.of(Blocks.OBSIDIAN))
-                add(1, -1, 1, HTMultiblockComponent.of(Blocks.OBSIDIAN))
-                // crying
-                add(-1, -1, 0, HTMultiblockComponent.of(Blocks.CRYING_OBSIDIAN))
-                add(0, -1, -1, HTMultiblockComponent.of(Blocks.CRYING_OBSIDIAN))
-                add(0, -1, 0, HTMultiblockComponent.of(Blocks.CRYING_OBSIDIAN))
-                add(0, -1, 1, HTMultiblockComponent.of(Blocks.CRYING_OBSIDIAN))
-                add(1, -1, 0, HTMultiblockComponent.of(Blocks.CRYING_OBSIDIAN))
-            },
-        )
-    }*/
-
-    /*private fun registerPattern(
-        entries: Entries,
-        keyMap: Map<HTMachineTier, RegistryKey<HTMultiblockPattern>>,
-        builderAction: HTMultiblockExporter.(HTMachineTier) -> Unit,
-    ) {
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            entries.add(
-                keyMap[tier]!!,
-                HTMultiblockExporter.create { builderAction(tier) },
-            )
-        }
-    }*/
 
     //    Placed Features    //
 
     private fun registerPlaced(entries: Entries) {
         val lookup: RegistryEntryLookup<ConfiguredFeature<*, *>> = entries.getLookup(RegistryKeys.CONFIGURED_FEATURE)
-        /*registerFeature(
-            entries,
-            lookup,
-            RagiumFeatures.DISK_SALT,
-            BiomePlacementModifier.of(),
-            BlockFilterPlacementModifier.of(BlockPredicate.matchingFluids(Fluids.WATER)),
-            PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP,
-            SquarePlacementModifier.of()
-        )*/
         registerOre(
             entries,
             lookup,
@@ -189,15 +62,6 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
             RagiumFeatures.ORE_END_RAGI_CRYSTAL,
             PlacedFeatures.TEN_ABOVE_AND_BELOW_RANGE,
         )
-        /*registerFeature(
-            entries,
-            lookup,
-            RagiumFeatures.PATCH_END_OBLIVION_CLUSTER,
-            BiomePlacementModifier.of(),
-            PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
-            RarityFilterPlacementModifier.of(100),
-            SquarePlacementModifier.of(),
-        )*/
     }
 
     private fun registerFeature(
@@ -308,18 +172,6 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
 
         @JvmStatic
         fun registerConfigured(register: (RegistryKey<ConfiguredFeature<*, *>>, ConfiguredFeature<*, *>) -> Unit) {
-            /*register(
-                RagiumFeatures.DISK_SALT.configuredKey,
-                ConfiguredFeature(
-                    Feature.DISK,
-                    DiskFeatureConfig(
-                        PredicatedStateProvider.of(RagiumBlocks.SALT_BLOCK),
-                        BlockPredicate.matchingBlocks(listOf(Blocks.DIRT, Blocks.GRASS_BLOCK)),
-                        UniformIntProvider.create(2, 3),
-                        1
-                    )
-                )
-            )*/
             registerOre(
                 register,
                 RagiumFeatures.ORE_RAGINITE,
@@ -354,18 +206,6 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                     ),
                 ),
             )
-            /*register(
-                RagiumFeatures.PATCH_END_OBLIVION_CLUSTER.configuredKey,
-                ConfiguredFeature(
-                    Feature.RANDOM_PATCH,
-                    ConfiguredFeatures.createRandomPatchFeatureConfig(
-                        Feature.SIMPLE_BLOCK,
-                        SimpleBlockFeatureConfig(
-                            BlockStateProvider.of(RagiumBlocks.OBLIVION_CLUSTER),
-                        ),
-                    ),
-                ),
-            )*/
         }
 
         @JvmStatic

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.machine.HTMachine
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -63,7 +63,7 @@ interface RagiumAPI {
     val machineRegistry: HTMachineRegistry
     val materialRegistry: HTMaterialRegistry
 
-    fun createBuiltMachineCriterion(type: HTMachine, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
+    fun createBuiltMachineCriterion(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 

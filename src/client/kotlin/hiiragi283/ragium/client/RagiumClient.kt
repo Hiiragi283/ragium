@@ -80,7 +80,7 @@ object RagiumClient : ClientModInitializer {
         )
         RagiumAPI
             .getInstance()
-            .machineRegistry.blocks.values
+            .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
         buildList {

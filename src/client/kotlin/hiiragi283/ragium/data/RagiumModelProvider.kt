@@ -251,8 +251,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // machines
-        RagiumAPI.getInstance().machineRegistry.blocks.values.forEach { block: HTMachineBlock ->
-            val modelId: Identifier = block.key.asProperties().getOrDefault(HTClientMachinePropertyKeys.MODEL_ID)
+        RagiumAPI.getInstance().machineRegistry.blocks.forEach { block: HTMachineBlock ->
+            val modelId: Identifier = block.key.entry.getOrDefault(HTClientMachinePropertyKeys.MODEL_ID)
             accept(
                 VariantsBlockStateSupplier
                     .create(

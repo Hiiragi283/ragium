@@ -40,20 +40,13 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     addAll(RagiumContents.Ores.entries)
-                    // addAll(RagiumContents.StorageBlocks.entries)
+                    addAll(RagiumContents.StorageBlocks.entries)
 
-                    // addAll(RagiumContents.Dusts.entries)
-                    // addAll(RagiumContents.Gems.entries)
-                    // addAll(RagiumContents.Ingots.entries)
-                    // addAll(RagiumContents.Plates.entries)
-                    // addAll(RagiumContents.RawMaterials.entries)
-
-                    RagiumAPI
-                        .getInstance()
-                        .materialRegistry
-                        .items
-                        .values
-                        .forEach(entries::add)
+                    addAll(RagiumContents.Dusts.entries)
+                    addAll(RagiumContents.Gems.entries)
+                    addAll(RagiumContents.Ingots.entries)
+                    addAll(RagiumContents.Plates.entries)
+                    addAll(RagiumContents.RawMaterials.entries)
 
                     addAll(RagiumItems.ARMORS)
                     addAll(RagiumItems.TOOLS)
@@ -113,7 +106,6 @@ object RagiumItemGroup {
                     .getInstance()
                     .machineRegistry
                     .blocks
-                    .values
                     .forEach(entries::add)
             }
         }

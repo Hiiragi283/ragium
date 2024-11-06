@@ -5,13 +5,32 @@ import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.util.HTTable
 
 class HTMachineRegistry(
-    val types: Map<HTMachineKey, HTMachineTypeNew>,
-    val blocks: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock>,
-    val properties: Map<HTMachineKey, HTPropertyHolder>,
+    private val types: Map<HTMachineKey, HTMachineType>,
+    private val blockTables: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock>,
+    private val properties: Map<HTMachineKey, HTPropertyHolder>,
 ) {
+    val entryMap: Map<HTMachineKey, Entry>
+        get() = types.keys.associateWith(::getEntry)
+    val blocks: Collection<HTMachineBlock>
+        get() = blockTables.values
+
     operator fun contains(key: HTMachineKey): Boolean = key in types
 
-    fun getType(key: HTMachineKey): HTMachineTypeNew = checkNotNull(types[key]) { "Invalid machine key; $key found!" }
+    fun getBlock(key: HTMachineKey, tier: HTMachineTier): HTMachineBlock? = blockTables.get(key, tier)
 
-    fun getProperty(key: HTMachineKey): HTPropertyHolder = properties.getOrDefault(key, HTPropertyHolder.Empty)
+    fun getEntry(key: HTMachineKey): Entry = Entry(
+        checkNotNull(types[key]) { "Invalid machine key; $key!" },
+        blockTables.row(key),
+        properties.getOrDefault(key, HTPropertyHolder.Empty),
+    )
+
+    //    Entry    //
+
+    data class Entry(val type: HTMachineType, val blockMap: Map<HTMachineTier, HTMachineBlock>, val property: HTPropertyHolder) :
+        HTPropertyHolder by property {
+        val blocks: Collection<HTMachineBlock>
+            get() = blockMap.values
+
+        fun getBlock(tier: HTMachineTier): HTMachineBlock = blockMap[tier]!!
+    }
 }

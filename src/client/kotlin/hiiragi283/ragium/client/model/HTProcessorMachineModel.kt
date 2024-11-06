@@ -94,7 +94,7 @@ data object HTProcessorMachineModel : UnbakedModel, BakedModel {
 
     @JvmStatic
     private fun emitMachineFront(frontDir: Direction, key: HTMachineKey, context: RenderContext) {
-        val properties: HTPropertyHolder = key.asProperties()
+        val properties: HTPropertyHolder = key.entry
         val frontSprite: Sprite = MinecraftClient
             .getInstance()
             .getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE)

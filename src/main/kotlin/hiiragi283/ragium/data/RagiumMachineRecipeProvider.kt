@@ -50,6 +50,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         extractor(exporter)
         fluidDrill(exporter)
         grinder(exporter)
+        laserTransformer(exporter)
         metalFormer(exporter)
         mixer(exporter)
         mobExtractor(exporter)
@@ -112,6 +113,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumItems.BASALT_MESH, 4)
             .itemOutput(RagiumContents.Plates.STELLA)
             .offerTo(exporter, RagiumContents.Plates.STELLA)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.Plates.STEEL, 4)
+            .itemInput(RagiumContents.Plates.ENGINEERING_PLASTIC, 4)
+            .fluidInput(RagiumFluids.NOBLE_GAS)
+            .itemOutput(RagiumItems.LASER_EMITTER)
+            .offerTo(exporter, RagiumItems.LASER_EMITTER)
         // circuits
         val boardMap: Map<HTMachineTier, Pair<RagiumContents.Plates, RagiumContents.Plates>> = mapOf(
             HTMachineTier.PRIMITIVE to (RagiumContents.Plates.SILICON to RagiumContents.Plates.COPPER),
@@ -356,6 +365,15 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidOutput(RagiumFluids.RESIDUAL_OIL, FluidConstants.BUCKET * 3)
             .offerTo(exporter, RagiumFluids.FUEL)
 
+        // refined gas -> alcohol + noble gas
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
+            .fluidInput(RagiumFluids.REFINED_GAS, FluidConstants.BUCKET * 8)
+            .catalyst(RagiumContents.Circuits.BASIC)
+            .fluidOutput(RagiumFluids.ALCOHOL, FluidConstants.BUCKET * 6)
+            .fluidOutput(RagiumFluids.NOBLE_GAS, FluidConstants.BUCKET * 2)
+            .offerTo(exporter, RagiumFluids.ALCOHOL)
+
         // residual oil -> fuel + aromatic compound
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -574,6 +592,16 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(input.first, input.second)
             .itemOutput(output.first, output.second)
             .offerTo(exporter, output.first, suffix)
+    }
+
+    //    Laser Transformer    //
+
+    private fun laserTransformer(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.Gems.RAGI_CRYSTAL, 8)
+            .itemOutput(RagiumContents.Gems.RAGIUM)
+            .offerTo(exporter, RagiumContents.Gems.RAGIUM)
     }
 
     //    Metal Former    //

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
@@ -37,9 +36,6 @@ object RagiumComponentTypes {
     @JvmField
     val MACHINE_KEY: ComponentType<HTMachineKey> =
         register("machine_key", HTMachineKey.COMPONENT_TYPE)
-
-    val MACHINE_TYPE: ComponentType<HTMachineType> =
-        register("machine_type", HTMachineType.COMPONENT_TYPE)
 
     @JvmField
     val MACHINE_TIER: ComponentType<HTMachineTier> =

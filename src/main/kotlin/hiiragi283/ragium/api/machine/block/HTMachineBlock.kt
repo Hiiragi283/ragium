@@ -37,7 +37,7 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
         world: BlockView,
         pos: BlockPos,
         context: ShapeContext,
-    ): VoxelShape = key.asProperties()[HTMachinePropertyKeys.VOXEL_SHAPE] ?: super.getOutlineShape(
+    ): VoxelShape = key.entry[HTMachinePropertyKeys.VOXEL_SHAPE] ?: super.getOutlineShape(
         state,
         world,
         pos,
@@ -69,5 +69,5 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
         state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
-        key.asProperties()[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, key, tier)
+        key.entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, key, tier)
 }

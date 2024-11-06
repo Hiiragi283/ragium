@@ -195,6 +195,9 @@ object RagiumItems : HTContentRegister {
     val HEART_OF_THE_NETHER: Item = registerItem("heart_of_the_nether", itemSettings().rarity(Rarity.UNCOMMON))
 
     @JvmField
+    val LASER_EMITTER: Item = registerItem("laser_emitter")
+
+    @JvmField
     val POLYMER_RESIN: Item = registerItem("polymer_resin")
 
     @JvmField
@@ -229,6 +232,7 @@ object RagiumItems : HTContentRegister {
         ENGINE,
         FORGE_HAMMER,
         HEART_OF_THE_NETHER,
+        LASER_EMITTER,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
