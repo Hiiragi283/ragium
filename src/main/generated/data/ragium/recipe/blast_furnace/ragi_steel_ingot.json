@@ -16,6 +16,9 @@
   "item_outputs": [
     {
       "item": "ragium:ragi_steel_ingot"
+    },
+    {
+      "item": "ragium:slag"
     }
   ]
 }

@@ -66,7 +66,7 @@ class HTMaterialKey private constructor(val name: String) :
                 HTTagPrefix.STORAGE_BLOCK,
             ),
             MINERAL(HTTagPrefix.DUST, HTTagPrefix.ORE, HTTagPrefix.RAW_MATERIAL),
-            PLASTIC(HTTagPrefix.PLATE),
+            PLATE(HTTagPrefix.DUST, HTTagPrefix.PLATE),
             ;
 
             constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toList())

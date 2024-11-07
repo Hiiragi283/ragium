@@ -17,6 +17,10 @@
   "item_outputs": [
     {
       "item": "ragium:aluminum_ingot"
+    },
+    {
+      "count": 2,
+      "item": "ragium:slag"
     }
   ]
 }

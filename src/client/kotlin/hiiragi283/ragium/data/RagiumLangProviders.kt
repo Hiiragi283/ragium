@@ -212,6 +212,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumItems.RAGI_CRYSTAL_PROCESSOR, "Ragi-Crystal Processor")
             builder.add(RagiumItems.REMOVER_DYNAMITE, "Remover Dynamite")
+            builder.add(RagiumItems.SLAG, "Slag")
             builder.add(RagiumItems.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumItems.SOLAR_PANEL, "Solar Panel")
             builder.add(RagiumItems.TRADER_CATALOG, "Trader Catalog")
@@ -284,6 +285,7 @@ object RagiumLangProviders {
                 "Smelt multiple ingredients into one",
             )
             builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
+            builder.add(RagiumMachineKeys.COMPRESSOR, "Compressor")
             builder.add(
                 RagiumMachineKeys.DISTILLATION_TOWER,
                 "Distillation Tower",
@@ -311,6 +313,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.IRON, "Iron")
             builder.add(RagiumMaterialKeys.NITER, "Niter")
             builder.add(RagiumMaterialKeys.SULFUR, "Sulfur")
+            builder.add(RagiumMaterialKeys.WOOD, "Wood")
 
             builder.add(RagiumMaterialKeys.RAGINITE, "Raginite")
             builder.add(RagiumMaterialKeys.RAGI_STEEL, "Ragi-Steel")
@@ -435,6 +438,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumItems.RAGI_CRYSTAL_PROCESSOR, "ラギクリスタリルプロセッサ")
             builder.add(RagiumItems.REMOVER_DYNAMITE, "削除用ダイナマイト")
+            builder.add(RagiumItems.SLAG, "スラグ")
             builder.add(RagiumItems.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
             builder.add(RagiumItems.TRADER_CATALOG, "行商人カタログ")
@@ -479,6 +483,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.ASSEMBLER, "組立機", "悪魔博士，アッセンブル！")
             builder.add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
             builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
+            builder.add(RagiumMachineKeys.COMPRESSOR, "圧縮機")
             builder.add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
             builder.add(RagiumMachineKeys.ELECTROLYZER, "電解槽", "エレキ オン")
             builder.add(RagiumMachineKeys.EXTRACTOR, "抽出器")
@@ -498,6 +503,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.IRON, "鉄")
             builder.add(RagiumMaterialKeys.NITER, "硝石")
             builder.add(RagiumMaterialKeys.SULFUR, "硫黄")
+            builder.add(RagiumMaterialKeys.WOOD, "木材")
 
             builder.add(RagiumMaterialKeys.RAGINITE, "ラギナイト")
             builder.add(RagiumMaterialKeys.RAGI_STEEL, "ラギスチール")

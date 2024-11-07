@@ -47,6 +47,10 @@
     {
       "id": "#c:plates/stella",
       "required": false
+    },
+    {
+      "id": "#c:plates/wood",
+      "required": false
     }
   ]
 }

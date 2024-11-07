@@ -55,6 +55,9 @@ object RagiumMachineKeys {
     val CHEMICAL_REACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("chemical_reactor"))
 
     @JvmField
+    val COMPRESSOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("compressor"))
+
+    @JvmField
     val DISTILLATION_TOWER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("distillation_tower"))
 
     @JvmField
@@ -93,6 +96,7 @@ object RagiumMachineKeys {
         ASSEMBLER,
         BLAST_FURNACE,
         CHEMICAL_REACTOR,
+        COMPRESSOR,
         DISTILLATION_TOWER,
         ELECTROLYZER,
         EXTRACTOR,

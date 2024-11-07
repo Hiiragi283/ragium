@@ -130,6 +130,7 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         IRON(RagiumMaterialKeys.IRON),
         COPPER(RagiumMaterialKeys.COPPER),
+        WOOD(RagiumMaterialKeys.WOOD),
 
         // tier2
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),

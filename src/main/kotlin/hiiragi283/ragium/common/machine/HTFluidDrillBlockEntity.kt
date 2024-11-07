@@ -76,7 +76,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder
-            .addHollow(
+            .addLayer(
                 -1..1,
                 0,
                 1..3,

@@ -29,6 +29,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/engineering_plastic",
+      "required": false
+    },
+    {
       "id": "#c:dusts/fluorite",
       "required": false
     },
@@ -42,6 +46,10 @@
     },
     {
       "id": "#c:dusts/niter",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/plastic",
       "required": false
     },
     {
@@ -77,7 +85,15 @@
       "required": false
     },
     {
+      "id": "#c:dusts/stella",
+      "required": false
+    },
+    {
       "id": "#c:dusts/sulfur",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/wood",
       "required": false
     }
   ]

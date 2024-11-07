@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "ragium:pulp"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:wood_plate"
+    }
+  ]
+}

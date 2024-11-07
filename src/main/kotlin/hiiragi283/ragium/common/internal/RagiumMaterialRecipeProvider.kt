@@ -5,10 +5,13 @@ import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
@@ -17,7 +20,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 
 @Suppress("DEPRECATION")
-object RagiumMaterialRecipeProvider {
+internal object RagiumMaterialRecipeProvider {
     @JvmStatic
     fun generate(exporter: RecipeExporter) {
         RagiumAPI.log { info("Registering Runtime Material Recipes...") }
@@ -170,6 +173,20 @@ object RagiumMaterialRecipeProvider {
             .itemInput(rawMaterial)
             .itemOutput(dust, 2)
             .offerTo(exporter, dust, "_from_raw")
+        // 3x Chemical Recipe
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(rawMaterial)
+            .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
+            .itemOutput(dust, 3)
+            .offerTo(exporter, dust, "_with_hcl")
+        // 4x Chemical Recipe
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .itemInput(rawMaterial)
+            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
+            .itemOutput(dust, 4)
+            .offerTo(exporter, dust, "_with_h2so4")
     }
 
     @JvmStatic

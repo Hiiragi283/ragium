@@ -69,10 +69,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
         consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL)
         consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
-        // plastic
-        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLASTIC)
-        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLASTIC)
-        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLASTIC)
+        // plate
+        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE)
+        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE)
+        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE)
+        consumer.accept(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE)
     }
 
     override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {

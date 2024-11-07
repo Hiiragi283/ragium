@@ -44,15 +44,16 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         assembler(exporter)
         blastFurnace(exporter)
         chemicalReactor(exporter)
+        compressor(exporter)
         distillation(exporter)
         electrolyzer(exporter)
         extractor(exporter)
-        fluidDrill(exporter)
+        // fluidDrill(exporter)
         grinder(exporter)
         laserTransformer(exporter)
         metalFormer(exporter)
         mixer(exporter)
-        mobExtractor(exporter)
+        // mobExtractor(exporter)
         rockGenerator(exporter)
         sawMill(exporter)
     }
@@ -184,6 +185,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(ConventionalItemTags.IRON_INGOTS)
             .itemInput(RagiumContents.Dusts.RAGINITE, 4)
             .itemOutput(RagiumContents.Ingots.RAGI_STEEL)
+            .itemOutput(RagiumItems.SLAG)
             .offerTo(exporter, RagiumContents.Ingots.RAGI_STEEL)
 
         HTMachineRecipeJsonBuilder
@@ -191,6 +193,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(ConventionalItemTags.IRON_INGOTS)
             .itemInput(ItemTags.COALS, 2)
             .itemOutput(RagiumContents.Ingots.STEEL)
+            .itemOutput(RagiumItems.SLAG)
             .offerTo(exporter, RagiumContents.Ingots.STEEL)
 
         HTMachineRecipeJsonBuilder
@@ -206,6 +209,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumContents.Dusts.RAGI_CRYSTAL, 4)
             .itemInput(ConventionalItemTags.QUARTZ_GEMS)
             .itemOutput(RagiumContents.Ingots.REFINED_RAGI_STEEL)
+            .itemOutput(RagiumItems.SLAG)
             .offerTo(exporter, RagiumContents.Ingots.REFINED_RAGI_STEEL)
 
         HTMachineRecipeJsonBuilder
@@ -213,8 +217,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(ConventionalItemTags.QUARTZ_GEMS, 2)
             .itemInput(ItemTags.COALS, 4)
             .itemOutput(RagiumContents.Plates.SILICON)
+            .itemOutput(RagiumItems.SLAG, 2)
             .offerTo(exporter, RagiumContents.Plates.SILICON)
-
         // aluminum
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
@@ -228,6 +232,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumContents.Gems.CRYOLITE)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumContents.Ingots.ALUMINUM)
+            .itemOutput(RagiumItems.SLAG, 2)
             .offerTo(exporter, RagiumContents.Ingots.ALUMINUM, "_with_cryolite")
     }
 
@@ -361,6 +366,16 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.OXYGEN, FluidConstants.INGOT)
             .itemOutput(after)
             .offerTo(exporter, after)
+    }
+
+    //    Compressor    //
+
+    private fun compressor(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(RagiumItems.PULP)
+            .itemOutput(RagiumContents.Plates.WOOD)
+            .offerTo(exporter, RagiumContents.Plates.WOOD)
     }
 
     //    Distillation Tower    //
