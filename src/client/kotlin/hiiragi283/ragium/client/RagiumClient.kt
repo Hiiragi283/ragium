@@ -96,6 +96,7 @@ object RagiumClient : ClientModInitializer {
 
         registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
+        registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
         registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerMachineRenderer(RagiumBlockEntityTypes.SAW_MILL)
 

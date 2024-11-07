@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:alumina_solution"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#c:gems/cryolite"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:aluminum_ingot"
+    }
+  ]
+}

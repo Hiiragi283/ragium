@@ -64,6 +64,9 @@ object RagiumMachineKeys {
     val EXTRACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("extractor"))
 
     @JvmField
+    val FLUID_DRILL: HTMachineKey = HTMachineKey.of(RagiumAPI.id("fluid_drill"))
+
+    @JvmField
     val GRINDER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("grinder"))
 
     @JvmField
@@ -93,6 +96,7 @@ object RagiumMachineKeys {
         DISTILLATION_TOWER,
         ELECTROLYZER,
         EXTRACTOR,
+        FLUID_DRILL,
         GRINDER,
         LASER_TRANSFORMER,
         METAL_FORMER,

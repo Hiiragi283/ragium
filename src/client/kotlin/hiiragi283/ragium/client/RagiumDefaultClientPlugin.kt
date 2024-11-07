@@ -22,6 +22,9 @@ object RagiumDefaultClientPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
         }
+        helper.modify(RagiumMachineKeys.FLUID_DRILL) {
+            set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
+        }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
             set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
         }

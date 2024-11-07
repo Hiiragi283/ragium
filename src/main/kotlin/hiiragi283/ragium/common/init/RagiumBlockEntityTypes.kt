@@ -38,6 +38,10 @@ object RagiumBlockEntityTypes {
         register("exporter", ::HTExporterBlockEntity)
 
     @JvmField
+    val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
+        register("fluid_drill", ::HTFluidDrillBlockEntity)
+
+    @JvmField
     val FIREBOX: BlockEntityType<HTFireboxBlockEntity> =
         register("firebox", ::HTFireboxBlockEntity)
 
@@ -126,6 +130,7 @@ object RagiumBlockEntityTypes {
         }
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, BLAST_FURNACE)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
+        registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
         registerMachineBlocks(RagiumMachineKeys.SAW_MILL, SAW_MILL)
     }

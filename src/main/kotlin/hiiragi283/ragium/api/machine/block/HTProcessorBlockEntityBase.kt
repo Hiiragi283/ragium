@@ -10,7 +10,6 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -22,7 +21,6 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -53,24 +51,17 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean {
-        fluidStorage.parts.forEach { storage: SingleFluidStorage ->
-            if (FluidStorageUtil.interactWithFluidStorage(storage, player, Hand.MAIN_HAND)) {
-                return true
-            }
-        }
-        return false
-    }
+    final override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
     //    HTDelegatedInventory    //
 
-    override fun markDirty() {
+    final override fun markDirty() {
         super<HTMachineBlockEntityBase>.markDirty()
     }
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
+    final override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
         fluidStorage.parts.forEachIndexed { index: Int, storage: SingleFluidStorage ->
             sender(player, index, storage.variant, storage.amount)
         }
@@ -78,7 +69,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
     //    Simple    //
 
@@ -129,10 +120,10 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
         HTMultiblockController {
         final override var showPreview: Boolean = false
 
-        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+        final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
             HTLargeMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
-        override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
+        final override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
 
         //    HTDelegatedInventory    //
 
@@ -153,7 +144,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildFluidStorage()
 
-        val processor = HTMachineRecipeProcessor(
+        private val processor = HTMachineRecipeProcessor(
             parent,
             intArrayOf(0, 1, 2),
             intArrayOf(4, 5, 6),

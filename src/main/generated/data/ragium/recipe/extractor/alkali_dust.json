@@ -1,20 +1,17 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:electrolyzer",
+    "type": "ragium:extractor",
     "tier": "primitive"
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:salt_water"
+      "fluids": "ragium:alkali_solution"
     }
   ],
   "fluid_outputs": [
     {
-      "fluid": "ragium:hydrogen"
-    },
-    {
-      "fluid": "ragium:chlorine"
+      "fluid": "minecraft:water"
     }
   ],
   "item_outputs": [

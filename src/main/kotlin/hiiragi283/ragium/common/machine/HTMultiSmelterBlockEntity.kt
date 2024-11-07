@@ -33,8 +33,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
-
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
@@ -42,7 +40,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildFluidStorage()
 
-    //    HTDelegatedInventory.Sided    //
+    //    HTDelegatedInventory    //
 
     override val parent: HTSidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

@@ -42,10 +42,19 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     CHLORINE(Color(0xccff33), "Chlorine", "塩素"),
 
     // Non-organic Chemical Compounds
+    CARBON_MONOXIDE(Color(0x99ccff), "Carbon Monoxide", "一酸化炭素"),
+    CARBON_DIOXIDE(Color(0x99ccff), "Carbon Dioxide", "二酸化炭素"),
+
     NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
-    SODIUM_HYDROXIDE(Color(0x000099), "Sodium Hydroxide Solution", "水酸化ナトリウム水溶液"),
+
+    ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
+
     SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸"),
     MIXTURE_ACID(Color(0xff3300), "Mixture Acid", "混酸"),
+
+    HYDROCHLORIC_ACID(Color(0xccff99), "Hydrochloric Acid", "塩酸"),
+    HYDROGEN_CHLORIDE(Color(0xccff66), "Hydrogen Chloride", "塩化水素"),
+
     ALUMINA_SOLUTION(Color(0xcccccc), "Alumina Solution", "アルミナ溶液"),
 
     // Oil products
@@ -63,7 +72,7 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     FUEL(Color(0xcc6633), "Fuel", "燃料"),
     NITRO_FUEL(Color(0xff33333), "Nitro Fuel", "ニトロ燃料"),
 
-    // Explodes
+    // Explosives
     NITRO_GLYCERIN(Color(0x99cc66), "Nitroglycerin", "ニトログリセリン"),
     TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
     ;

@@ -6,16 +6,22 @@ import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.inventory.HTStorageBuilder
 import hiiragi283.ragium.api.inventory.HTStorageIO
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.util.Hand
 
 class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageIO) {
     companion object {
@@ -43,6 +49,22 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
             }
         },
     )
+
+    fun interactByPlayer(player: PlayerEntity): Boolean {
+        val handStorage: Storage<FluidVariant> =
+            ContainerItemContext.forPlayerInteraction(player, Hand.MAIN_HAND).find(FluidStorage.ITEM) ?: return false
+        val variants: List<FluidVariant> = handStorage.map(StorageView<FluidVariant>::getResource)
+        parts1.forEach {
+            // prevent to insert same fluid into multiple parts
+            if (it.variant in variants && it.amount == it.capacity) {
+                return false
+            }
+            if (FluidStorageUtil.interactWithFluidStorage(it, player, Hand.MAIN_HAND)) {
+                return true
+            }
+        }
+        return false
+    }
 
     fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         val list: NbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE.toInt())

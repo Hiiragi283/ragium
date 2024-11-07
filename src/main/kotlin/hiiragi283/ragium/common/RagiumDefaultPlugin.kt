@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -25,7 +24,6 @@ import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -46,33 +44,35 @@ object RagiumDefaultPlugin : RagiumPlugin {
     }
 
     override fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {
-        // tier 1
-        consumer.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
+        // alloy
         consumer.accept(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY)
-        consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST)
-        consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
-        consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
-        // tier 2
-        consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL)
         consumer.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY)
-        consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM)
-        consumer.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLASTIC)
-        consumer.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY)
-        // tier 3
-        consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM)
         consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY)
-        consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY)
+        // dust
+        consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST)
+        consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST)
+        // gem
         consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM)
-        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLASTIC)
-        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLASTIC)
-        // tier 4
+        consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM)
+        consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM)
         consumer.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM)
-        // integration
+        // metal
+        consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL)
+        consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL)
+        consumer.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL)
+        consumer.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL)
+        consumer.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL)
+        // mineral
+        consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
+        // plastic
+        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLASTIC)
+        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLASTIC)
+        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLASTIC)
     }
 
     override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
@@ -131,6 +131,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
+        helper.modify(RagiumMachineKeys.FLUID_DRILL) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+        }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
@@ -142,22 +146,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
     }
 
-    override fun setupCommonMaterialProperties(helper: RagiumPlugin.PropertyHelper<HTMaterialKey>) {
-        // tier 1
-        // tier 2
-        helper.modify(RagiumMaterialKeys.TIER_TWO::contains) {
-            set(HTMaterialPropertyKeys.RARITY, Rarity.UNCOMMON)
-        }
-        // tier 3
-        helper.modify(RagiumMaterialKeys.TIER_THREE::contains) {
-            set(HTMaterialPropertyKeys.RARITY, Rarity.RARE)
-        }
-        // tier 4
-        helper.modify(RagiumMaterialKeys.RAGIUM) {
-            set(HTMaterialPropertyKeys.RARITY, Rarity.EPIC)
-        }
-    }
-
     override fun bindMaterialToItem(consumer: (HTTagPrefix, HTMaterialKey, Item) -> Unit) {
         fun bindContents(contents: List<HTContent.Material<*>>) {
             contents.forEach { consumer(it.tagPrefix, it.material, it.asItem()) }
@@ -166,14 +154,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
         consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
         consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
-        
+
         consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
         consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD, Items.GOLD_INGOT)
         consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, Items.IRON_INGOT)
 
         consumer(HTTagPrefix.NUGGET, RagiumMaterialKeys.GOLD, Items.GOLD_NUGGET)
         consumer(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_ORE)
-        
+
         consumer(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
         consumer(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
         consumer(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)

@@ -75,6 +75,7 @@ object RagiumContents : HTContentRegister {
         RAGINITE(RagiumMaterialKeys.RAGINITE),
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
 
+        ALKALI(RagiumMaterialKeys.ALKALI),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         ASH(RagiumMaterialKeys.ASH),
         BAUXITE(RagiumMaterialKeys.BAUXITE),

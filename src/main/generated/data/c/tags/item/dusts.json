@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "#c:dusts/alkali",
+      "required": false
+    },
+    {
       "id": "#c:dusts/aluminum",
       "required": false
     },

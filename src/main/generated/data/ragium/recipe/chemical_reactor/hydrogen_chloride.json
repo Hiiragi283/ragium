@@ -6,17 +6,15 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:alkali_solution"
+      "fluids": "ragium:hydrogen"
+    },
+    {
+      "fluids": "ragium:chlorine"
     }
   ],
   "fluid_outputs": [
     {
-      "fluid": "ragium:alumina_solution"
-    }
-  ],
-  "item_inputs": [
-    {
-      "items": "#c:dusts/bauxite"
+      "fluid": "ragium:hydrogen_chloride"
     }
   ]
 }

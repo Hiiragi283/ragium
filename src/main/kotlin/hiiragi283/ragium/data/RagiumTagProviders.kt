@@ -198,6 +198,7 @@ object RagiumTagProviders {
             add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
 
             // ragium
+            add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)

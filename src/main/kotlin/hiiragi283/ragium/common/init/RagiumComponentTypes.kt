@@ -44,15 +44,15 @@ object RagiumComponentTypes {
         register("machine_tier", HTMachineTier.COMPONENT_TYPE)
 
     //    Material    //
-    
+
     @JvmField
     val MATERIAL_KEY: ComponentType<HTMaterialKey> =
         register("material_key", HTMaterialKey.COMPONENT_TYPE)
-    
+
     @JvmField
-    val TAG_PREFIX: ComponentType<HTTagPrefix> = 
+    val TAG_PREFIX: ComponentType<HTTagPrefix> =
         register("tag_prefix", HTTagPrefix.COMPONENT_TYPE)
-    
+
     //    Misc    //
 
     @JvmField
