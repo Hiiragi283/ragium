@@ -216,9 +216,17 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumContents.Plates.SILICON)
             .offerTo(exporter, RagiumContents.Plates.SILICON)
 
+        // aluminum
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
             .itemInput(ItemTags.COALS, 8)
+            .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
+            .itemOutput(RagiumContents.Ingots.ALUMINUM)
+            .offerTo(exporter, RagiumContents.Ingots.ALUMINUM)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.Gems.CRYOLITE)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumContents.Ingots.ALUMINUM)
             .offerTo(exporter, RagiumContents.Ingots.ALUMINUM)
@@ -256,7 +264,15 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.SODIUM_HYDROXIDE)
             .fluidOutput(RagiumFluids.ALUMINA_SOLUTION)
             .offerTo(exporter, RagiumFluids.ALUMINA_SOLUTION)
-
+        
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(RagiumContents.Gems.FLUORITE)
+            .itemInput(RagiumContents.Dusts.ALUMINUM)
+            .fluidInput(RagiumFluids.SODIUM_HYDROXIDE)
+            .itemOutput(RagiumContents.Gems.CRYOLITE, 2)
+            .offerTo(exporter, RagiumContents.Gems.CRYOLITE)
+        
         // Fuels
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
@@ -458,6 +474,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.GLOWSTONE)
+            .itemOutput(RagiumContents.Gems.FLUORITE, 4)
+            .itemOutput(Items.GOLD_NUGGET)
+            .offerTo(exporter, RagiumContents.Gems.FLUORITE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(Items.SOUL_SAND)
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL)
@@ -515,7 +538,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, Items.ANCIENT_DEBRIS to 1, Items.NETHERITE_SCRAP to 2)
         registerGrinder(exporter, Items.COARSE_DIRT to 1, Items.DIRT to 1)
         registerGrinder(exporter, Items.DEEPSLATE to 1, Items.COBBLED_DEEPSLATE to 1)
-        registerGrinder(exporter, Items.GRAVEL to 1, Items.SAND to 1, suffix = "_from_gravel")
         registerGrinder(exporter, Items.STONE to 1, Items.COBBLESTONE to 1)
         registerGrinder(exporter, ItemTags.BOATS to 1, RagiumItems.PULP to 5, suffix = "_from_boat")
         registerGrinder(exporter, ItemTags.COAL_ORES to 1, Items.COAL to 2)
@@ -539,8 +561,23 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.GRINDER)
+            .itemInput(Items.GRAVEL)
+            .itemOutput(Items.FLINT)
+            .catalyst(Items.FLINT)
+            .offerTo(exporter, Items.FLINT, "_from_gravel")
+        
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(Items.GRAVEL)
+            .itemOutput(Items.SAND)
+            .catalyst(Items.SAND)
+            .offerTo(exporter, Items.SAND, "_from_gravel")
+        
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.GRINDER)
             .itemInput(Items.NETHERRACK, 8)
             .itemOutput(Items.GRAVEL, 4)
+            .itemOutput(RagiumContents.Dusts.BAUXITE, 2)
             .itemOutput(RagiumContents.Dusts.SULFUR)
             .offerTo(exporter, Items.GRAVEL, "_from_nether")
 
@@ -612,7 +649,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumContents.Ingots.STEEL, 2)
             .itemOutput(RagiumBlocks.SHAFT)
             .catalyst(RagiumBlocks.SHAFT)
-            .offerTo(exporter, RagiumContents.Dusts.RAGINITE)
+            .offerTo(exporter, RagiumBlocks.SHAFT)
 
         // pipes
         registerPipe(exporter, RagiumContents.Plates.IRON, RagiumContents.Pipes.IRON)

@@ -86,6 +86,9 @@ object RagiumMaterialKeys {
     val BAUXITE: HTMaterialKey = HTMaterialKey.of("bauxite")
 
     @JvmField
+    val CRYOLITE: HTMaterialKey = HTMaterialKey.of("cryolite")
+
+    @JvmField
     val ENGINEERING_PLASTIC: HTMaterialKey = HTMaterialKey.of("engineering_plastic")
 
     @JvmField

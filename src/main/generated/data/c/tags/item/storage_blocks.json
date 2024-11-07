@@ -9,6 +9,10 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/cryolite",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/fluorite",
       "required": false
     },

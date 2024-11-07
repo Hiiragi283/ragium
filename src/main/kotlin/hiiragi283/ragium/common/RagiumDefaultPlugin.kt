@@ -67,6 +67,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY)
         consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL)
         consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM)
         consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLASTIC)
         consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLASTIC)
         // tier 4
@@ -162,16 +163,20 @@ object RagiumDefaultPlugin : RagiumPlugin {
             contents.forEach { consumer(it.tagPrefix, it.material, it.asItem()) }
         }
 
+        consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
+        consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
+        consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
+        
         consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
         consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD, Items.GOLD_INGOT)
         consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, Items.IRON_INGOT)
 
+        consumer(HTTagPrefix.NUGGET, RagiumMaterialKeys.GOLD, Items.GOLD_NUGGET)
+        consumer(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        
         consumer(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
-        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
         consumer(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
-        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
         consumer(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
-        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
 
         consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
         consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
@@ -181,7 +186,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
         consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
 
-        // bindContents(RagiumContents.Ores.entries)
+        bindContents(RagiumContents.Ores.entries)
         bindContents(RagiumContents.StorageBlocks.entries)
         bindContents(RagiumContents.Dusts.entries)
         bindContents(RagiumContents.Gems.entries)

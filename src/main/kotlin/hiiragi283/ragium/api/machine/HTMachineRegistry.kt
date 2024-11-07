@@ -9,6 +9,8 @@ class HTMachineRegistry(
     private val blockTables: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock>,
     private val properties: Map<HTMachineKey, HTPropertyHolder>,
 ) {
+    val keys: Set<HTMachineKey>
+        get() = types.keys
     val entryMap: Map<HTMachineKey, Entry>
         get() = types.keys.associateWith(::getEntry)
     val blocks: Collection<HTMachineBlock>

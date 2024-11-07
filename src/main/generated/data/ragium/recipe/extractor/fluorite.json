@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:glowstone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:fluorite"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    }
+  ]
+}

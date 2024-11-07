@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.extension.amountedFluid
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
@@ -8,9 +7,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.world.World
@@ -46,16 +45,16 @@ class HTMachineRecipeProcessor(
 
     private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.itemOutputs.getOrNull(index)?.let { result: HTRecipeResult.Item ->
+            recipe.itemOutputs.getOrNull(index)?.let { result: HTItemResult ->
                 if (!result.canMerge(inventory.getStack(slot))) {
                     return false
                 }
             }
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.fluidOutputs.getOrNull(index)?.let { result: HTRecipeResult.Fluid ->
-                val fluidIn: Pair<Fluid, Long> = fluidStorage?.get(slot)?.amountedFluid ?: return@let
-                if (!result.canMerge(fluidIn)) {
+            recipe.fluidOutputs.getOrNull(index)?.let { result: HTFluidResult ->
+                val storageIn: SingleFluidStorage = fluidStorage?.get(slot) ?: return@let
+                if (!result.canMerge(storageIn)) {
                     return false
                 }
             }
@@ -65,15 +64,15 @@ class HTMachineRecipeProcessor(
 
     private fun modifyOutputs(recipe: HTMachineRecipe) {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.itemOutputs.getOrNull(index)?.let { result: HTRecipeResult.Item ->
+            recipe.itemOutputs.getOrNull(index)?.let { result: HTItemResult ->
                 inventory.modifyStack(slot, result::merge)
             }
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.fluidOutputs.getOrNull(index)?.let { result: HTRecipeResult.Fluid ->
-                val storageIn: SingleSlotStorage<FluidVariant> = fluidStorage?.get(slot) ?: return@let
+            recipe.fluidOutputs.getOrNull(index)?.let { result: HTFluidResult ->
                 useTransaction { transaction: Transaction ->
-                    val inserted: Long = storageIn.insert(result.variant, result.amount, transaction)
+                    val storageIn: SingleSlotStorage<FluidVariant> = fluidStorage?.get(slot) ?: return@let
+                    val inserted: Long = result.merge(storageIn, transaction)
                     if (inserted > 0) {
                         transaction.commit()
                     } else {

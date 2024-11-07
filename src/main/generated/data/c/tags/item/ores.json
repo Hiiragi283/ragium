@@ -17,6 +17,10 @@
       "required": false
     },
     {
+      "id": "#c:ores/cryolite",
+      "required": false
+    },
+    {
       "id": "#c:ores/fluorite",
       "required": false
     },

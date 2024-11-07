@@ -39,6 +39,9 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
     val entryMap: Map<RegistryEntry<O>, V>
         get() = entryList.associateWith { amount }
 
+    val valueMap: Map<O, V>
+        get() = entryMap.mapKeys { it.key.value() }
+
     override fun toString(): String = "HTIngredient[entryList=$entryList,amount=$amount]"
 
     companion object {
@@ -124,7 +127,7 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
         ): Item = Item(
             either.map(Registries.ITEM::getOrCreateEntryList) { RegistryEntryList.of(it.asItem().registryEntry) },
             count,
-            consumeType
+            consumeType,
         )
 
         @JvmStatic
@@ -137,11 +140,7 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
 
     //    Item    //
 
-    class Item(
-        entryList: RegistryEntryList<MCItem>,
-        amount: Int,
-        val consumeType: ConsumeType,
-    ) :
+    class Item(entryList: RegistryEntryList<MCItem>, amount: Int, val consumeType: ConsumeType) :
         HTIngredient<MCItem, Int>(entryList, amount),
         Predicate<ItemStack> {
         val matchingStacks: List<ItemStack>
@@ -178,6 +177,14 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
     class Fluid(entryList: RegistryEntryList<MCFluid>, amount: Long) :
         HTIngredient<MCFluid, Long>(entryList, amount),
         BiPredicate<MCFluid, Long> {
+        val resourceAmounts: List<ResourceAmount<FluidVariant>>
+            get() = entryMap.map { (fluid: RegistryEntry<MCFluid>, amount: Long) ->
+                ResourceAmount(
+                    FluidVariant.of(fluid.value()),
+                    amount,
+                )
+            }
+
         fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
 
         override fun test(fluid: MCFluid, amount: Long): Boolean = when {

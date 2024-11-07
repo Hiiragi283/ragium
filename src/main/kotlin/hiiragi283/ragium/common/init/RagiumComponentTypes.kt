@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
@@ -41,6 +43,16 @@ object RagiumComponentTypes {
     val MACHINE_TIER: ComponentType<HTMachineTier> =
         register("machine_tier", HTMachineTier.COMPONENT_TYPE)
 
+    //    Material    //
+    
+    @JvmField
+    val MATERIAL_KEY: ComponentType<HTMaterialKey> =
+        register("material_key", HTMaterialKey.COMPONENT_TYPE)
+    
+    @JvmField
+    val TAG_PREFIX: ComponentType<HTTagPrefix> = 
+        register("tag_prefix", HTTagPrefix.COMPONENT_TYPE)
+    
     //    Misc    //
 
     @JvmField

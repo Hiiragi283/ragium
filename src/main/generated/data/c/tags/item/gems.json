@@ -1,6 +1,10 @@
 {
   "values": [
     {
+      "id": "#c:gems/cryolite",
+      "required": false
+    },
+    {
       "id": "#c:gems/fluorite",
       "required": false
     },

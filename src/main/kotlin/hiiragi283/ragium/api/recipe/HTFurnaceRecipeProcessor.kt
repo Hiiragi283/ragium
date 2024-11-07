@@ -29,7 +29,7 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
         val recipe: T = recipeEntry.value
         val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
         resultStack.count *= processCount
-        val output: HTRecipeResult.Item = HTRecipeResult.ofItem(resultStack)
+        val output = HTItemResult(resultStack)
         if (!output.canMerge(inventory.getStack(outputIndex))) return@runCatching false
         inventory.modifyStack(outputIndex, output::merge)
         inventory.getStack(inputIndex).count -= processCount

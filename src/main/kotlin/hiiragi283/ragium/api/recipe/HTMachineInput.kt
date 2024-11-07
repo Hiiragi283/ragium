@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.extension.isBlank
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -41,7 +42,11 @@ class HTMachineInput private constructor(
 
     override fun getSize(): Int = itemInputs.size
 
-    override fun isEmpty(): Boolean = itemInputs.isEmpty() && fluidInputs.isEmpty()
+    override fun isEmpty(): Boolean {
+        val bool1: Boolean = itemInputs.isEmpty() || itemInputs.all(ItemStack::isEmpty)
+        val bool2: Boolean = fluidInputs.isEmpty() || fluidInputs.all(ResourceAmount<FluidVariant>::isBlank)
+        return bool1 && bool2
+    }
 
     //    Builder    //
 

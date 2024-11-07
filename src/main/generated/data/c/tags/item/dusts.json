@@ -21,6 +21,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/cryolite",
+      "required": false
+    },
+    {
       "id": "#c:dusts/fluorite",
       "required": false
     },

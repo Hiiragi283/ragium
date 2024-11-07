@@ -7,9 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.recipe.HTIngredient
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeResult
+import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
@@ -50,8 +48,8 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     private val itemInputs: MutableList<HTIngredient.Item> = mutableListOf()
     private val fluidInputs: MutableList<HTIngredient.Fluid> = mutableListOf()
-    private val itemOutputs: MutableList<HTRecipeResult.Item> = mutableListOf()
-    private val fluidOutputs: MutableList<HTRecipeResult.Fluid> = mutableListOf()
+    private val itemOutputs: MutableList<HTItemResult> = mutableListOf()
+    private val fluidOutputs: MutableList<HTFluidResult> = mutableListOf()
     private var catalyst: HTIngredient.Item? = null
 
     //    Input    //
@@ -65,8 +63,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         material: HTMaterialKey,
         count: Int = 1,
         consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder =
-        itemInput(prefix.createTag(material), count, consumeType)
+    ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
 
     fun itemInput(
         content: HTContent.Material<*>,
@@ -105,22 +102,22 @@ class HTMachineRecipeJsonBuilder private constructor(
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTRecipeResult.ofItem(item, count, components))
+        itemOutputs.add(HTItemResult(item, count, components))
     }
 
-    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTRecipeResult.ofItem(stack)) }
+    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult(stack)) }
 
-    @Deprecated("Experimental Feature")
+    @Deprecated("only used in runtime recipe registration")
     fun itemOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTRecipeResult.ofItemTag(tagKey, count))
+        itemOutputs.add(HTItemResult(tagKey, count))
     }
 
     fun fluidOutput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTRecipeResult.ofFluid(fluid, amount))
+        fluidOutputs.add(HTFluidResult(fluid, amount))
     }
 
     fun fluidOutput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTRecipeResult.ofFluid(fluid.value, amount))
+        fluidOutputs.add(HTFluidResult(fluid.value, amount))
     }
 
     //    Catalyst    //

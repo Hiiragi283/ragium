@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "catalyst": {
-    "items": "minecraft:sand"
+    "items": "minecraft:flint"
   },
   "definition": {
     "type": "ragium:grinder",
@@ -14,7 +14,7 @@
   ],
   "item_outputs": [
     {
-      "item": "minecraft:sand"
+      "item": "minecraft:flint"
     }
   ]
 }

@@ -25,8 +25,8 @@ class HTMachineRecipe(
     val itemInputs: List<HTIngredient.Item>,
     val fluidInputs: List<HTIngredient.Fluid>,
     val catalyst: HTIngredient.Item?,
-    val itemOutputs: List<HTRecipeResult.Item>,
-    val fluidOutputs: List<HTRecipeResult.Fluid>,
+    val itemOutputs: List<HTItemResult>,
+    val fluidOutputs: List<HTFluidResult>,
 ) : Recipe<HTMachineInput> {
     companion object {
         @JvmField
@@ -47,11 +47,11 @@ class HTMachineRecipe(
                     HTIngredient.ITEM_CODEC
                         .optionalFieldOf("catalyst")
                         .forGetter { Optional.ofNullable(it.catalyst) },
-                    HTRecipeResult.ITEM_CODEC
+                    HTItemResult.CODEC
                         .listOf()
                         .optionalFieldOf("item_outputs", listOf())
                         .forGetter(HTMachineRecipe::itemOutputs),
-                    HTRecipeResult.FLUID_CODEC
+                    HTFluidResult.CODEC
                         .listOf()
                         .optionalFieldOf("fluid_outputs", listOf())
                         .forGetter(HTMachineRecipe::fluidOutputs),
@@ -68,9 +68,9 @@ class HTMachineRecipe(
             HTMachineRecipe::fluidInputs,
             PacketCodecs.optional(HTIngredient.ITEM_PACKET_CODEC),
             { Optional.ofNullable(it.catalyst) },
-            HTRecipeResult.ITEM_PACKET_CODEC.toList(),
+            HTItemResult.PACKET_CODEC.toList(),
             HTMachineRecipe::itemOutputs,
-            HTRecipeResult.FLUID_PACKET_CODEC.toList(),
+            HTFluidResult.PACKET_CODEC.toList(),
             HTMachineRecipe::fluidOutputs,
             ::HTMachineRecipe,
         )
@@ -81,8 +81,8 @@ class HTMachineRecipe(
         itemInputs: List<HTIngredient.Item>,
         fluidInputs: List<HTIngredient.Fluid>,
         catalyst: Optional<HTIngredient.Item>,
-        itemOutputs: List<HTRecipeResult.Item>,
-        fluidOutputs: List<HTRecipeResult.Fluid>,
+        itemOutputs: List<HTItemResult>,
+        fluidOutputs: List<HTFluidResult>,
     ) : this(
         definition,
         itemInputs,
