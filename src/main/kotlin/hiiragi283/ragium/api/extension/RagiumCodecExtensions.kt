@@ -6,12 +6,18 @@ import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.network.packet.CustomPayload
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
@@ -35,6 +41,10 @@ fun World.sendPacket(action: (ServerPlayerEntity) -> Unit) {
 
 fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
     (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
+}
+
+fun PlayerEntity.sendPacket(payload: CustomPayload) {
+    (this as? ServerPlayerEntity)?.let { ServerPlayNetworking.send(it, payload) }
 }
 
 fun ServerPlayerEntity.sendTitle(title: Text) {
@@ -107,3 +117,9 @@ fun <A : Any, B : Any> pairPacketCodecOf(
     first: PacketCodec<RegistryByteBuf, A>,
     second: PacketCodec<RegistryByteBuf, B>,
 ): PacketCodec<RegistryByteBuf, Pair<A, B>> = PacketCodec.tuple(first, Pair<A, B>::getFirst, second, Pair<A, B>::getSecond, ::Pair)
+
+val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T>>
+    get() = RegistryKey.createPacketCodec(key).xmap(
+        { key: RegistryKey<T> -> getEntry(key).orElseThrow() },
+        { entry: RegistryEntry<T> -> entry.key.orElseThrow() },
+    )

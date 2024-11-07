@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
-fun interface HTMachineEntityRenderer {
+fun interface HTDynamicMachineRenderer {
     fun render(
         entity: HTMachineBlockEntityBase,
         world: World,

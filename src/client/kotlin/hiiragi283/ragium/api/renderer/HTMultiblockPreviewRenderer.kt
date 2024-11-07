@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
-object HTMultiblockPreviewRenderer : HTMachineEntityRenderer {
+object HTMultiblockPreviewRenderer : HTDynamicMachineRenderer {
     override fun render(
         entity: HTMachineBlockEntityBase,
         world: World,

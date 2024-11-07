@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTFluidStoragePayload
 import hiiragi283.ragium.common.network.HTFluidSyncPayload
@@ -28,6 +29,10 @@ object RagiumNetworks {
     @JvmField
     val FLUID_SYNC: CustomPayload.Id<HTFluidSyncPayload> =
         registerS2C("fluid_sync", HTFluidSyncPayload.PACKET_CODEC)
+
+    @JvmField
+    val MACHINE_SYNC: CustomPayload.Id<HTMachinePacket> =
+        registerS2C("machine_sync", HTMachinePacket.PACKET_CODEC)
 
     @JvmField
     val SET_STACK: CustomPayload.Id<HTInventoryPayload.Setter> =

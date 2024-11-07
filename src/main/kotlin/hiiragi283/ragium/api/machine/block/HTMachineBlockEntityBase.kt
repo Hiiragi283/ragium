@@ -8,6 +8,8 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
@@ -51,6 +53,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
+
+    @Environment(EnvType.CLIENT)
+    open fun onPacketReceived(packet: HTMachinePacket) {
+        key = packet.key
+        tier = packet.tier
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

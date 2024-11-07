@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.gui.HTMachineScreenBase
+import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
@@ -15,6 +16,7 @@ import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.HTFireboxBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.HTLargeProcessorBlockEntityRenderer
 import hiiragi283.ragium.client.renderer.HTMachineBlockEntityRenderer
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -90,10 +92,10 @@ object RagiumClient : ClientModInitializer {
 
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.FIREBOX) { HTFireboxBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
 
         registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
-        registerMachineRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
         registerMachineRenderer(RagiumBlockEntityTypes.SAW_MILL)
 
@@ -195,6 +197,10 @@ object RagiumClient : ClientModInitializer {
                 screen.fluidCache[index] = variant
                 screen.amountCache[index] = amount
             }
+        }
+
+        RagiumNetworks.MACHINE_SYNC.registerClientReceiver { payload: HTMachinePacket, context: ClientPlayNetworking.Context ->
+            (context.getBlockEntity(payload.pos) as? HTMachineBlockEntityBase)?.onPacketReceived(payload)
         }
 
         RagiumNetworks.SET_STACK.registerClientReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->

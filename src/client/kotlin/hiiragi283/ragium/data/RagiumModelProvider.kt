@@ -266,6 +266,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
+        register(RagiumBlocks.LARGE_PROCESSOR) { block: Block ->
+            generator.excludeFromSimpleItemModelGeneration(block)
+            accept(
+                VariantsBlockStateSupplier
+                    .create(
+                        block,
+                        stateVariantOf(block),
+                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+            )
+        }
     }
 
     //    Model    //

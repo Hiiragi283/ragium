@@ -52,24 +52,10 @@ abstract class HTBlockWithEntity(settings: Settings) :
         }
 
         @JvmStatic
-        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
+        fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : Horizontal(settings) {
             init {
                 type.addSupportedBlock(this)
-                defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
             }
-
-            override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
-                defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
-
-            override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-                builder.add(Properties.HORIZONTAL_FACING)
-            }
-
-            override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
-                state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)))
-
-            override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
-                state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
 
             override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity? = type.instantiate(pos, state)
         }
@@ -106,4 +92,25 @@ abstract class HTBlockWithEntity(settings: Settings) :
         BlockEntityTicker { world1: World, pos: BlockPos, state1: BlockState, blockEntity: T ->
             (blockEntity as? HTBlockEntityBase)?.let { TICKER.tick(world1, pos, state1, it) }
         }
+
+    //    Horizontal    //
+
+    abstract class Horizontal(settings: Settings) : HTBlockWithEntity(settings) {
+        init {
+            defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
+        }
+
+        override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
+            defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
+
+        override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+            builder.add(Properties.HORIZONTAL_FACING)
+        }
+
+        override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
+            state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)))
+
+        override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
+            state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
+    }
 }

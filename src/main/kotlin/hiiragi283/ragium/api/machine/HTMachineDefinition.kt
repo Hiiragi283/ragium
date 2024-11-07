@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -29,4 +30,7 @@ data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
 
     val iconStack: ItemStack
         get() = key.createItemStack(tier)
+
+    val block: HTMachineBlock
+        get() = key.entry.getBlock(tier)
 }
