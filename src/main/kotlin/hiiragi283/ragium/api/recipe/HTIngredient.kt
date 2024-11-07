@@ -4,9 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.isIn
-import hiiragi283.ragium.api.extension.longRangeCodec
-import hiiragi283.ragium.api.extension.validate
+import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
@@ -22,6 +20,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.StringIdentifiable
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 import kotlin.collections.component1
@@ -62,6 +61,9 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                             .intRange(1, Int.MAX_VALUE)
                             .optionalFieldOf("count", 1)
                             .forGetter(Item::amount),
+                        ConsumeType.CODEC
+                            .optionalFieldOf("consume_type", ConsumeType.DECREMENT)
+                            .forGetter(Item::consumeType),
                     ).apply(instance, ::Item)
             }.validate(::validate)
 
@@ -87,6 +89,8 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 Item::entryList,
                 PacketCodecs.VAR_INT,
                 Item::amount,
+                ConsumeType.PACKET_CODEC,
+                Item::consumeType,
                 ::Item,
             ).validate(::validate)
 
@@ -105,15 +109,22 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
         // val EMPTY_FLUID = Fluid(RegistryEntryList.empty(), 0)
 
         @JvmStatic
-        fun ofItem(item: ItemConvertible, count: Int = 1): Item = Item(RegistryEntryList.of(item.asItem().registryEntry), count)
+        fun ofItem(item: ItemConvertible, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): Item =
+            Item(RegistryEntryList.of(item.asItem().registryEntry), count, consumeType)
 
         @JvmStatic
-        fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1): Item = Item(Registries.ITEM.getOrCreateEntryList(tagKey), count)
+        fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): Item =
+            Item(Registries.ITEM.getOrCreateEntryList(tagKey), count, consumeType)
 
         @JvmStatic
-        fun ofItem(either: Either<TagKey<MCItem>, ItemConvertible>, count: Int = 1): Item = Item(
+        fun ofItem(
+            either: Either<TagKey<MCItem>, ItemConvertible>,
+            count: Int = 1,
+            consumeType: ConsumeType = ConsumeType.DECREMENT,
+        ): Item = Item(
             either.map(Registries.ITEM::getOrCreateEntryList) { RegistryEntryList.of(it.asItem().registryEntry) },
             count,
+            consumeType
         )
 
         @JvmStatic
@@ -126,7 +137,11 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
 
     //    Item    //
 
-    class Item(entryList: RegistryEntryList<MCItem>, amount: Int) :
+    class Item(
+        entryList: RegistryEntryList<MCItem>,
+        amount: Int,
+        val consumeType: ConsumeType,
+    ) :
         HTIngredient<MCItem, Int>(entryList, amount),
         Predicate<ItemStack> {
         val matchingStacks: List<ItemStack>
@@ -141,6 +156,21 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
             true -> this.isEmpty
             false -> stack.isIn(entryList) && stack.count >= this.amount
         }
+
+        fun onConsume(stack: ItemStack) {
+            when (consumeType) {
+                ConsumeType.DECREMENT -> stack.decrement(amount)
+                ConsumeType.DAMAGE -> {
+                    val damage: Int = stack.damage
+                    val maxDamage: Int = stack.maxDamage
+                    if (damage + 1 <= maxDamage) {
+                        stack.damage += amount
+                    } else {
+                        stack.decrement(1)
+                    }
+                }
+            }
+        }
     }
 
     //    Fluid    //
@@ -154,5 +184,23 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
             fluid == Fluids.EMPTY || amount <= 0 -> this.isEmpty
             else -> entryList.isIn(fluid) && amount >= this.amount
         }
+    }
+
+    //    ConsumeType    //
+
+    enum class ConsumeType : StringIdentifiable {
+        DECREMENT,
+        DAMAGE,
+        ;
+
+        companion object {
+            @JvmField
+            val CODEC: Codec<ConsumeType> = codecOf(entries)
+
+            @JvmField
+            val PACKET_CODEC: PacketCodec<RegistryByteBuf, ConsumeType> = packetCodecOf(entries)
+        }
+
+        override fun asString(): String = name.lowercase()
     }
 }

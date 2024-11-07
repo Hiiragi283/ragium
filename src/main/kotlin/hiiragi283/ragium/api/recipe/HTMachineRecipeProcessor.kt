@@ -87,7 +87,7 @@ class HTMachineRecipeProcessor(
     private fun decrementInputs(recipe: HTMachineRecipe) {
         itemInputs.forEachIndexed { index: Int, slot: Int ->
             recipe.itemInputs.getOrNull(index)?.let { ingredient: HTIngredient.Item ->
-                inventory.getStack(slot).count -= ingredient.amount
+                ingredient.onConsume(inventory.getStack(slot))
             }
         }
         fluidInputs.forEachIndexed { index: Int, slot: Int ->

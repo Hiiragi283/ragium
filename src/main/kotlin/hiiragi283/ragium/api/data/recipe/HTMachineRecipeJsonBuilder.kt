@@ -60,14 +60,31 @@ class HTMachineRecipeJsonBuilder private constructor(
         itemInputs.add(ingredient)
     }
 
-    fun itemInput(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): HTMachineRecipeJsonBuilder =
-        itemInput(prefix.createTag(material), count)
+    fun itemInput(
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
+        count: Int = 1,
+        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder =
+        itemInput(prefix.createTag(material), count, consumeType)
 
-    fun itemInput(content: HTContent.Material<*>, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count)
+    fun itemInput(
+        content: HTContent.Material<*>,
+        count: Int = 1,
+        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count, consumeType)
 
-    fun itemInput(item: ItemConvertible, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(item, count))
+    fun itemInput(
+        item: ItemConvertible,
+        count: Int = 1,
+        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(item, count, consumeType))
 
-    fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(tagKey, count))
+    fun itemInput(
+        tagKey: TagKey<Item>,
+        count: Int = 1,
+        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(tagKey, count, consumeType))
 
     fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
         fluidInputs.add(HTIngredient.ofFluid(fluid, amount))
@@ -94,28 +111,16 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTRecipeResult.ofItem(stack)) }
 
     @Deprecated("Experimental Feature")
-    fun itemOutput(
-        tagKey: TagKey<Item>,
-        count: Int = 1,
-        components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTRecipeResult.ofDynamic(tagKey, count, components))
+    fun itemOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
+        itemOutputs.add(HTRecipeResult.ofItemTag(tagKey, count))
     }
 
-    fun fluidOutput(
-        fluid: Fluid,
-        amount: Long = FluidConstants.BUCKET,
-        components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTRecipeResult.ofFluid(fluid, amount, components))
+    fun fluidOutput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+        fluidOutputs.add(HTRecipeResult.ofFluid(fluid, amount))
     }
 
-    fun fluidOutput(
-        fluid: RagiumFluids,
-        amount: Long = FluidConstants.BUCKET,
-        components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTRecipeResult.ofFluid(fluid.value, amount, components))
+    fun fluidOutput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+        fluidOutputs.add(HTRecipeResult.ofFluid(fluid.value, amount))
     }
 
     //    Catalyst    //
