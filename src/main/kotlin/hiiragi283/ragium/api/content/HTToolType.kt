@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.content
 
+import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.createAttributeComponent
 import net.minecraft.item.*
 import net.minecraft.registry.tag.ItemTags
@@ -12,24 +13,34 @@ enum class HTToolType(
     private val attackSpeed: Double,
 ) : HTTranslationFormatter {
     AXE(::AxeItem, ItemTags.AXES, 3.0, -2.9) {
-        override val enPattern: String = "%s Axe"
-        override val jaPattern: String = "%sの斧"
+        override fun getPattern(type: HTLangType): String = when (type) {
+            HTLangType.EN_US -> "%s Axe"
+            HTLangType.JA_JP -> "%sの斧"
+        }
     },
     HOE(::HoeItem, ItemTags.HOES, -4.0, 0.0) {
-        override val enPattern: String = "%s Hoe"
-        override val jaPattern: String = "%sのクワ"
+        override fun getPattern(type: HTLangType): String = when (type) {
+            HTLangType.EN_US -> "%s Hoe"
+            HTLangType.JA_JP -> "%sのクワ"
+        }
     },
     PICKAXE(::PickaxeItem, ItemTags.PICKAXES, -2.0, -2.8) {
-        override val enPattern: String = "%s Pickaxe"
-        override val jaPattern: String = "%sのツルハシ"
+        override fun getPattern(type: HTLangType): String = when (type) {
+            HTLangType.EN_US -> "%s Pickaxe"
+            HTLangType.JA_JP -> "%sのツルハシ"
+        }
     },
     SHOVEL(::ShovelItem, ItemTags.SHOVELS, 2.0, -3.0) {
-        override val enPattern: String = "%s Shovel"
-        override val jaPattern: String = "%sのシャベル"
+        override fun getPattern(type: HTLangType): String = when (type) {
+            HTLangType.EN_US -> "%s Shovel"
+            HTLangType.JA_JP -> "%sのシャベル"
+        }
     },
     SWORD(::SwordItem, ItemTags.SWORDS, 3.0, -2.0) {
-        override val enPattern: String = "%s Sword"
-        override val jaPattern: String = "%sの剣"
+        override fun getPattern(type: HTLangType): String = when (type) {
+            HTLangType.EN_US -> "%s Sword"
+            HTLangType.JA_JP -> "%sの剣"
+        }
     },
     ;
 

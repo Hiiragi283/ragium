@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContent
@@ -9,8 +8,9 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.material.HTTagPrefixedBlock
+import hiiragi283.ragium.api.material.HTTagPrefixedBlockItem
+import hiiragi283.ragium.api.material.HTTagPrefixedItem
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
@@ -46,24 +46,6 @@ import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 object RagiumContentRegister : HTContentRegister {
-    private val itemBuilders: MutableMap<HTContent<Item>, HTPropertyHolderBuilder> = mutableMapOf()
-
-    private val settingsKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item.Settings> =
-        HTPropertyKey.ofDefaulted(RagiumAPI.id("settings"), value = { it })
-
-    private val itemKey: HTPropertyKey.Defaulted<(Item.Settings) -> Item> =
-        HTPropertyKey.ofDefaulted(RagiumAPI.id("item"), value = ::Item)
-
-    private fun getProperties(content: HTContent<Item>): HTPropertyHolderBuilder =
-        itemBuilders.computeIfAbsent(content) { HTPropertyHolderBuilder() }
-
-    private fun createAndRegisterItem(content: HTContent<Item>) {
-        val properties: HTPropertyHolderBuilder = getProperties(content)
-        val settings: Item.Settings = properties.getOrDefault(settingsKey)(itemSettings())
-        val item: Item = properties.getOrDefault(itemKey)(settings)
-        registerItem(content, item)
-    }
-
     @JvmStatic
     fun registerContents() {
         // DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
@@ -71,14 +53,14 @@ object RagiumContentRegister : HTContentRegister {
         initBlockItems()
 
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-            val block = Block(blockSettings(ore.baseStone))
+            val block = HTTagPrefixedBlock(ore.tagPrefix, ore.material, blockSettings(ore.baseStone))
             registerBlock(ore, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
         }
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
-            val block = Block(blockSettings(Blocks.IRON_BLOCK))
+            val block = HTTagPrefixedBlock(storage.tagPrefix, storage.material, blockSettings(Blocks.IRON_BLOCK))
             registerBlock(storage, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
         }
 
         buildList {
@@ -90,7 +72,13 @@ object RagiumContentRegister : HTContentRegister {
             addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
-        }.forEach(::createAndRegisterItem)
+        }.forEach { content: HTContent<Item> ->
+            if (content is HTContent.Material<Item>) {
+                registerItem(content, HTTagPrefixedItem(content.tagPrefix, content.material, itemSettings()))
+            } else {
+                registerItem(content, Item(itemSettings()))
+            }
+        }
 
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val tier: HTMachineTier = HTMachineTier.entries[hull.ordinal]

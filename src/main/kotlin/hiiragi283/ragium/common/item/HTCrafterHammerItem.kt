@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
@@ -255,11 +254,6 @@ object HTCrafterHammerItem :
 
         override val registry: Registry<Item> = Registries.ITEM
         override val key: RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${asString()}_module"))
-
-        override fun getTranslation(type: HTLangType): String = when (type) {
-            HTLangType.EN_US -> "Hammer Module ($name)"
-            HTLangType.JA_JP -> "ハンマーモジュール（$name）"
-        }
 
         //    StringIdentifiable    //
 

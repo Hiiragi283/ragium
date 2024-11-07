@@ -1,14 +1,15 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTRegistryContent
+import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
@@ -53,30 +54,79 @@ object RagiumLangProviders {
         desc?.let { add(key.descriptionKey, it) }
     }
 
+    fun TranslationBuilder.add(key: HTMaterialKey, value: String) {
+        add(key.translationKey, value)
+    }
+
+    fun TranslationBuilder.add(prefix: HTTagPrefix, value: String) {
+        add(prefix.translationKey, value)
+    }
+
     @JvmStatic
     private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
         // blocks
-        buildList {
-            addAll(RagiumContents.Ores.entries)
-            addAll(RagiumContents.StorageBlocks.entries)
-
-            addAll(RagiumContents.Hulls.entries)
-            addAll(RagiumContents.Coils.entries)
-            addAll(RagiumContents.Exporters.entries)
-        }.forEach { block: HTContent<Block> -> builder.add(block, block.getTranslation(type)) }
+        RagiumContents.Hulls.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Hull"
+                        HTLangType.JA_JP -> "%s筐体"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
+        RagiumContents.Coils.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Coil"
+                        HTLangType.JA_JP -> "%sコイル"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
+        RagiumContents.Exporters.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Exporter"
+                        HTLangType.JA_JP -> "%s搬出機"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
         // items
-        buildList {
-            addAll(RagiumContents.Dusts.entries)
-            addAll(RagiumContents.Gems.entries)
-            addAll(RagiumContents.Ingots.entries)
-            addAll(RagiumContents.Plates.entries)
-            addAll(RagiumContents.RawMaterials.entries)
-
-            addAll(RagiumContents.CircuitBoards.entries)
-            addAll(RagiumContents.Circuits.entries)
-
-            addAll(HTCrafterHammerItem.Behavior.entries)
-        }.forEach { item: HTContent<Item> -> builder.add(item, item.getTranslation(type)) }
+        RagiumContents.CircuitBoards.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Circuit Board"
+                        HTLangType.JA_JP -> "%s回路基板"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
+        RagiumContents.Circuits.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Circuit"
+                        HTLangType.JA_JP -> "%s回路"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
+        /*HTCrafterHammerItem.Behavior.entries.forEach {
+            builder.add(it, object : HTTranslationFormatter {
+                override val enPattern: String = "Hammer Module (%s)"
+                override val jaPattern: String = "%s回路"
+            }.getTranslation(type, ))
+        }*/
         // fluids
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             builder.add(
@@ -192,7 +242,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
-            // Machine SizeType
+            // Machine Type
             builder.add(
                 RagiumMachineKeys.DRAIN,
                 "Drain",
@@ -250,6 +300,46 @@ object RagiumLangProviders {
                 "Saw Mill",
                 "Process Logs more efficiently",
             )
+            // Material
+            builder.add(RagiumMaterialKeys.CRUDE_RAGINITE, "Crude Raginite")
+            builder.add(RagiumMaterialKeys.RAGI_ALLOY, "Ragi-Alloy")
+            builder.add(RagiumMaterialKeys.ASH, "Ash")
+            builder.add(RagiumMaterialKeys.COPPER, "Copper")
+            builder.add(RagiumMaterialKeys.IRON, "Iron")
+            builder.add(RagiumMaterialKeys.NITER, "Niter")
+            builder.add(RagiumMaterialKeys.SULFUR, "Sulfur")
+
+            builder.add(RagiumMaterialKeys.RAGINITE, "Raginite")
+            builder.add(RagiumMaterialKeys.RAGI_STEEL, "Ragi-Steel")
+            builder.add(RagiumMaterialKeys.FLUORITE, "Fluorite")
+            builder.add(RagiumMaterialKeys.GOLD, "Gold")
+            builder.add(RagiumMaterialKeys.PLASTIC, "Plastic")
+            builder.add(RagiumMaterialKeys.SILICON, "Silicon")
+            builder.add(RagiumMaterialKeys.STEEL, "Steel")
+
+            builder.add(RagiumMaterialKeys.RAGI_CRYSTAL, "Ragi-Crystal")
+            builder.add(RagiumMaterialKeys.REFINED_RAGI_STEEL, "Refined Ragi-Steel")
+            builder.add(RagiumMaterialKeys.ALUMINUM, "Aluminum")
+            builder.add(RagiumMaterialKeys.BAUXITE, "Bauxite")
+            builder.add(RagiumMaterialKeys.CRYOLITE, "Cryolite")
+            builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "Engineering Plastic")
+            builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
+
+            builder.add(RagiumMaterialKeys.RAGIUM, "Ragium")
+            // Tag Prefix
+            builder.add(HTTagPrefix.DEEP_ORE, "Deepslate %s Ore")
+            builder.add(HTTagPrefix.END_ORE, "End %s Ore")
+            builder.add(HTTagPrefix.DUST, "%s Dust")
+            builder.add(HTTagPrefix.GEAR, "%s Gear")
+            builder.add(HTTagPrefix.GEM, "%s")
+            builder.add(HTTagPrefix.INGOT, "%s Ingot")
+            builder.add(HTTagPrefix.NETHER_ORE, "Nether %s Ore")
+            builder.add(HTTagPrefix.NUGGET, "%s Nugget")
+            builder.add(HTTagPrefix.ORE, "%s Ore")
+            builder.add(HTTagPrefix.PLATE, "%s Plate")
+            builder.add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
+            builder.add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
+
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
@@ -394,6 +484,46 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス")
             builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
             builder.add(RagiumMachineKeys.SAW_MILL, "製材機", "より効率的に原木を加工する")
+            // Material
+            builder.add(RagiumMaterialKeys.CRUDE_RAGINITE, "粗製ラギナイト")
+            builder.add(RagiumMaterialKeys.RAGI_ALLOY, "ラギ合金")
+            builder.add(RagiumMaterialKeys.ASH, "灰")
+            builder.add(RagiumMaterialKeys.COPPER, "銅")
+            builder.add(RagiumMaterialKeys.IRON, "鉄")
+            builder.add(RagiumMaterialKeys.NITER, "硝石")
+            builder.add(RagiumMaterialKeys.SULFUR, "硫黄")
+
+            builder.add(RagiumMaterialKeys.RAGINITE, "ラギナイト")
+            builder.add(RagiumMaterialKeys.RAGI_STEEL, "ラギスチール")
+            builder.add(RagiumMaterialKeys.FLUORITE, "蛍石")
+            builder.add(RagiumMaterialKeys.GOLD, "金")
+            builder.add(RagiumMaterialKeys.PLASTIC, "プラスチック")
+            builder.add(RagiumMaterialKeys.SILICON, "シリコン")
+            builder.add(RagiumMaterialKeys.STEEL, "スチール")
+
+            builder.add(RagiumMaterialKeys.RAGI_CRYSTAL, "ラギクリスタリル")
+            builder.add(RagiumMaterialKeys.REFINED_RAGI_STEEL, "精製ラギスチール")
+            builder.add(RagiumMaterialKeys.ALUMINUM, "アルミニウム")
+            builder.add(RagiumMaterialKeys.BAUXITE, "ボーキサイト")
+            builder.add(RagiumMaterialKeys.CRYOLITE, "氷晶石")
+            builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "エンジニアリングプラスチック")
+            builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
+
+            builder.add(RagiumMaterialKeys.RAGIUM, "ラギウム")
+            // Tag Prefix
+            builder.add(HTTagPrefix.DEEP_ORE, "深層%s鉱石")
+            builder.add(HTTagPrefix.END_ORE, "エンド%s鉱石")
+            builder.add(HTTagPrefix.DUST, "%sの粉")
+            builder.add(HTTagPrefix.GEAR, "%sの歯車")
+            builder.add(HTTagPrefix.GEM, "%s")
+            builder.add(HTTagPrefix.INGOT, "%sインゴット")
+            builder.add(HTTagPrefix.NUGGET, "%sのナゲット")
+            builder.add(HTTagPrefix.NETHER_ORE, "ネザー%s鉱石")
+            builder.add(HTTagPrefix.ORE, "%s鉱石")
+            builder.add(HTTagPrefix.PLATE, "%s板")
+            builder.add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
+            builder.add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
+
             // Mod Menu
             builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
             builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")

@@ -51,7 +51,11 @@ interface HTContentRegister {
 
     fun registerFoodItem(name: String, component: FoodComponent): Item = registerItem(name, Item(itemSettings().food(component)))
 
-    fun registerBlockItem(block: Block, settings: Item.Settings = itemSettings(), factory: (Block, Item.Settings) -> Item = ::BlockItem) {
+    fun <T : Block> registerBlockItem(
+        block: T,
+        settings: Item.Settings = itemSettings(),
+        factory: (T, Item.Settings) -> Item = ::BlockItem,
+    ) {
         Registries.BLOCK
             .getKey(block)
             .getOrNull()

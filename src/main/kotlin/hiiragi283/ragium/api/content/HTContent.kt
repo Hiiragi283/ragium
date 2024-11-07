@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.content
 
-import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -14,22 +13,12 @@ interface HTContent<T : ItemConvertible> :
     val commonTagKey: TagKey<Item>?
         get() = null
 
-    fun getTranslation(type: HTLangType): String
-
     override fun asItem(): Item = value.asItem()
 
     //    Material    //
 
-    interface Material<T : ItemConvertible> :
-        HTContent<T>,
-        HTTranslationFormatter {
+    interface Material<T : ItemConvertible> : HTContent<T> {
         val material: HTMaterialKey
-
-        override fun getTranslation(type: HTLangType): String = getTranslation(
-            type,
-            RagiumMaterialTranslations.entries.firstOrNull { it.key == material }
-                ?: RagiumMaterialTranslations.UNDEFINED,
-        )
 
         val tagPrefix: HTTagPrefix
 
@@ -42,11 +31,7 @@ interface HTContent<T : ItemConvertible> :
 
     //    Tier    //
 
-    interface Tier<T : ItemConvertible> :
-        HTContent<T>,
-        HTTranslationFormatter {
+    interface Tier<T : ItemConvertible> : HTContent<T> {
         val tier: HTMachineTier
-
-        override fun getTranslation(type: HTLangType): String = getTranslation(type, tier)
     }
 }
