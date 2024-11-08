@@ -6,10 +6,10 @@
       "tag": "c:plates/deep_steel"
     },
     "B": {
-      "item": "ragium:ragi_crystal_processor"
+      "tag": "c:plates/ragi_alloy"
     },
     "C": {
-      "item": "ragium:advanced_casing"
+      "item": "ragium:ragi_crystal_processor"
     }
   },
   "pattern": [

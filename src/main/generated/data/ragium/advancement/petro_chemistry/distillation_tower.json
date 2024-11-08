@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:petro_chemistry/root",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#ragium:machines/alloy_furnace"
+            "items": "#ragium:machines/distillation_tower"
           }
         ]
       },
@@ -16,13 +16,13 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_alloy_furnace"
+      "id": "ragium:basic_distillation_tower"
     },
     "title": {
-      "translate": "machine_tier.ragium.primitive.prefix",
+      "translate": "machine_tier.ragium.basic.prefix",
       "with": [
         {
-          "translate": "machine_type.ragium.alloy_furnace"
+          "translate": "machine_type.ragium.distillation_tower"
         }
       ]
     }

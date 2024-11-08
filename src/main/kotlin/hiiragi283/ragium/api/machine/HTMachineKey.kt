@@ -8,8 +8,11 @@ import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.component.ComponentType
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -47,6 +50,8 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
     val descriptionText: MutableText
         get() = Text.translatable(descriptionKey).formatted(Formatting.AQUA)
 
+    val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
+    
     val entry: HTMachineRegistry.Entry by lazy { RagiumAPI.getInstance().machineRegistry.getEntry(this) }
 
     fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier) {

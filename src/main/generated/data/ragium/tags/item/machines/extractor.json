@@ -1,0 +1,7 @@
+{
+  "values": [
+    "ragium:advanced_extractor",
+    "ragium:basic_extractor",
+    "ragium:primitive_extractor"
+  ]
+}

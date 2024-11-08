@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:petro_chemistry/root",
+  "parent": "ragium:petro_chemistry/distillation_tower",
   "criteria": {
     "has_items": {
       "conditions": {

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:machine/primitive_circuit",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#ragium:machines/alloy_furnace"
+            "items": "ragium:basic_circuit"
           }
         ]
       },
@@ -16,15 +16,10 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_alloy_furnace"
+      "id": "ragium:basic_circuit"
     },
     "title": {
-      "translate": "machine_tier.ragium.primitive.prefix",
-      "with": [
-        {
-          "translate": "machine_type.ragium.alloy_furnace"
-        }
-      ]
+      "translate": "item.ragium.basic_circuit"
     }
   },
   "requirements": [

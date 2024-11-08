@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:advanced_laser_transformer"
+            "items": "#ragium:machines/laser_transformer"
           }
         ]
       },

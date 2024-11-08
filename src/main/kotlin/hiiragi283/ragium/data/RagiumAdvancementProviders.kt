@@ -34,6 +34,7 @@ object RagiumAdvancementProviders {
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(::Progress)
         pack.addProvider(::Chemistry)
+        pack.addProvider(::Machine)
         pack.addProvider(::PetroChemistry)
     }
 
@@ -177,6 +178,33 @@ object RagiumAdvancementProviders {
         hasFluid(fluid)
     }
 
+    private fun createMachineChild(
+        consumer: Consumer<AdvancementEntry>,
+        path: String,
+        parent: AdvancementEntry,
+        key: HTMachineKey,
+        tier: HTMachineTier,
+        title: Text = tier.createPrefixedText(key),
+        desc: Text = Text.empty(),
+        frame: AdvancementFrame = AdvancementFrame.TASK,
+        showToast: Boolean = true,
+        announce: Boolean = true,
+        hidden: Boolean = false,
+    ): AdvancementEntry = createAdvancement(consumer, path) {
+        parent(parent)
+        display(
+            key.entry.getBlock(tier),
+            title,
+            desc,
+            null,
+            frame,
+            showToast,
+            announce,
+            hidden,
+        )
+        hasAnyItems(key.tagKey)
+    }
+
     @Suppress("removal")
     private fun createChild(
         consumer: Consumer<AdvancementEntry>,
@@ -289,12 +317,13 @@ object RagiumAdvancementProviders {
                 ragiAlloyPlate,
                 RagiumContents.Hulls.PRIMITIVE,
             ) { hasAllItems(RagiumContents.Hulls.PRIMITIVE) }
-            val alloyFurnace: AdvancementEntry = createChild(
+            val alloyFurnace: AdvancementEntry = createMachineChild(
                 consumer,
                 "progress/primitive_alloy_furnace",
                 primitiveHull,
-                RagiumMachineKeys.ALLOY_FURNACE.entry.getBlock(HTMachineTier.PRIMITIVE),
-            ) { hasMachine(RagiumMachineKeys.ALLOY_FURNACE, HTMachineTier.PRIMITIVE) }
+                RagiumMachineKeys.ALLOY_FURNACE,
+                HTMachineTier.PRIMITIVE
+            )
             val blastFurnace: AdvancementEntry = createChild(
                 consumer,
                 "progress/primitive_blast_furnace",
@@ -341,12 +370,13 @@ object RagiumAdvancementProviders {
                 refinedRagiSteel,
                 RagiumContents.Hulls.ADVANCED,
             ) { hasAllItems(RagiumContents.Hulls.ADVANCED) }
-            val laserTransformer: AdvancementEntry = createChild(
+            val laserTransformer: AdvancementEntry = createMachineChild(
                 consumer,
                 "progress/laser_transformer",
                 advancedHull,
-                RagiumMachineKeys.LASER_TRANSFORMER.entry.getBlock(HTMachineTier.ADVANCED),
-            ) { hasMachine(RagiumMachineKeys.LASER_TRANSFORMER, HTMachineTier.ADVANCED) }
+                RagiumMachineKeys.LASER_TRANSFORMER,
+                HTMachineTier.ADVANCED,
+            )
             // tier 4
             val ragium: AdvancementEntry = createContentChild(
                 consumer,
@@ -370,6 +400,74 @@ object RagiumAdvancementProviders {
                     RagiumItems.STELLA_BOOTS,
                 )
             }
+        }
+    }
+
+    //    Machine    //
+
+    private class Machine(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+        FabricAdvancementProvider(output, registryLookup) {
+        override fun getName(): String = "${super.getName()}/Machine"
+
+        override fun generateAdvancement(
+            registryLookup: RegistryWrapper.WrapperLookup,
+            consumer: Consumer<AdvancementEntry>,
+        ) {
+            val root: AdvancementEntry = createRoot(
+                consumer,
+                "machine/root",
+                RagiumContents.Hulls.PRIMITIVE,
+                Text.literal("Machine"),
+                Text.empty(),
+                Identifier.of("textures/block/smooth_stone.png"),
+            ) { hasAllItems(RagiumContents.Hulls.PRIMITIVE) }
+            val multiSmelter: AdvancementEntry = createMachineChild(
+                consumer,
+                "machine/multi_smelter",
+                root,
+                RagiumMachineKeys.MULTI_SMELTER,
+                HTMachineTier.PRIMITIVE
+            )
+            // assembler
+            val assembler: AdvancementEntry = createMachineChild(
+                consumer,
+                "machine/assembler",
+                root,
+                RagiumMachineKeys.ASSEMBLER,
+                HTMachineTier.PRIMITIVE
+            )
+            val primitiveCircuit: AdvancementEntry = createChild(
+                consumer,
+                "machine/primitive_circuit",
+                assembler,
+                RagiumContents.Circuits.PRIMITIVE
+            ) { hasAllItems(RagiumContents.Circuits.PRIMITIVE) }
+            val basicCircuit: AdvancementEntry = createChild(
+                consumer,
+                "machine/basic_circuit",
+                primitiveCircuit,
+                RagiumContents.Circuits.BASIC
+            ) { hasAllItems(RagiumContents.Circuits.BASIC) }
+            val advancedCircuit: AdvancementEntry = createChild(
+                consumer,
+                "machine/advanced_circuit",
+                basicCircuit,
+                RagiumContents.Circuits.ADVANCED
+            ) { hasAllItems(RagiumContents.Circuits.ADVANCED) }
+            val processor: AdvancementEntry = createChild(
+                consumer,
+                "machine/processor",
+                advancedCircuit,
+                RagiumItems.RAGI_CRYSTAL_PROCESSOR,
+                frame = AdvancementFrame.GOAL
+            ) { hasAllItems(RagiumItems.RAGI_CRYSTAL_PROCESSOR) }
+            val largeProcessor: AdvancementEntry = createChild(
+                consumer,
+                "machine/large_processor",
+                processor,
+                RagiumBlocks.LARGE_PROCESSOR,
+                frame = AdvancementFrame.CHALLENGE
+            ) { hasAllItems(RagiumBlocks.LARGE_PROCESSOR) }
         }
     }
 
@@ -518,11 +616,18 @@ object RagiumAdvancementProviders {
                 Text.empty(),
                 Identifier.of("textures/block/blast_furnace_top.png"),
             ) { hasFluid(RagiumFluids.CRUDE_OIL.value) }
+            val distillation: AdvancementEntry = createMachineChild(
+                consumer,
+                "petro_chemistry/distillation_tower",
+                root,
+                RagiumMachineKeys.DISTILLATION_TOWER,
+                HTMachineTier.BASIC
+            ) 
             // plastic
             val polymerResin: AdvancementEntry = createChild(
                 consumer,
                 "petro_chemistry/polymer_resin",
-                root,
+                distillation,
                 RagiumItems.POLYMER_RESIN,
             ) { hasAllItems(RagiumItems.POLYMER_RESIN) }
             val engineeringPlastic: AdvancementEntry = createContentChild(
@@ -536,7 +641,7 @@ object RagiumAdvancementProviders {
             val refinedGas: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/refined_gas",
-                root,
+                distillation,
                 RagiumFluids.REFINED_GAS.value,
             )
             val nobleGas: AdvancementEntry = createFluidChild(
@@ -549,7 +654,7 @@ object RagiumAdvancementProviders {
             val fuel: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/fuel",
-                root,
+                distillation,
                 RagiumFluids.FUEL.value,
             )
             val nitroFuel: AdvancementEntry = createFluidChild(
@@ -563,7 +668,7 @@ object RagiumAdvancementProviders {
             val residualOil: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/residual_oil",
-                root,
+                distillation,
                 RagiumFluids.RESIDUAL_OIL.value,
             )
             val aromaticCompound: AdvancementEntry = createFluidChild(

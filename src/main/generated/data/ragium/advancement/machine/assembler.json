@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:machine/root",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#ragium:machines/alloy_furnace"
+            "items": "#ragium:machines/assembler"
           }
         ]
       },
@@ -16,13 +16,13 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_alloy_furnace"
+      "id": "ragium:primitive_assembler"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",
       "with": [
         {
-          "translate": "machine_type.ragium.alloy_furnace"
+          "translate": "machine_type.ragium.assembler"
         }
       ]
     }

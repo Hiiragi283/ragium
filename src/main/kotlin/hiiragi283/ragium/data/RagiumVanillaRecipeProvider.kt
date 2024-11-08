@@ -597,7 +597,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumContents.Plates.DEEP_STEEL)
             .input('B', RagiumContents.Plates.STEEL)
             .input('C', RagiumContents.Circuits.ADVANCED)
-            .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+            .unlockedBy(RagiumContents.Plates.DEEP_STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -607,8 +607,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Plates.DEEP_STEEL)
-            .input('B', RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-            .input('C', RagiumBlocks.ADVANCED_CASING)
+            .input('B', RagiumContents.Plates.RAGI_ALLOY)
+            .input('C', RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .offerTo(exporter)
         // generators

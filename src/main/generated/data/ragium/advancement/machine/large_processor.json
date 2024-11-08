@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:machine/processor",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#ragium:machines/alloy_furnace"
+            "items": "ragium:large_processor"
           }
         ]
       },
@@ -14,17 +14,13 @@
   },
   "display": {
     "description": "",
+    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_alloy_furnace"
+      "id": "ragium:large_processor"
     },
     "title": {
-      "translate": "machine_tier.ragium.primitive.prefix",
-      "with": [
-        {
-          "translate": "machine_type.ragium.alloy_furnace"
-        }
-      ]
+      "translate": "block.ragium.large_processor"
     }
   },
   "requirements": [

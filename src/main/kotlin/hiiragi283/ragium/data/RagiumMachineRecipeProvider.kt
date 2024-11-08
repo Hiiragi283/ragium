@@ -92,14 +92,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumContents.Plates.RAGI_STEEL, 8)
             .itemOutput(RagiumItems.ENGINE)
             .offerTo(exporter, RagiumItems.ENGINE)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumContents.Gems.RAGI_CRYSTAL, 8)
-            .itemInput(RagiumItems.PROCESSOR_SOCKET)
-            .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-            .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-
+        
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumContents.Plates.STEEL, 4)
@@ -107,6 +100,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.NOBLE_GAS)
             .itemOutput(RagiumItems.LASER_EMITTER)
             .offerTo(exporter, RagiumItems.LASER_EMITTER)
+        // processor
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.Gems.RAGI_CRYSTAL, 8)
+            .itemInput(RagiumItems.PROCESSOR_SOCKET)
+            .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+            .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR, "_from_crystal")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.Gems.RAGIUM)
+            .itemInput(RagiumItems.PROCESSOR_SOCKET)
+            .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+            .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR, "_from_ragium")
         // circuits
         val boardMap: Map<HTMachineTier, Pair<RagiumContents.Plates, RagiumContents.Plates>> = mapOf(
             HTMachineTier.PRIMITIVE to (RagiumContents.Plates.SILICON to RagiumContents.Plates.COPPER),

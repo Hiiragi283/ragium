@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:machine/advanced_circuit",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#ragium:machines/alloy_furnace"
+            "items": "ragium:ragi_crystal_processor"
           }
         ]
       },
@@ -14,17 +14,13 @@
   },
   "display": {
     "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_alloy_furnace"
+      "id": "ragium:ragi_crystal_processor"
     },
     "title": {
-      "translate": "machine_tier.ragium.primitive.prefix",
-      "with": [
-        {
-          "translate": "machine_type.ragium.alloy_furnace"
-        }
-      ]
+      "translate": "item.ragium.ragi_crystal_processor"
     }
   },
   "requirements": [

@@ -1,0 +1,7 @@
+{
+  "values": [
+    "ragium:advanced_combustion_generator",
+    "ragium:basic_combustion_generator",
+    "ragium:primitive_combustion_generator"
+  ]
+}
