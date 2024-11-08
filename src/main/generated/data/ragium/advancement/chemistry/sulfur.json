@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:chemistry/root",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/sulfur"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:sulfur_dust"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.dust",
+      "with": [
+        {
+          "translate": "material.ragium.sulfur"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

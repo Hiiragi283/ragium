@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:chemistry/mixture_acid",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:dynamite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:dynamite"
+    },
+    "title": {
+      "translate": "item.ragium.dynamite"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "catalyst": {
-    "items": "minecraft:heart_of_the_sea"
+    "items": "ragium:heart_of_the_nether"
   },
   "definition": {
     "type": "ragium:chemical_reactor",
@@ -9,11 +9,9 @@
   },
   "fluid_inputs": [
     {
-      "amount": 162000,
-      "fluids": "ragium:refined_gas"
+      "fluids": "ragium:carbon_monoxide"
     },
     {
-      "amount": 162000,
       "fluids": "minecraft:water"
     }
   ],
@@ -22,8 +20,7 @@
       "fluid": "ragium:hydrogen"
     },
     {
-      "amount": 162000,
-      "fluid": "ragium:alcohol"
+      "fluid": "ragium:carbon_dioxide"
     }
   ]
 }

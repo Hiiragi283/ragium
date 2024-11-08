@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:petro_chemistry/polymer_resin",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:plates/engineering_plastic"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:engineering_plastic_plate"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.plate",
+      "with": [
+        {
+          "translate": "material.ragium.engineering_plastic"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

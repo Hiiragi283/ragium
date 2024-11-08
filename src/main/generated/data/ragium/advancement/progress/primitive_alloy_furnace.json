@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:progress/primitive_hull",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:primitive_alloy_furnace"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:primitive_alloy_furnace"
+    },
+    "title": {
+      "translate": "machine_tier.ragium.primitive.prefix",
+      "with": [
+        {
+          "translate": "machine_type.ragium.alloy_furnace"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

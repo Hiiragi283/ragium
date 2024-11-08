@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:chemistry/root",
+  "criteria": {
+    "has_fluids": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "ragium:fluid": "ragium:chlorine"
+            },
+            "items": "ragium:filled_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "components": {
+        "ragium:fluid": "ragium:chlorine"
+      },
+      "count": 1,
+      "id": "ragium:filled_fluid_cube"
+    },
+    "title": {
+      "translate": "fluid.ragium.chlorine"
+    }
+  },
+  "requirements": [
+    [
+      "has_fluids"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

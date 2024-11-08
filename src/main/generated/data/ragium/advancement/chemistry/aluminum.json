@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:chemistry/bauxite",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/aluminum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:aluminum_ingot"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.ingot",
+      "with": [
+        {
+          "translate": "material.ragium.aluminum"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

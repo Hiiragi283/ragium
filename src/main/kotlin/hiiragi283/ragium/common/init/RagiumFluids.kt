@@ -32,6 +32,7 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー"),
 
     // Natural Resources
+    AIR(Color(0xccffff), "Air", "空気"),
     SALT_WATER(Color(0x003399), "Salt Water", "塩水"),
     CRUDE_OIL(Color(0x000000), "Crude Oil", "原油"),
 
@@ -62,7 +63,7 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
     RESIDUAL_OIL(Color(0x000033), "Residual Oil", "残渣油"),
 
-    ALCOHOL(Color(0xccffff), "Alcohol", "アルコール"),
+    ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
     ASPHALT(Color(0x000066), "Asphalt", "アスファルト"),
     NOBLE_GAS(Color(0xff00ff), "Noble Gas", "希ガス"),

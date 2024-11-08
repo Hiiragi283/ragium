@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:aromatic_compounds"
+    },
+    {
+      "amount": 27000,
+      "fluids": "ragium:oxygen"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:engineering_plastic_plate"
+    }
+  ]
+}

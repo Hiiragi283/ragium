@@ -1,0 +1,38 @@
+{
+  "parent": "ragium:petro_chemistry/fuel",
+  "criteria": {
+    "has_fluids": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "ragium:fluid": "ragium:nitro_fuel"
+            },
+            "items": "ragium:filled_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "goal",
+    "icon": {
+      "components": {
+        "ragium:fluid": "ragium:nitro_fuel"
+      },
+      "count": 1,
+      "id": "ragium:filled_fluid_cube"
+    },
+    "title": {
+      "translate": "fluid.ragium.nitro_fuel"
+    }
+  },
+  "requirements": [
+    [
+      "has_fluids"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

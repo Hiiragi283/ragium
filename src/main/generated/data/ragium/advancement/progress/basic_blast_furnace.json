@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:progress/basic_hull",
+  "criteria": {
+    "build_multiblock": {
+      "conditions": {
+        "machine_type": "ragium:blast_furnace",
+        "min_tier": "basic"
+      },
+      "trigger": "ragium:build_machine"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:basic_blast_furnace"
+    },
+    "title": {
+      "translate": "machine_tier.ragium.basic.prefix",
+      "with": [
+        {
+          "translate": "machine_type.ragium.blast_furnace"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "build_multiblock"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

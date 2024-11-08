@@ -15,12 +15,12 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         val pack: FabricDataGenerator.Pack = fabricDataGenerator.createPack()
         // server
-        pack.addProvider(::RagiumAdvancementProvider)
         pack.addProvider(::RagiumBlockLootProvider)
         pack.addProvider(::RagiumDynamicRegistryProvider)
         pack.addProvider(::RagiumEntityLootProvider)
         pack.addProvider(::RagiumVanillaRecipeProvider)
         pack.addProvider(::RagiumMachineRecipeProvider)
+        RagiumAdvancementProviders.init(pack)
         RagiumTagProviders.init(pack)
         // client
         pack.addProvider(::RagiumModelProvider)

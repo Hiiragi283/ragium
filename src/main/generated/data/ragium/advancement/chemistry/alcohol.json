@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:chemistry/hydrogen",
+  "criteria": {
+    "has_fluids": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "ragium:fluid": "ragium:alcohol"
+            },
+            "items": "ragium:filled_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "components": {
+        "ragium:fluid": "ragium:alcohol"
+      },
+      "count": 1,
+      "id": "ragium:filled_fluid_cube"
+    },
+    "title": {
+      "translate": "fluid.ragium.alcohol"
+    }
+  },
+  "requirements": [
+    [
+      "has_fluids"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

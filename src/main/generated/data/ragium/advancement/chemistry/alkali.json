@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:chemistry/root",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#ragium:alkali"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:alkali_dust"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.dust",
+      "with": [
+        {
+          "translate": "material.ragium.alkali"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

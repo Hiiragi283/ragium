@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:petro_chemistry/residual_oil",
+  "criteria": {
+    "has_fluids": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "ragium:fluid": "ragium:aromatic_compounds"
+            },
+            "items": "ragium:filled_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "components": {
+        "ragium:fluid": "ragium:aromatic_compounds"
+      },
+      "count": 1,
+      "id": "ragium:filled_fluid_cube"
+    },
+    "title": {
+      "translate": "fluid.ragium.aromatic_compounds"
+    }
+  },
+  "requirements": [
+    [
+      "has_fluids"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -143,7 +143,7 @@ object RagiumLangProviders {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.EN_US)
             // Advancements
-            RagiumAdvancementProvider.register.generateLang(HTLangType.EN_US, builder)
+
             // Blocks
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -290,6 +290,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Extract")
             builder.add(RagiumMachineKeys.FLUID_DRILL, "Fluid Drill", "Pump up fluids from specified biomes")
             builder.add(RagiumMachineKeys.GRINDER, "Grinder", "Grind ingredients")
+            builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer")
             builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
             builder.add(RagiumMachineKeys.MIXER, "Mixer", "Genomix")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
@@ -348,7 +349,7 @@ object RagiumLangProviders {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.JA_JP)
             // Advancements
-            RagiumAdvancementProvider.register.generateLang(HTLangType.JA_JP, builder)
+
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
@@ -465,6 +466,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.EXTRACTOR, "抽出器")
             builder.add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
             builder.add(RagiumMachineKeys.GRINDER, "粉砕機")
+            builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機")
             builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
             builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス")

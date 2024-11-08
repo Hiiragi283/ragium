@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:chemistry/sulfur",
+  "criteria": {
+    "has_fluids": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "ragium:fluid": "ragium:sulfuric_acid"
+            },
+            "items": "ragium:filled_fluid_cube"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "components": {
+        "ragium:fluid": "ragium:sulfuric_acid"
+      },
+      "count": 1,
+      "id": "ragium:filled_fluid_cube"
+    },
+    "title": {
+      "translate": "fluid.ragium.sulfuric_acid"
+    }
+  },
+  "requirements": [
+    [
+      "has_fluids"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

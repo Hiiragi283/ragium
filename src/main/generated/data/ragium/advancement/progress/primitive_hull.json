@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:progress/ragi_alloy_plate",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:primitive_hull"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:primitive_hull"
+    },
+    "title": {
+      "translate": "block.ragium.primitive_hull"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

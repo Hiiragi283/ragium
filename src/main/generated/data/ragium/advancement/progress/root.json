@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:raw_materials/crude_raginite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/bricks.png",
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:raginite_ore"
+    },
+    "show_toast": false,
+    "title": "Ragium"
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

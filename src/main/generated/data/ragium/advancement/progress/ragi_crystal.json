@@ -1,0 +1,36 @@
+{
+  "parent": "ragium:progress/basic_blast_furnace",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/ragi_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_crystal"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.gem",
+      "with": [
+        {
+          "translate": "material.ragium.ragi_crystal"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

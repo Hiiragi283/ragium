@@ -1,0 +1,37 @@
+{
+  "parent": "ragium:progress/laser_transformer",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/ragium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragium"
+    },
+    "title": {
+      "translate": "tag_prefix.ragium.gem",
+      "with": [
+        {
+          "translate": "material.ragium.ragium"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

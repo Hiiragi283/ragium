@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
@@ -119,6 +120,16 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
         HTProcessorBlockEntityBase(type, pos, state),
         HTMultiblockController {
         final override var showPreview: Boolean = false
+
+        override fun onSucceeded(
+            state: BlockState,
+            world: World,
+            pos: BlockPos,
+            player: PlayerEntity,
+        ) {
+            super.onSucceeded(state, world, pos, player)
+            HTBuiltMachineCriterion.trigger(player, key, tier)
+        }
 
         final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
             HTLargeMachineScreenHandler(syncId, playerInventory, packet, createContext())
