@@ -458,7 +458,6 @@ object RagiumAdvancementProviders {
                 "chemistry/cryolite",
                 aluminum,
                 RagiumContents.Gems.CRYOLITE,
-                frame = AdvancementFrame.GOAL,
             )
             // sulfur
             val sulfur: AdvancementEntry = createContentChild(

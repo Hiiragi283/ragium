@@ -25,6 +25,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
     //   BlockState    //
 
     override fun generateBlockStateModels(generator: BlockStateModelGenerator) {
+        fun accept(supplier: BlockStateSupplier) {
+            generator.blockStateCollector.accept(supplier)
+        }
+
         fun register(block: Block, action: (Block) -> Unit) {
             action(block)
         }
@@ -37,15 +41,17 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             register(block) { generator.registerSingleton(it) { TexturedModel.getCubeAll(id) } }
         }
 
+        fun registerCustom(block: Block, id: Identifier = TextureMap.getId(block)) {
+            register(block) { accept(VariantsBlockStateSupplier.create(it, stateVariantOf(id))) }
+        }
+        
         fun registerLayered(block: Block, layer0: Identifier, layer1: Identifier) {
             register(block) { generator.registerSingleton(it, RagiumModels.createLayered(layer0, layer1)) }
         }
 
-        fun accept(supplier: BlockStateSupplier) {
-            generator.blockStateCollector.accept(supplier)
-        }
-
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
+        
+        registerCustom(RagiumBlocks.MANUAL_FORGE)
         register(RagiumBlocks.MANUAL_GRINDER) {
             accept(
                 buildMultipartState(it) {
@@ -76,6 +82,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 },
             )
         }
+        registerCustom(RagiumBlocks.MANUAL_MIXER)
+        
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
         register(RagiumBlocks.ITEM_DISPLAY) {
             generator.registerSingleton(
@@ -94,7 +102,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             Identifier.of("block/netherrack"),
             Identifier.of("block/destroy_stage_5"),
         )
-
         registerSimple(RagiumBlocks.SPONGE_CAKE)
 
         accept(
@@ -131,8 +138,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     ),
             )
         }
-        register(RagiumBlocks.MANUAL_FORGE) { accept(VariantsBlockStateSupplier.create(it, stateVariantOf(it))) }
-
         // exporters
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val coil: Block = exporter.tier.getCoil().value
@@ -255,7 +260,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 VariantsBlockStateSupplier
                     .create(
                         block,
-                        stateVariantOf(block),
+                        stateVariantOf(
+                            Models.CUBE_COLUMN.upload(
+                                ModelIds.getItemModelId(block.asItem()),
+                                TextureMap.all(block),
+                                generator.modelCollector
+                            )
+                        ),
                     ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
             )
         }

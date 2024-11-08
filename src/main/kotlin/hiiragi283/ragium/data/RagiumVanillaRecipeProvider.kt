@@ -725,7 +725,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                     when (tier) {
                         HTMachineTier.PRIMITIVE -> RagiumContents.Plates.IRON
                         HTMachineTier.BASIC -> RagiumContents.Plates.STEEL
-                        HTMachineTier.ADVANCED -> RagiumContents.Plates.STELLA
+                        HTMachineTier.ADVANCED -> RagiumContents.Plates.ALUMINUM
                     },
                 ).input('B', core)
                 .input('C', tier.getCircuit())
