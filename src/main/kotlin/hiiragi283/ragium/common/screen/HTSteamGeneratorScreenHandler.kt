@@ -7,7 +7,7 @@ import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTSteamMachineScreenHandler(
+class HTSteamGeneratorScreenHandler(
     syncId: Int,
     playerInv: PlayerInventory,
     packet: HTMachinePacket,

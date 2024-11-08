@@ -2,10 +2,10 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.screen.HTFireboxMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTFluidDrillScreenHandler
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
-import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -17,8 +17,8 @@ import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
     @JvmField
-    val FIREBOX: ScreenHandlerType<HTFireboxMachineScreenHandler> =
-        register("firebox", ::HTFireboxMachineScreenHandler)
+    val FLUID_DRILL: ExtendedScreenHandlerType<HTFluidDrillScreenHandler, HTMachinePacket> =
+        registerExtended("fluid_drill", ::HTFluidDrillScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
     val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =
@@ -29,8 +29,8 @@ object RagiumScreenHandlerTypes {
         registerExtended("simple_machine", ::HTSimpleMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
-    val STEAM: ExtendedScreenHandlerType<HTSteamMachineScreenHandler, HTMachinePacket> =
-        registerExtended("stean", ::HTSteamMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val STEAM: ExtendedScreenHandlerType<HTSteamGeneratorScreenHandler, HTMachinePacket> =
+        registerExtended("steam_generator", ::HTSteamGeneratorScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(

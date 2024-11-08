@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.toStorage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.inventory.*
@@ -8,11 +8,11 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
-import hiiragi283.ragium.common.block.entity.HTFireboxBlockEntity
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
+import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -21,15 +21,14 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.Fluids
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.tag.ItemTags
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
@@ -38,13 +37,12 @@ import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import kotlin.math.max
 
 class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTGeneratorBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
     HTDelegatedInventory.Sided,
     HTFluidSyncable {
-    companion object {
+    /*companion object {
         @JvmField
         val HEAT_LOOKUP: BlockApiLookup<Long, Direction?> = BlockApiLookup.get(
             RagiumAPI.id("heat_sided"),
@@ -78,7 +76,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }, RagiumBlockEntityTypes.FIREBOX)
         }
-    }
+    }*/
 
     override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
@@ -100,13 +98,15 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
 
     override fun generateEnergy(world: World, pos: BlockPos): Long {
-        val heatPower: Long = getHeatPower(world, pos.down(), Direction.UP)
-        if (heatPower > 0) {
+        val fuelStack: ItemStack = getStack(0)
+        if (fuelStack.isIn(ItemTags.COALS)) {
             useTransaction { transaction: Transaction ->
                 val extracted: Long =
                     fluidStorage.extract(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET, transaction)
                 if (extracted == FluidConstants.BUCKET) {
                     transaction.commit()
+                    fuelStack.decrement(1)
+                    modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
                     return tier.recipeCost
                 } else {
                     transaction.abort()
@@ -150,7 +150,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExtendedScreenHandlerFactory    //
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSteamMachineScreenHandler(
+        HTSteamGeneratorScreenHandler(
             syncId,
             playerInventory,
             packet,

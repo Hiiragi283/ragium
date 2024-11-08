@@ -71,7 +71,6 @@ object RagiumClient : ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
             RagiumBlocks.POROUS_NETHERRACK,
-            RagiumBlocks.FIREBOX,
         )
         RagiumAPI
             .getInstance()
@@ -83,7 +82,6 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.Hulls.entries)
         }.map(HTRegistryContent<Block>::value).forEach(::registerCutoutMipped)
 
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.FIREBOX) { HTFireboxBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
 
@@ -150,10 +148,10 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerScreens() {
-        HandledScreens.register(RagiumScreenHandlerTypes.FIREBOX, ::HTFireboxMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.FLUID_DRILL, ::HTFluidDrillScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.STEAM, ::HTSteamMachineScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.STEAM, ::HTSteamGeneratorScreen)
     }
 
     //    Events    //

@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -84,7 +84,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExtendedScreenHandlerFactory    //
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSteamMachineScreenHandler(
+        HTSteamGeneratorScreenHandler(
             syncId,
             playerInventory,
             packet,

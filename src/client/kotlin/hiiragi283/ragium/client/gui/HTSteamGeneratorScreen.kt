@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.screen.HTSteamMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -12,8 +12,8 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 
 @Environment(EnvType.CLIENT)
-class HTSteamMachineScreen(handler: HTSteamMachineScreenHandler, inventory: PlayerInventory, title: Text) :
-    HTMachineScreenBase<HTSteamMachineScreenHandler>(handler, inventory, title) {
+class HTSteamGeneratorScreen(handler: HTSteamGeneratorScreenHandler, inventory: PlayerInventory, title: Text) :
+    HTMachineScreenBase<HTSteamGeneratorScreenHandler>(handler, inventory, title) {
     companion object {
         @JvmField
         val TEXTURE: Identifier = RagiumAPI.id("textures/gui/steam_generator.png")

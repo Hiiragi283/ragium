@@ -56,7 +56,6 @@ object RagiumTagProviders {
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ADVANCED_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.BASIC_CASING)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.FIREBOX)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)

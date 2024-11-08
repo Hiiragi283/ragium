@@ -58,6 +58,11 @@ loom {
         getByName("server") {
             runDir = "run/server"
         }
+        getByName("datagen") {
+            vmArg("-Dfabric-api.datagen")
+            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
+            vmArg("-Dfabric-api.datagen.modid=ragium")
+        }
         /*create("datagen") {
             inherit(getByName("client"))
             name = "Data Generation"

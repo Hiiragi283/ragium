@@ -129,7 +129,6 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
-        registerBlockItem(RagiumBlocks.FIREBOX)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)

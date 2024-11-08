@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTFluidDrillScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
@@ -42,7 +42,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
 
     override fun processRecipe(world: World, pos: BlockPos): Boolean {
         val biome: RegistryEntry<Biome> = world.getBiome(pos)

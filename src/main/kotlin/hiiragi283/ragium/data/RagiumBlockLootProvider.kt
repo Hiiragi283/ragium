@@ -45,7 +45,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.BACKPACK_INTERFACE)
         addDrop(RagiumBlocks.BASIC_CASING)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
-        addDrop(RagiumBlocks.FIREBOX)
         addDrop(RagiumBlocks.ITEM_DISPLAY)
         addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)

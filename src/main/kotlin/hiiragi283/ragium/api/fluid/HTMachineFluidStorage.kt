@@ -53,7 +53,7 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
     fun interactByPlayer(player: PlayerEntity): Boolean {
         val handStorage: Storage<FluidVariant> =
             ContainerItemContext.forPlayerInteraction(player, Hand.MAIN_HAND).find(FluidStorage.ITEM) ?: return false
-        val variants: List<FluidVariant> = handStorage.map(StorageView<FluidVariant>::getResource)
+        val variants: List<FluidVariant> = handStorage.nonEmptyViews().map(StorageView<FluidVariant>::getResource)
         parts1.forEach {
             // prevent to insert same fluid into multiple parts
             if (it.variant in variants && it.amount == it.capacity) {

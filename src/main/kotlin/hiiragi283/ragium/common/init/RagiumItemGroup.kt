@@ -90,7 +90,6 @@ object RagiumItemGroup {
                     add(RagiumBlocks.MANUAL_FORGE)
                     add(RagiumBlocks.MANUAL_GRINDER)
                     add(RagiumBlocks.MANUAL_MIXER)
-                    add(RagiumBlocks.FIREBOX)
 
                     add(RagiumBlocks.BACKPACK_INTERFACE)
                     add(RagiumBlocks.ITEM_DISPLAY)

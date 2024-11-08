@@ -589,18 +589,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.FIREBOX)
-            .patterns(
-                "AAA",
-                "ABA",
-                "CCC",
-            ).input('A', RagiumContents.Plates.RAGI_ALLOY)
-            .input('B', Items.FURNACE)
-            .input('C', Items.BRICKS)
-            .unlockedBy(RagiumContents.Plates.RAGI_ALLOY)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.NETWORK_INTERFACE)
             .patterns(
                 "ABA",
