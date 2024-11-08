@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:dirt"
+  },
+  "definition": {
+    "type": "ragium:growth_chamber",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:cherry_sapling"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:cherry_log"
+    },
+    {
+      "item": "minecraft:cherry_sapling"
+    }
+  ]
+}

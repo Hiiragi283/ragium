@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:dirt"
+  },
+  "definition": {
+    "type": "ragium:growth_chamber",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:acacia_sapling"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:acacia_log"
+    },
+    {
+      "item": "minecraft:acacia_sapling"
+    }
+  ]
+}

@@ -595,6 +595,19 @@ object RagiumAdvancementProviders {
                 chlorine,
                 RagiumFluids.HYDROCHLORIC_ACID.value,
             )
+            val aquaRegia: AdvancementEntry = createFluidChild(
+                consumer,
+                "chemistry/aqua_regia",
+                hydrochloricAcid,
+                RagiumFluids.AQUA_REGIA.value,
+            )
+            val deepSteel: AdvancementEntry = createContentChild(
+                consumer,
+                "chemistry/deep_steel",
+                aquaRegia,
+                RagiumContents.Ingots.DEEP_STEEL,
+                frame = AdvancementFrame.GOAL,
+            )
         }
     }
 

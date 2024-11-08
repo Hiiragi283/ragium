@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:dirt"
+  },
+  "definition": {
+    "type": "ragium:growth_chamber",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:melon_seeds"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:melon"
+    },
+    {
+      "item": "minecraft:melon_seeds"
+    }
+  ]
+}

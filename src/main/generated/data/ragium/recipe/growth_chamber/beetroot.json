@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:dirt"
+  },
+  "definition": {
+    "type": "ragium:growth_chamber",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:beetroot_seeds"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:beetroot"
+    },
+    {
+      "item": "minecraft:beetroot_seeds"
+    }
+  ]
+}

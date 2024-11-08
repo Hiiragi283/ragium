@@ -61,6 +61,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
         }
+        helper.modify(RagiumMachineKeys.BIOMASS_FERMENTER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBiomassFermenterBlockEntity))
+        }
         // generators
         helper.modify(RagiumMachineKeys.GENERATORS::contains) {
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
@@ -110,13 +113,22 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
+        helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
+        }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
+        helper.modify(RagiumMachineKeys.ELECTROLYZER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
+        }
         helper.modify(RagiumMachineKeys.FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+        }
+        helper.modify(RagiumMachineKeys.MIXER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))

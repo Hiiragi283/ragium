@@ -12,10 +12,6 @@
   ],
   "item_outputs": [
     {
-      "count": 4,
-      "item": "minecraft:gravel"
-    },
-    {
       "count": 2,
       "item": "ragium:bauxite_dust"
     },

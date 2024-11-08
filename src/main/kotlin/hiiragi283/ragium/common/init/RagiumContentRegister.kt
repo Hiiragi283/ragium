@@ -85,27 +85,27 @@ object RagiumContentRegister : HTContentRegister {
             val tier: HTMachineTier = HTMachineTier.entries[hull.ordinal]
             val block = Block(blockSettings(tier.getBaseBlock()))
             registerBlock(hull, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings().tier(hull.tier))
         }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
             val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
             registerBlock(coil, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings().tier(coil.tier))
         }
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block = HTExporterBlock(exporter.tier)
             registerBlock(exporter, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings().tier(exporter.tier))
         }
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val block = HTPipeBlock(pipe.tier, pipe.pipeType)
             registerBlock(pipe, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings().tier(pipe.tier))
         }
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
             val block = HTDrumBlock(drum.tier)
             registerBlock(drum, block)
-            registerBlockItem(block, itemSettings())
+            registerBlockItem(block, itemSettings().tier(drum.tier))
         }
 
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
@@ -163,9 +163,6 @@ object RagiumContentRegister : HTContentRegister {
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
-        FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            context.itemVariant.componentMap.get(RagiumComponentTypes.DRUM)
-        }
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
             if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context

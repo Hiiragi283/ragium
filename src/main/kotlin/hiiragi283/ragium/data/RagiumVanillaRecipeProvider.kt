@@ -619,6 +619,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('C', RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .offerTo(exporter)
+        // consumers
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.BIOMASS_FERMENTER,
+            Items.COMPOSTER,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.DRAIN,
+            Items.BUCKET,
+        )
         // generators
         createGenerator(
             exporter,
@@ -675,6 +686,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumMachineKeys.EXTRACTOR,
             Items.HOPPER,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.FLUID_DRILL,
+            RagiumBlocks.SHAFT,
         )
         createProcessor(
             exporter,

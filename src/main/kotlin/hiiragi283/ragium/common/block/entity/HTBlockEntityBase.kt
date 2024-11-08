@@ -67,11 +67,13 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
 
+    open val shouldTick: Boolean = true
     open var ticks: Int = 0
         protected set
     open val tickRate: Int = 200
 
     fun tick(world: World, pos: BlockPos, state: BlockState) {
+        if (!shouldTick) return
         tickEach(world, pos, state, ticks)
         if (ticks >= tickRate) {
             tickSecond(world, pos, state)

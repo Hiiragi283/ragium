@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:leather"
+  },
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:leather"
+    }
+  ]
+}

@@ -148,6 +148,7 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerScreens() {
+        HandledScreens.register(RagiumScreenHandlerTypes.CHEMICAL_MACHINE, ::HTChemicalMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.FLUID_DRILL, ::HTFluidDrillScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)

@@ -14,8 +14,16 @@ import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
     @JvmField
+    val BIOMASS_FERMENTER: BlockEntityType<HTBiomassFermenterBlockEntity> =
+        register("biomass_fermenter", ::HTBiomassFermenterBlockEntity)
+
+    @JvmField
     val BLAST_FURNACE: BlockEntityType<HTBlastFurnaceBlockEntity> =
         register("blast_furnace", ::HTBlastFurnaceBlockEntity)
+
+    @JvmField
+    val CHEMICAL_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Chemical> =
+        register("chemical_processor", HTProcessorBlockEntityBase::Chemical)
 
     @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
@@ -114,6 +122,7 @@ object RagiumBlockEntityTypes {
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
         // consumers
+        registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         // generators
         RagiumMachineKeys.GENERATORS.forEach {
@@ -126,8 +135,11 @@ object RagiumBlockEntityTypes {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, BLAST_FURNACE)
+        registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
+        registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
+        registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
         registerMachineBlocks(RagiumMachineKeys.SAW_MILL, SAW_MILL)
     }

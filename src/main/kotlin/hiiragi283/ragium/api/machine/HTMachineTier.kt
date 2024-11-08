@@ -162,6 +162,16 @@ enum class HTMachineTier(
         }
     }
 
+    fun consumerEnergy(world: World, transaction: Transaction) {
+        world.energyNetwork?.let { network: HTEnergyNetwork ->
+            val extracted: Long = network.extract(recipeCost, transaction)
+            when {
+                extracted > 0 -> transaction.commit()
+                else -> transaction.abort()
+            }
+        }
+    }
+
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()

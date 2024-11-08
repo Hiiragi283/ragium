@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "ragium:slag"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ]
+}

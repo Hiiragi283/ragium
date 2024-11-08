@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:sulfuric_acid"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 162000,
+      "fluid": "ragium:hydrogen_fluoride"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#c:gems/fluorite"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ]
+}

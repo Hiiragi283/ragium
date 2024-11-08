@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.screen.HTFluidDrillScreenHandler
-import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
-import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
-import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
+import hiiragi283.ragium.common.screen.*
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -16,6 +13,10 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
+    @JvmField
+    val CHEMICAL_MACHINE: ExtendedScreenHandlerType<HTChemicalMachineScreenHandler, HTMachinePacket> =
+        registerExtended("chemical_machine", ::HTChemicalMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+
     @JvmField
     val FLUID_DRILL: ExtendedScreenHandlerType<HTFluidDrillScreenHandler, HTMachinePacket> =
         registerExtended("fluid_drill", ::HTFluidDrillScreenHandler, HTMachinePacket.PACKET_CODEC)

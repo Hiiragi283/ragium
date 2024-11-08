@@ -16,26 +16,36 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FluidDrainable
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
-    HTConsumerBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state),
-    SidedStorageBlockEntity {
+class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.DRAIN
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
         this.tier = tier
+    }
+
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, wrapperLookup)
+        fluidStorage.writeNbt(nbt, wrapperLookup)
+    }
+
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, wrapperLookup)
+        fluidStorage = fluidStorageOf(tier.tankCapacity)
+        fluidStorage.readNbt(nbt, wrapperLookup)
     }
 
     override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
@@ -67,7 +77,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage: SingleFluidStorage = fluidStorageOf(tier.tankCapacity)
+    private var fluidStorage: SingleFluidStorage = fluidStorageOf(tier.tankCapacity)
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)

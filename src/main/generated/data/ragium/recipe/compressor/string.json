@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:string"
+  },
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:string"
+    }
+  ]
+}

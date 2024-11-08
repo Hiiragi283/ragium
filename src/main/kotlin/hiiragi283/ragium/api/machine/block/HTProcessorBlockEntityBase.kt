@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.screen.HTChemicalMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -111,6 +112,50 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             fluidStorage,
             intArrayOf(0),
             intArrayOf(1),
+        )
+    }
+
+    //    Chemical    //
+
+    class Chemical(pos: BlockPos, state: BlockState) :
+        HTProcessorBlockEntityBase(RagiumBlockEntityTypes.CHEMICAL_PROCESSOR, pos, state) {
+        override var key: HTMachineKey = RagiumMachineKeys.CHEMICAL_REACTOR
+
+        constructor(pos: BlockPos, state: BlockState, key: HTMachineKey, tier: HTMachineTier) : this(pos, state) {
+            this.key = key
+            this.tier = tier
+        }
+
+        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+            HTChemicalMachineScreenHandler(syncId, playerInventory, packet, createContext())
+
+        override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
+
+        //    HTDelegatedInventory    //
+
+        override val parent: HTSidedInventory = HTStorageBuilder(5)
+            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
+            .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+            .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+            .buildSided()
+
+        override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
+            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+            .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+            .buildFluidStorage()
+
+        val processor = HTMachineRecipeProcessor(
+            parent,
+            intArrayOf(0, 1),
+            intArrayOf(3, 4),
+            2,
+            fluidStorage,
+            intArrayOf(0, 1),
+            intArrayOf(2, 3),
         )
     }
 

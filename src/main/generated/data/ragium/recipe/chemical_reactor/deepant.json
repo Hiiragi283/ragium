@@ -6,22 +6,13 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:hydrochloric_acid"
-    },
-    {
-      "amount": 243000,
-      "fluids": "ragium:nitric_acid"
+      "fluids": "ragium:aqua_regia"
     }
   ],
   "item_inputs": [
     {
       "count": 16,
       "items": "minecraft:deepslate"
-    }
-  ],
-  "item_outputs": [
-    {
-      "item": "ragium:deepant"
     }
   ]
 }

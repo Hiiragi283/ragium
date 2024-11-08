@@ -5,12 +5,15 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 
 object RagiumMachineKeys {
     //    Consumer    //
+    @JvmField
+    val BIOMASS_FERMENTER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("biomass_fermenter"))
 
     @JvmField
     val DRAIN: HTMachineKey = HTMachineKey.of(RagiumAPI.id("drain"))
 
     @JvmField
     val CONSUMERS: List<HTMachineKey> = listOf(
+        BIOMASS_FERMENTER,
         DRAIN,
     )
 
@@ -73,6 +76,9 @@ object RagiumMachineKeys {
     val GRINDER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("grinder"))
 
     @JvmField
+    val GROWTH_CHAMBER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("growth_chamber"))
+
+    @JvmField
     val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("laser_transformer"))
 
     @JvmField
@@ -102,6 +108,7 @@ object RagiumMachineKeys {
         EXTRACTOR,
         FLUID_DRILL,
         GRINDER,
+        GROWTH_CHAMBER,
         LASER_TRANSFORMER,
         METAL_FORMER,
         MIXER,

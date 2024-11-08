@@ -253,6 +253,11 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine Type
             builder.add(
+                RagiumMachineKeys.BIOMASS_FERMENTER,
+                "Biomass Fermenter",
+                "Produce Biomass from Composter inputs",
+            )
+            builder.add(
                 RagiumMachineKeys.DRAIN,
                 "Drain",
                 "Drains fluids from each side",
@@ -464,6 +469,11 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine Type
+            builder.add(
+                RagiumMachineKeys.BIOMASS_FERMENTER,
+                "バイオマス発酵槽",
+                "コンポスターに入れられるアイテムからバイオマスを生産する",
+            )
             builder.add(RagiumMachineKeys.DRAIN, "排水溝", "各面から液体を吸い取る")
 
             builder.add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")

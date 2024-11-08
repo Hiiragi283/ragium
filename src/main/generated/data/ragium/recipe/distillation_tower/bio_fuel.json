@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:basic_circuit"
+  },
+  "definition": {
+    "type": "ragium:distillation_tower",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:biomass"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:bio_fuel"
+    }
+  ]
+}

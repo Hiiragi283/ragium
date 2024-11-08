@@ -21,6 +21,7 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     // Molten Materials
 
     // Organics
+    BIOMASS(Color(0x006600), "Biomass", "バイオマス"),
     GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
     TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
@@ -47,6 +48,9 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     CARBON_DIOXIDE(Color(0x99ccff), "Carbon Dioxide", "二酸化炭素"),
 
     NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
+    AQUA_REGIA(Color(0xffff00), "Aqua Regia", "王水"),
+
+    HYDROGEN_FLUORIDE(Color(0x33cccc), "Hydrogen Fluoride", "フッ化水素"),
 
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
 

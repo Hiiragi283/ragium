@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:netherrack"
+  },
+  "definition": {
+    "type": "ragium:growth_chamber",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:warped_fungus"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "minecraft:warped_stem"
+    },
+    {
+      "item": "minecraft:warped_fungus"
+    }
+  ]
+}
