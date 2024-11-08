@@ -6,11 +6,11 @@
   },
   "item_inputs": [
     {
-      "count": 4,
-      "items": "ragium:polymer_resin"
+      "items": "ragium:basalt_mesh"
     },
     {
-      "items": "ragium:basalt_mesh"
+      "count": 4,
+      "items": "ragium:polymer_resin"
     }
   ],
   "item_outputs": [

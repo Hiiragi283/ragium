@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:basic_circuit"
+  },
+  "definition": {
+    "type": "ragium:distillation_tower",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 648000,
+      "fluids": "ragium:residual_oil"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 324000,
+      "fluid": "ragium:fuel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:residual_coke"
+    }
+  ]
+}

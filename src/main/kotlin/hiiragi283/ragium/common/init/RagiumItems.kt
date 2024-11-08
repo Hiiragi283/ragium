@@ -213,6 +213,9 @@ object RagiumItems : HTContentRegister {
     val REMOVER_DYNAMITE: Item = registerItem("remover_dynamite", HTRemoverDynamiteItem)
 
     @JvmField
+    val RESIDUAL_COKE: Item = registerItem("residual_coke")
+
+    @JvmField
     val SLAG: Item = registerItem("slag")
 
     @JvmField
@@ -241,6 +244,7 @@ object RagiumItems : HTContentRegister {
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
         REMOVER_DYNAMITE,
+        RESIDUAL_COKE,
         SLAG,
         SOAP_INGOT,
         SOLAR_PANEL,

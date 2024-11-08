@@ -21,9 +21,9 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     // Molten Materials
 
     // Organics
+    GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
     TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
-    GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
 
     // Foods
     BATTER(Color(0xffcc66), "Batter", "バッター液"),

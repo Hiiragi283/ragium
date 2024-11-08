@@ -18,21 +18,16 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.entity.EntityType
-import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.BiomeKeys
 import java.util.concurrent.CompletableFuture
 
 class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
@@ -48,12 +43,10 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         distillation(exporter)
         electrolyzer(exporter)
         extractor(exporter)
-        // fluidDrill(exporter)
         grinder(exporter)
         laserTransformer(exporter)
         metalFormer(exporter)
         mixer(exporter)
-        // mobExtractor(exporter)
         rockGenerator(exporter)
         sawMill(exporter)
     }
@@ -343,8 +336,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .itemInput(RagiumItems.POLYMER_RESIN, 4)
             .itemInput(RagiumItems.BASALT_MESH)
+            .itemInput(RagiumItems.POLYMER_RESIN, 4)
             .itemOutput(RagiumContents.Plates.ENGINEERING_PLASTIC)
             .offerTo(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC)
         // oxidization
@@ -388,7 +381,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumItems.POLYMER_RESIN, 4)
             .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 4)
             .offerTo(exporter, RagiumFluids.CRUDE_OIL)
-
         // crude oil -> refined gas
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -397,7 +389,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidOutput(RagiumFluids.REFINED_GAS, FluidConstants.BUCKET * 5)
             .fluidOutput(RagiumFluids.RESIDUAL_OIL, FluidConstants.BUCKET * 3)
             .offerTo(exporter, RagiumItems.POLYMER_RESIN)
-
         // crude oil -> naphtha
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -415,7 +406,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidOutput(RagiumFluids.ALCOHOL, FluidConstants.BUCKET * 6)
             .fluidOutput(RagiumFluids.NOBLE_GAS, FluidConstants.BUCKET * 2)
             .offerTo(exporter, RagiumFluids.ALCOHOL)
-
+        // residual oil -> fuel + asphalt
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
+            .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidConstants.BUCKET * 8)
+            .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 3)
+            .fluidOutput(RagiumFluids.ASPHALT, FluidConstants.BUCKET * 5)
+            .offerTo(exporter, RagiumFluids.ASPHALT)
         // residual oil -> fuel + aromatic compound
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -424,14 +421,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 3)
             .fluidOutput(RagiumFluids.AROMATIC_COMPOUNDS, FluidConstants.BUCKET * 5)
             .offerTo(exporter, RagiumFluids.AROMATIC_COMPOUNDS)
-
-        // residual oil -> fuel + asphalt
+        // residual oil -> residual coke + fuel
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidConstants.BUCKET * 8)
-            .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 3)
-            .fluidOutput(RagiumFluids.ASPHALT, FluidConstants.BUCKET * 5)
-            .offerTo(exporter, RagiumFluids.ASPHALT)
+            .catalyst(RagiumContents.Circuits.BASIC)
+            .itemOutput(RagiumItems.RESIDUAL_COKE, 4)
+            .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 4)
+            .offerTo(exporter, RagiumItems.RESIDUAL_COKE)
     }
 
     //    Electrolyzer    //
@@ -525,42 +522,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL)
             .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_soul_soil")
-    }
-
-    //    Fluid Drill    //
-
-    private fun fluidDrill(exporter: RecipeExporter) {
-        registerDrilling(exporter, BiomeKeys.WARM_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.LUKEWARM_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_LUKEWARM_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.COLD_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_COLD_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.FROZEN_OCEAN, RagiumFluids.SALT_WATER)
-        registerDrilling(exporter, BiomeKeys.DEEP_FROZEN_OCEAN, RagiumFluids.SALT_WATER)
-
-        registerDrilling(exporter, BiomeKeys.NETHER_WASTES, Fluids.LAVA)
-        registerDrilling(exporter, BiomeKeys.WARPED_FOREST, Fluids.LAVA)
-        registerDrilling(exporter, BiomeKeys.CRIMSON_FOREST, Fluids.LAVA)
-        registerDrilling(exporter, BiomeKeys.SOUL_SAND_VALLEY, RagiumFluids.CRUDE_OIL)
-        registerDrilling(exporter, BiomeKeys.BASALT_DELTAS, Fluids.LAVA)
-    }
-
-    private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: Fluid) {
-        /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.FLUID_DRILL)
-            .addOutput(fluid)
-            .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
-            .offerTo(exporter, biomeKey.value)*/
-    }
-
-    private fun registerDrilling(exporter: RecipeExporter, biomeKey: RegistryKey<Biome>, fluid: RagiumFluids) {
-        /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.FLUID_DRILL)
-            .addOutput(fluid)
-            .setCustomData(HTRecipeComponentTypes.BIOME, biomeKey)
-            .offerTo(exporter, biomeKey.value)*/
     }
 
     //    Grinder    //
@@ -884,44 +845,5 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(plank, 6)
             .itemOutput(RagiumItems.PULP)
             .offerTo(exporter, plank)
-    }
-
-    //    Mob Extractor    //
-
-    private fun mobExtractor(exporter: RecipeExporter) {
-        registerMobDrop(exporter, Items.ARMADILLO_SCUTE, EntityType.ARMADILLO)
-        registerMobDrop(exporter, Items.HONEYCOMB, EntityType.BEE)
-        // registerMobDrop(exporter, RagiumFluids.SULFURIC_ACID, EntityType.BLAZE)
-        // registerMobDrop(exporter, RagiumFluids.NITRIC_ACID, EntityType.BREEZE)
-        registerMobDrop(exporter, Items.EGG, EntityType.CHICKEN)
-        // registerMobDrop(exporter, RagiumFluids.MILK, EntityType.COW)
-        registerMobDrop(exporter, Items.GLOW_INK_SAC, EntityType.GLOW_SQUID)
-        registerMobDrop(exporter, Items.IRON_NUGGET, EntityType.IRON_GOLEM)
-        // registerMobDrop(exporter, RagiumFluids.MILK, EntityType.MOOSHROOM) // TODO
-        registerMobDrop(exporter, Items.WHITE_WOOL, EntityType.SHEEP)
-        registerMobDrop(exporter, Items.SNOWBALL, EntityType.SNOW_GOLEM)
-        registerMobDrop(exporter, Items.INK_SAC, EntityType.SQUID)
-        registerMobDrop(exporter, Items.TURTLE_SCUTE, EntityType.TURTLE)
-        registerMobDrop(exporter, Items.EMERALD, EntityType.WANDERING_TRADER)
-        registerMobDrop(exporter, Items.ECHO_SHARD, EntityType.WARDEN) // TODO
-        registerMobDrop(exporter, Items.WITHER_ROSE, EntityType.WITHER)
-        registerMobDrop(exporter, Items.PLAYER_HEAD, EntityType.PLAYER)
-
-        // registerMobDrop(exporter, RagiumContents.Gems.OBLIVION_CRYSTAL, RagiumEntityTypes.OBLIVION_CUBE)
-
-        /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.MOB_EXTRACTOR)
-            .addOutput(Items.RED_MUSHROOM)
-            .addOutput(Items.BROWN_MUSHROOM)
-            .setCustomData(HTRecipeComponentTypes.ENTITY_TYPE, EntityType.BOGGED)
-            .offerTo(exporter)*/
-    }
-
-    private fun registerMobDrop(exporter: RecipeExporter, output: ItemConvertible, entityType: EntityType<*>) {
-        /*HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.MOB_EXTRACTOR)
-            .addOutput(output)
-            .setCustomData(HTRecipeComponentTypes.ENTITY_TYPE, entityType)
-            .offerTo(exporter, Registries.ENTITY_TYPE.getId(entityType))*/
     }
 }

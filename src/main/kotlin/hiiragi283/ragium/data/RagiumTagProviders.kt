@@ -197,6 +197,7 @@ object RagiumTagProviders {
             add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
 
             add(ItemTags.PLANKS, RagiumContents.Plates.WOOD)
+            add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
