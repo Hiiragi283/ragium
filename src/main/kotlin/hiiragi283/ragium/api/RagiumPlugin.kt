@@ -3,9 +3,14 @@ package hiiragi283.ragium.api
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
+import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl
+import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.tag.TagKey
 import java.util.function.BiConsumer
 import java.util.function.Predicate
 
@@ -34,7 +39,18 @@ interface RagiumPlugin {
 
     fun bindMaterialToItem(consumer: (HTTagPrefix, HTMaterialKey, Item) -> Unit) {}
 
-    fun afterRagiumInit(instance: RagiumAPI)
+    fun afterRagiumInit(instance: RagiumAPI) {}
+
+    fun registerRuntimeRecipes(
+        exporter: RecipeExporter,
+        key: HTMaterialKey,
+        entry: HTMaterialRegistry.Entry,
+        helper: RecipeHelper,
+    ) {
+    }
+
+    @Suppress("UnstableApiUsage")
+    fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditionsImpl.tagsPopulated(RegistryKeys.ITEM.value, listOf(tagKey.id))
 
     //    PropertyHelper    //
 
@@ -50,6 +66,28 @@ interface RagiumPlugin {
         fun modify(filter: Predicate<T>, builderAction: HTMutablePropertyHolder.() -> Unit) {
             if (filter.test(this.key)) {
                 properties.builderAction()
+            }
+        }
+    }
+
+    //    RecipeHelper    //
+
+    class RecipeHelper {
+        @Suppress("UnstableApiUsage")
+        fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditionsImpl.tagsPopulated(RegistryKeys.ITEM.value, listOf(tagKey.id))
+
+        fun register(
+            exporter: RecipeExporter,
+            key: HTMaterialKey,
+            entry: HTMaterialRegistry.Entry,
+            vararg requiredPrefixes: HTTagPrefix,
+            action: (List<TagKey<Item>>) -> Unit,
+        ) {
+            if (requiredPrefixes.all(entry.type::isValidPrefix)) {
+                val tagKeys: List<TagKey<Item>> = requiredPrefixes.map { it.createTag(key) }
+                if (tagKeys.all(::isPopulated)) {
+                    action(tagKeys)
+                }
             }
         }
     }

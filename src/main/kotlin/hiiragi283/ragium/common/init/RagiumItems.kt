@@ -222,7 +222,7 @@ object RagiumItems : HTContentRegister {
     val SOLAR_PANEL: Item = registerItem("solar_panel")
 
     @JvmField
-    val TRADER_CATALOG: Item = registerItem("trader_catalog")
+    val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
 
     @JvmField
     val MISC: List<Item> = listOf(

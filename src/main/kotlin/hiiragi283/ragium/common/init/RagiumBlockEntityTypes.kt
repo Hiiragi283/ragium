@@ -89,10 +89,6 @@ object RagiumBlockEntityTypes {
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =
         register("steam_generator", ::HTSteamGeneratorBlockEntity)
 
-    @JvmField
-    val TRADER_STATION: BlockEntityType<HTTraderStationBlockEntity> =
-        register("trader_station", ::HTTraderStationBlockEntity)
-
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
@@ -115,7 +111,6 @@ object RagiumBlockEntityTypes {
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
-        TRADER_STATION.addSupportedBlock(RagiumBlocks.TRADER_STATION)
         // consumers
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         // generators

@@ -3,7 +3,8 @@ package hiiragi283.ragium.mixin;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
-import hiiragi283.ragium.common.internal.RagiumMaterialRecipeProvider;
+import hiiragi283.ragium.api.RagiumAPI;
+import hiiragi283.ragium.api.RagiumPlugin;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.data.server.recipe.RecipeExporter;
@@ -50,7 +51,9 @@ public abstract class RecipeManagerMixin {
                 return new Advancement.Builder();
             }
         };
-        RagiumMaterialRecipeProvider.generate(exporter);
+        RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> {
+            RagiumAPI.getPlugins().forEach(plugin -> plugin.registerRuntimeRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper()));
+        });
         recipesByType = map1;
         recipesById = map2;
     }

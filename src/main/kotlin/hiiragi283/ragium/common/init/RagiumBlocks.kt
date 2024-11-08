@@ -103,10 +103,6 @@ object RagiumBlocks : HTContentRegister {
     val SHAFT: Block =
         registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
 
-    @JvmStatic
-    val TRADER_STATION: Block =
-        registerHorizontalWithBE("trader_station", RagiumBlockEntityTypes.TRADER_STATION)
-
     @JvmField
     val TRASH_BOX: Block =
         registerBlock("trash_box")

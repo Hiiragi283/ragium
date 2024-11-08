@@ -52,7 +52,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.MANUAL_MIXER)
         addDrop(RagiumBlocks.NETWORK_INTERFACE)
         addDrop(RagiumBlocks.SHAFT)
-        addDrop(RagiumBlocks.TRADER_STATION)
         addDrop(RagiumBlocks.TRASH_BOX)
 
         RagiumContents.Ores.entries.forEach(::dropOre)

@@ -14,16 +14,15 @@ import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.fabricmc.fabric.api.event.player.UseItemCallback
+import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
-import net.minecraft.entity.EntityType
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.passive.WanderingTraderEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.EnchantedBookItem
 import net.minecraft.item.ItemStack
@@ -36,9 +35,10 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
+import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.Rarity
-import net.minecraft.util.TypedActionResult
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.village.*
 import net.minecraft.world.World
@@ -154,27 +154,17 @@ object RagiumEventHandlers {
             }
         }
 
-        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
+        UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.hasEnchantments()) {
+            if (stack.hasEnchantments() && world.getBlockState(result.blockPos).isOf(Blocks.CRYING_OBSIDIAN)) {
                 stack.enchantments
                     .toLevelMap()
                     .map(EnchantedBookItem::forEnchantment)
                     .onEach { dropStackAt(player, it) }
                 stack.remove(DataComponentTypes.ENCHANTMENTS)
-                TypedActionResult.success(stack, world.isClient)
+                ActionResult.success(world.isClient)
             } else {
-                TypedActionResult.pass(stack)
-            }
-        }
-
-        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
-            val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.isOf(RagiumItems.TRADER_CATALOG)) {
-                WanderingTraderEntity(EntityType.WANDERING_TRADER, world).interactMob(player, Hand.MAIN_HAND)
-                TypedActionResult.success(stack, world.isClient)
-            } else {
-                TypedActionResult.pass(stack)
+                ActionResult.PASS
             }
         }
     }

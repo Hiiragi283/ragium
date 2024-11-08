@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.trade.HTTradeOfferRegistry
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import net.fabricmc.api.ModInitializer
 
 object RagiumCommon : ModInitializer {
@@ -26,7 +24,6 @@ object RagiumCommon : ModInitializer {
         InternalRagiumAPI.registerMachines()
         InternalRagiumAPI.registerMaterials()
 
-        HTTradeOfferRegistry.init()
         RagiumBlockEntityTypes.init()
         RagiumCommands.init()
         RagiumEventHandlers.init()

@@ -96,7 +96,6 @@ object RagiumItemGroup {
                     add(RagiumBlocks.ITEM_DISPLAY)
                     add(RagiumBlocks.NETWORK_INTERFACE)
                     add(RagiumBlocks.SHAFT)
-                    add(RagiumBlocks.TRADER_STATION)
                     add(RagiumBlocks.TRASH_BOX)
 
                     addAll(RagiumContents.Exporters.entries)

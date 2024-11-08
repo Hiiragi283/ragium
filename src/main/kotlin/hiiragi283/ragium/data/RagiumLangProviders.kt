@@ -159,7 +159,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Basin")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
-            builder.add(RagiumBlocks.TRADER_STATION, "Trader Station")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
 
             builder.add(RagiumItems.STEEL_HELMET, "Steel Helmet")
@@ -367,7 +366,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_MIXER, "らぎ釜")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
-            builder.add(RagiumBlocks.TRADER_STATION, "貿易ステーション")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")
 
             builder.add(RagiumItems.STEEL_HELMET, "スチールのヘルメット")

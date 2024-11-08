@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.internal
+package hiiragi283.ragium.common
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.RagiumConfig
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems

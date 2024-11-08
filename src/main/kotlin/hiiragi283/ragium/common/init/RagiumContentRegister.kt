@@ -137,7 +137,6 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
         registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
         registerBlockItem(RagiumBlocks.SHAFT)
-        registerBlockItem(RagiumBlocks.TRADER_STATION)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
     }
 
