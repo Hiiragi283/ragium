@@ -222,6 +222,19 @@ object RagiumContents : HTContentRegister {
             RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_pipe"))
     }
 
+    //    Drums    //
+
+    enum class Drums(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_drum"))
+    }
+
     //    Circuits    //
 
     enum class CircuitBoards(override val tier: HTMachineTier) : HTContent.Tier<Item> {

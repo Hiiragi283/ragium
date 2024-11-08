@@ -59,6 +59,25 @@ object RagiumMaterialKeys {
     @JvmField
     val SILICON: HTMaterialKey = HTMaterialKey.of("silicon")
 
+    // integrations
+    @JvmField
+    val IRIDIUM: HTMaterialKey = HTMaterialKey.of("iridium")
+
+    @JvmField
+    val LEAD: HTMaterialKey = HTMaterialKey.of("lead")
+
+    @JvmField
+    val SILVER: HTMaterialKey = HTMaterialKey.of("silver")
+
+    @JvmField
+    val TIN: HTMaterialKey = HTMaterialKey.of("tin")
+
+    @JvmField
+    val TUNGSTEN: HTMaterialKey = HTMaterialKey.of("tungsten")
+
+    @JvmField
+    val ZINC: HTMaterialKey = HTMaterialKey.of("zinc")
+
     //    Mineral    //
 
     @JvmField

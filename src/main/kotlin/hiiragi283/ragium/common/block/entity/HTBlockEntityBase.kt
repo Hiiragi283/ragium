@@ -17,6 +17,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
+    companion object {
+        const val MACHINE_KEY = "machine"
+        const val TIER_KEY = "tier"
+    }
+
     protected open fun asInventory(): HTSimpleInventory? = (this as? HTDelegatedInventory<*>)?.parent
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {

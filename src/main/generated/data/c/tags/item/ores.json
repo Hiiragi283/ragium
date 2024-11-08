@@ -29,7 +29,15 @@
       "required": false
     },
     {
+      "id": "#c:ores/iridium",
+      "required": false
+    },
+    {
       "id": "#c:ores/iron",
+      "required": false
+    },
+    {
+      "id": "#c:ores/lead",
       "required": false
     },
     {
@@ -53,7 +61,23 @@
       "required": false
     },
     {
+      "id": "#c:ores/silver",
+      "required": false
+    },
+    {
       "id": "#c:ores/sulfur",
+      "required": false
+    },
+    {
+      "id": "#c:ores/tin",
+      "required": false
+    },
+    {
+      "id": "#c:ores/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:ores/zinc",
       "required": false
     }
   ]

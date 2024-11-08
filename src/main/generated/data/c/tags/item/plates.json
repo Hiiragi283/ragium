@@ -21,7 +21,15 @@
       "required": false
     },
     {
+      "id": "#c:plates/iridium",
+      "required": false
+    },
+    {
       "id": "#c:plates/iron",
+      "required": false
+    },
+    {
+      "id": "#c:plates/lead",
       "required": false
     },
     {
@@ -45,6 +53,10 @@
       "required": false
     },
     {
+      "id": "#c:plates/silver",
+      "required": false
+    },
+    {
       "id": "#c:plates/steel",
       "required": false
     },
@@ -53,7 +65,19 @@
       "required": false
     },
     {
+      "id": "#c:plates/tin",
+      "required": false
+    },
+    {
+      "id": "#c:plates/tungsten",
+      "required": false
+    },
+    {
       "id": "#c:plates/wood",
+      "required": false
+    },
+    {
+      "id": "#c:plates/zinc",
       "required": false
     }
   ]

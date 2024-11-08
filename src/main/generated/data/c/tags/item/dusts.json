@@ -45,7 +45,15 @@
       "required": false
     },
     {
+      "id": "#c:dusts/iridium",
+      "required": false
+    },
+    {
       "id": "#c:dusts/iron",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/lead",
       "required": false
     },
     {
@@ -85,6 +93,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/silver",
+      "required": false
+    },
+    {
       "id": "#c:dusts/steel",
       "required": false
     },
@@ -97,7 +109,19 @@
       "required": false
     },
     {
+      "id": "#c:dusts/tin",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/tungsten",
+      "required": false
+    },
+    {
       "id": "#c:dusts/wood",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/zinc",
       "required": false
     }
   ]

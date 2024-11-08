@@ -1,33 +1,37 @@
 package hiiragi283.ragium.api.property
 
 interface HTMutablePropertyHolder : HTPropertyHolder {
-    operator fun <T : Any> set(id: HTPropertyKey<T>, value: T)
+    operator fun <T : Any> set(key: HTPropertyKey<T>, value: T)
 
-    fun <T : Any> setIfNonNull(id: HTPropertyKey<T>, value: T?) {
-        value?.let { set(id, it) }
+    fun add(key: HTPropertyKey<Unit>) {
+        set(key, Unit)
+    }
+
+    fun <T : Any> setIfNonNull(key: HTPropertyKey<T>, value: T?) {
+        value?.let { set(key, it) }
     }
 
     fun remove(id: HTPropertyKey<*>)
 
-    fun <T : Any> removeIf(id: HTPropertyKey<T>, filter: (T) -> Boolean) {
-        val existValue: T = get(id) ?: return
+    fun <T : Any> removeIf(key: HTPropertyKey<T>, filter: (T) -> Boolean) {
+        val existValue: T = get(key) ?: return
         if (filter(existValue)) {
-            remove(id)
+            remove(key)
         }
     }
 
-    fun <T : Any> removeIfNull(id: HTPropertyKey<T>, mapping: (T) -> Any?) {
-        val existValue: T = get(id) ?: return
+    fun <T : Any> removeIfNull(key: HTPropertyKey<T>, mapping: (T) -> Any?) {
+        val existValue: T = get(key) ?: return
         if (mapping(existValue) == null) {
-            remove(id)
+            remove(key)
         }
     }
 
-    fun <T : Any> computeIfAbsent(id: HTPropertyKey<T>, mapping: () -> T): T {
-        val value: T? = get(id)
+    fun <T : Any> computeIfAbsent(key: HTPropertyKey<T>, mapping: () -> T): T {
+        val value: T? = get(key)
         if (value == null) {
             val newValue: T = mapping()
-            set(id, newValue)
+            set(key, newValue)
             return newValue
         } else {
             return value

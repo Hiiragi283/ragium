@@ -99,6 +99,7 @@ object RagiumItemGroup {
 
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)
+                    addAll(RagiumContents.Drums.entries)
                 }.forEach(entries::add)
                 RagiumAPI
                     .getInstance()

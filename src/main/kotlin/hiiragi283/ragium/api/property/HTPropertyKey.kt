@@ -12,6 +12,9 @@ sealed class HTPropertyKey<T : Any>(val id: Identifier) {
 
         @JvmStatic
         fun <T : Any> ofDefaulted(id: Identifier, initializer: () -> T): Defaulted<T> = Defaulted(id, initializer)
+
+        @JvmStatic
+        fun ofFlag(id: Identifier): Defaulted<Unit> = ofDefaulted(id, Unit)
     }
 
     @Suppress("UNCHECKED_CAST")

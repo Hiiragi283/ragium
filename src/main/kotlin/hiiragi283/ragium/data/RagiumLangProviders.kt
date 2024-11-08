@@ -98,6 +98,17 @@ object RagiumLangProviders {
                 }.getTranslation(type, it.tier),
             )
         }
+        RagiumContents.Drums.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Drum"
+                        HTLangType.JA_JP -> "%sドラム"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
         // items
         RagiumContents.CircuitBoards.entries.forEach {
             builder.add(

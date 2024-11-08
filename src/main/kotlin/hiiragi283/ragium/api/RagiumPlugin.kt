@@ -31,13 +31,9 @@ interface RagiumPlugin {
 
     fun registerMaterial(consumer: TriConsumer<HTMaterialKey, HTMaterialKey.Type, Rarity>) {}
 
-    fun setupCommonMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
+    fun setupMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 
-    fun setupClientMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
-
-    fun setupCommonMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
-
-    fun setupClientMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
+    fun setupMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
 
     fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Item>) {}
 

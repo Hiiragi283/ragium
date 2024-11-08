@@ -25,7 +25,15 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/iridium",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/iron",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/lead",
       "required": false
     },
     {
@@ -53,7 +61,23 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/silver",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/steel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tin",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/zinc",
       "required": false
     }
   ]

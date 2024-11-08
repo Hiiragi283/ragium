@@ -73,8 +73,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             sortedKeys.keys.forEach { key: HTMachineKey ->
                 val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
                 val helper: RagiumPlugin.PropertyHelper<HTMachineKey> = RagiumPlugin.PropertyHelper(key, builder)
-                plugin.setupCommonMachineProperties(helper)
-                if (isClientEnv()) plugin.setupClientMachineProperties(helper)
+                plugin.setupMachineProperties(helper)
             }
         }
         // register blocks
@@ -119,8 +118,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             sortedKeys.keys.forEach { key: HTMaterialKey ->
                 val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
                 val helper: RagiumPlugin.PropertyHelper<HTMaterialKey> = RagiumPlugin.PropertyHelper(key, builder)
-                plugin.setupCommonMaterialProperties(helper)
-                if (isClientEnv()) plugin.setupClientMaterialProperties(helper)
+                plugin.setupMaterialProperties(helper)
             }
         }
         // bind items
@@ -138,9 +136,14 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 compareBy(Pair<HTTagPrefix, HTMaterialKey>::second)
                     .thenBy(Pair<HTTagPrefix, HTMaterialKey>::first),
             ).forEach { (pair: Pair<HTTagPrefix, HTMaterialKey>, items: Collection<Item>) ->
+                val (prefix: HTTagPrefix, key: HTMaterialKey) = pair
+                if (key !in keyCache.keys) {
+                    RagiumAPI.log { warn("Could not bind item with unregistered material: $key!") }
+                    return@forEach
+                }
                 itemTable.put(
-                    pair.first,
-                    pair.second,
+                    prefix,
+                    key,
                     items.toSortedSet(idComparator(Registries.ITEM)),
                 )
             }
@@ -148,7 +151,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             itemTable.forEach { (_: HTTagPrefix, key: HTMaterialKey, items: Set<Item>) ->
                 context.modify(items) { builder: ComponentMap.Builder, _: Item ->
-                    builder.add(DataComponentTypes.RARITY, rarityCache.getOrDefault(key, Rarity.COMMON))
+                    rarityCache[key]?.let { builder.add(DataComponentTypes.RARITY, it) }
                 }
             }
             RagiumAPI.log { info("Added rarities for material items!") }

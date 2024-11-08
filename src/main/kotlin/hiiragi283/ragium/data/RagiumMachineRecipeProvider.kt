@@ -92,7 +92,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumContents.Plates.RAGI_STEEL, 8)
             .itemOutput(RagiumItems.ENGINE)
             .offerTo(exporter, RagiumItems.ENGINE)
-        
+
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumContents.Plates.STEEL, 4)
@@ -115,10 +115,10 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR, "_from_ragium")
         // circuits
-        val boardMap: Map<HTMachineTier, Pair<RagiumContents.Plates, RagiumContents.Plates>> = mapOf(
-            HTMachineTier.PRIMITIVE to (RagiumContents.Plates.SILICON to RagiumContents.Plates.COPPER),
-            HTMachineTier.BASIC to (RagiumContents.Plates.PLASTIC to RagiumContents.Plates.GOLD),
-            HTMachineTier.ADVANCED to (RagiumContents.Plates.ENGINEERING_PLASTIC to RagiumContents.Plates.RAGI_ALLOY),
+        val boardMap: Map<HTMachineTier, RagiumContents.Plates> = mapOf(
+            HTMachineTier.PRIMITIVE to RagiumContents.Plates.SILICON,
+            HTMachineTier.BASIC to RagiumContents.Plates.PLASTIC,
+            HTMachineTier.ADVANCED to RagiumContents.Plates.ENGINEERING_PLASTIC,
         )
         val circuitMap: Map<HTMachineTier, Either<TagKey<Item>, ItemConvertible>> = mapOf(
             HTMachineTier.PRIMITIVE to Either.left(ConventionalItemTags.REDSTONE_DUSTS),
@@ -127,7 +127,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
 
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val (first: RagiumContents.Plates, second: RagiumContents.Plates) = boardMap[tier] ?: return@forEach
+            val first: RagiumContents.Plates = boardMap[tier] ?: return@forEach
+            val second: RagiumContents.Plates = tier.getSubPlate()
             val board: RagiumContents.CircuitBoards = tier.getCircuitBoard()
             val dope: Either<TagKey<Item>, ItemConvertible> = circuitMap[tier] ?: return@forEach
             val circuit: RagiumContents.Circuits = tier.getCircuit()

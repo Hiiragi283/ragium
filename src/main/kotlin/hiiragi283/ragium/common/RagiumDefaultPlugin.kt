@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.TriConsumer
@@ -55,41 +56,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         RagiumMachineKeys.PROCESSORS.forEach { consumer.accept(it, HTMachineType.PROCESSOR) }
     }
 
-    override fun registerMaterial(consumer: TriConsumer<HTMaterialKey, HTMaterialKey.Type, Rarity>) {
-        // alloy
-        consumer.accept(RagiumMaterialKeys.DEEP_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY, Rarity.COMMON)
-        consumer.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
-        consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
-        // dust
-        consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST, Rarity.COMMON)
-        consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST, Rarity.COMMON)
-        // gem
-        consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
-        consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM, Rarity.EPIC)
-        // metal
-        consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL, Rarity.COMMON)
-        consumer.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        consumer.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL, Rarity.COMMON)
-        consumer.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        // mineral
-        consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
-        consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
-        consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
-        consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
-        // plate
-        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE, Rarity.RARE)
-        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE, Rarity.UNCOMMON)
-        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE, Rarity.EPIC)
-        consumer.accept(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE, Rarity.COMMON)
-    }
-
-    override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
+    override fun setupMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
         // consumers
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
@@ -159,6 +126,62 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
+        }
+    }
+
+    override fun registerMaterial(consumer: TriConsumer<HTMaterialKey, HTMaterialKey.Type, Rarity>) {
+        // alloy
+        consumer.accept(RagiumMaterialKeys.DEEP_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        // dust
+        consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST, Rarity.COMMON)
+        // gem
+        consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM, Rarity.EPIC)
+        // metal
+        consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+
+        consumer.accept(RagiumMaterialKeys.IRIDIUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
+        consumer.accept(RagiumMaterialKeys.LEAD, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.SILVER, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.TIN, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.TUNGSTEN, HTMaterialKey.Type.METAL, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.ZINC, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        // mineral
+        consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
+        // plate
+        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE, Rarity.EPIC)
+        consumer.accept(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE, Rarity.COMMON)
+    }
+
+    override fun setupMaterialProperties(helper: RagiumPlugin.PropertyHelper<HTMaterialKey>) {
+        // metal
+        helper.modify(RagiumMaterialKeys.IRON, RagiumMaterialKeys.COPPER) {
+            set(HTMaterialPropertyKeys.SMELTING_EXP, 0.7f)
+        }
+        helper.modify(RagiumMaterialKeys.GOLD) {
+            set(HTMaterialPropertyKeys.SMELTING_EXP, 1f)
+        }
+
+        helper.modify(RagiumMaterialKeys.IRIDIUM, RagiumMaterialKeys.TUNGSTEN) {
+            add(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)
+            add(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)
         }
     }
 
@@ -325,10 +348,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
             val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
                 ?: key.entry.getFirstItem(HTTagPrefix.GEM)
                 ?: return@register
+            if (entry.contains(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)) return@register
             HTCookingRecipeJsonBuilder.smeltAndBlast(
                 exporter,
                 tagKeys[0],
                 result,
+                entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
                 suffix = "_from_raw",
             )
         }
@@ -338,10 +363,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
             val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
                 ?: key.entry.getFirstItem(HTTagPrefix.GEM)
                 ?: return@register
+            if (entry.contains(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)) return@register
             HTCookingRecipeJsonBuilder.smeltAndBlast(
                 exporter,
                 tagKeys[0],
                 result,
+                entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
                 suffix = "_from_dust",
             )
         }

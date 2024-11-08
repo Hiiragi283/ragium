@@ -322,7 +322,7 @@ object RagiumAdvancementProviders {
                 "progress/primitive_alloy_furnace",
                 primitiveHull,
                 RagiumMachineKeys.ALLOY_FURNACE,
-                HTMachineTier.PRIMITIVE
+                HTMachineTier.PRIMITIVE,
             )
             val blastFurnace: AdvancementEntry = createChild(
                 consumer,
@@ -409,10 +409,7 @@ object RagiumAdvancementProviders {
         FabricAdvancementProvider(output, registryLookup) {
         override fun getName(): String = "${super.getName()}/Machine"
 
-        override fun generateAdvancement(
-            registryLookup: RegistryWrapper.WrapperLookup,
-            consumer: Consumer<AdvancementEntry>,
-        ) {
+        override fun generateAdvancement(registryLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
             val root: AdvancementEntry = createRoot(
                 consumer,
                 "machine/root",
@@ -426,7 +423,7 @@ object RagiumAdvancementProviders {
                 "machine/multi_smelter",
                 root,
                 RagiumMachineKeys.MULTI_SMELTER,
-                HTMachineTier.PRIMITIVE
+                HTMachineTier.PRIMITIVE,
             )
             // assembler
             val assembler: AdvancementEntry = createMachineChild(
@@ -434,39 +431,39 @@ object RagiumAdvancementProviders {
                 "machine/assembler",
                 root,
                 RagiumMachineKeys.ASSEMBLER,
-                HTMachineTier.PRIMITIVE
+                HTMachineTier.PRIMITIVE,
             )
             val primitiveCircuit: AdvancementEntry = createChild(
                 consumer,
                 "machine/primitive_circuit",
                 assembler,
-                RagiumContents.Circuits.PRIMITIVE
+                RagiumContents.Circuits.PRIMITIVE,
             ) { hasAllItems(RagiumContents.Circuits.PRIMITIVE) }
             val basicCircuit: AdvancementEntry = createChild(
                 consumer,
                 "machine/basic_circuit",
                 primitiveCircuit,
-                RagiumContents.Circuits.BASIC
+                RagiumContents.Circuits.BASIC,
             ) { hasAllItems(RagiumContents.Circuits.BASIC) }
             val advancedCircuit: AdvancementEntry = createChild(
                 consumer,
                 "machine/advanced_circuit",
                 basicCircuit,
-                RagiumContents.Circuits.ADVANCED
+                RagiumContents.Circuits.ADVANCED,
             ) { hasAllItems(RagiumContents.Circuits.ADVANCED) }
             val processor: AdvancementEntry = createChild(
                 consumer,
                 "machine/processor",
                 advancedCircuit,
                 RagiumItems.RAGI_CRYSTAL_PROCESSOR,
-                frame = AdvancementFrame.GOAL
+                frame = AdvancementFrame.GOAL,
             ) { hasAllItems(RagiumItems.RAGI_CRYSTAL_PROCESSOR) }
             val largeProcessor: AdvancementEntry = createChild(
                 consumer,
                 "machine/large_processor",
                 processor,
                 RagiumBlocks.LARGE_PROCESSOR,
-                frame = AdvancementFrame.CHALLENGE
+                frame = AdvancementFrame.CHALLENGE,
             ) { hasAllItems(RagiumBlocks.LARGE_PROCESSOR) }
         }
     }
@@ -621,8 +618,8 @@ object RagiumAdvancementProviders {
                 "petro_chemistry/distillation_tower",
                 root,
                 RagiumMachineKeys.DISTILLATION_TOWER,
-                HTMachineTier.BASIC
-            ) 
+                HTMachineTier.BASIC,
+            )
             // plastic
             val polymerResin: AdvancementEntry = createChild(
                 consumer,

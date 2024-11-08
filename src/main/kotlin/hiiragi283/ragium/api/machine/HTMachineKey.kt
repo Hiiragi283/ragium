@@ -51,7 +51,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
         get() = Text.translatable(descriptionKey).formatted(Formatting.AQUA)
 
     val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
-    
+
     val entry: HTMachineRegistry.Entry by lazy { RagiumAPI.getInstance().machineRegistry.getEntry(this) }
 
     fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier) {

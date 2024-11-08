@@ -1,7 +1,10 @@
 package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.fluidStorageOf
+import hiiragi283.ragium.api.extension.longRangeCodec
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -9,6 +12,8 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
 import net.minecraft.network.RegistryByteBuf
@@ -42,6 +47,41 @@ object RagiumComponentTypes {
     @JvmField
     val MACHINE_TIER: ComponentType<HTMachineTier> =
         register("machine_tier", HTMachineTier.COMPONENT_TYPE)
+
+    @JvmField
+    val DRUM: ComponentType<SingleFluidStorage> = register(
+        "drum",
+        RecordCodecBuilder.create { instance ->
+            instance
+                .group(
+                    longRangeCodec(0, Long.MAX_VALUE)
+                        .fieldOf("capacity")
+                        .forGetter(SingleFluidStorage::getCapacity),
+                    longRangeCodec(0, Long.MAX_VALUE)
+                        .fieldOf("amount")
+                        .forGetter(SingleFluidStorage::getAmount),
+                    FluidVariant.CODEC
+                        .fieldOf("variant")
+                        .forGetter(SingleFluidStorage::getResource),
+                ).apply(instance, ::createFluidStorage)
+        },
+        PacketCodec.tuple(
+            PacketCodecs.VAR_LONG,
+            SingleFluidStorage::getCapacity,
+            PacketCodecs.VAR_LONG,
+            SingleFluidStorage::getAmount,
+            FluidVariant.PACKET_CODEC,
+            SingleFluidStorage::getResource,
+            ::createFluidStorage,
+        ),
+    )
+
+    @JvmStatic
+    private fun createFluidStorage(capacity: Long, amount: Long, variant: FluidVariant): SingleFluidStorage =
+        fluidStorageOf(capacity).apply {
+            this.amount = amount
+            this.variant = variant
+        }
 
     //    Material    //
 

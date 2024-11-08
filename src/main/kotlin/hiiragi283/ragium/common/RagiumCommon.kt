@@ -22,7 +22,6 @@ object RagiumCommon : ModInitializer {
 
         RagiumContentRegister.registerContents()
         InternalRagiumAPI.registerMachines()
-        InternalRagiumAPI.registerMaterials()
 
         RagiumBlockEntityTypes.init()
         RagiumCommands.init()

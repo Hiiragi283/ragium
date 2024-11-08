@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTTagPrefixedBlock
 import hiiragi283.ragium.api.material.HTTagPrefixedBlockItem
 import hiiragi283.ragium.api.material.HTTagPrefixedItem
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
@@ -101,6 +102,11 @@ object RagiumContentRegister : HTContentRegister {
             registerBlock(pipe, block)
             registerBlockItem(block, itemSettings())
         }
+        RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
+            val block = HTDrumBlock(drum.tier)
+            registerBlock(drum, block)
+            registerBlockItem(block, itemSettings())
+        }
 
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
@@ -157,6 +163,9 @@ object RagiumContentRegister : HTContentRegister {
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
+        FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
+            context.itemVariant.componentMap.get(RagiumComponentTypes.DRUM)
+        }
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
             if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context

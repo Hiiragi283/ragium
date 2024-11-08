@@ -21,7 +21,15 @@
       "required": false
     },
     {
+      "id": "#c:raw_materials/iridium",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/iron",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/lead",
       "required": false
     },
     {
@@ -37,7 +45,23 @@
       "required": false
     },
     {
+      "id": "#c:raw_materials/silver",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/sulfur",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/tin",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/zinc",
       "required": false
     }
   ]

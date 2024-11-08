@@ -31,11 +31,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     HTBlockEntityBase(type, pos, state),
     ExtendedScreenHandlerFactory<HTMachinePacket>,
     SidedStorageBlockEntity {
-    companion object {
-        const val MACHINE_KEY = "machine"
-        const val TIER_KEY = "tier"
-    }
-
     abstract var key: HTMachineKey
         protected set
     var tier: HTMachineTier = HTMachineTier.PRIMITIVE

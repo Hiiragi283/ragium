@@ -1,9 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineTier
-import net.minecraft.block.Block
-import net.minecraft.data.client.*
+import net.minecraft.data.client.Model
+import net.minecraft.data.client.TextureKey
 import net.minecraft.util.Identifier
 import java.util.*
 
@@ -82,47 +81,4 @@ object RagiumModels {
         Optional.empty(),
         *keys,
     )
-
-    //    Factory    //
-
-    @JvmStatic
-    fun createAllTinted(all: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        TextureMap.of(TextureKey.ALL, all)
-    }, ALL_TINTED)
-
-    @JvmStatic
-    fun createDisplay(top: Identifier, side: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        textureMap {
-            put(TextureKey.TOP, top)
-            put(TextureKey.SIDE, side)
-        }
-    }, DISPLAY)
-
-    @JvmStatic
-    fun createLayered(inner: Identifier, outer: Identifier): TexturedModel.Factory = TexturedModel.makeFactory({
-        textureMap {
-            put(TextureKey.LAYER0, inner)
-            put(TextureKey.LAYER1, outer)
-        }
-    }, LAYERED)
-
-    @JvmStatic
-    fun createHull(generator: BlockStateModelGenerator, block: Block, tier: HTMachineTier) {
-        generator.registerSingleton(
-            block,
-            textureMap {
-                put(
-                    TextureKey.INSIDE,
-                    when (tier) {
-                        HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
-                        HTMachineTier.BASIC -> Identifier.of("block/blast_furnace_top")
-                        HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
-                    },
-                )
-                put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
-                put(TextureKey.SIDE, ModelIds.getBlockModelId(block))
-            },
-            HULL,
-        )
-    }
 }

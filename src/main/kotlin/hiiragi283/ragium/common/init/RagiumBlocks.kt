@@ -93,7 +93,7 @@ object RagiumBlocks : HTContentRegister {
 
     @JvmField
     val LARGE_PROCESSOR: Block =
-        registerHorizontalWithBE("large_processor", RagiumBlockEntityTypes.LARGE_PROCESSOR)
+        registerBlock("large_processor", HTLargeProcessorBlock(blockSettings()))
 
     @JvmField
     val SHAFT: Block =

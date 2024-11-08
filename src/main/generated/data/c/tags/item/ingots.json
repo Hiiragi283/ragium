@@ -17,7 +17,15 @@
       "required": false
     },
     {
+      "id": "#c:ingots/iridium",
+      "required": false
+    },
+    {
       "id": "#c:ingots/iron",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/lead",
       "required": false
     },
     {
@@ -37,7 +45,23 @@
       "required": false
     },
     {
+      "id": "#c:ingots/silver",
+      "required": false
+    },
+    {
       "id": "#c:ingots/steel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/tin",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/tungsten",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/zinc",
       "required": false
     }
   ]

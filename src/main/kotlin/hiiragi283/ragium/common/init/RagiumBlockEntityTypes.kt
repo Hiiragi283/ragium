@@ -34,6 +34,10 @@ object RagiumBlockEntityTypes {
         register("drain", ::HTDrainBlockEntity)
 
     @JvmField
+    val DRUM: BlockEntityType<HTDrumBlockEntity> =
+        register("drum", ::HTDrumBlockEntity)
+
+    @JvmField
     val EXPORTER: BlockEntityType<HTExporterBlockEntity> =
         register("exporter", ::HTExporterBlockEntity)
 
@@ -101,6 +105,9 @@ object RagiumBlockEntityTypes {
         RagiumContents.Pipes.entries
             .map(RagiumContents.Pipes::value)
             .forEach(FLUID_PIPE::addSupportedBlock)
+        RagiumContents.Drums.entries
+            .map(RagiumContents.Drums::value)
+            .forEach(DRUM::addSupportedBlock)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         LARGE_PROCESSOR.addSupportedBlock(RagiumBlocks.LARGE_PROCESSOR)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)

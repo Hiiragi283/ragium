@@ -2,10 +2,17 @@ package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyKey
-import net.minecraft.util.Rarity
 
 object HTMaterialPropertyKeys {
     @JvmField
-    val RARITY: HTPropertyKey.Defaulted<Rarity> =
-        HTPropertyKey.ofDefaulted(RagiumAPI.id("rarity")) { Rarity.COMMON }
+    val DISABLE_DUST_SMELTING: HTPropertyKey.Defaulted<Unit> =
+        HTPropertyKey.ofFlag(RagiumAPI.id("disable_dust_smelting"))
+
+    @JvmField
+    val DISABLE_RAW_SMELTING: HTPropertyKey.Defaulted<Unit> =
+        HTPropertyKey.ofFlag(RagiumAPI.id("disable_raw_smelting"))
+
+    @JvmField
+    val SMELTING_EXP: HTPropertyKey.Defaulted<Float> =
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("smelting_exp"), 0f)
 }

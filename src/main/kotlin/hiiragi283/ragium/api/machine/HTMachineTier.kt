@@ -122,16 +122,22 @@ enum class HTMachineTier(
         ADVANCED -> RagiumContents.Hulls.ADVANCED
     }
 
-    fun getIngot(): RagiumContents.Ingots = when (this) {
-        PRIMITIVE -> RagiumContents.Ingots.RAGI_ALLOY
-        BASIC -> RagiumContents.Ingots.RAGI_STEEL
-        ADVANCED -> RagiumContents.Ingots.REFINED_RAGI_STEEL
-    }
-
-    fun getPlate(): RagiumContents.Plates = when (this) {
+    fun getMainPlate(): RagiumContents.Plates = when (this) {
         PRIMITIVE -> RagiumContents.Plates.RAGI_ALLOY
         BASIC -> RagiumContents.Plates.RAGI_STEEL
         ADVANCED -> RagiumContents.Plates.REFINED_RAGI_STEEL
+    }
+
+    fun getSubPlate(): RagiumContents.Plates = when (this) {
+        PRIMITIVE -> RagiumContents.Plates.COPPER
+        BASIC -> RagiumContents.Plates.GOLD
+        ADVANCED -> RagiumContents.Plates.RAGI_ALLOY
+    }
+
+    fun getSteelPlate(): RagiumContents.Plates = when (this) {
+        PRIMITIVE -> RagiumContents.Plates.IRON
+        BASIC -> RagiumContents.Plates.STEEL
+        ADVANCED -> RagiumContents.Plates.DEEP_STEEL
     }
 
     fun getStorageBlock(): RagiumContents.StorageBlocks = when (this) {

@@ -229,8 +229,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
-        // invar
-
         // backpack
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.BACKPACK)
@@ -483,7 +481,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                     "AAA",
                     " B ",
                     "CDC",
-                ).input('A', exporter1.tier.getPlate())
+                ).input('A', exporter1.tier.getMainPlate())
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .input('C', exporter1.tier.getCoil())
                 .input('D', RagiumItemTags.PIPES)
@@ -510,23 +508,33 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .unlockedBy(ItemTags.PLANKS)
                 .offerTo(exporter)
         }
+        // drums
+        RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
+            HTShapedRecipeJsonBuilder
+                .create(drum)
+                .patterns(
+                    "ABA",
+                    "ACA",
+                    "ABA",
+                ).input('A', drum.tier.getSubPlate())
+                .input('B', drum.tier.getMainPlate())
+                .input('C', Items.BUCKET)
+                .unlockedBy(drum.tier.getMainPlate())
+                .offerTo(exporter)
+        }
         // hulls
-        listOf(
-            RagiumContents.Plates.RAGI_ALLOY,
-            RagiumContents.Plates.RAGI_STEEL,
-            RagiumContents.Plates.REFINED_RAGI_STEEL,
-        ).forEachIndexed { index: Int, plate: RagiumContents.Plates ->
-            val base: Block = HTMachineTier.entries[index].getBaseBlock()
-            val hull: RagiumContents.Hulls = RagiumContents.Hulls.entries[index]
+        HTMachineTier.entries.forEach { tier: HTMachineTier ->
+            val base: Block = tier.getBaseBlock()
+            val hull: RagiumContents.Hulls = tier.getHull()
             HTShapedRecipeJsonBuilder
                 .create(hull)
                 .patterns(
                     "AAA",
                     "A A",
                     "BBB",
-                ).input('A', plate)
+                ).input('A', tier.getMainPlate())
                 .input('B', base)
-                .unlockedBy(plate)
+                .unlockedBy(tier.getMainPlate())
                 .offerTo(exporter)
         }
         // casings
@@ -748,18 +756,12 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                     "AAA",
                     "BCD",
                     "EEE",
-                ).input('A', tier.getPlate())
+                ).input('A', tier.getMainPlate())
                 .input('B', left)
                 .input('C', tier.getHull())
                 .input('D', right)
-                .input(
-                    'E',
-                    when (tier) {
-                        HTMachineTier.PRIMITIVE -> RagiumContents.Plates.COPPER
-                        HTMachineTier.BASIC -> RagiumContents.Plates.IRON
-                        HTMachineTier.ADVANCED -> RagiumContents.Plates.STEEL
-                    },
-                ).unlockedBy(tier.getHull())
+                .input('E', tier.getSteelPlate())
+                .unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(key))
         }
     }
