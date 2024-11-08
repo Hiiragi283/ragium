@@ -47,6 +47,11 @@ class HTBackpackManager : PersistentState() {
     operator fun get(color: DyeColor): HTSimpleInventory = backpacks.computeIfAbsent(color) { HTSimpleInventory(56) }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = nbt.apply {
+        RagiumAPI.log {
+            backpacks.forEach { (color: DyeColor, inventory: HTSimpleInventory) ->
+                info("Color: $color, inventory: $inventory")
+            }
+        }
         CODEC
             .encodeStart(NbtOps.INSTANCE, backpacks)
             .result()

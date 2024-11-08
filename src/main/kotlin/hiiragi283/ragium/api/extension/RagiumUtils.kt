@@ -87,6 +87,8 @@ fun getModMetadata(modId: String): ModMetadata? = FabricLoader
 
 fun getModName(modId: String): String? = getModMetadata(modId)?.name
 
+inline fun <reified T : Any> collectEntrypoints(key: String): List<T> = FabricLoader.getInstance().getEntrypoints(key, T::class.java)
+
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"

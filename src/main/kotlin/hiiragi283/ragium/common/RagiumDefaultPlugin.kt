@@ -82,6 +82,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
         }
         // generators
+        helper.modify(RagiumMachineKeys.GENERATORS::contains) {
+            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
+        }
         helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.BLUE)
@@ -89,6 +92,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
+            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
             set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
         }
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
@@ -118,11 +122,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
             }
         }
         // processors
-        RagiumMachineKeys.PROCESSORS.forEach {
-            helper.modify(it) {
-                set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Simple))
-                set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
-            }
+        helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Simple))
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))

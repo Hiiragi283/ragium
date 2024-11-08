@@ -16,6 +16,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofSimple(RagiumAPI.id("machine_factory"))
 
     @JvmField
+    val MODEL_ID: HTPropertyKey.Defaulted<Identifier> =
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("model_id")) { RagiumAPI.id("block/dynamic_processor") }
+
+    @JvmField
     val TOOLTIP_BUILDER: HTPropertyKey.Simple<HTMachineTooltipAppender> =
         HTPropertyKey.ofSimple(RagiumAPI.id("tooltip_builder"))
 

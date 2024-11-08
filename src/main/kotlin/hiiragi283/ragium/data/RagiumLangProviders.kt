@@ -224,10 +224,6 @@ object RagiumLangProviders {
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
-            // Key Binds
-            // builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
-
-            // builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "Open Backpack")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
@@ -343,26 +339,12 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.NUGGET, "%s Nugget")
             builder.add(HTTagPrefix.ORE, "%s Ore")
             builder.add(HTTagPrefix.PLATE, "%s Plate")
-            builder.add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
-            builder.add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
-
-            // Mod Menu
-            builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
-            builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "Enable Hard Mode (Run `/reload` command to apply)")
-            // Jade
-            builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "Machines")
-            builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
-
-            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "Stored Energy: %s E")
-            // REI
-            builder.add(RagiumTranslationKeys.REI_RECIPE_BIOME, "Found in the biome: %s")
-            builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "Recipe Info")
         }
     }
 
     //    Japanese    //
 
-    class JapaneseLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    private class JapaneseLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, "ja_jp", registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.JA_JP)
@@ -450,10 +432,6 @@ object RagiumLangProviders {
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
-            // Key Binds
-            // builder.add(RagiumKeyBinds.CATEGORY, RagiumAPI.MOD_NAME)
-
-            // builder.add(RagiumKeyBinds.OPEN_BACKPACK.translationKey, "バックパックを開く")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
@@ -535,18 +513,6 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.PLATE, "%s板")
             builder.add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
             builder.add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
-
-            // Mod Menu
-            builder.add(RagiumTranslationKeys.CONFIG_TILE, "Ragium - Config")
-            builder.add(RagiumTranslationKeys.CONFIG_IS_HARD_MODE, "ハードモードの切り替え（reloadコマンドで反映）")
-            // Jade
-            builder.add(RagiumTranslationKeys.CONFIG_JADE_MACHINE, "機械")
-            builder.add(RagiumTranslationKeys.CONFIG_JADE_NETWORK_INTERFACE, "E.N.I")
-
-            builder.add(RagiumTranslationKeys.PROVIDER_JADE_NETWORK_INTERFACE, "エネルギー量: %s E")
-            // REI
-            builder.add(RagiumTranslationKeys.REI_RECIPE_BIOME, "次のバイオームで見つかる: %s")
-            builder.add(RagiumTranslationKeys.REI_RECIPE_INFO, "レシピ情報")
         }
     }
 }

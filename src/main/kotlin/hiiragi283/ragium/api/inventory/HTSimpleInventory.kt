@@ -60,6 +60,8 @@ open class HTSimpleInventory : Inventory {
         }
     }
 
+    override fun toString(): String = "[${stacks.joinToString(separator = ", ", transform = ItemStack::toString)}]"
+
     //    Inventory    //
 
     override fun clear() {

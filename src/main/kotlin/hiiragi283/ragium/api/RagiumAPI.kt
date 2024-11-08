@@ -1,12 +1,13 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.extension.collectEntrypoints
+import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -40,12 +41,12 @@ interface RagiumAPI {
         @JvmStatic
         fun getPlugins(): List<RagiumPlugin> {
             if (!::plugins.isInitialized) {
-                plugins = FabricLoader
-                    .getInstance()
-                    .getEntrypoints(
-                        RagiumPlugin.KEY,
-                        RagiumPlugin::class.java,
-                    ).sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
+                plugins = buildList {
+                    addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.SERVER_KEY))
+                    if (isClientEnv()) {
+                        addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.CLIENT_KEY))
+                    }
+                }.sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
                     .filter(RagiumPlugin::shouldLoad)
                 log {
                     info("=== Loaded Ragium Plugins ===")

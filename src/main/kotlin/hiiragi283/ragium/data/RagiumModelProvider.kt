@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -252,7 +252,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         // machines
         RagiumAPI.getInstance().machineRegistry.blocks.forEach { block: HTMachineBlock ->
-            val modelId: Identifier = block.key.entry.getOrDefault(HTClientMachinePropertyKeys.MODEL_ID)
+            val modelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID)
             accept(
                 VariantsBlockStateSupplier
                     .create(

@@ -1,7 +1,9 @@
 package hiiragi283.ragium.client.model
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.getMachine
+import hiiragi283.ragium.api.extension.getOrDefault
+import hiiragi283.ragium.api.extension.machineKeyOrNull
+import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
@@ -36,9 +38,6 @@ import java.util.function.Supplier
 
 @Environment(EnvType.CLIENT)
 data object HTProcessorMachineModel : UnbakedModel, BakedModel {
-    @JvmField
-    val MODEL_ID: Identifier = RagiumAPI.id("block/dynamic_processor")
-
     //    UnbakedModel    //
 
     override fun getModelDependencies(): Collection<Identifier> = listOf()

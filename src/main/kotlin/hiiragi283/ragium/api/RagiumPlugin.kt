@@ -12,7 +12,8 @@ import java.util.function.Predicate
 @JvmDefaultWithCompatibility
 interface RagiumPlugin {
     companion object {
-        const val KEY = "ragium.plugin"
+        const val SERVER_KEY = "ragium.plugin.server"
+        const val CLIENT_KEY = "ragium.plugin.client"
     }
 
     val priority: Int

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.model
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.extension.FLUID_CUBE_TRANSFORM
 import hiiragi283.ragium.client.extension.getSpriteAndColor
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -26,9 +25,6 @@ import java.util.function.Supplier
 
 @Environment(EnvType.CLIENT)
 data object HTFluidCubeModel : UnbakedModel, BakedModel {
-    @JvmField
-    val MODEL_ID: Identifier = RagiumAPI.id("item/fluid_cube")
-
     @JvmStatic
     private lateinit var sprite: Sprite
 

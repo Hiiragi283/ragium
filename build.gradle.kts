@@ -37,6 +37,10 @@ repositories {
     maven(url = "https://maven.blamejared.com") // Patchouli
 }
 
+fabricApi {
+    configureDataGeneration()
+}
+
 loom {
     // accessWidenerPath = file("src/main/resources/ht_materials.accesswidener")
     splitEnvironmentSourceSets()
@@ -54,7 +58,7 @@ loom {
         getByName("server") {
             runDir = "run/server"
         }
-        create("datagen") {
+        /*create("datagen") {
             inherit(getByName("client"))
             name = "Data Generation"
             vmArg("-Dfabric-api.datagen")
@@ -62,7 +66,7 @@ loom {
             vmArg("-Dfabric-api.datagen.modid=ragium")
             runDir("build/datagen")
             source(sourceSets.getByName("client"))
-        }
+        }*/
         /*create("test") {
             inherit(getByName("client"))
             name = "Game Test Client"

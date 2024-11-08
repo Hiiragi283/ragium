@@ -84,8 +84,6 @@
   "block.ragium.trash_box": "Trash Box",
   "block.ragium.universal_pipe": "Universal Pipe",
   "block.ragium.wooden_pipe": "Wooden Pipe",
-  "config.jade.plugin_ragium.machine": "Machines",
-  "config.jade.plugin_ragium.network_interface": "E.N.I",
   "enchantment.ragium.buzz_saw": "Buzz Saw",
   "enchantment.ragium.sledge_hammer": "Sledge Hammer",
   "enchantment.ragium.smelting": "Smelting",
@@ -255,12 +253,6 @@
   "tag_prefix.ragium.nugget": "%s Nugget",
   "tag_prefix.ragium.ore": "%s Ore",
   "tag_prefix.ragium.plate": "%s Plate",
-  "tag_prefix.ragium.raw_material": "Raw %s",
-  "tag_prefix.ragium.storage_block": "Block of %s",
-  "text.autoconfig.ragium.option.isHardMode": "Enable Hard Mode (Run `/reload` command to apply)",
-  "text.autoconfig.ragium.title": "Ragium - Config",
-  "tooltip.jade.plugin_ragium.network_interface": "Stored Energy: %s E",
-  "tooltip.ragium.found_in_biome": "Found in the biome: %s",
   "tooltip.ragium.item.crafter_hammer.module": "Module: %s",
   "tooltip.ragium.item.dynamite.destroy": "Destroy: %s",
   "tooltip.ragium.item.dynamite.power": "Power: %s",
@@ -272,6 +264,5 @@
   "tooltip.ragium.machine.show_preview": "Show preview: %s",
   "tooltip.ragium.machine.slot_counts": "Input/Output Slots: %s",
   "tooltip.ragium.machine.tank_capacity": "Each Tank Capacity: %s Buckets",
-  "tooltip.ragium.machine.tier": "Tier: %s",
-  "tooltip.ragium.recipe_info": "Recipe Info"
+  "tooltip.ragium.machine.tier": "Tier: %s"
 }

@@ -81,8 +81,6 @@
   "block.ragium.trash_box": "ゴミ箱",
   "block.ragium.universal_pipe": "万能パイプ",
   "block.ragium.wooden_pipe": "木製パイプ",
-  "config.jade.plugin_ragium.machine": "機械",
-  "config.jade.plugin_ragium.network_interface": "E.N.I",
   "enchantment.ragium.buzz_saw": "製材",
   "enchantment.ragium.sledge_hammer": "粉砕",
   "enchantment.ragium.smelting": "精錬",
@@ -253,10 +251,6 @@
   "tag_prefix.ragium.plate": "%s板",
   "tag_prefix.ragium.raw_material": "%sの原石",
   "tag_prefix.ragium.storage_block": "%sブロック",
-  "text.autoconfig.ragium.option.isHardMode": "ハードモードの切り替え（reloadコマンドで反映）",
-  "text.autoconfig.ragium.title": "Ragium - Config",
-  "tooltip.jade.plugin_ragium.network_interface": "エネルギー量: %s E",
-  "tooltip.ragium.found_in_biome": "次のバイオームで見つかる: %s",
   "tooltip.ragium.item.crafter_hammer.module": "モジュール: %s",
   "tooltip.ragium.item.dynamite.destroy": "地形破壊: %s",
   "tooltip.ragium.item.dynamite.power": "威力: %s",
@@ -268,6 +262,5 @@
   "tooltip.ragium.machine.show_preview": "プレビューの表示: %s",
   "tooltip.ragium.machine.slot_counts": "入力/出力スロット数: %s",
   "tooltip.ragium.machine.tank_capacity": "各液体タンクの容量: %s バケツ",
-  "tooltip.ragium.machine.tier": "ティア: %s",
-  "tooltip.ragium.recipe_info": "レシピ情報"
+  "tooltip.ragium.machine.tier": "ティア: %s"
 }

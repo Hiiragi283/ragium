@@ -171,8 +171,8 @@ object RagiumClient : ClientModInitializer {
             // register item model resolver
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
                 when {
-                    HTProcessorMachineModel.MODEL_ID in original.modelDependencies -> HTProcessorMachineModel
-                    HTFluidCubeModel.MODEL_ID in original.modelDependencies -> HTFluidCubeModel
+                    RagiumAPI.id("block/dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel
+                    RagiumAPI.id("item/fluid_cube") in original.modelDependencies -> HTFluidCubeModel
                     else -> original
                 }
             }

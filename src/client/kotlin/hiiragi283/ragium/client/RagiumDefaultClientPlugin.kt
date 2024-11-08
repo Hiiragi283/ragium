@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.renderer.HTMultiblockPreviewRenderer
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 
+@Environment(EnvType.CLIENT)
 object RagiumDefaultClientPlugin : RagiumPlugin {
     override val priority: Int = -100
 
@@ -27,13 +30,6 @@ object RagiumDefaultClientPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
             set(HTClientMachinePropertyKeys.DYNAMIC_RENDERER, HTMultiblockPreviewRenderer)
-        }
-
-        helper.modify(RagiumMachineKeys.GENERATORS::contains) {
-            set(HTClientMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
-        }
-        helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
-            set(HTClientMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
         }
     }
 }
