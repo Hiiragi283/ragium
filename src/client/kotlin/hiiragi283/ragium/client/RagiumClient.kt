@@ -3,21 +3,14 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.gui.HTMachineScreenBase
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
-import hiiragi283.ragium.client.gui.HTFireboxMachineScreen
-import hiiragi283.ragium.client.gui.HTLargeMachineScreen
-import hiiragi283.ragium.client.gui.HTSimpleMachineScreen
-import hiiragi283.ragium.client.gui.HTSteamMachineScreen
+import hiiragi283.ragium.client.gui.*
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
-import hiiragi283.ragium.client.renderer.HTFireboxBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTItemDisplayBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTLargeProcessorBlockEntityRenderer
-import hiiragi283.ragium.client.renderer.HTMachineBlockEntityRenderer
+import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
@@ -117,7 +110,7 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun <T : HTMachineBlockEntityBase> registerMachineRenderer(type: BlockEntityType<T>) {
-        BlockEntityRendererFactories.register(type) { HTMachineBlockEntityRenderer }
+        BlockEntityRendererFactories.register(type) { HTMultiblockMachineBlockEntityRenderer }
     }
 
     //    Entities    //

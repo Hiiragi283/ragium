@@ -1,17 +1,19 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.api.machine.HTClientMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.client.extension.renderMultiblock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.state.property.Properties
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
-object HTMachineBlockEntityRenderer : BlockEntityRenderer<HTMachineBlockEntityBase> {
+object HTMultiblockMachineBlockEntityRenderer : BlockEntityRenderer<HTMachineBlockEntityBase> {
     override fun render(
         entity: HTMachineBlockEntityBase,
         tickDelta: Float,
@@ -21,9 +23,14 @@ object HTMachineBlockEntityRenderer : BlockEntityRenderer<HTMachineBlockEntityBa
         overlay: Int,
     ) {
         val world: World = entity.world ?: return
-        val key: HTMachineKey = entity.key
-        key.entry.ifPresent(HTClientMachinePropertyKeys.DYNAMIC_RENDERER) {
-            it.render(entity, world, entity.pos, tickDelta, matrices, vertexConsumers, light, overlay)
+        if (entity is HTMultiblockController) {
+            renderMultiblock(
+                entity,
+                world,
+                world.getBlockState(entity.pos).getOrNull(Properties.HORIZONTAL_FACING),
+                matrices,
+                vertexConsumers,
+            )
         }
     }
 }

@@ -39,12 +39,7 @@
         "adapter": "kotlin"
       }
     ],
-    "ragium.plugin.client": [
-      {
-        "value": "hiiragi283.ragium.client.RagiumDefaultClientPlugin",
-        "adapter": "kotlin"
-      }
-    ]
+    "ragium.plugin.client": []
   },
   "mixins": [
     "ragium.mixins.json"

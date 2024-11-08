@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.gui
+package hiiragi283.ragium.client.gui
 
 import hiiragi283.ragium.api.extension.getModName
 import hiiragi283.ragium.api.extension.longText

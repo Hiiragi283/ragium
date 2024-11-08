@@ -39,6 +39,6 @@ object HTLargeProcessorBlockEntityRenderer : BlockEntityRenderer<HTLargeProcesso
                 Random.create(),
             )
         // render multiblock
-        HTMachineBlockEntityRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay)
+        HTMultiblockMachineBlockEntityRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay)
     }
 }

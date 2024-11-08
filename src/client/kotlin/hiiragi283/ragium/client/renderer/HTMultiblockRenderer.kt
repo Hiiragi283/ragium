@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.machine
+package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
