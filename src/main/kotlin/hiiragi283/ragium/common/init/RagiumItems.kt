@@ -48,22 +48,6 @@ object RagiumItems : HTContentRegister {
         registerArmorItem("stella_boots", HTArmorType.BOOTS, RagiumArmorMaterials.STELLA, 33)
 
     @JvmField
-    val RAGIUM_HELMET: Item =
-        registerArmorItem("ragium_helmet", HTArmorType.HELMET, RagiumArmorMaterials.RAGIUM, 37)
-
-    @JvmField
-    val RAGIUM_CHESTPLATE: Item =
-        registerArmorItem("ragium_chestplate", HTArmorType.CHESTPLATE, RagiumArmorMaterials.RAGIUM, 37)
-
-    @JvmField
-    val RAGIUM_LEGGINGS: Item =
-        registerArmorItem("ragium_leggings", HTArmorType.LEGGINGS, RagiumArmorMaterials.RAGIUM, 37)
-
-    @JvmField
-    val RAGIUM_BOOTS: Item =
-        registerArmorItem("ragium_boots", HTArmorType.BOOTS, RagiumArmorMaterials.RAGIUM, 37)
-
-    @JvmField
     val ARMORS: List<Item> = listOf(
         STEEL_HELMET,
         STEEL_CHESTPLATE,
@@ -73,10 +57,6 @@ object RagiumItems : HTContentRegister {
         STELLA_JACKET,
         STELLA_LEGGINGS,
         STELLA_BOOTS,
-        RAGIUM_HELMET,
-        RAGIUM_CHESTPLATE,
-        RAGIUM_LEGGINGS,
-        RAGIUM_BOOTS,
     )
 
     //    Tools    //

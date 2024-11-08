@@ -24,12 +24,6 @@ object RagiumArmorMaterials {
         ArmorMaterials.DIAMOND,
     ) { Ingredient.ofItems(RagiumContents.Plates.STELLA) }
 
-    @JvmField
-    val RAGIUM: RegistryEntry<ArmorMaterial> = register(
-        "ragium",
-        ArmorMaterials.NETHERITE,
-    ) { Ingredient.ofItems(RagiumContents.Gems.RAGIUM) }
-
     @JvmStatic
     private fun register(name: String, entry: RegistryEntry<ArmorMaterial>, repairment: () -> Ingredient): RegistryEntry<ArmorMaterial> =
         entry.value().let { parent: ArmorMaterial ->

@@ -172,22 +172,18 @@ object RagiumTagProviders {
             getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(
                 RagiumItems.STEEL_HELMET,
                 RagiumItems.STELLA_GOGGLE,
-                RagiumItems.RAGIUM_HELMET,
             )
             getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(
                 RagiumItems.STEEL_CHESTPLATE,
                 RagiumItems.STELLA_JACKET,
-                RagiumItems.RAGIUM_CHESTPLATE,
             )
             getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(
                 RagiumItems.STEEL_LEGGINGS,
                 RagiumItems.STELLA_LEGGINGS,
-                RagiumItems.RAGIUM_LEGGINGS,
             )
             getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(
                 RagiumItems.STEEL_BOOTS,
                 RagiumItems.STELLA_BOOTS,
-                RagiumItems.RAGIUM_BOOTS,
             )
 
             add(ItemTags.AXES, RagiumItems.STEEL_AXE)
