@@ -30,6 +30,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
     }
 
     override fun buildRegistry(registryBuilder: RegistryBuilder) {
+        if (System.getProperty("fabric-api.datagen.modid") != RagiumAPI.MOD_ID) return
         registryBuilder.addRegistry(RegistryKeys.ENCHANTMENT) { registerable: Registerable<Enchantment> ->
             val enchantmentLookup: RegistryEntryLookup<Enchantment> = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT)
             val itemLookup: RegistryEntryLookup<Item> = registerable.getRegistryLookup(RegistryKeys.ITEM)

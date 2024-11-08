@@ -157,7 +157,11 @@ tasks {
         from("LICENSE") {
             rename { "${it}_${project.base.archivesName.get()}" }
         }
-        exclude("**/ragium/data/**")
+        exclude { element: FileTreeElement ->
+            element.path.contains("/ragium/data/") && !element.path.endsWith("RagiumDataGenerator.class")
+        }
+        // exclude("**/ragium/data/**")
+        // include("**/RagiumDataGenerator.kt")
         exclude("**/unused/**")
     }
 }
