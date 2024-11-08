@@ -29,6 +29,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/deep_steel",
+      "required": false
+    },
+    {
       "id": "#c:dusts/engineering_plastic",
       "required": false
     },

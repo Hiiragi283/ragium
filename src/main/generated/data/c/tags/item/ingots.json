@@ -9,6 +9,10 @@
       "required": false
     },
     {
+      "id": "#c:ingots/deep_steel",
+      "required": false
+    },
+    {
       "id": "#c:ingots/gold",
       "required": false
     },

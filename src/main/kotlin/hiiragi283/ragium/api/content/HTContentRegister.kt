@@ -11,6 +11,7 @@ import net.minecraft.component.type.FoodComponent
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.Item.Settings
 import net.minecraft.item.ToolMaterial
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -75,7 +76,8 @@ interface HTContentRegister {
         type: HTArmorType,
         material: RegistryEntry<ArmorMaterial>,
         multiplier: Int,
-    ): Item = registerItem(name, type.createItem(material, multiplier))
+        settings: Settings = itemSettings(),
+    ): Item = registerItem(name, type.createItem(material, multiplier, settings))
 
     /*fun <T : ToolItem> registerToolItem(
         name: String,

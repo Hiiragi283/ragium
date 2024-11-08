@@ -44,13 +44,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         fun registerCustom(block: Block, id: Identifier = TextureMap.getId(block)) {
             register(block) { accept(VariantsBlockStateSupplier.create(it, stateVariantOf(id))) }
         }
-        
+
         fun registerLayered(block: Block, layer0: Identifier, layer1: Identifier) {
             register(block) { generator.registerSingleton(it, RagiumModels.createLayered(layer0, layer1)) }
         }
 
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
-        
+
         registerCustom(RagiumBlocks.MANUAL_FORGE)
         register(RagiumBlocks.MANUAL_GRINDER) {
             accept(
@@ -83,7 +83,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
         }
         registerCustom(RagiumBlocks.MANUAL_MIXER)
-        
+
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
         register(RagiumBlocks.ITEM_DISPLAY) {
             generator.registerSingleton(
@@ -264,8 +264,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                             Models.CUBE_COLUMN.upload(
                                 ModelIds.getItemModelId(block.asItem()),
                                 TextureMap.all(block),
-                                generator.modelCollector
-                            )
+                                generator.modelCollector,
+                            ),
                         ),
                     ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
             )

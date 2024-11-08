@@ -9,6 +9,10 @@
       "required": false
     },
     {
+      "id": "#c:plates/deep_steel",
+      "required": false
+    },
+    {
       "id": "#c:plates/engineering_plastic",
       "required": false
     },

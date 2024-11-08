@@ -6,6 +6,9 @@ object RagiumMaterialKeys {
     //    Alloy    //
 
     @JvmField
+    val DEEP_STEEL: HTMaterialKey = HTMaterialKey.of("deep_steel")
+
+    @JvmField
     val RAGI_ALLOY: HTMaterialKey = HTMaterialKey.of("ragi_alloy")
 
     @JvmField

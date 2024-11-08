@@ -6,11 +6,13 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
+import hiiragi283.ragium.api.util.TriConsumer
 import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
 import java.util.function.Predicate
 
@@ -27,7 +29,7 @@ interface RagiumPlugin {
 
     fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
-    fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {}
+    fun registerMaterial(consumer: TriConsumer<HTMaterialKey, HTMaterialKey.Type, Rarity>) {}
 
     fun setupCommonMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 
@@ -37,7 +39,7 @@ interface RagiumPlugin {
 
     fun setupClientMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
 
-    fun bindMaterialToItem(consumer: (HTTagPrefix, HTMaterialKey, Item) -> Unit) {}
+    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Item>) {}
 
     fun afterRagiumInit(instance: RagiumAPI) {}
 

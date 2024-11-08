@@ -199,6 +199,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.BACKPACK, "Backpack")
             builder.add(RagiumItems.BASALT_MESH, "Basalt Mesh")
             builder.add(RagiumItems.CRAFTER_HAMMER, "Crafter's Hammer")
+            builder.add(RagiumItems.DEEPANT, "Deepant")
             builder.add(RagiumItems.DYNAMITE, "Dynamite")
             builder.add(RagiumItems.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
             builder.add(RagiumItems.FILLED_FLUID_CUBE, "Fluid Cube (%s)")
@@ -324,6 +325,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.ALUMINUM, "Aluminum")
             builder.add(RagiumMaterialKeys.BAUXITE, "Bauxite")
             builder.add(RagiumMaterialKeys.CRYOLITE, "Cryolite")
+            builder.add(RagiumMaterialKeys.DEEP_STEEL, "Deep Steel")
             builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "Engineering Plastic")
             builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
@@ -339,6 +341,8 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.NUGGET, "%s Nugget")
             builder.add(HTTagPrefix.ORE, "%s Ore")
             builder.add(HTTagPrefix.PLATE, "%s Plate")
+            builder.add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
+            builder.add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         }
     }
 
@@ -407,6 +411,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.BACKPACK, "バックパック")
             builder.add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
             builder.add(RagiumItems.CRAFTER_HAMMER, "クラフターズ・ハンマー")
+            builder.add(RagiumItems.DEEPANT, "ディーパント")
             builder.add(RagiumItems.DYNAMITE, "ダイナマイト")
             builder.add(RagiumItems.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
             builder.add(RagiumItems.FILLED_FLUID_CUBE, "液体キューブ（%s）")
@@ -496,6 +501,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.ALUMINUM, "アルミニウム")
             builder.add(RagiumMaterialKeys.BAUXITE, "ボーキサイト")
             builder.add(RagiumMaterialKeys.CRYOLITE, "氷晶石")
+            builder.add(RagiumMaterialKeys.DEEP_STEEL, "深層鋼")
             builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "エンジニアリングプラスチック")
             builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 

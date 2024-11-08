@@ -113,6 +113,7 @@ object RagiumContents : HTContentRegister {
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         STEEL(RagiumMaterialKeys.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         ;
@@ -142,6 +143,7 @@ object RagiumContents : HTContentRegister {
 
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         ENGINEERING_PLASTIC(RagiumMaterialKeys.ENGINEERING_PLASTIC),
         STELLA(RagiumMaterialKeys.STELLA),
         ;

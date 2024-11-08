@@ -15,12 +15,16 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementCriterion
+import net.minecraft.component.ComponentMap
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.util.Rarity
 
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
@@ -92,10 +96,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
     @JvmStatic
     fun registerMaterials() {
         val keyCache: MutableMap<HTMaterialKey, HTMaterialKey.Type> = mutableMapOf()
+        val rarityCache: MutableMap<HTMaterialKey, Rarity> = mutableMapOf()
 
         // collect keys from plugins
-        fun addMaterial(key: HTMaterialKey, type: HTMaterialKey.Type) {
+        fun addMaterial(key: HTMaterialKey, type: HTMaterialKey.Type, rarity: Rarity) {
             check(keyCache.put(key, type) == null) { "Material; ${key.name} is already registered!" }
+            rarityCache[key] = rarity
         }
         RagiumAPI.getPlugins().forEach {
             it.registerMaterial(::addMaterial)
@@ -138,6 +144,15 @@ internal data object InternalRagiumAPI : RagiumAPI {
                     items.toSortedSet(idComparator(Registries.ITEM)),
                 )
             }
+
+        DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
+            itemTable.forEach { (_: HTTagPrefix, key: HTMaterialKey, items: Set<Item>) ->
+                context.modify(items) { builder: ComponentMap.Builder, _: Item ->
+                    builder.add(DataComponentTypes.RARITY, rarityCache.getOrDefault(key, Rarity.COMMON))
+                }
+            }
+            RagiumAPI.log { info("Added rarities for material items!") }
+        }
 
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)

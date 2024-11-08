@@ -112,7 +112,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "A A",
             ).input('A', RagiumContents.Plates.STELLA)
-            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .input('B', RagiumContents.Gems.RAGIUM)
             .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
 
@@ -123,7 +123,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "AAA",
             ).input('A', RagiumContents.Plates.STELLA)
-            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .input('B', RagiumContents.Gems.RAGIUM)
             .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
 
@@ -134,7 +134,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A A",
                 "A A",
             ).input('A', RagiumContents.Plates.STELLA)
-            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .input('B', RagiumContents.Gems.RAGIUM)
             .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
 
@@ -144,7 +144,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A A",
                 "ABA",
             ).input('A', RagiumContents.Plates.STELLA)
-            .input('B', RagiumContents.Gems.RAGI_CRYSTAL)
+            .input('B', RagiumContents.Gems.RAGIUM)
             .unlockedBy(RagiumContents.Plates.STELLA)
             .offerTo(exporter)
     }
@@ -548,7 +548,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumContents.Plates.STELLA)
+            ).input('A', RagiumContents.Plates.DEEP_STEEL)
             .input('B', RagiumContents.Plates.ALUMINUM)
             .input('C', RagiumContents.Gems.RAGI_CRYSTAL)
             .unlockedBy(RagiumContents.Gems.RAGI_CRYSTAL)
@@ -594,7 +594,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumContents.Plates.STELLA)
+            ).input('A', RagiumContents.Plates.DEEP_STEEL)
             .input('B', RagiumContents.Plates.STEEL)
             .input('C', RagiumContents.Circuits.ADVANCED)
             .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
@@ -606,7 +606,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumContents.Plates.STELLA)
+            ).input('A', RagiumContents.Plates.DEEP_STEEL)
             .input('B', RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .input('C', RagiumBlocks.ADVANCED_CASING)
             .unlockedBy(RagiumItems.RAGI_CRYSTAL_PROCESSOR)

@@ -1,0 +1,39 @@
+{
+  "parent": "ragium:progress/ragium",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:stella_goggle"
+          },
+          {
+            "items": "ragium:stella_jacket"
+          },
+          {
+            "items": "ragium:stella_leggings"
+          },
+          {
+            "items": "ragium:stella_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ragium:stella_goggle"
+    },
+    "title": "Synthetically Treated External Lightweight-Layered Augment"
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

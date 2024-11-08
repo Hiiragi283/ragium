@@ -101,13 +101,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR)
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.BASIC)
-            .itemInput(RagiumContents.Plates.ALUMINUM, 4)
-            .itemInput(RagiumItems.BASALT_MESH, 4)
-            .itemOutput(RagiumContents.Plates.STELLA)
-            .offerTo(exporter, RagiumContents.Plates.STELLA)
-
-        HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumContents.Plates.STEEL, 4)
             .itemInput(RagiumContents.Plates.ENGINEERING_PLASTIC, 4)
@@ -214,24 +207,39 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Plates.SILICON)
         // aluminum
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(ItemTags.COALS, 8)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumContents.Ingots.ALUMINUM)
             .offerTo(exporter, RagiumContents.Ingots.ALUMINUM, "_with_coal")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(RagiumContents.Gems.CRYOLITE)
             .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
             .itemOutput(RagiumContents.Ingots.ALUMINUM)
             .itemOutput(RagiumItems.SLAG, 2)
             .offerTo(exporter, RagiumContents.Ingots.ALUMINUM, "_with_cryolite")
+        // deep steel
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
+            .itemInput(RagiumContents.Ingots.STEEL)
+            .itemInput(RagiumItems.DEEPANT, 4)
+            .itemOutput(RagiumContents.Ingots.DEEP_STEEL)
+            .offerTo(exporter, RagiumContents.Ingots.DEEP_STEEL)
     }
 
     //    Chemical Reactor    //
 
     private fun chemicalReactor(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(Items.DEEPSLATE, 16)
+            .fluidInput(RagiumFluids.HYDROCHLORIC_ACID)
+            .fluidInput(RagiumFluids.NITRIC_ACID, FluidConstants.BUCKET * 3)
+            .itemOutput(RagiumItems.DEEPANT)
+            .offerTo(exporter, RagiumItems.DEEPANT)
+
         // steam reforming
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
@@ -402,6 +410,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumItems.PULP)
             .itemOutput(RagiumContents.Plates.WOOD)
             .offerTo(exporter, RagiumContents.Plates.WOOD)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.Plates.ALUMINUM)
+            .itemInput(RagiumContents.Plates.ENGINEERING_PLASTIC)
+            .itemInput(RagiumContents.Plates.DEEP_STEEL, 2)
+            .itemOutput(RagiumContents.Plates.STELLA)
+            .offerTo(exporter, RagiumContents.Plates.STELLA)
     }
 
     //    Distillation Tower    //

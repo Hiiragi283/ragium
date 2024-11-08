@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:hydrochloric_acid"
+    },
+    {
+      "amount": 243000,
+      "fluids": "ragium:nitric_acid"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 16,
+      "items": "minecraft:deepslate"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:deepant"
+    }
+  ]
+}

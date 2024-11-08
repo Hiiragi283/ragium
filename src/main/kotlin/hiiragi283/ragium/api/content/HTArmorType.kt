@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.itemSettings
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.Item
+import net.minecraft.item.Item.Settings
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
@@ -36,6 +37,6 @@ enum class HTArmorType(val armorTag: TagKey<Item>, val itemType: ArmorItem.Type)
     },
     ;
 
-    fun createItem(material: RegistryEntry<ArmorMaterial>, multiplier: Int): ArmorItem =
-        ArmorItem(material, itemType, itemSettings().maxDamage(itemType.getMaxDamage(multiplier)))
+    fun createItem(material: RegistryEntry<ArmorMaterial>, multiplier: Int, settings: Settings = itemSettings()): ArmorItem =
+        ArmorItem(material, itemType, settings.maxDamage(itemType.getMaxDamage(multiplier)))
 }

@@ -13,6 +13,10 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/deep_steel",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/fluorite",
       "required": false
     },

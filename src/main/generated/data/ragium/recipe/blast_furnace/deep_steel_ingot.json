@@ -1,22 +1,21 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:assembler",
+    "type": "ragium:blast_furnace",
     "tier": "basic"
   },
   "item_inputs": [
     {
-      "count": 4,
-      "items": "#c:plates/aluminum"
+      "items": "#c:ingots/steel"
     },
     {
       "count": 4,
-      "items": "ragium:basalt_mesh"
+      "items": "ragium:deepant"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:stella_plate"
+      "item": "ragium:deep_steel_ingot"
     }
   ]
 }

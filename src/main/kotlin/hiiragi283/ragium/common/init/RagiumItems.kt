@@ -33,19 +33,43 @@ object RagiumItems : HTContentRegister {
 
     @JvmField
     val STELLA_GOGGLE: Item =
-        registerArmorItem("stella_goggle", HTArmorType.HELMET, RagiumArmorMaterials.STELLA, 33)
+        registerArmorItem(
+            "stella_goggle",
+            HTArmorType.HELMET,
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings().rarity(Rarity.EPIC),
+        )
 
     @JvmField
     val STELLA_JACKET: Item =
-        registerArmorItem("stella_jacket", HTArmorType.CHESTPLATE, RagiumArmorMaterials.STELLA, 33)
+        registerArmorItem(
+            "stella_jacket",
+            HTArmorType.CHESTPLATE,
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings().rarity(Rarity.EPIC),
+        )
 
     @JvmField
     val STELLA_LEGGINGS: Item =
-        registerArmorItem("stella_leggings", HTArmorType.LEGGINGS, RagiumArmorMaterials.STELLA, 33)
+        registerArmorItem(
+            "stella_leggings",
+            HTArmorType.LEGGINGS,
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings().rarity(Rarity.EPIC),
+        )
 
     @JvmField
     val STELLA_BOOTS: Item =
-        registerArmorItem("stella_boots", HTArmorType.BOOTS, RagiumArmorMaterials.STELLA, 33)
+        registerArmorItem(
+            "stella_boots",
+            HTArmorType.BOOTS,
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings().rarity(Rarity.EPIC),
+        )
 
     @JvmField
     val ARMORS: List<Item> = listOf(
@@ -157,6 +181,9 @@ object RagiumItems : HTContentRegister {
     val CRAFTER_HAMMER: Item = registerItem("crafter_hammer", HTCrafterHammerItem)
 
     @JvmField
+    val DEEPANT: Item = registerItem("deepant")
+
+    @JvmField
     val DYNAMITE: Item = registerItem("dynamite", HTDynamiteItem)
 
     @JvmField
@@ -212,6 +239,7 @@ object RagiumItems : HTContentRegister {
         BACKPACK,
         BASALT_MESH,
         CRAFTER_HAMMER,
+        DEEPANT,
         DYNAMITE,
         EMPTY_FLUID_CUBE,
         FILLED_FLUID_CUBE,

@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:plates/aluminum"
+    },
+    {
+      "items": "#c:plates/engineering_plastic"
+    },
+    {
+      "count": 2,
+      "items": "#c:plates/deep_steel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:stella_plate"
+    }
+  ]
+}

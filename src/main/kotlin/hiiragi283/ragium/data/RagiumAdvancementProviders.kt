@@ -355,6 +355,21 @@ object RagiumAdvancementProviders {
                 RagiumContents.Gems.RAGIUM,
                 frame = AdvancementFrame.CHALLENGE,
             )
+            val stellaSuit: AdvancementEntry = createChild(
+                consumer,
+                "progress/stella_suit",
+                ragium,
+                RagiumItems.STELLA_GOGGLE,
+                title = Text.literal("Synthetically Treated External Lightweight-Layered Augment"),
+                frame = AdvancementFrame.CHALLENGE,
+            ) {
+                hasAllItems(
+                    RagiumItems.STELLA_GOGGLE,
+                    RagiumItems.STELLA_JACKET,
+                    RagiumItems.STELLA_LEGGINGS,
+                    RagiumItems.STELLA_BOOTS,
+                )
+            }
         }
     }
 

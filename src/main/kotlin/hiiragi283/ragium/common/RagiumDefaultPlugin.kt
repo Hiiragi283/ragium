@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -35,6 +36,7 @@ import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
+import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -53,37 +55,38 @@ object RagiumDefaultPlugin : RagiumPlugin {
         RagiumMachineKeys.PROCESSORS.forEach { consumer.accept(it, HTMachineType.PROCESSOR) }
     }
 
-    override fun registerMaterial(consumer: BiConsumer<HTMaterialKey, HTMaterialKey.Type>) {
+    override fun registerMaterial(consumer: TriConsumer<HTMaterialKey, HTMaterialKey.Type, Rarity>) {
         // alloy
-        consumer.accept(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY)
-        consumer.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY)
-        consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY)
-        consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY)
+        consumer.accept(RagiumMaterialKeys.DEEP_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
         // dust
-        consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST)
-        consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST)
+        consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST, Rarity.COMMON)
         // gem
-        consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM)
-        consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM)
-        consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM)
-        consumer.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM)
+        consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM, Rarity.EPIC)
         // metal
-        consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL)
-        consumer.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL)
+        consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
         // mineral
-        consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL)
-        consumer.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
-        consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
-        consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL)
-        consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
+        consumer.accept(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL, Rarity.COMMON)
         // plate
-        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE)
-        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE)
-        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE)
-        consumer.accept(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE)
+        consumer.accept(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE, Rarity.EPIC)
+        consumer.accept(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE, Rarity.COMMON)
     }
 
     override fun setupCommonMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
@@ -159,33 +162,33 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
     }
 
-    override fun bindMaterialToItem(consumer: (HTTagPrefix, HTMaterialKey, Item) -> Unit) {
+    override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Item>) {
         fun bindContents(contents: List<HTContent.Material<*>>) {
-            contents.forEach { consumer(it.tagPrefix, it.material, it.asItem()) }
+            contents.forEach { consumer.accept(it.tagPrefix, it.material, it.asItem()) }
         }
 
-        consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
-        consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
-        consumer(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
 
-        consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
-        consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD, Items.GOLD_INGOT)
-        consumer(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, Items.IRON_INGOT)
+        consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
+        consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD, Items.GOLD_INGOT)
+        consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, Items.IRON_INGOT)
 
-        consumer(HTTagPrefix.NUGGET, RagiumMaterialKeys.GOLD, Items.GOLD_NUGGET)
-        consumer(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.GOLD, Items.GOLD_NUGGET)
+        consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_ORE)
 
-        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
-        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
-        consumer(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
 
-        consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
-        consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
-        consumer(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.IRON, Items.RAW_IRON)
+        consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
+        consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
+        consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.IRON, Items.RAW_IRON)
 
-        consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER, Items.COPPER_BLOCK)
-        consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
-        consumer(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER, Items.COPPER_BLOCK)
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
 
         bindContents(RagiumContents.Ores.entries)
         bindContents(RagiumContents.StorageBlocks.entries)
