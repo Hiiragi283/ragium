@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.inventory.HTSidedInventory
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
+import hiiragi283.ragium.api.inventory.HTStorageIO
+import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -11,9 +14,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state),
-    HTDelegatedInventory.Simple {
+class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state) {
     override fun onUse(
         state: BlockState,
         world: World,
@@ -23,19 +24,13 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) :
     ): ActionResult {
         val hand: Hand = player.activeHand
         val stack: ItemStack = player.getStackInHand(hand)
-        val stackIn: ItemStack = getStack(0).copy()
-        setStack(0, stack.copy())
+        val stackIn: ItemStack = inventory.getStack(0).copy()
+        inventory.setStack(0, stack.copy())
         player.setStackInHand(hand, stackIn)
         return ActionResult.success(world.isClient)
     }
 
-    //    HTDelegatedInventory    //
-
-    override val parent: HTSimpleInventory = HTStorageBuilder(1)
+    val inventory: HTSidedInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .buildSimple()
-
-    override fun markDirty() {
-        super<HTBlockEntityBase>.markDirty()
-    }
+        .buildSided()
 }

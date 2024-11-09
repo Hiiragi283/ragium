@@ -1,7 +1,10 @@
 package hiiragi283.ragium.api.machine.block
 
 import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
-import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.inventory.HTSidedInventory
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
+import hiiragi283.ragium.api.inventory.HTStorageIO
+import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
@@ -19,6 +22,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
@@ -29,7 +33,6 @@ import net.minecraft.world.World
 
 abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
-    HTDelegatedInventory.Sided,
     HTFluidSyncable {
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (tier.canProcess(world)) {
@@ -45,6 +48,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
+        asInventory()
         fluidStorage.writeNbt(nbt, wrapperLookup)
     }
 
@@ -54,12 +58,6 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
     }
 
     final override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
-
-    //    HTDelegatedInventory    //
-
-    final override fun markDirty() {
-        super<HTMachineBlockEntityBase>.markDirty()
-    }
 
     //    HTFluidSyncable    //
 
@@ -89,9 +87,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
         override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
 
-        //    HTDelegatedInventory    //
-
-        override val parent: HTSidedInventory = HTStorageBuilder(5)
+        val inventory: HTSidedInventory = HTStorageBuilder(5)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
@@ -99,13 +95,15 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildSided()
 
+        override fun asInventory(): SidedInventory = inventory
+
         override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildFluidStorage()
 
         val processor = HTMachineRecipeProcessor(
-            parent,
+            inventory,
             intArrayOf(0, 1),
             intArrayOf(3, 4),
             2,
@@ -131,15 +129,15 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
         override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
 
-        //    HTDelegatedInventory    //
-
-        override val parent: HTSidedInventory = HTStorageBuilder(5)
+        val inventory: HTSidedInventory = HTStorageBuilder(5)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
             .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildSided()
+
+        override fun asInventory(): SidedInventory = inventory
 
         override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -149,7 +147,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .buildFluidStorage()
 
         val processor = HTMachineRecipeProcessor(
-            parent,
+            inventory,
             intArrayOf(0, 1),
             intArrayOf(3, 4),
             2,
@@ -183,7 +181,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
         //    HTDelegatedInventory    //
 
-        final override val parent: HTSidedInventory = HTStorageBuilder(7)
+        val inventory: HTSidedInventory = HTStorageBuilder(7)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -193,6 +191,8 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildSided()
 
+        override fun asInventory(): SidedInventory = inventory
+
         final override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -201,7 +201,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .buildFluidStorage()
 
         private val processor = HTMachineRecipeProcessor(
-            parent,
+            inventory,
             intArrayOf(0, 1, 2),
             intArrayOf(4, 5, 6),
             3,

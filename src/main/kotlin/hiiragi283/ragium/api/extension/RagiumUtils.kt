@@ -4,16 +4,13 @@ import com.google.common.collect.HashBasedTable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
+import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
-import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
@@ -24,11 +21,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
-import net.minecraft.screen.GenericContainerScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.TranslatableTextContent
@@ -93,41 +86,6 @@ inline fun <reified T : Any> collectEntrypoints(key: String): List<T> = FabricLo
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
 
-//    Inventory    //
-
-fun openEnderChest(world: World, player: PlayerEntity) {
-    if (!world.isClient) {
-        player.openHandledScreen(
-            SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
-                GenericContainerScreenHandler.createGeneric9x3(
-                    syncId,
-                    playerInv,
-                    playerInv.player.enderChestInventory,
-                )
-            }, Text.translatable("container.enderchest")),
-        )
-    }
-    world.playSound(
-        null,
-        player.x,
-        player.y,
-        player.z,
-        SoundEvents.BLOCK_ENDER_CHEST_OPEN,
-        SoundCategory.BLOCKS,
-        0.5f,
-        1.0f,
-    )
-}
-
-fun Inventory.modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
-    val stackIn: ItemStack = getStack(slot)
-    setStack(slot, mapping(stackIn))
-}
-
-fun Inventory.toStorage(side: Direction?): InventoryStorage = InventoryStorage.of(this, side)
-
-fun Inventory.getStackOrNull(slot: Int): ItemStack? = if (slot in 0..size()) getStack(slot) else null
-
 //    ServiceLoader    //
 
 inline fun <reified T : Any> collectInstances(): Iterable<T> = ServiceLoader.load(T::class.java)
@@ -166,9 +124,10 @@ fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T
 
 fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
 
-fun ScreenHandlerContext.getInventory(size: Int): Inventory = getBlockEntity() as? Inventory ?: SimpleInventory(size)
+fun ScreenHandlerContext.getInventory(size: Int): Inventory =
+    (getBlockEntity() as? HTBlockEntityBase)?.asInventory() ?: SimpleInventory(size)
 
-fun ScreenHandlerContext.getMachine(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase
+fun ScreenHandlerContext.getMachineEntity(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase
 
 //    Table    //
 

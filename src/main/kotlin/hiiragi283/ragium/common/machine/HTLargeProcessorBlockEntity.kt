@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.extension.getMachine
+import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
@@ -36,7 +36,7 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         player: PlayerEntity?,
     ) {
         super.beforeValidation(state, world, pos, player)
-        val parent: HTMachineBlockEntityBase = world.getMachine(pos.offset(facing.opposite, 2)) ?: return
+        val parent: HTMachineBlockEntityBase = world.getMachineEntity(pos.offset(facing.opposite, 2)) ?: return
         key = parent.key
         tier = parent.tier
         player?.sendPacket(HTMachinePacket(key, tier, pos))

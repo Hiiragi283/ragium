@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.model
 
-import hiiragi283.ragium.api.extension.getMachine
+import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.machineKeyOrNull
 import hiiragi283.ragium.api.extension.machineTier
@@ -77,7 +77,7 @@ data object HTProcessorMachineModel : UnbakedModel, BakedModel {
         randomSupplier: Supplier<Random>,
         context: RenderContext,
     ) {
-        val blockEntity: HTMachineBlockEntityBase = blockView.getMachine(pos) ?: return
+        val blockEntity: HTMachineBlockEntityBase = blockView.getMachineEntity(pos) ?: return
         val (key: HTMachineKey, tier: HTMachineTier) = blockEntity.definition
         tier.hullModel.emitBlockQuads(blockView, state, pos, randomSupplier, context)
         val frontDir: Direction =

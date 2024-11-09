@@ -19,6 +19,6 @@ object HTItemDisplayBlockEntityRenderer : BlockEntityRenderer<HTItemDisplayBlock
         light: Int,
         overlay: Int,
     ) {
-        renderItem(entity.world, Vec3d.ZERO, entity.getStack(0), matrices, vertexConsumers, 0.75f)
+        renderItem(entity.world, Vec3d.ZERO, entity.inventory.getStack(0), matrices, vertexConsumers, 0.75f)
     }
 }

@@ -79,7 +79,11 @@ abstract class HTBlockWithEntity(settings: Settings) :
         newState: BlockState,
         moved: Boolean,
     ) {
-        ItemScatterer.onStateReplaced(state, newState, world, pos)
+        if (state.isOf(newState.block)) {
+            (world.getBlockEntity(pos) as? HTBlockEntityBase)
+                ?.asInventory()
+                ?.let { ItemScatterer.spawn(world, pos, it) }
+        }
         super.onStateReplaced(state, world, pos, newState, moved)
     }
 

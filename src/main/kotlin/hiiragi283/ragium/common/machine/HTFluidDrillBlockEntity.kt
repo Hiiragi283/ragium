@@ -25,6 +25,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.screen.ScreenHandler
@@ -64,11 +65,13 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
+    private val inventory: HTSidedInventory = HTStorageBuilder(0).buildSided()
+
+    override fun asInventory(): SidedInventory = inventory
+
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildFluidStorage()
-
-    override val parent: HTSidedInventory = HTStorageBuilder(0).buildSided()
 
     //    HTMultiblockController    //
 

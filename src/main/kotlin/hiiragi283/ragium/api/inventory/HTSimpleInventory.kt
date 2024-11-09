@@ -1,36 +1,15 @@
 package hiiragi283.ragium.api.inventory
 
-import com.mojang.serialization.Codec
-import hiiragi283.ragium.common.init.RagiumNetworks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.InventoryChangedListener
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.network.RegistryByteBuf
-import net.minecraft.network.codec.PacketCodec
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.collection.DefaultedList
-import net.minecraft.util.math.BlockPos
 
 open class HTSimpleInventory : Inventory {
-    companion object {
-        @JvmField
-        val CODEC: Codec<HTSimpleInventory> =
-            ItemStack.OPTIONAL_CODEC.listOf().xmap(::HTSimpleInventory, HTSimpleInventory::stacks)
-
-        @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTSimpleInventory> = PacketCodec.tuple(
-            ItemStack.LIST_PACKET_CODEC,
-            HTSimpleInventory::stacks,
-            ::HTSimpleInventory,
-        )
-    }
-
-    protected val stacks: DefaultedList<ItemStack>
-    protected val slotFilter: (Int, ItemStack) -> Boolean
+    private val stacks: DefaultedList<ItemStack>
+    private val slotFilter: (Int, ItemStack) -> Boolean
 
     constructor(size: Int, filter: (Int, ItemStack) -> Boolean = HTStorageBuilder.ACCEPT_ALL) {
         stacks = DefaultedList.ofSize(size, ItemStack.EMPTY)
@@ -44,20 +23,6 @@ open class HTSimpleInventory : Inventory {
     constructor(vararg stacks: ItemStack) {
         this.stacks = DefaultedList.copyOf(ItemStack.EMPTY, *stacks)
         this.slotFilter = HTStorageBuilder.ACCEPT_ALL
-    }
-
-    fun writeNbt(nbt: NbtCompound, lookup: RegistryWrapper.WrapperLookup) {
-        Inventories.writeNbt(nbt, stacks, lookup)
-    }
-
-    fun readNbt(nbt: NbtCompound, lookup: RegistryWrapper.WrapperLookup) {
-        Inventories.readNbt(nbt, stacks, lookup)
-    }
-
-    fun sendS2CPacket(player: ServerPlayerEntity, pos: BlockPos) {
-        stacks.forEachIndexed { slot: Int, stack: ItemStack ->
-            RagiumNetworks.sendItemSync(player, pos, slot, stack)
-        }
     }
 
     override fun toString(): String = "[${stacks.joinToString(separator = ", ", transform = ItemStack::toString)}]"

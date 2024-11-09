@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine.block
 
 import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineKeyOrNull
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -9,8 +10,10 @@ import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.block.HTBlockWithEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.InventoryProvider
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
@@ -25,9 +28,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
+import net.minecraft.world.WorldAccess
 
 class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
-    HTBlockWithEntity(blockSettings(tier.getBaseBlock()).nonOpaque()) {
+    HTBlockWithEntity(blockSettings(tier.getBaseBlock()).nonOpaque()),
+    InventoryProvider {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }
@@ -70,4 +75,9 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
         key.entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, key, tier)
+
+    //    InventoryProvider    //
+
+    override fun getInventory(state: BlockState, world: WorldAccess, pos: BlockPos): SidedInventory? =
+        world.getMachineEntity(pos)?.asInventory()
 }

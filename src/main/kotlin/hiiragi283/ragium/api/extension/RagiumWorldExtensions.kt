@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTBackpackManager
@@ -14,6 +13,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -34,7 +34,7 @@ import kotlin.jvm.optionals.getOrNull
 
 //    Views    //
 
-fun BlockView.getMachine(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
+fun BlockView.getMachineEntity(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
 
 fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockController? = getBlockEntity(pos) as? HTMultiblockController
 
@@ -96,8 +96,7 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, stack: ItemStac
     }
 
 fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor) {
-    world.backpackManager?.get(color)?.let { inventory: HTSimpleInventory ->
-        inventory.setCallback { it.playSound(SoundEvents.BLOCK_VAULT_CLOSE_SHUTTER, 1.0f, 1.0f) }
+    world.backpackManager?.get(color)?.let { inventory: SimpleInventory ->
         player.openHandledScreen(
             SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
                 GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)

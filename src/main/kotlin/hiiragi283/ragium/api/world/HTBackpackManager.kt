@@ -2,8 +2,9 @@ package hiiragi283.ragium.api.world
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.createInventoryCodec
 import hiiragi283.ragium.api.extension.mappedCodecOf
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import net.minecraft.inventory.SimpleInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryWrapper
@@ -19,9 +20,9 @@ class HTBackpackManager : PersistentState() {
         val ID: Identifier = RagiumAPI.id(KEY)
 
         @JvmField
-        val CODEC: Codec<Map<DyeColor, HTSimpleInventory>> = mappedCodecOf(
+        val CODEC: Codec<Map<DyeColor, SimpleInventory>> = mappedCodecOf(
             DyeColor.CODEC.fieldOf("color"),
-            HTSimpleInventory.CODEC.fieldOf("inventory"),
+            createInventoryCodec(::SimpleInventory).fieldOf("inventory"),
         )
 
         @JvmField
@@ -33,8 +34,8 @@ class HTBackpackManager : PersistentState() {
             CODEC
                 .parse(NbtOps.INSTANCE, nbt.get(KEY))
                 .result()
-                .ifPresent { map: Map<DyeColor, HTSimpleInventory> ->
-                    map.forEach { (color: DyeColor, inventory: HTSimpleInventory) ->
+                .ifPresent { map: Map<DyeColor, SimpleInventory> ->
+                    map.forEach { (color: DyeColor, inventory: SimpleInventory) ->
                         manager.backpacks[color] = inventory
                     }
                 }
@@ -42,13 +43,13 @@ class HTBackpackManager : PersistentState() {
         }
     }
 
-    private val backpacks: MutableMap<DyeColor, HTSimpleInventory> = mutableMapOf()
+    private val backpacks: MutableMap<DyeColor, SimpleInventory> = mutableMapOf()
 
-    operator fun get(color: DyeColor): HTSimpleInventory = backpacks.computeIfAbsent(color) { HTSimpleInventory(56) }
+    operator fun get(color: DyeColor): SimpleInventory = backpacks.computeIfAbsent(color) { SimpleInventory(56) }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = nbt.apply {
         RagiumAPI.log {
-            backpacks.forEach { (color: DyeColor, inventory: HTSimpleInventory) ->
+            backpacks.forEach { (color: DyeColor, inventory: SimpleInventory) ->
                 info("Color: $color, inventory: $inventory")
             }
         }

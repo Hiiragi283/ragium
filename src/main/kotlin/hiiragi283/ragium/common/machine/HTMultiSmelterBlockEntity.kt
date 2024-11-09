@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SmeltingRecipe
 import net.minecraft.screen.ScreenHandler
@@ -42,16 +43,18 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTDelegatedInventory    //
 
-    override val parent: HTSidedInventory = HTStorageBuilder(2)
+    private val inventory: HTSidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSided()
 
+    override fun asInventory(): SidedInventory = inventory
+
     private var processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
-        HTFurnaceRecipeProcessor(RecipeType.SMELTING, parent, 0, 1, tier.smelterMulti)
+        HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, tier.smelterMulti)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        processor = HTFurnaceRecipeProcessor(RecipeType.SMELTING, parent, 0, 1, newTier.smelterMulti)
+        processor = HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, newTier.smelterMulti)
     }
 
     //    HTMultiblockController    //

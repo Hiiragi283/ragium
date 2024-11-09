@@ -2,7 +2,10 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.modifyBlockState
-import hiiragi283.ragium.api.inventory.*
+import hiiragi283.ragium.api.inventory.HTSidedInventory
+import hiiragi283.ragium.api.inventory.HTStorageBuilder
+import hiiragi283.ragium.api.inventory.HTStorageIO
+import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -22,8 +25,7 @@ import net.minecraft.world.World
 import kotlin.jvm.optionals.getOrNull
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state),
-    HTDelegatedInventory.Simple {
+    HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state) {
     override fun onUse(
         state: BlockState,
         world: World,
@@ -43,12 +45,10 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         return ActionResult.success(world.isClient)
     }
 
-    //    HTDelegatedInventory    //
-
-    override val parent: HTSimpleInventory =
+    val inventory: HTSidedInventory =
         HTStorageBuilder(1)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .buildSimple()
+            .buildSided()
 
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
@@ -60,13 +60,13 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                 HTMachineInput.create(
                     RagiumMachineKeys.GRINDER,
                     HTMachineTier.PRIMITIVE,
-                ) { add(getStack(0)) },
+                ) { add(inventory.getStack(0)) },
                 world,
             ).getOrNull()
             ?.value
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        parent.getStack(0).decrement(recipe.itemInputs[0].amount)
+        inventory.getStack(0).decrement(recipe.itemInputs[0].amount)
         world.playSoundAtBlockCenter(
             pos,
             SoundEvents.BLOCK_GRINDSTONE_USE,
@@ -75,9 +75,5 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             1.0f,
             false,
         )
-    }
-
-    override fun markDirty() {
-        super<HTBlockEntityBase>.markDirty()
     }
 }

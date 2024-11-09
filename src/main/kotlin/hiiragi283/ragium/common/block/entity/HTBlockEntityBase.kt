@@ -1,12 +1,15 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.extension.readNbt
 import hiiragi283.ragium.api.extension.sendPacket
-import hiiragi283.ragium.api.inventory.HTDelegatedInventory
-import hiiragi283.ragium.api.inventory.HTSimpleInventory
+import hiiragi283.ragium.api.extension.sendS2CPacket
+import hiiragi283.ragium.api.extension.writeNbt
+import hiiragi283.ragium.api.inventory.HTInventoryProvider
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
@@ -22,7 +25,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         const val TIER_KEY = "tier"
     }
 
-    protected open fun asInventory(): HTSimpleInventory? = (this as? HTDelegatedInventory<*>)?.parent
+    open fun asInventory(): SidedInventory? = (this as? HTInventoryProvider)?.asInventory()
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         asInventory()?.writeNbt(nbt, wrapperLookup)
