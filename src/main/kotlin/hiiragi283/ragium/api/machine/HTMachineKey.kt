@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.hasValidTranslation
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -77,7 +76,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
 
     fun isProcessor(): Boolean = entry.type == HTMachineType.PROCESSOR
 
-    fun createItemStack(tier: HTMachineTier): ItemStack = buildItemStack(entry.getBlock(tier))
+    fun createItemStack(tier: HTMachineTier): ItemStack = ItemStack(entry.getBlock(tier))
 
     override fun toString(): String = "HTMachineKey[$id]"
 

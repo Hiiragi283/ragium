@@ -29,8 +29,7 @@ class HTExporterBlock(private val tier: HTMachineTier) : HTBlockWithEntity(block
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
-        tooltip.add(Text.literal("- Item Speed; ${HTPipeType.ALL.getItemCount(tier)} / s"))
-        tooltip.add(Text.literal("- Fluid Speed; ${HTPipeType.ALL.getFluidCount(tier)} Units / s"))
+        HTPipeType.ALL.appendTooltip(tooltip::add, tier)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

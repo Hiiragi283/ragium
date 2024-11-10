@@ -390,7 +390,7 @@ object RagiumAdvancementProviders {
                 "progress/stella_suit",
                 ragium,
                 RagiumItems.STELLA_GOGGLE,
-                title = Text.literal("Synthetically Treated External Lightweight-Layered Augment"),
+                title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT),
                 frame = AdvancementFrame.CHALLENGE,
             ) {
                 hasAllItems(

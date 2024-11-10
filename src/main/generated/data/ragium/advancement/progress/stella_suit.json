@@ -28,7 +28,9 @@
       "count": 1,
       "id": "ragium:stella_goggle"
     },
-    "title": "Synthetically Treated External Lightweight-Layered Augment"
+    "title": {
+      "translate": "advancement.ragium.stella_suit.title"
+    }
   },
   "requirements": [
     [

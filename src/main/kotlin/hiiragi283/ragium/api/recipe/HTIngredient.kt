@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemConvertible
@@ -20,6 +21,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.text.Text
 import net.minecraft.util.StringIdentifiable
 import java.util.function.BiPredicate
 import java.util.function.Predicate
@@ -42,7 +44,9 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
     val valueMap: Map<O, V>
         get() = entryMap.mapKeys { it.key.value() }
 
-    override fun toString(): String = "HTIngredient[entryList=$entryList,amount=$amount]"
+    abstract val entryText: Text
+
+    override fun toString(): String = "HTIngredient[entryList=${entryText.string},amount=$amount]"
 
     companion object {
         @JvmStatic
@@ -151,6 +155,9 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 )
             }
 
+        override val entryText: Text
+            get() = entryList.asText(MCItem::getName)
+
         override fun test(stack: ItemStack): Boolean = when (stack.isEmpty) {
             true -> this.isEmpty
             false -> stack.isIn(entryList) && stack.count >= this.amount
@@ -184,6 +191,9 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                     amount,
                 )
             }
+
+        override val entryText: Text
+            get() = entryList.asText { FluidVariantAttributes.getName(FluidVariant.of(it)) }
 
         fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
 

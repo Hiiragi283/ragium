@@ -176,7 +176,7 @@ object RagiumLangProviders {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.EN_US)
             // Advancements
-
+            builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
@@ -215,6 +215,13 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Pipes.STEEL, "Steel Pipe")
             builder.add(RagiumContents.Pipes.COPPER, "Copper Pipe")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "Universal Pipe")
+
+            builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "Amount: %s Unit")
+            builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "Capacity: %s Unit")
+            builder.add(RagiumTranslationKeys.DRUM_FLUID, "Fluid: %s")
+
+            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "液体速度: %s ユニット/秒")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "アイテム速度: %s個/秒")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
@@ -401,7 +408,7 @@ object RagiumLangProviders {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.JA_JP)
             // Advancements
-
+            builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
@@ -440,6 +447,10 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Pipes.STEEL, "鋼鉄パイプ")
             builder.add(RagiumContents.Pipes.COPPER, "銅パイプ")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "万能パイプ")
+
+            builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "液体量: %s ユニット")
+            builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "容量: %s ユニット")
+            builder.add(RagiumTranslationKeys.DRUM_FLUID, "液体: %s")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")

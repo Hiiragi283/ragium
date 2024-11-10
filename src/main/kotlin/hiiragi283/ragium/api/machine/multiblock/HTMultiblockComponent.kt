@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine.multiblock
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.content.HTRegistryContent
+import hiiragi283.ragium.api.extension.asText
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -14,7 +15,6 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.text.MutableText
 import net.minecraft.world.World
 import java.util.function.Predicate
 
@@ -62,19 +62,7 @@ class HTMultiblockComponent private constructor(private val entryList: RegistryE
         else -> ((world.time % (20 * size)) / 20).toInt()
     }
 
-    override fun toString(): String = "HTMultiblockComponent${asString(entryList)}"
-
-    fun asString(entryList: RegistryEntryList<Block>): String = when (entryList) {
-        is RegistryEntryList.Named<Block> -> "[${entryList.tag.id}]"
-
-        else ->
-            "${
-                entryList
-                    .mapNotNull(RegistryEntry<Block>::value)
-                    .map(Block::getName)
-                    .map(MutableText::getString)
-            }"
-    }
+    override fun toString(): String = "HTMultiblockComponent${entryList.asText(Block::getName).string}"
 
     //    Predicate    //
 

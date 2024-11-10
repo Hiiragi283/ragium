@@ -64,6 +64,8 @@ fun Inventory.toStorage(side: Direction?): InventoryStorage = InventoryStorage.o
 
 fun Inventory.getStackOrNull(slot: Int): ItemStack? = if (slot in 0..size()) getStack(slot) else null
 
+fun Inventory.getStackOrEmpty(slot: Int): ItemStack = getStackOrNull(slot) ?: ItemStack.EMPTY
+
 fun Inventory.asMap(): Map<Int, ItemStack> = (0 until size()).associateWith(::getStack)
 
 fun Inventory.iterateStacks(): List<ItemStack> = (0 until size()).map(::getStack)

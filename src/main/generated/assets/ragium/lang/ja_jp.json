@@ -1,4 +1,5 @@
 {
+  "advancement.ragium.stella_suit.title": "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ",
   "block.ragium.advanced_casing": "発展外装",
   "block.ragium.advanced_coil": "発展コイル",
   "block.ragium.advanced_drum": "発展ドラム",
@@ -220,6 +221,9 @@
   "tag_prefix.ragium.raw_material": "%sの原石",
   "tag_prefix.ragium.rod": "%s棒",
   "tag_prefix.ragium.storage_block": "%sブロック",
+  "tooltip.ragium.block.drum_amount": "液体量: %s ユニット",
+  "tooltip.ragium.block.drum_capacity": "容量: %s ユニット",
+  "tooltip.ragium.block.drum_fluid": "液体: %s",
   "tooltip.ragium.item.crafter_hammer.module": "モジュール: %s",
   "tooltip.ragium.item.dynamite.destroy": "地形破壊: %s",
   "tooltip.ragium.item.dynamite.power": "威力: %s",

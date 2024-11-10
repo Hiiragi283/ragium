@@ -1,5 +1,6 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.common.unused
 
+import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineKey

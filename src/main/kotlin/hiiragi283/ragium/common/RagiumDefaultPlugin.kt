@@ -266,13 +266,22 @@ object RagiumDefaultPlugin : RagiumPlugin {
         HTMaterialKey.Type.PLATE -> null
     }
 
+    private fun getRawPrefix(type: HTMaterialKey.Type): HTTagPrefix? = when (type) {
+        HTMaterialKey.Type.ALLOY -> null
+        HTMaterialKey.Type.DUST -> null
+        HTMaterialKey.Type.GEM -> HTTagPrefix.GEM
+        HTMaterialKey.Type.METAL -> HTTagPrefix.RAW_MATERIAL
+        HTMaterialKey.Type.MINERAL -> null
+        HTMaterialKey.Type.PLATE -> null
+    }
+
     override fun registerRuntimeRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
         entry: HTMaterialRegistry.Entry,
         helper: RagiumPlugin.RecipeHelper,
     ) {
-        // ingot -> block
+        // ingot/gem -> block
         helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
             val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
             val prefix: HTTagPrefix = getMainPrefix(entry.type) ?: return@register
@@ -286,7 +295,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 ).input('A', prefix, key)
                 .offerTo(exporter)
         }
-        // block -> ingot
+        // block -> ingot/gem
         with(this) {
             val prefix: HTTagPrefix = getMainPrefix(entry.type) ?: return@with
             helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
@@ -328,25 +337,32 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemOutput(dust)
                 .offerTo(exporter, dust, "_from_plate")
         }
-        // ore -> raw
-        helper.register(entry, HTTagPrefix.RAW_MATERIAL) { map: Map<HTTagPrefix, Item> ->
-            val raw = map[HTTagPrefix.RAW_MATERIAL] ?: return@register
-            // Grinder Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.ORE, key)
-                .itemOutput(raw, 2)
-                .offerTo(exporter, raw)
-        }
-        // ore -> gem
-        helper.register(entry, HTTagPrefix.GEM) { map: Map<HTTagPrefix, Item> ->
-            val gem: Item = map[HTTagPrefix.GEM] ?: return@register
-            // Grinder Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.ORE, key)
-                .itemOutput(gem, 2)
-                .offerTo(exporter, gem)
+        // ore -> raw/gem
+        with(this) {
+            val prefix: HTTagPrefix = getRawPrefix(entry.type) ?: return@with
+            helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
+                val output: Item = map[prefix] ?: return@register
+                // Grinder Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.GRINDER)
+                    .itemInput(HTTagPrefix.ORE, key)
+                    .itemOutput(output, 2)
+                    .offerTo(exporter, output)
+                // 3x Chemical Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+                    .itemInput(HTTagPrefix.ORE, key)
+                    .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
+                    .itemOutput(output, 3)
+                    .offerTo(exporter, output, "_with_hcl")
+                // 4x Chemical Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+                    .itemInput(HTTagPrefix.ORE, key)
+                    .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
+                    .itemOutput(output, 4)
+                    .offerTo(exporter, output, "_with_h2so4")
+            }
         }
         // raw -> dust
         helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
@@ -357,20 +373,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemInput(HTTagPrefix.RAW_MATERIAL, key)
                 .itemOutput(dust, 2)
                 .offerTo(exporter, dust, "_from_raw")
-            // 3x Chemical Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
-                .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
-                .itemOutput(dust, 3)
-                .offerTo(exporter, dust, "_with_hcl")
-            // 4x Chemical Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
-                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
-                .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
-                .itemOutput(dust, 4)
-                .offerTo(exporter, dust, "_with_h2so4")
         }
         // raw -> ingot
         helper.register(entry) {

@@ -1,4 +1,5 @@
 {
+  "advancement.ragium.stella_suit.title": "Synthetically Treated External Lightweight-Layered Augment",
   "block.ragium.advanced_casing": "Advanced Casing",
   "block.ragium.advanced_coil": "Advanced Coil",
   "block.ragium.advanced_drum": "Advanced Drum",
@@ -221,6 +222,11 @@
   "tag_prefix.ragium.raw_material": "Raw %s",
   "tag_prefix.ragium.rod": "%s Rod",
   "tag_prefix.ragium.storage_block": "Block of %s",
+  "tooltip.ragium.block.drum_amount": "Amount: %s Unit",
+  "tooltip.ragium.block.drum_capacity": "Capacity: %s Unit",
+  "tooltip.ragium.block.drum_fluid": "Fluid: %s",
+  "tooltip.ragium.block.transporter.fluid": "Fluid Speed: %s Units / s",
+  "tooltip.ragium.block.transporter.item": "Item Speed: %s / s",
   "tooltip.ragium.item.crafter_hammer.module": "Module: %s",
   "tooltip.ragium.item.dynamite.destroy": "Destroy: %s",
   "tooltip.ragium.item.dynamite.power": "Power: %s",

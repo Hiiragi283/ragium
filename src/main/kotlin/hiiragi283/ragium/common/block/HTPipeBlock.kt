@@ -41,12 +41,7 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
-        if (type.isItem) {
-            tooltip.add(Text.literal("- Item Speed; ${HTPipeType.ALL.getItemCount(tier)} / s"))
-        }
-        if (type.isFluid) {
-            tooltip.add(Text.literal("- Fluid Speed; ${HTPipeType.ALL.getFluidCount(tier)} Units / s"))
-        }
+        type.appendTooltip(tooltip::add, tier)
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

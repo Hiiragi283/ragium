@@ -1,7 +1,18 @@
 package hiiragi283.ragium.common.init
 
 object RagiumTranslationKeys {
+    //    Advancement    //
+
+    const val ADVANCEMENT_STELLA_SUIT = "advancement.ragium.stella_suit.title"
+
     //    Block    //
+
+    const val DRUM_AMOUNT = "tooltip.ragium.block.drum_amount"
+    const val DRUM_CAPACITY = "tooltip.ragium.block.drum_capacity"
+    const val DRUM_FLUID = "tooltip.ragium.block.drum_fluid"
+
+    const val TRANSPORTER_FLUID_SPEED = "tooltip.ragium.block.transporter.fluid"
+    const val TRANSPORTER_ITEM_SPEED = "tooltip.ragium.block.transporter.item"
 
     //    Item    //
 

@@ -24,6 +24,7 @@ import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import net.minecraft.text.Texts
 import net.minecraft.text.TranslatableTextContent
 import net.minecraft.util.Identifier
 import net.minecraft.util.Language
@@ -118,6 +119,11 @@ fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 
 fun <T : Any> RegistryEntryList<T>.isIn(value: T): Boolean = any { it.isOf(value) }
 
+fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): Text = when (this) {
+    is RegistryEntryList.Named<*> -> tag.name
+    else -> Texts.join(this.map(RegistryEntry<T>::value), mapper)
+}
+
 //    ScreenHandler    //
 
 fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T? = get(getter, null)
@@ -147,6 +153,10 @@ fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V
 fun intText(value: Int): MutableText = longText(value.toLong())
 
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
+
+fun floatText(value: Float): MutableText = doubleText(value.toDouble())
+
+fun doubleText(value: Double): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
     ?.let(TranslatableTextContent::getKey)
