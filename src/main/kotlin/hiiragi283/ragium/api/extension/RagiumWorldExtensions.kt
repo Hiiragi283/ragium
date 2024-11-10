@@ -3,9 +3,7 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTBackpackManager
-import hiiragi283.ragium.api.world.HTDataDriveManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.api.world.HTHardModeManager
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.enchantment.Enchantment
@@ -106,16 +104,6 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor
     }
 }
 
-// Data Drive
-val MinecraftServer.dataDriveManager: HTDataDriveManager
-    get() = getState(overworld, HTDataDriveManager.TYPE, HTDataDriveManager.ID)
-
-val ServerWorld.dataDriveManager: HTDataDriveManager
-    get() = server.dataDriveManager
-
-val WorldAccess.dataDriveManager: HTDataDriveManager?
-    get() = server?.dataDriveManager
-
 // Energy Network
 val MinecraftServer.networkMap: Map<RegistryKey<World>, HTEnergyNetwork>
     get() = worlds.associate { it.registryKey to it.energyNetwork }
@@ -125,7 +113,3 @@ val ServerWorld.energyNetwork: HTEnergyNetwork
 
 val World.energyNetwork: HTEnergyNetwork?
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
-
-// Hard Mode
-val MinecraftServer.hardModeManager: HTHardModeManager
-    get() = getState(overworld, HTHardModeManager.TYPE, HTHardModeManager.ID)

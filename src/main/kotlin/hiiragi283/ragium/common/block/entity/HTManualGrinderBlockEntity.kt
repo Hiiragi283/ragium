@@ -2,20 +2,20 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.modifyBlockState
-import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
-import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
@@ -26,6 +26,13 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state) {
+    private val inventory: SidedInventory =
+        HTStorageBuilder(1)
+            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+            .buildSided()
+
+    override fun asInventory(): SidedInventory = inventory
+
     override fun onUse(
         state: BlockState,
         world: World,
@@ -44,11 +51,6 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return ActionResult.success(world.isClient)
     }
-
-    val inventory: HTSidedInventory =
-        HTStorageBuilder(1)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .buildSided()
 
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)

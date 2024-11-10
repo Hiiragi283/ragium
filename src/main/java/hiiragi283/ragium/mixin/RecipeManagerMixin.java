@@ -51,9 +51,7 @@ public abstract class RecipeManagerMixin {
                 return new Advancement.Builder();
             }
         };
-        RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> {
-            RagiumAPI.getPlugins().forEach(plugin -> plugin.registerRuntimeRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper()));
-        });
+        RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> RagiumAPI.forEachPlugins(plugin -> plugin.registerRuntimeRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper())));
         recipesByType = map1;
         recipesById = map2;
     }

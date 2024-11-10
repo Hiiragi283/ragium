@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
-import hiiragi283.ragium.api.inventory.HTStorageSide
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
@@ -15,6 +15,12 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state) {
+    private val inventory: SidedInventory = HTStorageBuilder(1)
+        .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
+        .buildSided()
+
+    override fun asInventory(): SidedInventory = inventory
+
     override fun onUse(
         state: BlockState,
         world: World,
@@ -29,8 +35,4 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         player.setStackInHand(hand, stackIn)
         return ActionResult.success(world.isClient)
     }
-
-    val inventory: HTSidedInventory = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .buildSided()
 }

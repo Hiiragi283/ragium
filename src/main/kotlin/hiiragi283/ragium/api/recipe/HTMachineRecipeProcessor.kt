@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
-import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage

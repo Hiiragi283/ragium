@@ -15,8 +15,8 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
-import hiiragi283.ragium.common.fluid.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
+import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage

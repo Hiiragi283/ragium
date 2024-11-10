@@ -1,11 +1,9 @@
-package hiiragi283.ragium.api.fluid
+package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.buildNbtList
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage

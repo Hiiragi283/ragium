@@ -3,15 +3,14 @@ package hiiragi283.ragium.common.machine
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.toStorage
 import hiiragi283.ragium.api.extension.useTransaction
-import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
-import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -89,12 +88,13 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    override fun asInventory(): SidedInventory = inventory
-
-    private val inventory: HTSidedInventory = HTStorageBuilder(2)
+    private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .filter { _: Int, stack: ItemStack -> stack.isIn(ItemTags.COALS) }
         .buildSided()
+
+    override fun asInventory(): SidedInventory = inventory
 
     private val fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity

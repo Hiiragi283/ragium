@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.extension.readNbt
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.extension.sendS2CPacket
 import hiiragi283.ragium.api.extension.writeNbt
-import hiiragi283.ragium.api.inventory.HTInventoryProvider
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -25,7 +24,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         const val TIER_KEY = "tier"
     }
 
-    open fun asInventory(): SidedInventory? = (this as? HTInventoryProvider)?.asInventory()
+    open fun asInventory(): SidedInventory? = null
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         asInventory()?.writeNbt(nbt, wrapperLookup)

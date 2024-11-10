@@ -15,6 +15,7 @@ import net.minecraft.util.Identifier
 import org.jetbrains.annotations.ApiStatus
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.function.Consumer
 
 @ApiStatus.NonExtendable
 interface RagiumAPI {
@@ -58,20 +59,23 @@ interface RagiumAPI {
             }
             return plugins
         }
+
+        @JvmStatic
+        fun forEachPlugins(action: Consumer<RagiumPlugin>) {
+            getPlugins().forEach(action)
+        }
+
+        @JvmName("forEachPluginsKt")
+        @JvmStatic
+        inline fun forEachPlugins(action: (RagiumPlugin) -> Unit) {
+            getPlugins().forEach(action)
+        }
     }
 
-    val config: Config
     val machineRegistry: HTMachineRegistry
     val materialRegistry: HTMaterialRegistry
 
     fun createBuiltMachineCriterion(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
-
-    //    Config    //
-
-    @ApiStatus.NonExtendable
-    interface Config {
-        val isHardMode: Boolean
-    }
 }

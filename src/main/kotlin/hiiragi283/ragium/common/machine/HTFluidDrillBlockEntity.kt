@@ -2,17 +2,16 @@ package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.useTransaction
-import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
-import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
-import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -65,13 +64,11 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private val inventory: HTSidedInventory = HTStorageBuilder(0).buildSided()
-
-    override fun asInventory(): SidedInventory = inventory
+    override val inventory: SidedInventory = HTStorageBuilder(0).buildSided()
 
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildFluidStorage()
+        .buildMachineFluidStorage()
 
     //    HTMultiblockController    //
 

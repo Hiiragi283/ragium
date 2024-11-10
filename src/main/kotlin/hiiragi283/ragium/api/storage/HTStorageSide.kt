@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.inventory
+package hiiragi283.ragium.api.storage
 
 import net.minecraft.util.math.Direction
 

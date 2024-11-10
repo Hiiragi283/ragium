@@ -30,5 +30,5 @@ object HTManualGrinderBlock : HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STON
     //    InventoryProvider    //
 
     override fun getInventory(state: BlockState, world: WorldAccess, pos: BlockPos): SidedInventory? =
-        (world.getBlockEntity(pos) as? HTManualGrinderBlockEntity)?.inventory
+        (world.getBlockEntity(pos) as? HTManualGrinderBlockEntity)?.asInventory()
 }

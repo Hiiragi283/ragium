@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.fluid
+package hiiragi283.ragium.common.storage
 
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems

@@ -29,7 +29,6 @@ import net.minecraft.util.Rarity
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
 
-    override val config: RagiumAPI.Config = RagiumConfig
     override lateinit var machineRegistry: HTMachineRegistry
         private set
     override lateinit var materialRegistry: HTMaterialRegistry
@@ -57,7 +56,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         fun addMachine(key: HTMachineKey, type: HTMachineType) {
             check(keyCache.put(key, type) == null) { "Machine; ${key.id} is already registered!" }
         }
-        RagiumAPI.getPlugins().forEach {
+        RagiumAPI.forEachPlugins {
             it.registerMachineType(::addMachine)
         }
         // sort keys based on its type and id
@@ -69,7 +68,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMachineKey, HTPropertyHolderBuilder> = mutableMapOf()
-        RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
+        RagiumAPI.forEachPlugins { plugin: RagiumPlugin ->
             sortedKeys.keys.forEach { key: HTMachineKey ->
                 val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
                 val helper: RagiumPlugin.PropertyHelper<HTMachineKey> = RagiumPlugin.PropertyHelper(key, builder)
@@ -102,7 +101,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             check(keyCache.put(key, type) == null) { "Material; ${key.name} is already registered!" }
             rarityCache[key] = rarity
         }
-        RagiumAPI.getPlugins().forEach {
+        RagiumAPI.forEachPlugins {
             it.registerMaterial(::addMaterial)
         }
         // sort keys based on its type and id
@@ -114,7 +113,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
-        RagiumAPI.getPlugins().forEach { plugin: RagiumPlugin ->
+        RagiumAPI.forEachPlugins { plugin: RagiumPlugin ->
             sortedKeys.keys.forEach { key: HTMaterialKey ->
                 val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
                 val helper: RagiumPlugin.PropertyHelper<HTMaterialKey> = RagiumPlugin.PropertyHelper(key, builder)
@@ -123,12 +122,11 @@ internal data object InternalRagiumAPI : RagiumAPI {
         }
         // bind items
         val itemCache: Multimap<Pair<HTTagPrefix, HTMaterialKey>, Item> = HashMultimap.create()
-        RagiumAPI.getPlugins().forEach {
+        RagiumAPI.forEachPlugins {
             it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: Item ->
                 itemCache.put(prefix to key, item)
             }
         }
-
         val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Set<Item>> = mutableTableOf()
         itemCache
             .asMap()

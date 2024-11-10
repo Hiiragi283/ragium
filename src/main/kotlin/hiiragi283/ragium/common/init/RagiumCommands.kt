@@ -12,31 +12,24 @@ import hiiragi283.ragium.api.extension.networkMap
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockConstructor
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.common.RagiumConfig
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
 import net.minecraft.command.CommandRegistryAccess
 import net.minecraft.command.argument.BlockPosArgumentType
-import net.minecraft.command.argument.IdentifierArgumentType
 import net.minecraft.command.argument.ItemStackArgument
 import net.minecraft.command.argument.ItemStackArgumentType
-import net.minecraft.command.suggestion.SuggestionProviders
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Recipe
-import net.minecraft.recipe.RecipeEntry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import kotlin.collections.component1
 import kotlin.collections.component2
-import kotlin.jvm.optionals.getOrNull
 
 object RagiumCommands {
     @JvmStatic
@@ -53,7 +46,7 @@ object RagiumCommands {
         dispatcher.register(
             CommandManager
                 .literal("ragium")
-                .then(
+                /*.then(
                     CommandManager
                         .literal("drive_manager")
                         .then(
@@ -75,7 +68,8 @@ object RagiumCommands {
                                         .executes(::removeDriveRecipe),
                                 ),
                         ),
-                ).then(
+                )*/
+                .then(
                     CommandManager
                         .literal("floating_item")
                         .then(
@@ -113,23 +107,19 @@ object RagiumCommands {
                                         .executes(::setEnergy),
                                 ),
                         ),
-                ).then(
-                    CommandManager
-                        .literal("config")
-                        .then(RagiumConfig.ARGUMENT_BUILDER),
                 ),
         )
     }
 
     //    Data Drive    //
 
-    @JvmStatic
+    /*@JvmStatic
     private fun addDriveRecipe(context: CommandContext<ServerCommandSource>): Int {
         val id: Identifier = IdentifierArgumentType.getIdentifier(context, "id")
         val recipeEntry: RecipeEntry<*>? = context.source.world.recipeManager
             .get(id)
             ?.getOrNull()
-        /*if (recipeEntry != null) {
+        if (recipeEntry != null) {
             val recipe: Recipe<*> = recipeEntry.value
             if (recipe is HTRequireScanRecipe && recipe.requireScan) {
                 val manager: HTDataDriveManager = context.source.server.dataDriveManager
@@ -144,7 +134,7 @@ object RagiumCommands {
             }
         } else {
             context.source.sendError(Text.literal("Could not find recipe; $id"))
-        }*/
+        }
         return Command.SINGLE_SUCCESS
     }
 
@@ -156,7 +146,7 @@ object RagiumCommands {
             ?.getOrNull()
         if (recipeEntry != null) {
             val recipe: Recipe<*> = recipeEntry.value
-            /*if (recipe is HTRequireScanRecipe && recipe.requireScan) {
+            if (recipe is HTRequireScanRecipe && recipe.requireScan) {
                 val manager: HTDataDriveManager = context.source.server.dataDriveManager
                 if (id in manager) {
                     manager.remove(id)
@@ -166,12 +156,12 @@ object RagiumCommands {
                 }
             } else {
                 context.source.sendError(Text.literal("The recipe; $id does not require scanning!"))
-            }*/
+            }
         } else {
             context.source.sendError(Text.literal("Could not find recipe; $id"))
         }
         return Command.SINGLE_SUCCESS
-    }
+    }*/
 
     //    Floating Item    //
 

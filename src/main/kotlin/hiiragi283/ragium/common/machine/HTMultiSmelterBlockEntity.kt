@@ -1,10 +1,5 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.fluid.HTMachineFluidStorage
-import hiiragi283.ragium.api.inventory.HTSidedInventory
-import hiiragi283.ragium.api.inventory.HTStorageBuilder
-import hiiragi283.ragium.api.inventory.HTStorageIO
-import hiiragi283.ragium.api.inventory.HTStorageSide
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
@@ -12,6 +7,10 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.recipe.HTFurnaceRecipeProcessor
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
@@ -39,16 +38,14 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world)
 
-    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildFluidStorage()
+    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildMachineFluidStorage()
 
     //    HTDelegatedInventory    //
 
-    private val inventory: HTSidedInventory = HTStorageBuilder(2)
+    override val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSided()
-
-    override fun asInventory(): SidedInventory = inventory
 
     private var processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, tier.smelterMulti)

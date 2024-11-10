@@ -18,5 +18,5 @@ object HTItemDisplayBlock : HTBlockWithEntity(blockSettings().nonOpaque()), Inve
     //    InventoryProvider    //
 
     override fun getInventory(state: BlockState, world: WorldAccess, pos: BlockPos): SidedInventory? =
-        (world.getBlockEntity(pos) as? HTItemDisplayBlockEntity)?.inventory
+        (world.getBlockEntity(pos) as? HTItemDisplayBlockEntity)?.asInventory()
 }

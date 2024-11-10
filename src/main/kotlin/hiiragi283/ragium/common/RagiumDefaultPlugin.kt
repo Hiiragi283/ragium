@@ -241,7 +241,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper: RagiumPlugin.RecipeHelper,
     ) {
         // ingot -> block
-        helper.register(exporter, key, entry, HTTagPrefix.INGOT) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.INGOT) { tagKeys: List<TagKey<Item>> ->
             val block: ItemConvertible = entry.getFirstItem(HTTagPrefix.STORAGE_BLOCK) ?: return@register
             // Shaped Crafting
             HTShapedRecipeJsonBuilder
@@ -255,7 +255,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter)
         }
         // block -> ingot
-        helper.register(exporter, key, entry, HTTagPrefix.STORAGE_BLOCK) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.STORAGE_BLOCK) { tagKeys: List<TagKey<Item>> ->
             val ingot: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT) ?: return@register
             // Shapeless Crafting
             HTShapelessRecipeJsonBuilder
@@ -265,7 +265,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter)
         }
         // ingot -> plate
-        helper.register(exporter, key, entry, HTTagPrefix.INGOT, HTTagPrefix.PLATE) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.INGOT, HTTagPrefix.PLATE) { tagKeys: List<TagKey<Item>> ->
             // Metal Former Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.METAL_FORMER)
@@ -274,7 +274,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1])
         }
         // ingot -> dust
-        helper.register(exporter, key, entry, HTTagPrefix.INGOT, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.INGOT, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
@@ -283,7 +283,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1], "_from_ingot")
         }
         // gem -> dust
-        helper.register(exporter, key, entry, HTTagPrefix.GEM, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.GEM, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
@@ -292,7 +292,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1], "_from_gem")
         }
         // plate -> dust
-        helper.register(exporter, key, entry, HTTagPrefix.PLATE, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.PLATE, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
@@ -301,13 +301,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1], "_from_plate")
         }
         // ore -> raw
-        helper.register(
-            exporter,
-            key,
-            entry,
-            HTTagPrefix.ORE,
-            HTTagPrefix.RAW_MATERIAL,
-        ) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.ORE, HTTagPrefix.RAW_MATERIAL) { tagKeys: List<TagKey<Item>> ->
             // Grinder Recipe
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
@@ -317,7 +311,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1])
         }
         // ore -> gem
-        helper.register(exporter, key, entry, HTTagPrefix.ORE, HTTagPrefix.GEM) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.ORE, HTTagPrefix.GEM) { tagKeys: List<TagKey<Item>> ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
@@ -326,13 +320,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1])
         }
         // raw -> dust
-        helper.register(
-            exporter,
-            key,
-            entry,
-            HTTagPrefix.RAW_MATERIAL,
-            HTTagPrefix.DUST,
-        ) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.RAW_MATERIAL, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
@@ -355,7 +343,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, tagKeys[1], "_with_h2so4")
         }
         // raw -> ingot
-        helper.register(exporter, key, entry, HTTagPrefix.RAW_MATERIAL) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.RAW_MATERIAL) { tagKeys: List<TagKey<Item>> ->
             // Smelting Recipe
             val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
                 ?: key.entry.getFirstItem(HTTagPrefix.GEM)
@@ -370,7 +358,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             )
         }
         // dust -> ingot
-        helper.register(exporter, key, entry, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(key, entry, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
             // Smelting Recipe
             val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
                 ?: key.entry.getFirstItem(HTTagPrefix.GEM)

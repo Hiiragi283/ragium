@@ -7,7 +7,6 @@ import net.fabricmc.api.ModInitializer
 object RagiumCommon : ModInitializer {
     override fun onInitialize() {
         RagiumAPI.log { info("Registering game objects...") }
-        RagiumConfig.init()
 
         RagiumComponentTypes
 
@@ -31,8 +30,6 @@ object RagiumCommon : ModInitializer {
         RagiumNetworks
 
         RagiumContentRegister.initRegistry()
-
-        RagiumAPI.getPlugins().forEach { it.afterRagiumInit(RagiumAPI.getInstance()) }
 
         RagiumAPI.log { info("Ragium initialized!") }
     }

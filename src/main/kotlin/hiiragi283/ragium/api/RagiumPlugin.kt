@@ -75,7 +75,6 @@ interface RagiumPlugin {
         fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditionsImpl.tagsPopulated(RegistryKeys.ITEM.value, listOf(tagKey.id))
 
         fun register(
-            exporter: RecipeExporter,
             key: HTMaterialKey,
             entry: HTMaterialRegistry.Entry,
             vararg requiredPrefixes: HTTagPrefix,
