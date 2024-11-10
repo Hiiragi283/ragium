@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.machine.property
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.property.HTPropertyKey
-import net.minecraft.util.DyeColor
+import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -20,6 +20,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofDefaulted(RagiumAPI.id("model_id")) { RagiumAPI.id("block/dynamic_processor") }
 
     @JvmField
+    val SOUND: HTPropertyKey.Simple<SoundEvent> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("sound"))
+
+    @JvmField
     val TOOLTIP_BUILDER: HTPropertyKey.Simple<HTMachineTooltipAppender> =
         HTPropertyKey.ofSimple(RagiumAPI.id("tooltip_builder"))
 
@@ -28,10 +32,6 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofSimple(RagiumAPI.id("voxel_shape"))
 
     //    Generator    //
-
-    @JvmField
-    val GENERATOR_COLOR: HTPropertyKey.Simple<DyeColor> =
-        HTPropertyKey.ofSimple(RagiumAPI.id("generator_color"))
 
     @JvmField
     val GENERATOR_PREDICATE: HTPropertyKey.Defaulted<(World, BlockPos) -> Boolean> =
@@ -43,7 +43,7 @@ object HTMachinePropertyKeys {
     val FRONT_TEX: HTPropertyKey.Defaulted<(Identifier) -> Identifier> =
         HTPropertyKey.ofDefaulted(
             RagiumAPI.id("front_tex"),
-        ) { id: Identifier -> id.withPath { "block/processor/$it" } }
+        ) { id: Identifier -> id.withPath { "block/machine/$it" } }
 
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =

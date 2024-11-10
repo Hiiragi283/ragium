@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
@@ -116,6 +117,12 @@ enum class HTMachineTier(
         ADVANCED -> RagiumContents.Coils.ADVANCED
     }
 
+    fun getGrate(): RagiumContents.Grates = when (this) {
+        PRIMITIVE -> RagiumContents.Grates.PRIMITIVE
+        BASIC -> RagiumContents.Grates.BASIC
+        ADVANCED -> RagiumContents.Grates.ADVANCED
+    }
+
     fun getHull(): RagiumContents.Hulls = when (this) {
         PRIMITIVE -> RagiumContents.Hulls.PRIMITIVE
         BASIC -> RagiumContents.Hulls.BASIC
@@ -150,24 +157,14 @@ enum class HTMachineTier(
 
     fun canProcess(network: HTEnergyNetwork?): Boolean = network?.amount?.let { it >= recipeCost } ?: false
 
-    fun consumerEnergy(world: World) {
-        world.energyNetwork?.let { network: HTEnergyNetwork ->
-            useTransaction { transaction: Transaction ->
+    fun consumerEnergy(world: World, parent: TransactionContext? = null) {
+        useTransaction(parent) { transaction: Transaction ->
+            world.energyNetwork?.let { network: HTEnergyNetwork ->
                 val extracted: Long = network.extract(recipeCost, transaction)
                 when {
                     extracted > 0 -> transaction.commit()
                     else -> transaction.abort()
                 }
-            }
-        }
-    }
-
-    fun consumerEnergy(world: World, transaction: Transaction) {
-        world.energyNetwork?.let { network: HTEnergyNetwork ->
-            val extracted: Long = network.extract(recipeCost, transaction)
-            when {
-                extracted > 0 -> transaction.commit()
-                else -> transaction.abort()
             }
         }
     }

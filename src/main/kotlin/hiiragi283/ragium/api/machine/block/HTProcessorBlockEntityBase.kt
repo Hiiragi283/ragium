@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.machine.block
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
@@ -15,7 +16,6 @@ import hiiragi283.ragium.common.screen.HTChemicalMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -26,6 +26,7 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -36,6 +37,9 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (tier.canProcess(world)) {
             if (processRecipe(world, pos)) {
+                key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+                    world.playSound(null, pos, it, SoundCategory.BLOCKS)
+                }
                 tier.consumerEnergy(world)
             }
         }
@@ -65,9 +69,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
     //    HTFluidSyncable    //
 
     final override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.parts.forEachIndexed { index: Int, storage: SingleFluidStorage ->
-            sender(player, index, storage.variant, storage.amount)
-        }
+        fluidStorage.sendPacket(player, sender)
     }
 
     //    SidedStorageBlockEntity    //
@@ -85,11 +87,6 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             this.tier = tier
         }
 
-        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
-
-        override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
-
         override val inventory: SidedInventory = HTStorageBuilder(5)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -103,7 +100,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildMachineFluidStorage()
 
-        val processor = HTMachineRecipeProcessor(
+        private val processor = HTMachineRecipeProcessor(
             inventory,
             intArrayOf(0, 1),
             intArrayOf(3, 4),
@@ -112,6 +109,11 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             intArrayOf(0),
             intArrayOf(1),
         )
+
+        override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
+
+        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+            HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
     }
 
     //    Chemical    //

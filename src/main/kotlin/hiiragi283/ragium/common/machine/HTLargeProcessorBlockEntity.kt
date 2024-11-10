@@ -37,6 +37,7 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.beforeValidation(state, world, pos, player)
         val parent: HTMachineBlockEntityBase = world.getMachineEntity(pos.offset(facing.opposite, 2)) ?: return
+        if (!parent.key.isProcessor()) return
         key = parent.key
         tier = parent.tier
         player?.sendPacket(HTMachinePacket(key, tier, pos))

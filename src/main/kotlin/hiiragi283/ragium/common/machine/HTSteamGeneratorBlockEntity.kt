@@ -34,8 +34,6 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -50,6 +48,20 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
+    private val inventory: SidedInventory = HTStorageBuilder(2)
+        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .filter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else true }
+        .buildSided()
+
+    override fun asInventory(): SidedInventory = inventory
+
+    private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
+        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+
+        override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
+    }
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
@@ -57,6 +69,11 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
+        fluidStorage = object : SingleFluidStorage() {
+            override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+
+            override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
+        }
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
 
@@ -82,25 +99,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         return 0
     }
 
-    override fun onSucceeded(world: World, pos: BlockPos) {
-        world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS)
-    }
-
     //    SidedStorageBlockEntity    //
-
-    private val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .filter { _: Int, stack: ItemStack -> stack.isIn(ItemTags.COALS) }
-        .buildSided()
-
-    override fun asInventory(): SidedInventory = inventory
-
-    private val fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
-        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
-
-        override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
-    }
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant> = inventory.toStorage(side)
 

@@ -65,12 +65,14 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.ADVANCED_CASING)
         registerSimple(RagiumBlocks.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
+        registerSimple(RagiumBlocks.ELITE_CASING)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.SPONGE_CAKE)
 
-        RagiumContents.StorageBlocks.entries
-            .map(RagiumContents.StorageBlocks::value)
-            .forEach(::registerSimple)
+        buildList {
+            addAll(RagiumContents.StorageBlocks.entries)
+            addAll(RagiumContents.Grates.entries)
+        }.map { it.value }.forEach(::registerSimple)
         // layered
         registerLayered(
             RagiumBlocks.POROUS_NETHERRACK,

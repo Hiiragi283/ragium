@@ -23,13 +23,13 @@ class HTChemicalMachineScreenHandler(
     init {
         inventory.onOpen(player)
         // inputs
-        addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
+        addSlot(0, 2, 1)
+        addSlot(1, 3, 1)
         // catalyst
         addSlot(2, 4, 2)
         // outputs
-        addOutputSlot(3, 6, 1)
-        addOutputSlot(4, 7, 1)
+        addOutputSlot(3, 5, 1)
+        addOutputSlot(4, 6, 1)
         // player inventory
         addPlayerInv()
         // register property

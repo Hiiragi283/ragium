@@ -1,39 +1,47 @@
 package hiiragi283.ragium.common.machine
 
+import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTFluidDrillScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.SidedInventory
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
+import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
+    HTConsumerBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
+    HTFluidSyncable,
     HTMultiblockController {
     override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
@@ -41,10 +49,23 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
+    private var fluidStorage: SingleFluidStorage = fluidStorageOf(tier.tankCapacity)
+
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, wrapperLookup)
+        fluidStorage.writeNbt(nbt, wrapperLookup)
+    }
+
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, wrapperLookup)
+        fluidStorage = fluidStorageOf(tier.tankCapacity)
+        fluidStorage.readNbt(nbt, wrapperLookup)
+    }
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
 
-    override fun processRecipe(world: World, pos: BlockPos): Boolean {
+    override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
         val biome: RegistryEntry<Biome> = world.getBiome(pos)
         val resource: ResourceAmount<FluidVariant> = when {
             biome.isIn(BiomeTags.IS_END) -> ResourceAmount(FluidVariant.of(RagiumFluids.NOBLE_GAS.value), FluidConstants.INGOT)
@@ -53,9 +74,10 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
             else -> null ?: return false
         }
         useTransaction { transaction: Transaction ->
-            val inserted: Long = fluidStorage.get(0).insert(resource, transaction)
+            val inserted: Long = fluidStorage.insert(resource, transaction)
             if (inserted > 0) {
                 transaction.commit()
+                world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
                 return true
             } else {
                 transaction.abort()
@@ -64,11 +86,16 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    override val inventory: SidedInventory = HTStorageBuilder(0).buildSided()
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
+        FluidStorageUtil.interactWithFluidStorage(FilteringStorage.extractOnlyOf(fluidStorage), player, Hand.MAIN_HAND)
 
-    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = FilteringStorage.extractOnlyOf(fluidStorage)
+
+    //    HTFluidSyncable    //
+
+    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
+        sender(player, 0, fluidStorage.resource, fluidStorage.amount)
+    }
 
     //    HTMultiblockController    //
 
@@ -85,24 +112,24 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.of(Blocks.WAXED_COPPER_GRATE),
+                HTMultiblockComponent.of(tier.getGrate()),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.of(Blocks.WAXED_COPPER_GRATE),
+                HTMultiblockComponent.of(tier.getGrate()),
             )
         builder.add(
             0,
             3,
             2,
-            HTMultiblockComponent.of(Blocks.WAXED_COPPER_GRATE),
+            HTMultiblockComponent.of(tier.getGrate()),
         )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockComponent.of(Blocks.WAXED_COPPER_GRATE),
+            HTMultiblockComponent.of(tier.getGrate()),
         )
     }
 }

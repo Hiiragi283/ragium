@@ -63,25 +63,21 @@ object RagiumClient : ClientModInitializer {
     private fun registerBlocks() {
         // cutout
         buildList {
+            addAll(RagiumContents.Ores.entries)
+            addAll(RagiumContents.Grates.entries)
+            addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Exporters.entries)
             addAll(RagiumContents.Pipes.entries)
-        }.map(HTRegistryContent<Block>::value).forEach(::registerCutout)
-        registerCutout(RagiumBlocks.ITEM_DISPLAY)
-        // cutout mipped
-        BlockRenderLayerMap.INSTANCE.putBlocks(
-            RenderLayer.getCutoutMipped(),
-            RagiumBlocks.POROUS_NETHERRACK,
-        )
+        }.map(HTRegistryContent<Block>::value).forEach(::registerCutoutMipped)
+
         RagiumAPI
             .getInstance()
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
-        buildList {
-            addAll(RagiumContents.Ores.entries)
-            addAll(RagiumContents.Hulls.entries)
-        }.map(HTRegistryContent<Block>::value).forEach(::registerCutoutMipped)
-
+        registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
+        registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
+        // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
 

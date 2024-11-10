@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -24,7 +25,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
@@ -75,14 +75,9 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         stackMain.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
         stackOff.decrement(recipe.itemInputs.getOrNull(1)?.amount ?: 0)
         extractFluid(recipe)
-        world.playSoundAtBlockCenter(
-            pos,
-            SoundEvents.ITEM_BUCKET_EMPTY,
-            SoundCategory.BLOCKS,
-            1.0f,
-            1.0f,
-            false,
-        )
+        RagiumMachineKeys.MIXER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+            world.playSound(null, pos, it, SoundCategory.BLOCKS)
+        }
     }
 
     private fun extractFluid(recipe: HTMachineRecipe) {

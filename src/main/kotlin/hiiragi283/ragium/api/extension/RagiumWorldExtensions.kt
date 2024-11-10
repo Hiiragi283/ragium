@@ -43,14 +43,12 @@ fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Encha
 
 //    World    //
 
-fun dropStackAt(entity: Entity, stack: ItemStack) {
-    dropStackAt(entity.world, entity.blockPos, stack)
-}
+fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.blockPos, stack)
 
-fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack) {
+fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean {
     val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
     itemEntity.setPickupDelay(0)
-    world.spawnEntity(itemEntity)
+    return world.spawnEntity(itemEntity)
 }
 
 //    PersistentState    //

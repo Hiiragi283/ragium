@@ -45,6 +45,11 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
+        fluidStorage = object : SingleFluidStorage() {
+            override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+
+            override fun canInsert(variant: FluidVariant): Boolean = variant.isIn(RagiumFluidTags.FUEL)
+        }
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
 
@@ -67,7 +72,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
+    private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
         override fun canInsert(variant: FluidVariant): Boolean = variant.isIn(RagiumFluidTags.FUEL)

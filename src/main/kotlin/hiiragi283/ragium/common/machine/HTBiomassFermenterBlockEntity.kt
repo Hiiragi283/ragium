@@ -94,7 +94,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
-        FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
+        FluidStorageUtil.interactWithFluidStorage(FilteringStorage.extractOnlyOf(fluidStorage), player, Hand.MAIN_HAND)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = FilteringStorage.extractOnlyOf(fluidStorage)
 }

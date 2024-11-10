@@ -36,11 +36,10 @@ import net.minecraft.item.Items
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.DyeColor
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.util.function.BiConsumer
 
@@ -61,31 +60,38 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // consumers
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
         helper.modify(RagiumMachineKeys.BIOMASS_FERMENTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBiomassFermenterBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_COMPOSTER_FILL_SUCCESS)
+        }
+        helper.modify(RagiumMachineKeys.CANNING_MACHINE) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCanningMachineBlockEntity))
+        }
+        helper.modify(RagiumMachineKeys.FLUID_DRILL) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         // generators
         helper.modify(RagiumMachineKeys.GENERATORS::contains) {
-            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
         }
         helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
-            set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.BLUE)
+            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
         }
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
             set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
         }
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSteamGeneratorBlockEntity))
-            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
         helper.modify(RagiumMachineKeys.THERMAL_GENERATOR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
-            set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.ORANGE)
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 when {
                     world.getBiome(pos).isIn(BiomeTags.IS_NETHER) -> true
@@ -97,13 +103,15 @@ object RagiumDefaultPlugin : RagiumPlugin {
                             }.size >= 4
                 }
             }
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTThermalGeneratorBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
         helper.modify(RagiumMachineKeys.WATER_GENERATOR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
-            set(HTMachinePropertyKeys.GENERATOR_COLOR, DyeColor.CYAN)
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
             }
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
+            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
         }
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
@@ -112,33 +120,46 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
         }
+        helper.modify(RagiumMachineKeys.COMPRESSOR) {
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
+        }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.ELECTROLYZER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
         }
-        helper.modify(RagiumMachineKeys.FLUID_DRILL) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
-            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+        helper.modify(RagiumMachineKeys.GRINDER) {
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
+        }
+        helper.modify(RagiumMachineKeys.METAL_FORMER) {
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_ANVIL_USE)
         }
         helper.modify(RagiumMachineKeys.MIXER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
+        }
+        helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL)
         }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
             set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
-            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
+            set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
     }
 

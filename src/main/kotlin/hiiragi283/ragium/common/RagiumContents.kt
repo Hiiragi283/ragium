@@ -168,6 +168,19 @@ object RagiumContents : HTContentRegister {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
+    //    Grates    //
+
+    enum class Grates(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_grate"))
+    }
+
     //    Hulls    //
 
     enum class Hulls(override val tier: HTMachineTier) : HTContent.Tier<Block> {

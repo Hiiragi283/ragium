@@ -79,7 +79,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
         newState: BlockState,
         moved: Boolean,
     ) {
-        if (state.isOf(newState.block)) {
+        if (!state.isOf(newState.block)) {
             (world.getBlockEntity(pos) as? HTBlockEntityBase)
                 ?.asInventory()
                 ?.let { ItemScatterer.spawn(world, pos, it) }

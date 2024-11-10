@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -14,7 +15,6 @@ import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
@@ -55,13 +55,8 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
         stackOff.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
-        world.playSoundAtBlockCenter(
-            pos,
-            SoundEvents.BLOCK_ANVIL_USE,
-            SoundCategory.BLOCKS,
-            1.0f,
-            1.0f,
-            false,
-        )
+        RagiumMachineKeys.METAL_FORMER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+            world.playSound(null, pos, it, SoundCategory.BLOCKS)
+        }
     }
 }

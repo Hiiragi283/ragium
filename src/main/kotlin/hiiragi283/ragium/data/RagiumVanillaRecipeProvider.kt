@@ -522,9 +522,20 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .unlockedBy(drum.tier.getMainPlate())
                 .offerTo(exporter)
         }
-        // hulls
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             val base: Block = tier.getBaseBlock()
+            // grates
+            val grate: RagiumContents.Grates = tier.getGrate()
+            HTShapedRecipeJsonBuilder
+                .create(grate)
+                .patterns(
+                    " A ",
+                    "A A",
+                    " A ",
+                ).input('A', tier.getSteelPlate())
+                .unlockedBy(tier.getSteelPlate())
+                .offerTo(exporter)
+            // hulls
             val hull: RagiumContents.Hulls = tier.getHull()
             HTShapedRecipeJsonBuilder
                 .create(hull)
@@ -560,6 +571,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', RagiumContents.Plates.ALUMINUM)
             .input('C', RagiumContents.Gems.RAGI_CRYSTAL)
             .unlockedBy(RagiumContents.Gems.RAGI_CRYSTAL)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.ELITE_CASING, 3)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', RagiumContents.Plates.DEEP_STEEL)
+            .input('C', ConventionalItemTags.DIAMOND_GEMS)
+            .unlockedBy(ConventionalItemTags.DIAMOND_GEMS)
             .offerTo(exporter)
         // machines
         HTShapedRecipeJsonBuilder
@@ -630,6 +653,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumMachineKeys.DRAIN,
             Items.BUCKET,
         )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.FLUID_DRILL,
+            RagiumBlocks.SHAFT,
+        )
         // generators
         createGenerator(
             exporter,
@@ -686,11 +714,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumMachineKeys.EXTRACTOR,
             Items.HOPPER,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.FLUID_DRILL,
-            RagiumBlocks.SHAFT,
         )
         createProcessor(
             exporter,

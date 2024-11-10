@@ -22,6 +22,10 @@ object RagiumBlockEntityTypes {
         register("blast_furnace", ::HTBlastFurnaceBlockEntity)
 
     @JvmField
+    val CANNING_MACHINE: BlockEntityType<HTCanningMachineBlockEntity> =
+        register("exporter", ::HTCanningMachineBlockEntity)
+
+    @JvmField
     val CHEMICAL_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Chemical> =
         register("chemical_processor", HTProcessorBlockEntityBase::Chemical)
 
@@ -97,6 +101,10 @@ object RagiumBlockEntityTypes {
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =
         register("steam_generator", ::HTSteamGeneratorBlockEntity)
 
+    @JvmField
+    val THERMAL_GENERATOR: BlockEntityType<HTThermalGeneratorBlockEntity> =
+        register("thermal_generator", ::HTThermalGeneratorBlockEntity)
+
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
@@ -123,13 +131,16 @@ object RagiumBlockEntityTypes {
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
         // consumers
         registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)
+        registerMachineBlocks(RagiumMachineKeys.CANNING_MACHINE, CANNING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
+        registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
         // generators
         RagiumMachineKeys.GENERATORS.forEach {
             registerMachineBlocks(it, SIMPLE_GENERATOR)
         }
         registerMachineBlocks(RagiumMachineKeys.COMBUSTION_GENERATOR, COMBUSTION_GENERATOR)
         registerMachineBlocks(RagiumMachineKeys.STEAM_GENERATOR, STEAM_GENERATOR)
+        registerMachineBlocks(RagiumMachineKeys.THERMAL_GENERATOR, THERMAL_GENERATOR)
         // processors
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
@@ -138,7 +149,6 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
-        registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
         registerMachineBlocks(RagiumMachineKeys.SAW_MILL, SAW_MILL)

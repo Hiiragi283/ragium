@@ -1,0 +1,19 @@
+{
+  "values": [
+    "ragium:advanced_combustion_generator",
+    "ragium:advanced_solar_panel",
+    "ragium:advanced_steam_generator",
+    "ragium:advanced_thermal_generator",
+    "ragium:advanced_water_generator",
+    "ragium:basic_combustion_generator",
+    "ragium:basic_solar_panel",
+    "ragium:basic_steam_generator",
+    "ragium:basic_thermal_generator",
+    "ragium:basic_water_generator",
+    "ragium:primitive_combustion_generator",
+    "ragium:primitive_solar_panel",
+    "ragium:primitive_steam_generator",
+    "ragium:primitive_thermal_generator",
+    "ragium:primitive_water_generator"
+  ]
+}

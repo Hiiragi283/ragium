@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefixedBlock
 import hiiragi283.ragium.api.material.HTTagPrefixedBlockItem
 import hiiragi283.ragium.api.material.HTTagPrefixedItem
@@ -24,6 +23,8 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
@@ -81,9 +82,13 @@ object RagiumContentRegister : HTContentRegister {
             }
         }
 
+        RagiumContents.Grates.entries.forEach { grate: RagiumContents.Grates ->
+            val block = TransparentBlock(blockSettings(Blocks.COPPER_GRATE))
+            registerBlock(grate, block)
+            registerBlockItem(block, itemSettings().tier(grate.tier))
+        }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            val tier: HTMachineTier = HTMachineTier.entries[hull.ordinal]
-            val block = Block(blockSettings(tier.getBaseBlock()))
+            val block = TransparentBlock(blockSettings(hull.tier.getBaseBlock()))
             registerBlock(hull, block)
             registerBlockItem(block, itemSettings().tier(hull.tier))
         }
@@ -135,6 +140,7 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
         registerBlockItem(RagiumBlocks.BASIC_CASING)
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.ELITE_CASING)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
@@ -159,6 +165,11 @@ object RagiumContentRegister : HTContentRegister {
                 override fun getCapacity(variant: ItemVariant): Long = Long.MAX_VALUE
             }
         }, RagiumBlocks.TRASH_BOX)
+        ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+            InsertionOnlyStorage { resource: ItemVariant, _: Long, _: TransactionContext ->
+                if (dropStackAt(world, pos.down(), resource.toStack())) 1 else 0
+            }
+        }, RagiumBlocks.ELITE_CASING)
 
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)

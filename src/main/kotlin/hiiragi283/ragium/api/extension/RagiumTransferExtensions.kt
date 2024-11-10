@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -61,6 +62,9 @@ fun <T : TransferVariant<*>> Storage<T>.extract(resourceAmount: ResourceAmount<T
 val <T : Any> SingleSlotStorage<T>.resourceAmount: ResourceAmount<T>
     get() = ResourceAmount(resource, amount)
 
+val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
+    get() = amount == capacity
+
 val SingleSlotStorage<FluidVariant>.amountedFluid: Pair<Fluid, Long>
     get() = resource.fluid to amount
 
@@ -80,4 +84,5 @@ fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID, t
 
 //    Transaction    //
 
-inline fun <R> useTransaction(action: (Transaction) -> R): R = Transaction.openOuter().use(action)
+inline fun <R> useTransaction(parent: TransactionContext? = null, action: (Transaction) -> R): R =
+    Transaction.openNested(parent).use(action)

@@ -72,6 +72,10 @@ object RagiumBlocks : HTContentRegister {
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
 
     @JvmField
+    val ELITE_CASING: Block =
+        registerCopy("elite_casing", Blocks.IRON_BLOCK)
+
+    @JvmField
     val ITEM_DISPLAY: Block =
         registerBlock("item_display", HTItemDisplayBlock)
 

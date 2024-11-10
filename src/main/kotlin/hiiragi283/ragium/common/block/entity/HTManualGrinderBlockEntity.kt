@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.modifyBlockState
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -17,7 +18,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.sound.SoundCategory
-import net.minecraft.sound.SoundEvents
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -69,13 +69,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         inventory.getStack(0).decrement(recipe.itemInputs[0].amount)
-        world.playSoundAtBlockCenter(
-            pos,
-            SoundEvents.BLOCK_GRINDSTONE_USE,
-            SoundCategory.BLOCKS,
-            1.0f,
-            1.0f,
-            false,
-        )
+        RagiumMachineKeys.GRINDER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+            world.playSound(null, pos, it, SoundCategory.BLOCKS)
+        }
     }
 }

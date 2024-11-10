@@ -65,6 +65,17 @@ object RagiumLangProviders {
     @JvmStatic
     private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
         // blocks
+        RagiumContents.Grates.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Grate"
+                        HTLangType.JA_JP -> "%s格子"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
         RagiumContents.Hulls.entries.forEach {
             builder.add(
                 it,
@@ -156,6 +167,8 @@ object RagiumLangProviders {
             // Advancements
 
             // Blocks
+            builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
+
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
@@ -259,10 +272,16 @@ object RagiumLangProviders {
                 "Produce Biomass from Composter inputs",
             )
             builder.add(
+                RagiumMachineKeys.CANNING_MACHINE,
+                "Canning Machine",
+                "Insert or Extract fluids from Fluid Cube",
+            )
+            builder.add(
                 RagiumMachineKeys.DRAIN,
                 "Drain",
                 "Drains fluids from each side",
             )
+            builder.add(RagiumMachineKeys.FLUID_DRILL, "Fluid Drill", "Pump up fluids from specified biomes")
 
             builder.add(
                 RagiumMachineKeys.COMBUSTION_GENERATOR,
@@ -306,7 +325,6 @@ object RagiumLangProviders {
             )
             builder.add(RagiumMachineKeys.ELECTROLYZER, "Electrolyzer", "Elek On")
             builder.add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Extract")
-            builder.add(RagiumMachineKeys.FLUID_DRILL, "Fluid Drill", "Pump up fluids from specified biomes")
             builder.add(RagiumMachineKeys.GRINDER, "Grinder", "Grind ingredients")
             builder.add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber")
             builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer")
@@ -477,7 +495,9 @@ object RagiumLangProviders {
                 "バイオマス発酵槽",
                 "コンポスターに入れられるアイテムからバイオマスを生産する",
             )
+            builder.add(RagiumMachineKeys.CANNING_MACHINE, "缶詰機", "液体キューブに液体を出し入れできる")
             builder.add(RagiumMachineKeys.DRAIN, "排水溝", "各面から液体を吸い取る")
+            builder.add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
 
             builder.add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
             builder.add(RagiumMachineKeys.SOLAR_PANEL, "太陽光発電機", "日中に発電する")
@@ -493,7 +513,6 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
             builder.add(RagiumMachineKeys.ELECTROLYZER, "電解槽", "エレキ オン")
             builder.add(RagiumMachineKeys.EXTRACTOR, "抽出器")
-            builder.add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
             builder.add(RagiumMachineKeys.GRINDER, "粉砕機")
             builder.add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー")
             builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機")

@@ -58,6 +58,7 @@ object RagiumTagProviders {
 
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ADVANCED_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.BASIC_CASING)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ELITE_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
@@ -67,6 +68,7 @@ object RagiumTagProviders {
             buildList {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
+                addAll(RagiumContents.Grates.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
                 addAll(RagiumContents.Pipes.entries)
@@ -215,7 +217,10 @@ object RagiumTagProviders {
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
             RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-                entry.blocks.forEach { add(key.tagKey, it) }
+                entry.blocks.forEach {
+                    add(key.tagKey, it)
+                    add(entry.type.tagKey, it)
+                }
             }
 
             RagiumAPI.getInstance().materialRegistry.entryMap.forEach { (key: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->

@@ -52,9 +52,11 @@ object RagiumItemGroup {
                     addAll(RagiumItems.TOOLS)
                     addAll(HTCrafterHammerItem.Behavior.entries)
 
+                    addAll(RagiumContents.Grates.entries)
                     addAll(RagiumContents.Hulls.entries)
                     add(RagiumBlocks.BASIC_CASING)
                     add(RagiumBlocks.ADVANCED_CASING)
+                    add(RagiumBlocks.ELITE_CASING)
                     addAll(RagiumContents.Coils.entries)
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)

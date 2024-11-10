@@ -48,6 +48,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.BACKPACK_INTERFACE)
         addDrop(RagiumBlocks.BASIC_CASING)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
+        addDrop(RagiumBlocks.ELITE_CASING)
         addDrop(RagiumBlocks.ITEM_DISPLAY)
         addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)
@@ -60,6 +61,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)
+            addAll(RagiumContents.Grates.entries)
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Coils.entries)
             addAll(RagiumContents.Exporters.entries)

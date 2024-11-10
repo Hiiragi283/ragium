@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.buildNbtList
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
+import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
@@ -19,9 +20,10 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Hand
 
-class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageIO) {
+class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageIO) : HTFluidSyncable {
     companion object {
         const val NBT_KEY = "fluid_storages"
     }
@@ -80,5 +82,13 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
                 parts1.forEach { add(buildNbt { it.writeNbt(this, wrapperLookup) }) }
             },
         )
+    }
+    
+    //    HTFluidSyncable    //
+
+    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
+        parts.forEachIndexed { index: Int, storage: SingleFluidStorage ->
+            sender(player, index, storage.variant, storage.amount)
+        }
     }
 }
