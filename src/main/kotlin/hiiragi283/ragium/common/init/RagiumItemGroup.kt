@@ -52,12 +52,6 @@ object RagiumItemGroup {
                     addAll(RagiumItems.TOOLS)
                     addAll(HTCrafterHammerItem.Behavior.entries)
 
-                    addAll(RagiumContents.Grates.entries)
-                    addAll(RagiumContents.Hulls.entries)
-                    add(RagiumBlocks.BASIC_CASING)
-                    add(RagiumBlocks.ADVANCED_CASING)
-                    add(RagiumBlocks.ELITE_CASING)
-                    addAll(RagiumContents.Coils.entries)
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)
 
@@ -88,6 +82,11 @@ object RagiumItemGroup {
             icon { RagiumMachineKeys.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
+                    addAll(RagiumContents.Grates.entries)
+                    addAll(RagiumContents.Casings.entries)
+                    addAll(RagiumContents.Hulls.entries)
+                    addAll(RagiumContents.Coils.entries)
+
                     add(RagiumBlocks.CREATIVE_SOURCE)
                     add(RagiumBlocks.MANUAL_FORGE)
                     add(RagiumBlocks.MANUAL_GRINDER)
@@ -96,6 +95,7 @@ object RagiumItemGroup {
                     add(RagiumBlocks.BACKPACK_INTERFACE)
                     add(RagiumBlocks.ITEM_DISPLAY)
                     add(RagiumBlocks.NETWORK_INTERFACE)
+                    add(RagiumBlocks.LARGE_PROCESSOR)
                     add(RagiumBlocks.SHAFT)
                     add(RagiumBlocks.TRASH_BOX)
 

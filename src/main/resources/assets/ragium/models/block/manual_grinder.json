@@ -1,8 +1,8 @@
 {
 	"credit": "Made by Hiiragi Russell Tsubasa",
 	"textures": {
-		"particle": "block/smooth_stone",
-		"bottom": "block/smooth_stone",
+		"particle": "block/bricks",
+		"bottom": "block/bricks",
 		"top": "ragium:block/ragi_alloy_block",
 		"hand": "block/oak_planks"
 	},

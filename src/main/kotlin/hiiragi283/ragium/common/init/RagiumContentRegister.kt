@@ -23,8 +23,6 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
@@ -87,8 +85,13 @@ object RagiumContentRegister : HTContentRegister {
             registerBlock(grate, block)
             registerBlockItem(block, itemSettings().tier(grate.tier))
         }
+        RagiumContents.Casings.entries.forEach { casings: RagiumContents.Casings ->
+            val block = Block(blockSettings(Blocks.SMOOTH_STONE))
+            registerBlock(casings, block)
+            registerBlockItem(block, itemSettings().tier(casings.tier))
+        }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            val block = TransparentBlock(blockSettings(hull.tier.getBaseBlock()))
+            val block = TransparentBlock(blockSettings(Blocks.SMOOTH_STONE))
             registerBlock(hull, block)
             registerBlockItem(block, itemSettings().tier(hull.tier))
         }
@@ -122,6 +125,8 @@ object RagiumContentRegister : HTContentRegister {
     private fun initBlockItems() {
         registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
 
+        registerBlockItem(RagiumBlocks.ASPHALT)
+
         registerBlockItem(RagiumBlocks.SPONGE_CAKE)
         registerBlockItem(
             RagiumBlocks.SWEET_BERRIES_CAKE,
@@ -136,11 +141,8 @@ object RagiumContentRegister : HTContentRegister {
                 .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
         )
 
-        registerBlockItem(RagiumBlocks.ADVANCED_CASING)
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
-        registerBlockItem(RagiumBlocks.BASIC_CASING)
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
-        registerBlockItem(RagiumBlocks.ELITE_CASING)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
@@ -165,11 +167,11 @@ object RagiumContentRegister : HTContentRegister {
                 override fun getCapacity(variant: ItemVariant): Long = Long.MAX_VALUE
             }
         }, RagiumBlocks.TRASH_BOX)
-        ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+        /*ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, _: Long, _: TransactionContext ->
                 if (dropStackAt(world, pos.down(), resource.toStack())) 1 else 0
             }
-        }, RagiumBlocks.ELITE_CASING)
+        }, RagiumBlocks.ELITE_CASING)*/
 
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)

@@ -8,10 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.block.HTBlockWithEntity
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.InventoryProvider
-import net.minecraft.block.ShapeContext
+import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.Item
@@ -31,7 +28,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
 class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
-    HTBlockWithEntity(blockSettings(tier.getBaseBlock()).nonOpaque()),
+    HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE).nonOpaque()),
     InventoryProvider {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)

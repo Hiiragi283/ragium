@@ -7,7 +7,7 @@
   "item_inputs": [
     {
       "count": 8,
-      "items": "#c:ingots/copper"
+      "items": "#c:plates/copper"
     },
     {
       "items": "ragium:shaft"

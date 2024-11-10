@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/ragi_crystal"
+            "items": "ragium:advanced_grate"
           }
         ]
       },

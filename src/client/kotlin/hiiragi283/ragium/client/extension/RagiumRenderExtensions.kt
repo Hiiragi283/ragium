@@ -24,6 +24,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.resource.Resource
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.RotationAxis
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
 import net.minecraft.world.World
@@ -60,12 +61,16 @@ fun renderItem(
     matrices: MatrixStack,
     vertexConsumers: VertexConsumerProvider,
     scale: Float = 1.0f,
+    pitch: Float = 0.0f,
+    yaw: Float = 0.0f,
 ) {
     if (world == null) return
     matrices.push()
     matrices.translate(pos)
     matrices.translate(0.5, 0, 0.5)
     matrices.scale(scale, scale, scale)
+    matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(pitch))
+    matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(yaw))
     MinecraftClient.getInstance().itemRenderer.renderItem(
         stack,
         ModelTransformationMode.FIXED,

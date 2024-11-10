@@ -62,10 +62,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         // simple
-        registerSimple(RagiumBlocks.ADVANCED_CASING)
-        registerSimple(RagiumBlocks.BASIC_CASING, Identifier.of("block/blast_furnace_top"))
+        registerSimple(RagiumBlocks.ASPHALT)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
-        registerSimple(RagiumBlocks.ELITE_CASING)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.SPONGE_CAKE)
 
@@ -73,6 +71,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Grates.entries)
         }.map { it.value }.forEach(::registerSimple)
+
+        registerSimple(RagiumContents.Casings.PRIMITIVE.value, Identifier.of("block/blast_furnace_top"))
+        registerSimple(RagiumContents.Casings.BASIC.value)
+        registerSimple(RagiumContents.Casings.ADVANCED.value)
         // layered
         registerLayered(
             RagiumBlocks.POROUS_NETHERRACK,
@@ -108,8 +110,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     put(
                         TextureKey.INSIDE,
                         when (tier) {
-                            HTMachineTier.PRIMITIVE -> Identifier.of("block/bricks")
-                            HTMachineTier.BASIC -> Identifier.of("block/blast_furnace_top")
+                            HTMachineTier.PRIMITIVE -> Identifier.of("block/blast_furnace_top")
+                            HTMachineTier.BASIC -> RagiumAPI.id("block/basic_casing")
                             HTMachineTier.ADVANCED -> RagiumAPI.id("block/advanced_casing")
                         },
                     )

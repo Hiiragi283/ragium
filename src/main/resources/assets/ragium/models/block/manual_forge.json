@@ -2,7 +2,7 @@
 	"credit": "Made by Hiiragi Russell Tsubasa",
 	"textures": {
 		"0": "ragium:block/ragi_alloy_block",
-		"3": "block/smooth_stone",
+		"3": "block/bricks",
 		"particle": "ragium:block/ragi_alloy_block"
 	},
 	"elements": [

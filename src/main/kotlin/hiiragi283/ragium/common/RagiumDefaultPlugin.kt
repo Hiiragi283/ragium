@@ -43,7 +43,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.BiConsumer
 
-@Suppress("DEPRECATION")
 object RagiumDefaultPlugin : RagiumPlugin {
     override val priority: Int = -100
 
@@ -258,6 +257,15 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumContents.RawMaterials.entries)
     }
 
+    private fun getMainPrefix(type: HTMaterialKey.Type): HTTagPrefix? = when (type) {
+        HTMaterialKey.Type.ALLOY -> HTTagPrefix.INGOT
+        HTMaterialKey.Type.DUST -> null
+        HTMaterialKey.Type.GEM -> HTTagPrefix.GEM
+        HTMaterialKey.Type.METAL -> HTTagPrefix.INGOT
+        HTMaterialKey.Type.MINERAL -> null
+        HTMaterialKey.Type.PLATE -> null
+    }
+
     override fun registerRuntimeRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
@@ -267,6 +275,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // ingot -> block
         helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
             val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
+            val prefix: HTTagPrefix = getMainPrefix(entry.type) ?: return@register
             // Shaped Crafting
             HTShapedRecipeJsonBuilder
                 .create(block)
@@ -274,17 +283,20 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     "AAA",
                     "AAA",
                     "AAA",
-                ).input('A', HTTagPrefix.INGOT, key)
+                ).input('A', prefix, key)
                 .offerTo(exporter)
         }
         // block -> ingot
-        helper.register(entry, HTTagPrefix.INGOT) { map: Map<HTTagPrefix, Item> ->
-            val ingot: Item = map[HTTagPrefix.INGOT] ?: return@register
-            // Shapeless Crafting
-            HTShapelessRecipeJsonBuilder
-                .create(ingot, 9)
-                .input(HTTagPrefix.STORAGE_BLOCK, key)
-                .offerTo(exporter)
+        with(this) {
+            val prefix: HTTagPrefix = getMainPrefix(entry.type) ?: return@with
+            helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
+                val output: Item = map[prefix] ?: return@register
+                // Shapeless Crafting
+                HTShapelessRecipeJsonBuilder
+                    .create(output, 9)
+                    .input(HTTagPrefix.STORAGE_BLOCK, key)
+                    .offerTo(exporter)
+            }
         }
         // ingot -> plate
         helper.register(entry, HTTagPrefix.PLATE) { map: Map<HTTagPrefix, Item> ->

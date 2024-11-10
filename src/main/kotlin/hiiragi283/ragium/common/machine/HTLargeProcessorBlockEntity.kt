@@ -23,7 +23,7 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockController    //
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.of(tier.getBaseBlock()))
+        builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.of(tier.getCasing()))
         builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.of(tier.getHull()))
         builder.addLayer(-1..1, 1, 1..3, HTMultiblockComponent.of(tier.getStorageBlock()))
         builder.add(0, 0, 2, HTMultiblockComponent.of(RagiumBlockTags.MACHINES))

@@ -60,6 +60,7 @@ object RagiumContents : HTContentRegister {
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         STEEL(RagiumMaterialKeys.STEEL),
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         ;
 
         override val registry: Registry<Block> = Registries.BLOCK
@@ -71,19 +72,23 @@ object RagiumContents : HTContentRegister {
     //    Dusts    //
 
     enum class Dusts(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        // tier 1
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
-        RAGINITE(RagiumMaterialKeys.RAGINITE),
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
-
         ALKALI(RagiumMaterialKeys.ALKALI),
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         ASH(RagiumMaterialKeys.ASH),
-        BAUXITE(RagiumMaterialKeys.BAUXITE),
         COPPER(RagiumMaterialKeys.COPPER),
-        GOLD(RagiumMaterialKeys.GOLD),
         IRON(RagiumMaterialKeys.IRON),
         NITER(RagiumMaterialKeys.NITER),
         SULFUR(RagiumMaterialKeys.SULFUR),
+
+        // tier 2
+        RAGINITE(RagiumMaterialKeys.RAGINITE),
+        GOLD(RagiumMaterialKeys.GOLD),
+
+        // tier 3
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -95,9 +100,12 @@ object RagiumContents : HTContentRegister {
     //    Gems    //
 
     enum class Gems(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        // tier 3
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
         CRYOLITE(RagiumMaterialKeys.CRYOLITE),
         FLUORITE(RagiumMaterialKeys.FLUORITE),
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+
+        // tier 4
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
@@ -110,12 +118,17 @@ object RagiumContents : HTContentRegister {
     //    Ingots    //
 
     enum class Ingots(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        // tier 1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+
+        // tier 2
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        STEEL(RagiumMaterialKeys.STEEL),
+
+        // tier 3
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        STEEL(RagiumMaterialKeys.STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -157,9 +170,14 @@ object RagiumContents : HTContentRegister {
     //    Raw Materials    //
 
     enum class RawMaterials(override val material: HTMaterialKey) : HTContent.Material<Item> {
-        BAUXITE(RagiumMaterialKeys.BAUXITE),
+        // tier 1
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
+
+        // tier2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
+
+        // tier 3
+        BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -179,6 +197,19 @@ object RagiumContents : HTContentRegister {
         override val registry: Registry<Block> = Registries.BLOCK
         override val key: RegistryKey<Block> =
             RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_grate"))
+    }
+
+    //    Casings    //
+
+    enum class Casings(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val registry: Registry<Block> = Registries.BLOCK
+        override val key: RegistryKey<Block> =
+            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_casing"))
     }
 
     //    Hulls    //

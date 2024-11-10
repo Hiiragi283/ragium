@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:dusts/redstone"
+            "items": "ragium:basic_grate"
           }
         ]
       },

@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedSlottedStorage
-import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
@@ -42,7 +41,7 @@ class HTStorageBuilder(val size: Int) {
 
     fun <T : Any> build(builder: (HTStorageBuilder) -> T): T = builder(this)
 
-    fun buildSimple(): Inventory = build { SimpleInventory(it.size) }
+    fun buildSimple(): SimpleInventory = build { SimpleInventory(it.size) }
 
     fun buildSided(): SidedInventory = build(::SidedInventoryImpl)
 

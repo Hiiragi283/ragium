@@ -5,13 +5,10 @@ import hiiragi283.ragium.api.content.HTTranslationProvider
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -93,12 +90,6 @@ enum class HTMachineTier(
 
     fun createId(key: HTMachineKey): Identifier = key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
-    fun getBaseBlock(): Block = when (this) {
-        PRIMITIVE -> Blocks.BRICKS
-        BASIC -> RagiumBlocks.BASIC_CASING
-        ADVANCED -> RagiumBlocks.ADVANCED_CASING
-    }
-
     fun getCircuitBoard(): RagiumContents.CircuitBoards = when (this) {
         PRIMITIVE -> RagiumContents.CircuitBoards.PRIMITIVE
         BASIC -> RagiumContents.CircuitBoards.BASIC
@@ -121,6 +112,12 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumContents.Grates.PRIMITIVE
         BASIC -> RagiumContents.Grates.BASIC
         ADVANCED -> RagiumContents.Grates.ADVANCED
+    }
+
+    fun getCasing(): RagiumContents.Casings = when (this) {
+        PRIMITIVE -> RagiumContents.Casings.PRIMITIVE
+        BASIC -> RagiumContents.Casings.BASIC
+        ADVANCED -> RagiumContents.Casings.ADVANCED
     }
 
     fun getHull(): RagiumContents.Hulls = when (this) {

@@ -6,7 +6,7 @@
       "tag": "c:plates/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:bricks"
+      "item": "ragium:primitive_casing"
     }
   },
   "pattern": [
@@ -15,7 +15,7 @@
     "BBB"
   ],
   "result": {
-    "count": 1,
+    "count": 2,
     "id": "ragium:primitive_hull"
   }
 }

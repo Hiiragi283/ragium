@@ -17,8 +17,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
@@ -523,11 +521,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .offerTo(exporter)
         }
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val base: Block = tier.getBaseBlock()
             // grates
             val grate: RagiumContents.Grates = tier.getGrate()
             HTShapedRecipeJsonBuilder
-                .create(grate)
+                .create(grate, 2)
                 .patterns(
                     " A ",
                     "A A",
@@ -538,51 +535,51 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             // hulls
             val hull: RagiumContents.Hulls = tier.getHull()
             HTShapedRecipeJsonBuilder
-                .create(hull)
+                .create(hull, 2)
                 .patterns(
                     "AAA",
                     "A A",
                     "BBB",
                 ).input('A', tier.getMainPlate())
-                .input('B', base)
+                .input('B', tier.getCasing())
                 .unlockedBy(tier.getMainPlate())
                 .offerTo(exporter)
         }
         // casings
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.BASIC_CASING, 3)
+            .create(RagiumContents.Casings.PRIMITIVE, 3)
             .patterns(
                 "ABA",
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Plates.IRON)
-            .input('B', RagiumContents.Plates.STEEL)
-            .input('C', ConventionalItemTags.REDSTONE_DUSTS)
-            .unlockedBy(ConventionalItemTags.REDSTONE_DUSTS)
+            .input('B', Items.STONE)
+            .input('C', RagiumContents.Grates.PRIMITIVE)
+            .unlockedBy(RagiumContents.Grates.PRIMITIVE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.ADVANCED_CASING, 3)
+            .create(RagiumContents.Casings.BASIC, 3)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumContents.Plates.STEEL)
+            .input('B', Items.QUARTZ_BLOCK)
+            .input('C', RagiumContents.Grates.BASIC)
+            .unlockedBy(RagiumContents.Grates.BASIC)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumContents.Casings.ADVANCED, 3)
             .patterns(
                 "ABA",
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Plates.DEEP_STEEL)
-            .input('B', RagiumContents.Plates.ALUMINUM)
-            .input('C', RagiumContents.Gems.RAGI_CRYSTAL)
-            .unlockedBy(RagiumContents.Gems.RAGI_CRYSTAL)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.ELITE_CASING, 3)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', RagiumContents.Plates.STELLA)
-            .input('B', RagiumContents.Plates.DEEP_STEEL)
-            .input('C', ConventionalItemTags.DIAMOND_GEMS)
-            .unlockedBy(ConventionalItemTags.DIAMOND_GEMS)
+            .input('B', Items.POLISHED_DEEPSLATE)
+            .input('C', RagiumContents.Grates.ADVANCED)
+            .unlockedBy(RagiumContents.Grates.ADVANCED)
             .offerTo(exporter)
         // machines
         HTShapedRecipeJsonBuilder
@@ -592,7 +589,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " B ",
                 "BBB",
             ).input('A', RagiumContents.StorageBlocks.RAGI_ALLOY)
-            .input('B', Blocks.SMOOTH_STONE)
+            .input('B', ItemTags.TERRACOTTA)
             .unlockedBy(RagiumContents.StorageBlocks.RAGI_ALLOY)
             .offerTo(exporter)
 
@@ -604,7 +601,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "CCC",
             ).input('A', ConventionalItemTags.WOODEN_RODS)
             .input('B', RagiumContents.Ingots.RAGI_ALLOY)
-            .input('C', Items.SMOOTH_STONE)
+            .input('C', ItemTags.TERRACOTTA)
             .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
 

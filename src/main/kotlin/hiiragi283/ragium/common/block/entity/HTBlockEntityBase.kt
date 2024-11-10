@@ -45,7 +45,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     //    Extensions    //
 
-    fun syncInventory() {
+    open fun syncInventory() {
         sendPacket { asInventory()?.sendS2CPacket(it, pos) }
     }
 

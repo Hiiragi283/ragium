@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/iron"
-    },
-    "B": {
       "tag": "c:plates/steel"
     },
+    "B": {
+      "item": "minecraft:quartz_block"
+    },
     "C": {
-      "tag": "c:dusts/redstone"
+      "item": "ragium:basic_grate"
     }
   },
   "pattern": [

@@ -24,22 +24,10 @@ object RagiumBlocks : HTContentRegister {
             },
         )
 
-    /*val SNOW_SPONGE: Block =
-        registerBlock(
-            "snow_sponge",
-            HTSpongeBlock(
-                blockSettings(Blocks.SNOW_BLOCK),
-                Blocks.SNOW_BLOCK::getDefaultState,
-            ) { world: World, pos: BlockPos ->
-                world.getBlockState(pos).isIn(BlockTags.SNOW)
-            },
-        )*/
+    //    Blocks - Buildings    //
 
-    /*val OBLIVION_CLUSTER: Block =
-        registerBlock(
-            "oblivion_cluster",
-            AmethystClusterBlock(7.0f, 3.0f, blockSettings(Blocks.AMETHYST_CLUSTER).mapColor(MapColor.BLACK)),
-        )*/
+    @JvmField
+    val ASPHALT: Block = registerCopy("asphalt", Blocks.STONE)
 
     //    Blocks - Foods    //
 
@@ -57,23 +45,11 @@ object RagiumBlocks : HTContentRegister {
     //    Blocks - Utilities    //
 
     @JvmField
-    val ADVANCED_CASING: Block =
-        registerCopy("advanced_casing", Blocks.IRON_BLOCK)
-
-    @JvmField
     val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
-
-    @JvmField
-    val BASIC_CASING: Block =
-        registerCopy("basic_casing", Blocks.IRON_BLOCK)
 
     @JvmField
     val CREATIVE_SOURCE: Block =
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
-
-    @JvmField
-    val ELITE_CASING: Block =
-        registerCopy("elite_casing", Blocks.IRON_BLOCK)
 
     @JvmField
     val ITEM_DISPLAY: Block =

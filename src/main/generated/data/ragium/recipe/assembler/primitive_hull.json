@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 3,
+      "items": "#c:plates/ragi_alloy"
+    },
+    {
+      "items": "ragium:primitive_casing"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:primitive_hull"
+    }
+  ]
+}

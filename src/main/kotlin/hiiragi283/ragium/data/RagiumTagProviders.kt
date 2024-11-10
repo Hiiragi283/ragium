@@ -54,11 +54,10 @@ object RagiumTagProviders {
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
 
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ASPHALT)
+
             add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
 
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ADVANCED_CASING)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.BASIC_CASING)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ELITE_CASING)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
@@ -69,6 +68,7 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
                 addAll(RagiumContents.Grates.entries)
+                addAll(RagiumContents.Casings.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
                 addAll(RagiumContents.Pipes.entries)

@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:primitive_grate"
+  },
+  "definition": {
+    "type": "ragium:metal_former",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "#c:plates/iron"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:primitive_grate"
+    }
+  ]
+}

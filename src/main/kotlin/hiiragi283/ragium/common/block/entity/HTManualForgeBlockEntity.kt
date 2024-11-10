@@ -1,11 +1,15 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -13,6 +17,7 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.ActionResult
@@ -25,6 +30,12 @@ import kotlin.jvm.optionals.getOrNull
 class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_FORGE, pos, state) {
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
+
+    private val inventory: SidedInventory = HTStorageBuilder(1)
+        .set(0, HTStorageIO.GENERIC, HTStorageSide.NONE)
+        .buildSided()
+
+    override fun asInventory(): SidedInventory = inventory
 
     override fun onUse(
         state: BlockState,
@@ -40,21 +51,29 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
         val stackMain: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
-        if (!stackMain.isOf(RagiumItems.FORGE_HAMMER)) return
-        val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
+        if (!stackMain.isOf(RagiumItems.FORGE_HAMMER)) {
+            inventory.modifyStack(0) { stack: ItemStack ->
+                dropStackAt(player, stack)
+                val copies: ItemStack = stackMain.copy()
+                stackMain.count = 0
+                copies
+            }
+            return
+        }
+        val invStack: ItemStack = inventory.getStack(0)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
                 HTMachineInput.create(
                     RagiumMachineKeys.METAL_FORMER,
                     HTMachineTier.PRIMITIVE,
-                ) { add(stackOff) },
+                ) { add(invStack) },
                 world,
             ).getOrNull()
             ?.value
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
-        stackOff.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
+        invStack.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
         RagiumMachineKeys.METAL_FORMER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

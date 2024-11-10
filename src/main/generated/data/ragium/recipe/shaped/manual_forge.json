@@ -6,7 +6,7 @@
       "tag": "c:storage_blocks/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:smooth_stone"
+      "tag": "minecraft:terracotta"
     }
   },
   "pattern": [

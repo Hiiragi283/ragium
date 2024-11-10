@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/diamond"
+            "items": "ragium:primitive_grate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/elite_casing"
+        "recipe": "ragium:shaped/primitive_casing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/elite_casing"
+      "ragium:shaped/primitive_casing"
     ]
   }
 }

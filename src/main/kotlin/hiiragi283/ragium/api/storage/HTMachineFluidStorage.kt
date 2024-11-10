@@ -83,7 +83,7 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
             },
         )
     }
-    
+
     //    HTFluidSyncable    //
 
     override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {

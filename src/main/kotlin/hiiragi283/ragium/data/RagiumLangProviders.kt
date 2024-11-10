@@ -76,6 +76,17 @@ object RagiumLangProviders {
                 }.getTranslation(type, it.tier),
             )
         }
+        RagiumContents.Casings.entries.forEach {
+            builder.add(
+                it,
+                HTTranslationFormatter { type ->
+                    when (type) {
+                        HTLangType.EN_US -> "%s Casing"
+                        HTLangType.JA_JP -> "%s外装"
+                    }
+                }.getTranslation(type, it.tier),
+            )
+        }
         RagiumContents.Hulls.entries.forEach {
             builder.add(
                 it,
@@ -169,11 +180,11 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
+            builder.add(RagiumBlocks.ASPHALT, "Asphalt")
+
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
-            builder.add(RagiumBlocks.ADVANCED_CASING, "Advanced Casing")
-            builder.add(RagiumBlocks.BASIC_CASING, "Basic Casing")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "Large Processor")
@@ -378,6 +389,7 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.ORE, "%s Ore")
             builder.add(HTTagPrefix.PLATE, "%s Plate")
             builder.add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
+            builder.add(HTTagPrefix.ROD, "%s Rod")
             builder.add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         }
     }
@@ -393,11 +405,11 @@ object RagiumLangProviders {
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
+            builder.add(RagiumBlocks.ASPHALT, "アスファルト")
+
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
-            builder.add(RagiumBlocks.ADVANCED_CASING, "発展外装")
-            builder.add(RagiumBlocks.BASIC_CASING, "基本外装")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "大型処理装置")
@@ -562,6 +574,7 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.ORE, "%s鉱石")
             builder.add(HTTagPrefix.PLATE, "%s板")
             builder.add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
+            builder.add(HTTagPrefix.ROD, "%s棒")
             builder.add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         }
     }

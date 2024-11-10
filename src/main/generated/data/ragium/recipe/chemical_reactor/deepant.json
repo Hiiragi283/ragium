@@ -14,5 +14,10 @@
       "count": 16,
       "items": "minecraft:deepslate"
     }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:deepant"
+    }
   ]
 }

@@ -39,7 +39,7 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 3,
                 1..3,
-                HTMultiblockComponent.of(tier.getBaseBlock()),
+                HTMultiblockComponent.of(tier.getCasing()),
             )
     }
 }

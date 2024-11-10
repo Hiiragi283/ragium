@@ -9,7 +9,7 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "C": {
-      "item": "minecraft:smooth_stone"
+      "tag": "minecraft:terracotta"
     }
   },
   "pattern": [

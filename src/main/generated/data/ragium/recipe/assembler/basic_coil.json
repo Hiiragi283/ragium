@@ -7,7 +7,7 @@
   "item_inputs": [
     {
       "count": 8,
-      "items": "#c:ingots/gold"
+      "items": "#c:plates/gold"
     },
     {
       "items": "ragium:shaft"
