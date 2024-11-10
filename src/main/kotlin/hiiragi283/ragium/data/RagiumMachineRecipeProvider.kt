@@ -70,13 +70,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY, "_alt")
 
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ALLOY_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(ConventionalItemTags.GOLD_INGOTS, 5)
-            .itemInput(Items.NETHERITE_SCRAP, 3)
-            .itemOutput(Items.NETHERITE_INGOT, 2)
-            .offerTo(exporter, Items.NETHERITE_INGOT)
-
-        HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ALLOY_FURNACE)
             .fluidInput(RagiumFluids.BATTER)
             .itemInput(RagiumItems.BUTTER)
@@ -252,6 +245,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumItems.DEEPANT)
             .offerTo(exporter, RagiumItems.DEEPANT)
 
+        // netherite scrap
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(Items.ANCIENT_DEBRIS)
+            .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
+            .itemOutput(Items.NETHERITE_SCRAP, 3)
+            .offerTo(exporter, Items.NETHERITE_SCRAP, "_3x")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(Items.ANCIENT_DEBRIS)
+            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
+            .itemOutput(Items.NETHERITE_SCRAP, 4)
+            .offerTo(exporter, Items.NETHERITE_SCRAP, "_4x")
         // steam reforming
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)

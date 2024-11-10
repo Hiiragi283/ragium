@@ -1,11 +1,27 @@
 {
   "values": [
     {
+      "id": "#c:gems/coal",
+      "required": false
+    },
+    {
       "id": "#c:gems/cryolite",
       "required": false
     },
     {
+      "id": "#c:gems/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:gems/emerald",
+      "required": false
+    },
+    {
       "id": "#c:gems/fluorite",
+      "required": false
+    },
+    {
+      "id": "#c:gems/quartz",
       "required": false
     },
     {

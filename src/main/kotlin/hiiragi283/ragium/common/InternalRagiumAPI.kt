@@ -21,6 +21,7 @@ import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -123,8 +124,8 @@ internal data object InternalRagiumAPI : RagiumAPI {
         // bind items
         val itemCache: Multimap<Pair<HTTagPrefix, HTMaterialKey>, Item> = HashMultimap.create()
         RagiumAPI.forEachPlugins {
-            it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: Item ->
-                itemCache.put(prefix to key, item)
+            it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: ItemConvertible ->
+                itemCache.put(prefix to key, item.asItem())
             }
         }
         val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Set<Item>> = mutableTableOf()

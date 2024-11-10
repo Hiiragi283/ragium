@@ -173,10 +173,17 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST, Rarity.COMMON)
         consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST, Rarity.COMMON)
         // gem
+        consumer.accept(RagiumMaterialKeys.COAL, HTMaterialKey.Type.GEM, Rarity.COMMON)
         consumer.accept(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.DIAMOND, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.EMERALD, HTMaterialKey.Type.GEM, Rarity.RARE)
         consumer.accept(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.PERIDOT, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.QUARTZ, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
         consumer.accept(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
         consumer.accept(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM, Rarity.EPIC)
+        consumer.accept(RagiumMaterialKeys.RUBY, HTMaterialKey.Type.GEM, Rarity.RARE)
+        consumer.accept(RagiumMaterialKeys.SAPPHIRE, HTMaterialKey.Type.GEM, Rarity.RARE)
         // metal
         consumer.accept(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL, Rarity.RARE)
         consumer.accept(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL, Rarity.COMMON)
@@ -218,14 +225,21 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
     }
 
-    override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Item>) {
+    override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {
         fun bindContents(contents: List<HTContent.Material<*>>) {
-            contents.forEach { consumer.accept(it.tagPrefix, it.material, it.asItem()) }
+            contents.forEach { consumer.accept(it.tagPrefix, it.material, it) }
         }
-
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COAL, Items.DEEPSLATE_COAL_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.DIAMOND, Items.DEEPSLATE_DIAMOND_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.EMERALD, Items.DEEPSLATE_EMERALD_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
+
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.COAL, Items.COAL)
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND, Items.DIAMOND)
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD, Items.EMERALD)
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
 
         consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
         consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD, Items.GOLD_INGOT)
@@ -234,9 +248,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.GOLD, Items.GOLD_NUGGET)
         consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_ORE)
 
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COAL, Items.COAL_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.DIAMOND, Items.DIAMOND_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.EMERALD, Items.EMERALD_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.QUARTZ, Items.NETHER_QUARTZ_ORE)
 
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
@@ -244,7 +262,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
         consumer.accept(HTTagPrefix.ROD, RagiumMaterialKeys.WOOD, Items.STICK)
 
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COAL, Items.COAL_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER, Items.COPPER_BLOCK)
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.DIAMOND, Items.DIAMOND_BLOCK)
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.EMERALD, Items.EMERALD_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
 
@@ -257,24 +278,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumContents.RawMaterials.entries)
     }
 
-    private fun getMainPrefix(type: HTMaterialKey.Type): HTTagPrefix? = when (type) {
-        HTMaterialKey.Type.ALLOY -> HTTagPrefix.INGOT
-        HTMaterialKey.Type.DUST -> null
-        HTMaterialKey.Type.GEM -> HTTagPrefix.GEM
-        HTMaterialKey.Type.METAL -> HTTagPrefix.INGOT
-        HTMaterialKey.Type.MINERAL -> null
-        HTMaterialKey.Type.PLATE -> null
-    }
-
-    private fun getRawPrefix(type: HTMaterialKey.Type): HTTagPrefix? = when (type) {
-        HTMaterialKey.Type.ALLOY -> null
-        HTMaterialKey.Type.DUST -> null
-        HTMaterialKey.Type.GEM -> HTTagPrefix.GEM
-        HTMaterialKey.Type.METAL -> HTTagPrefix.RAW_MATERIAL
-        HTMaterialKey.Type.MINERAL -> null
-        HTMaterialKey.Type.PLATE -> null
-    }
-
     override fun registerRuntimeRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
@@ -284,7 +287,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // ingot/gem -> block
         helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
             val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
-            val prefix: HTTagPrefix = getMainPrefix(entry.type) ?: return@register
+            val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@register
             // Shaped Crafting
             HTShapedRecipeJsonBuilder
                 .create(block)
@@ -296,8 +299,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter)
         }
         // block -> ingot/gem
-        with(this) {
-            val prefix: HTTagPrefix = getMainPrefix(entry.type) ?: return@with
+        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
             helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
                 val output: Item = map[prefix] ?: return@register
                 // Shapeless Crafting
@@ -338,8 +340,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, dust, "_from_plate")
         }
         // ore -> raw/gem
-        with(this) {
-            val prefix: HTTagPrefix = getRawPrefix(entry.type) ?: return@with
+        entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
             helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
                 val output: Item = map[prefix] ?: return@register
                 // Grinder Recipe
@@ -354,14 +355,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .itemInput(HTTagPrefix.ORE, key)
                     .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
                     .itemOutput(output, 3)
-                    .offerTo(exporter, output, "_with_hcl")
+                    .offerTo(exporter, output, "_3x")
                 // 4x Chemical Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
                     .itemInput(HTTagPrefix.ORE, key)
                     .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
                     .itemOutput(output, 4)
-                    .offerTo(exporter, output, "_with_h2so4")
+                    .offerTo(exporter, output, "_4x")
             }
         }
         // raw -> dust

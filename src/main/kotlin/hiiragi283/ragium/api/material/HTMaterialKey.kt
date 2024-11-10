@@ -56,8 +56,17 @@ class HTMaterialKey private constructor(val name: String) :
         enum class Type(val validPrefixes: List<HTTagPrefix>) {
             ALLOY(HTTagPrefix.DUST, HTTagPrefix.INGOT, HTTagPrefix.PLATE, HTTagPrefix.STORAGE_BLOCK),
             DUST(HTTagPrefix.DUST),
-            GEM(HTTagPrefix.DUST, HTTagPrefix.GEM, HTTagPrefix.ORE, HTTagPrefix.STORAGE_BLOCK),
+            GEM(
+                HTTagPrefix.END_ORE,
+                HTTagPrefix.DEEP_ORE,
+                HTTagPrefix.DUST,
+                HTTagPrefix.GEM,
+                HTTagPrefix.ORE,
+                HTTagPrefix.STORAGE_BLOCK,
+            ),
             METAL(
+                HTTagPrefix.END_ORE,
+                HTTagPrefix.DEEP_ORE,
                 HTTagPrefix.DUST,
                 HTTagPrefix.INGOT,
                 HTTagPrefix.ORE,
@@ -65,12 +74,36 @@ class HTMaterialKey private constructor(val name: String) :
                 HTTagPrefix.RAW_MATERIAL,
                 HTTagPrefix.STORAGE_BLOCK,
             ),
-            MINERAL(HTTagPrefix.DUST, HTTagPrefix.ORE, HTTagPrefix.RAW_MATERIAL),
+            MINERAL(
+                HTTagPrefix.END_ORE,
+                HTTagPrefix.DEEP_ORE,
+                HTTagPrefix.DUST,
+                HTTagPrefix.ORE,
+                HTTagPrefix.RAW_MATERIAL,
+            ),
             PLATE(HTTagPrefix.DUST, HTTagPrefix.PLATE),
             ;
 
             constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toList())
 
             fun isValidPrefix(prefix: HTTagPrefix): Boolean = prefix in validPrefixes
+
+            fun getMainPrefix(): HTTagPrefix? = when (this) {
+                ALLOY -> HTTagPrefix.INGOT
+                DUST -> null
+                GEM -> HTTagPrefix.GEM
+                METAL -> HTTagPrefix.INGOT
+                MINERAL -> null
+                PLATE -> null
+            }
+
+            fun getRawPrefix(): HTTagPrefix? = when (this) {
+                ALLOY -> null
+                DUST -> null
+                GEM -> HTTagPrefix.GEM
+                METAL -> HTTagPrefix.RAW_MATERIAL
+                MINERAL -> HTTagPrefix.RAW_MATERIAL
+                PLATE -> null
+            }
         }
     }

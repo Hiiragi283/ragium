@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.util.TriConsumer
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
 import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
 import java.util.function.Predicate
@@ -32,7 +33,7 @@ interface RagiumPlugin {
 
     fun setupMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
 
-    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Item>) {}
+    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {}
 
     fun afterRagiumInit(instance: RagiumAPI) {}
 

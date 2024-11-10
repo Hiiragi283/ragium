@@ -17,6 +17,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/coal",
+      "required": false
+    },
+    {
       "id": "#c:dusts/copper",
       "required": false
     },
@@ -30,6 +34,14 @@
     },
     {
       "id": "#c:dusts/deep_steel",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/emerald",
       "required": false
     },
     {
@@ -62,6 +74,10 @@
     },
     {
       "id": "#c:dusts/plastic",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/quartz",
       "required": false
     },
     {

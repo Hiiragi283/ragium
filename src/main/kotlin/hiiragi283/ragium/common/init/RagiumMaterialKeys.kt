@@ -31,16 +31,37 @@ object RagiumMaterialKeys {
     //    Gem    //
 
     @JvmField
+    val COAL: HTMaterialKey = HTMaterialKey.of("coal")
+
+    @JvmField
     val CRYOLITE: HTMaterialKey = HTMaterialKey.of("cryolite")
 
     @JvmField
+    val DIAMOND: HTMaterialKey = HTMaterialKey.of("diamond")
+
+    @JvmField
+    val EMERALD: HTMaterialKey = HTMaterialKey.of("emerald")
+
+    @JvmField
     val FLUORITE: HTMaterialKey = HTMaterialKey.of("fluorite")
+
+    @JvmField
+    val PERIDOT: HTMaterialKey = HTMaterialKey.of("peridot")
+
+    @JvmField
+    val QUARTZ: HTMaterialKey = HTMaterialKey.of("quartz")
+
+    @JvmField
+    val SAPPHIRE: HTMaterialKey = HTMaterialKey.of("sapphire")
 
     @JvmField
     val RAGI_CRYSTAL: HTMaterialKey = HTMaterialKey.of("ragi_crystal")
 
     @JvmField
     val RAGIUM: HTMaterialKey = HTMaterialKey.of("ragium")
+
+    @JvmField
+    val RUBY: HTMaterialKey = HTMaterialKey.of("ruby")
 
     //    Metal    //
 

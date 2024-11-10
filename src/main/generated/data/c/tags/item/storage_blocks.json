@@ -5,6 +5,10 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/coal",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/copper",
       "required": false
     },
@@ -14,6 +18,14 @@
     },
     {
       "id": "#c:storage_blocks/deep_steel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/diamond",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/emerald",
       "required": false
     },
     {
@@ -34,6 +46,10 @@
     },
     {
       "id": "#c:storage_blocks/lead",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/quartz",
       "required": false
     },
     {

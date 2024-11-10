@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "ragium:hydrochloric_acid"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:ancient_debris"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 3,
+      "item": "minecraft:netherite_scrap"
+    }
+  ]
+}
