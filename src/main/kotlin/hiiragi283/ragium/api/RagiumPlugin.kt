@@ -7,11 +7,8 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.util.TriConsumer
-import net.fabricmc.fabric.impl.resource.conditions.ResourceConditionsImpl
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
 import java.util.function.Predicate
@@ -47,9 +44,6 @@ interface RagiumPlugin {
     ) {
     }
 
-    @Suppress("UnstableApiUsage")
-    fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditionsImpl.tagsPopulated(RegistryKeys.ITEM.value, listOf(tagKey.id))
-
     //    PropertyHelper    //
 
     class PropertyHelper<T : Any>(private val key: T, private val properties: HTMutablePropertyHolder) {
@@ -71,20 +65,15 @@ interface RagiumPlugin {
     //    RecipeHelper    //
 
     class RecipeHelper {
-        @Suppress("UnstableApiUsage")
-        fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditionsImpl.tagsPopulated(RegistryKeys.ITEM.value, listOf(tagKey.id))
-
-        fun register(
-            key: HTMaterialKey,
-            entry: HTMaterialRegistry.Entry,
-            vararg requiredPrefixes: HTTagPrefix,
-            action: (List<TagKey<Item>>) -> Unit,
-        ) {
+        fun register(entry: HTMaterialRegistry.Entry, vararg requiredPrefixes: HTTagPrefix, action: (Map<HTTagPrefix, Item>) -> Unit) {
             if (requiredPrefixes.all(entry.type::isValidPrefix)) {
-                val tagKeys: List<TagKey<Item>> = requiredPrefixes.map { it.createTag(key) }
-                if (tagKeys.all(::isPopulated)) {
-                    action(tagKeys)
-                }
+                action(
+                    buildMap {
+                        requiredPrefixes.forEach { prefix: HTTagPrefix ->
+                            entry.getFirstItem(prefix)?.let { put(prefix, it) }
+                        }
+                    },
+                )
             }
         }
     }

@@ -38,6 +38,7 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
     RAW_MATERIAL("raw_materials") {
         override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
     },
+    ROD("rods"),
     STORAGE_BLOCK("storage_blocks", false) {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },

@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.machine.*
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.RecipeExporter
@@ -221,6 +222,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.IRON, Items.RAW_IRON)
 
+        consumer.accept(HTTagPrefix.ROD, RagiumMaterialKeys.WOOD, Items.STICK)
+
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.COPPER, Items.COPPER_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
@@ -241,8 +244,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper: RagiumPlugin.RecipeHelper,
     ) {
         // ingot -> block
-        helper.register(key, entry, HTTagPrefix.INGOT) { tagKeys: List<TagKey<Item>> ->
-            val block: ItemConvertible = entry.getFirstItem(HTTagPrefix.STORAGE_BLOCK) ?: return@register
+        helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
+            val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
             // Shaped Crafting
             HTShapedRecipeJsonBuilder
                 .create(block)
@@ -250,123 +253,121 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     "AAA",
                     "AAA",
                     "AAA",
-                ).input('A', tagKeys[0])
-                .unlockedBy(tagKeys[0])
+                ).input('A', HTTagPrefix.INGOT, key)
                 .offerTo(exporter)
         }
         // block -> ingot
-        helper.register(key, entry, HTTagPrefix.STORAGE_BLOCK) { tagKeys: List<TagKey<Item>> ->
-            val ingot: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT) ?: return@register
+        helper.register(entry, HTTagPrefix.INGOT) { map: Map<HTTagPrefix, Item> ->
+            val ingot: Item = map[HTTagPrefix.INGOT] ?: return@register
             // Shapeless Crafting
             HTShapelessRecipeJsonBuilder
                 .create(ingot, 9)
-                .input(tagKeys[0])
-                .unlockedBy(tagKeys[0])
+                .input(HTTagPrefix.STORAGE_BLOCK, key)
                 .offerTo(exporter)
         }
         // ingot -> plate
-        helper.register(key, entry, HTTagPrefix.INGOT, HTTagPrefix.PLATE) { tagKeys: List<TagKey<Item>> ->
+        helper.register(entry, HTTagPrefix.PLATE) { map: Map<HTTagPrefix, Item> ->
+            val plate: Item = map[HTTagPrefix.PLATE] ?: return@register
             // Metal Former Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.METAL_FORMER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1])
-                .offerTo(exporter, tagKeys[1])
+                .itemInput(HTTagPrefix.INGOT, key)
+                .itemOutput(plate)
+                .offerTo(exporter, plate)
         }
         // ingot -> dust
-        helper.register(key, entry, HTTagPrefix.INGOT, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
+            val dust: Item = map[HTTagPrefix.DUST] ?: return@register
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1])
-                .offerTo(exporter, tagKeys[1], "_from_ingot")
-        }
-        // gem -> dust
-        helper.register(key, entry, HTTagPrefix.GEM, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
-            // Grinder Recipe
+                .itemInput(HTTagPrefix.INGOT, key)
+                .itemOutput(dust)
+                .offerTo(exporter, dust, "_from_ingot")
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1])
-                .offerTo(exporter, tagKeys[1], "_from_gem")
-        }
-        // plate -> dust
-        helper.register(key, entry, HTTagPrefix.PLATE, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
-            // Grinder Recipe
+                .itemInput(HTTagPrefix.GEM, key)
+                .itemOutput(dust)
+                .offerTo(exporter, dust, "_from_gem")
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1])
-                .offerTo(exporter, tagKeys[1], "_from_plate")
+                .itemInput(HTTagPrefix.PLATE, key)
+                .itemOutput(dust)
+                .offerTo(exporter, dust, "_from_plate")
         }
         // ore -> raw
-        helper.register(key, entry, HTTagPrefix.ORE, HTTagPrefix.RAW_MATERIAL) { tagKeys: List<TagKey<Item>> ->
-            // Grinder Recipe
+        helper.register(entry, HTTagPrefix.RAW_MATERIAL) { map: Map<HTTagPrefix, Item> ->
+            val raw = map[HTTagPrefix.RAW_MATERIAL] ?: return@register
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1], 2)
-                .offerTo(exporter, tagKeys[1])
+                .itemInput(HTTagPrefix.ORE, key)
+                .itemOutput(raw, 2)
+                .offerTo(exporter, raw)
         }
         // ore -> gem
-        helper.register(key, entry, HTTagPrefix.ORE, HTTagPrefix.GEM) { tagKeys: List<TagKey<Item>> ->
+        helper.register(entry, HTTagPrefix.GEM) { map: Map<HTTagPrefix, Item> ->
+            val gem: Item = map[HTTagPrefix.GEM] ?: return@register
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1], 2)
-                .offerTo(exporter, tagKeys[1])
+                .itemInput(HTTagPrefix.ORE, key)
+                .itemOutput(gem, 2)
+                .offerTo(exporter, gem)
         }
         // raw -> dust
-        helper.register(key, entry, HTTagPrefix.RAW_MATERIAL, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
+            val dust: Item = map[HTTagPrefix.DUST] ?: return@register
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(tagKeys[0])
-                .itemOutput(tagKeys[1], 2)
-                .offerTo(exporter, tagKeys[1], "_from_raw")
+                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
+                .itemOutput(dust, 2)
+                .offerTo(exporter, dust, "_from_raw")
             // 3x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .itemInput(tagKeys[0])
+                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
                 .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
-                .itemOutput(tagKeys[1], 3)
-                .offerTo(exporter, tagKeys[1], "_with_hcl")
+                .itemOutput(dust, 3)
+                .offerTo(exporter, dust, "_with_hcl")
             // 4x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
-                .itemInput(tagKeys[0])
+                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
                 .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
-                .itemOutput(tagKeys[1], 4)
-                .offerTo(exporter, tagKeys[1], "_with_h2so4")
+                .itemOutput(dust, 4)
+                .offerTo(exporter, dust, "_with_h2so4")
         }
         // raw -> ingot
-        helper.register(key, entry, HTTagPrefix.RAW_MATERIAL) { tagKeys: List<TagKey<Item>> ->
+        helper.register(entry) {
             // Smelting Recipe
             val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
                 ?: key.entry.getFirstItem(HTTagPrefix.GEM)
                 ?: return@register
             if (entry.contains(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)) return@register
+            val raw: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
+            if (!ResourceConditions.tagsPopulated(raw).test(null)) return@register
             HTCookingRecipeJsonBuilder.smeltAndBlast(
                 exporter,
-                tagKeys[0],
+                raw,
                 result,
                 entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
                 suffix = "_from_raw",
             )
         }
         // dust -> ingot
-        helper.register(key, entry, HTTagPrefix.DUST) { tagKeys: List<TagKey<Item>> ->
+        helper.register(entry) {
             // Smelting Recipe
             val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
                 ?: key.entry.getFirstItem(HTTagPrefix.GEM)
                 ?: return@register
             if (entry.contains(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)) return@register
+            val dust: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
+            if (!ResourceConditions.tagsPopulated(dust).test(null)) return@register
             HTCookingRecipeJsonBuilder.smeltAndBlast(
                 exporter,
-                tagKeys[0],
+                dust,
                 result,
                 entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
                 suffix = "_from_dust",
