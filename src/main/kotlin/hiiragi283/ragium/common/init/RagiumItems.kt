@@ -181,6 +181,9 @@ object RagiumItems : HTContentRegister {
     val CRAFTER_HAMMER: Item = registerItem("crafter_hammer", HTCrafterHammerItem)
 
     @JvmField
+    val CRIMSON_CRYSTAL: Item = registerItem("crimson_crystal")
+
+    @JvmField
     val DEEPANT: Item = registerItem("deepant")
 
     @JvmField
@@ -235,10 +238,14 @@ object RagiumItems : HTContentRegister {
     val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
 
     @JvmField
+    val WARPED_CRYSTAL: Item = registerItem("warped_crystal")
+
+    @JvmField
     val MISC: List<Item> = listOf(
         BACKPACK,
         BASALT_MESH,
         CRAFTER_HAMMER,
+        CRIMSON_CRYSTAL,
         DEEPANT,
         DYNAMITE,
         EMPTY_FLUID_CUBE,
@@ -257,5 +264,6 @@ object RagiumItems : HTContentRegister {
         SOAP_INGOT,
         SOLAR_PANEL,
         TRADER_CATALOG,
+        WARPED_CRYSTAL,
     )
 }

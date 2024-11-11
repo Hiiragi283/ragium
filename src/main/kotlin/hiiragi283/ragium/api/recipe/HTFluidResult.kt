@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.longRangeCodec
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
@@ -55,12 +56,7 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
     val resourceAmount: ResourceAmount<FluidVariant>
         get() = ResourceAmount(variant, amount)
 
-    fun canMerge(storage: SingleSlotStorage<FluidVariant>): Boolean = when {
-        storage.resource.isBlank || storage.amount == 0L -> true
-        !storage.resource.isOf(fluid) -> false
-        storage.amount + amount > storage.capacity -> false
-        else -> true
-    }
+    fun canMerge(storage: SingleSlotStorage<FluidVariant>): Boolean = StorageUtil.simulateInsert(storage, variant, amount, null) == amount
 
     fun merge(storage: SingleSlotStorage<FluidVariant>, transaction: TransactionContext): Long = when {
         canMerge(storage) -> storage.insert(storage.resource, amount, transaction)

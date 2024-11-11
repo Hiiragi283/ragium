@@ -21,6 +21,10 @@
       "required": false
     },
     {
+      "id": "#c:gems/peridot",
+      "required": false
+    },
+    {
       "id": "#c:gems/quartz",
       "required": false
     },
@@ -30,6 +34,14 @@
     },
     {
       "id": "#c:gems/ragium",
+      "required": false
+    },
+    {
+      "id": "#c:gems/ruby",
+      "required": false
+    },
+    {
+      "id": "#c:gems/sapphire",
       "required": false
     }
   ]

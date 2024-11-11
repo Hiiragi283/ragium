@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:advanced_water_generator"
+          "name": "ragium:open_crate"
         }
       ],
       "rolls": 1.0

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_item": {
+    "has_input": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_hull"
+            "items": "ragium:warped_crystal"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/basic_thermal_generator"
+        "recipe": "minecraft:blasting/ender_pearl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_the_item"
+      "has_input"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/basic_thermal_generator"
+      "minecraft:blasting/ender_pearl"
     ]
   }
 }

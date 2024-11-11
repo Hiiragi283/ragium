@@ -3,19 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/steel"
+      "tag": "c:plates/ragi_steel"
     },
     "B": {
       "item": "minecraft:magma_block"
     },
     "C": {
-      "item": "ragium:basic_circuit"
+      "item": "ragium:basic_hull"
+    },
+    "D": {
+      "item": "minecraft:magma_block"
+    },
+    "E": {
+      "tag": "c:plates/steel"
     }
   },
   "pattern": [
     "AAA",
-    "ABA",
-    "ACA"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

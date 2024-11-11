@@ -49,6 +49,10 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/peridot",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/quartz",
       "required": false
     },
@@ -70,6 +74,14 @@
     },
     {
       "id": "#c:storage_blocks/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/ruby",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/sapphire",
       "required": false
     },
     {

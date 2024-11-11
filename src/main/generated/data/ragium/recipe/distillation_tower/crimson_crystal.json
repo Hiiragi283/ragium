@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:distillation_tower",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 324000,
+      "fluids": "ragium:crimson_sap"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 243000,
+      "fluid": "ragium:refined_gas"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:crimson_crystal"
+    }
+  ]
+}

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:primitive_water_generator"
+          "name": "ragium:large_processor"
         }
       ],
       "rolls": 1.0

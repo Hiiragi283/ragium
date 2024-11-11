@@ -73,15 +73,13 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     val stack: ItemStack
         get() = ItemStack(entry, count, components)
 
-    fun canMerge(other: ItemStack): Boolean = when {
-        other.isEmpty -> true
-        ItemStack.areItemsAndComponentsEqual(stack, other) -> true
-        other.count + this.count > other.maxCount -> false
-        else -> false
+    fun canMerge(other: ItemStack): Boolean {
+        val copied: ItemStack = other.copy()
+        val merged: ItemStack = merge(copied)
+        return merged !== copied
     }
 
     fun merge(other: ItemStack): ItemStack = when {
-        !canMerge(other) -> other
         other.isEmpty -> stack
         other.count + this.count > other.maxCount -> other
         ItemStack.areItemsAndComponentsEqual(stack, other) -> other.apply { count += stack.count }

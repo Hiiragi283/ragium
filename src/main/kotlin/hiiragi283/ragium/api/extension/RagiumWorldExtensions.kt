@@ -27,6 +27,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Vec3d
 import net.minecraft.world.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -47,6 +48,7 @@ fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.
 
 fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean {
     val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
+    itemEntity.velocity = Vec3d.ZERO
     itemEntity.setPickupDelay(0)
     return world.spawnEntity(itemEntity)
 }

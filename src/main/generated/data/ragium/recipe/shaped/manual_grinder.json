@@ -9,7 +9,7 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "C": {
-      "tag": "minecraft:terracotta"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [

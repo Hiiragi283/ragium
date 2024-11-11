@@ -244,7 +244,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.DEEPANT)
             .offerTo(exporter, RagiumItems.DEEPANT)
-
         // netherite scrap
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
@@ -484,6 +483,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .catalyst(RagiumContents.Circuits.BASIC)
             .fluidOutput(RagiumFluids.BIO_FUEL)
             .offerTo(exporter, RagiumFluids.BIO_FUEL)
+
         // crude oil -> polymer resin + fuel
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -516,6 +516,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidOutput(RagiumFluids.ALCOHOL, FluidConstants.BUCKET * 6)
             .fluidOutput(RagiumFluids.NOBLE_GAS, FluidConstants.BUCKET * 2)
             .offerTo(exporter, RagiumFluids.ALCOHOL)
+
         // residual oil -> fuel + asphalt
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -539,6 +540,21 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumItems.RESIDUAL_COKE, 4)
             .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 4)
             .offerTo(exporter, RagiumItems.RESIDUAL_COKE)
+
+        // crimson sap -> crimson crystal
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
+            .fluidInput(RagiumFluids.CRIMSON_SAP, FluidConstants.BUCKET * 4)
+            .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
+            .fluidOutput(RagiumFluids.REFINED_GAS, FluidConstants.BUCKET * 3)
+            .offerTo(exporter, RagiumItems.CRIMSON_CRYSTAL)
+        // warped sap -> warped crystal
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
+            .fluidInput(RagiumFluids.WARPED_SAP, FluidConstants.BUCKET * 4)
+            .itemOutput(RagiumItems.WARPED_CRYSTAL)
+            .fluidOutput(RagiumFluids.REFINED_GAS, FluidConstants.BUCKET * 3)
+            .offerTo(exporter, RagiumItems.WARPED_CRYSTAL)
     }
 
     //    Electrolyzer    //
@@ -625,6 +641,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidOutput(RagiumFluids.NITROGEN, FluidConstants.BUCKET * 4)
             .fluidOutput(RagiumFluids.OXYGEN)
             .offerTo(exporter, RagiumFluids.AIR)
+        // sap
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.CRIMSON_STEMS)
+            .itemOutput(RagiumItems.PULP, 6)
+            .fluidOutput(RagiumFluids.CRIMSON_SAP, FluidConstants.BUCKET)
+            .offerTo(exporter, RagiumFluids.CRIMSON_SAP)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.WARPED_STEMS)
+            .itemOutput(RagiumItems.PULP, 6)
+            .fluidOutput(RagiumFluids.WARPED_SAP, FluidConstants.BUCKET)
+            .offerTo(exporter, RagiumFluids.WARPED_SAP)
         // crude oil
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)

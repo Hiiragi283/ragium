@@ -94,8 +94,9 @@ object RagiumItemGroup {
 
                     add(RagiumBlocks.BACKPACK_INTERFACE)
                     add(RagiumBlocks.ITEM_DISPLAY)
-                    add(RagiumBlocks.NETWORK_INTERFACE)
                     add(RagiumBlocks.LARGE_PROCESSOR)
+                    add(RagiumBlocks.NETWORK_INTERFACE)
+                    add(RagiumBlocks.OPEN_CRATE)
                     add(RagiumBlocks.SHAFT)
                     add(RagiumBlocks.TRASH_BOX)
 

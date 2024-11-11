@@ -6,16 +6,14 @@
       "tag": "c:plates/steel"
     },
     "B": {
-      "item": "ragium:forge_hammer"
+      "tag": "c:glass_blocks"
     }
   },
   "pattern": [
-    "AAA",
-    " B ",
-    "AAA"
+    "ABA"
   ],
   "result": {
-    "count": 3,
+    "count": 1,
     "id": "ragium:steel_pipe"
   }
 }

@@ -23,6 +23,8 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
 import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
@@ -148,6 +150,7 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
         registerBlockItem(RagiumBlocks.MANUAL_MIXER)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
+        registerBlockItem(RagiumBlocks.OPEN_CRATE)
         registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
         registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
@@ -167,11 +170,11 @@ object RagiumContentRegister : HTContentRegister {
                 override fun getCapacity(variant: ItemVariant): Long = Long.MAX_VALUE
             }
         }, RagiumBlocks.TRASH_BOX)
-        /*ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+        ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, _: Long, _: TransactionContext ->
                 if (dropStackAt(world, pos.down(), resource.toStack())) 1 else 0
             }
-        }, RagiumBlocks.ELITE_CASING)*/
+        }, RagiumBlocks.OPEN_CRATE)
 
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)

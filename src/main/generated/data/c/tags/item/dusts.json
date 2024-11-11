@@ -73,6 +73,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/peridot",
+      "required": false
+    },
+    {
       "id": "#c:dusts/plastic",
       "required": false
     },
@@ -102,6 +106,14 @@
     },
     {
       "id": "#c:dusts/refined_ragi_steel",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/ruby",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/sapphire",
       "required": false
     },
     {

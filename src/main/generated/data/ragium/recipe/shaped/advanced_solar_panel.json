@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/aluminum"
+      "tag": "c:plates/deep_steel"
     },
     "B": {
       "item": "ragium:solar_panel"
@@ -13,7 +13,6 @@
     }
   },
   "pattern": [
-    "AAA",
     "ABA",
     "ACA"
   ],

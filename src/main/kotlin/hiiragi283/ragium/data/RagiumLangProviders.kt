@@ -241,6 +241,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.BACKPACK, "Backpack")
             builder.add(RagiumItems.BASALT_MESH, "Basalt Mesh")
             builder.add(RagiumItems.CRAFTER_HAMMER, "Crafter's Hammer")
+            builder.add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
             builder.add(RagiumItems.DEEPANT, "Deepant")
             builder.add(RagiumItems.DYNAMITE, "Dynamite")
             builder.add(RagiumItems.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
@@ -259,6 +260,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumItems.SOLAR_PANEL, "Solar Panel")
             builder.add(RagiumItems.TRADER_CATALOG, "Trader Catalog")
+            builder.add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
 
             builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "Module: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
@@ -321,7 +323,7 @@ object RagiumLangProviders {
                 "Thermal Generator",
                 "Generate energy from hot fluids",
             )
-            builder.add(RagiumMachineKeys.WATER_GENERATOR, "Water Generator")
+            // builder.add(RagiumMachineKeys.WATER_GENERATOR, "Water Generator")
 
             builder.add(
                 RagiumMachineKeys.ALLOY_FURNACE,
@@ -470,6 +472,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.BACKPACK, "バックパック")
             builder.add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
             builder.add(RagiumItems.CRAFTER_HAMMER, "クラフターズ・ハンマー")
+            builder.add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
             builder.add(RagiumItems.DEEPANT, "ディーパント")
             builder.add(RagiumItems.DYNAMITE, "ダイナマイト")
             builder.add(RagiumItems.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
@@ -488,6 +491,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
             builder.add(RagiumItems.TRADER_CATALOG, "行商人カタログ")
+            builder.add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 
             builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "モジュール: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")
@@ -526,7 +530,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.SOLAR_PANEL, "太陽光発電機", "日中に発電する")
             builder.add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と下部の熱源から発電する")
             builder.add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
-            builder.add(RagiumMachineKeys.WATER_GENERATOR, "水力発電機")
+            // builder.add(RagiumMachineKeys.WATER_GENERATOR, "水力発電機")
 
             builder.add(RagiumMachineKeys.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
             builder.add(RagiumMachineKeys.ASSEMBLER, "組立機", "悪魔博士，アッセンブル！")

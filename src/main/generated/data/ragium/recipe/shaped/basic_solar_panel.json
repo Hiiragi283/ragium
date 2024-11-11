@@ -13,7 +13,6 @@
     }
   },
   "pattern": [
-    "AAA",
     "ABA",
     "ACA"
   ],

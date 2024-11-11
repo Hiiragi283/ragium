@@ -48,7 +48,6 @@ object RagiumMachineKeys {
         SOLAR_PANEL,
         STEAM_GENERATOR,
         THERMAL_GENERATOR,
-        WATER_GENERATOR,
     )
 
     //    Processor    //

@@ -57,6 +57,10 @@
       "required": false
     },
     {
+      "id": "#c:ores/peridot",
+      "required": false
+    },
+    {
       "id": "#c:ores/quartz",
       "required": false
     },
@@ -70,6 +74,14 @@
     },
     {
       "id": "#c:ores/ragium",
+      "required": false
+    },
+    {
+      "id": "#c:ores/ruby",
+      "required": false
+    },
+    {
+      "id": "#c:ores/sapphire",
       "required": false
     },
     {

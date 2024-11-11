@@ -58,10 +58,12 @@ object RagiumTagProviders {
 
             add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
 
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.LARGE_PROCESSOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OPEN_CRATE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
 
             buildList {

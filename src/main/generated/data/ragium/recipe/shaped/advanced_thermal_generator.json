@@ -3,19 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/aluminum"
+      "tag": "c:plates/refined_ragi_steel"
     },
     "B": {
       "item": "minecraft:magma_block"
     },
     "C": {
-      "item": "ragium:advanced_circuit"
+      "item": "ragium:advanced_hull"
+    },
+    "D": {
+      "item": "minecraft:magma_block"
+    },
+    "E": {
+      "tag": "c:plates/deep_steel"
     }
   },
   "pattern": [
     "AAA",
-    "ABA",
-    "ACA"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

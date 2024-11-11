@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:crimson_sap"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#minecraft:crimson_stems"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "item": "ragium:pulp"
+    }
+  ]
+}

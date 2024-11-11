@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:warped_sap"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#minecraft:warped_stems"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "item": "ragium:pulp"
+    }
+  ]
+}

@@ -152,18 +152,23 @@ enum class HTMachineTier(
 
     fun canProcess(world: World): Boolean = canProcess(world.energyNetwork)
 
-    fun canProcess(network: HTEnergyNetwork?): Boolean = network?.amount?.let { it >= recipeCost } ?: false
+    fun canProcess(network: HTEnergyNetwork?, multiplier: Long = 1): Boolean =
+        network?.amount?.let { it >= recipeCost * multiplier } ?: false
 
-    fun consumerEnergy(world: World, parent: TransactionContext? = null) {
+    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean {
         useTransaction(parent) { transaction: Transaction ->
             world.energyNetwork?.let { network: HTEnergyNetwork ->
-                val extracted: Long = network.extract(recipeCost, transaction)
+                val extracted: Long = network.extract(recipeCost * multiplier, transaction)
                 when {
-                    extracted > 0 -> transaction.commit()
+                    extracted > 0 -> {
+                        transaction.commit()
+                        return true
+                    }
                     else -> transaction.abort()
                 }
             }
         }
+        return false
     }
 
     //    StringIdentifiable    //

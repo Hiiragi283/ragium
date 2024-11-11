@@ -6,7 +6,7 @@
       "tag": "c:plates/ragi_alloy"
     },
     "B": {
-      "tag": "minecraft:terracotta"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [

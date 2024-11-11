@@ -3,19 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/iron"
+      "tag": "c:plates/ragi_alloy"
     },
     "B": {
       "item": "minecraft:magma_block"
     },
     "C": {
-      "item": "ragium:primitive_circuit"
+      "item": "ragium:primitive_hull"
+    },
+    "D": {
+      "item": "minecraft:magma_block"
+    },
+    "E": {
+      "tag": "c:plates/iron"
     }
   },
   "pattern": [
     "AAA",
-    "ABA",
-    "ACA"
+    "BCD",
+    "EEE"
   ],
   "result": {
     "count": 1,

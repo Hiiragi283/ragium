@@ -105,13 +105,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTThermalGeneratorBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
-        helper.modify(RagiumMachineKeys.WATER_GENERATOR) {
+        /*helper.modify(RagiumMachineKeys.WATER_GENERATOR) {
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
                 pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
             }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
-        }
+        }*/
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Simple))

@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.ConnectingBlock
+import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
@@ -20,10 +21,17 @@ import net.minecraft.text.Text
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
 class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType) : HTBlockWithEntity(blockSettings().solid().nonOpaque()) {
+    companion object {
+        @JvmField
+        val SHAPE: VoxelShape = createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)
+    }
+
     init {
         defaultState = stateManager.defaultState
             .with(Properties.DOWN, false)
@@ -34,6 +42,13 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
             .with(Properties.EAST, false)
             .with(Properties.FACING, Direction.DOWN)
     }
+
+    override fun getOutlineShape(
+        state: BlockState,
+        world: BlockView,
+        pos: BlockPos,
+        context: ShapeContext,
+    ): VoxelShape = SHAPE
 
     override fun appendTooltip(
         stack: ItemStack,

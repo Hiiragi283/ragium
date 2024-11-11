@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.data.recipe
 
-import net.minecraft.advancement.AdvancementCriterion
-import net.minecraft.advancement.criterion.InventoryChangedCriterion
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
@@ -14,6 +12,8 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 object HTCookingRecipeJsonBuilder {
+    //    Blasting    //
+
     @JvmStatic
     fun smeltAndBlast(
         exporter: RecipeExporter,
@@ -75,12 +75,13 @@ object HTCookingRecipeJsonBuilder {
             .offerTo(exporter, id.withPrefixedPath("blasting/").withSuffixedPath(suffix))
     }
 
+    //    Smoking    //
+
     @JvmStatic
     fun smeltAndSmoke(
         exporter: RecipeExporter,
-        input: Ingredient,
+        input: ItemConvertible,
         output: ItemConvertible,
-        condition: AdvancementCriterion<InventoryChangedCriterion.Conditions>,
         exp: Float = 0.0f,
         time: Int = 200,
         id: Identifier = CraftingRecipeJsonBuilder.getItemId(output),
@@ -88,30 +89,30 @@ object HTCookingRecipeJsonBuilder {
     ) {
         CookingRecipeJsonBuilder
             .createSmelting(
-                input,
+                Ingredient.ofItems(input),
                 RecipeCategory.FOOD,
                 output,
                 exp,
                 time,
-            ).criterion("has_input", condition)
+            ).criterion("has_input", RecipeProvider.conditionsFromItem(input))
             .offerTo(exporter, id.withPrefixedPath("smelting/").withSuffixedPath(suffix))
         CookingRecipeJsonBuilder
             .createCampfireCooking(
-                input,
+                Ingredient.ofItems(input),
                 RecipeCategory.FOOD,
                 output,
                 exp,
                 time,
-            ).criterion("has_input", condition)
+            ).criterion("has_input", RecipeProvider.conditionsFromItem(input))
             .offerTo(exporter, id.withPrefixedPath("campfire/").withSuffixedPath(suffix))
         CookingRecipeJsonBuilder
             .createSmoking(
-                input,
+                Ingredient.ofItems(input),
                 RecipeCategory.FOOD,
                 output,
                 exp,
                 time / 2,
-            ).criterion("has_input", condition)
+            ).criterion("has_input", RecipeProvider.conditionsFromItem(input))
             .offerTo(exporter, id.withPrefixedPath("smoking/").withSuffixedPath(suffix))
     }
 }

@@ -56,6 +56,10 @@ object RagiumBlocks : HTContentRegister {
         registerBlock("item_display", HTItemDisplayBlock)
 
     @JvmField
+    val LARGE_PROCESSOR: Block =
+        registerBlock("large_processor", HTLargeProcessorBlock(blockSettings()))
+
+    @JvmField
     val MANUAL_FORGE: Block =
         registerWithBE("manual_forge", RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.ANVIL).nonOpaque())
 
@@ -72,8 +76,8 @@ object RagiumBlocks : HTContentRegister {
         registerBlock("network_interface", HTNetworkInterfaceBlock)
 
     @JvmField
-    val LARGE_PROCESSOR: Block =
-        registerBlock("large_processor", HTLargeProcessorBlock(blockSettings()))
+    val OPEN_CRATE: Block =
+        registerCopy("open_crate", Blocks.SMOOTH_STONE)
 
     @JvmField
     val SHAFT: Block =

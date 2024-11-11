@@ -49,10 +49,12 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.BACKPACK_INTERFACE)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumBlocks.ITEM_DISPLAY)
+        addDrop(RagiumBlocks.LARGE_PROCESSOR)
         addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)
         addDrop(RagiumBlocks.MANUAL_MIXER)
         addDrop(RagiumBlocks.NETWORK_INTERFACE)
+        addDrop(RagiumBlocks.OPEN_CRATE)
         addDrop(RagiumBlocks.SHAFT)
         addDrop(RagiumBlocks.TRASH_BOX)
 
@@ -175,11 +177,11 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         ),
     )
 
-    fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyDrop(value: Float): T =
+    private fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyDrop(value: Float): T =
         apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(value)))
 
-    fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyDropRange(min: Number, max: Number): T =
+    private fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyDropRange(min: Number, max: Number): T =
         apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(min.toFloat(), max.toFloat())))
 
-    fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyFortune(): T = apply(ApplyBonusLootFunction.oreDrops(fortune))
+    private fun <T : LeafEntry.Builder<T>> LeafEntry.Builder<T>.applyFortune(): T = apply(ApplyBonusLootFunction.oreDrops(fortune))
 }
