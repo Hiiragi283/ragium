@@ -1,4 +1,5 @@
 {
+  "advancement.ragium.bujin.title": "Tycoon the Racoon",
   "advancement.ragium.stella_suit.title": "Synthetically Treated External Lightweight-Layered Augment",
   "block.ragium.advanced_casing": "Advanced Casing",
   "block.ragium.advanced_coil": "Advanced Coil",
@@ -88,6 +89,7 @@
   "item.ragium.basic_circuit": "Basic Circuit",
   "item.ragium.basic_circuit_board": "Basic Circuit Board",
   "item.ragium.bee_wax": "Bee Wax",
+  "item.ragium.bujin": "Bujin",
   "item.ragium.butter": "Butter",
   "item.ragium.caramel": "Caramel",
   "item.ragium.chocolate": "Chocolate",

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:plates/stella"
+    },
+    "B": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "A",
+    "A",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:bujin"
+  }
+}

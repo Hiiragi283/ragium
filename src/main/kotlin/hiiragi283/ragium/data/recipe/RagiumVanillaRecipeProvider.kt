@@ -256,6 +256,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
+        // bujin
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.BUJIN)
+            .patterns(
+                "A",
+                "A",
+                "B",
+            ).input('A', RagiumContents.Plates.STELLA)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .unlockedBy(RagiumContents.Plates.STELLA)
+            .offerTo(exporter)
         // backpack
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.BACKPACK)

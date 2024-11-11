@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 object RagiumTranslationKeys {
     //    Advancement    //
 
+    const val ADVANCEMENT_BUJIN = "advancement.ragium.bujin.title"
     const val ADVANCEMENT_STELLA_SUIT = "advancement.ragium.stella_suit.title"
 
     //    Block    //

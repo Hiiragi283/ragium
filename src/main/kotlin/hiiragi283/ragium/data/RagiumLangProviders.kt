@@ -176,6 +176,7 @@ object RagiumLangProviders {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.EN_US)
             // Advancements
+            builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "Tycoon the Racoon")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
@@ -209,6 +210,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.STEEL_PICKAXE, "Steel Pickaxe")
             builder.add(RagiumItems.STEEL_SHOVEL, "Steel Shovel")
             builder.add(RagiumItems.STEEL_SWORD, "Steel Sword")
+            builder.add(RagiumItems.BUJIN, "Bujin")
 
             builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
             builder.add(RagiumContents.Pipes.WOODEN, "Wooden Pipe")
@@ -428,6 +430,7 @@ object RagiumLangProviders {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.JA_JP)
             // Advancements
+            builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
@@ -461,6 +464,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.STEEL_PICKAXE, "スチールのツルハシ")
             builder.add(RagiumItems.STEEL_SHOVEL, "スチールのショベル")
             builder.add(RagiumItems.STEEL_SWORD, "スチールの剣")
+            builder.add(RagiumItems.BUJIN, "武刃")
 
             builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
             builder.add(RagiumContents.Pipes.WOODEN, "木製パイプ")

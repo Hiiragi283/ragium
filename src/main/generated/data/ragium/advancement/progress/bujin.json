@@ -1,0 +1,32 @@
+{
+  "parent": "ragium:progress/ragium",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:bujin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "ragium:bujin"
+    },
+    "title": {
+      "translate": "advancement.ragium.bujin.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -306,6 +306,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumItems.TOOLS)
+            remove(RagiumItems.BUJIN)
             addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumItems.ARMORS)
             addAll(RagiumContents.CircuitBoards.entries)

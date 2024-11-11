@@ -101,12 +101,16 @@ object RagiumItems : HTContentRegister {
     val STEEL_SWORD: Item = registerToolItem("steel_sword", HTToolType.SWORD, RagiumToolMaterials.STEEL)
 
     @JvmField
+    val BUJIN: Item = registerItem("bujin", HTBujinItem)
+
+    @JvmField
     val TOOLS: List<Item> = listOf(
         STEEL_AXE,
         STEEL_HOE,
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
+        BUJIN
     )
 
     //    Foods    //

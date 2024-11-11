@@ -1,4 +1,5 @@
 {
+  "advancement.ragium.bujin.title": "タイクーン将軍",
   "advancement.ragium.stella_suit.title": "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ",
   "block.ragium.advanced_casing": "発展外装",
   "block.ragium.advanced_coil": "発展コイル",
@@ -88,6 +89,7 @@
   "item.ragium.basic_circuit": "基本回路",
   "item.ragium.basic_circuit_board": "基本回路基板",
   "item.ragium.bee_wax": "蜜蠟",
+  "item.ragium.bujin": "武刃",
   "item.ragium.butter": "バター",
   "item.ragium.caramel": "キャラメル",
   "item.ragium.chocolate": "チョコレート",

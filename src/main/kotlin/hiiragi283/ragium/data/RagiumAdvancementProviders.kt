@@ -399,6 +399,14 @@ object RagiumAdvancementProviders {
                     RagiumItems.STELLA_BOOTS,
                 )
             }
+            val bujin: AdvancementEntry = createChild(
+                consumer,
+                "progress/bujin",
+                ragium,
+                RagiumItems.BUJIN,
+                title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_BUJIN),
+                frame = AdvancementFrame.CHALLENGE,
+            ) { hasAllItems(RagiumItems.BUJIN) }
         }
     }
 
