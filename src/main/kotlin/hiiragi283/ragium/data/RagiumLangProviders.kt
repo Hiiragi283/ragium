@@ -398,6 +398,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumMaterialKeys.IRIDIUM, "Iridium")
             builder.add(RagiumMaterialKeys.LEAD, "Lead")
+            builder.add(RagiumMaterialKeys.NICKEL, "Nickel")
+            builder.add(RagiumMaterialKeys.PLATINUM, "Platinum")
             builder.add(RagiumMaterialKeys.SILVER, "Silver")
             builder.add(RagiumMaterialKeys.TIN, "Tin")
             builder.add(RagiumMaterialKeys.TUNGSTEN, "Tungsten")
@@ -604,6 +606,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumMaterialKeys.IRIDIUM, "イリジウム")
             builder.add(RagiumMaterialKeys.LEAD, "鉛")
+            builder.add(RagiumMaterialKeys.NICKEL, "ニッケル")
+            builder.add(RagiumMaterialKeys.PLATINUM, "白金")
             builder.add(RagiumMaterialKeys.SILVER, "銀")
             builder.add(RagiumMaterialKeys.TIN, "スズ")
             builder.add(RagiumMaterialKeys.TUNGSTEN, "タングステン")

@@ -9,6 +9,9 @@ class HTMaterialRegistry(
     private val items: HTTable<HTTagPrefix, HTMaterialKey, Set<Item>>,
     private val properties: Map<HTMaterialKey, HTPropertyHolder>,
 ) {
+    val keys: Set<HTMaterialKey>
+        get() = types.keys
+
     val entryMap: Map<HTMaterialKey, Entry>
         get() = types.keys.associateWith(::getEntry)
 

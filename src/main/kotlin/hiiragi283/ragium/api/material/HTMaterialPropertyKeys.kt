@@ -5,6 +5,10 @@ import hiiragi283.ragium.api.property.HTPropertyKey
 
 object HTMaterialPropertyKeys {
     @JvmField
+    val DISABLE_BLOCK_CRAFTING: HTPropertyKey.Defaulted<Unit> =
+        HTPropertyKey.ofFlag(RagiumAPI.id("disable_block_crafting"))
+
+    @JvmField
     val DISABLE_DUST_SMELTING: HTPropertyKey.Defaulted<Unit> =
         HTPropertyKey.ofFlag(RagiumAPI.id("disable_dust_smelting"))
 

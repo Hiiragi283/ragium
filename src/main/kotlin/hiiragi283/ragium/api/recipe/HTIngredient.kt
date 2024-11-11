@@ -34,6 +34,9 @@ import net.minecraft.item.Item as MCItem
 sealed class HTIngredient<O : Any, V : Number>(protected val entryList: RegistryEntryList<O>, val amount: V) {
     abstract val isEmpty: Boolean
 
+    val storage: Either<TagKey<O>, List<RegistryEntry<O>>>
+        get() = entryList.storage
+
     val firstEntry: RegistryEntry<O>?
         get() = entryList.firstOrNull()
 
@@ -154,7 +157,7 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 )
             }
 
-        override val isEmpty: Boolean = entryList.storage.map(
+        override val isEmpty: Boolean = storage.map(
             { false },
             { list: List<RegistryEntry<MCItem>> -> list.isEmpty() || list.any { it.isOf(Items.AIR) } },
         )
@@ -196,7 +199,7 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 )
             }
 
-        override val isEmpty: Boolean = entryList.storage.map(
+        override val isEmpty: Boolean = storage.map(
             { false },
             { list: List<RegistryEntry<MCFluid>> -> list.isEmpty() || list.any { it.isOf(Fluids.EMPTY) } },
         )

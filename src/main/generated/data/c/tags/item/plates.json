@@ -13,6 +13,10 @@
       "required": false
     },
     {
+      "id": "#c:plates/electrum",
+      "required": false
+    },
+    {
       "id": "#c:plates/engineering_plastic",
       "required": false
     },
@@ -33,7 +37,15 @@
       "required": false
     },
     {
+      "id": "#c:plates/nickel",
+      "required": false
+    },
+    {
       "id": "#c:plates/plastic",
+      "required": false
+    },
+    {
+      "id": "#c:plates/platinum",
       "required": false
     },
     {

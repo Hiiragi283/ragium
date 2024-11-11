@@ -53,11 +53,19 @@
       "required": false
     },
     {
+      "id": "#c:ores/nickel",
+      "required": false
+    },
+    {
       "id": "#c:ores/niter",
       "required": false
     },
     {
       "id": "#c:ores/peridot",
+      "required": false
+    },
+    {
+      "id": "#c:ores/platinum",
       "required": false
     },
     {

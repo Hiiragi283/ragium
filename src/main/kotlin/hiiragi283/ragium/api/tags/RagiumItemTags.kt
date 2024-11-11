@@ -15,6 +15,9 @@ object RagiumItemTags {
     val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")
 
     @JvmField
+    val SILICON: TagKey<Item> = create("silicon")
+
+    @JvmField
     val TOOL_MODULES: TagKey<Item> = create(RagiumAPI.MOD_ID, "tool_modules")
 
     @JvmStatic

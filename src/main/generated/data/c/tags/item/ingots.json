@@ -13,6 +13,10 @@
       "required": false
     },
     {
+      "id": "#c:ingots/electrum",
+      "required": false
+    },
+    {
       "id": "#c:ingots/gold",
       "required": false
     },
@@ -26,6 +30,14 @@
     },
     {
       "id": "#c:ingots/lead",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/nickel",
+      "required": false
+    },
+    {
+      "id": "#c:ingots/platinum",
       "required": false
     },
     {

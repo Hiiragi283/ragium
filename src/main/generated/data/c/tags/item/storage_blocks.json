@@ -25,6 +25,10 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/electrum",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/emerald",
       "required": false
     },
@@ -49,7 +53,15 @@
       "required": false
     },
     {
+      "id": "#c:storage_blocks/nickel",
+      "required": false
+    },
+    {
       "id": "#c:storage_blocks/peridot",
+      "required": false
+    },
+    {
+      "id": "#c:storage_blocks/platinum",
       "required": false
     },
     {

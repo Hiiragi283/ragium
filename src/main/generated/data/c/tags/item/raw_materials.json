@@ -33,7 +33,15 @@
       "required": false
     },
     {
+      "id": "#c:raw_materials/nickel",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/niter",
+      "required": false
+    },
+    {
+      "id": "#c:raw_materials/platinum",
       "required": false
     },
     {

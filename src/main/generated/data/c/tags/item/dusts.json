@@ -41,6 +41,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/electrum",
+      "required": false
+    },
+    {
       "id": "#c:dusts/emerald",
       "required": false
     },
@@ -69,6 +73,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/nickel",
+      "required": false
+    },
+    {
       "id": "#c:dusts/niter",
       "required": false
     },
@@ -78,6 +86,10 @@
     },
     {
       "id": "#c:dusts/plastic",
+      "required": false
+    },
+    {
+      "id": "#c:dusts/platinum",
       "required": false
     },
     {

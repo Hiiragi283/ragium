@@ -169,6 +169,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
         consumer.accept(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
         consumer.accept(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+
+        consumer.accept(RagiumMaterialKeys.ELECTRUM, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
         // dust
         consumer.accept(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST, Rarity.COMMON)
         consumer.accept(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST, Rarity.COMMON)
@@ -193,6 +195,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
         consumer.accept(RagiumMaterialKeys.IRIDIUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
         consumer.accept(RagiumMaterialKeys.LEAD, HTMaterialKey.Type.METAL, Rarity.COMMON)
+        consumer.accept(RagiumMaterialKeys.NICKEL, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+        consumer.accept(RagiumMaterialKeys.PLATINUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
         consumer.accept(RagiumMaterialKeys.SILVER, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
         consumer.accept(RagiumMaterialKeys.TIN, HTMaterialKey.Type.METAL, Rarity.COMMON)
         consumer.accept(RagiumMaterialKeys.TUNGSTEN, HTMaterialKey.Type.METAL, Rarity.RARE)
@@ -285,29 +289,31 @@ object RagiumDefaultPlugin : RagiumPlugin {
         entry: HTMaterialRegistry.Entry,
         helper: RagiumPlugin.RecipeHelper,
     ) {
-        // ingot/gem -> block
-        helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
-            val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
-            val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@register
-            // Shaped Crafting
-            HTShapedRecipeJsonBuilder
-                .create(block)
-                .patterns(
-                    "AAA",
-                    "AAA",
-                    "AAA",
-                ).input('A', prefix, key)
-                .offerTo(exporter)
-        }
-        // block -> ingot/gem
-        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-            helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
-                val output: Item = map[prefix] ?: return@register
-                // Shapeless Crafting
-                HTShapelessRecipeJsonBuilder
-                    .create(output, 9)
-                    .input(HTTagPrefix.STORAGE_BLOCK, key)
+        if (HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING !in entry) {
+            // ingot/gem -> block
+            helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
+                val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
+                val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@register
+                // Shaped Crafting
+                HTShapedRecipeJsonBuilder
+                    .create(block)
+                    .patterns(
+                        "AAA",
+                        "AAA",
+                        "AAA",
+                    ).input('A', prefix, key)
                     .offerTo(exporter)
+            }
+            // block -> ingot/gem
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
+                    val output: Item = map[prefix] ?: return@register
+                    // Shapeless Crafting
+                    HTShapelessRecipeJsonBuilder
+                        .create(output, 9)
+                        .input(HTTagPrefix.STORAGE_BLOCK, key)
+                        .offerTo(exporter)
+                }
             }
         }
         // ingot -> plate
