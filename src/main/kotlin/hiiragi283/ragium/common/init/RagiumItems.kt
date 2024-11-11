@@ -214,6 +214,9 @@ object RagiumItems : HTContentRegister {
     val PROCESSOR_SOCKET: Item = registerItem("processor_socket")
 
     @JvmField
+    val TELEPORTER: Item = registerItem("teleporter", HTTeleporterItem)
+
+    @JvmField
     val RAGI_ALLOY_COMPOUND: Item = registerItem("ragi_alloy_compound")
 
     @JvmField

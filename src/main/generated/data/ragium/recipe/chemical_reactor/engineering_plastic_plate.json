@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:basalt_mesh"
+  },
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"

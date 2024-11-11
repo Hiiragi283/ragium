@@ -28,15 +28,6 @@ object RagiumEntityTypes {
         dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
     }
 
-    /*@JvmField
-    val OBLIVION_CUBE: EntityType<HTOblivionCubeEntity> = register(
-        "oblivion_cube",
-        ::HTOblivionCubeEntity,
-        SpawnGroup.MONSTER,
-    ) {
-        dimensions(0.75f, 0.75f)
-    }*/
-
     @JvmStatic
     private fun <T : Entity> register(
         name: String,
@@ -51,12 +42,4 @@ object RagiumEntityTypes {
             .apply(builderAction)
             .build(name),
     )
-
-    /*@JvmStatic
-    fun init() {
-        FabricDefaultAttributeRegistry.register(
-            OBLIVION_CUBE,
-            HTOblivionCubeEntity.createAttributes(),
-        )
-    }*/
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
@@ -17,6 +18,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.text.MutableText
 
 //    ResourceAmount    //
 
@@ -81,6 +83,9 @@ fun ItemVariant.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 fun ItemVariant.isIn(tagKey: TagKey<Item>): Boolean = isIn(Registries.ITEM, tagKey)
 
 fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID, tagKey)
+
+val FluidVariant.name: MutableText
+    get() = FluidVariantAttributes.getName(this).copy()
 
 //    Transaction    //
 

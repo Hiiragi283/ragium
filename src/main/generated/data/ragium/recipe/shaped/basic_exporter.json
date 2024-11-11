@@ -12,7 +12,7 @@
       "item": "ragium:basic_coil"
     },
     "D": {
-      "tag": "ragium:pipes"
+      "item": "minecraft:piston"
     }
   },
   "pattern": [

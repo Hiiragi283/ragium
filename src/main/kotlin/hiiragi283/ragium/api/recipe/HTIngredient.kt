@@ -7,11 +7,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
@@ -32,8 +32,7 @@ import net.minecraft.item.Item as MCItem
 
 @Suppress("DEPRECATION")
 sealed class HTIngredient<O : Any, V : Number>(protected val entryList: RegistryEntryList<O>, val amount: V) {
-    val isEmpty: Boolean
-        get() = (entryList !is RegistryEntryList.Named<O> && entryList.size() == 0) || amount.toInt() <= 0
+    abstract val isEmpty: Boolean
 
     val firstEntry: RegistryEntry<O>?
         get() = entryList.firstOrNull()
@@ -155,6 +154,11 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 )
             }
 
+        override val isEmpty: Boolean = entryList.storage.map(
+            { false },
+            { list: List<RegistryEntry<MCItem>> -> list.isEmpty() || list.any { it.isOf(Items.AIR) } },
+        )
+
         override val entryText: Text
             get() = entryList.asText(MCItem::getName)
 
@@ -192,8 +196,13 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 )
             }
 
+        override val isEmpty: Boolean = entryList.storage.map(
+            { false },
+            { list: List<RegistryEntry<MCFluid>> -> list.isEmpty() || list.any { it.isOf(Fluids.EMPTY) } },
+        )
+
         override val entryText: Text
-            get() = entryList.asText { FluidVariantAttributes.getName(FluidVariant.of(it)) }
+            get() = entryList.asText(MCFluid::name)
 
         fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
 

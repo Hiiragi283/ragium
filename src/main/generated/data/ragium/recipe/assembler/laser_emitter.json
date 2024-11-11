@@ -11,8 +11,12 @@
   ],
   "item_inputs": [
     {
+      "count": 2,
+      "items": "ragium:advanced_circuit"
+    },
+    {
       "count": 4,
-      "items": "#c:plates/steel"
+      "items": "#c:plates/deep_steel"
     },
     {
       "count": 4,

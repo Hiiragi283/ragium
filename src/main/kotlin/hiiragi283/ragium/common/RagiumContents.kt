@@ -79,6 +79,7 @@ object RagiumContents : HTContentRegister {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         NITER(RagiumMaterialKeys.NITER),
+        SALT(RagiumMaterialKeys.SALT),
         SULFUR(RagiumMaterialKeys.SULFUR),
 
         // tier 2

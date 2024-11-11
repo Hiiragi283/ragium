@@ -1,8 +1,11 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "#minecraft:warped_stems"
+  },
   "definition": {
     "type": "ragium:extractor",
-    "tier": "primitive"
+    "tier": "advanced"
   },
   "fluid_outputs": [
     {

@@ -2,11 +2,11 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -31,7 +31,7 @@ class HTDrumBlock(val tier: HTMachineTier) : HTBlockWithEntity(blockSettings(Blo
                     Text
                         .translatable(
                             RagiumTranslationKeys.DRUM_FLUID,
-                            FluidVariantAttributes.getName(storage.resource).copy().formatted(Formatting.WHITE),
+                            storage.resource.name.formatted(Formatting.WHITE),
                         ).formatted(Formatting.GRAY),
                 )
                 tooltip.add(

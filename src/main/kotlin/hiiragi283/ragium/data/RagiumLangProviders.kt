@@ -365,6 +365,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.COPPER, "Copper")
             builder.add(RagiumMaterialKeys.IRON, "Iron")
             builder.add(RagiumMaterialKeys.NITER, "Niter")
+            builder.add(RagiumMaterialKeys.SALT, "Salt")
             builder.add(RagiumMaterialKeys.SULFUR, "Sulfur")
             builder.add(RagiumMaterialKeys.WOOD, "Wood")
 
@@ -386,6 +387,21 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
             builder.add(RagiumMaterialKeys.RAGIUM, "Ragium")
+
+            builder.add(RagiumMaterialKeys.COAL, "Coal")
+            builder.add(RagiumMaterialKeys.DIAMOND, "Diamond")
+            builder.add(RagiumMaterialKeys.EMERALD, "Emerald")
+            builder.add(RagiumMaterialKeys.PERIDOT, "Peridot")
+            builder.add(RagiumMaterialKeys.QUARTZ, "Quartz")
+            builder.add(RagiumMaterialKeys.SAPPHIRE, "Sapphire")
+            builder.add(RagiumMaterialKeys.RUBY, "Ruby")
+
+            builder.add(RagiumMaterialKeys.IRIDIUM, "Iridium")
+            builder.add(RagiumMaterialKeys.LEAD, "Lead")
+            builder.add(RagiumMaterialKeys.SILVER, "Silver")
+            builder.add(RagiumMaterialKeys.TIN, "Tin")
+            builder.add(RagiumMaterialKeys.TUNGSTEN, "Tungsten")
+            builder.add(RagiumMaterialKeys.ZINC, "Zinc")
             // Tag Prefix
             builder.add(HTTagPrefix.DEEP_ORE, "Deepslate %s Ore")
             builder.add(HTTagPrefix.END_ORE, "End %s Ore")
@@ -577,6 +593,21 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
             builder.add(RagiumMaterialKeys.RAGIUM, "ラギウム")
+
+            builder.add(RagiumMaterialKeys.COAL, "石炭")
+            builder.add(RagiumMaterialKeys.DIAMOND, "ダイアモンド")
+            builder.add(RagiumMaterialKeys.EMERALD, "エメラルド")
+            builder.add(RagiumMaterialKeys.PERIDOT, "ペリドット")
+            builder.add(RagiumMaterialKeys.QUARTZ, "水晶")
+            builder.add(RagiumMaterialKeys.SAPPHIRE, "サファイア")
+            builder.add(RagiumMaterialKeys.RUBY, "ルビー")
+
+            builder.add(RagiumMaterialKeys.IRIDIUM, "イリジウム")
+            builder.add(RagiumMaterialKeys.LEAD, "鉛")
+            builder.add(RagiumMaterialKeys.SILVER, "銀")
+            builder.add(RagiumMaterialKeys.TIN, "スズ")
+            builder.add(RagiumMaterialKeys.TUNGSTEN, "タングステン")
+            builder.add(RagiumMaterialKeys.ZINC, "亜鉛")
             // Tag Prefix
             builder.add(HTTagPrefix.DEEP_ORE, "深層%s鉱石")
             builder.add(HTTagPrefix.END_ORE, "エンド%s鉱石")

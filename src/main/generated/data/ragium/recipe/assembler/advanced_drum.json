@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "#c:plates/ragi_alloy"
+    },
+    {
+      "items": "minecraft:bucket"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:advanced_drum"
+    }
+  ]
+}

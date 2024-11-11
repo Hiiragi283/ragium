@@ -212,8 +212,6 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
 
-            RagiumContents.Pipes.entries.forEach { add(RagiumItemTags.PIPES, it) }
-
             buildList {
                 addAll(HTCrafterHammerItem.Behavior.entries)
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }

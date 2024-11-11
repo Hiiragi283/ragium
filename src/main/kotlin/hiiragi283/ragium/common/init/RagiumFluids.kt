@@ -3,11 +3,14 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.content.HTTranslationProvider
+import hiiragi283.ragium.api.extension.name
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.text.MutableText
 import net.minecraft.util.Util
 import java.awt.Color
 
@@ -25,13 +28,13 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     CRIMSON_SAP(Color(0x660000), "Crimson Sap", "深紅の樹液"),
     GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
     TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
+    SAP(Color(0x996633), "Sap", "樹液"),
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
     WARPED_SAP(Color(0x006666), "Warped Sap", "歪んだ樹液"),
 
     // Foods
     BATTER(Color(0xffcc66), "Batter", "バッター液"),
     CHOCOLATE(Color(0x663300), "Chocolate", "チョコレート"),
-    STARCH_SYRUP(Color(0x99ffff), "Starch Syrup", "水あめ"),
     SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー"),
 
     // Natural Resources
@@ -88,4 +91,9 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     override val key: RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, RagiumAPI.id(name.lowercase()))
 
     val translationKey: String = Util.createTranslationKey("fluid", id)
+    val text: MutableText
+        get() = value.name
+
+    val variant: FluidVariant
+        get() = FluidVariant.of(value)
 }

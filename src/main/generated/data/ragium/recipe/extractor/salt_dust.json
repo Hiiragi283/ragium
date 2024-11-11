@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "ragium:salt_water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "minecraft:water"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:salt_dust"
+    }
+  ]
+}

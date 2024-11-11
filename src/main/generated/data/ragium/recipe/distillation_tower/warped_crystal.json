@@ -13,7 +13,7 @@
   "fluid_outputs": [
     {
       "amount": 243000,
-      "fluid": "ragium:refined_gas"
+      "fluid": "ragium:sap"
     }
   ],
   "item_outputs": [

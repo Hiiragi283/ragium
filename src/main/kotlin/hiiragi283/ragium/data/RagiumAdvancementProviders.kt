@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -10,8 +11,6 @@ import hiiragi283.ragium.common.init.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
@@ -157,7 +156,7 @@ object RagiumAdvancementProviders {
         path: String,
         parent: AdvancementEntry,
         fluid: Fluid,
-        title: Text = FluidVariantAttributes.getName(FluidVariant.of(fluid)),
+        title: Text = fluid.name,
         desc: Text = Text.empty(),
         frame: AdvancementFrame = AdvancementFrame.TASK,
         showToast: Boolean = true,
@@ -481,7 +480,7 @@ object RagiumAdvancementProviders {
                 RagiumMachineKeys.CHEMICAL_REACTOR.entry.getBlock(HTMachineTier.PRIMITIVE),
                 Text.literal("Chemistry"),
                 Text.empty(),
-                RagiumAPI.id("textures/block/advanced_casing.png"),
+                Identifier.of("textures/block/quartz_block_top.png"),
             ) { hasMachine(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.PRIMITIVE) }
             // hydrogen
             val hydrogen: AdvancementEntry = createFluidChild(

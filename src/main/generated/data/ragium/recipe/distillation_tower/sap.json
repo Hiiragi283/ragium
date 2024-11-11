@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:distillation_tower",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 162000,
+      "fluids": "ragium:sap"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:refined_gas"
+    },
+    {
+      "fluid": "ragium:alcohol"
+    }
+  ]
+}

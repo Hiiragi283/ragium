@@ -1,14 +1,14 @@
-package hiiragi283.ragium.data
+package hiiragi283.ragium.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
+import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
-import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -20,7 +20,6 @@ import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
@@ -53,11 +52,43 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingRecipes(exporter: RecipeExporter) {
         craftingAlternatives(exporter)
         craftingArmors(exporter)
-        craftingFluids(exporter)
         craftingFoods(exporter)
         craftingIngredients(exporter)
-        craftingMachines(exporter)
         craftingTools(exporter)
+
+        craftingMachines(exporter)
+    }
+
+    //    Crafting - Alternatives    //
+
+    private fun craftingAlternatives(exporter: RecipeExporter) {
+        HTShapelessRecipeJsonBuilder
+            .create(Items.STICKY_PISTON)
+            .input(ConventionalItemTags.SLIME_BALLS)
+            .input(Items.PISTON)
+            .unlockedBy(Items.PISTON)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(Items.LEAD, 2)
+            .patterns(
+                "AA ",
+                "AB ",
+                "  A",
+            ).input('A', ConventionalItemTags.STRINGS)
+            .input('B', ConventionalItemTags.SLIME_BALLS)
+            .unlockedBy(ConventionalItemTags.SLIME_BALLS)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(Items.CANDLE)
+            .patterns(
+                "A",
+                "B",
+            ).input('A', ConventionalItemTags.STRINGS)
+            .input('B', RagiumItems.BEE_WAX)
+            .unlockedBy(RagiumItems.BEE_WAX)
+            .offerTo(exporter)
     }
 
     //    Crafting - Armors    //
@@ -287,14 +318,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input(fluidIngredient(RagiumFluids.CHOCOLATE.value))
             .unlockedBy(Items.APPLE)
             .offerTo(exporter)
-
-        /*HTShapelessRecipeJsonBuilder
-            .create(RagiumItems)
-            .input(Items.APPLE)
-            .input(fluidIngredient(RagiumFluids.STARCH_SYRUP.value))
-            .input(ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(Items.APPLE)
-            .offerTo(exporter)*/
     }
 
     //    Crafting - Misc    //
@@ -364,6 +387,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input(ConventionalItemTags.CHESTS)
             .unlockedBy(Items.BOOK)
             .offerTo(exporter)
+        // fluid cubes
+        createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
+        createEmptyFluidCube(exporter, RagiumContents.Plates.PLASTIC, 8, "_pe")
+        createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.EMPTY_FLUID_CUBE)
+            .input(RagiumItems.EMPTY_FLUID_CUBE)
+            .unlockedBy(RagiumItems.EMPTY_FLUID_CUBE)
+            .offerTo(exporter, RagiumAPI.id("clear_fluid_cube"))
         // circuits
         HTShapedRecipeJsonBuilder
             .create(RagiumContents.Circuits.PRIMITIVE)
@@ -404,57 +437,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
     }
 
-    //    Crafting - Fluids    //
-
-    private fun craftingFluids(exporter: RecipeExporter) {
-        createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
-        createEmptyFluidCube(exporter, RagiumContents.Plates.PLASTIC, 8, "_pe")
-        createEmptyFluidCube(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, 16, "_pvc")
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.EMPTY_FLUID_CUBE)
-            .input(RagiumItems.EMPTY_FLUID_CUBE)
-            .unlockedBy(RagiumItems.EMPTY_FLUID_CUBE)
-            .offerTo(exporter, RagiumAPI.id("clear_fluid_cube"))
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumAPI.getInstance().createFilledCube(Fluids.WATER))
-            .input(RagiumItems.EMPTY_FLUID_CUBE)
-            .input(Items.WATER_BUCKET)
-            .unlockedBy(Items.WATER_BUCKET)
-            .offerTo(exporter, RagiumAPI.id("water_cube"))
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumAPI.getInstance().createFilledCube(Fluids.LAVA))
-            .input(RagiumItems.EMPTY_FLUID_CUBE)
-            .input(Items.LAVA_BUCKET)
-            .unlockedBy(Items.LAVA_BUCKET)
-            .offerTo(exporter, RagiumAPI.id("lava_cube"))
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumAPI.getInstance().createFilledCube(RagiumFluids.MILK.value))
-            .input(RagiumItems.EMPTY_FLUID_CUBE)
-            .input(Items.MILK_BUCKET)
-            .unlockedBy(Items.MILK_BUCKET)
-            .offerTo(exporter, RagiumAPI.id("milk_cube"))
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumAPI.getInstance().createFilledCube(RagiumFluids.HONEY.value))
-            .input(RagiumItems.EMPTY_FLUID_CUBE)
-            .input(Items.HONEY_BOTTLE)
-            .input(Items.HONEY_BOTTLE)
-            .input(Items.HONEY_BOTTLE)
-            .input(Items.HONEY_BOTTLE)
-            .unlockedBy(Items.HONEY_BOTTLE)
-            .offerTo(exporter, RagiumAPI.id("honey_cube"))
-    }
-
     private fun createEmptyFluidCube(
         exporter: RecipeExporter,
         input: ItemConvertible,
         count: Int,
         suffix: String? = null,
     ) {
+        val id: Identifier = RagiumAPI.id("empty_fluid_cube$suffix")
+        // shaped crafting
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.EMPTY_FLUID_CUBE, count)
             .patterns(
@@ -463,7 +453,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " A ",
             ).input('A', input)
             .unlockedBy(input)
-            .offerTo(exporter, RagiumAPI.id("empty_fluid_cube$suffix"))
+            .offerTo(exporter, id)
+        // assembler
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(input, 4)
+            .catalyst(RagiumItems.EMPTY_FLUID_CUBE)
+            .itemOutput(RagiumItems.EMPTY_FLUID_CUBE, count)
+            .offerTo(exporter, id)
     }
 
     //    Crafting - Machines    //
@@ -471,6 +468,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingMachines(exporter: RecipeExporter) {
         // exporters
         RagiumContents.Exporters.entries.forEach { exporter1: RagiumContents.Exporters ->
+            // shaped crafting
             HTShapedRecipeJsonBuilder
                 .create(exporter1)
                 .patterns(
@@ -480,9 +478,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input('A', exporter1.tier.getMainPlate())
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .input('C', exporter1.tier.getCoil())
-                .input('D', RagiumItemTags.PIPES)
+                .input('D', Items.PISTON)
                 .unlockedBy(exporter1.tier.getCoil())
                 .offerTo(exporter)
+            // assembler
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.ASSEMBLER)
+                .itemInput(exporter1.tier.getCoil())
+                .itemInput(Items.PISTON)
+                .itemOutput(exporter1)
+                .offerTo(exporter, exporter1)
         }
         // pipes
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
@@ -501,9 +506,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .unlockedBy(input)
                 .offerTo(exporter)
+            // metal former
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.METAL_FORMER)
+                .itemInput(input, 2)
+                .catalyst(pipe)
+                .itemOutput(pipe)
+                .offerTo(exporter, pipe)
         }
         // drums
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
+            // shaped crafting
             HTShapedRecipeJsonBuilder
                 .create(drum)
                 .patterns(
@@ -515,10 +528,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input('C', Items.BUCKET)
                 .unlockedBy(drum.tier.getMainPlate())
                 .offerTo(exporter)
+            // assembler
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.ASSEMBLER)
+                .itemInput(drum.tier.getSubPlate(), 4)
+                .itemInput(Items.BUCKET)
+                .itemOutput(drum)
+                .offerTo(exporter, drum)
         }
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             // grates
             val grate: RagiumContents.Grates = tier.getGrate()
+            // shaped crafting
             HTShapedRecipeJsonBuilder
                 .create(grate, 2)
                 .patterns(
@@ -528,8 +549,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 ).input('A', tier.getSteelPlate())
                 .unlockedBy(tier.getSteelPlate())
                 .offerTo(exporter)
+            // metal former
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.METAL_FORMER)
+                .itemInput(grate.tier.getSteelPlate(), 4)
+                .catalyst(grate)
+                .itemOutput(grate, 4)
+                .offerTo(exporter, grate)
             // hulls
             val hull: RagiumContents.Hulls = tier.getHull()
+            // shaped crafting
             HTShapedRecipeJsonBuilder
                 .create(hull, 2)
                 .patterns(
@@ -540,6 +569,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .input('B', tier.getCasing())
                 .unlockedBy(tier.getMainPlate())
                 .offerTo(exporter)
+            // assembler
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.ASSEMBLER)
+                .itemInput(hull.tier.getMainPlate(), 3)
+                .itemInput(hull.tier.getCasing())
+                .itemOutput(hull)
+                .offerTo(exporter, hull)
         }
         // casings
         HTShapedRecipeJsonBuilder
@@ -688,6 +724,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumMachineKeys.STEAM_GENERATOR,
             Items.FURNACE,
+            Items.BUCKET,
         )
         // processors
         createProcessor(
@@ -786,38 +823,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 .unlockedBy(tier.getHull())
                 .offerTo(exporter, tier.createId(key))
         }
-    }
-
-    //    Crafting - Alternatives    //
-
-    private fun craftingAlternatives(exporter: RecipeExporter) {
-        HTShapelessRecipeJsonBuilder
-            .create(Items.STICKY_PISTON)
-            .input(ConventionalItemTags.SLIME_BALLS)
-            .input(Items.PISTON)
-            .unlockedBy(Items.PISTON)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(Items.LEAD, 2)
-            .patterns(
-                "AA ",
-                "AB ",
-                "  A",
-            ).input('A', ConventionalItemTags.STRINGS)
-            .input('B', ConventionalItemTags.SLIME_BALLS)
-            .unlockedBy(ConventionalItemTags.SLIME_BALLS)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(Items.CANDLE)
-            .patterns(
-                "A",
-                "B",
-            ).input('A', ConventionalItemTags.STRINGS)
-            .input('B', RagiumItems.BEE_WAX)
-            .unlockedBy(RagiumItems.BEE_WAX)
-            .offerTo(exporter)
     }
 
     //    Cooking   //

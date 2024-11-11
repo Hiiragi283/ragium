@@ -81,6 +81,10 @@
       "required": false
     },
     {
+      "id": "#c:ores/salt",
+      "required": false
+    },
+    {
       "id": "#c:ores/sapphire",
       "required": false
     },

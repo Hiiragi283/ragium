@@ -71,7 +71,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
             biome.isIn(BiomeTags.IS_END) -> ResourceAmount(FluidVariant.of(RagiumFluids.NOBLE_GAS.value), FluidConstants.INGOT)
             biome.isIn(BiomeTags.IS_NETHER) -> ResourceAmount(FluidVariant.of(RagiumFluids.CRUDE_OIL.value), FluidConstants.BUCKET)
             biome.isIn(BiomeTags.IS_OCEAN) -> ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BUCKET)
-            else -> null ?: return false
+            else -> ResourceAmount(FluidVariant.of(RagiumFluids.AIR.value), FluidConstants.BUCKET)
         }
         useTransaction { transaction: Transaction ->
             val inserted: Long = fluidStorage.insert(resource, transaction)

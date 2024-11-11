@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "catalyst": {
-    "items": "ragium:universal_pipe"
+    "items": "ragium:wooden_pipe"
   },
   "definition": {
     "type": "ragium:metal_former",
@@ -10,12 +10,12 @@
   "item_inputs": [
     {
       "count": 2,
-      "items": "#c:plates/refined_ragi_steel"
+      "items": "#minecraft:planks"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:universal_pipe"
+      "item": "ragium:wooden_pipe"
     }
   ]
 }

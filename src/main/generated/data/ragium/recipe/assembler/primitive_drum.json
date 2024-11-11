@@ -1,21 +1,21 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:copper_pipe"
-  },
   "definition": {
-    "type": "ragium:metal_former",
+    "type": "ragium:assembler",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "count": 2,
+      "count": 4,
       "items": "#c:plates/copper"
+    },
+    {
+      "items": "minecraft:bucket"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:copper_pipe"
+      "item": "ragium:primitive_drum"
     }
   ]
 }

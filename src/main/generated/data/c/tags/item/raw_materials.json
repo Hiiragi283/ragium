@@ -41,6 +41,10 @@
       "required": false
     },
     {
+      "id": "#c:raw_materials/salt",
+      "required": false
+    },
+    {
       "id": "#c:raw_materials/silicon",
       "required": false
     },

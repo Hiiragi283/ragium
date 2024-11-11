@@ -6,13 +6,18 @@
   },
   "fluid_outputs": [
     {
-      "fluid": "ragium:starch_syrup"
+      "fluid": "ragium:sap"
     }
   ],
   "item_inputs": [
     {
-      "count": 4,
-      "items": "minecraft:sugar"
+      "items": "#minecraft:logs"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "item": "ragium:pulp"
     }
   ]
 }

@@ -1,6 +1,9 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumMachineRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.enchantment.Enchantment
@@ -20,6 +23,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider(::RagiumEntityLootProvider)
         pack.addProvider(::RagiumVanillaRecipeProvider)
         pack.addProvider(::RagiumMachineRecipeProvider)
+        pack.addProvider(::RagiumChemicalRecipeProvider)
         RagiumAdvancementProviders.init(pack)
         RagiumTagProviders.init(pack)
         // client

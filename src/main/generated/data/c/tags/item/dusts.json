@@ -113,6 +113,10 @@
       "required": false
     },
     {
+      "id": "#c:dusts/salt",
+      "required": false
+    },
+    {
       "id": "#c:dusts/sapphire",
       "required": false
     },

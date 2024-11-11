@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:electrolyzer",
+    "tier": "basic"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:chlorine"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#c:dusts/salt"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:alkali_dust"
+    }
+  ]
+}

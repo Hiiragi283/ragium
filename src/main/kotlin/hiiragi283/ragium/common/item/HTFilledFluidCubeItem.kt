@@ -2,12 +2,11 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -22,8 +21,7 @@ import net.minecraft.world.World
 object HTFilledFluidCubeItem : Item(itemSettings()) {
     override fun getName(stack: ItemStack): Text = stack
         .get(RagiumComponentTypes.FLUID)
-        ?.let(FluidVariant::of)
-        ?.let(FluidVariantAttributes::getName)
+        ?.name
         ?.let { Text.translatable(translationKey, it) }
         ?: super.getName(stack)
 

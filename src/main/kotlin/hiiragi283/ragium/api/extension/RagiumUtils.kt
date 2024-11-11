@@ -6,9 +6,14 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.entity.Entity
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.recipe.Recipe
@@ -22,6 +27,8 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.screen.ScreenHandlerContext
+import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
@@ -31,6 +38,8 @@ import net.minecraft.util.Language
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.TeleportTarget
 import net.minecraft.world.World
 import java.text.NumberFormat
 import java.util.*
@@ -50,6 +59,59 @@ fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
             }
         }
     }
+}
+
+//    Entity    //
+
+fun teleport(entity: Entity, world: World, posTo: Vec3d): Boolean {
+    if (world is ServerWorld && canTeleport(entity, world)) {
+        if (entity.hasVehicle()) {
+            entity.detach()
+        }
+        if (entity is ServerPlayerEntity) {
+            if (entity.networkHandler.isConnectionOpen) {
+                entity.teleportTo(
+                    TeleportTarget(
+                        world,
+                        posTo,
+                        entity.velocity,
+                        entity.yaw,
+                        entity.pitch,
+                        TeleportTarget.NO_OP,
+                    ),
+                )
+                entity.onLanding()
+                entity.clearCurrentExplosion()
+            }
+        } else {
+            entity.teleportTo(
+                TeleportTarget(
+                    world,
+                    entity.pos.add(0.0, 1.0, 0.0),
+                    entity.velocity,
+                    entity.yaw,
+                    entity.pitch,
+                    TeleportTarget.NO_OP,
+                ),
+            )
+            entity.onLanding()
+            if (entity is PlayerEntity) {
+                entity.clearCurrentExplosion()
+            }
+        }
+        return true
+    }
+    return false
+}
+
+fun canTeleport(entity: Entity, world: World): Boolean = if (entity.world.registryKey == world.registryKey) {
+    if (entity !is LivingEntity) {
+        entity.isAlive
+    } else {
+        entity.isAlive && !entity.isSleeping
+    }
+} else {
+    entity.canUsePortals(true)
 }
 
 //    Color    //
@@ -82,6 +144,11 @@ fun getModMetadata(modId: String): ModMetadata? = FabricLoader
 fun getModName(modId: String): String? = getModMetadata(modId)?.name
 
 inline fun <reified T : Any> collectEntrypoints(key: String): List<T> = FabricLoader.getInstance().getEntrypoints(key, T::class.java)
+
+//    Fluid    //
+
+val Fluid.name: MutableText
+    get() = FluidVariant.of(this).name
 
 //    Identifier    //
 
@@ -119,10 +186,10 @@ fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 
 fun <T : Any> RegistryEntryList<T>.isIn(value: T): Boolean = any { it.isOf(value) }
 
-fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): Text = when (this) {
-    is RegistryEntryList.Named<*> -> tag.name
-    else -> Texts.join(this.map(RegistryEntry<T>::value), mapper)
-}
+fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): Text = storage.map(
+    { it.name },
+    { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
+)
 
 //    ScreenHandler    //
 
@@ -162,34 +229,3 @@ fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextCont
     ?.let(TranslatableTextContent::getKey)
     ?.let(Language.getInstance()::hasTranslation)
     ?: false
-
-/*fun breakRangedBlock(
-    world: World,
-    pos: BlockPos,
-    range: Int,
-    breaker: Entity,
-    tool: ItemStack
-) {
-    breakRangedBlock(world, pos, breaker.facing, range, breaker, tool::isSuitableFor)
-}
-
-fun breakRangedBlock(
-    world: World,
-    pos: BlockPos,
-    direction: Direction,
-    range: Int,
-    breaker: Entity?,
-    predicate: (BlockState) -> Boolean
-) {
-    when (direction.axis) {
-        Direction.Axis.X -> BlockPos.iterate(pos.add(0, range, -range), pos.add(0, -range, range))
-        Direction.Axis.Y -> BlockPos.iterate(pos.add(-range, 0, -range), pos.add(range, 0, range))
-        Direction.Axis.Z -> BlockPos.iterate(pos.add(-range, range, 0), pos.add(range, -range, 0))
-        else -> listOf()
-    }
-        .filter { predicate(world.getBlockState(it)) }
-        .forEach {
-            world.setBlockState(it, Blocks.BEDROCK.defaultState)
-            // world.breakBlock(it, true, breaker)
-        }
-}*/

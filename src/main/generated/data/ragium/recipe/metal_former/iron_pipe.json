@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:iron_pipe"
+  },
   "definition": {
     "type": "ragium:metal_former",
     "tier": "primitive"
