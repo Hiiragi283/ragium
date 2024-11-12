@@ -9,10 +9,10 @@ import net.minecraft.util.Identifier
 
 object RagiumItemTags {
     @JvmField
-    val ALKALI: TagKey<Item> = create(RagiumAPI.MOD_ID, "alkali")
+    val ALKALI: TagKey<Item> = create("alkali")
 
     @JvmField
-    val PROTEIN_FOODS: TagKey<Item> = create(RagiumAPI.MOD_ID, "foods/protein")
+    val PROTEIN_FOODS: TagKey<Item> = create("foods/protein")
 
     @JvmField
     val SILICON: TagKey<Item> = create("silicon")

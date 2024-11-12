@@ -16,7 +16,7 @@ import net.minecraft.world.World
 abstract class HTThrowableItem(settings: Settings) :
     Item(settings),
     ProjectileItem {
-    override fun use(world: World, user: PlayerEntity, hand: Hand?): TypedActionResult<ItemStack> {
+    override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         world.playSound(
             null,

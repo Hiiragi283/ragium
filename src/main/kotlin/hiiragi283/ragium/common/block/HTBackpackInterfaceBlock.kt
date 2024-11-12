@@ -7,6 +7,7 @@ import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
@@ -20,7 +21,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object HTBackpackInterfaceBlock : Block(blockSettings()) {
+object HTBackpackInterfaceBlock : Block(blockSettings(Blocks.SMOOTH_STONE)) {
     private val COLOR: EnumProperty<DyeColor>
         get() = RagiumBlockProperties.COLOR
 

@@ -31,22 +31,4 @@ class HTThinPillarBlock(settings: Settings) : PillarBlock(settings) {
         Direction.Axis.Y -> Y_SHAPE
         else -> Z_SHAPE
     }
-
-    //    HTKineticNode    //
-
-    /*override fun findProcessor(world: World, pos: BlockPos, from: Direction): BlockPos? {
-        val state: BlockState = world.getBlockState(pos)
-        val axis: Direction.Axis = state.get(AXIS)
-        return if (axis == from.axis) {
-            val toPos: BlockPos = pos.offset(from.opposite)
-            val toBlock: Block = world.getBlockState(toPos).block
-            return when {
-                world.getBlockEntity(toPos) is HTKineticProcessor -> toPos
-                toBlock is HTKineticNode -> toBlock.findProcessor(world, toPos, from)
-                else -> null
-            }
-        } else {
-            null
-        }
-    }*/
 }

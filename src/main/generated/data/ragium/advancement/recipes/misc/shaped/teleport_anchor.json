@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:advanced_circuit"
+            "items": "ragium:warped_crystal"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/network_interface"
+        "recipe": "ragium:shaped/teleport_anchor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/network_interface"
+      "ragium:shaped/teleport_anchor"
     ]
   }
 }

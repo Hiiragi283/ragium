@@ -13,9 +13,11 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.minecraft.block.BlockState
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.util.ItemScatterer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -43,6 +45,19 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         HTPipeType.canConnect(world, pos, dir, type)
     } ?: false
 
+    override fun onStateReplaced(state: BlockState, world: World, pos: BlockPos, newState: BlockState, moved: Boolean) {
+        ItemStorage.SIDED.find(world, pos, null)?.forEach { view: StorageView<ItemVariant> ->
+            ItemScatterer.spawn(
+                world,
+                pos.x.toDouble(),
+                pos.y.toDouble(),
+                pos.z.toDouble(),
+                view.resource.toStack(view.amount.toInt()),
+            )
+        }
+        super.onStateReplaced(state, world, pos, newState, moved)
+    }
+    
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
         // export containment

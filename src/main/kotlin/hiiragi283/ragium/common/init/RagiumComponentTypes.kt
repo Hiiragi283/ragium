@@ -21,6 +21,8 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.text.Text
+import net.minecraft.text.TextCodecs
 import net.minecraft.util.DyeColor
 
 object RagiumComponentTypes {
@@ -102,6 +104,9 @@ object RagiumComponentTypes {
     @JvmField
     val DAMAGE_INSTEAD_OF_DECREASE: ComponentType<Unit> =
         registerUnit("damage_instead_of_decrease")
+
+    @JvmField
+    val DESCRIPTION: ComponentType<Text> = register("description", TextCodecs.CODEC, TextCodecs.PACKET_CODEC)
 
     @JvmField
     val FLUID: ComponentType<Fluid> =

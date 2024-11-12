@@ -15,7 +15,6 @@ import net.minecraft.state.property.Properties
 import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
-import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -61,10 +60,10 @@ abstract class HTBlockWithEntity(settings: Settings) :
         }
     }
 
-    override fun createScreenHandlerFactory(state: BlockState, world: World, pos: BlockPos): NamedScreenHandlerFactory? =
+    final override fun createScreenHandlerFactory(state: BlockState, world: World, pos: BlockPos): NamedScreenHandlerFactory? =
         (world.getBlockEntity(pos) as? NamedScreenHandlerFactory)?.takeUnless { world.isClient }
 
-    override fun onUse(
+    final override fun onUse(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -72,7 +71,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
         hit: BlockHitResult,
     ): ActionResult = (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onUse(state, world, pos, player, hit) ?: ActionResult.PASS
 
-    override fun onStateReplaced(
+    final override fun onStateReplaced(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -80,9 +79,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
         moved: Boolean,
     ) {
         if (!state.isOf(newState.block)) {
-            (world.getBlockEntity(pos) as? HTBlockEntityBase)
-                ?.asInventory()
-                ?.let { ItemScatterer.spawn(world, pos, it) }
+            (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onStateReplaced(state, world, pos, newState, moved)
         }
         super.onStateReplaced(state, world, pos, newState, moved)
     }
@@ -90,9 +87,9 @@ abstract class HTBlockWithEntity(settings: Settings) :
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
         (world.getBlockEntity(pos) as? HTBlockEntityBase)?.getComparatorOutput(state, world, pos) ?: 0
 
-    override fun hasComparatorOutput(state: BlockState): Boolean = true
+    final override fun hasComparatorOutput(state: BlockState): Boolean = true
 
-    override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+    final override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
         BlockEntityTicker { world1: World, pos: BlockPos, state1: BlockState, blockEntity: T ->
             (blockEntity as? HTBlockEntityBase)?.let { TICKER.tick(world1, pos, state1, it) }
         }

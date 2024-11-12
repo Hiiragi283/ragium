@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
@@ -113,6 +114,8 @@ fun canTeleport(entity: Entity, world: World): Boolean = if (entity.world.regist
 } else {
     entity.canUsePortals(true)
 }
+
+fun LivingEntity.getStackInActiveHand(): ItemStack = getStackInHand(activeHand)
 
 //    Color    //
 
@@ -224,6 +227,8 @@ fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInst
 fun floatText(value: Float): MutableText = doubleText(value.toDouble())
 
 fun doubleText(value: Double): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
+
+fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
     ?.let(TranslatableTextContent::getKey)

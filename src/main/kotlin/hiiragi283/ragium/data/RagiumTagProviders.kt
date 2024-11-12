@@ -63,6 +63,7 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.TELEPORT_ANCHOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OPEN_CRATE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
 

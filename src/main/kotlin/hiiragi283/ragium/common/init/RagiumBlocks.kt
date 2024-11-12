@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.block.HayBlock
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.math.BlockPos
@@ -27,16 +28,13 @@ object RagiumBlocks : HTContentRegister {
     //    Blocks - Buildings    //
 
     @JvmField
-    val ASPHALT: Block = registerCopy("asphalt", Blocks.STONE)
+    val ASPHALT: Block = registerCopy("asphalt", Blocks.SMOOTH_STONE)
 
     //    Blocks - Foods    //
 
     @JvmField
     val SPONGE_CAKE: Block =
-        registerBlock(
-            "sponge_cake",
-            HTDecreaseFallingBlock(0.2f, blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL)),
-        )
+        registerBlock("sponge_cake", HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL)))
 
     @JvmField
     val SWEET_BERRIES_CAKE: Block =
@@ -57,7 +55,7 @@ object RagiumBlocks : HTContentRegister {
 
     @JvmField
     val LARGE_PROCESSOR: Block =
-        registerBlock("large_processor", HTLargeProcessorBlock(blockSettings()))
+        registerBlock("large_processor", HTLargeProcessorBlock)
 
     @JvmField
     val MANUAL_FORGE: Block =
@@ -69,7 +67,7 @@ object RagiumBlocks : HTContentRegister {
 
     @JvmField
     val MANUAL_MIXER: Block =
-        registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER)
+        registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER, blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
     val NETWORK_INTERFACE: Block =
@@ -82,6 +80,10 @@ object RagiumBlocks : HTContentRegister {
     @JvmField
     val SHAFT: Block =
         registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
+
+    @JvmField
+    val TELEPORT_ANCHOR: Block =
+        registerCopy("teleport_anchor", Blocks.SMOOTH_STONE)
 
     @JvmField
     val TRASH_BOX: Block =

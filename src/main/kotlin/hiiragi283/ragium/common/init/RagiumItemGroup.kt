@@ -98,6 +98,7 @@ object RagiumItemGroup {
                     add(RagiumBlocks.NETWORK_INTERFACE)
                     add(RagiumBlocks.OPEN_CRATE)
                     add(RagiumBlocks.SHAFT)
+                    add(RagiumBlocks.TELEPORT_ANCHOR)
                     add(RagiumBlocks.TRASH_BOX)
 
                     addAll(RagiumContents.Exporters.entries)

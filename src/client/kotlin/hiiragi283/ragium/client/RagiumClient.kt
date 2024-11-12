@@ -20,6 +20,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
@@ -38,7 +39,10 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.inventory.Inventory
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.tooltip.TooltipType
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
@@ -169,6 +173,9 @@ object RagiumClient : ClientModInitializer {
                 RagiumAPI.id("block/generator"),
                 RagiumAPI.id("block/solar_generator"),
             )
+        }
+        ItemTooltipCallback.EVENT.register(RagiumAPI.id("description")) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
+            stack.get(RagiumComponentTypes.DESCRIPTION)?.let(tooltips::add)
         }
     }
 

@@ -7,6 +7,7 @@
     "ragium:manual_grinder",
     "ragium:manual_mixer",
     "ragium:network_interface",
+    "ragium:teleport_anchor",
     "ragium:open_crate",
     "ragium:shaft",
     "ragium:raginite_ore",

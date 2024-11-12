@@ -153,6 +153,7 @@ object RagiumContentRegister : HTContentRegister {
         registerBlockItem(RagiumBlocks.OPEN_CRATE)
         registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
         registerBlockItem(RagiumBlocks.SHAFT)
+        registerBlockItem(RagiumBlocks.TELEPORT_ANCHOR)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
     }
 

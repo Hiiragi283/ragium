@@ -14,6 +14,7 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.util.ActionResult
+import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -67,6 +68,16 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         }
     } ?: ActionResult.PASS
 
+    open fun onStateReplaced(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        newState: BlockState,
+        moved: Boolean,
+    ) {
+        asInventory()?.let { ItemScatterer.spawn(world, pos, it) }
+    }
+    
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
 
     open val shouldTick: Boolean = true

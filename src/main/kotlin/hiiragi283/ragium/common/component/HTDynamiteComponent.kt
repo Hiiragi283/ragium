@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.entity.Entity
 import net.minecraft.item.Item
@@ -10,7 +11,9 @@ import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.world.World
 import java.util.function.Consumer
 
@@ -60,7 +63,21 @@ data class HTDynamiteComponent(val power: Float, val canDestroy: Boolean) : Tool
     //    TooltipAppender    //
 
     override fun appendTooltip(context: Item.TooltipContext, tooltip: Consumer<Text>, type: TooltipType) {
-        tooltip.accept(Text.translatable(RagiumTranslationKeys.DYNAMITE_POWER, power))
-        tooltip.accept(Text.translatable(RagiumTranslationKeys.DYNAMITE_DESTROY, canDestroy))
+        tooltip.accept(
+            Text.translatable(
+                RagiumTranslationKeys.DYNAMITE_POWER,
+                floatText(power).formatted(Formatting.WHITE)
+            ).formatted(Formatting.GRAY)
+        )
+        val destroyText: MutableText = when (canDestroy) {
+            true -> Text.literal("true").formatted(Formatting.RED)
+            false -> Text.literal("false").formatted(Formatting.AQUA)
+        }
+        tooltip.accept(
+            Text.translatable(
+                RagiumTranslationKeys.DYNAMITE_DESTROY,
+                destroyText
+            ).formatted(Formatting.GRAY)
+        )
     }
 }

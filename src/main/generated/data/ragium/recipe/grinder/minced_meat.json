@@ -6,7 +6,7 @@
   },
   "item_inputs": [
     {
-      "items": "#ragium:foods/protein"
+      "items": "#c:foods/protein"
     }
   ],
   "item_outputs": [

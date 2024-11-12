@@ -218,9 +218,6 @@ object RagiumItems : HTContentRegister {
     val PROCESSOR_SOCKET: Item = registerItem("processor_socket")
 
     @JvmField
-    val TELEPORTER: Item = registerItem("teleporter", HTTeleporterItem)
-
-    @JvmField
     val RAGI_ALLOY_COMPOUND: Item = registerItem("ragi_alloy_compound")
 
     @JvmField
@@ -245,7 +242,7 @@ object RagiumItems : HTContentRegister {
     val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
 
     @JvmField
-    val WARPED_CRYSTAL: Item = registerItem("warped_crystal")
+    val WARPED_CRYSTAL: Item = registerItem("warped_crystal", HTWarpedCrystalItem)
 
     @JvmField
     val MISC: List<Item> = listOf(

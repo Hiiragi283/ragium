@@ -14,17 +14,14 @@ import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
-import net.fabricmc.fabric.api.event.player.UseBlockCallback
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.EnchantedBookItem
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
@@ -34,11 +31,10 @@ import net.minecraft.recipe.input.SingleStackRecipeInput
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
+import net.minecraft.util.Formatting
 import net.minecraft.util.Rarity
-import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.village.*
 import net.minecraft.world.World
@@ -104,6 +100,61 @@ object RagiumEventHandlers {
             }
         }
 
+        DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
+            // blocks
+            addDescription(
+                context,
+                RagiumBlocks.POROUS_NETHERRACK,
+                Text.literal("Absorb lava like sponge but not reusable")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.SPONGE_CAKE,
+                Text.literal("Decrease falling damage when landed")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.LARGE_PROCESSOR,
+                Text.literal("Extend processor machine inside the multiblock")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.MANUAL_FORGE,
+                Text.literal("Right-click to place ingredient, or process by Forge Hammer")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.MANUAL_GRINDER,
+                Text.literal("Input ingredients by Hopper\nRight-click to process")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.MANUAL_MIXER,
+                Text.literal("Process mixer recipe with holding items")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.OPEN_CRATE,
+                Text.literal("Drop items below when inserted")
+            )
+            addDescription(
+                context,
+                RagiumBlocks.TRASH_BOX,
+                Text.literal("Remove ALL inserted items or fluids")
+            )
+            // items
+            addDescription(
+                context,
+                RagiumItems.BACKPACK,
+                Text.literal("Share inventory between same colored backpacks")
+            )
+            addDescription(
+                context,
+                RagiumItems.WARPED_CRYSTAL,
+                Text.literal("Click on Teleport Anchor to link\nTeleport on the Anchor by right-clicking")
+            )
+        }
+        
         // DefaultItemComponentEvents
         /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
             if (entityType.spawnGroup == SpawnGroup.MONSTER && reason == SpawnReason.NATURAL) TriState.FALSE else TriState.DEFAULT
@@ -154,7 +205,7 @@ object RagiumEventHandlers {
             }
         }
 
-        UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
+        /*UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
             if (stack.hasEnchantments() && world.getBlockState(result.blockPos).isOf(Blocks.CRYING_OBSIDIAN)) {
                 stack.enchantments
@@ -166,9 +217,20 @@ object RagiumEventHandlers {
             } else {
                 ActionResult.PASS
             }
-        }
+        }*/
     }
 
+    @JvmStatic
+    private fun addDescription(
+        context: DefaultItemComponentEvents.ModifyContext,
+        item: ItemConvertible,
+        text: MutableText,
+    ) {
+        context.modify(item.asItem()) {
+            it.add(RagiumComponentTypes.DESCRIPTION, text.formatted(Formatting.AQUA))
+        }
+    }
+    
     @JvmStatic
     private fun <T : RecipeInput, U : Recipe<T>> applyRecipe(
         drop: ItemStack,
