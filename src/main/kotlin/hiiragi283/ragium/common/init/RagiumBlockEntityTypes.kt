@@ -26,6 +26,10 @@ object RagiumBlockEntityTypes {
         register("exporter", ::HTCanningMachineBlockEntity)
 
     @JvmField
+    val AUTO_ILLUMINATOR: BlockEntityType<HTAutoIlluminatorBlockEntity> =
+        register("auto_illuminator", ::HTAutoIlluminatorBlockEntity)
+
+    @JvmField
     val CHEMICAL_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Chemical> =
         register("chemical_processor", HTProcessorBlockEntityBase::Chemical)
 

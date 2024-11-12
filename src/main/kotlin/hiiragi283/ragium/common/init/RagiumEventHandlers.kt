@@ -105,56 +105,62 @@ object RagiumEventHandlers {
             addDescription(
                 context,
                 RagiumBlocks.POROUS_NETHERRACK,
-                Text.literal("Absorb lava like sponge but not reusable")
+                Text.literal("Absorb lava like sponge but not reusable"),
             )
             addDescription(
                 context,
                 RagiumBlocks.SPONGE_CAKE,
-                Text.literal("Decrease falling damage when landed")
+                Text.literal("Decrease falling damage when landed"),
+            )
+
+            addDescription(
+                context,
+                RagiumBlocks.AUTO_ILLUMINATOR,
+                Text.literal("Place light blocks below area"),
             )
             addDescription(
                 context,
                 RagiumBlocks.LARGE_PROCESSOR,
-                Text.literal("Extend processor machine inside the multiblock")
+                Text.literal("Extend processor machine inside the multiblock"),
             )
             addDescription(
                 context,
                 RagiumBlocks.MANUAL_FORGE,
-                Text.literal("Right-click to place ingredient, or process by Forge Hammer")
+                Text.literal("Right-click to place ingredient, or process by Forge Hammer"),
             )
             addDescription(
                 context,
                 RagiumBlocks.MANUAL_GRINDER,
-                Text.literal("Input ingredients by Hopper\nRight-click to process")
+                Text.literal("Input ingredients by Hopper\nRight-click to process"),
             )
             addDescription(
                 context,
                 RagiumBlocks.MANUAL_MIXER,
-                Text.literal("Process mixer recipe with holding items")
+                Text.literal("Process mixer recipe with holding items"),
             )
             addDescription(
                 context,
                 RagiumBlocks.OPEN_CRATE,
-                Text.literal("Drop items below when inserted")
+                Text.literal("Drop items below when inserted"),
             )
             addDescription(
                 context,
                 RagiumBlocks.TRASH_BOX,
-                Text.literal("Remove ALL inserted items or fluids")
+                Text.literal("Remove ALL inserted items or fluids"),
             )
             // items
             addDescription(
                 context,
                 RagiumItems.BACKPACK,
-                Text.literal("Share inventory between same colored backpacks")
+                Text.literal("Share inventory between same colored backpacks"),
             )
             addDescription(
                 context,
                 RagiumItems.WARPED_CRYSTAL,
-                Text.literal("Click on Teleport Anchor to link\nTeleport on the Anchor by right-clicking")
+                Text.literal("Click on Teleport Anchor to link\nTeleport on the Anchor by right-clicking"),
             )
         }
-        
+
         // DefaultItemComponentEvents
         /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
             if (entityType.spawnGroup == SpawnGroup.MONSTER && reason == SpawnReason.NATURAL) TriState.FALSE else TriState.DEFAULT
@@ -221,16 +227,12 @@ object RagiumEventHandlers {
     }
 
     @JvmStatic
-    private fun addDescription(
-        context: DefaultItemComponentEvents.ModifyContext,
-        item: ItemConvertible,
-        text: MutableText,
-    ) {
+    private fun addDescription(context: DefaultItemComponentEvents.ModifyContext, item: ItemConvertible, text: MutableText) {
         context.modify(item.asItem()) {
             it.add(RagiumComponentTypes.DESCRIPTION, text.formatted(Formatting.AQUA))
         }
     }
-    
+
     @JvmStatic
     private fun <T : RecipeInput, U : Recipe<T>> applyRecipe(
         drop: ItemStack,

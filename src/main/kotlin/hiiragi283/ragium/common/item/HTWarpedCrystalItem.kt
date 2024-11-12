@@ -53,17 +53,16 @@ object HTWarpedCrystalItem : Item(itemSettings()) {
         }
         return super.useOnBlock(context)
     }
-    
-    override fun hasGlint(stack: ItemStack): Boolean =
-        super.hasGlint(stack) || stack.contains(DataComponentTypes.LODESTONE_TRACKER)
+
+    override fun hasGlint(stack: ItemStack): Boolean = super.hasGlint(stack) || stack.contains(DataComponentTypes.LODESTONE_TRACKER)
 
     override fun appendTooltip(
         stack: ItemStack,
         context: TooltipContext,
         tooltip: MutableList<Text>,
-        type: TooltipType
+        type: TooltipType,
     ) {
-        stack.get(DataComponentTypes.LODESTONE_TRACKER)?.let { component: LodestoneTrackerComponent -> 
+        stack.get(DataComponentTypes.LODESTONE_TRACKER)?.let { component: LodestoneTrackerComponent ->
             tooltip.add(Text.literal("Destination: ${component.target.getOrNull()}"))
         }
     }

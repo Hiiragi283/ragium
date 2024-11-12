@@ -87,18 +87,20 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Hulls.entries)
                     addAll(RagiumContents.Coils.entries)
 
+                    add(RagiumBlocks.LARGE_PROCESSOR)
+                    add(RagiumBlocks.AUTO_ILLUMINATOR)
+                    add(RagiumBlocks.TELEPORT_ANCHOR)
                     add(RagiumBlocks.CREATIVE_SOURCE)
+
                     add(RagiumBlocks.MANUAL_FORGE)
                     add(RagiumBlocks.MANUAL_GRINDER)
                     add(RagiumBlocks.MANUAL_MIXER)
 
                     add(RagiumBlocks.BACKPACK_INTERFACE)
                     add(RagiumBlocks.ITEM_DISPLAY)
-                    add(RagiumBlocks.LARGE_PROCESSOR)
                     add(RagiumBlocks.NETWORK_INTERFACE)
                     add(RagiumBlocks.OPEN_CRATE)
                     add(RagiumBlocks.SHAFT)
-                    add(RagiumBlocks.TELEPORT_ANCHOR)
                     add(RagiumBlocks.TRASH_BOX)
 
                     addAll(RagiumContents.Exporters.entries)

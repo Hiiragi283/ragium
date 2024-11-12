@@ -47,6 +47,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.SWEET_BERRIES_CAKE, dropsNothing())
 
         addDrop(RagiumBlocks.BACKPACK_INTERFACE)
+        addDrop(RagiumBlocks.AUTO_ILLUMINATOR)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumBlocks.ITEM_DISPLAY)
         addDrop(RagiumBlocks.LARGE_PROCESSOR)

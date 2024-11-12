@@ -186,6 +186,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
+            builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "Auto Illuminator")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "Large Processor")
@@ -194,23 +195,8 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Basin")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
+            builder.add(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
-
-            builder.add(RagiumItems.STEEL_HELMET, "Steel Helmet")
-            builder.add(RagiumItems.STEEL_CHESTPLATE, "Steel Chestplate")
-            builder.add(RagiumItems.STEEL_LEGGINGS, "Steel Leggings")
-            builder.add(RagiumItems.STEEL_BOOTS, "Steel Boots")
-            builder.add(RagiumItems.STELLA_GOGGLE, "S.T.E.L.L.A. Goggles")
-            builder.add(RagiumItems.STELLA_JACKET, "S.T.E.L.L.A. Jacket")
-            builder.add(RagiumItems.STELLA_LEGGINGS, "S.T.E.L.L.A. Leggings")
-            builder.add(RagiumItems.STELLA_BOOTS, "S.T.E.L.L.A. Boots")
-
-            builder.add(RagiumItems.STEEL_AXE, "Steel Axe")
-            builder.add(RagiumItems.STEEL_HOE, "Steel Hoe")
-            builder.add(RagiumItems.STEEL_PICKAXE, "Steel Pickaxe")
-            builder.add(RagiumItems.STEEL_SHOVEL, "Steel Shovel")
-            builder.add(RagiumItems.STEEL_SWORD, "Steel Sword")
-            builder.add(RagiumItems.BUJIN, "Bujin")
 
             builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
             builder.add(RagiumContents.Pipes.WOODEN, "Wooden Pipe")
@@ -229,6 +215,22 @@ object RagiumLangProviders {
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
             builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Items
+            builder.add(RagiumItems.STEEL_HELMET, "Steel Helmet")
+            builder.add(RagiumItems.STEEL_CHESTPLATE, "Steel Chestplate")
+            builder.add(RagiumItems.STEEL_LEGGINGS, "Steel Leggings")
+            builder.add(RagiumItems.STEEL_BOOTS, "Steel Boots")
+            builder.add(RagiumItems.STELLA_GOGGLE, "S.T.E.L.L.A. Goggles")
+            builder.add(RagiumItems.STELLA_JACKET, "S.T.E.L.L.A. Jacket")
+            builder.add(RagiumItems.STELLA_LEGGINGS, "S.T.E.L.L.A. Leggings")
+            builder.add(RagiumItems.STELLA_BOOTS, "S.T.E.L.L.A. Boots")
+
+            builder.add(RagiumItems.STEEL_AXE, "Steel Axe")
+            builder.add(RagiumItems.STEEL_HOE, "Steel Hoe")
+            builder.add(RagiumItems.STEEL_PICKAXE, "Steel Pickaxe")
+            builder.add(RagiumItems.STEEL_SHOVEL, "Steel Shovel")
+            builder.add(RagiumItems.STEEL_SWORD, "Steel Sword")
+            builder.add(RagiumItems.BUJIN, "Bujin")
+
             builder.add(RagiumItems.BEE_WAX, "Bee Wax")
             builder.add(RagiumItems.BUTTER, "Butter")
             builder.add(RagiumItems.CARAMEL, "Caramel")
@@ -440,6 +442,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
+            builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "光源置き太郎")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "大型処理装置")
@@ -448,6 +451,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_MIXER, "らぎ釜")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
+            builder.add(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")
 
             builder.add(RagiumItems.STEEL_HELMET, "スチールのヘルメット")

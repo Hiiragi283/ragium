@@ -58,6 +58,7 @@ object RagiumTagProviders {
 
             add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
 
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.AUTO_ILLUMINATOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.LARGE_PROCESSOR)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)

@@ -63,6 +63,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
 
         // simple
         registerSimple(RagiumBlocks.ASPHALT)
+        registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.TELEPORT_ANCHOR)

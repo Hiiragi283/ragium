@@ -684,13 +684,25 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.AUTO_ILLUMINATOR)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumContents.Plates.DEEP_STEEL)
+            .input('B', RagiumContents.Plates.GOLD)
+            .input('C', RagiumItems.CRIMSON_CRYSTAL)
+            .unlockedBy(RagiumItems.CRIMSON_CRYSTAL)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.TELEPORT_ANCHOR)
             .patterns(
                 "ABA",
                 "BCB",
                 "ABA",
             ).input('A', RagiumContents.Plates.DEEP_STEEL)
-            .input('B', RagiumContents.Plates.STEEL)
+            .input('B', RagiumContents.Plates.ALUMINUM)
             .input('C', RagiumItems.WARPED_CRYSTAL)
             .unlockedBy(RagiumItems.WARPED_CRYSTAL)
             .offerTo(exporter)

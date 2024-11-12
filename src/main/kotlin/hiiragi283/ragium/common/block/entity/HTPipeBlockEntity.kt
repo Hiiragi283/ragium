@@ -45,7 +45,13 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         HTPipeType.canConnect(world, pos, dir, type)
     } ?: false
 
-    override fun onStateReplaced(state: BlockState, world: World, pos: BlockPos, newState: BlockState, moved: Boolean) {
+    override fun onStateReplaced(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        newState: BlockState,
+        moved: Boolean,
+    ) {
         ItemStorage.SIDED.find(world, pos, null)?.forEach { view: StorageView<ItemVariant> ->
             ItemScatterer.spawn(
                 world,
@@ -57,7 +63,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         }
         super.onStateReplaced(state, world, pos, newState, moved)
     }
-    
+
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
         // export containment

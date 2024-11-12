@@ -77,7 +77,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     ) {
         asInventory()?.let { ItemScatterer.spawn(world, pos, it) }
     }
-    
+
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
 
     open val shouldTick: Boolean = true

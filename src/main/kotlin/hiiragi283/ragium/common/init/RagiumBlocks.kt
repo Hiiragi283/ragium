@@ -46,6 +46,9 @@ object RagiumBlocks : HTContentRegister {
     val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
 
     @JvmField
+    val AUTO_ILLUMINATOR: Block = registerWithBE("auto_illuminator", RagiumBlockEntityTypes.AUTO_ILLUMINATOR)
+
+    @JvmField
     val CREATIVE_SOURCE: Block =
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
 

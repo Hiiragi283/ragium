@@ -110,7 +110,7 @@ object RagiumItems : HTContentRegister {
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
-        BUJIN
+        BUJIN,
     )
 
     //    Foods    //

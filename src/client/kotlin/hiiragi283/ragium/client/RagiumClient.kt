@@ -174,7 +174,9 @@ object RagiumClient : ClientModInitializer {
                 RagiumAPI.id("block/solar_generator"),
             )
         }
-        ItemTooltipCallback.EVENT.register(RagiumAPI.id("description")) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
+        ItemTooltipCallback.EVENT.register(
+            RagiumAPI.id("description"),
+        ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
             stack.get(RagiumComponentTypes.DESCRIPTION)?.let(tooltips::add)
         }
     }

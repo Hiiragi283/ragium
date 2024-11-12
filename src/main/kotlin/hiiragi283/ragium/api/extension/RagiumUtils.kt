@@ -52,6 +52,16 @@ fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direc
 
 //    ChunkPos    //
 
+fun ChunkPos.iterator(yRange: IntRange): Iterator<BlockPos> = iterator {
+    (startX..endX).forEach { x: Int ->
+        (startZ..endZ).forEach { z: Int ->
+            yRange.forEach { y: Int ->
+                yield(BlockPos(x, y, z))
+            }
+        }
+    }
+}
+
 fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
     (startX..endX).forEach { x: Int ->
         (startZ..endZ).forEach { z: Int ->

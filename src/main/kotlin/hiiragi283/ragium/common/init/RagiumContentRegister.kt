@@ -144,6 +144,7 @@ object RagiumContentRegister : HTContentRegister {
         )
 
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlockItem(RagiumBlocks.AUTO_ILLUMINATOR)
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)

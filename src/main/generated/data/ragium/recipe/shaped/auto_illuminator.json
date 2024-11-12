@@ -6,10 +6,10 @@
       "tag": "c:plates/deep_steel"
     },
     "B": {
-      "tag": "c:plates/aluminum"
+      "tag": "c:plates/gold"
     },
     "C": {
-      "item": "ragium:warped_crystal"
+      "item": "ragium:crimson_crystal"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_anchor"
+    "id": "ragium:auto_illuminator"
   }
 }

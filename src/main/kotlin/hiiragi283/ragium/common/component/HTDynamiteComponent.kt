@@ -64,20 +64,22 @@ data class HTDynamiteComponent(val power: Float, val canDestroy: Boolean) : Tool
 
     override fun appendTooltip(context: Item.TooltipContext, tooltip: Consumer<Text>, type: TooltipType) {
         tooltip.accept(
-            Text.translatable(
-                RagiumTranslationKeys.DYNAMITE_POWER,
-                floatText(power).formatted(Formatting.WHITE)
-            ).formatted(Formatting.GRAY)
+            Text
+                .translatable(
+                    RagiumTranslationKeys.DYNAMITE_POWER,
+                    floatText(power).formatted(Formatting.WHITE),
+                ).formatted(Formatting.GRAY),
         )
         val destroyText: MutableText = when (canDestroy) {
             true -> Text.literal("true").formatted(Formatting.RED)
             false -> Text.literal("false").formatted(Formatting.AQUA)
         }
         tooltip.accept(
-            Text.translatable(
-                RagiumTranslationKeys.DYNAMITE_DESTROY,
-                destroyText
-            ).formatted(Formatting.GRAY)
+            Text
+                .translatable(
+                    RagiumTranslationKeys.DYNAMITE_DESTROY,
+                    destroyText,
+                ).formatted(Formatting.GRAY),
         )
     }
 }

@@ -10,11 +10,14 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.SwordItem
 import net.minecraft.util.Rarity
 
-object HTBujinItem : SwordItem(
-    RagiumToolMaterials.STEEL,
-    itemSettings().rarity(Rarity.EPIC)
-        .attributeModifiers(createAttributeComponent(RagiumToolMaterials.STEEL, 6.0, 0.0))
-), Equipment {
+object HTBujinItem :
+    SwordItem(
+        RagiumToolMaterials.STEEL,
+        itemSettings()
+            .rarity(Rarity.EPIC)
+            .attributeModifiers(createAttributeComponent(RagiumToolMaterials.STEEL, 6.0, 0.0)),
+    ),
+    Equipment {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {
         target.damage(attacker.world.damageSources.magic(), 4.0f)
         return super.postHit(stack, target, attacker)

@@ -20,14 +20,15 @@ object HTStonecuttingRecipeJsonBuilder {
         count: Int = 1,
         id: Identifier = CraftingRecipeJsonBuilder.getItemId(output),
         category: RecipeCategory = RecipeCategory.MISC,
-        suffix: String = ""
+        suffix: String = "",
     ) {
-        StonecuttingRecipeJsonBuilder.createStonecutting(
-            Ingredient.ofItems(input),
-            category,
-            output,
-            count
-        ).criterion("has_input", RecipeProvider.conditionsFromItem(input))
+        StonecuttingRecipeJsonBuilder
+            .createStonecutting(
+                Ingredient.ofItems(input),
+                category,
+                output,
+                count,
+            ).criterion("has_input", RecipeProvider.conditionsFromItem(input))
             .offerTo(exporter, id.withPrefixedPath("stonecutting/").withSuffixedPath(suffix))
     }
 
@@ -39,14 +40,15 @@ object HTStonecuttingRecipeJsonBuilder {
         count: Int = 1,
         id: Identifier = CraftingRecipeJsonBuilder.getItemId(output),
         category: RecipeCategory = RecipeCategory.MISC,
-        suffix: String = ""
+        suffix: String = "",
     ) {
-        StonecuttingRecipeJsonBuilder.createStonecutting(
-            Ingredient.fromTag(input),
-            category,
-            output,
-            count
-        ).criterion("has_input", RecipeProvider.conditionsFromTag(input))
+        StonecuttingRecipeJsonBuilder
+            .createStonecutting(
+                Ingredient.fromTag(input),
+                category,
+                output,
+                count,
+            ).criterion("has_input", RecipeProvider.conditionsFromTag(input))
             .offerTo(exporter, id.withPrefixedPath("stonecutting/").withSuffixedPath(suffix))
     }
 
