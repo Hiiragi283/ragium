@@ -2,6 +2,9 @@ package hiiragi283.ragium.common
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.*
@@ -16,6 +19,7 @@ import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
@@ -26,6 +30,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.util.Rarity
+import java.nio.file.Files
+import java.nio.file.Path
+import kotlin.io.path.bufferedReader
+import kotlin.io.path.bufferedWriter
 
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
@@ -159,5 +167,37 @@ internal data object InternalRagiumAPI : RagiumAPI {
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
         RagiumAPI.log { info("Registered material types and properties!") }
+    }
+
+    //    ConfigImpl    //
+
+    @JvmStatic
+    private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
+
+    @JvmStatic
+    private val configPath: Path = FabricLoader.getInstance().configDir.resolve("${RagiumAPI.MOD_ID}.json")
+
+    override val config: RagiumAPI.Config by lazy { readConfig() }
+
+    @JvmStatic
+    private fun readConfig(): RagiumAPI.Config = when {
+        Files.exists(configPath) -> configPath.bufferedReader().use { gson.fromJson(it, ConfigImpl::class.java) }
+        else -> ConfigImpl().apply { configPath.bufferedWriter().use { gson.toJson(this, it) } }
+    }.validate()
+
+    @JvmStatic
+    private fun getVersion(): String = getModMetadata(RagiumAPI.MOD_ID)?.version?.friendlyString ?: "MISSING"
+
+    private class ConfigImpl(
+        val version: String,
+        @SerializedName("auto_illuminator_radius")
+        override val autoIlluminatorRadius: Int,
+    ) : RagiumAPI.Config {
+        constructor() : this(getVersion(), 64)
+
+        fun validate(): ConfigImpl = apply {
+            check(version == getVersion()) { "Not matching config version! Remove old config file!" }
+            RagiumAPI.log { info("Loaded config!") }
+        }
     }
 }

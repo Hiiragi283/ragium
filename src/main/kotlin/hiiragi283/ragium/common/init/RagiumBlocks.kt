@@ -53,6 +53,10 @@ object RagiumBlocks : HTContentRegister {
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
 
     @JvmField
+    val ENCHANT_BOOKSHELF: Block =
+        registerWithBE("enchantment_bookshelf", RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, Blocks.BOOKSHELF)
+
+    @JvmField
     val ITEM_DISPLAY: Block =
         registerBlock("item_display", HTItemDisplayBlock)
 

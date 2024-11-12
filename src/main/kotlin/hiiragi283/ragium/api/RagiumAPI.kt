@@ -72,10 +72,18 @@ interface RagiumAPI {
         }
     }
 
+    val config: Config
+
     val machineRegistry: HTMachineRegistry
     val materialRegistry: HTMaterialRegistry
 
     fun createBuiltMachineCriterion(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
+
+    //    Config    //
+    @ApiStatus.NonExtendable
+    interface Config {
+        val autoIlluminatorRadius: Int
+    }
 }
