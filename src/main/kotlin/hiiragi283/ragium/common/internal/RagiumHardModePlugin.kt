@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.internal
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTHardModeContents
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
@@ -145,49 +146,42 @@ object RagiumHardModePlugin : RagiumPlugin {
             .input('B', Items.BRICKS)
             .offerTo(exporter)
 
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.NETWORK_INTERFACE)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', HTHardModeContents.DEEP_STEEL.getContent(hardMode))
-            .input('B', HTHardModeContents.STEEL.getContent(hardMode))
-            .input('C', RagiumContents.Circuits.ADVANCED)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.LARGE_PROCESSOR)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', HTHardModeContents.DEEP_STEEL.getContent(hardMode))
-            .input('B', HTMachineTier.ADVANCED.getSubMetal(hardMode))
-            .input('C', RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.AUTO_ILLUMINATOR)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', HTHardModeContents.DEEP_STEEL.getContent(hardMode))
-            .input('B', HTHardModeContents.GOLD.getContent(hardMode))
-            .input('C', RagiumItems.CRIMSON_CRYSTAL)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.TELEPORT_ANCHOR)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', HTHardModeContents.DEEP_STEEL.getContent(hardMode))
-            .input('B', HTHardModeContents.ALUMINUM.getContent(hardMode))
-            .input('C', RagiumItems.WARPED_CRYSTAL)
-            .offerTo(exporter)
+        createMechanics(
+            exporter,
+            RagiumBlocks.NETWORK_INTERFACE,
+            HTHardModeContents.STEEL.getContent(hardMode),
+            RagiumContents.Circuits.ADVANCED
+        )
+        createMechanics(
+            exporter,
+            RagiumBlocks.LARGE_PROCESSOR,
+            HTHardModeContents.RAGI_ALLOY.getContent(hardMode),
+            RagiumItems.RAGI_CRYSTAL_PROCESSOR
+        )
+        createMechanics(
+            exporter,
+            RagiumBlocks.AUTO_ILLUMINATOR,
+            HTHardModeContents.GOLD.getContent(hardMode),
+            RagiumItems.CRIMSON_CRYSTAL
+        )
+        createMechanics(
+            exporter,
+            RagiumBlocks.TELEPORT_ANCHOR,
+            HTHardModeContents.ALUMINUM.getContent(hardMode),
+            RagiumItems.WARPED_CRYSTAL
+        )
+        createMechanics(
+            exporter,
+            RagiumBlocks.OPEN_CRATE,
+            RagiumContents.Gems.FLUORITE,
+            Items.HOPPER
+        )
+        createMechanics(
+            exporter,
+            RagiumBlocks.TRASH_BOX,
+            HTHardModeContents.IRON.getContent(hardMode),
+            Items.LAVA_BUCKET
+        )
         // consumers
         createProcessor(
             exporter,
@@ -503,6 +497,24 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .input('C', casing.tier.getGrate())
                 .offerTo(exporter)
         }
+    }
+    
+    private fun createMechanics(
+        exporter: RecipeExporter,
+        output: ItemConvertible,
+        side: HTContent.Material<Item>,
+        core: ItemConvertible
+    ) {
+        HTShapedRecipeJsonBuilder
+            .create(output)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', HTHardModeContents.DEEP_STEEL.getContent(hardMode))
+            .input('B', side)
+            .input('C', core)
+            .offerTo(exporter)
     }
 
     private fun createProcessor(

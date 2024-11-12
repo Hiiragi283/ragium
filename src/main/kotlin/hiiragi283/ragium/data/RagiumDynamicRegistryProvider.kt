@@ -46,8 +46,8 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
             lookup,
             RagiumFeatures.ORE_RAGINITE,
             HeightRangePlacementModifier.trapezoid(
-                YOffset.fixed(-16),
-                YOffset.fixed(112),
+                YOffset.fixed(-48),
+                YOffset.fixed(48),
             ),
         )
         registerOre(
