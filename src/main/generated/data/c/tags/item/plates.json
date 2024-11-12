@@ -17,10 +17,6 @@
       "required": false
     },
     {
-      "id": "#c:plates/engineering_plastic",
-      "required": false
-    },
-    {
       "id": "#c:plates/gold",
       "required": false
     },
@@ -41,10 +37,6 @@
       "required": false
     },
     {
-      "id": "#c:plates/plastic",
-      "required": false
-    },
-    {
       "id": "#c:plates/platinum",
       "required": false
     },
@@ -61,19 +53,11 @@
       "required": false
     },
     {
-      "id": "#c:plates/silicon",
-      "required": false
-    },
-    {
       "id": "#c:plates/silver",
       "required": false
     },
     {
       "id": "#c:plates/steel",
-      "required": false
-    },
-    {
-      "id": "#c:plates/stella",
       "required": false
     },
     {

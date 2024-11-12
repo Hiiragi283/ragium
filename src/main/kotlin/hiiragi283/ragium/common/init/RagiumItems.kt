@@ -197,10 +197,13 @@ object RagiumItems : HTContentRegister {
     val EMPTY_FLUID_CUBE: Item = registerItem("empty_fluid_cube")
 
     @JvmField
-    val FILLED_FLUID_CUBE: Item = registerItem("filled_fluid_cube", HTFilledFluidCubeItem)
+    val ENGINE: Item = registerItem("engine")
 
     @JvmField
-    val ENGINE: Item = registerItem("engine")
+    val ENGINEERING_PLASTIC_PLATE: Item = registerItem("engineering_plastic_plate")
+
+    @JvmField
+    val FILLED_FLUID_CUBE: Item = registerItem("filled_fluid_cube", HTFilledFluidCubeItem)
 
     @JvmField
     val FORGE_HAMMER: Item = registerItem("forge_hammer", HTForgeHammerItem)
@@ -210,6 +213,9 @@ object RagiumItems : HTContentRegister {
 
     @JvmField
     val LASER_EMITTER: Item = registerItem("laser_emitter")
+
+    @JvmField
+    val PLASTIC_PLATE: Item = registerItem("plastic_plate")
 
     @JvmField
     val POLYMER_RESIN: Item = registerItem("polymer_resin")
@@ -239,6 +245,12 @@ object RagiumItems : HTContentRegister {
     val SOLAR_PANEL: Item = registerItem("solar_panel")
 
     @JvmField
+    val SILICON_PLATE: Item = registerItem("silicon_plate")
+
+    @JvmField
+    val STELLA_PLATE: Item = registerItem("stella_plate")
+
+    @JvmField
     val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
 
     @JvmField
@@ -253,8 +265,9 @@ object RagiumItems : HTContentRegister {
         DEEPANT,
         DYNAMITE,
         EMPTY_FLUID_CUBE,
-        FILLED_FLUID_CUBE,
         ENGINE,
+        ENGINEERING_PLASTIC_PLATE,
+        FILLED_FLUID_CUBE,
         FORGE_HAMMER,
         HEART_OF_THE_NETHER,
         LASER_EMITTER,
@@ -267,6 +280,8 @@ object RagiumItems : HTContentRegister {
         SLAG,
         SOAP_INGOT,
         SOLAR_PANEL,
+        SILICON_PLATE,
+        STELLA_PLATE,
         TRADER_CATALOG,
         WARPED_CRYSTAL,
     )

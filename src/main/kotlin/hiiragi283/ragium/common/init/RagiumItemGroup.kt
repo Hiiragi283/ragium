@@ -45,7 +45,9 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Dusts.entries)
                     addAll(RagiumContents.Gems.entries)
                     addAll(RagiumContents.Ingots.entries)
-                    addAll(RagiumContents.Plates.entries)
+                    if (RagiumAPI.getInstance().config.isHardMode) {
+                        addAll(RagiumContents.Plates.entries)
+                    }
                     addAll(RagiumContents.RawMaterials.entries)
 
                     addAll(RagiumItems.ARMORS)

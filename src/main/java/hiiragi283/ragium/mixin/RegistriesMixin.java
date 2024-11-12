@@ -1,7 +1,7 @@
 package hiiragi283.ragium.mixin;
 
 import hiiragi283.ragium.api.RagiumAPI;
-import hiiragi283.ragium.common.InternalRagiumAPI;
+import hiiragi283.ragium.common.internal.InternalRagiumAPI;
 import net.minecraft.registry.Registries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -97,10 +97,6 @@
       "required": false
     },
     {
-      "id": "#c:storage_blocks/silicon",
-      "required": false
-    },
-    {
       "id": "#c:storage_blocks/silver",
       "required": false
     },

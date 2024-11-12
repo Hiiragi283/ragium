@@ -53,10 +53,6 @@
       "required": false
     },
     {
-      "id": "#c:raw_materials/silicon",
-      "required": false
-    },
-    {
       "id": "#c:raw_materials/silver",
       "required": false
     },

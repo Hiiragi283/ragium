@@ -1,9 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
-import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
@@ -78,21 +76,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Assembler    //
 
     private fun assembler(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(RagiumContents.Plates.STEEL, 8)
-            .itemInput(RagiumContents.Plates.RAGI_STEEL, 8)
-            .itemOutput(RagiumItems.ENGINE)
-            .offerTo(exporter, RagiumItems.ENGINE)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumContents.Circuits.ADVANCED, 2)
-            .itemInput(RagiumContents.Plates.DEEP_STEEL, 4)
-            .itemInput(RagiumContents.Plates.ENGINEERING_PLASTIC, 4)
-            .fluidInput(RagiumFluids.NOBLE_GAS)
-            .itemOutput(RagiumItems.LASER_EMITTER)
-            .offerTo(exporter, RagiumItems.LASER_EMITTER)
         // processor
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
@@ -107,47 +90,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumItems.PROCESSOR_SOCKET)
             .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
             .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR, "_from_ragium")
-        // circuits
-        val boardMap: Map<HTMachineTier, RagiumContents.Plates> = mapOf(
-            HTMachineTier.PRIMITIVE to RagiumContents.Plates.SILICON,
-            HTMachineTier.BASIC to RagiumContents.Plates.PLASTIC,
-            HTMachineTier.ADVANCED to RagiumContents.Plates.ENGINEERING_PLASTIC,
-        )
-        val circuitMap: Map<HTMachineTier, Either<TagKey<Item>, ItemConvertible>> = mapOf(
-            HTMachineTier.PRIMITIVE to Either.left(ConventionalItemTags.REDSTONE_DUSTS),
-            HTMachineTier.BASIC to Either.left(ConventionalItemTags.GLOWSTONE_DUSTS),
-            HTMachineTier.ADVANCED to Either.right(RagiumContents.Dusts.RAGI_CRYSTAL),
-        )
-
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val plate: RagiumContents.Plates = boardMap[tier] ?: return@forEach
-            val board: RagiumContents.CircuitBoards = tier.getCircuitBoard()
-            val dope: Either<TagKey<Item>, ItemConvertible> = circuitMap[tier] ?: return@forEach
-            val circuit: RagiumContents.Circuits = tier.getCircuit()
-            // board
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, tier)
-                .itemInput(plate)
-                .itemInput(tier.getSubPlate())
-                .itemOutput(board)
-                .offerTo(exporter, board)
-            // circuit
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, tier)
-                .itemInput(board)
-                .itemInput(HTIngredient.ofItem(dope))
-                .itemOutput(circuit)
-                .offerTo(exporter, circuit)
-        }
-        // coils
-        RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.ASSEMBLER)
-                .itemInput(coil.tier.getSubPlate(), 8)
-                .itemInput(RagiumBlocks.SHAFT)
-                .itemOutput(coil, 2)
-                .offerTo(exporter, coil)
-        }
     }
 
     //    Blast Furnace    //
@@ -189,9 +131,9 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(ConventionalItemTags.QUARTZ_GEMS, 2)
             .itemInput(ItemTags.COALS, 4)
-            .itemOutput(RagiumContents.Plates.SILICON)
+            .itemOutput(RagiumItems.SILICON_PLATE)
             .itemOutput(RagiumItems.SLAG, 2)
-            .offerTo(exporter, RagiumContents.Plates.SILICON)
+            .offerTo(exporter, RagiumItems.SILICON_PLATE)
         // aluminum
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
@@ -245,14 +187,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .catalyst(Items.GLASS)
             .itemOutput(Items.GLASS)
             .offerTo(exporter, Items.GLASS)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.COMPRESSOR, HTMachineTier.ADVANCED)
-            .itemInput(RagiumContents.Plates.ALUMINUM)
-            .itemInput(RagiumContents.Plates.ENGINEERING_PLASTIC)
-            .itemInput(RagiumContents.Plates.DEEP_STEEL, 2)
-            .itemOutput(RagiumContents.Plates.STELLA)
-            .offerTo(exporter, RagiumContents.Plates.STELLA)
     }
 
     //    Distillation Tower    //

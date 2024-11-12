@@ -49,10 +49,6 @@
       "required": false
     },
     {
-      "id": "#c:dusts/engineering_plastic",
-      "required": false
-    },
-    {
       "id": "#c:dusts/fluorite",
       "required": false
     },
@@ -82,10 +78,6 @@
     },
     {
       "id": "#c:dusts/peridot",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/plastic",
       "required": false
     },
     {
@@ -133,19 +125,11 @@
       "required": false
     },
     {
-      "id": "#c:dusts/silicon",
-      "required": false
-    },
-    {
       "id": "#c:dusts/silver",
       "required": false
     },
     {
       "id": "#c:dusts/steel",
-      "required": false
-    },
-    {
-      "id": "#c:dusts/stella",
       "required": false
     },
     {

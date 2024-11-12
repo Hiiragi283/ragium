@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:plates/engineering_plastic"
+            "items": "ragium:engineering_plastic_plate"
           }
         ]
       },
@@ -20,12 +20,7 @@
       "id": "ragium:engineering_plastic_plate"
     },
     "title": {
-      "translate": "tag_prefix.ragium.plate",
-      "with": [
-        {
-          "translate": "material.ragium.engineering_plastic"
-        }
-      ]
+      "translate": "item.ragium.engineering_plastic_plate"
     }
   },
   "requirements": [

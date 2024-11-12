@@ -184,30 +184,30 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumItems.POLYMER_RESIN)
-            .itemOutput(RagiumContents.Plates.PLASTIC)
-            .offerTo(exporter, RagiumContents.Plates.PLASTIC)
+            .itemOutput(RagiumItems.PLASTIC_PLATE)
+            .offerTo(exporter, RagiumItems.PLASTIC_PLATE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumItems.POLYMER_RESIN)
             .fluidInput(RagiumFluids.OXYGEN)
-            .itemOutput(RagiumContents.Plates.PLASTIC, 2)
-            .offerTo(exporter, RagiumContents.Plates.PLASTIC, "_with_oxygen")
+            .itemOutput(RagiumItems.PLASTIC_PLATE, 2)
+            .offerTo(exporter, RagiumItems.PLASTIC_PLATE, "_with_oxygen")
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumItems.BASALT_MESH)
             .itemInput(RagiumItems.POLYMER_RESIN, 4)
             .catalyst(RagiumItems.BASALT_MESH)
-            .itemOutput(RagiumContents.Plates.ENGINEERING_PLASTIC)
-            .offerTo(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC)
+            .itemOutput(RagiumItems.ENGINEERING_PLASTIC_PLATE)
+            .offerTo(exporter, RagiumItems.ENGINEERING_PLASTIC_PLATE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS)
             .fluidInput(RagiumFluids.OXYGEN, FluidConstants.BOTTLE)
-            .itemOutput(RagiumContents.Plates.ENGINEERING_PLASTIC)
-            .offerTo(exporter, RagiumContents.Plates.ENGINEERING_PLASTIC, "_from_aromatic")
+            .itemOutput(RagiumItems.ENGINEERING_PLASTIC_PLATE)
+            .offerTo(exporter, RagiumItems.ENGINEERING_PLASTIC_PLATE, "_from_aromatic")
         // oxidization
         registerOxidize(exporter, Items.CHISELED_COPPER, Items.OXIDIZED_CHISELED_COPPER)
         registerOxidize(exporter, Items.COPPER_BLOCK, Items.OXIDIZED_COPPER)

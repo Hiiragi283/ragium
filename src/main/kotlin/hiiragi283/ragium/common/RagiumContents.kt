@@ -151,15 +151,11 @@ object RagiumContents : HTContentRegister {
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         GOLD(RagiumMaterialKeys.GOLD),
-        PLASTIC(RagiumMaterialKeys.PLASTIC),
-        SILICON(RagiumMaterialKeys.SILICON),
         STEEL(RagiumMaterialKeys.STEEL),
 
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        ENGINEERING_PLASTIC(RagiumMaterialKeys.ENGINEERING_PLASTIC),
-        STELLA(RagiumMaterialKeys.STELLA),
         ;
 
         override val registry: Registry<Item> = Registries.ITEM
@@ -291,6 +287,12 @@ object RagiumContents : HTContentRegister {
         override val registry: Registry<Item> = Registries.ITEM
         override val key: RegistryKey<Item> =
             RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_circuit_board"))
+
+        fun getCircuit(): Circuits = when (this) {
+            PRIMITIVE -> Circuits.PRIMITIVE
+            BASIC -> Circuits.BASIC
+            ADVANCED -> Circuits.ADVANCED
+        }
     }
 
     enum class Circuits(override val tier: HTMachineTier) : HTContent.Tier<Item> {

@@ -53,10 +53,6 @@
       "required": false
     },
     {
-      "id": "#c:ingots/silicon",
-      "required": false
-    },
-    {
       "id": "#c:ingots/silver",
       "required": false
     },

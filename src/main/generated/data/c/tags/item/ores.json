@@ -97,10 +97,6 @@
       "required": false
     },
     {
-      "id": "#c:ores/silicon",
-      "required": false
-    },
-    {
       "id": "#c:ores/silver",
       "required": false
     },
