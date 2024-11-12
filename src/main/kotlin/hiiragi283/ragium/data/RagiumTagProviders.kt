@@ -47,27 +47,28 @@ object RagiumTagProviders {
     private class BlockProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.BlockTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
+            val blockCache: Multimap<TagKey<Block>, Block> = HashMultimap.create()
+            val tagCache: Multimap<TagKey<Block>, TagKey<Block>> = HashMultimap.create()
+            
             fun add(tagKey: TagKey<Block>, block: Block) {
-                getOrCreateTagBuilder(tagKey).add(block)
+                blockCache.put(tagKey, block)
+            }
+
+            fun add(tagKey: TagKey<Block>, content: HTContent<Block>) {
+                add(tagKey, content.value)
+            }
+
+            fun add(tagKey: TagKey<Block>, child: TagKey<Block>) {
+                tagCache.put(tagKey, child)
             }
 
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
-
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ASPHALT)
-
-            add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
-
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.AUTO_ILLUMINATOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.LARGE_PROCESSOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.TELEPORT_ANCHOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OPEN_CRATE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
-
+            RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
+            RagiumBlocks.MECHANICS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
+            RagiumBlocks.MISC.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
+            
             buildList {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
@@ -77,22 +78,36 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Coils.entries)
                 addAll(RagiumContents.Pipes.entries)
                 addAll(RagiumContents.Drums.entries)
-            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
+            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-                add(BlockTags.DRAGON_IMMUNE, ore.value)
+                add(BlockTags.DRAGON_IMMUNE, ore)
             }
 
-            // ragium
-            RagiumAPI.getInstance().machineRegistry.blocks.forEach {
-                add(BlockTags.PICKAXE_MINEABLE, it)
-                add(RagiumBlockTags.MACHINES, it)
+            RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+                add(RagiumBlockTags.MACHINES, key.blockTag)
+                add(BlockTags.PICKAXE_MINEABLE, key.blockTag)
+                add(entry.type.blockTag, key.blockTag)
+                entry.blocks.forEach {
+                    add(key.blockTag, it)
+                }
             }
 
             buildList {
                 addAll(RagiumContents.Exporters.entries)
                 addAll(RagiumContents.Pipes.entries)
-            }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it.value) }
+            }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
+
+            blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
+                blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->
+                    getOrCreateTagBuilder(tagKey).add(block)
+                }
+            }
+            tagCache.asMap().forEach { (tagKey: TagKey<Block>, children: Collection<TagKey<Block>>) ->
+                children.sortedBy(TagKey<Block>::id).forEach { child: TagKey<Block> ->
+                    getOrCreateTagBuilder(tagKey).addOptionalTag(child)
+                }
+            }
         }
     }
 
@@ -200,6 +215,7 @@ object RagiumTagProviders {
             add(ItemTags.PICKAXES, RagiumItems.STEEL_PICKAXE)
             add(ItemTags.SHOVELS, RagiumItems.STEEL_SHOVEL)
             add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
+            add(ItemTags.SWORDS, RagiumItems.BUJIN)
 
             add(ItemTags.PLANKS, RagiumContents.Plates.WOOD)
             add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
@@ -219,9 +235,9 @@ object RagiumTagProviders {
             }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
             RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+                add(entry.type.itemTag, key.itemTag)
                 entry.blocks.forEach {
-                    add(key.tagKey, it)
-                    add(entry.type.tagKey, it)
+                    add(key.itemTag, it)
                 }
             }
 

@@ -1,0 +1,7 @@
+{
+  "values": [
+    "ragium:advanced_thermal_generator",
+    "ragium:basic_thermal_generator",
+    "ragium:primitive_thermal_generator"
+  ]
+}

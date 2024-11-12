@@ -1,117 +1,146 @@
 {
   "values": [
-    "ragium:porous_netherrack",
+    "ragium:advanced_casing",
+    "ragium:advanced_coil",
+    "ragium:advanced_drum",
+    "ragium:advanced_grate",
+    "ragium:advanced_hull",
+    "ragium:aluminum_block",
     "ragium:asphalt",
     "ragium:auto_illuminator",
+    "ragium:backpack_interface",
+    "ragium:basic_casing",
+    "ragium:basic_coil",
+    "ragium:basic_drum",
+    "ragium:basic_grate",
+    "ragium:basic_hull",
+    "ragium:copper_pipe",
+    "ragium:creative_source",
+    "ragium:deep_steel_block",
+    "ragium:deepslate_raginite_ore",
+    "ragium:enchantment_bookshelf",
+    "ragium:end_ragi_crystal_ore",
+    "ragium:iron_pipe",
+    "ragium:item_display",
     "ragium:large_processor",
     "ragium:manual_forge",
     "ragium:manual_grinder",
     "ragium:manual_mixer",
-    "ragium:network_interface",
-    "ragium:teleport_anchor",
-    "ragium:open_crate",
-    "ragium:shaft",
-    "ragium:raginite_ore",
-    "ragium:deepslate_raginite_ore",
     "ragium:nether_raginite_ore",
-    "ragium:end_ragi_crystal_ore",
+    "ragium:network_interface",
+    "ragium:open_crate",
+    "ragium:porous_netherrack",
+    "ragium:primitive_casing",
+    "ragium:primitive_coil",
+    "ragium:primitive_drum",
+    "ragium:primitive_grate",
+    "ragium:primitive_hull",
     "ragium:ragi_alloy_block",
     "ragium:ragi_steel_block",
-    "ragium:aluminum_block",
-    "ragium:steel_block",
+    "ragium:raginite_ore",
     "ragium:refined_ragi_steel_block",
-    "ragium:deep_steel_block",
-    "ragium:primitive_grate",
-    "ragium:basic_grate",
-    "ragium:advanced_grate",
-    "ragium:primitive_casing",
-    "ragium:basic_casing",
-    "ragium:advanced_casing",
-    "ragium:primitive_hull",
-    "ragium:basic_hull",
-    "ragium:advanced_hull",
-    "ragium:primitive_coil",
-    "ragium:basic_coil",
-    "ragium:advanced_coil",
-    "ragium:iron_pipe",
-    "ragium:wooden_pipe",
+    "ragium:shaft",
+    "ragium:steel_block",
     "ragium:steel_pipe",
-    "ragium:copper_pipe",
+    "ragium:teleport_anchor",
+    "ragium:trash_box",
     "ragium:universal_pipe",
-    "ragium:primitive_drum",
-    "ragium:basic_drum",
-    "ragium:advanced_drum",
-    "ragium:primitive_combustion_generator",
-    "ragium:basic_combustion_generator",
-    "ragium:advanced_combustion_generator",
-    "ragium:primitive_solar_panel",
-    "ragium:basic_solar_panel",
-    "ragium:advanced_solar_panel",
-    "ragium:primitive_steam_generator",
-    "ragium:basic_steam_generator",
-    "ragium:advanced_steam_generator",
-    "ragium:primitive_thermal_generator",
-    "ragium:basic_thermal_generator",
-    "ragium:advanced_thermal_generator",
-    "ragium:primitive_alloy_furnace",
-    "ragium:basic_alloy_furnace",
-    "ragium:advanced_alloy_furnace",
-    "ragium:primitive_assembler",
-    "ragium:basic_assembler",
-    "ragium:advanced_assembler",
-    "ragium:primitive_blast_furnace",
-    "ragium:basic_blast_furnace",
-    "ragium:advanced_blast_furnace",
-    "ragium:primitive_chemical_reactor",
-    "ragium:basic_chemical_reactor",
-    "ragium:advanced_chemical_reactor",
-    "ragium:primitive_compressor",
-    "ragium:basic_compressor",
-    "ragium:advanced_compressor",
-    "ragium:primitive_distillation_tower",
-    "ragium:basic_distillation_tower",
-    "ragium:advanced_distillation_tower",
-    "ragium:primitive_electrolyzer",
-    "ragium:basic_electrolyzer",
-    "ragium:advanced_electrolyzer",
-    "ragium:primitive_extractor",
-    "ragium:basic_extractor",
-    "ragium:advanced_extractor",
-    "ragium:primitive_grinder",
-    "ragium:basic_grinder",
-    "ragium:advanced_grinder",
-    "ragium:primitive_growth_chamber",
-    "ragium:basic_growth_chamber",
-    "ragium:advanced_growth_chamber",
-    "ragium:primitive_laser_transformer",
-    "ragium:basic_laser_transformer",
-    "ragium:advanced_laser_transformer",
-    "ragium:primitive_metal_former",
-    "ragium:basic_metal_former",
-    "ragium:advanced_metal_former",
-    "ragium:primitive_mixer",
-    "ragium:basic_mixer",
-    "ragium:advanced_mixer",
-    "ragium:primitive_multi_smelter",
-    "ragium:basic_multi_smelter",
-    "ragium:advanced_multi_smelter",
-    "ragium:primitive_rock_generator",
-    "ragium:basic_rock_generator",
-    "ragium:advanced_rock_generator",
-    "ragium:primitive_saw_mill",
-    "ragium:basic_saw_mill",
-    "ragium:advanced_saw_mill",
-    "ragium:primitive_biomass_fermenter",
-    "ragium:basic_biomass_fermenter",
-    "ragium:advanced_biomass_fermenter",
-    "ragium:primitive_canning_machine",
-    "ragium:basic_canning_machine",
-    "ragium:advanced_canning_machine",
-    "ragium:primitive_drain",
-    "ragium:basic_drain",
-    "ragium:advanced_drain",
-    "ragium:primitive_fluid_drill",
-    "ragium:basic_fluid_drill",
-    "ragium:advanced_fluid_drill"
+    "ragium:wooden_pipe",
+    {
+      "id": "#ragium:machines/alloy_furnace",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/assembler",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/biomass_fermenter",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/blast_furnace",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/canning_machine",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/chemical_reactor",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/combustion_generator",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/compressor",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/distillation_tower",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/drain",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/electrolyzer",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/extractor",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/fluid_drill",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/grinder",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/growth_chamber",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/laser_transformer",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/metal_former",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/mixer",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/multi_smelter",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/rock_generator",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/saw_mill",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/solar_panel",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/steam_generator",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/thermal_generator",
+      "required": false
+    }
   ]
 }

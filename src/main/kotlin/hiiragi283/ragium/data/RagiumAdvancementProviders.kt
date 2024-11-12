@@ -201,7 +201,7 @@ object RagiumAdvancementProviders {
             announce,
             hidden,
         )
-        hasAnyItems(key.tagKey)
+        hasAnyItems(key.itemTag)
     }
 
     @Suppress("removal")

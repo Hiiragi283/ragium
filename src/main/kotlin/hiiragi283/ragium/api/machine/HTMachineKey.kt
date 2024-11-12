@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.hasValidTranslation
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
+import net.minecraft.block.Block
 import net.minecraft.component.ComponentType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -49,7 +50,8 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
     val descriptionText: MutableText
         get() = Text.translatable(descriptionKey).formatted(Formatting.AQUA)
 
-    val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
+    val blockTag: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id.withPrefixedPath("machines/"))
+    val itemTag: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
 
     val entry: HTMachineRegistry.Entry by lazy { RagiumAPI.getInstance().machineRegistry.getEntry(this) }
 

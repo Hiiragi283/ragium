@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#ragium:machines/combustion_generator",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/solar_panel",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/steam_generator",
+      "required": false
+    },
+    {
+      "id": "#ragium:machines/thermal_generator",
+      "required": false
+    }
+  ]
+}
