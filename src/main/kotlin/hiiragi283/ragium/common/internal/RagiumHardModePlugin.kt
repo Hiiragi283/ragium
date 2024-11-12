@@ -150,37 +150,37 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumBlocks.NETWORK_INTERFACE,
             HTHardModeContents.STEEL.getContent(hardMode),
-            RagiumContents.Circuits.ADVANCED
+            RagiumContents.Circuits.ADVANCED,
         )
         createMechanics(
             exporter,
             RagiumBlocks.LARGE_PROCESSOR,
             HTHardModeContents.RAGI_ALLOY.getContent(hardMode),
-            RagiumItems.RAGI_CRYSTAL_PROCESSOR
+            RagiumItems.RAGI_CRYSTAL_PROCESSOR,
         )
         createMechanics(
             exporter,
             RagiumBlocks.AUTO_ILLUMINATOR,
             HTHardModeContents.GOLD.getContent(hardMode),
-            RagiumItems.CRIMSON_CRYSTAL
+            RagiumItems.CRIMSON_CRYSTAL,
         )
         createMechanics(
             exporter,
             RagiumBlocks.TELEPORT_ANCHOR,
             HTHardModeContents.ALUMINUM.getContent(hardMode),
-            RagiumItems.WARPED_CRYSTAL
+            RagiumItems.WARPED_CRYSTAL,
         )
         createMechanics(
             exporter,
             RagiumBlocks.OPEN_CRATE,
             RagiumContents.Gems.FLUORITE,
-            Items.HOPPER
+            Items.HOPPER,
         )
         createMechanics(
             exporter,
             RagiumBlocks.TRASH_BOX,
             HTHardModeContents.IRON.getContent(hardMode),
-            Items.LAVA_BUCKET
+            Items.LAVA_BUCKET,
         )
         // consumers
         createProcessor(
@@ -498,12 +498,12 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .offerTo(exporter)
         }
     }
-    
+
     private fun createMechanics(
         exporter: RecipeExporter,
         output: ItemConvertible,
         side: HTContent.Material<Item>,
-        core: ItemConvertible
+        core: ItemConvertible,
     ) {
         HTShapedRecipeJsonBuilder
             .create(output)
