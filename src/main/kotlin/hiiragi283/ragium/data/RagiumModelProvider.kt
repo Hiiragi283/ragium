@@ -66,8 +66,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
-        registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
+        registerSimple(RagiumBlocks.OPEN_CRATE)
         registerSimple(RagiumBlocks.SPONGE_CAKE)
+        registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
+        registerSimple(RagiumBlocks.TRASH_BOX)
 
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)

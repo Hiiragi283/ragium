@@ -86,6 +86,30 @@ object RagiumItems : HTContentRegister {
     //    Tools    //
 
     @JvmField
+    val BACKPACK: Item = registerItem("backpack", HTBackpackItem)
+
+    @JvmField
+    val BUJIN: Item = registerItem("bujin", HTBujinItem)
+
+    @JvmField
+    val CRAFTER_HAMMER: Item = registerItem("crafter_hammer", HTCrafterHammerItem)
+
+    @JvmField
+    val DYNAMITE: Item = registerItem("dynamite", HTDynamiteItem)
+
+    @JvmField
+    val EMPTY_FLUID_CUBE: Item = registerItem("empty_fluid_cube")
+
+    @JvmField
+    val FILLED_FLUID_CUBE: Item = registerItem("filled_fluid_cube", HTFilledFluidCubeItem)
+
+    @JvmField
+    val FORGE_HAMMER: Item = registerItem("forge_hammer", HTForgeHammerItem)
+
+    @JvmField
+    val REMOVER_DYNAMITE: Item = registerItem("remover_dynamite", HTRemoverDynamiteItem)
+
+    @JvmField
     val STEEL_AXE: Item = registerToolItem("steel_axe", HTToolType.AXE, RagiumToolMaterials.STEEL)
 
     @JvmField
@@ -101,15 +125,25 @@ object RagiumItems : HTContentRegister {
     val STEEL_SWORD: Item = registerToolItem("steel_sword", HTToolType.SWORD, RagiumToolMaterials.STEEL)
 
     @JvmField
-    val BUJIN: Item = registerItem("bujin", HTBujinItem)
+    val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
 
     @JvmField
     val TOOLS: List<Item> = listOf(
+        // damageable tool
         STEEL_AXE,
         STEEL_HOE,
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
+        CRAFTER_HAMMER,
+        FORGE_HAMMER,
+        // non-damageable tool
+        BACKPACK,
+        DYNAMITE,
+        EMPTY_FLUID_CUBE,
+        FILLED_FLUID_CUBE,
+        REMOVER_DYNAMITE,
+        TRADER_CATALOG,
         BUJIN,
     )
 
@@ -176,13 +210,7 @@ object RagiumItems : HTContentRegister {
     //    Misc    //
 
     @JvmField
-    val BACKPACK: Item = registerItem("backpack", HTBackpackItem)
-
-    @JvmField
     val BASALT_MESH: Item = registerItem("basalt_mesh")
-
-    @JvmField
-    val CRAFTER_HAMMER: Item = registerItem("crafter_hammer", HTCrafterHammerItem)
 
     @JvmField
     val CRIMSON_CRYSTAL: Item = registerItem("crimson_crystal")
@@ -191,22 +219,10 @@ object RagiumItems : HTContentRegister {
     val DEEPANT: Item = registerItem("deepant")
 
     @JvmField
-    val DYNAMITE: Item = registerItem("dynamite", HTDynamiteItem)
-
-    @JvmField
-    val EMPTY_FLUID_CUBE: Item = registerItem("empty_fluid_cube")
-
-    @JvmField
     val ENGINE: Item = registerItem("engine")
 
     @JvmField
     val ENGINEERING_PLASTIC_PLATE: Item = registerItem("engineering_plastic_plate")
-
-    @JvmField
-    val FILLED_FLUID_CUBE: Item = registerItem("filled_fluid_cube", HTFilledFluidCubeItem)
-
-    @JvmField
-    val FORGE_HAMMER: Item = registerItem("forge_hammer", HTForgeHammerItem)
 
     @JvmField
     val HEART_OF_THE_NETHER: Item = registerItem("heart_of_the_nether", itemSettings().rarity(Rarity.UNCOMMON))
@@ -230,9 +246,6 @@ object RagiumItems : HTContentRegister {
     val RAGI_CRYSTAL_PROCESSOR: Item = registerItem("ragi_crystal_processor")
 
     @JvmField
-    val REMOVER_DYNAMITE: Item = registerItem("remover_dynamite", HTRemoverDynamiteItem)
-
-    @JvmField
     val RESIDUAL_COKE: Item = registerItem("residual_coke")
 
     @JvmField
@@ -251,38 +264,27 @@ object RagiumItems : HTContentRegister {
     val STELLA_PLATE: Item = registerItem("stella_plate")
 
     @JvmField
-    val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
-
-    @JvmField
     val WARPED_CRYSTAL: Item = registerItem("warped_crystal", HTWarpedCrystalItem)
 
     @JvmField
     val MISC: List<Item> = listOf(
-        BACKPACK,
         BASALT_MESH,
-        CRAFTER_HAMMER,
         CRIMSON_CRYSTAL,
         DEEPANT,
-        DYNAMITE,
-        EMPTY_FLUID_CUBE,
         ENGINE,
         ENGINEERING_PLASTIC_PLATE,
-        FILLED_FLUID_CUBE,
-        FORGE_HAMMER,
         HEART_OF_THE_NETHER,
         LASER_EMITTER,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
-        REMOVER_DYNAMITE,
         RESIDUAL_COKE,
         SLAG,
         SOAP_INGOT,
         SOLAR_PANEL,
         SILICON_PLATE,
         STELLA_PLATE,
-        TRADER_CATALOG,
         WARPED_CRYSTAL,
     )
 }

@@ -187,6 +187,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "Auto Illuminator")
+            builder.add(RagiumBlocks.BACKPACK_INTERFACE, "Backpack Interface")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "Large Processor")
@@ -194,6 +195,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_GRINDER, "Ragi-Grinder")
             builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Basin")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumBlocks.OPEN_CRATE, "Open Crate")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
@@ -447,6 +449,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "光源置き太郎")
+            builder.add(RagiumBlocks.BACKPACK_INTERFACE, "バックパックインターフェース")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "大型処理装置")
@@ -454,6 +457,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
             builder.add(RagiumBlocks.MANUAL_MIXER, "らぎ釜")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")

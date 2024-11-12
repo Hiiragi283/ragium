@@ -50,16 +50,16 @@ object RagiumItemGroup {
                     }
                     addAll(RagiumContents.RawMaterials.entries)
 
+                    addAll(RagiumBlocks.FOODS)
+                    addAll(RagiumItems.FOODS)
+
                     addAll(RagiumItems.ARMORS)
                     addAll(RagiumItems.TOOLS)
                     addAll(HTCrafterHammerItem.Behavior.entries)
 
-                    addAll(RagiumContents.CircuitBoards.entries)
-                    addAll(RagiumContents.Circuits.entries)
-
-                    add(RagiumBlocks.SPONGE_CAKE)
-                    add(RagiumBlocks.SWEET_BERRIES_CAKE)
+                    addAll(RagiumBlocks.MISC)
                     addAll(RagiumItems.MISC)
+
                     remove(RagiumItems.BACKPACK)
                     remove(RagiumItems.FILLED_FLUID_CUBE)
                 }.forEach(entries::add)
@@ -89,25 +89,14 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Hulls.entries)
                     addAll(RagiumContents.Coils.entries)
 
-                    add(RagiumBlocks.LARGE_PROCESSOR)
-                    add(RagiumBlocks.AUTO_ILLUMINATOR)
-                    add(RagiumBlocks.TELEPORT_ANCHOR)
-                    add(RagiumBlocks.CREATIVE_SOURCE)
-
-                    add(RagiumBlocks.MANUAL_FORGE)
-                    add(RagiumBlocks.MANUAL_GRINDER)
-                    add(RagiumBlocks.MANUAL_MIXER)
-
-                    add(RagiumBlocks.BACKPACK_INTERFACE)
-                    add(RagiumBlocks.ITEM_DISPLAY)
-                    add(RagiumBlocks.NETWORK_INTERFACE)
-                    add(RagiumBlocks.OPEN_CRATE)
-                    add(RagiumBlocks.SHAFT)
-                    add(RagiumBlocks.TRASH_BOX)
-
+                    addAll(RagiumContents.Drums.entries)
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)
-                    addAll(RagiumContents.Drums.entries)
+
+                    addAll(RagiumContents.CircuitBoards.entries)
+                    addAll(RagiumContents.Circuits.entries)
+
+                    addAll(RagiumBlocks.MECHANICS)
                 }.forEach(entries::add)
                 RagiumAPI
                     .getInstance()

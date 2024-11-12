@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 object RagiumBlocks : HTContentRegister {
-    //    Blocks - Minerals    //
+    //    Minerals    //
     @JvmField
     val POROUS_NETHERRACK: Block =
         registerBlock(
@@ -25,12 +25,12 @@ object RagiumBlocks : HTContentRegister {
             },
         )
 
-    //    Blocks - Buildings    //
+    //    Buildings    //
 
     @JvmField
     val ASPHALT: Block = registerCopy("asphalt", Blocks.SMOOTH_STONE)
 
-    //    Blocks - Foods    //
+    //    Foods    //
 
     @JvmField
     val SPONGE_CAKE: Block =
@@ -40,10 +40,13 @@ object RagiumBlocks : HTContentRegister {
     val SWEET_BERRIES_CAKE: Block =
         registerBlock("sweet_berries_cake", HTSweetBerriesCakeBlock)
 
-    //    Blocks - Utilities    //
-
     @JvmField
-    val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
+    val FOODS: List<Block> = listOf(
+        SPONGE_CAKE,
+        SWEET_BERRIES_CAKE,
+    )
+
+    //    Mechanics    //
 
     @JvmField
     val AUTO_ILLUMINATOR: Block = registerWithBE("auto_illuminator", RagiumBlockEntityTypes.AUTO_ILLUMINATOR)
@@ -51,14 +54,6 @@ object RagiumBlocks : HTContentRegister {
     @JvmField
     val CREATIVE_SOURCE: Block =
         registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
-
-    @JvmField
-    val ENCHANT_BOOKSHELF: Block =
-        registerWithBE("enchantment_bookshelf", RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, Blocks.BOOKSHELF)
-
-    @JvmField
-    val ITEM_DISPLAY: Block =
-        registerBlock("item_display", HTItemDisplayBlock)
 
     @JvmField
     val LARGE_PROCESSOR: Block =
@@ -85,10 +80,6 @@ object RagiumBlocks : HTContentRegister {
         registerCopy("open_crate", Blocks.SMOOTH_STONE)
 
     @JvmField
-    val SHAFT: Block =
-        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
-
-    @JvmField
     val TELEPORT_ANCHOR: Block =
         registerCopy("teleport_anchor", Blocks.SMOOTH_STONE)
 
@@ -97,6 +88,46 @@ object RagiumBlocks : HTContentRegister {
         registerBlock("trash_box")
 
     @JvmField
+    val MECHANICS: List<Block> = listOf(
+        LARGE_PROCESSOR, // red
+        AUTO_ILLUMINATOR, // yellow
+        OPEN_CRATE, // green
+        TELEPORT_ANCHOR, // blue
+        CREATIVE_SOURCE, // purple
+        TRASH_BOX, // gray
+        NETWORK_INTERFACE, // white
+        // manual machines
+        MANUAL_FORGE,
+        MANUAL_GRINDER,
+        MANUAL_MIXER,
+    )
+
+    //    Misc    //
+
+    @JvmField
+    val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
+
+    @JvmField
+    val ENCHANT_BOOKSHELF: Block =
+        registerWithBE("enchantment_bookshelf", RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, Blocks.BOOKSHELF)
+
+    @JvmField
+    val ITEM_DISPLAY: Block =
+        registerBlock("item_display", HTItemDisplayBlock)
+
+    @JvmField
+    val SHAFT: Block =
+        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
+
+    @JvmField
     val INFESTING: Block =
         registerBlock("infesting", HTInfectingBlock)
+
+    @JvmField
+    val MISC: List<Block> = listOf(
+        BACKPACK_INTERFACE,
+        ENCHANT_BOOKSHELF,
+        ITEM_DISPLAY,
+        SHAFT,
+    )
 }
