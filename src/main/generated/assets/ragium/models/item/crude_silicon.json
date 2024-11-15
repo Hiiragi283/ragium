@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/silicon_plate"
+    "layer0": "ragium:item/crude_silicon"
   }
 }

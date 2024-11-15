@@ -232,6 +232,9 @@ object RagiumTagProviders {
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
 
+            add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
+            add(RagiumItemTags.SILICON_INGOTS, RagiumItems.SILICON)
+
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)
                 .addOptionalTag(ConventionalItemTags.RAW_MEAT_FOODS)

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.internal
 
-import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTContent
@@ -12,7 +11,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.recipe.HTIngredient
+import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -45,7 +44,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                 "BBB",
                 "CCC",
             ).input('A', ConventionalItemTags.GLASS_PANES)
-            .input('B', RagiumItems.SILICON_PLATE)
+            .input('B', RagiumItemTags.SILICON_INGOTS)
             .input('C', HTHardModeContents.ALUMINUM.getContent(hardMode))
             .offerTo(exporter)
         // primitive circuit
@@ -385,21 +384,21 @@ object RagiumHardModePlugin : RagiumPlugin {
     }
 
     private fun craftCircuits(exporter: RecipeExporter) {
-        val boardMap: Map<HTMachineTier, ItemConvertible> = mapOf(
-            HTMachineTier.PRIMITIVE to RagiumItems.SILICON_PLATE,
-            HTMachineTier.BASIC to RagiumItems.PLASTIC_PLATE,
-            HTMachineTier.ADVANCED to RagiumItems.ENGINEERING_PLASTIC_PLATE,
+        val boardMap: Map<HTMachineTier, TagKey<Item>> = mapOf(
+            HTMachineTier.PRIMITIVE to RagiumItemTags.SILICON,
+            HTMachineTier.BASIC to RagiumItemTags.SILICON_INGOTS,
+            HTMachineTier.ADVANCED to RagiumItemTags.SILICON_INGOTS, // TODO
         )
-        val circuitMap: Map<HTMachineTier, Either<TagKey<Item>, ItemConvertible>> = mapOf(
-            HTMachineTier.PRIMITIVE to Either.left(ConventionalItemTags.REDSTONE_DUSTS),
-            HTMachineTier.BASIC to Either.left(ConventionalItemTags.GLOWSTONE_DUSTS),
-            HTMachineTier.ADVANCED to Either.right(RagiumContents.Dusts.RAGI_CRYSTAL),
+        val circuitMap: Map<HTMachineTier, TagKey<Item>> = mapOf(
+            HTMachineTier.PRIMITIVE to ConventionalItemTags.REDSTONE_DUSTS,
+            HTMachineTier.BASIC to ConventionalItemTags.GLOWSTONE_DUSTS,
+            HTMachineTier.ADVANCED to RagiumContents.Dusts.RAGI_CRYSTAL.prefixedTagKey,
         )
 
         RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
             val tier: HTMachineTier = board.tier
-            val plate: ItemConvertible = boardMap[tier] ?: return@forEach
-            val dope: Either<TagKey<Item>, ItemConvertible> = circuitMap[tier] ?: return@forEach
+            val plate: TagKey<Item> = boardMap[tier] ?: return@forEach
+            val dope: TagKey<Item> = circuitMap[tier] ?: return@forEach
             // board
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.ASSEMBLER, tier)
@@ -411,7 +410,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.ASSEMBLER, tier)
                 .itemInput(board)
-                .itemInput(HTIngredient.ofItem(dope))
+                .itemInput(dope)
                 .itemOutput(board.getCircuit())
                 .offerTo(exporter, board.getCircuit())
         }
