@@ -36,5 +36,5 @@ class HTChemicalMachineScreenHandler(
         addProperties(property)
     }
 
-    override val machineSlotRange: IntRange = (0..6)
+    override val machineSlotRange: IntRange = (0..4)
 }
