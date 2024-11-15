@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -14,8 +13,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Position
 import net.minecraft.world.World
 
-object HTDynamiteItem :
-    HTThrowableItem(itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)) {
+class HTDynamiteItem(val action: HTDynamiteEntity.Action, settings: Settings) : HTThrowableItem(settings) {
     override fun appendTooltip(
         stack: ItemStack,
         context: TooltipContext,
@@ -36,5 +34,8 @@ object HTDynamiteItem :
         pos: Position,
         stack: ItemStack,
         direction: Direction,
-    ): ProjectileEntity = HTDynamiteEntity(world, pos.x, pos.y, pos.z).apply { setItem(stack) }
+    ): ProjectileEntity = HTDynamiteEntity(world, pos.x, pos.y, pos.z).apply {
+        setItem(stack)
+        this.action = this@HTDynamiteItem.action
+    }
 }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.entity
 
-import hiiragi283.ragium.common.component.HTDynamiteComponent
-import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.entity.HTDynamiteEntity.Action
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.entity.EntityType
@@ -18,15 +17,21 @@ class HTDynamiteEntity : ThrownItemEntity {
 
     constructor(world: World, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.DYNAMITE, x, y, z, world)
 
+    var action: Action = Action { _: HTDynamiteEntity, _: HitResult -> }
+
     override fun getDefaultItem(): Item = RagiumItems.DYNAMITE
 
     override fun onCollision(hitResult: HitResult) {
         super.onCollision(hitResult)
         if (!world.isClient) {
-            stack
-                .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
-                .createExplosion(world, this, x, y, z)
+            action.onCollision(this, hitResult)
             discard()
         }
+    }
+
+    //    Action    //
+
+    fun interface Action {
+        fun onCollision(entity: HTDynamiteEntity, hitResult: HitResult)
     }
 }

@@ -4,6 +4,9 @@ import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.common.component.HTDynamiteComponent
+import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
+import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
@@ -11,6 +14,8 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
 import net.minecraft.util.Rarity
+import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.Vec3d
 
 object RagiumItems : HTContentRegister {
     //    Armors    //
@@ -89,13 +94,30 @@ object RagiumItems : HTContentRegister {
     val BACKPACK: Item = registerItem("backpack", HTBackpackItem)
 
     @JvmField
+    val BEDROCK_DYNAMITE: Item = registerItem(
+        "bedrock_dynamite",
+        HTDynamiteItem(HTRemoverDynamiteBehaviors.BEDROCK::onBlockHit, itemSettings()),
+    )
+
+    @JvmField
     val BUJIN: Item = registerItem("bujin", HTBujinItem)
 
     @JvmField
     val CRAFTER_HAMMER: Item = registerItem("crafter_hammer", HTCrafterHammerItem)
 
     @JvmField
-    val DYNAMITE: Item = registerItem("dynamite", HTDynamiteItem)
+    val DYNAMITE: Item = registerItem(
+        "dynamite",
+        HTDynamiteItem(
+            { entity: HTDynamiteEntity, result: HitResult ->
+                val pos: Vec3d = result.pos
+                entity.stack
+                    .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
+                    .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
+            },
+            itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT),
+        ),
+    )
 
     @JvmField
     val EMPTY_FLUID_CUBE: Item = registerItem("empty_fluid_cube")
@@ -104,10 +126,13 @@ object RagiumItems : HTContentRegister {
     val FILLED_FLUID_CUBE: Item = registerItem("filled_fluid_cube", HTFilledFluidCubeItem)
 
     @JvmField
-    val FORGE_HAMMER: Item = registerItem("forge_hammer", HTForgeHammerItem)
+    val FLATTENING_DYNAMITE: Item = registerItem(
+        "flattening_dynamite",
+        HTDynamiteItem(HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit, itemSettings()),
+    )
 
     @JvmField
-    val REMOVER_DYNAMITE: Item = registerItem("remover_dynamite", HTRemoverDynamiteItem)
+    val FORGE_HAMMER: Item = registerItem("forge_hammer", HTForgeHammerItem)
 
     @JvmField
     val STEEL_AXE: Item = registerToolItem("steel_axe", HTToolType.AXE, RagiumToolMaterials.STEEL)
@@ -139,10 +164,10 @@ object RagiumItems : HTContentRegister {
         FORGE_HAMMER,
         // non-damageable tool
         BACKPACK,
+        BEDROCK_DYNAMITE,
         DYNAMITE,
         EMPTY_FLUID_CUBE,
         FILLED_FLUID_CUBE,
-        REMOVER_DYNAMITE,
         TRADER_CATALOG,
         BUJIN,
     )
@@ -216,6 +241,9 @@ object RagiumItems : HTContentRegister {
     val CRIMSON_CRYSTAL: Item = registerItem("crimson_crystal")
 
     @JvmField
+    val CRUDE_SILICON: Item = registerItem("crude_silicon")
+
+    @JvmField
     val DEEPANT: Item = registerItem("deepant")
 
     @JvmField
@@ -246,7 +274,13 @@ object RagiumItems : HTContentRegister {
     val RAGI_CRYSTAL_PROCESSOR: Item = registerItem("ragi_crystal_processor")
 
     @JvmField
+    val REFINED_SILICON: Item = registerItem("refined_silicon")
+
+    @JvmField
     val RESIDUAL_COKE: Item = registerItem("residual_coke")
+
+    @JvmField
+    val SILICON: Item = registerItem("silicon")
 
     @JvmField
     val SLAG: Item = registerItem("slag")
@@ -258,9 +292,6 @@ object RagiumItems : HTContentRegister {
     val SOLAR_PANEL: Item = registerItem("solar_panel")
 
     @JvmField
-    val SILICON_PLATE: Item = registerItem("silicon_plate")
-
-    @JvmField
     val STELLA_PLATE: Item = registerItem("stella_plate")
 
     @JvmField
@@ -270,20 +301,23 @@ object RagiumItems : HTContentRegister {
     val MISC: List<Item> = listOf(
         BASALT_MESH,
         CRIMSON_CRYSTAL,
+        CRUDE_SILICON,
         DEEPANT,
         ENGINE,
         ENGINEERING_PLASTIC_PLATE,
+        FLATTENING_DYNAMITE,
         HEART_OF_THE_NETHER,
         LASER_EMITTER,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
+        REFINED_SILICON,
         RESIDUAL_COKE,
+        SILICON,
         SLAG,
         SOAP_INGOT,
         SOLAR_PANEL,
-        SILICON_PLATE,
         STELLA_PLATE,
         WARPED_CRYSTAL,
     )

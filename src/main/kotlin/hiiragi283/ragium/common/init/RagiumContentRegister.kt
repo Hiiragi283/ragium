@@ -269,8 +269,9 @@ object RagiumContentRegister : HTContentRegister {
             }
         }*/
         // Dispenser
+        DispenserBlock.registerProjectileBehavior(RagiumItems.BEDROCK_DYNAMITE)
         DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.REMOVER_DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.FLATTENING_DYNAMITE)
         // Fluid Attributes
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidVariantAttributes.register(

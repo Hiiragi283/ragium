@@ -116,7 +116,6 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerEntities() {
-        EntityRendererRegistry.register(RagiumEntityTypes.REMOVER_DYNAMITE, ::FlyingItemEntityRenderer)
         EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
     }
 
