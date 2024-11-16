@@ -12,7 +12,7 @@ import net.minecraft.util.Rarity
 
 object HTBujinItem :
     SwordItem(
-        RagiumToolMaterials.STEEL,
+        RagiumToolMaterials.STELLA,
         itemSettings()
             .rarity(Rarity.EPIC)
             .attributeModifiers(createToolAttribute(RagiumToolMaterials.STEEL, 6.0, 0.0).build()),

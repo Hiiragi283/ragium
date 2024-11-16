@@ -15,7 +15,7 @@ import net.minecraft.registry.tag.BlockTags
 import net.minecraft.util.Rarity
 
 object HTGigantHammerItem : MiningToolItem(
-    RagiumToolMaterials.STEEL,
+    RagiumToolMaterials.STELLA,
     BlockTags.PICKAXE_MINEABLE,
     itemSettings()
         .rarity(Rarity.EPIC)
