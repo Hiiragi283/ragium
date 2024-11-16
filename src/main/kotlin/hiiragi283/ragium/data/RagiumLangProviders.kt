@@ -210,8 +210,8 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "Capacity: %s Unit")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "Fluid: %s")
 
-            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "液体速度: %s ユニット/秒")
-            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "アイテム速度: %s個/秒")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "Fluid Speed: %s Units/s")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "Item Speed: %s /s")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
@@ -256,6 +256,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.ENGINEERING_PLASTIC_PLATE, "Engineering Plastic Plate")
             builder.add(RagiumItems.FILLED_FLUID_CUBE, "Fluid Cube (%s)")
             builder.add(RagiumItems.FORGE_HAMMER, "Forge Hammer")
+            builder.add(RagiumItems.GIGANT_HAMMER, "Gigant Hammer")
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "Heart of the Nether")
             builder.add(RagiumItems.LASER_EMITTER, "Laser Emitter")
             builder.add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
@@ -489,6 +490,9 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "液体量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "容量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "液体: %s")
+
+            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "液体速度: %s ユニット/秒")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "アイテム速度: %s個/秒")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
@@ -517,6 +521,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.ENGINEERING_PLASTIC_PLATE, "エンジニアリングプラスチック板")
             builder.add(RagiumItems.FILLED_FLUID_CUBE, "液体キューブ（%s）")
             builder.add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+            builder.add(RagiumItems.GIGANT_HAMMER, "ギガントハンマー")
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "地獄の心臓")
             builder.add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
             builder.add(RagiumItems.PLASTIC_PLATE, "プラスチック板")

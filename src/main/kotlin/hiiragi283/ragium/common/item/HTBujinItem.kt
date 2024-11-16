@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.createAttributeComponent
+import hiiragi283.ragium.api.extension.createToolAttribute
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.init.RagiumToolMaterials
 import net.minecraft.entity.EquipmentSlot
@@ -15,7 +15,7 @@ object HTBujinItem :
         RagiumToolMaterials.STEEL,
         itemSettings()
             .rarity(Rarity.EPIC)
-            .attributeModifiers(createAttributeComponent(RagiumToolMaterials.STEEL, 6.0, 0.0)),
+            .attributeModifiers(createToolAttribute(RagiumToolMaterials.STEEL, 6.0, 0.0).build()),
     ),
     Equipment {
     override fun postHit(stack: ItemStack, target: LivingEntity, attacker: LivingEntity): Boolean {

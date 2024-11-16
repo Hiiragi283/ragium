@@ -11,13 +11,56 @@ import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffectInstance
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ToolMaterial
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.util.Identifier
 import java.util.*
 import java.util.stream.Collectors
 
-fun createAttributeComponent(material: ToolMaterial, baseAttack: Double, attackSpeed: Double): AttributeModifiersComponent =
+fun createArmorAttribute(material: RegistryEntry<ArmorMaterial>, type: ArmorItem.Type): AttributeModifiersComponent.Builder {
+    val protection: Int = material.value().getProtection(type)
+    val toughness: Float = material.value().toughness
+    val kResistance: Float = material.value().knockbackResistance
+    val builder: AttributeModifiersComponent.Builder = AttributeModifiersComponent.builder()
+    val slot: AttributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.equipmentSlot)
+    val id: Identifier = Identifier.of("armor.${type.getName()}")
+    builder.add(
+        EntityAttributes.GENERIC_ARMOR,
+        EntityAttributeModifier(
+            id,
+            protection.toDouble(),
+            EntityAttributeModifier.Operation.ADD_VALUE,
+        ),
+        slot,
+    )
+    builder.add(
+        EntityAttributes.GENERIC_ARMOR_TOUGHNESS,
+        EntityAttributeModifier(
+            id,
+            toughness.toDouble(),
+            EntityAttributeModifier.Operation.ADD_VALUE,
+        ),
+        slot,
+    )
+    if (kResistance > 0f) {
+        builder.add(
+            EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE,
+            EntityAttributeModifier(
+                id,
+                kResistance.toDouble(),
+                EntityAttributeModifier.Operation.ADD_VALUE,
+            ),
+            slot,
+        )
+    }
+    return builder
+}
+
+fun createToolAttribute(material: ToolMaterial, baseAttack: Double, attackSpeed: Double): AttributeModifiersComponent.Builder =
     AttributeModifiersComponent
         .builder()
         .add(
@@ -36,7 +79,7 @@ fun createAttributeComponent(material: ToolMaterial, baseAttack: Double, attackS
                 EntityAttributeModifier.Operation.ADD_VALUE,
             ),
             AttributeModifierSlot.MAINHAND,
-        ).build()
+        )
 
 fun foodComponent(
     nutrition: Int,

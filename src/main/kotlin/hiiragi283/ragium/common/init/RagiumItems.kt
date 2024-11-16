@@ -2,24 +2,28 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTToolType
+import hiiragi283.ragium.api.extension.createArmorAttribute
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
 import net.minecraft.block.Blocks
+import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
+import net.minecraft.entity.attribute.EntityAttributeModifier
+import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.item.ArmorItem
 import net.minecraft.item.Item
+import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
-import net.minecraft.util.math.Vec3i
 import net.minecraft.world.World
 
 object RagiumItems {
@@ -43,15 +47,90 @@ object RagiumItems {
 
     @JvmField
     val STELLA_JACKET: Item =
-        HTArmorType.CHESTPLATE.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
+        HTArmorType.CHESTPLATE.createItem(
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings()
+                .rarity(Rarity.EPIC)
+                .attributeModifiers(
+                    createArmorAttribute(RagiumArmorMaterials.STELLA, ArmorItem.Type.CHESTPLATE)
+                        .add(
+                            EntityAttributes.PLAYER_MINING_EFFICIENCY,
+                            EntityAttributeModifier(
+                                Identifier.of("armor.chestplate"),
+                                2.0,
+                                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,
+                            ),
+                            AttributeModifierSlot.CHEST,
+                        ).add(
+                            EntityAttributes.GENERIC_MAX_HEALTH,
+                            EntityAttributeModifier(
+                                Identifier.of("armor.chestplate"),
+                                20.0,
+                                EntityAttributeModifier.Operation.ADD_VALUE,
+                            ),
+                            AttributeModifierSlot.CHEST,
+                        ).build(),
+                ),
+        )
 
     @JvmField
     val STELLA_LEGGINGS: Item =
-        HTArmorType.LEGGINGS.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
+        HTArmorType.LEGGINGS.createItem(
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings()
+                .rarity(Rarity.EPIC)
+                .attributeModifiers(
+                    createArmorAttribute(RagiumArmorMaterials.STELLA, ArmorItem.Type.LEGGINGS)
+                        .add(
+                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
+                            EntityAttributeModifier(
+                                Identifier.of("armor.leggings"),
+                                0.4,
+                                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,
+                            ),
+                            AttributeModifierSlot.LEGS,
+                        ).add(
+                            EntityAttributes.GENERIC_JUMP_STRENGTH,
+                            EntityAttributeModifier(
+                                Identifier.of("armor.leggings"),
+                                1.0,
+                                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,
+                            ),
+                            AttributeModifierSlot.LEGS,
+                        ).build(),
+                ),
+        )
 
     @JvmField
     val STELLA_BOOTS: Item =
-        HTArmorType.BOOTS.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
+        HTArmorType.BOOTS.createItem(
+            RagiumArmorMaterials.STELLA,
+            33,
+            itemSettings()
+                .rarity(Rarity.EPIC)
+                .attributeModifiers(
+                    createArmorAttribute(RagiumArmorMaterials.STELLA, ArmorItem.Type.BOOTS)
+                        .add(
+                            EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,
+                            EntityAttributeModifier(
+                                Identifier.of("armor.boots"),
+                                -100.0,
+                                EntityAttributeModifier.Operation.ADD_VALUE,
+                            ),
+                            AttributeModifierSlot.FEET,
+                        ).add(
+                            EntityAttributes.GENERIC_STEP_HEIGHT,
+                            EntityAttributeModifier(
+                                Identifier.of("armor.boots"),
+                                1.0,
+                                EntityAttributeModifier.Operation.ADD_VALUE,
+                            ),
+                            AttributeModifierSlot.FEET,
+                        ).build(),
+                ),
+        )
 
     @JvmField
     val ARMORS: List<Item> = listOf(
@@ -120,6 +199,9 @@ object RagiumItems {
     val FORGE_HAMMER: Item = HTForgeHammerItem
 
     @JvmField
+    val GIGANT_HAMMER: Item = HTGigantHammerItem
+
+    @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
@@ -140,12 +222,14 @@ object RagiumItems {
     @JvmField
     val TOOLS: List<Item> = listOf(
         // damageable tool
+        BUJIN,
         STEEL_AXE,
         STEEL_HOE,
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
         FORGE_HAMMER,
+        GIGANT_HAMMER,
         // non-damageable tool
         ANVIL_DYNAMITE,
         BACKPACK,
@@ -154,7 +238,6 @@ object RagiumItems {
         EMPTY_FLUID_CUBE,
         FILLED_FLUID_CUBE,
         TRADER_CATALOG,
-        BUJIN,
     )
 
     //    Foods    //

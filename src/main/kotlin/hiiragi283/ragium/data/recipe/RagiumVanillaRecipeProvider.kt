@@ -180,6 +180,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.GIGANT_HAMMER)
+            .patterns(
+                " AB",
+                " BA",
+                "B  ",
+            ).input('A', RagiumContents.Gems.RAGIUM)
+            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .unlockedBy(RagiumContents.Gems.RAGIUM)
+            .offerTo(exporter)
         // steel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_SWORD)

@@ -310,6 +310,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumItems.TOOLS)
             remove(RagiumItems.BUJIN)
+            remove(RagiumItems.GIGANT_HAMMER)
             addAll(RagiumItems.ARMORS)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)

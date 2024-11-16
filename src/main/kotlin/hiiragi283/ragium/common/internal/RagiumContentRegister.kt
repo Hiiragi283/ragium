@@ -226,6 +226,7 @@ internal object RagiumContentRegister {
         registerItem("filled_fluid_cube", RagiumItems.FILLED_FLUID_CUBE)
         registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)
         registerItem("forge_hammer", RagiumItems.FORGE_HAMMER)
+        registerItem("gigant_hammer", RagiumItems.GIGANT_HAMMER)
         registerItem("steel_axe", RagiumItems.STEEL_AXE)
         registerItem("steel_hoe", RagiumItems.STEEL_HOE)
         registerItem("steel_pickaxe", RagiumItems.STEEL_PICKAXE)
@@ -289,7 +290,7 @@ internal object RagiumContentRegister {
         ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.globalItemStorage?.storage
         }, RagiumBlocks.ASPHALT)
-        
+
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
@@ -333,34 +334,6 @@ internal object RagiumContentRegister {
                 it.removeStatusEffect(StatusEffects.NIGHT_VISION)
             }
             slotType = HTAccessorySlotTypes.FACE
-        }
-        HTAccessoryRegistry.register(RagiumItems.STELLA_JACKET) {
-            equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.HASTE, -1, 1))
-            }
-            unequippedAction = HTAccessoryRegistry.UnequippedAction {
-                it.removeStatusEffect(StatusEffects.HASTE)
-            }
-        }
-        HTAccessoryRegistry.register(RagiumItems.STELLA_LEGGINGS) {
-            equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.RESISTANCE, -1, 1))
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.SPEED, -1, 1))
-            }
-            unequippedAction = HTAccessoryRegistry.UnequippedAction {
-                it.removeStatusEffect(StatusEffects.RESISTANCE)
-                it.removeStatusEffect(StatusEffects.SPEED)
-            }
-        }
-        HTAccessoryRegistry.register(RagiumItems.STELLA_BOOTS) {
-            equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.SLOW_FALLING, -1, 0))
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.JUMP_BOOST, -1, 1))
-            }
-            unequippedAction = HTAccessoryRegistry.UnequippedAction {
-                it.removeStatusEffect(StatusEffects.SLOW_FALLING)
-                it.removeStatusEffect(StatusEffects.JUMP_BOOST)
-            }
         }
         // Cauldron
         /*registerCauldron(

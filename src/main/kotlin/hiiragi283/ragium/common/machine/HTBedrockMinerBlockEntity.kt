@@ -75,7 +75,5 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
         builder.add(0, 1, -2, HTMultiblockComponent.Simple(tier.getStorageBlock()))
         builder.add(0, 1, 2, HTMultiblockComponent.Simple(tier.getStorageBlock()))
         builder.add(2, 1, 0, HTMultiblockComponent.Simple(tier.getStorageBlock()))
-
-
     }
 }

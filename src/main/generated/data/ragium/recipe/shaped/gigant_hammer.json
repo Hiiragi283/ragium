@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:gems/ragium"
+    },
+    "B": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    " AB",
+    " BA",
+    "B  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:gigant_hammer"
+  }
+}
