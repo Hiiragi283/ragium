@@ -13,9 +13,6 @@ import net.minecraft.registry.tag.TagKey
 interface HTContent<T : ItemConvertible> :
     HTRegistryContent<T>,
     ItemConvertible {
-    val commonTagKey: TagKey<Item>?
-        get() = null
-
     override fun asItem(): Item = value.asItem()
 
     //    Material    //
@@ -38,9 +35,6 @@ interface HTContent<T : ItemConvertible> :
 
         val prefixedTagKey: TagKey<Item>
             get() = tagPrefix.createTag(material)
-
-        override val commonTagKey: TagKey<Item>
-            get() = tagPrefix.commonTagKey
     }
 
     //    Tier    //

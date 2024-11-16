@@ -7,9 +7,6 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -184,7 +181,7 @@ object RagiumTagProviders {
                 tagCache.put(tagKey, child)
             }
 
-            buildList {
+            /*buildList {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
 
@@ -200,7 +197,7 @@ object RagiumTagProviders {
                 } else {
                     add(content.commonTagKey, content)
                 }
-            }
+            }*/
 
             getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(
                 RagiumItems.STEEL_HELMET,
@@ -253,11 +250,11 @@ object RagiumTagProviders {
                 .machineRegistry.keys
                 .forEach { key: HTMachineKey -> copy(key.blockTag, key.itemTag) }
 
-            RagiumAPI.getInstance().materialRegistry.entryMap.forEach { (key: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
+            /*RagiumAPI.getInstance().materialRegistry.entryMap.forEach { (key: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
                 entry.type.validPrefixes.forEach { prefix: HTTagPrefix ->
                     add(prefix.commonTagKey, prefix.createTag(key))
                 }
-            }
+            }*/
 
             itemCache.asMap().forEach { (tagKey: TagKey<Item>, items: Collection<Item>) ->
                 items.sortedBy(Registries.ITEM::getId).forEach { item: Item ->

@@ -108,14 +108,20 @@ internal data object InternalRagiumAPI : RagiumAPI {
     fun registerMaterials() {
         val keyCache: MutableMap<HTMaterialKey, HTMaterialKey.Type> = mutableMapOf()
         val rarityCache: MutableMap<HTMaterialKey, Rarity> = mutableMapOf()
+        val altNameCache: MutableMap<String, HTMaterialKey> = mutableMapOf()
 
         // collect keys from plugins
         fun addMaterial(key: HTMaterialKey, type: HTMaterialKey.Type, rarity: Rarity) {
             check(keyCache.put(key, type) == null) { "Material; ${key.name} is already registered!" }
             rarityCache[key] = rarity
         }
+
+        fun addAltName(parent: HTMaterialKey, child: String) {
+            check(parent.name != child) { "Could not register same alternative name!" }
+            check(altNameCache.put(child, parent) == null) { "Alternative Name: $child already has redirect material!" }
+        }
         RagiumAPI.forEachPlugins {
-            it.registerMaterial(::addMaterial)
+            it.registerMaterial(RagiumPlugin.MaterialHelper(::addMaterial, ::addAltName))
         }
         // sort keys based on its type and id
         val sortedKeys: Map<HTMaterialKey, HTMaterialKey.Type> = keyCache
@@ -148,13 +154,14 @@ internal data object InternalRagiumAPI : RagiumAPI {
                     .thenBy(Pair<HTTagPrefix, HTMaterialKey>::first),
             ).forEach { (pair: Pair<HTTagPrefix, HTMaterialKey>, items: Collection<Item>) ->
                 val (prefix: HTTagPrefix, key: HTMaterialKey) = pair
-                if (key !in keyCache.keys) {
-                    RagiumAPI.log { warn("Could not bind item with unregistered material: $key!") }
+                val fixedKey: HTMaterialKey = altNameCache.getOrDefault(key.name, key)
+                if (fixedKey !in keyCache.keys) {
+                    RagiumAPI.log { warn("Could not bind item with unregistered material: $fixedKey!") }
                     return@forEach
                 }
                 itemTable.put(
                     prefix,
-                    key,
+                    fixedKey,
                     items.toSortedSet(idComparator(Registries.ITEM)),
                 )
             }
