@@ -44,7 +44,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                 "BBB",
                 "CCC",
             ).input('A', ConventionalItemTags.GLASS_PANES)
-            .input('B', RagiumItemTags.SILICON_INGOTS)
+            .input('B', RagiumItemTags.SILICON_PLATES)
             .input('C', HTHardModeContents.ALUMINUM.getContent(hardMode))
             .offerTo(exporter)
         // primitive circuit
@@ -386,8 +386,8 @@ object RagiumHardModePlugin : RagiumPlugin {
     private fun craftCircuits(exporter: RecipeExporter) {
         val boardMap: Map<HTMachineTier, TagKey<Item>> = mapOf(
             HTMachineTier.PRIMITIVE to RagiumItemTags.SILICON,
-            HTMachineTier.BASIC to RagiumItemTags.SILICON_INGOTS,
-            HTMachineTier.ADVANCED to RagiumItemTags.SILICON_INGOTS, // TODO
+            HTMachineTier.BASIC to RagiumItemTags.SILICON_PLATES,
+            HTMachineTier.ADVANCED to RagiumItemTags.REFINED_SILICON_PLATES,
         )
         val circuitMap: Map<HTMachineTier, TagKey<Item>> = mapOf(
             HTMachineTier.PRIMITIVE to ConventionalItemTags.REDSTONE_DUSTS,

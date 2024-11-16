@@ -7,10 +7,10 @@
   "item_inputs": [
     {
       "count": 2,
-      "items": "#c:gems/quartz"
+      "items": "#c:silicon"
     },
     {
-      "count": 4,
+      "count": 2,
       "items": "#minecraft:coals"
     }
   ],
@@ -19,7 +19,6 @@
       "item": "ragium:silicon"
     },
     {
-      "count": 2,
       "item": "ragium:slag"
     }
   ]

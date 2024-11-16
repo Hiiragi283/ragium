@@ -440,6 +440,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumItems.WARPED_CRYSTAL,
             Items.ENDER_PEARL,
         )
+        HTCookingRecipeJsonBuilder.smeltAndBlast(
+            exporter,
+            RagiumContents.Dusts.QUARTZ.prefixedTagKey,
+            RagiumItems.CRUDE_SILICON,
+        )
 
         HTCookingRecipeJsonBuilder.smeltAndSmoke(
             exporter,

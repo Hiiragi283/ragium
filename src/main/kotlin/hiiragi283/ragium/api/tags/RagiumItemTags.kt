@@ -18,7 +18,10 @@ object RagiumItemTags {
     val SILICON: TagKey<Item> = create("silicon")
 
     @JvmField
-    val SILICON_INGOTS: TagKey<Item> = create("ingots/silicon")
+    val SILICON_PLATES: TagKey<Item> = create("plates/silicon")
+
+    @JvmField
+    val REFINED_SILICON_PLATES: TagKey<Item> = create("plates/refined_silicon")
 
     @JvmField
     val TOOL_MODULES: TagKey<Item> = create(RagiumAPI.MOD_ID, "tool_modules")

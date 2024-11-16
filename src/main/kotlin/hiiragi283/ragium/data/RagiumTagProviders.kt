@@ -230,7 +230,8 @@ object RagiumTagProviders {
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
 
             add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
-            add(RagiumItemTags.SILICON_INGOTS, RagiumItems.SILICON)
+            add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
+            add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)

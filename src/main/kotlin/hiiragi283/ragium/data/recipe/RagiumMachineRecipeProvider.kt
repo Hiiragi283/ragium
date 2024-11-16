@@ -120,14 +120,22 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumContents.Ingots.REFINED_RAGI_STEEL)
             .itemOutput(RagiumItems.SLAG)
             .offerTo(exporter, RagiumContents.Ingots.REFINED_RAGI_STEEL)
-
+        // silicon
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
-            .itemInput(ConventionalItemTags.QUARTZ_GEMS, 2)
+            .itemInput(RagiumContents.Dusts.QUARTZ, 2)
             .itemInput(ItemTags.COALS, 4)
             .itemOutput(RagiumItems.SILICON)
             .itemOutput(RagiumItems.SLAG, 2)
-            .offerTo(exporter, RagiumItems.SILICON)
+            .offerTo(exporter, RagiumItems.SILICON, "_from_quartz")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
+            .itemInput(RagiumItemTags.SILICON, 2)
+            .itemInput(ItemTags.COALS, 2)
+            .itemOutput(RagiumItems.SILICON)
+            .itemOutput(RagiumItems.SLAG)
+            .offerTo(exporter, RagiumItems.SILICON, "_from_crude")
         // aluminum
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)

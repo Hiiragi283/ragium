@@ -46,6 +46,21 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.DEEPANT)
             .offerTo(exporter, RagiumItems.DEEPANT)
+        // silicon refining
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(RagiumItemTags.SILICON_PLATES)
+            .fluidInput(RagiumFluids.HYDROGEN_CHLORIDE, FluidConstants.BUCKET * 4)
+            .fluidOutput(RagiumFluids.CHLOROSILANE)
+            .fluidOutput(RagiumFluids.HYDROGEN, FluidConstants.BUCKET * 2)
+            .offerTo(exporter, RagiumFluids.CHLOROSILANE)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .fluidInput(RagiumFluids.CHLOROSILANE)
+            .fluidInput(RagiumFluids.HYDROGEN, FluidConstants.BUCKET * 2)
+            .itemOutput(RagiumItems.REFINED_SILICON)
+            .fluidOutput(RagiumFluids.HYDROGEN_CHLORIDE, FluidConstants.BUCKET * 4)
+            .offerTo(exporter, RagiumItems.REFINED_SILICON)
         // netherite scrap
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
