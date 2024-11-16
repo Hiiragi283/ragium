@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.extension.createAttributeComponent
+import hiiragi283.ragium.api.extension.itemSettings
 import net.minecraft.item.*
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
@@ -18,7 +19,7 @@ enum class HTToolType(
     SWORD(::SwordItem, ItemTags.SWORDS, 3.0, -2.0),
     ;
 
-    fun createToolItem(material: ToolMaterial, settings: Item.Settings): ToolItem = factory(
+    fun createToolItem(material: ToolMaterial, settings: Item.Settings = itemSettings()): ToolItem = factory(
         material,
         settings.attributeModifiers(createAttributeComponent(material, baseAttack, attackSpeed)),
     )

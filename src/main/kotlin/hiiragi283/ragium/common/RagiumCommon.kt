@@ -3,6 +3,7 @@ package hiiragi283.ragium.common
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
+import hiiragi283.ragium.common.internal.RagiumContentRegister
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import net.fabricmc.api.ModInitializer
 

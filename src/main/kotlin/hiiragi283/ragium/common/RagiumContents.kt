@@ -2,7 +2,6 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -17,7 +16,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 
-object RagiumContents : HTContentRegister {
+object RagiumContents {
     //    Ores    //
 
     enum class Ores(override val material: HTMaterialKey, val baseStone: Block) : HTContent.Material<Block> {

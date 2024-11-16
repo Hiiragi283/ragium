@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-object HTManualGrinderBlock : HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE)), InventoryProvider {
+object HTManualGrinderBlock : HTBlockWithEntity(blockSettings(Blocks.BRICKS)), InventoryProvider {
     init {
         defaultState = stateManager.defaultState.with(RagiumBlockProperties.LEVEL_7, 0)
     }

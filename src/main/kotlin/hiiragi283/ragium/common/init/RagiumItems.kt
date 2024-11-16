@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.content.HTArmorType
-import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.component.HTDynamiteComponent
@@ -17,64 +16,36 @@ import net.minecraft.util.Rarity
 import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.Vec3d
 
-object RagiumItems : HTContentRegister {
+object RagiumItems {
     //    Armors    //
 
     @JvmField
-    val STEEL_HELMET: Item =
-        registerArmorItem("steel_helmet", HTArmorType.HELMET, RagiumArmorMaterials.STEEL, 25)
+    val STEEL_HELMET: Item = HTArmorType.HELMET.createItem(RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
-    val STEEL_CHESTPLATE: Item =
-        registerArmorItem("steel_chestplate", HTArmorType.CHESTPLATE, RagiumArmorMaterials.STEEL, 25)
+    val STEEL_CHESTPLATE: Item = HTArmorType.CHESTPLATE.createItem(RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
-    val STEEL_LEGGINGS: Item =
-        registerArmorItem("steel_leggings", HTArmorType.LEGGINGS, RagiumArmorMaterials.STEEL, 25)
+    val STEEL_LEGGINGS: Item = HTArmorType.LEGGINGS.createItem(RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
-    val STEEL_BOOTS: Item =
-        registerArmorItem("steel_boots", HTArmorType.BOOTS, RagiumArmorMaterials.STEEL, 25)
+    val STEEL_BOOTS: Item = HTArmorType.BOOTS.createItem(RagiumArmorMaterials.STEEL, 25)
 
     @JvmField
     val STELLA_GOGGLE: Item =
-        registerArmorItem(
-            "stella_goggle",
-            HTArmorType.HELMET,
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings().rarity(Rarity.EPIC),
-        )
+        HTArmorType.HELMET.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
 
     @JvmField
     val STELLA_JACKET: Item =
-        registerArmorItem(
-            "stella_jacket",
-            HTArmorType.CHESTPLATE,
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings().rarity(Rarity.EPIC),
-        )
+        HTArmorType.CHESTPLATE.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
 
     @JvmField
     val STELLA_LEGGINGS: Item =
-        registerArmorItem(
-            "stella_leggings",
-            HTArmorType.LEGGINGS,
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings().rarity(Rarity.EPIC),
-        )
+        HTArmorType.LEGGINGS.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
 
     @JvmField
     val STELLA_BOOTS: Item =
-        registerArmorItem(
-            "stella_boots",
-            HTArmorType.BOOTS,
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings().rarity(Rarity.EPIC),
-        )
+        HTArmorType.BOOTS.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
 
     @JvmField
     val ARMORS: List<Item> = listOf(
@@ -91,66 +62,57 @@ object RagiumItems : HTContentRegister {
     //    Tools    //
 
     @JvmField
-    val BACKPACK: Item = registerItem("backpack", HTBackpackItem)
+    val BACKPACK: Item = HTBackpackItem
 
     @JvmField
-    val BEDROCK_DYNAMITE: Item = registerItem(
-        "bedrock_dynamite",
-        HTDynamiteItem(HTRemoverDynamiteBehaviors.BEDROCK::onBlockHit, itemSettings()),
+    val BEDROCK_DYNAMITE: Item = HTDynamiteItem(HTRemoverDynamiteBehaviors.BEDROCK::onBlockHit, itemSettings())
+
+    @JvmField
+    val BUJIN: Item = HTBujinItem
+
+    @JvmField
+    val CRAFTER_HAMMER: Item = HTCrafterHammerItem
+
+    @JvmField
+    val DYNAMITE: Item = HTDynamiteItem(
+        { entity: HTDynamiteEntity, result: HitResult ->
+            val pos: Vec3d = result.pos
+            entity.stack
+                .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
+                .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
+        },
+        itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT),
     )
 
     @JvmField
-    val BUJIN: Item = registerItem("bujin", HTBujinItem)
+    val EMPTY_FLUID_CUBE: Item = Item(itemSettings())
 
     @JvmField
-    val CRAFTER_HAMMER: Item = registerItem("crafter_hammer", HTCrafterHammerItem)
+    val FILLED_FLUID_CUBE: Item = HTFilledFluidCubeItem
 
     @JvmField
-    val DYNAMITE: Item = registerItem(
-        "dynamite",
-        HTDynamiteItem(
-            { entity: HTDynamiteEntity, result: HitResult ->
-                val pos: Vec3d = result.pos
-                entity.stack
-                    .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
-                    .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
-            },
-            itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT),
-        ),
-    )
+    val FLATTENING_DYNAMITE: Item = HTDynamiteItem(HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit, itemSettings())
 
     @JvmField
-    val EMPTY_FLUID_CUBE: Item = registerItem("empty_fluid_cube")
+    val FORGE_HAMMER: Item = HTForgeHammerItem
 
     @JvmField
-    val FILLED_FLUID_CUBE: Item = registerItem("filled_fluid_cube", HTFilledFluidCubeItem)
+    val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
-    val FLATTENING_DYNAMITE: Item = registerItem(
-        "flattening_dynamite",
-        HTDynamiteItem(HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit, itemSettings()),
-    )
+    val STEEL_HOE: Item = HTToolType.HOE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
-    val FORGE_HAMMER: Item = registerItem("forge_hammer", HTForgeHammerItem)
+    val STEEL_PICKAXE: Item = HTToolType.PICKAXE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_AXE: Item = registerToolItem("steel_axe", HTToolType.AXE, RagiumToolMaterials.STEEL)
+    val STEEL_SHOVEL: Item = HTToolType.SHOVEL.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_HOE: Item = registerToolItem("steel_hoe", HTToolType.HOE, RagiumToolMaterials.STEEL)
+    val STEEL_SWORD: Item = HTToolType.SWORD.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
-    val STEEL_PICKAXE: Item = registerToolItem("steel_pickaxe", HTToolType.PICKAXE, RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STEEL_SHOVEL: Item = registerToolItem("steel_shovel", HTToolType.SHOVEL, RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STEEL_SWORD: Item = registerToolItem("steel_sword", HTToolType.SWORD, RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val TRADER_CATALOG: Item = registerItem("trader_catalog", HTTraderCatalogItem)
+    val TRADER_CATALOG: Item = HTTraderCatalogItem
 
     @JvmField
     val TOOLS: List<Item> = listOf(
@@ -175,17 +137,16 @@ object RagiumItems : HTContentRegister {
     //    Foods    //
 
     @JvmField
-    val BEE_WAX: Item = registerItem("bee_wax")
+    val BEE_WAX: Item = Item(itemSettings())
 
     @JvmField
-    val BUTTER: Item = registerItem("butter", itemSettings().food(FoodComponents.APPLE))
+    val BUTTER: Item = Item(itemSettings().food(FoodComponents.APPLE))
 
     @JvmField
-    val CARAMEL: Item = registerItem("caramel", itemSettings().food(FoodComponents.DRIED_KELP))
+    val CARAMEL: Item = Item(itemSettings().food(FoodComponents.DRIED_KELP))
 
     @JvmField
-    val CHOCOLATE: Item = registerItem(
-        "chocolate",
+    val CHOCOLATE: Item = Item(
         itemSettings().food(
             FoodComponent
                 .Builder()
@@ -201,22 +162,22 @@ object RagiumItems : HTContentRegister {
     )
 
     @JvmField
-    val CHOCOLATE_APPLE: Item = registerItem("chocolate_apple", itemSettings().food(FoodComponents.COOKED_CHICKEN))
+    val CHOCOLATE_APPLE: Item = Item(itemSettings().food(FoodComponents.COOKED_CHICKEN))
 
     @JvmField
-    val CHOCOLATE_BREAD: Item = registerItem("chocolate_bread", itemSettings().food(FoodComponents.COOKED_BEEF))
+    val CHOCOLATE_BREAD: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
 
     @JvmField
-    val FLOUR: Item = registerItem("flour")
+    val FLOUR: Item = Item(itemSettings())
 
     @JvmField
-    val DOUGH: Item = registerItem("dough")
+    val DOUGH: Item = Item(itemSettings())
 
     @JvmField
-    val MINCED_MEAT: Item = registerItem("minced_meat")
+    val MINCED_MEAT: Item = Item(itemSettings())
 
     @JvmField
-    val PULP: Item = registerItem("pulp")
+    val PULP: Item = Item(itemSettings())
 
     @JvmField
     val FOODS: List<Item> = listOf(
@@ -235,67 +196,67 @@ object RagiumItems : HTContentRegister {
     //    Misc    //
 
     @JvmField
-    val BASALT_MESH: Item = registerItem("basalt_mesh")
+    val BASALT_MESH: Item = Item(itemSettings())
 
     @JvmField
-    val CRIMSON_CRYSTAL: Item = registerItem("crimson_crystal")
+    val CRIMSON_CRYSTAL: Item = Item(itemSettings())
 
     @JvmField
-    val CRUDE_SILICON: Item = registerItem("crude_silicon")
+    val CRUDE_SILICON: Item = Item(itemSettings())
 
     @JvmField
-    val DEEPANT: Item = registerItem("deepant")
+    val DEEPANT: Item = Item(itemSettings())
 
     @JvmField
-    val ENGINE: Item = registerItem("engine")
+    val ENGINE: Item = Item(itemSettings())
 
     @JvmField
-    val ENGINEERING_PLASTIC_PLATE: Item = registerItem("engineering_plastic_plate")
+    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings())
 
     @JvmField
-    val HEART_OF_THE_NETHER: Item = registerItem("heart_of_the_nether", itemSettings().rarity(Rarity.UNCOMMON))
+    val HEART_OF_THE_NETHER: Item = Item(itemSettings().rarity(Rarity.UNCOMMON))
 
     @JvmField
-    val LASER_EMITTER: Item = registerItem("laser_emitter")
+    val LASER_EMITTER: Item = Item(itemSettings())
 
     @JvmField
-    val PLASTIC_PLATE: Item = registerItem("plastic_plate")
+    val PLASTIC_PLATE: Item = Item(itemSettings())
 
     @JvmField
-    val POLYMER_RESIN: Item = registerItem("polymer_resin")
+    val POLYMER_RESIN: Item = Item(itemSettings())
 
     @JvmField
-    val PROCESSOR_SOCKET: Item = registerItem("processor_socket")
+    val PROCESSOR_SOCKET: Item = Item(itemSettings())
 
     @JvmField
-    val RAGI_ALLOY_COMPOUND: Item = registerItem("ragi_alloy_compound")
+    val RAGI_ALLOY_COMPOUND: Item = Item(itemSettings())
 
     @JvmField
-    val RAGI_CRYSTAL_PROCESSOR: Item = registerItem("ragi_crystal_processor")
+    val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings())
 
     @JvmField
-    val REFINED_SILICON: Item = registerItem("refined_silicon")
+    val REFINED_SILICON: Item = Item(itemSettings())
 
     @JvmField
-    val RESIDUAL_COKE: Item = registerItem("residual_coke")
+    val RESIDUAL_COKE: Item = Item(itemSettings())
 
     @JvmField
-    val SILICON: Item = registerItem("silicon")
+    val SILICON: Item = Item(itemSettings())
 
     @JvmField
-    val SLAG: Item = registerItem("slag")
+    val SLAG: Item = Item(itemSettings())
 
     @JvmField
-    val SOAP_INGOT: Item = registerItem("soap_ingot")
+    val SOAP_INGOT: Item = Item(itemSettings())
 
     @JvmField
-    val SOLAR_PANEL: Item = registerItem("solar_panel")
+    val SOLAR_PANEL: Item = Item(itemSettings())
 
     @JvmField
-    val STELLA_PLATE: Item = registerItem("stella_plate")
+    val STELLA_PLATE: Item = Item(itemSettings())
 
     @JvmField
-    val WARPED_CRYSTAL: Item = registerItem("warped_crystal", HTWarpedCrystalItem)
+    val WARPED_CRYSTAL: Item = HTWarpedCrystalItem
 
     @JvmField
     val MISC: List<Item> = listOf(

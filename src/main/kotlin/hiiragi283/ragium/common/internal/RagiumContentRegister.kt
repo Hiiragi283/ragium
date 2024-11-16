@@ -1,9 +1,10 @@
-package hiiragi283.ragium.common.init
+package hiiragi283.ragium.common.internal
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTContentRegister
+import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
@@ -14,6 +15,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -33,10 +35,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
@@ -46,14 +45,40 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
+import kotlin.jvm.optionals.getOrNull
 
-object RagiumContentRegister : HTContentRegister {
+internal object RagiumContentRegister {
+    fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T = Registry.register(registry, RagiumAPI.id(name), value)
+
+    //    Block    //
+
+    fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
+
+    fun registerBlock(content: HTRegistryContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
+
+    //    Item    //
+
+    fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
+
+    fun registerItem(content: HTRegistryContent<Item>, item: Item): Item = registerItem(content.id.path, item)
+
+    fun <T : Block> registerBlockItem(
+        block: T,
+        settings: Item.Settings = itemSettings(),
+        factory: (T, Item.Settings) -> Item = ::BlockItem,
+    ) {
+        Registries.BLOCK
+            .getKey(block)
+            .getOrNull()
+            ?.value
+            ?.let { registerItem(it.path, factory(block, settings)) }
+    }
+
+    //    Init    //
+
     @JvmStatic
     fun registerContents() {
-        // DynamicRegistries.registerSynced(HTMultiblockPattern.REGISTRY_KEY, HTMultiblockPattern.CODEC)
-
-        initBlockItems()
-
+        // block
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
             val block = HTTagPrefixedBlock(ore.tagPrefix, ore.material, blockSettings(ore.baseStone))
             registerBlock(ore, block)
@@ -63,23 +88,6 @@ object RagiumContentRegister : HTContentRegister {
             val block = HTTagPrefixedBlock(storage.tagPrefix, storage.material, blockSettings(Blocks.IRON_BLOCK))
             registerBlock(storage, block)
             registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
-        }
-
-        buildList {
-            addAll(RagiumContents.Dusts.entries)
-            addAll(RagiumContents.Gems.entries)
-            addAll(RagiumContents.Ingots.entries)
-            addAll(RagiumContents.Plates.entries)
-            addAll(RagiumContents.RawMaterials.entries)
-            addAll(HTCrafterHammerItem.Behavior.entries)
-            addAll(RagiumContents.CircuitBoards.entries)
-            addAll(RagiumContents.Circuits.entries)
-        }.forEach { content: HTContent<Item> ->
-            if (content is HTContent.Material<Item>) {
-                registerItem(content, HTTagPrefixedItem(content.tagPrefix, content.material, itemSettings()))
-            } else {
-                registerItem(content, Item(itemSettings()))
-            }
         }
 
         RagiumContents.Grates.entries.forEach { grate: RagiumContents.Grates ->
@@ -117,18 +125,43 @@ object RagiumContentRegister : HTContentRegister {
             registerBlock(drum, block)
             registerBlockItem(block, itemSettings().tier(drum.tier))
         }
+        initBlocks()
 
+        // item
+        buildList {
+            addAll(RagiumContents.Dusts.entries)
+            addAll(RagiumContents.Gems.entries)
+            addAll(RagiumContents.Ingots.entries)
+            addAll(RagiumContents.Plates.entries)
+            addAll(RagiumContents.RawMaterials.entries)
+            addAll(HTCrafterHammerItem.Behavior.entries)
+            addAll(RagiumContents.CircuitBoards.entries)
+            addAll(RagiumContents.Circuits.entries)
+        }.forEach { content: HTContent<Item> ->
+            if (content is HTContent.Material<Item>) {
+                registerItem(content, HTTagPrefixedItem(content.tagPrefix, content.material, itemSettings()))
+            } else {
+                registerItem(content, Item(itemSettings()))
+            }
+        }
+        initItems()
+
+        // fluid
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
         }
     }
 
     @JvmStatic
-    private fun initBlockItems() {
+    private fun initBlocks() {
+        registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
         registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
 
+        registerBlock("asphalt", RagiumBlocks.ASPHALT)
         registerBlockItem(RagiumBlocks.ASPHALT)
 
+        registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
+        registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)
         registerBlockItem(RagiumBlocks.SPONGE_CAKE)
         registerBlockItem(
             RagiumBlocks.SWEET_BERRIES_CAKE,
@@ -143,20 +176,97 @@ object RagiumContentRegister : HTContentRegister {
                 .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
         )
 
-        registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
+        registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
+        registerBlock("large_processor", RagiumBlocks.LARGE_PROCESSOR)
+        registerBlock("manual_forge", RagiumBlocks.MANUAL_FORGE)
+        registerBlock("manual_grinder", RagiumBlocks.MANUAL_GRINDER)
+        registerBlock("manual_mixer", RagiumBlocks.MANUAL_MIXER)
+        registerBlock("network_interface", RagiumBlocks.NETWORK_INTERFACE)
+        registerBlock("open_crate", RagiumBlocks.OPEN_CRATE)
+        registerBlock("teleport_anchor", RagiumBlocks.TELEPORT_ANCHOR)
+        registerBlock("trash_box", RagiumBlocks.TRASH_BOX)
         registerBlockItem(RagiumBlocks.AUTO_ILLUMINATOR)
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
-        registerBlockItem(RagiumBlocks.ENCHANT_BOOKSHELF)
-        registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
         registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
         registerBlockItem(RagiumBlocks.MANUAL_MIXER)
         registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
         registerBlockItem(RagiumBlocks.OPEN_CRATE)
         registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
-        registerBlockItem(RagiumBlocks.SHAFT)
         registerBlockItem(RagiumBlocks.TELEPORT_ANCHOR)
         registerBlockItem(RagiumBlocks.TRASH_BOX)
+
+        registerBlock("backpack_interface", RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlock("enchantment_bookshelf", RagiumBlocks.ENCHANTMENT_BOOKSHELF)
+        registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
+        registerBlock("shaft", RagiumBlocks.SHAFT)
+        registerBlock("infesting", RagiumBlocks.INFESTING)
+        registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlockItem(RagiumBlocks.ENCHANTMENT_BOOKSHELF)
+        registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
+        registerBlockItem(RagiumBlocks.SHAFT)
+    }
+
+    @JvmStatic
+    private fun initItems() {
+        registerItem("steel_helmet", RagiumItems.STEEL_HELMET)
+        registerItem("steel_chestplate", RagiumItems.STEEL_CHESTPLATE)
+        registerItem("steel_leggings", RagiumItems.STEEL_LEGGINGS)
+        registerItem("steel_boots", RagiumItems.STEEL_BOOTS)
+        registerItem("stella_goggle", RagiumItems.STELLA_GOGGLE)
+        registerItem("stella_jacket", RagiumItems.STELLA_JACKET)
+        registerItem("stella_leggings", RagiumItems.STELLA_LEGGINGS)
+        registerItem("stella_boots", RagiumItems.STELLA_BOOTS)
+
+        registerItem("backpack", RagiumItems.BACKPACK)
+        registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
+        registerItem("bujin", RagiumItems.BUJIN)
+        registerItem("dynamite", RagiumItems.DYNAMITE)
+        registerItem("crafter_hammer", RagiumItems.CRAFTER_HAMMER)
+        registerItem("empty_fluid_cube", RagiumItems.EMPTY_FLUID_CUBE)
+        registerItem("filled_fluid_cube", RagiumItems.FILLED_FLUID_CUBE)
+        registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)
+        registerItem("forge_hammer", RagiumItems.FORGE_HAMMER)
+        registerItem("steel_axe", RagiumItems.STEEL_AXE)
+        registerItem("steel_hoe", RagiumItems.STEEL_HOE)
+        registerItem("steel_pickaxe", RagiumItems.STEEL_PICKAXE)
+        registerItem("steel_shovel", RagiumItems.STEEL_SHOVEL)
+        registerItem("steel_sword", RagiumItems.STEEL_SWORD)
+        registerItem("trader_catalog", RagiumItems.TRADER_CATALOG)
+
+        registerItem("bee_wax", RagiumItems.BEE_WAX)
+        registerItem("butter", RagiumItems.BUTTER)
+        registerItem("caramel", RagiumItems.CARAMEL)
+        registerItem("chocolate", RagiumItems.CHOCOLATE)
+        registerItem("chocolate_apple", RagiumItems.CHOCOLATE_APPLE)
+        registerItem("chocolate_bread", RagiumItems.CHOCOLATE_BREAD)
+        registerItem("flour", RagiumItems.FLOUR)
+        registerItem("dough", RagiumItems.DOUGH)
+        registerItem("minced_meat", RagiumItems.MINCED_MEAT)
+        registerItem("pulp", RagiumItems.PULP)
+
+        registerItem("basalt_mesh", RagiumItems.BASALT_MESH)
+        registerItem("crimson_crystal", RagiumItems.CRIMSON_CRYSTAL)
+        registerItem("crude_silicon", RagiumItems.CRUDE_SILICON)
+        registerItem("deepant", RagiumItems.DEEPANT)
+        registerItem("engine", RagiumItems.ENGINE)
+        registerItem("engineering_plastic_plate", RagiumItems.ENGINEERING_PLASTIC_PLATE)
+        registerItem("heart_of_the_nether", RagiumItems.HEART_OF_THE_NETHER)
+        registerItem("laser_emitter", RagiumItems.LASER_EMITTER)
+        registerItem("plastic_plate", RagiumItems.PLASTIC_PLATE)
+        registerItem("polymer_resin", RagiumItems.POLYMER_RESIN)
+        registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)
+        registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
+        registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+        registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
+        registerItem("residual_coke", RagiumItems.RESIDUAL_COKE)
+        registerItem("silicon", RagiumItems.SILICON)
+        registerItem("slag", RagiumItems.SLAG)
+        registerItem("soap_ingot", RagiumItems.SOAP_INGOT)
+        registerItem("solar_panel", RagiumItems.SOLAR_PANEL)
+        registerItem("stella_plate", RagiumItems.STELLA_PLATE)
+        registerItem("warped_crystal", RagiumItems.WARPED_CRYSTAL)
     }
 
     @JvmStatic
