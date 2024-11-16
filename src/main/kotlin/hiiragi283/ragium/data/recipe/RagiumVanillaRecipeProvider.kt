@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
-import hiiragi283.ragium.api.recipe.HTSmithingModuleRecipe
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -39,12 +38,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         exporterCache = exporter
         craftingRecipes(exporter)
         cookingRecipes(exporter)
-
-        exporter.accept(
-            RagiumAPI.id("smithing/install_module"),
-            HTSmithingModuleRecipe,
-            null,
-        )
     }
 
     //    Crafting    //
@@ -187,18 +180,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumItems.CRAFTER_HAMMER)
-            .patterns(
-                " AA",
-                "BBA",
-                " AA",
-            ).input('A', RagiumContents.StorageBlocks.STEEL)
-            .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.StorageBlocks.STEEL)
-            .offerTo(exporter)
-
         // steel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_SWORD)

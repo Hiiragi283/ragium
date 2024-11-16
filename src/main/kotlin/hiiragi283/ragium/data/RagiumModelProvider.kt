@@ -8,7 +8,6 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -311,7 +310,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumItems.TOOLS)
             remove(RagiumItems.BUJIN)
-            addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumItems.ARMORS)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)

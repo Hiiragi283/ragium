@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
@@ -134,7 +133,6 @@ internal object RagiumContentRegister {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-            addAll(HTCrafterHammerItem.Behavior.entries)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
         }.forEach { content: HTContent<Item> ->
@@ -223,7 +221,6 @@ internal object RagiumContentRegister {
         registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
         registerItem("bujin", RagiumItems.BUJIN)
         registerItem("dynamite", RagiumItems.DYNAMITE)
-        registerItem("crafter_hammer", RagiumItems.CRAFTER_HAMMER)
         registerItem("empty_fluid_cube", RagiumItems.EMPTY_FLUID_CUBE)
         registerItem("filled_fluid_cube", RagiumItems.FILLED_FLUID_CUBE)
         registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)

@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -186,10 +185,6 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.COOKED_MEAT_FOODS)
                 .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
-
-            buildList {
-                addAll(HTCrafterHammerItem.Behavior.entries)
-            }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
 
             itemCache.asMap().forEach { (tagKey: TagKey<Item>, items: Collection<Item>) ->
                 items.sortedBy(Registries.ITEM::getId).forEach { item: Item ->

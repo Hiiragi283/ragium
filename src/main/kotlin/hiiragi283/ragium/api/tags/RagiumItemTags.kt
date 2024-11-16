@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.tags
 
-import hiiragi283.ragium.api.RagiumAPI
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
@@ -22,9 +21,6 @@ object RagiumItemTags {
 
     @JvmField
     val REFINED_SILICON_PLATES: TagKey<Item> = create("plates/refined_silicon")
-
-    @JvmField
-    val TOOL_MODULES: TagKey<Item> = create(RagiumAPI.MOD_ID, "tool_modules")
 
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))

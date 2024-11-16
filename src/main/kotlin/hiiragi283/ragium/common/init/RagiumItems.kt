@@ -71,9 +71,6 @@ object RagiumItems {
     val BUJIN: Item = HTBujinItem
 
     @JvmField
-    val CRAFTER_HAMMER: Item = HTCrafterHammerItem
-
-    @JvmField
     val DYNAMITE: Item = HTDynamiteItem(
         { entity: HTDynamiteEntity, result: HitResult ->
             val pos: Vec3d = result.pos
@@ -122,7 +119,6 @@ object RagiumItems {
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
-        CRAFTER_HAMMER,
         FORGE_HAMMER,
         // non-damageable tool
         BACKPACK,
