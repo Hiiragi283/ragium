@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.common.component.HTDynamiteComponent
+import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.LivingEntity
@@ -20,12 +20,13 @@ class HTDynamiteItem(val action: HTDynamiteEntity.Action, settings: Settings) : 
         tooltip: MutableList<Text>,
         type: TooltipType,
     ) {
-        stack
-            .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
-            .appendTooltip(context, tooltip::add, type)
+        stack.get(RagiumComponentTypes.DYNAMITE)?.appendTooltip(context, tooltip::add, type)
     }
 
-    override fun createEntity(world: World, user: LivingEntity): ThrownItemEntity = HTDynamiteEntity(world, user)
+    override fun createEntity(world: World, user: LivingEntity): ThrownItemEntity = HTDynamiteEntity(world, user).apply {
+        setItem(user.getStackInActiveHand())
+        this.action = this@HTDynamiteItem.action
+    }
 
     //    ProjectileItem    //
 

@@ -7,14 +7,20 @@ import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
+import net.minecraft.block.Blocks
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.Item
 import net.minecraft.util.Rarity
+import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
+import net.minecraft.util.math.Vec3i
+import net.minecraft.world.World
 
 object RagiumItems {
     //    Armors    //
@@ -60,6 +66,26 @@ object RagiumItems {
     )
 
     //    Tools    //
+
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+    @JvmField
+    val ANVIL_DYNAMITE: Item = HTDynamiteItem(
+        { entity: HTDynamiteEntity, result: HitResult ->
+            val world: World = entity.world
+            when (result.type) {
+                HitResult.Type.MISS -> {}
+                HitResult.Type.BLOCK -> {
+                    val blockResult: BlockHitResult = result as BlockHitResult
+                    world.setBlockState(blockResult.blockPos.offset(blockResult.side), Blocks.ANVIL.defaultState)
+                }
+                HitResult.Type.ENTITY -> {
+                    val entityResult: EntityHitResult = result as EntityHitResult
+                    entityResult.entity.damage(world.damageSources.fallingAnvil(entity), 10f)
+                }
+            }
+        },
+        itemSettings(),
+    )
 
     @JvmField
     val BACKPACK: Item = HTBackpackItem
@@ -121,6 +147,7 @@ object RagiumItems {
         STEEL_SWORD,
         FORGE_HAMMER,
         // non-damageable tool
+        ANVIL_DYNAMITE,
         BACKPACK,
         BEDROCK_DYNAMITE,
         DYNAMITE,

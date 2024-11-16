@@ -6,6 +6,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 object RagiumMachineKeys {
     //    Consumer    //
     @JvmField
+    val BEDROCK_MINER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("bedrock_miner"))
+
+    @JvmField
     val BIOMASS_FERMENTER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("biomass_fermenter"))
 
     @JvmField
@@ -19,6 +22,7 @@ object RagiumMachineKeys {
 
     @JvmField
     val CONSUMERS: List<HTMachineKey> = listOf(
+        BEDROCK_MINER,
         BIOMASS_FERMENTER,
         CANNING_MACHINE,
         DRAIN,

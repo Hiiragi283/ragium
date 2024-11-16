@@ -58,9 +58,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
     override fun setupMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
         // consumers
-        helper.modify(RagiumMachineKeys.DRAIN) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
-            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
+        helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
         helper.modify(RagiumMachineKeys.BIOMASS_FERMENTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBiomassFermenterBlockEntity))
@@ -68,6 +68,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.CANNING_MACHINE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCanningMachineBlockEntity))
+        }
+        helper.modify(RagiumMachineKeys.DRAIN) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
         helper.modify(RagiumMachineKeys.FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))

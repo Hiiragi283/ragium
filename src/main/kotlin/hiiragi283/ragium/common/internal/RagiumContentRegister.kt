@@ -217,6 +217,7 @@ internal object RagiumContentRegister {
         registerItem("stella_leggings", RagiumItems.STELLA_LEGGINGS)
         registerItem("stella_boots", RagiumItems.STELLA_BOOTS)
 
+        registerItem("anvil_dynamite", RagiumItems.ANVIL_DYNAMITE)
         registerItem("backpack", RagiumItems.BACKPACK)
         registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
         registerItem("bujin", RagiumItems.BUJIN)
@@ -281,11 +282,14 @@ internal object RagiumContentRegister {
             }
         }, RagiumBlocks.TRASH_BOX)
         ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            InsertionOnlyStorage { resource: ItemVariant, _: Long, _: TransactionContext ->
-                if (dropStackAt(world, pos.down(), resource.toStack())) 1 else 0
+            InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
+                if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
             }
         }, RagiumBlocks.OPEN_CRATE)
-
+        ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+            world.globalItemStorage?.storage
+        }, RagiumBlocks.ASPHALT)
+        
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)

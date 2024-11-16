@@ -25,33 +25,33 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 -1,
                 1..3,
-                HTMultiblockComponent.of(tier.getCasing()),
+                HTMultiblockComponent.Simple(tier.getCasing()),
             ).addHollow(
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.of(tier.getHull()),
+                HTMultiblockComponent.Simple(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.of(Blocks.RED_CONCRETE),
+                HTMultiblockComponent.Simple(Blocks.RED_CONCRETE),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.of(Blocks.WHITE_CONCRETE),
+                HTMultiblockComponent.Simple(Blocks.WHITE_CONCRETE),
             ).addCross4(
                 -1..1,
                 3,
                 1..3,
-                HTMultiblockComponent.of(Blocks.RED_CONCRETE),
+                HTMultiblockComponent.Simple(Blocks.RED_CONCRETE),
             )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockComponent.of(Blocks.WHITE_CONCRETE),
+            HTMultiblockComponent.Simple(Blocks.WHITE_CONCRETE),
         )
     }
 }

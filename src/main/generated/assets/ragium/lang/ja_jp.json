@@ -157,6 +157,8 @@
   "machine_type.ragium.alloy_furnace.description": "二つの素材を一つに焼き上げる",
   "machine_type.ragium.assembler": "組立機",
   "machine_type.ragium.assembler.description": "悪魔博士，アッセンブル！",
+  "machine_type.ragium.bedrock_miner": "岩盤採掘機",
+  "machine_type.ragium.bedrock_miner.description": "岩盤から鉱物を採掘する",
   "machine_type.ragium.biomass_fermenter": "バイオマス発酵槽",
   "machine_type.ragium.biomass_fermenter.description": "コンポスターに入れられるアイテムからバイオマスを生産する",
   "machine_type.ragium.blast_furnace": "大型高炉",

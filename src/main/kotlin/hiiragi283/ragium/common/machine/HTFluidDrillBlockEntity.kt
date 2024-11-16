@@ -77,6 +77,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
 
     override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
+        if (!isValid(cachedState, world, pos)) return false
         useTransaction { transaction: Transaction ->
             val inserted: Long = fluidStorage.insert(findResource(world.getBiome(pos)), transaction)
             if (inserted > 0) {
@@ -120,29 +121,29 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.of(tier.getHull()),
+                HTMultiblockComponent.Simple(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.of(tier.getGrate()),
+                HTMultiblockComponent.Simple(tier.getGrate()),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.of(tier.getGrate()),
+                HTMultiblockComponent.Simple(tier.getGrate()),
             )
         builder.add(
             0,
             3,
             2,
-            HTMultiblockComponent.of(tier.getGrate()),
+            HTMultiblockComponent.Simple(tier.getGrate()),
         )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockComponent.of(tier.getGrate()),
+            HTMultiblockComponent.Simple(tier.getGrate()),
         )
     }
 }

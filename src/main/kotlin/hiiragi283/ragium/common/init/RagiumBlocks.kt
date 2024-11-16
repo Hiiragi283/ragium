@@ -53,7 +53,7 @@ object RagiumBlocks {
     val LARGE_PROCESSOR: Block = HTLargeProcessorBlock
 
     @JvmField
-    val MANUAL_FORGE: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.ANVIL).nonOpaque())
+    val MANUAL_FORGE: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.BRICKS).nonOpaque())
 
     @JvmField
     val MANUAL_GRINDER: Block = HTManualGrinderBlock

@@ -297,6 +297,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine Type
+            builder.add(RagiumMachineKeys.BEDROCK_MINER, "Bedrock Miner", "Collect minerals from Bedrck")
             builder.add(
                 RagiumMachineKeys.BIOMASS_FERMENTER,
                 "Biomass Fermenter",
@@ -557,6 +558,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine Type
+            builder.add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
             builder.add(
                 RagiumMachineKeys.BIOMASS_FERMENTER,
                 "バイオマス発酵槽",

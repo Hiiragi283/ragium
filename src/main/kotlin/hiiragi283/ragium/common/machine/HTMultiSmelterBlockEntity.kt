@@ -59,8 +59,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override var showPreview: Boolean = false
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.of(tier.getCasing()))
-        builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.of(tier.getCoil()))
-        builder.addLayer(-1..1, 1, 1..3, HTMultiblockComponent.of(tier.getStorageBlock()))
+        builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.Simple(tier.getCasing()))
+        builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.Simple(tier.getCoil()))
+        builder.addLayer(-1..1, 1, 1..3, HTMultiblockComponent.Simple(tier.getStorageBlock()))
     }
 }

@@ -157,6 +157,8 @@
   "machine_type.ragium.alloy_furnace.description": "Smelt two ingredients into one",
   "machine_type.ragium.assembler": "Assembler",
   "machine_type.ragium.assembler.description": "Dr.Doom, Assemble!",
+  "machine_type.ragium.bedrock_miner": "Bedrock Miner",
+  "machine_type.ragium.bedrock_miner.description": "Collect minerals from Bedrck",
   "machine_type.ragium.biomass_fermenter": "Biomass Fermenter",
   "machine_type.ragium.biomass_fermenter.description": "Produce Biomass from Composter inputs",
   "machine_type.ragium.blast_furnace": "Large Blast Furnace",

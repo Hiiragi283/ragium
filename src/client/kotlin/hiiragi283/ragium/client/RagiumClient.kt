@@ -86,6 +86,7 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
 
+        registerMachineRenderer(RagiumBlockEntityTypes.BEDROCK_MINER)
         registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)

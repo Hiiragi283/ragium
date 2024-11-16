@@ -1,73 +1,48 @@
 package hiiragi283.ragium.api.machine.multiblock
 
-import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.content.HTRegistryContent
-import hiiragi283.ragium.api.extension.asText
+import hiiragi283.ragium.api.content.HTContent
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.network.RegistryByteBuf
-import net.minecraft.network.codec.PacketCodec
-import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.world.World
 import java.util.function.Predicate
 
-class HTMultiblockComponent private constructor(private val entryList: RegistryEntryList<Block>) : Predicate<BlockState> {
-    companion object {
-        @JvmField
-        val EMPTY = HTMultiblockComponent(RegistryEntryList.empty())
+sealed interface HTMultiblockComponent : Predicate<BlockState> {
+    fun getPreviewState(world: World): BlockState?
 
-        @JvmField
-        val CODEC: Codec<HTMultiblockComponent> =
-            RegistryCodecs.entryList(RegistryKeys.BLOCK, Registries.BLOCK.codec).xmap(
-                ::HTMultiblockComponent,
-                HTMultiblockComponent::entryList,
-            )
+    data object Empty : HTMultiblockComponent {
+        override fun getPreviewState(world: World): BlockState? = null
 
-        @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMultiblockComponent> = PacketCodec.tuple(
-            PacketCodecs.registryEntryList(RegistryKeys.BLOCK),
-            HTMultiblockComponent::entryList,
-            ::HTMultiblockComponent,
-        )
+        override fun test(state: BlockState): Boolean = true
+    }
 
-        @JvmStatic
-        fun of(content: HTRegistryContent<Block>): HTMultiblockComponent = of(content.value)
+    data class Simple(val block: Block) : HTMultiblockComponent {
+        constructor(content: HTContent<Block>) : this(content.value)
 
-        @Suppress("DEPRECATION")
-        @JvmStatic
-        fun of(block: Block): HTMultiblockComponent = when (block) {
-            Blocks.AIR -> EMPTY
-            else -> HTMultiblockComponent(RegistryEntryList.of(block.registryEntry))
+        override fun getPreviewState(world: World): BlockState = block.defaultState
+
+        override fun test(state: BlockState): Boolean = state.isOf(block)
+    }
+
+    data class State(val state: BlockState) : HTMultiblockComponent {
+        override fun getPreviewState(world: World): BlockState = state
+
+        override fun test(state: BlockState): Boolean = state == this.state
+    }
+
+    data class Tag(val entryList: RegistryEntryList<Block>) : HTMultiblockComponent {
+        constructor(tagKey: TagKey<Block>) : this(Registries.BLOCK.getOrCreateEntryList(tagKey))
+
+        override fun getPreviewState(world: World): BlockState = entryList.get(getIndex(world, entryList.size())).value().defaultState
+
+        private fun getIndex(world: World, size: Int): Int = when (size) {
+            0 -> 0
+            1 -> 0
+            else -> ((world.time % (20 * size)) / 20).toInt()
         }
 
-        @JvmStatic
-        fun of(tagKey: TagKey<Block>): HTMultiblockComponent = Registries.BLOCK.getOrCreateEntryList(tagKey).let(::HTMultiblockComponent)
-    }
-
-    private val matchingStates: List<BlockState>
-        get() = entryList.map(RegistryEntry<Block>::value).map(Block::getDefaultState)
-
-    fun getPreviewState(world: World): BlockState? = matchingStates.getOrNull(getIndex(world, matchingStates.size))
-
-    private fun getIndex(world: World, size: Int): Int = when (size) {
-        0 -> 0
-        1 -> 0
-        else -> ((world.time % (20 * size)) / 20).toInt()
-    }
-
-    override fun toString(): String = "HTMultiblockComponent${entryList.asText(Block::getName).string}"
-
-    //    Predicate    //
-
-    override fun test(state: BlockState): Boolean = when {
-        state.isAir -> this == EMPTY
-        else -> entryList.any(state::isOf)
+        override fun test(state: BlockState): Boolean = state.isIn(entryList)
     }
 }
