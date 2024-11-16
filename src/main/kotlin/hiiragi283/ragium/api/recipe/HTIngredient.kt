@@ -7,7 +7,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -34,14 +37,14 @@ import net.minecraft.item.Item as MCItem
 sealed class HTIngredient<O : Any, V : Number>(protected val entryList: RegistryEntryList<O>, val amount: V) {
     abstract val isEmpty: Boolean
 
-    val storage: Either<TagKey<O>, List<RegistryEntry<O>>>
-        get() = entryList.storage
+    fun <T : Any> map(transform: (RegistryEntry<O>, V) -> T): List<T> = entryList.map { transform(it, amount) }
+
+    val storage: Either<TagKey<O>, List<RegistryEntry<O>>> = entryList.storage
 
     val firstEntry: RegistryEntry<O>?
         get() = entryList.firstOrNull()
 
-    val entryMap: Map<RegistryEntry<O>, V>
-        get() = entryList.associateWith { amount }
+    val entryMap: Map<RegistryEntry<O>, V> = entryList.associateWith { amount }
 
     val valueMap: Map<O, V>
         get() = entryMap.mapKeys { it.key.value() }
@@ -113,10 +116,6 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 ::Fluid,
             ).validate(::validate)
 
-        // val EMPTY_ITEM = Item(RegistryEntryList.empty(), 0)
-
-        // val EMPTY_FLUID = Fluid(RegistryEntryList.empty(), 0)
-
         @JvmStatic
         fun ofItem(item: ItemConvertible, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): Item =
             Item(RegistryEntryList.of(item.asItem().registryEntry), count, consumeType)
@@ -124,17 +123,6 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
         @JvmStatic
         fun ofItem(tagKey: TagKey<MCItem>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): Item =
             Item(Registries.ITEM.getOrCreateEntryList(tagKey), count, consumeType)
-
-        @JvmStatic
-        fun ofItem(
-            either: Either<TagKey<MCItem>, ItemConvertible>,
-            count: Int = 1,
-            consumeType: ConsumeType = ConsumeType.DECREMENT,
-        ): Item = Item(
-            either.map(Registries.ITEM::getOrCreateEntryList) { RegistryEntryList.of(it.asItem().registryEntry) },
-            count,
-            consumeType,
-        )
 
         @JvmStatic
         fun ofFluid(fluid: MCFluid, amount: Long = FluidConstants.BUCKET): Fluid = Fluid(RegistryEntryList.of(fluid.registryEntry), amount)
@@ -157,10 +145,12 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
                 )
             }
 
-        override val isEmpty: Boolean = storage.map(
-            { false },
-            { list: List<RegistryEntry<MCItem>> -> list.isEmpty() || list.any { it.isOf(Items.AIR) } },
-        )
+        override val isEmpty: Boolean =
+            entryList.storage.map(
+                { false },
+                { list: List<RegistryEntry<MCItem>> -> list.isEmpty() || list.any { it.isOf(Items.AIR) } },
+            ) ||
+                amount <= 0
 
         override val entryText: Text
             get() = entryList.asText(MCItem::getName)
@@ -191,18 +181,12 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
     class Fluid(entryList: RegistryEntryList<MCFluid>, amount: Long) :
         HTIngredient<MCFluid, Long>(entryList, amount),
         BiPredicate<MCFluid, Long> {
-        val resourceAmounts: List<ResourceAmount<FluidVariant>>
-            get() = entryMap.map { (fluid: RegistryEntry<MCFluid>, amount: Long) ->
-                ResourceAmount(
-                    FluidVariant.of(fluid.value()),
-                    amount,
-                )
-            }
-
-        override val isEmpty: Boolean = storage.map(
-            { false },
-            { list: List<RegistryEntry<MCFluid>> -> list.isEmpty() || list.any { it.isOf(Fluids.EMPTY) } },
-        )
+        override val isEmpty: Boolean =
+            entryList.storage.map(
+                { false },
+                { list: List<RegistryEntry<MCFluid>> -> list.isEmpty() || list.any { it.isOf(Fluids.EMPTY) } },
+            ) ||
+                amount <= 0
 
         override val entryText: Text
             get() = entryList.asText(MCFluid::name)
@@ -211,7 +195,25 @@ sealed class HTIngredient<O : Any, V : Number>(protected val entryList: Registry
 
         override fun test(fluid: MCFluid, amount: Long): Boolean = when {
             fluid == Fluids.EMPTY || amount <= 0 -> this.isEmpty
-            else -> entryList.isIn(fluid) && amount >= this.amount
+            else -> fluid in entryList && amount >= this.amount
+        }
+
+        fun onConsume(storage: SingleSlotStorage<FluidVariant>) {
+            useTransaction { transaction: Transaction ->
+                val foundVariant: FluidVariant = StorageUtil.findExtractableResource(
+                    storage,
+                    { test(it.fluid, storage.amount) },
+                    transaction,
+                ) ?: return
+                if (test(foundVariant.fluid, amount)) {
+                    val extracted: Long = storage.extract(foundVariant, amount, transaction)
+                    if (extracted == amount) {
+                        transaction.commit()
+                    } else {
+                        transaction.abort()
+                    }
+                }
+            }
         }
     }
 

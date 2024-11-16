@@ -3,10 +3,8 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
-import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
-import hiiragi283.ragium.api.recipe.HTIngredient
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -18,9 +16,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -74,28 +70,9 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
         stackOff.decrement(recipe.itemInputs.getOrNull(1)?.amount ?: 0)
-        extractFluid(recipe)
+        recipe.fluidInputs.getOrNull(0)?.onConsume(fluidStorage)
         RagiumMachineKeys.MIXER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
-        }
-    }
-
-    private fun extractFluid(recipe: HTMachineRecipe) {
-        val fluidInput: HTIngredient.Fluid = recipe.fluidInputs.getOrNull(0) ?: return
-        useTransaction { transaction: Transaction ->
-            val foundVariant: FluidVariant = StorageUtil.findExtractableResource(
-                fluidStorage,
-                { fluidInput.test(it.fluid, fluidStorage.amount) },
-                transaction,
-            ) ?: return@useTransaction
-            if (fluidInput.test(foundVariant.fluid, fluidInput.amount)) {
-                val extracted: Long = fluidStorage.extract(foundVariant, fluidInput.amount, transaction)
-                if (extracted > 0) {
-                    transaction.commit()
-                } else {
-                    transaction.abort()
-                }
-            }
         }
     }
 

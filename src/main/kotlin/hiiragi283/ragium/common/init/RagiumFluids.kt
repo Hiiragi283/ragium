@@ -66,7 +66,7 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     HYDROGEN_CHLORIDE(Color(0xccff66), "Hydrogen Chloride", "塩化水素"),
 
     ALUMINA_SOLUTION(Color(0xcccccc), "Alumina Solution", "アルミナ溶液"),
-    
+
     CHLOROSILANE(Color(0xcccccc), "Chlorosilane", "塩化ケイ素"),
 
     // Oil products

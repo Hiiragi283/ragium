@@ -7,7 +7,10 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTFluidResult
+import hiiragi283.ragium.api.recipe.HTIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
@@ -106,11 +109,6 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult(stack)) }
-
-    @Deprecated("only used in runtime recipe registration")
-    fun itemOutput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTItemResult(tagKey, count))
-    }
 
     fun fluidOutput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
         fluidOutputs.add(HTFluidResult(fluid, amount))
