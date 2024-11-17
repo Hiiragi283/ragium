@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
+import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
@@ -65,6 +66,25 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         super.readNbt(nbt, wrapperLookup)
         key = nbt.getMachineKey(MACHINE_KEY)
         tier = nbt.getTier(TIER_KEY)
+    }
+
+    val isActive: Boolean
+        get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
+
+    protected fun activateState(world: World, pos: BlockPos, newState: Boolean) {
+        if (!world.isClient) {
+            world.modifyBlockState(pos) { stateIn: BlockState ->
+                if (stateIn.contains(RagiumBlockProperties.ACTIVE)) {
+                    if (stateIn.get(RagiumBlockProperties.ACTIVE) == newState) {
+                        null
+                    } else {
+                        stateIn.with(RagiumBlockProperties.ACTIVE, newState)
+                    }
+                } else {
+                    null
+                }
+            }
+        }
     }
 
     override fun onUse(

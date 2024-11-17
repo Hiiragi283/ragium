@@ -4,7 +4,6 @@ import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.EnumProperty
 import net.minecraft.state.property.IntProperty
 import net.minecraft.util.DyeColor
-import net.minecraft.util.math.Direction
 
 object RagiumBlockProperties {
     @JvmField
@@ -15,7 +14,4 @@ object RagiumBlockProperties {
 
     @JvmField
     val LEVEL_7: IntProperty = IntProperty.of("level", 0, 7)
-
-    @JvmField
-    val DIRECTION_MAP: Map<Direction, BooleanProperty> = Direction.entries.associateWith { BooleanProperty.of(it.asString()) }
 }

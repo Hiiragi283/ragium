@@ -25,9 +25,9 @@ fun blockSettings(block: AbstractBlock, isShallow: Boolean = false): AbstractBlo
 fun <T : BlockEntity> blockEntityType(factory: BlockEntityType.BlockEntityFactory<T>, vararg blocks: Block): BlockEntityType<T> =
     BlockEntityType.Builder.create(factory, *blocks).build()
 
-fun World.modifyBlockState(pos: BlockPos, mapping: (BlockState) -> BlockState): Boolean {
+fun World.modifyBlockState(pos: BlockPos, mapping: (BlockState) -> BlockState?): Boolean {
     val stateIn: BlockState = getBlockState(pos)
-    return setBlockState(pos, mapping(stateIn))
+    return mapping(stateIn)?.let { setBlockState(pos, it) } == true
 }
 
 //    BlockState    //

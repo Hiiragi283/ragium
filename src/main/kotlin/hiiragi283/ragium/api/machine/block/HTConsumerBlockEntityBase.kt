@@ -16,8 +16,11 @@ abstract class HTConsumerBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
                     world.playSound(null, pos, it, SoundCategory.BLOCKS)
                 }
                 tier.consumerEnergy(world)
+                activateState(world, pos, true)
+                return
             }
         }
+        activateState(world, pos, false)
     }
 
     abstract fun consumeEnergy(world: World, pos: BlockPos): Boolean

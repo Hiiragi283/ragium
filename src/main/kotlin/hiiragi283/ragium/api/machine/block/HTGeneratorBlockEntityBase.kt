@@ -25,9 +25,11 @@ abstract class HTGeneratorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
                 val inserted: Long = world.energyNetwork?.insert(energy, transaction) ?: 0
                 if (inserted > 0) {
                     onSucceeded(world, pos)
+                    activateState(world, pos, true)
                     transaction.commit()
                 } else {
                     onFailed(world, pos)
+                    activateState(world, pos, false)
                     transaction.abort()
                 }
             }

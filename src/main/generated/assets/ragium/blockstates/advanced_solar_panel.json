@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "active=false,facing=east": {
       "model": "ragium:block/solar_generator",
       "y": 90
     },
-    "facing=north": {
+    "active=false,facing=north": {
       "model": "ragium:block/solar_generator"
     },
-    "facing=south": {
+    "active=false,facing=south": {
       "model": "ragium:block/solar_generator",
       "y": 180
     },
-    "facing=west": {
+    "active=false,facing=west": {
       "model": "ragium:block/solar_generator",
+      "y": 270
+    },
+    "active=true,facing=east": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 90
+    },
+    "active=true,facing=north": {
+      "model": "ragium:block/active_dynamic_processor"
+    },
+    "active=true,facing=south": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 180
+    },
+    "active=true,facing=west": {
+      "model": "ragium:block/active_dynamic_processor",
       "y": 270
     }
   }

@@ -41,8 +41,11 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
                     world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
                 tier.consumerEnergy(world)
+                activateState(world, pos, true)
+                return
             }
         }
+        activateState(world, pos, false)
     }
 
     abstract fun processRecipe(world: World, pos: BlockPos): Boolean

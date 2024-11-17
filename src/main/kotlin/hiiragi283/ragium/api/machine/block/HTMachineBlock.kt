@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.block.HTBlockWithEntity
+import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.inventory.SidedInventory
@@ -31,7 +32,10 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
     HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE).nonOpaque()),
     InventoryProvider {
     init {
-        defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
+        defaultState = stateManager
+            .defaultState
+            .with(Properties.HORIZONTAL_FACING, Direction.NORTH)
+            .with(RagiumBlockProperties.ACTIVE, false)
     }
 
     override fun getOutlineShape(
@@ -61,7 +65,7 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
         defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(Properties.HORIZONTAL_FACING)
+        builder.add(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
     }
 
     override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =

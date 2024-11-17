@@ -230,14 +230,21 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         RagiumAPI.getInstance().machineRegistry.blocks.forEach { block: HTMachineBlock ->
             val modelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID)
-            registerSupplier(
-                block,
-                VariantsBlockStateSupplier
-                    .create(
-                        block,
-                        stateVariantOf(modelId),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
+            val activeModelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.ACTIVE_MODEL_ID)
+            val stateMap: BlockStateVariantMap = BlockStateVariantMap
+                .create(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
+                .register { direction: Direction, isActive: Boolean ->
+                    val variant: BlockStateVariant = BlockStateVariant.create()
+                    variant.put(
+                        VariantSettings.MODEL,
+                        when (isActive) {
+                            true -> activeModelId
+                            false -> modelId
+                        },
+                    )
+                    variant.rot(direction)
+                }
+            registerSupplier(block, VariantsBlockStateSupplier.create(block).coordinate(stateMap))
             RagiumModels.model(modelId).upload(
                 ModelIds.getItemModelId(block.asItem()),
                 TextureMap(),
