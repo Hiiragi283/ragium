@@ -11,12 +11,7 @@ import team.reborn.energy.api.EnergyStorage
 
 class HTCreativeSourceBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.CREATIVE_SOURCE, pos, state) {
-    override fun tickEach(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        ticks: Int,
-    ) {
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (!world.isClient) {
             Direction.entries.forEach { direction: Direction ->
                 val posTo: BlockPos = pos.offset(direction)

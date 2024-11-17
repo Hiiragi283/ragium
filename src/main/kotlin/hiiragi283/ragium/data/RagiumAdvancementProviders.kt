@@ -204,8 +204,7 @@ object RagiumAdvancementProviders {
         hasAnyItems(key.itemTag)
     }
 
-    @Suppress("removal")
-    private fun createChild(
+    /*private fun createChild(
         consumer: Consumer<AdvancementEntry>,
         path: String,
         parent: Identifier,
@@ -230,7 +229,7 @@ object RagiumAdvancementProviders {
             hidden,
         )
         builderAction()
-    }
+    }*/
 
     private fun Advancement.Builder.buildMultiblock(key: HTMachineKey, minTier: HTMachineTier): Advancement.Builder = criterion(
         "build_multiblock",

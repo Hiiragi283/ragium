@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTRegistryContent
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
@@ -72,7 +72,7 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Exporters.entries)
             addAll(RagiumContents.Pipes.entries)
-        }.map(HTRegistryContent<Block>::value).forEach(::registerCutoutMipped)
+        }.map(HTContent<Block>::value).forEach(::registerCutoutMipped)
 
         RagiumAPI
             .getInstance()

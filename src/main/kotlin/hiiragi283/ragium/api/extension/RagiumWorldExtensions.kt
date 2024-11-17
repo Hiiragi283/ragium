@@ -72,12 +72,15 @@ fun <T : PersistentState> getState(
     id: Identifier,
 ): T? = server.getWorld(key)?.let { getState(it, type, id) }
 
+fun <T : PersistentState> getStateFromServer(server: MinecraftServer, type: PersistentState.Type<T>, id: Identifier): T =
+    getState(server.overworld, type, id)
+
+fun <T : PersistentState> getStateFromServer(world: ServerWorld, type: PersistentState.Type<T>, id: Identifier): T =
+    getStateFromServer(world.server, type, id)
+
 // Backpack
 val MinecraftServer.backpackManager: HTBackpackManager
-    get() = getState(overworld, HTBackpackManager.TYPE, HTBackpackManager.ID)
-
-val ServerWorld.backpackManager: HTBackpackManager
-    get() = server.backpackManager
+    get() = getStateFromServer(this, HTBackpackManager.TYPE, HTBackpackManager.ID)
 
 val WorldAccess.backpackManager: HTBackpackManager?
     get() = server?.backpackManager

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.content.HTRegistryContent
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
@@ -29,14 +29,14 @@ object RagiumLangProviders {
     }
 
     @JvmName("addBlock")
-    fun TranslationBuilder.add(entry: HTRegistryContent<Block>, value: String, desc: String? = null) {
+    fun TranslationBuilder.add(entry: HTContent<Block>, value: String, desc: String? = null) {
         val block: Block = entry.value
         add(block, value)
         desc?.let { add("${block.translationKey}.description", it) }
     }
 
     @JvmName("addItem")
-    fun TranslationBuilder.add(entry: HTRegistryContent<Item>, value: String) {
+    fun TranslationBuilder.add(entry: HTContent<Item>, value: String) {
         add(entry.value, value)
     }
 

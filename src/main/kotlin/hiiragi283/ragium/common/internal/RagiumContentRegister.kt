@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTRegistryContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
@@ -53,13 +52,13 @@ internal object RagiumContentRegister {
 
     fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
 
-    fun registerBlock(content: HTRegistryContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
+    fun registerBlock(content: HTContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
 
     //    Item    //
 
     fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
 
-    fun registerItem(content: HTRegistryContent<Item>, item: Item): Item = registerItem(content.id.path, item)
+    fun registerItem(content: HTContent<Item>, item: Item): Item = registerItem(content.id.path, item)
 
     fun <T : Block> registerBlockItem(
         block: T,
@@ -287,9 +286,6 @@ internal object RagiumContentRegister {
                 if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
             }
         }, RagiumBlocks.OPEN_CRATE)
-        ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            world.globalItemStorage?.storage
-        }, RagiumBlocks.ASPHALT)
 
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)

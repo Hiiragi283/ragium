@@ -48,6 +48,7 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         check(count > 0) { "Non-Negative count required!" }
     }
 
+    @Suppress("DEPRECATION")
     constructor(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
         item.asItem().registryEntry,
         count,

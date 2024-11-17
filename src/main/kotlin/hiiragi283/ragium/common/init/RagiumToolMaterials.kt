@@ -13,19 +13,19 @@ enum class RagiumToolMaterials(
     private val miningSpeed: Float,
     private val attackDamage: Float,
     private val enchantability: Int,
-    private val repairment: Ingredient,
+    private val repairment: () -> Ingredient,
 ) : ToolMaterial {
     STEEL(
         ToolMaterials.DIAMOND,
-        Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey),
+        { Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey) },
     ),
     STELLA(
         ToolMaterials.NETHERITE,
-        Ingredient.ofItems(RagiumItems.STELLA_PLATE),
+        { Ingredient.ofItems(RagiumItems.STELLA_PLATE) },
     ),
     ;
 
-    constructor(from: ToolMaterial, repairment: Ingredient) : this(
+    constructor(from: ToolMaterial, repairment: () -> Ingredient) : this(
         from.inverseTag,
         from.durability,
         from.miningSpeedMultiplier,
@@ -42,7 +42,7 @@ enum class RagiumToolMaterials(
 
     override fun getEnchantability(): Int = enchantability
 
-    override fun getRepairIngredient(): Ingredient = repairment
+    override fun getRepairIngredient(): Ingredient = repairment()
 
     override fun getInverseTag(): TagKey<Block> = inverseTag
 }

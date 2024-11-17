@@ -46,6 +46,7 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
         StoragePreconditions.notNegative(amount)
     }
 
+    @Suppress("DEPRECATION")
     constructor(fluid: Fluid, amount: Long = FluidConstants.BUCKET) : this(fluid.registryEntry, amount)
 
     val fluid: Fluid

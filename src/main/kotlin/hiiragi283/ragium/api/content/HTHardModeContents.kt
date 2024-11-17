@@ -14,7 +14,7 @@ object HTHardModeContents {
 
     @JvmField
     val COPPER: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.wrapped(
+        HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.COPPER,
             Items.COPPER_INGOT,
@@ -30,7 +30,7 @@ object HTHardModeContents {
 
     @JvmField
     val GOLD: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.wrapped(
+        HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.GOLD,
             Items.GOLD_INGOT,
@@ -40,7 +40,7 @@ object HTHardModeContents {
 
     @JvmField
     val IRON: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.wrapped(
+        HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.IRON,
             Items.IRON_INGOT,
