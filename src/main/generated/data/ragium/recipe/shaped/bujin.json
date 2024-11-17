@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/stella"
+      "item": "ragium:stella_plate"
     },
     "B": {
       "tag": "c:rods/wooden"

@@ -1,23 +1,54 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.entity.LivingEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.registry.RegistryWrapper
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import java.util.*
 
 class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, pos, state) {
+    private var placer: UUID? = null
     private val yRange: IntRange
         get() = (world?.bottomY ?: 0)..<pos.y
+
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.writeNbt(nbt, wrapperLookup)
+        placer?.let { nbt.putUuid("Placer", it) }
+    }
+
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        super.readNbt(nbt, wrapperLookup)
+        placer = nbt.getUuid("Placer")
+    }
+
+    override fun onPlaced(
+        world: World,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        stack: ItemStack,
+    ) {
+        this.placer = placer?.uuid
+    }
 
     override val tickRate: Int = 1
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        for (x: Int in (pos.x - 64..pos.x + 64)) {
-            for (z: Int in (pos.z - 64..pos.z + 64)) {
+        val radius: Int = RagiumAPI.getInstance().config.autoIlluminatorRadius
+        for (x: Int in (pos.x - radius..pos.x + radius)) {
+            for (z: Int in (pos.z - radius..pos.z + radius)) {
                 for (y: Int in yRange) {
                     val posIn = BlockPos(x, y, z)
                     val stateIn: BlockState = world.getBlockState(posIn)
@@ -30,7 +61,21 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }
         }
-        world.playSound(null, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 10.0f, 0.5f)
-        world.breakBlock(pos, true)
+        world.breakBlock(pos, false)
+        (world as? ServerWorld)?.let { serverWorld: ServerWorld ->
+            placer
+                ?.let(serverWorld::getEntity)
+                ?.let {
+                    dropStackAt(it, ItemStack(RagiumBlocks.AUTO_ILLUMINATOR))
+                    world.playSound(
+                        null,
+                        pos,
+                        SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
+                        SoundCategory.PLAYERS,
+                        10.0f,
+                        0.5f,
+                    )
+                }
+        }
     }
 }

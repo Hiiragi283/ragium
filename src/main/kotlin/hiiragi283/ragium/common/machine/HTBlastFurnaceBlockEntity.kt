@@ -24,22 +24,22 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.of(tier.getHull()),
+                HTMultiblockComponent.Simple(tier.getHull()),
             ).addHollow(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.of(tier.getCoil()),
+                HTMultiblockComponent.Simple(tier.getCoil()),
             ).addHollow(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.of(tier.getCoil()),
+                HTMultiblockComponent.Simple(tier.getCoil()),
             ).addLayer(
                 -1..1,
                 3,
                 1..3,
-                HTMultiblockComponent.of(tier.getCasing()),
+                HTMultiblockComponent.Simple(tier.getCasing()),
             )
     }
 }

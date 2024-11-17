@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.packetCodecOf
+import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -25,7 +26,8 @@ enum class HTMachineType : StringIdentifiable {
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineType> = packetCodecOf(entries)
     }
 
-    val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, RagiumAPI.id("machines/${asString()}"))
+    val blockTag: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, RagiumAPI.id("machines/${asString()}"))
+    val itemTag: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, RagiumAPI.id("machines/${asString()}"))
 
     override fun asString(): String = name.lowercase()
 }

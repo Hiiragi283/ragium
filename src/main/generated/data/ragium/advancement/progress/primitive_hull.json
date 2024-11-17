@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:progress/ragi_alloy_plate",
+  "parent": "ragium:progress/ragi_alloy",
   "criteria": {
     "has_items": {
       "conditions": {

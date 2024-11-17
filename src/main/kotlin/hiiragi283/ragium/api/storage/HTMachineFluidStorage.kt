@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.buildNbtList
-import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.resourceAmount
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -33,10 +32,17 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
         builder.ioMapper,
     )
 
+    private var callback: () -> Unit = {}
+
+    fun setCallback(callback: () -> Unit): HTMachineFluidStorage = apply {
+        this.callback = callback
+    }
+
     val parts: Array<SingleFluidStorage>
         get() = parts1
 
-    private val parts1: Array<SingleFluidStorage> = Array(size) { fluidStorageOf(FluidConstants.BUCKET * 16) }
+    private val parts1: Array<SingleFluidStorage> =
+        Array(size) { SingleFluidStorage.withFixedCapacity(FluidConstants.BUCKET * 16, callback::invoke) }
 
     fun get(index: Int): SingleFluidStorage = parts1[index]
 
@@ -76,6 +82,7 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
     }
 
     fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+        callback()
         nbt.put(
             NBT_KEY,
             buildNbtList {

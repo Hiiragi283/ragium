@@ -2,20 +2,16 @@ package hiiragi283.ragium.data
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineRegistry
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.tags.*
+import hiiragi283.ragium.api.tags.RagiumBlockTags
+import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
+import hiiragi283.ragium.api.tags.RagiumFluidTags
+import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -39,7 +35,7 @@ object RagiumTagProviders {
         pack.addProvider(RagiumTagProviders::BlockProvider)
         pack.addProvider(RagiumTagProviders::EnchantmentProvider)
         pack.addProvider(RagiumTagProviders::FluidProvider)
-        pack.addProvider(RagiumTagProviders::ItemProvider)
+        pack.addProvider(::ItemProvider)
     }
 
     //    Block    //
@@ -47,26 +43,22 @@ object RagiumTagProviders {
     private class BlockProvider(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.BlockTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
+            val blockCache: Multimap<TagKey<Block>, Block> = HashMultimap.create()
+
             fun add(tagKey: TagKey<Block>, block: Block) {
-                getOrCreateTagBuilder(tagKey).add(block)
+                blockCache.put(tagKey, block)
+            }
+
+            fun add(tagKey: TagKey<Block>, content: HTContent<Block>) {
+                add(tagKey, content.value)
             }
 
             // vanilla
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
-
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ASPHALT)
-
-            add(BlockTags.HOE_MINEABLE, RagiumBlocks.SPONGE_CAKE)
-
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.AUTO_ILLUMINATOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.LARGE_PROCESSOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_FORGE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_GRINDER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.MANUAL_MIXER)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.NETWORK_INTERFACE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.TELEPORT_ANCHOR)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.OPEN_CRATE)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.SHAFT)
+            RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
+            RagiumBlocks.MECHANICS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
+            RagiumBlocks.MISC.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
             buildList {
                 addAll(RagiumContents.Ores.entries)
@@ -77,22 +69,22 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Coils.entries)
                 addAll(RagiumContents.Pipes.entries)
                 addAll(RagiumContents.Drums.entries)
-            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it.value) }
+            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-                add(BlockTags.DRAGON_IMMUNE, ore.value)
-            }
-
-            // ragium
-            RagiumAPI.getInstance().machineRegistry.blocks.forEach {
-                add(BlockTags.PICKAXE_MINEABLE, it)
-                add(RagiumBlockTags.MACHINES, it)
+                add(BlockTags.DRAGON_IMMUNE, ore)
             }
 
             buildList {
                 addAll(RagiumContents.Exporters.entries)
                 addAll(RagiumContents.Pipes.entries)
-            }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it.value) }
+            }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
+
+            blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
+                blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->
+                    getOrCreateTagBuilder(tagKey).add(block)
+                }
+            }
         }
     }
 
@@ -146,36 +138,11 @@ object RagiumTagProviders {
         FabricTagProvider.ItemTagProvider(output, registryLookup) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
             val itemCache: Multimap<TagKey<Item>, Item> = HashMultimap.create()
-            val tagCache: Multimap<TagKey<Item>, TagKey<Item>> = HashMultimap.create()
 
             fun add(tagKey: TagKey<Item>?, item: ItemConvertible?) {
                 val item1: Item = item?.asItem() ?: return
                 if (tagKey == null) return
                 itemCache.put(tagKey, item1)
-            }
-
-            fun add(tagKey: TagKey<Item>?, child: TagKey<Item>?) {
-                if (child == null) return
-                if (tagKey == null) return
-                tagCache.put(tagKey, child)
-            }
-
-            buildList {
-                addAll(RagiumContents.Ores.entries)
-                addAll(RagiumContents.StorageBlocks.entries)
-
-                addAll(RagiumContents.Dusts.entries)
-                addAll(RagiumContents.Gems.entries)
-                addAll(RagiumContents.Ingots.entries)
-                addAll(RagiumContents.Plates.entries)
-                addAll(RagiumContents.RawMaterials.entries)
-            }.forEach { content: HTContent<out ItemConvertible> ->
-                if (content is HTContent.Material<*>) {
-                    add(content.prefixedTagKey, content)
-                    add(content.commonTagKey, content.prefixedTagKey)
-                } else {
-                    add(content.commonTagKey, content)
-                }
             }
 
             getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(
@@ -200,12 +167,17 @@ object RagiumTagProviders {
             add(ItemTags.PICKAXES, RagiumItems.STEEL_PICKAXE)
             add(ItemTags.SHOVELS, RagiumItems.STEEL_SHOVEL)
             add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
+            add(ItemTags.SWORDS, RagiumItems.BUJIN)
 
             add(ItemTags.PLANKS, RagiumContents.Plates.WOOD)
             add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
+
+            add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
+            add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
+            add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)
@@ -214,31 +186,9 @@ object RagiumTagProviders {
                 .addOptionalTag(ConventionalItemTags.RAW_FISH_FOODS)
                 .addOptionalTag(ConventionalItemTags.COOKED_FISH_FOODS)
 
-            buildList {
-                addAll(HTCrafterHammerItem.Behavior.entries)
-            }.forEach { add(RagiumItemTags.TOOL_MODULES, it) }
-
-            RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-                entry.blocks.forEach {
-                    add(key.tagKey, it)
-                    add(entry.type.tagKey, it)
-                }
-            }
-
-            RagiumAPI.getInstance().materialRegistry.entryMap.forEach { (key: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
-                entry.type.validPrefixes.forEach { prefix: HTTagPrefix ->
-                    add(prefix.commonTagKey, prefix.createTag(key))
-                }
-            }
-
             itemCache.asMap().forEach { (tagKey: TagKey<Item>, items: Collection<Item>) ->
                 items.sortedBy(Registries.ITEM::getId).forEach { item: Item ->
                     getOrCreateTagBuilder(tagKey).add(item)
-                }
-            }
-            tagCache.asMap().forEach { (tagKey: TagKey<Item>, children: Collection<TagKey<Item>>) ->
-                children.sortedBy(TagKey<Item>::id).forEach { child: TagKey<Item> ->
-                    getOrCreateTagBuilder(tagKey).addOptionalTag(child)
                 }
             }
         }

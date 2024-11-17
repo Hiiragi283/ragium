@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "basic"
+  },
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:silicon"
+    },
+    {
+      "count": 2,
+      "items": "#minecraft:coals"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:silicon"
+    },
+    {
+      "item": "ragium:slag"
+    }
+  ]
+}

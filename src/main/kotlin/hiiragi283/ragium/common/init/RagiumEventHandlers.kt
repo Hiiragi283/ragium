@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
-import hiiragi283.ragium.api.event.HTEquippedArmorCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -13,6 +12,7 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
@@ -21,6 +21,7 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
@@ -62,14 +63,16 @@ object RagiumEventHandlers {
             }
         }
 
-        HTEquippedArmorCallback.EVENT.register { entity: LivingEntity, _: EquipmentSlot, oldStack: ItemStack, newStack: ItemStack ->
-            if (oldStack.isEmpty && !newStack.isEmpty) {
-                HTAccessoryRegistry.onEquipped(entity, newStack)
-                return@register
-            }
-            if (!oldStack.isEmpty && newStack.isEmpty) {
-                HTAccessoryRegistry.onUnequipped(entity, oldStack)
-                return@register
+        ServerEntityEvents.EQUIPMENT_CHANGE.register { entity: LivingEntity, slot: EquipmentSlot, old: ItemStack, new: ItemStack ->
+            if (slot.type == EquipmentSlot.Type.HUMANOID_ARMOR) {
+                if (old.isEmpty && !new.isEmpty) {
+                    HTAccessoryRegistry.onEquipped(entity, new)
+                    return@register
+                }
+                if (!old.isEmpty && new.isEmpty) {
+                    HTAccessoryRegistry.onUnequipped(entity, old)
+                    return@register
+                }
             }
         }
 
@@ -204,10 +207,17 @@ object RagiumEventHandlers {
 
         ServerTickEvents.END_SERVER_TICK.register { server: MinecraftServer ->
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
-                val screen: HTMachineScreenHandlerBase =
-                    player.currentScreenHandler as? HTMachineScreenHandlerBase ?: return@forEach
-                (player.world.getBlockEntity(screen.pos) as? HTFluidSyncable)
-                    ?.sendPacket(player, RagiumNetworks::sendFluidSync)
+                // send fluid sync packet
+                (player.currentScreenHandler as? HTMachineScreenHandlerBase)?.let { screen: HTMachineScreenHandlerBase ->
+                    (player.world.getBlockEntity(screen.pos) as? HTFluidSyncable)
+                        ?.sendPacket(player, RagiumNetworks::sendFluidSync)
+                }
+                // consume energy when worm stella goggles
+                if (player.armorItems.any { it.isOf(RagiumItems.STELLA_GOGGLE) }) {
+                    if (!HTMachineTier.BASIC.consumerEnergy(player.world)) {
+                        player.removeStatusEffect(StatusEffects.NIGHT_VISION)
+                    }
+                }
             }
         }
 

@@ -30,6 +30,10 @@ object RagiumBlockEntityTypes {
         register("auto_illuminator", ::HTAutoIlluminatorBlockEntity)
 
     @JvmField
+    val BEDROCK_MINER: BlockEntityType<HTBedrockMinerBlockEntity> =
+        register("bedrock_miner", ::HTBedrockMinerBlockEntity)
+
+    @JvmField
     val CHEMICAL_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Chemical> =
         register("chemical_processor", HTProcessorBlockEntityBase::Chemical)
 
@@ -138,6 +142,7 @@ object RagiumBlockEntityTypes {
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
         // consumers
+        registerMachineBlocks(RagiumMachineKeys.BEDROCK_MINER, BEDROCK_MINER)
         registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)
         registerMachineBlocks(RagiumMachineKeys.CANNING_MACHINE, CANNING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)

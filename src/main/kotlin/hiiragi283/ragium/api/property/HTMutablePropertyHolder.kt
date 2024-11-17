@@ -27,14 +27,5 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
         }
     }
 
-    fun <T : Any> computeIfAbsent(key: HTPropertyKey<T>, mapping: () -> T): T {
-        val value: T? = get(key)
-        if (value == null) {
-            val newValue: T = mapping()
-            set(key, newValue)
-            return newValue
-        } else {
-            return value
-        }
-    }
+    fun <T : Any> computeIfAbsent(key: HTPropertyKey<T>, mapping: () -> T): T = get(key) ?: mapping().apply { set(key, this) }
 }

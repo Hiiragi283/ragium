@@ -2,7 +2,6 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -12,34 +11,32 @@ import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
 
-object RagiumContents : HTContentRegister {
+object RagiumContents {
     //    Ores    //
 
     enum class Ores(override val material: HTMaterialKey, val baseStone: Block) : HTContent.Material<Block> {
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE) {
-            override val key: RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("raginite_ore"))
+            override val delegated: HTContent<Block> =
+                HTContent.ofBlock(RagiumAPI.id("raginite_ore"))
             override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
         },
         DEEP_RAGINITE(RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE) {
-            override val key: RegistryKey<Block> =
-                RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("deepslate_raginite_ore"))
+            override val delegated: HTContent<Block> =
+                HTContent.ofBlock(RagiumAPI.id("deepslate_raginite_ore"))
             override val tagPrefix: HTTagPrefix = HTTagPrefix.DEEP_ORE
         },
         NETHER_RAGINITE(RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK) {
-            override val key: RegistryKey<Block> =
-                RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("nether_raginite_ore"))
+            override val delegated: HTContent<Block> =
+                HTContent.ofBlock(RagiumAPI.id("nether_raginite_ore"))
             override val tagPrefix: HTTagPrefix = HTTagPrefix.NETHER_ORE
         },
         END_RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE) {
-            override val key: RegistryKey<Block> =
-                RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("end_ragi_crystal_ore"))
+            override val delegated: HTContent<Block> =
+                HTContent.ofBlock(RagiumAPI.id("end_ragi_crystal_ore"))
             override val tagPrefix: HTTagPrefix = HTTagPrefix.END_ORE
-        }, ;
+        },
+        ;
 
         val dropMineral: ItemConvertible
             get() = when (this) {
@@ -48,8 +45,6 @@ object RagiumContents : HTContentRegister {
                 NETHER_RAGINITE -> RawMaterials.RAGINITE
                 END_RAGI_CRYSTAL -> Gems.RAGI_CRYSTAL
             }
-
-        override val registry: Registry<Block> = Registries.BLOCK
     }
 
     //    Storage Blocks    //
@@ -63,9 +58,8 @@ object RagiumContents : HTContentRegister {
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_block"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_block"))
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
@@ -79,6 +73,7 @@ object RagiumContents : HTContentRegister {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         NITER(RagiumMaterialKeys.NITER),
+        QUARTZ(RagiumMaterialKeys.QUARTZ),
         SALT(RagiumMaterialKeys.SALT),
         SULFUR(RagiumMaterialKeys.SULFUR),
 
@@ -92,9 +87,8 @@ object RagiumContents : HTContentRegister {
         BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_dust"))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_dust"))
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
@@ -110,9 +104,8 @@ object RagiumContents : HTContentRegister {
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(name.lowercase()))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id(name.lowercase()))
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEM
     }
 
@@ -132,9 +125,8 @@ object RagiumContents : HTContentRegister {
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_ingot"))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_ingot"))
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
@@ -151,20 +143,15 @@ object RagiumContents : HTContentRegister {
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         GOLD(RagiumMaterialKeys.GOLD),
-        PLASTIC(RagiumMaterialKeys.PLASTIC),
-        SILICON(RagiumMaterialKeys.SILICON),
         STEEL(RagiumMaterialKeys.STEEL),
 
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        ENGINEERING_PLASTIC(RagiumMaterialKeys.ENGINEERING_PLASTIC),
-        STELLA(RagiumMaterialKeys.STELLA),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_plate"))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_plate"))
         override val tagPrefix: HTTagPrefix = HTTagPrefix.PLATE
     }
 
@@ -181,9 +168,8 @@ object RagiumContents : HTContentRegister {
         BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("raw_${name.lowercase()}"))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("raw_${name.lowercase()}"))
         override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
@@ -195,9 +181,8 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_grate"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_grate"))
     }
 
     //    Casings    //
@@ -208,9 +193,8 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_casing"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_casing"))
     }
 
     //    Hulls    //
@@ -221,9 +205,8 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_hull"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_hull"))
     }
 
     //    Coils    //
@@ -234,9 +217,8 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_coil"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_coil"))
     }
 
     //    Exporter    //
@@ -247,9 +229,8 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_exporter"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_exporter"))
     }
 
     //    Pipes    //
@@ -262,9 +243,8 @@ object RagiumContents : HTContentRegister {
         UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_pipe"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
     }
 
     //    Drums    //
@@ -275,9 +255,8 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Block> = Registries.BLOCK
-        override val key: RegistryKey<Block> =
-            RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id("${name.lowercase()}_drum"))
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_drum"))
     }
 
     //    Circuits    //
@@ -288,9 +267,14 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_circuit_board"))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_circuit_board"))
+
+        fun getCircuit(): Circuits = when (this) {
+            PRIMITIVE -> Circuits.PRIMITIVE
+            BASIC -> Circuits.BASIC
+            ADVANCED -> Circuits.ADVANCED
+        }
     }
 
     enum class Circuits(override val tier: HTMachineTier) : HTContent.Tier<Item> {
@@ -299,8 +283,7 @@ object RagiumContents : HTContentRegister {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val registry: Registry<Item> = Registries.ITEM
-        override val key: RegistryKey<Item> =
-            RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id("${name.lowercase()}_circuit"))
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_circuit"))
     }
 }

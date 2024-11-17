@@ -44,5 +44,5 @@ class HTVirtualFluid : Fluid() {
 
     override fun getShape(state: FluidState, world: BlockView, pos: BlockPos): VoxelShape = VoxelShapes.empty()
 
-    override fun toString(): String = "Fluid{${Registries.FLUID.getId(this)}}"
+    override fun toString(): String = "Fluid[${Registries.FLUID.getId(this)}]"
 }

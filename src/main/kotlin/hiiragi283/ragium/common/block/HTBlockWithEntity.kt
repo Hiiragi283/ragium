@@ -7,8 +7,10 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.item.ItemStack
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
@@ -70,6 +72,16 @@ abstract class HTBlockWithEntity(settings: Settings) :
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult = (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onUse(state, world, pos, player, hit) ?: ActionResult.PASS
+
+    final override fun onPlaced(
+        world: World,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        itemStack: ItemStack,
+    ) {
+        (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onPlaced(world, pos, state, placer, itemStack)
+    }
 
     final override fun onStateReplaced(
         state: BlockState,

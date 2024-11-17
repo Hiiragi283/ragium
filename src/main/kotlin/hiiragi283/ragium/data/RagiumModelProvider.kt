@@ -8,7 +8,6 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -66,8 +65,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
-        registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
+        registerSimple(RagiumBlocks.OPEN_CRATE)
         registerSimple(RagiumBlocks.SPONGE_CAKE)
+        registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
+        registerSimple(RagiumBlocks.TRASH_BOX)
 
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)
@@ -309,7 +310,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumItems.TOOLS)
             remove(RagiumItems.BUJIN)
-            addAll(HTCrafterHammerItem.Behavior.entries)
+            remove(RagiumItems.GIGANT_HAMMER)
             addAll(RagiumItems.ARMORS)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)

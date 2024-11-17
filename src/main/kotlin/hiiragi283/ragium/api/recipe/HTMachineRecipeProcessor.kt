@@ -1,14 +1,13 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.inventory.Inventory
 import net.minecraft.recipe.RecipeEntry
@@ -20,43 +19,44 @@ class HTMachineRecipeProcessor(
     private val itemInputs: IntArray,
     private val itemOutputs: IntArray,
     private val catalystIndex: Int,
-    private val fluidStorage: HTMachineFluidStorage? = null,
-    private val fluidInputs: IntArray = intArrayOf(),
-    private val fluidOutputs: IntArray = intArrayOf(),
+    private val fluidStorage: HTMachineFluidStorage,
+    private val fluidInputs: IntArray,
+    private val fluidOutputs: IntArray,
 ) {
     private val matchGetter: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Boolean = runCatching {
         val input: HTMachineInput = HTMachineInput.create(key, tier) {
             itemInputs.map(inventory::getStack).forEach(::add)
-            fluidInputs.forEach { fluidStorage?.getResourceAmount(it)?.let(::add) }
+            fluidInputs.map(fluidStorage::getResourceAmount).forEach(::add)
             catalyst = inventory.getStack(catalystIndex)
         }
         val recipeEntry: RecipeEntry<HTMachineRecipe> = matchGetter
             .getFirstMatch(input, world)
             .getOrNull() ?: return@runCatching false
         val recipe: HTMachineRecipe = recipeEntry.value
-        if (!canAcceptOutputs(recipe)) return@runCatching false
-        if (!tier.canProcess(world)) return@runCatching false
-        modifyOutputs(recipe)
-        decrementInputs(recipe)
-        true
+        when {
+            !canAcceptOutputs(recipe) -> false
+            !tier.canProcess(world) -> false
+            else -> {
+                modifyOutputs(recipe)
+                decrementInputs(recipe)
+                true
+            }
+        }
     }.getOrDefault(false)
 
     private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.itemOutputs.getOrNull(index)?.let { result: HTItemResult ->
-                if (!result.canMerge(inventory.getStack(slot))) {
-                    return false
-                }
+            val result: HTItemResult = recipe.itemOutputs.getOrNull(index) ?: return@forEachIndexed
+            if (!result.canMerge(inventory.getStack(slot))) {
+                return false
             }
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.fluidOutputs.getOrNull(index)?.let { result: HTFluidResult ->
-                val storageIn: SingleFluidStorage = fluidStorage?.get(slot) ?: return@let
-                if (!result.canMerge(storageIn)) {
-                    return false
-                }
+            val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
+            if (!result.canMerge(fluidStorage.get(slot))) {
+                return false
             }
         }
         return true
@@ -64,20 +64,18 @@ class HTMachineRecipeProcessor(
 
     private fun modifyOutputs(recipe: HTMachineRecipe) {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.itemOutputs.getOrNull(index)?.let { result: HTItemResult ->
-                inventory.modifyStack(slot, result::merge)
-            }
+            val result: HTItemResult = recipe.itemOutputs.getOrNull(index) ?: return@forEachIndexed
+            inventory.modifyStack(slot, result::merge)
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.fluidOutputs.getOrNull(index)?.let { result: HTFluidResult ->
-                useTransaction { transaction: Transaction ->
-                    val storageIn: SingleSlotStorage<FluidVariant> = fluidStorage?.get(slot) ?: return@let
-                    val inserted: Long = result.merge(storageIn, transaction)
-                    if (inserted > 0) {
-                        transaction.commit()
-                    } else {
-                        transaction.abort()
-                    }
+            val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
+            useTransaction { transaction: Transaction ->
+                val inserted: Long = result.merge(fluidStorage.get(slot), transaction)
+                if (inserted == result.amount) {
+                    RagiumAPI.log { info("Succeeded!!") }
+                    transaction.commit()
+                } else {
+                    transaction.abort()
                 }
             }
         }
@@ -85,23 +83,13 @@ class HTMachineRecipeProcessor(
 
     private fun decrementInputs(recipe: HTMachineRecipe) {
         itemInputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.itemInputs.getOrNull(index)?.let { ingredient: HTIngredient.Item ->
-                ingredient.onConsume(inventory.getStack(slot))
-            }
+            val ingredient: HTIngredient.Item = recipe.itemInputs.getOrNull(index) ?: return@forEachIndexed
+            ingredient.onConsume(inventory.getStack(slot))
         }
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
-            recipe.fluidInputs.getOrNull(index)?.let { ingredient: HTIngredient.Fluid ->
-                val storageIn: SingleSlotStorage<FluidVariant> = fluidStorage?.get(slot) ?: return@let
-                useTransaction { transaction: Transaction ->
-                    val variantIn: FluidVariant = storageIn.resource
-                    val extracted: Long = storageIn.extract(variantIn, ingredient.amount, transaction)
-                    if (extracted > 0) {
-                        transaction.commit()
-                    } else {
-                        transaction.abort()
-                    }
-                }
-            }
+            val ingredient: HTIngredient.Fluid = recipe.fluidInputs.getOrNull(index) ?: return@forEachIndexed
+            val storageIn: SingleFluidStorage = fluidStorage.get(slot)
+            ingredient.onConsume(storageIn)
         }
     }
 }

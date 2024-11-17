@@ -38,7 +38,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
         if (tier.canProcess(world)) {
             if (processRecipe(world, pos)) {
                 key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
-                    world.playSound(null, pos, it, SoundCategory.BLOCKS)
+                    world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
                 tier.consumerEnergy(world)
             }
@@ -55,7 +55,6 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        asInventory()
         fluidStorage.writeNbt(nbt, wrapperLookup)
     }
 
@@ -99,6 +98,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildMachineFluidStorage()
+            .setCallback(this@Simple::markDirty)
 
         private val processor = HTMachineRecipeProcessor(
             inventory,
@@ -127,11 +127,6 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             this.tier = tier
         }
 
-        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTChemicalMachineScreenHandler(syncId, playerInventory, packet, createContext())
-
-        override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
-
         override val inventory: SidedInventory = HTStorageBuilder(5)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -146,8 +141,9 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildMachineFluidStorage()
+            .setCallback(this@Chemical::markDirty)
 
-        val processor = HTMachineRecipeProcessor(
+        private val processor = HTMachineRecipeProcessor(
             inventory,
             intArrayOf(0, 1),
             intArrayOf(3, 4),
@@ -156,6 +152,11 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             intArrayOf(0, 1),
             intArrayOf(2, 3),
         )
+
+        override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
+
+        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+            HTChemicalMachineScreenHandler(syncId, playerInventory, packet, createContext())
     }
 
     //    Large    //
@@ -175,11 +176,6 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             HTBuiltMachineCriterion.trigger(player, key, tier)
         }
 
-        final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTLargeMachineScreenHandler(syncId, playerInventory, packet, createContext())
-
-        final override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
-
         final override val inventory: SidedInventory = HTStorageBuilder(7)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -196,6 +192,7 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .buildMachineFluidStorage()
+            .setCallback { this@Large.markDirty() }
 
         private val processor = HTMachineRecipeProcessor(
             inventory,
@@ -206,5 +203,10 @@ abstract class HTProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
             intArrayOf(0, 1),
             intArrayOf(2, 3),
         )
+
+        final override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
+
+        final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+            HTLargeMachineScreenHandler(syncId, playerInventory, packet, createContext())
     }
 }

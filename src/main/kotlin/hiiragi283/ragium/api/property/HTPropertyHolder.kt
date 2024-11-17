@@ -9,8 +9,10 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
 
     operator fun contains(key: HTPropertyKey<*>): Boolean
 
+    fun <T : Any, R : Any> map(key: HTPropertyKey<T>, transform: (T) -> R): R? = get(key)?.let(transform)
+
     fun <T : Any> ifPresent(key: HTPropertyKey<T>, action: (T) -> Unit) {
-        get(key)?.let(action)
+        map(key, action)
     }
 
     //    Empty    //

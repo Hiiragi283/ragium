@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.Block
 import net.minecraft.item.ToolMaterial
+import net.minecraft.item.ToolMaterials
 import net.minecraft.recipe.Ingredient
-import net.minecraft.registry.tag.BlockTags
 import net.minecraft.registry.tag.TagKey
 
 enum class RagiumToolMaterials(
@@ -13,25 +13,25 @@ enum class RagiumToolMaterials(
     private val miningSpeed: Float,
     private val attackDamage: Float,
     private val enchantability: Int,
-    private val repairment: Ingredient,
+    private val repairment: () -> Ingredient,
 ) : ToolMaterial {
     STEEL(
-        BlockTags.INCORRECT_FOR_IRON_TOOL,
-        750,
-        8.0f,
-        3.0f,
-        14,
-        Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey),
+        ToolMaterials.DIAMOND,
+        { Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey) },
+    ),
+    STELLA(
+        ToolMaterials.NETHERITE,
+        { Ingredient.ofItems(RagiumItems.STELLA_PLATE) },
     ),
     ;
 
-    constructor(from: ToolMaterial) : this(
+    constructor(from: ToolMaterial, repairment: () -> Ingredient) : this(
         from.inverseTag,
         from.durability,
         from.miningSpeedMultiplier,
         from.attackDamage,
         from.enchantability,
-        from.repairIngredient,
+        repairment,
     )
 
     override fun getDurability(): Int = durability
@@ -42,7 +42,7 @@ enum class RagiumToolMaterials(
 
     override fun getEnchantability(): Int = enchantability
 
-    override fun getRepairIngredient(): Ingredient = repairment
+    override fun getRepairIngredient(): Ingredient = repairment()
 
     override fun getInverseTag(): TagKey<Block> = inverseTag
 }

@@ -20,11 +20,11 @@ class HTSawmillBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.add(-1, 0, 0, HTMultiblockComponent.of(tier.getHull()))
-        builder.add(1, 0, 0, HTMultiblockComponent.of(tier.getHull()))
-        builder.add(-1, 0, 1, HTMultiblockComponent.of(Blocks.STONE_SLAB))
-        builder.add(0, 0, 1, HTMultiblockComponent.of(Blocks.STONECUTTER))
-        builder.add(1, 0, 1, HTMultiblockComponent.of(Blocks.STONE_SLAB))
-        builder.addLayer(-1..1, 0, 2..2, HTMultiblockComponent.of(tier.getHull()))
+        builder.add(-1, 0, 0, HTMultiblockComponent.Simple(tier.getHull()))
+        builder.add(1, 0, 0, HTMultiblockComponent.Simple(tier.getHull()))
+        builder.add(-1, 0, 1, HTMultiblockComponent.Simple(Blocks.STONE_SLAB))
+        builder.add(0, 0, 1, HTMultiblockComponent.Simple(Blocks.STONECUTTER))
+        builder.add(1, 0, 1, HTMultiblockComponent.Simple(Blocks.STONE_SLAB))
+        builder.addLayer(-1..1, 0, 2..2, HTMultiblockComponent.Simple(tier.getHull()))
     }
 }

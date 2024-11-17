@@ -1,14 +1,11 @@
 package hiiragi283.ragium.common.component
 
-import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import net.minecraft.block.*
-import net.minecraft.network.RegistryByteBuf
-import net.minecraft.network.codec.PacketCodec
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
@@ -66,15 +63,13 @@ enum class HTRemoverDynamiteBehaviors : StringIdentifiable {
     },
     ;
 
-    companion object {
-        @JvmField
-        val CODEC: Codec<HTRemoverDynamiteBehaviors> = codecOf(entries)
-
-        @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRemoverDynamiteBehaviors> = packetCodecOf(entries)
-    }
-
     abstract fun onBlockHit(world: World, hitResult: BlockHitResult)
+
+    fun onBlockHit(entity: HTDynamiteEntity, hitResult: HitResult) {
+        if (hitResult is BlockHitResult) {
+            onBlockHit(entity.world, hitResult)
+        }
+    }
 
     override fun asString(): String = name.lowercase()
 }

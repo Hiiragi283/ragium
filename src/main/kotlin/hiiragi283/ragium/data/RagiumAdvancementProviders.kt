@@ -201,11 +201,10 @@ object RagiumAdvancementProviders {
             announce,
             hidden,
         )
-        hasAnyItems(key.tagKey)
+        hasAnyItems(key.itemTag)
     }
 
-    @Suppress("removal")
-    private fun createChild(
+    /*private fun createChild(
         consumer: Consumer<AdvancementEntry>,
         path: String,
         parent: Identifier,
@@ -230,7 +229,7 @@ object RagiumAdvancementProviders {
             hidden,
         )
         builderAction()
-    }
+    }*/
 
     private fun Advancement.Builder.buildMultiblock(key: HTMachineKey, minTier: HTMachineTier): Advancement.Builder = criterion(
         "build_multiblock",
@@ -304,16 +303,10 @@ object RagiumAdvancementProviders {
                 manualGrinder,
                 RagiumBlocks.MANUAL_FORGE,
             ) { hasAllItems(RagiumBlocks.MANUAL_FORGE) }
-            val ragiAlloyPlate: AdvancementEntry = createChild(
-                consumer,
-                "progress/ragi_alloy_plate",
-                manualForge,
-                RagiumItems.FORGE_HAMMER,
-            ) { hasAnyItems(RagiumContents.Plates.RAGI_ALLOY) }
             val primitiveHull: AdvancementEntry = createChild(
                 consumer,
                 "progress/primitive_hull",
-                ragiAlloyPlate,
+                ragiAlloy,
                 RagiumContents.Hulls.PRIMITIVE,
             ) { hasAllItems(RagiumContents.Hulls.PRIMITIVE) }
             val alloyFurnace: AdvancementEntry = createMachineChild(
@@ -647,13 +640,13 @@ object RagiumAdvancementProviders {
                 distillation,
                 RagiumItems.POLYMER_RESIN,
             ) { hasAllItems(RagiumItems.POLYMER_RESIN) }
-            val engineeringPlastic: AdvancementEntry = createContentChild(
+            val engineeringPlastic: AdvancementEntry = createChild(
                 consumer,
                 "petro_chemistry/engineering_plastic",
                 polymerResin,
-                RagiumContents.Plates.ENGINEERING_PLASTIC,
+                RagiumItems.ENGINEERING_PLASTIC_PLATE,
                 frame = AdvancementFrame.GOAL,
-            )
+            ) { hasAllItems(RagiumItems.ENGINEERING_PLASTIC_PLATE) }
             // refined gas
             val refinedGas: AdvancementEntry = createFluidChild(
                 consumer,

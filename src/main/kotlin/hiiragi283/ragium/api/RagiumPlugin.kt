@@ -27,7 +27,7 @@ interface RagiumPlugin {
 
     fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
-    fun registerMaterial(consumer: TriConsumer<HTMaterialKey, HTMaterialKey.Type, Rarity>) {}
+    fun registerMaterial(helper: MaterialHelper) {}
 
     fun setupMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 
@@ -43,6 +43,21 @@ interface RagiumPlugin {
         entry: HTMaterialRegistry.Entry,
         helper: RecipeHelper,
     ) {
+    }
+
+    //    MaterialHelper    //
+
+    class MaterialHelper(
+        private val consumer: (HTMaterialKey, HTMaterialKey.Type, Rarity) -> Unit,
+        private val altConsumer: (HTMaterialKey, String) -> Unit,
+    ) {
+        fun register(key: HTMaterialKey, type: HTMaterialKey.Type, rarity: Rarity = Rarity.COMMON) {
+            consumer(key, type, rarity)
+        }
+
+        fun addAltName(parent: HTMaterialKey, child: String) {
+            altConsumer(parent, child)
+        }
     }
 
     //    PropertyHelper    //

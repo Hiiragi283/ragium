@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.content.HTContentRegister
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
 import net.minecraft.block.Block
@@ -11,88 +10,107 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object RagiumBlocks : HTContentRegister {
-    //    Blocks - Minerals    //
+object RagiumBlocks {
+    //    Minerals    //
     @JvmField
-    val POROUS_NETHERRACK: Block =
-        registerBlock(
-            "porous_netherrack",
-            HTSpongeBlock(
-                blockSettings(Blocks.NETHERRACK),
-                Blocks.MAGMA_BLOCK::getDefaultState,
-            ) { world: World, pos: BlockPos ->
-                world.getFluidState(pos).isIn(FluidTags.LAVA)
-            },
-        )
+    val POROUS_NETHERRACK: Block = HTSpongeBlock(
+        blockSettings(Blocks.NETHERRACK),
+        Blocks.MAGMA_BLOCK::getDefaultState,
+    ) { world: World, pos: BlockPos ->
+        world.getFluidState(pos).isIn(FluidTags.LAVA)
+    }
 
-    //    Blocks - Buildings    //
+    //    Buildings    //
 
     @JvmField
-    val ASPHALT: Block = registerCopy("asphalt", Blocks.SMOOTH_STONE)
+    val ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
-    //    Blocks - Foods    //
-
-    @JvmField
-    val SPONGE_CAKE: Block =
-        registerBlock("sponge_cake", HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL)))
+    //    Foods    //
 
     @JvmField
-    val SWEET_BERRIES_CAKE: Block =
-        registerBlock("sweet_berries_cake", HTSweetBerriesCakeBlock)
-
-    //    Blocks - Utilities    //
+    val SPONGE_CAKE: Block = HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL))
 
     @JvmField
-    val BACKPACK_INTERFACE: Block = registerBlock("backpack_interface", HTBackpackInterfaceBlock)
+    val SWEET_BERRIES_CAKE: Block = HTSweetBerriesCakeBlock
 
     @JvmField
-    val AUTO_ILLUMINATOR: Block = registerWithBE("auto_illuminator", RagiumBlockEntityTypes.AUTO_ILLUMINATOR)
+    val FOODS: List<Block> = listOf(
+        SPONGE_CAKE,
+        SWEET_BERRIES_CAKE,
+    )
+
+    //    Mechanics    //
+
+    @JvmField
+    val AUTO_ILLUMINATOR: Block =
+        HTBlockWithEntity.build(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
     val CREATIVE_SOURCE: Block =
-        registerWithBE("creative_source", RagiumBlockEntityTypes.CREATIVE_SOURCE, Blocks.COMMAND_BLOCK)
+        HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_SOURCE, blockSettings(Blocks.COMMAND_BLOCK))
 
     @JvmField
-    val ITEM_DISPLAY: Block =
-        registerBlock("item_display", HTItemDisplayBlock)
+    val LARGE_PROCESSOR: Block = HTLargeProcessorBlock
 
     @JvmField
-    val LARGE_PROCESSOR: Block =
-        registerBlock("large_processor", HTLargeProcessorBlock)
+    val MANUAL_FORGE: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.BRICKS).nonOpaque())
 
     @JvmField
-    val MANUAL_FORGE: Block =
-        registerWithBE("manual_forge", RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.ANVIL).nonOpaque())
+    val MANUAL_GRINDER: Block = HTManualGrinderBlock
 
     @JvmField
-    val MANUAL_GRINDER: Block =
-        registerBlock("manual_grinder", HTManualGrinderBlock)
+    val MANUAL_MIXER: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_MIXER, blockSettings(Blocks.BRICKS))
 
     @JvmField
-    val MANUAL_MIXER: Block =
-        registerWithBE("manual_mixer", RagiumBlockEntityTypes.MANUAL_MIXER, blockSettings(Blocks.SMOOTH_STONE))
+    val NETWORK_INTERFACE: Block = HTNetworkInterfaceBlock
 
     @JvmField
-    val NETWORK_INTERFACE: Block =
-        registerBlock("network_interface", HTNetworkInterfaceBlock)
+    val OPEN_CRATE: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val OPEN_CRATE: Block =
-        registerCopy("open_crate", Blocks.SMOOTH_STONE)
+    val TELEPORT_ANCHOR: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val SHAFT: Block =
-        registerBlock("shaft", HTThinPillarBlock(blockSettings(Blocks.CHAIN)))
+    val TRASH_BOX: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val TELEPORT_ANCHOR: Block =
-        registerCopy("teleport_anchor", Blocks.SMOOTH_STONE)
+    val MECHANICS: List<Block> = listOf(
+        LARGE_PROCESSOR, // red
+        AUTO_ILLUMINATOR, // yellow
+        OPEN_CRATE, // green
+        TELEPORT_ANCHOR, // blue
+        CREATIVE_SOURCE, // purple
+        TRASH_BOX, // gray
+        NETWORK_INTERFACE, // white
+        // manual machines
+        MANUAL_FORGE,
+        MANUAL_GRINDER,
+        MANUAL_MIXER,
+    )
+
+    //    Misc    //
 
     @JvmField
-    val TRASH_BOX: Block =
-        registerBlock("trash_box")
+    val BACKPACK_INTERFACE: Block = HTBackpackInterfaceBlock
 
     @JvmField
-    val INFESTING: Block =
-        registerBlock("infesting", HTInfectingBlock)
+    val ENCHANTMENT_BOOKSHELF: Block =
+        HTBlockWithEntity.build(RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, blockSettings(Blocks.BOOKSHELF))
+
+    @JvmField
+    val ITEM_DISPLAY: Block = HTItemDisplayBlock
+
+    @JvmField
+    val SHAFT: Block = HTThinPillarBlock(blockSettings(Blocks.CHAIN))
+
+    @JvmField
+    val INFESTING: Block = HTInfectingBlock
+
+    @JvmField
+    val MISC: List<Block> = listOf(
+        BACKPACK_INTERFACE,
+        ENCHANTMENT_BOOKSHELF,
+        ITEM_DISPLAY,
+        SHAFT,
+    )
 }

@@ -29,6 +29,7 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BiomeTags
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
@@ -43,6 +44,16 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTConsumerBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
     HTFluidSyncable,
     HTMultiblockController {
+    companion object {
+        @JvmField
+        val FLUID_MAP: Map<TagKey<Biome>, ResourceAmount<FluidVariant>> = mapOf(
+            BiomeTags.IS_END to ResourceAmount(FluidVariant.of(RagiumFluids.NOBLE_GAS.value), FluidConstants.INGOT),
+            BiomeTags.IS_NETHER to ResourceAmount(FluidVariant.of(RagiumFluids.CRUDE_OIL.value), FluidConstants.BUCKET),
+            BiomeTags.IS_OCEAN to ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BUCKET),
+            BiomeTags.IS_BEACH to ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BOTTLE),
+        )
+    }
+
     override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
@@ -66,15 +77,9 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
 
     override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
-        val biome: RegistryEntry<Biome> = world.getBiome(pos)
-        val resource: ResourceAmount<FluidVariant> = when {
-            biome.isIn(BiomeTags.IS_END) -> ResourceAmount(FluidVariant.of(RagiumFluids.NOBLE_GAS.value), FluidConstants.INGOT)
-            biome.isIn(BiomeTags.IS_NETHER) -> ResourceAmount(FluidVariant.of(RagiumFluids.CRUDE_OIL.value), FluidConstants.BUCKET)
-            biome.isIn(BiomeTags.IS_OCEAN) -> ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BUCKET)
-            else -> ResourceAmount(FluidVariant.of(RagiumFluids.AIR.value), FluidConstants.BUCKET)
-        }
+        if (!isValid(cachedState, world, pos)) return false
         useTransaction { transaction: Transaction ->
-            val inserted: Long = fluidStorage.insert(resource, transaction)
+            val inserted: Long = fluidStorage.insert(findResource(world.getBiome(pos)), transaction)
             if (inserted > 0) {
                 transaction.commit()
                 world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
@@ -84,6 +89,15 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 return false
             }
         }
+    }
+
+    private fun findResource(biome: RegistryEntry<Biome>): ResourceAmount<FluidVariant> {
+        for ((tagKey: TagKey<Biome>, resource: ResourceAmount<FluidVariant>) in FLUID_MAP) {
+            if (biome.isIn(tagKey)) {
+                return resource
+            }
+        }
+        return ResourceAmount(FluidVariant.of(RagiumFluids.AIR.value), FluidConstants.BUCKET)
     }
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
@@ -107,29 +121,29 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.of(tier.getHull()),
+                HTMultiblockComponent.Simple(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.of(tier.getGrate()),
+                HTMultiblockComponent.Simple(tier.getGrate()),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.of(tier.getGrate()),
+                HTMultiblockComponent.Simple(tier.getGrate()),
             )
         builder.add(
             0,
             3,
             2,
-            HTMultiblockComponent.of(tier.getGrate()),
+            HTMultiblockComponent.Simple(tier.getGrate()),
         )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockComponent.of(tier.getGrate()),
+            HTMultiblockComponent.Simple(tier.getGrate()),
         )
     }
 }

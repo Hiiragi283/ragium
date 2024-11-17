@@ -26,9 +26,14 @@ import kotlin.jvm.optionals.getOrNull
 object HTWarpedCrystalItem : Item(itemSettings()) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
+        user.itemCooldownManager.set(this, 20)
         val tracker: LodestoneTrackerComponent =
             stack.get(DataComponentTypes.LODESTONE_TRACKER) ?: return super.use(world, user, hand)
         val globalPos: GlobalPos = tracker.target.getOrNull() ?: return super.use(world, user, hand)
+        if (!world.getBlockState(globalPos.pos).isOf(RagiumBlocks.TELEPORT_ANCHOR)) {
+            stack.remove(DataComponentTypes.LODESTONE_TRACKER)
+            return super.use(world, user, hand)
+        }
         if (HTMachineTier.ADVANCED.consumerEnergy(world, null, 64)) {
             world.server?.getWorld(globalPos.dimension)?.let { worldTo: ServerWorld ->
                 val vec3d = Vec3d(

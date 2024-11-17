@@ -7,8 +7,10 @@ import hiiragi283.ragium.api.extension.writeNbt
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
@@ -67,6 +69,15 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
             }
         }
     } ?: ActionResult.PASS
+
+    open fun onPlaced(
+        world: World,
+        pos: BlockPos,
+        state: BlockState,
+        placer: LivingEntity?,
+        stack: ItemStack,
+    ) {
+    }
 
     open fun onStateReplaced(
         state: BlockState,

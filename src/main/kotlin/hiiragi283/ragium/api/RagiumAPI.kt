@@ -6,8 +6,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.common.InternalRagiumAPI
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
+import hiiragi283.ragium.common.internal.InternalRagiumAPI
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -72,10 +73,22 @@ interface RagiumAPI {
         }
     }
 
+    val config: Config
+
     val machineRegistry: HTMachineRegistry
     val materialRegistry: HTMaterialRegistry
 
     fun createBuiltMachineCriterion(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
+
+    fun createHardModeCondition(value: Boolean): ResourceCondition
+
+    //    Config    //
+    @ApiStatus.NonExtendable
+    interface Config {
+        val autoIlluminatorRadius: Int
+
+        val isHardMode: Boolean
+    }
 }

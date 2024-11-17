@@ -1,9 +1,7 @@
 package hiiragi283.ragium.api.recipe
 
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.entryComparator
 import hiiragi283.ragium.api.extension.entryPacketCodec
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
@@ -13,14 +11,7 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.entry.RegistryEntryOwner
-import net.minecraft.registry.tag.TagKey
-import net.minecraft.util.Identifier
-import java.util.*
-import java.util.function.Predicate
-import java.util.stream.Stream
 
 class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val components: ComponentChanges = ComponentChanges.EMPTY) {
     companion object {
@@ -57,6 +48,7 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         check(count > 0) { "Non-Negative count required!" }
     }
 
+    @Suppress("DEPRECATION")
     constructor(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
         item.asItem().registryEntry,
         count,
@@ -64,9 +56,6 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     )
 
     constructor(stack: ItemStack) : this(stack.registryEntry, stack.count, stack.componentChanges)
-
-    @Deprecated("only used in runtime recipe registration")
-    constructor(tagKey: TagKey<Item>, count: Int = 1) : this(TagRegistryEntry(tagKey), count)
 
     val item: Item
         get() = entry.value()
@@ -87,9 +76,9 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         else -> other
     }
 
-    //    TagRegistryEntry    //
+    override fun toString(): String = "HTItemResult[item=${entry.idAsString},count=$count,components=$components]"
 
-    private class TagRegistryEntry(val tagKey: TagKey<Item>) : RegistryEntry<Item> {
+    /*private class TagRegistryEntry(val tagKey: TagKey<Item>) : RegistryEntry<Item> {
         private val firstEntry: RegistryEntry<Item>
             get() = Registries.ITEM
                 .getEntryList(tagKey)
@@ -121,5 +110,5 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         override fun matches(predicate: Predicate<RegistryKey<Item>>): Boolean = firstEntry.matches(predicate)
 
         override fun matchesKey(key: RegistryKey<Item>): Boolean = firstEntry.matchesKey(key)
-    }
+    }*/
 }

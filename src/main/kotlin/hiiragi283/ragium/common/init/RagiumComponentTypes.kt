@@ -10,8 +10,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.component.HTDynamiteComponent
-import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
-import hiiragi283.ragium.common.item.HTCrafterHammerItem
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.minecraft.component.ComponentType
@@ -31,14 +29,6 @@ object RagiumComponentTypes {
     @JvmField
     val DYNAMITE: ComponentType<HTDynamiteComponent> =
         register("dynamite", HTDynamiteComponent.CODEC, HTDynamiteComponent.PACKET_CODEC)
-
-    @JvmField
-    val CRAFTER_HAMMER: ComponentType<HTCrafterHammerItem.Component> =
-        register("crafter_hammer", HTCrafterHammerItem.Component.COMPONENT_TYPE)
-
-    @JvmField
-    val REMOVER_DYNAMITE: ComponentType<HTRemoverDynamiteBehaviors> =
-        register("remover_dynamite", HTRemoverDynamiteBehaviors.CODEC, HTRemoverDynamiteBehaviors.PACKET_CODEC)
 
     //    Machine    //
 

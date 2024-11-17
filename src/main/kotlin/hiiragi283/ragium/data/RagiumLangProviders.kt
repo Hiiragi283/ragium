@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.content.HTRegistryContent
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.data.HTLangType
 import hiiragi283.ragium.api.extension.splitWith
@@ -29,14 +29,14 @@ object RagiumLangProviders {
     }
 
     @JvmName("addBlock")
-    fun TranslationBuilder.add(entry: HTRegistryContent<Block>, value: String, desc: String? = null) {
+    fun TranslationBuilder.add(entry: HTContent<Block>, value: String, desc: String? = null) {
         val block: Block = entry.value
         add(block, value)
         desc?.let { add("${block.translationKey}.description", it) }
     }
 
     @JvmName("addItem")
-    fun TranslationBuilder.add(entry: HTRegistryContent<Item>, value: String) {
+    fun TranslationBuilder.add(entry: HTContent<Item>, value: String) {
         add(entry.value, value)
     }
 
@@ -187,6 +187,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "Auto Illuminator")
+            builder.add(RagiumBlocks.BACKPACK_INTERFACE, "Backpack Interface")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "Large Processor")
@@ -194,6 +195,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_GRINDER, "Ragi-Grinder")
             builder.add(RagiumBlocks.MANUAL_MIXER, "Ragi-Basin")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumBlocks.OPEN_CRATE, "Open Crate")
             builder.add(RagiumBlocks.SHAFT, "Shaft")
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
@@ -208,8 +210,8 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "Capacity: %s Unit")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "Fluid: %s")
 
-            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "液体速度: %s ユニット/秒")
-            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "アイテム速度: %s個/秒")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "Fluid Speed: %s Units/s")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "Item Speed: %s /s")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
@@ -244,25 +246,31 @@ object RagiumLangProviders {
 
             builder.add(RagiumItems.BACKPACK, "Backpack")
             builder.add(RagiumItems.BASALT_MESH, "Basalt Mesh")
-            builder.add(RagiumItems.CRAFTER_HAMMER, "Crafter's Hammer")
+            builder.add(RagiumItems.BEDROCK_DYNAMITE, "Bedrock Dynamite")
             builder.add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
+            builder.add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
             builder.add(RagiumItems.DEEPANT, "Deepant")
             builder.add(RagiumItems.DYNAMITE, "Dynamite")
             builder.add(RagiumItems.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
-            builder.add(RagiumItems.FILLED_FLUID_CUBE, "Fluid Cube (%s)")
             builder.add(RagiumItems.ENGINE, "V8 Engine")
+            builder.add(RagiumItems.ENGINEERING_PLASTIC_PLATE, "Engineering Plastic Plate")
+            builder.add(RagiumItems.FILLED_FLUID_CUBE, "Fluid Cube (%s)")
             builder.add(RagiumItems.FORGE_HAMMER, "Forge Hammer")
+            builder.add(RagiumItems.GIGANT_HAMMER, "Gigant Hammer")
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "Heart of the Nether")
             builder.add(RagiumItems.LASER_EMITTER, "Laser Emitter")
+            builder.add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
             builder.add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "Processor Socket")
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
             builder.add(RagiumItems.RAGI_CRYSTAL_PROCESSOR, "Ragi-Crystal Processor")
-            builder.add(RagiumItems.REMOVER_DYNAMITE, "Remover Dynamite")
+            builder.add(RagiumItems.REFINED_SILICON, "Refined Silicon")
             builder.add(RagiumItems.RESIDUAL_COKE, "Residual Coke")
+            builder.add(RagiumItems.SILICON, "Silicon")
             builder.add(RagiumItems.SLAG, "Slag")
             builder.add(RagiumItems.SOAP_INGOT, "Soap Ingot")
             builder.add(RagiumItems.SOLAR_PANEL, "Solar Panel")
+            builder.add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A. Plate")
             builder.add(RagiumItems.TRADER_CATALOG, "Trader Catalog")
             builder.add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
 
@@ -290,6 +298,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine Type
+            builder.add(RagiumMachineKeys.BEDROCK_MINER, "Bedrock Miner", "Collect minerals from Bedrck")
             builder.add(
                 RagiumMachineKeys.BIOMASS_FERMENTER,
                 "Biomass Fermenter",
@@ -377,8 +386,8 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.RAGI_STEEL, "Ragi-Steel")
             builder.add(RagiumMaterialKeys.FLUORITE, "Fluorite")
             builder.add(RagiumMaterialKeys.GOLD, "Gold")
-            builder.add(RagiumMaterialKeys.PLASTIC, "Plastic")
-            builder.add(RagiumMaterialKeys.SILICON, "Silicon")
+            // builder.add(RagiumMaterialKeys.PLASTIC, "Plastic")
+            // builder.add(RagiumMaterialKeys.SILICON, "Silicon")
             builder.add(RagiumMaterialKeys.STEEL, "Steel")
 
             builder.add(RagiumMaterialKeys.RAGI_CRYSTAL, "Ragi-Crystal")
@@ -387,8 +396,8 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.BAUXITE, "Bauxite")
             builder.add(RagiumMaterialKeys.CRYOLITE, "Cryolite")
             builder.add(RagiumMaterialKeys.DEEP_STEEL, "Deep Steel")
-            builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "Engineering Plastic")
-            builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
+            // builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "Engineering Plastic")
+            // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
             builder.add(RagiumMaterialKeys.RAGIUM, "Ragium")
 
@@ -443,6 +452,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "光源置き太郎")
+            builder.add(RagiumBlocks.BACKPACK_INTERFACE, "バックパックインターフェース")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "大型処理装置")
@@ -450,6 +460,7 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
             builder.add(RagiumBlocks.MANUAL_MIXER, "らぎ釜")
             builder.add(RagiumBlocks.NETWORK_INTERFACE, "E.N.I.")
+            builder.add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
             builder.add(RagiumBlocks.SHAFT, "シャフト")
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")
@@ -479,6 +490,9 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "液体量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "容量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "液体: %s")
+
+            builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "液体速度: %s ユニット/秒")
+            builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "アイテム速度: %s個/秒")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
@@ -497,25 +511,31 @@ object RagiumLangProviders {
 
             builder.add(RagiumItems.BACKPACK, "バックパック")
             builder.add(RagiumItems.BASALT_MESH, "玄武岩メッシュ")
-            builder.add(RagiumItems.CRAFTER_HAMMER, "クラフターズ・ハンマー")
+            builder.add(RagiumItems.BEDROCK_DYNAMITE, "岩盤ダイナマイト")
             builder.add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
+            builder.add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
             builder.add(RagiumItems.DEEPANT, "ディーパント")
             builder.add(RagiumItems.DYNAMITE, "ダイナマイト")
             builder.add(RagiumItems.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
-            builder.add(RagiumItems.FILLED_FLUID_CUBE, "液体キューブ（%s）")
             builder.add(RagiumItems.ENGINE, "V8エンジン")
+            builder.add(RagiumItems.ENGINEERING_PLASTIC_PLATE, "エンジニアリングプラスチック板")
+            builder.add(RagiumItems.FILLED_FLUID_CUBE, "液体キューブ（%s）")
             builder.add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+            builder.add(RagiumItems.GIGANT_HAMMER, "ギガントハンマー")
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "地獄の心臓")
             builder.add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
+            builder.add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
             builder.add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "プロセッサソケット")
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
             builder.add(RagiumItems.RAGI_CRYSTAL_PROCESSOR, "ラギクリスタリルプロセッサ")
-            builder.add(RagiumItems.REMOVER_DYNAMITE, "削除用ダイナマイト")
+            builder.add(RagiumItems.REFINED_SILICON, "精製シリコン")
             builder.add(RagiumItems.RESIDUAL_COKE, "残渣油コークス")
+            builder.add(RagiumItems.SILICON, "シリコン")
             builder.add(RagiumItems.SLAG, "スラグ")
             builder.add(RagiumItems.SOAP_INGOT, "石鹸インゴット")
             builder.add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
+            builder.add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A.板")
             builder.add(RagiumItems.TRADER_CATALOG, "行商人カタログ")
             builder.add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 
@@ -543,6 +563,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "基本", "基本型%s")
             builder.add(HTMachineTier.ADVANCED, "発展", "発展型%s")
             // Machine Type
+            builder.add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
             builder.add(
                 RagiumMachineKeys.BIOMASS_FERMENTER,
                 "バイオマス発酵槽",
@@ -589,8 +610,8 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.RAGI_STEEL, "ラギスチール")
             builder.add(RagiumMaterialKeys.FLUORITE, "蛍石")
             builder.add(RagiumMaterialKeys.GOLD, "金")
-            builder.add(RagiumMaterialKeys.PLASTIC, "プラスチック")
-            builder.add(RagiumMaterialKeys.SILICON, "シリコン")
+            // builder.add(RagiumMaterialKeys.PLASTIC, "プラスチック")
+            // builder.add(RagiumMaterialKeys.SILICON, "シリコン")
             builder.add(RagiumMaterialKeys.STEEL, "スチール")
 
             builder.add(RagiumMaterialKeys.RAGI_CRYSTAL, "ラギクリスタリル")
@@ -599,8 +620,8 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.BAUXITE, "ボーキサイト")
             builder.add(RagiumMaterialKeys.CRYOLITE, "氷晶石")
             builder.add(RagiumMaterialKeys.DEEP_STEEL, "深層鋼")
-            builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "エンジニアリングプラスチック")
-            builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
+            // builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "エンジニアリングプラスチック")
+            // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
             builder.add(RagiumMaterialKeys.RAGIUM, "ラギウム")
 
