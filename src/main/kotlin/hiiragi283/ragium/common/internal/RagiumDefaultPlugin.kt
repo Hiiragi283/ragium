@@ -41,6 +41,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import java.util.function.BiConsumer
 
@@ -59,6 +60,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
     override fun setupMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
         // consumers
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
+            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }

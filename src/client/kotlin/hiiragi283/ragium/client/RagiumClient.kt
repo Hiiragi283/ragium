@@ -82,11 +82,11 @@ object RagiumClient : ClientModInitializer {
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
         registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
         // block entity renderer
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
 
-        registerMachineRenderer(RagiumBlockEntityTypes.BEDROCK_MINER)
         registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)

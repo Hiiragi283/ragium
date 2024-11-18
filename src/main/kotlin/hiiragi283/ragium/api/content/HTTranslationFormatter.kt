@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.content
 
-import hiiragi283.ragium.api.content.HTLangType
-
 fun interface HTTranslationFormatter {
     fun getPattern(type: HTLangType): String
 

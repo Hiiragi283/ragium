@@ -36,7 +36,7 @@ repositories {
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") // Modonomicon
     maven(url = "https://maven.modmuss50.me/")
     maven(url = "https://maven.blamejared.com") // Patchouli
-    maven { 
+    maven {
         url = URI("https://maven.pkg.github.com/refinedmods/refinedstorage2")
         credentials {
             username = "anything"

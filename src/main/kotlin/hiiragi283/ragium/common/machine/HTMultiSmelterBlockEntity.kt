@@ -57,6 +57,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockController    //
 
     override var showPreview: Boolean = false
+    override var isValid: Boolean = false
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.Simple(tier.getCasing()))

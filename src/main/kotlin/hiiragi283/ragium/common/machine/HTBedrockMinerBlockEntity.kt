@@ -37,12 +37,13 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockController    //
 
     override var showPreview: Boolean = false
+    override var isValid: Boolean = false
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         // drill
         builder.add(0, -3, 0, HTMultiblockComponent.Simple(Blocks.BEDROCK))
-        builder.add(0, -2, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
-        builder.add(0, -1, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
+        // builder.add(0, -2, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
+        // builder.add(0, -1, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
         builder.add(-1, 0, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
         builder.add(0, 0, -1, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
         builder.add(0, 0, 1, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))

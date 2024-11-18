@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.content.HTLangType
+import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
