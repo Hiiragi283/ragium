@@ -78,16 +78,13 @@ fun Inventory.writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperL
     ItemStack.OPTIONAL_CODEC
         .listOf()
         .encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), iterateStacks())
-        .result()
-        .orElse(NbtList())
-        .let { nbt.put("Inventory", it) }
+        .ifSuccess { nbt.put("Inventory", it) }
+        .ifError { nbt.put("Inventory", NbtList()) }
 }
 
 fun Inventory.readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC
         .listOf()
         .parse(wrapperLookup.getOps(NbtOps.INSTANCE), nbt.get("Inventory"))
-        .result()
-        .orElse(listOf())
-        .forEachIndexed(::setStack)
+        .ifSuccess { it.forEachIndexed(::setStack) }
 }

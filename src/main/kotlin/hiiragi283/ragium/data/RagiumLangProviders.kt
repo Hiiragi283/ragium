@@ -212,6 +212,9 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "Fluid Speed: %s Units/s")
             builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "Item Speed: %s /s")
+
+            builder.add(RagiumTranslationKeys.EXPORTER_FLUID_FILTER, "Current Fluid Filter: %s")
+            builder.add(RagiumTranslationKeys.EXPORTER_ITEM_FILTER, "Current Item Filter: %s")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
@@ -493,6 +496,9 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.TRANSPORTER_FLUID_SPEED, "液体速度: %s ユニット/秒")
             builder.add(RagiumTranslationKeys.TRANSPORTER_ITEM_SPEED, "アイテム速度: %s個/秒")
+
+            builder.add(RagiumTranslationKeys.EXPORTER_FLUID_FILTER, "現在の液体フィルタ: %s")
+            builder.add(RagiumTranslationKeys.EXPORTER_ITEM_FILTER, "現在のアイテムフィルタ: %s")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")

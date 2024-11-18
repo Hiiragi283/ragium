@@ -32,9 +32,9 @@ import java.util.concurrent.CompletableFuture
 object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
-        pack.addProvider(RagiumTagProviders::BlockProvider)
-        pack.addProvider(RagiumTagProviders::EnchantmentProvider)
-        pack.addProvider(RagiumTagProviders::FluidProvider)
+        pack.addProvider(::BlockProvider)
+        pack.addProvider(::EnchantmentProvider)
+        pack.addProvider(::FluidProvider)
         pack.addProvider(::ItemProvider)
     }
 
@@ -174,6 +174,10 @@ object RagiumTagProviders {
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
+
+            add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItems.FLUID_FILTER)
+
+            add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItems.ITEM_FILTER)
 
             add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
             add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)

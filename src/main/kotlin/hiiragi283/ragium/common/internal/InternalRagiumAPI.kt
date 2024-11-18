@@ -101,7 +101,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         }
         // complete
         machineRegistry = HTMachineRegistry(sortedKeys, blockTable, propertyCache)
-        RagiumAPI.log { info("Registered machine types and properties!") }
+        RagiumAPI.LOGGER.info("Registered machine types and properties!")
     }
 
     @JvmStatic
@@ -156,7 +156,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 val (prefix: HTTagPrefix, key: HTMaterialKey) = pair
                 val fixedKey: HTMaterialKey = altNameCache.getOrDefault(key.name, key)
                 if (fixedKey !in keyCache.keys) {
-                    RagiumAPI.log { warn("Could not bind item with unregistered material: $fixedKey!") }
+                    RagiumAPI.LOGGER.warn("Could not bind item with unregistered material: $fixedKey!")
                     return@forEach
                 }
                 itemTable.put(
@@ -172,12 +172,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
                     rarityCache[key]?.let { builder.add(DataComponentTypes.RARITY, it) }
                 }
             }
-            RagiumAPI.log { info("Added rarities for material items!") }
+            RagiumAPI.LOGGER.info("Added rarities for material items!")
         }
 
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
-        RagiumAPI.log { info("Registered material types and properties!") }
+        RagiumAPI.LOGGER.info("Registered material types and properties!")
     }
 
     //    ConfigImpl    //
@@ -218,7 +218,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
         fun validate(): ConfigImpl = apply {
             check(version == getVersion()) { "Not matching config version! Remove old config file!" }
-            RagiumAPI.log { info("Loaded config!") }
+            RagiumAPI.LOGGER.info("Loaded config!")
         }
     }
 }

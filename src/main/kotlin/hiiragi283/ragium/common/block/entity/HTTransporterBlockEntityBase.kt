@@ -23,23 +23,19 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .encodeStart(NbtOps.INSTANCE, tier)
-            .result()
-            .ifPresent { nbt.put("tier", it) }
+            .ifSuccess { nbt.put("tier", it) }
         HTPipeType.CODEC
             .encodeStart(NbtOps.INSTANCE, type)
-            .result()
-            .ifPresent { nbt.put("type", it) }
+            .ifSuccess { nbt.put("type", it) }
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("tier"))
-            .result()
-            .ifPresent { tier = it }
+            .ifSuccess { tier = it }
         HTPipeType.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("type"))
-            .result()
-            .ifPresent { type = it }
+            .ifSuccess { type = it }
     }
 
     final override val tickRate: Int = 20

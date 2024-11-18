@@ -72,7 +72,7 @@ class HTMachineRecipeProcessor(
             useTransaction { transaction: Transaction ->
                 val inserted: Long = result.merge(fluidStorage.get(slot), transaction)
                 if (inserted == result.amount) {
-                    RagiumAPI.log { info("Succeeded!!") }
+                    RagiumAPI.LOGGER.info("Succeeded!!")
                     transaction.commit()
                 } else {
                     transaction.abort()
@@ -83,11 +83,11 @@ class HTMachineRecipeProcessor(
 
     private fun decrementInputs(recipe: HTMachineRecipe) {
         itemInputs.forEachIndexed { index: Int, slot: Int ->
-            val ingredient: HTIngredient.Item = recipe.itemInputs.getOrNull(index) ?: return@forEachIndexed
+            val ingredient: HTItemIngredient = recipe.itemInputs.getOrNull(index) ?: return@forEachIndexed
             ingredient.onConsume(inventory.getStack(slot))
         }
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
-            val ingredient: HTIngredient.Fluid = recipe.fluidInputs.getOrNull(index) ?: return@forEachIndexed
+            val ingredient: HTFluidIngredient = recipe.fluidInputs.getOrNull(index) ?: return@forEachIndexed
             val storageIn: SingleFluidStorage = fluidStorage.get(slot)
             ingredient.onConsume(storageIn)
         }

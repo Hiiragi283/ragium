@@ -7,8 +7,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.HTFluidResult
-import hiiragi283.ragium.api.recipe.HTIngredient
+import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -49,15 +50,15 @@ class HTMachineRecipeJsonBuilder private constructor(
         fun createRecipeId(fluid: RagiumFluids): Identifier = createRecipeId(fluid.value)
     }
 
-    private val itemInputs: MutableList<HTIngredient.Item> = mutableListOf()
-    private val fluidInputs: MutableList<HTIngredient.Fluid> = mutableListOf()
+    private val itemInputs: MutableList<HTItemIngredient> = mutableListOf()
+    private val fluidInputs: MutableList<HTFluidIngredient> = mutableListOf()
     private val itemOutputs: MutableList<HTItemResult> = mutableListOf()
     private val fluidOutputs: MutableList<HTFluidResult> = mutableListOf()
-    private var catalyst: HTIngredient.Item? = null
+    private var catalyst: HTItemIngredient? = null
 
     //    Input    //
 
-    fun itemInput(ingredient: HTIngredient.Item): HTMachineRecipeJsonBuilder = apply {
+    fun itemInput(ingredient: HTItemIngredient): HTMachineRecipeJsonBuilder = apply {
         itemInputs.add(ingredient)
     }
 
@@ -65,37 +66,37 @@ class HTMachineRecipeJsonBuilder private constructor(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
         count: Int = 1,
-        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
 
     fun itemInput(
         content: HTContent.Material<*>,
         count: Int = 1,
-        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count, consumeType)
 
     fun itemInput(
         item: ItemConvertible,
         count: Int = 1,
-        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(item, count, consumeType))
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(item, count, consumeType))
 
     fun itemInput(
         tagKey: TagKey<Item>,
         count: Int = 1,
-        consumeType: HTIngredient.ConsumeType = HTIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTIngredient.ofItem(tagKey, count, consumeType))
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(tagKey, count, consumeType))
 
     fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTIngredient.ofFluid(fluid, amount))
+        fluidInputs.add(HTFluidIngredient.of(fluid, amount))
     }
 
     fun fluidInput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTIngredient.ofFluid(fluid.value, amount))
+        fluidInputs.add(HTFluidIngredient.of(fluid.value, amount))
     }
 
     fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTIngredient.ofFluid(tagKey, amount))
+        fluidInputs.add(HTFluidIngredient.of(tagKey, amount))
     }
 
     //    Output    //
@@ -121,11 +122,11 @@ class HTMachineRecipeJsonBuilder private constructor(
     //    Catalyst    //
 
     fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = apply {
-        catalyst = HTIngredient.ofItem(item)
+        catalyst = HTItemIngredient.of(item)
     }
 
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {
-        catalyst = HTIngredient.ofItem(tagKey)
+        catalyst = HTItemIngredient.of(tagKey)
     }
 
     @Deprecated(

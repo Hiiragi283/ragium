@@ -237,6 +237,8 @@
   "material.ragium.tungsten": "Tungsten",
   "material.ragium.wood": "Wood",
   "material.ragium.zinc": "Zinc",
+  "message.ragium.block.exporter.fluid_filter": "Current Fluid Filter: %s",
+  "message.ragium.block.exporter.item_filter": "Current Item Filter: %s",
   "message.ragium.multi_shape.error": "Not matching condition; %s at %ss",
   "message.ragium.multi_shape.success": "The structure is valid!",
   "tag_prefix.ragium.deep_ore": "Deepslate %s Ore",

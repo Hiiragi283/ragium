@@ -58,7 +58,7 @@ object RagiumClient : ClientModInitializer {
         registerEvents()
         registerNetworks()
 
-        RagiumAPI.log { info("Ragium-Client initialized!") }
+        RagiumAPI.LOGGER.info("Ragium-Client initialized!")
     }
 
     //    Blocks    //

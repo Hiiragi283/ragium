@@ -46,16 +46,14 @@ class HTEnchantmentBookshelfBlockEntity(pos: BlockPos, state: BlockState) :
         super.writeNbt(nbt, wrapperLookup)
         CODEC
             .encodeStart(NbtOps.INSTANCE, enchantMap)
-            .result()
-            .ifPresent { nbt.put("Map", it) }
+            .ifSuccess { nbt.put("Map", it) }
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
         CODEC
             .parse(NbtOps.INSTANCE, nbt.get("Map"))
-            .result()
-            .ifPresent(enchantMap::putAll)
+            .ifSuccess(enchantMap::putAll)
     }
 
     override fun onUse(

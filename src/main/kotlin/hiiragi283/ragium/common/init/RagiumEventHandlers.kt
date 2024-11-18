@@ -4,13 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.hasEnchantment
+import hiiragi283.ragium.api.extension.sendTitle
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
-import hiiragi283.ragium.api.util.*
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
@@ -37,7 +37,6 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
-import net.minecraft.village.*
 import net.minecraft.world.World
 
 object RagiumEventHandlers {
@@ -156,6 +155,16 @@ object RagiumEventHandlers {
                 context,
                 RagiumItems.BACKPACK,
                 Text.literal("Share inventory between same colored backpacks"),
+            )
+            addDescription(
+                context,
+                RagiumItems.FLUID_FILTER,
+                Text.literal("Right-click Exporter to apply\nId format - modid:path\nTag format - #modid:path"),
+            )
+            addDescription(
+                context,
+                RagiumItems.ITEM_FILTER,
+                Text.literal("Right-click Exporter to apply\nId format - modid:path\nTag format - #modid:path"),
             )
             addDescription(
                 context,

@@ -9,34 +9,36 @@ import net.fabricmc.api.ModInitializer
 
 object RagiumCommon : ModInitializer {
     override fun onInitialize() {
-        InternalRagiumAPI.config
-        HTHardModeResourceCondition
+        RagiumAPI.log {
+            InternalRagiumAPI.config
+            HTHardModeResourceCondition
 
-        RagiumAPI.log { info("Registering game objects...") }
+            RagiumAPI.LOGGER.info("Registering game objects...")
 
-        RagiumComponentTypes
+            RagiumComponentTypes
 
-        RagiumAdvancementCriteria
-        RagiumArmorMaterials
-        RagiumBlockEntityTypes
-        RagiumBlocks
-        RagiumEntityTypes
-        RagiumItems
-        RagiumRecipeSerializers
-        RagiumRecipeTypes
+            RagiumAdvancementCriteria
+            RagiumArmorMaterials
+            RagiumBlockEntityTypes
+            RagiumBlocks
+            RagiumEntityTypes
+            RagiumItems
+            RagiumRecipeSerializers
+            RagiumRecipeTypes
 
-        RagiumContentRegister.registerContents()
-        InternalRagiumAPI.registerMachines()
+            RagiumContentRegister.registerContents()
+            InternalRagiumAPI.registerMachines()
 
-        RagiumBlockEntityTypes.init()
-        RagiumCommands.init()
-        RagiumEventHandlers.init()
-        RagiumFeatures.init()
-        RagiumItemGroup.init()
-        RagiumNetworks
+            RagiumBlockEntityTypes.init()
+            RagiumCommands.init()
+            RagiumEventHandlers.init()
+            RagiumFeatures.init()
+            RagiumItemGroup.init()
+            RagiumNetworks
 
-        RagiumContentRegister.initRegistry()
+            RagiumContentRegister.initRegistry()
 
-        RagiumAPI.log { info("Ragium initialized!") }
+            RagiumAPI.LOGGER.info("Ragium initialized!")
+        }
     }
 }

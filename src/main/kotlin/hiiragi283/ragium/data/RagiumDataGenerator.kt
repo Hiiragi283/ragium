@@ -30,7 +30,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider(::RagiumModelProvider)
         RagiumLangProviders.init(pack)
 
-        RagiumAPI.log { info("Ragium data generation is done!") }
+        RagiumAPI.LOGGER.info("Ragium data generation is done!")
     }
 
     override fun buildRegistry(registryBuilder: RegistryBuilder) {

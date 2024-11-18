@@ -189,6 +189,9 @@ operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
 
 //    Registry    //
 
+val <T : Any> RegistryEntryList<T>.isEmpty: Boolean
+    get() = size() == 0
+
 fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
 
 fun <T : Any> idComparator(registry: Registry<T>): Comparator<T> = compareBy(registry::getId)

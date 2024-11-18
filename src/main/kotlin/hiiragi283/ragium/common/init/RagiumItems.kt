@@ -196,10 +196,16 @@ object RagiumItems {
     val FLATTENING_DYNAMITE: Item = HTDynamiteItem(HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit, itemSettings())
 
     @JvmField
+    val FLUID_FILTER: Item = Item(itemSettings())
+
+    @JvmField
     val FORGE_HAMMER: Item = HTForgeHammerItem
 
     @JvmField
     val GIGANT_HAMMER: Item = HTGigantHammerItem
+
+    @JvmField
+    val ITEM_FILTER: Item = Item(itemSettings())
 
     @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
@@ -237,6 +243,8 @@ object RagiumItems {
         DYNAMITE,
         EMPTY_FLUID_CUBE,
         FILLED_FLUID_CUBE,
+        FLUID_FILTER,
+        ITEM_FILTER,
         TRADER_CATALOG,
     )
 

@@ -15,6 +15,9 @@ object RagiumTranslationKeys {
     const val TRANSPORTER_FLUID_SPEED = "tooltip.ragium.block.transporter.fluid"
     const val TRANSPORTER_ITEM_SPEED = "tooltip.ragium.block.transporter.item"
 
+    const val EXPORTER_FLUID_FILTER = "message.ragium.block.exporter.fluid_filter"
+    const val EXPORTER_ITEM_FILTER = "message.ragium.block.exporter.item_filter"
+
     //    Item    //
 
     const val CRAFTER_HAMMER_MODULE = "tooltip.ragium.item.crafter_hammer.module"

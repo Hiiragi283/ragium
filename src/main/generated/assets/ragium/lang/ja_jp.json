@@ -235,6 +235,8 @@
   "material.ragium.tungsten": "タングステン",
   "material.ragium.wood": "木材",
   "material.ragium.zinc": "亜鉛",
+  "message.ragium.block.exporter.fluid_filter": "現在の液体フィルタ: %s",
+  "message.ragium.block.exporter.item_filter": "現在のアイテムフィルタ: %s",
   "message.ragium.multi_shape.error": "次の条件を満たしていません; %s (座標 %s)",
   "message.ragium.multi_shape.success": "構造物は有効です！",
   "tag_prefix.ragium.deep_ore": "深層%s鉱石",
