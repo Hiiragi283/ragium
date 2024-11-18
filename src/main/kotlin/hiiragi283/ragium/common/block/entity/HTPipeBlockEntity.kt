@@ -42,7 +42,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     fun canConnect(dir: Direction): Boolean = ifPresentWorld { world: World ->
         HTPipeType.canConnect(world, pos, dir, type)
-    } ?: false
+    } == true
 
     override fun onStateReplaced(
         state: BlockState,

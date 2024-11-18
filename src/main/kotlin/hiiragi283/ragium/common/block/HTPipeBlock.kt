@@ -15,13 +15,16 @@ import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
+import net.minecraft.util.BlockMirror
+import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldAccess
 
-class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType) : HTBlockWithEntity(blockSettings().solid().nonOpaque()) {
+class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType) :
+    HTBlockWithEntity(blockSettings().solid().nonOpaque().strength(2f, 6f)) {
     companion object {
         @JvmField
         val SHAPE: VoxelShape = createCuboidShape(4.0, 4.0, 4.0, 12.0, 12.0, 12.0)
@@ -75,6 +78,11 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
         .with(Properties.WEST, HTPipeType.canConnect(ctx.world, ctx.blockPos, Direction.WEST, type))
         .with(Properties.EAST, HTPipeType.canConnect(ctx.world, ctx.blockPos, Direction.EAST, type))
 
+    override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
+        state.with(Properties.FACING, rotation.rotate(state.get(Properties.FACING)))
+
+    override fun mirror(state: BlockState, mirror: BlockMirror): BlockState = state.rotate(mirror.getRotation(state.get(Properties.FACING)))
+
     override fun getStateForNeighborUpdate(
         state: BlockState,
         direction: Direction,
@@ -84,7 +92,7 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
         neighborPos: BlockPos,
     ): BlockState = state.with(
         ConnectingBlock.FACING_PROPERTIES[direction],
-        (world.getBlockEntity(pos) as? HTPipeBlockEntity)?.canConnect(direction) ?: false,
+        (world.getBlockEntity(pos) as? HTPipeBlockEntity)?.canConnect(direction) == true,
     )
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTPipeBlockEntity(pos, state, tier, type)

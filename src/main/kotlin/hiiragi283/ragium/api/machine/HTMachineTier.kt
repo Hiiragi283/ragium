@@ -157,7 +157,7 @@ enum class HTMachineTier(
     fun canProcess(world: World): Boolean = canProcess(world.energyNetwork)
 
     fun canProcess(network: HTEnergyNetwork?, multiplier: Long = 1): Boolean =
-        network?.amount?.let { it >= recipeCost * multiplier } ?: false
+        network?.amount?.let { it >= recipeCost * multiplier } == true
 
     fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean {
         useTransaction(parent) { transaction: Transaction ->

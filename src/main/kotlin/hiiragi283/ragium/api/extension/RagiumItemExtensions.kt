@@ -41,8 +41,7 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
 fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): Boolean = world
     .getEnchantment(key)
     ?.let(EnchantmentHelper.getEnchantments(this)::getLevel)
-    ?.let { it > 0 }
-    ?: false
+    ?.let { it > 0 } == true
 
 fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 

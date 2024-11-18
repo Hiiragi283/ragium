@@ -260,6 +260,7 @@ internal object RagiumContentRegister {
         registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
         registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
         registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
+        registerItem("ragi_wrench", RagiumItems.RAGI_WRENCH)
         registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
         registerItem("residual_coke", RagiumItems.RESIDUAL_COKE)
         registerItem("silicon", RagiumItems.SILICON)

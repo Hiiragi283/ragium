@@ -31,6 +31,7 @@ import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.MutableText
+import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
 import net.minecraft.text.TranslatableTextContent
@@ -246,5 +247,6 @@ fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
     ?.let(TranslatableTextContent::getKey)
-    ?.let(Language.getInstance()::hasTranslation)
-    ?: false
+    ?.let(Language.getInstance()::hasTranslation) == true
+
+inline fun buildStyle(builderAction: Style.() -> Unit): Style = Style.EMPTY.apply(builderAction)

@@ -18,7 +18,8 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 
-class HTExporterBlock(private val tier: HTMachineTier) : HTBlockWithEntity(blockSettings().solid().nonOpaque()) {
+class HTExporterBlock(private val tier: HTMachineTier) :
+    HTBlockWithEntity(blockSettings().solid().nonOpaque().strength(2f, 6f)) {
     init {
         defaultState = stateManager.defaultState.with(Properties.FACING, Direction.NORTH)
     }

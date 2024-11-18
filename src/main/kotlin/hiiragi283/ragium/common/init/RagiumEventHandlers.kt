@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
+import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
@@ -22,6 +23,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
@@ -32,10 +34,11 @@ import net.minecraft.recipe.input.SingleStackRecipeInput
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.state.property.Properties
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
-import net.minecraft.util.Formatting
-import net.minecraft.util.Rarity
+import net.minecraft.util.*
+import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
@@ -230,19 +233,30 @@ object RagiumEventHandlers {
             }
         }
 
-        /*UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
+        // rotate block by ragi-wrench
+        UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.hasEnchantments() && world.getBlockState(result.blockPos).isOf(Blocks.CRYING_OBSIDIAN)) {
-                stack.enchantments
-                    .toLevelMap()
-                    .map(EnchantedBookItem::forEnchantment)
-                    .onEach { dropStackAt(player, it) }
-                stack.remove(DataComponentTypes.ENCHANTMENTS)
-                ActionResult.success(world.isClient)
-            } else {
-                ActionResult.PASS
+            if (stack.isOf(RagiumItems.RAGI_WRENCH)) {
+                val pos: BlockPos = result.blockPos
+                val state: BlockState = world.getBlockState(pos)
+                val rotated: BlockState = when (player.isSneaking) {
+                    true -> {
+                        if (Properties.FACING in state) {
+                            state.with(Properties.FACING, result.side)
+                        } else state
+                    }
+
+                    false -> state.rotate(BlockRotation.COUNTERCLOCKWISE_90)
+                }
+                if (rotated != state) {
+                    if (!world.isClient) {
+                        world.setBlockState(pos, rotated)
+                    }
+                    return@register ActionResult.success(world.isClient)
+                }
             }
-        }*/
+            ActionResult.PASS
+        }
     }
 
     @JvmStatic

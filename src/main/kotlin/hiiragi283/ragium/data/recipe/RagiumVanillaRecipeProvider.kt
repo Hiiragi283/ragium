@@ -191,6 +191,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.RAGI_WRENCH)
+            .patterns(
+                "A A",
+                "AAA",
+                " A ",
+            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
+            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerTo(exporter)
         // filter
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.FLUID_FILTER)

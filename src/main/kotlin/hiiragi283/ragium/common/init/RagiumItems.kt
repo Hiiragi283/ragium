@@ -208,6 +208,9 @@ object RagiumItems {
     val ITEM_FILTER: Item = Item(itemSettings())
 
     @JvmField
+    val RAGI_WRENCH: Item = Item(itemSettings())
+
+    @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
@@ -245,6 +248,7 @@ object RagiumItems {
         FILLED_FLUID_CUBE,
         FLUID_FILTER,
         ITEM_FILTER,
+        RAGI_WRENCH,
         TRADER_CATALOG,
     )
 
