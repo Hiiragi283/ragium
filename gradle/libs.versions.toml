@@ -10,6 +10,7 @@ fabric-kotlin = "1.12.+"
 energy = "4.1.0"
 jade = "15.8.2+fabric"
 mod-menu = "11.0.3"
+refined-storage = "2.0.0-milestone.4.9"
 rei = "16.0.788"
 
 [libraries]
@@ -21,13 +22,15 @@ fabric-kotlin = { group = "net.fabricmc", name = "fabric-language-kotlin", versi
 energy = { group = "teamreborn", name = "energy", version.ref = "energy" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mod-modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "mod-menu" }
+rs-fabric = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-fabric", version.ref = "refined-storage" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version.ref = "rei" }
 
 [bundles]
 mods-fabric = [
     "fabric-api",
     "fabric-kotlin",
-    "fabric-loader"
+    "fabric-loader",
+    "rs-fabric"
 ]
 mods-include = [
     "energy"

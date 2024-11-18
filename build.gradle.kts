@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import java.net.URI
 
 plugins {
     kotlin("jvm") version libs.versions.kotlin
@@ -35,6 +36,13 @@ repositories {
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") // Modonomicon
     maven(url = "https://maven.modmuss50.me/")
     maven(url = "https://maven.blamejared.com") // Patchouli
+    maven { 
+        url = URI("https://maven.pkg.github.com/refinedmods/refinedstorage2")
+        credentials {
+            username = "anything"
+            password = "\u0067hp_oGjcDFCn8jeTzIj4Ke9pLoEVtpnZMP4VQgaX"
+        }
+    } // RS2
 }
 
 fabricApi {
@@ -42,7 +50,7 @@ fabricApi {
 }
 
 loom {
-    // accessWidenerPath = file("src/main/resources/ht_materials.accesswidener")
+    accessWidenerPath = file("src/main/resources/ragium.accesswidener")
     splitEnvironmentSourceSets()
     mods {
         create("ragium") {
