@@ -40,25 +40,16 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
 
     final override val tickRate: Int = 20
 
-    protected fun <A : Any> getBackStorage(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        lookup: BlockApiLookup<A, Direction?>,
-    ): A? {
-        val backDir: Direction = state.get(Properties.FACING).opposite
-        val posFrom: BlockPos = pos.offset(backDir)
-        return lookup.find(world, posFrom, backDir.opposite)
+    protected val front: Direction
+        get() = cachedState.get(Properties.FACING)
+
+    protected fun <A : Any> getBackStorage(world: World, pos: BlockPos, lookup: BlockApiLookup<A, Direction?>): A? {
+        val posFrom: BlockPos = pos.offset(front.opposite)
+        return lookup.find(world, posFrom, front)
     }
 
-    protected fun <A : Any> getFrontStorage(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        lookup: BlockApiLookup<A, Direction?>,
-    ): A? {
-        val nextDir: Direction = state.get(Properties.FACING)
-        val posTo: BlockPos = pos.offset(nextDir)
-        return lookup.find(world, posTo, nextDir.opposite)
+    protected fun <A : Any> getFrontStorage(world: World, pos: BlockPos, lookup: BlockApiLookup<A, Direction?>): A? {
+        val posTo: BlockPos = pos.offset(front)
+        return lookup.find(world, posTo, front.opposite)
     }
 }

@@ -14,6 +14,7 @@
     "ragium:basic_drum",
     "ragium:basic_grate",
     "ragium:basic_hull",
+    "ragium:buffer",
     "ragium:copper_pipe",
     "ragium:creative_source",
     "ragium:deep_steel_block",

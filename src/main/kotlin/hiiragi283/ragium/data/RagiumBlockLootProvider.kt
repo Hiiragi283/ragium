@@ -46,19 +46,18 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(RagiumBlocks.SWEET_BERRIES_CAKE, dropsNothing())
 
-        addDrop(RagiumBlocks.BACKPACK_INTERFACE)
         addDrop(RagiumBlocks.AUTO_ILLUMINATOR)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
-        addDrop(RagiumBlocks.ITEM_DISPLAY)
         addDrop(RagiumBlocks.LARGE_PROCESSOR)
         addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)
         addDrop(RagiumBlocks.MANUAL_MIXER)
         addDrop(RagiumBlocks.NETWORK_INTERFACE)
         addDrop(RagiumBlocks.OPEN_CRATE)
-        addDrop(RagiumBlocks.SHAFT)
         addDrop(RagiumBlocks.TELEPORT_ANCHOR)
         addDrop(RagiumBlocks.TRASH_BOX)
+
+        RagiumBlocks.MISC.forEach(::addDrop)
 
         RagiumContents.Ores.entries.forEach(::dropOre)
 

@@ -207,6 +207,18 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Pipes.COPPER, "Copper Pipe")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "Universal Pipe")
 
+            builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "Place lights in area of %s block radius")
+            builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "Extend processor machine inside the multiblock")
+            builder.add(RagiumTranslationKeys.MANUAL_GRINDER, "Insert items by hopper or something else")
+            builder.add(
+                RagiumTranslationKeys.NETWORK_INTERFACE,
+                "Connect Wireless Network and energy cables from other mod",
+            )
+            builder.add(RagiumTranslationKeys.OPEN_CRATE, "Drop inserted items below")
+            builder.add(RagiumTranslationKeys.POROUS_NETHERRACK, "Absorb around lava like sponge but not reusable")
+            builder.add(RagiumTranslationKeys.SPONGE_CAKE, "Decrease falling damage when land on")
+            builder.add(RagiumTranslationKeys.TRASH_BOX, "Remove ALL inserted items or fluids")
+
             builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "Amount: %s Unit")
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "Capacity: %s Unit")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "Fluid: %s")
@@ -284,10 +296,25 @@ object RagiumLangProviders {
             builder.add(RagiumItems.TRADER_CATALOG, "Trader Catalog")
             builder.add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
 
-            builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "Module: %s")
+            builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "Place Anvil when land on")
+            builder.add(RagiumTranslationKeys.BACKPACK, "Shares inventory between the same color")
+            builder.add(RagiumTranslationKeys.BEDROCK_DYNAMITE, "Flatten Bedrocks inside hit chunk")
+            builder.add(RagiumTranslationKeys.FLATTENING_DYNAMITE, "Remove ALL blocks above when hit")
+            builder.add(
+                RagiumTranslationKeys.RAGI_WRENCH,
+                "Right-click to rotate horizontally, change front when sneaking",
+            )
+            builder.add(RagiumTranslationKeys.TRADER_CATALOG, "Right-click to open Wandering Trader's Screen")
+            builder.add(
+                RagiumTranslationKeys.WARPED_CRYSTAL,
+                "Right-click to teleport on linked Teleport Anchor, or bind it with sneaking",
+            )
+
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "Power: %s")
-            builder.add(RagiumTranslationKeys.REMOVER_DYNAMITE_MODE, "Mode: %s")
+            builder.add(RagiumTranslationKeys.FILTER, "Right-click Exporters to apply")
+            builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- ID Format: namespace:path")
+            builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- Tag Format: #namespace:path")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
@@ -482,6 +509,18 @@ object RagiumLangProviders {
             builder.add(RagiumContents.Pipes.COPPER, "銅パイプ")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "万能パイプ")
 
+            builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "半径%sブロックの範囲に光源を自動で設置する")
+            builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "マルチブロック内の加工機械を拡張する")
+            builder.add(RagiumTranslationKeys.MANUAL_GRINDER, "ホッパーなどでアイテムを搬入できる")
+            builder.add(
+                RagiumTranslationKeys.NETWORK_INTERFACE,
+                "無線ネットワークと他modのエネルギーケーブルをつなげる",
+            )
+            builder.add(RagiumTranslationKeys.OPEN_CRATE, "搬入されたアイテムを下にドロップする")
+            builder.add(RagiumTranslationKeys.POROUS_NETHERRACK, "スポンジのように溶岩を吸い取る（使い切り）")
+            builder.add(RagiumTranslationKeys.SPONGE_CAKE, "着地時のダメージを軽減する")
+            builder.add(RagiumTranslationKeys.TRASH_BOX, "搬入された「すべて」のアイテムや液体を消滅させる")
+
             builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "液体量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "容量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "液体: %s")
@@ -559,10 +598,22 @@ object RagiumLangProviders {
             builder.add(RagiumItems.TRADER_CATALOG, "行商人カタログ")
             builder.add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
 
-            builder.add(RagiumTranslationKeys.CRAFTER_HAMMER_MODULE, "モジュール: %s")
+            builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "着弾点に金床を設置する")
+            builder.add(RagiumTranslationKeys.BACKPACK, "同じ色同士でインベントリを共有する")
+            builder.add(RagiumTranslationKeys.BEDROCK_DYNAMITE, "着弾したチャンク内の岩盤を整地する")
+            builder.add(RagiumTranslationKeys.FLATTENING_DYNAMITE, "着弾点より上のブロックを「すべて」消滅させる")
+            builder.add(RagiumTranslationKeys.RAGI_WRENCH, "右クリックで水平方向の回転，シフト右クリックで正面を変更")
+            builder.add(RagiumTranslationKeys.TRADER_CATALOG, "右クリックで行商人との取引を行う")
+            builder.add(
+                RagiumTranslationKeys.WARPED_CRYSTAL,
+                "右クリックでテレポートアンカーの上にテレポート，シフト右クリックで紐づけ",
+            )
+
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "威力: %s")
-            builder.add(RagiumTranslationKeys.REMOVER_DYNAMITE_MODE, "モード: %s")
+            builder.add(RagiumTranslationKeys.FILTER, "右クリックで搬出機に適用")
+            builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- IDフォーマット: namespace:path")
+            builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- タグフォーマット: #namespace:path")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")

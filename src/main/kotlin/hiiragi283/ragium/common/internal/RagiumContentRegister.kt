@@ -152,14 +152,20 @@ internal object RagiumContentRegister {
     @JvmStatic
     private fun initBlocks() {
         registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
-        registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
+        registerBlockItem(
+            RagiumBlocks.POROUS_NETHERRACK,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK)),
+        )
 
         registerBlock("asphalt", RagiumBlocks.ASPHALT)
         registerBlockItem(RagiumBlocks.ASPHALT)
 
         registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
         registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)
-        registerBlockItem(RagiumBlocks.SPONGE_CAKE)
+        registerBlockItem(
+            RagiumBlocks.SPONGE_CAKE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)),
+        )
         registerBlockItem(
             RagiumBlocks.SWEET_BERRIES_CAKE,
             itemSettings()
@@ -183,23 +189,48 @@ internal object RagiumContentRegister {
         registerBlock("open_crate", RagiumBlocks.OPEN_CRATE)
         registerBlock("teleport_anchor", RagiumBlocks.TELEPORT_ANCHOR)
         registerBlock("trash_box", RagiumBlocks.TRASH_BOX)
-        registerBlockItem(RagiumBlocks.AUTO_ILLUMINATOR)
+        registerBlockItem(
+            RagiumBlocks.AUTO_ILLUMINATOR,
+            itemSettings().descriptions(
+                Text.translatable(
+                    RagiumTranslationKeys.AUTO_ILLUMINATOR,
+                    RagiumAPI.getInstance().config.autoIlluminatorRadius,
+                ),
+            ),
+        )
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(
+            RagiumBlocks.LARGE_PROCESSOR,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.LARGE_PROCESSOR)),
+        )
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
-        registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
+        registerBlockItem(
+            RagiumBlocks.MANUAL_GRINDER,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.MANUAL_GRINDER)),
+        )
         registerBlockItem(RagiumBlocks.MANUAL_MIXER)
-        registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
-        registerBlockItem(RagiumBlocks.OPEN_CRATE)
-        registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
+        registerBlockItem(
+            RagiumBlocks.NETWORK_INTERFACE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.NETWORK_INTERFACE)),
+        )
+        registerBlockItem(
+            RagiumBlocks.OPEN_CRATE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.OPEN_CRATE)),
+        )
         registerBlockItem(RagiumBlocks.TELEPORT_ANCHOR)
-        registerBlockItem(RagiumBlocks.TRASH_BOX)
+        registerBlockItem(
+            RagiumBlocks.TRASH_BOX,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.TRASH_BOX)),
+        )
 
         registerBlock("backpack_interface", RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlock("buffer", RagiumBlocks.BUFFER)
         registerBlock("enchantment_bookshelf", RagiumBlocks.ENCHANTMENT_BOOKSHELF)
         registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
         registerBlock("shaft", RagiumBlocks.SHAFT)
         registerBlock("infesting", RagiumBlocks.INFESTING)
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlockItem(RagiumBlocks.BUFFER)
         registerBlockItem(RagiumBlocks.ENCHANTMENT_BOOKSHELF)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.SHAFT)

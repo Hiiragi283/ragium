@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentChanges
@@ -13,6 +14,8 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.world.WorldView
 
 //    Item    //
@@ -26,6 +29,9 @@ fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachine
 fun Item.Settings.materialKey(key: HTMaterialKey): Item.Settings = component(HTMaterialKey.COMPONENT_TYPE, key)
 
 fun Item.Settings.prefix(prefix: HTTagPrefix): Item.Settings = component(HTTagPrefix.COMPONENT_TYPE, prefix)
+
+fun Item.Settings.descriptions(vararg texts: Text): Item.Settings =
+    component(RagiumComponentTypes.DESCRIPTION, texts.map(Text::copy).map { it.formatted(Formatting.YELLOW) })
 
 //    ItemStack    //
 

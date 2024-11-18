@@ -1,10 +1,12 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.blockState
+import hiiragi283.ragium.api.extension.descriptions
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.extension.teleport
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.LodestoneTrackerComponent
 import net.minecraft.entity.player.PlayerEntity
@@ -23,7 +25,7 @@ import net.minecraft.world.World
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-object HTWarpedCrystalItem : Item(itemSettings()) {
+object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL))) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         user.itemCooldownManager.set(this, 20)

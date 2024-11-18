@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.extension.createArmorAttribute
+import hiiragi283.ragium.api.extension.descriptions
 import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
@@ -18,6 +19,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.Item
+import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.hit.BlockHitResult
@@ -163,14 +165,17 @@ object RagiumItems {
                 }
             }
         },
-        itemSettings(),
+        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ANVIL_DYNAMITE)),
     )
 
     @JvmField
     val BACKPACK: Item = HTBackpackItem
 
     @JvmField
-    val BEDROCK_DYNAMITE: Item = HTDynamiteItem(HTRemoverDynamiteBehaviors.BEDROCK::onBlockHit, itemSettings())
+    val BEDROCK_DYNAMITE: Item = HTDynamiteItem(
+        HTRemoverDynamiteBehaviors.BEDROCK::onBlockHit,
+        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.BEDROCK_DYNAMITE)),
+    )
 
     @JvmField
     val BUJIN: Item = HTBujinItem
@@ -193,10 +198,19 @@ object RagiumItems {
     val FILLED_FLUID_CUBE: Item = HTFilledFluidCubeItem
 
     @JvmField
-    val FLATTENING_DYNAMITE: Item = HTDynamiteItem(HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit, itemSettings())
+    val FLATTENING_DYNAMITE: Item = HTDynamiteItem(
+        HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit,
+        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.FLATTENING_DYNAMITE)),
+    )
 
     @JvmField
-    val FLUID_FILTER: Item = Item(itemSettings())
+    val FLUID_FILTER: Item = Item(
+        itemSettings().descriptions(
+            Text.translatable(RagiumTranslationKeys.FILTER),
+            Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
+            Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
+        ),
+    )
 
     @JvmField
     val FORGE_HAMMER: Item = HTForgeHammerItem
@@ -205,10 +219,16 @@ object RagiumItems {
     val GIGANT_HAMMER: Item = HTGigantHammerItem
 
     @JvmField
-    val ITEM_FILTER: Item = Item(itemSettings())
+    val ITEM_FILTER: Item = Item(
+        itemSettings().descriptions(
+            Text.translatable(RagiumTranslationKeys.FILTER),
+            Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
+            Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
+        ),
+    )
 
     @JvmField
-    val RAGI_WRENCH: Item = Item(itemSettings())
+    val RAGI_WRENCH: Item = Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.RAGI_WRENCH)))
 
     @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)

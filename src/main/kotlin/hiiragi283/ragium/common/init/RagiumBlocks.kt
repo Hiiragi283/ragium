@@ -75,6 +75,7 @@ object RagiumBlocks {
 
     @JvmField
     val MECHANICS: List<Block> = listOf(
+        // colored
         LARGE_PROCESSOR, // red
         AUTO_ILLUMINATOR, // yellow
         OPEN_CRATE, // green
@@ -94,6 +95,10 @@ object RagiumBlocks {
     val BACKPACK_INTERFACE: Block = HTBackpackInterfaceBlock
 
     @JvmField
+    val BUFFER: Block =
+        HTBlockWithEntity.build(RagiumBlockEntityTypes.BUFFER, blockSettings(Blocks.SMOOTH_STONE))
+
+    @JvmField
     val ENCHANTMENT_BOOKSHELF: Block =
         HTBlockWithEntity.build(RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, blockSettings(Blocks.BOOKSHELF))
 
@@ -109,6 +114,7 @@ object RagiumBlocks {
     @JvmField
     val MISC: List<Block> = listOf(
         BACKPACK_INTERFACE,
+        BUFFER,
         ENCHANTMENT_BOOKSHELF,
         ITEM_DISPLAY,
         SHAFT,

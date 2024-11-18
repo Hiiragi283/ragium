@@ -8,6 +8,15 @@ object RagiumTranslationKeys {
 
     //    Block    //
 
+    const val AUTO_ILLUMINATOR = "tooltip.ragium.block.auto_illuminator"
+    const val LARGE_PROCESSOR = "tooltip.ragium.block.large_processor"
+    const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
+    const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"
+    const val OPEN_CRATE = "tooltip.ragium.block.open_crate"
+    const val POROUS_NETHERRACK = "tooltip.ragium.block.porous_netherrack"
+    const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
+    const val TRASH_BOX = "tooltip.ragium.block.trash_box"
+
     const val DRUM_AMOUNT = "tooltip.ragium.block.drum_amount"
     const val DRUM_CAPACITY = "tooltip.ragium.block.drum_capacity"
     const val DRUM_FLUID = "tooltip.ragium.block.drum_fluid"
@@ -20,12 +29,19 @@ object RagiumTranslationKeys {
 
     //    Item    //
 
-    const val CRAFTER_HAMMER_MODULE = "tooltip.ragium.item.crafter_hammer.module"
+    const val ANVIL_DYNAMITE = "tooltip.ragium.item.anvil_dynamite"
+    const val BACKPACK = "tooltip.ragium.item.backpack"
+    const val BEDROCK_DYNAMITE = "tooltip.ragium.item.bedrock_dynamite"
+    const val FLATTENING_DYNAMITE = "tooltip.ragium.item.flatten_dynamite"
+    const val RAGI_WRENCH = "tooltip.ragium.item.ragi_wrench"
+    const val TRADER_CATALOG = "tooltip.ragium.item.trader_catalog"
+    const val WARPED_CRYSTAL = "tooltip.ragium.item.warped_crystal"
 
     const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"
     const val DYNAMITE_POWER = "tooltip.ragium.item.dynamite.power"
-
-    const val REMOVER_DYNAMITE_MODE = "tooltip.ragium.item.remover_dynamite.mode"
+    const val FILTER = "tooltip.ragium.item.filter"
+    const val FILTER_ID_FORMAT = "tooltip.ragium.item.filter.id_format"
+    const val FILTER_TAG_FORMAT = "tooltip.ragium.item.filter.tag_format"
 
     //    Machine    //
 

@@ -22,6 +22,10 @@ object RagiumBlockEntityTypes {
         register("blast_furnace", ::HTBlastFurnaceBlockEntity)
 
     @JvmField
+    val BUFFER: BlockEntityType<HTBufferBlockEntity> =
+        register("buffer", ::HTBufferBlockEntity)
+
+    @JvmField
     val CANNING_MACHINE: BlockEntityType<HTCanningMachineBlockEntity> =
         register("exporter", ::HTCanningMachineBlockEntity)
 

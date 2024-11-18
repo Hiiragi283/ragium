@@ -35,6 +35,12 @@ class HTStorageBuilder(val size: Int) {
         }
     }
 
+    fun setAll(type: HTStorageIO, sideType: HTStorageSide, indices: IntRange): HTStorageBuilder = apply {
+        indices.forEach { index: Int ->
+            set(index, type, sideType)
+        }
+    }
+
     fun filter(filter: (Int, ItemStack) -> Boolean): HTStorageBuilder = apply {
         this.slotFilter = filter
     }

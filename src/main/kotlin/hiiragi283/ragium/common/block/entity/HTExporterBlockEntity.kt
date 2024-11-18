@@ -121,15 +121,15 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
         if (world.isReceivingRedstonePower(pos)) return
         // transfer containment
         StorageUtil.move(
-            getBackStorage(world, pos, state, ItemStorage.SIDED),
-            getFrontStorage(world, pos, state, ItemStorage.SIDED),
+            getBackStorage(world, pos, ItemStorage.SIDED),
+            getFrontStorage(world, pos, ItemStorage.SIDED),
             { itemFilter.isEmpty || itemFilter.any(it::isOf) },
             type.getItemCount(tier),
             null,
         )
         StorageUtil.move(
-            getBackStorage(world, pos, state, FluidStorage.SIDED),
-            getFrontStorage(world, pos, state, FluidStorage.SIDED),
+            getBackStorage(world, pos, FluidStorage.SIDED),
+            getFrontStorage(world, pos, FluidStorage.SIDED),
             { fluidFilter.isEmpty || fluidFilter.any(it::isOf) },
             type.getFluidCount(tier),
             null,
