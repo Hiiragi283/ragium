@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTHardModeContents
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlock

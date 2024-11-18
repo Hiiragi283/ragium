@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.content
 
-import hiiragi283.ragium.api.data.HTLangType
+import hiiragi283.ragium.api.content.HTLangType
 
 interface HTTranslationProvider {
     val enName: String

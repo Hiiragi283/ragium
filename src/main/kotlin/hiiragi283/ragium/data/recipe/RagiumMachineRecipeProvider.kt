@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents

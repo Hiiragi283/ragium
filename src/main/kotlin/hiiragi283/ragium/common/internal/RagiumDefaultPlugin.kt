@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier

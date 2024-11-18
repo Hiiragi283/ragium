@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data
 
 import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder

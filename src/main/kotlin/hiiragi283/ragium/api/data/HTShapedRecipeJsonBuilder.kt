@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data.recipe
+package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.material.HTMaterialKey
