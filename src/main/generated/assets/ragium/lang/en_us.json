@@ -166,7 +166,7 @@
   "machine_type.ragium.assembler": "Assembler",
   "machine_type.ragium.assembler.description": "Dr.Doom, Assemble!",
   "machine_type.ragium.bedrock_miner": "Bedrock Miner",
-  "machine_type.ragium.bedrock_miner.description": "Collect minerals from Bedrck",
+  "machine_type.ragium.bedrock_miner.description": "Collect minerals from Bedrock",
   "machine_type.ragium.biomass_fermenter": "Biomass Fermenter",
   "machine_type.ragium.biomass_fermenter.description": "Produce Biomass from Composter inputs",
   "machine_type.ragium.blast_furnace": "Large Blast Furnace",
@@ -286,6 +286,7 @@
   "tooltip.ragium.item.ragi_wrench": "Right-click to rotate horizontally, change front when sneaking",
   "tooltip.ragium.item.trader_catalog": "Right-click to open Wandering Trader's Screen",
   "tooltip.ragium.item.warped_crystal": "Right-click to teleport on linked Teleport Anchor, or bind it with sneaking",
+  "tooltip.ragium.item.warped_crystal.destination": "Destination: %s",
   "tooltip.ragium.machine.cost": "Recipe cost: %s E",
   "tooltip.ragium.machine.fluid_amount": "Amount: %s Units",
   "tooltip.ragium.machine.name": "Name: %s",
@@ -293,5 +294,9 @@
   "tooltip.ragium.machine.show_preview": "Show preview: %s",
   "tooltip.ragium.machine.slot_counts": "Input/Output Slots: %s",
   "tooltip.ragium.machine.tank_capacity": "Each Tank Capacity: %s Buckets",
-  "tooltip.ragium.machine.tier": "Tier: %s"
+  "tooltip.ragium.machine.tier": "Tier: %s",
+  "tooltip.ragium.press_ctrl": "Press Ctrl to show descriptions",
+  "world.minecraft.overworld": "Overworld",
+  "world.minecraft.the_end": "The End",
+  "world.minecraft.the_nether": "Nether"
 }

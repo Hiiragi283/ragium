@@ -30,7 +30,6 @@ class HTExporterBlock(private val tier: HTMachineTier) : HTBlockWithEntity(block
         options: TooltipType,
     ) {
         HTPipeType.ALL.appendTooltip(tooltip::add, tier)
-        tooltip.add(Text.literal("Right-click to show current filter"))
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {

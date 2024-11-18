@@ -30,20 +30,18 @@ import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
-import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
-import net.minecraft.text.TranslatableTextContent
 import net.minecraft.util.Identifier
-import net.minecraft.util.Language
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.TeleportTarget
 import net.minecraft.world.World
-import java.text.NumberFormat
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -75,7 +73,7 @@ fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
 
 //    Entity    //
 
-fun teleport(entity: Entity, world: World, posTo: Vec3d): Boolean {
+fun teleport(entity: Entity, world: World, posTo: Vec3d, playSound: Boolean = true): Boolean {
     if (world is ServerWorld && canTeleport(entity, world)) {
         if (entity.hasVehicle()) {
             entity.detach()
@@ -110,6 +108,9 @@ fun teleport(entity: Entity, world: World, posTo: Vec3d): Boolean {
             if (entity is PlayerEntity) {
                 entity.clearCurrentExplosion()
             }
+        }
+        if (playSound) {
+            world.playSound(null, posTo.x, posTo.y, posTo.z, SoundEvents.ENTITY_PLAYER_TELEPORT, SoundCategory.PLAYERS)
         }
         return true
     }
@@ -232,21 +233,3 @@ fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, 
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)
 }
-
-//    Text    //
-
-fun intText(value: Int): MutableText = longText(value.toLong())
-
-fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
-
-fun floatText(value: Float): MutableText = doubleText(value.toDouble())
-
-fun doubleText(value: Double): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
-
-fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
-
-fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
-    ?.let(TranslatableTextContent::getKey)
-    ?.let(Language.getInstance()::hasTranslation) == true
-
-inline fun buildStyle(builderAction: Style.() -> Unit): Style = Style.EMPTY.apply(builderAction)

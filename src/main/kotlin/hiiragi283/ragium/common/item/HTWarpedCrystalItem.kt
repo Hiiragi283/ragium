@@ -1,14 +1,11 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.blockState
-import hiiragi283.ragium.api.extension.descriptions
-import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.api.extension.teleport
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.LodestoneTrackerComponent
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -22,16 +19,12 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.GlobalPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import java.util.*
-import kotlin.jvm.optionals.getOrNull
 
 object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL))) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         user.itemCooldownManager.set(this, 20)
-        val tracker: LodestoneTrackerComponent =
-            stack.get(DataComponentTypes.LODESTONE_TRACKER) ?: return super.use(world, user, hand)
-        val globalPos: GlobalPos = tracker.target.getOrNull() ?: return super.use(world, user, hand)
+        val globalPos: GlobalPos = stack.get(RagiumComponentTypes.GLOBAL_POS) ?: return super.use(world, user, hand)
         if (!world.getBlockState(globalPos.pos).isOf(RagiumBlocks.TELEPORT_ANCHOR)) {
             stack.remove(DataComponentTypes.LODESTONE_TRACKER)
             return super.use(world, user, hand)
@@ -53,8 +46,8 @@ object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(
     override fun useOnBlock(context: ItemUsageContext): ActionResult {
         if (context.blockState.isOf(RagiumBlocks.TELEPORT_ANCHOR)) {
             context.stack.set(
-                DataComponentTypes.LODESTONE_TRACKER,
-                LodestoneTrackerComponent(Optional.of(GlobalPos(context.world.registryKey, context.blockPos)), false),
+                RagiumComponentTypes.GLOBAL_POS,
+                GlobalPos(context.world.registryKey, context.blockPos),
             )
             return ActionResult.success(context.world.isClient())
         }
@@ -69,8 +62,8 @@ object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(
         tooltip: MutableList<Text>,
         type: TooltipType,
     ) {
-        stack.get(DataComponentTypes.LODESTONE_TRACKER)?.let { component: LodestoneTrackerComponent ->
-            tooltip.add(Text.literal("Destination: ${component.target.getOrNull()}"))
+        stack.get(RagiumComponentTypes.GLOBAL_POS)?.let(::globalPosText)?.let {
+            tooltip.add(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, it))
         }
     }
 }

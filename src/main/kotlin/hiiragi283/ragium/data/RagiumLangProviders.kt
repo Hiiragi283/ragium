@@ -19,6 +19,8 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.util.Util
+import net.minecraft.world.World
 import java.util.concurrent.CompletableFuture
 
 object RagiumLangProviders {
@@ -60,6 +62,10 @@ object RagiumLangProviders {
 
     fun TranslationBuilder.add(prefix: HTTagPrefix, value: String) {
         add(prefix.translationKey, value)
+    }
+
+    fun TranslationBuilder.addWorld(key: RegistryKey<World>, value: String) {
+        add(Util.createTranslationKey("world", key.value), value)
     }
 
     @JvmStatic
@@ -175,6 +181,9 @@ object RagiumLangProviders {
         FabricLanguageProvider(output, registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.EN_US)
+
+            builder.add(RagiumTranslationKeys.PRESS_CTRL, "Press Ctrl to show descriptions")
+            
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "Tycoon the Racoon")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
@@ -315,6 +324,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.FILTER, "Right-click Exporters to apply")
             builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- ID Format: namespace:path")
             builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- Tag Format: #namespace:path")
+            builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "Destination: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
@@ -335,7 +345,7 @@ object RagiumLangProviders {
             builder.add(HTMachineTier.BASIC, "Basic", "Basic %s")
             builder.add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
             // Machine Type
-            builder.add(RagiumMachineKeys.BEDROCK_MINER, "Bedrock Miner", "Collect minerals from Bedrck")
+            builder.add(RagiumMachineKeys.BEDROCK_MINER, "Bedrock Miner", "Collect minerals from Bedrock")
             builder.add(
                 RagiumMachineKeys.BIOMASS_FERMENTER,
                 "Biomass Fermenter",
@@ -468,6 +478,10 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
             builder.add(HTTagPrefix.ROD, "%s Rod")
             builder.add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
+            // World
+            builder.addWorld(World.OVERWORLD, "Overworld")
+            builder.addWorld(World.NETHER, "Nether")
+            builder.addWorld(World.END, "The End")
         }
     }
 
@@ -477,6 +491,9 @@ object RagiumLangProviders {
         FabricLanguageProvider(output, "ja_jp", registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
             translateContents(builder, HTLangType.JA_JP)
+
+            builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
+            
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
@@ -614,6 +631,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.FILTER, "右クリックで搬出機に適用")
             builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- IDフォーマット: namespace:path")
             builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- タグフォーマット: #namespace:path")
+            builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "座標: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
@@ -627,7 +645,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.MACHINE_SLOT_COUNTS, "入力/出力スロット数: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TANK_CAPACITY, "各液体タンクの容量: %s バケツ")
 
-            builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません; %s (座標 %s)")
+            builder.add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
             builder.add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "構造物は有効です！")
             // Machine Tier
             builder.add(HTMachineTier.PRIMITIVE, "簡易", "簡易型%s")
@@ -726,6 +744,10 @@ object RagiumLangProviders {
             builder.add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
             builder.add(HTTagPrefix.ROD, "%s棒")
             builder.add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
+            // World
+            builder.addWorld(World.OVERWORLD, "オーバーワールド")
+            builder.addWorld(World.NETHER, "ネザー")
+            builder.addWorld(World.END, "ジ・エンド")
         }
     }
 }

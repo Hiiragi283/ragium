@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.machine.multiblock
 
+import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
@@ -21,7 +22,7 @@ class HTMultiblockValidator(val world: World, val pos: BlockPos, val player: Pla
             isValid = component.test(world.getBlockState(pos1))
             if (!isValid) {
                 player?.sendMessage(
-                    Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, component.toString(), pos1.toString()),
+                    Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, component.text, blockPosText(pos1)),
                     false,
                 )
             }

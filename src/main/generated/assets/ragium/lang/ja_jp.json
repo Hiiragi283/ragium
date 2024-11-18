@@ -244,7 +244,7 @@
   "material.ragium.zinc": "亜鉛",
   "message.ragium.block.exporter.fluid_filter": "現在の液体フィルタ: %s",
   "message.ragium.block.exporter.item_filter": "現在のアイテムフィルタ: %s",
-  "message.ragium.multi_shape.error": "次の条件を満たしていません; %s (座標 %s)",
+  "message.ragium.multi_shape.error": "次の条件を満たしていません: %s (座標: %s)",
   "message.ragium.multi_shape.success": "構造物は有効です！",
   "tag_prefix.ragium.deep_ore": "深層%s鉱石",
   "tag_prefix.ragium.dust": "%sの粉",
@@ -284,6 +284,7 @@
   "tooltip.ragium.item.ragi_wrench": "右クリックで水平方向の回転，シフト右クリックで正面を変更",
   "tooltip.ragium.item.trader_catalog": "右クリックで行商人との取引を行う",
   "tooltip.ragium.item.warped_crystal": "右クリックでテレポートアンカーの上にテレポート，シフト右クリックで紐づけ",
+  "tooltip.ragium.item.warped_crystal.destination": "座標: %s",
   "tooltip.ragium.machine.cost": "処理コスト: %s E",
   "tooltip.ragium.machine.fluid_amount": "液体量: %s ユニット",
   "tooltip.ragium.machine.name": "名称: %s",
@@ -291,5 +292,9 @@
   "tooltip.ragium.machine.show_preview": "プレビューの表示: %s",
   "tooltip.ragium.machine.slot_counts": "入力/出力スロット数: %s",
   "tooltip.ragium.machine.tank_capacity": "各液体タンクの容量: %s バケツ",
-  "tooltip.ragium.machine.tier": "ティア: %s"
+  "tooltip.ragium.machine.tier": "ティア: %s",
+  "tooltip.ragium.press_ctrl": "Ctrlキーを押して説明を表示",
+  "world.minecraft.overworld": "オーバーワールド",
+  "world.minecraft.the_end": "ジ・エンド",
+  "world.minecraft.the_nether": "ネザー"
 }

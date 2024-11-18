@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.init
 
 object RagiumTranslationKeys {
+
+    const val PRESS_CTRL = "tooltip.ragium.press_ctrl"
+    
     //    Advancement    //
 
     const val ADVANCEMENT_BUJIN = "advancement.ragium.bujin.title"
@@ -42,6 +45,7 @@ object RagiumTranslationKeys {
     const val FILTER = "tooltip.ragium.item.filter"
     const val FILTER_ID_FORMAT = "tooltip.ragium.item.filter.id_format"
     const val FILTER_TAG_FORMAT = "tooltip.ragium.item.filter.tag_format"
+    const val WARPED_CRYSTAL_DESTINATION = "tooltip.ragium.item.warped_crystal.destination"
 
     //    Machine    //
 

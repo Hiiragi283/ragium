@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.entity.Entity
@@ -70,10 +71,12 @@ data class HTDynamiteComponent(val power: Float, val canDestroy: Boolean) : Tool
                     floatText(power).formatted(Formatting.WHITE),
                 ).formatted(Formatting.GRAY),
         )
-        val destroyText: MutableText = when (canDestroy) {
-            true -> Text.literal("true").formatted(Formatting.RED)
-            false -> Text.literal("false").formatted(Formatting.AQUA)
-        }
+        val destroyText: MutableText = boolText(canDestroy).formatted(
+            when (canDestroy) {
+                true -> Formatting.RED
+                false -> Formatting.AQUA
+            }
+        )
         tooltip.accept(
             Text
                 .translatable(

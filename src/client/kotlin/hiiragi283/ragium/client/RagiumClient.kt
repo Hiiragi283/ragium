@@ -43,6 +43,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
@@ -178,7 +179,13 @@ object RagiumClient : ClientModInitializer {
         ItemTooltipCallback.EVENT.register(
             RagiumAPI.id("description"),
         ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
-            stack.get(RagiumComponentTypes.DESCRIPTION)?.forEach(tooltips::add)
+            stack.get(RagiumComponentTypes.DESCRIPTION)?.let { texts: List<Text> ->
+                if (Screen.hasControlDown()) {
+                    texts.map(Text::copy).map { it.formatted(Formatting.AQUA) }.forEach(tooltips::add)
+                } else {
+                    tooltips.add(Text.translatable(RagiumTranslationKeys.PRESS_CTRL).formatted(Formatting.YELLOW))
+                }
+            }
         }
     }
 

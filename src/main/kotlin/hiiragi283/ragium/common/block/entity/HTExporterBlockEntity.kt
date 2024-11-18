@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -23,7 +22,6 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
-import net.minecraft.util.Formatting
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -75,24 +73,14 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
                     RegistryCodecs
                         .entryList(RegistryKeys.FLUID)
                         .parse(world.registryManager.getOps(NbtOps.INSTANCE), NbtString.of(stack.name.string))
-                        .ifError { error: DataResult.Error<RegistryEntryList<Fluid>> ->
-                            player.sendMessage(
-                                Text.literal(error.messageSupplier.get()).formatted(Formatting.RED),
-                                false,
-                            )
-                        }.ifSuccess { fluidFilter = it }
+                        .ifSuccess { fluidFilter = it }
                 }
 
                 stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
                     RegistryCodecs
                         .entryList(RegistryKeys.ITEM)
                         .parse(world.registryManager.getOps(NbtOps.INSTANCE), NbtString.of(stack.name.string))
-                        .ifError { error: DataResult.Error<RegistryEntryList<Item>> ->
-                            player.sendMessage(
-                                Text.literal(error.messageSupplier.get()).formatted(Formatting.RED),
-                                false,
-                            )
-                        }.ifSuccess { itemFilter = it }
+                        .ifSuccess { itemFilter = it }
                 }
 
                 else -> {
