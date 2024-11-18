@@ -390,6 +390,7 @@ object RagiumItems {
         FLATTENING_DYNAMITE,
         HEART_OF_THE_NETHER,
         LASER_EMITTER,
+        PLASTIC_PLATE,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,

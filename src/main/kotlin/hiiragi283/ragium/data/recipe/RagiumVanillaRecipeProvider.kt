@@ -201,6 +201,35 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
             .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
+        // dynamites
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.ANVIL_DYNAMITE)
+            .input(RagiumItems.DYNAMITE)
+            .input(ItemTags.ANVIL)
+            .unlockedBy(RagiumItems.DYNAMITE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.BEDROCK_DYNAMITE, 8)
+            .patterns(
+                "AAA",
+                "ABA",
+                "AAA",
+            ).input('A', RagiumItems.DYNAMITE)
+            .input('B', Items.DIAMOND_PICKAXE)
+            .unlockedBy(RagiumItems.DYNAMITE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.FLATTENING_DYNAMITE, 8)
+            .patterns(
+                "AAA",
+                "ABA",
+                "AAA",
+            ).input('A', RagiumItems.DYNAMITE)
+            .input('B', Items.NETHER_STAR)
+            .unlockedBy(RagiumItems.DYNAMITE)
+            .offerTo(exporter)
         // filter
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.FLUID_FILTER)

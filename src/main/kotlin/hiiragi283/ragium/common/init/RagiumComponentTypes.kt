@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.longRangeCodec
+import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -96,7 +97,8 @@ object RagiumComponentTypes {
         registerUnit("damage_instead_of_decrease")
 
     @JvmField
-    val DESCRIPTION: ComponentType<Text> = register("description", TextCodecs.CODEC, TextCodecs.PACKET_CODEC)
+    val DESCRIPTION: ComponentType<List<Text>> =
+        register("description", TextCodecs.CODEC.listOf(), TextCodecs.PACKET_CODEC.toList())
 
     @JvmField
     val FLUID: ComponentType<Fluid> =

@@ -136,7 +136,8 @@ object RagiumEventHandlers {
             addDescription(
                 context,
                 RagiumBlocks.MANUAL_GRINDER,
-                Text.literal("Input ingredients by Hopper\nRight-click to process"),
+                Text.literal("Input ingredients by Hopper"),
+                Text.literal("Right-click to process"),
             )
             addDescription(
                 context,
@@ -162,17 +163,22 @@ object RagiumEventHandlers {
             addDescription(
                 context,
                 RagiumItems.FLUID_FILTER,
-                Text.literal("Right-click Exporter to apply\nId format - modid:path\nTag format - #modid:path"),
+                Text.literal("Right-click Exporter to apply"),
+                Text.literal("Id format - modid:path"),
+                Text.literal("Tag format - #modid:path"),
             )
             addDescription(
                 context,
                 RagiumItems.ITEM_FILTER,
-                Text.literal("Right-click Exporter to apply\nId format - modid:path\nTag format - #modid:path"),
+                Text.literal("Right-click Exporter to apply"),
+                Text.literal("Id format - modid:path"),
+                Text.literal("Tag format - #modid:path"),
             )
             addDescription(
                 context,
                 RagiumItems.WARPED_CRYSTAL,
-                Text.literal("Click on Teleport Anchor to link\nTeleport on the Anchor by right-clicking"),
+                Text.literal("Click on Teleport Anchor to link"),
+                Text.literal("Teleport on the Anchor by right-clicking"),
             )
         }
 
@@ -243,7 +249,9 @@ object RagiumEventHandlers {
                     true -> {
                         if (Properties.FACING in state) {
                             state.with(Properties.FACING, result.side)
-                        } else state
+                        } else {
+                            state
+                        }
                     }
 
                     false -> state.rotate(BlockRotation.COUNTERCLOCKWISE_90)
@@ -260,9 +268,9 @@ object RagiumEventHandlers {
     }
 
     @JvmStatic
-    private fun addDescription(context: DefaultItemComponentEvents.ModifyContext, item: ItemConvertible, text: MutableText) {
+    private fun addDescription(context: DefaultItemComponentEvents.ModifyContext, item: ItemConvertible, vararg texts: MutableText) {
         context.modify(item.asItem()) {
-            it.add(RagiumComponentTypes.DESCRIPTION, text.formatted(Formatting.AQUA))
+            it.add(RagiumComponentTypes.DESCRIPTION, texts.map { it.formatted(Formatting.AQUA) })
         }
     }
 

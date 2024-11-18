@@ -178,7 +178,7 @@ object RagiumClient : ClientModInitializer {
         ItemTooltipCallback.EVENT.register(
             RagiumAPI.id("description"),
         ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
-            stack.get(RagiumComponentTypes.DESCRIPTION)?.let(tooltips::add)
+            stack.get(RagiumComponentTypes.DESCRIPTION)?.forEach(tooltips::add)
         }
     }
 

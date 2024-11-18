@@ -105,6 +105,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 put(TextureKey.SIDE, Identifier.of("block/oak_log"))
             }
         }
+        registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
+            textureMap {
+                put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
+                put(TextureKey.SIDE, TextureMap.getId(RagiumBlocks.ENCHANTMENT_BOOKSHELF))
+            }
+        }
+
         RagiumContents.Drums.entries.forEach { registerFactory(it.value, TexturedModel.CUBE_COLUMN) }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val tier: HTMachineTier = hull.tier
