@@ -349,6 +349,9 @@ object RagiumItems {
     val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings())
 
     @JvmField
+    val RAGI_TICKET: Item = Item(itemSettings().rarity(Rarity.EPIC))
+
+    @JvmField
     val REFINED_SILICON: Item = Item(itemSettings())
 
     @JvmField
@@ -387,6 +390,7 @@ object RagiumItems {
         PROCESSOR_SOCKET,
         RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
+        RAGI_TICKET,
         REFINED_SILICON,
         RESIDUAL_COKE,
         SILICON,

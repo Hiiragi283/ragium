@@ -34,8 +34,8 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    private var fluidFilter: RegistryEntryList<Fluid> = RegistryEntryList.empty()
-    private var itemFilter: RegistryEntryList<Item> = RegistryEntryList.empty()
+    var fluidFilter: RegistryEntryList<Fluid> = RegistryEntryList.empty()
+    var itemFilter: RegistryEntryList<Item> = RegistryEntryList.empty()
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

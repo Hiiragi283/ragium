@@ -19,6 +19,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.text.MutableText
 import net.minecraft.util.StringIdentifiable
 import java.util.function.Predicate
 
@@ -75,6 +76,9 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
 
         fun <T : Any> map(transform: (RegistryEntry<Item>, Int) -> T): List<T> = entryList.map { transform(it, count) }
 
+        val text: MutableText
+            get() = entryList.asText(Item::getName)
+
         val firstEntry: RegistryEntry<Item>?
             get() = entryList.firstOrNull()
 
@@ -82,6 +86,9 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
 
         val valueMap: Map<Item, Int>
             get() = entryMap.mapKeys { it.key.value() }
+
+        val matchingStacks: List<ItemStack>
+            get() = valueMap.map { (item: Item, count: Int) -> ItemStack(item, count) }
 
         override fun test(stack: ItemStack): Boolean = when (stack.isEmpty) {
             true -> this.isEmpty
@@ -103,7 +110,7 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
             }
         }
 
-        override fun toString(): String = "HTItemIngredient[entryList=${entryList.asText(Item::getName)},count=$count]"
+        override fun toString(): String = "HTItemIngredient[entryList=${text.string},count=$count]"
 
         //    ConsumeType    //
 

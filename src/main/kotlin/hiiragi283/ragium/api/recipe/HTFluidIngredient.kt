@@ -2,10 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.contains
-import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.api.extension.longRangeCodec
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
@@ -23,6 +20,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.text.MutableText
 import java.util.function.BiPredicate
 
 class HTFluidIngredient private constructor(private val entryList: RegistryEntryList<Fluid>, val amount: Long) : BiPredicate<Fluid, Long> {
@@ -69,6 +67,9 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
 
     fun <T : Any> map(transform: (RegistryEntry<Fluid>, Long) -> T): List<T> = entryList.map { transform(it, amount) }
 
+    val text: MutableText
+        get() = entryList.asText(Fluid::name)
+
     val firstEntry: RegistryEntry<Fluid>?
         get() = entryList.firstOrNull()
 
@@ -101,4 +102,6 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
             }
         }
     }
+
+    override fun toString(): String = "HTFluidIngredient[entryList=${text.string},amount=$amount]"
 }

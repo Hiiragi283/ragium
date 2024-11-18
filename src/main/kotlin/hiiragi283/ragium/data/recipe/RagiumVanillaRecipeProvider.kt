@@ -191,6 +191,22 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter)
+        // filter
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.FLUID_FILTER)
+            .input(Items.PAPER)
+            .input(ConventionalItemTags.LIGHT_BLUE_DYES)
+            .input(RagiumContents.Dusts.RAGINITE)
+            .unlockedBy(Items.PAPER)
+            .offerTo(exporter)
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.ITEM_FILTER)
+            .input(Items.PAPER)
+            .input(ConventionalItemTags.ORANGE_DYES)
+            .input(RagiumContents.Dusts.RAGINITE)
+            .unlockedBy(Items.PAPER)
+            .offerTo(exporter)
         // steel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_SWORD)

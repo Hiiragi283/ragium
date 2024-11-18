@@ -259,6 +259,7 @@ internal object RagiumContentRegister {
         registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)
         registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
         registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+        registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
         registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
         registerItem("residual_coke", RagiumItems.RESIDUAL_COKE)
         registerItem("silicon", RagiumItems.SILICON)

@@ -202,10 +202,11 @@ fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 
 operator fun <T : Any> RegistryEntryList<T>.contains(value: T): Boolean = any { it.isOf(value) }
 
-fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): Text = storage.map(
-    { it.name },
-    { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
-)
+fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): MutableText = storage
+    .map(
+        { it.name },
+        { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
+    ).copy()
 
 //    ScreenHandler    //
 
