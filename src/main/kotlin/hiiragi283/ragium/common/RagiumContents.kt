@@ -53,9 +53,13 @@ object RagiumContents {
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        FLUORITE(RagiumMaterialKeys.FLUORITE),
         STEEL(RagiumMaterialKeys.STEEL),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        CRYOLITE(RagiumMaterialKeys.CRYOLITE),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+        RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
         override val delegated: HTContent<Block> =

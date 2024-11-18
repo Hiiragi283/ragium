@@ -239,6 +239,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             add(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)
             add(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)
         }
+        // gem
+        helper.modify(RagiumMaterialKeys.QUARTZ) {
+            add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
+        }
     }
 
     override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {
