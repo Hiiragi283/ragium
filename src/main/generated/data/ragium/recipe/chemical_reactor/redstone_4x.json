@@ -12,13 +12,13 @@
   ],
   "item_inputs": [
     {
-      "items": "#c:ores/netherite_scrap"
+      "items": "#minecraft:redstone_ores"
     }
   ],
   "item_outputs": [
     {
-      "count": 4,
-      "item": "minecraft:netherite_scrap"
+      "count": 16,
+      "item": "minecraft:redstone"
     }
   ]
 }

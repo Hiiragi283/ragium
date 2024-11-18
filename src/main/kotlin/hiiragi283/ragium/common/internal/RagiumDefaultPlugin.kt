@@ -187,6 +187,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.DIAMOND, HTMaterialKey.Type.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.EMERALD, HTMaterialKey.Type.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.LAPIS, HTMaterialKey.Type.GEM, Rarity.COMMON)
         helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialKey.Type.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
@@ -228,7 +229,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
     override fun setupMaterialProperties(helper: RagiumPlugin.PropertyHelper<HTMaterialKey>) {
         // metal
-        helper.modify(RagiumMaterialKeys.IRON, RagiumMaterialKeys.COPPER) {
+        helper.modify(RagiumMaterialKeys.COPPER, RagiumMaterialKeys.GOLD, RagiumMaterialKeys.IRON) {
+            add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
+        }
+        helper.modify(RagiumMaterialKeys.COPPER, RagiumMaterialKeys.IRON) {
             set(HTMaterialPropertyKeys.SMELTING_EXP, 0.7f)
         }
         helper.modify(RagiumMaterialKeys.GOLD) {
@@ -240,8 +244,17 @@ object RagiumDefaultPlugin : RagiumPlugin {
             add(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)
         }
         // gem
-        helper.modify(RagiumMaterialKeys.QUARTZ) {
+        helper.modify(
+            RagiumMaterialKeys.COAL,
+            RagiumMaterialKeys.EMERALD,
+            RagiumMaterialKeys.DIAMOND,
+            RagiumMaterialKeys.LAPIS,
+            RagiumMaterialKeys.QUARTZ
+        ) {
             add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
+        }
+        helper.modify(RagiumMaterialKeys.LAPIS) {
+            set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 4)
         }
     }
 
@@ -255,10 +268,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.EMERALD, Items.DEEPSLATE_EMERALD_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.LAPIS, Items.DEEPSLATE_LAPIS_ORE)
 
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.COAL, Items.COAL)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND, Items.DIAMOND)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD, Items.EMERALD)
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.LAPIS, Items.LAPIS_LAZULI)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
 
         consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
@@ -274,6 +289,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.EMERALD, Items.EMERALD_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.LAPIS, Items.LAPIS_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.QUARTZ, Items.NETHER_QUARTZ_ORE)
 
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
@@ -288,6 +304,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.EMERALD, Items.EMERALD_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.GOLD, Items.GOLD_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.IRON, Items.IRON_BLOCK)
+        consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.LAPIS, Items.LAPIS_BLOCK)
 
         bindContents(RagiumContents.Ores.entries)
         bindContents(RagiumContents.StorageBlocks.entries)
@@ -365,25 +382,26 @@ object RagiumDefaultPlugin : RagiumPlugin {
         entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
             helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
                 val output: Item = map[prefix] ?: return@register
+                val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
                 // Grinder Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.GRINDER)
                     .itemInput(HTTagPrefix.ORE, key)
-                    .itemOutput(output, 2)
+                    .itemOutput(output, count * 2)
                     .offerTo(exporter, output)
                 // 3x Chemical Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.CHEMICAL_REACTOR)
                     .itemInput(HTTagPrefix.ORE, key)
                     .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
-                    .itemOutput(output, 3)
+                    .itemOutput(output, count * 3)
                     .offerTo(exporter, output, "_3x")
                 // 4x Chemical Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
                     .itemInput(HTTagPrefix.ORE, key)
                     .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
-                    .itemOutput(output, 4)
+                    .itemOutput(output, count * 4)
                     .offerTo(exporter, output, "_4x")
             }
         }

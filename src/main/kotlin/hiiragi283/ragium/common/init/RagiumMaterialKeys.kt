@@ -50,6 +50,9 @@ object RagiumMaterialKeys {
     val FLUORITE: HTMaterialKey = HTMaterialKey.of("fluorite")
 
     @JvmField
+    val LAPIS: HTMaterialKey = HTMaterialKey.of("lapis")
+
+    @JvmField
     val PERIDOT: HTMaterialKey = HTMaterialKey.of("peridot")
 
     @JvmField
