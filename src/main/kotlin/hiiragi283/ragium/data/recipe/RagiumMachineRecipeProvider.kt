@@ -70,6 +70,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Assembler    //
 
     private fun assembler(exporter: RecipeExporter) {
+        // LED
         // processor
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
@@ -361,6 +362,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumContents.Dusts.SALT)
             .fluidOutput(Fluids.WATER)
             .offerTo(exporter, RagiumContents.Dusts.SALT)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.GLOW_INK_SAC)
+            .itemOutput(RagiumItems.LUMINESCENCE_DUST)
+            .itemOutput(Items.INK_SAC)
+            .offerTo(exporter, RagiumItems.LUMINESCENCE_DUST)
         // sap
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)

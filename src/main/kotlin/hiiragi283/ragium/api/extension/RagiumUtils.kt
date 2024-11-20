@@ -73,7 +73,12 @@ fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
 
 //    Entity    //
 
-fun teleport(entity: Entity, world: World, posTo: Vec3d, playSound: Boolean = true): Boolean {
+fun teleport(
+    entity: Entity,
+    world: World,
+    posTo: Vec3d,
+    playSound: Boolean = true,
+): Boolean {
     if (world is ServerWorld && canTeleport(entity, world)) {
         if (entity.hasVehicle()) {
             entity.detach()

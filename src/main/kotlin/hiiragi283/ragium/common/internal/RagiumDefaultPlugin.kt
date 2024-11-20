@@ -249,7 +249,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             RagiumMaterialKeys.EMERALD,
             RagiumMaterialKeys.DIAMOND,
             RagiumMaterialKeys.LAPIS,
-            RagiumMaterialKeys.QUARTZ
+            RagiumMaterialKeys.QUARTZ,
         ) {
             add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
         }

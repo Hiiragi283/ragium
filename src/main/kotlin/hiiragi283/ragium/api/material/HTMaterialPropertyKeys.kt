@@ -19,7 +19,7 @@ object HTMaterialPropertyKeys {
     @JvmField
     val GRINDING_BASE_COUNT: HTPropertyKey.Defaulted<Int> =
         HTPropertyKey.ofDefaulted(RagiumAPI.id("grinding_count"), 1)
-    
+
     @JvmField
     val SMELTING_EXP: HTPropertyKey.Defaulted<Float> =
         HTPropertyKey.ofDefaulted(RagiumAPI.id("smelting_exp"), 0f)

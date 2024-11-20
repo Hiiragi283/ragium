@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -14,6 +15,7 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.Text
 import net.minecraft.world.WorldView
 
@@ -29,8 +31,13 @@ fun Item.Settings.materialKey(key: HTMaterialKey): Item.Settings = component(HTM
 
 fun Item.Settings.prefix(prefix: HTTagPrefix): Item.Settings = component(HTTagPrefix.COMPONENT_TYPE, prefix)
 
-fun Item.Settings.descriptions(vararg texts: Text): Item.Settings =
-    component(RagiumComponentTypes.DESCRIPTION, texts.toList())
+fun Item.Settings.descriptions(vararg texts: Text): Item.Settings = component(RagiumComponentTypes.DESCRIPTION, texts.toList())
+
+fun Item.Settings.repairment(item: ItemConvertible, count: Int = 1): Item.Settings =
+    component(RagiumComponentTypes.REPAIRMENT, HTItemIngredient.of(item, count))
+
+fun Item.Settings.repairment(tagKey: TagKey<Item>, count: Int = 1): Item.Settings =
+    component(RagiumComponentTypes.REPAIRMENT, HTItemIngredient.of(tagKey, count))
 
 //    ItemStack    //
 

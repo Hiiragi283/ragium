@@ -285,6 +285,7 @@ internal object RagiumContentRegister {
         registerItem("engineering_plastic_plate", RagiumItems.ENGINEERING_PLASTIC_PLATE)
         registerItem("heart_of_the_nether", RagiumItems.HEART_OF_THE_NETHER)
         registerItem("laser_emitter", RagiumItems.LASER_EMITTER)
+        registerItem("luminescence_dust", RagiumItems.LUMINESCENCE_DUST)
         registerItem("plastic_plate", RagiumItems.PLASTIC_PLATE)
         registerItem("polymer_resin", RagiumItems.POLYMER_RESIN)
         registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)

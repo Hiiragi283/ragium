@@ -23,20 +23,21 @@ fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
 
 fun blockPosText(value: BlockPos): MutableText = Text.literal("[${value.x}, ${value.y}, ${value.z}]")
 
-fun globalPosText(value: GlobalPos): MutableText = Text.literal("[")
+fun globalPosText(value: GlobalPos): MutableText = Text
+    .literal("[")
     .append(
         Texts.join(
             listOf<Text>(
                 worldText(value.dimension),
                 intText(value.pos.x),
                 intText(value.pos.y),
-                intText(value.pos.z)
-            ), Text.literal(", ")
-        )
+                intText(value.pos.z),
+            ),
+            Text.literal(", "),
+        ),
     ).append("]")
 
-fun worldText(value: RegistryKey<World>): MutableText =
-    Text.translatable(Util.createTranslationKey("world", value.value))
+fun worldText(value: RegistryKey<World>): MutableText = Text.translatable(Util.createTranslationKey("world", value.value))
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
     ?.let(TranslatableTextContent::getKey)

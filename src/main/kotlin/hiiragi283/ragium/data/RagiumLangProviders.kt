@@ -183,7 +183,7 @@ object RagiumLangProviders {
             translateContents(builder, HTLangType.EN_US)
 
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Press Ctrl to show descriptions")
-            
+
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "Tycoon the Racoon")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
@@ -288,6 +288,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "Heart of the Nether")
             builder.add(RagiumItems.ITEM_FILTER, "Item Filter")
             builder.add(RagiumItems.LASER_EMITTER, "Laser Emitter")
+            builder.add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
             builder.add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
             builder.add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "Processor Socket")
@@ -494,7 +495,7 @@ object RagiumLangProviders {
             translateContents(builder, HTLangType.JA_JP)
 
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
-            
+
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
@@ -599,6 +600,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.HEART_OF_THE_NETHER, "地獄の心臓")
             builder.add(RagiumItems.ITEM_FILTER, "アイテムフィルタ")
             builder.add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
+            builder.add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
             builder.add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
             builder.add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "プロセッサソケット")

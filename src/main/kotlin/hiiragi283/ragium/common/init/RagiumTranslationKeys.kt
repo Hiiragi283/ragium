@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.init
 
 object RagiumTranslationKeys {
-
     const val PRESS_CTRL = "tooltip.ragium.press_ctrl"
-    
+
     //    Advancement    //
 
     const val ADVANCEMENT_BUJIN = "advancement.ragium.bujin.title"

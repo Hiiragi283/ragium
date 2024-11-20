@@ -75,7 +75,7 @@ data class HTDynamiteComponent(val power: Float, val canDestroy: Boolean) : Tool
             when (canDestroy) {
                 true -> Formatting.RED
                 false -> Formatting.AQUA
-            }
+            },
         )
         tooltip.accept(
             Text

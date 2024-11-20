@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
+import hiiragi283.ragium.api.content.HTHardModeContents
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
 import hiiragi283.ragium.api.extension.hasEnchantment
@@ -9,21 +10,29 @@ import hiiragi283.ragium.api.extension.sendTitle
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
+import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.component.ComponentMap
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterials
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import net.minecraft.item.ToolItem
+import net.minecraft.item.ToolMaterials
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType
@@ -187,6 +196,25 @@ object RagiumEventHandlers {
                 }
             }
             ActionResult.PASS
+        }
+
+        DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
+            context.modify({
+                (it as? ToolItem)?.material == ToolMaterials.IRON || (it as? ArmorItem)?.material == ArmorMaterials.IRON
+            }) { builder: ComponentMap.Builder, item: Item ->
+                builder.add(
+                    RagiumComponentTypes.REPAIRMENT,
+                    HTItemIngredient.of(HTHardModeContents.IRON.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                )
+            }
+            context.modify({
+                (it as? ToolItem)?.material == ToolMaterials.GOLD || (it as? ArmorItem)?.material == ArmorMaterials.GOLD
+            }) { builder: ComponentMap.Builder, item: Item ->
+                builder.add(
+                    RagiumComponentTypes.REPAIRMENT,
+                    HTItemIngredient.of(HTHardModeContents.GOLD.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                )
+            }
         }
     }
 

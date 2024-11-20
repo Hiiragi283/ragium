@@ -358,6 +358,9 @@ object RagiumItems {
     val LASER_EMITTER: Item = Item(itemSettings())
 
     @JvmField
+    val LUMINESCENCE_DUST = Item(itemSettings())
+
+    @JvmField
     val PLASTIC_PLATE: Item = Item(itemSettings())
 
     @JvmField
@@ -410,6 +413,7 @@ object RagiumItems {
         FLATTENING_DYNAMITE,
         HEART_OF_THE_NETHER,
         LASER_EMITTER,
+        LUMINESCENCE_DUST,
         PLASTIC_PLATE,
         POLYMER_RESIN,
         PROCESSOR_SOCKET,

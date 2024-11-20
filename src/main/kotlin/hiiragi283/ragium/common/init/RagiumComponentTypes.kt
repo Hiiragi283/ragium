@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.common.component.HTDynamiteComponent
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -72,7 +73,7 @@ object RagiumComponentTypes {
             this.amount = amount
             this.variant = variant
         }
-    
+
     @JvmField
     val DYNAMITE: ComponentType<HTDynamiteComponent> =
         register("dynamite", HTDynamiteComponent.CODEC, HTDynamiteComponent.PACKET_CODEC)
@@ -96,6 +97,10 @@ object RagiumComponentTypes {
     @JvmField
     val MATERIAL_KEY: ComponentType<HTMaterialKey> =
         register("material_key", HTMaterialKey.COMPONENT_TYPE)
+
+    @JvmField
+    val REPAIRMENT: ComponentType<HTItemIngredient> =
+        register("repairment", HTItemIngredient.CODEC, HTItemIngredient.PACKET_CODEC)
 
     @JvmField
     val TAG_PREFIX: ComponentType<HTTagPrefix> =

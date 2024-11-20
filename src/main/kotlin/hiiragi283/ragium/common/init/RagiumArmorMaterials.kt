@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.ArmorMaterials
@@ -16,7 +16,7 @@ object RagiumArmorMaterials {
     val STEEL: RegistryEntry<ArmorMaterial> = register(
         "steel",
         ArmorMaterials.IRON,
-    ) { Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey) }
+    ) { Ingredient.fromTag(HTTagPrefix.INGOT.createTag(RagiumMaterialKeys.STEEL)) }
 
     @JvmField
     val STELLA: RegistryEntry<ArmorMaterial> = register(
