@@ -337,6 +337,15 @@ object RagiumItems {
     val BASALT_MESH: Item = Item(itemSettings())
 
     @JvmField
+    val BLAZING_CARBON_ELECTRODE: Item = Item(itemSettings())
+
+    @JvmField
+    val CARBON_ELECTRODE: Item = Item(itemSettings())
+
+    @JvmField
+    val CHARGED_CARBON_ELECTRODE: Item = Item(itemSettings())
+
+    @JvmField
     val CRIMSON_CRYSTAL: Item = Item(itemSettings())
 
     @JvmField
@@ -350,9 +359,6 @@ object RagiumItems {
 
     @JvmField
     val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings())
-
-    @JvmField
-    val HEART_OF_THE_NETHER: Item = Item(itemSettings().rarity(Rarity.UNCOMMON))
 
     @JvmField
     val LASER_EMITTER: Item = Item(itemSettings())
@@ -405,13 +411,15 @@ object RagiumItems {
     @JvmField
     val MISC: List<Item> = listOf(
         BASALT_MESH,
+        BLAZING_CARBON_ELECTRODE,
+        CARBON_ELECTRODE,
+        CHARGED_CARBON_ELECTRODE,
         CRIMSON_CRYSTAL,
         CRUDE_SILICON,
         DEEPANT,
         ENGINE,
         ENGINEERING_PLASTIC_PLATE,
         FLATTENING_DYNAMITE,
-        HEART_OF_THE_NETHER,
         LASER_EMITTER,
         LUMINESCENCE_DUST,
         PLASTIC_PLATE,

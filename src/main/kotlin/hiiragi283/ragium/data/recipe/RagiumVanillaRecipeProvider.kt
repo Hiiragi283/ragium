@@ -404,18 +404,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerSuffix(exporter, "_1")
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.HEART_OF_THE_NETHER)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', Items.MAGMA_BLOCK)
-            .input('B', Items.BLAZE_POWDER)
-            .input('C', ConventionalItemTags.STORAGE_BLOCKS_NETHERITE)
-            .unlockedBy(ConventionalItemTags.STORAGE_BLOCKS_NETHERITE)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SHAFT, 6)
             .patterns(
                 "A",

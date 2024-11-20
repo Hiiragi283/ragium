@@ -264,7 +264,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.ELECTROLYZER,
-            Items.LIGHTNING_ROD,
+            RagiumItems.CHARGED_CARBON_ELECTRODE,
         )
         createProcessor(
             exporter,
@@ -295,7 +295,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.MULTI_SMELTER,
-            RagiumItems.HEART_OF_THE_NETHER,
+            RagiumItems.BLAZING_CARBON_ELECTRODE,
         )
         createProcessor(
             exporter,

@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.extension.asText
 import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -61,10 +63,17 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
             fun of(item: ItemConvertible, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
                 HTItemIngredient(RegistryEntryList.of(item.asItem().registryEntry), count, consumeType)
 
-            @Suppress("DEPRECATION")
             @JvmStatic
             fun of(tagKey: TagKey<Item>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
                 HTItemIngredient(Registries.ITEM.getOrCreateEntryList(tagKey), count, consumeType)
+
+            @JvmStatic
+            fun of(
+                prefix: HTTagPrefix,
+                material: HTMaterialKey,
+                count: Int = 1,
+                consumeType: ConsumeType = ConsumeType.DECREMENT,
+            ): HTItemIngredient = of(prefix.createTag(material), count, consumeType)
         }
 
         val isEmpty: Boolean
@@ -78,9 +87,6 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
 
         val text: MutableText
             get() = entryList.asText(Item::getName)
-
-        val firstEntry: RegistryEntry<Item>?
-            get() = entryList.firstOrNull()
 
         val entryMap: Map<RegistryEntry<Item>, Int> = entryList.associateWith { count }
 

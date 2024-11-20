@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -72,7 +71,6 @@ class HTMachineRecipeProcessor(
             useTransaction { transaction: Transaction ->
                 val inserted: Long = result.merge(fluidStorage.get(slot), transaction)
                 if (inserted == result.amount) {
-                    RagiumAPI.LOGGER.info("Succeeded!!")
                     transaction.commit()
                 } else {
                     transaction.abort()

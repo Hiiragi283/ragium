@@ -18,6 +18,10 @@ object RagiumScreenHandlerTypes {
         registerExtended("chemical_machine", ::HTChemicalMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
+    val DISTILLATION_TOWER: ExtendedScreenHandlerType<HTDistillationTowerScreenHandler, HTMachinePacket> =
+        registerExtended("distillation_tower", ::HTDistillationTowerScreenHandler, HTMachinePacket.PACKET_CODEC)
+
+    @JvmField
     val FLUID_DRILL: ExtendedScreenHandlerType<HTFluidDrillScreenHandler, HTMachinePacket> =
         registerExtended("fluid_drill", ::HTFluidDrillScreenHandler, HTMachinePacket.PACKET_CODEC)
 

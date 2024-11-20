@@ -67,7 +67,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         material: HTMaterialKey,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
+    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(prefix, material, count, consumeType))
 
     fun itemInput(
         content: HTContent.Material<*>,

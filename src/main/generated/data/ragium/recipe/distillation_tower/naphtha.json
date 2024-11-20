@@ -1,8 +1,5 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:advanced_circuit"
-  },
   "definition": {
     "type": "ragium:distillation_tower",
     "tier": "primitive"
@@ -10,17 +7,19 @@
   "fluid_inputs": [
     {
       "amount": 648000,
-      "fluids": "ragium:crude_oil"
+      "fluids": "ragium:naphtha"
     }
   ],
   "fluid_outputs": [
     {
-      "amount": 405000,
-      "fluid": "ragium:naphtha"
-    },
+      "amount": 324000,
+      "fluid": "ragium:fuel"
+    }
+  ],
+  "item_outputs": [
     {
-      "amount": 243000,
-      "fluid": "ragium:residual_oil"
+      "count": 4,
+      "item": "ragium:polymer_resin"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/heart_of_the_nether"
+    "layer0": "ragium:item/charged_carbon_electrode"
   }
 }

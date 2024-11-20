@@ -33,22 +33,20 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
-
-    override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world)
-
-    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildMachineFluidStorage()
-
-    //    HTDelegatedInventory    //
-
     override val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildSided()
 
+    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildMachineFluidStorage()
+
     private var processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, tier.smelterMulti)
+
+    override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world)
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
+        HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         processor = HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, newTier.smelterMulti)
