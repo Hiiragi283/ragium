@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -44,7 +45,14 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.ASPHALT)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
-        addDrop(RagiumBlocks.SWEET_BERRIES_CAKE, dropsNothing())
+        addDrop(
+            RagiumBlocks.SWEET_BERRIES_CAKE,
+            drops(
+                RagiumBlocks.SWEET_BERRIES_CAKE,
+                RagiumItems.SWEET_BERRIES_CAKE_PIECE,
+                ConstantLootNumberProvider.create(8f),
+            ),
+        )
 
         addDrop(RagiumBlocks.AUTO_ILLUMINATOR)
         addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())

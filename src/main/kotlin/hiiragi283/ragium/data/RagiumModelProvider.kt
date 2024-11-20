@@ -95,6 +95,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // static
         registerStaticModel(RagiumBlocks.MANUAL_FORGE)
         registerStaticModel(RagiumBlocks.MANUAL_MIXER)
+        registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
             TextureMap.all(Blocks.WHITE_WOOL)
@@ -160,7 +161,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 }
             },
         )
-        registerSupplier(
+        /*registerSupplier(
             RagiumBlocks.SWEET_BERRIES_CAKE,
             VariantsBlockStateSupplier
                 .create(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -181,7 +182,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                             }
                         },
                 ),
-        )
+        )*/
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block: Block = exporter.value
             val coil: Block = exporter.tier.getCoil().value

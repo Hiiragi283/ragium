@@ -2,12 +2,12 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
-import net.minecraft.block.HayBlock
+import net.minecraft.block.*
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
 object RagiumBlocks {
@@ -31,7 +31,14 @@ object RagiumBlocks {
     val SPONGE_CAKE: Block = HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL))
 
     @JvmField
-    val SWEET_BERRIES_CAKE: Block = HTSweetBerriesCakeBlock
+    val SWEET_BERRIES_CAKE: Block = object : Block(blockSettings(Blocks.CAKE)) {
+        override fun getOutlineShape(
+            state: BlockState,
+            world: BlockView,
+            pos: BlockPos,
+            context: ShapeContext,
+        ): VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
+    }
 
     @JvmField
     val FOODS: List<Block> = listOf(

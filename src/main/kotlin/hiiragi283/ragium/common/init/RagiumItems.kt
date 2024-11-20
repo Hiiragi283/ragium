@@ -318,6 +318,17 @@ object RagiumItems {
     val PULP: Item = Item(itemSettings())
 
     @JvmField
+    val SWEET_BERRIES_CAKE_PIECE: Item = Item(
+        itemSettings().food(
+            FoodComponent
+                .Builder()
+                .nutrition(2)
+                .saturationModifier(0.1f)
+                .build(),
+        ),
+    )
+
+    @JvmField
     val FOODS: List<Item> = listOf(
         BEE_WAX,
         BUTTER,
@@ -329,6 +340,7 @@ object RagiumItems {
         DOUGH,
         MINCED_MEAT,
         PULP,
+        SWEET_BERRIES_CAKE_PIECE,
     )
 
     //    Misc    //

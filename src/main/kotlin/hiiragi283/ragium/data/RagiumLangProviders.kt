@@ -173,6 +173,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.DOUGH, "Dough")
             builder.add(RagiumItems.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumItems.PULP, "Pulp")
+            builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
 
             builder.add(RagiumItems.ANVIL_DYNAMITE, "Anvil Dynamite")
             builder.add(RagiumItems.BACKPACK, "Backpack")
@@ -501,6 +502,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.DOUGH, "生地")
             builder.add(RagiumItems.MINCED_MEAT, "ひき肉")
             builder.add(RagiumItems.PULP, "パルプ")
+            builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
 
             builder.add(RagiumItems.ANVIL_DYNAMITE, "金床ダイナマイト")
             builder.add(RagiumItems.BACKPACK, "バックパック")

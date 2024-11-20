@@ -25,7 +25,6 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -211,18 +210,7 @@ internal object RagiumContentRegister {
             RagiumBlocks.SPONGE_CAKE,
             itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)),
         )
-        registerBlockItem(
-            RagiumBlocks.SWEET_BERRIES_CAKE,
-            itemSettings()
-                .food(
-                    FoodComponent
-                        .Builder()
-                        .nutrition(2)
-                        .saturationModifier(0.1f)
-                        .build(),
-                ).maxDamage(7)
-                .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
-        )
+        registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
         registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
@@ -321,6 +309,7 @@ internal object RagiumContentRegister {
         registerItem("dough", RagiumItems.DOUGH)
         registerItem("minced_meat", RagiumItems.MINCED_MEAT)
         registerItem("pulp", RagiumItems.PULP)
+        registerItem("sweet_berries_cake_piece", RagiumItems.SWEET_BERRIES_CAKE_PIECE)
 
         registerItem("basalt_mesh", RagiumItems.BASALT_MESH)
         registerItem("blazing_carbon_electrode", RagiumItems.BLAZING_CARBON_ELECTRODE)

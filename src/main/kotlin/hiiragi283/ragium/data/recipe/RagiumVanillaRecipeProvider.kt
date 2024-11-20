@@ -362,6 +362,22 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.SWEET_BERRIES_CAKE_PIECE, 8)
+            .input(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .patterns(
+                "AAA",
+                "A A",
+                "AAA",
+            ).input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .offerSuffix(exporter, "_from_piece")
+
+        HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_BREAD)
             .input(Items.BREAD)
             .input(fluidIngredient(RagiumFluids.CHOCOLATE.value))
