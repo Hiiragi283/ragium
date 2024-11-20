@@ -341,7 +341,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                 RagiumContents.Pipes.WOODEN -> ItemTags.PLANKS
                 RagiumContents.Pipes.STEEL -> HTHardModeContents.STEEL.getContent(hardMode).prefixedTagKey
                 RagiumContents.Pipes.COPPER -> HTHardModeContents.COPPER.getContent(hardMode).prefixedTagKey
-                RagiumContents.Pipes.UNIVERSAL -> HTMachineTier.PRIMITIVE.getMainMetal(hardMode).prefixedTagKey
+                RagiumContents.Pipes.UNIVERSAL -> HTHardModeContents.REFINED_RAGI_STEEL.getContent(hardMode).prefixedTagKey
             }
             // shaped crafting
             HTShapedRecipeJsonBuilder

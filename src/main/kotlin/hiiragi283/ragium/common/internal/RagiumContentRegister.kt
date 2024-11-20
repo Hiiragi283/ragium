@@ -7,9 +7,6 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import hiiragi283.ragium.api.material.HTTagPrefixedBlock
-import hiiragi283.ragium.api.material.HTTagPrefixedBlockItem
-import hiiragi283.ragium.api.material.HTTagPrefixedItem
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
@@ -26,14 +23,17 @@ import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
-import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.*
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
@@ -78,40 +78,67 @@ internal object RagiumContentRegister {
     fun registerContents() {
         // block
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-            val block = HTTagPrefixedBlock(ore.tagPrefix, ore.material, blockSettings(ore.baseStone))
+            val block = Block(blockSettings(ore.baseStone))
             registerBlock(ore, block)
-            registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
+            registerBlockItem(
+                block,
+                itemSettings().component(
+                    DataComponentTypes.ITEM_NAME,
+                    ore.tagPrefix.getText(ore.material),
+                ),
+            )
         }
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
-            val block = HTTagPrefixedBlock(storage.tagPrefix, storage.material, blockSettings(Blocks.IRON_BLOCK))
+            val block = Block(blockSettings(Blocks.IRON_BLOCK))
             registerBlock(storage, block)
-            registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
+            registerBlockItem(
+                block,
+                itemSettings().component(
+                    DataComponentTypes.ITEM_NAME,
+                    storage.tagPrefix.getText(storage.material),
+                ),
+            )
         }
 
         RagiumContents.Grates.entries.forEach { grate: RagiumContents.Grates ->
             val block = TransparentBlock(blockSettings(Blocks.COPPER_GRATE))
             registerBlock(grate, block)
-            registerBlockItem(block, itemSettings().tier(grate.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.GRATE, grate.tier),
+            )
         }
         RagiumContents.Casings.entries.forEach { casings: RagiumContents.Casings ->
             val block = Block(blockSettings(Blocks.SMOOTH_STONE))
             registerBlock(casings, block)
-            registerBlockItem(block, itemSettings().tier(casings.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.CASING, casings.tier),
+            )
         }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val block = TransparentBlock(blockSettings(Blocks.SMOOTH_STONE))
             registerBlock(hull, block)
-            registerBlockItem(block, itemSettings().tier(hull.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.HULL, hull.tier),
+            )
         }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
             val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
             registerBlock(coil, block)
-            registerBlockItem(block, itemSettings().tier(coil.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.COIL, coil.tier),
+            )
         }
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block = HTExporterBlock(exporter.tier)
             registerBlock(exporter, block)
-            registerBlockItem(block, itemSettings().tier(exporter.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.EXPORTER, exporter.tier),
+            )
         }
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val block = HTPipeBlock(pipe.tier, pipe.pipeType)
@@ -121,7 +148,10 @@ internal object RagiumContentRegister {
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
             val block = HTDrumBlock(drum.tier)
             registerBlock(drum, block)
-            registerBlockItem(block, itemSettings().tier(drum.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.DRUM, drum.tier),
+            )
         }
         initBlocks()
 
@@ -132,15 +162,30 @@ internal object RagiumContentRegister {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-            addAll(RagiumContents.CircuitBoards.entries)
-            addAll(RagiumContents.Circuits.entries)
-        }.forEach { content: HTContent<Item> ->
-            if (content is HTContent.Material<Item>) {
-                registerItem(content, HTTagPrefixedItem(content.tagPrefix, content.material, itemSettings()))
-            } else {
-                registerItem(content, Item(itemSettings()))
-            }
+        }.forEach { content: HTContent.Material<Item> ->
+            registerItem(
+                content,
+                Item(
+                    itemSettings().component(
+                        DataComponentTypes.ITEM_NAME,
+                        content.tagPrefix.getText(content.material),
+                    ),
+                ),
+            )
         }
+        RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
+            registerItem(
+                board,
+                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, board.tier)),
+            )
+        }
+        RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
+            registerItem(
+                circuit,
+                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, circuit.tier)),
+            )
+        }
+
         initItems()
 
         // fluid
@@ -422,10 +467,5 @@ internal object RagiumContentRegister {
                 )
             }
         }
-    }
-
-    @JvmStatic
-    private fun registerCauldron(map: CauldronBehavior.CauldronBehaviorMap, item: ItemConvertible, behavior: CauldronBehavior) {
-        map.map[item.asItem()] = behavior
     }
 }

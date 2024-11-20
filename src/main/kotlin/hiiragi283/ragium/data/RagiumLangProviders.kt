@@ -1,8 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTLangType
-import hiiragi283.ragium.api.content.HTTranslationFormatter
 import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -68,119 +66,17 @@ object RagiumLangProviders {
         add(Util.createTranslationKey("world", key.value), value)
     }
 
-    @JvmStatic
-    private fun translateContents(builder: TranslationBuilder, type: HTLangType) {
-        // blocks
-        RagiumContents.Grates.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Grate"
-                        HTLangType.JA_JP -> "%s格子"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        RagiumContents.Casings.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Casing"
-                        HTLangType.JA_JP -> "%s外装"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        RagiumContents.Hulls.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Hull"
-                        HTLangType.JA_JP -> "%s筐体"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        RagiumContents.Coils.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Coil"
-                        HTLangType.JA_JP -> "%sコイル"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        RagiumContents.Exporters.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Exporter"
-                        HTLangType.JA_JP -> "%s搬出機"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        RagiumContents.Drums.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Drum"
-                        HTLangType.JA_JP -> "%sドラム"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        // items
-        RagiumContents.CircuitBoards.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Circuit Board"
-                        HTLangType.JA_JP -> "%s回路基板"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        RagiumContents.Circuits.entries.forEach {
-            builder.add(
-                it,
-                HTTranslationFormatter { type ->
-                    when (type) {
-                        HTLangType.EN_US -> "%s Circuit"
-                        HTLangType.JA_JP -> "%s回路"
-                    }
-                }.getTranslation(type, it.tier),
-            )
-        }
-        /*HTCrafterHammerItem.Behavior.entries.forEach {
-            builder.add(it, object : HTTranslationFormatter {
-                override val enPattern: String = "Hammer Module (%s)"
-                override val jaPattern: String = "%s回路"
-            }.getTranslation(type, ))
-        }*/
-        // fluids
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            builder.add(
-                fluid.translationKey,
-                fluid.getTranslation(type),
-            )
-        }
-    }
-
     //    English    //
 
     private class EnglishLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
-            translateContents(builder, HTLangType.EN_US)
+            RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+                builder.add(
+                    fluid.translationKey,
+                    fluid.enName,
+                )
+            }
 
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Press Ctrl to show descriptions")
 
@@ -237,7 +133,16 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.EXPORTER_FLUID_FILTER, "Current Fluid Filter: %s")
             builder.add(RagiumTranslationKeys.EXPORTER_ITEM_FILTER, "Current Item Filter: %s")
-            // Enchantment
+            // Contents
+            builder.add(RagiumTranslationKeys.CASING, "Casing")
+            builder.add(RagiumTranslationKeys.CIRCUIT, "Circuit")
+            builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "circuit Board")
+            builder.add(RagiumTranslationKeys.COIL, "Coil")
+            builder.add(RagiumTranslationKeys.DRUM, "Drum")
+            builder.add(RagiumTranslationKeys.EXPORTER, "Exporter")
+            builder.add(RagiumTranslationKeys.GRATE, "Grate")
+            builder.add(RagiumTranslationKeys.HULL, "Hull")
+            // Enchantments
             builder.add(RagiumEnchantments.SMELTING, "Smelting")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
             builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
@@ -492,7 +397,12 @@ object RagiumLangProviders {
     private class JapaneseLang(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricLanguageProvider(output, "ja_jp", registryLookup) {
         override fun generateTranslations(registryLookup: RegistryWrapper.WrapperLookup, builder: TranslationBuilder) {
-            translateContents(builder, HTLangType.JA_JP)
+            RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+                builder.add(
+                    fluid.translationKey,
+                    fluid.jaName,
+                )
+            }
 
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
 
@@ -549,6 +459,15 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.EXPORTER_FLUID_FILTER, "現在の液体フィルタ: %s")
             builder.add(RagiumTranslationKeys.EXPORTER_ITEM_FILTER, "現在のアイテムフィルタ: %s")
+            // Contents
+            builder.add(RagiumTranslationKeys.CASING, "外装")
+            builder.add(RagiumTranslationKeys.CIRCUIT, "回路")
+            builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "回路基板")
+            builder.add(RagiumTranslationKeys.COIL, "コイル")
+            builder.add(RagiumTranslationKeys.DRUM, "ドラム")
+            builder.add(RagiumTranslationKeys.EXPORTER, "搬出機")
+            builder.add(RagiumTranslationKeys.GRATE, "格子")
+            builder.add(RagiumTranslationKeys.HULL, "筐体")
             // Enchantment
             builder.add(RagiumEnchantments.SMELTING, "精錬")
             builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")

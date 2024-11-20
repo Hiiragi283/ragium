@@ -13,8 +13,7 @@ class HTMachineBlockItem(block: HTMachineBlock, settings: Settings) :
         block,
         settings
             .machineKey(block.key)
-            .tier(block.tier)
-            .rarity(block.tier.rarity),
+            .tier(block.tier),
     ) {
     val key: HTMachineKey = block.key
     val tier: HTMachineTier = block.tier

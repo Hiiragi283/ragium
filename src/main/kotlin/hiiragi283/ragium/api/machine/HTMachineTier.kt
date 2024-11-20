@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTHardModeContents
-import hiiragi283.ragium.api.content.HTTranslationProvider
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -26,34 +26,25 @@ import net.minecraft.world.World
 
 enum class HTMachineTier(
     private val idPattern: String,
-    override val enName: String,
-    override val jaName: String,
     val recipeCost: Long,
     val tickRate: Int,
     val rarity: Rarity,
-) : StringIdentifiable,
-    HTTranslationProvider {
+) : StringIdentifiable {
     // NONE(RagiumAPI.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
     PRIMITIVE(
         "primitive_%s",
-        "Primitive",
-        "簡易",
         160,
         200,
         Rarity.COMMON,
     ),
     BASIC(
         "basic_%s",
-        "Basic",
-        "基本",
         640,
         150,
         Rarity.UNCOMMON,
     ),
     ADVANCED(
         "advanced_%s",
-        "Advanced",
-        "発展",
         2560,
         100,
         Rarity.RARE,
@@ -80,8 +71,12 @@ enum class HTMachineTier(
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
-    val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)
-    val tierText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_TIER, text).formatted(Formatting.GRAY)
+    val text: MutableText = Text.translatable(translationKey)
+    val tierText: MutableText = Text
+        .translatable(
+            RagiumTranslationKeys.MACHINE_TIER,
+            text.formatted(rarity.formatting),
+        ).formatted(Formatting.GRAY)
     val recipeCostText: MutableText = Text
         .translatable(
             RagiumTranslationKeys.MACHINE_RECIPE_COST,
@@ -89,6 +84,8 @@ enum class HTMachineTier(
         ).formatted(Formatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
+
+    fun createPrefixedText(key: String): MutableText = Text.translatable(prefixKey, Text.translatable(key))
 
     fun createPrefixedText(key: HTMachineKey): MutableText = Text.translatable(prefixKey, key.text)
 

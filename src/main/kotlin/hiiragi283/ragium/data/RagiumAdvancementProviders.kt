@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -130,7 +129,7 @@ object RagiumAdvancementProviders {
         path: String,
         parent: AdvancementEntry,
         icon: HTContent.Material<*>,
-        title: Text = icon.asItem().name,
+        title: Text = ItemStack(icon).name,
         desc: Text = Text.empty(),
         frame: AdvancementFrame = AdvancementFrame.TASK,
         showToast: Boolean = true,
@@ -537,12 +536,12 @@ object RagiumAdvancementProviders {
                 frame = AdvancementFrame.GOAL,
             ) { hasAllItems(RagiumItems.DYNAMITE) }
             // alkali
-            val alkali: AdvancementEntry = createChild(
+            val alkali: AdvancementEntry = createContentChild(
                 consumer,
                 "chemistry/alkali",
                 root,
                 RagiumContents.Dusts.ALKALI,
-            ) { hasAnyItems(RagiumItemTags.ALKALI) }
+            )
             val soap: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/soap",

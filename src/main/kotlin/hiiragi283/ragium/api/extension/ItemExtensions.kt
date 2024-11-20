@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentChanges
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.item.*
@@ -25,7 +26,7 @@ fun itemSettings(): Item.Settings = Item.Settings()
 
 fun Item.Settings.machineKey(key: HTMachineKey): Item.Settings = component(HTMachineKey.COMPONENT_TYPE, key)
 
-fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachineTier.COMPONENT_TYPE, tier)
+fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachineTier.COMPONENT_TYPE, tier).rarity(tier.rarity)
 
 fun Item.Settings.materialKey(key: HTMaterialKey): Item.Settings = component(HTMaterialKey.COMPONENT_TYPE, key)
 
@@ -38,6 +39,9 @@ fun Item.Settings.repairment(item: ItemConvertible, count: Int = 1): Item.Settin
 
 fun Item.Settings.repairment(tagKey: TagKey<Item>, count: Int = 1): Item.Settings =
     component(RagiumComponentTypes.REPAIRMENT, HTItemIngredient.of(tagKey, count))
+
+fun Item.Settings.tieredText(translationKey: String, tier: HTMachineTier): Item.Settings =
+    component(DataComponentTypes.ITEM_NAME, tier.createPrefixedText(translationKey)).tier(tier)
 
 //    ItemStack    //
 

@@ -29,6 +29,17 @@ object RagiumTranslationKeys {
     const val EXPORTER_FLUID_FILTER = "message.ragium.block.exporter.fluid_filter"
     const val EXPORTER_ITEM_FILTER = "message.ragium.block.exporter.item_filter"
 
+    //    Content    //
+
+    const val CASING = "content.ragium.casing"
+    const val CIRCUIT = "content.ragium.circuit"
+    const val CIRCUIT_BOARD = "content.ragium.circuit_board"
+    const val COIL = "content.ragium.coil"
+    const val DRUM = "content.ragium.drum"
+    const val EXPORTER = "content.ragium.exporter"
+    const val GRATE = "content.ragium.grate"
+    const val HULL = "content.ragium.hull"
+
     //    Item    //
 
     const val ANVIL_DYNAMITE = "tooltip.ragium.item.anvil_dynamite"
