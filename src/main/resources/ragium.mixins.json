@@ -5,7 +5,6 @@
   "mixins": [
     "AdvancementRewardsMixin",
     "AnvilScreenHandlerMixin",
-    "BlockMixin",
     "LivingEntityMixin",
     "RecipeManagerMixin",
     "RegistriesMixin",

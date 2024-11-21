@@ -195,6 +195,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(ItemTags.COALS, 8)
             .itemOutput(RagiumItems.CARBON_ELECTRODE)
             .offerTo(exporter, RagiumItems.CARBON_ELECTRODE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(RagiumItems.MINCED_MEAT)
+            .itemOutput(RagiumItems.MEAT_INGOT)
+            .offerTo(exporter, RagiumItems.MEAT_INGOT)
     }
 
     //    Extractor    //

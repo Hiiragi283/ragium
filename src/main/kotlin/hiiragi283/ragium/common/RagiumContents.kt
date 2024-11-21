@@ -152,6 +152,9 @@ object RagiumContents {
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+
+        // tier4
+        NETHERITE(RagiumMaterialKeys.NETHERITE),
         ;
 
         override val delegated: HTContent<Item> =

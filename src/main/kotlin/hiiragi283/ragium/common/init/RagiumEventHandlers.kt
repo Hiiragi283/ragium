@@ -2,16 +2,11 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
-import hiiragi283.ragium.api.content.HTHardModeContents
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
-import hiiragi283.ragium.api.event.HTModifyBlockDropsCallback
-import hiiragi283.ragium.api.extension.hasEnchantment
 import hiiragi283.ragium.api.extension.sendTitle
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
@@ -20,27 +15,14 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
-import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ArmorMaterials
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.ToolItem
-import net.minecraft.item.ToolMaterials
-import net.minecraft.recipe.Recipe
-import net.minecraft.recipe.RecipeEntry
-import net.minecraft.recipe.RecipeType
-import net.minecraft.recipe.input.RecipeInput
-import net.minecraft.recipe.input.SingleStackRecipeInput
+import net.minecraft.item.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -88,7 +70,7 @@ object RagiumEventHandlers {
         }
 
         // modify drops
-        HTModifyBlockDropsCallback.EVENT.register {
+        /*HTModifyBlockDropsCallback.EVENT.register {
                 _: BlockState,
                 world: ServerWorld,
                 _: BlockPos,
@@ -112,7 +94,7 @@ object RagiumEventHandlers {
 
                 else -> drops
             }
-        }
+        }*/
 
         // DefaultItemComponentEvents
         /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
@@ -204,7 +186,7 @@ object RagiumEventHandlers {
             }) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
                     RagiumComponentTypes.REPAIRMENT,
-                    HTItemIngredient.of(HTHardModeContents.IRON.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                    HTItemIngredient.of(RagiumHardModeContents.IRON.getContent(RagiumAPI.getInstance().config.isHardMode)),
                 )
             }
             context.modify({
@@ -212,13 +194,21 @@ object RagiumEventHandlers {
             }) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
                     RagiumComponentTypes.REPAIRMENT,
-                    HTItemIngredient.of(HTHardModeContents.GOLD.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                    HTItemIngredient.of(RagiumHardModeContents.GOLD.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                )
+            }
+            context.modify({
+                (it as? ToolItem)?.material == ToolMaterials.NETHERITE || (it as? ArmorItem)?.material == ArmorMaterials.NETHERITE
+            }) { builder: ComponentMap.Builder, item: Item ->
+                builder.add(
+                    RagiumComponentTypes.REPAIRMENT,
+                    HTItemIngredient.of(RagiumHardModeContents.NETHERITE.getContent(RagiumAPI.getInstance().config.isHardMode)),
                 )
             }
         }
     }
 
-    @JvmStatic
+    /*@JvmStatic
     private fun <T : RecipeInput, U : Recipe<T>> applyRecipe(
         drop: ItemStack,
         world: World,
@@ -249,5 +239,5 @@ object RagiumEventHandlers {
         key: HTMachineKey,
     ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
         HTMachineInput.create(key, HTMachineTier.PRIMITIVE) { add(it) }
-    }
+    }*/
 }

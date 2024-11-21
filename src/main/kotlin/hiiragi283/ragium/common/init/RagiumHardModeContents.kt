@@ -1,19 +1,20 @@
-package hiiragi283.ragium.api.content
+package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTHardModeContent
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.item.Items
 
-object HTHardModeContents {
+object RagiumHardModeContents {
     @JvmField
-    val ALUMINUM: HTHardModeContent = HTHardModeContent.of(
+    val ALUMINUM: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.ALUMINUM,
         RagiumContents.Plates.ALUMINUM,
     )
 
     @JvmField
-    val COPPER: HTHardModeContent = HTHardModeContent.of(
+    val COPPER: HTHardModeContent = HTHardModeContent.Companion.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.COPPER,
@@ -23,13 +24,13 @@ object HTHardModeContents {
     )
 
     @JvmField
-    val DEEP_STEEL: HTHardModeContent = HTHardModeContent.of(
+    val DEEP_STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.DEEP_STEEL,
         RagiumContents.Plates.DEEP_STEEL,
     )
 
     @JvmField
-    val GOLD: HTHardModeContent = HTHardModeContent.of(
+    val GOLD: HTHardModeContent = HTHardModeContent.Companion.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.GOLD,
@@ -39,7 +40,7 @@ object HTHardModeContents {
     )
 
     @JvmField
-    val IRON: HTHardModeContent = HTHardModeContent.of(
+    val IRON: HTHardModeContent = HTHardModeContent.Companion.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.IRON,
@@ -49,25 +50,35 @@ object HTHardModeContents {
     )
 
     @JvmField
-    val RAGI_ALLOY: HTHardModeContent = HTHardModeContent.of(
+    val NETHERITE: HTHardModeContent = HTHardModeContent.Companion.of(
+        HTContent.Material.ofWrapped(
+            HTTagPrefix.INGOT,
+            RagiumMaterialKeys.NETHERITE,
+            Items.NETHERITE_INGOT,
+        ),
+        RagiumContents.Plates.NETHERITE,
+    )
+
+    @JvmField
+    val RAGI_ALLOY: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.RAGI_ALLOY,
         RagiumContents.Plates.RAGI_ALLOY,
     )
 
     @JvmField
-    val RAGI_STEEL: HTHardModeContent = HTHardModeContent.of(
+    val RAGI_STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.RAGI_STEEL,
         RagiumContents.Plates.RAGI_STEEL,
     )
 
     @JvmField
-    val REFINED_RAGI_STEEL: HTHardModeContent = HTHardModeContent.of(
+    val REFINED_RAGI_STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.REFINED_RAGI_STEEL,
         RagiumContents.Plates.REFINED_RAGI_STEEL,
     )
 
     @JvmField
-    val STEEL: HTHardModeContent = HTHardModeContent.of(
+    val STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.STEEL,
         RagiumContents.Plates.STEEL,
     )

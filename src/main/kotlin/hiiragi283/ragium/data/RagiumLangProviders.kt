@@ -143,9 +143,9 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.GRATE, "Grate")
             builder.add(RagiumTranslationKeys.HULL, "Hull")
             // Enchantments
-            builder.add(RagiumEnchantments.SMELTING, "Smelting")
-            builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
-            builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
+            // builder.add(RagiumEnchantments.SMELTING, "Smelting")
+            // builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
+            // builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Items
             builder.add(RagiumItems.STEEL_HELMET, "Steel Helmet")
             builder.add(RagiumItems.STEEL_CHESTPLATE, "Steel Chestplate")
@@ -169,8 +169,10 @@ object RagiumLangProviders {
             builder.add(RagiumItems.CHOCOLATE, "Chocolate")
             builder.add(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
             builder.add(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
+            builder.add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
             builder.add(RagiumItems.FLOUR, "Flour")
             builder.add(RagiumItems.DOUGH, "Dough")
+            builder.add(RagiumItems.MEAT_INGOT, "Meat Ingot")
             builder.add(RagiumItems.MINCED_MEAT, "Minced Meat")
             builder.add(RagiumItems.PULP, "Pulp")
             builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
@@ -356,6 +358,7 @@ object RagiumLangProviders {
             // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
             builder.add(RagiumMaterialKeys.RAGIUM, "Ragium")
+            builder.add(RagiumMaterialKeys.NETHERITE, "Netherite")
 
             builder.add(RagiumMaterialKeys.COAL, "Coal")
             builder.add(RagiumMaterialKeys.DIAMOND, "Diamond")
@@ -472,9 +475,9 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.GRATE, "格子")
             builder.add(RagiumTranslationKeys.HULL, "筐体")
             // Enchantment
-            builder.add(RagiumEnchantments.SMELTING, "精錬")
-            builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
-            builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
+            // builder.add(RagiumEnchantments.SMELTING, "精錬")
+            // builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
+            // builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
             // Items
             builder.add(RagiumItems.STEEL_HELMET, "スチールのヘルメット")
             builder.add(RagiumItems.STEEL_CHESTPLATE, "スチールのチェストプレート")
@@ -498,8 +501,10 @@ object RagiumLangProviders {
             builder.add(RagiumItems.CHOCOLATE, "チョコレート")
             builder.add(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
             builder.add(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
+            builder.add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
             builder.add(RagiumItems.FLOUR, "小麦粉")
             builder.add(RagiumItems.DOUGH, "生地")
+            builder.add(RagiumItems.MEAT_INGOT, "生肉インゴット")
             builder.add(RagiumItems.MINCED_MEAT, "ひき肉")
             builder.add(RagiumItems.PULP, "パルプ")
             builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
@@ -641,6 +646,7 @@ object RagiumLangProviders {
             // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
             builder.add(RagiumMaterialKeys.RAGIUM, "ラギウム")
+            builder.add(RagiumMaterialKeys.NETHERITE, "ネザライト")
 
             builder.add(RagiumMaterialKeys.COAL, "石炭")
             builder.add(RagiumMaterialKeys.DIAMOND, "ダイアモンド")

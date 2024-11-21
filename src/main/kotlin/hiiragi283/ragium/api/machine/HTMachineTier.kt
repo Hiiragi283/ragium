@@ -3,11 +3,11 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTHardModeContents
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumHardModeContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -128,21 +128,21 @@ enum class HTMachineTier(
     }
 
     fun getMainMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
-        PRIMITIVE -> HTHardModeContents.RAGI_ALLOY
-        BASIC -> HTHardModeContents.RAGI_STEEL
-        ADVANCED -> HTHardModeContents.REFINED_RAGI_STEEL
+        PRIMITIVE -> RagiumHardModeContents.RAGI_ALLOY
+        BASIC -> RagiumHardModeContents.RAGI_STEEL
+        ADVANCED -> RagiumHardModeContents.REFINED_RAGI_STEEL
     }.getContent(hardMode)
 
     fun getSubMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
-        PRIMITIVE -> HTHardModeContents.COPPER
-        BASIC -> HTHardModeContents.GOLD
-        ADVANCED -> HTHardModeContents.RAGI_ALLOY
+        PRIMITIVE -> RagiumHardModeContents.COPPER
+        BASIC -> RagiumHardModeContents.GOLD
+        ADVANCED -> RagiumHardModeContents.RAGI_ALLOY
     }.getContent(hardMode)
 
     fun getSteelMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
-        PRIMITIVE -> HTHardModeContents.IRON
-        BASIC -> HTHardModeContents.STEEL
-        ADVANCED -> HTHardModeContents.DEEP_STEEL
+        PRIMITIVE -> RagiumHardModeContents.IRON
+        BASIC -> RagiumHardModeContents.STEEL
+        ADVANCED -> RagiumHardModeContents.DEEP_STEEL
     }.getContent(hardMode)
 
     fun getStorageBlock(): RagiumContents.StorageBlocks = when (this) {

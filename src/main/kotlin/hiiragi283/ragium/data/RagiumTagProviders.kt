@@ -4,12 +4,10 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
-import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -24,7 +22,6 @@ import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.EnchantmentTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
@@ -33,7 +30,7 @@ object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(::BlockProvider)
-        pack.addProvider(::EnchantmentProvider)
+        // pack.addProvider(::EnchantmentProvider)
         pack.addProvider(::FluidProvider)
         pack.addProvider(::ItemProvider)
     }
@@ -90,7 +87,7 @@ object RagiumTagProviders {
 
     //    Enchantment    //
 
-    private class EnchantmentProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    /*private class EnchantmentProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.EnchantmentTagProvider(output, completableFuture) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
             getOrCreateTagBuilder(EnchantmentTags.TRADEABLE)
@@ -108,7 +105,7 @@ object RagiumTagProviders {
                 .add(RagiumEnchantments.SLEDGE_HAMMER)
                 .add(RagiumEnchantments.BUZZ_SAW)
         }
-    }
+    }*/
 
     //    Fluid    //
 

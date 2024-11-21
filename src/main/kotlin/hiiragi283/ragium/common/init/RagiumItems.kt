@@ -306,10 +306,16 @@ object RagiumItems {
     val CHOCOLATE_BREAD: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
 
     @JvmField
+    val COOKED_MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
+
+    @JvmField
     val FLOUR: Item = Item(itemSettings())
 
     @JvmField
     val DOUGH: Item = Item(itemSettings())
+
+    @JvmField
+    val MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.BEEF))
 
     @JvmField
     val MINCED_MEAT: Item = Item(itemSettings())
@@ -334,11 +340,13 @@ object RagiumItems {
         BUTTER,
         CARAMEL,
         CHOCOLATE,
+        COOKED_MEAT_INGOT,
         CHOCOLATE_APPLE,
         CHOCOLATE_BREAD,
         FLOUR,
         DOUGH,
         MINCED_MEAT,
+        MEAT_INGOT,
         PULP,
         SWEET_BERRIES_CAKE_PIECE,
     )

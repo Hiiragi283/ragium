@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "ragium:meat_ingot"
+  },
+  "result": {
+    "id": "ragium:cooked_meat_ingot"
+  }
+}

@@ -502,5 +502,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             RagiumItems.DOUGH,
             Items.BREAD,
         )
+        HTCookingRecipeJsonBuilder.smeltAndSmoke(
+            exporter,
+            RagiumItems.MEAT_INGOT,
+            RagiumItems.COOKED_MEAT_INGOT,
+        )
     }
 }

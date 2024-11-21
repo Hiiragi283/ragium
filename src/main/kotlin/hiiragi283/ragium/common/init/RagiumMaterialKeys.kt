@@ -9,6 +9,9 @@ object RagiumMaterialKeys {
     val DEEP_STEEL: HTMaterialKey = HTMaterialKey.of("deep_steel")
 
     @JvmField
+    val NETHERITE: HTMaterialKey = HTMaterialKey.of("netherite")
+
+    @JvmField
     val RAGI_ALLOY: HTMaterialKey = HTMaterialKey.of("ragi_alloy")
 
     @JvmField
