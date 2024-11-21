@@ -21,12 +21,16 @@ object RagiumMachineKeys {
     val FLUID_DRILL: HTMachineKey = HTMachineKey.of(RagiumAPI.id("fluid_drill"))
 
     @JvmField
+    val ROCK_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("rock_generator"))
+
+    @JvmField
     val CONSUMERS: List<HTMachineKey> = listOf(
         BEDROCK_MINER,
         BIOMASS_FERMENTER,
         CANNING_MACHINE,
         DRAIN,
         FLUID_DRILL,
+        ROCK_GENERATOR,
     )
 
     //    Generator    //
@@ -96,9 +100,6 @@ object RagiumMachineKeys {
     val MULTI_SMELTER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("multi_smelter"))
 
     @JvmField
-    val ROCK_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("rock_generator"))
-
-    @JvmField
     val SAW_MILL: HTMachineKey = HTMachineKey.of(RagiumAPI.id("saw_mill"))
 
     @JvmField
@@ -117,7 +118,6 @@ object RagiumMachineKeys {
         METAL_FORMER,
         MIXER,
         MULTI_SMELTER,
-        ROCK_GENERATOR,
         SAW_MILL,
     )
 }

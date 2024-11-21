@@ -1,10 +1,12 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.consume
 
 import com.google.common.base.Predicates
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -30,7 +32,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state) {
+class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.DRAIN
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
@@ -48,7 +50,10 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTConsumerBlockEnti
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
 
-    override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
+    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
+
+    override fun process(world: World, pos: BlockPos): Boolean {
         Direction.entries.forEach { dir: Direction ->
             val posTo: BlockPos = pos.offset(dir)
             val stateTo: BlockState = world.getBlockState(posTo)

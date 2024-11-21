@@ -1,11 +1,11 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.process
 
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntityBase.Large(RagiumBlockEntityTypes.LARGE_PROCESSOR, pos, state) {
+    HTRecipeProcessorBlockEntityBase.Large(RagiumBlockEntityTypes.LARGE_PROCESSOR, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.ALLOY_FURNACE
 
     //    HTMultiblockController    //

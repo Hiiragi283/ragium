@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
+import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
@@ -35,6 +37,7 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
@@ -42,8 +45,17 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.TeleportTarget
 import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
+
+//    ApiLookup    //
+
+fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromHand(player: PlayerEntity, hand: Hand = Hand.MAIN_HAND): A? =
+    ContainerItemContext.forPlayerInteraction(player, hand).find(this)
+
+fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromStack(stack: ItemStack): A? =
+    ContainerItemContext.withConstant(stack).find(this)
 
 //    BlockPos    //
 
@@ -143,6 +155,11 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
     return Triple(red, green, blue)
 }
 
+//    EnergyStorage    //
+
+val EnergyStorage.energyPercent: Float
+    get() = amount.toFloat() / capacity.toFloat()
+
 //    FabricLoader    //
 
 fun isModLoaded(modId: String): Boolean = FabricLoader.getInstance().isModLoaded(modId)
@@ -193,6 +210,12 @@ fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getAllMatches(
 operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
 
 operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
+
+fun RecipeInput.iterable(): Iterable<ItemStack> = buildList<ItemStack> {
+    for (index: Int in (0 until this.size)) {
+        add(this[index])
+    }
+}
 
 //    Registry    //
 

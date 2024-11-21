@@ -1,11 +1,13 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.consume
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -19,7 +21,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTConsumerBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state),
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state),
     HTMultiblockController {
     override var key: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
@@ -27,12 +29,15 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
+    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    override fun consumeEnergy(world: World, pos: BlockPos): Boolean = false
+    override fun process(world: World, pos: BlockPos): Boolean = false
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+        HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
 
     //    HTMultiblockController    //
 

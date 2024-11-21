@@ -273,6 +273,7 @@ object RagiumLangProviders {
                 "Drains fluids from each side",
             )
             builder.add(RagiumMachineKeys.FLUID_DRILL, "Fluid Drill", "Pump up fluids from specified biomes")
+            builder.add(RagiumMachineKeys.ROCK_GENERATOR, "Rock Generator")
 
             builder.add(
                 RagiumMachineKeys.COMBUSTION_GENERATOR,
@@ -322,7 +323,6 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
             builder.add(RagiumMachineKeys.MIXER, "Mixer", "Genomix")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
-            builder.add(RagiumMachineKeys.ROCK_GENERATOR, "Rock Generator")
             builder.add(
                 RagiumMachineKeys.SAW_MILL,
                 "Saw Mill",
@@ -594,6 +594,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.CANNING_MACHINE, "缶詰機", "液体キューブに液体を出し入れできる")
             builder.add(RagiumMachineKeys.DRAIN, "排水溝", "各面から液体を吸い取る")
             builder.add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
+            builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
 
             builder.add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
             builder.add(RagiumMachineKeys.SOLAR_PANEL, "太陽光発電機", "日中に発電する")
@@ -615,7 +616,6 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
             builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス")
-            builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
             builder.add(RagiumMachineKeys.SAW_MILL, "製材機", "より効率的に原木を加工する")
             // Material
             builder.add(RagiumMaterialKeys.CRUDE_RAGINITE, "粗製ラギナイト")

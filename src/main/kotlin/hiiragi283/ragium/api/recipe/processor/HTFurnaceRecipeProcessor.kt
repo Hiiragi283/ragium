@@ -1,10 +1,13 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.processor
 
 import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.recipe.HTRecipeCache
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.AbstractCookingRecipe
-import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.SingleStackRecipeInput
 import net.minecraft.world.World
@@ -16,23 +19,20 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
     private val inventory: Inventory,
     private val inputIndex: Int,
     private val outputIndex: Int,
-    private val multiplier: Int = 1,
-) {
+) : HTRecipeProcessor {
     private val matchGetter: HTRecipeCache<SingleStackRecipeInput, T> = HTRecipeCache(recipeType)
 
-    fun process(world: World): Boolean = runCatching {
+    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Boolean = runCatching {
         val inputStack: ItemStack = inventory.getStack(inputIndex)
-        val processCount: Int = min(inputStack.count, multiplier)
-        val recipeEntry: RecipeEntry<T> = matchGetter
-            .getFirstMatch(SingleStackRecipeInput(inventory.getStack(inputIndex)), world)
-            .getOrNull() ?: return@runCatching false
-        val recipe: T = recipeEntry.value
+        val processCount: Int = min(inputStack.count, tier.smelterMulti)
+        val recipe: T = matchGetter.getFirstMatch(SingleStackRecipeInput(inputStack), world).getOrNull()?.value
+            ?: return@runCatching false
         val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
         resultStack.count *= processCount
         val output = HTItemResult(resultStack)
         if (!output.canMerge(inventory.getStack(outputIndex))) return@runCatching false
         inventory.modifyStack(outputIndex, output::merge)
-        inventory.getStack(inputIndex).count -= processCount
+        inputStack.decrement(processCount)
         return@runCatching true
     }.getOrDefault(false)
 }

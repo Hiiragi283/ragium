@@ -1,12 +1,12 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.api.recipe.processor.HTMachineRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -21,10 +21,9 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
     HTMultiblockController {
     override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
@@ -44,7 +43,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
         .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .buildMachineFluidStorage()
 
-    private val processor = HTMachineRecipeProcessor(
+    override val processor = HTMachineRecipeProcessor(
         inventory,
         intArrayOf(),
         intArrayOf(1),
@@ -53,8 +52,6 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
         intArrayOf(0),
         intArrayOf(1, 2, 3),
     )
-
-    override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTDistillationTowerScreenHandler(syncId, playerInventory, packet, createContext())

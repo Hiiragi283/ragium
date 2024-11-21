@@ -1,15 +1,17 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.consume
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -41,7 +43,7 @@ import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
-    HTConsumerBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
     HTFluidSyncable,
     HTMultiblockController {
     companion object {
@@ -76,7 +78,10 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
 
-    override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
+    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
+
+    override fun process(world: World, pos: BlockPos): Boolean {
         if (!updateValidation(cachedState, world, pos)) return false
         useTransaction { transaction: Transaction ->
             val inserted: Long = fluidStorage.insert(findResource(world.getBiome(pos)), transaction)

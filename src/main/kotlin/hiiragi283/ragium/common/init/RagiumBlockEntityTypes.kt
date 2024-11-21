@@ -4,10 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
-import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
-import hiiragi283.ragium.common.machine.*
+import hiiragi283.ragium.common.machine.consume.*
+import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.process.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -38,8 +42,8 @@ object RagiumBlockEntityTypes {
         register("bedrock_miner", ::HTBedrockMinerBlockEntity)
 
     @JvmField
-    val CHEMICAL_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Chemical> =
-        register("chemical_processor", HTProcessorBlockEntityBase::Chemical)
+    val CHEMICAL_PROCESSOR: BlockEntityType<HTRecipeProcessorBlockEntityBase.Chemical> =
+        register("chemical_processor", HTRecipeProcessorBlockEntityBase::Chemical)
 
     @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
@@ -102,6 +106,10 @@ object RagiumBlockEntityTypes {
         register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
+    val ROCK_GENERATOR: BlockEntityType<HTRockGeneratorBlockEntity> =
+        register("rock_generator", ::HTRockGeneratorBlockEntity)
+
+    @JvmField
     val SAW_MILL: BlockEntityType<HTSawmillBlockEntity> =
         register("saw_mill", ::HTSawmillBlockEntity)
 
@@ -110,8 +118,8 @@ object RagiumBlockEntityTypes {
         register("simple_generator", HTGeneratorBlockEntityBase::Simple)
 
     @JvmField
-    val SIMPLE_PROCESSOR: BlockEntityType<HTProcessorBlockEntityBase.Simple> =
-        register("simple_processor", HTProcessorBlockEntityBase::Simple)
+    val SIMPLE_PROCESSOR: BlockEntityType<HTRecipeProcessorBlockEntityBase.Simple> =
+        register("simple_processor", HTRecipeProcessorBlockEntityBase::Simple)
 
     @JvmField
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =

@@ -1,17 +1,14 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.generator
 
-import hiiragi283.ragium.api.extension.modifyStack
-import hiiragi283.ragium.api.extension.toStorage
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
-import hiiragi283.ragium.api.recipe.HTItemResult
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.api.tags.RagiumFluidTags
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
@@ -19,19 +16,14 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.fluid.Fluids
-import net.minecraft.inventory.SidedInventory
-import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Hand
@@ -39,27 +31,13 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTGeneratorBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
+class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTGeneratorBlockEntityBase(RagiumBlockEntityTypes.COMBUSTION_GENERATOR, pos, state),
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
         this.tier = tier
-    }
-
-    private val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .filter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else true }
-        .buildSided()
-
-    override fun asInventory(): SidedInventory = inventory
-
-    private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
-        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
-
-        override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
     }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
@@ -72,7 +50,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage = object : SingleFluidStorage() {
             override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
-            override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
+            override fun canInsert(variant: FluidVariant): Boolean = variant.isIn(RagiumFluidTags.FUEL)
         }
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
@@ -80,28 +58,30 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
 
-    override fun generateEnergy(world: World, pos: BlockPos): Long {
-        val fuelStack: ItemStack = inventory.getStack(0)
-        if (fuelStack.isIn(ItemTags.COALS)) {
-            useTransaction { transaction: Transaction ->
-                val extracted: Long =
-                    fluidStorage.extract(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET, transaction)
-                if (extracted == FluidConstants.BUCKET) {
-                    transaction.commit()
-                    fuelStack.decrement(1)
-                    inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
-                    return tier.recipeCost
-                } else {
-                    transaction.abort()
-                }
-            }
+    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> = when {
+        fluidStorage.amount >= FluidConstants.BUCKET -> tier.createEnergyResult(HTEnergyNetwork.Flag.GENERATE)
+        else -> DataResult.error { "Could not find fuels from Combustion Generator!" }
+    }
+
+    override fun process(world: World, pos: BlockPos): Boolean = useTransaction { transaction: Transaction ->
+        if (fluidStorage.variant.isBlank) false
+        val extracted: Long = fluidStorage.extract(fluidStorage.variant, FluidConstants.BUCKET, transaction)
+        if (extracted == FluidConstants.BUCKET) {
+            transaction.commit()
+            true
+        } else {
+            transaction.abort()
+            false
         }
-        return 0
     }
 
     //    SidedStorageBlockEntity    //
 
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = inventory.toStorage(side)
+    private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
+        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+
+        override fun canInsert(variant: FluidVariant): Boolean = variant.isIn(RagiumFluidTags.FUEL)
+    }
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = FilteringStorage.insertOnlyOf(fluidStorage)
 

@@ -2,7 +2,9 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockEntity
@@ -28,6 +30,7 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -47,6 +50,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
+import team.reborn.energy.api.EnergyStorage
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
@@ -180,12 +184,18 @@ object RagiumClient : ClientModInitializer {
         ItemTooltipCallback.EVENT.register(
             RagiumAPI.id("description"),
         ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
-            stack.get(RagiumComponentTypes.DESCRIPTION)?.let { texts: List<Text> ->
-                if (Screen.hasControlDown()) {
-                    texts.map(Text::copy).map { it.formatted(Formatting.AQUA) }.forEach(tooltips::add)
-                } else {
-                    tooltips.add(Text.translatable(RagiumTranslationKeys.PRESS_CTRL).formatted(Formatting.YELLOW))
+            val texts: List<Text> = stack.get(RagiumComponentTypes.DESCRIPTION)
+                ?: ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
+                    listOf(
+                        Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"),
+                    )
                 }
+                ?: listOf()
+            if (texts.isEmpty()) return@register
+            if (Screen.hasControlDown()) {
+                texts.map(Text::copy).map { it.formatted(Formatting.AQUA) }.forEach(tooltips::add)
+            } else {
+                tooltips.add(Text.translatable(RagiumTranslationKeys.PRESS_CTRL).formatted(Formatting.YELLOW))
             }
         }
     }

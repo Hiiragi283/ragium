@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
+import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.sendTitle
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
@@ -13,11 +14,14 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.boss.BossBar
+import net.minecraft.entity.boss.ServerBossBar
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.*
@@ -32,8 +36,12 @@ import net.minecraft.util.Rarity
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
+import team.reborn.energy.api.EnergyStorage
 
 object RagiumEventHandlers {
+    @JvmField
+    val ENERGY_BAR = ServerBossBar(Text.empty(), BossBar.Color.YELLOW, BossBar.Style.PROGRESS)
+
     @JvmStatic
     fun init() {
         // send title and floating item packet when unlock advancement
@@ -150,6 +158,17 @@ object RagiumEventHandlers {
                         player.removeStatusEffect(StatusEffects.NIGHT_VISION)
                     }
                 }
+                // show energy bar (boss bar) when holding energy item
+                val itemContext: ContainerItemContext = ContainerItemContext.forPlayerInteraction(player, Hand.MAIN_HAND)
+                itemContext
+                    .find(EnergyStorage.ITEM)
+                    ?.let { storage: EnergyStorage ->
+                        ENERGY_BAR.apply {
+                            name = itemContext.itemVariant.toStack().name
+                            percent = storage.energyPercent
+                            addPlayer(player)
+                        }
+                    } ?: run { ENERGY_BAR.removePlayer(player) }
             }
         }
 

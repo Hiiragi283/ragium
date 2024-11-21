@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTLargeProcessorBlockEntity
+import hiiragi283.ragium.common.machine.process.HTLargeProcessorBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.RenderLayers

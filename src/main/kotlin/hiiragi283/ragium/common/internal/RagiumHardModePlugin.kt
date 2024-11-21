@@ -202,6 +202,12 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumMachineKeys.FLUID_DRILL,
             RagiumBlocks.SHAFT,
         )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.ROCK_GENERATOR,
+            Items.LAVA_BUCKET,
+            Items.WATER_BUCKET,
+        )
         // generators
         createProcessor(
             exporter,
@@ -301,12 +307,6 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumMachineKeys.MULTI_SMELTER,
             RagiumItems.BLAZING_CARBON_ELECTRODE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.ROCK_GENERATOR,
-            Items.LAVA_BUCKET,
-            Items.WATER_BUCKET,
         )
         createProcessor(
             exporter,

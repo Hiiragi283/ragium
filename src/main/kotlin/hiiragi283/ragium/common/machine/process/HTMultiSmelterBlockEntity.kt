@@ -1,12 +1,12 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.recipe.HTFurnaceRecipeProcessor
+import hiiragi283.ragium.api.recipe.processor.HTFurnaceRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -22,10 +22,9 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SmeltingRecipe
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
     HTMultiblockController {
     override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
@@ -40,17 +39,11 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildMachineFluidStorage()
 
-    private var processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
-        HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, tier.smelterMulti)
-
-    override fun processRecipe(world: World, pos: BlockPos): Boolean = processor.process(world)
+    override val processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
+        HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
-
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        processor = HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1, newTier.smelterMulti)
-    }
 
     //    HTMultiblockController    //
 

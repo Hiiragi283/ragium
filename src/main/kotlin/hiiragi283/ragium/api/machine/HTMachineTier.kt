@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
@@ -69,6 +70,9 @@ enum class HTMachineTier(
     val smelterMulti: Int = (recipeCost / 20).toInt()
     val bucketUnit: Long = recipeCost / 20
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
+
+    fun createEnergyResult(flag: HTEnergyNetwork.Flag): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        DataResult.success(flag to recipeCost)
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
     val text: MutableText = Text.translatable(translationKey)
@@ -150,11 +154,6 @@ enum class HTMachineTier(
         BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
-
-    fun canProcess(world: World): Boolean = canProcess(world.energyNetwork)
-
-    fun canProcess(network: HTEnergyNetwork?, multiplier: Long = 1): Boolean =
-        network?.amount?.let { it >= recipeCost * multiplier } == true
 
     fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean {
         useTransaction(parent) { transaction: Transaction ->

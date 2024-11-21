@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
-import hiiragi283.ragium.api.machine.block.HTProcessorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -25,7 +25,14 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.common.machine.*
+import hiiragi283.ragium.common.machine.consume.*
+import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.process.HTBlastFurnaceBlockEntity
+import hiiragi283.ragium.common.machine.process.HTDistillationTowerBlockEntity
+import hiiragi283.ragium.common.machine.process.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.machine.process.HTSawmillBlockEntity
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.block.Block
@@ -121,7 +128,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }*/
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Simple))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
@@ -130,7 +137,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
+            set(
+                HTMachinePropertyKeys.MACHINE_FACTORY,
+                HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Chemical)
+            )
         }
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
@@ -141,7 +151,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.ELECTROLYZER) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
+            set(
+                HTMachinePropertyKeys.MACHINE_FACTORY,
+                HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Chemical)
+            )
         }
         helper.modify(RagiumMachineKeys.GRINDER) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
@@ -150,7 +163,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_ANVIL_USE)
         }
         helper.modify(RagiumMachineKeys.MIXER) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTProcessorBlockEntityBase::Chemical))
+            set(
+                HTMachinePropertyKeys.MACHINE_FACTORY,
+                HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Chemical)
+            )
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {

@@ -1,12 +1,15 @@
 package hiiragi283.ragium.api.machine.block
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.fabricmc.api.EnvType
@@ -20,6 +23,7 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundCategory
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -27,6 +31,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import kotlin.Unit
 
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(type, pos, state),
@@ -115,6 +120,44 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     abstract fun interactWithFluidStorage(player: PlayerEntity): Boolean
 
     final override val tickRate: Int = tier.tickRate
+
+    final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
+        getRequiredEnergy(world, pos)
+            .flatMap { (flag: HTEnergyNetwork.Flag, amount: Long) ->
+                val network: HTEnergyNetwork = world.energyNetwork
+                    ?: return@flatMap DataResult.error { "Failed to find energy network!" }
+                when (flag) {
+                    HTEnergyNetwork.Flag.CONSUME -> when (network.canConsume(amount)) {
+                        true -> DataResult.success(Triple(network, flag, amount))
+                        false -> DataResult.error { "Failed to extract required energy from network!" }
+                    }
+
+                    HTEnergyNetwork.Flag.GENERATE -> DataResult.success(Triple(network, flag, amount))
+                }
+            }.flatMap { (network: HTEnergyNetwork, flag: HTEnergyNetwork.Flag, amount: Long) ->
+                if (process(world, pos) && flag.processAmount(network, amount)) {
+                    key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+                        world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
+                    }
+                    activateState(world, pos, true)
+                    onSucceeded(world, pos)
+                    DataResult.success(Unit)
+                } else {
+                    DataResult.error { "Failed to process machine!" }
+                }
+            }.ifError { _: DataResult.Error<Unit> ->
+                activateState(world, pos, false)
+                onFailed(world, pos)
+            }
+    }
+
+    abstract fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>>
+
+    abstract fun process(world: World, pos: BlockPos): Boolean
+
+    open fun onSucceeded(world: World, pos: BlockPos) {}
+
+    open fun onFailed(world: World, pos: BlockPos) {}
 
     val property: PropertyDelegate = HTDynamicPropertyDelegate(3, ::getProperty, ::setProperty)
 

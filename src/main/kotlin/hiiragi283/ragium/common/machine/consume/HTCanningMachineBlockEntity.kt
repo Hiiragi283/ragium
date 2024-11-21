@@ -1,18 +1,20 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.consume
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.isFilledMax
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -39,7 +41,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
-    HTConsumerBlockEntityBase(RagiumBlockEntityTypes.CANNING_MACHINE, pos, state),
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.CANNING_MACHINE, pos, state),
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.CANNING_MACHINE
 
@@ -73,8 +75,11 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
+    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
+
     // always not consume energy
-    override fun consumeEnergy(world: World, pos: BlockPos): Boolean {
+    override fun process(world: World, pos: BlockPos): Boolean {
         val cubeStack: ItemStack = inventory.getStack(0)
         val storageIn: SingleFluidStorage = fluidStorage.get(0)
         val storageOut: SingleFluidStorage = fluidStorage.get(1)

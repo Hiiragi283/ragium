@@ -1,8 +1,10 @@
-package hiiragi283.ragium.common.machine
+package hiiragi283.ragium.common.machine.consume
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTConsumerBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -29,7 +31,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTConsumerBlockEntityBase(RagiumBlockEntityTypes.BIOMASS_FERMENTER, pos, state) {
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.BIOMASS_FERMENTER, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
@@ -53,7 +55,10 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val shouldTick: Boolean = false
 
-    override fun consumeEnergy(world: World, pos: BlockPos): Boolean = false
+    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
+
+    override fun process(world: World, pos: BlockPos): Boolean = false
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null
 
