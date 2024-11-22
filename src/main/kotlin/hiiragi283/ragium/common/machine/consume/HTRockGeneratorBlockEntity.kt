@@ -36,7 +36,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    override fun process(world: World, pos: BlockPos): Boolean {
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         TODO("Not yet implemented")
     }
 

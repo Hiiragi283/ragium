@@ -58,7 +58,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    override fun process(world: World, pos: BlockPos): Boolean = false
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> = DataResult.error { "WIP" }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null
 

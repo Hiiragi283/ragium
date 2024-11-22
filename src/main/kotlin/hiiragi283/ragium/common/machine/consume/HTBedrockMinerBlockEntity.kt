@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTFluidDrillScreenHandler
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
@@ -32,12 +32,12 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    override fun process(world: World, pos: BlockPos): Boolean = false
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> = DataResult.error { "WIP" }
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
     //    HTMultiblockController    //
 

@@ -1,22 +1,16 @@
 package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.recipe.processor.HTMachineRecipeProcessor
-import hiiragi283.ragium.api.recipe.processor.HTRecipeProcessor
+import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTChemicalMachineScreenHandler
+import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
-import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
@@ -38,7 +32,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     final override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    final override fun process(world: World, pos: BlockPos): Boolean = processor.process(world, key, tier)
+    final override fun process(world: World, pos: BlockPos): DataResult<Unit> = processor.process(world, key, tier)
 
     protected abstract val inventory: SidedInventory
 
@@ -69,86 +63,6 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     //    SidedStorageBlockEntity    //
 
     final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
-
-    //    Simple    //
-
-    class Simple(pos: BlockPos, state: BlockState) :
-        HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.SIMPLE_PROCESSOR, pos, state) {
-        override var key: HTMachineKey = RagiumMachineKeys.ALLOY_FURNACE
-
-        constructor(pos: BlockPos, state: BlockState, key: HTMachineKey, tier: HTMachineTier) : this(pos, state) {
-            this.key = key
-            this.tier = tier
-        }
-
-        override val inventory: SidedInventory = HTStorageBuilder(5)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-            .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildSided()
-
-        override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildMachineFluidStorage()
-            .setCallback(this@Simple::markDirty)
-
-        override val processor = HTMachineRecipeProcessor(
-            inventory,
-            intArrayOf(0, 1),
-            intArrayOf(3, 4),
-            2,
-            fluidStorage,
-            intArrayOf(0),
-            intArrayOf(1),
-        )
-
-        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
-    }
-
-    //    Chemical    //
-
-    class Chemical(pos: BlockPos, state: BlockState) :
-        HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.CHEMICAL_PROCESSOR, pos, state) {
-        override var key: HTMachineKey = RagiumMachineKeys.CHEMICAL_REACTOR
-
-        constructor(pos: BlockPos, state: BlockState, key: HTMachineKey, tier: HTMachineTier) : this(pos, state) {
-            this.key = key
-            this.tier = tier
-        }
-
-        override val inventory: SidedInventory = HTStorageBuilder(5)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-            .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildSided()
-
-        override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildMachineFluidStorage()
-            .setCallback(this@Chemical::markDirty)
-
-        override val processor = HTMachineRecipeProcessor(
-            inventory,
-            intArrayOf(0, 1),
-            intArrayOf(3, 4),
-            2,
-            fluidStorage,
-            intArrayOf(0, 1),
-            intArrayOf(2, 3),
-        )
-
-        override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTChemicalMachineScreenHandler(syncId, playerInventory, packet, createContext())
-    }
 
     //    Large    //
 

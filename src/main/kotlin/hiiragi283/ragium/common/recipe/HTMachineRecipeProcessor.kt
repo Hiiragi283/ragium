@@ -1,24 +1,18 @@
-package hiiragi283.ragium.api.recipe.processor
+package hiiragi283.ragium.common.recipe
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.HTFluidIngredient
-import hiiragi283.ragium.api.recipe.HTFluidResult
-import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.recipe.HTItemResult
-import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
-import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.inventory.Inventory
-import net.minecraft.recipe.RecipeEntry
 import net.minecraft.world.World
-import kotlin.jvm.optionals.getOrNull
 
 class HTMachineRecipeProcessor(
     val inventory: Inventory,
@@ -29,27 +23,27 @@ class HTMachineRecipeProcessor(
     private val fluidInputs: IntArray,
     private val fluidOutputs: IntArray,
 ) : HTRecipeProcessor {
-    private val matchGetter: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipeTypes.MACHINE)
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Boolean = runCatching {
+    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): DataResult<Unit> {
         val input: HTMachineInput = HTMachineInput.Companion.create(key, tier) {
             itemInputs.map(inventory::getStack).forEach(::add)
             fluidInputs.map(fluidStorage::getResourceAmount).forEach(::add)
             catalyst = inventory.getStack(catalystIndex)
         }
-        val recipeEntry: RecipeEntry<HTMachineRecipe> = matchGetter
+        return recipeCache
             .getFirstMatch(input, world)
-            .getOrNull() ?: return@runCatching false
-        val recipe: HTMachineRecipe = recipeEntry.value
-        when {
-            !canAcceptOutputs(recipe) -> false
-            else -> {
-                modifyOutputs(recipe)
-                decrementInputs(recipe)
-                true
+            .flatMap { recipe: HTMachineRecipe ->
+                when {
+                    !canAcceptOutputs(recipe) -> DataResult.error { "Failed to merge results into outputs!" }
+                    else -> {
+                        modifyOutputs(recipe)
+                        decrementInputs(recipe)
+                        DataResult.success(Unit)
+                    }
+                }
             }
-        }
-    }.getOrDefault(false)
+    }
 
     private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->

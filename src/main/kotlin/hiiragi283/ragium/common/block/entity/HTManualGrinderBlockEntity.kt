@@ -64,8 +64,8 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                     HTMachineTier.PRIMITIVE,
                 ) { add(inventory.getStack(0)) },
                 world,
-            ).getOrNull()
-            ?.value
+            ).result()
+            ?.getOrNull()
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         inventory.getStack(0).decrement(recipe.itemInputs[0].count)

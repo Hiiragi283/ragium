@@ -68,8 +68,8 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
                     HTMachineTier.PRIMITIVE,
                 ) { add(invStack) },
                 world,
-            ).getOrNull()
-            ?.value
+            ).result()
+            .getOrNull()
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)

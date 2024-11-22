@@ -15,7 +15,7 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTFluidDrillScreenHandler
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -76,22 +76,22 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTFluidDrillScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    override fun process(world: World, pos: BlockPos): Boolean {
-        if (!updateValidation(cachedState, world, pos)) return false
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+        if (!updateValidation(cachedState, world, pos)) return DataResult.error { "Invalid multiblock structure found!" }
         useTransaction { transaction: Transaction ->
             val inserted: Long = fluidStorage.insert(findResource(world.getBiome(pos)), transaction)
             if (inserted > 0) {
                 transaction.commit()
                 world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
-                return true
+                return DataResult.success(Unit)
             } else {
                 transaction.abort()
-                return false
+                return DataResult.error { "Failed to insert fluid into Fluid Drill!" }
             }
         }
     }
@@ -113,7 +113,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTFluidSyncable    //
 
     override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        sender(player, 0, fluidStorage.resource, fluidStorage.amount)
+        sender(player, 1, fluidStorage.resource, fluidStorage.amount)
     }
 
     //    HTMultiblockController    //

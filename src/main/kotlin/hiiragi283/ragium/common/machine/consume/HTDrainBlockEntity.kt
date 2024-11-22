@@ -53,7 +53,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    override fun process(world: World, pos: BlockPos): Boolean {
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         Direction.entries.forEach { dir: Direction ->
             val posTo: BlockPos = pos.offset(dir)
             val stateTo: BlockState = world.getBlockState(posTo)
@@ -71,11 +71,11 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
                     null,
                 )
                 if (transferred > 0) {
-                    return true
+                    return DataResult.success(Unit)
                 }
             }
         }
-        return false
+        return DataResult.error { "Failed to extract fluid from any sides!" }
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null

@@ -122,3 +122,12 @@ val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T
         { key: RegistryKey<T> -> getEntry(key).orElseThrow() },
         { entry: RegistryEntry<T> -> entry.key.orElseThrow() },
     )
+
+//    DataResult    //
+
+fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -> String): DataResult<R> = flatMap { result: R ->
+    when (checker(result)) {
+        true -> DataResult.success(result)
+        false -> DataResult.error(errorMessage)
+    }
+}

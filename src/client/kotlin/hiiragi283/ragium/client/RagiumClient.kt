@@ -156,10 +156,9 @@ object RagiumClient : ClientModInitializer {
     private fun registerScreens() {
         HandledScreens.register(RagiumScreenHandlerTypes.CHEMICAL_MACHINE, ::HTChemicalMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.DISTILLATION_TOWER, ::HTDistillationTowerScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.FLUID_DRILL, ::HTFluidDrillScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.STEAM, ::HTSteamGeneratorScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.SMALL_MACHINE, ::HTSmallMachineScreen)
     }
 
     //    Events    //

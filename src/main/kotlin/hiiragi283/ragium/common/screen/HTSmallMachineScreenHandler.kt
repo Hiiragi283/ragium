@@ -7,13 +7,13 @@ import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTSteamGeneratorScreenHandler(
+class HTSmallMachineScreenHandler(
     syncId: Int,
     playerInv: PlayerInventory,
     packet: HTMachinePacket,
     ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
 ) : HTMachineScreenHandlerBase(
-        RagiumScreenHandlerTypes.STEAM,
+        RagiumScreenHandlerTypes.SMALL_MACHINE,
         syncId,
         playerInv,
         packet,

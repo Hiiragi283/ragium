@@ -22,20 +22,16 @@ object RagiumScreenHandlerTypes {
         registerExtended("distillation_tower", ::HTDistillationTowerScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
-    val FLUID_DRILL: ExtendedScreenHandlerType<HTFluidDrillScreenHandler, HTMachinePacket> =
-        registerExtended("fluid_drill", ::HTFluidDrillScreenHandler, HTMachinePacket.PACKET_CODEC)
-
-    @JvmField
     val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =
         registerExtended("large_machine", ::HTLargeMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
-    val SIMPLE_MACHINE: ExtendedScreenHandlerType<HTSimpleMachineScreenHandler, HTMachinePacket> =
-        registerExtended("simple_machine", ::HTSimpleMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val SMALL_MACHINE: ExtendedScreenHandlerType<HTSmallMachineScreenHandler, HTMachinePacket> =
+        registerExtended("small_machine", ::HTSmallMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
-    val STEAM: ExtendedScreenHandlerType<HTSteamGeneratorScreenHandler, HTMachinePacket> =
-        registerExtended("steam_generator", ::HTSteamGeneratorScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val SIMPLE_MACHINE: ExtendedScreenHandlerType<HTSimpleMachineScreenHandler, HTMachinePacket> =
+        registerExtended("simple_machine", ::HTSimpleMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(

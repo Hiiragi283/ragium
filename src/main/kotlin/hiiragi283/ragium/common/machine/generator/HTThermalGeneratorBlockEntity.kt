@@ -6,14 +6,14 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -39,7 +39,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTGeneratorBlockEntityBase(RagiumBlockEntityTypes.THERMAL_GENERATOR, pos, state),
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.THERMAL_GENERATOR, pos, state),
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
 
@@ -84,22 +84,22 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         else -> DataResult.error { "Could not find fuels from Thermal Generator!" }
     }
 
-    override fun process(world: World, pos: BlockPos): Boolean {
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         // try to consume item
         val fuelStack: ItemStack = inventory.getStack(0)
         if (fuelStack.isOf(Items.BLAZE_POWDER)) {
             fuelStack.decrement(1)
-            return true
+            return DataResult.success(Unit)
         }
         // try to consume fluid
         return useTransaction { transaction: Transaction ->
             val extracted: Long = fluidStorage.extract(FluidVariant.of(Fluids.LAVA), FluidConstants.BUCKET, transaction)
             if (extracted == FluidConstants.BUCKET) {
                 transaction.commit()
-                true
+                DataResult.success(Unit)
             } else {
                 transaction.abort()
-                false
+                DataResult.error { "Failed to consume fuels!" }
             }
         }
     }
@@ -119,7 +119,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExtendedScreenHandlerFactory    //
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSteamGeneratorScreenHandler(
+        HTSmallMachineScreenHandler(
             syncId,
             playerInventory,
             packet,

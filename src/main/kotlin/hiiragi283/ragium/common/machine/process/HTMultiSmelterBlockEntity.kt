@@ -6,13 +6,13 @@ import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.recipe.processor.HTFurnaceRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor
 import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.validate
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
@@ -34,7 +35,9 @@ abstract class HTGeneratorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPo
         override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
             DataResult.success(HTEnergyNetwork.Flag.GENERATE to tier.recipeCost)
 
-        override fun process(world: World, pos: BlockPos): Boolean =
-            key.entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos)
+        override fun process(world: World, pos: BlockPos): DataResult<Unit> = DataResult.success(Unit).validate(
+            { key.entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos) },
+            { "Failed to generate energy!" }
+        )
     }
 }

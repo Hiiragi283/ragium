@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.machine.consume
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.findFromStack
 import hiiragi283.ragium.api.extension.isFilledMax
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
@@ -18,8 +19,7 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -62,7 +62,9 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSided()
+        .filter { _: Int, stack: ItemStack ->
+            stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
+        }.buildSided()
 
     override fun asInventory(): SidedInventory = inventory
 
@@ -78,45 +80,50 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
         tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
-    // always not consume energy
-    override fun process(world: World, pos: BlockPos): Boolean {
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val cubeStack: ItemStack = inventory.getStack(0)
         val storageIn: SingleFluidStorage = fluidStorage.get(0)
         val storageOut: SingleFluidStorage = fluidStorage.get(1)
-        when {
+        return when {
             cubeStack.isOf(RagiumItems.EMPTY_FLUID_CUBE) -> tryInsertCube(cubeStack, storageIn)
             cubeStack.isOf(RagiumItems.FILLED_FLUID_CUBE) -> tryExtractCube(cubeStack, storageOut)
+            else -> DataResult.error { "Failed to process Canning Machine!" }
         }
-        return false
     }
 
-    private fun tryInsertCube(stack: ItemStack, storageIn: SingleFluidStorage) {
-        if (storageIn.isResourceBlank) return
-        if (storageIn.amount < FluidConstants.BUCKET) return
+    private fun tryInsertCube(stack: ItemStack, storageIn: SingleFluidStorage): DataResult<Unit> {
+        if (storageIn.isResourceBlank) return DataResult.error { "Input tank is empty!" }
+        if (storageIn.amount < FluidConstants.BUCKET) return DataResult.error { "Required 81,000 Units or more for canning!" }
         val variantIn: FluidVariant = storageIn.resource
         val filledStack: ItemStack = RagiumAPI.getInstance().createFilledCube(variantIn.fluid)
         val filledResult = HTItemResult(filledStack)
-        if (filledResult.canMerge(inventory.getStack(1))) {
+        return if (filledResult.canMerge(inventory.getStack(1))) {
             useTransaction { transaction: Transaction ->
                 if (storageIn.extract(variantIn, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
                     inventory.modifyStack(1, filledResult::merge)
                     stack.decrement(1)
                     transaction.commit()
+                    DataResult.success(Unit)
                 } else {
                     transaction.abort()
+                    DataResult.error { "Failed to extract 81,000 Units from input tank!" }
                 }
             }
+        } else {
+            DataResult.error { "Failed to merge result into output!" }
         }
     }
 
-    private fun tryExtractCube(stack: ItemStack, storageOut: SingleFluidStorage) {
-        if (storageOut.isFilledMax) return
+    private fun tryExtractCube(stack: ItemStack, storageOut: SingleFluidStorage): DataResult<Unit> {
+        if (storageOut.isFilledMax) return DataResult.error { "Output tank is full!" }
         val cubeStorage: Storage<FluidVariant> =
-            ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM) ?: return
+            FluidStorage.ITEM.findFromStack(stack)
+                ?: return DataResult.error { "Failed to find fluid storage from cube" }
         val emptyResult = HTItemResult(RagiumItems.EMPTY_FLUID_CUBE)
-        if (!emptyResult.canMerge(inventory.getStack(1))) return
-        val cubeResource: FluidVariant = StorageUtil.findStoredResource(cubeStorage) ?: return
-        if (storageOut.isResourceBlank || storageOut.variant.isOf(cubeResource.fluid)) {
+        if (!emptyResult.canMerge(inventory.getStack(1))) return DataResult.error { "Failed to merge result into output!" }
+        val cubeResource: FluidVariant = StorageUtil.findStoredResource(cubeStorage)
+            ?: return DataResult.error { "No extractable fluid in given cube!" }
+        return if (storageOut.isResourceBlank || storageOut.variant.isOf(cubeResource.fluid)) {
             useTransaction { transaction: Transaction ->
                 if (storageOut.insert(
                         cubeResource,
@@ -127,15 +134,19 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
                     inventory.removeStack(0, 1)
                     inventory.modifyStack(1, emptyResult::merge)
                     transaction.commit()
+                    DataResult.success(Unit)
                 } else {
                     transaction.abort()
+                    DataResult.error { "Failed to extract 81,000 Units from input tank!" }
                 }
             }
+        } else {
+            DataResult.error { "Failed to merge result into output!" }
         }
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSteamGeneratorScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
     //    HTFluidSyncable    //
 

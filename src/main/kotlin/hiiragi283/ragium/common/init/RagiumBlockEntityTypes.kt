@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
-import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.machine.consume.*
@@ -42,8 +41,8 @@ object RagiumBlockEntityTypes {
         register("bedrock_miner", ::HTBedrockMinerBlockEntity)
 
     @JvmField
-    val CHEMICAL_PROCESSOR: BlockEntityType<HTRecipeProcessorBlockEntityBase.Chemical> =
-        register("chemical_processor", HTRecipeProcessorBlockEntityBase::Chemical)
+    val CHEMICAL_PROCESSOR: BlockEntityType<HTChemicalRecipeProcessorBlockEntity> =
+        register("chemical_processor", ::HTChemicalRecipeProcessorBlockEntity)
 
     @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
@@ -118,8 +117,8 @@ object RagiumBlockEntityTypes {
         register("simple_generator", HTGeneratorBlockEntityBase::Simple)
 
     @JvmField
-    val SIMPLE_PROCESSOR: BlockEntityType<HTRecipeProcessorBlockEntityBase.Simple> =
-        register("simple_processor", HTRecipeProcessorBlockEntityBase::Simple)
+    val SIMPLE_PROCESSOR: BlockEntityType<HTSimpleRecipeProcessorBlockEntity> =
+        register("simple_processor", ::HTSimpleRecipeProcessorBlockEntity)
 
     @JvmField
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =

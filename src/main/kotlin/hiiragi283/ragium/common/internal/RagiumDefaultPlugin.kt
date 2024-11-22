@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
-import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -29,10 +28,7 @@ import hiiragi283.ragium.common.machine.consume.*
 import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.process.HTBlastFurnaceBlockEntity
-import hiiragi283.ragium.common.machine.process.HTDistillationTowerBlockEntity
-import hiiragi283.ragium.common.machine.process.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.machine.process.HTSawmillBlockEntity
+import hiiragi283.ragium.common.machine.process.*
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.block.Block
@@ -98,6 +94,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
+            set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/solar_generator"))
             set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
         }
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
@@ -128,7 +125,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }*/
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Simple))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
@@ -139,7 +136,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Chemical)
+                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
             )
         }
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
@@ -153,7 +150,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.ELECTROLYZER) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Chemical)
+                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
             )
         }
         helper.modify(RagiumMachineKeys.GRINDER) {
@@ -165,7 +162,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.MIXER) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(HTRecipeProcessorBlockEntityBase::Chemical)
+                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
             )
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
         }

@@ -64,8 +64,8 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
                     add(fluidStorage.resourceAmount)
                 },
                 world,
-            ).getOrNull()
-            ?.value
+            ).result()
+            ?.getOrNull()
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)

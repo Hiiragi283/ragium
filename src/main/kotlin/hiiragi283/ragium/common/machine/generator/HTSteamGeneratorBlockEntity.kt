@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
+import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSteamGeneratorScreenHandler
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -42,7 +42,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTGeneratorBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
@@ -83,12 +83,13 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
 
     override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> = when {
-        inventory.getStack(0).isIn(ItemTags.COALS) -> tier.createEnergyResult(HTEnergyNetwork.Flag.GENERATE)
-        fluidStorage.amount >= FluidConstants.BUCKET -> tier.createEnergyResult(HTEnergyNetwork.Flag.GENERATE)
+        inventory.getStack(0).isIn(ItemTags.COALS) && fluidStorage.amount >= FluidConstants.BUCKET -> tier.createEnergyResult(
+            HTEnergyNetwork.Flag.GENERATE,
+        )
         else -> DataResult.error { "Could not find fuels from Steam Generator!" }
     }
 
-    override fun process(world: World, pos: BlockPos): Boolean {
+    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val fuelStack: ItemStack = inventory.getStack(0)
         if (fuelStack.isIn(ItemTags.COALS)) {
             useTransaction { transaction: Transaction ->
@@ -98,13 +99,13 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                     transaction.commit()
                     fuelStack.decrement(1)
                     inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
-                    return true
+                    return DataResult.success(Unit)
                 } else {
                     transaction.abort()
                 }
             }
         }
-        return false
+        return DataResult.error { "Failed to consume fuels!" }
     }
 
     //    SidedStorageBlockEntity    //
@@ -122,7 +123,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExtendedScreenHandlerFactory    //
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSteamGeneratorScreenHandler(
+        HTSmallMachineScreenHandler(
             syncId,
             playerInventory,
             packet,

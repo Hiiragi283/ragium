@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -11,9 +11,9 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
 @Environment(EnvType.CLIENT)
-class HTSimpleMachineScreen(handler: HTSimpleMachineScreenHandler, inventory: PlayerInventory, title: Text) :
-    HTMachineScreenBase<HTSimpleMachineScreenHandler>(handler, inventory, title) {
-    override val texture: Identifier = RagiumAPI.id("textures/gui/simple_machine.png")
+class HTSmallMachineScreen(handler: HTSmallMachineScreenHandler, inventory: PlayerInventory, title: Text) :
+    HTMachineScreenBase<HTSmallMachineScreenHandler>(handler, inventory, title) {
+    override val texture: Identifier = RagiumAPI.id("textures/gui/small_machine.png")
     override val fluidCache: Array<FluidVariant> = Array(2) { FluidVariant.blank() }
     override val amountCache: LongArray = LongArray(2) { 0 }
 

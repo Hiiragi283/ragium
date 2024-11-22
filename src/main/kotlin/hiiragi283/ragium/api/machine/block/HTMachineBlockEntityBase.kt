@@ -27,11 +27,11 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Formatting
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import kotlin.Unit
 
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(type, pos, state),
@@ -52,6 +52,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     val facing: Direction
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+    private var errorMessage: String? = null
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
@@ -99,6 +100,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
+        // Send error message (TODO)
+        errorMessage?.let { player.sendMessage(Text.translatable(it).formatted(Formatting.RED), false) }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
@@ -122,6 +125,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     final override val tickRate: Int = tier.tickRate
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
+        if (world.isClient) return
         getRequiredEnergy(world, pos)
             .flatMap { (flag: HTEnergyNetwork.Flag, amount: Long) ->
                 val network: HTEnergyNetwork = world.energyNetwork
@@ -134,18 +138,18 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
                     HTEnergyNetwork.Flag.GENERATE -> DataResult.success(Triple(network, flag, amount))
                 }
-            }.flatMap { (network: HTEnergyNetwork, flag: HTEnergyNetwork.Flag, amount: Long) ->
-                if (process(world, pos) && flag.processAmount(network, amount)) {
-                    key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
-                        world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
-                    }
-                    activateState(world, pos, true)
-                    onSucceeded(world, pos)
-                    DataResult.success(Unit)
-                } else {
-                    DataResult.error { "Failed to process machine!" }
+            }.validate(
+                { (network: HTEnergyNetwork, flag: HTEnergyNetwork.Flag, amount: Long) -> flag.processAmount(network, amount) },
+                { "Failed to interact energy network" },
+            ).ifSuccess { _: Triple<HTEnergyNetwork, HTEnergyNetwork.Flag, Long> ->
+                key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+                    world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
-            }.ifError { _: DataResult.Error<Unit> ->
+                errorMessage = null
+                activateState(world, pos, true)
+                onSucceeded(world, pos)
+            }.ifError { error: DataResult.Error<Triple<HTEnergyNetwork, HTEnergyNetwork.Flag, Long>> ->
+                errorMessage = error.message()
                 activateState(world, pos, false)
                 onFailed(world, pos)
             }
@@ -153,7 +157,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     abstract fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>>
 
-    abstract fun process(world: World, pos: BlockPos): Boolean
+    abstract fun process(world: World, pos: BlockPos): DataResult<Unit>
 
     open fun onSucceeded(world: World, pos: BlockPos) {}
 
