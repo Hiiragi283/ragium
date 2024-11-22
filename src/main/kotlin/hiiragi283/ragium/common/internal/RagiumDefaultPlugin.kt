@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.property.HTMachineTooltipAppender
@@ -26,6 +25,7 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.machine.consume.*
 import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.HTSimpleGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.process.*
@@ -92,7 +92,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
             set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/solar_generator"))
             set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))

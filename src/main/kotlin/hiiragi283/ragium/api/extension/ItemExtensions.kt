@@ -34,6 +34,8 @@ fun Item.Settings.prefix(prefix: HTTagPrefix): Item.Settings = component(HTTagPr
 
 fun Item.Settings.descriptions(vararg texts: Text): Item.Settings = component(RagiumComponentTypes.DESCRIPTION, texts.toList())
 
+fun Item.Settings.name(text: Text): Item.Settings = component(DataComponentTypes.ITEM_NAME, text)
+
 fun Item.Settings.repairment(item: ItemConvertible, count: Int = 1): Item.Settings =
     component(RagiumComponentTypes.REPAIRMENT, HTItemIngredient.of(item, count))
 

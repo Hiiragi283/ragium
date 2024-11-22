@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -77,9 +76,6 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
-
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         if (!updateValidation(cachedState, world, pos)) return DataResult.error { "Invalid multiblock structure found!" }

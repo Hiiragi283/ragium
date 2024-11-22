@@ -78,11 +78,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
 
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> = when {
-        inventory.getStack(0).isOf(Items.BLAZE_POWDER) -> tier.createEnergyResult(HTEnergyNetwork.Flag.GENERATE)
-        fluidStorage.amount >= FluidConstants.BUCKET -> tier.createEnergyResult(HTEnergyNetwork.Flag.GENERATE)
-        else -> DataResult.error { "Could not find fuels from Thermal Generator!" }
-    }
+    override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         // try to consume item

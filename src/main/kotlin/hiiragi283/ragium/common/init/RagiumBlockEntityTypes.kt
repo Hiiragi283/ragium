@@ -3,11 +3,11 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.block.HTGeneratorBlockEntityBase
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.machine.consume.*
 import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.HTSimpleGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.process.*
@@ -113,8 +113,8 @@ object RagiumBlockEntityTypes {
         register("saw_mill", ::HTSawmillBlockEntity)
 
     @JvmField
-    val SIMPLE_GENERATOR: BlockEntityType<HTGeneratorBlockEntityBase.Simple> =
-        register("simple_generator", HTGeneratorBlockEntityBase::Simple)
+    val SIMPLE_GENERATOR: BlockEntityType<HTSimpleGeneratorBlockEntity> =
+        register("simple_generator", ::HTSimpleGeneratorBlockEntity)
 
     @JvmField
     val SIMPLE_PROCESSOR: BlockEntityType<HTSimpleRecipeProcessorBlockEntity> =

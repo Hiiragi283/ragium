@@ -53,7 +53,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .filter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else true }
+        .filter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else false }
         .buildSided()
 
     override fun asInventory(): SidedInventory = inventory
@@ -61,7 +61,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
-        override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
+        override fun canInsert(variant: FluidVariant): Boolean = variant.isOf(Fluids.WATER)
     }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
@@ -74,7 +74,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage = object : SingleFluidStorage() {
             override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
-            override fun canInsert(variant: FluidVariant): Boolean = variant == FluidVariant.of(Fluids.WATER)
+            override fun canInsert(variant: FluidVariant): Boolean = variant.isOf(Fluids.WATER)
         }
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
@@ -82,12 +82,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
 
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> = when {
-        inventory.getStack(0).isIn(ItemTags.COALS) && fluidStorage.amount >= FluidConstants.BUCKET -> tier.createEnergyResult(
-            HTEnergyNetwork.Flag.GENERATE,
-        )
-        else -> DataResult.error { "Could not find fuels from Steam Generator!" }
-    }
+    override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val fuelStack: ItemStack = inventory.getStack(0)

@@ -126,36 +126,31 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
-        getRequiredEnergy(world, pos)
-            .flatMap { (flag: HTEnergyNetwork.Flag, amount: Long) ->
-                val network: HTEnergyNetwork = world.energyNetwork
-                    ?: return@flatMap DataResult.error { "Failed to find energy network!" }
-                when (flag) {
-                    HTEnergyNetwork.Flag.CONSUME -> when (network.canConsume(amount)) {
-                        true -> DataResult.success(Triple(network, flag, amount))
-                        false -> DataResult.error { "Failed to extract required energy from network!" }
-                    }
-
-                    HTEnergyNetwork.Flag.GENERATE -> DataResult.success(Triple(network, flag, amount))
-                }
-            }.validate(
-                { (network: HTEnergyNetwork, flag: HTEnergyNetwork.Flag, amount: Long) -> flag.processAmount(network, amount) },
+        val result: DataResult<HTEnergyNetwork> = world.energyNetwork
+            ?.let(DataResult<HTEnergyNetwork>::success)
+            ?: DataResult.error { "Failed to find energy network!" }
+        result
+            .validate(
+                { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.recipeCost) },
+                { "Failed to extract required energy from network!" },
+            ).validate(
+                { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.recipeCost) },
                 { "Failed to interact energy network" },
-            ).ifSuccess { _: Triple<HTEnergyNetwork, HTEnergyNetwork.Flag, Long> ->
+            ).ifSuccess { _: HTEnergyNetwork ->
                 key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
                     world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
                 errorMessage = null
                 activateState(world, pos, true)
                 onSucceeded(world, pos)
-            }.ifError { error: DataResult.Error<Triple<HTEnergyNetwork, HTEnergyNetwork.Flag, Long>> ->
+            }.ifError { error: DataResult.Error<HTEnergyNetwork> ->
                 errorMessage = error.message()
                 activateState(world, pos, false)
                 onFailed(world, pos)
             }
     }
 
-    abstract fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>>
+    open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
 
     abstract fun process(world: World, pos: BlockPos): DataResult<Unit>
 

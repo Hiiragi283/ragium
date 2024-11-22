@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -49,9 +48,6 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
         fluidStorage = fluidStorageOf(tier.tankCapacity)
         fluidStorage.readNbt(nbt, wrapperLookup)
     }
-
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         Direction.entries.forEach { dir: Direction ->

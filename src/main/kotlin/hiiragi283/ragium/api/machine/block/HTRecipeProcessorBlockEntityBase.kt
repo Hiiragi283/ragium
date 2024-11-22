@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
@@ -29,9 +28,6 @@ import net.minecraft.world.World
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
     HTFluidSyncable {
-    final override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
-
     final override fun process(world: World, pos: BlockPos): DataResult<Unit> = processor.process(world, key, tier)
 
     protected abstract val inventory: SidedInventory

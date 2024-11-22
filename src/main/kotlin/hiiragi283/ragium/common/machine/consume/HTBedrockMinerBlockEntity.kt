@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -28,9 +27,6 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
         this.tier = tier
     }
-
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> = DataResult.error { "WIP" }
 

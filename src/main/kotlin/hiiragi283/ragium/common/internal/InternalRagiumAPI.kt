@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
-import hiiragi283.ragium.api.machine.block.HTMachineBlockItem
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
@@ -26,6 +25,7 @@ import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -95,7 +95,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 val block = HTMachineBlock(key, tier)
                 Registry.register(Registries.BLOCK, tier.createId(key), block)
                 blockTable.put(key, tier, block)
-                val item = HTMachineBlockItem(block, itemSettings())
+                val item = BlockItem(block, itemSettings().name(tier.createPrefixedText(key)))
                 Registry.register(Registries.ITEM, tier.createId(key), item)
             }
         }

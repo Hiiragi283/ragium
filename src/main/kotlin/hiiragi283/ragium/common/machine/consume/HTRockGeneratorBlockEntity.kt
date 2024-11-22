@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.block.BlockState
@@ -32,9 +31,6 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         .buildSided()
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
-
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         TODO("Not yet implemented")

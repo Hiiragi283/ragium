@@ -32,10 +32,7 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
                 val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
                 resultStack.count *= processCount
                 val output = HTItemResult(resultStack)
-                if (!output.canMerge(
-                        inventory.getStack(outputIndex),
-                    )
-                ) {
+                if (!output.canMerge(inventory.getStack(outputIndex))) {
                     return@flatMap DataResult.error { "Failed to merge result into output!" }
                 }
                 inventory.modifyStack(outputIndex, output::merge)

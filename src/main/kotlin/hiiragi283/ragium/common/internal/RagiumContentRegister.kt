@@ -24,7 +24,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
@@ -81,10 +80,7 @@ internal object RagiumContentRegister {
             registerBlock(ore, block)
             registerBlockItem(
                 block,
-                itemSettings().component(
-                    DataComponentTypes.ITEM_NAME,
-                    ore.tagPrefix.getText(ore.material),
-                ),
+                itemSettings().name(ore.tagPrefix.getText(ore.material)),
             )
         }
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
@@ -92,10 +88,7 @@ internal object RagiumContentRegister {
             registerBlock(storage, block)
             registerBlockItem(
                 block,
-                itemSettings().component(
-                    DataComponentTypes.ITEM_NAME,
-                    storage.tagPrefix.getText(storage.material),
-                ),
+                itemSettings().name(storage.tagPrefix.getText(storage.material)),
             )
         }
 
@@ -165,10 +158,7 @@ internal object RagiumContentRegister {
             registerItem(
                 content,
                 Item(
-                    itemSettings().component(
-                        DataComponentTypes.ITEM_NAME,
-                        content.tagPrefix.getText(content.material),
-                    ),
+                    itemSettings().name(content.tagPrefix.getText(content.material)),
                 ),
             )
         }

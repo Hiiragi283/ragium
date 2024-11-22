@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -76,9 +75,6 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
-
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        tier.createEnergyResult(HTEnergyNetwork.Flag.CONSUME)
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val cubeStack: ItemStack = inventory.getStack(0)

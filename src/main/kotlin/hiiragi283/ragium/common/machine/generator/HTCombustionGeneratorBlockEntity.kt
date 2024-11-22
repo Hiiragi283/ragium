@@ -58,10 +58,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
         FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
 
-    override fun getRequiredEnergy(world: World, pos: BlockPos): DataResult<Pair<HTEnergyNetwork.Flag, Long>> = when {
-        fluidStorage.amount >= FluidConstants.BUCKET -> tier.createEnergyResult(HTEnergyNetwork.Flag.GENERATE)
-        else -> DataResult.error { "Could not find fuels from Combustion Generator!" }
-    }
+    override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> = useTransaction { transaction: Transaction ->
         if (fluidStorage.variant.isBlank) false
