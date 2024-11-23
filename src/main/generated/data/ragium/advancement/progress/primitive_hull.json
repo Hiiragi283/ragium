@@ -19,7 +19,12 @@
       "id": "ragium:primitive_hull"
     },
     "title": {
-      "translate": "block.ragium.primitive_hull"
+      "translate": "machine_tier.ragium.primitive.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.hull"
+        }
+      ]
     }
   },
   "requirements": [

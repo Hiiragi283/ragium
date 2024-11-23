@@ -19,7 +19,12 @@
       "id": "ragium:advanced_hull"
     },
     "title": {
-      "translate": "block.ragium.advanced_hull"
+      "translate": "machine_tier.ragium.advanced.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.hull"
+        }
+      ]
     }
   },
   "requirements": [

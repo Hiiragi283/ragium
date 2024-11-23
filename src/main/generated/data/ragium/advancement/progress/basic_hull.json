@@ -19,7 +19,12 @@
       "id": "ragium:basic_hull"
     },
     "title": {
-      "translate": "block.ragium.basic_hull"
+      "translate": "machine_tier.ragium.basic.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.hull"
+        }
+      ]
     }
   },
   "requirements": [

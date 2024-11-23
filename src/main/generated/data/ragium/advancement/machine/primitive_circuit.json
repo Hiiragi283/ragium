@@ -19,7 +19,12 @@
       "id": "ragium:primitive_circuit"
     },
     "title": {
-      "translate": "item.ragium.primitive_circuit"
+      "translate": "machine_tier.ragium.primitive.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.circuit_board"
+        }
+      ]
     }
   },
   "requirements": [

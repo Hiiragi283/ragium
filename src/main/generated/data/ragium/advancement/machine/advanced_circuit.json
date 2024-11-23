@@ -19,7 +19,12 @@
       "id": "ragium:advanced_circuit"
     },
     "title": {
-      "translate": "item.ragium.advanced_circuit"
+      "translate": "machine_tier.ragium.advanced.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.circuit_board"
+        }
+      ]
     }
   },
   "requirements": [

@@ -102,7 +102,7 @@ object RagiumAdvancementProviders {
         path: String,
         parent: AdvancementEntry,
         icon: ItemConvertible,
-        title: Text = icon.asItem().name,
+        title: Text = ItemStack(icon).name,
         desc: Text = Text.empty(),
         frame: AdvancementFrame = AdvancementFrame.TASK,
         showToast: Boolean = true,
