@@ -69,6 +69,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Assembler    //
 
     private fun assembler(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
+            .fluidInput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
+            .fluidInput(Fluids.WATER)
+            .itemOutput(RagiumItems.URANIUM_FUEL)
+            .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
+            .offerTo(exporter, RagiumItems.URANIUM_FUEL)
         // LED
         // processor
         HTMachineRecipeJsonBuilder
@@ -283,6 +291,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumItems.LUMINESCENCE_DUST)
             .itemOutput(Items.INK_SAC)
             .offerTo(exporter, RagiumItems.LUMINESCENCE_DUST)
+        // uranium enrichment
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .fluidInput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 8)
+            .fluidOutput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 7)
+            .fluidOutput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
+            .offerTo(exporter, RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
         // sap
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)

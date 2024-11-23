@@ -13,11 +13,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.advancement.AdvancementFrame
+import net.minecraft.advancement.criterion.ConsumeItemCriterion
 import net.minecraft.advancement.criterion.InventoryChangedCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.predicate.ComponentPredicate
 import net.minecraft.predicate.item.ItemPredicate
 import net.minecraft.registry.RegistryWrapper
@@ -271,7 +273,7 @@ object RagiumAdvancementProviders {
 
     private class Progress(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricAdvancementProvider(output, registryLookup) {
-        override fun getName(): String = "${super.getName()}/Progress"
+        override fun getName(): String = "${super.name}/Progress"
 
         override fun generateAdvancement(registryLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
             // tier 1
@@ -406,7 +408,7 @@ object RagiumAdvancementProviders {
 
     private class Machine(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricAdvancementProvider(output, registryLookup) {
-        override fun getName(): String = "${super.getName()}/Machine"
+        override fun getName(): String = "${super.name}/Machine"
 
         override fun generateAdvancement(registryLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
             val root: AdvancementEntry = createRoot(
@@ -471,7 +473,7 @@ object RagiumAdvancementProviders {
 
     private class Chemistry(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricAdvancementProvider(output, registryLookup) {
-        override fun getName(): String = "${super.getName()}/Chemistry"
+        override fun getName(): String = "${super.name}/Chemistry"
 
         override fun generateAdvancement(registryLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
             val root: AdvancementEntry = createRoot(
@@ -607,6 +609,39 @@ object RagiumAdvancementProviders {
                 RagiumContents.Ingots.DEEP_STEEL,
                 frame = AdvancementFrame.GOAL,
             )
+            // uranium
+            val uranium: AdvancementEntry = createChild(
+                consumer,
+                "chemistry/uranium",
+                root,
+                Items.POISONOUS_POTATO,
+            ) { hasAllItems(Items.POISONOUS_POTATO) }
+            val yellowCake: AdvancementEntry = createChild(
+                consumer,
+                "chemistry/yellow_cake",
+                uranium,
+                RagiumItems.YELLOW_CAKE,
+            ) { hasAllItems(RagiumItems.YELLOW_CAKE) }
+            val thisCakeIsDie: AdvancementEntry = createChild(
+                consumer,
+                "chemistry/this_cake_is_die",
+                yellowCake,
+                RagiumItems.YELLOW_CAKE_PIECE,
+                title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE),
+                frame = AdvancementFrame.CHALLENGE,
+                hidden = true,
+            ) {
+                criterion(
+                    "consumed_item",
+                    ConsumeItemCriterion.Conditions.item(RagiumItems.YELLOW_CAKE_PIECE),
+                )
+            }
+            val uraniumFuel: AdvancementEntry = createChild(
+                consumer,
+                "chemistry/uranium_fuel",
+                yellowCake,
+                RagiumItems.URANIUM_FUEL,
+            ) { hasAllItems(RagiumItems.URANIUM_FUEL) }
         }
     }
 
@@ -614,7 +649,7 @@ object RagiumAdvancementProviders {
 
     private class PetroChemistry(output: FabricDataOutput, registryLookup: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricAdvancementProvider(output, registryLookup) {
-        override fun getName(): String = "${super.getName()}/PetroChemistry"
+        override fun getName(): String = "${super.name}/PetroChemistry"
 
         override fun generateAdvancement(registryLookup: RegistryWrapper.WrapperLookup, consumer: Consumer<AdvancementEntry>) {
             val root: AdvancementEntry = createRoot(

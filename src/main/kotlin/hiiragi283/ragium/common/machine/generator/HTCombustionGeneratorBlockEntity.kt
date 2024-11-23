@@ -61,8 +61,9 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> = useTransaction { transaction: Transaction ->
-        if (fluidStorage.variant.isBlank) false
-        val extracted: Long = fluidStorage.extract(fluidStorage.variant, FluidConstants.BUCKET, transaction)
+        val variantIn: FluidVariant = fluidStorage.variant
+        if (variantIn.isBlank) return@useTransaction DataResult.error { "Empty fuels!" }
+        val extracted: Long = fluidStorage.extract(variantIn, FluidConstants.BUCKET, transaction)
         if (extracted == FluidConstants.BUCKET) {
             transaction.commit()
             DataResult.success(Unit)

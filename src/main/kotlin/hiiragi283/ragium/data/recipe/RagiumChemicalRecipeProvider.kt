@@ -47,6 +47,19 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.DEEPANT)
             .offerTo(exporter, RagiumItems.DEEPANT)
+        // uranium enrichment
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .itemInput(RagiumContents.RawMaterials.URANITE, 8)
+            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.BUCKET * 4)
+            .itemOutput(RagiumItems.YELLOW_CAKE)
+            .offerTo(exporter, RagiumItems.YELLOW_CAKE)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .itemInput(RagiumItems.YELLOW_CAKE)
+            .fluidInput(RagiumFluids.HYDROGEN_FLUORIDE, FluidConstants.BUCKET * 6)
+            .fluidOutput(RagiumFluids.URANIUM_HEXAFLUORIDE)
+            .offerTo(exporter, RagiumFluids.URANIUM_HEXAFLUORIDE)
         // silicon refining
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)

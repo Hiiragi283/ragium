@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.extension.createArmorAttribute
 import hiiragi283.ragium.api.extension.descriptions
+import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.common.component.HTDynamiteComponent
-import hiiragi283.ragium.common.component.HTRemoverDynamiteBehaviors
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
+import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponent
@@ -25,6 +25,9 @@ import net.minecraft.util.Rarity
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
@@ -173,7 +176,17 @@ object RagiumItems {
 
     @JvmField
     val BEDROCK_DYNAMITE: Item = HTDynamiteItem(
-        HTRemoverDynamiteBehaviors.BEDROCK::onBlockHit,
+        { entity: HTDynamiteEntity, result: HitResult ->
+            if (result is BlockHitResult) {
+                val world: World = entity.world
+                val bottomY: Int = world.bottomY
+                ChunkPos(result.blockPos).forEach(bottomY + 1..bottomY + 5) { pos ->
+                    if (world.getBlockState(pos).isOf(Blocks.BEDROCK)) {
+                        world.removeBlock(pos, false)
+                    }
+                }
+            }
+        },
         itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.BEDROCK_DYNAMITE)),
     )
 
@@ -185,10 +198,10 @@ object RagiumItems {
         { entity: HTDynamiteEntity, result: HitResult ->
             val pos: Vec3d = result.pos
             entity.stack
-                .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT)
+                .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT)
                 .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
         },
-        itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteComponent.DEFAULT),
+        itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT),
     )
 
     @JvmField
@@ -199,7 +212,20 @@ object RagiumItems {
 
     @JvmField
     val FLATTENING_DYNAMITE: Item = HTDynamiteItem(
-        HTRemoverDynamiteBehaviors.FLATTEN::onBlockHit,
+        { entity: HTDynamiteEntity, result: HitResult ->
+            if (result is BlockHitResult) {
+                val world: World = entity.world
+                val pos: BlockPos = result.blockPos
+                val hitY: Int = pos.y
+                val minY: Int = when (result.side) {
+                    Direction.UP -> hitY + 1
+                    else -> hitY
+                }
+                ChunkPos(pos).forEach(minY..world.height) { pos: BlockPos ->
+                    world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
+                }
+            }
+        },
         itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.FLATTENING_DYNAMITE)),
     )
 
@@ -217,6 +243,9 @@ object RagiumItems {
 
     @JvmField
     val GIGANT_HAMMER: Item = HTGigantHammerItem
+
+    @JvmField
+    val GUIDE_BOOK: Item = HTGuideBookItem
 
     @JvmField
     val ITEM_FILTER: Item = Item(
@@ -259,14 +288,17 @@ object RagiumItems {
         STEEL_SWORD,
         FORGE_HAMMER,
         GIGANT_HAMMER,
-        // non-damageable tool
-        ANVIL_DYNAMITE,
-        BACKPACK,
-        BEDROCK_DYNAMITE,
+        // dynamite
         DYNAMITE,
+        ANVIL_DYNAMITE,
+        BEDROCK_DYNAMITE,
+        FLATTENING_DYNAMITE,
+        // non-damageable tool
+        BACKPACK,
         EMPTY_FLUID_CUBE,
         FILLED_FLUID_CUBE,
         FLUID_FILTER,
+        GUIDE_BOOK,
         ITEM_FILTER,
         RAGI_WRENCH,
         TRADER_CATALOG,
@@ -275,13 +307,16 @@ object RagiumItems {
     //    Foods    //
 
     @JvmField
-    val BEE_WAX: Item = Item(itemSettings())
-
-    @JvmField
     val BUTTER: Item = Item(itemSettings().food(FoodComponents.APPLE))
 
     @JvmField
     val CARAMEL: Item = Item(itemSettings().food(FoodComponents.DRIED_KELP))
+
+    @JvmField
+    val DOUGH: Item = Item(itemSettings())
+
+    @JvmField
+    val FLOUR: Item = Item(itemSettings())
 
     @JvmField
     val CHOCOLATE: Item = Item(
@@ -306,22 +341,13 @@ object RagiumItems {
     val CHOCOLATE_BREAD: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
 
     @JvmField
-    val COOKED_MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
-
-    @JvmField
-    val FLOUR: Item = Item(itemSettings())
-
-    @JvmField
-    val DOUGH: Item = Item(itemSettings())
+    val MINCED_MEAT: Item = Item(itemSettings())
 
     @JvmField
     val MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.BEEF))
 
     @JvmField
-    val MINCED_MEAT: Item = Item(itemSettings())
-
-    @JvmField
-    val PULP: Item = Item(itemSettings())
+    val COOKED_MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
 
     @JvmField
     val SWEET_BERRIES_CAKE_PIECE: Item = Item(
@@ -336,23 +362,78 @@ object RagiumItems {
 
     @JvmField
     val FOODS: List<Item> = listOf(
-        BEE_WAX,
+        SWEET_BERRIES_CAKE_PIECE,
         BUTTER,
         CARAMEL,
+        DOUGH,
+        FLOUR,
         CHOCOLATE,
-        COOKED_MEAT_INGOT,
         CHOCOLATE_APPLE,
         CHOCOLATE_BREAD,
-        FLOUR,
-        DOUGH,
         MINCED_MEAT,
         MEAT_INGOT,
-        PULP,
-        SWEET_BERRIES_CAKE_PIECE,
+        COOKED_MEAT_INGOT,
     )
 
-    //    Misc    //
+    //    Ingredients    //
 
+    // organic
+    @JvmField
+    val BEE_WAX: Item = Item(itemSettings())
+
+    @JvmField
+    val PULP: Item = Item(itemSettings())
+
+    @JvmField
+    val RESIDUAL_COKE: Item = Item(itemSettings())
+
+    // inorganic
+    @JvmField
+    val DEEPANT: Item = Item(itemSettings())
+
+    @JvmField
+    val LUMINESCENCE_DUST = Item(itemSettings())
+
+    @JvmField
+    val RAGI_ALLOY_COMPOUND: Item = Item(itemSettings())
+
+    @JvmField
+    val SLAG: Item = Item(itemSettings())
+
+    @JvmField
+    val SOAP_INGOT: Item = Item(itemSettings())
+
+    // plastic
+    @JvmField
+    val POLYMER_RESIN: Item = Item(itemSettings())
+
+    @JvmField
+    val PLASTIC_PLATE: Item = Item(itemSettings())
+
+    @JvmField
+    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings())
+
+    @JvmField
+    val STELLA_PLATE: Item = Item(itemSettings())
+
+    // silicon
+    @JvmField
+    val CRUDE_SILICON: Item = Item(itemSettings())
+
+    @JvmField
+    val SILICON: Item = Item(itemSettings())
+
+    @JvmField
+    val REFINED_SILICON: Item = Item(itemSettings())
+
+    // magical
+    @JvmField
+    val CRIMSON_CRYSTAL: Item = Item(itemSettings())
+
+    @JvmField
+    val WARPED_CRYSTAL: Item = HTWarpedCrystalItem
+
+    // parts
     @JvmField
     val BASALT_MESH: Item = Item(itemSettings())
 
@@ -366,95 +447,83 @@ object RagiumItems {
     val CHARGED_CARBON_ELECTRODE: Item = Item(itemSettings())
 
     @JvmField
-    val CRIMSON_CRYSTAL: Item = Item(itemSettings())
-
-    @JvmField
-    val CRUDE_SILICON: Item = Item(itemSettings())
-
-    @JvmField
-    val DEEPANT: Item = Item(itemSettings())
-
-    @JvmField
     val ENGINE: Item = Item(itemSettings())
-
-    @JvmField
-    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings())
 
     @JvmField
     val LASER_EMITTER: Item = Item(itemSettings())
 
     @JvmField
-    val LUMINESCENCE_DUST = Item(itemSettings())
-
-    @JvmField
-    val PLASTIC_PLATE: Item = Item(itemSettings())
-
-    @JvmField
-    val POLYMER_RESIN: Item = Item(itemSettings())
-
-    @JvmField
     val PROCESSOR_SOCKET: Item = Item(itemSettings())
-
-    @JvmField
-    val RAGI_ALLOY_COMPOUND: Item = Item(itemSettings())
 
     @JvmField
     val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings())
 
     @JvmField
-    val RAGI_TICKET: Item = Item(itemSettings().rarity(Rarity.EPIC))
-
-    @JvmField
-    val REFINED_SILICON: Item = Item(itemSettings())
-
-    @JvmField
-    val RESIDUAL_COKE: Item = Item(itemSettings())
-
-    @JvmField
-    val SILICON: Item = Item(itemSettings())
-
-    @JvmField
-    val SLAG: Item = Item(itemSettings())
-
-    @JvmField
-    val SOAP_INGOT: Item = Item(itemSettings())
-
-    @JvmField
     val SOLAR_PANEL: Item = Item(itemSettings())
 
+    // nuclear
     @JvmField
-    val STELLA_PLATE: Item = Item(itemSettings())
+    val URANIUM_FUEL = Item(itemSettings().maxDamage(1024))
 
     @JvmField
-    val WARPED_CRYSTAL: Item = HTWarpedCrystalItem
+    val YELLOW_CAKE: Item = Item(itemSettings())
 
     @JvmField
-    val MISC: List<Item> = listOf(
+    val YELLOW_CAKE_PIECE: Item = Item(
+        itemSettings().food(
+            FoodComponent
+                .Builder()
+                .statusEffect(StatusEffectInstance(StatusEffects.WITHER, -1, 1), 1f)
+                .build(),
+        ),
+    )
+
+    @JvmField
+    val INGREDIENTS: List<Item> = listOf(
+        // organic
+        BEE_WAX,
+        PULP,
+        RESIDUAL_COKE,
+        // inorganic
+        DEEPANT,
+        LUMINESCENCE_DUST,
+        RAGI_ALLOY_COMPOUND,
+        SLAG,
+        SOAP_INGOT,
+        // plastic
+        POLYMER_RESIN,
+        PLASTIC_PLATE,
+        ENGINEERING_PLASTIC_PLATE,
+        STELLA_PLATE,
+        // silicon
+        CRUDE_SILICON,
+        SILICON,
+        REFINED_SILICON,
+        // magical
+        CRIMSON_CRYSTAL,
+        WARPED_CRYSTAL,
+        // parts
         BASALT_MESH,
         BLAZING_CARBON_ELECTRODE,
         CARBON_ELECTRODE,
         CHARGED_CARBON_ELECTRODE,
-        CRIMSON_CRYSTAL,
-        CRUDE_SILICON,
-        DEEPANT,
-        ENGINE,
-        ENGINEERING_PLASTIC_PLATE,
-        FLATTENING_DYNAMITE,
         LASER_EMITTER,
-        LUMINESCENCE_DUST,
-        PLASTIC_PLATE,
-        POLYMER_RESIN,
         PROCESSOR_SOCKET,
-        RAGI_ALLOY_COMPOUND,
         RAGI_CRYSTAL_PROCESSOR,
-        RAGI_TICKET,
-        REFINED_SILICON,
-        RESIDUAL_COKE,
-        SILICON,
-        SLAG,
-        SOAP_INGOT,
         SOLAR_PANEL,
-        STELLA_PLATE,
-        WARPED_CRYSTAL,
+        // nuclear
+        URANIUM_FUEL,
+        YELLOW_CAKE,
+        YELLOW_CAKE_PIECE,
+    )
+
+    //    Misc    //
+
+    @JvmField
+    val RAGI_TICKET: Item = Item(itemSettings().rarity(Rarity.EPIC))
+
+    @JvmField
+    val MISC: List<Item> = listOf(
+        RAGI_TICKET,
     )
 }

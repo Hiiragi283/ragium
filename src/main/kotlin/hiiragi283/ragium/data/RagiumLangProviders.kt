@@ -83,6 +83,7 @@ object RagiumLangProviders {
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "Tycoon the Racoon")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
+            builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "This cake is DIE.")
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
@@ -196,6 +197,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.FLUID_FILTER, "Fluid Filter")
             builder.add(RagiumItems.FORGE_HAMMER, "Forge Hammer")
             builder.add(RagiumItems.GIGANT_HAMMER, "Gigant Hammer")
+            builder.add(RagiumItems.GUIDE_BOOK, "Guide Book")
             builder.add(RagiumItems.ITEM_FILTER, "Item Filter")
             builder.add(RagiumItems.LASER_EMITTER, "Laser Emitter")
             builder.add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
@@ -214,7 +216,10 @@ object RagiumLangProviders {
             builder.add(RagiumItems.SOLAR_PANEL, "Solar Panel")
             builder.add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A. Plate")
             builder.add(RagiumItems.TRADER_CATALOG, "Trader Catalog")
+            builder.add(RagiumItems.URANIUM_FUEL, "Uranium Fuel")
             builder.add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
+            builder.add(RagiumItems.YELLOW_CAKE, "Yellow Cake")
+            builder.add(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "Place Anvil when land on")
             builder.add(RagiumTranslationKeys.BACKPACK, "Shares inventory between the same color")
@@ -354,6 +359,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.BAUXITE, "Bauxite")
             builder.add(RagiumMaterialKeys.CRYOLITE, "Cryolite")
             builder.add(RagiumMaterialKeys.DEEP_STEEL, "Deep Steel")
+            builder.add(RagiumMaterialKeys.URANITE, "Uranite")
             // builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "Engineering Plastic")
             // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
@@ -415,6 +421,7 @@ object RagiumLangProviders {
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
+            builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "つばさレストラン名物「デスケーキ」")
             // Blocks
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
@@ -528,6 +535,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.FLUID_FILTER, "液体フィルタ")
             builder.add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
             builder.add(RagiumItems.GIGANT_HAMMER, "ギガントハンマー")
+            builder.add(RagiumItems.GUIDE_BOOK, "ガイドブック")
             builder.add(RagiumItems.ITEM_FILTER, "アイテムフィルタ")
             builder.add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
             builder.add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
@@ -546,7 +554,10 @@ object RagiumLangProviders {
             builder.add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
             builder.add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A.板")
             builder.add(RagiumItems.TRADER_CATALOG, "行商人カタログ")
+            builder.add(RagiumItems.URANIUM_FUEL, "ウラン燃料")
             builder.add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
+            builder.add(RagiumItems.YELLOW_CAKE, "イエローケーキ")
+            builder.add(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "着弾点に金床を設置する")
             builder.add(RagiumTranslationKeys.BACKPACK, "同じ色同士でインベントリを共有する")
@@ -625,6 +636,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.COPPER, "銅")
             builder.add(RagiumMaterialKeys.IRON, "鉄")
             builder.add(RagiumMaterialKeys.NITER, "硝石")
+            builder.add(RagiumMaterialKeys.SALT, "塩")
             builder.add(RagiumMaterialKeys.SULFUR, "硫黄")
             builder.add(RagiumMaterialKeys.WOOD, "木材")
 
@@ -642,6 +654,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.BAUXITE, "ボーキサイト")
             builder.add(RagiumMaterialKeys.CRYOLITE, "氷晶石")
             builder.add(RagiumMaterialKeys.DEEP_STEEL, "深層鋼")
+            builder.add(RagiumMaterialKeys.URANITE, "閃ウラン鉱")
             // builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "エンジニアリングプラスチック")
             // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 

@@ -28,7 +28,14 @@ import net.minecraft.world.World
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
     HTFluidSyncable {
-    final override fun process(world: World, pos: BlockPos): DataResult<Unit> = processor.process(world, key, tier)
+    final override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+        if (this is HTMultiblockController) {
+            if (!updateValidation(cachedState, world, pos)) {
+                return DataResult.error { "Invalid multiblock structure found!" }
+            }
+        }
+        return processor.process(world, key, tier)
+    }
 
     protected abstract val inventory: SidedInventory
 

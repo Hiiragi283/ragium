@@ -155,21 +155,25 @@ enum class HTMachineTier(
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
 
-    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean {
+    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =
         useTransaction(parent) { transaction: Transaction ->
-            world.energyNetwork?.let { network: HTEnergyNetwork ->
-                val extracted: Long = network.extract(recipeCost * multiplier, transaction)
-                when {
-                    extracted > 0 -> {
-                        transaction.commit()
-                        return true
+            world.energyNetwork
+                .map { network: HTEnergyNetwork ->
+                    val extracted: Long = network.extract(recipeCost * multiplier, transaction)
+                    when {
+                        extracted > 0 -> {
+                            transaction.commit()
+                            true
+                        }
+
+                        else -> {
+                            transaction.abort()
+                            false
+                        }
                     }
-                    else -> transaction.abort()
-                }
-            }
+                }.result()
+                .orElse(false)
         }
-        return false
-    }
 
     //    StringIdentifiable    //
 

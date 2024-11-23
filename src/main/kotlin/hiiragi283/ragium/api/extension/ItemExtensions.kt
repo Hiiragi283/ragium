@@ -24,13 +24,13 @@ import net.minecraft.world.WorldView
 
 fun itemSettings(): Item.Settings = Item.Settings()
 
-fun Item.Settings.machineKey(key: HTMachineKey): Item.Settings = component(HTMachineKey.COMPONENT_TYPE, key)
-
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachineTier.COMPONENT_TYPE, tier).rarity(tier.rarity)
 
-fun Item.Settings.materialKey(key: HTMaterialKey): Item.Settings = component(HTMaterialKey.COMPONENT_TYPE, key)
+fun Item.Settings.machine(key: HTMachineKey, tier: HTMachineTier): Item.Settings =
+    component(HTMachineKey.COMPONENT_TYPE, key).tier(tier).name(tier.createPrefixedText(key))
 
-fun Item.Settings.prefix(prefix: HTTagPrefix): Item.Settings = component(HTTagPrefix.COMPONENT_TYPE, prefix)
+fun Item.Settings.material(key: HTMaterialKey, prefix: HTTagPrefix): Item.Settings =
+    component(HTMaterialKey.COMPONENT_TYPE, key).component(HTTagPrefix.COMPONENT_TYPE, prefix).name(prefix.createText(key))
 
 fun Item.Settings.descriptions(vararg texts: Text): Item.Settings = component(RagiumComponentTypes.DESCRIPTION, texts.toList())
 

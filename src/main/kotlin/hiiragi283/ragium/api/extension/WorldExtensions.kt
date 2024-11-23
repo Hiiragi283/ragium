@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.world.HTBackpackManager
@@ -82,8 +83,11 @@ fun <T : PersistentState> getStateFromServer(world: ServerWorld, type: Persisten
 val MinecraftServer.backpackManager: HTBackpackManager
     get() = getStateFromServer(this, HTBackpackManager.TYPE, HTBackpackManager.ID)
 
-val WorldAccess.backpackManager: HTBackpackManager?
-    get() = server?.backpackManager
+val WorldAccess.backpackManager: DataResult<HTBackpackManager>
+    get() = server
+        ?.backpackManager
+        ?.let(DataResult<HTBackpackManager>::success)
+        ?: DataResult.error { "Failed to find backpack manager!" }
 
 fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
     openBackpackScreen(world, player, player.getStackInHand(hand))
@@ -97,14 +101,16 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, stack: ItemStac
     }
 
 fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor) {
-    world.backpackManager?.get(color)?.let { inventory: SimpleInventory ->
-        player.openHandledScreen(
-            SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
-                GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
-            }, RagiumItems.BACKPACK.name),
-        )
-        player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
-    }
+    world.backpackManager
+        .map { it[color] }
+        .ifSuccess { inventory: SimpleInventory ->
+            player.openHandledScreen(
+                SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
+                    GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
+                }, RagiumItems.BACKPACK.name),
+            )
+            player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
+        }
 }
 
 // Energy Network
@@ -114,5 +120,7 @@ val MinecraftServer.networkMap: Map<RegistryKey<World>, HTEnergyNetwork>
 val ServerWorld.energyNetwork: HTEnergyNetwork
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
 
-val World.energyNetwork: HTEnergyNetwork?
+val World.energyNetwork: DataResult<HTEnergyNetwork>
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
+        ?.let(DataResult<HTEnergyNetwork>::success)
+        ?: DataResult.error { "Failed to find energy network!" }

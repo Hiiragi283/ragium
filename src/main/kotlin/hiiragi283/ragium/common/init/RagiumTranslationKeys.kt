@@ -7,6 +7,7 @@ object RagiumTranslationKeys {
 
     const val ADVANCEMENT_BUJIN = "advancement.ragium.bujin.title"
     const val ADVANCEMENT_STELLA_SUIT = "advancement.ragium.stella_suit.title"
+    const val ADVANCEMENT_THIS_CAKE_IS_DIE = "advancement.ragium.this_cake_is_die.title"
 
     //    Block    //
 

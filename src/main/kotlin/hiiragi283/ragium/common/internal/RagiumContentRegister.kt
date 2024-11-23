@@ -80,7 +80,7 @@ internal object RagiumContentRegister {
             registerBlock(ore, block)
             registerBlockItem(
                 block,
-                itemSettings().name(ore.tagPrefix.getText(ore.material)),
+                itemSettings().material(ore.material, ore.tagPrefix),
             )
         }
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
@@ -88,7 +88,7 @@ internal object RagiumContentRegister {
             registerBlock(storage, block)
             registerBlockItem(
                 block,
-                itemSettings().name(storage.tagPrefix.getText(storage.material)),
+                itemSettings().material(storage.material, storage.tagPrefix),
             )
         }
 
@@ -158,7 +158,7 @@ internal object RagiumContentRegister {
             registerItem(
                 content,
                 Item(
-                    itemSettings().name(content.tagPrefix.getText(content.material)),
+                    itemSettings().material(content.material, content.tagPrefix),
                 ),
             )
         }
@@ -281,7 +281,9 @@ internal object RagiumContentRegister {
         registerItem("fluid_filter", RagiumItems.FLUID_FILTER)
         registerItem("forge_hammer", RagiumItems.FORGE_HAMMER)
         registerItem("gigant_hammer", RagiumItems.GIGANT_HAMMER)
+        registerItem("guide_book", RagiumItems.GUIDE_BOOK)
         registerItem("item_filter", RagiumItems.ITEM_FILTER)
+        registerItem("ragi_wrench", RagiumItems.RAGI_WRENCH)
         registerItem("steel_axe", RagiumItems.STEEL_AXE)
         registerItem("steel_hoe", RagiumItems.STEEL_HOE)
         registerItem("steel_pickaxe", RagiumItems.STEEL_PICKAXE)
@@ -289,46 +291,58 @@ internal object RagiumContentRegister {
         registerItem("steel_sword", RagiumItems.STEEL_SWORD)
         registerItem("trader_catalog", RagiumItems.TRADER_CATALOG)
 
-        registerItem("bee_wax", RagiumItems.BEE_WAX)
+        registerItem("sweet_berries_cake_piece", RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+
         registerItem("butter", RagiumItems.BUTTER)
         registerItem("caramel", RagiumItems.CARAMEL)
+        registerItem("dough", RagiumItems.DOUGH)
+        registerItem("flour", RagiumItems.FLOUR)
+
         registerItem("chocolate", RagiumItems.CHOCOLATE)
         registerItem("chocolate_apple", RagiumItems.CHOCOLATE_APPLE)
         registerItem("chocolate_bread", RagiumItems.CHOCOLATE_BREAD)
-        registerItem("cooked_meat_ingot", RagiumItems.COOKED_MEAT_INGOT)
-        registerItem("flour", RagiumItems.FLOUR)
-        registerItem("dough", RagiumItems.DOUGH)
-        registerItem("meat_ingot", RagiumItems.MEAT_INGOT)
+
         registerItem("minced_meat", RagiumItems.MINCED_MEAT)
+        registerItem("meat_ingot", RagiumItems.MEAT_INGOT)
+        registerItem("cooked_meat_ingot", RagiumItems.COOKED_MEAT_INGOT)
+
+        registerItem("bee_wax", RagiumItems.BEE_WAX)
         registerItem("pulp", RagiumItems.PULP)
-        registerItem("sweet_berries_cake_piece", RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+        registerItem("residual_coke", RagiumItems.RESIDUAL_COKE)
+
+        registerItem("deepant", RagiumItems.DEEPANT)
+        registerItem("luminescence_dust", RagiumItems.LUMINESCENCE_DUST)
+        registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
+        registerItem("slag", RagiumItems.SLAG)
+        registerItem("soap_ingot", RagiumItems.SOAP_INGOT)
+
+        registerItem("polymer_resin", RagiumItems.POLYMER_RESIN)
+        registerItem("plastic_plate", RagiumItems.PLASTIC_PLATE)
+        registerItem("engineering_plastic_plate", RagiumItems.ENGINEERING_PLASTIC_PLATE)
+        registerItem("stella_plate", RagiumItems.STELLA_PLATE)
+
+        registerItem("crude_silicon", RagiumItems.CRUDE_SILICON)
+        registerItem("silicon", RagiumItems.SILICON)
+        registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
+
+        registerItem("crimson_crystal", RagiumItems.CRIMSON_CRYSTAL)
+        registerItem("warped_crystal", RagiumItems.WARPED_CRYSTAL)
 
         registerItem("basalt_mesh", RagiumItems.BASALT_MESH)
         registerItem("blazing_carbon_electrode", RagiumItems.BLAZING_CARBON_ELECTRODE)
         registerItem("carbon_electrode", RagiumItems.CARBON_ELECTRODE)
         registerItem("charged_carbon_electrode", RagiumItems.CHARGED_CARBON_ELECTRODE)
-        registerItem("crimson_crystal", RagiumItems.CRIMSON_CRYSTAL)
-        registerItem("crude_silicon", RagiumItems.CRUDE_SILICON)
-        registerItem("deepant", RagiumItems.DEEPANT)
         registerItem("engine", RagiumItems.ENGINE)
-        registerItem("engineering_plastic_plate", RagiumItems.ENGINEERING_PLASTIC_PLATE)
         registerItem("laser_emitter", RagiumItems.LASER_EMITTER)
-        registerItem("luminescence_dust", RagiumItems.LUMINESCENCE_DUST)
-        registerItem("plastic_plate", RagiumItems.PLASTIC_PLATE)
-        registerItem("polymer_resin", RagiumItems.POLYMER_RESIN)
         registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)
-        registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
         registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-        registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
-        registerItem("ragi_wrench", RagiumItems.RAGI_WRENCH)
-        registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
-        registerItem("residual_coke", RagiumItems.RESIDUAL_COKE)
-        registerItem("silicon", RagiumItems.SILICON)
-        registerItem("slag", RagiumItems.SLAG)
-        registerItem("soap_ingot", RagiumItems.SOAP_INGOT)
         registerItem("solar_panel", RagiumItems.SOLAR_PANEL)
-        registerItem("stella_plate", RagiumItems.STELLA_PLATE)
-        registerItem("warped_crystal", RagiumItems.WARPED_CRYSTAL)
+
+        registerItem("uranium_fuel", RagiumItems.URANIUM_FUEL)
+        registerItem("yellow_cake", RagiumItems.YELLOW_CAKE)
+        registerItem("yellow_cake_piece", RagiumItems.YELLOW_CAKE_PIECE)
+
+        registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
     }
 
     @JvmStatic
@@ -337,8 +351,10 @@ internal object RagiumContentRegister {
         ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerForBlocks null
             world.backpackManager
-                ?.get(color)
-                ?.let { InventoryStorage.of(it, direction) }
+                .map { it[color] }
+                .map { InventoryStorage.of(it, direction) }
+                .result()
+                .getOrNull()
         }, RagiumBlocks.BACKPACK_INTERFACE)
         ItemStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             object : SingleItemStorage() {
@@ -382,7 +398,7 @@ internal object RagiumContentRegister {
             RagiumBlocks.CREATIVE_SOURCE,
         )
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            world.energyNetwork
+            world.energyNetwork.result().getOrNull()
         }, RagiumBlocks.NETWORK_INTERFACE)
 
         // Accessory

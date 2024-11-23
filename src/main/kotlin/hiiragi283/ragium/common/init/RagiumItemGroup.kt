@@ -55,6 +55,8 @@ object RagiumItemGroup {
                     addAll(RagiumItems.ARMORS)
                     addAll(RagiumItems.TOOLS)
 
+                    addAll(RagiumItems.INGREDIENTS)
+
                     addAll(RagiumBlocks.MISC)
                     addAll(RagiumItems.MISC)
 

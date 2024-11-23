@@ -347,6 +347,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     }
 
     private fun craftingFoods(exporter: RecipeExporter) {
+        // sweet berries cake
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .patterns(
@@ -376,7 +377,23 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
             .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
+        // yellow cake
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.YELLOW_CAKE_PIECE, 8)
+            .input(RagiumItems.YELLOW_CAKE)
+            .unlockedBy(RagiumItems.YELLOW_CAKE_PIECE)
+            .offerTo(exporter)
 
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.YELLOW_CAKE)
+            .patterns(
+                "AAA",
+                "A A",
+                "AAA",
+            ).input('A', RagiumItems.YELLOW_CAKE_PIECE)
+            .unlockedBy(RagiumItems.YELLOW_CAKE_PIECE)
+            .offerSuffix(exporter, "_from_piece")
+        // chocolate
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_BREAD)
             .input(Items.BREAD)

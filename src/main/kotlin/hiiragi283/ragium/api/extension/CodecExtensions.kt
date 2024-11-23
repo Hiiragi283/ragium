@@ -52,15 +52,6 @@ fun ServerPlayerEntity.sendTitle(title: Text) {
 
 //    Codec    //
 
-/*inline fun <reified T : StringIdentifiable> List<T>.createCodec(): Codec<T> =
-    StringIdentifiable.BasicCodec(this.toTypedArray(), this::matchName, this::indexOf)
-
-fun <T : StringIdentifiable> Iterable<T>.matchName(name: String): T = first { it.asString() == name }
-
-fun <T : StringIdentifiable> Iterable<T>.matchNameOrNull(name: String): T? = firstOrNull { it.asString() == name }*/
-
-// fun <T : StringIdentifiable> codecOf(from: (String) -> T): Codec<T> = Codec.STRING.xmap(from, StringIdentifiable::asString)
-
 fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.xmap(
     { name: String -> entries.firstOrNull { it.asString() == name } },
     StringIdentifiable::asString,
@@ -75,11 +66,6 @@ fun <A : Any, B : Any> Codec<Pair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf
     { pairs: List<Pair<A, B>> -> pairs.associate { it.first to it.second } },
     { map: Map<A, B> -> map.toList().map { Pair(it.first, it.second) } },
 )
-
-fun <T : Any> pairCodecOf(codec: Codec<T>, defaultValue: T, name: String): MapCodec<Pair<T, T>> = pairCodecOf(
-    codec.optionalFieldOf("first", defaultValue),
-    codec.optionalFieldOf("second", defaultValue),
-).optionalFieldOf(name, Pair.of(defaultValue, defaultValue))
 
 fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     val func: Function<Long, DataResult<Long>> = Codec.checkRange(min, max)
@@ -103,9 +89,6 @@ fun <B : ByteBuf, V : Any> PacketCodec<B, V>.validate(checker: (V) -> DataResult
     { checker(it).orThrow },
     { checker(it).orThrow },
 )
-
-// fun <T : StringIdentifiable> packetCodecOf(from: (String) -> T): PacketCodec<RegistryByteBuf, T> =
-//     PacketCodec.tuple(PacketCodecs.STRING, StringIdentifiable::asString, from)
 
 fun <T : StringIdentifiable> packetCodecOf(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
     PacketCodecs.STRING,

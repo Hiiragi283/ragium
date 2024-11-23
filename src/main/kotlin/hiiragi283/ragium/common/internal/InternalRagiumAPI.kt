@@ -8,9 +8,14 @@ import com.google.gson.annotations.SerializedName
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
-import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
@@ -95,7 +100,10 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 val block = HTMachineBlock(key, tier)
                 Registry.register(Registries.BLOCK, tier.createId(key), block)
                 blockTable.put(key, tier, block)
-                val item = BlockItem(block, itemSettings().name(tier.createPrefixedText(key)))
+                val item = BlockItem(
+                    block,
+                    itemSettings().machine(key, tier),
+                )
                 Registry.register(Registries.ITEM, tier.createId(key), item)
             }
         }

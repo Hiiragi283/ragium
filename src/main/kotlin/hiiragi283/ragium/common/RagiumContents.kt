@@ -173,6 +173,7 @@ object RagiumContents {
 
         // tier 3
         BAUXITE(RagiumMaterialKeys.BAUXITE),
+        URANITE(RagiumMaterialKeys.URANITE),
         ;
 
         override val delegated: HTContent<Item> =

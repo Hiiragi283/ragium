@@ -42,7 +42,7 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrDefault(property: Pro
     false -> defaultValue
 }
 
-operator fun <O : Any, S : Any> State<O, S>.contains(property: Property<*>): Boolean = contains(property)
+// operator fun <O : Any, S : Any> State<O, S>.contains(property: Property<*>): Boolean = contains(property)
 
 operator fun <O : Any, S : Any, T : Comparable<T>, U : State<O, S>> U.set(property: Property<T>, value: T): U = apply {
     with(property, value)

@@ -22,19 +22,6 @@ import net.minecraft.text.MutableText
 
 //    ResourceAmount    //
 
-/*
-fun <O : TransferVariant<*>, S : Any> stackMapper(objGetter: (S) -> O, numGetter: (S) -> Long): Function<S, ResourceAmount<O>> =
-    Function { stack: S -> ResourceAmount(objGetter(stack), numGetter(stack)) }
-
-@JvmField
-val ITEM_STACK_MAPPER: Function<ItemStack, ResourceAmount<ItemVariant>> =
-    stackMapper(ItemVariant::of) { it.count.toLong() }
-
-@JvmField
-val FLUID_STACK_MAPPER: Function<HTFluidStack, ResourceAmount<FluidVariant>> =
-    stackMapper({ FluidVariant.of(it.fluid, it.getComponentChanges()) }) { it.amount }
-*/
-
 operator fun <T : Any> ResourceAmount<T>.plus(amount: Long): ResourceAmount<T> = ResourceAmount(resource, this.amount + amount)
 
 operator fun <T : Any> ResourceAmount<T>.minus(amount: Long): ResourceAmount<T> = ResourceAmount(resource, this.amount - amount)
@@ -66,9 +53,6 @@ val <T : Any> SingleSlotStorage<T>.resourceAmount: ResourceAmount<T>
 
 val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
     get() = amount == capacity
-
-val SingleSlotStorage<FluidVariant>.amountedFluid: Pair<Fluid, Long>
-    get() = resource.fluid to amount
 
 fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? = if (slot in 0..slotCount) getSlot(slot) else null
 

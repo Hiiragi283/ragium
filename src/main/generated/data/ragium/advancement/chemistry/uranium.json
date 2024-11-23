@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:chemistry/root",
+  "criteria": {
+    "has_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:poisonous_potato"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:poisonous_potato"
+    },
+    "title": {
+      "translate": "item.minecraft.poisonous_potato"
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

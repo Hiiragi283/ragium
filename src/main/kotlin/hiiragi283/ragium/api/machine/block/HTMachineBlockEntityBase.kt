@@ -126,14 +126,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
-        val result: DataResult<HTEnergyNetwork> = world.energyNetwork
-            ?.let(DataResult<HTEnergyNetwork>::success)
-            ?: DataResult.error { "Failed to find energy network!" }
-        result
+        world.energyNetwork
             .validate(
                 { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.recipeCost) },
                 { "Failed to extract required energy from network!" },
-            ).validate(
+            ).flatMap { network: HTEnergyNetwork -> process(world, pos).map { _: Unit -> network } }
+            .validate(
                 { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.recipeCost) },
                 { "Failed to interact energy network" },
             ).ifSuccess { _: HTEnergyNetwork ->

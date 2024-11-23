@@ -82,6 +82,10 @@ enum class RagiumFluids(val color: Color, val enName: String, val jaName: String
     // Explosives
     NITRO_GLYCERIN(Color(0x99cc66), "Nitroglycerin", "ニトログリセリン"),
     TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
+
+    // Radioactive
+    URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Uranium Hexafluoride", "六フッ化ウラン"),
+    ENRICHED_URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Enriched Uranium Hexafluoride", "濃縮六フッ化ウラン"),
     ;
 
     override val key: RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, RagiumAPI.id(name.lowercase()))
