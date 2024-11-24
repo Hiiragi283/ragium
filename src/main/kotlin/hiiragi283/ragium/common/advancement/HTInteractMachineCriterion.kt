@@ -13,12 +13,11 @@ import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
-object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condition>() {
+object HTInteractMachineCriterion : AbstractCriterion<HTInteractMachineCriterion.Condition>() {
     @JvmStatic
     fun create(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<Condition> = create(Condition(null, key, minTier))
 
-    override fun getConditionsCodec(): Codec<Condition> = Condition.CODEC
-
+    @JvmStatic
     fun trigger(player: PlayerEntity?, key: HTMachineKey, tier: HTMachineTier) {
         (player as? ServerPlayerEntity)?.let {
             trigger(it) { condition: Condition ->
@@ -26,6 +25,8 @@ object HTBuiltMachineCriterion : AbstractCriterion<HTBuiltMachineCriterion.Condi
             }
         }
     }
+
+    override fun getConditionsCodec(): Codec<Condition> = Condition.CODEC
 
     //    Condition    //
 

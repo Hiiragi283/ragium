@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
-import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
+import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -82,7 +82,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
             player: PlayerEntity,
         ) {
             super<HTMultiblockController>.onSucceeded(state, world, pos, player)
-            HTBuiltMachineCriterion.trigger(player, key, tier)
+            HTInteractMachineCriterion.trigger(player, key, tier)
         }
 
         final override val inventory: SidedInventory = HTStorageBuilder(7)

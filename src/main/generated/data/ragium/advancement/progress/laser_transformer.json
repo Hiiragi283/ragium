@@ -1,15 +1,12 @@
 {
   "parent": "ragium:progress/advanced_hull",
   "criteria": {
-    "has_items": {
+    "interact_machine": {
       "conditions": {
-        "items": [
-          {
-            "items": "#ragium:machines/laser_transformer"
-          }
-        ]
+        "machine_type": "ragium:laser_transformer",
+        "min_tier": "advanced"
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "ragium:interact_machine"
     }
   },
   "display": {
@@ -29,7 +26,7 @@
   },
   "requirements": [
     [
-      "has_items"
+      "interact_machine"
     ]
   ],
   "sends_telemetry_event": true

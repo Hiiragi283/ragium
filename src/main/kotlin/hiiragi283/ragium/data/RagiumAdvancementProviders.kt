@@ -202,7 +202,7 @@ object RagiumAdvancementProviders {
             announce,
             hidden,
         )
-        hasAnyItems(key.itemTag)
+        interactMachine(key, tier)
     }
 
     /*private fun createChild(
@@ -232,9 +232,9 @@ object RagiumAdvancementProviders {
         builderAction()
     }*/
 
-    private fun Advancement.Builder.buildMultiblock(key: HTMachineKey, minTier: HTMachineTier): Advancement.Builder = criterion(
-        "build_multiblock",
-        RagiumAPI.getInstance().createBuiltMachineCriterion(key, minTier),
+    private fun Advancement.Builder.interactMachine(key: HTMachineKey, minTier: HTMachineTier): Advancement.Builder = criterion(
+        "interact_machine",
+        RagiumAPI.getInstance().createInteractMachineCriterion(key, minTier),
     )
 
     private fun Advancement.Builder.hasAllItems(vararg items: ItemConvertible): Advancement.Builder = criterion(
@@ -262,11 +262,6 @@ object RagiumAdvancementProviders {
                         .build(),
                 ),
         ),
-    )
-
-    private fun Advancement.Builder.hasMachine(key: HTMachineKey, tier: HTMachineTier): Advancement.Builder = criterion(
-        "has_items",
-        InventoryChangedCriterion.Conditions.items(key.createItemStack(tier).item),
     )
 
     //    Progress    //
@@ -322,7 +317,7 @@ object RagiumAdvancementProviders {
                 "progress/primitive_blast_furnace",
                 primitiveHull,
                 RagiumMachineKeys.BLAST_FURNACE.entry.getBlock(HTMachineTier.PRIMITIVE),
-            ) { buildMultiblock(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.PRIMITIVE) }
+            ) { interactMachine(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.PRIMITIVE) }
             // tier 2
             val ragiSteel: AdvancementEntry = createContentChild(
                 consumer,
@@ -342,7 +337,7 @@ object RagiumAdvancementProviders {
                 "progress/basic_blast_furnace",
                 basicHull,
                 RagiumMachineKeys.BLAST_FURNACE.entry.getBlock(HTMachineTier.BASIC),
-            ) { buildMultiblock(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC) }
+            ) { interactMachine(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC) }
             // tier 3
             val ragiCrystal: AdvancementEntry = createContentChild(
                 consumer,
@@ -483,7 +478,7 @@ object RagiumAdvancementProviders {
                 Text.literal("Chemistry"),
                 Text.empty(),
                 Identifier.of("textures/block/quartz_block_top.png"),
-            ) { hasMachine(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.PRIMITIVE) }
+            ) { interactMachine(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.PRIMITIVE) }
             // hydrogen
             val hydrogen: AdvancementEntry = createFluidChild(
                 consumer,

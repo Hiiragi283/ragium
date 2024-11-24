@@ -1,11 +1,11 @@
 {
   "parent": "ragium:progress/primitive_hull",
   "criteria": {
-    "build_multiblock": {
+    "interact_machine": {
       "conditions": {
         "machine_type": "ragium:blast_furnace"
       },
-      "trigger": "ragium:build_machine"
+      "trigger": "ragium:interact_machine"
     }
   },
   "display": {
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "build_multiblock"
+      "interact_machine"
     ]
   ],
   "sends_telemetry_event": true

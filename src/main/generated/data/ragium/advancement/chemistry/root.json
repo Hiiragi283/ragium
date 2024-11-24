@@ -1,14 +1,10 @@
 {
   "criteria": {
-    "has_items": {
+    "interact_machine": {
       "conditions": {
-        "items": [
-          {
-            "items": "ragium:primitive_chemical_reactor"
-          }
-        ]
+        "machine_type": "ragium:chemical_reactor"
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "ragium:interact_machine"
     }
   },
   "display": {
@@ -24,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_items"
+      "interact_machine"
     ]
   ],
   "sends_telemetry_event": true

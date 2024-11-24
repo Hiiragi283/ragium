@@ -49,6 +49,7 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
                 ::HTFluidIngredient,
             )
 
+        @Suppress("DEPRECATION")
         @JvmStatic
         fun of(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
             HTFluidIngredient(RegistryEntryList.of(fluid.registryEntry), amount)

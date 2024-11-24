@@ -1,15 +1,12 @@
 {
   "parent": "ragium:petro_chemistry/root",
   "criteria": {
-    "has_items": {
+    "interact_machine": {
       "conditions": {
-        "items": [
-          {
-            "items": "#ragium:machines/distillation_tower"
-          }
-        ]
+        "machine_type": "ragium:distillation_tower",
+        "min_tier": "basic"
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "ragium:interact_machine"
     }
   },
   "display": {
@@ -29,7 +26,7 @@
   },
   "requirements": [
     [
-      "has_items"
+      "interact_machine"
     ]
   ],
   "sends_telemetry_event": true

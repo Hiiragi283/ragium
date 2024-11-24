@@ -1,12 +1,12 @@
 {
   "parent": "ragium:progress/basic_hull",
   "criteria": {
-    "build_multiblock": {
+    "interact_machine": {
       "conditions": {
         "machine_type": "ragium:blast_furnace",
         "min_tier": "basic"
       },
-      "trigger": "ragium:build_machine"
+      "trigger": "ragium:interact_machine"
     }
   },
   "display": {
@@ -26,7 +26,7 @@
   },
   "requirements": [
     [
-      "build_multiblock"
+      "interact_machine"
     ]
   ],
   "sends_telemetry_event": true

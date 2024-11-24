@@ -1,15 +1,11 @@
 {
   "parent": "ragium:machine/root",
   "criteria": {
-    "has_items": {
+    "interact_machine": {
       "conditions": {
-        "items": [
-          {
-            "items": "#ragium:machines/assembler"
-          }
-        ]
+        "machine_type": "ragium:assembler"
       },
-      "trigger": "minecraft:inventory_changed"
+      "trigger": "ragium:interact_machine"
     }
   },
   "display": {
@@ -29,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_items"
+      "interact_machine"
     ]
   ],
   "sends_telemetry_event": true

@@ -29,10 +29,9 @@ object RagiumLangProviders {
     }
 
     @JvmName("addBlock")
-    fun TranslationBuilder.add(entry: HTContent<Block>, value: String, desc: String? = null) {
+    fun TranslationBuilder.add(entry: HTContent<Block>, value: String) {
         val block: Block = entry.value
         add(block, value)
-        desc?.let { add("${block.translationKey}.description", it) }
     }
 
     @JvmName("addItem")

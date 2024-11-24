@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.world.HTEnergyNetwork
+import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.fabricmc.api.EnvType
@@ -115,6 +116,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             true -> ActionResult.SUCCESS
             else -> {
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
+                HTInteractMachineCriterion.trigger(player, key, tier)
                 ActionResult.CONSUME
             }
         }

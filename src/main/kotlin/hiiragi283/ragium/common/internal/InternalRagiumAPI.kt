@@ -19,7 +19,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
-import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
+import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
@@ -50,10 +50,10 @@ internal data object InternalRagiumAPI : RagiumAPI {
     override lateinit var materialRegistry: HTMaterialRegistry
         private set
 
-    override fun createBuiltMachineCriterion(
+    override fun createInteractMachineCriterion(
         key: HTMachineKey,
         minTier: HTMachineTier,
-    ): AdvancementCriterion<HTBuiltMachineCriterion.Condition> = HTBuiltMachineCriterion.create(key, minTier)
+    ): AdvancementCriterion<HTInteractMachineCriterion.Condition> = HTInteractMachineCriterion.create(key, minTier)
 
     override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
         RagiumItems.FILLED_FLUID_CUBE,

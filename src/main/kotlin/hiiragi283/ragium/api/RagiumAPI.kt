@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.common.advancement.HTBuiltMachineCriterion
+import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.minecraft.advancement.AdvancementCriterion
@@ -78,7 +78,10 @@ interface RagiumAPI {
     val machineRegistry: HTMachineRegistry
     val materialRegistry: HTMaterialRegistry
 
-    fun createBuiltMachineCriterion(key: HTMachineKey, minTier: HTMachineTier): AdvancementCriterion<HTBuiltMachineCriterion.Condition>
+    fun createInteractMachineCriterion(
+        key: HTMachineKey,
+        minTier: HTMachineTier,
+    ): AdvancementCriterion<HTInteractMachineCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 
