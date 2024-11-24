@@ -151,21 +151,18 @@ object RagiumItems {
 
     //    Tools    //
 
-    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     @JvmField
     val ANVIL_DYNAMITE: Item = HTDynamiteItem(
         { entity: HTDynamiteEntity, result: HitResult ->
             val world: World = entity.world
-            when (result.type) {
-                HitResult.Type.MISS -> {}
-                HitResult.Type.BLOCK -> {
-                    val blockResult: BlockHitResult = result as BlockHitResult
-                    world.setBlockState(blockResult.blockPos.offset(blockResult.side), Blocks.ANVIL.defaultState)
+            when (result) {
+                is BlockHitResult -> {
+                    world.setBlockState(result.blockPos.offset(result.side), Blocks.ANVIL.defaultState)
                 }
-                HitResult.Type.ENTITY -> {
-                    val entityResult: EntityHitResult = result as EntityHitResult
-                    entityResult.entity.damage(world.damageSources.fallingAnvil(entity), 10f)
+                is EntityHitResult -> {
+                    result.entity.damage(world.damageSources.fallingAnvil(entity), 10f)
                 }
+                else -> {}
             }
         },
         itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ANVIL_DYNAMITE)),
@@ -260,6 +257,21 @@ object RagiumItems {
     val RAGI_WRENCH: Item = Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.RAGI_WRENCH)))
 
     @JvmField
+    val ROPE_DYNAMITE: Item = HTDynamiteItem(
+        { entity: HTDynamiteEntity, result: HitResult ->
+            val world: World = entity.world
+            if (result is BlockHitResult) {
+                var pos: BlockPos = result.blockPos.offset(result.side)
+                while (world.isAir(pos)) {
+                    world.setBlockState(pos, Blocks.WEEPING_VINES.defaultState)
+                    pos = pos.down()
+                }
+            }
+        },
+        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ANVIL_DYNAMITE)),
+    )
+
+    @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
@@ -280,19 +292,20 @@ object RagiumItems {
     @JvmField
     val TOOLS: List<Item> = listOf(
         // damageable tool
-        BUJIN,
+        FORGE_HAMMER,
         STEEL_AXE,
         STEEL_HOE,
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
-        FORGE_HAMMER,
+        BUJIN,
         GIGANT_HAMMER,
         // dynamite
         DYNAMITE,
         ANVIL_DYNAMITE,
         BEDROCK_DYNAMITE,
         FLATTENING_DYNAMITE,
+        ROPE_DYNAMITE,
         // non-damageable tool
         BACKPACK,
         EMPTY_FLUID_CUBE,
@@ -507,6 +520,7 @@ object RagiumItems {
         BLAZING_CARBON_ELECTRODE,
         CARBON_ELECTRODE,
         CHARGED_CARBON_ELECTRODE,
+        ENGINE,
         LASER_EMITTER,
         PROCESSOR_SOCKET,
         RAGI_CRYSTAL_PROCESSOR,

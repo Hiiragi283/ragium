@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=east": {
-      "model": "ragium:item/large_processor",
+      "model": "ragium:block/large_processor",
       "y": 90
     },
     "facing=north": {
-      "model": "ragium:item/large_processor"
+      "model": "ragium:block/large_processor"
     },
     "facing=south": {
-      "model": "ragium:item/large_processor",
+      "model": "ragium:block/large_processor",
       "y": 180
     },
     "facing=west": {
-      "model": "ragium:item/large_processor",
+      "model": "ragium:block/large_processor",
       "y": 270
     }
   }

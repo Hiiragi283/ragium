@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.machine.process
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.BlockPos
@@ -18,7 +18,14 @@ import net.minecraft.world.World
 
 class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase.Large(RagiumBlockEntityTypes.LARGE_PROCESSOR, pos, state) {
-    override var key: HTMachineKey = RagiumMachineKeys.ALLOY_FURNACE
+    companion object {
+        private val DEFAULT_KEY: HTMachineKey = HTMachineKey.of(RagiumAPI.id("large_processor"))
+    }
+
+    override var key: HTMachineKey = DEFAULT_KEY
+
+    val isDefault: Boolean
+        get() = key == DEFAULT_KEY
 
     //    HTMultiblockController    //
 
@@ -41,5 +48,15 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         key = parent.key
         tier = parent.tier
         player?.sendPacket(HTMachinePacket(key, tier, pos))
+    }
+
+    override fun onFailed(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+    ) {
+        super.onFailed(state, world, pos, player)
+        key = DEFAULT_KEY
     }
 }
