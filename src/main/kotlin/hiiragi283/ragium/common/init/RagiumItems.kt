@@ -268,7 +268,7 @@ object RagiumItems {
                 }
             }
         },
-        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ANVIL_DYNAMITE)),
+        itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
     )
 
     @JvmField
@@ -418,13 +418,13 @@ object RagiumItems {
 
     // plastic
     @JvmField
-    val POLYMER_RESIN: Item = Item(itemSettings())
+    val POLYMER_RESIN: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
-    val PLASTIC_PLATE: Item = Item(itemSettings())
+    val PLASTIC_PLATE: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
-    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings())
+    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
     val STELLA_PLATE: Item = Item(itemSettings())
@@ -448,7 +448,7 @@ object RagiumItems {
 
     // parts
     @JvmField
-    val BASALT_MESH: Item = Item(itemSettings())
+    val BASALT_MESH: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
     val BLAZING_CARBON_ELECTRODE: Item = Item(itemSettings())
@@ -466,10 +466,10 @@ object RagiumItems {
     val LASER_EMITTER: Item = Item(itemSettings())
 
     @JvmField
-    val PROCESSOR_SOCKET: Item = Item(itemSettings())
+    val PROCESSOR_SOCKET: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
-    val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings())
+    val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
     val SOLAR_PANEL: Item = Item(itemSettings())

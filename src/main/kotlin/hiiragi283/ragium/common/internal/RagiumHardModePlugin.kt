@@ -182,6 +182,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.LAVA_BUCKET,
         )
         // consumers
+        // bedrock miner
         createProcessor(
             exporter,
             RagiumMachineKeys.BIOMASS_FERMENTER,
@@ -209,11 +210,6 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.WATER_BUCKET,
         )
         // generators
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.THERMAL_GENERATOR,
-            Items.MAGMA_BLOCK,
-        )
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             // combustion generator
             val combustion: HTMachineBlock = RagiumMachineKeys.COMBUSTION_GENERATOR.entry.getBlock(tier)
@@ -246,6 +242,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.FURNACE,
             Items.BUCKET,
         )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.THERMAL_GENERATOR,
+            Items.MAGMA_BLOCK,
+        )
         // processors
         createProcessor(
             exporter,
@@ -269,6 +270,11 @@ object RagiumHardModePlugin : RagiumPlugin {
         )
         createProcessor(
             exporter,
+            RagiumMachineKeys.COMPRESSOR,
+            Items.PISTON,
+        )
+        createProcessor(
+            exporter,
             RagiumMachineKeys.DISTILLATION_TOWER,
             RagiumContents.Drums.BASIC,
         )
@@ -286,6 +292,12 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumMachineKeys.GRINDER,
             Items.FLINT,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.GROWTH_CHAMBER,
+            Items.IRON_HOE,
+            Items.IRON_AXE,
         )
         createProcessor(
             exporter,

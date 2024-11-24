@@ -103,6 +103,10 @@ object RagiumComponentTypes {
         register("repairment", HTItemIngredient.CODEC, HTItemIngredient.PACKET_CODEC)
 
     @JvmField
+    val REWORK_TARGET: ComponentType<Unit> =
+        registerUnit("rework_target")
+
+    @JvmField
     val TAG_PREFIX: ComponentType<HTTagPrefix> =
         register("tag_prefix", HTTagPrefix.COMPONENT_TYPE)
 

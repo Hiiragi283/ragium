@@ -10,7 +10,7 @@ fabric-kotlin = "1.12.+"
 energy = "4.1.0"
 jade = "15.8.2+fabric"
 mod-menu = "11.0.3"
-refined-storage = "2.0.0-milestone.4.9"
+refined-storage = "2.0.0-milestone.4.10"
 rei = "16.0.788"
 
 [libraries]

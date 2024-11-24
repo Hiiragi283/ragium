@@ -247,13 +247,17 @@ object RagiumClient : ClientModInitializer {
         ItemTooltipCallback.EVENT.register(
             RagiumAPI.id("description"),
         ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
-            val texts: List<Text> = stack.get(RagiumComponentTypes.DESCRIPTION)
-                ?: ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
-                    listOf(
-                        Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"),
-                    )
+            // rework warning
+            if (stack.contains(RagiumComponentTypes.REWORK_TARGET)) {
+                tooltips.add(Text.literal("This content may be updated or REMOVED!").formatted(Formatting.DARK_RED))
+            }
+            // descriptions
+            val texts: List<Text> = buildList {
+                stack.get(RagiumComponentTypes.DESCRIPTION)?.let(this::addAll)
+                ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
+                    add(Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"))
                 }
-                ?: listOf()
+            }
             if (texts.isEmpty()) return@register
             if (Screen.hasControlDown()) {
                 texts.map(Text::copy).map { it.formatted(Formatting.AQUA) }.forEach(tooltips::add)

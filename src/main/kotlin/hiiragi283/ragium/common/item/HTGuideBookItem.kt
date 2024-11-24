@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.buildStyle
 import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -11,7 +12,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-object HTGuideBookItem : Item(itemSettings().maxCount(1)) {
+object HTGuideBookItem : Item(itemSettings().maxCount(1).component(RagiumComponentTypes.REWORK_TARGET, Unit)) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         if (!world.isClient) {

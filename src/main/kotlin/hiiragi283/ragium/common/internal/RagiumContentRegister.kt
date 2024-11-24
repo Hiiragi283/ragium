@@ -252,9 +252,18 @@ internal object RagiumContentRegister {
         registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
         registerBlock("shaft", RagiumBlocks.SHAFT)
         registerBlock("infesting", RagiumBlocks.INFESTING)
-        registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
-        registerBlockItem(RagiumBlocks.BUFFER)
-        registerBlockItem(RagiumBlocks.ENCHANTMENT_BOOKSHELF)
+        registerBlockItem(
+            RagiumBlocks.BACKPACK_INTERFACE,
+            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
+        )
+        registerBlockItem(
+            RagiumBlocks.BUFFER,
+            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
+        )
+        registerBlockItem(
+            RagiumBlocks.ENCHANTMENT_BOOKSHELF,
+            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
+        )
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.SHAFT)
     }
