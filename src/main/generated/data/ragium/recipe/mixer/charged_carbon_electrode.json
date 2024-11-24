@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "ragium:carbon_electrode"
+    },
+    {
+      "count": 8,
+      "items": "minecraft:wind_charge"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:charged_carbon_electrode"
+    }
+  ]
+}

@@ -1,7 +1,3 @@
 {
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "ragium:block/large_processor",
-    "side": "ragium:block/large_processor"
-  }
+  "parent": "ragium:block/large_processor"
 }

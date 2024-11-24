@@ -2,8 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlock
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -32,6 +30,24 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // supplier-based
         fun registerSupplier(block: Block, supplier: BlockStateSupplier) {
             generator.blockStateCollector.accept(supplier)
+        }
+
+        fun registerDirectional(block: Block, model: BlockStateVariant = stateVariantOf(block)) {
+            registerSupplier(
+                block,
+                VariantsBlockStateSupplier
+                    .create(block, model)
+                    .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
+            )
+        }
+
+        fun registerHorizontal(block: Block, modelId: Identifier = TextureMap.getId(block)) {
+            registerSupplier(
+                block,
+                VariantsBlockStateSupplier
+                    .create(block, stateVariantOf(modelId))
+                    .coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+            )
         }
 
         // model-based
@@ -95,6 +111,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // static
         registerStaticModel(RagiumBlocks.MANUAL_FORGE)
         registerStaticModel(RagiumBlocks.MANUAL_MIXER)
+        registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
             TextureMap.all(Blocks.WHITE_WOOL)
@@ -105,6 +122,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 put(TextureKey.SIDE, Identifier.of("block/oak_log"))
             }
         }
+        registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
+            textureMap {
+                put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
+                put(TextureKey.SIDE, TextureMap.getId(RagiumBlocks.ENCHANTMENT_BOOKSHELF))
+            }
+        }
+
         RagiumContents.Drums.entries.forEach { registerFactory(it.value, TexturedModel.CUBE_COLUMN) }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val tier: HTMachineTier = hull.tier
@@ -153,27 +177,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 }
             },
         )
-        registerSupplier(
-            RagiumBlocks.SWEET_BERRIES_CAKE,
-            VariantsBlockStateSupplier
-                .create(RagiumBlocks.SWEET_BERRIES_CAKE)
-                .coordinate(
-                    BlockStateVariantMap
-                        .create(Properties.BITES)
-                        .register { bite: Int ->
-                            when (bite) {
-                                0 -> ""
-                                else -> "_slice$bite"
-                            }.let {
-                                stateVariantOf(
-                                    TextureMap.getSubId(
-                                        RagiumBlocks.SWEET_BERRIES_CAKE,
-                                        it,
-                                    ),
-                                )
-                            }
-                        },
-                ),
+        registerHorizontal(
+            RagiumBlocks.LARGE_PROCESSOR,
+            TexturedModel.CUBE_ALL.upload(RagiumBlocks.LARGE_PROCESSOR, generator.modelCollector),
         )
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block: Block = exporter.value
@@ -186,12 +192,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 },
                 generator.modelCollector,
             )
-            registerSupplier(
-                block,
-                VariantsBlockStateSupplier
-                    .create(block, stateVariantOf(modelId))
-                    .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
-            )
+            registerDirectional(block, stateVariantOf(modelId))
         }
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val block: Block = pipe.value
@@ -228,41 +229,31 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
-        RagiumAPI.getInstance().machineRegistry.blocks.forEach { block: HTMachineBlock ->
+        /*RagiumAPI.getInstance().machineRegistry.blocks.forEach { block: HTMachineBlock ->
             val modelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID)
-            registerSupplier(
-                block,
-                VariantsBlockStateSupplier
-                    .create(
-                        block,
-                        stateVariantOf(modelId),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
+            val activeModelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.ACTIVE_MODEL_ID)
+            val stateMap: BlockStateVariantMap = BlockStateVariantMap
+                .create(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
+                .register { direction: Direction, isActive: Boolean ->
+                    val variant: BlockStateVariant = BlockStateVariant.create()
+                    variant.put(
+                        VariantSettings.MODEL,
+                        when (isActive) {
+                            true -> activeModelId
+                            false -> modelId
+                        },
+                    )
+                    variant.rot(direction)
+                }
+            registerSupplier(block, VariantsBlockStateSupplier.create(block).coordinate(stateMap))
             RagiumModels.model(modelId).upload(
                 ModelIds.getItemModelId(block.asItem()),
                 TextureMap(),
                 generator.modelCollector,
             )
-        }
+        }*/
         // custom
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        register(RagiumBlocks.LARGE_PROCESSOR) {
-            generator.excludeFromSimpleItemModelGeneration(it)
-            registerSupplier(
-                it,
-                VariantsBlockStateSupplier
-                    .create(
-                        it,
-                        stateVariantOf(
-                            Models.CUBE_COLUMN.upload(
-                                ModelIds.getItemModelId(it.asItem()),
-                                TextureMap.all(it),
-                                generator.modelCollector,
-                            ),
-                        ),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
-        }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
             register(coil.value) {
                 generator.registerAxisRotated(
@@ -315,6 +306,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
             addAll(RagiumItems.FOODS)
+            addAll(RagiumItems.INGREDIENTS)
             addAll(RagiumItems.MISC)
 
             remove(RagiumItems.CHOCOLATE_APPLE)

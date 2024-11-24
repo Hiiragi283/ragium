@@ -12,7 +12,7 @@
   ],
   "item_inputs": [
     {
-      "items": "minecraft:ancient_debris"
+      "items": "#c:ores/netherite_scrap"
     }
   ],
   "item_outputs": [

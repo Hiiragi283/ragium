@@ -64,11 +64,11 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                     HTMachineTier.PRIMITIVE,
                 ) { add(inventory.getStack(0)) },
                 world,
-            ).getOrNull()
-            ?.value
+            ).result()
+            ?.getOrNull()
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        inventory.getStack(0).decrement(recipe.itemInputs[0].amount)
+        inventory.getStack(0).decrement(recipe.itemInputs[0].count)
         RagiumMachineKeys.GRINDER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

@@ -45,6 +45,7 @@
     ],
     "ragium.plugin.client": []
   },
+  "accessWidener": "ragium.accesswidener",
   "mixins": [
     "ragium.mixins.json"
   ],

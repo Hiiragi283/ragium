@@ -9,6 +9,9 @@ object RagiumMaterialKeys {
     val DEEP_STEEL: HTMaterialKey = HTMaterialKey.of("deep_steel")
 
     @JvmField
+    val NETHERITE: HTMaterialKey = HTMaterialKey.of("netherite")
+
+    @JvmField
     val RAGI_ALLOY: HTMaterialKey = HTMaterialKey.of("ragi_alloy")
 
     @JvmField
@@ -48,6 +51,9 @@ object RagiumMaterialKeys {
 
     @JvmField
     val FLUORITE: HTMaterialKey = HTMaterialKey.of("fluorite")
+
+    @JvmField
+    val LAPIS: HTMaterialKey = HTMaterialKey.of("lapis")
 
     @JvmField
     val PERIDOT: HTMaterialKey = HTMaterialKey.of("peridot")
@@ -125,6 +131,9 @@ object RagiumMaterialKeys {
 
     @JvmField
     val SULFUR: HTMaterialKey = HTMaterialKey.of("sulfur")
+
+    @JvmField
+    val URANITE: HTMaterialKey = HTMaterialKey.of("uranite")
 
     //    Plate    //
 

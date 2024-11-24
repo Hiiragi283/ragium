@@ -78,7 +78,7 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     val translationKey = "tag_prefix.${RagiumAPI.MOD_ID}.${asString()}"
 
-    fun getText(key: HTMaterialKey): MutableText = Text.translatable(translationKey, key.text)
+    fun createText(key: HTMaterialKey): MutableText = Text.translatable(translationKey, key.text)
 
     //    StringIdentifiable    //
 

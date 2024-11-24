@@ -1,8 +1,7 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.machine.HTLargeProcessorBlockEntity
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.machine.process.HTLargeProcessorBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.RenderLayers
@@ -23,9 +22,13 @@ object HTLargeProcessorBlockEntityRenderer : BlockEntityRenderer<HTLargeProcesso
     ) {
         val world: World = entity.world ?: return
         // render machine
-        val key: HTMachineKey = entity.key
-        val tier: HTMachineTier = entity.tier
-        val state: BlockState = key.entry.getBlock(tier).defaultState
+        val state: BlockState = when (entity.isDefault) {
+            true -> RagiumBlocks.LARGE_PROCESSOR.defaultState
+            false ->
+                entity.key.entry
+                    .getBlock(entity.tier)
+                    .defaultState
+        }
         MinecraftClient
             .getInstance()
             .blockRenderManager

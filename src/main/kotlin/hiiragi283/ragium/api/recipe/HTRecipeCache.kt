@@ -1,24 +1,32 @@
 package hiiragi283.ragium.api.recipe
 
+import com.mojang.serialization.DataResult
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeEntry
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.util.Identifier
 import net.minecraft.world.World
-import java.util.*
 
-class HTRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeType: RecipeType<R>) : RecipeManager.MatchGetter<I, R> {
+class HTRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeType: RecipeType<R>) {
     private var id: Identifier? = null
 
-    override fun getFirstMatch(input: I, world: World): Optional<RecipeEntry<R>> = world.recipeManager
+    fun getFirstMatch(input: I, world: World): DataResult<R> = world.recipeManager
         .getFirstMatch(recipeType, input, world, id)
-        .flatMap {
+        .map {
             this.id = it.id
-            Optional.of(it)
-        }.or {
+            DataResult.success(it.value)
+        }.orElseGet {
             this.id = null
-            Optional.empty()
+            DataResult.error { "Failed to find matching recipe!" }
+        }
+
+    fun getAllMatches(input: I, world: World): DataResult<List<R>> = world.recipeManager
+        .getAllMatches(recipeType, input, world)
+        .let { entries: List<RecipeEntry<R>> ->
+            when (entries.isEmpty()) {
+                true -> DataResult.error { "Failed to find matching recipes!" }
+                false -> DataResult.success(entries.map(RecipeEntry<R>::value))
+            }
         }
 }

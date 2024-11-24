@@ -35,6 +35,12 @@ class HTStorageBuilder(val size: Int) {
         }
     }
 
+    fun setAll(type: HTStorageIO, sideType: HTStorageSide, indices: IntRange): HTStorageBuilder = apply {
+        indices.forEach { index: Int ->
+            set(index, type, sideType)
+        }
+    }
+
     fun filter(filter: (Int, ItemStack) -> Boolean): HTStorageBuilder = apply {
         this.slotFilter = filter
     }
@@ -83,7 +89,7 @@ class HTStorageBuilder(val size: Int) {
         override fun getAvailableSlots(side: Direction): IntArray = slotsMapper(side)
 
         override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean =
-            dir?.let { ioMapper(slot).canInsert && slot in slotsMapper(it) } ?: false
+            dir?.let { ioMapper(slot).canInsert && slot in slotsMapper(it) } == true
 
         override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean =
             ioMapper(slot).canExtract && slot in slotsMapper(dir)

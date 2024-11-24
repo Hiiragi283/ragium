@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTCookingRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapedRecipeJsonBuilder
-import hiiragi283.ragium.api.data.recipe.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -191,6 +191,61 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.RAGI_WRENCH)
+            .patterns(
+                "A A",
+                "AAA",
+                " A ",
+            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
+            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerTo(exporter)
+        // dynamites
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.ANVIL_DYNAMITE)
+            .input(RagiumItems.DYNAMITE)
+            .input(ItemTags.ANVIL)
+            .unlockedBy(RagiumItems.DYNAMITE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.BEDROCK_DYNAMITE, 8)
+            .patterns(
+                "AAA",
+                "ABA",
+                "AAA",
+            ).input('A', RagiumItems.DYNAMITE)
+            .input('B', Items.DIAMOND_PICKAXE)
+            .unlockedBy(RagiumItems.DYNAMITE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.FLATTENING_DYNAMITE, 8)
+            .patterns(
+                "AAA",
+                "ABA",
+                "AAA",
+            ).input('A', RagiumItems.DYNAMITE)
+            .input('B', Items.NETHER_STAR)
+            .unlockedBy(RagiumItems.DYNAMITE)
+            .offerTo(exporter)
+        // filter
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.FLUID_FILTER)
+            .input(Items.PAPER)
+            .input(ConventionalItemTags.LIGHT_BLUE_DYES)
+            .input(RagiumContents.Dusts.RAGINITE)
+            .unlockedBy(Items.PAPER)
+            .offerTo(exporter)
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.ITEM_FILTER)
+            .input(Items.PAPER)
+            .input(ConventionalItemTags.ORANGE_DYES)
+            .input(RagiumContents.Dusts.RAGINITE)
+            .unlockedBy(Items.PAPER)
+            .offerTo(exporter)
         // steel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_SWORD)
@@ -292,6 +347,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     }
 
     private fun craftingFoods(exporter: RecipeExporter) {
+        // sweet berries cake
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .patterns(
@@ -306,6 +362,38 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumBlocks.SPONGE_CAKE)
             .offerTo(exporter)
 
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.SWEET_BERRIES_CAKE_PIECE, 8)
+            .input(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .patterns(
+                "AAA",
+                "A A",
+                "AAA",
+            ).input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .offerSuffix(exporter, "_from_piece")
+        // yellow cake
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.YELLOW_CAKE_PIECE, 8)
+            .input(RagiumItems.YELLOW_CAKE)
+            .unlockedBy(RagiumItems.YELLOW_CAKE_PIECE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.YELLOW_CAKE)
+            .patterns(
+                "AAA",
+                "A A",
+                "AAA",
+            ).input('A', RagiumItems.YELLOW_CAKE_PIECE)
+            .unlockedBy(RagiumItems.YELLOW_CAKE_PIECE)
+            .offerSuffix(exporter, "_from_piece")
+        // chocolate
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_BREAD)
             .input(Items.BREAD)
@@ -347,18 +435,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', ConventionalItemTags.COPPER_INGOTS)
             .unlockedBy(RagiumContents.Dusts.CRUDE_RAGINITE)
             .offerSuffix(exporter, "_1")
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumItems.HEART_OF_THE_NETHER)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', Items.MAGMA_BLOCK)
-            .input('B', Items.BLAZE_POWDER)
-            .input('C', ConventionalItemTags.STORAGE_BLOCKS_NETHERITE)
-            .unlockedBy(ConventionalItemTags.STORAGE_BLOCKS_NETHERITE)
-            .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SHAFT, 6)
@@ -442,6 +518,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumItems.DOUGH,
             Items.BREAD,
+        )
+        HTCookingRecipeJsonBuilder.smeltAndSmoke(
+            exporter,
+            RagiumItems.MEAT_INGOT,
+            RagiumItems.COOKED_MEAT_INGOT,
         )
     }
 }

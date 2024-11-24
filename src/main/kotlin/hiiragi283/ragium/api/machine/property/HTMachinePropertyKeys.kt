@@ -20,6 +20,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofDefaulted(RagiumAPI.id("model_id")) { RagiumAPI.id("block/dynamic_processor") }
 
     @JvmField
+    val ACTIVE_MODEL_ID: HTPropertyKey.Defaulted<Identifier> =
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("active_model_id")) { RagiumAPI.id("block/active_dynamic_processor") }
+
+    @JvmField
     val SOUND: HTPropertyKey.Simple<SoundEvent> =
         HTPropertyKey.ofSimple(RagiumAPI.id("sound"))
 
@@ -44,6 +48,12 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofDefaulted(
             RagiumAPI.id("front_tex"),
         ) { id: Identifier -> id.withPath { "block/machine/$it" } }
+
+    @JvmField
+    val ACTIVE_FRONT_TEX: HTPropertyKey.Defaulted<(Identifier) -> Identifier> =
+        HTPropertyKey.ofDefaulted(
+            RagiumAPI.id("active_front_tex"),
+        ) { id: Identifier -> id.withPath { "block/machine/${it}_active" } }
 
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =

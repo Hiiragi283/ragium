@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:dynamite"
+    },
+    {
+      "tag": "minecraft:anvil"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:anvil_dynamite"
+  }
+}

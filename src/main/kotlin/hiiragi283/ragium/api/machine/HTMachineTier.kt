@@ -1,13 +1,14 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTHardModeContents
-import hiiragi283.ragium.api.content.HTTranslationProvider
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumHardModeContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -26,34 +27,25 @@ import net.minecraft.world.World
 
 enum class HTMachineTier(
     private val idPattern: String,
-    override val enName: String,
-    override val jaName: String,
     val recipeCost: Long,
     val tickRate: Int,
     val rarity: Rarity,
-) : StringIdentifiable,
-    HTTranslationProvider {
+) : StringIdentifiable {
     // NONE(RagiumAPI.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
     PRIMITIVE(
         "primitive_%s",
-        "Primitive",
-        "簡易",
         160,
         200,
         Rarity.COMMON,
     ),
     BASIC(
         "basic_%s",
-        "Basic",
-        "基本",
         640,
         150,
         Rarity.UNCOMMON,
     ),
     ADVANCED(
         "advanced_%s",
-        "Advanced",
-        "発展",
         2560,
         100,
         Rarity.RARE,
@@ -79,9 +71,16 @@ enum class HTMachineTier(
     val bucketUnit: Long = recipeCost / 20
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
+    fun createEnergyResult(flag: HTEnergyNetwork.Flag): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
+        DataResult.success(flag to recipeCost)
+
     val translationKey: String = "machine_tier.ragium.${asString()}"
-    val text: MutableText = Text.translatable(translationKey).formatted(rarity.formatting)
-    val tierText: MutableText = Text.translatable(RagiumTranslationKeys.MACHINE_TIER, text).formatted(Formatting.GRAY)
+    val text: MutableText = Text.translatable(translationKey)
+    val tierText: MutableText = Text
+        .translatable(
+            RagiumTranslationKeys.MACHINE_TIER,
+            text.formatted(rarity.formatting),
+        ).formatted(Formatting.GRAY)
     val recipeCostText: MutableText = Text
         .translatable(
             RagiumTranslationKeys.MACHINE_RECIPE_COST,
@@ -89,6 +88,8 @@ enum class HTMachineTier(
         ).formatted(Formatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
+
+    fun createPrefixedText(key: String): MutableText = Text.translatable(prefixKey, Text.translatable(key))
 
     fun createPrefixedText(key: HTMachineKey): MutableText = Text.translatable(prefixKey, key.text)
 
@@ -131,21 +132,21 @@ enum class HTMachineTier(
     }
 
     fun getMainMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
-        PRIMITIVE -> HTHardModeContents.RAGI_ALLOY
-        BASIC -> HTHardModeContents.RAGI_STEEL
-        ADVANCED -> HTHardModeContents.REFINED_RAGI_STEEL
+        PRIMITIVE -> RagiumHardModeContents.RAGI_ALLOY
+        BASIC -> RagiumHardModeContents.RAGI_STEEL
+        ADVANCED -> RagiumHardModeContents.REFINED_RAGI_STEEL
     }.getContent(hardMode)
 
     fun getSubMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
-        PRIMITIVE -> HTHardModeContents.COPPER
-        BASIC -> HTHardModeContents.GOLD
-        ADVANCED -> HTHardModeContents.RAGI_ALLOY
+        PRIMITIVE -> RagiumHardModeContents.COPPER
+        BASIC -> RagiumHardModeContents.GOLD
+        ADVANCED -> RagiumHardModeContents.RAGI_ALLOY
     }.getContent(hardMode)
 
     fun getSteelMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
-        PRIMITIVE -> HTHardModeContents.IRON
-        BASIC -> HTHardModeContents.STEEL
-        ADVANCED -> HTHardModeContents.DEEP_STEEL
+        PRIMITIVE -> RagiumHardModeContents.IRON
+        BASIC -> RagiumHardModeContents.STEEL
+        ADVANCED -> RagiumHardModeContents.DEEP_STEEL
     }.getContent(hardMode)
 
     fun getStorageBlock(): RagiumContents.StorageBlocks = when (this) {
@@ -154,26 +155,25 @@ enum class HTMachineTier(
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
 
-    fun canProcess(world: World): Boolean = canProcess(world.energyNetwork)
-
-    fun canProcess(network: HTEnergyNetwork?, multiplier: Long = 1): Boolean =
-        network?.amount?.let { it >= recipeCost * multiplier } ?: false
-
-    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean {
+    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =
         useTransaction(parent) { transaction: Transaction ->
-            world.energyNetwork?.let { network: HTEnergyNetwork ->
-                val extracted: Long = network.extract(recipeCost * multiplier, transaction)
-                when {
-                    extracted > 0 -> {
-                        transaction.commit()
-                        return true
+            world.energyNetwork
+                .map { network: HTEnergyNetwork ->
+                    val extracted: Long = network.extract(recipeCost * multiplier, transaction)
+                    when {
+                        extracted > 0 -> {
+                            transaction.commit()
+                            true
+                        }
+
+                        else -> {
+                            transaction.abort()
+                            false
+                        }
                     }
-                    else -> transaction.abort()
-                }
-            }
+                }.result()
+                .orElse(false)
         }
-        return false
-    }
 
     //    StringIdentifiable    //
 

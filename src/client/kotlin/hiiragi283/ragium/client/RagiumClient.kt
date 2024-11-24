@@ -2,9 +2,15 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.gui.*
@@ -21,13 +27,16 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
+import net.fabricmc.fabric.api.client.model.loading.v1.BlockStateResolver
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelModifier
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelResolver
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -37,15 +46,23 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
+import net.minecraft.client.render.model.ModelRotation
 import net.minecraft.client.render.model.UnbakedModel
+import net.minecraft.client.render.model.json.ModelVariant
+import net.minecraft.client.render.model.json.WeightedUnbakedModel
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
+import net.minecraft.registry.Registries
+import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockRenderView
+import team.reborn.energy.api.EnergyStorage
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
@@ -58,7 +75,7 @@ object RagiumClient : ClientModInitializer {
         registerEvents()
         registerNetworks()
 
-        RagiumAPI.log { info("Ragium-Client initialized!") }
+        RagiumAPI.LOGGER.info("Ragium-Client initialized!")
     }
 
     //    Blocks    //
@@ -82,11 +99,11 @@ object RagiumClient : ClientModInitializer {
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
         registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
         // block entity renderer
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
 
-        registerMachineRenderer(RagiumBlockEntityTypes.BEDROCK_MINER)
         registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
@@ -150,10 +167,10 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerScreens() {
         HandledScreens.register(RagiumScreenHandlerTypes.CHEMICAL_MACHINE, ::HTChemicalMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.FLUID_DRILL, ::HTFluidDrillScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.DISTILLATION_TOWER, ::HTDistillationTowerScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.STEAM, ::HTSteamGeneratorScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.SMALL_MACHINE, ::HTSmallMachineScreen)
     }
 
     //    Events    //
@@ -161,10 +178,62 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerEvents() {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
+            // register block state resolver
+            RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+                entry.blocks.forEach { block: HTMachineBlock ->
+                    context.registerBlockStateResolver(block) { context: BlockStateResolver.Context ->
+                        Properties.HORIZONTAL_FACING.values.forEach { direction: Direction ->
+                            RagiumBlockProperties.ACTIVE.values.forEach { isActive: Boolean ->
+                                val state: BlockState = block.defaultState
+                                    .with(Properties.HORIZONTAL_FACING, direction)
+                                    .with(RagiumBlockProperties.ACTIVE, isActive)
+                                val modelId: Identifier = when (isActive) {
+                                    true -> HTMachinePropertyKeys.ACTIVE_MODEL_ID
+                                    false -> HTMachinePropertyKeys.MODEL_ID
+                                }.let(entry::getOrDefault)
+                                val variant = ModelVariant(
+                                    modelId,
+                                    ModelRotation
+                                        .get(
+                                            0,
+                                            when (direction) {
+                                                Direction.SOUTH -> 180
+                                                Direction.WEST -> 270
+                                                Direction.EAST -> 90
+                                                else -> 0
+                                            },
+                                        ).rotation,
+                                    false,
+                                    1,
+                                )
+                                val model = WeightedUnbakedModel(listOf(variant))
+                                context.setModel(state, model)
+                            }
+                        }
+                    }
+                }
+            }
             // register item model resolver
+            context.resolveModel().register { context1: ModelResolver.Context ->
+                val id: Identifier = context1.id() ?: return@register null
+                if (id.namespace != RagiumAPI.MOD_ID) return@register null
+                val item: Item = Registries.ITEM.get(id.withPath { it.removePrefix("item/") })
+                item.components
+                    .get(HTMachineKey.COMPONENT_TYPE)
+                    ?.let(HTMachineKey::entry)
+                    ?.getOrDefault(HTMachinePropertyKeys.MODEL_ID)
+                    ?.let { modelId: Identifier ->
+                        when (modelId) {
+                            RagiumAPI.id("block/dynamic_processor") -> HTProcessorMachineModel.INACTIVE
+                            RagiumAPI.id("block/active_dynamic_processor") -> HTProcessorMachineModel.ACTIVE
+                            else -> context1.getOrLoadModel(modelId)
+                        }
+                    }
+            }
             context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
                 when {
-                    RagiumAPI.id("block/dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel
+                    RagiumAPI.id("block/dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.INACTIVE
+                    RagiumAPI.id("block/active_dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.ACTIVE
                     RagiumAPI.id("item/fluid_cube") in original.modelDependencies -> HTFluidCubeModel
                     else -> original
                 }
@@ -173,11 +242,24 @@ object RagiumClient : ClientModInitializer {
                 RagiumAPI.id("block/generator"),
                 RagiumAPI.id("block/solar_generator"),
             )
+            RagiumAPI.LOGGER.info("Loaded runtime models!")
         }
         ItemTooltipCallback.EVENT.register(
             RagiumAPI.id("description"),
         ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
-            stack.get(RagiumComponentTypes.DESCRIPTION)?.let(tooltips::add)
+            val texts: List<Text> = stack.get(RagiumComponentTypes.DESCRIPTION)
+                ?: ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
+                    listOf(
+                        Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"),
+                    )
+                }
+                ?: listOf()
+            if (texts.isEmpty()) return@register
+            if (Screen.hasControlDown()) {
+                texts.map(Text::copy).map { it.formatted(Formatting.AQUA) }.forEach(tooltips::add)
+            } else {
+                tooltips.add(Text.translatable(RagiumTranslationKeys.PRESS_CTRL).formatted(Formatting.YELLOW))
+            }
         }
     }
 

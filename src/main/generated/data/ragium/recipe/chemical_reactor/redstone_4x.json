@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "ragium:sulfuric_acid"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#minecraft:redstone_ores"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 16,
+      "item": "minecraft:redstone"
+    }
+  ]
+}

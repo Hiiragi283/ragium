@@ -55,7 +55,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
 
     val entry: HTMachineRegistry.Entry by lazy { RagiumAPI.getInstance().machineRegistry.getEntry(this) }
 
-    fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier) {
+    fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier, allowDescription: Boolean = true) {
         consumer(
             Text
                 .translatable(
@@ -67,7 +67,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
         consumer(tier.recipeCostText)
         consumer(tier.recipeCostText)
         entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer, this, tier)
-        if (descriptionText.hasValidTranslation()) {
+        if (descriptionText.hasValidTranslation() || allowDescription) {
             consumer(descriptionText)
         }
     }

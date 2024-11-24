@@ -1,0 +1,3 @@
+accessWidener	v2	named
+
+extendable method net/minecraft/block/Block getDefaultState ()Lnet/minecraft/block/BlockState;

@@ -4,17 +4,16 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
-import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
@@ -24,7 +23,6 @@ import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.EnchantmentTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
@@ -32,9 +30,9 @@ import java.util.concurrent.CompletableFuture
 object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
-        pack.addProvider(RagiumTagProviders::BlockProvider)
-        pack.addProvider(RagiumTagProviders::EnchantmentProvider)
-        pack.addProvider(RagiumTagProviders::FluidProvider)
+        pack.addProvider(::BlockProvider)
+        // pack.addProvider(::EnchantmentProvider)
+        pack.addProvider(::FluidProvider)
         pack.addProvider(::ItemProvider)
     }
 
@@ -90,7 +88,7 @@ object RagiumTagProviders {
 
     //    Enchantment    //
 
-    private class EnchantmentProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+    /*private class EnchantmentProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.EnchantmentTagProvider(output, completableFuture) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
             getOrCreateTagBuilder(EnchantmentTags.TRADEABLE)
@@ -108,7 +106,7 @@ object RagiumTagProviders {
                 .add(RagiumEnchantments.SLEDGE_HAMMER)
                 .add(RagiumEnchantments.BUZZ_SAW)
         }
-    }
+    }*/
 
     //    Fluid    //
 
@@ -123,9 +121,27 @@ object RagiumTagProviders {
                 add(tagKey, fluid.value)
             }
 
+            add(ConventionalFluidTags.MILK, RagiumFluids.MILK)
+            add(ConventionalFluidTags.HONEY, RagiumFluids.HONEY)
+
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.AIR)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.HYDROGEN)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.NITROGEN)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.OXYGEN)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.CHLORINE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.CARBON_MONOXIDE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.CARBON_DIOXIDE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.HYDROGEN_FLUORIDE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.HYDROGEN_CHLORIDE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.CHLOROSILANE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.REFINED_GAS)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.NOBLE_GAS)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.URANIUM_HEXAFLUORIDE)
+            add(ConventionalFluidTags.GASEOUS, RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
+
             add(RagiumFluidTags.FUEL, RagiumFluids.BIO_FUEL)
             add(RagiumFluidTags.FUEL, RagiumFluids.FUEL)
-            add(RagiumFluidTags.FUEL, RagiumFluids.AROMATIC_COMPOUNDS)
+            add(RagiumFluidTags.FUEL, RagiumFluids.NITRO_FUEL)
 
             add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.TALLOW)
             add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.SEED_OIL)
@@ -174,6 +190,10 @@ object RagiumTagProviders {
             // ragium
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
+
+            add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItems.FLUID_FILTER)
+
+            add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItems.ITEM_FILTER)
 
             add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
             add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)

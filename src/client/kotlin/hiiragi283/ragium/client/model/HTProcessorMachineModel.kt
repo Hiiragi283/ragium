@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.client.extension.getBlockModel
 import hiiragi283.ragium.client.extension.hullModel
 import hiiragi283.ragium.common.RagiumContents
@@ -37,7 +38,13 @@ import java.util.function.Function
 import java.util.function.Supplier
 
 @Environment(EnvType.CLIENT)
-data object HTProcessorMachineModel : UnbakedModel, BakedModel {
+enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identifier) -> Identifier>) :
+    UnbakedModel,
+    BakedModel {
+    INACTIVE(HTMachinePropertyKeys.FRONT_TEX),
+    ACTIVE(HTMachinePropertyKeys.ACTIVE_FRONT_TEX),
+    ;
+
     //    UnbakedModel    //
 
     override fun getModelDependencies(): Collection<Identifier> = listOf()
@@ -91,13 +98,12 @@ data object HTProcessorMachineModel : UnbakedModel, BakedModel {
         emitMachineFront(Direction.NORTH, key, context)
     }
 
-    @JvmStatic
     private fun emitMachineFront(frontDir: Direction, key: HTMachineKey, context: RenderContext) {
         val properties: HTPropertyHolder = key.entry
         val frontSprite: Sprite = MinecraftClient
             .getInstance()
             .getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE)
-            .apply(properties.getOrDefault(HTMachinePropertyKeys.FRONT_TEX)(key.id))
+            .apply(properties.getOrDefault(frontKey)(key.id))
 
         val emitter: QuadEmitter = context.emitter
         val texDir: Direction = properties.getOrDefault(HTMachinePropertyKeys.FRONT_MAPPER)(frontDir)

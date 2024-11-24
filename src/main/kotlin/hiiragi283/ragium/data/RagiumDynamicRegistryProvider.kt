@@ -1,21 +1,15 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.tags.RagiumEnchantmentTags
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumEnchantments
 import hiiragi283.ragium.common.init.RagiumFeatures
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.block.Blocks
-import net.minecraft.component.type.AttributeModifierSlot
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.item.Item
 import net.minecraft.registry.RegistryEntryLookup
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.structure.rule.BlockMatchRuleTest
 import net.minecraft.structure.rule.TagMatchRuleTest
 import net.minecraft.world.gen.YOffset
@@ -28,10 +22,10 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
     override fun getName(): String = "Dynamic"
 
     override fun configure(registries: RegistryWrapper.WrapperLookup, entries: Entries) {
-        val enchantmentLookup: RegistryEntryLookup<Enchantment> = entries.getLookup(RegistryKeys.ENCHANTMENT)
-        val itemLookup: RegistryEntryLookup<Item> = entries.getLookup(RegistryKeys.ITEM)
+        // val enchantmentLookup: RegistryEntryLookup<Enchantment> = entries.getLookup(RegistryKeys.ENCHANTMENT)
+        // val itemLookup: RegistryEntryLookup<Item> = entries.getLookup(RegistryKeys.ITEM)
 
-        Bootstraps.registerEnchantments(entries::add, enchantmentLookup, itemLookup)
+        // Bootstraps.registerEnchantments(entries::add, enchantmentLookup, itemLookup)
         Bootstraps.registerConfigured(entries::add)
 
         registerPlaced(entries)
@@ -101,7 +95,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
     data object Bootstraps {
         //    Enchantment    //
 
-        @JvmStatic
+        /*@JvmStatic
         fun registerEnchantments(
             register: (RegistryKey<Enchantment>, Enchantment) -> Unit,
             enchantmentLookup: RegistryEntryLookup<Enchantment>,
@@ -143,7 +137,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                             AttributeModifierSlot.MAINHAND,
                         ),
                     ).exclusiveSet(enchantmentLookup.getOrThrow(RagiumEnchantmentTags.MODIFYING_EXCLUSIVE_SET)),
-                /*.addEffect(
+                .addEffect(
                     EnchantmentEffectComponentTypes.LOCATION_CHANGED,
                     ReplaceDiskEnchantmentEffect(
                         Clamped(EnchantmentLevelBasedValue.linear(3.0f, 1.0f), 0.0f, 16.0f),
@@ -164,9 +158,9 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                         LootContext.EntityTarget.THIS,
                         EntityPredicate.Builder.create().flags(EntityFlagsPredicate.Builder.create().onGround(true))
                     )
-                )*/
+                )
             )
-        }
+        }*/
 
         //    Configured Features    //
 

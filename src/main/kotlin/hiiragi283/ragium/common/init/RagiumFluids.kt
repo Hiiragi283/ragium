@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTTranslationProvider
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.Registries
@@ -12,9 +11,7 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.Util
 import java.awt.Color
 
-enum class RagiumFluids(val color: Color, override val enName: String, override val jaName: String) :
-    HTContent<Fluid>,
-    HTTranslationProvider {
+enum class RagiumFluids(val color: Color, val enName: String, val jaName: String) : HTContent<Fluid> {
     // Vanilla
     MILK(Color(0xffffff), "Milk", "牛乳"),
     HONEY(Color(0xffcc33), "Honey", "蜂蜜"),
@@ -85,6 +82,10 @@ enum class RagiumFluids(val color: Color, override val enName: String, override 
     // Explosives
     NITRO_GLYCERIN(Color(0x99cc66), "Nitroglycerin", "ニトログリセリン"),
     TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン"),
+
+    // Radioactive
+    URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Uranium Hexafluoride", "六フッ化ウラン"),
+    ENRICHED_URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Enriched Uranium Hexafluoride", "濃縮六フッ化ウラン"),
     ;
 
     override val key: RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, RagiumAPI.id(name.lowercase()))

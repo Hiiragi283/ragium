@@ -23,46 +23,33 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .encodeStart(NbtOps.INSTANCE, tier)
-            .result()
-            .ifPresent { nbt.put("tier", it) }
+            .ifSuccess { nbt.put("tier", it) }
         HTPipeType.CODEC
             .encodeStart(NbtOps.INSTANCE, type)
-            .result()
-            .ifPresent { nbt.put("type", it) }
+            .ifSuccess { nbt.put("type", it) }
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("tier"))
-            .result()
-            .ifPresent { tier = it }
+            .ifSuccess { tier = it }
         HTPipeType.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("type"))
-            .result()
-            .ifPresent { type = it }
+            .ifSuccess { type = it }
     }
 
     final override val tickRate: Int = 20
 
-    protected fun <A : Any> getBackStorage(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        lookup: BlockApiLookup<A, Direction?>,
-    ): A? {
-        val backDir: Direction = state.get(Properties.FACING).opposite
-        val posFrom: BlockPos = pos.offset(backDir)
-        return lookup.find(world, posFrom, backDir.opposite)
+    protected val front: Direction
+        get() = cachedState.get(Properties.FACING)
+
+    protected fun <A : Any> getBackStorage(world: World, pos: BlockPos, lookup: BlockApiLookup<A, Direction?>): A? {
+        val posFrom: BlockPos = pos.offset(front.opposite)
+        return lookup.find(world, posFrom, front)
     }
 
-    protected fun <A : Any> getFrontStorage(
-        world: World,
-        pos: BlockPos,
-        state: BlockState,
-        lookup: BlockApiLookup<A, Direction?>,
-    ): A? {
-        val nextDir: Direction = state.get(Properties.FACING)
-        val posTo: BlockPos = pos.offset(nextDir)
-        return lookup.find(world, posTo, nextDir.opposite)
+    protected fun <A : Any> getFrontStorage(world: World, pos: BlockPos, lookup: BlockApiLookup<A, Direction?>): A? {
+        val posTo: BlockPos = pos.offset(front)
+        return lookup.find(world, posTo, front.opposite)
     }
 }

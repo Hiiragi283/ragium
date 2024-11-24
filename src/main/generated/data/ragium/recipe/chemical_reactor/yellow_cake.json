@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 324000,
+      "fluids": "ragium:sulfuric_acid"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#c:raw_materials/uranite"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:yellow_cake"
+    }
+  ]
+}

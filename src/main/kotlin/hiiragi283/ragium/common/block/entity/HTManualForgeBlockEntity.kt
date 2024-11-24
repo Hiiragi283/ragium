@@ -68,12 +68,12 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
                     HTMachineTier.PRIMITIVE,
                 ) { add(invStack) },
                 world,
-            ).getOrNull()
-            ?.value
+            ).result()
+            .getOrNull()
             ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
-        invStack.decrement(recipe.itemInputs.getOrNull(0)?.amount ?: 0)
+        invStack.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
         RagiumMachineKeys.METAL_FORMER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

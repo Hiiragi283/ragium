@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "catalyst": {
-    "items": "ragium:heart_of_the_nether"
+    "items": "ragium:blazing_carbon_electrode"
   },
   "definition": {
     "type": "ragium:chemical_reactor",

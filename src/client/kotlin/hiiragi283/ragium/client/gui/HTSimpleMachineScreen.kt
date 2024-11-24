@@ -9,26 +9,18 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.MathHelper
 
 @Environment(EnvType.CLIENT)
 class HTSimpleMachineScreen(handler: HTSimpleMachineScreenHandler, inventory: PlayerInventory, title: Text) :
     HTMachineScreenBase<HTSimpleMachineScreenHandler>(handler, inventory, title) {
-    companion object {
-        @JvmField
-        val TEXTURE: Identifier = RagiumAPI.id("textures/gui/simple_machine.png")
-    }
-
+    override val texture: Identifier = RagiumAPI.id("textures/gui/simple_machine.png")
     override val fluidCache: Array<FluidVariant> = Array(2) { FluidVariant.blank() }
     override val amountCache: LongArray = LongArray(2) { 0 }
 
     override fun drawMouseoverTooltip(context: DrawContext, x: Int, y: Int) {
         super.drawMouseoverTooltip(context, x, y)
-
         drawFluidTooltip(context, fluidCache[0], amountCache[0], 2, 2, x, y)
         drawFluidTooltip(context, fluidCache[1], amountCache[1], 6, 2, x, y)
-
-        drawEnergyTooltip(context, handler.player.world.registryKey, 4, 1, x, y)
     }
 
     override fun drawBackground(
@@ -37,21 +29,8 @@ class HTSimpleMachineScreen(handler: HTSimpleMachineScreenHandler, inventory: Pl
         mouseX: Int,
         mouseY: Int,
     ) {
-        context.drawTexture(TEXTURE, startX, startY, 0, 0, backgroundWidth, backgroundHeight)
-
+        super.drawBackground(context, delta, mouseX, mouseY)
         drawFluid(context, fluidCache[0], 2, 2)
         drawFluid(context, fluidCache[1], 6, 2)
-
-        context.drawGuiTexture(
-            RagiumAPI.id("progress_bar"),
-            16,
-            16,
-            0,
-            0,
-            startX + getSlotPosX(4),
-            startY + getSlotPosY(1),
-            MathHelper.ceil(handler.getProgress() * 16f),
-            16,
-        )
     }
 }

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#minecraft:coals"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:carbon_electrode"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:glow_ink_sac"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:luminescence_dust"
+    },
+    {
+      "item": "minecraft:ink_sac"
+    }
+  ]
+}

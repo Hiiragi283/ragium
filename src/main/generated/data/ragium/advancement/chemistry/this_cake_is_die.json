@@ -1,0 +1,31 @@
+{
+  "parent": "ragium:chemistry/yellow_cake",
+  "criteria": {
+    "consumed_item": {
+      "conditions": {
+        "item": {
+          "items": "ragium:yellow_cake_piece"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": "",
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "ragium:yellow_cake_piece"
+    },
+    "title": {
+      "translate": "advancement.ragium.this_cake_is_die.title"
+    }
+  },
+  "requirements": [
+    [
+      "consumed_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

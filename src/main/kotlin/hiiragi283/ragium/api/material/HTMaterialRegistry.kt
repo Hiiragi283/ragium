@@ -20,6 +20,7 @@ class HTMaterialRegistry(
     fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): Set<Item> = items.get(prefix, key) ?: setOf()
 
     fun getEntry(key: HTMaterialKey): Entry = Entry(
+        key,
         checkNotNull(types[key]) { "Invalid material key; $key!" },
         items.column(key),
         properties.getOrDefault(key, HTPropertyHolder.Empty),
@@ -27,8 +28,12 @@ class HTMaterialRegistry(
 
     //    Entry    //
 
-    data class Entry(val type: HTMaterialKey.Type, val itemMap: Map<HTTagPrefix, Set<Item>>, val property: HTPropertyHolder) :
-        HTPropertyHolder by property {
+    data class Entry(
+        val key: HTMaterialKey,
+        val type: HTMaterialKey.Type,
+        val itemMap: Map<HTTagPrefix, Set<Item>>,
+        val property: HTPropertyHolder,
+    ) : HTPropertyHolder by property {
         fun getItems(prefix: HTTagPrefix): Set<Item> = itemMap.getOrDefault(prefix, setOf())
 
         fun getFirstItem(prefix: HTTagPrefix): Item? = getItems(prefix).firstOrNull()

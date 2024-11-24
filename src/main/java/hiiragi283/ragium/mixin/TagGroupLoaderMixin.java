@@ -81,7 +81,7 @@ public abstract class TagGroupLoaderMixin {
                 // add item entries
                 items.forEach((Item item) -> add(map, tagKey, item, Registries.ITEM));
             }));
-            RagiumAPI.getLogger().info("Registered runtime item tags!");
+            RagiumAPI.getLOGGER().info("Registered runtime item tags!");
         }
     }
 

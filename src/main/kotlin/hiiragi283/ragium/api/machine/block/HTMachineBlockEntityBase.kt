@@ -1,13 +1,17 @@
 package hiiragi283.ragium.api.machine.block
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
+import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
@@ -19,9 +23,11 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundCategory
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Formatting
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -46,6 +52,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     val facing: Direction
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+    private var errorMessage: String? = null
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
@@ -67,6 +74,25 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         tier = nbt.getTier(TIER_KEY)
     }
 
+    val isActive: Boolean
+        get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
+
+    protected fun activateState(world: World, pos: BlockPos, newState: Boolean) {
+        if (!world.isClient) {
+            world.modifyBlockState(pos) { stateIn: BlockState ->
+                if (stateIn.contains(RagiumBlockProperties.ACTIVE)) {
+                    if (stateIn.get(RagiumBlockProperties.ACTIVE) == newState) {
+                        null
+                    } else {
+                        stateIn.with(RagiumBlockProperties.ACTIVE, newState)
+                    }
+                } else {
+                    null
+                }
+            }
+        }
+    }
+
     override fun onUse(
         state: BlockState,
         world: World,
@@ -74,6 +100,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
+        // Send error message (TODO)
+        errorMessage?.let { player.sendMessage(Text.translatable(it).formatted(Formatting.RED), false) }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
@@ -95,6 +123,38 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     abstract fun interactWithFluidStorage(player: PlayerEntity): Boolean
 
     final override val tickRate: Int = tier.tickRate
+
+    final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
+        if (world.isClient) return
+        world.energyNetwork
+            .validate(
+                { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.recipeCost) },
+                { "Failed to extract required energy from network!" },
+            ).flatMap { network: HTEnergyNetwork -> process(world, pos).map { _: Unit -> network } }
+            .validate(
+                { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.recipeCost) },
+                { "Failed to interact energy network" },
+            ).ifSuccess { _: HTEnergyNetwork ->
+                key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+                    world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
+                }
+                errorMessage = null
+                activateState(world, pos, true)
+                onSucceeded(world, pos)
+            }.ifError { error: DataResult.Error<HTEnergyNetwork> ->
+                errorMessage = error.message()
+                activateState(world, pos, false)
+                onFailed(world, pos)
+            }
+    }
+
+    open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
+
+    abstract fun process(world: World, pos: BlockPos): DataResult<Unit>
+
+    open fun onSucceeded(world: World, pos: BlockPos) {}
+
+    open fun onFailed(world: World, pos: BlockPos) {}
 
     val property: PropertyDelegate = HTDynamicPropertyDelegate(3, ::getProperty, ::setProperty)
 

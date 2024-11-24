@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.util.HTTable
 import hiiragi283.ragium.api.util.HTWrappedTable
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
+import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
@@ -30,21 +32,30 @@ import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
-import net.minecraft.text.TranslatableTextContent
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
-import net.minecraft.util.Language
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.TeleportTarget
 import net.minecraft.world.World
-import java.text.NumberFormat
+import team.reborn.energy.api.EnergyStorage
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
+
+//    ApiLookup    //
+
+fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromHand(player: PlayerEntity, hand: Hand = Hand.MAIN_HAND): A? =
+    ContainerItemContext.forPlayerInteraction(player, hand).find(this)
+
+fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromStack(stack: ItemStack): A? =
+    ContainerItemContext.withConstant(stack).find(this)
 
 //    BlockPos    //
 
@@ -74,7 +85,12 @@ fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
 
 //    Entity    //
 
-fun teleport(entity: Entity, world: World, posTo: Vec3d): Boolean {
+fun teleport(
+    entity: Entity,
+    world: World,
+    posTo: Vec3d,
+    playSound: Boolean = true,
+): Boolean {
     if (world is ServerWorld && canTeleport(entity, world)) {
         if (entity.hasVehicle()) {
             entity.detach()
@@ -110,6 +126,9 @@ fun teleport(entity: Entity, world: World, posTo: Vec3d): Boolean {
                 entity.clearCurrentExplosion()
             }
         }
+        if (playSound) {
+            world.playSound(null, posTo.x, posTo.y, posTo.z, SoundEvents.ENTITY_PLAYER_TELEPORT, SoundCategory.PLAYERS)
+        }
         return true
     }
     return false
@@ -135,6 +154,11 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
     val blue: Float = (color and 255) / 255.0f
     return Triple(red, green, blue)
 }
+
+//    EnergyStorage    //
+
+val EnergyStorage.energyPercent: Float
+    get() = amount.toFloat() / capacity.toFloat()
 
 //    FabricLoader    //
 
@@ -187,7 +211,16 @@ operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
 
 operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
 
+fun RecipeInput.iterable(): Iterable<ItemStack> = buildList<ItemStack> {
+    for (index: Int in (0 until this.size)) {
+        add(this[index])
+    }
+}
+
 //    Registry    //
+
+val <T : Any> RegistryEntryList<T>.isEmpty: Boolean
+    get() = size() == 0
 
 fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
 
@@ -199,10 +232,11 @@ fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 
 operator fun <T : Any> RegistryEntryList<T>.contains(value: T): Boolean = any { it.isOf(value) }
 
-fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): Text = storage.map(
-    { it.name },
-    { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
-)
+fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): MutableText = storage
+    .map(
+        { it.name },
+        { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
+    ).copy()
 
 //    ScreenHandler    //
 
@@ -227,20 +261,3 @@ fun <R : Any, C : Any, V : Any> buildTable(builderAction: HTTable.Mutable<R, C, 
 fun <R : Any, C : Any, V : Any> HTTable<R, C, V>.forEach(action: (Triple<R, C, V>) -> Unit) {
     entries.forEach(action)
 }
-
-//    Text    //
-
-fun intText(value: Int): MutableText = longText(value.toLong())
-
-fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
-
-fun floatText(value: Float): MutableText = doubleText(value.toDouble())
-
-fun doubleText(value: Double): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
-
-fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
-
-fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
-    ?.let(TranslatableTextContent::getKey)
-    ?.let(Language.getInstance()::hasTranslation)
-    ?: false

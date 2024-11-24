@@ -33,8 +33,7 @@ class HTBackpackManager : PersistentState() {
             val manager = HTBackpackManager()
             CODEC
                 .parse(NbtOps.INSTANCE, nbt.get(KEY))
-                .result()
-                .ifPresent { map: Map<DyeColor, SimpleInventory> ->
+                .ifSuccess { map: Map<DyeColor, SimpleInventory> ->
                     map.forEach { (color: DyeColor, inventory: SimpleInventory) ->
                         manager.backpacks[color] = inventory
                     }
@@ -48,14 +47,8 @@ class HTBackpackManager : PersistentState() {
     operator fun get(color: DyeColor): SimpleInventory = backpacks.computeIfAbsent(color) { SimpleInventory(56) }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = nbt.apply {
-        RagiumAPI.log {
-            backpacks.forEach { (color: DyeColor, inventory: SimpleInventory) ->
-                info("Color: $color, inventory: $inventory")
-            }
-        }
         CODEC
             .encodeStart(NbtOps.INSTANCE, backpacks)
-            .result()
-            .ifPresent { nbt.put(KEY, it) }
+            .ifSuccess { nbt.put(KEY, it) }
     }
 }

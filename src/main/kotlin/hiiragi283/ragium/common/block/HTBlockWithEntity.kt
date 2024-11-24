@@ -26,23 +26,6 @@ abstract class HTBlockWithEntity(settings: Settings) :
     Block(settings),
     BlockEntityProvider {
     companion object {
-        @JvmField
-        val TICKER: BlockEntityTicker<HTBlockEntityBase> =
-            BlockEntityTicker { world: World, pos: BlockPos, state: BlockState, blockEntity: HTBlockEntityBase ->
-                blockEntity.tick(world, pos, state)
-            }
-
-        @Suppress("UNCHECKED_CAST")
-        @JvmStatic
-        fun <E : BlockEntity, A : BlockEntity> validateTicker(
-            givenType: BlockEntityType<A>,
-            expectedType: BlockEntityType<E>,
-            ticker: BlockEntityTicker<*>?,
-        ): BlockEntityTicker<A>? = when (expectedType == givenType) {
-            true -> ticker
-            false -> null
-        } as? BlockEntityTicker<A>
-
         @JvmStatic
         fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
             init {
@@ -103,7 +86,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
 
     final override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
         BlockEntityTicker { world1: World, pos: BlockPos, state1: BlockState, blockEntity: T ->
-            (blockEntity as? HTBlockEntityBase)?.let { TICKER.tick(world1, pos, state1, it) }
+            (blockEntity as? HTBlockEntityBase)?.tick(world1, pos, state1)
         }
 
     //    Horizontal    //

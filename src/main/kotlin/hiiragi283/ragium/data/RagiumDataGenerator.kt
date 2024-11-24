@@ -30,7 +30,7 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider(::RagiumModelProvider)
         RagiumLangProviders.init(pack)
 
-        RagiumAPI.log { info("Ragium data generation is done!") }
+        RagiumAPI.LOGGER.info("Ragium data generation is done!")
     }
 
     override fun buildRegistry(registryBuilder: RegistryBuilder) {
@@ -39,11 +39,11 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
             val enchantmentLookup: RegistryEntryLookup<Enchantment> = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT)
             val itemLookup: RegistryEntryLookup<Item> = registerable.getRegistryLookup(RegistryKeys.ITEM)
 
-            RagiumDynamicRegistryProvider.Bootstraps.registerEnchantments(
+            /*RagiumDynamicRegistryProvider.Bootstraps.registerEnchantments(
                 registerable::register,
                 enchantmentLookup,
                 itemLookup,
-            )
+            )*/
         }
 
         registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE) { registerable: Registerable<ConfiguredFeature<*, *>> ->

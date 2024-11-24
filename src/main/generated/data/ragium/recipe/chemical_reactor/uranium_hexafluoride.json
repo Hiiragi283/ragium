@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 486000,
+      "fluids": "ragium:hydrogen_fluoride"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:uranium_hexafluoride"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "ragium:yellow_cake"
+    }
+  ]
+}

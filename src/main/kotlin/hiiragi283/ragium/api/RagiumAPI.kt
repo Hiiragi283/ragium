@@ -28,11 +28,11 @@ interface RagiumAPI {
         fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 
         @JvmStatic
-        val logger: Logger = LoggerFactory.getLogger(MOD_NAME)
+        val LOGGER: Logger = LoggerFactory.getLogger(MOD_NAME)
 
         @JvmStatic
         inline fun log(action: Logger.() -> Unit) {
-            logger.action()
+            LOGGER.action()
         }
 
         @JvmStatic

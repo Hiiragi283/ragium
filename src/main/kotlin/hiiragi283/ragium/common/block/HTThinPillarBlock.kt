@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.PillarBlock
 import net.minecraft.block.ShapeContext
@@ -12,13 +11,13 @@ import net.minecraft.world.BlockView
 class HTThinPillarBlock(settings: Settings) : PillarBlock(settings) {
     companion object {
         @JvmField
-        val Y_SHAPE: VoxelShape = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)
+        val Y_SHAPE: VoxelShape = createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)
 
         @JvmField
-        val Z_SHAPE: VoxelShape = Block.createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0)
+        val Z_SHAPE: VoxelShape = createCuboidShape(4.0, 4.0, 0.0, 12.0, 12.0, 16.0)
 
         @JvmField
-        val X_SHAPE: VoxelShape = Block.createCuboidShape(0.0, 4.0, 4.0, 16.0, 12.0, 12.0)
+        val X_SHAPE: VoxelShape = createCuboidShape(0.0, 4.0, 4.0, 16.0, 12.0, 12.0)
     }
 
     override fun getOutlineShape(

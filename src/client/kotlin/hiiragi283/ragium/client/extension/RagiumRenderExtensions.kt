@@ -10,6 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.render.block.entity.BeaconBlockEntityRenderer
 import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.render.model.BakedModelManager
 import net.minecraft.client.render.model.json.JsonUnbakedModel
@@ -22,6 +23,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.resource.Resource
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.RotationAxis
@@ -95,6 +97,29 @@ fun <T : HTMultiblockController> renderMultiblock(
     world?.let {
         controller.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
     }
+}
+
+fun renderBeam(
+    matrices: MatrixStack,
+    vertexConsumers: VertexConsumerProvider,
+    tickDelta: Float,
+    world: World,
+    color: DyeColor = DyeColor.WHITE,
+    textureId: Identifier = Identifier.ofVanilla("textures/entity/beacon_beam.png"),
+) {
+    BeaconBlockEntityRenderer.renderBeam(
+        matrices,
+        vertexConsumers,
+        textureId,
+        tickDelta,
+        1f,
+        world.time,
+        -2,
+        2,
+        color.entityColor,
+        0.2f,
+        0.25f,
+    )
 }
 
 //    Fluid    //

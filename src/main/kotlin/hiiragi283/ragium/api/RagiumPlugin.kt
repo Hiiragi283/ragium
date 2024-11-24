@@ -7,9 +7,11 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.util.TriConsumer
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
 import java.util.function.Predicate
@@ -81,8 +83,10 @@ interface RagiumPlugin {
     //    RecipeHelper    //
 
     class RecipeHelper {
+        fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
+
         fun register(entry: HTMaterialRegistry.Entry, vararg requiredPrefixes: HTTagPrefix, action: (Map<HTTagPrefix, Item>) -> Unit) {
-            if (requiredPrefixes.all(entry.type::isValidPrefix)) {
+            if (requiredPrefixes.all { entry.type.isValidPrefix(it) && isPopulated(it.createTag(entry.key)) }) {
                 action(
                     buildMap {
                         requiredPrefixes.forEach { prefix: HTTagPrefix ->

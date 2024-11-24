@@ -6,20 +6,21 @@
   },
   "fluid_inputs": [
     {
-      "amount": 648000,
+      "amount": 486000,
       "fluids": "ragium:crude_oil"
     }
   ],
   "fluid_outputs": [
     {
-      "amount": 324000,
-      "fluid": "ragium:fuel"
-    }
-  ],
-  "item_outputs": [
+      "amount": 162000,
+      "fluid": "ragium:refined_gas"
+    },
     {
-      "count": 4,
-      "item": "ragium:polymer_resin"
+      "amount": 243000,
+      "fluid": "ragium:naphtha"
+    },
+    {
+      "fluid": "ragium:residual_oil"
     }
   ]
 }

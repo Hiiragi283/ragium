@@ -22,9 +22,9 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTMachineRecipe(
     val definition: HTMachineDefinition,
-    val itemInputs: List<HTIngredient.Item>,
-    val fluidInputs: List<HTIngredient.Fluid>,
-    val catalyst: HTIngredient.Item?,
+    val itemInputs: List<HTItemIngredient>,
+    val fluidInputs: List<HTFluidIngredient>,
+    val catalyst: HTItemIngredient?,
     val itemOutputs: List<HTItemResult>,
     val fluidOutputs: List<HTFluidResult>,
 ) : Recipe<HTMachineInput> {
@@ -36,15 +36,15 @@ class HTMachineRecipe(
                     HTMachineDefinition.CODEC
                         .fieldOf("definition")
                         .forGetter(HTMachineRecipe::definition),
-                    HTIngredient.ITEM_CODEC
+                    HTItemIngredient.CODEC
                         .listOf()
                         .optionalFieldOf("item_inputs", listOf())
                         .forGetter(HTMachineRecipe::itemInputs),
-                    HTIngredient.FLUID_CODEC
+                    HTFluidIngredient.CODEC
                         .listOf()
                         .optionalFieldOf("fluid_inputs", listOf())
                         .forGetter(HTMachineRecipe::fluidInputs),
-                    HTIngredient.ITEM_CODEC
+                    HTItemIngredient.CODEC
                         .optionalFieldOf("catalyst")
                         .forGetter { Optional.ofNullable(it.catalyst) },
                     HTItemResult.CODEC
@@ -62,11 +62,11 @@ class HTMachineRecipe(
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineRecipe> = PacketCodec.tuple(
             HTMachineDefinition.PACKET_CODEC,
             HTMachineRecipe::definition,
-            HTIngredient.ITEM_PACKET_CODEC.toList(),
+            HTItemIngredient.PACKET_CODEC.toList(),
             HTMachineRecipe::itemInputs,
-            HTIngredient.FLUID_PACKET_CODEC.toList(),
+            HTFluidIngredient.PACKET_CODEC.toList(),
             HTMachineRecipe::fluidInputs,
-            PacketCodecs.optional(HTIngredient.ITEM_PACKET_CODEC),
+            PacketCodecs.optional(HTItemIngredient.PACKET_CODEC),
             { Optional.ofNullable(it.catalyst) },
             HTItemResult.PACKET_CODEC.toList(),
             HTMachineRecipe::itemOutputs,
@@ -78,9 +78,9 @@ class HTMachineRecipe(
 
     constructor(
         definition: HTMachineDefinition,
-        itemInputs: List<HTIngredient.Item>,
-        fluidInputs: List<HTIngredient.Fluid>,
-        catalyst: Optional<HTIngredient.Item>,
+        itemInputs: List<HTItemIngredient>,
+        fluidInputs: List<HTFluidIngredient>,
+        catalyst: Optional<HTItemIngredient>,
         itemOutputs: List<HTItemResult>,
         fluidOutputs: List<HTFluidResult>,
     ) : this(
@@ -104,12 +104,12 @@ class HTMachineRecipe(
     override fun matches(input: HTMachineInput, world: World): Boolean {
         if (input.key != this.key) return false
         if (input.tier < this.tier) return false
-        itemInputs.forEachIndexed { index: Int, item: HTIngredient.Item ->
+        itemInputs.forEachIndexed { index: Int, item: HTItemIngredient ->
             if (!item.test(input.getItem(index))) {
                 return false
             }
         }
-        fluidInputs.forEachIndexed { index: Int, fluid: HTIngredient.Fluid ->
+        fluidInputs.forEachIndexed { index: Int, fluid: HTFluidIngredient ->
             if (!fluid.test(input.getFluid(index))) {
                 return false
             }

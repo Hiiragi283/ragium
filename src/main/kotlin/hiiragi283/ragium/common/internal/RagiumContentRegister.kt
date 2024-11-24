@@ -7,9 +7,6 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import hiiragi283.ragium.api.material.HTTagPrefixedBlock
-import hiiragi283.ragium.api.material.HTTagPrefixedBlockItem
-import hiiragi283.ragium.api.material.HTTagPrefixedItem
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
@@ -26,14 +23,15 @@ import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
-import net.minecraft.block.cauldron.CauldronBehavior
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.*
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
@@ -78,40 +76,61 @@ internal object RagiumContentRegister {
     fun registerContents() {
         // block
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-            val block = HTTagPrefixedBlock(ore.tagPrefix, ore.material, blockSettings(ore.baseStone))
+            val block = Block(blockSettings(ore.baseStone))
             registerBlock(ore, block)
-            registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
+            registerBlockItem(
+                block,
+                itemSettings().material(ore.material, ore.tagPrefix),
+            )
         }
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
-            val block = HTTagPrefixedBlock(storage.tagPrefix, storage.material, blockSettings(Blocks.IRON_BLOCK))
+            val block = Block(blockSettings(Blocks.IRON_BLOCK))
             registerBlock(storage, block)
-            registerBlockItem(block, itemSettings(), ::HTTagPrefixedBlockItem)
+            registerBlockItem(
+                block,
+                itemSettings().material(storage.material, storage.tagPrefix),
+            )
         }
 
         RagiumContents.Grates.entries.forEach { grate: RagiumContents.Grates ->
             val block = TransparentBlock(blockSettings(Blocks.COPPER_GRATE))
             registerBlock(grate, block)
-            registerBlockItem(block, itemSettings().tier(grate.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.GRATE, grate.tier),
+            )
         }
         RagiumContents.Casings.entries.forEach { casings: RagiumContents.Casings ->
             val block = Block(blockSettings(Blocks.SMOOTH_STONE))
             registerBlock(casings, block)
-            registerBlockItem(block, itemSettings().tier(casings.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.CASING, casings.tier),
+            )
         }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val block = TransparentBlock(blockSettings(Blocks.SMOOTH_STONE))
             registerBlock(hull, block)
-            registerBlockItem(block, itemSettings().tier(hull.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.HULL, hull.tier),
+            )
         }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
             val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
             registerBlock(coil, block)
-            registerBlockItem(block, itemSettings().tier(coil.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.COIL, coil.tier),
+            )
         }
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block = HTExporterBlock(exporter.tier)
             registerBlock(exporter, block)
-            registerBlockItem(block, itemSettings().tier(exporter.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.EXPORTER, exporter.tier),
+            )
         }
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val block = HTPipeBlock(pipe.tier, pipe.pipeType)
@@ -121,7 +140,10 @@ internal object RagiumContentRegister {
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
             val block = HTDrumBlock(drum.tier)
             registerBlock(drum, block)
-            registerBlockItem(block, itemSettings().tier(drum.tier))
+            registerBlockItem(
+                block,
+                itemSettings().tieredText(RagiumTranslationKeys.DRUM, drum.tier),
+            )
         }
         initBlocks()
 
@@ -132,15 +154,27 @@ internal object RagiumContentRegister {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-            addAll(RagiumContents.CircuitBoards.entries)
-            addAll(RagiumContents.Circuits.entries)
-        }.forEach { content: HTContent<Item> ->
-            if (content is HTContent.Material<Item>) {
-                registerItem(content, HTTagPrefixedItem(content.tagPrefix, content.material, itemSettings()))
-            } else {
-                registerItem(content, Item(itemSettings()))
-            }
+        }.forEach { content: HTContent.Material<Item> ->
+            registerItem(
+                content,
+                Item(
+                    itemSettings().material(content.material, content.tagPrefix),
+                ),
+            )
         }
+        RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
+            registerItem(
+                board,
+                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, board.tier)),
+            )
+        }
+        RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
+            registerItem(
+                circuit,
+                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, circuit.tier)),
+            )
+        }
+
         initItems()
 
         // fluid
@@ -152,26 +186,21 @@ internal object RagiumContentRegister {
     @JvmStatic
     private fun initBlocks() {
         registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
-        registerBlockItem(RagiumBlocks.POROUS_NETHERRACK)
+        registerBlockItem(
+            RagiumBlocks.POROUS_NETHERRACK,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK)),
+        )
 
         registerBlock("asphalt", RagiumBlocks.ASPHALT)
         registerBlockItem(RagiumBlocks.ASPHALT)
 
         registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
         registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)
-        registerBlockItem(RagiumBlocks.SPONGE_CAKE)
         registerBlockItem(
-            RagiumBlocks.SWEET_BERRIES_CAKE,
-            itemSettings()
-                .food(
-                    FoodComponent
-                        .Builder()
-                        .nutrition(2)
-                        .saturationModifier(0.1f)
-                        .build(),
-                ).maxDamage(7)
-                .component(RagiumComponentTypes.DAMAGE_INSTEAD_OF_DECREASE, Unit),
+            RagiumBlocks.SPONGE_CAKE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)),
         )
+        registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
         registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
@@ -183,23 +212,48 @@ internal object RagiumContentRegister {
         registerBlock("open_crate", RagiumBlocks.OPEN_CRATE)
         registerBlock("teleport_anchor", RagiumBlocks.TELEPORT_ANCHOR)
         registerBlock("trash_box", RagiumBlocks.TRASH_BOX)
-        registerBlockItem(RagiumBlocks.AUTO_ILLUMINATOR)
+        registerBlockItem(
+            RagiumBlocks.AUTO_ILLUMINATOR,
+            itemSettings().descriptions(
+                Text.translatable(
+                    RagiumTranslationKeys.AUTO_ILLUMINATOR,
+                    RagiumAPI.getInstance().config.autoIlluminatorRadius,
+                ),
+            ),
+        )
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(
+            RagiumBlocks.LARGE_PROCESSOR,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.LARGE_PROCESSOR)),
+        )
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
-        registerBlockItem(RagiumBlocks.MANUAL_GRINDER)
+        registerBlockItem(
+            RagiumBlocks.MANUAL_GRINDER,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.MANUAL_GRINDER)),
+        )
         registerBlockItem(RagiumBlocks.MANUAL_MIXER)
-        registerBlockItem(RagiumBlocks.NETWORK_INTERFACE)
-        registerBlockItem(RagiumBlocks.OPEN_CRATE)
-        registerBlockItem(RagiumBlocks.LARGE_PROCESSOR)
+        registerBlockItem(
+            RagiumBlocks.NETWORK_INTERFACE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.NETWORK_INTERFACE)),
+        )
+        registerBlockItem(
+            RagiumBlocks.OPEN_CRATE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.OPEN_CRATE)),
+        )
         registerBlockItem(RagiumBlocks.TELEPORT_ANCHOR)
-        registerBlockItem(RagiumBlocks.TRASH_BOX)
+        registerBlockItem(
+            RagiumBlocks.TRASH_BOX,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.TRASH_BOX)),
+        )
 
         registerBlock("backpack_interface", RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlock("buffer", RagiumBlocks.BUFFER)
         registerBlock("enchantment_bookshelf", RagiumBlocks.ENCHANTMENT_BOOKSHELF)
         registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
         registerBlock("shaft", RagiumBlocks.SHAFT)
         registerBlock("infesting", RagiumBlocks.INFESTING)
         registerBlockItem(RagiumBlocks.BACKPACK_INTERFACE)
+        registerBlockItem(RagiumBlocks.BUFFER)
         registerBlockItem(RagiumBlocks.ENCHANTMENT_BOOKSHELF)
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(RagiumBlocks.SHAFT)
@@ -216,55 +270,82 @@ internal object RagiumContentRegister {
         registerItem("stella_leggings", RagiumItems.STELLA_LEGGINGS)
         registerItem("stella_boots", RagiumItems.STELLA_BOOTS)
 
-        registerItem("anvil_dynamite", RagiumItems.ANVIL_DYNAMITE)
-        registerItem("backpack", RagiumItems.BACKPACK)
-        registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
-        registerItem("bujin", RagiumItems.BUJIN)
-        registerItem("dynamite", RagiumItems.DYNAMITE)
-        registerItem("empty_fluid_cube", RagiumItems.EMPTY_FLUID_CUBE)
-        registerItem("filled_fluid_cube", RagiumItems.FILLED_FLUID_CUBE)
-        registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)
         registerItem("forge_hammer", RagiumItems.FORGE_HAMMER)
-        registerItem("gigant_hammer", RagiumItems.GIGANT_HAMMER)
         registerItem("steel_axe", RagiumItems.STEEL_AXE)
         registerItem("steel_hoe", RagiumItems.STEEL_HOE)
         registerItem("steel_pickaxe", RagiumItems.STEEL_PICKAXE)
         registerItem("steel_shovel", RagiumItems.STEEL_SHOVEL)
         registerItem("steel_sword", RagiumItems.STEEL_SWORD)
+        registerItem("bujin", RagiumItems.BUJIN)
+        registerItem("gigant_hammer", RagiumItems.GIGANT_HAMMER)
+
+        registerItem("dynamite", RagiumItems.DYNAMITE)
+        registerItem("anvil_dynamite", RagiumItems.ANVIL_DYNAMITE)
+        registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
+        registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)
+        registerItem("rope_dynamite", RagiumItems.ROPE_DYNAMITE)
+
+        registerItem("backpack", RagiumItems.BACKPACK)
+        registerItem("empty_fluid_cube", RagiumItems.EMPTY_FLUID_CUBE)
+        registerItem("filled_fluid_cube", RagiumItems.FILLED_FLUID_CUBE)
+        registerItem("fluid_filter", RagiumItems.FLUID_FILTER)
+        registerItem("guide_book", RagiumItems.GUIDE_BOOK)
+        registerItem("item_filter", RagiumItems.ITEM_FILTER)
+        registerItem("ragi_wrench", RagiumItems.RAGI_WRENCH)
         registerItem("trader_catalog", RagiumItems.TRADER_CATALOG)
 
-        registerItem("bee_wax", RagiumItems.BEE_WAX)
+        registerItem("sweet_berries_cake_piece", RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+
         registerItem("butter", RagiumItems.BUTTER)
         registerItem("caramel", RagiumItems.CARAMEL)
+        registerItem("dough", RagiumItems.DOUGH)
+        registerItem("flour", RagiumItems.FLOUR)
+
         registerItem("chocolate", RagiumItems.CHOCOLATE)
         registerItem("chocolate_apple", RagiumItems.CHOCOLATE_APPLE)
         registerItem("chocolate_bread", RagiumItems.CHOCOLATE_BREAD)
-        registerItem("flour", RagiumItems.FLOUR)
-        registerItem("dough", RagiumItems.DOUGH)
-        registerItem("minced_meat", RagiumItems.MINCED_MEAT)
-        registerItem("pulp", RagiumItems.PULP)
 
-        registerItem("basalt_mesh", RagiumItems.BASALT_MESH)
-        registerItem("crimson_crystal", RagiumItems.CRIMSON_CRYSTAL)
-        registerItem("crude_silicon", RagiumItems.CRUDE_SILICON)
-        registerItem("deepant", RagiumItems.DEEPANT)
-        registerItem("engine", RagiumItems.ENGINE)
-        registerItem("engineering_plastic_plate", RagiumItems.ENGINEERING_PLASTIC_PLATE)
-        registerItem("heart_of_the_nether", RagiumItems.HEART_OF_THE_NETHER)
-        registerItem("laser_emitter", RagiumItems.LASER_EMITTER)
-        registerItem("plastic_plate", RagiumItems.PLASTIC_PLATE)
-        registerItem("polymer_resin", RagiumItems.POLYMER_RESIN)
-        registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)
-        registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
-        registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-        registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
+        registerItem("minced_meat", RagiumItems.MINCED_MEAT)
+        registerItem("meat_ingot", RagiumItems.MEAT_INGOT)
+        registerItem("cooked_meat_ingot", RagiumItems.COOKED_MEAT_INGOT)
+
+        registerItem("bee_wax", RagiumItems.BEE_WAX)
+        registerItem("pulp", RagiumItems.PULP)
         registerItem("residual_coke", RagiumItems.RESIDUAL_COKE)
-        registerItem("silicon", RagiumItems.SILICON)
+
+        registerItem("deepant", RagiumItems.DEEPANT)
+        registerItem("luminescence_dust", RagiumItems.LUMINESCENCE_DUST)
+        registerItem("ragi_alloy_compound", RagiumItems.RAGI_ALLOY_COMPOUND)
         registerItem("slag", RagiumItems.SLAG)
         registerItem("soap_ingot", RagiumItems.SOAP_INGOT)
-        registerItem("solar_panel", RagiumItems.SOLAR_PANEL)
+
+        registerItem("polymer_resin", RagiumItems.POLYMER_RESIN)
+        registerItem("plastic_plate", RagiumItems.PLASTIC_PLATE)
+        registerItem("engineering_plastic_plate", RagiumItems.ENGINEERING_PLASTIC_PLATE)
         registerItem("stella_plate", RagiumItems.STELLA_PLATE)
+
+        registerItem("crude_silicon", RagiumItems.CRUDE_SILICON)
+        registerItem("silicon", RagiumItems.SILICON)
+        registerItem("refined_silicon", RagiumItems.REFINED_SILICON)
+
+        registerItem("crimson_crystal", RagiumItems.CRIMSON_CRYSTAL)
         registerItem("warped_crystal", RagiumItems.WARPED_CRYSTAL)
+
+        registerItem("basalt_mesh", RagiumItems.BASALT_MESH)
+        registerItem("blazing_carbon_electrode", RagiumItems.BLAZING_CARBON_ELECTRODE)
+        registerItem("carbon_electrode", RagiumItems.CARBON_ELECTRODE)
+        registerItem("charged_carbon_electrode", RagiumItems.CHARGED_CARBON_ELECTRODE)
+        registerItem("engine", RagiumItems.ENGINE)
+        registerItem("laser_emitter", RagiumItems.LASER_EMITTER)
+        registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)
+        registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
+        registerItem("solar_panel", RagiumItems.SOLAR_PANEL)
+
+        registerItem("uranium_fuel", RagiumItems.URANIUM_FUEL)
+        registerItem("yellow_cake", RagiumItems.YELLOW_CAKE)
+        registerItem("yellow_cake_piece", RagiumItems.YELLOW_CAKE_PIECE)
+
+        registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
     }
 
     @JvmStatic
@@ -273,8 +354,10 @@ internal object RagiumContentRegister {
         ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerForBlocks null
             world.backpackManager
-                ?.get(color)
-                ?.let { InventoryStorage.of(it, direction) }
+                .map { it[color] }
+                .map { InventoryStorage.of(it, direction) }
+                .result()
+                .getOrNull()
         }, RagiumBlocks.BACKPACK_INTERFACE)
         ItemStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             object : SingleItemStorage() {
@@ -318,7 +401,7 @@ internal object RagiumContentRegister {
             RagiumBlocks.CREATIVE_SOURCE,
         )
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            world.energyNetwork
+            world.energyNetwork.result().getOrNull()
         }, RagiumBlocks.NETWORK_INTERFACE)
 
         // Accessory
@@ -386,10 +469,5 @@ internal object RagiumContentRegister {
                 )
             }
         }
-    }
-
-    @JvmStatic
-    private fun registerCauldron(map: CauldronBehavior.CauldronBehaviorMap, item: ItemConvertible, behavior: CauldronBehavior) {
-        map.map[item.asItem()] = behavior
     }
 }

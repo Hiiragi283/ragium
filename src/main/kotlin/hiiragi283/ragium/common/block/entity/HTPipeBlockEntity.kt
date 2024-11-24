@@ -42,7 +42,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     fun canConnect(dir: Direction): Boolean = ifPresentWorld { world: World ->
         HTPipeType.canConnect(world, pos, dir, type)
-    } ?: false
+    } == true
 
     override fun onStateReplaced(
         state: BlockState,
@@ -67,7 +67,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         if (type.isItem) {
             StorageUtil.move(
                 itemStorage,
-                getFrontStorage(world, pos, state, ItemStorage.SIDED),
+                getFrontStorage(world, pos, ItemStorage.SIDED),
                 { true },
                 type.getItemCount(tier),
                 null,
@@ -76,7 +76,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
         if (type.isFluid) {
             StorageUtil.move(
                 fluidStorage,
-                getFrontStorage(world, pos, state, FluidStorage.SIDED),
+                getFrontStorage(world, pos, FluidStorage.SIDED),
                 { true },
                 type.getFluidCount(tier),
                 null,
@@ -92,7 +92,7 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
 
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = if (type.isItem) itemStorage else null
+    override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = if (type.isItem && side != front) itemStorage else null
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = if (type.isFluid) fluidStorage else null
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = if (type.isFluid && side != front) fluidStorage else null
 }

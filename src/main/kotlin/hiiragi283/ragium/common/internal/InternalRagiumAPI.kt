@@ -8,10 +8,14 @@ import com.google.gson.annotations.SerializedName
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
-import hiiragi283.ragium.api.machine.block.HTMachineBlockItem
-import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.HTTable
@@ -26,6 +30,7 @@ import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -95,13 +100,16 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 val block = HTMachineBlock(key, tier)
                 Registry.register(Registries.BLOCK, tier.createId(key), block)
                 blockTable.put(key, tier, block)
-                val item = HTMachineBlockItem(block, itemSettings())
+                val item = BlockItem(
+                    block,
+                    itemSettings().machine(key, tier),
+                )
                 Registry.register(Registries.ITEM, tier.createId(key), item)
             }
         }
         // complete
         machineRegistry = HTMachineRegistry(sortedKeys, blockTable, propertyCache)
-        RagiumAPI.log { info("Registered machine types and properties!") }
+        RagiumAPI.LOGGER.info("Registered machine types and properties!")
     }
 
     @JvmStatic
@@ -156,7 +164,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 val (prefix: HTTagPrefix, key: HTMaterialKey) = pair
                 val fixedKey: HTMaterialKey = altNameCache.getOrDefault(key.name, key)
                 if (fixedKey !in keyCache.keys) {
-                    RagiumAPI.log { warn("Could not bind item with unregistered material: $fixedKey!") }
+                    RagiumAPI.LOGGER.warn("Could not bind item with unregistered material: $fixedKey!")
                     return@forEach
                 }
                 itemTable.put(
@@ -172,12 +180,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
                     rarityCache[key]?.let { builder.add(DataComponentTypes.RARITY, it) }
                 }
             }
-            RagiumAPI.log { info("Added rarities for material items!") }
+            RagiumAPI.LOGGER.info("Added rarities for material items!")
         }
 
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
-        RagiumAPI.log { info("Registered material types and properties!") }
+        RagiumAPI.LOGGER.info("Registered material types and properties!")
     }
 
     //    ConfigImpl    //
@@ -218,7 +226,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
         fun validate(): ConfigImpl = apply {
             check(version == getVersion()) { "Not matching config version! Remove old config file!" }
-            RagiumAPI.log { info("Loaded config!") }
+            RagiumAPI.LOGGER.info("Loaded config!")
         }
     }
 }
