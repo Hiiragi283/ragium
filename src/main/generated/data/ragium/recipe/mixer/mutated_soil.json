@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#minecraft:dirt"
+    },
+    {
+      "items": "ragium:nuclear_waste"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:mutated_soil"
+    }
+  ]
+}

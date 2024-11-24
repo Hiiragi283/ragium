@@ -465,6 +465,13 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .fluidInput(Fluids.WATER)
             .fluidOutput(RagiumFluids.SALT_WATER)
             .offerTo(exporter, RagiumFluids.SALT_WATER)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.MIXER)
+            .itemInput(ItemTags.DIRT)
+            .itemInput(RagiumItems.NUCLEAR_WASTE)
+            .itemOutput(RagiumBlocks.MUTATED_SOIL)
+            .offerTo(exporter, RagiumBlocks.MUTATED_SOIL)
         // carbon electrodes
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)

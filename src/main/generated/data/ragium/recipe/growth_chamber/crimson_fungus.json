@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:mutated_soil"
+  },
+  "definition": {
+    "type": "ragium:growth_chamber",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "minecraft:red_mushroom"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:crimson_fungus"
+    },
+    {
+      "item": "minecraft:red_mushroom"
+    }
+  ]
+}

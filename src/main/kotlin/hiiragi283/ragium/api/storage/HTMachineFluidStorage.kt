@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.storage
 
 import hiiragi283.ragium.api.extension.buildNbt
 import hiiragi283.ragium.api.extension.buildNbtList
+import hiiragi283.ragium.api.extension.copyTo
 import hiiragi283.ragium.api.extension.resourceAmount
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
+import hiiragi283.ragium.api.machine.HTMachineTier
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -22,7 +22,11 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.Hand
 
-class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageIO) : HTFluidSyncable {
+class HTMachineFluidStorage private constructor(
+    size: Int,
+    private val ioMapper: (Int) -> HTStorageIO,
+    private val filter: (Int, FluidVariant) -> Boolean,
+) {
     companion object {
         const val NBT_KEY = "fluid_storages"
     }
@@ -30,6 +34,7 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
     constructor(builder: HTStorageBuilder) : this(
         builder.size,
         builder.ioMapper,
+        builder.fluidFilter,
     )
 
     private var callback: () -> Unit = {}
@@ -38,11 +43,21 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
         this.callback = callback
     }
 
-    val parts: Array<SingleFluidStorage>
-        get() = parts1
+    val parts: List<SingleFluidStorage>
+        get() = parts1.toList()
 
-    private val parts1: Array<SingleFluidStorage> =
-        Array(size) { SingleFluidStorage.withFixedCapacity(FluidConstants.BUCKET * 16, callback::invoke) }
+    private val parts1: Array<SingleFluidStorage> = Array(size, ::childStorage)
+
+    private fun childStorage(slot: Int, tier: HTMachineTier = HTMachineTier.PRIMITIVE): SingleFluidStorage =
+        object : SingleFluidStorage() {
+            override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+
+            override fun canInsert(variant: FluidVariant): Boolean = filter(slot, variant)
+
+            override fun onFinalCommit() {
+                callback()
+            }
+        }
 
     fun get(index: Int): SingleFluidStorage = parts1[index]
 
@@ -72,8 +87,22 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
         return false
     }
 
-    fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    fun update(tier: HTMachineTier): HTMachineFluidStorage = apply {
+        val copied: Array<SingleFluidStorage> = parts1.copyOf()
+        copied.forEachIndexed { index: Int, storage: SingleFluidStorage ->
+            val newStorage: SingleFluidStorage = childStorage(index, tier)
+            storage.copyTo(newStorage)
+            parts1[index] = newStorage
+        }
+    }
+
+    fun readNbt(
+        nbt: NbtCompound,
+        wrapperLookup: RegistryWrapper.WrapperLookup,
+        tier: HTMachineTier = HTMachineTier.PRIMITIVE,
+    ) {
         val list: NbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE.toInt())
+        update(tier)
         list.forEachIndexed { index: Int, nbtElement: NbtElement ->
             if (nbtElement is NbtCompound) {
                 parts1[index].readNbt(nbtElement, wrapperLookup)
@@ -93,9 +122,23 @@ class HTMachineFluidStorage(size: Int, private val ioMapper: (Int) -> HTStorageI
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        parts.forEachIndexed { index: Int, storage: SingleFluidStorage ->
-            sender(player, index, storage.variant, storage.amount)
+    fun sendPacket(
+        player: ServerPlayerEntity,
+        sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit,
+        vararg slotRange: Int,
+    ) {
+        slotRange.forEach { index: Int ->
+            parts1.getOrNull(index)?.let { storage: SingleFluidStorage ->
+                sender(player, index, storage.variant, storage.amount)
+            }
         }
+    }
+    
+    fun sendPacket(
+        player: ServerPlayerEntity,
+        sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit,
+        slotRange: IntRange = parts.indices,
+    ) {
+        sendPacket(player, sender, *slotRange.toList().toIntArray())
     }
 }

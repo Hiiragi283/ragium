@@ -13,6 +13,9 @@ import net.minecraft.world.World
 object RagiumBlocks {
     //    Minerals    //
     @JvmField
+    val MUTATED_SOIL: Block = Block(blockSettings(Blocks.DIRT))
+
+    @JvmField
     val POROUS_NETHERRACK: Block = HTSpongeBlock(
         blockSettings(Blocks.NETHERRACK),
         Blocks.MAGMA_BLOCK::getDefaultState,

@@ -7,17 +7,19 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -26,7 +28,6 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -40,6 +41,15 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
+    }
+    
+    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
+        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+        .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.FUEL) }
+        .buildMachineFluidStorage()
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
@@ -47,23 +57,18 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage = object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
-
-            override fun canInsert(variant: FluidVariant): Boolean = variant.isIn(RagiumFluidTags.FUEL)
-        }
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
-        FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> = useTransaction { transaction: Transaction ->
-        val variantIn: FluidVariant = fluidStorage.variant
+        val storageIn: SingleFluidStorage = fluidStorage.get(0)
+        val variantIn: FluidVariant = storageIn.variant
         if (variantIn.isBlank) return@useTransaction DataResult.error { "Empty fuels!" }
-        val extracted: Long = fluidStorage.extract(variantIn, FluidConstants.BUCKET, transaction)
+        val extracted: Long = storageIn.extract(variantIn, FluidConstants.BUCKET, transaction)
         if (extracted == FluidConstants.BUCKET) {
             transaction.commit()
             DataResult.success(Unit)
@@ -74,19 +79,13 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     //    SidedStorageBlockEntity    //
-
-    private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
-        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
-
-        override fun canInsert(variant: FluidVariant): Boolean = variant.isIn(RagiumFluidTags.FUEL)
-    }
-
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = FilteringStorage.insertOnlyOf(fluidStorage)
+    
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
     //    HTFluidSyncable    //
 
     override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        sender(player, 0, fluidStorage.variant, fluidStorage.amount)
+        fluidStorage.sendPacket(player, sender)
     }
 
     //    ExtendedScreenHandlerFactory    //

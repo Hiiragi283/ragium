@@ -294,6 +294,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // uranium enrichment
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .itemInput(Items.POISONOUS_POTATO)
+            .itemOutput(RagiumContents.RawMaterials.URANITE)
+            .offerTo(exporter, RagiumContents.RawMaterials.URANITE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
             .fluidInput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 8)
             .fluidOutput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 7)
             .fluidOutput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
@@ -456,6 +462,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerCrop(exporter, Items.SWEET_BERRIES, Items.SWEET_BERRIES)
         registerCrop(exporter, Items.TORCHFLOWER_SEEDS, Items.TORCHFLOWER)
         registerCrop(exporter, Items.WHEAT_SEEDS, Items.WHEAT)
+
+        // registerCrop(exporter, Items.BEETROOT_SEEDS, Items.NETHER_WART, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.BROWN_MUSHROOM, Items.WARPED_FUNGUS, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.POTATO, Items.POISONOUS_POTATO, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.PUMPKIN_SEEDS, Items.CARVED_PUMPKIN, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.RED_MUSHROOM, Items.CRIMSON_FUNGUS, RagiumBlocks.MUTATED_SOIL)
+        // registerCrop(exporter, Items.SWEET_BERRIES, Items.GLOW_BERRIES, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.TORCHFLOWER_SEEDS, Items.TORCH, RagiumBlocks.MUTATED_SOIL)
         // trees
         registerTree(exporter, Items.ACACIA_SAPLING, Items.ACACIA_LOG)
         registerTree(exporter, Items.BIRCH_SAPLING, Items.BIRCH_LOG)

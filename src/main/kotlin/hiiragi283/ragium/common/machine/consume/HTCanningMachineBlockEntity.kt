@@ -48,6 +48,22 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
+    }
+
+    private val inventory: SidedInventory = HTStorageBuilder(2)
+        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .stackFilter { _: Int, stack: ItemStack ->
+            stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
+        }.buildSided()
+
+    private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
+        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .buildMachineFluidStorage()
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
@@ -55,22 +71,10 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
 
-    private val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .filter { _: Int, stack: ItemStack ->
-            stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
-        }.buildSided()
-
     override fun asInventory(): SidedInventory = inventory
-
-    private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 

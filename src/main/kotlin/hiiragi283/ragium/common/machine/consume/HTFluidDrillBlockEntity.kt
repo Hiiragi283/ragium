@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.machine.consume
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -11,16 +10,17 @@ import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -35,7 +35,6 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -61,8 +60,14 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    private var fluidStorage: SingleFluidStorage = fluidStorageOf(tier.tankCapacity)
-
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
+    }
+    
+    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
+        .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .buildMachineFluidStorage()
+    
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
@@ -70,8 +75,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage = fluidStorageOf(tier.tankCapacity)
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
@@ -80,7 +84,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         if (!updateValidation(cachedState, world, pos)) return DataResult.error { "Invalid multiblock structure found!" }
         useTransaction { transaction: Transaction ->
-            val inserted: Long = fluidStorage.insert(findResource(world.getBiome(pos)), transaction)
+            val inserted: Long = fluidStorage.get(0).insert(findResource(world.getBiome(pos)), transaction)
             if (inserted > 0) {
                 transaction.commit()
                 world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
@@ -101,15 +105,14 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         return ResourceAmount(FluidVariant.of(RagiumFluids.AIR.value), FluidConstants.BUCKET)
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
-        FluidStorageUtil.interactWithFluidStorage(FilteringStorage.extractOnlyOf(fluidStorage), player, Hand.MAIN_HAND)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = FilteringStorage.extractOnlyOf(fluidStorage)
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage.createWrapped()
 
     //    HTFluidSyncable    //
 
     override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        sender(player, 1, fluidStorage.resource, fluidStorage.amount)
+        fluidStorage.sendPacket(player, sender, 1)
     }
 
     //    HTMultiblockController    //

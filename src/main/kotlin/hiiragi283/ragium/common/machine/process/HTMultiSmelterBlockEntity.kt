@@ -32,6 +32,10 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(tier)
+    }
+    
     override val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)

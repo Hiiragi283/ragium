@@ -492,6 +492,9 @@ object RagiumItems {
     )
 
     @JvmField
+    val NUCLEAR_WASTE: Item = Item(itemSettings())
+
+    @JvmField
     val INGREDIENTS: List<Item> = listOf(
         // organic
         BEE_WAX,
@@ -529,6 +532,7 @@ object RagiumItems {
         URANIUM_FUEL,
         YELLOW_CAKE,
         YELLOW_CAKE_PIECE,
+        NUCLEAR_WASTE,
     )
 
     //    Misc    //

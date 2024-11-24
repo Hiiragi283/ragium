@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.machine.generator
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.restDamage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -13,13 +14,16 @@ import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -29,33 +33,27 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
+class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.NUCLEAR_REACTOR, pos, state),
     HTFluidSyncable {
-    override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
+    override var key: HTMachineKey = RagiumMachineKeys.NUCLEAR_REACTOR
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
         this.tier = tier
     }
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage.update(tier)
-    }
-
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .stackFilter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else false }
         .buildSided()
 
-    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
+    private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .fluidFilter { _: Int, variant: FluidVariant -> variant.isOf(Fluids.WATER) }
         .buildMachineFluidStorage()
@@ -71,31 +69,50 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun asInventory(): SidedInventory = inventory
-    
+
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val fuelStack: ItemStack = inventory.getStack(0)
-        if (fuelStack.isIn(ItemTags.COALS)) {
+        val wasteStack: ItemStack = inventory.getStack(1)
+        if (fuelStack.isOf(RagiumItems.URANIUM_FUEL)) {
+            val result = HTItemResult(RagiumItems.NUCLEAR_WASTE)
+            if (!result.canMerge(wasteStack)) return overheat(world, pos)
             useTransaction { transaction: Transaction ->
-                val extracted: Long =
-                    fluidStorage.get(0).extract(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET, transaction)
-                if (extracted == FluidConstants.BUCKET) {
+                val storageIn: SingleFluidStorage = fluidStorage.get(0)
+                val foundVariant: FluidVariant =
+                    StorageUtil.findExtractableResource(storageIn, transaction) ?: return overheat(world, pos)
+                if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
                     transaction.commit()
-                    fuelStack.decrement(1)
-                    inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
+                    inventory.modifyStack(1, result::merge)
+                    fuelStack.damage += 1
                     return DataResult.success(Unit)
                 } else {
                     transaction.abort()
+                    return overheat(world, pos)
                 }
             }
         }
-        return DataResult.error { "Failed to consume fuels!" }
+        return DataResult.error { "Input slot has no nuclear fuels!" }
     }
 
-    //    SidedStorageBlockEntity    //
+    private fun overheat(world: World, pos: BlockPos): DataResult<Unit> {
+        val fuel: ItemStack = inventory.getStack(0).copy()
+        inventory.clear()
+        val power: Float = fuel.restDamage / 16f
+        HTDynamiteItem.Component(power, true).createExplosion(world, pos)
+        return DataResult.error<Unit> { "Overheated!" }
+    }
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+        HTSmallMachineScreenHandler(
+            syncId,
+            playerInventory,
+            packet,
+            createContext(),
+        )
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
@@ -104,14 +121,4 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
         fluidStorage.sendPacket(player, sender)
     }
-
-    //    ExtendedScreenHandlerFactory    //
-
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(
-            syncId,
-            playerInventory,
-            packet,
-            createContext(),
-        )
 }

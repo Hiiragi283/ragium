@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
@@ -52,7 +53,11 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup, tier)
+    }
+
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
     }
 
     final override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)

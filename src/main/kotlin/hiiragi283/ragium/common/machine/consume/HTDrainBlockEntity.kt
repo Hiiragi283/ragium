@@ -2,21 +2,21 @@ package hiiragi283.ragium.common.machine.consume
 
 import com.google.common.base.Predicates
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FluidDrainable
@@ -26,7 +26,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -38,6 +37,14 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
         this.tier = tier
     }
 
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
+    }
+    
+    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
+        .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .buildMachineFluidStorage()
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
@@ -45,10 +52,11 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage = fluidStorageOf(tier.tankCapacity)
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
 
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         Direction.entries.forEach { dir: Direction ->
             val posTo: BlockPos = pos.offset(dir)
@@ -61,7 +69,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
                 val maxAmount: Long = storage.sumOf(StorageView<FluidVariant>::getCapacity)
                 val transferred: Long = StorageUtil.move(
                     storage,
-                    fluidStorage,
+                    fluidStorage.get(0),
                     Predicates.alwaysTrue(),
                     maxAmount,
                     null,
@@ -76,12 +84,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null
 
-    //    SidedStorageBlockEntity    //
+    //    SidedStorageBlockEntity    //   
 
-    private var fluidStorage: SingleFluidStorage = fluidStorageOf(tier.tankCapacity)
-
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
-        FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
-
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = FilteringStorage.extractOnlyOf(fluidStorage)
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 }

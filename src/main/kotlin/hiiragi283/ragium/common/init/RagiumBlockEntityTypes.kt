@@ -6,10 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.machine.consume.*
-import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.generator.HTSimpleGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.*
 import hiiragi283.ragium.common.machine.process.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -97,12 +94,16 @@ object RagiumBlockEntityTypes {
         register("manual_grinder", ::HTManualGrinderBlockEntity)
 
     @JvmField
+    val MANUAL_MIXER: BlockEntityType<HTManualMixerBlockEntity> =
+        register("manual_mixer", ::HTManualMixerBlockEntity)
+
+    @JvmField
     val MULTI_SMELTER: BlockEntityType<HTMultiSmelterBlockEntity> =
         register("multi_smelter", ::HTMultiSmelterBlockEntity)
 
     @JvmField
-    val MANUAL_MIXER: BlockEntityType<HTManualMixerBlockEntity> =
-        register("manual_mixer", ::HTManualMixerBlockEntity)
+    val NUCLEAR_REACTOR: BlockEntityType<HTNuclearReactorBlockEntity> =
+        register("nuclear_reactor", ::HTNuclearReactorBlockEntity)
 
     @JvmField
     val ROCK_GENERATOR: BlockEntityType<HTRockGeneratorBlockEntity> =
@@ -163,6 +164,7 @@ object RagiumBlockEntityTypes {
             registerMachineBlocks(it, SIMPLE_GENERATOR)
         }
         registerMachineBlocks(RagiumMachineKeys.COMBUSTION_GENERATOR, COMBUSTION_GENERATOR)
+        registerMachineBlocks(RagiumMachineKeys.NUCLEAR_REACTOR, NUCLEAR_REACTOR)
         registerMachineBlocks(RagiumMachineKeys.STEAM_GENERATOR, STEAM_GENERATOR)
         registerMachineBlocks(RagiumMachineKeys.THERMAL_GENERATOR, THERMAL_GENERATOR)
         // processors

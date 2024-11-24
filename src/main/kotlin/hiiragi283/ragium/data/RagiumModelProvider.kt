@@ -80,6 +80,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.ASPHALT)
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
+        registerSimple(RagiumBlocks.MUTATED_SOIL, Identifier.of("block/dirt"))
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.OPEN_CRATE)
         registerSimple(RagiumBlocks.SPONGE_CAKE)

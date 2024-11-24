@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
@@ -16,11 +17,8 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -31,7 +29,6 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.util.Hand
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -45,6 +42,19 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
+    }
+    
+    private val inventory: SidedInventory = HTStorageBuilder(1)
+        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
+        .buildSided()
+
+    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
+        .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
+        .fluidFilter { _: Int, variant: FluidVariant -> variant.isOf(RagiumFluids.BIOMASS.value) }
+        .buildMachineFluidStorage()
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
@@ -52,30 +62,14 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage = object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
-
-            override fun canInsert(variant: FluidVariant): Boolean = variant.isOf(RagiumFluids.BIOMASS.value)
-        }
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
-
-    private val inventory: SidedInventory = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .buildSided()
 
     override fun asInventory(): SidedInventory? = inventory
 
-    private var fluidStorage: SingleFluidStorage = object : SingleFluidStorage() {
-        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-        override fun canInsert(variant: FluidVariant): Boolean = variant.isOf(RagiumFluids.BIOMASS.value)
-    }
-
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean =
-        FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)
-
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = FilteringStorage.extractOnlyOf(fluidStorage)
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> = HTRecipeProcessor { _: World, _: HTMachineKey, _: HTMachineTier ->
         val inputStack: ItemStack = inventory.getStack(0)
@@ -86,7 +80,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
         }
         useTransaction { transaction: Transaction ->
             val inserted: Long =
-                fluidStorage.insert(FluidVariant.of(RagiumFluids.BIOMASS.value), fixedAmount, transaction)
+                fluidStorage.get(0).insert(FluidVariant.of(RagiumFluids.BIOMASS.value), fixedAmount, transaction)
             if (inserted > 0) {
                 transaction.commit()
                 inputStack.decrement(1)
@@ -104,6 +98,6 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTFluidSyncable    //
 
     override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        sender(player, 1, fluidStorage.resource, fluidStorage.amount)
+        fluidStorage.sendPacket(player, sender, 1)
     }
 }

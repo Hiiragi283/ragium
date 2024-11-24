@@ -185,7 +185,12 @@ internal object RagiumContentRegister {
 
     @JvmStatic
     private fun initBlocks() {
+        registerBlock("mutated_soil", RagiumBlocks.MUTATED_SOIL)
         registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
+        registerBlockItem(
+            RagiumBlocks.MUTATED_SOIL,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK)),
+        )
         registerBlockItem(
             RagiumBlocks.POROUS_NETHERRACK,
             itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK)),
@@ -353,6 +358,7 @@ internal object RagiumContentRegister {
         registerItem("uranium_fuel", RagiumItems.URANIUM_FUEL)
         registerItem("yellow_cake", RagiumItems.YELLOW_CAKE)
         registerItem("yellow_cake_piece", RagiumItems.YELLOW_CAKE_PIECE)
+        registerItem("nuclear_waste", RagiumItems.NUCLEAR_WASTE)
 
         registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
     }

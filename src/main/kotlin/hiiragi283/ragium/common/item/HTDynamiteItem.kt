@@ -21,6 +21,7 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Position
 import net.minecraft.world.World
@@ -79,18 +80,18 @@ class HTDynamiteItem(val action: HTDynamiteEntity.Action, settings: Settings) : 
             )
         }
 
-        init {
-            check(power in (0f..16f)) { "Invalid explosion power; $power (allowed range is 0f ~ 16f)" }
-        }
-
         private val sourceType: World.ExplosionSourceType = when (canDestroy) {
             true -> World.ExplosionSourceType.TNT
             false -> World.ExplosionSourceType.NONE
         }
 
+        fun createExplosion(world: World, pos: BlockPos) {
+            createExplosion(world, null, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
+        }
+
         fun createExplosion(
             world: World,
-            entity: Entity,
+            entity: Entity?,
             x: Double,
             y: Double,
             z: Double,

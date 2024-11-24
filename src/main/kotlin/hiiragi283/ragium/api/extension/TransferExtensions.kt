@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.fluid.Fluid
@@ -55,6 +56,11 @@ val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
     get() = amount == capacity
 
 fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? = if (slot in 0..slotCount) getSlot(slot) else null
+
+fun <T : TransferVariant<*>> SingleVariantStorage<T>.copyTo(other: SingleVariantStorage<T>) {
+    other.variant = this.resource
+    other.amount = this.amount
+}
 
 //    TransferVariant    //
 

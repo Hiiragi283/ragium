@@ -24,10 +24,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.machine.consume.*
-import hiiragi283.ragium.common.machine.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.generator.HTSimpleGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.generator.HTSteamGeneratorBlockEntity
-import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.machine.generator.*
 import hiiragi283.ragium.common.machine.process.*
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -88,6 +85,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
             set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/generator"))
+        }
+        helper.modify(RagiumMachineKeys.NUCLEAR_REACTOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTNuclearReactorBlockEntity))
         }
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }

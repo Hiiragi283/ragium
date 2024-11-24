@@ -63,6 +63,9 @@ fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): B
 
 fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 
+val ItemStack.restDamage: Int
+    get() = maxDamage - damage
+
 //    ItemUsageContext    //
 
 val ItemUsageContext.blockState: BlockState

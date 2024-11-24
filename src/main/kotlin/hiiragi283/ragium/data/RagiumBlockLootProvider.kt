@@ -40,6 +40,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
     override fun generate() {
+        addDrop(RagiumBlocks.MUTATED_SOIL)
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
         addDrop(RagiumBlocks.ASPHALT)

@@ -84,6 +84,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "This cake is DIE.")
             // Blocks
+            builder.add(RagiumBlocks.MUTATED_SOIL, "Mutated Soil")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
             builder.add(RagiumBlocks.ASPHALT, "Asphalt")
@@ -200,6 +201,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.ITEM_FILTER, "Item Filter")
             builder.add(RagiumItems.LASER_EMITTER, "Laser Emitter")
             builder.add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
+            builder.add(RagiumItems.NUCLEAR_WASTE, "Nuclear Waste")
             builder.add(RagiumItems.PLASTIC_PLATE, "Plastic Plate")
             builder.add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "Processor Socket")
@@ -283,6 +285,11 @@ object RagiumLangProviders {
                 RagiumMachineKeys.COMBUSTION_GENERATOR,
                 "Combustion Generator",
                 "Generate energy from liquid fuels",
+            )
+            builder.add(
+                RagiumMachineKeys.NUCLEAR_REACTOR,
+                "Nuclear Reactor",
+                "Generate energy from radioactive fuels",
             )
             builder.add(
                 RagiumMachineKeys.SOLAR_PANEL,
@@ -422,6 +429,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "つばさレストラン名物「デスケーキ」")
             // Blocks
+            builder.add(RagiumBlocks.MUTATED_SOIL, "変異した土壌")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
             builder.add(RagiumBlocks.ASPHALT, "アスファルト")
@@ -538,6 +546,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.ITEM_FILTER, "アイテムフィルタ")
             builder.add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
             builder.add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
+            builder.add(RagiumItems.NUCLEAR_WASTE, "核廃棄物")
             builder.add(RagiumItems.PLASTIC_PLATE, "プラスチック板")
             builder.add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
             builder.add(RagiumItems.PROCESSOR_SOCKET, "プロセッサソケット")
@@ -607,6 +616,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "岩石を生成する")
 
             builder.add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
+            builder.add(RagiumMachineKeys.NUCLEAR_REACTOR, "原子炉", "放射性燃料から発電する")
             builder.add(RagiumMachineKeys.SOLAR_PANEL, "太陽光発電機", "日中に発電する")
             builder.add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と下部の熱源から発電する")
             builder.add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")

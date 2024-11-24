@@ -11,11 +11,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
 
 class HTStorageBuilder(val size: Int) {
-    companion object {
-        @JvmField
-        val ACCEPT_ALL: (Int, ItemStack) -> Boolean = { _: Int, _: ItemStack -> true }
-    }
-
     val sizeRange: IntRange = (0 until size)
 
     val ioMapper: (Int) -> HTStorageIO
@@ -25,7 +20,9 @@ class HTStorageBuilder(val size: Int) {
     val sideMapper: (Direction) -> IntArray = { sides[it]?.toIntArray() ?: intArrayOf() }
     private val sides: MutableMap<Direction, MutableList<Int>> = mutableMapOf()
 
-    var slotFilter: (Int, ItemStack) -> Boolean = ACCEPT_ALL
+    var stackFilter: (Int, ItemStack) -> Boolean = { _: Int, _: ItemStack -> true }
+        private set
+    var fluidFilter: (Int, FluidVariant) -> Boolean = { _: Int, _: FluidVariant -> true }
         private set
 
     operator fun set(index: Int, type: HTStorageIO, sideType: HTStorageSide): HTStorageBuilder = apply {
@@ -41,8 +38,12 @@ class HTStorageBuilder(val size: Int) {
         }
     }
 
-    fun filter(filter: (Int, ItemStack) -> Boolean): HTStorageBuilder = apply {
-        this.slotFilter = filter
+    fun stackFilter(filter: (Int, ItemStack) -> Boolean): HTStorageBuilder = apply {
+        this.stackFilter = filter
+    }
+
+    fun fluidFilter(filter: (Int, FluidVariant) -> Boolean): HTStorageBuilder = apply {
+        this.fluidFilter = filter
     }
 
     fun <T : Any> build(builder: (HTStorageBuilder) -> T): T = builder(this)
@@ -65,14 +66,14 @@ class HTStorageBuilder(val size: Int) {
         size: Int,
         private val ioMapper: (Int) -> HTStorageIO,
         private val slotsMapper: (Direction) -> IntArray,
-        private val slotFilter: (Int, ItemStack) -> Boolean = ACCEPT_ALL,
+        private val slotFilter: (Int, ItemStack) -> Boolean = { _: Int, _: ItemStack -> true },
     ) : SimpleInventory(size),
         SidedInventory {
         constructor(builder: HTStorageBuilder) : this(
             builder.size,
             builder.ioMapper,
             builder.sideMapper,
-            builder.slotFilter,
+            builder.stackFilter,
         )
 
         //    Inventory    //
