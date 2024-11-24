@@ -77,11 +77,12 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
         }
 
         val isEmpty: Boolean
-            get() = entryList.storage.map(
-                { false },
-                { it.isEmpty() || it.any { entry: RegistryEntry<Item> -> entry.isOf(Items.AIR) } },
-            ) ||
-                count <= 0
+            get() =
+                entryList.storage.map(
+                    { false },
+                    { it.isEmpty() || it.any { entry: RegistryEntry<Item> -> entry.isOf(Items.AIR) } },
+                ) ||
+                    count <= 0
 
         fun <T : Any> map(transform: (RegistryEntry<Item>, Int) -> T): List<T> = entryList.map { transform(it, count) }
 

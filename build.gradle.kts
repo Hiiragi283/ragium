@@ -79,8 +79,8 @@ loom {
             vmArg("-Dfabric-api.datagen.modid=ragium")
             runDir("build/datagen")
             source(sourceSets.getByName("client"))
-        }*/
-        /*create("test") {
+        }
+        create("test") {
             inherit(getByName("client"))
             name = "Game Test Client"
             vmArg("-Dfabric-api.gametest")
@@ -140,8 +140,7 @@ java {
 ktlint {
     version = "1.3.1"
     reporters {
-        reporter(ReporterType.HTML)
-        reporter(ReporterType.SARIF)
+        reporter(ReporterType.JSON)
     }
     filter {
         exclude("**/generated/**")

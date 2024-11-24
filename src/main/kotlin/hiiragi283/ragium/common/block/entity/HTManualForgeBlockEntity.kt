@@ -61,16 +61,17 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
             return
         }
         val invStack: ItemStack = inventory.getStack(0)
-        val recipe: HTMachineRecipe = recipeCache
-            .getFirstMatch(
-                HTMachineInput.create(
-                    RagiumMachineKeys.METAL_FORMER,
-                    HTMachineTier.PRIMITIVE,
-                ) { add(invStack) },
-                world,
-            ).result()
-            .getOrNull()
-            ?: return
+        val recipe: HTMachineRecipe =
+            recipeCache
+                .getFirstMatch(
+                    HTMachineInput.create(
+                        RagiumMachineKeys.METAL_FORMER,
+                        HTMachineTier.PRIMITIVE,
+                    ) { add(invStack) },
+                    world,
+                ).result()
+                .getOrNull()
+                ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
         invStack.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)

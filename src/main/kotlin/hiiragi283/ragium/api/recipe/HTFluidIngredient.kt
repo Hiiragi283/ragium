@@ -59,11 +59,12 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
     }
 
     val isEmpty: Boolean
-        get() = entryList.storage.map(
-            { false },
-            { it.isEmpty() || it.any { entry: RegistryEntry<Fluid> -> entry.isOf(Fluids.EMPTY) } },
-        ) ||
-            amount <= 0
+        get() =
+            entryList.storage.map(
+                { false },
+                { it.isEmpty() || it.any { entry: RegistryEntry<Fluid> -> entry.isOf(Fluids.EMPTY) } },
+            ) ||
+                amount <= 0
 
     fun <T : Any> map(transform: (RegistryEntry<Fluid>, Long) -> T): List<T> = entryList.map { transform(it, amount) }
 
@@ -87,11 +88,12 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
 
     fun onConsume(storage: SingleSlotStorage<FluidVariant>) {
         useTransaction { transaction: Transaction ->
-            val foundVariant: FluidVariant = StorageUtil.findExtractableResource(
-                storage,
-                { test(it.fluid, storage.amount) },
-                transaction,
-            ) ?: return
+            val foundVariant: FluidVariant =
+                StorageUtil.findExtractableResource(
+                    storage,
+                    { test(it.fluid, storage.amount) },
+                    transaction,
+                ) ?: return
             if (test(foundVariant.fluid, amount)) {
                 val extracted: Long = storage.extract(foundVariant, amount, transaction)
                 if (extracted == amount) {

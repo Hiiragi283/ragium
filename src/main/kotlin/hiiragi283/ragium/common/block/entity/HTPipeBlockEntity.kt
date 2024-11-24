@@ -86,9 +86,10 @@ class HTPipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val itemStorage: SingleItemStorage = object : SingleItemStorage() {
-        override fun getCapacity(variant: ItemVariant): Long = 64
-    }
+    private val itemStorage: SingleItemStorage =
+        object : SingleItemStorage() {
+            override fun getCapacity(variant: ItemVariant): Long = 64
+        }
 
     private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
 

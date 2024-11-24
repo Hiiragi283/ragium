@@ -57,16 +57,17 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val recipe: HTMachineRecipe = recipeCache
-            .getFirstMatch(
-                HTMachineInput.create(
-                    RagiumMachineKeys.GRINDER,
-                    HTMachineTier.PRIMITIVE,
-                ) { add(inventory.getStack(0)) },
-                world,
-            ).result()
-            ?.getOrNull()
-            ?: return
+        val recipe: HTMachineRecipe =
+            recipeCache
+                .getFirstMatch(
+                    HTMachineInput.create(
+                        RagiumMachineKeys.GRINDER,
+                        HTMachineTier.PRIMITIVE,
+                    ) { add(inventory.getStack(0)) },
+                    world,
+                ).result()
+                ?.getOrNull()
+                ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         inventory.getStack(0).decrement(recipe.itemInputs[0].count)
         RagiumMachineKeys.GRINDER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {

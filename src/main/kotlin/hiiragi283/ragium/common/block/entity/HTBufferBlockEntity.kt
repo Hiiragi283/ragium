@@ -26,13 +26,15 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.BUFFER, pos, state),
     NamedScreenHandlerFactory,
     SidedStorageBlockEntity {
-    private val inventory: SidedInventory = HTStorageBuilder(9)
-        .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-        .buildSided()
+    private val inventory: SidedInventory =
+        HTStorageBuilder(9)
+            .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
+            .buildSided()
 
-    private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(9)
-        .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-        .buildMachineFluidStorage()
+    private val fluidStorage: HTMachineFluidStorage =
+        HTStorageBuilder(9)
+            .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
+            .buildMachineFluidStorage()
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

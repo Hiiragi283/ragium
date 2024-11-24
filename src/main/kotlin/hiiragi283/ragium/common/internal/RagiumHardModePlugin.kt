@@ -389,16 +389,18 @@ object RagiumHardModePlugin : RagiumPlugin {
     }
 
     private fun craftCircuits(exporter: RecipeExporter) {
-        val boardMap: Map<HTMachineTier, TagKey<Item>> = mapOf(
-            HTMachineTier.PRIMITIVE to RagiumItemTags.SILICON,
-            HTMachineTier.BASIC to RagiumItemTags.SILICON_PLATES,
-            HTMachineTier.ADVANCED to RagiumItemTags.REFINED_SILICON_PLATES,
-        )
-        val circuitMap: Map<HTMachineTier, TagKey<Item>> = mapOf(
-            HTMachineTier.PRIMITIVE to ConventionalItemTags.REDSTONE_DUSTS,
-            HTMachineTier.BASIC to ConventionalItemTags.GLOWSTONE_DUSTS,
-            HTMachineTier.ADVANCED to RagiumContents.Dusts.RAGI_CRYSTAL.prefixedTagKey,
-        )
+        val boardMap: Map<HTMachineTier, TagKey<Item>> =
+            mapOf(
+                HTMachineTier.PRIMITIVE to RagiumItemTags.SILICON,
+                HTMachineTier.BASIC to RagiumItemTags.SILICON_PLATES,
+                HTMachineTier.ADVANCED to RagiumItemTags.REFINED_SILICON_PLATES,
+            )
+        val circuitMap: Map<HTMachineTier, TagKey<Item>> =
+            mapOf(
+                HTMachineTier.PRIMITIVE to ConventionalItemTags.REDSTONE_DUSTS,
+                HTMachineTier.BASIC to ConventionalItemTags.GLOWSTONE_DUSTS,
+                HTMachineTier.ADVANCED to RagiumContents.Dusts.RAGI_CRYSTAL.prefixedTagKey,
+            )
 
         RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
             val tier: HTMachineTier = board.tier
@@ -485,11 +487,12 @@ object RagiumHardModePlugin : RagiumPlugin {
 
     private fun craftCasing(exporter: RecipeExporter) {
         RagiumContents.Casings.entries.forEach { casing ->
-            val stone: Item = when (casing) {
-                RagiumContents.Casings.PRIMITIVE -> Items.STONE
-                RagiumContents.Casings.BASIC -> Items.QUARTZ_BLOCK
-                RagiumContents.Casings.ADVANCED -> Items.POLISHED_DEEPSLATE
-            }
+            val stone: Item =
+                when (casing) {
+                    RagiumContents.Casings.PRIMITIVE -> Items.STONE
+                    RagiumContents.Casings.BASIC -> Items.QUARTZ_BLOCK
+                    RagiumContents.Casings.ADVANCED -> Items.POLISHED_DEEPSLATE
+                }
             HTShapedRecipeJsonBuilder
                 .create(casing, 3)
                 .patterns(

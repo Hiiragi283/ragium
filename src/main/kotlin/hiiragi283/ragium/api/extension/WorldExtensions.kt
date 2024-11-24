@@ -121,6 +121,7 @@ val ServerWorld.energyNetwork: HTEnergyNetwork
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
 
 val World.energyNetwork: DataResult<HTEnergyNetwork>
-    get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
-        ?.let(DataResult<HTEnergyNetwork>::success)
-        ?: DataResult.error { "Failed to find energy network!" }
+    get() =
+        getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
+            ?.let(DataResult<HTEnergyNetwork>::success)
+            ?: DataResult.error { "Failed to find energy network!" }

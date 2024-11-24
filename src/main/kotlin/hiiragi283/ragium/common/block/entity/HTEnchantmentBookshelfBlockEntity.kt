@@ -30,10 +30,11 @@ class HTEnchantmentBookshelfBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, pos, state) {
     companion object {
         @JvmField
-        val CODEC: Codec<Map<RegistryEntry<Enchantment>, Long>> = mappedCodecOf(
-            Enchantment.ENTRY_CODEC.fieldOf("enchantment"),
-            longRangeCodec(0, Long.MAX_VALUE).fieldOf("value"),
-        )
+        val CODEC: Codec<Map<RegistryEntry<Enchantment>, Long>> =
+            mappedCodecOf(
+                Enchantment.ENTRY_CODEC.fieldOf("enchantment"),
+                longRangeCodec(0, Long.MAX_VALUE).fieldOf("value"),
+            )
     }
 
     private val enchantMap: MutableMap<RegistryEntry<Enchantment>, Long> = mutableMapOf()
