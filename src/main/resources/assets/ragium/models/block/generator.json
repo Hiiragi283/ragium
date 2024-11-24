@@ -1,10 +1,10 @@
 {
 	"credit": "Made by Hiiragi Russell Tsubasa",
 	"textures": {
-		"particle": "block/white_concrete",
-		"top": "block/white_concrete",
+		"particle": "block/red_concrete",
+		"top": "block/red_concrete",
 		"all": "ragium:block/generator",
-		"frame": "block/smooth_stone",
+		"frame": "block/gray_concrete",
 		"side": "ragium:block/generator_side"
 	},
 	"elements": [

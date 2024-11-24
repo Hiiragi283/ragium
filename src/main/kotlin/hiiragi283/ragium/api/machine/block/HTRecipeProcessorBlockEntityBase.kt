@@ -73,7 +73,6 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
         HTRecipeProcessorBlockEntityBase(type, pos, state),
         HTMultiblockController {
         final override var showPreview: Boolean = false
-        final override var isValid: Boolean = false
 
         override fun onSucceeded(
             state: BlockState,

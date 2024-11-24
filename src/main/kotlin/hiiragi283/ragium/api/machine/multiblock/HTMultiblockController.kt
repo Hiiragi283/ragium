@@ -13,7 +13,6 @@ import net.minecraft.world.World
 
 interface HTMultiblockController {
     var showPreview: Boolean
-    var isValid: Boolean
 
     fun buildMultiblock(builder: HTMultiblockBuilder)
 
@@ -25,7 +24,7 @@ interface HTMultiblockController {
         controller: HTMultiblockController?,
     ): ActionResult {
         if (controller == null) return ActionResult.PASS
-        if (player.isSneaking && !isValid) {
+        if (player.isSneaking) {
             controller.showPreview = !controller.showPreview
             return ActionResult.success(world.isClient)
         }
@@ -53,7 +52,7 @@ interface HTMultiblockController {
         val validator = HTMultiblockValidator(world, pos, player)
         beforeValidation(state, world, pos, player)
         buildMultiblock(validator.rotate(direction))
-        return validator.isValid.apply { isValid = this }
+        return validator.isValid
     }
 
     fun beforeValidation(

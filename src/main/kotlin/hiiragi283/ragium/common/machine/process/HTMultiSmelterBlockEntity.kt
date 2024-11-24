@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor
-import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -43,12 +43,11 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
     //    HTMultiblockController    //
 
     override var showPreview: Boolean = false
-    override var isValid: Boolean = false
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.Simple(tier.getCasing()))

@@ -31,7 +31,6 @@ import hiiragi283.ragium.common.machine.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.machine.process.*
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.minecraft.block.Block
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
@@ -41,7 +40,6 @@ import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -63,7 +61,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
     override fun setupMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
         // consumers
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
-            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
+            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.DOWN }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
@@ -89,13 +87,15 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
+            set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/generator"))
         }
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
+            set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity))
-            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
-            set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/solar_generator"))
-            set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
+            // set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
+            // set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/solar_generator"))
+            // set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
         }
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSteamGeneratorBlockEntity))
@@ -175,7 +175,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL)
         }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
-            set(HTMachinePropertyKeys.FRONT_TEX) { Identifier.of("block/stonecutter_saw") }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
             set(HTMachinePropertyKeys.TOOLTIP_BUILDER, HTMachineTooltipAppender.DEFAULT_PROCESSOR)

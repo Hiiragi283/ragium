@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:block/solar_front"
+    "layer0": "ragium:item/solar_panel"
   }
 }

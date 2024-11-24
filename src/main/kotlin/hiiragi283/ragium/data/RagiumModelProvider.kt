@@ -229,29 +229,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
-        /*RagiumAPI.getInstance().machineRegistry.blocks.forEach { block: HTMachineBlock ->
-            val modelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID)
-            val activeModelId: Identifier = block.key.entry.getOrDefault(HTMachinePropertyKeys.ACTIVE_MODEL_ID)
-            val stateMap: BlockStateVariantMap = BlockStateVariantMap
-                .create(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
-                .register { direction: Direction, isActive: Boolean ->
-                    val variant: BlockStateVariant = BlockStateVariant.create()
-                    variant.put(
-                        VariantSettings.MODEL,
-                        when (isActive) {
-                            true -> activeModelId
-                            false -> modelId
-                        },
-                    )
-                    variant.rot(direction)
-                }
-            registerSupplier(block, VariantsBlockStateSupplier.create(block).coordinate(stateMap))
-            RagiumModels.model(modelId).upload(
-                ModelIds.getItemModelId(block.asItem()),
-                TextureMap(),
-                generator.modelCollector,
-            )
-        }*/
         // custom
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
@@ -313,18 +290,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             remove(RagiumItems.EMPTY_FLUID_CUBE)
             remove(RagiumItems.FILLED_FLUID_CUBE)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
-            remove(RagiumItems.SOLAR_PANEL)
         }.map(ItemConvertible::asItem).forEach(::register)
 
         registerLayered(
             RagiumItems.RAGI_ALLOY_COMPOUND.asItem(),
             TextureMap.getId(Items.COPPER_INGOT),
             TextureMap.getId(RagiumItems.RAGI_ALLOY_COMPOUND.asItem()),
-        )
-        register(
-            RagiumItems.SOLAR_PANEL.asItem(),
-            Models.GENERATED,
-            TextureMap.layer0(RagiumAPI.id("block/solar_front")),
         )
         registerLayered(
             RagiumItems.CHOCOLATE_APPLE.asItem(),

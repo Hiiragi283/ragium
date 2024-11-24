@@ -65,7 +65,6 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockController    //
 
     override var showPreview: Boolean = false
-    override var isValid: Boolean = false
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         // drill

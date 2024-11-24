@@ -21,7 +21,7 @@ object HTBedrockMinerBlockEntityRenderer : BlockEntityRenderer<HTBedrockMinerBlo
     ) {
         val world: World = entity.world ?: return
         // render beam
-        if (entity.isValid) {
+        if (entity.isActive) {
             renderBeam(matrices, vertexConsumers, tickDelta, world)
         }
         // render multiblock
