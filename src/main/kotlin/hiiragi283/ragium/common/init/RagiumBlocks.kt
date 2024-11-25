@@ -22,11 +22,11 @@ object RagiumBlocks {
     ) { world: World, pos: BlockPos ->
         world.getFluidState(pos).isIn(FluidTags.LAVA)
     }
-    
+
     @JvmField
     val NATURAL: List<Block> = listOf(
         MUTATED_SOIL,
-        POROUS_NETHERRACK
+        POROUS_NETHERRACK,
     )
 
     //    Buildings    //
@@ -57,7 +57,7 @@ object RagiumBlocks {
 
     @JvmField
     val GYPSUM_STAIRS = StairsBlock(GYPSUM.defaultState, blockSettings(GYPSUM))
-    
+
     @JvmField
     val BUILDINGS: List<Block> = listOf(
         ASPHALT,
@@ -70,7 +70,7 @@ object RagiumBlocks {
         GYPSUM_SLAB,
         GYPSUM_STAIRS,
     )
-    
+
     //    Foods    //
 
     @JvmField

@@ -73,7 +73,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         fun registerSlab(slabBlock: Block, fullBlock: Block) {
-            val textureMap: TextureMap = textureMap { 
+            val textureMap: TextureMap = textureMap {
                 put(TextureKey.SIDE, TextureMap.getId(fullBlock))
                 put(TextureKey.TOP, TextureMap.getId(fullBlock))
                 put(TextureKey.BOTTOM, TextureMap.getId(fullBlock))

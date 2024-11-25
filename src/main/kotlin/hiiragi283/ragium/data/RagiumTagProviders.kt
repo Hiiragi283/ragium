@@ -61,7 +61,7 @@ object RagiumTagProviders {
             add(BlockTags.STAIRS, RagiumBlocks.ASPHALT_STAIRS)
             add(BlockTags.STAIRS, RagiumBlocks.LINED_ASPHALT_STAIRS)
             add(BlockTags.STAIRS, RagiumBlocks.GYPSUM_STAIRS)
-            
+
             RagiumBlocks.BUILDINGS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
             RagiumBlocks.MECHANICS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }

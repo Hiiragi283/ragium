@@ -177,13 +177,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerSlab(exporter, RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
         registerStair(exporter, RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
         // lined asphalt
-        HTShapedRecipeJsonBuilder.create(RagiumBlocks.LINED_ASPHALT, 6)
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.LINED_ASPHALT, 6)
             .patterns(
                 "ABA",
                 "ABA",
-                "ABA"
-            )
-            .input('A', RagiumBlocks.ASPHALT)
+                "ABA",
+            ).input('A', RagiumBlocks.ASPHALT)
             .input('B', ConventionalItemTags.WHITE_DYES)
             .unlockedBy(RagiumBlocks.ASPHALT)
             .offerTo(exporter)

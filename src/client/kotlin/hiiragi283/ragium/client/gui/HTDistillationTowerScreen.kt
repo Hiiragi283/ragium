@@ -19,7 +19,7 @@ class HTDistillationTowerScreen(handler: HTDistillationTowerScreenHandler, inven
 
     override fun drawMouseoverTooltip(context: DrawContext, x: Int, y: Int) {
         super.drawMouseoverTooltip(context, x, y)
-        drawFluidTooltip(context, fluidCache[0], amountCache[0], 2, 2, x, y)
+        drawFluidTooltip(context, fluidCache[0], amountCache[0], 3, 2, x, y)
         drawFluidTooltip(context, fluidCache[1], amountCache[1], 5, 2, x, y)
         drawFluidTooltip(context, fluidCache[2], amountCache[2], 6, 2, x, y)
         drawFluidTooltip(context, fluidCache[3], amountCache[3], 7, 2, x, y)
@@ -32,7 +32,7 @@ class HTDistillationTowerScreen(handler: HTDistillationTowerScreenHandler, inven
         mouseY: Int,
     ) {
         super.drawBackground(context, delta, mouseX, mouseY)
-        drawFluid(context, fluidCache[0], 2, 2)
+        drawFluid(context, fluidCache[0], 3, 2)
         drawFluid(context, fluidCache[1], 5, 2)
         drawFluid(context, fluidCache[2], 6, 2)
         drawFluid(context, fluidCache[3], 7, 2)
