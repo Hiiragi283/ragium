@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.block.HTDrumBlock
 import hiiragi283.ragium.common.block.HTExporterBlock
 import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.item.HTRopeBlockItem
 import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
@@ -199,21 +200,33 @@ internal object RagiumContentRegister {
         registerBlock("asphalt", RagiumBlocks.ASPHALT)
         registerBlock("asphalt_slab", RagiumBlocks.ASPHALT_SLAB)
         registerBlock("asphalt_stairs", RagiumBlocks.ASPHALT_STAIRS)
-        registerBlock("lined_asphalt", RagiumBlocks.LINED_ASPHALT)
-        registerBlock("lined_asphalt_slab", RagiumBlocks.LINED_ASPHALT_SLAB)
-        registerBlock("lined_asphalt_stairs", RagiumBlocks.LINED_ASPHALT_STAIRS)
+        // registerBlock("lined_asphalt", RagiumBlocks.LINED_ASPHALT)
+        // registerBlock("lined_asphalt_slab", RagiumBlocks.LINED_ASPHALT_SLAB)
+        // registerBlock("lined_asphalt_stairs", RagiumBlocks.LINED_ASPHALT_STAIRS)
+        registerBlock("polished_asphalt", RagiumBlocks.POLISHED_ASPHALT)
+        registerBlock("polished_asphalt_slab", RagiumBlocks.POLISHED_ASPHALT_SLAB)
+        registerBlock("polished_asphalt_stairs", RagiumBlocks.POLISHED_ASPHALT_STAIRS)
         registerBlock("gypsum", RagiumBlocks.GYPSUM)
         registerBlock("gypsum_slab", RagiumBlocks.GYPSUM_SLAB)
         registerBlock("gypsum_stairs", RagiumBlocks.GYPSUM_STAIRS)
+        registerBlock("polished_gypsum", RagiumBlocks.POLISHED_GYPSUM)
+        registerBlock("polished_gypsum_slab", RagiumBlocks.POLISHED_GYPSUM_SLAB)
+        registerBlock("polished_gypsum_stairs", RagiumBlocks.POLISHED_GYPSUM_STAIRS)
         registerBlockItem(RagiumBlocks.ASPHALT)
         registerBlockItem(RagiumBlocks.ASPHALT_SLAB)
         registerBlockItem(RagiumBlocks.ASPHALT_STAIRS)
-        registerBlockItem(RagiumBlocks.LINED_ASPHALT)
-        registerBlockItem(RagiumBlocks.LINED_ASPHALT_SLAB)
-        registerBlockItem(RagiumBlocks.LINED_ASPHALT_STAIRS)
+        // registerBlockItem(RagiumBlocks.LINED_ASPHALT)
+        // registerBlockItem(RagiumBlocks.LINED_ASPHALT_SLAB)
+        // registerBlockItem(RagiumBlocks.LINED_ASPHALT_STAIRS)
+        registerBlockItem(RagiumBlocks.POLISHED_ASPHALT)
+        registerBlockItem(RagiumBlocks.POLISHED_ASPHALT_SLAB)
+        registerBlockItem(RagiumBlocks.POLISHED_ASPHALT_STAIRS)
         registerBlockItem(RagiumBlocks.GYPSUM)
         registerBlockItem(RagiumBlocks.GYPSUM_SLAB)
         registerBlockItem(RagiumBlocks.GYPSUM_STAIRS)
+        registerBlockItem(RagiumBlocks.POLISHED_GYPSUM)
+        registerBlockItem(RagiumBlocks.POLISHED_GYPSUM_SLAB)
+        registerBlockItem(RagiumBlocks.POLISHED_GYPSUM_STAIRS)
 
         registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
         registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -272,6 +285,7 @@ internal object RagiumContentRegister {
         registerBlock("enchantment_bookshelf", RagiumBlocks.ENCHANTMENT_BOOKSHELF)
         registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
         registerBlock("shaft", RagiumBlocks.SHAFT)
+        registerBlock("rope", RagiumBlocks.ROPE)
         registerBlock("infesting", RagiumBlocks.INFESTING)
         registerBlockItem(
             RagiumBlocks.BACKPACK_INTERFACE,
@@ -286,6 +300,11 @@ internal object RagiumContentRegister {
             itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
         )
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
+        registerBlockItem(
+            RagiumBlocks.ROPE,
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ROPE)),
+            ::HTRopeBlockItem,
+        )
         registerBlockItem(RagiumBlocks.SHAFT)
     }
 
@@ -313,7 +332,6 @@ internal object RagiumContentRegister {
         registerItem("anvil_dynamite", RagiumItems.ANVIL_DYNAMITE)
         registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
         registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)
-        registerItem("rope_dynamite", RagiumItems.ROPE_DYNAMITE)
 
         registerItem("backpack", RagiumItems.BACKPACK)
         registerItem("empty_fluid_cube", RagiumItems.EMPTY_FLUID_CUBE)

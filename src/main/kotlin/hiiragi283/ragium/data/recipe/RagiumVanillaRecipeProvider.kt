@@ -1,11 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTStonecuttingRecipeJsonBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -177,7 +173,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerSlab(exporter, RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
         registerStair(exporter, RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
         // lined asphalt
-        HTShapedRecipeJsonBuilder
+        /* HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.LINED_ASPHALT, 6)
             .patterns(
                 "ABA",
@@ -188,10 +184,28 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumBlocks.ASPHALT)
             .offerTo(exporter)
         registerSlab(exporter, RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
-        registerStair(exporter, RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT)
+        registerStair(exporter, RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT) */
+        // polished asphalt
+        HTStonecuttingRecipeJsonBuilder.register(
+            exporter,
+            RagiumBlocks.ASPHALT,
+            RagiumBlocks.POLISHED_ASPHALT,
+            category = RecipeCategory.BUILDING_BLOCKS,
+        )
+        registerSlab(exporter, RagiumBlocks.POLISHED_ASPHALT_SLAB, RagiumBlocks.POLISHED_ASPHALT)
+        registerStair(exporter, RagiumBlocks.POLISHED_ASPHALT_STAIRS, RagiumBlocks.POLISHED_ASPHALT)
         // gypsum
         registerSlab(exporter, RagiumBlocks.GYPSUM_SLAB, RagiumBlocks.GYPSUM)
         registerStair(exporter, RagiumBlocks.GYPSUM_STAIRS, RagiumBlocks.GYPSUM)
+        // polished gypsum
+        HTStonecuttingRecipeJsonBuilder.register(
+            exporter,
+            RagiumBlocks.GYPSUM,
+            RagiumBlocks.POLISHED_GYPSUM,
+            category = RecipeCategory.BUILDING_BLOCKS,
+        )
+        registerSlab(exporter, RagiumBlocks.POLISHED_GYPSUM_SLAB, RagiumBlocks.POLISHED_GYPSUM)
+        registerStair(exporter, RagiumBlocks.POLISHED_GYPSUM_STAIRS, RagiumBlocks.POLISHED_GYPSUM)
     }
 
     private fun registerSlab(
@@ -277,6 +291,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " A ",
             ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
             .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.ROPE, 8)
+            .patterns(
+                "A",
+                "A",
+                "A",
+            ).input('A', ItemTags.WOOL)
+            .unlockedBy(ItemTags.WOOL)
             .offerTo(exporter)
         // dynamites
         HTShapelessRecipeJsonBuilder

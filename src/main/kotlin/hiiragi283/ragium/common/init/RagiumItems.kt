@@ -257,21 +257,6 @@ object RagiumItems {
     val RAGI_WRENCH: Item = Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.RAGI_WRENCH)))
 
     @JvmField
-    val ROPE_DYNAMITE: Item = HTDynamiteItem(
-        { entity: HTDynamiteEntity, result: HitResult ->
-            val world: World = entity.world
-            if (result is BlockHitResult) {
-                var pos: BlockPos = result.blockPos.offset(result.side)
-                while (world.isAir(pos)) {
-                    world.setBlockState(pos, Blocks.WEEPING_VINES.defaultState)
-                    pos = pos.down()
-                }
-            }
-        },
-        itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
-    )
-
-    @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
@@ -305,7 +290,6 @@ object RagiumItems {
         ANVIL_DYNAMITE,
         BEDROCK_DYNAMITE,
         FLATTENING_DYNAMITE,
-        ROPE_DYNAMITE,
         // non-damageable tool
         BACKPACK,
         EMPTY_FLUID_CUBE,

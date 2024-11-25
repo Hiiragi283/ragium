@@ -15,6 +15,7 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
@@ -142,6 +143,28 @@ fun canTeleport(entity: Entity, world: World): Boolean = if (entity.world.regist
     }
 } else {
     entity.canUsePortals(true)
+}
+
+fun throwEntity(world: World, player: PlayerEntity, entityBuilder: (World, PlayerEntity) -> ProjectileEntity?): Boolean {
+    world.playSound(
+        null,
+        player.x,
+        player.y,
+        player.z,
+        SoundEvents.ENTITY_SNOWBALL_THROW,
+        SoundCategory.PLAYERS,
+        0.5f,
+        0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f),
+    )
+    if (!world.isClient) {
+        val entity: ProjectileEntity = entityBuilder(world, player) ?: return false
+        entity.apply {
+            setVelocity(player, player.pitch, player.yaw, 0.0f, 1.5f, 1.0f)
+            world.spawnEntity(this)
+        }
+        return true
+    }
+    return false
 }
 
 fun LivingEntity.getStackInActiveHand(): ItemStack = getStackInHand(activeHand)

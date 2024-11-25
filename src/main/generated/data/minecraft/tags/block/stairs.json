@@ -2,6 +2,7 @@
   "values": [
     "ragium:asphalt_stairs",
     "ragium:gypsum_stairs",
-    "ragium:lined_asphalt_stairs"
+    "ragium:polished_asphalt_stairs",
+    "ragium:polished_gypsum_slab"
   ]
 }

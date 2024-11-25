@@ -122,13 +122,21 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSlab(RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
         registerStair(RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
 
-        registerSimple(RagiumBlocks.LINED_ASPHALT)
-        registerSlab(RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
-        registerStair(RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT)
+        // registerSimple(RagiumBlocks.LINED_ASPHALT)
+        // registerSlab(RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
+        // registerStair(RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT)
+
+        registerSimple(RagiumBlocks.POLISHED_ASPHALT)
+        registerSlab(RagiumBlocks.POLISHED_ASPHALT_SLAB, RagiumBlocks.POLISHED_ASPHALT)
+        registerStair(RagiumBlocks.POLISHED_ASPHALT_STAIRS, RagiumBlocks.POLISHED_ASPHALT)
 
         registerSimple(RagiumBlocks.GYPSUM)
         registerSlab(RagiumBlocks.GYPSUM_SLAB, RagiumBlocks.GYPSUM)
         registerStair(RagiumBlocks.GYPSUM_STAIRS, RagiumBlocks.GYPSUM)
+
+        registerSimple(RagiumBlocks.POLISHED_GYPSUM)
+        registerSlab(RagiumBlocks.POLISHED_GYPSUM_SLAB, RagiumBlocks.POLISHED_GYPSUM)
+        registerStair(RagiumBlocks.POLISHED_GYPSUM_STAIRS, RagiumBlocks.POLISHED_GYPSUM)
 
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
@@ -164,6 +172,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // static
         registerStaticModel(RagiumBlocks.MANUAL_FORGE)
         registerStaticModel(RagiumBlocks.MANUAL_MIXER)
+        generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.ROPE)
+        registerStaticModel(RagiumBlocks.ROPE)
         registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
@@ -330,8 +340,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumItems.TOOLS)
-            remove(RagiumItems.BUJIN)
-            remove(RagiumItems.GIGANT_HAMMER)
             addAll(RagiumItems.ARMORS)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
@@ -339,6 +347,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumItems.INGREDIENTS)
             addAll(RagiumItems.MISC)
 
+            add(RagiumBlocks.ROPE)
+
+            remove(RagiumItems.BUJIN)
+            remove(RagiumItems.GIGANT_HAMMER)
             remove(RagiumItems.CHOCOLATE_APPLE)
             remove(RagiumItems.EMPTY_FLUID_CUBE)
             remove(RagiumItems.FILLED_FLUID_CUBE)

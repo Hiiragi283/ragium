@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ragium:polished_gypsum"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:polished_gypsum_stairs"
+  }
+}

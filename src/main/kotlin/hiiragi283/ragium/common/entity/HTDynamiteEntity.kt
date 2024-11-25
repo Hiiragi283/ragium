@@ -16,7 +16,11 @@ class HTDynamiteEntity : ThrownItemEntity {
 
     constructor(world: World, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.DYNAMITE, x, y, z, world)
 
-    var action: Action = Action { _: HTDynamiteEntity, _: HitResult -> }
+    private var action: Action = Action { _: HTDynamiteEntity, _: HitResult -> }
+
+    fun setAction(action: Action): HTDynamiteEntity = apply {
+        this.action = action
+    }
 
     override fun getDefaultItem(): Item = RagiumItems.DYNAMITE
 

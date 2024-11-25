@@ -39,15 +39,21 @@ object RagiumBlocks {
 
     @JvmField
     val ASPHALT_STAIRS = StairsBlock(ASPHALT.defaultState, blockSettings(ASPHALT))
+    
+    // val LINED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+    
+    // val LINED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(LINED_ASPHALT))
+    
+    // val LINED_ASPHALT_STAIRS = StairsBlock(LINED_ASPHALT.defaultState, blockSettings(LINED_ASPHALT))
 
     @JvmField
-    val LINED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+    val POLISHED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val LINED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(LINED_ASPHALT))
+    val POLISHED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(POLISHED_ASPHALT))
 
     @JvmField
-    val LINED_ASPHALT_STAIRS = StairsBlock(LINED_ASPHALT.defaultState, blockSettings(LINED_ASPHALT))
+    val POLISHED_ASPHALT_STAIRS = StairsBlock(POLISHED_ASPHALT.defaultState, blockSettings(POLISHED_ASPHALT))
 
     @JvmField
     val GYPSUM: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
@@ -59,16 +65,33 @@ object RagiumBlocks {
     val GYPSUM_STAIRS = StairsBlock(GYPSUM.defaultState, blockSettings(GYPSUM))
 
     @JvmField
+    val POLISHED_GYPSUM: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+
+    @JvmField
+    val POLISHED_GYPSUM_SLAB: Block = SlabBlock(blockSettings(POLISHED_GYPSUM))
+
+    @JvmField
+    val POLISHED_GYPSUM_STAIRS = StairsBlock(POLISHED_GYPSUM.defaultState, blockSettings(POLISHED_GYPSUM))
+
+    @JvmField
     val BUILDINGS: List<Block> = listOf(
+        // asphalt
         ASPHALT,
         ASPHALT_SLAB,
         ASPHALT_STAIRS,
-        LINED_ASPHALT,
-        LINED_ASPHALT_SLAB,
-        LINED_ASPHALT_STAIRS,
+        // LINED_ASPHALT,
+        // LINED_ASPHALT_SLAB,
+        // LINED_ASPHALT_STAIRS,
+        POLISHED_ASPHALT,
+        POLISHED_ASPHALT_SLAB,
+        POLISHED_ASPHALT_STAIRS,
+        // gypsum
         GYPSUM,
         GYPSUM_SLAB,
         GYPSUM_STAIRS,
+        POLISHED_GYPSUM,
+        POLISHED_GYPSUM_SLAB,
+        POLISHED_GYPSUM_STAIRS,
     )
 
     //    Foods    //
@@ -159,6 +182,9 @@ object RagiumBlocks {
     val ITEM_DISPLAY: Block = HTItemDisplayBlock
 
     @JvmField
+    val ROPE: Block = HTRopeBlock
+
+    @JvmField
     val SHAFT: Block = HTThinPillarBlock(blockSettings(Blocks.CHAIN))
 
     @JvmField
@@ -170,6 +196,7 @@ object RagiumBlocks {
         BUFFER,
         ENCHANTMENT_BOOKSHELF,
         ITEM_DISPLAY,
+        ROPE,
         SHAFT,
     )
 }

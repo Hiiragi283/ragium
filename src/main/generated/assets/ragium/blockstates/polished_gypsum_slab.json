@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/polished_gypsum_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/polished_gypsum"
+    },
+    "type=top": {
+      "model": "ragium:block/polished_gypsum_slab_top"
+    }
+  }
+}
