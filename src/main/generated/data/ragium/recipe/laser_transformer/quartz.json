@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:laser_transformer",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#c:glass_blocks/colorless"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:quartz"
+    }
+  ]
+}

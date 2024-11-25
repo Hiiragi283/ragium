@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:laser_transformer",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    {
+      "count": 64,
+      "items": "minecraft:blue_ice"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:heart_of_the_sea"
+    }
+  ]
+}

@@ -77,6 +77,15 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumItems.URANIUM_FUEL)
             .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
             .offerTo(exporter, RagiumItems.URANIUM_FUEL)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
+            .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
+            .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
+            .fluidInput(RagiumFluids.AQUA_REGIA)
+            .itemOutput(RagiumItems.PLUTONIUM_FUEL)
+            .offerTo(exporter, RagiumItems.PLUTONIUM_FUEL)
         // LED
         // processor
         HTMachineRecipeJsonBuilder
@@ -335,6 +344,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(Items.SAND)
             .fluidOutput(RagiumFluids.CRUDE_OIL)
             .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_soul_soil")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.BASIC)
+            .itemInput(Items.COAL, 3)
+            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_coal")
     }
 
     //    Grinder    //
@@ -510,11 +525,49 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Laser Transformer    //
 
     private fun laserTransformer(exporter: RecipeExporter) {
+        // primitive
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER)
+            .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 8)
+            .itemOutput(Items.QUARTZ)
+            .offerTo(exporter, Items.QUARTZ)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER)
+            .itemInput(Items.ICE)
+            .itemOutput(Items.PRISMARINE_CRYSTALS)
+            .offerTo(exporter, Items.PRISMARINE_CRYSTALS)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER)
+            .itemInput(Items.PACKED_ICE)
+            .itemOutput(Items.PRISMARINE_SHARD)
+            .offerTo(exporter, Items.PRISMARINE_SHARD)
+        // basic
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER, HTMachineTier.BASIC)
+            .itemInput(ItemTags.COALS, 64)
+            .itemOutput(Items.DIAMOND)
+            .offerTo(exporter, Items.DIAMOND)
+        // advanced
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.LASER_TRANSFORMER, HTMachineTier.ADVANCED)
             .itemInput(RagiumContents.Gems.RAGI_CRYSTAL, 8)
             .itemOutput(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter, RagiumContents.Gems.RAGIUM)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER, HTMachineTier.ADVANCED)
+            .itemInput(Items.BLUE_ICE, 64)
+            .itemOutput(Items.HEART_OF_THE_SEA)
+            .offerTo(exporter, Items.HEART_OF_THE_SEA)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.LASER_TRANSFORMER, HTMachineTier.ADVANCED)
+            .itemInput(ConventionalItemTags.STORAGE_BLOCKS_GOLD, 8)
+            .itemInput(Items.APPLE)
+            .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
+            .offerTo(exporter, Items.ENCHANTED_GOLDEN_APPLE)
     }
 
     //    Metal Former    //

@@ -1,0 +1,30 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "fluids": "#c:aqua_regia"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "ragium:empty_fluid_cube"
+    },
+    {
+      "count": 64,
+      "items": "ragium:nuclear_waste"
+    },
+    {
+      "count": 64,
+      "items": "ragium:nuclear_waste"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:plutonium_fuel"
+    }
+  ]
+}

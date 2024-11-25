@@ -223,19 +223,17 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .input('B', RagiumItems.ENGINE)
                 .input('C', tier.getCircuit())
                 .offerTo(exporter, tier.createId(RagiumMachineKeys.COMBUSTION_GENERATOR))
-            // solar generator
-            val solar: HTMachineBlock = RagiumMachineKeys.SOLAR_PANEL.entry.getBlock(tier)
-            HTShapedRecipeJsonBuilder
-                .create(solar)
-                .patterns(
-                    "ABA",
-                    "ACA",
-                ).input('A', tier.getSteelMetal(hardMode))
-                .input('B', RagiumItems.SOLAR_PANEL)
-                .input('C', tier.getCircuit())
-                .unlockedBy(tier.getCircuit())
-                .offerTo(exporter, tier.createId(RagiumMachineKeys.SOLAR_PANEL))
         }
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.NUCLEAR_REACTOR,
+            RagiumItems.STELLA_PLATE,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.SOLAR_PANEL,
+            RagiumItems.SOLAR_PANEL,
+        )
         createProcessor(
             exporter,
             RagiumMachineKeys.STEAM_GENERATOR,

@@ -77,25 +77,26 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val fuelStack: ItemStack = inventory.getStack(0)
         val wasteStack: ItemStack = inventory.getStack(1)
-        if (fuelStack.isOf(RagiumItems.URANIUM_FUEL)) {
-            val result = HTItemResult(RagiumItems.NUCLEAR_WASTE)
-            if (!result.canMerge(wasteStack)) return overheat(world, pos)
-            useTransaction { transaction: Transaction ->
-                val storageIn: SingleFluidStorage = fluidStorage.get(0)
-                val foundVariant: FluidVariant =
-                    StorageUtil.findExtractableResource(storageIn, transaction) ?: return overheat(world, pos)
-                if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
-                    transaction.commit()
-                    inventory.modifyStack(1, result::merge)
-                    fuelStack.damage += 1
-                    return DataResult.success(Unit)
-                } else {
-                    transaction.abort()
-                    return overheat(world, pos)
-                }
+        val result: HTItemResult = when (fuelStack.item) {
+            RagiumItems.URANIUM_FUEL -> RagiumItems.NUCLEAR_WASTE
+            RagiumItems.PLUTONIUM_FUEL -> RagiumItems.SLAG
+            else -> null
+        }?.let(::HTItemResult) ?: return DataResult.error { "Input slot has no nuclear fuels!" }
+        if (!result.canMerge(wasteStack)) return overheat(world, pos)
+        useTransaction { transaction: Transaction ->
+            val storageIn: SingleFluidStorage = fluidStorage.get(0)
+            val foundVariant: FluidVariant =
+                StorageUtil.findExtractableResource(storageIn, transaction) ?: return overheat(world, pos)
+            if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                transaction.commit()
+                inventory.modifyStack(1, result::merge)
+                fuelStack.damage += 1
+                return DataResult.success(Unit)
+            } else {
+                transaction.abort()
+                return overheat(world, pos)
             }
         }
-        return DataResult.error { "Input slot has no nuclear fuels!" }
     }
 
     private fun overheat(world: World, pos: BlockPos): DataResult<Unit> {

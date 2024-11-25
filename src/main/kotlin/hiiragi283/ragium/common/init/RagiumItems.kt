@@ -479,6 +479,9 @@ object RagiumItems {
     val URANIUM_FUEL = Item(itemSettings().maxDamage(1024))
 
     @JvmField
+    val PLUTONIUM_FUEL = Item(itemSettings().maxDamage(2048))
+
+    @JvmField
     val YELLOW_CAKE: Item = Item(itemSettings())
 
     @JvmField
@@ -530,6 +533,7 @@ object RagiumItems {
         SOLAR_PANEL,
         // nuclear
         URANIUM_FUEL,
+        PLUTONIUM_FUEL,
         YELLOW_CAKE,
         YELLOW_CAKE_PIECE,
         NUCLEAR_WASTE,

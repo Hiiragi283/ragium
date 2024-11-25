@@ -261,11 +261,11 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.GIGANT_HAMMER)
             .patterns(
-                " AB",
-                " BA",
-                "B  ",
+                "AAA",
+                "AB ",
+                " B ",
             ).input('A', RagiumContents.Gems.RAGIUM)
-            .input('B', ConventionalItemTags.WOODEN_RODS)
+            .input('B', RagiumBlocks.SHAFT)
             .unlockedBy(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter)
 
@@ -377,17 +377,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Ingots.STEEL)
-            .offerTo(exporter)
-        // bujin
-        HTShapedRecipeJsonBuilder
-            .create(RagiumItems.BUJIN)
-            .patterns(
-                "A",
-                "A",
-                "B",
-            ).input('A', RagiumItems.STELLA_PLATE)
-            .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
         // backpack
         HTShapedRecipeJsonBuilder

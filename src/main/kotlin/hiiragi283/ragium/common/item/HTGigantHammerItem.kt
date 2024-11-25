@@ -21,6 +21,7 @@ object HTGigantHammerItem :
     Item(
         itemSettings()
             .component(DataComponentTypes.UNBREAKABLE, UnbreakableComponent(true))
+            .maxCount(1)
             .rarity(Rarity.EPIC)
             .attributeModifiers(
                 createToolAttribute(ToolMaterials.NETHERITE, 15.0, -3.0)

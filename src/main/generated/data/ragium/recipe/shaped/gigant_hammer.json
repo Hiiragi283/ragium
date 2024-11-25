@@ -6,13 +6,13 @@
       "tag": "c:gems/ragium"
     },
     "B": {
-      "tag": "c:rods/wooden"
+      "item": "ragium:shaft"
     }
   },
   "pattern": [
-    " AB",
-    " BA",
-    "B  "
+    "AAA",
+    "AB ",
+    " B "
   ],
   "result": {
     "count": 1,

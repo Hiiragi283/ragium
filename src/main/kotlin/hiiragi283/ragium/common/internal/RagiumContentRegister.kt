@@ -372,6 +372,7 @@ internal object RagiumContentRegister {
         registerItem("solar_panel", RagiumItems.SOLAR_PANEL)
 
         registerItem("uranium_fuel", RagiumItems.URANIUM_FUEL)
+        registerItem("plutonium_fuel", RagiumItems.PLUTONIUM_FUEL)
         registerItem("yellow_cake", RagiumItems.YELLOW_CAKE)
         registerItem("yellow_cake_piece", RagiumItems.YELLOW_CAKE_PIECE)
         registerItem("nuclear_waste", RagiumItems.NUCLEAR_WASTE)

@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:laser_transformer",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#c:storage_blocks/gold"
+    },
+    {
+      "items": "minecraft:apple"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    }
+  ]
+}

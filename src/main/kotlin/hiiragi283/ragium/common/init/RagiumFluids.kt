@@ -22,12 +22,14 @@ enum class RagiumFluids(val color: Color, val enName: String, val jaName: String
     // Molten Materials
 
     // Organics
-    BIOMASS(Color(0x006600), "Biomass", "バイオマス"),
-    CRIMSON_SAP(Color(0x660000), "Crimson Sap", "深紅の樹液"),
-    GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
-    TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
-    SAP(Color(0x996633), "Sap", "樹液"),
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
+    TALLOW(Color(0xcc9933), "Tallow", "獣脂"),
+
+    BIOMASS(Color(0x006600), "Biomass", "バイオマス"),
+    GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
+
+    SAP(Color(0x996633), "Sap", "樹液"),
+    CRIMSON_SAP(Color(0x660000), "Crimson Sap", "深紅の樹液"),
     WARPED_SAP(Color(0x006666), "Warped Sap", "歪んだ樹液"),
 
     // Foods
@@ -97,7 +99,7 @@ enum class RagiumFluids(val color: Color, val enName: String, val jaName: String
     val translationKey: String = Util.createTranslationKey("fluid", id)
 
     val tagKey: TagKey<Fluid> = TagKey.of(RegistryKeys.FLUID, Identifier.of(TagUtil.C_TAG_NAMESPACE, name.lowercase()))
-    
+
     val variant: FluidVariant
         get() = FluidVariant.of(value)
 }
