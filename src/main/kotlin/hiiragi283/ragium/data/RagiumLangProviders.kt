@@ -88,6 +88,14 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
             builder.add(RagiumBlocks.ASPHALT, "Asphalt")
+            builder.add(RagiumBlocks.ASPHALT_SLAB, "Asphalt Slab")
+            builder.add(RagiumBlocks.ASPHALT_STAIRS, "Asphalt Stairs")
+            builder.add(RagiumBlocks.LINED_ASPHALT, "Lined Asphalt")
+            builder.add(RagiumBlocks.LINED_ASPHALT_SLAB, "Lined Asphalt Slab")
+            builder.add(RagiumBlocks.LINED_ASPHALT_STAIRS, "Lined Asphalt Stairs")
+            builder.add(RagiumBlocks.GYPSUM, "Gypsum")
+            builder.add(RagiumBlocks.GYPSUM_SLAB, "Gypsum Slab")
+            builder.add(RagiumBlocks.GYPSUM_STAIRS, "Gypsum Stairs")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -433,6 +441,14 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
             builder.add(RagiumBlocks.ASPHALT, "アスファルト")
+            builder.add(RagiumBlocks.ASPHALT_SLAB, "アスファルトのハーフブロック")
+            builder.add(RagiumBlocks.ASPHALT_STAIRS, "アスファルトの階段")
+            builder.add(RagiumBlocks.LINED_ASPHALT, "アスファルト（白線）")
+            builder.add(RagiumBlocks.LINED_ASPHALT_SLAB, "アスファルト（白線）のハーフブロック")
+            builder.add(RagiumBlocks.LINED_ASPHALT_STAIRS, "アスファルト（白線）の階段")
+            builder.add(RagiumBlocks.GYPSUM, "石膏")
+            builder.add(RagiumBlocks.GYPSUM_SLAB, "石膏のハーフブロック")
+            builder.add(RagiumBlocks.GYPSUM_STAIRS, "石膏の階段")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")

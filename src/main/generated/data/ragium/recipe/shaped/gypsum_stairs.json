@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "ragium:asphalt"
+      "item": "ragium:gypsum"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 4,
-    "id": "ragium:asphalt_stair"
+    "id": "ragium:gypsum_stairs"
   }
 }

@@ -149,7 +149,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumContents.Gems.FLUORITE)
             .fluidInput(RagiumFluids.SULFURIC_ACID)
-            .itemOutput(Items.BONE_MEAL)
+            .itemOutput(RagiumBlocks.GYPSUM)
             .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE, FluidConstants.BUCKET * 2)
             .offerTo(exporter, RagiumFluids.HYDROGEN_FLUORIDE)
 

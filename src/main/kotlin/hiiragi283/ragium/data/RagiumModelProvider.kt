@@ -120,11 +120,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // simple
         registerSimple(RagiumBlocks.ASPHALT)
         registerSlab(RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
-        registerStair(RagiumBlocks.ASPHALT_STAIR, RagiumBlocks.ASPHALT)
+        registerStair(RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
 
         registerSimple(RagiumBlocks.LINED_ASPHALT)
         registerSlab(RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
-        registerStair(RagiumBlocks.LINED_ASPHALT_STAIR, RagiumBlocks.LINED_ASPHALT)
+        registerStair(RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT)
+
+        registerSimple(RagiumBlocks.GYPSUM)
+        registerSlab(RagiumBlocks.GYPSUM_SLAB, RagiumBlocks.GYPSUM)
+        registerStair(RagiumBlocks.GYPSUM_STAIRS, RagiumBlocks.GYPSUM)
 
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)

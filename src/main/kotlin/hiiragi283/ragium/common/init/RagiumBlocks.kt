@@ -38,7 +38,7 @@ object RagiumBlocks {
     val ASPHALT_SLAB: Block = SlabBlock(blockSettings(ASPHALT))
 
     @JvmField
-    val ASPHALT_STAIR = StairsBlock(ASPHALT.defaultState, blockSettings(ASPHALT))
+    val ASPHALT_STAIRS = StairsBlock(ASPHALT.defaultState, blockSettings(ASPHALT))
 
     @JvmField
     val LINED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
@@ -47,16 +47,28 @@ object RagiumBlocks {
     val LINED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(LINED_ASPHALT))
 
     @JvmField
-    val LINED_ASPHALT_STAIR = StairsBlock(LINED_ASPHALT.defaultState, blockSettings(LINED_ASPHALT))
+    val LINED_ASPHALT_STAIRS = StairsBlock(LINED_ASPHALT.defaultState, blockSettings(LINED_ASPHALT))
 
+    @JvmField
+    val GYPSUM: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+
+    @JvmField
+    val GYPSUM_SLAB: Block = SlabBlock(blockSettings(GYPSUM))
+
+    @JvmField
+    val GYPSUM_STAIRS = StairsBlock(GYPSUM.defaultState, blockSettings(GYPSUM))
+    
     @JvmField
     val BUILDINGS: List<Block> = listOf(
         ASPHALT,
         ASPHALT_SLAB,
-        ASPHALT_STAIR,
+        ASPHALT_STAIRS,
         LINED_ASPHALT,
         LINED_ASPHALT_SLAB,
-        LINED_ASPHALT_STAIR,
+        LINED_ASPHALT_STAIRS,
+        GYPSUM,
+        GYPSUM_SLAB,
+        GYPSUM_STAIRS,
     )
     
     //    Foods    //

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:asphalt_stair"
+          "name": "ragium:asphalt_stairs"
         }
       ],
       "rolls": 1.0

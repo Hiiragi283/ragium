@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:asphalt"
+            "items": "ragium:gypsum"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/asphalt_stair"
+        "recipe": "ragium:shaped/gypsum_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/asphalt_stair"
+      "ragium:shaped/gypsum_stairs"
     ]
   }
 }

@@ -175,7 +175,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingBuildings(exporter: RecipeExporter) {
         // asphalt
         registerSlab(exporter, RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
-        registerStair(exporter, RagiumBlocks.ASPHALT_STAIR, RagiumBlocks.ASPHALT)
+        registerStair(exporter, RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
         // lined asphalt
         HTShapedRecipeJsonBuilder.create(RagiumBlocks.LINED_ASPHALT, 6)
             .patterns(
@@ -188,7 +188,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumBlocks.ASPHALT)
             .offerTo(exporter)
         registerSlab(exporter, RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
-        registerStair(exporter, RagiumBlocks.LINED_ASPHALT_STAIR, RagiumBlocks.LINED_ASPHALT)
+        registerStair(exporter, RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT)
+        // gypsum
+        registerSlab(exporter, RagiumBlocks.GYPSUM_SLAB, RagiumBlocks.GYPSUM)
+        registerStair(exporter, RagiumBlocks.GYPSUM_STAIRS, RagiumBlocks.GYPSUM)
     }
 
     private fun registerSlab(

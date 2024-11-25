@@ -45,10 +45,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         addDrop(RagiumBlocks.ASPHALT)
         addDrop(RagiumBlocks.ASPHALT_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.ASPHALT_STAIR)
+        addDrop(RagiumBlocks.ASPHALT_STAIRS)
         addDrop(RagiumBlocks.LINED_ASPHALT)
         addDrop(RagiumBlocks.LINED_ASPHALT_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.LINED_ASPHALT_STAIR)
+        addDrop(RagiumBlocks.LINED_ASPHALT_STAIRS)
+        addDrop(RagiumBlocks.GYPSUM)
+        addDrop(RagiumBlocks.GYPSUM_SLAB, ::slabDrops)
+        addDrop(RagiumBlocks.GYPSUM_STAIRS)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(

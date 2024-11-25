@@ -57,9 +57,11 @@ object RagiumTagProviders {
 
             add(BlockTags.SLABS, RagiumBlocks.ASPHALT_SLAB)
             add(BlockTags.SLABS, RagiumBlocks.LINED_ASPHALT_SLAB)
-            add(BlockTags.STAIRS, RagiumBlocks.ASPHALT_STAIR)
-            add(BlockTags.STAIRS, RagiumBlocks.LINED_ASPHALT_STAIR)
-
+            add(BlockTags.SLABS, RagiumBlocks.GYPSUM_SLAB)
+            add(BlockTags.STAIRS, RagiumBlocks.ASPHALT_STAIRS)
+            add(BlockTags.STAIRS, RagiumBlocks.LINED_ASPHALT_STAIRS)
+            add(BlockTags.STAIRS, RagiumBlocks.GYPSUM_STAIRS)
+            
             RagiumBlocks.BUILDINGS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
             RagiumBlocks.MECHANICS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
