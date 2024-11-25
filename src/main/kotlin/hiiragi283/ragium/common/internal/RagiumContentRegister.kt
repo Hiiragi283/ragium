@@ -197,7 +197,17 @@ internal object RagiumContentRegister {
         )
 
         registerBlock("asphalt", RagiumBlocks.ASPHALT)
+        registerBlock("asphalt_slab", RagiumBlocks.ASPHALT_SLAB)
+        registerBlock("asphalt_stair", RagiumBlocks.ASPHALT_STAIR)
+        registerBlock("lined_asphalt", RagiumBlocks.LINED_ASPHALT)
+        registerBlock("lined_asphalt_slab", RagiumBlocks.LINED_ASPHALT_SLAB)
+        registerBlock("lined_asphalt_stair", RagiumBlocks.LINED_ASPHALT_STAIR)
         registerBlockItem(RagiumBlocks.ASPHALT)
+        registerBlockItem(RagiumBlocks.ASPHALT_SLAB)
+        registerBlockItem(RagiumBlocks.ASPHALT_STAIR)
+        registerBlockItem(RagiumBlocks.LINED_ASPHALT)
+        registerBlockItem(RagiumBlocks.LINED_ASPHALT_SLAB)
+        registerBlockItem(RagiumBlocks.LINED_ASPHALT_STAIR)
 
         registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
         registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)

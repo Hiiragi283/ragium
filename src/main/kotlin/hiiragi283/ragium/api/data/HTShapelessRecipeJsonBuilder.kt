@@ -39,9 +39,14 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
     private val inputs: DefaultedList<Ingredient> = DefaultedList.of()
     private val criteriaMap: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var group: String? = null
+    private var category: RecipeCategory = RecipeCategory.MISC
 
     init {
         check(!output.isEmpty) { "Invalid output found!" }
+    }
+
+    fun category(category: RecipeCategory): HTShapelessRecipeJsonBuilder = apply {
+        this.category = category
     }
 
     fun input(prefix: HTTagPrefix, material: HTMaterialKey): HTShapelessRecipeJsonBuilder = input(prefix.createTag(material))
@@ -93,7 +98,7 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         criteriaMap.forEach(builder::criterion)
         val recipe = ShapelessRecipe(
             group ?: "",
-            CraftingRecipeJsonBuilder.toCraftingCategory(RecipeCategory.MISC),
+            CraftingRecipeJsonBuilder.toCraftingCategory(category),
             output,
             inputs,
         )

@@ -48,16 +48,15 @@ class HTMachineFluidStorage private constructor(
 
     private val parts1: Array<SingleFluidStorage> = Array(size, ::childStorage)
 
-    private fun childStorage(slot: Int, tier: HTMachineTier = HTMachineTier.PRIMITIVE): SingleFluidStorage =
-        object : SingleFluidStorage() {
-            override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
+    private fun childStorage(slot: Int, tier: HTMachineTier = HTMachineTier.PRIMITIVE): SingleFluidStorage = object : SingleFluidStorage() {
+        override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
-            override fun canInsert(variant: FluidVariant): Boolean = filter(slot, variant)
+        override fun canInsert(variant: FluidVariant): Boolean = filter(slot, variant)
 
-            override fun onFinalCommit() {
-                callback()
-            }
+        override fun onFinalCommit() {
+            callback()
         }
+    }
 
     fun get(index: Int): SingleFluidStorage = parts1[index]
 
@@ -96,11 +95,7 @@ class HTMachineFluidStorage private constructor(
         }
     }
 
-    fun readNbt(
-        nbt: NbtCompound,
-        wrapperLookup: RegistryWrapper.WrapperLookup,
-        tier: HTMachineTier = HTMachineTier.PRIMITIVE,
-    ) {
+    fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup, tier: HTMachineTier = HTMachineTier.PRIMITIVE) {
         val list: NbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE.toInt())
         update(tier)
         list.forEachIndexed { index: Int, nbtElement: NbtElement ->
@@ -122,18 +117,14 @@ class HTMachineFluidStorage private constructor(
 
     //    HTFluidSyncable    //
 
-    fun sendPacket(
-        player: ServerPlayerEntity,
-        sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit,
-        vararg slotRange: Int,
-    ) {
+    fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit, vararg slotRange: Int) {
         slotRange.forEach { index: Int ->
             parts1.getOrNull(index)?.let { storage: SingleFluidStorage ->
                 sender(player, index, storage.variant, storage.amount)
             }
         }
     }
-    
+
     fun sendPacket(
         player: ServerPlayerEntity,
         sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit,

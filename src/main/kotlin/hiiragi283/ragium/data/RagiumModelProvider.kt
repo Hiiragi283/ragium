@@ -72,12 +72,60 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
 
+        fun registerSlab(slabBlock: Block, fullBlock: Block) {
+            val textureMap: TextureMap = textureMap { 
+                put(TextureKey.SIDE, TextureMap.getId(fullBlock))
+                put(TextureKey.TOP, TextureMap.getId(fullBlock))
+                put(TextureKey.BOTTOM, TextureMap.getId(fullBlock))
+            }
+            val slabBottom: Identifier = Models.SLAB.upload(slabBlock, textureMap, generator.modelCollector)
+            val slabTop: Identifier = Models.SLAB_TOP.upload(slabBlock, textureMap, generator.modelCollector)
+            registerSupplier(
+                slabBlock,
+                BlockStateModelGenerator.createSlabBlockState(
+                    slabBlock,
+                    slabBottom,
+                    slabTop,
+                    TextureMap.getId(fullBlock),
+                ),
+            )
+            generator.registerParentedItemModel(slabBlock, slabBottom)
+        }
+
+        fun registerStair(stairBlock: Block, fullBlock: Block) {
+            val textureMap: TextureMap = textureMap {
+                put(TextureKey.SIDE, TextureMap.getId(fullBlock))
+                put(TextureKey.TOP, TextureMap.getId(fullBlock))
+                put(TextureKey.BOTTOM, TextureMap.getId(fullBlock))
+            }
+            val innerId: Identifier = Models.INNER_STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
+            val stairId: Identifier = Models.STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
+            val outerId: Identifier = Models.OUTER_STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
+            registerSupplier(
+                stairBlock,
+                BlockStateModelGenerator.createStairsBlockState(
+                    stairBlock,
+                    innerId,
+                    stairId,
+                    outerId,
+                ),
+            )
+            generator.registerParentedItemModel(stairBlock, stairId)
+        }
+
         fun registerStaticModel(block: Block, modelId: Identifier = TextureMap.getId(block)) {
             registerSupplier(block, VariantsBlockStateSupplier.create(block, stateVariantOf(modelId)))
         }
 
         // simple
         registerSimple(RagiumBlocks.ASPHALT)
+        registerSlab(RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
+        registerStair(RagiumBlocks.ASPHALT_STAIR, RagiumBlocks.ASPHALT)
+
+        registerSimple(RagiumBlocks.LINED_ASPHALT)
+        registerSlab(RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
+        registerStair(RagiumBlocks.LINED_ASPHALT_STAIR, RagiumBlocks.LINED_ASPHALT)
+
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         registerSimple(RagiumBlocks.MUTATED_SOIL, Identifier.of("block/dirt"))

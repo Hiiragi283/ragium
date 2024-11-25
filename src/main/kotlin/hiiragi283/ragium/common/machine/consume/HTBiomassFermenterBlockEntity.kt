@@ -45,7 +45,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)
     }
-    
+
     private val inventory: SidedInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .buildSided()

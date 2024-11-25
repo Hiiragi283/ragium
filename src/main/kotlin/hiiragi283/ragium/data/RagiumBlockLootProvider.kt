@@ -44,6 +44,11 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
         addDrop(RagiumBlocks.ASPHALT)
+        addDrop(RagiumBlocks.ASPHALT_SLAB, ::slabDrops)
+        addDrop(RagiumBlocks.ASPHALT_STAIR)
+        addDrop(RagiumBlocks.LINED_ASPHALT)
+        addDrop(RagiumBlocks.LINED_ASPHALT_SLAB, ::slabDrops)
+        addDrop(RagiumBlocks.LINED_ASPHALT_STAIR)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(

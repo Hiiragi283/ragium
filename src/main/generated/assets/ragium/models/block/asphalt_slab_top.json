@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "ragium:block/asphalt",
+    "side": "ragium:block/asphalt",
+    "top": "ragium:block/asphalt"
+  }
+}

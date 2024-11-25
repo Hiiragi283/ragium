@@ -22,12 +22,43 @@ object RagiumBlocks {
     ) { world: World, pos: BlockPos ->
         world.getFluidState(pos).isIn(FluidTags.LAVA)
     }
+    
+    @JvmField
+    val NATURAL: List<Block> = listOf(
+        MUTATED_SOIL,
+        POROUS_NETHERRACK
+    )
 
     //    Buildings    //
 
     @JvmField
     val ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
+    @JvmField
+    val ASPHALT_SLAB: Block = SlabBlock(blockSettings(ASPHALT))
+
+    @JvmField
+    val ASPHALT_STAIR = StairsBlock(ASPHALT.defaultState, blockSettings(ASPHALT))
+
+    @JvmField
+    val LINED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+
+    @JvmField
+    val LINED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(LINED_ASPHALT))
+
+    @JvmField
+    val LINED_ASPHALT_STAIR = StairsBlock(LINED_ASPHALT.defaultState, blockSettings(LINED_ASPHALT))
+
+    @JvmField
+    val BUILDINGS: List<Block> = listOf(
+        ASPHALT,
+        ASPHALT_SLAB,
+        ASPHALT_STAIR,
+        LINED_ASPHALT,
+        LINED_ASPHALT_SLAB,
+        LINED_ASPHALT_STAIR,
+    )
+    
     //    Foods    //
 
     @JvmField

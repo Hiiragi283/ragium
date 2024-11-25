@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/asphalt_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/asphalt"
+    },
+    "type=top": {
+      "model": "ragium:block/asphalt_slab_top"
+    }
+  }
+}

@@ -27,11 +27,10 @@ import net.minecraft.world.World
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
     HTBlockEntityBase(RagiumBlockEntityTypes.DRUM, pos, state),
     SidedStorageBlockEntity {
-
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.GENERIC, HTStorageSide.ANY)
         .buildMachineFluidStorage()
-        
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         nbt.putTier(TIER_KEY, tier)

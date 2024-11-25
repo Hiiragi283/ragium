@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:asphalt"
+    },
+    "B": {
+      "tag": "c:dyes/white"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "ABA",
+    "ABA"
+  ],
+  "result": {
+    "count": 6,
+    "id": "ragium:lined_asphalt"
+  }
+}

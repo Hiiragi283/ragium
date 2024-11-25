@@ -53,9 +53,14 @@ object RagiumTagProviders {
 
             // vanilla
             add(BlockTags.SHOVEL_MINEABLE, RagiumBlocks.MUTATED_SOIL)
-
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.ASPHALT)
+
+            add(BlockTags.SLABS, RagiumBlocks.ASPHALT_SLAB)
+            add(BlockTags.SLABS, RagiumBlocks.LINED_ASPHALT_SLAB)
+            add(BlockTags.STAIRS, RagiumBlocks.ASPHALT_STAIR)
+            add(BlockTags.STAIRS, RagiumBlocks.LINED_ASPHALT_STAIR)
+
+            RagiumBlocks.BUILDINGS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
             RagiumBlocks.MECHANICS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             RagiumBlocks.MISC.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }

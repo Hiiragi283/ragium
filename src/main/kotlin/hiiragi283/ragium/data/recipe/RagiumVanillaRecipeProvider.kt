@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTStonecuttingRecipeJsonBuilder
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -20,6 +21,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.recipe.Ingredient
+import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
@@ -45,6 +47,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingRecipes(exporter: RecipeExporter) {
         craftingAlternatives(exporter)
         craftingArmors(exporter)
+        craftingBuildings(exporter)
         craftingFoods(exporter)
         craftingIngredients(exporter)
         craftingTools(exporter)
@@ -165,6 +168,77 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', RagiumContents.Gems.RAGIUM)
             .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
+    }
+
+    //    Crafting - Buildings    //
+
+    private fun craftingBuildings(exporter: RecipeExporter) {
+        // asphalt
+        registerSlab(exporter, RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
+        registerStair(exporter, RagiumBlocks.ASPHALT_STAIR, RagiumBlocks.ASPHALT)
+        // lined asphalt
+        HTShapedRecipeJsonBuilder.create(RagiumBlocks.LINED_ASPHALT, 6)
+            .patterns(
+                "ABA",
+                "ABA",
+                "ABA"
+            )
+            .input('A', RagiumBlocks.ASPHALT)
+            .input('B', ConventionalItemTags.WHITE_DYES)
+            .unlockedBy(RagiumBlocks.ASPHALT)
+            .offerTo(exporter)
+        registerSlab(exporter, RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
+        registerStair(exporter, RagiumBlocks.LINED_ASPHALT_STAIR, RagiumBlocks.LINED_ASPHALT)
+    }
+
+    private fun registerSlab(
+        exporter: RecipeExporter,
+        output: ItemConvertible,
+        input: ItemConvertible,
+        category: RecipeCategory = RecipeCategory.BUILDING_BLOCKS,
+    ) {
+        // shaped crafting
+        HTShapedRecipeJsonBuilder
+            .create(output, 6)
+            .patterns("AAA")
+            .input('A', input)
+            .unlockedBy(input)
+            .category(category)
+            .offerTo(exporter)
+        // stone cutting
+        HTStonecuttingRecipeJsonBuilder.register(
+            exporter,
+            input,
+            output,
+            count = 2,
+            category = category,
+        )
+    }
+
+    private fun registerStair(
+        exporter: RecipeExporter,
+        output: ItemConvertible,
+        input: ItemConvertible,
+        category: RecipeCategory = RecipeCategory.BUILDING_BLOCKS,
+    ) {
+        // shaped crafting
+        HTShapedRecipeJsonBuilder
+            .create(output, 4)
+            .patterns(
+                "A  ",
+                "AA ",
+                "AAA",
+            ).input('A', input)
+            .unlockedBy(input)
+            .category(category)
+            .offerTo(exporter)
+        // stone cutting
+        HTStonecuttingRecipeJsonBuilder.register(
+            exporter,
+            input,
+            output,
+            category = category,
+        )
     }
 
     //    Crafting - Tools    //

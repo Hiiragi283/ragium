@@ -71,7 +71,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun asInventory(): SidedInventory = inventory
-    
+
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE

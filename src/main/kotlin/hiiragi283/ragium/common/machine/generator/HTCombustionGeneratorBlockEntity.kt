@@ -44,7 +44,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)
     }
-    
+
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.FUEL) }
@@ -79,7 +79,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     //    SidedStorageBlockEntity    //
-    
+
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
     //    HTFluidSyncable    //

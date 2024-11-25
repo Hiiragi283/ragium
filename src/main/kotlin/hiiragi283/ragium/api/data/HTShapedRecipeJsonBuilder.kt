@@ -40,9 +40,14 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
     private val inputMap: MutableMap<Char, Ingredient> = mutableMapOf()
     private val criteriaMap: MutableMap<String, AdvancementCriterion<*>> = mutableMapOf()
     private var group: String? = null
+    private var category: RecipeCategory = RecipeCategory.MISC
 
     init {
         check(!output.isEmpty) { "Invalid output found!" }
+    }
+
+    fun category(category: RecipeCategory): HTShapedRecipeJsonBuilder = apply {
+        this.category = category
     }
 
     fun input(char: Char, prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = input(char, prefix.createTag(material))
@@ -118,7 +123,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         criteriaMap.forEach(builder::criterion)
         val recipe = ShapedRecipe(
             group ?: "",
-            CraftingRecipeJsonBuilder.toCraftingCategory(RecipeCategory.MISC),
+            CraftingRecipeJsonBuilder.toCraftingCategory(category),
             rawRecipe,
             output,
             true,
