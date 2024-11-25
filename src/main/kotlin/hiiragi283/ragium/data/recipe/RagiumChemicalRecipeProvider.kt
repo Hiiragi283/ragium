@@ -50,7 +50,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         // uranium enrichment
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
-            .itemInput(RagiumContents.RawMaterials.URANITE, 8)
+            .itemInput(Items.POISONOUS_POTATO, 8)
             .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.BUCKET * 4)
             .itemOutput(RagiumItems.YELLOW_CAKE)
             .offerTo(exporter, RagiumItems.YELLOW_CAKE)

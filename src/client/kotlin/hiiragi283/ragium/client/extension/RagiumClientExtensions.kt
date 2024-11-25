@@ -26,6 +26,3 @@ fun ClientPlayNetworking.Context.getBlockEntity(pos: BlockPos): BlockEntity? = w
 
 val CLIENT_NETWORK_MAP: Map<RegistryKey<World>, HTEnergyNetwork>
     get() = MinecraftClient.getInstance().server?.networkMap ?: mapOf()
-
-val ClientWorld.energyNetwork: HTEnergyNetwork?
-    get() = CLIENT_NETWORK_MAP[registryKey]

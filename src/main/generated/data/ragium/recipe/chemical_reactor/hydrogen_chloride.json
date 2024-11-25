@@ -6,10 +6,10 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:hydrogen"
+      "fluids": "#c:hydrogen"
     },
     {
-      "fluids": "ragium:chlorine"
+      "fluids": "#c:chlorine"
     }
   ],
   "fluid_outputs": [

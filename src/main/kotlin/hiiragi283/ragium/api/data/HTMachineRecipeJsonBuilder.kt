@@ -92,7 +92,7 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     fun fluidInput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.of(fluid.value, amount))
+        fluidInputs.add(HTFluidIngredient.of(fluid.tagKey, amount))
     }
 
     fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {

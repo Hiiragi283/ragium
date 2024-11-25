@@ -132,9 +132,6 @@ object RagiumMaterialKeys {
     @JvmField
     val SULFUR: HTMaterialKey = HTMaterialKey.of("sulfur")
 
-    @JvmField
-    val URANITE: HTMaterialKey = HTMaterialKey.of("uranite")
-
     //    Plate    //
 
     @JvmField

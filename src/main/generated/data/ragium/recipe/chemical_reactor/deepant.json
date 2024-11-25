@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:aqua_regia"
+      "fluids": "#c:aqua_regia"
     }
   ],
   "item_inputs": [

@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 9000,
-      "fluids": "ragium:hydrochloric_acid"
+      "fluids": "#c:hydrochloric_acid"
     }
   ],
   "item_inputs": [

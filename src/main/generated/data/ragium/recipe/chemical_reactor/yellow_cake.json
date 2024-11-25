@@ -7,13 +7,13 @@
   "fluid_inputs": [
     {
       "amount": 324000,
-      "fluids": "ragium:sulfuric_acid"
+      "fluids": "#c:sulfuric_acid"
     }
   ],
   "item_inputs": [
     {
       "count": 8,
-      "items": "#c:raw_materials/uranite"
+      "items": "minecraft:poisonous_potato"
     }
   ],
   "item_outputs": [

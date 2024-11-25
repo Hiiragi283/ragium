@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 486000,
-      "fluids": "ragium:crude_oil"
+      "fluids": "#c:crude_oil"
     }
   ],
   "fluid_outputs": [

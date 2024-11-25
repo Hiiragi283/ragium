@@ -7,10 +7,10 @@
   "fluid_inputs": [
     {
       "amount": 243000,
-      "fluids": "ragium:nitric_acid"
+      "fluids": "#c:nitric_acid"
     },
     {
-      "fluids": "ragium:hydrochloric_acid"
+      "fluids": "#c:hydrochloric_acid"
     }
   ],
   "fluid_outputs": [

@@ -6,11 +6,11 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:chlorosilane"
+      "fluids": "#c:chlorosilane"
     },
     {
       "amount": 162000,
-      "fluids": "ragium:hydrogen"
+      "fluids": "#c:hydrogen"
     }
   ],
   "fluid_outputs": [

@@ -6,10 +6,10 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:nitric_acid"
+      "fluids": "#c:nitric_acid"
     },
     {
-      "fluids": "ragium:sulfuric_acid"
+      "fluids": "#c:sulfuric_acid"
     }
   ],
   "fluid_outputs": [

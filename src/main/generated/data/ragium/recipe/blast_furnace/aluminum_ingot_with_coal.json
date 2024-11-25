@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:alumina_solution"
+      "fluids": "#c:alumina_solution"
     }
   ],
   "item_inputs": [

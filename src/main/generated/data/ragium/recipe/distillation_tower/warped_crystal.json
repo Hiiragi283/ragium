@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 324000,
-      "fluids": "ragium:warped_sap"
+      "fluids": "#c:warped_sap"
     }
   ],
   "fluid_outputs": [

@@ -9,7 +9,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:biomass"
+      "fluids": "#c:biomass"
     }
   ],
   "fluid_outputs": [

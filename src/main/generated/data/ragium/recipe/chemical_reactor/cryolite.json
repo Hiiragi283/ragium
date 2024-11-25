@@ -6,10 +6,10 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:hydrogen_fluoride"
+      "fluids": "#c:hydrogen_fluoride"
     },
     {
-      "fluids": "ragium:alkali_solution"
+      "fluids": "#c:alkali_solution"
     }
   ],
   "item_inputs": [

@@ -6,11 +6,11 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:glycerol"
+      "fluids": "#c:glycerol"
     },
     {
       "amount": 243000,
-      "fluids": "ragium:mixture_acid"
+      "fluids": "#c:mixture_acid"
     }
   ],
   "fluid_outputs": [

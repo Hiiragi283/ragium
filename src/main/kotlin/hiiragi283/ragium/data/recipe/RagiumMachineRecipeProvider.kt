@@ -294,12 +294,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // uranium enrichment
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
-            .itemInput(Items.POISONOUS_POTATO)
-            .itemOutput(RagiumContents.RawMaterials.URANITE)
-            .offerTo(exporter, RagiumContents.RawMaterials.URANITE)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
             .fluidInput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 8)
             .fluidOutput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 7)
             .fluidOutput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)

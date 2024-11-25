@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 324000,
-      "fluids": "ragium:hydrogen_chloride"
+      "fluids": "#c:hydrogen_chloride"
     }
   ],
   "fluid_outputs": [

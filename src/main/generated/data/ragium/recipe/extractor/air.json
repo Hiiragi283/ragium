@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 405000,
-      "fluids": "ragium:air"
+      "fluids": "#c:air"
     }
   ],
   "fluid_outputs": [

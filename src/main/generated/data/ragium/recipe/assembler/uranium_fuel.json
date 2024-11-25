@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:enriched_uranium_hexafluoride"
+      "fluids": "#c:enriched_uranium_hexafluoride"
     },
     {
       "fluids": "minecraft:water"

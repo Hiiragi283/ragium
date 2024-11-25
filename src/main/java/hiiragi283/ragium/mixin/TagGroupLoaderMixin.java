@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey;
 import hiiragi283.ragium.api.material.HTMaterialRegistry;
 import hiiragi283.ragium.api.material.HTTagPrefix;
 import hiiragi283.ragium.api.tags.RagiumBlockTags;
+import hiiragi283.ragium.common.init.RagiumFluids;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -62,6 +63,10 @@ public abstract class TagGroupLoaderMixin {
                 // machine key tag
                 entry.getBlocks().forEach(block -> add(map, key.getBlockTag(), block, Registries.BLOCK));
             });
+        }
+        if (dataType.endsWith("fluid")) {
+            // fluid tags
+            RagiumFluids.getEntries().forEach(fluid -> add(map, fluid.getTagKey(), fluid.getValue(), Registries.FLUID));
         }
         if (dataType.endsWith("item")) {
             // machine tags

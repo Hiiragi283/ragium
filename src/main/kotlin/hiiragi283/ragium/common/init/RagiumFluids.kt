@@ -2,12 +2,15 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import java.awt.Color
 
@@ -93,6 +96,8 @@ enum class RagiumFluids(val color: Color, val enName: String, val jaName: String
 
     val translationKey: String = Util.createTranslationKey("fluid", id)
 
+    val tagKey: TagKey<Fluid> = TagKey.of(RegistryKeys.FLUID, Identifier.of(TagUtil.C_TAG_NAMESPACE, name.lowercase()))
+    
     val variant: FluidVariant
         get() = FluidVariant.of(value)
 }

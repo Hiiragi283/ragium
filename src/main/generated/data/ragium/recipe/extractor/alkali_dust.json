@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:alkali_solution"
+      "fluids": "#c:alkali_solution"
     }
   ],
   "fluid_outputs": [

@@ -6,11 +6,11 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:aromatic_compounds"
+      "fluids": "#c:aromatic_compounds"
     },
     {
       "amount": 27000,
-      "fluids": "ragium:oxygen"
+      "fluids": "#c:oxygen"
     }
   ],
   "item_outputs": [

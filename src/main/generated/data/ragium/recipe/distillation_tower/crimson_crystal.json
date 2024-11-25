@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 324000,
-      "fluids": "ragium:crimson_sap"
+      "fluids": "#c:crimson_sap"
     }
   ],
   "fluid_outputs": [

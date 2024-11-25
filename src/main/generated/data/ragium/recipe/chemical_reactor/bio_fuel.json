@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 243000,
-      "fluids": "ragium:alcohol"
+      "fluids": "#c:alcohol"
     },
     {
       "fluids": "#ragium:organic_oils"

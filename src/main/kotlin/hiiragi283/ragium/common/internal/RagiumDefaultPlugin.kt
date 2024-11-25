@@ -229,7 +229,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.SALT, HTMaterialKey.Type.MINERAL)
         helper.register(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.URANITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
+        // helper.register(RagiumMaterialKeys.URANITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
         // plate
         // helper.register(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE, Rarity.RARE)
         // helper.register(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE, Rarity.UNCOMMON)

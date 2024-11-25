@@ -10,7 +10,7 @@
     },
     {
       "amount": 20250,
-      "fluids": "ragium:mixture_acid"
+      "fluids": "#c:mixture_acid"
     }
   ],
   "fluid_outputs": [

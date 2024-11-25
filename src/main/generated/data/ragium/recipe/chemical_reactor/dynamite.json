@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:nitro_glycerin"
+      "fluids": "#c:nitro_glycerin"
     }
   ],
   "item_inputs": [

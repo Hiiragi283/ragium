@@ -10,7 +10,7 @@
   "fluid_inputs": [
     {
       "amount": 162000,
-      "fluids": "ragium:refined_gas"
+      "fluids": "#c:refined_gas"
     },
     {
       "amount": 162000,

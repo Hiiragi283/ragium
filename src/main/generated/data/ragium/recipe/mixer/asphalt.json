@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:asphalt"
+      "fluids": "#c:asphalt"
     }
   ],
   "item_inputs": [

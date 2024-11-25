@@ -252,6 +252,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "Destination: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
+            builder.add(RagiumItemGroup.FLUID_KEY, "Ragium - Fluids")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - Machines")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
@@ -373,7 +374,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.BAUXITE, "Bauxite")
             builder.add(RagiumMaterialKeys.CRYOLITE, "Cryolite")
             builder.add(RagiumMaterialKeys.DEEP_STEEL, "Deep Steel")
-            builder.add(RagiumMaterialKeys.URANITE, "Uranite")
+            // builder.add(RagiumMaterialKeys.URANITE, "Uranite")
             // builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "Engineering Plastic")
             // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 
@@ -602,6 +603,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "座標: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
+            builder.add(RagiumItemGroup.FLUID_KEY, "Ragium - 液体")
             builder.add(RagiumItemGroup.MACHINE_KEY, "Ragium - 機械")
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
@@ -679,7 +681,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.BAUXITE, "ボーキサイト")
             builder.add(RagiumMaterialKeys.CRYOLITE, "氷晶石")
             builder.add(RagiumMaterialKeys.DEEP_STEEL, "深層鋼")
-            builder.add(RagiumMaterialKeys.URANITE, "閃ウラン鉱")
+            // builder.add(RagiumMaterialKeys.URANITE, "閃ウラン鉱")
             // builder.add(RagiumMaterialKeys.ENGINEERING_PLASTIC, "エンジニアリングプラスチック")
             // builder.add(RagiumMaterialKeys.STELLA, "S.T.E.L.L.A.")
 

@@ -100,7 +100,7 @@ class HTMachineFluidStorage private constructor(
         update(tier)
         list.forEachIndexed { index: Int, nbtElement: NbtElement ->
             if (nbtElement is NbtCompound) {
-                parts1[index].readNbt(nbtElement, wrapperLookup)
+                parts1.getOrNull(index)?.readNbt(nbtElement, wrapperLookup)
             }
         }
     }

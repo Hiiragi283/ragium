@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 9000,
-      "fluids": "ragium:oxygen"
+      "fluids": "#c:oxygen"
     }
   ],
   "item_inputs": [

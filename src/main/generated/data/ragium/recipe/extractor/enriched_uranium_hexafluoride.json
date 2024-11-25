@@ -7,7 +7,7 @@
   "fluid_inputs": [
     {
       "amount": 648000,
-      "fluids": "ragium:uranium_hexafluoride"
+      "fluids": "#c:uranium_hexafluoride"
     }
   ],
   "fluid_outputs": [

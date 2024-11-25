@@ -9,7 +9,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:refined_gas"
+      "fluids": "#c:refined_gas"
     },
     {
       "fluids": "minecraft:water"

@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "ragium:chlorine"
+      "fluids": "#c:chlorine"
     }
   ],
   "item_inputs": [

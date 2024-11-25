@@ -10,7 +10,7 @@
   "fluid_inputs": [
     {
       "amount": 648000,
-      "fluids": "ragium:residual_oil"
+      "fluids": "#c:residual_oil"
     }
   ],
   "fluid_outputs": [
