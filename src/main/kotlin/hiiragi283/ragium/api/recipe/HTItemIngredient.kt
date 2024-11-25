@@ -2,12 +2,10 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.asText
-import hiiragi283.ragium.api.extension.codecOf
-import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.recipe.HTItemIngredient.ConsumeType.entries
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -65,7 +63,7 @@ class HTItemIngredient private constructor(private val entryList: RegistryEntryL
 
             @JvmStatic
             fun of(tagKey: TagKey<Item>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
-                HTItemIngredient(Registries.ITEM.getOrCreateEntryList(tagKey), count, consumeType)
+                HTItemIngredient(Registries.ITEM.getEntryListOrEmpty(tagKey), count, consumeType)
 
             @JvmStatic
             fun of(

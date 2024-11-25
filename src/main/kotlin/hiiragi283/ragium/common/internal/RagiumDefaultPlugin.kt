@@ -227,6 +227,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
         helper.register(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
         helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.SALT, HTMaterialKey.Type.MINERAL)
         helper.register(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
         // helper.register(RagiumMaterialKeys.URANITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
@@ -270,6 +271,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMaterialKeys.LAPIS) {
             set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 4)
         }
+        // mineral
+        helper.modify(RagiumMaterialKeys.REDSTONE) {
+            set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 4)
+        }
     }
 
     override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {
@@ -283,6 +288,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.LAPIS, Items.DEEPSLATE_LAPIS_ORE)
+        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.REDSTONE, Items.DEEPSLATE_REDSTONE_ORE)
 
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.COAL, Items.COAL)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND, Items.DIAMOND)
@@ -306,6 +312,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.LAPIS, Items.LAPIS_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.QUARTZ, Items.NETHER_QUARTZ_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.REDSTONE, Items.REDSTONE_ORE)
 
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
         consumer.accept(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)

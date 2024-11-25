@@ -11,11 +11,7 @@ import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ArmorMaterial
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.ToolMaterial
+import net.minecraft.item.*
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.Identifier
 import java.util.*

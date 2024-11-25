@@ -64,11 +64,13 @@ internal object RagiumContentRegister {
         settings: Item.Settings = itemSettings(),
         factory: (T, Item.Settings) -> Item = ::BlockItem,
     ) {
-        Registries.BLOCK
-            .getKey(block)
-            .getOrNull()
-            ?.value
-            ?.let { registerItem(it.path, factory(block, settings)) }
+        registerItem(
+            Registries.BLOCK
+                .getKeyOrThrow(block)
+                .value
+                .path,
+            factory(block, settings),
+        )
     }
 
     //    Init    //

@@ -17,6 +17,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
@@ -25,19 +26,12 @@ import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
-import net.minecraft.registry.BuiltinRegistries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
-import net.minecraft.text.Text
-import net.minecraft.text.Texts
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -57,6 +51,12 @@ fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromHand(player: Player
 
 fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromStack(stack: ItemStack): A? =
     ContainerItemContext.withConstant(stack).find(this)
+
+//    BlockEntity    //
+
+fun <T : Any> BlockEntity.ifPresentWorld(action: (World) -> T): T? = world?.let(action)
+
+fun BlockEntity.createContext(): ScreenHandlerContext = world?.let { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
 
 //    BlockPos    //
 
@@ -210,6 +210,12 @@ inline fun <reified T : Any> collectEntrypoints(key: String): List<T> = FabricLo
 val Fluid.name: MutableText
     get() = FluidVariant.of(this).name
 
+val Fluid.isEmpty: Boolean
+    get() = this == Fluids.EMPTY
+
+val Fluid.nonEmptyOrNull: Fluid?
+    get() = takeUnless { it.isEmpty }
+
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
@@ -239,27 +245,6 @@ fun RecipeInput.iterable(): Iterable<ItemStack> = buildList<ItemStack> {
         add(this[index])
     }
 }
-
-//    Registry    //
-
-val <T : Any> RegistryEntryList<T>.isEmpty: Boolean
-    get() = size() == 0
-
-fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
-
-fun <T : Any> idComparator(registry: Registry<T>): Comparator<T> = compareBy(registry::getId)
-
-fun <T : Any> entryComparator(registry: Registry<T>): Comparator<RegistryEntry<T>> = compareBy { it.key.orElseThrow().value }
-
-fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
-
-operator fun <T : Any> RegistryEntryList<T>.contains(value: T): Boolean = any { it.isOf(value) }
-
-fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): MutableText = storage
-    .map(
-        { it.name },
-        { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
-    ).copy()
 
 //    ScreenHandler    //
 

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.extension.ifPresentWorld
 import hiiragi283.ragium.api.extension.readNbt
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.extension.sendS2CPacket
@@ -51,8 +52,6 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     open fun syncInventory() {
         sendPacket { asInventory()?.sendS2CPacket(it, pos) }
     }
-
-    fun <T> ifPresentWorld(action: (World) -> T): T? = world?.let(action)
 
     open fun onUse(
         state: BlockState,

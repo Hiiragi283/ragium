@@ -30,7 +30,6 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.*
-import kotlin.jvm.optionals.getOrNull
 
 //    Views    //
 
@@ -39,7 +38,7 @@ fun BlockView.getMachineEntity(pos: BlockPos): HTMachineBlockEntityBase? = (getB
 fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockController? = getBlockEntity(pos) as? HTMultiblockController
 
 fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
-    registryManager.get(registryKey).getEntry(key).getOrNull()
+    registryManager.get(registryKey).getEntryOrNull(key)
 
 fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = getEntry(RegistryKeys.ENCHANTMENT, key)
 

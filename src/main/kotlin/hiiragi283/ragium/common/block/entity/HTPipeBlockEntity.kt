@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.fluidStorageOf
+import hiiragi283.ragium.api.extension.ifPresentWorld
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes

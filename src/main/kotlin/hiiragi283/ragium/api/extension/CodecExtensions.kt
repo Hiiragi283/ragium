@@ -102,7 +102,7 @@ fun <A : Any, B : Any> pairPacketCodecOf(
 
 val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T>>
     get() = RegistryKey.createPacketCodec(key).xmap(
-        { key: RegistryKey<T> -> getEntry(key).orElseThrow() },
+        this::getEntryOrThrow,
         { entry: RegistryEntry<T> -> entry.key.orElseThrow() },
     )
 

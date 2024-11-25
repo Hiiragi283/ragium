@@ -63,10 +63,12 @@ public abstract class TagGroupLoaderMixin {
                 // machine key tag
                 entry.getBlocks().forEach(block -> add(map, key.getBlockTag(), block, Registries.BLOCK));
             });
+            RagiumAPI.getLOGGER().info("Registered runtime block tags!");
         }
         if (dataType.endsWith("fluid")) {
             // fluid tags
             RagiumFluids.getEntries().forEach(fluid -> add(map, fluid.getTagKey(), fluid.getValue(), Registries.FLUID));
+            RagiumAPI.getLOGGER().info("Registered runtime fluid tags!");
         }
         if (dataType.endsWith("item")) {
             // machine tags
@@ -79,12 +81,12 @@ public abstract class TagGroupLoaderMixin {
             // material tags
             RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((HTMaterialKey key, HTMaterialRegistry.Entry entry) -> entry.getItemMap().forEach((HTTagPrefix prefix, Set<Item> items) -> {
                 TagKey<Item> tagKey = prefix.createTag(key);
-                // add tag entries
                 if (!items.isEmpty()) {
+                    // add tag entries
                     addTag(map, prefix.getCommonTagKey(), tagKey);
+                    // add item entries
+                    items.forEach((Item item) -> add(map, tagKey, item, Registries.ITEM));
                 }
-                // add item entries
-                items.forEach((Item item) -> add(map, tagKey, item, Registries.ITEM));
             }));
             RagiumAPI.getLOGGER().info("Registered runtime item tags!");
         }

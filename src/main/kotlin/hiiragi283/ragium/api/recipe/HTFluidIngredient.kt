@@ -56,7 +56,7 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
 
         @JvmStatic
         fun of(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
-            HTFluidIngredient(Registries.FLUID.getOrCreateEntryList(tagKey), amount)
+            HTFluidIngredient(Registries.FLUID.getEntryListOrEmpty(tagKey), amount)
     }
 
     val isEmpty: Boolean
@@ -83,7 +83,7 @@ class HTFluidIngredient private constructor(private val entryList: RegistryEntry
     fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
 
     override fun test(fluid: Fluid, amount: Long): Boolean = when {
-        fluid == Fluids.EMPTY || amount <= 0 -> this.isEmpty
+        fluid.isEmpty || amount <= 0 -> this.isEmpty
         else -> fluid in entryList && amount >= this.amount
     }
 

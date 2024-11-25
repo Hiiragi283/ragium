@@ -167,6 +167,10 @@ object RagiumContents {
     enum class RawMaterials(override val material: HTMaterialKey) : HTContent.Material<Item> {
         // tier 1
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
+        NITER(RagiumMaterialKeys.NITER),
+        REDSTONE(RagiumMaterialKeys.REDSTONE),
+        SALT(RagiumMaterialKeys.SALT),
+        SULFUR(RagiumMaterialKeys.SULFUR),
 
         // tier2
         RAGINITE(RagiumMaterialKeys.RAGINITE),

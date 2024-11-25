@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine.multiblock
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.asText
+import hiiragi283.ragium.api.extension.getEntryListOrEmpty
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.registry.Registries
@@ -28,7 +29,7 @@ sealed interface HTMultiblockComponent : Predicate<BlockState> {
     }
 
     data class Tag(val entryList: RegistryEntryList<Block>) : HTMultiblockComponent {
-        constructor(tagKey: TagKey<Block>) : this(Registries.BLOCK.getOrCreateEntryList(tagKey))
+        constructor(tagKey: TagKey<Block>) : this(Registries.BLOCK.getEntryListOrEmpty(tagKey))
 
         override val text: MutableText
             get() = entryList.asText(Block::getName)

@@ -54,5 +54,6 @@ public abstract class RecipeManagerMixin {
         RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> RagiumAPI.forEachPlugins(plugin -> plugin.registerRuntimeRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper())));
         recipesByType = map1;
         recipesById = map2;
+        RagiumAPI.getLOGGER().info("Registered runtime recipes!");
     }
 }

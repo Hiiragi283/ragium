@@ -13,7 +13,6 @@ import net.minecraft.component.DataComponentTypes
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.item.*
-import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
@@ -45,13 +44,17 @@ fun Item.Settings.repairment(tagKey: TagKey<Item>, count: Int = 1): Item.Setting
 fun Item.Settings.tieredText(translationKey: String, tier: HTMachineTier): Item.Settings =
     component(DataComponentTypes.ITEM_NAME, tier.createPrefixedText(translationKey)).tier(tier)
 
+val Item.isAir: Boolean
+    get() = this == Items.AIR
+
+val Item.nonAirOrNull: Item?
+    get() = takeUnless { it.isAir }
+
 //    ItemStack    //
 
+@Suppress("DEPRECATION")
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
-    if (item == null) return ItemStack.EMPTY
-    val item1: Item = item.asItem()
-    if (item1 == Items.AIR) return ItemStack.EMPTY
-    val entry: RegistryEntry<Item> = Registries.ITEM.getEntry(item1)
+    val entry: RegistryEntry<Item> = item?.asItem()?.nonAirOrNull?.registryEntry ?: return ItemStack.EMPTY
     val changes: ComponentChanges = ComponentChanges.builder().apply(builderAction).build()
     return ItemStack(entry, count, changes)
 }
