@@ -284,18 +284,18 @@ object RagiumClient : ClientModInitializer {
             }
         }
 
+        RagiumNetworks.ITEM_SYNC.registerClientReceiver { payload: HTInventoryPayload, context: ClientPlayNetworking.Context ->
+            val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
+            val inventory: Inventory = (context.getBlockEntity(pos) as? HTMachineBlockEntityBase)?.asInventory()
+                ?: return@registerClientReceiver
+            when {
+                stack.isEmpty -> inventory.removeStack(slot)
+                else -> inventory.setStack(slot, stack)
+            }
+        }
+
         RagiumNetworks.MACHINE_SYNC.registerClientReceiver { payload: HTMachinePacket, context: ClientPlayNetworking.Context ->
             (context.getBlockEntity(payload.pos) as? HTMachineBlockEntityBase)?.onPacketReceived(payload)
-        }
-
-        RagiumNetworks.SET_STACK.registerClientReceiver { payload: HTInventoryPayload.Setter, context: ClientPlayNetworking.Context ->
-            val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
-            (context.getBlockEntity(pos) as? Inventory)?.setStack(slot, stack)
-        }
-
-        RagiumNetworks.REMOVE_STACK.registerClientReceiver { payload: HTInventoryPayload.Remover, context: ClientPlayNetworking.Context ->
-            val (pos: BlockPos, slot: Int) = payload
-            (context.getBlockEntity(pos) as? Inventory)?.removeStack(slot)
         }
     }
 }

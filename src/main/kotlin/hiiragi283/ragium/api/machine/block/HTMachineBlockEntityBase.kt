@@ -28,7 +28,6 @@ import net.minecraft.sound.SoundCategory
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
-import net.minecraft.util.Formatting
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -102,24 +101,22 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         hit: BlockHitResult,
     ): ActionResult {
         // Send error message (TODO)
-        errorMessage?.let { player.sendMessage(Text.translatable(it).formatted(Formatting.RED), false) }
+        // errorMessage?.let { player.sendMessage(Text.translatable(it).formatted(Formatting.RED), false) }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
         }
         // Validate multiblock
-        if (this is HTMultiblockController) {
-            return onUseController(state, world, pos, player, this)
-        }
+        val result: Boolean = (this as? HTMultiblockController)?.onUseController(state, world, pos, player) != false
         // open machine screen
-        return when (world.isClient) {
-            true -> ActionResult.SUCCESS
-            else -> {
+        if (result) {
+            if (!world.isClient) {
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
                 HTInteractMachineCriterion.trigger(player, key, tier)
-                ActionResult.CONSUME
             }
+            return ActionResult.success(world.isClient)
         }
+        return ActionResult.PASS
     }
 
     abstract fun interactWithFluidStorage(player: PlayerEntity): Boolean

@@ -31,16 +31,12 @@ object RagiumNetworks {
         registerS2C("fluid_sync", HTFluidSyncPayload.PACKET_CODEC)
 
     @JvmField
+    val ITEM_SYNC: CustomPayload.Id<HTInventoryPayload> =
+        registerS2C("item_sync", HTInventoryPayload.PACKET_CODEC)
+
+    @JvmField
     val MACHINE_SYNC: CustomPayload.Id<HTMachinePacket> =
         registerS2C("machine_sync", HTMachinePacket.PACKET_CODEC)
-
-    @JvmField
-    val SET_STACK: CustomPayload.Id<HTInventoryPayload.Setter> =
-        registerS2C("set_stack", HTInventoryPayload.Setter.PACKET_CODEC)
-
-    @JvmField
-    val REMOVE_STACK: CustomPayload.Id<HTInventoryPayload.Remover> =
-        registerS2C("remove_stack", HTInventoryPayload.Remover.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : CustomPayload> registerS2C(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {
@@ -75,7 +71,7 @@ object RagiumNetworks {
         slot: Int,
         stack: ItemStack,
     ) {
-        ServerPlayNetworking.send(player, HTInventoryPayload.createPacket(pos, slot, stack))
+        ServerPlayNetworking.send(player, HTInventoryPayload(pos, slot, stack))
     }
 
     @JvmStatic

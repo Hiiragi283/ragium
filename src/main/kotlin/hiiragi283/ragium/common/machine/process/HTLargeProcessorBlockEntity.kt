@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
@@ -50,13 +51,16 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         player?.sendPacket(HTMachinePacket(key, tier, pos))
     }
 
-    override fun onFailed(
+    override fun onUpdated(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
+        result: Boolean,
     ) {
-        super.onFailed(state, world, pos, player)
-        key = DEFAULT_KEY
+        if (!result) {
+            key = DEFAULT_KEY
+            tier = HTMachineTier.PRIMITIVE
+        }
     }
 }

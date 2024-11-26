@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.network
 
 import hiiragi283.ragium.common.init.RagiumNetworks
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
@@ -21,8 +20,6 @@ data class HTFluidSyncPayload(val index: Int, val variant: FluidVariant, val amo
             ::HTFluidSyncPayload,
         )
     }
-
-    val resourceAmount: ResourceAmount<FluidVariant> = ResourceAmount(variant, amount)
 
     override fun getId(): CustomPayload.Id<out CustomPayload> = RagiumNetworks.FLUID_SYNC
 }

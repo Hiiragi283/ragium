@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
-import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -21,26 +20,29 @@ interface HTMultiblockController {
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
-        controller: HTMultiblockController?,
-    ): ActionResult {
-        if (controller == null) return ActionResult.PASS
+    ): Boolean {
         if (player.isSneaking) {
-            controller.showPreview = !controller.showPreview
-            return ActionResult.success(world.isClient)
+            showPreview = !showPreview
+            return true
         }
-        return when (world.isClient) {
-            true -> ActionResult.SUCCESS
-            false -> {
-                if (updateValidation(state, world, pos, player)) {
-                    onSucceeded(state, world, pos, player)
-                    showPreview = false
-                } else {
-                    onFailed(state, world, pos, player)
-                }
-                ActionResult.CONSUME
+        if (!world.isClient) {
+            val result: Boolean = updateValidation(state, world, pos, player)
+            if (result) {
+                player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), true)
+                showPreview = false
             }
+            onUpdated(state, world, pos, player, result)
+            return result
         }
+        return false
     }
+
+    fun beforeValidation(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity?,
+    ) {}
 
     fun updateValidation(
         state: BlockState,
@@ -55,27 +57,11 @@ interface HTMultiblockController {
         return validator.isValid
     }
 
-    fun beforeValidation(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity?,
-    ) {}
-
-    fun onSucceeded(
+    fun onUpdated(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
-    ) {
-        player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), true)
-        player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
-    }
-
-    fun onFailed(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity,
+        result: Boolean,
     ) {}
 }

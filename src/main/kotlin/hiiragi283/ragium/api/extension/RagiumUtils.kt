@@ -181,7 +181,7 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
 //    EnergyStorage    //
 
 val EnergyStorage.energyPercent: Float
-    get() = amount.toFloat() / capacity.toFloat()
+    get() = (amount.toFloat() / capacity.toFloat()) * 100
 
 //    FabricLoader    //
 
