@@ -118,18 +118,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         // simple
+        // asphalt
         registerSimple(RagiumBlocks.ASPHALT)
         registerSlab(RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
         registerStair(RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
 
-        // registerSimple(RagiumBlocks.LINED_ASPHALT)
-        // registerSlab(RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
-        // registerStair(RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT)
-
         registerSimple(RagiumBlocks.POLISHED_ASPHALT)
         registerSlab(RagiumBlocks.POLISHED_ASPHALT_SLAB, RagiumBlocks.POLISHED_ASPHALT)
         registerStair(RagiumBlocks.POLISHED_ASPHALT_STAIRS, RagiumBlocks.POLISHED_ASPHALT)
-
+        // gypsum
         registerSimple(RagiumBlocks.GYPSUM)
         registerSlab(RagiumBlocks.GYPSUM_SLAB, RagiumBlocks.GYPSUM)
         registerStair(RagiumBlocks.GYPSUM_STAIRS, RagiumBlocks.GYPSUM)
@@ -137,7 +134,15 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.POLISHED_GYPSUM)
         registerSlab(RagiumBlocks.POLISHED_GYPSUM_SLAB, RagiumBlocks.POLISHED_GYPSUM)
         registerStair(RagiumBlocks.POLISHED_GYPSUM_STAIRS, RagiumBlocks.POLISHED_GYPSUM)
+        // slate
+        registerSimple(RagiumBlocks.SLATE)
+        registerSlab(RagiumBlocks.SLATE_SLAB, RagiumBlocks.SLATE)
+        registerStair(RagiumBlocks.SLATE_STAIRS, RagiumBlocks.SLATE)
 
+        registerSimple(RagiumBlocks.POLISHED_SLATE)
+        registerSlab(RagiumBlocks.POLISHED_SLATE_SLAB, RagiumBlocks.POLISHED_SLATE)
+        registerStair(RagiumBlocks.POLISHED_SLATE_STAIRS, RagiumBlocks.POLISHED_SLATE)
+        
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
         registerSimple(RagiumBlocks.MUTATED_SOIL)

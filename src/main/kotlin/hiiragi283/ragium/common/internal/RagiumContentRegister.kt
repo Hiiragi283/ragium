@@ -192,7 +192,7 @@ internal object RagiumContentRegister {
         registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
         registerBlockItem(
             RagiumBlocks.MUTATED_SOIL,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK)),
+            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.MUTATED_SOIL)),
         )
         registerBlockItem(
             RagiumBlocks.POROUS_NETHERRACK,
@@ -202,9 +202,6 @@ internal object RagiumContentRegister {
         registerBlock("asphalt", RagiumBlocks.ASPHALT)
         registerBlock("asphalt_slab", RagiumBlocks.ASPHALT_SLAB)
         registerBlock("asphalt_stairs", RagiumBlocks.ASPHALT_STAIRS)
-        // registerBlock("lined_asphalt", RagiumBlocks.LINED_ASPHALT)
-        // registerBlock("lined_asphalt_slab", RagiumBlocks.LINED_ASPHALT_SLAB)
-        // registerBlock("lined_asphalt_stairs", RagiumBlocks.LINED_ASPHALT_STAIRS)
         registerBlock("polished_asphalt", RagiumBlocks.POLISHED_ASPHALT)
         registerBlock("polished_asphalt_slab", RagiumBlocks.POLISHED_ASPHALT_SLAB)
         registerBlock("polished_asphalt_stairs", RagiumBlocks.POLISHED_ASPHALT_STAIRS)
@@ -214,12 +211,15 @@ internal object RagiumContentRegister {
         registerBlock("polished_gypsum", RagiumBlocks.POLISHED_GYPSUM)
         registerBlock("polished_gypsum_slab", RagiumBlocks.POLISHED_GYPSUM_SLAB)
         registerBlock("polished_gypsum_stairs", RagiumBlocks.POLISHED_GYPSUM_STAIRS)
+        registerBlock("slate", RagiumBlocks.SLATE)
+        registerBlock("slate_slab", RagiumBlocks.SLATE_SLAB)
+        registerBlock("slate_stairs", RagiumBlocks.SLATE_STAIRS)
+        registerBlock("polished_slate", RagiumBlocks.POLISHED_SLATE)
+        registerBlock("polished_slate_slab", RagiumBlocks.POLISHED_SLATE_SLAB)
+        registerBlock("polished_slate_stairs", RagiumBlocks.POLISHED_SLATE_STAIRS)
         registerBlockItem(RagiumBlocks.ASPHALT)
         registerBlockItem(RagiumBlocks.ASPHALT_SLAB)
         registerBlockItem(RagiumBlocks.ASPHALT_STAIRS)
-        // registerBlockItem(RagiumBlocks.LINED_ASPHALT)
-        // registerBlockItem(RagiumBlocks.LINED_ASPHALT_SLAB)
-        // registerBlockItem(RagiumBlocks.LINED_ASPHALT_STAIRS)
         registerBlockItem(RagiumBlocks.POLISHED_ASPHALT)
         registerBlockItem(RagiumBlocks.POLISHED_ASPHALT_SLAB)
         registerBlockItem(RagiumBlocks.POLISHED_ASPHALT_STAIRS)
@@ -229,6 +229,12 @@ internal object RagiumContentRegister {
         registerBlockItem(RagiumBlocks.POLISHED_GYPSUM)
         registerBlockItem(RagiumBlocks.POLISHED_GYPSUM_SLAB)
         registerBlockItem(RagiumBlocks.POLISHED_GYPSUM_STAIRS)
+        registerBlockItem(RagiumBlocks.SLATE)
+        registerBlockItem(RagiumBlocks.SLATE_SLAB)
+        registerBlockItem(RagiumBlocks.SLATE_STAIRS)
+        registerBlockItem(RagiumBlocks.POLISHED_SLATE)
+        registerBlockItem(RagiumBlocks.POLISHED_SLATE_SLAB)
+        registerBlockItem(RagiumBlocks.POLISHED_SLATE_STAIRS)
 
         registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
         registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)

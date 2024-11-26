@@ -13,6 +13,15 @@ import net.minecraft.world.gen.feature.PlacedFeature
 
 object RagiumFeatures {
     @JvmField
+    val ORE_ASPHALT: Data = create("ore_asphalt")
+
+    @JvmField
+    val ORE_GYPSUM: Data = create("ore_gypsum")
+
+    @JvmField
+    val ORE_SLATE: Data = create("ore_slate")
+
+    @JvmField
     val ORE_RAGINITE: Data = create("ore_raginite")
 
     @JvmField
@@ -20,8 +29,6 @@ object RagiumFeatures {
 
     @JvmField
     val ORE_END_RAGI_CRYSTAL: Data = create("ore_end_ragi_crystal")
-
-    // val PATCH_END_OBLIVION_CLUSTER: Data = create("patch_end_oblivion_cluster")
 
     @JvmStatic
     private fun create(name: String): Data = Data(
@@ -31,11 +38,21 @@ object RagiumFeatures {
 
     @JvmStatic
     fun init() {
-        /*BiomeModifications.addFeature(
+        BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,
-            DISK_SALT.featureKey,
-        )*/
+            ORE_ASPHALT.featureKey,
+        )
+        BiomeModifications.addFeature(
+            BiomeSelectors.foundInOverworld(),
+            GenerationStep.Feature.UNDERGROUND_ORES,
+            ORE_GYPSUM.featureKey,
+        )
+        BiomeModifications.addFeature(
+            BiomeSelectors.foundInOverworld(),
+            GenerationStep.Feature.UNDERGROUND_ORES,
+            ORE_SLATE.featureKey,
+        )
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,

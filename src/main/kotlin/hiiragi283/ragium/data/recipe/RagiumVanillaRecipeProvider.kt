@@ -206,6 +206,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         registerSlab(exporter, RagiumBlocks.POLISHED_GYPSUM_SLAB, RagiumBlocks.POLISHED_GYPSUM)
         registerStair(exporter, RagiumBlocks.POLISHED_GYPSUM_STAIRS, RagiumBlocks.POLISHED_GYPSUM)
+        // slate
+        registerSlab(exporter, RagiumBlocks.SLATE_SLAB, RagiumBlocks.SLATE)
+        registerStair(exporter, RagiumBlocks.SLATE_STAIRS, RagiumBlocks.SLATE)
+        // polished slate
+        HTStonecuttingRecipeJsonBuilder.register(
+            exporter,
+            RagiumBlocks.SLATE,
+            RagiumBlocks.POLISHED_SLATE,
+            category = RecipeCategory.BUILDING_BLOCKS,
+        )
+        registerSlab(exporter, RagiumBlocks.POLISHED_SLATE_SLAB, RagiumBlocks.POLISHED_SLATE)
+        registerStair(exporter, RagiumBlocks.POLISHED_SLATE_STAIRS, RagiumBlocks.POLISHED_SLATE)
     }
 
     private fun registerSlab(

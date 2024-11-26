@@ -74,14 +74,29 @@ object RagiumBlocks {
     val POLISHED_GYPSUM_STAIRS = StairsBlock(POLISHED_GYPSUM.defaultState, blockSettings(POLISHED_GYPSUM))
 
     @JvmField
+    val SLATE: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+
+    @JvmField
+    val SLATE_SLAB: Block = SlabBlock(blockSettings(SLATE))
+
+    @JvmField
+    val SLATE_STAIRS = StairsBlock(SLATE.defaultState, blockSettings(SLATE))
+
+    @JvmField
+    val POLISHED_SLATE: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
+
+    @JvmField
+    val POLISHED_SLATE_SLAB: Block = SlabBlock(blockSettings(POLISHED_SLATE))
+
+    @JvmField
+    val POLISHED_SLATE_STAIRS = StairsBlock(POLISHED_SLATE.defaultState, blockSettings(POLISHED_SLATE))
+    
+    @JvmField
     val BUILDINGS: List<Block> = listOf(
         // asphalt
         ASPHALT,
         ASPHALT_SLAB,
         ASPHALT_STAIRS,
-        // LINED_ASPHALT,
-        // LINED_ASPHALT_SLAB,
-        // LINED_ASPHALT_STAIRS,
         POLISHED_ASPHALT,
         POLISHED_ASPHALT_SLAB,
         POLISHED_ASPHALT_STAIRS,
@@ -92,6 +107,13 @@ object RagiumBlocks {
         POLISHED_GYPSUM,
         POLISHED_GYPSUM_SLAB,
         POLISHED_GYPSUM_STAIRS,
+        // slate
+        SLATE,
+        SLATE_SLAB,
+        SLATE_STAIRS,
+        POLISHED_SLATE,
+        POLISHED_SLATE_SLAB,
+        POLISHED_SLATE_STAIRS,
     )
 
     //    Foods    //

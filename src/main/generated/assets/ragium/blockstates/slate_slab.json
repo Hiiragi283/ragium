@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ragium:block/slate_slab"
+    },
+    "type=double": {
+      "model": "ragium:block/slate"
+    },
+    "type=top": {
+      "model": "ragium:block/slate_slab_top"
+    }
+  }
+}

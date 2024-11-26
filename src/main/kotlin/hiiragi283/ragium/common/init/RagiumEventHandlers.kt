@@ -76,75 +76,7 @@ object RagiumEventHandlers {
                 }
             }
         }
-
-        // modify drops
-        /*HTModifyBlockDropsCallback.EVENT.register {
-                _: BlockState,
-                world: ServerWorld,
-                _: BlockPos,
-                _: BlockEntity?,
-                breaker: Entity?,
-                tool: ItemStack,
-                drops: List<ItemStack>,
-            ->
-            when {
-                hasEnchantment(RagiumEnchantments.SMELTING, world, tool) -> drops.map { drop: ItemStack ->
-                    applyRecipe(drop, world, breaker, tool, RecipeType.SMELTING, ::SingleStackRecipeInput)
-                }
-
-                hasEnchantment(RagiumEnchantments.SLEDGE_HAMMER, world, tool) -> drops.map { drop: ItemStack ->
-                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineKeys.GRINDER)
-                }
-
-                hasEnchantment(RagiumEnchantments.BUZZ_SAW, world, tool) -> drops.map { drop: ItemStack ->
-                    applyMachineRecipe(drop, world, breaker, tool, RagiumMachineKeys.SAW_MILL)
-                }
-
-                else -> drops
-            }
-        }*/
-
-        // DefaultItemComponentEvents
-        /*HTAllowSpawnCallback.EVENT.register { entityType: EntityType<*>, _: ServerWorldAccess, _: BlockPos, reason: SpawnReason ->
-            if (entityType.spawnGroup == SpawnGroup.MONSTER && reason == SpawnReason.NATURAL) TriState.FALSE else TriState.DEFAULT
-        }
-
-        ServerLivingEntityEvents.AFTER_DEATH.register { entity: LivingEntity, damage: DamageSource ->
-            if (entity.type.isIn(EntityTypeTags.UNDEAD) && damage.isIn(DamageTypeTags.IS_PLAYER_ATTACK)) {
-                dropStackAt(entity, Items.NETHER_STAR.defaultStack)
-            }
-        }*/
-
-        // range mining
-        /*PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, _: BlockState, _: BlockEntity? ->
-            val enchant: RegistryEntry<Enchantment> =
-                world.getEntry(RegistryKeys.ENCHANTMENT, Enchantments.UNBREAKING) ?: return@register
-            val stack: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
-            val enchantLevel: Int = EnchantmentHelper.getLevel(enchant, stack)
-            if (enchantLevel > 0) {
-                breakRangedBlock(
-                    world,
-                    pos,
-                    enchantLevel,
-                    player,
-                    stack
-                )
-            }
-        }*/
-
-        // spawn oblivion cube when oblivion cluster broken
-        /*PlayerBlockBreakEvents.AFTER.register { world: World, player: PlayerEntity, pos: BlockPos, state: BlockState, _: BlockEntity? ->
-            if (!player.isCreative) {
-                if (state.isOf(RagiumBlocks.OBLIVION_CLUSTER)) {
-                    RagiumEntityTypes.OBLIVION_CUBE.create(world)?.let {
-                        it.refreshPositionAndAngles(pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, 0.0F, 0.0F)
-                        world.spawnEntity(it)
-                        it.playSpawnEffects()
-                    }
-                }
-            }
-        }*/
-
+        
         ServerTickEvents.END_SERVER_TICK.register { server: MinecraftServer ->
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 // send fluid sync packet
@@ -198,7 +130,7 @@ object RagiumEventHandlers {
             }
             ActionResult.PASS
         }
-
+        // hard mode repair
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             context.modify({
                 (it as? ToolItem)?.material == ToolMaterials.IRON || (it as? ArmorItem)?.material == ArmorMaterials.IRON
@@ -226,37 +158,4 @@ object RagiumEventHandlers {
             }
         }
     }
-
-    /*@JvmStatic
-    private fun <T : RecipeInput, U : Recipe<T>> applyRecipe(
-        drop: ItemStack,
-        world: World,
-        breaker: Entity?,
-        tool: ItemStack,
-        recipeType: RecipeType<U>,
-        factory: (ItemStack) -> T,
-    ): ItemStack {
-        val input: T = factory(drop)
-        return world.recipeManager
-            .getFirstMatch(recipeType, input, world)
-            .map(RecipeEntry<U>::value)
-            .map { it.craft(input, world.registryManager) }
-            .map { drop1: ItemStack ->
-                breaker
-                    ?.let { it as? LivingEntity }
-                    ?.let { tool.damage(1, it, EquipmentSlot.MAINHAND) }
-                drop1
-            }.orElse(drop)
-    }
-
-    @JvmStatic
-    private fun applyMachineRecipe(
-        drop: ItemStack,
-        world: World,
-        breaker: Entity?,
-        tool: ItemStack,
-        key: HTMachineKey,
-    ): ItemStack = applyRecipe(drop, world, breaker, tool, RagiumRecipeTypes.MACHINE) {
-        HTMachineInput.create(key, HTMachineTier.PRIMITIVE) { add(it) }
-    }*/
 }

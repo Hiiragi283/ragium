@@ -90,9 +90,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.ASPHALT, "Asphalt")
             builder.add(RagiumBlocks.ASPHALT_SLAB, "Asphalt Slab")
             builder.add(RagiumBlocks.ASPHALT_STAIRS, "Asphalt Stairs")
-            // builder.add(RagiumBlocks.LINED_ASPHALT, "Lined Asphalt")
-            // builder.add(RagiumBlocks.LINED_ASPHALT_SLAB, "Lined Asphalt Slab")
-            // builder.add(RagiumBlocks.LINED_ASPHALT_STAIRS, "Lined Asphalt Stairs")
             builder.add(RagiumBlocks.POLISHED_ASPHALT, "Polished Asphalt")
             builder.add(RagiumBlocks.POLISHED_ASPHALT_SLAB, "Polished Asphalt Slab")
             builder.add(RagiumBlocks.POLISHED_ASPHALT_STAIRS, "Polished Asphalt Stairs")
@@ -102,6 +99,12 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.POLISHED_GYPSUM, "Polished Gypsum")
             builder.add(RagiumBlocks.POLISHED_GYPSUM_SLAB, "Polished Gypsum Slab")
             builder.add(RagiumBlocks.POLISHED_GYPSUM_STAIRS, "Polished Gypsum Stairs")
+            builder.add(RagiumBlocks.SLATE, "Slate")
+            builder.add(RagiumBlocks.SLATE_SLAB, "Slate Slab")
+            builder.add(RagiumBlocks.SLATE_STAIRS, "Slate Stairs")
+            builder.add(RagiumBlocks.POLISHED_SLATE, "Polished Slate")
+            builder.add(RagiumBlocks.POLISHED_SLATE_SLAB, "Polished Slate Slab")
+            builder.add(RagiumBlocks.POLISHED_SLATE_STAIRS, "Polished Slate Stairs")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -131,6 +134,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "Place lights in area of %s block radius")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "Extend processor machine inside the multiblock")
             builder.add(RagiumTranslationKeys.MANUAL_GRINDER, "Insert items by hopper or something else")
+            builder.add(RagiumTranslationKeys.MUTATED_SOIL, "Used for Growth Chamber")
             builder.add(
                 RagiumTranslationKeys.NETWORK_INTERFACE,
                 "Connect Wireless Network and energy cables from other mod",
@@ -453,9 +457,6 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.ASPHALT, "アスファルト")
             builder.add(RagiumBlocks.ASPHALT_SLAB, "アスファルトのハーフブロック")
             builder.add(RagiumBlocks.ASPHALT_STAIRS, "アスファルトの階段")
-            // builder.add(RagiumBlocks.LINED_ASPHALT, "アスファルト（白線）")
-            // builder.add(RagiumBlocks.LINED_ASPHALT_SLAB, "アスファルト（白線）のハーフブロック")
-            // builder.add(RagiumBlocks.LINED_ASPHALT_STAIRS, "アスファルト（白線）の階段")
             builder.add(RagiumBlocks.POLISHED_ASPHALT, "磨かれたアスファルト")
             builder.add(RagiumBlocks.POLISHED_ASPHALT_SLAB, "磨かれたアスファルトのハーフブロック")
             builder.add(RagiumBlocks.POLISHED_ASPHALT_STAIRS, "磨かれたアスファルトの階段")
@@ -465,6 +466,12 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.POLISHED_GYPSUM, "磨かれた石膏")
             builder.add(RagiumBlocks.POLISHED_GYPSUM_SLAB, "磨かれた石膏のハーフブロック")
             builder.add(RagiumBlocks.POLISHED_GYPSUM_STAIRS, "磨かれた石膏の階段")
+            builder.add(RagiumBlocks.SLATE, "スレート")
+            builder.add(RagiumBlocks.SLATE_SLAB, "スレートのハーフブロック")
+            builder.add(RagiumBlocks.SLATE_STAIRS, "スレートの階段")
+            builder.add(RagiumBlocks.POLISHED_SLATE, "磨かれたスレート")
+            builder.add(RagiumBlocks.POLISHED_SLATE_SLAB, "磨かれたスレートのハーフブロック")
+            builder.add(RagiumBlocks.POLISHED_SLATE_STAIRS, "磨かれたスレートの階段")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -494,6 +501,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "半径%sブロックの範囲に光源を自動で設置する")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "マルチブロック内の加工機械を拡張する")
             builder.add(RagiumTranslationKeys.MANUAL_GRINDER, "ホッパーなどでアイテムを搬入できる")
+            builder.add(RagiumTranslationKeys.MUTATED_SOIL, "成長チャンバーで使用")
             builder.add(
                 RagiumTranslationKeys.NETWORK_INTERFACE,
                 "無線ネットワークと他modのエネルギーケーブルをつなげる",

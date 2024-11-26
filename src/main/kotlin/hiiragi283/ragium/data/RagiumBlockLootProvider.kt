@@ -47,9 +47,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.ASPHALT)
         addDrop(RagiumBlocks.ASPHALT_SLAB, ::slabDrops)
         addDrop(RagiumBlocks.ASPHALT_STAIRS)
-        // addDrop(RagiumBlocks.LINED_ASPHALT)
-        // addDrop(RagiumBlocks.LINED_ASPHALT_SLAB, ::slabDrops)
-        // addDrop(RagiumBlocks.LINED_ASPHALT_STAIRS)
         addDrop(RagiumBlocks.POLISHED_ASPHALT)
         addDrop(RagiumBlocks.POLISHED_ASPHALT_SLAB, ::slabDrops)
         addDrop(RagiumBlocks.POLISHED_ASPHALT_STAIRS)
@@ -60,6 +57,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.POLISHED_GYPSUM)
         addDrop(RagiumBlocks.POLISHED_GYPSUM_SLAB, ::slabDrops)
         addDrop(RagiumBlocks.POLISHED_GYPSUM_STAIRS)
+        // slate
+        addDrop(RagiumBlocks.SLATE)
+        addDrop(RagiumBlocks.SLATE_SLAB, ::slabDrops)
+        addDrop(RagiumBlocks.SLATE_STAIRS)
+        addDrop(RagiumBlocks.POLISHED_SLATE)
+        addDrop(RagiumBlocks.POLISHED_SLATE_SLAB, ::slabDrops)
+        addDrop(RagiumBlocks.POLISHED_SLATE_STAIRS)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(

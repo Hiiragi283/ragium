@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFeatures
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
@@ -35,6 +36,27 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
 
     private fun registerPlaced(entries: Entries) {
         val lookup: RegistryEntryLookup<ConfiguredFeature<*, *>> = entries.getLookup(RegistryKeys.CONFIGURED_FEATURE)
+        registerFeature(
+            entries,
+            lookup,
+            RagiumFeatures.ORE_ASPHALT,
+            CountPlacementModifier.of(2),
+            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(0))
+        )
+        registerFeature(
+            entries,
+            lookup,
+            RagiumFeatures.ORE_GYPSUM,
+            CountPlacementModifier.of(2),
+            HeightRangePlacementModifier.uniform(YOffset.getBottom(), YOffset.fixed(0))
+        )
+        registerFeature(
+            entries,
+            lookup,
+            RagiumFeatures.ORE_SLATE,
+            CountPlacementModifier.of(2),
+            HeightRangePlacementModifier.uniform(YOffset.fixed(0), YOffset.getTop())
+        )
         registerOre(
             entries,
             lookup,
@@ -58,21 +80,6 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
         )
     }
 
-    private fun registerFeature(
-        entries: Entries,
-        lookup: RegistryEntryLookup<ConfiguredFeature<*, *>>,
-        data: RagiumFeatures.Data,
-        vararg modifiers: PlacementModifier,
-    ) {
-        entries.add(
-            data.featureKey,
-            PlacedFeature(
-                data.getConfiguredEntry(lookup),
-                listOf(*modifiers),
-            ),
-        )
-    }
-
     private fun registerOre(
         entries: Entries,
         lookup: RegistryEntryLookup<ConfiguredFeature<*, *>>,
@@ -87,6 +94,21 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
             BiomePlacementModifier.of(),
             SquarePlacementModifier.of(),
             *modifiers,
+        )
+    }
+
+    private fun registerFeature(
+        entries: Entries,
+        lookup: RegistryEntryLookup<ConfiguredFeature<*, *>>,
+        data: RagiumFeatures.Data,
+        vararg modifiers: PlacementModifier,
+    ) {
+        entries.add(
+            data.featureKey,
+            PlacedFeature(
+                data.getConfiguredEntry(lookup),
+                listOf(*modifiers),
+            ),
         )
     }
 
@@ -168,6 +190,39 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
         fun registerConfigured(register: (RegistryKey<ConfiguredFeature<*, *>>, ConfiguredFeature<*, *>) -> Unit) {
             registerOre(
                 register,
+                RagiumFeatures.ORE_ASPHALT,
+                listOf(
+                    OreFeatureConfig.createTarget(
+                        TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD),
+                        RagiumBlocks.ASPHALT.defaultState
+                    )
+                ),
+                64
+            )
+            registerOre(
+                register,
+                RagiumFeatures.ORE_GYPSUM,
+                listOf(
+                    OreFeatureConfig.createTarget(
+                        TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD),
+                        RagiumBlocks.GYPSUM.defaultState
+                    )
+                ),
+                64
+            )
+            registerOre(
+                register,
+                RagiumFeatures.ORE_SLATE,
+                listOf(
+                    OreFeatureConfig.createTarget(
+                        TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD),
+                        RagiumBlocks.SLATE.defaultState
+                    )
+                ),
+                64
+            )
+            registerOre(
+                register,
                 RagiumFeatures.ORE_RAGINITE,
                 listOf(
                     OreFeatureConfig.createTarget(
@@ -207,14 +262,19 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
             register: (RegistryKey<ConfiguredFeature<*, *>>, ConfiguredFeature<*, *>) -> Unit,
             data: RagiumFeatures.Data,
             targets: List<OreFeatureConfig.Target>,
+            size: Int = 16,
         ) {
-            register(
-                data.configuredKey,
-                ConfiguredFeature(
-                    Feature.ORE,
-                    OreFeatureConfig(targets, 16),
-                ),
-            )
+            register(register, data, Feature.ORE, OreFeatureConfig(targets, size))
+        }
+
+        @JvmStatic
+        private fun <FC : FeatureConfig, F : Feature<FC>> register(
+            register: (RegistryKey<ConfiguredFeature<*, *>>, ConfiguredFeature<*, *>) -> Unit,
+            data: RagiumFeatures.Data,
+            feature: F,
+            config: FC,
+        ) {
+            register(data.configuredKey, ConfiguredFeature(feature, config))
         }
     }
 }
