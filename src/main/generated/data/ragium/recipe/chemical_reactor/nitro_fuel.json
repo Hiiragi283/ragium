@@ -6,7 +6,7 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "#ragium:fuel"
+      "fluids": "#ragium:fuels/non_nitro"
     },
     {
       "amount": 20250,

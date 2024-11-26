@@ -185,7 +185,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .fluidInput(RagiumFluidTags.FUEL)
+            .fluidInput(RagiumFluidTags.NON_NITRO_FUELS)
             .fluidInput(RagiumFluids.MIXTURE_ACID, FluidConstants.BUCKET / 4)
             .fluidOutput(RagiumFluids.NITRO_FUEL, FluidConstants.BUCKET / 4)
             .offerTo(exporter, RagiumFluids.NITRO_FUEL)

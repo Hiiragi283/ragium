@@ -1,7 +1,6 @@
 {
   "values": [
     "ragium:bio_fuel",
-    "ragium:fuel",
-    "ragium:nitro_fuel"
+    "ragium:fuel"
   ]
 }

@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
@@ -140,6 +141,10 @@ object RagiumTagProviders {
                 add(tagKey, fluid.value)
             }
 
+            fun add(tagKey: TagKey<Fluid>, child: TagKey<Fluid>) {
+                getOrCreateTagBuilder(tagKey).addTag(child)
+            }
+
             add(ConventionalFluidTags.MILK, RagiumFluids.MILK)
             add(ConventionalFluidTags.HONEY, RagiumFluids.HONEY)
 
@@ -158,12 +163,19 @@ object RagiumTagProviders {
             add(ConventionalFluidTags.GASEOUS, RagiumFluids.URANIUM_HEXAFLUORIDE)
             add(ConventionalFluidTags.GASEOUS, RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
 
-            add(RagiumFluidTags.FUEL, RagiumFluids.BIO_FUEL)
-            add(RagiumFluidTags.FUEL, RagiumFluids.FUEL)
-            add(RagiumFluidTags.FUEL, RagiumFluids.NITRO_FUEL)
+            add(RagiumFluidTags.COOLANTS, Fluids.WATER)
+
+            add(RagiumFluidTags.FUELS, RagiumFluidTags.NITRO_FUELS)
+            add(RagiumFluidTags.FUELS, RagiumFluidTags.NON_NITRO_FUELS)
+
+            add(RagiumFluidTags.NON_NITRO_FUELS, RagiumFluids.BIO_FUEL)
+            add(RagiumFluidTags.NON_NITRO_FUELS, RagiumFluids.FUEL)
+            add(RagiumFluidTags.NITRO_FUELS, RagiumFluids.NITRO_FUEL)
 
             add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.TALLOW)
             add(RagiumFluidTags.ORGANIC_OILS, RagiumFluids.SEED_OIL)
+
+            add(RagiumFluidTags.THERMAL_FUELS, Fluids.LAVA)
         }
     }
 

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.machine.generator
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.toStorage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -11,19 +12,20 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.fluid.Fluids
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
@@ -55,7 +57,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .fluidFilter { _: Int, variant: FluidVariant -> variant.isOf(Fluids.LAVA) }
+        .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.THERMAL_FUELS) }
         .buildMachineFluidStorage()
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
@@ -83,8 +85,11 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         // try to consume fluid
         return useTransaction { transaction: Transaction ->
+            val storageIn: SingleFluidStorage = fluidStorage.get(0)
+            val variantIn: FluidVariant = storageIn.resource
+            if (variantIn.isBlank) return DataResult.error { "Fuels is empty!" }
             val extracted: Long =
-                fluidStorage.get(0).extract(FluidVariant.of(Fluids.LAVA), FluidConstants.BUCKET, transaction)
+                fluidStorage.get(0).extract(variantIn, FluidConstants.BUCKET, transaction)
             if (extracted == FluidConstants.BUCKET) {
                 transaction.commit()
                 DataResult.success(Unit)
