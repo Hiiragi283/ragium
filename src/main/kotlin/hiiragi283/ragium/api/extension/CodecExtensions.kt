@@ -23,6 +23,7 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.world.World
+import java.util.*
 import java.util.function.Function
 
 //    Network    //
@@ -52,8 +53,10 @@ fun ServerPlayerEntity.sendTitle(title: Text) {
 
 //    Codec    //
 
-fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.xmap(
-    { name: String -> entries.firstOrNull { it.asString() == name } },
+fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.comapFlatMap(
+    { name: String ->
+        entries.firstOrNull { it.asString() == name }.toDataResult { "Failed to find a entry named $name!" }
+    },
     StringIdentifiable::asString,
 )
 
@@ -116,3 +119,9 @@ fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -
         false -> DataResult.error(errorMessage)
     }
 }
+
+fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T> =
+    map(DataResult<T>::success).orElse(DataResult.error(errorMessage))
+
+fun <T : Any> T?.toDataResult(errorMessage: () -> String): DataResult<T> =
+    this?.let(DataResult<T>::success) ?: DataResult.error(errorMessage)

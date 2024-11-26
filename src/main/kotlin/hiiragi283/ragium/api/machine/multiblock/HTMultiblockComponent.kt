@@ -1,12 +1,11 @@
 package hiiragi283.ragium.api.machine.multiblock
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.extension.asText
-import hiiragi283.ragium.api.extension.getEntryListOrEmpty
+import hiiragi283.ragium.api.content.HTRegistryEntryList
+import hiiragi283.ragium.api.extension.isIn
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.registry.Registries
-import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.world.World
@@ -28,13 +27,13 @@ sealed interface HTMultiblockComponent : Predicate<BlockState> {
         override fun test(state: BlockState): Boolean = state.isOf(block)
     }
 
-    data class Tag(val entryList: RegistryEntryList<Block>) : HTMultiblockComponent {
-        constructor(tagKey: TagKey<Block>) : this(Registries.BLOCK.getEntryListOrEmpty(tagKey))
+    data class Tag(val entryList: HTRegistryEntryList<Block>) : HTMultiblockComponent {
+        constructor(tagKey: TagKey<Block>) : this(HTRegistryEntryList.ofTag(tagKey, Registries.BLOCK))
 
         override val text: MutableText
-            get() = entryList.asText(Block::getName)
+            get() = entryList.getText(Block::getName)
 
-        override fun getPreviewState(world: World): BlockState = entryList.get(getIndex(world, entryList.size())).value().defaultState
+        override fun getPreviewState(world: World): BlockState = entryList[getIndex(world, entryList.size)].defaultState
 
         private fun getIndex(world: World, size: Int): Int = when (size) {
             0 -> 0

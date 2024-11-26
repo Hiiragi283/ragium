@@ -75,20 +75,6 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemOutput(RagiumItems.REFINED_SILICON)
             .fluidOutput(RagiumFluids.HYDROGEN_CHLORIDE, FluidConstants.BUCKET * 4)
             .offerTo(exporter, RagiumItems.REFINED_SILICON)
-        // redstone
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .itemInput(ItemTags.REDSTONE_ORES)
-            .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
-            .itemOutput(Items.REDSTONE, 12)
-            .offerTo(exporter, Items.REDSTONE, "_3x")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .itemInput(ItemTags.REDSTONE_ORES)
-            .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
-            .itemOutput(Items.REDSTONE, 16)
-            .offerTo(exporter, Items.REDSTONE, "_4x")
         // netherite scrap
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)

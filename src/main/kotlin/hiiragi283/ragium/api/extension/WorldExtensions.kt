@@ -85,8 +85,7 @@ val MinecraftServer.backpackManager: HTBackpackManager
 val WorldAccess.backpackManager: DataResult<HTBackpackManager>
     get() = server
         ?.backpackManager
-        ?.let(DataResult<HTBackpackManager>::success)
-        ?: DataResult.error { "Failed to find backpack manager!" }
+        .toDataResult { "Failed to find backpack manager!" }
 
 fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
     openBackpackScreen(world, player, player.getStackInHand(hand))
@@ -120,7 +119,4 @@ val ServerWorld.energyNetwork: HTEnergyNetwork
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
 
 val World.energyNetwork: DataResult<HTEnergyNetwork>
-    get() =
-        getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
-            ?.let(DataResult<HTEnergyNetwork>::success)
-            ?: DataResult.error { "Failed to find energy network!" }
+    get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID).toDataResult { "Failed to find energy network!" }
