@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.gui.*

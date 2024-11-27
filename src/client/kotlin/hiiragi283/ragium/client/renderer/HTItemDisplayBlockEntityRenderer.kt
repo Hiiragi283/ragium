@@ -25,7 +25,7 @@ object HTItemDisplayBlockEntityRenderer : BlockEntityRenderer<HTItemDisplayBlock
             entity.asInventory().getStack(0),
             matrices,
             vertexConsumers,
-            0.75f,
+            0.1f,
         )
     }
 }

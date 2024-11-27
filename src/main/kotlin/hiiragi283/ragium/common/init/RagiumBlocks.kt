@@ -40,12 +40,6 @@ object RagiumBlocks {
     @JvmField
     val ASPHALT_STAIRS = StairsBlock(ASPHALT.defaultState, blockSettings(ASPHALT))
 
-    // val LINED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    // val LINED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(LINED_ASPHALT))
-
-    // val LINED_ASPHALT_STAIRS = StairsBlock(LINED_ASPHALT.defaultState, blockSettings(LINED_ASPHALT))
-
     @JvmField
     val POLISHED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
@@ -90,7 +84,7 @@ object RagiumBlocks {
 
     @JvmField
     val POLISHED_SLATE_STAIRS = StairsBlock(POLISHED_SLATE.defaultState, blockSettings(POLISHED_SLATE))
-    
+
     @JvmField
     val BUILDINGS: List<Block> = listOf(
         // asphalt

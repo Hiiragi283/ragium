@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.hasValidTranslation
-import hiiragi283.ragium.api.machine.property.HTMachinePropertyKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
@@ -66,7 +65,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
         consumer(tier.tierText)
         consumer(tier.recipeCostText)
         consumer(tier.recipeCostText)
-        entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer, this, tier)
+        // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer, this, tier)
         if (descriptionText.hasValidTranslation() || allowDescription) {
             consumer(descriptionText)
         }

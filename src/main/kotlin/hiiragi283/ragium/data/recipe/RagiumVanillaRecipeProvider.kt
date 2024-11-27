@@ -314,6 +314,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', ItemTags.WOOL)
             .unlockedBy(ItemTags.WOOL)
             .offerTo(exporter)
+        // patchouli
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.GUIDE_BOOK)
+            .input(Items.BOOK)
+            .input(RagiumContents.RawMaterials.CRUDE_RAGINITE)
+            .input(ConventionalItemTags.IRON_INGOTS)
+            .unlockedBy(RagiumContents.RawMaterials.CRUDE_RAGINITE)
+            .offerTo(exporter)
         // dynamites
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.ANVIL_DYNAMITE)

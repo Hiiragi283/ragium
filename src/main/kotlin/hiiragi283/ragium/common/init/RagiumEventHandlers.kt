@@ -76,7 +76,7 @@ object RagiumEventHandlers {
                 }
             }
         }
-        
+
         ServerTickEvents.END_SERVER_TICK.register { server: MinecraftServer ->
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 // send fluid sync packet

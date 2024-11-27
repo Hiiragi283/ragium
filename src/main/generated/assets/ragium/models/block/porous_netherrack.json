@@ -1,7 +1,6 @@
 {
-  "parent": "ragium:block/layered",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "layer0": "minecraft:block/netherrack",
-    "layer1": "minecraft:block/destroy_stage_5"
+    "all": "ragium:block/porous_netherrack"
   }
 }

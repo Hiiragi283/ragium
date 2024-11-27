@@ -142,12 +142,14 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.POLISHED_SLATE)
         registerSlab(RagiumBlocks.POLISHED_SLATE_SLAB, RagiumBlocks.POLISHED_SLATE)
         registerStair(RagiumBlocks.POLISHED_SLATE_STAIRS, RagiumBlocks.POLISHED_SLATE)
-        
+
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
+        registerSimple(RagiumBlocks.ITEM_DISPLAY)
         registerSimple(RagiumBlocks.MUTATED_SOIL)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.OPEN_CRATE)
+        registerSimple(RagiumBlocks.POROUS_NETHERRACK)
         registerSimple(RagiumBlocks.SPONGE_CAKE)
         registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
         registerSimple(RagiumBlocks.TRASH_BOX)
@@ -161,12 +163,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumContents.Casings.BASIC.value)
         registerSimple(RagiumContents.Casings.ADVANCED.value)
         // layered
-        registerLayered(
-            RagiumBlocks.POROUS_NETHERRACK,
-            Identifier.of("block/netherrack"),
-            Identifier.of("block/destroy_stage_5"),
-        )
-
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
             registerLayered(
                 ore.value,
@@ -184,12 +180,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
             TextureMap.all(Blocks.WHITE_WOOL)
         }
-        registerFactory(RagiumBlocks.ITEM_DISPLAY, RagiumModels.DISPLAY) {
+        /*registerFactory(RagiumBlocks.ITEM_DISPLAY, RagiumModels.DISPLAY) {
             textureMap {
                 put(TextureKey.TOP, Identifier.of("block/oak_log_top"))
                 put(TextureKey.SIDE, Identifier.of("block/oak_log"))
             }
-        }
+        }*/
         registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
             textureMap {
                 put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))

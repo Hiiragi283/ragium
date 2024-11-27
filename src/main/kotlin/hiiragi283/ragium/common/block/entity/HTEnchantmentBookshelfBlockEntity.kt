@@ -73,7 +73,7 @@ class HTEnchantmentBookshelfBlockEntity(pos: BlockPos, state: BlockState) :
                     (value ?: 0) + levelToValue(level)
                 }
             }
-            mainStack.decrement(1)
+            mainStack.decrementUnlessCreative(1, player)
             ActionResult.success(world.isClient)
         } else {
             super.onUse(state, world, pos, player, hit)

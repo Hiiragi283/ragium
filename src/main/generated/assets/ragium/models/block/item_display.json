@@ -1,7 +1,6 @@
 {
-  "parent": "ragium:block/display",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "side": "minecraft:block/oak_log",
-    "top": "minecraft:block/oak_log_top"
+    "all": "ragium:block/item_display"
   }
 }
