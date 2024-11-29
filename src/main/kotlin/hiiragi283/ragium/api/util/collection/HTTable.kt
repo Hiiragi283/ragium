@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util
+package hiiragi283.ragium.api.util.collection
 
 import com.google.common.collect.Table
 
@@ -42,7 +42,7 @@ interface HTTable<R : Any, C : Any, V : Any> {
 
         fun remove(row: R, column: C): V?
 
-        fun computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V? {
+        fun computeIfAbsent(row: R, column: C, mapper: (R, C) -> V): V {
             val value: V? = get(row, column)
             if (value == null) {
                 val newValue: V = mapper(row, column)

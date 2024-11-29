@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.item.Item
 
 class HTMaterialRegistry(
     private val types: Map<HTMaterialKey, HTMaterialKey.Type>,
-    private val items: HTTable<HTTagPrefix, HTMaterialKey, Set<Item>>,
+    private val items: HTTable<HTTagPrefix, HTMaterialKey, out Set<Item>>,
     private val properties: Map<HTMaterialKey, HTPropertyHolder>,
 ) {
     val keys: Set<HTMaterialKey>

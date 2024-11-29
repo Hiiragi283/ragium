@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.internal
 
-import com.google.common.collect.HashMultimap
-import com.google.common.collect.Multimap
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
@@ -18,7 +16,7 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -148,31 +146,31 @@ internal data object InternalRagiumAPI : RagiumAPI {
             }
         }
         // bind items
-        val itemCache: Multimap<Pair<HTTagPrefix, HTMaterialKey>, Item> = HashMultimap.create()
+        val itemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableSet<Item>> = mutableTableOf()
         RagiumAPI.forEachPlugins {
             it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: ItemConvertible ->
-                itemCache.put(prefix to key, item.asItem())
+                itemCache
+                    .computeIfAbsent(prefix, key) { _: HTTagPrefix, _: HTMaterialKey -> mutableSetOf() }
+                    .add(item.asItem())
             }
         }
-        val itemTable: HTTable.Mutable<HTTagPrefix, HTMaterialKey, Set<Item>> = mutableTableOf()
-        itemCache
-            .asMap()
+        val itemTable: HTTable<HTTagPrefix, HTMaterialKey, MutableSet<Item>> = itemCache
+            .asPairMap()
             .toSortedMap(
                 compareBy(Pair<HTTagPrefix, HTMaterialKey>::second)
                     .thenBy(Pair<HTTagPrefix, HTMaterialKey>::first),
-            ).forEach { (pair: Pair<HTTagPrefix, HTMaterialKey>, items: Collection<Item>) ->
-                val (prefix: HTTagPrefix, key: HTMaterialKey) = pair
+            ).filter { (pair: Pair<HTTagPrefix, HTMaterialKey>, _) ->
+                val (_: HTTagPrefix, key: HTMaterialKey) = pair
                 val fixedKey: HTMaterialKey = altNameCache.getOrDefault(key.name, key)
                 if (fixedKey !in keyCache.keys) {
                     RagiumAPI.LOGGER.warn("Could not bind item with unregistered material: $fixedKey!")
-                    return@forEach
+                    false
+                } else {
+                    true
                 }
-                itemTable.put(
-                    prefix,
-                    fixedKey,
-                    items.toSortedSet(idComparator(Registries.ITEM)),
-                )
-            }
+            }.onEach { (_: Pair<HTTagPrefix, HTMaterialKey>, items: MutableSet<Item>) ->
+                items.sortedWith(idComparator(Registries.ITEM))
+            }.toTable()
 
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             itemTable.forEach { (_: HTTagPrefix, key: HTMaterialKey, items: Set<Item>) ->
@@ -223,6 +221,10 @@ internal data object InternalRagiumAPI : RagiumAPI {
         override val isHardMode: Boolean,
     ) : RagiumAPI.Config {
         constructor() : this(getVersion(), 64, false)
+
+        init {
+            validate()
+        }
 
         fun validate(): ConfigImpl = apply {
             check(version == getVersion()) { "Not matching config version! Remove old config file!" }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.util.HTTable
+import hiiragi283.ragium.api.util.collection.HTTable
 
 class HTMachineRegistry(
     private val types: Map<HTMachineKey, HTMachineType>,
