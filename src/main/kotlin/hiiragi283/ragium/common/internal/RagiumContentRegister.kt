@@ -393,6 +393,7 @@ internal object RagiumContentRegister {
         registerItem("charged_carbon_electrode", RagiumItems.CHARGED_CARBON_ELECTRODE)
         registerItem("engine", RagiumItems.ENGINE)
         registerItem("laser_emitter", RagiumItems.LASER_EMITTER)
+        registerItem("led", RagiumItems.LED)
         registerItem("processor_socket", RagiumItems.PROCESSOR_SOCKET)
         registerItem("ragi_crystal_processor", RagiumItems.RAGI_CRYSTAL_PROCESSOR)
         registerItem("solar_panel", RagiumItems.SOLAR_PANEL)

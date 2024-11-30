@@ -266,7 +266,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         // mineral
         helper.modify(RagiumMaterialKeys.REDSTONE) {
-            set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 4)
+            set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 2)
         }
     }
 
@@ -376,20 +376,22 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemOutput(plate)
                 .offerTo(exporter, plate)
         }
-        // ingot -> dust
+        // ingot/gem -> dust
+        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+            helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
+                val dust: Item = map[HTTagPrefix.DUST] ?: return@register
+                // Grinder Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.GRINDER)
+                    .itemInput(prefix, key)
+                    .itemOutput(dust)
+                    .offerTo(exporter, dust, "_from_${prefix.asString()}")
+            }
+        }
+        // plate -> dust
         helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
             val dust: Item = map[HTTagPrefix.DUST] ?: return@register
             // Grinder Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.INGOT, key)
-                .itemOutput(dust)
-                .offerTo(exporter, dust, "_from_ingot")
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.GEM, key)
-                .itemOutput(dust)
-                .offerTo(exporter, dust, "_from_gem")
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.PLATE, key)

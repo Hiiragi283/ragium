@@ -7,6 +7,10 @@ import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.item.Items
 
 object RagiumHardModeContents {
+    //    Gems    //
+
+    //    Ingots    //
+
     @JvmField
     val ALUMINUM: HTHardModeContent = HTHardModeContent.Companion.of(
         RagiumContents.Ingots.ALUMINUM,

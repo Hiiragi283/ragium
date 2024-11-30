@@ -450,6 +450,9 @@ object RagiumItems {
     val LASER_EMITTER: Item = Item(itemSettings())
 
     @JvmField
+    val LED: Item = Item(itemSettings())
+
+    @JvmField
     val PROCESSOR_SOCKET: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
@@ -512,6 +515,7 @@ object RagiumItems {
         CHARGED_CARBON_ELECTRODE,
         ENGINE,
         LASER_EMITTER,
+        LED,
         PROCESSOR_SOCKET,
         RAGI_CRYSTAL_PROCESSOR,
         SOLAR_PANEL,

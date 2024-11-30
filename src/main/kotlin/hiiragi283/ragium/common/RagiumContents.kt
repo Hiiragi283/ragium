@@ -15,28 +15,20 @@ import net.minecraft.item.ItemConvertible
 object RagiumContents {
     //    Ores    //
 
-    enum class Ores(override val material: HTMaterialKey, val baseStone: Block) : HTContent.Material<Block> {
-        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE) {
-            override val delegated: HTContent<Block> =
-                HTContent.ofBlock(RagiumAPI.id("raginite_ore"))
-            override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
-        },
-        DEEP_RAGINITE(RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE) {
-            override val delegated: HTContent<Block> =
-                HTContent.ofBlock(RagiumAPI.id("deepslate_raginite_ore"))
-            override val tagPrefix: HTTagPrefix = HTTagPrefix.DEEP_ORE
-        },
-        NETHER_RAGINITE(RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK) {
-            override val delegated: HTContent<Block> =
-                HTContent.ofBlock(RagiumAPI.id("nether_raginite_ore"))
-            override val tagPrefix: HTTagPrefix = HTTagPrefix.NETHER_ORE
-        },
-        END_RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE) {
-            override val delegated: HTContent<Block> =
-                HTContent.ofBlock(RagiumAPI.id("end_ragi_crystal_ore"))
-            override val tagPrefix: HTTagPrefix = HTTagPrefix.END_ORE
-        },
+    enum class Ores(
+        path: String,
+        override val tagPrefix: HTTagPrefix,
+        override val material: HTMaterialKey,
+        val baseStone: Block,
+    ) : HTContent.Material<Block> {
+        CRUDE_RAGINITE("raginite_ore", HTTagPrefix.ORE, RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
+        DEEP_RAGINITE("deepslate_raginite_ore", HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
+        NETHER_RAGINITE("nether_raginite_ore", HTTagPrefix.NETHER_ORE, RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
+        END_RAGI_CRYSTAL("end_ragi_crystal_ore", HTTagPrefix.END_ORE, RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE),
         ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id(path))
 
         val dropMineral: ItemConvertible
             get() = when (this) {
@@ -89,6 +81,8 @@ object RagiumContents {
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         BAUXITE(RagiumMaterialKeys.BAUXITE),
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
         override val delegated: HTContent<Item> =

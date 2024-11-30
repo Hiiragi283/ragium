@@ -33,10 +33,12 @@ object RagiumTranslationKeys {
 
     //    Content    //
 
+    const val BATTERY = "content.ragium.battery"
     const val CASING = "content.ragium.casing"
     const val CIRCUIT = "content.ragium.circuit"
     const val CIRCUIT_BOARD = "content.ragium.circuit_board"
     const val COIL = "content.ragium.coil"
+    const val DRILL_HEAD = "content.ragium.drill_head"
     const val DRUM = "content.ragium.drum"
     const val EXPORTER = "content.ragium.exporter"
     const val GRATE = "content.ragium.grate"

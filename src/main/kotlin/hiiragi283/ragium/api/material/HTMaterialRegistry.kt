@@ -32,7 +32,7 @@ class HTMaterialRegistry(
         val key: HTMaterialKey,
         val type: HTMaterialKey.Type,
         val itemMap: Map<HTTagPrefix, Set<Item>>,
-        val property: HTPropertyHolder,
+        private val property: HTPropertyHolder,
     ) : HTPropertyHolder by property {
         fun getItems(prefix: HTTagPrefix): Set<Item> = itemMap.getOrDefault(prefix, setOf())
 

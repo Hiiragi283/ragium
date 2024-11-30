@@ -69,6 +69,14 @@ object RagiumHardModePlugin : RagiumPlugin {
             .input('D', RagiumContents.Circuits.PRIMITIVE)
             .unlockedBy(RagiumContents.Dusts.RAGINITE)
             .offerTo(exporter)
+        // led
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(RagiumItems.LUMINESCENCE_DUST)
+            .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS)
+            .itemInput(RagiumHardModeContents.COPPER.getContent(hardMode))
+            .itemOutput(RagiumItems.LED, 4)
+            .offerTo(exporter, RagiumItems.LED)
 
         craftingMachines(exporter)
     }
@@ -178,7 +186,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.LAVA_BUCKET,
         )
         // consumers
-        // bedrock miner
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.BEDROCK_MINER,
+            Items.NETHERITE_PICKAXE,
+        )
         createProcessor(
             exporter,
             RagiumMachineKeys.BIOMASS_FERMENTER,
