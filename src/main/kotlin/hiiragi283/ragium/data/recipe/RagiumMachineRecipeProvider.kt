@@ -218,6 +218,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumItems.MINCED_MEAT)
             .itemOutput(RagiumItems.MEAT_INGOT)
             .offerTo(exporter, RagiumItems.MEAT_INGOT)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .fluidInput(RagiumFluids.NITROGEN, FluidConstants.BUCKET * 8)
+            .fluidOutput(RagiumFluids.LIQUID_NITROGEN)
+            .offerTo(exporter, RagiumFluids.LIQUID_NITROGEN)
     }
 
     //    Extractor    //

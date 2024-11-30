@@ -52,6 +52,7 @@ enum class RagiumFluids(val color: Color, val enName: String, val jaName: String
     CARBON_MONOXIDE(Color(0x99ccff), "Carbon Monoxide", "一酸化炭素"),
     CARBON_DIOXIDE(Color(0x99ccff), "Carbon Dioxide", "二酸化炭素"),
 
+    LIQUID_NITROGEN(Color(0x66cccc), "Liquid Nitrogen", "液体窒素"),
     NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
     AQUA_REGIA(Color(0xffff00), "Aqua Regia", "王水"),
 

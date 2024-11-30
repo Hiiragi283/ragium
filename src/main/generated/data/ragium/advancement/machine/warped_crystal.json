@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:machine/sap",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:warped_crystal"
           }
         ]
       },
@@ -14,14 +14,15 @@
   },
   "display": {
     "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
+      "translate": "tooltip.ragium.item.warped_crystal"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:warped_crystal"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "item.ragium.warped_crystal"
     }
   },
   "requirements": [

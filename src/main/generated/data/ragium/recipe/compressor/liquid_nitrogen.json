@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 648000,
+      "fluids": "#c:nitrogen"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:liquid_nitrogen"
+    }
+  ]
+}

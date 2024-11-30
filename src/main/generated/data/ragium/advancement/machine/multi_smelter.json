@@ -9,7 +9,10 @@
     }
   },
   "display": {
-    "description": "",
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.ragium.multi_smelter.description"
+    },
     "icon": {
       "count": 1,
       "id": "ragium:primitive_multi_smelter"

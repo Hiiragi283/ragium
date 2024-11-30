@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragium",
+  "parent": "ragium:progress/laser_transformer",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:bujin"
+            "items": "minecraft:enchanted_golden_apple"
           }
         ]
       },
@@ -14,13 +14,12 @@
   },
   "display": {
     "description": "",
-    "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:bujin"
+      "id": "minecraft:enchanted_golden_apple"
     },
     "title": {
-      "translate": "advancement.ragium.bujin.title"
+      "translate": "item.minecraft.enchanted_golden_apple"
     }
   },
   "requirements": [

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:machine/compressor",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:meat_ingot"
           }
         ]
       },
@@ -13,15 +13,13 @@
     }
   },
   "display": {
-    "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
-    },
+    "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:meat_ingot"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "item.ragium.meat_ingot"
     }
   },
   "requirements": [

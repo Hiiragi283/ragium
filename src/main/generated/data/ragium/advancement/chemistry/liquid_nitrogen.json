@@ -1,12 +1,12 @@
 {
-  "parent": "ragium:chemistry/air",
+  "parent": "ragium:chemistry/nitrogen",
   "criteria": {
     "has_fluids": {
       "conditions": {
         "items": [
           {
             "components": {
-              "ragium:fluid": "ragium:oxygen"
+              "ragium:fluid": "ragium:liquid_nitrogen"
             },
             "items": "ragium:filled_fluid_cube"
           }
@@ -17,15 +17,16 @@
   },
   "display": {
     "description": "",
+    "frame": "goal",
     "icon": {
       "components": {
-        "ragium:fluid": "ragium:oxygen"
+        "ragium:fluid": "ragium:liquid_nitrogen"
       },
       "count": 1,
       "id": "ragium:filled_fluid_cube"
     },
     "title": {
-      "translate": "fluid.ragium.oxygen"
+      "translate": "fluid.ragium.liquid_nitrogen"
     }
   },
   "requirements": [

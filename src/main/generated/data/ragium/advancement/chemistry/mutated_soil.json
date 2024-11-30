@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:chemistry/uranium_fuel",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:mutated_soil"
           }
         ]
       },
@@ -14,14 +14,15 @@
   },
   "display": {
     "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
+      "translate": "tooltip.ragium.block.mutated_soil"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:mutated_soil"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "block.ragium.mutated_soil"
     }
   },
   "requirements": [

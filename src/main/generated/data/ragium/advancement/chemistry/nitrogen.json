@@ -6,7 +6,7 @@
         "items": [
           {
             "components": {
-              "ragium:fluid": "ragium:oxygen"
+              "ragium:fluid": "ragium:nitrogen"
             },
             "items": "ragium:filled_fluid_cube"
           }
@@ -19,13 +19,13 @@
     "description": "",
     "icon": {
       "components": {
-        "ragium:fluid": "ragium:oxygen"
+        "ragium:fluid": "ragium:nitrogen"
       },
       "count": 1,
       "id": "ragium:filled_fluid_cube"
     },
     "title": {
-      "translate": "fluid.ragium.oxygen"
+      "translate": "fluid.ragium.nitrogen"
     }
   },
   "requirements": [

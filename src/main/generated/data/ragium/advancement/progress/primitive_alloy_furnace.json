@@ -9,7 +9,10 @@
     }
   },
   "display": {
-    "description": "",
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.ragium.alloy_furnace.description"
+    },
     "icon": {
       "count": 1,
       "id": "ragium:primitive_alloy_furnace"

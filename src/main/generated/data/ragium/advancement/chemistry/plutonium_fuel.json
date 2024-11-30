@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:chemistry/uranium_fuel",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:plutonium_fuel"
           }
         ]
       },
@@ -13,15 +13,14 @@
     }
   },
   "display": {
-    "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
-    },
+    "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:plutonium_fuel"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "item.ragium.plutonium_fuel"
     }
   },
   "requirements": [

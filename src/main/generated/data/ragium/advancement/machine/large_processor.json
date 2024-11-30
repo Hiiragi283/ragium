@@ -13,7 +13,9 @@
     }
   },
   "display": {
-    "description": "",
+    "description": {
+      "translate": "tooltip.ragium.block.large_processor"
+    },
     "frame": "challenge",
     "icon": {
       "count": 1,

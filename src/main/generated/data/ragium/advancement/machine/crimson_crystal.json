@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:machine/sap",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:crimson_crystal"
           }
         ]
       },
@@ -13,15 +13,14 @@
     }
   },
   "display": {
-    "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
-    },
+    "description": "",
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:crimson_crystal"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "item.ragium.crimson_crystal"
     }
   },
   "requirements": [

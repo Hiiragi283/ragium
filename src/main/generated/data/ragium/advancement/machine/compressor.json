@@ -1,10 +1,9 @@
 {
-  "parent": "ragium:petro_chemistry/root",
+  "parent": "ragium:machine/root",
   "criteria": {
     "interact_machine": {
       "conditions": {
-        "machine_type": "ragium:distillation_tower",
-        "min_tier": "basic"
+        "machine_type": "ragium:compressor"
       },
       "trigger": "ragium:interact_machine"
     }
@@ -12,17 +11,17 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.ragium.distillation_tower.description"
+      "translate": "machine_type.ragium.compressor.description"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:basic_distillation_tower"
+      "id": "ragium:primitive_compressor"
     },
     "title": {
-      "translate": "machine_tier.ragium.basic.prefix",
+      "translate": "machine_tier.ragium.primitive.prefix",
       "with": [
         {
-          "translate": "machine_type.ragium.distillation_tower"
+          "translate": "machine_type.ragium.compressor"
         }
       ]
     }

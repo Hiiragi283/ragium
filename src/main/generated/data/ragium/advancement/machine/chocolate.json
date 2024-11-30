@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:machine/mixer",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:chocolate"
           }
         ]
       },
@@ -13,15 +13,13 @@
     }
   },
   "display": {
-    "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
-    },
+    "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:chocolate"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "item.ragium.chocolate"
     }
   },
   "requirements": [

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:machine/mixer",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:manual_grinder"
+            "items": "ragium:porous_netherrack"
           }
         ]
       },
@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "tooltip.ragium.block.manual_grinder"
+      "translate": "tooltip.ragium.block.porous_netherrack"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:manual_grinder"
+      "id": "ragium:porous_netherrack"
     },
     "title": {
-      "translate": "block.ragium.manual_grinder"
+      "translate": "block.ragium.porous_netherrack"
     }
   },
   "requirements": [
