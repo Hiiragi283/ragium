@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AdvancementRewardsMixin",
+    "BrushItemMixin",
     "ItemMixin",
     "LivingEntityMixin",
     "RecipeManagerMixin",

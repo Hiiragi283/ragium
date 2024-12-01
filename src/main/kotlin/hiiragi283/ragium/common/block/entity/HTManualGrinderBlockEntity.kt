@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.modifyBlockState
+import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
@@ -45,7 +45,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
             process(player)
         }
         if (!world.isClient) {
-            world.modifyBlockState(pos) { stateIn: BlockState ->
+            world.replaceBlockState(pos) { stateIn: BlockState ->
                 stateIn.with(RagiumBlockProperties.LEVEL_7, (step + 1) % 8)
             }
         }

@@ -430,6 +430,9 @@ object RagiumItems {
     @JvmField
     val WARPED_CRYSTAL: Item = HTWarpedCrystalItem
 
+    @JvmField
+    val OBSIDIAN_TEAR = Item(itemSettings())
+
     // parts
     @JvmField
     val BASALT_MESH: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
@@ -508,6 +511,7 @@ object RagiumItems {
         // magical
         CRIMSON_CRYSTAL,
         WARPED_CRYSTAL,
+        OBSIDIAN_TEAR,
         // parts
         BASALT_MESH,
         BLAZING_CARBON_ELECTRODE,

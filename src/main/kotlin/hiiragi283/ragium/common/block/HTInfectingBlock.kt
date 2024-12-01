@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.extension.modifyBlockState
+import hiiragi283.ragium.api.extension.replaceBlockState
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -36,7 +36,7 @@ object HTInfectingBlock : Block(blockSettings().ticksRandomly().dropsNothing()) 
                 if (stateTo.isAir) {
                     world.setBlockState(posTo, defaultState.with(Properties.ENABLED, true))
                 } else if (stateTo.block is Waterloggable) {
-                    world.modifyBlockState(posTo) { it.with(Properties.WATERLOGGED, true) }
+                    world.replaceBlockState(posTo) { it.with(Properties.WATERLOGGED, true) }
                 }
                 return@forEach
             }

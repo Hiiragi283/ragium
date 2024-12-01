@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
+import hiiragi283.ragium.api.event.HTBrushingDropRegistry
 import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.sendTitle
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -157,5 +158,7 @@ object RagiumEventHandlers {
                 )
             }
         }
+        // brushing interaction
+        HTBrushingDropRegistry.init()
     }
 }

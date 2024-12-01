@@ -79,7 +79,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     protected fun activateState(world: World, pos: BlockPos, newState: Boolean) {
         if (!world.isClient) {
-            world.modifyBlockState(pos) { stateIn: BlockState ->
+            world.replaceBlockState(pos) { stateIn: BlockState ->
                 if (stateIn.contains(RagiumBlockProperties.ACTIVE)) {
                     if (stateIn.get(RagiumBlockProperties.ACTIVE) == newState) {
                         null

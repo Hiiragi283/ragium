@@ -386,6 +386,7 @@ internal object RagiumContentRegister {
 
         registerItem("crimson_crystal", RagiumItems.CRIMSON_CRYSTAL)
         registerItem("warped_crystal", RagiumItems.WARPED_CRYSTAL)
+        registerItem("obsidian_tear", RagiumItems.OBSIDIAN_TEAR)
 
         registerItem("basalt_mesh", RagiumItems.BASALT_MESH)
         registerItem("blazing_carbon_electrode", RagiumItems.BLAZING_CARBON_ELECTRODE)
@@ -508,7 +509,7 @@ internal object RagiumContentRegister {
         HTFluidDrinkingHandlerRegistry.register(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->
             if (!world.isClient) {
                 user.setOnFireFromLava()
-                dropStackAt(user, Items.OBSIDIAN.defaultStack)
+                dropStackAt(user, Items.OBSIDIAN)
             }
         }
         HTFluidDrinkingHandlerRegistry.register(RagiumFluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->

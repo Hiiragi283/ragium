@@ -66,7 +66,7 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
             placer
                 ?.let(serverWorld::getEntity)
                 ?.let {
-                    dropStackAt(it, ItemStack(RagiumBlocks.AUTO_ILLUMINATOR))
+                    dropStackAt(it, RagiumBlocks.AUTO_ILLUMINATOR)
                     world.playSound(
                         null,
                         pos,

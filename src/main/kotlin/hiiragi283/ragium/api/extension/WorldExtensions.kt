@@ -13,6 +13,7 @@ import net.minecraft.entity.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -43,6 +44,8 @@ fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: Reg
 fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = getEntry(RegistryKeys.ENCHANTMENT, key)
 
 //    World    //
+
+fun dropStackAt(entity: Entity, item: ItemConvertible, count: Int = 1): Boolean = dropStackAt(entity, ItemStack(item, count))
 
 fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.blockPos, stack)
 
