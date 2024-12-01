@@ -526,7 +526,22 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumItems.YELLOW_CAKE_PIECE)
             .unlockedBy(RagiumItems.YELLOW_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.MELON_PIE)
+            .input(Items.MELON)
+            .input(Items.SUGAR)
+            .input(Items.EGG)
+            .unlockedBy(Items.MELON)
+            .offerTo(exporter)
         // chocolate
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.CHOCOLATE_APPLE)
+            .input(Items.APPLE)
+            .input(fluidIngredient(RagiumFluids.CHOCOLATE.value))
+            .unlockedBy(Items.APPLE)
+            .offerTo(exporter)
+
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_BREAD)
             .input(Items.BREAD)
@@ -534,11 +549,15 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(Items.BREAD)
             .offerTo(exporter)
 
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.CHOCOLATE_APPLE)
-            .input(Items.APPLE)
-            .input(fluidIngredient(RagiumFluids.CHOCOLATE.value))
-            .unlockedBy(Items.APPLE)
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.CHOCOLATE_COOKIE, 8)
+            .patterns(
+                "AAA",
+                "ABA",
+                "AAA",
+            ).input('A', Items.COOKIE)
+            .input('B', RagiumItems.CHOCOLATE)
+            .unlockedBy(Items.COOKIE)
             .offerTo(exporter)
     }
 

@@ -16,6 +16,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.Item
+import net.minecraft.item.Items
 import net.minecraft.item.SwordItem
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
@@ -272,7 +273,7 @@ object RagiumItems {
         RagiumToolMaterials.STELLA,
         itemSettings()
             .rarity(Rarity.EPIC)
-            .attributeModifiers(createToolAttribute(RagiumToolMaterials.STELLA, 8.0, -3.0).build()),
+            .attributeModifiers(createToolAttribute(RagiumToolMaterials.STELLA, 7.0, 0.0).build()),
     )
 
     @JvmField
@@ -312,6 +313,28 @@ object RagiumItems {
     //    Foods    //
 
     @JvmField
+    val SWEET_BERRIES_CAKE_PIECE: Item = Item(
+        itemSettings().food(
+            FoodComponent
+                .Builder()
+                .nutrition(2)
+                .saturationModifier(0.1f)
+                .build(),
+        ),
+    )
+
+    @JvmField
+    val MELON_PIE = Item(
+        itemSettings().food(
+            FoodComponent.Builder()
+                .nutrition(8)
+                .saturationModifier(0.3f)
+                .usingConvertsTo(Items.MELON_SEEDS)
+                .build()
+        )
+    )
+
+    @JvmField
     val BUTTER: Item = Item(itemSettings().food(FoodComponents.APPLE))
 
     @JvmField
@@ -346,6 +369,9 @@ object RagiumItems {
     val CHOCOLATE_BREAD: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
 
     @JvmField
+    val CHOCOLATE_COOKIE: Item = Item(itemSettings().food(FoodComponents.COOKIE))
+
+    @JvmField
     val MINCED_MEAT: Item = Item(itemSettings())
 
     @JvmField
@@ -355,19 +381,9 @@ object RagiumItems {
     val COOKED_MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
 
     @JvmField
-    val SWEET_BERRIES_CAKE_PIECE: Item = Item(
-        itemSettings().food(
-            FoodComponent
-                .Builder()
-                .nutrition(2)
-                .saturationModifier(0.1f)
-                .build(),
-        ),
-    )
-
-    @JvmField
     val FOODS: List<Item> = listOf(
         SWEET_BERRIES_CAKE_PIECE,
+        MELON_PIE,
         BUTTER,
         CARAMEL,
         DOUGH,
@@ -375,6 +391,7 @@ object RagiumItems {
         CHOCOLATE,
         CHOCOLATE_APPLE,
         CHOCOLATE_BREAD,
+        CHOCOLATE_COOKIE,
         MINCED_MEAT,
         MEAT_INGOT,
         COOKED_MEAT_INGOT,

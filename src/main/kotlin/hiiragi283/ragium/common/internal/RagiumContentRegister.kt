@@ -362,6 +362,7 @@ internal object RagiumContentRegister {
         registerItem("trader_catalog", RagiumItems.TRADER_CATALOG)
 
         registerItem("sweet_berries_cake_piece", RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+        registerItem("melon_pie", RagiumItems.MELON_PIE)
 
         registerItem("butter", RagiumItems.BUTTER)
         registerItem("caramel", RagiumItems.CARAMEL)
@@ -371,6 +372,7 @@ internal object RagiumContentRegister {
         registerItem("chocolate", RagiumItems.CHOCOLATE)
         registerItem("chocolate_apple", RagiumItems.CHOCOLATE_APPLE)
         registerItem("chocolate_bread", RagiumItems.CHOCOLATE_BREAD)
+        registerItem("chocolate_cookie", RagiumItems.CHOCOLATE_COOKIE)
 
         registerItem("minced_meat", RagiumItems.MINCED_MEAT)
         registerItem("meat_ingot", RagiumItems.MEAT_INGOT)
