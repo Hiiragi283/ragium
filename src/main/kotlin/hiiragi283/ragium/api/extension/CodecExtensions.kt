@@ -55,7 +55,7 @@ fun ServerPlayerEntity.sendTitle(title: Text) {
 
 fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.comapFlatMap(
     { name: String ->
-        entries.firstOrNull { it.asString() == name }.toDataResult { "Failed to find a entry named $name!" }
+        entries.firstOrNull { it.asString() == name }.toDataResult { "Unknown entry: $name!" }
     },
     StringIdentifiable::asString,
 )
@@ -98,11 +98,6 @@ fun <T : StringIdentifiable> packetCodecOf(entries: Iterable<T>): PacketCodec<Re
     StringIdentifiable::asString,
 ) { name: String -> entries.firstOrNull { it.asString() == name } }
 
-fun <A : Any, B : Any> pairPacketCodecOf(
-    first: PacketCodec<RegistryByteBuf, A>,
-    second: PacketCodec<RegistryByteBuf, B>,
-): PacketCodec<RegistryByteBuf, Pair<A, B>> = PacketCodec.tuple(first, Pair<A, B>::getFirst, second, Pair<A, B>::getSecond, ::Pair)
-
 val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T>>
     get() = RegistryKey.createPacketCodec(key).xmap(
         this::getEntryOrThrow,
@@ -110,8 +105,6 @@ val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T
     )
 
 //    DataResult    //
-
-fun <R : Any> buildDataResult(getter: () -> DataResult<R>): DataResult<R> = getter()
 
 fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -> String): DataResult<R> = flatMap { result: R ->
     when (checker(result)) {

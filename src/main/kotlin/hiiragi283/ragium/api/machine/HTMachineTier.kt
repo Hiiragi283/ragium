@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
@@ -70,9 +69,6 @@ enum class HTMachineTier(
     val smelterMulti: Int = (recipeCost / 20).toInt()
     val bucketUnit: Long = recipeCost / 20
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
-
-    fun createEnergyResult(flag: HTEnergyNetwork.Flag): DataResult<Pair<HTEnergyNetwork.Flag, Long>> =
-        DataResult.success(flag to recipeCost)
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
     val text: MutableText = Text.translatable(translationKey)

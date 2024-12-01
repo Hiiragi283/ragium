@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.hasValidTranslation
+import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.block.Block
@@ -23,7 +24,12 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
         private val instances: MutableMap<Identifier, HTMachineKey> = mutableMapOf()
 
         @JvmField
-        val CODEC: Codec<HTMachineKey> = Identifier.CODEC.xmap(Companion::of, HTMachineKey::id)
+        val CODEC: Codec<HTMachineKey> =
+            Identifier.CODEC.xmap(Companion::of, HTMachineKey::id).validate { key: HTMachineKey ->
+                key
+                    .takeIf { it in RagiumAPI.getInstance().machineRegistry }
+                    .toDataResult { "Unknown machine key: $key" }
+            }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<ByteBuf, HTMachineKey> =

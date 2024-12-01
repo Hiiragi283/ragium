@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.toDataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.component.ComponentType
 import net.minecraft.network.codec.PacketCodec
@@ -17,7 +18,12 @@ class HTMaterialKey private constructor(val name: String) :
             private val instances: MutableMap<String, HTMaterialKey> = mutableMapOf()
 
             @JvmField
-            val CODEC: Codec<HTMaterialKey> = Codec.STRING.xmap(Companion::of, HTMaterialKey::name)
+            val CODEC: Codec<HTMaterialKey> =
+                Codec.STRING.xmap(Companion::of, HTMaterialKey::name).validate { key: HTMaterialKey ->
+                    key
+                        .takeIf { it in RagiumAPI.getInstance().materialRegistry }
+                        .toDataResult { "Unknown material key: $key" }
+                }
 
             @JvmField
             val PACKET_CODEC: PacketCodec<ByteBuf, HTMaterialKey> =

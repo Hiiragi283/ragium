@@ -37,6 +37,8 @@ class HTDynamiteItem(val action: HTDynamiteEntity.Action, settings: Settings) : 
         stack.get(RagiumComponentTypes.DYNAMITE)?.appendTooltip(context, tooltip::add, type)
     }
 
+    override fun hasGlint(stack: ItemStack): Boolean = super.hasGlint(stack) || stack.get(RagiumComponentTypes.DYNAMITE)?.canDestroy == true
+
     override fun createEntity(world: World, user: LivingEntity): ThrownItemEntity = HTDynamiteEntity(world, user)
         .apply { setItem(user.getStackInActiveHand()) }
         .setAction(action)

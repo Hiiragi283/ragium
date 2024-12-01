@@ -1,14 +1,18 @@
 package hiiragi283.ragium.api.machine
 
+import com.mojang.serialization.DynamicOps
+import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.util.collection.HTTable
+import net.minecraft.util.Identifier
+import java.util.stream.Stream
 
 class HTMachineRegistry(
     private val types: Map<HTMachineKey, HTMachineType>,
     private val blockTables: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock>,
     private val properties: Map<HTMachineKey, HTPropertyHolder>,
-) {
+) : Keyable {
     val keys: Set<HTMachineKey>
         get() = types.keys
     val entryMap: Map<HTMachineKey, Entry>
@@ -25,6 +29,14 @@ class HTMachineRegistry(
         blockTables.row(key),
         properties.getOrDefault(key, HTPropertyHolder.Empty),
     )
+
+    //    Keyable    //
+
+    override fun <T : Any> keys(ops: DynamicOps<T>): Stream<T> = keys
+        .stream()
+        .map(HTMachineKey::id)
+        .map(Identifier::toString)
+        .map(ops::createString)
 
     //    Entry    //
 
