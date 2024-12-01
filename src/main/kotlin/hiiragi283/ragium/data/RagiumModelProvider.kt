@@ -9,7 +9,6 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.block.ConnectingBlock
 import net.minecraft.data.client.*
 import net.minecraft.item.Item
@@ -178,14 +177,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
-            TextureMap.all(Blocks.WHITE_WOOL)
+            TextureMap.all(RagiumBlocks.BACKPACK_INTERFACE)
         }
-        /*registerFactory(RagiumBlocks.ITEM_DISPLAY, RagiumModels.DISPLAY) {
-            textureMap {
-                put(TextureKey.TOP, Identifier.of("block/oak_log_top"))
-                put(TextureKey.SIDE, Identifier.of("block/oak_log"))
-            }
-        }*/
         registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
             textureMap {
                 put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
