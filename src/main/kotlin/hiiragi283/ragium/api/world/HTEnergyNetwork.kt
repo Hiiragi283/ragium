@@ -57,7 +57,7 @@ class HTEnergyNetwork() :
                 useTransaction(parent) { transaction: Transaction ->
                     val extracted: Long = network.extract(amount, transaction)
                     when {
-                        extracted > 0 -> {
+                        extracted == amount -> {
                             transaction.commit()
                             return true
                         }
@@ -74,7 +74,7 @@ class HTEnergyNetwork() :
                 useTransaction(parent) { transaction: Transaction ->
                     val inserted: Long = network.insert(amount, transaction)
                     when {
-                        inserted > 0 -> {
+                        inserted == amount -> {
                             transaction.commit()
                             return true
                         }

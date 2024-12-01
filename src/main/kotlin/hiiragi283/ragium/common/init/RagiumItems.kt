@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.content.HTArmorType
 import hiiragi283.ragium.api.content.HTToolType
-import hiiragi283.ragium.api.extension.createArmorAttribute
-import hiiragi283.ragium.api.extension.descriptions
-import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
 import net.minecraft.block.Block
@@ -19,6 +16,7 @@ import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.Item
+import net.minecraft.item.SwordItem
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
@@ -188,9 +186,6 @@ object RagiumItems {
     )
 
     @JvmField
-    val BUJIN: Item = HTBujinItem
-
-    @JvmField
     val DYNAMITE: Item = HTDynamiteItem(
         { entity: HTDynamiteEntity, result: HitResult ->
             val pos: Vec3d = result.pos
@@ -239,9 +234,6 @@ object RagiumItems {
     val FORGE_HAMMER: Item = HTForgeHammerItem
 
     @JvmField
-    val GIGANT_HAMMER: Item = HTGigantHammerItem
-
-    @JvmField
     val GUIDE_BOOK: Item = HTGuideBookItem
 
     @JvmField
@@ -272,6 +264,21 @@ object RagiumItems {
     val STEEL_SWORD: Item = HTToolType.SWORD.createToolItem(RagiumToolMaterials.STEEL)
 
     @JvmField
+    val STELLA_SABER: Item =
+        HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, itemSettings().rarity(Rarity.RARE))
+
+    @JvmField
+    val RAGIUM_SABER: Item = SwordItem(
+        RagiumToolMaterials.STELLA,
+        itemSettings()
+            .rarity(Rarity.EPIC)
+            .attributeModifiers(createToolAttribute(RagiumToolMaterials.STELLA, 8.0, -3.0).build()),
+    )
+
+    @JvmField
+    val GIGANT_HAMMER: Item = HTGigantHammerItem
+
+    @JvmField
     val TRADER_CATALOG: Item = HTTraderCatalogItem
 
     @JvmField
@@ -283,7 +290,8 @@ object RagiumItems {
         STEEL_PICKAXE,
         STEEL_SHOVEL,
         STEEL_SWORD,
-        BUJIN,
+        STELLA_SABER,
+        RAGIUM_SABER,
         GIGANT_HAMMER,
         // dynamite
         DYNAMITE,

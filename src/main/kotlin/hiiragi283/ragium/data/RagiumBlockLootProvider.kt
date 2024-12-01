@@ -68,6 +68,9 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.WHITE_LINE)
         addDrop(RagiumBlocks.T_WHITE_LINE)
         addDrop(RagiumBlocks.CROSS_WHITE_LINE)
+        // glass
+        addDrop(RagiumBlocks.STEEL_GLASS)
+        addDrop(RagiumBlocks.RAGIUM_GLASS)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(

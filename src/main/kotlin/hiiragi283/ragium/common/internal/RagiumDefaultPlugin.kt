@@ -88,16 +88,19 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
             set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/generator"))
         }
+        helper.modify(RagiumMachineKeys.ENERGETIC_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTEnergeticGeneratorBlockEntity))
+        }
         helper.modify(RagiumMachineKeys.NUCLEAR_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTNuclearReactorBlockEntity))
         }
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity))
-            // set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/solar_generator"))
-            // set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/solar_generator"))
-            // set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
+            set(
+                HTMachinePropertyKeys.MACHINE_FACTORY,
+                HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity),
+            ) // set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
         }
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSteamGeneratorBlockEntity))

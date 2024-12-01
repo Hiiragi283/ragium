@@ -285,17 +285,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.GIGANT_HAMMER)
-            .patterns(
-                "AAA",
-                "AB ",
-                " B ",
-            ).input('A', RagiumContents.Gems.RAGIUM)
-            .input('B', RagiumBlocks.SHAFT)
-            .unlockedBy(RagiumContents.Gems.RAGIUM)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
             .create(RagiumItems.RAGI_WRENCH)
             .patterns(
                 "A A",
@@ -421,6 +410,40 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumContents.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
             .unlockedBy(RagiumContents.Ingots.STEEL)
+            .offerTo(exporter)
+        // stella
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.STELLA_SABER)
+            .patterns(
+                "B",
+                "A",
+                "A",
+            ).input('A', RagiumItems.STELLA_PLATE)
+            .input('B', RagiumBlocks.SHAFT)
+            .unlockedBy(RagiumItems.STELLA_PLATE)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.RAGIUM_SABER)
+            .patterns(
+                "  A",
+                " A ",
+                "B  ",
+            ).input('A', RagiumContents.Gems.RAGIUM)
+            .input('B', RagiumItems.STELLA_SABER)
+            .unlockedBy(RagiumContents.Gems.RAGIUM)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.GIGANT_HAMMER)
+            .patterns(
+                "ABB",
+                "AC ",
+                " C ",
+            ).input('A', RagiumContents.StorageBlocks.DEEP_STEEL)
+            .input('B', RagiumContents.Gems.RAGIUM)
+            .input('C', RagiumBlocks.SHAFT)
+            .unlockedBy(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter)
         // backpack
         HTShapedRecipeJsonBuilder

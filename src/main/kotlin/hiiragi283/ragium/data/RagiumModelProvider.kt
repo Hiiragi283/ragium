@@ -141,6 +141,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.POLISHED_SLATE)
         registerSlab(RagiumBlocks.POLISHED_SLATE_SLAB, RagiumBlocks.POLISHED_SLATE)
         registerStair(RagiumBlocks.POLISHED_SLATE_STAIRS, RagiumBlocks.POLISHED_SLATE)
+        // glass
+        registerSimple(RagiumBlocks.STEEL_GLASS)
+        registerSimple(RagiumBlocks.RAGIUM_GLASS)
 
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
         registerSimple(RagiumBlocks.CREATIVE_SOURCE)
@@ -365,7 +368,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
 
             add(RagiumBlocks.ROPE)
 
-            remove(RagiumItems.BUJIN)
             remove(RagiumItems.GIGANT_HAMMER)
             remove(RagiumItems.CHOCOLATE_APPLE)
             remove(RagiumItems.EMPTY_FLUID_CUBE)

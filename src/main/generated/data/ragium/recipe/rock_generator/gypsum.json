@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:gypsum"
+  },
+  "definition": {
+    "type": "ragium:rock_generator",
+    "tier": "primitive"
+  },
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "ragium:gypsum"
+    }
+  ]
+}

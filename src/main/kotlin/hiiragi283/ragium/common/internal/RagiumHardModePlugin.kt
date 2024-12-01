@@ -77,6 +77,19 @@ object RagiumHardModePlugin : RagiumPlugin {
             .itemInput(RagiumHardModeContents.COPPER.getContent(hardMode))
             .itemOutput(RagiumItems.LED, 4)
             .offerTo(exporter, RagiumItems.LED)
+        // glasses
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(RagiumHardModeContents.STEEL.getContent(hardMode))
+            .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 4)
+            .itemOutput(RagiumBlocks.STEEL_GLASS, 4)
+            .offerTo(exporter, RagiumBlocks.STEEL_GLASS, "_from_steel")
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(RagiumHardModeContents.DEEP_STEEL.getContent(hardMode))
+            .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 8)
+            .itemOutput(RagiumBlocks.STEEL_GLASS, 8)
+            .offerTo(exporter, RagiumBlocks.STEEL_GLASS, "_from_deep_steel")
 
         craftingMachines(exporter)
     }

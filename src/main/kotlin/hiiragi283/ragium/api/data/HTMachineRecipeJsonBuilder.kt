@@ -7,11 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.recipe.HTFluidIngredient
-import hiiragi283.ragium.api.recipe.HTFluidResult
-import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.recipe.HTItemResult
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
@@ -129,17 +125,6 @@ class HTMachineRecipeJsonBuilder private constructor(
         catalyst = HTItemIngredient.of(tagKey)
     }
 
-    @Deprecated(
-        "Experimental Feature",
-        ReplaceWith(
-            "offerTo(exporter, RagiumAPI.id(output.id.path).withSuffixedPath(suffix))",
-            "hiiragi283.ragium.api.RagiumAPI",
-        ),
-    )
-    fun offerTo(exporter: RecipeExporter, output: TagKey<*>, suffix: String = "") {
-        offerTo(exporter, RagiumAPI.id(output.id.path).withSuffixedPath(suffix))
-    }
-
     fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {
         offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
@@ -155,18 +140,21 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe = HTMachineRecipe(
+        export { recipe: HTMachineRecipe -> exporter.accept(prefixedId, recipe, null) }
+    }
+
+    fun <T : Any> transform(transform: (HTMachineRecipe) -> T): T = transform(
+        HTMachineRecipe(
             HTMachineDefinition(key, tier),
             itemInputs,
             fluidInputs,
             catalyst,
             itemOutputs,
             fluidOutputs,
-        )
-        exporter.accept(
-            prefixedId,
-            recipe,
-            null,
-        )
+        ),
+    )
+
+    fun export(action: (HTMachineRecipe) -> Unit) {
+        transform(action)
     }
 }

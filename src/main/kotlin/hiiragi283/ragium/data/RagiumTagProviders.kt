@@ -195,29 +195,26 @@ object RagiumTagProviders {
                 itemCache.put(tagKey, item1)
             }
 
-            getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(
-                RagiumItems.STEEL_HELMET,
-                RagiumItems.STELLA_GOGGLE,
-            )
-            getOrCreateTagBuilder(ItemTags.CHEST_ARMOR).add(
-                RagiumItems.STEEL_CHESTPLATE,
-                RagiumItems.STELLA_JACKET,
-            )
-            getOrCreateTagBuilder(ItemTags.LEG_ARMOR).add(
-                RagiumItems.STEEL_LEGGINGS,
-                RagiumItems.STELLA_LEGGINGS,
-            )
-            getOrCreateTagBuilder(ItemTags.FOOT_ARMOR).add(
-                RagiumItems.STEEL_BOOTS,
-                RagiumItems.STELLA_BOOTS,
-            )
+            add(ItemTags.HEAD_ARMOR, RagiumItems.STEEL_HELMET)
+            add(ItemTags.HEAD_ARMOR, RagiumItems.STELLA_GOGGLE)
+            add(ItemTags.CHEST_ARMOR, RagiumItems.STEEL_CHESTPLATE)
+            add(ItemTags.CHEST_ARMOR, RagiumItems.STELLA_JACKET)
+            add(ItemTags.LEG_ARMOR, RagiumItems.STEEL_LEGGINGS)
+            add(ItemTags.LEG_ARMOR, RagiumItems.STELLA_LEGGINGS)
+            add(ItemTags.FOOT_ARMOR, RagiumItems.STEEL_BOOTS)
+            add(ItemTags.FOOT_ARMOR, RagiumItems.STELLA_BOOTS)
 
+            add(ItemTags.AXES, RagiumItems.GIGANT_HAMMER)
             add(ItemTags.AXES, RagiumItems.STEEL_AXE)
+            add(ItemTags.HOES, RagiumItems.GIGANT_HAMMER)
             add(ItemTags.HOES, RagiumItems.STEEL_HOE)
+            add(ItemTags.PICKAXES, RagiumItems.GIGANT_HAMMER)
             add(ItemTags.PICKAXES, RagiumItems.STEEL_PICKAXE)
+            add(ItemTags.SHOVELS, RagiumItems.GIGANT_HAMMER)
             add(ItemTags.SHOVELS, RagiumItems.STEEL_SHOVEL)
             add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
-            add(ItemTags.SWORDS, RagiumItems.BUJIN)
+            add(ItemTags.SWORDS, RagiumItems.STELLA_SABER)
+            add(ItemTags.SWORDS, RagiumItems.RAGIUM_SABER)
 
             add(ItemTags.PLANKS, RagiumContents.Plates.WOOD)
             add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)

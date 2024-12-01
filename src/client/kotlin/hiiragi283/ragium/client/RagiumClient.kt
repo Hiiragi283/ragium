@@ -96,11 +96,13 @@ object RagiumClient : ClientModInitializer {
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
+        registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
         registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
-        registerCutoutMipped(RagiumBlocks.WHITE_LINE)
+        registerCutoutMipped(RagiumBlocks.RAGIUM_GLASS)
+        registerCutoutMipped(RagiumBlocks.STEEL_GLASS)
         registerCutoutMipped(RagiumBlocks.T_WHITE_LINE)
-        registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
+        registerCutoutMipped(RagiumBlocks.WHITE_LINE)
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }

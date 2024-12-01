@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:shaft"
+  },
+  "definition": {
+    "type": "ragium:metal_former",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "#c:ingots/deep_steel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:shaft"
+    }
+  ]
+}

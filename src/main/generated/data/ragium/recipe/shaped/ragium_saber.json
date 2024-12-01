@@ -3,22 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:storage_blocks/deep_steel"
-    },
-    "B": {
       "tag": "c:gems/ragium"
     },
-    "C": {
-      "item": "ragium:shaft"
+    "B": {
+      "item": "ragium:stella_saber"
     }
   },
   "pattern": [
-    "ABB",
-    "AC ",
-    " C "
+    "  A",
+    " A ",
+    "B  "
   ],
   "result": {
     "count": 1,
-    "id": "ragium:gigant_hammer"
+    "id": "ragium:ragium_saber"
   }
 }

@@ -95,6 +95,12 @@ object RagiumBlocks {
     val CROSS_WHITE_LINE: Block = HTSurfaceBlock(blockSettings().breakInstantly())
 
     @JvmField
+    val STEEL_GLASS = TransparentBlock(blockSettings(Blocks.GLASS).strength(2f, 1200f))
+
+    @JvmField
+    val RAGIUM_GLASS = TransparentBlock(blockSettings(Blocks.GLASS).strength(2f, 3600000.0F))
+
+    @JvmField
     val BUILDINGS: List<Block> = listOf(
         // asphalt
         ASPHALT,
@@ -121,6 +127,9 @@ object RagiumBlocks {
         WHITE_LINE,
         T_WHITE_LINE,
         CROSS_WHITE_LINE,
+        // glass
+        STEEL_GLASS,
+        RAGIUM_GLASS,
     )
 
     //    Foods    //

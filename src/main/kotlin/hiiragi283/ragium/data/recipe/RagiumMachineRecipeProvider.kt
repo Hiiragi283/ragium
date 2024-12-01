@@ -86,6 +86,13 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.PLUTONIUM_FUEL)
             .offerTo(exporter, RagiumItems.PLUTONIUM_FUEL)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(RagiumContents.Gems.RAGIUM)
+            .itemInput(RagiumBlocks.STEEL_GLASS)
+            .itemOutput(RagiumBlocks.RAGIUM_GLASS)
+            .offerTo(exporter, RagiumBlocks.RAGIUM_GLASS)
         // LED
         // processor
         HTMachineRecipeJsonBuilder
@@ -579,12 +586,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Metal Former    //
 
     private fun metalFormer(exporter: RecipeExporter) {
+        // shaft
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.METAL_FORMER)
             .itemInput(RagiumContents.Ingots.STEEL, 2)
             .itemOutput(RagiumBlocks.SHAFT)
             .catalyst(RagiumBlocks.SHAFT)
-            .offerTo(exporter, RagiumBlocks.SHAFT)
+            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_steel")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.METAL_FORMER)
+            .itemInput(RagiumContents.Ingots.DEEP_STEEL)
+            .itemOutput(RagiumBlocks.SHAFT)
+            .catalyst(RagiumBlocks.SHAFT)
+            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_deep_steel")
     }
 
     //    Rock Generator    //
@@ -604,6 +619,10 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerRock(exporter, Items.BASALT)
         registerRock(exporter, Items.BLACKSTONE)
         registerRock(exporter, Items.END_STONE)
+
+        registerRock(exporter, RagiumBlocks.ASPHALT)
+        registerRock(exporter, RagiumBlocks.GYPSUM)
+        registerRock(exporter, RagiumBlocks.SLATE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ROCK_GENERATOR)

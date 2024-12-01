@@ -186,7 +186,8 @@ object RagiumLangProviders {
             builder.add(RagiumItems.STEEL_PICKAXE, "Steel Pickaxe")
             builder.add(RagiumItems.STEEL_SHOVEL, "Steel Shovel")
             builder.add(RagiumItems.STEEL_SWORD, "Steel Sword")
-            builder.add(RagiumItems.BUJIN, "Bujin")
+            builder.add(RagiumItems.STELLA_SABER, "S.T.E.L.L.A. Saber")
+            builder.add(RagiumItems.RAGIUM_SABER, "Ragium Saber")
 
             builder.add(RagiumItems.BEE_WAX, "Bee Wax")
             builder.add(RagiumItems.BUTTER, "Butter")
@@ -551,7 +552,8 @@ object RagiumLangProviders {
             builder.add(RagiumItems.STEEL_PICKAXE, "スチールのツルハシ")
             builder.add(RagiumItems.STEEL_SHOVEL, "スチールのショベル")
             builder.add(RagiumItems.STEEL_SWORD, "スチールの剣")
-            builder.add(RagiumItems.BUJIN, "武刃")
+            builder.add(RagiumItems.STELLA_SABER, "S.T.E.L.L.A.セイバー")
+            builder.add(RagiumItems.RAGIUM_SABER, "ラギウムセイバー")
 
             builder.add(RagiumItems.BEE_WAX, "蜜蠟")
             builder.add(RagiumItems.BUTTER, "バター")

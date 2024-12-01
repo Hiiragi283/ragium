@@ -220,6 +220,8 @@ internal object RagiumContentRegister {
         registerBlock("white_line", RagiumBlocks.WHITE_LINE)
         registerBlock("t_white_line", RagiumBlocks.T_WHITE_LINE)
         registerBlock("cross_white_line", RagiumBlocks.CROSS_WHITE_LINE)
+        registerBlock("steel_glass", RagiumBlocks.STEEL_GLASS)
+        registerBlock("ragium_glass", RagiumBlocks.RAGIUM_GLASS)
         registerBlockItem(RagiumBlocks.ASPHALT)
         registerBlockItem(RagiumBlocks.ASPHALT_SLAB)
         registerBlockItem(RagiumBlocks.ASPHALT_STAIRS)
@@ -241,6 +243,8 @@ internal object RagiumContentRegister {
         registerBlockItem(RagiumBlocks.WHITE_LINE)
         registerBlockItem(RagiumBlocks.T_WHITE_LINE)
         registerBlockItem(RagiumBlocks.CROSS_WHITE_LINE)
+        registerBlockItem(RagiumBlocks.STEEL_GLASS)
+        registerBlockItem(RagiumBlocks.RAGIUM_GLASS)
 
         registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
         registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -339,7 +343,8 @@ internal object RagiumContentRegister {
         registerItem("steel_pickaxe", RagiumItems.STEEL_PICKAXE)
         registerItem("steel_shovel", RagiumItems.STEEL_SHOVEL)
         registerItem("steel_sword", RagiumItems.STEEL_SWORD)
-        registerItem("bujin", RagiumItems.BUJIN)
+        registerItem("stella_saber", RagiumItems.STELLA_SABER)
+        registerItem("ragium_saber", RagiumItems.RAGIUM_SABER)
         registerItem("gigant_hammer", RagiumItems.GIGANT_HAMMER)
 
         registerItem("dynamite", RagiumItems.DYNAMITE)

@@ -54,6 +54,10 @@ object RagiumBlockEntityTypes {
         register("enchantment_bookshelf", ::HTEnchantmentBookshelfBlockEntity)
 
     @JvmField
+    val ENERGETIC_GENERATOR: BlockEntityType<HTEnergeticGeneratorBlockEntity> =
+        register("energetic_generator", ::HTEnergeticGeneratorBlockEntity)
+
+    @JvmField
     val DISTILLATION_TOWER: BlockEntityType<HTDistillationTowerBlockEntity> =
         register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
@@ -165,6 +169,7 @@ object RagiumBlockEntityTypes {
             registerMachineBlocks(it, SIMPLE_GENERATOR)
         }
         registerMachineBlocks(RagiumMachineKeys.COMBUSTION_GENERATOR, COMBUSTION_GENERATOR)
+        registerMachineBlocks(RagiumMachineKeys.ENERGETIC_GENERATOR, ENERGETIC_GENERATOR)
         registerMachineBlocks(RagiumMachineKeys.NUCLEAR_REACTOR, NUCLEAR_REACTOR)
         registerMachineBlocks(RagiumMachineKeys.STEAM_GENERATOR, STEAM_GENERATOR)
         registerMachineBlocks(RagiumMachineKeys.THERMAL_GENERATOR, THERMAL_GENERATOR)
