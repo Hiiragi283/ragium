@@ -98,6 +98,9 @@ object RagiumClient : ClientModInitializer {
 
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
         registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
+        registerCutoutMipped(RagiumBlocks.WHITE_LINE)
+        registerCutoutMipped(RagiumBlocks.T_WHITE_LINE)
+        registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }

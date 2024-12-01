@@ -105,6 +105,9 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.POLISHED_SLATE, "Polished Slate")
             builder.add(RagiumBlocks.POLISHED_SLATE_SLAB, "Polished Slate Slab")
             builder.add(RagiumBlocks.POLISHED_SLATE_STAIRS, "Polished Slate Stairs")
+            builder.add(RagiumBlocks.WHITE_LINE, "White Line")
+            builder.add(RagiumBlocks.T_WHITE_LINE, "White Line (T)")
+            builder.add(RagiumBlocks.CROSS_WHITE_LINE, "White Line (Cross)")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -477,6 +480,9 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.POLISHED_SLATE, "磨かれたスレート")
             builder.add(RagiumBlocks.POLISHED_SLATE_SLAB, "磨かれたスレートのハーフブロック")
             builder.add(RagiumBlocks.POLISHED_SLATE_STAIRS, "磨かれたスレートの階段")
+            builder.add(RagiumBlocks.WHITE_LINE, "白線")
+            builder.add(RagiumBlocks.T_WHITE_LINE, "白線（T字）")
+            builder.add(RagiumBlocks.CROSS_WHITE_LINE, "白線（交差）")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")

@@ -176,6 +176,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerStaticModel(RagiumBlocks.ROPE)
         registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
+        registerFactory(RagiumBlocks.CROSS_WHITE_LINE, Models.CARPET) {
+            TextureMap.wool(RagiumBlocks.CROSS_WHITE_LINE)
+        }
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
             TextureMap.all(RagiumBlocks.BACKPACK_INTERFACE)
         }
@@ -205,6 +208,23 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // supplier
+        listOf(RagiumBlocks.WHITE_LINE, RagiumBlocks.T_WHITE_LINE).forEach { block ->
+            registerSupplier(
+                block,
+                VariantsBlockStateSupplier
+                    .create(
+                        block,
+                        stateVariantOf(
+                            Models.CARPET.upload(
+                                block,
+                                TextureMap.wool(block),
+                                generator.modelCollector,
+                            ),
+                        ),
+                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+            )
+        }
+
         registerSupplier(
             RagiumBlocks.MANUAL_GRINDER,
             buildMultipartState(RagiumBlocks.MANUAL_GRINDER) {

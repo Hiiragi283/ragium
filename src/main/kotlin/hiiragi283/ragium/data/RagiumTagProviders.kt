@@ -57,21 +57,24 @@ object RagiumTagProviders {
             add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
 
             add(BlockTags.SLABS, RagiumBlocks.ASPHALT_SLAB)
-            // add(BlockTags.SLABS, RagiumBlocks.LINED_ASPHALT_SLAB)
             add(BlockTags.SLABS, RagiumBlocks.POLISHED_ASPHALT_SLAB)
             add(BlockTags.SLABS, RagiumBlocks.GYPSUM_SLAB)
             add(BlockTags.SLABS, RagiumBlocks.POLISHED_GYPSUM_SLAB)
             add(BlockTags.STAIRS, RagiumBlocks.ASPHALT_STAIRS)
-            // add(BlockTags.STAIRS, RagiumBlocks.LINED_ASPHALT_STAIRS)
             add(BlockTags.STAIRS, RagiumBlocks.POLISHED_ASPHALT_STAIRS)
             add(BlockTags.STAIRS, RagiumBlocks.GYPSUM_STAIRS)
             add(BlockTags.STAIRS, RagiumBlocks.POLISHED_GYPSUM_SLAB)
 
-            RagiumBlocks.BUILDINGS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
-            RagiumBlocks.MECHANICS.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
+
             buildList {
+                addAll(RagiumBlocks.BUILDINGS)
+                addAll(RagiumBlocks.MECHANICS)
                 addAll(RagiumBlocks.MISC)
+
+                remove(RagiumBlocks.WHITE_LINE)
+                remove(RagiumBlocks.T_WHITE_LINE)
+                remove(RagiumBlocks.CROSS_WHITE_LINE)
                 remove(RagiumBlocks.ROPE)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
             add(BlockTags.AXE_MINEABLE, RagiumBlocks.ROPE)

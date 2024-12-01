@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
+import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
@@ -88,6 +89,9 @@ class HTItemIngredient private constructor(
 
     val matchingStacks: List<ItemStack>
         get() = entryMap.map { (item: Item, count: Int) -> ItemStack(item, count) }
+
+    val vanillaIngredient: Ingredient
+        get() = entryList.storage.map(Ingredient::fromTag, Ingredient::ofItems)
 
     override fun test(stack: ItemStack): Boolean = when (stack.isEmpty) {
         true -> this.isEmpty

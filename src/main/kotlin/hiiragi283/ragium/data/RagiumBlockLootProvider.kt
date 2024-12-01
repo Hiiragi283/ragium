@@ -64,6 +64,10 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.POLISHED_SLATE)
         addDrop(RagiumBlocks.POLISHED_SLATE_SLAB, ::slabDrops)
         addDrop(RagiumBlocks.POLISHED_SLATE_STAIRS)
+        // white line
+        addDrop(RagiumBlocks.WHITE_LINE)
+        addDrop(RagiumBlocks.T_WHITE_LINE)
+        addDrop(RagiumBlocks.CROSS_WHITE_LINE)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(

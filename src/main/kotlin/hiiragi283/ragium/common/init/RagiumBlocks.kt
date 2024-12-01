@@ -86,6 +86,15 @@ object RagiumBlocks {
     val POLISHED_SLATE_STAIRS = StairsBlock(POLISHED_SLATE.defaultState, blockSettings(POLISHED_SLATE))
 
     @JvmField
+    val WHITE_LINE: Block = HTSurfaceLineBlock(blockSettings().breakInstantly())
+
+    @JvmField
+    val T_WHITE_LINE: Block = HTSurfaceLineBlock(blockSettings().breakInstantly())
+
+    @JvmField
+    val CROSS_WHITE_LINE: Block = HTSurfaceBlock(blockSettings().breakInstantly())
+
+    @JvmField
     val BUILDINGS: List<Block> = listOf(
         // asphalt
         ASPHALT,
@@ -108,6 +117,10 @@ object RagiumBlocks {
         POLISHED_SLATE,
         POLISHED_SLATE_SLAB,
         POLISHED_SLATE_STAIRS,
+        // white line
+        WHITE_LINE,
+        T_WHITE_LINE,
+        CROSS_WHITE_LINE,
     )
 
     //    Foods    //
