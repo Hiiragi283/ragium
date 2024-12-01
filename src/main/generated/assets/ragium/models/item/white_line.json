@@ -1,3 +1,6 @@
 {
-  "parent": "ragium:block/white_line"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ragium:block/white_line"
+  }
 }

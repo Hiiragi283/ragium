@@ -176,6 +176,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerStaticModel(RagiumBlocks.ROPE)
         registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
+        generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.CROSS_WHITE_LINE)
         registerFactory(RagiumBlocks.CROSS_WHITE_LINE, Models.CARPET) {
             TextureMap.wool(RagiumBlocks.CROSS_WHITE_LINE)
         }
@@ -208,7 +209,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             }
         }
         // supplier
-        listOf(RagiumBlocks.WHITE_LINE, RagiumBlocks.T_WHITE_LINE).forEach { block ->
+        listOf(RagiumBlocks.WHITE_LINE, RagiumBlocks.T_WHITE_LINE).forEach { block: Block ->
+            generator.excludeFromSimpleItemModelGeneration(block)
             registerSupplier(
                 block,
                 VariantsBlockStateSupplier
@@ -382,5 +384,17 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             TextureMap.getId(RagiumItems.CHOCOLATE_APPLE.asItem()),
         )
         register(RagiumItems.FILLED_FLUID_CUBE.asItem(), RagiumModels.FILLED_FLUID_CUBE)
+
+        listOf(
+            RagiumBlocks.WHITE_LINE,
+            RagiumBlocks.T_WHITE_LINE,
+            RagiumBlocks.CROSS_WHITE_LINE,
+        ).forEach { block: Block ->
+            Models.GENERATED.upload(
+                TextureMap.getId(block.asItem()),
+                TextureMap.layer0(block),
+                generator.writer,
+            )
+        }
     }
 }

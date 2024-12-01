@@ -45,7 +45,7 @@ class HTMachineInput private constructor(
     override fun isEmpty(): Boolean {
         val bool1: Boolean = itemInputs.isEmpty() || itemInputs.all(ItemStack::isEmpty)
         val bool2: Boolean = fluidInputs.isEmpty() || fluidInputs.all(ResourceAmount<FluidVariant>::isBlank)
-        return bool1 && bool2
+        return bool1 && bool2 && catalyst.isEmpty
     }
 
     //    Builder    //

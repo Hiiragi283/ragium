@@ -57,6 +57,9 @@ fun BlockEntity.createContext(): ScreenHandlerContext = world?.let { ScreenHandl
 
 //    BlockPos    //
 
+val BlockPos.aroundPos: List<BlockPos>
+    get() = Direction.entries.map(this::offset)
+
 fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direction.entries.map(this::offset).filter(filter)
 
 //    ChunkPos    //

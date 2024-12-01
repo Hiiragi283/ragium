@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:andesite"
+  },
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "primitive"

@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:blackstone"
+  },
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "primitive"

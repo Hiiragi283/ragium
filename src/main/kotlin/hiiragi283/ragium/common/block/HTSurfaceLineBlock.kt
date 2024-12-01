@@ -14,7 +14,6 @@ class HTSurfaceLineBlock(settings: Settings) : HTSurfaceBlock(settings) {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }
 
-
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
         defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
 

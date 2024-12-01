@@ -76,6 +76,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
+        helper.modify(RagiumMachineKeys.ROCK_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTRockGeneratorBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
+        }
         // generators
         helper.modify(RagiumMachineKeys.GENERATORS::contains) {
         }

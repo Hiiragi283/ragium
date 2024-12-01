@@ -159,6 +159,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.CANNING_MACHINE, CANNING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
+        registerMachineBlocks(RagiumMachineKeys.ROCK_GENERATOR, ROCK_GENERATOR)
         // generators
         RagiumMachineKeys.GENERATORS.forEach {
             registerMachineBlocks(it, SIMPLE_GENERATOR)

@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:end_stone"
+  },
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "primitive"

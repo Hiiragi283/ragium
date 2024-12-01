@@ -608,6 +608,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ROCK_GENERATOR)
             .fluidInput(Fluids.LAVA)
+            .catalyst(Items.OBSIDIAN)
             .itemOutput(Items.OBSIDIAN)
             .offerTo(exporter, Items.OBSIDIAN)
     }
@@ -615,6 +616,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun registerRock(exporter: RecipeExporter, rock: ItemConvertible) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ROCK_GENERATOR)
+            .catalyst(rock)
             .itemOutput(rock, 8)
             .offerTo(exporter, rock)
     }
