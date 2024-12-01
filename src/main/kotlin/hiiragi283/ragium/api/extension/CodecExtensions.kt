@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
@@ -25,6 +24,7 @@ import net.minecraft.util.StringIdentifiable
 import net.minecraft.world.World
 import java.util.*
 import java.util.function.Function
+import com.mojang.datafixers.util.Pair as MPair
 
 //    Network    //
 
@@ -60,14 +60,14 @@ fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STR
     StringIdentifiable::asString,
 )
 
-fun <A : Any, B : Any> pairCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Pair<A, B>> = Codec.pair(first.codec(), second.codec())
+fun <A : Any, B : Any> pairCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<MPair<A, B>> = Codec.pair(first.codec(), second.codec())
 
 fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> = pairCodecOf(first, second)
     .toMap()
 
-fun <A : Any, B : Any> Codec<Pair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf().xmap(
-    { pairs: List<Pair<A, B>> -> pairs.associate { it.first to it.second } },
-    { map: Map<A, B> -> map.toList().map { Pair(it.first, it.second) } },
+fun <A : Any, B : Any> Codec<MPair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf().xmap(
+    { pairs: List<MPair<A, B>> -> pairs.associate(MPair<A, B>::toKotlin) },
+    { map: Map<A, B> -> map.toList().map(Pair<A, B>::toMojang) },
 )
 
 fun longRangeCodec(min: Long, max: Long): Codec<Long> {
@@ -118,3 +118,13 @@ fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T
 
 fun <T : Any> T?.toDataResult(errorMessage: () -> String): DataResult<T> =
     this?.let(DataResult<T>::success) ?: DataResult.error(errorMessage)
+
+//    Pair    //
+
+fun <F : Any, S : Any> Pair<F, S>.toMojang(): MPair<F, S> = MPair(first, second)
+
+fun <F : Any, S : Any> MPair<F, S>.toKotlin(): Pair<F, S> = first to second
+
+operator fun <F : Any, S : Any> MPair<F, S>.component1(): F = first
+
+operator fun <F : Any, S : Any> MPair<F, S>.component2(): S = second

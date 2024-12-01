@@ -72,7 +72,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
         consumer(tier.recipeCostText)
         consumer(tier.recipeCostText)
         // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer, this, tier)
-        if (descriptionText.hasValidTranslation() || allowDescription) {
+        if (descriptionText.hasValidTranslation() && allowDescription) {
             consumer(descriptionText)
         }
     }

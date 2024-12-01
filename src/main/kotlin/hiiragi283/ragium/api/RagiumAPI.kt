@@ -38,38 +38,30 @@ interface RagiumAPI {
         @JvmStatic
         fun getInstance(): RagiumAPI = InternalRagiumAPI
 
-        private lateinit var plugins: List<RagiumPlugin>
-
         @JvmStatic
-        fun getPlugins(): List<RagiumPlugin> {
-            if (!::plugins.isInitialized) {
-                plugins = buildList {
-                    addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.SERVER_KEY))
-                    if (isClientEnv()) {
-                        addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.CLIENT_KEY))
-                    }
-                }.sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
-                    .filter(RagiumPlugin::shouldLoad)
-                log {
-                    info("=== Loaded Ragium Plugins ===")
-                    plugins.forEach { plugin: RagiumPlugin ->
-                        info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
-                    }
-                    info("=============================")
+        val plugins: List<RagiumPlugin> by lazy {
+            LOGGER.info("=== Loaded Ragium Plugins ===")
+            buildList {
+                addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.SERVER_KEY))
+                if (isClientEnv()) {
+                    addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.CLIENT_KEY))
                 }
-            }
-            return plugins
+            }.sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
+                .filter(RagiumPlugin::shouldLoad)
+                .onEach { plugin: RagiumPlugin ->
+                    LOGGER.info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
+                }.apply { LOGGER.info("=============================") }
         }
 
         @JvmStatic
         fun forEachPlugins(action: Consumer<RagiumPlugin>) {
-            getPlugins().forEach(action)
+            plugins.forEach(action)
         }
 
         @JvmName("forEachPluginsKt")
         @JvmStatic
         inline fun forEachPlugins(action: (RagiumPlugin) -> Unit) {
-            getPlugins().forEach(action)
+            plugins.forEach(action)
         }
     }
 

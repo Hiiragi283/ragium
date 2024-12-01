@@ -6,11 +6,8 @@ import hiiragi283.ragium.data.recipe.RagiumMachineRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumVanillaRecipeProvider
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.item.Item
 import net.minecraft.registry.Registerable
 import net.minecraft.registry.RegistryBuilder
-import net.minecraft.registry.RegistryEntryLookup
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.world.gen.feature.ConfiguredFeature
 
@@ -35,16 +32,16 @@ object RagiumDataGenerator : DataGeneratorEntrypoint {
 
     override fun buildRegistry(registryBuilder: RegistryBuilder) {
         if (System.getProperty("fabric-api.datagen.modid") != RagiumAPI.MOD_ID) return
-        registryBuilder.addRegistry(RegistryKeys.ENCHANTMENT) { registerable: Registerable<Enchantment> ->
+        /*registryBuilder.addRegistry(RegistryKeys.ENCHANTMENT) { registerable: Registerable<Enchantment> ->
             val enchantmentLookup: RegistryEntryLookup<Enchantment> = registerable.getRegistryLookup(RegistryKeys.ENCHANTMENT)
             val itemLookup: RegistryEntryLookup<Item> = registerable.getRegistryLookup(RegistryKeys.ITEM)
 
-            /*RagiumDynamicRegistryProvider.Bootstraps.registerEnchantments(
+            RagiumDynamicRegistryProvider.Bootstraps.registerEnchantments(
                 registerable::register,
                 enchantmentLookup,
                 itemLookup,
-            )*/
-        }
+            )
+        }*/
 
         registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE) { registerable: Registerable<ConfiguredFeature<*, *>> ->
             RagiumDynamicRegistryProvider.Bootstraps.registerConfigured(registerable::register)
