@@ -10,10 +10,7 @@ import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
-import hiiragi283.ragium.common.block.transfer.HTCrossPipeBlock
-import hiiragi283.ragium.common.block.transfer.HTExporterBlock
-import hiiragi283.ragium.common.block.transfer.HTPipeBlock
-import hiiragi283.ragium.common.block.transfer.HTPipeStationBlock
+import hiiragi283.ragium.common.block.transfer.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTRopeBlockItem
 import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
@@ -153,6 +150,11 @@ internal object RagiumContentRegister {
         RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
             val block = HTPipeStationBlock(station.pipeType)
             registerBlock(station, block)
+            registerBlockItem(block, itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION)))
+        }
+        RagiumContents.FilteringPipe.entries.forEach { filtering: RagiumContents.FilteringPipe ->
+            val block = HTFilteringPipeBlock(filtering.pipeType)
+            registerBlock(filtering, block)
             registerBlockItem(block, itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION)))
         }
         RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->

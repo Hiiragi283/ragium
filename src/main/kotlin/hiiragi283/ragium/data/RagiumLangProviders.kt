@@ -108,6 +108,8 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.WHITE_LINE, "White Line")
             builder.add(RagiumBlocks.T_WHITE_LINE, "White Line (T)")
             builder.add(RagiumBlocks.CROSS_WHITE_LINE, "White Line (Cross)")
+            builder.add(RagiumBlocks.STEEL_GLASS, "Steel Glass")
+            builder.add(RagiumBlocks.RAGIUM_GLASS, "Ragium Glass")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
@@ -139,6 +141,9 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.PipeStations.ITEM, "Item Pipe Station")
             builder.add(RagiumContents.PipeStations.FLUID, "Fluid Pipe Station")
+
+            builder.add(RagiumContents.FilteringPipe.ITEM, "Item Filtering Pipe")
+            builder.add(RagiumContents.FilteringPipe.FLUID, "Fluid Filtering Pipe")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "Place lights in area of %s block radius")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "Extend processor machine inside the multiblock")
@@ -483,6 +488,8 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.WHITE_LINE, "白線")
             builder.add(RagiumBlocks.T_WHITE_LINE, "白線（T字）")
             builder.add(RagiumBlocks.CROSS_WHITE_LINE, "白線（交差）")
+            builder.add(RagiumBlocks.STEEL_GLASS, "鋼鉄ガラス")
+            builder.add(RagiumBlocks.RAGIUM_GLASS, "ラギウムガラス")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
@@ -514,6 +521,9 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.PipeStations.ITEM, "アイテムパイプステーション")
             builder.add(RagiumContents.PipeStations.FLUID, "液体パイプステーション")
+
+            builder.add(RagiumContents.FilteringPipe.ITEM, "アイテムフィルタリングパイプ")
+            builder.add(RagiumContents.FilteringPipe.FLUID, "液体フィルタリングパイプ")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "半径%sブロックの範囲に光源を自動で設置する")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "マルチブロック内の加工機械を拡張する")

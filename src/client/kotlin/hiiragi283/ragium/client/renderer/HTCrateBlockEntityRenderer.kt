@@ -16,7 +16,7 @@ object HTCrateBlockEntityRenderer : BlockEntityRenderer<HTCrateBlockEntity> {
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
         light: Int,
-        overlay: Int
+        overlay: Int,
     ) {
         val front: Direction = entity.cachedState.get(Properties.FACING)
         renderItem(
@@ -25,7 +25,7 @@ object HTCrateBlockEntityRenderer : BlockEntityRenderer<HTCrateBlockEntity> {
             entity.previewStack,
             matrices,
             vertexConsumers,
-            light = light
+            light = light,
         )
     }
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTCrossDirection
 import hiiragi283.ragium.common.RagiumContents
@@ -342,8 +343,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
-        RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
-            val block: Block = station.value
+        buildList {
+            addAll(RagiumContents.PipeStations.entries)
+            addAll(RagiumContents.FilteringPipe.entries)
+        }.forEach { pipe: HTContent<Block> ->
+            val block: Block = pipe.value
             // blockstate
             registerSupplier(
                 block,

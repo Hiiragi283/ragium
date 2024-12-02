@@ -65,7 +65,7 @@ fun renderItem(
     scale: Float = 1.0f,
     pitch: Float = 0.0f,
     yaw: Float = 0.0f,
-    light: Int = 15728880
+    light: Int = 15728880,
 ) {
     if (world == null) return
     matrices.push()

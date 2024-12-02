@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.RagiumContents
@@ -13,10 +14,8 @@ import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.transfer.HTCrossPipeBlockEntity
-import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
-import hiiragi283.ragium.common.block.transfer.HTPipeBlockEntity
-import hiiragi283.ragium.common.block.transfer.HTPipeStationBlockEntity
+import hiiragi283.ragium.common.block.transfer.*
+import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -103,6 +102,10 @@ object RagiumBlockEntityTypes {
         register("drain", ::HTDrainBlockEntity)
 
     @JvmField
+    val FILTERING_PIPE: BlockEntityType<HTFilteringPipeBlockEntity> =
+        register("filtering_pipe", ::HTFilteringPipeBlockEntity)
+
+    @JvmField
     val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
         register("fluid_drill", ::HTFluidDrillBlockEntity)
 
@@ -170,24 +173,15 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        RagiumContents.Exporters.entries
-            .map(RagiumContents.Exporters::value)
-            .forEach(EXPORTER::addSupportedBlock)
-        RagiumContents.Pipes.entries
-            .map(RagiumContents.Pipes::value)
-            .forEach(PIPE::addSupportedBlock)
-        RagiumContents.CrossPipes.entries
-            .map(RagiumContents.CrossPipes::value)
-            .forEach(CROSS_PIPE::addSupportedBlock)
-        RagiumContents.PipeStations.entries
-            .map(RagiumContents.PipeStations::value)
-            .forEach(PIPE_STATION::addSupportedBlock)
-        RagiumContents.Crates.entries
-            .map(RagiumContents.Crates::value)
-            .forEach(CRATE::addSupportedBlock)
-        RagiumContents.Drums.entries
-            .map(RagiumContents.Drums::value)
-            .forEach(DRUM::addSupportedBlock)
+        registerBlocks(CROSS_PIPE, RagiumContents.CrossPipes.entries)
+        registerBlocks(EXPORTER, RagiumContents.Exporters.entries)
+        registerBlocks(FILTERING_PIPE, RagiumContents.FilteringPipe.entries)
+        registerBlocks(PIPE, RagiumContents.Pipes.entries)
+        registerBlocks(PIPE_STATION, RagiumContents.PipeStations.entries)
+
+        registerBlocks(CRATE, RagiumContents.PipeStations.entries)
+        registerBlocks(DRUM, RagiumContents.Drums.entries)
+
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         LARGE_PROCESSOR.addSupportedBlock(RagiumBlocks.LARGE_PROCESSOR)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
@@ -220,6 +214,11 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
         registerMachineBlocks(RagiumMachineKeys.SAW_MILL, SAW_MILL)
+    }
+
+    @JvmStatic
+    private fun registerBlocks(type: BlockEntityType<*>, blocks: Collection<HTContent<Block>>) {
+        blocks.map(HTContent<Block>::value).forEach(type::addSupportedBlock)
     }
 
     @JvmStatic

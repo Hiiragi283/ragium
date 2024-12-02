@@ -83,14 +83,14 @@ abstract class HTScreenHandlerBase(
         addSlot(HTOutputSlot(inventory, index, getSlotPosX(x), getSlotPosY(y)))
     }
 
-    protected fun addPlayerInv() {
+    protected fun addPlayerInv(yOffset: Int = 0) {
         // inventory
         (0..26).forEach { index: Int ->
-            addSlot(Slot(playerInv, index + 9, getSlotPosX(index % 9), getSlotPosY(3 + (index / 9)) + 12))
+            addSlot(Slot(playerInv, index + 9, getSlotPosX(index % 9), getSlotPosY(3 + (index / 9)) + 12 + yOffset))
         }
         // hotbar
         (0..8).forEach { index: Int ->
-            addSlot(Slot(playerInv, index, getSlotPosX(index), getSlotPosY(7) - 2))
+            addSlot(Slot(playerInv, index, getSlotPosX(index), getSlotPosY(7) - 2 + yOffset))
         }
     }
 }

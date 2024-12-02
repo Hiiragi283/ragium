@@ -43,7 +43,9 @@ public abstract class RecipeManagerMixin {
             public void accept(Identifier recipeId, Recipe<?> recipe, @Nullable AdvancementEntry advancement) {
                 RecipeEntry<?> entry = new RecipeEntry<>(recipeId, recipe);
                 map1.put(recipe.getType(), entry);
-                map2.put(recipeId, entry);
+                if (map2.put(recipeId, entry) != null) {
+                    RagiumAPI.getLOGGER().warn("Recipe: {} was replaced!", recipeId);
+                }
             }
 
             @Override
@@ -51,7 +53,10 @@ public abstract class RecipeManagerMixin {
                 return new Advancement.Builder();
             }
         };
-        RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> RagiumAPI.forEachPlugins(plugin -> plugin.registerRuntimeRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper())));
+        RagiumAPI.forEachPlugins(plugin -> {
+            plugin.registerRuntimeRecipe(exporter);
+            RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> plugin.registerRuntimeMaterialRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper()));
+        });
         recipesByType = map1;
         recipesById = map2;
         RagiumAPI.getLOGGER().info("Registered runtime recipes!");

@@ -340,7 +340,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumContents.RawMaterials.entries)
     }
 
-    override fun registerRuntimeRecipes(
+    override fun registerRuntimeMaterialRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
         entry: HTMaterialRegistry.Entry,

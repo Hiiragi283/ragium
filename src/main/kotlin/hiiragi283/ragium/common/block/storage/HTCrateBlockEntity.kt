@@ -30,7 +30,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
     private var itemStorage: SingleItemStorage = HTStorageIO.GENERIC.createItemStorage(tier.bucketUnit * 8)
 
     val previewStack: ItemStack = itemStorage.variant.toStack()
-    
+
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         itemStorage.writeNbt(nbt, wrapperLookup)

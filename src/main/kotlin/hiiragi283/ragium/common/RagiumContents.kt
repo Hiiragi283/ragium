@@ -146,6 +146,8 @@ object RagiumContents {
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
 
         // tier4
         NETHERITE(RagiumMaterialKeys.NETHERITE),
@@ -274,6 +276,19 @@ object RagiumContents {
 
         override val delegated: HTContent<Block> =
             HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe_station"))
+
+        override fun asItem(): Item = value.asItem()
+    }
+
+    enum class FilteringPipe(val pipeType: HTPipeType) :
+        HTContent.Delegated<Block>,
+        ItemConvertible {
+        ITEM(HTPipeType.ITEM),
+        FLUID(HTPipeType.FLUID),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_filtering_pipe"))
 
         override fun asItem(): Item = value.asItem()
     }

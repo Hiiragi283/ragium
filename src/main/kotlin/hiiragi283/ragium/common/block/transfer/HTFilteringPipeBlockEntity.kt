@@ -3,13 +3,21 @@ package hiiragi283.ragium.common.block.transfer
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.screen.HTFilteringPipeScreenHandler
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.block.BlockState
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.screen.ScreenHandler
+import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTPipeStationBlockEntity(pos: BlockPos, state: BlockState) :
-    HTPipeBlockEntityBase(RagiumBlockEntityTypes.PIPE_STATION, pos, state) {
+class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
+    HTPipeBlockEntityBase(RagiumBlockEntityTypes.FILTERING_PIPE, pos, state),
+    ExtendedScreenHandlerFactory<HTPipeType> {
     init {
         this.tier = HTMachineTier.ADVANCED
     }
@@ -37,4 +45,13 @@ class HTPipeStationBlockEntity(pos: BlockPos, state: BlockState) :
         }
         super.tickSecond(world, pos, state)
     }
+
+    //    ExtendedScreenHandlerFactory    //
+
+    override fun getDisplayName(): Text = Text.empty()
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+        HTFilteringPipeScreenHandler(syncId, playerInventory, type)
+
+    override fun getScreenOpeningData(player: ServerPlayerEntity): HTPipeType = type
 }

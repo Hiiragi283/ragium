@@ -83,6 +83,22 @@ abstract class HTPipeBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, st
         }
     }
 
+    protected fun moveItem(world: World, pos: BlockPos, front: Direction): Boolean = StorageUtil.move(
+        itemStorage,
+        getFrontItemStorage(world, pos, front),
+        { true },
+        type.getItemCount(tier),
+        null,
+    ) > 0
+
+    protected fun moveFluid(world: World, pos: BlockPos, front: Direction): Boolean = StorageUtil.move(
+        fluidStorage,
+        getFrontFluidStorage(world, pos, front),
+        { true },
+        type.getFluidCount(tier),
+        null,
+    ) > 0
+
     //    SidedStorageBlockEntity    //
 
     val itemStorage: SingleItemStorage =

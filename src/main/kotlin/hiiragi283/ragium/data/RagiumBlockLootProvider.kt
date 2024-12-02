@@ -108,6 +108,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.Pipes.entries)
             addAll(RagiumContents.CrossPipes.entries)
             addAll(RagiumContents.PipeStations.entries)
+            addAll(RagiumContents.FilteringPipe.entries)
         }.map { it.value }.forEach(::addDrop)
 
         RagiumContents.Crates.entries

@@ -87,9 +87,11 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
 
+                addAll(RagiumContents.Exporters.entries)
                 addAll(RagiumContents.Pipes.entries)
                 addAll(RagiumContents.CrossPipes.entries)
                 addAll(RagiumContents.PipeStations.entries)
+                addAll(RagiumContents.FilteringPipe.entries)
 
                 addAll(RagiumContents.Crates.entries)
                 addAll(RagiumContents.Drums.entries)
@@ -106,6 +108,7 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Pipes.entries)
                 addAll(RagiumContents.CrossPipes.entries)
                 addAll(RagiumContents.PipeStations.entries)
+                addAll(RagiumContents.FilteringPipe.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->

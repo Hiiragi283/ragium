@@ -91,6 +91,7 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.Pipes.entries)
             addAll(RagiumContents.CrossPipes.entries)
             addAll(RagiumContents.PipeStations.entries)
+            addAll(RagiumContents.FilteringPipe.entries)
         }.map(HTContent<Block>::value).forEach(::registerCutoutMipped)
 
         RagiumAPI
@@ -178,6 +179,8 @@ object RagiumClient : ClientModInitializer {
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SMALL_MACHINE, ::HTSmallMachineScreen)
+
+        HandledScreens.register(RagiumScreenHandlerTypes.FILTERING_PIPE, ::HTFilteringPipeScreen)
     }
 
     //    Events    //
