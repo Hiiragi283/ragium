@@ -13,6 +13,42 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
+    //    Transfer    //
+
+    @JvmField
+    val BUFFER: BlockEntityType<HTBufferBlockEntity> =
+        register("buffer", ::HTBufferBlockEntity)
+
+    @JvmField
+    val CROSS_PIPE: BlockEntityType<HTCrossPipeBlockEntity> =
+        register("cross_pipe", ::HTCrossPipeBlockEntity)
+
+    @JvmField
+    val DRUM: BlockEntityType<HTDrumBlockEntity> =
+        register("drum", ::HTDrumBlockEntity)
+
+    @JvmField
+    val EXPORTER: BlockEntityType<HTExporterBlockEntity> =
+        register("exporter", ::HTExporterBlockEntity)
+
+    @JvmField
+    val PIPE: BlockEntityType<HTPipeBlockEntity> =
+        register("pipe", ::HTPipeBlockEntity)
+
+    //    Machine    //
+
+    @JvmField
+    val MANUAL_FORGE: BlockEntityType<HTManualForgeBlockEntity> =
+        register("manual_forge", ::HTManualForgeBlockEntity)
+
+    @JvmField
+    val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
+        register("manual_grinder", ::HTManualGrinderBlockEntity)
+
+    @JvmField
+    val MANUAL_MIXER: BlockEntityType<HTManualMixerBlockEntity> =
+        register("manual_mixer", ::HTManualMixerBlockEntity)
+
     @JvmField
     val BIOMASS_FERMENTER: BlockEntityType<HTBiomassFermenterBlockEntity> =
         register("biomass_fermenter", ::HTBiomassFermenterBlockEntity)
@@ -22,16 +58,8 @@ object RagiumBlockEntityTypes {
         register("blast_furnace", ::HTBlastFurnaceBlockEntity)
 
     @JvmField
-    val BUFFER: BlockEntityType<HTBufferBlockEntity> =
-        register("buffer", ::HTBufferBlockEntity)
-
-    @JvmField
     val CANNING_MACHINE: BlockEntityType<HTCanningMachineBlockEntity> =
         register("exporter", ::HTCanningMachineBlockEntity)
-
-    @JvmField
-    val AUTO_ILLUMINATOR: BlockEntityType<HTAutoIlluminatorBlockEntity> =
-        register("auto_illuminator", ::HTAutoIlluminatorBlockEntity)
 
     @JvmField
     val BEDROCK_MINER: BlockEntityType<HTBedrockMinerBlockEntity> =
@@ -46,14 +74,6 @@ object RagiumBlockEntityTypes {
         register("combustion_generator", ::HTCombustionGeneratorBlockEntity)
 
     @JvmField
-    val CREATIVE_SOURCE: BlockEntityType<HTCreativeSourceBlockEntity> =
-        register("creative_source", ::HTCreativeSourceBlockEntity)
-
-    @JvmField
-    val ENCHANTMENT_BOOKSHELF: BlockEntityType<HTEnchantmentBookshelfBlockEntity> =
-        register("enchantment_bookshelf", ::HTEnchantmentBookshelfBlockEntity)
-
-    @JvmField
     val ENERGETIC_GENERATOR: BlockEntityType<HTEnergeticGeneratorBlockEntity> =
         register("energetic_generator", ::HTEnergeticGeneratorBlockEntity)
 
@@ -66,40 +86,8 @@ object RagiumBlockEntityTypes {
         register("drain", ::HTDrainBlockEntity)
 
     @JvmField
-    val DRUM: BlockEntityType<HTDrumBlockEntity> =
-        register("drum", ::HTDrumBlockEntity)
-
-    @JvmField
-    val EXPORTER: BlockEntityType<HTExporterBlockEntity> =
-        register("exporter", ::HTExporterBlockEntity)
-
-    @JvmField
     val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
         register("fluid_drill", ::HTFluidDrillBlockEntity)
-
-    @JvmField
-    val FLUID_PIPE: BlockEntityType<HTPipeBlockEntity> =
-        register("fluid_pipe", ::HTPipeBlockEntity)
-
-    @JvmField
-    val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
-        register("item_display", ::HTItemDisplayBlockEntity)
-
-    @JvmField
-    val LARGE_PROCESSOR: BlockEntityType<HTLargeProcessorBlockEntity> =
-        register("large_processor", ::HTLargeProcessorBlockEntity)
-
-    @JvmField
-    val MANUAL_FORGE: BlockEntityType<HTManualForgeBlockEntity> =
-        register("manual_forge", ::HTManualForgeBlockEntity)
-
-    @JvmField
-    val MANUAL_GRINDER: BlockEntityType<HTManualGrinderBlockEntity> =
-        register("manual_grinder", ::HTManualGrinderBlockEntity)
-
-    @JvmField
-    val MANUAL_MIXER: BlockEntityType<HTManualMixerBlockEntity> =
-        register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: BlockEntityType<HTMultiSmelterBlockEntity> =
@@ -133,6 +121,28 @@ object RagiumBlockEntityTypes {
     val THERMAL_GENERATOR: BlockEntityType<HTThermalGeneratorBlockEntity> =
         register("thermal_generator", ::HTThermalGeneratorBlockEntity)
 
+    //    Misc    //
+
+    @JvmField
+    val AUTO_ILLUMINATOR: BlockEntityType<HTAutoIlluminatorBlockEntity> =
+        register("auto_illuminator", ::HTAutoIlluminatorBlockEntity)
+
+    @JvmField
+    val CREATIVE_SOURCE: BlockEntityType<HTCreativeSourceBlockEntity> =
+        register("creative_source", ::HTCreativeSourceBlockEntity)
+
+    @JvmField
+    val ENCHANTMENT_BOOKSHELF: BlockEntityType<HTEnchantmentBookshelfBlockEntity> =
+        register("enchantment_bookshelf", ::HTEnchantmentBookshelfBlockEntity)
+
+    @JvmField
+    val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
+        register("item_display", ::HTItemDisplayBlockEntity)
+
+    @JvmField
+    val LARGE_PROCESSOR: BlockEntityType<HTLargeProcessorBlockEntity> =
+        register("large_processor", ::HTLargeProcessorBlockEntity)
+
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
         Registry.register(
@@ -148,7 +158,10 @@ object RagiumBlockEntityTypes {
             .forEach(EXPORTER::addSupportedBlock)
         RagiumContents.Pipes.entries
             .map(RagiumContents.Pipes::value)
-            .forEach(FLUID_PIPE::addSupportedBlock)
+            .forEach(PIPE::addSupportedBlock)
+        RagiumContents.CrossPipes.entries
+            .map(RagiumContents.CrossPipes::value)
+            .forEach(CROSS_PIPE::addSupportedBlock)
         RagiumContents.Drums.entries
             .map(RagiumContents.Drums::value)
             .forEach(DRUM::addSupportedBlock)

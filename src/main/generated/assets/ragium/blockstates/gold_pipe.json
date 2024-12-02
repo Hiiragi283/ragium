@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "ragium:block/steel_pipe"
+        "model": "ragium:block/gold_pipe"
       }
     },
     {

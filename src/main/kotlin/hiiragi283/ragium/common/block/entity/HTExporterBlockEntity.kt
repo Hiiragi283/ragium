@@ -20,6 +20,7 @@ import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
+import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
@@ -109,15 +110,15 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
         if (world.isReceivingRedstonePower(pos)) return
         // transfer containment
         StorageUtil.move(
-            getBackStorage(world, pos, ItemStorage.SIDED),
-            getFrontStorage(world, pos, ItemStorage.SIDED),
+            getBackStorage(world, pos, ItemStorage.SIDED, state.get(Properties.FACING)),
+            getFrontStorage(world, pos, ItemStorage.SIDED, state.get(Properties.FACING)),
             { itemFilter.isEmpty || itemFilter.any(it::isOf) },
             type.getItemCount(tier),
             null,
         )
         StorageUtil.move(
-            getBackStorage(world, pos, FluidStorage.SIDED),
-            getFrontStorage(world, pos, FluidStorage.SIDED),
+            getBackStorage(world, pos, FluidStorage.SIDED, state.get(Properties.FACING)),
+            getFrontStorage(world, pos, FluidStorage.SIDED, state.get(Properties.FACING)),
             { fluidFilter.isEmpty || fluidFilter.any(it::isOf) },
             type.getFluidCount(tier),
             null,

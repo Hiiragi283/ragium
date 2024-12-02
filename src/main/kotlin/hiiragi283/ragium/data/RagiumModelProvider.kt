@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.HTCrossDirection
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -276,6 +277,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
             registerDirectional(block, stateVariantOf(modelId))
         }
+        // pipes
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val block: Block = pipe.value
             // blockstate
@@ -307,6 +309,35 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
             RagiumModels.PIPE_SIDE.upload(
                 TextureMap.getSubId(block, "_side"),
+                TextureMap.all(block),
+                generator.modelCollector,
+            )
+        }
+        RagiumContents.CrossPipes.entries.forEach { crossPipe: RagiumContents.CrossPipes ->
+            val block: Block = crossPipe.value
+            // blockstate
+            registerSupplier(
+                block,
+                buildMultipartState(block) {
+                    with(stateVariantOf(block))
+                    HTCrossDirection.entries.forEach { direction: HTCrossDirection ->
+                        // pipe facing
+                        this.with(
+                            When.create().set(RagiumBlockProperties.CROSS_DIRECTION, direction),
+                            stateVariantOf(RagiumAPI.id("block/cross_pipe_overlay"))
+                                .rot(direction.second)
+                                .apply {
+                                    if (direction.first == Direction.DOWN) {
+                                        rotX(VariantSettings.Rotation.R180)
+                                    }
+                                },
+                        )
+                    }
+                },
+            )
+            // model
+            RagiumModels.CROSS_PIPE.upload(
+                block,
                 TextureMap.all(block),
                 generator.modelCollector,
             )

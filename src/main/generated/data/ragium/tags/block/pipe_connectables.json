@@ -3,9 +3,11 @@
     "ragium:advanced_exporter",
     "ragium:basic_exporter",
     "ragium:copper_pipe",
+    "ragium:gold_pipe",
     "ragium:iron_pipe",
     "ragium:primitive_exporter",
     "ragium:steel_pipe",
+    "ragium:stone_pipe",
     "ragium:universal_pipe",
     "ragium:wooden_pipe"
   ]

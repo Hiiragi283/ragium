@@ -128,11 +128,14 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
 
-            builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
+            builder.add(RagiumContents.Pipes.STONE, "Stone Pipe")
             builder.add(RagiumContents.Pipes.WOODEN, "Wooden Pipe")
-            builder.add(RagiumContents.Pipes.STEEL, "Steel Pipe")
+            builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
             builder.add(RagiumContents.Pipes.COPPER, "Copper Pipe")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "Universal Pipe")
+
+            builder.add(RagiumContents.CrossPipes.STEEL, "Steel Pipe")
+            builder.add(RagiumContents.CrossPipes.GOLD, "Gold Pipe")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "Place lights in area of %s block radius")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "Extend processor machine inside the multiblock")
@@ -496,11 +499,14 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")
 
-            builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
+            builder.add(RagiumContents.Pipes.STONE, "石パイプ")
             builder.add(RagiumContents.Pipes.WOODEN, "木製パイプ")
-            builder.add(RagiumContents.Pipes.STEEL, "鋼鉄パイプ")
+            builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
             builder.add(RagiumContents.Pipes.COPPER, "銅パイプ")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "万能パイプ")
+
+            builder.add(RagiumContents.CrossPipes.STEEL, "鋼鉄パイプ")
+            builder.add(RagiumContents.CrossPipes.GOLD, "金パイプ")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "半径%sブロックの範囲に光源を自動で設置する")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "マルチブロック内の加工機械を拡張する")

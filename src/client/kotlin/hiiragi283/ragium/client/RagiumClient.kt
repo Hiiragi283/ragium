@@ -89,6 +89,7 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.Hulls.entries)
             addAll(RagiumContents.Exporters.entries)
             addAll(RagiumContents.Pipes.entries)
+            addAll(RagiumContents.CrossPipes.entries)
         }.map(HTContent<Block>::value).forEach(::registerCutoutMipped)
 
         RagiumAPI

@@ -22,6 +22,13 @@ object RagiumModels {
     )
 
     @JvmField
+    val CROSS_PIPE: Model =
+        model(
+            "block/cross_pipe",
+            TextureKey.ALL,
+        )
+
+    @JvmField
     val EXPORTER: Model = model(
         "block/exporter",
         TextureKey.TOP,

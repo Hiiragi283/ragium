@@ -94,6 +94,7 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Drums.entries)
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)
+                    addAll(RagiumContents.CrossPipes.entries)
 
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)

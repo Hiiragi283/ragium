@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.block.entity.HTExporterBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

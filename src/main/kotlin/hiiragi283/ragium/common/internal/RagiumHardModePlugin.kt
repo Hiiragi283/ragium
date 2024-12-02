@@ -373,9 +373,9 @@ object RagiumHardModePlugin : RagiumPlugin {
     private fun craftPipes(exporter: RecipeExporter) {
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val input: TagKey<Item> = when (pipe) {
-                RagiumContents.Pipes.IRON -> RagiumHardModeContents.IRON.getContent(hardMode).prefixedTagKey
+                RagiumContents.Pipes.STONE -> ItemTags.STONE_TOOL_MATERIALS
                 RagiumContents.Pipes.WOODEN -> ItemTags.PLANKS
-                RagiumContents.Pipes.STEEL -> RagiumHardModeContents.STEEL.getContent(hardMode).prefixedTagKey
+                RagiumContents.Pipes.IRON -> RagiumHardModeContents.IRON.getContent(hardMode).prefixedTagKey
                 RagiumContents.Pipes.COPPER -> RagiumHardModeContents.COPPER.getContent(hardMode).prefixedTagKey
                 RagiumContents.Pipes.UNIVERSAL -> RagiumHardModeContents.REFINED_RAGI_STEEL.getContent(hardMode).prefixedTagKey
             }
@@ -391,8 +391,31 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .create(RagiumMachineKeys.METAL_FORMER)
                 .itemInput(input, 2)
                 .catalyst(pipe)
-                .itemOutput(pipe)
+                .itemOutput(pipe, 2)
                 .offerTo(exporter, pipe)
+        }
+        RagiumContents.CrossPipes.entries.forEach { crossPipe: RagiumContents.CrossPipes ->
+            val input: HTContent.Material<Item> = when (crossPipe) {
+                RagiumContents.CrossPipes.STEEL -> RagiumHardModeContents.STEEL.getContent(hardMode)
+                RagiumContents.CrossPipes.GOLD -> RagiumHardModeContents.GOLD.getContent(hardMode)
+            }
+            // shaped crafting
+            HTShapedRecipeJsonBuilder
+                .create(crossPipe)
+                .patterns(
+                    " A ",
+                    "ABA",
+                    " A ",
+                ).input('A', input)
+                .input('B', ConventionalItemTags.GLASS_BLOCKS)
+                .offerTo(exporter)
+            // metal former
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.METAL_FORMER)
+                .itemInput(input, 4)
+                .catalyst(crossPipe)
+                .itemOutput(crossPipe, 2)
+                .offerTo(exporter, crossPipe)
         }
     }
 
