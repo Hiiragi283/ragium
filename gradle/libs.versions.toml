@@ -30,7 +30,6 @@ mods-fabric = [
     "fabric-api",
     "fabric-kotlin",
     "fabric-loader",
-    "rs-fabric"
 ]
 mods-include = [
     "energy"

@@ -3,7 +3,10 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.content.HTRegistryEntryList
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
+import hiiragi283.ragium.api.extension.isEmpty
+import hiiragi283.ragium.api.extension.name
+import hiiragi283.ragium.api.extension.useTransaction
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
@@ -30,7 +33,7 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
                             .codec(Registries.FLUID)
                             .fieldOf("fluids")
                             .forGetter(HTFluidIngredient::entryList),
-                        longRangeCodec(1, Long.MAX_VALUE)
+                        POSITIVE_LONG_CODEC
                             .optionalFieldOf("amount", FluidConstants.BUCKET)
                             .forGetter(HTFluidIngredient::amount),
                     ).apply(instance, ::HTFluidIngredient)

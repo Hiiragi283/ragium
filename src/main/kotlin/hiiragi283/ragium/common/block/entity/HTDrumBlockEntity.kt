@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.extension.copyTo
-import hiiragi283.ragium.api.extension.getTier
-import hiiragi283.ragium.api.extension.putTier
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
@@ -46,13 +44,16 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
 
     override fun readComponents(components: ComponentsAccess) {
         fluidStorage.map(0) { storageIn: SingleFluidStorage ->
-            components.get(RagiumComponentTypes.DRUM)?.copyTo(storageIn)
+            components.get(RagiumComponentTypes.DRUM)?.let { (variant: FluidVariant, amount: Long) ->
+                storageIn.variant = variant
+                storageIn.amount = amount
+            }
         }
     }
 
     override fun addComponents(builder: ComponentMap.Builder) {
         fluidStorage.map(0) { storageIn: SingleFluidStorage ->
-            builder.add(RagiumComponentTypes.DRUM, storageIn)
+            builder.add(RagiumComponentTypes.DRUM, storageIn.resourceAmount)
         }
     }
 

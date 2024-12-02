@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.fluidStorageOf
-import hiiragi283.ragium.api.extension.longRangeCodec
+import hiiragi283.ragium.api.extension.resourceCodec
+import hiiragi283.ragium.api.extension.resourcePacketCodec
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -13,7 +12,8 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.common.item.HTDynamiteItem
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.fabricmc.fabric.impl.transfer.VariantCodecs
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
 import net.minecraft.network.RegistryByteBuf
@@ -39,40 +39,13 @@ object RagiumComponentTypes {
     val DESCRIPTION: ComponentType<List<Text>> =
         register("description", TextCodecs.CODEC.listOf(), TextCodecs.PACKET_CODEC.toList())
 
+    @Suppress("UnstableApiUsage")
     @JvmField
-    val DRUM: ComponentType<SingleFluidStorage> = register(
+    val DRUM: ComponentType<ResourceAmount<FluidVariant>> = register(
         "drum",
-        RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    longRangeCodec(0, Long.MAX_VALUE)
-                        .fieldOf("capacity")
-                        .forGetter(SingleFluidStorage::getCapacity),
-                    longRangeCodec(0, Long.MAX_VALUE)
-                        .fieldOf("amount")
-                        .forGetter(SingleFluidStorage::getAmount),
-                    FluidVariant.CODEC
-                        .fieldOf("variant")
-                        .forGetter(SingleFluidStorage::getResource),
-                ).apply(instance, ::createFluidStorage)
-        },
-        PacketCodec.tuple(
-            PacketCodecs.VAR_LONG,
-            SingleFluidStorage::getCapacity,
-            PacketCodecs.VAR_LONG,
-            SingleFluidStorage::getAmount,
-            FluidVariant.PACKET_CODEC,
-            SingleFluidStorage::getResource,
-            ::createFluidStorage,
-        ),
+        resourceCodec(VariantCodecs.FLUID_CODEC),
+        resourcePacketCodec(VariantCodecs.FLUID_PACKET_CODEC),
     )
-
-    @JvmStatic
-    private fun createFluidStorage(capacity: Long, amount: Long, variant: FluidVariant): SingleFluidStorage =
-        fluidStorageOf(capacity).apply {
-            this.amount = amount
-            this.variant = variant
-        }
 
     @JvmField
     val DYNAMITE: ComponentType<HTDynamiteItem.Component> =

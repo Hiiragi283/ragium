@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.api.extension.longText
-import hiiragi283.ragium.api.extension.name
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.entity.HTDrumBlockEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
@@ -25,30 +23,32 @@ class HTDrumBlock(val tier: HTMachineTier) : HTBlockWithEntity(blockSettings(Blo
         tooltip: MutableList<Text>,
         options: TooltipType?,
     ) {
-        stack.get(RagiumComponentTypes.DRUM)?.let { storage: SingleFluidStorage ->
-            if (!storage.isResourceBlank) {
+        stack.get(RagiumComponentTypes.DRUM)?.let { (variant: FluidVariant, amount: Long) ->
+            if (!variant.isBlank) {
                 tooltip.add(
                     Text
                         .translatable(
                             RagiumTranslationKeys.DRUM_FLUID,
-                            storage.resource.name.formatted(Formatting.WHITE),
+                            variant.name.formatted(Formatting.WHITE),
                         ).formatted(Formatting.GRAY),
                 )
                 tooltip.add(
                     Text
                         .translatable(
                             RagiumTranslationKeys.DRUM_AMOUNT,
-                            longText(storage.getAmount()).formatted(Formatting.WHITE),
-                        ).formatted(Formatting.GRAY),
-                )
-                tooltip.add(
-                    Text
-                        .translatable(
-                            RagiumTranslationKeys.DRUM_AMOUNT,
-                            longText(storage.capacity).formatted(Formatting.WHITE),
+                            longText(amount).formatted(Formatting.WHITE),
                         ).formatted(Formatting.GRAY),
                 )
             }
+        }
+        stack.get(HTMachineTier.COMPONENT_TYPE)?.let { tierIn: HTMachineTier ->
+            tooltip.add(
+                Text
+                    .translatable(
+                        RagiumTranslationKeys.DRUM_CAPACITY,
+                        longText(tierIn.tankCapacity).formatted(Formatting.WHITE),
+                    ).formatted(Formatting.GRAY),
+            )
         }
     }
 

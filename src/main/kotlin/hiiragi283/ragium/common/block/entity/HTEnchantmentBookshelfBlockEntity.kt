@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.NON_NEGATIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.getStackInActiveHand
-import hiiragi283.ragium.api.extension.longRangeCodec
 import hiiragi283.ragium.api.extension.mappedCodecOf
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.block.BlockState
@@ -33,7 +33,7 @@ class HTEnchantmentBookshelfBlockEntity(pos: BlockPos, state: BlockState) :
         val CODEC: Codec<Map<RegistryEntry<Enchantment>, Long>> =
             mappedCodecOf(
                 Enchantment.ENTRY_CODEC.fieldOf("enchantment"),
-                longRangeCodec(0, Long.MAX_VALUE).fieldOf("value"),
+                NON_NEGATIVE_LONG_CODEC.fieldOf("value"),
             )
     }
 

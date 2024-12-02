@@ -14,6 +14,8 @@ import hiiragi283.ragium.common.block.HTPipeBlock
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTRopeBlockItem
 import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
+import hiiragi283.ragium.common.storage.HTTieredFluidItemStorage
+import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -448,6 +450,10 @@ internal object RagiumContentRegister {
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
+        RagiumContents.Drums.entries
+            .map(RagiumContents.Drums::asItem)
+            .map(FluidStorage::combinedItemApiProvider)
+            .forEach { event: Event<FluidStorage.CombinedItemApiProvider> -> event.register(HTTieredFluidItemStorage::find) }
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
             if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context

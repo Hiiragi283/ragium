@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -75,14 +76,17 @@ fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     return Codec.LONG.flatXmap(func, func)
 }
 
-fun <T : Any> resourcePacketCodec(resourceCodec: PacketCodec<RegistryByteBuf, T>): PacketCodec<RegistryByteBuf, ResourceAmount<T>> =
-    PacketCodec.tuple(
-        resourceCodec,
-        ResourceAmount<T>::resource,
-        PacketCodecs.VAR_LONG,
-        ResourceAmount<T>::amount,
-        ::ResourceAmount,
-    )
+val NON_NEGATIVE_LONG_CODEC: Codec<Long> = longRangeCodec(0, Long.MAX_VALUE)
+
+val POSITIVE_LONG_CODEC: Codec<Long> = longRangeCodec(1, Long.MAX_VALUE)
+
+fun <T : Any> resourceCodec(resourceCodec: Codec<T>): Codec<ResourceAmount<T>> = RecordCodecBuilder.create { instance ->
+    instance
+        .group(
+            resourceCodec.fieldOf("resource").forGetter(ResourceAmount<T>::resource),
+            NON_NEGATIVE_LONG_CODEC.fieldOf("amount").forGetter(ResourceAmount<T>::amount),
+        ).apply(instance, ::ResourceAmount)
+}
 
 //    PacketCodec    //
 
@@ -102,6 +106,15 @@ val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T
     get() = RegistryKey.createPacketCodec(key).xmap(
         this::getEntryOrThrow,
         { entry: RegistryEntry<T> -> entry.key.orElseThrow() },
+    )
+
+fun <T : Any> resourcePacketCodec(resourceCodec: PacketCodec<RegistryByteBuf, T>): PacketCodec<RegistryByteBuf, ResourceAmount<T>> =
+    PacketCodec.tuple(
+        resourceCodec,
+        ResourceAmount<T>::resource,
+        PacketCodecs.VAR_LONG,
+        ResourceAmount<T>::amount,
+        ::ResourceAmount,
     )
 
 //    DataResult    //
