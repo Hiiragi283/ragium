@@ -265,6 +265,19 @@ object RagiumContents {
         override fun asItem(): Item = value.asItem()
     }
 
+    enum class PipeStations(val pipeType: HTPipeType) :
+        HTContent.Delegated<Block>,
+        ItemConvertible {
+        ITEM(HTPipeType.ITEM),
+        FLUID(HTPipeType.FLUID),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe_station"))
+
+        override fun asItem(): Item = value.asItem()
+    }
+
     //    Drums    //
 
     enum class Drums(override val tier: HTMachineTier) : HTContent.Tier<Block> {

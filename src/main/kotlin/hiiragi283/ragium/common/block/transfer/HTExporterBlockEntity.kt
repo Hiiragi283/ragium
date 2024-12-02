@@ -1,12 +1,10 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -25,6 +23,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
@@ -105,20 +104,23 @@ class HTExporterBlockEntity(pos: BlockPos, state: BlockState) :
         return ActionResult.success(world.isClient)
     }
 
+    private val front: Direction
+        get() = cachedState.get(Properties.FACING)
+
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
         if (world.isReceivingRedstonePower(pos)) return
         // transfer containment
         StorageUtil.move(
-            getBackStorage(world, pos, ItemStorage.SIDED, state.get(Properties.FACING)),
-            getFrontStorage(world, pos, ItemStorage.SIDED, state.get(Properties.FACING)),
+            getBackItemStorage(world, pos, front),
+            getFrontItemStorage(world, pos, front),
             { itemFilter.isEmpty || itemFilter.any(it::isOf) },
             type.getItemCount(tier),
             null,
         )
         StorageUtil.move(
-            getBackStorage(world, pos, FluidStorage.SIDED, state.get(Properties.FACING)),
-            getFrontStorage(world, pos, FluidStorage.SIDED, state.get(Properties.FACING)),
+            getBackFluidStorage(world, pos, front),
+            getFrontFluidStorage(world, pos, front),
             { fluidFilter.isEmpty || fluidFilter.any(it::isOf) },
             type.getFluidCount(tier),
             null,

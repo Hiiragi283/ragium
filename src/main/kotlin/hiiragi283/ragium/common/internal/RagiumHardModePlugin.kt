@@ -417,6 +417,23 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .itemOutput(crossPipe, 2)
                 .offerTo(exporter, crossPipe)
         }
+        RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
+            val input: TagKey<Item> = when (station) {
+                RagiumContents.PipeStations.ITEM -> ConventionalItemTags.REDSTONE_DUSTS
+                RagiumContents.PipeStations.FLUID -> ConventionalItemTags.LAPIS_GEMS
+            }
+            // shaped crafting
+            HTShapedRecipeJsonBuilder
+                .create(station)
+                .patterns(
+                    "AAA",
+                    "BCB",
+                    "AAA",
+                ).input('A', input)
+                .input('B', RagiumContents.Grates.BASIC)
+                .input('C', ConventionalItemTags.GLASS_BLOCKS)
+                .offerTo(exporter)
+        }
     }
 
     private fun craftDrums(exporter: RecipeExporter) {

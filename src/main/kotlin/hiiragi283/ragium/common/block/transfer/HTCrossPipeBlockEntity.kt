@@ -1,12 +1,10 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.transfer
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
@@ -28,15 +26,15 @@ class HTCrossPipeBlockEntity(pos: BlockPos, state: BlockState) :
         // transfer containment
         state.get(RagiumBlockProperties.CROSS_DIRECTION).directions.forEach { direction: Direction ->
             StorageUtil.move(
-                getBackStorage(world, pos, ItemStorage.SIDED, direction),
-                getFrontStorage(world, pos, ItemStorage.SIDED, direction),
+                getBackItemStorage(world, pos, direction),
+                getFrontItemStorage(world, pos, direction),
                 Predicates.alwaysTrue(),
                 type.getItemCount(tier),
                 null,
             )
             StorageUtil.move(
-                getBackStorage(world, pos, FluidStorage.SIDED, direction),
-                getFrontStorage(world, pos, FluidStorage.SIDED, direction),
+                getBackFluidStorage(world, pos, direction),
+                getFrontFluidStorage(world, pos, direction),
                 Predicates.alwaysTrue(),
                 type.getFluidCount(tier),
                 null,

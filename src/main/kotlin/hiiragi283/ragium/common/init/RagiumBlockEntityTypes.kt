@@ -5,6 +5,13 @@ import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
+import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTCrossPipeBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTPipeBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTPipeStationBlockEntity
 import hiiragi283.ragium.common.machine.consume.*
 import hiiragi283.ragium.common.machine.generator.*
 import hiiragi283.ragium.common.machine.process.*
@@ -34,6 +41,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PIPE: BlockEntityType<HTPipeBlockEntity> =
         register("pipe", ::HTPipeBlockEntity)
+
+    @JvmField
+    val PIPE_STATION: BlockEntityType<HTPipeStationBlockEntity> =
+        register("pipe_station", ::HTPipeStationBlockEntity)
 
     //    Machine    //
 
@@ -162,6 +173,9 @@ object RagiumBlockEntityTypes {
         RagiumContents.CrossPipes.entries
             .map(RagiumContents.CrossPipes::value)
             .forEach(CROSS_PIPE::addSupportedBlock)
+        RagiumContents.PipeStations.entries
+            .map(RagiumContents.PipeStations::value)
+            .forEach(PIPE_STATION::addSupportedBlock)
         RagiumContents.Drums.entries
             .map(RagiumContents.Drums::value)
             .forEach(DRUM::addSupportedBlock)

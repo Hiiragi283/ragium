@@ -137,6 +137,9 @@ object RagiumLangProviders {
             builder.add(RagiumContents.CrossPipes.STEEL, "Steel Pipe")
             builder.add(RagiumContents.CrossPipes.GOLD, "Gold Pipe")
 
+            builder.add(RagiumContents.PipeStations.ITEM, "Item Pipe Station")
+            builder.add(RagiumContents.PipeStations.FLUID, "Fluid Pipe Station")
+
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "Place lights in area of %s block radius")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "Extend processor machine inside the multiblock")
             builder.add(RagiumTranslationKeys.MANUAL_GRINDER, "Insert items by hopper or something else")
@@ -507,6 +510,9 @@ object RagiumLangProviders {
 
             builder.add(RagiumContents.CrossPipes.STEEL, "鋼鉄パイプ")
             builder.add(RagiumContents.CrossPipes.GOLD, "金パイプ")
+
+            builder.add(RagiumContents.PipeStations.ITEM, "アイテムパイプステーション")
+            builder.add(RagiumContents.PipeStations.FLUID, "液体パイプステーション")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "半径%sブロックの範囲に光源を自動で設置する")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "マルチブロック内の加工機械を拡張する")

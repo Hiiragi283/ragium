@@ -106,6 +106,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.Exporters.entries)
             addAll(RagiumContents.Pipes.entries)
             addAll(RagiumContents.CrossPipes.entries)
+            addAll(RagiumContents.PipeStations.entries)
         }.map { it.value }.forEach(::addDrop)
 
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->

@@ -1,0 +1,57 @@
+package hiiragi283.ragium.common.block.transfer
+
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.HTPipeType
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
+import net.minecraft.block.BlockState
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
+import net.minecraft.world.World
+
+class HTPipeStationBlockEntity(pos: BlockPos, state: BlockState) :
+    HTPipeBlockEntityBase(RagiumBlockEntityTypes.PIPE_STATION, pos, state) {
+    init {
+        this.tier = HTMachineTier.ADVANCED
+    }
+
+    constructor(pos: BlockPos, state: BlockState, type: HTPipeType) : this(pos, state) {
+        this.type = type
+    }
+
+    override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
+        if (world.isClient) return
+        // transfer for side storages
+        val others: List<Direction> =
+            Direction.entries.filterNot { directionIn: Direction -> directionIn.axis == front.axis }
+        others.forEach { directionIn: Direction ->
+            if (type.isItem) {
+                if (moveItem(world, pos, directionIn)) {
+                    return
+                }
+            }
+            if (type.isFluid) {
+                if (moveFluid(world, pos, directionIn)) {
+                    return
+                }
+            }
+        }
+        super.tickSecond(world, pos, state)
+    }
+
+    private fun moveItem(world: World, pos: BlockPos, front: Direction): Boolean = StorageUtil.move(
+        itemStorage,
+        getFrontItemStorage(world, pos, front),
+        { true },
+        type.getItemCount(tier),
+        null,
+    ) > 0
+
+    private fun moveFluid(world: World, pos: BlockPos, front: Direction): Boolean = StorageUtil.move(
+        fluidStorage,
+        getFrontFluidStorage(world, pos, front),
+        { true },
+        type.getFluidCount(tier),
+        null,
+    ) > 0
+}

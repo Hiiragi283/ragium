@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.fluidStorageOf
@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes

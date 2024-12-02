@@ -1,9 +1,9 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.util.HTCrossDirection
 import hiiragi283.ragium.api.util.HTPipeType
-import hiiragi283.ragium.common.block.entity.HTCrossPipeBlockEntity
+import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

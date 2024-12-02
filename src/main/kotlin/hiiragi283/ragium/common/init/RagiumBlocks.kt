@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.machine.HTLargeProcessorBlock
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import net.minecraft.block.*
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup

@@ -100,6 +100,7 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Exporters.entries)
                 addAll(RagiumContents.Pipes.entries)
                 addAll(RagiumContents.CrossPipes.entries)
+                addAll(RagiumContents.PipeStations.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->

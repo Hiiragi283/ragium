@@ -342,6 +342,29 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
+        RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
+            val block: Block = station.value
+            // blockstate
+            registerSupplier(
+                block,
+                buildMultipartState(block) {
+                    with(stateVariantOf(block))
+                    Direction.entries.forEach { direction: Direction ->
+                        // pipe facing
+                        this.with(
+                            When.create().set(Properties.FACING, direction),
+                            stateVariantOf(RagiumAPI.id("block/pipe_overlay")).rot(direction),
+                        )
+                    }
+                },
+            )
+            // model
+            RagiumModels.CROSS_PIPE.upload(
+                block,
+                TextureMap.all(block),
+                generator.modelCollector,
+            )
+        }
         // custom
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
