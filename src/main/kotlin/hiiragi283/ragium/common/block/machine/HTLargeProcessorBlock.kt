@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.HTBlockWithEntity
-import hiiragi283.ragium.common.machine.process.HTLargeProcessorBlockEntity
+import hiiragi283.ragium.common.block.machine.process.HTLargeProcessorBlockEntity
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
