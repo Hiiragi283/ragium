@@ -33,7 +33,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
 
     private val inventory: SidedInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.GENERIC, HTStorageSide.NONE)
-        .buildSided()
+        .buildInventory()
 
     override fun asInventory(): SidedInventory = inventory
 

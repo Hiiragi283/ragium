@@ -29,7 +29,7 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory =
         HTStorageBuilder(9)
             .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-            .buildSided()
+            .buildInventory()
 
     private val fluidStorage: HTMachineFluidStorage =
         HTStorageBuilder(9)

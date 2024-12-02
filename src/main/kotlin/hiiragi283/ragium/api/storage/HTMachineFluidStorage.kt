@@ -1,9 +1,7 @@
 package hiiragi283.ragium.api.storage
 
-import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.extension.buildNbtList
-import hiiragi283.ragium.api.extension.copyTo
-import hiiragi283.ragium.api.extension.resourceAmount
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
@@ -43,10 +41,7 @@ class HTMachineFluidStorage private constructor(
         this.callback = callback
     }
 
-    val parts: List<SingleFluidStorage>
-        get() = parts1.toList()
-
-    private val parts1: Array<SingleFluidStorage> = Array(size, ::childStorage)
+    private val parts: Array<SingleFluidStorage> = Array(size, ::childStorage)
 
     private fun childStorage(slot: Int, tier: HTMachineTier = HTMachineTier.PRIMITIVE): SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
@@ -58,13 +53,18 @@ class HTMachineFluidStorage private constructor(
         }
     }
 
-    fun get(index: Int): SingleFluidStorage = parts1[index]
+    fun <T : Any> map(index: Int, action: (SingleFluidStorage) -> T?): DataResult<T> =
+        parts.getOrNull(index)?.let(action).toDataResult { "Invalid child index: $index" }
 
-    fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> = get(index).resourceAmount
+    fun <T : Any> flatMap(index: Int, action: (SingleFluidStorage) -> DataResult<T>): DataResult<T> =
+        parts.getOrNull(index)?.let(action) ?: DataResult.error { "Invalid child index: $index" }
+
+    fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> =
+        map(index, SingleFluidStorage::resourceAmount).result().orElse(ResourceAmount(FluidVariant.blank(), 0))
 
     fun createWrapped(): Storage<FluidVariant> = CombinedStorage(
         buildList {
-            parts1.forEachIndexed { index: Int, storage: SingleFluidStorage ->
+            parts.forEachIndexed { index: Int, storage: SingleFluidStorage ->
                 add(ioMapper(index).wrapStorage(storage))
             }
         },
@@ -74,7 +74,7 @@ class HTMachineFluidStorage private constructor(
         val handStorage: Storage<FluidVariant> =
             ContainerItemContext.forPlayerInteraction(player, Hand.MAIN_HAND).find(FluidStorage.ITEM) ?: return false
         val variants: List<FluidVariant> = handStorage.nonEmptyViews().map(StorageView<FluidVariant>::getResource)
-        parts1.forEach {
+        parts.forEach {
             // prevent to insert same fluid into multiple parts
             if (it.variant in variants && it.amount == it.capacity) {
                 return false
@@ -87,11 +87,11 @@ class HTMachineFluidStorage private constructor(
     }
 
     fun update(tier: HTMachineTier): HTMachineFluidStorage = apply {
-        val copied: Array<SingleFluidStorage> = parts1.copyOf()
+        val copied: Array<SingleFluidStorage> = parts.copyOf()
         copied.forEachIndexed { index: Int, storage: SingleFluidStorage ->
             val newStorage: SingleFluidStorage = childStorage(index, tier)
             storage.copyTo(newStorage)
-            parts1[index] = newStorage
+            parts[index] = newStorage
         }
     }
 
@@ -100,7 +100,7 @@ class HTMachineFluidStorage private constructor(
         update(tier)
         list.forEachIndexed { index: Int, nbtElement: NbtElement ->
             if (nbtElement is NbtCompound) {
-                parts1.getOrNull(index)?.readNbt(nbtElement, wrapperLookup)
+                parts.getOrNull(index)?.readNbt(nbtElement, wrapperLookup)
             }
         }
     }
@@ -110,7 +110,7 @@ class HTMachineFluidStorage private constructor(
         nbt.put(
             NBT_KEY,
             buildNbtList {
-                parts1.forEach { add(buildNbt { it.writeNbt(this, wrapperLookup) }) }
+                parts.forEach { add(buildNbt { it.writeNbt(this, wrapperLookup) }) }
             },
         )
     }
@@ -119,7 +119,7 @@ class HTMachineFluidStorage private constructor(
 
     fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit, vararg slotRange: Int) {
         slotRange.forEach { index: Int ->
-            parts1.getOrNull(index)?.let { storage: SingleFluidStorage ->
+            parts.getOrNull(index)?.let { storage: SingleFluidStorage ->
                 sender(player, index, storage.variant, storage.amount)
             }
         }

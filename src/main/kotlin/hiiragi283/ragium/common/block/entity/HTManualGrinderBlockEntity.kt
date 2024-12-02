@@ -29,7 +29,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory =
         HTStorageBuilder(1)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .buildSided()
+            .buildInventory()
 
     override fun asInventory(): SidedInventory = inventory
 

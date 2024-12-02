@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
@@ -58,6 +59,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+        var result = false
         Direction.entries.forEach { dir: Direction ->
             val posTo: BlockPos = pos.offset(dir)
             val stateTo: BlockState = world.getBlockState(posTo)
@@ -67,14 +69,16 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
                 val storage: Storage<FluidVariant> =
                     FluidStorage.ITEM.find(drained, ContainerItemContext.withConstant(drained)) ?: return@forEach
                 val maxAmount: Long = storage.sumOf(StorageView<FluidVariant>::getCapacity)
-                val transferred: Long = StorageUtil.move(
-                    storage,
-                    fluidStorage.get(0),
-                    Predicates.alwaysTrue(),
-                    maxAmount,
-                    null,
-                )
-                if (transferred > 0) {
+                fluidStorage.map(0) { storageIn: SingleFluidStorage ->
+                    result = StorageUtil.move(
+                        storage,
+                        storageIn,
+                        Predicates.alwaysTrue(),
+                        maxAmount,
+                        null,
+                    ) > 0
+                }
+                if (result) {
                     return DataResult.success(Unit)
                 }
             }

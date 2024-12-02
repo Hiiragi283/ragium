@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -54,7 +53,7 @@ class HTMachineRecipeProcessor(
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
-            if (!result.canMerge(fluidStorage.get(slot))) {
+            if (fluidStorage.map(slot, result::canMerge).result().orElse(false)) {
                 return false
             }
         }
@@ -69,11 +68,12 @@ class HTMachineRecipeProcessor(
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
             useTransaction { transaction: Transaction ->
-                val inserted: Long = result.merge(fluidStorage.get(slot), transaction)
-                if (inserted == result.amount) {
-                    transaction.commit()
-                } else {
-                    transaction.abort()
+                fluidStorage.map(slot) { storageIn: SingleFluidStorage ->
+                    if (result.merge(storageIn, transaction) == result.amount) {
+                        transaction.commit()
+                    } else {
+                        transaction.abort()
+                    }
                 }
             }
         }
@@ -86,8 +86,7 @@ class HTMachineRecipeProcessor(
         }
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
             val ingredient: HTFluidIngredient = recipe.fluidInputs.getOrNull(index) ?: return@forEachIndexed
-            val storageIn: SingleFluidStorage = fluidStorage.get(slot)
-            ingredient.onConsume(storageIn)
+            fluidStorage.map(slot, ingredient::onConsume)
         }
     }
 }

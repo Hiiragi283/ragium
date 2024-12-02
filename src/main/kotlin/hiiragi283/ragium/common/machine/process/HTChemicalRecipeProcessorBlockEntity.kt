@@ -33,7 +33,7 @@ class HTChemicalRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
         .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSided()
+        .buildInventory()
 
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

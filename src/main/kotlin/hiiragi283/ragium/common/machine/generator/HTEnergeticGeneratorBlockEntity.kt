@@ -57,7 +57,7 @@ class HTEnergeticGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .countFilter { 1 }
-        .buildSided()
+        .buildInventory()
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -81,21 +81,31 @@ class HTEnergeticGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         // try to consume fluid fuel
-        useTransaction { transaction: Transaction ->
-            val storageIn: SingleFluidStorage = fluidStorage.get(0)
-            StorageUtil
-                .findExtractableResource(
-                    storageIn,
-                    { it.isIn(ConventionalFluidTags.EXPERIENCE) },
-                    transaction,
-                )?.let { foundVariant: FluidVariant ->
-                    if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
-                        transaction.commit()
-                        return DataResult.success(Unit)
-                    } else {
-                        transaction.abort()
+        val fluidResult: DataResult<Boolean> = useTransaction { transaction: Transaction ->
+            fluidStorage.map(0) { storageIn: SingleFluidStorage ->
+                StorageUtil
+                    .findExtractableResource(
+                        storageIn,
+                        { it.isIn(ConventionalFluidTags.EXPERIENCE) },
+                        transaction,
+                    )?.let { foundVariant: FluidVariant ->
+                        if (storageIn.extract(
+                                foundVariant,
+                                FluidConstants.BUCKET,
+                                transaction,
+                            ) == FluidConstants.BUCKET
+                        ) {
+                            transaction.commit()
+                            true
+                        } else {
+                            transaction.abort()
+                            false
+                        }
                     }
-                }
+            }
+        }
+        if (fluidResult.result().orElse(false)) {
+            return DataResult.success(Unit)
         }
         // try to consume item fuel
         val fuelStack: ItemStack = inventory.getStack(0)

@@ -57,7 +57,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .stackFilter { _: Int, stack: ItemStack ->
             stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
-        }.buildSided()
+        }.buildInventory()
 
     private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -82,11 +82,9 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val cubeStack: ItemStack = inventory.getStack(0)
-        val storageIn: SingleFluidStorage = fluidStorage.get(0)
-        val storageOut: SingleFluidStorage = fluidStorage.get(1)
         return when {
-            cubeStack.isOf(RagiumItems.EMPTY_FLUID_CUBE) -> tryInsertCube(cubeStack, storageIn)
-            cubeStack.isOf(RagiumItems.FILLED_FLUID_CUBE) -> tryExtractCube(cubeStack, storageOut)
+            cubeStack.isOf(RagiumItems.EMPTY_FLUID_CUBE) -> fluidStorage.flatMap(0) { tryInsertCube(cubeStack, it) }
+            cubeStack.isOf(RagiumItems.FILLED_FLUID_CUBE) -> fluidStorage.flatMap(1) { tryExtractCube(cubeStack, it) }
             else -> DataResult.error { "Failed to process Canning Machine!" }
         }
     }

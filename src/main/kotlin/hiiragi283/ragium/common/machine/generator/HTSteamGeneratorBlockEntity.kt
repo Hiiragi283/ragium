@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -53,7 +54,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .stackFilter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else false }
-        .buildSided()
+        .buildInventory()
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -78,21 +79,22 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         val fuelStack: ItemStack = inventory.getStack(0)
-        if (fuelStack.isIn(ItemTags.COALS)) {
+        return if (fuelStack.isIn(ItemTags.COALS)) {
             useTransaction { transaction: Transaction ->
-                val extracted: Long =
-                    fluidStorage.get(0).extract(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET, transaction)
-                if (extracted == FluidConstants.BUCKET) {
-                    transaction.commit()
-                    fuelStack.decrement(1)
-                    inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
-                    return DataResult.success(Unit)
-                } else {
-                    transaction.abort()
+                return fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+                    if (storageIn.extract(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                        transaction.commit()
+                        fuelStack.decrement(1)
+                        inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
+                        DataResult.success(Unit)
+                    } else {
+                        DataResult.error { "Failed to consume fuels!" }
+                    }
                 }
             }
+        } else {
+            DataResult.error { "Required fuels with #minecraft:coals!" }
         }
-        return DataResult.error { "Failed to consume fuels!" }
     }
 
     //    SidedStorageBlockEntity    //

@@ -48,7 +48,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val inventory: SidedInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .buildSided()
+        .buildInventory()
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
@@ -79,15 +79,13 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
             return@HTRecipeProcessor DataResult.error { "Failed to calculate biomass amount!" }
         }
         useTransaction { transaction: Transaction ->
-            val inserted: Long =
-                fluidStorage.get(0).insert(FluidVariant.of(RagiumFluids.BIOMASS.value), fixedAmount, transaction)
-            if (inserted > 0) {
-                transaction.commit()
-                inputStack.decrement(1)
-                DataResult.success(Unit)
-            } else {
-                transaction.abort()
-                DataResult.error { "Failed to insert result into output!" }
+            fluidStorage.map(0) {
+                if (it.insert(FluidVariant.of(RagiumFluids.BIOMASS.value), fixedAmount, transaction) == fixedAmount) {
+                    transaction.commit()
+                    inputStack.decrement(1)
+                } else {
+                    transaction.abort()
+                }
             }
         }
     }.process(world, key, tier)

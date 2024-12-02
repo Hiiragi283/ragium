@@ -53,7 +53,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .stackFilter { _: Int, stack: ItemStack -> stack.isOf(Items.BLAZE_POWDER) }
-        .buildSided()
+        .buildInventory()
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -85,17 +85,18 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         // try to consume fluid
         return useTransaction { transaction: Transaction ->
-            val storageIn: SingleFluidStorage = fluidStorage.get(0)
-            val variantIn: FluidVariant = storageIn.resource
-            if (variantIn.isBlank) return DataResult.error { "Fuels is empty!" }
-            val extracted: Long =
-                fluidStorage.get(0).extract(variantIn, FluidConstants.BUCKET, transaction)
-            if (extracted == FluidConstants.BUCKET) {
-                transaction.commit()
-                DataResult.success(Unit)
-            } else {
-                transaction.abort()
-                DataResult.error { "Failed to consume fuels!" }
+            fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+                val variantIn: FluidVariant = storageIn.resource
+                if (variantIn.isBlank) return@flatMap DataResult.error { "Fuels is empty!" }
+                val extracted: Long =
+                    storageIn.extract(variantIn, FluidConstants.BUCKET, transaction)
+                if (extracted == FluidConstants.BUCKET) {
+                    transaction.commit()
+                    DataResult.success(Unit)
+                } else {
+                    transaction.abort()
+                    DataResult.error { "Failed to consume fuels!" }
+                }
             }
         }
     }

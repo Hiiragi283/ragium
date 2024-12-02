@@ -57,9 +57,7 @@ class HTStorageBuilder(val size: Int) {
 
     fun <T : Any> build(builder: (HTStorageBuilder) -> T): T = builder(this)
 
-    fun buildSimple(): SimpleInventory = build { SimpleInventory(it.size) }
-
-    fun buildSided(): SidedInventory = build(::SidedInventoryImpl)
+    fun buildInventory(): SidedInventory = build(::SidedInventoryImpl)
 
     fun buildItemStorage(capacity: Long): CombinedSlottedStorage<ItemVariant, SingleItemStorage> =
         CombinedSlottedStorage(sizeRange.map { ioMapper(it).createItemStorage(capacity) })

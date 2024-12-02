@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -84,14 +85,15 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
         if (!updateValidation(cachedState, world, pos)) return DataResult.error { "Invalid multiblock structure found!" }
         useTransaction { transaction: Transaction ->
-            val inserted: Long = fluidStorage.get(0).insert(findResource(world.getBiome(pos)), transaction)
-            if (inserted > 0) {
-                transaction.commit()
-                world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
-                return DataResult.success(Unit)
-            } else {
-                transaction.abort()
-                return DataResult.error { "Failed to insert fluid into Fluid Drill!" }
+            return fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+                val resource: ResourceAmount<FluidVariant> = findResource(world.getBiome(pos))
+                if (storageIn.insert(resource, transaction) == resource.amount) {
+                    transaction.commit()
+                    world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
+                    DataResult.success(Unit)
+                } else {
+                    DataResult.error { "Failed to insert fluid into Fluid Drill!" }
+                }
             }
         }
     }

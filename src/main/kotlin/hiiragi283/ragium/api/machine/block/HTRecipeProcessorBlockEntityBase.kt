@@ -86,7 +86,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
             .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .set(5, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildSided()
+            .buildInventory()
 
         final override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

@@ -34,7 +34,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     override val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSided()
+        .buildInventory()
 
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

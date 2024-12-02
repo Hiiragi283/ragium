@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
@@ -44,11 +45,15 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
     }
 
     override fun readComponents(components: ComponentsAccess) {
-        components.get(RagiumComponentTypes.DRUM)?.copyTo(fluidStorage.get(0))
+        fluidStorage.map(0) { storageIn: SingleFluidStorage ->
+            components.get(RagiumComponentTypes.DRUM)?.copyTo(storageIn)
+        }
     }
 
     override fun addComponents(builder: ComponentMap.Builder) {
-        builder.add(RagiumComponentTypes.DRUM, fluidStorage.get(0))
+        fluidStorage.map(0) { storageIn: SingleFluidStorage ->
+            builder.add(RagiumComponentTypes.DRUM, storageIn)
+        }
     }
 
     override fun onUse(

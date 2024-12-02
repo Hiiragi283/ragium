@@ -65,20 +65,21 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> = useTransaction { transaction: Transaction ->
-        val storageIn: SingleFluidStorage = fluidStorage.get(0)
-        val variantIn: FluidVariant = storageIn.variant
-        if (variantIn.isBlank) return@useTransaction DataResult.error { "Empty fuels!" }
-        val maxAmount: Long = when {
-            variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.INGOT
-            variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.BOTTLE
-            else -> return@useTransaction DataResult.error { "Failed to calculate consume amount!" }
-        }
-        if (storageIn.extract(variantIn, FluidConstants.BUCKET, transaction) == maxAmount) {
-            transaction.commit()
-            DataResult.success(Unit)
-        } else {
-            transaction.abort()
-            DataResult.error { "Failed to consume fuels!" }
+        fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+            val variantIn: FluidVariant = storageIn.variant
+            if (variantIn.isBlank) return@flatMap DataResult.error { "Empty fuels!" }
+            val maxAmount: Long = when {
+                variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.INGOT
+                variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.BOTTLE
+                else -> return@flatMap DataResult.error { "Failed to calculate consume amount!" }
+            }
+            if (storageIn.extract(variantIn, FluidConstants.BUCKET, transaction) == maxAmount) {
+                transaction.commit()
+                DataResult.success(Unit)
+            } else {
+                transaction.abort()
+                DataResult.error { "Failed to consume fuels!" }
+            }
         }
     }
 

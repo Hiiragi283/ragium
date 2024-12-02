@@ -44,7 +44,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
         .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSided()
+        .buildInventory()
 
     val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

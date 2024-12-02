@@ -52,7 +52,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildSided()
+        .buildInventory()
 
     private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -84,18 +84,19 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
             else -> null
         }?.let(::HTItemResult) ?: return DataResult.error { "Input slot has no nuclear fuels!" }
         if (!result.canMerge(wasteStack)) return overheat(world, pos)
-        useTransaction { transaction: Transaction ->
-            val storageIn: SingleFluidStorage = fluidStorage.get(0)
-            val foundVariant: FluidVariant =
-                StorageUtil.findExtractableResource(storageIn, transaction) ?: return overheat(world, pos)
-            if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
-                transaction.commit()
-                inventory.modifyStack(1, result::merge)
-                fuelStack.damage += 1
-                return DataResult.success(Unit)
-            } else {
-                transaction.abort()
-                return overheat(world, pos)
+        return useTransaction { transaction: Transaction ->
+            fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+                val foundVariant: FluidVariant =
+                    StorageUtil.findExtractableResource(storageIn, transaction) ?: return@flatMap overheat(world, pos)
+                if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                    transaction.commit()
+                    inventory.modifyStack(1, result::merge)
+                    fuelStack.damage += 1
+                    return@flatMap DataResult.success(Unit)
+                } else {
+                    transaction.abort()
+                    return@flatMap overheat(world, pos)
+                }
             }
         }
     }
