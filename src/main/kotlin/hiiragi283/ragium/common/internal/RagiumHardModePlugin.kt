@@ -424,13 +424,13 @@ object RagiumHardModePlugin : RagiumPlugin {
             }
             // shaped crafting
             HTShapedRecipeJsonBuilder
-                .create(station)
+                .create(station, 2)
                 .patterns(
                     "AAA",
                     "BCB",
                     "AAA",
                 ).input('A', input)
-                .input('B', RagiumContents.Grates.BASIC)
+                .input('B', RagiumContents.Circuits.BASIC)
                 .input('C', ConventionalItemTags.GLASS_BLOCKS)
                 .offerTo(exporter)
         }
@@ -557,7 +557,7 @@ object RagiumHardModePlugin : RagiumPlugin {
     }
 
     private fun craftCasing(exporter: RecipeExporter) {
-        RagiumContents.Casings.entries.forEach { casing ->
+        RagiumContents.Casings.entries.forEach { casing: RagiumContents.Casings ->
             val stone: Item =
                 when (casing) {
                     RagiumContents.Casings.PRIMITIVE -> Items.STONE

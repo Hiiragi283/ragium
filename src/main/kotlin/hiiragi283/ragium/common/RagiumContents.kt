@@ -278,6 +278,18 @@ object RagiumContents {
         override fun asItem(): Item = value.asItem()
     }
 
+    //    Crate    //
+
+    enum class Crates(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_crate"))
+    }
+
     //    Drums    //
 
     enum class Drums(override val tier: HTMachineTier) : HTContent.Tier<Block> {

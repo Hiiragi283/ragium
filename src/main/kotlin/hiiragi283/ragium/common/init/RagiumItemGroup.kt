@@ -91,6 +91,7 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Hulls.entries)
                     addAll(RagiumContents.Coils.entries)
 
+                    addAll(RagiumContents.Crates.entries)
                     addAll(RagiumContents.Drums.entries)
                     addAll(RagiumContents.Exporters.entries)
                     addAll(RagiumContents.Pipes.entries)

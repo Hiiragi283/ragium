@@ -86,7 +86,12 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Casings.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
+
                 addAll(RagiumContents.Pipes.entries)
+                addAll(RagiumContents.CrossPipes.entries)
+                addAll(RagiumContents.PipeStations.entries)
+
+                addAll(RagiumContents.Crates.entries)
                 addAll(RagiumContents.Drums.entries)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 

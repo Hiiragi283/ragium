@@ -19,12 +19,12 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.machine.consume.*
+import hiiragi283.ragium.common.block.machine.generator.*
+import hiiragi283.ragium.common.block.machine.process.*
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.common.machine.consume.*
-import hiiragi283.ragium.common.machine.generator.*
-import hiiragi283.ragium.common.machine.process.*
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter

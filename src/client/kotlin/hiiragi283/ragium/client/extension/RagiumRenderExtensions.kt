@@ -65,6 +65,7 @@ fun renderItem(
     scale: Float = 1.0f,
     pitch: Float = 0.0f,
     yaw: Float = 0.0f,
+    light: Int = 15728880
 ) {
     if (world == null) return
     matrices.push()
@@ -76,7 +77,7 @@ fun renderItem(
     MinecraftClient.getInstance().itemRenderer.renderItem(
         stack,
         ModelTransformationMode.FIXED,
-        15728880,
+        light,
         OverlayTexture.DEFAULT_UV,
         matrices,
         vertexConsumers,

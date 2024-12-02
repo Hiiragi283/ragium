@@ -8,14 +8,15 @@ import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity
+import hiiragi283.ragium.common.block.machine.consume.*
+import hiiragi283.ragium.common.block.machine.generator.*
+import hiiragi283.ragium.common.block.machine.process.*
+import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTCrossPipeBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTPipeBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTPipeStationBlockEntity
-import hiiragi283.ragium.common.machine.consume.*
-import hiiragi283.ragium.common.machine.generator.*
-import hiiragi283.ragium.common.machine.process.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -26,6 +27,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val BUFFER: BlockEntityType<HTBufferBlockEntity> =
         register("buffer", ::HTBufferBlockEntity)
+
+    @JvmField
+    val CRATE: BlockEntityType<HTCrateBlockEntity> =
+        register("crate", ::HTCrateBlockEntity)
 
     @JvmField
     val CROSS_PIPE: BlockEntityType<HTCrossPipeBlockEntity> =
@@ -177,6 +182,9 @@ object RagiumBlockEntityTypes {
         RagiumContents.PipeStations.entries
             .map(RagiumContents.PipeStations::value)
             .forEach(PIPE_STATION::addSupportedBlock)
+        RagiumContents.Crates.entries
+            .map(RagiumContents.Crates::value)
+            .forEach(CRATE::addSupportedBlock)
         RagiumContents.Drums.entries
             .map(RagiumContents.Drums::value)
             .forEach(DRUM::addSupportedBlock)

@@ -38,7 +38,7 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
             }
             if (inserted > 0) {
                 val newResourceAmount: ResourceAmount<FluidVariant> = ResourceAmount(resource, amount + inserted)
-                val changed: Long = context.modifyComponent { map: MutableComponentMap ->
+                val changed: Long = context.modifyComponent(transaction) { map: MutableComponentMap ->
                     map.set(RagiumComponentTypes.DRUM, newResourceAmount)
                 }
                 if (changed == 1L) {
@@ -55,7 +55,7 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
                     val extracted: Long = min(maxAmount, amount)
                     if (extracted > 0) {
                         val newResourceAmount: ResourceAmount<FluidVariant> = ResourceAmount(resource, amount - extracted)
-                        val changed: Long = context.modifyComponent { map: MutableComponentMap ->
+                        val changed: Long = context.modifyComponent(transaction) { map: MutableComponentMap ->
                             if (newResourceAmount.amount <= 0) {
                                 map.remove(RagiumComponentTypes.DRUM)
                             } else {

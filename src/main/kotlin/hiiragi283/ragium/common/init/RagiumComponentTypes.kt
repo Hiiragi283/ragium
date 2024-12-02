@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.common.item.HTDynamiteItem
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.impl.transfer.VariantCodecs
 import net.minecraft.component.ComponentType
@@ -26,10 +27,18 @@ import net.minecraft.text.TextCodecs
 import net.minecraft.util.DyeColor
 import net.minecraft.util.math.GlobalPos
 
+@Suppress("UnstableApiUsage")
 object RagiumComponentTypes {
     @JvmField
     val COLOR: ComponentType<DyeColor> =
         register("color", DyeColor.CODEC, DyeColor.PACKET_CODEC)
+
+    @JvmField
+    val CRATE: ComponentType<ResourceAmount<ItemVariant>> = register(
+        "crate",
+        resourceCodec(VariantCodecs.ITEM_CODEC),
+        resourcePacketCodec(VariantCodecs.ITEM_PACKET_CODEC),
+    )
 
     @JvmField
     val DAMAGE_INSTEAD_OF_DECREASE: ComponentType<Unit> =
@@ -39,7 +48,6 @@ object RagiumComponentTypes {
     val DESCRIPTION: ComponentType<List<Text>> =
         register("description", TextCodecs.CODEC.listOf(), TextCodecs.PACKET_CODEC.toList())
 
-    @Suppress("UnstableApiUsage")
     @JvmField
     val DRUM: ComponentType<ResourceAmount<FluidVariant>> = register(
         "drum",

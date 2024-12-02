@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
+import net.minecraft.component.ComponentType
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.Enchantments
 import net.minecraft.item.ItemConvertible
@@ -109,29 +110,12 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.PipeStations.entries)
         }.map { it.value }.forEach(::addDrop)
 
-        RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
-            addDrop(drum.value) { block: Block ->
-                LootTable
-                    .builder()
-                    .pool(
-                        addSurvivesExplosionCondition(
-                            block,
-                            LootPool
-                                .builder()
-                                .rolls(ConstantLootNumberProvider.create(1.0f))
-                                .with(
-                                    ItemEntry
-                                        .builder(block)
-                                        .apply(
-                                            CopyComponentsLootFunction
-                                                .builder(CopyComponentsLootFunction.Source.BLOCK_ENTITY)
-                                                .include(RagiumComponentTypes.DRUM),
-                                        ),
-                                ),
-                        ),
-                    )
-            }
-        }
+        RagiumContents.Crates.entries
+            .map(RagiumContents.Crates::value)
+            .forEach { dropWithComponent(it, RagiumComponentTypes.CRATE) }
+        RagiumContents.Drums.entries
+            .map(RagiumContents.Drums::value)
+            .forEach { dropWithComponent(it, RagiumComponentTypes.DRUM) }
 
         RagiumAPI
             .getInstance()
@@ -155,7 +139,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         )
     }
 
-    /*private fun dropMachine(block: Block) {
+    private fun dropWithComponent(block: Block, vararg types: ComponentType<*>) {
         addDrop(block) { block1: Block ->
             LootTable
                 .builder()
@@ -171,39 +155,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                                     .apply(
                                         CopyComponentsLootFunction
                                             .builder(CopyComponentsLootFunction.Source.BLOCK_ENTITY)
-                                            .include(HTMachineType.COMPONENT_TYPE)
-                                            .include(HTMachineTier.COMPONENT_TYPE),
+                                            .apply { types.forEach(this::include) },
                                     ),
                             ),
                     ),
                 )
         }
     }
-
-    private fun addCrops(crop: RagiumContents.Crops) {
-        val condition: BlockStatePropertyLootCondition.Builder = BlockStatePropertyLootCondition
-            .builder(crop.cropBlock)
-            .properties(StatePredicate.Builder.create().exactMatch(Properties.AGE_7, 7))
-        val dropBuilder: LeafEntry.Builder<*> = ItemEntry.builder(crop.seedItem)
-        addDrop(
-            crop.cropBlock,
-            applyExplosionDecay(
-                crop.cropBlock,
-                LootTable
-                    .builder()
-                    .pool(LootPool.builder().with(dropBuilder))
-                    .pool(
-                        LootPool
-                            .builder()
-                            .conditionally(condition)
-                            .with(dropBuilder)
-                            .apply(
-                                ApplyBonusLootFunction.binomialWithBonusCount(fortune, 0.5714286f, 3),
-                            ),
-                    ),
-            ),
-        )
-    }*/
 
     private fun withSilkTouch(with: Block, without: ItemConvertible, amount: Float = 1.0f): LootTable.Builder = dropsWithSilkTouch(
         with,

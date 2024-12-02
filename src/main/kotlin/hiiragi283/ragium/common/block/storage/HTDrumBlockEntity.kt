@@ -54,7 +54,9 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
 
     override fun addComponents(builder: ComponentMap.Builder) {
         fluidStorage.map(0) { storageIn: SingleFluidStorage ->
-            builder.add(RagiumComponentTypes.DRUM, storageIn.resourceAmount)
+            if (!storageIn.isResourceBlank && storageIn.amount > 0) {
+                builder.add(RagiumComponentTypes.DRUM, storageIn.resourceAmount)
+            }
         }
     }
 
