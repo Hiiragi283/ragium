@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.machine.consume
+package hiiragi283.ragium.common.block.machine.consume
 
 import com.google.common.base.Predicates
 import com.mojang.serialization.DataResult

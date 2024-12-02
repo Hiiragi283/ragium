@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.util.MutableComponentMap
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -12,6 +14,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
+import net.minecraft.component.ComponentMapImpl
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -76,6 +79,15 @@ fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID, t
 
 val FluidVariant.name: MutableText
     get() = FluidVariantAttributes.getName(this).copy()
+
+fun ContainerItemContext.modifyComponent(count: Long = 1, action: (MutableComponentMap) -> Unit): Long {
+    val newVariant: ItemVariant = itemVariant
+        .toStack()
+        .apply {
+            (components as? ComponentMapImpl)?.let(MutableComponentMap::of)?.apply(action)
+        }.let(ItemVariant::of)
+    return useTransaction { transaction: Transaction -> exchange(newVariant, count, transaction) }
+}
 
 //    Transaction    //
 

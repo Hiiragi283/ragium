@@ -1,15 +1,15 @@
 package hiiragi283.ragium.common.storage
 
+import hiiragi283.ragium.api.extension.modifyComponent
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.MutableComponentMap
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
-import net.minecraft.item.ItemStack
 import kotlin.math.min
 
 class HTTieredFluidItemStorage private constructor(val context: ContainerItemContext, val tier: HTMachineTier) :
@@ -38,10 +38,10 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
             }
             if (inserted > 0) {
                 val newResourceAmount: ResourceAmount<FluidVariant> = ResourceAmount(resource, amount + inserted)
-                val newStack: ItemStack = context.itemVariant.toStack().apply {
-                    set(RagiumComponentTypes.DRUM, newResourceAmount)
+                val changed: Long = context.modifyComponent { map: MutableComponentMap ->
+                    map.set(RagiumComponentTypes.DRUM, newResourceAmount)
                 }
-                if (context.exchange(ItemVariant.of(newStack), 1, transaction) == 1L) {
+                if (changed == 1L) {
                     return inserted
                 }
             }
@@ -55,14 +55,15 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
                     val extracted: Long = min(maxAmount, amount)
                     if (extracted > 0) {
                         val newResourceAmount: ResourceAmount<FluidVariant> = ResourceAmount(resource, amount - extracted)
-                        val newStack: ItemStack = context.itemVariant.toStack().apply {
+                        val changed: Long = context.modifyComponent { map: MutableComponentMap ->
                             if (newResourceAmount.amount <= 0) {
-                                remove(RagiumComponentTypes.DRUM)
+                                map.remove(RagiumComponentTypes.DRUM)
                             } else {
-                                set(RagiumComponentTypes.DRUM, newResourceAmount)
+                                map.set(RagiumComponentTypes.DRUM, newResourceAmount)
                             }
+                            map.set(RagiumComponentTypes.DRUM, newResourceAmount)
                         }
-                        if (context.exchange(ItemVariant.of(newStack), 1, transaction) == 1L) {
+                        if (changed == 1L) {
                             return extracted
                         }
                     }

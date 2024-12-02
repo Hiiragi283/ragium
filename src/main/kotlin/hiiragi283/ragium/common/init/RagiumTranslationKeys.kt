@@ -17,6 +17,7 @@ object RagiumTranslationKeys {
     const val MUTATED_SOIL = "tooltip.ragium.block.mutated_soil"
     const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"
     const val OPEN_CRATE = "tooltip.ragium.block.open_crate"
+    const val PIPE_STATION = "tooltip.ragium.block.pipe_station"
     const val POROUS_NETHERRACK = "tooltip.ragium.block.porous_netherrack"
     const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
     const val TRASH_BOX = "tooltip.ragium.block.trash_box"

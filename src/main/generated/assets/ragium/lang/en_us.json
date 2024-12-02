@@ -308,6 +308,7 @@
   "tooltip.ragium.block.mutated_soil": "Used for Growth Chamber",
   "tooltip.ragium.block.network_interface": "Connect Wireless Network and energy cables from other mod",
   "tooltip.ragium.block.open_crate": "Drop inserted items below",
+  "tooltip.ragium.block.pipe_station": "Priority transport to adjacent storage",
   "tooltip.ragium.block.porous_netherrack": "Absorb around lava like sponge but not reusable",
   "tooltip.ragium.block.sponge_cake": "Decrease falling damage when land on",
   "tooltip.ragium.block.transporter.fluid": "Fluid Speed: %s Units/s",

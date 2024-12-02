@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.machine.process
+package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier

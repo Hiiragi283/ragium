@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getOrDefault

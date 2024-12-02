@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.machine.consume
+package hiiragi283.ragium.common.block.machine.consume
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.getAroundPos

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.machine.generator
+package hiiragi283.ragium.common.block.machine.generator
 
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.recipe.HTItemIngredient

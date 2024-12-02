@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.block.entity.*
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity
+import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTCrossPipeBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTPipeBlockEntity

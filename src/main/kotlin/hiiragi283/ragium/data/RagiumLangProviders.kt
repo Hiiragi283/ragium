@@ -149,6 +149,7 @@ object RagiumLangProviders {
                 "Connect Wireless Network and energy cables from other mod",
             )
             builder.add(RagiumTranslationKeys.OPEN_CRATE, "Drop inserted items below")
+            builder.add(RagiumTranslationKeys.PIPE_STATION, "Priority transport to adjacent storage")
             builder.add(RagiumTranslationKeys.POROUS_NETHERRACK, "Absorb around lava like sponge but not reusable")
             builder.add(RagiumTranslationKeys.SPONGE_CAKE, "Decrease falling damage when land on")
             builder.add(RagiumTranslationKeys.TRASH_BOX, "Remove ALL inserted items or fluids")
@@ -523,6 +524,7 @@ object RagiumLangProviders {
                 "無線ネットワークと他modのエネルギーケーブルをつなげる",
             )
             builder.add(RagiumTranslationKeys.OPEN_CRATE, "搬入されたアイテムを下にドロップする")
+            builder.add(RagiumTranslationKeys.PIPE_STATION, "優先して隣接したストレージに輸送する")
             builder.add(RagiumTranslationKeys.POROUS_NETHERRACK, "スポンジのように溶岩を吸い取る（使い切り）")
             builder.add(RagiumTranslationKeys.SPONGE_CAKE, "着地時のダメージを軽減する")
             builder.add(RagiumTranslationKeys.TRASH_BOX, "搬入された「すべて」のアイテムや液体を消滅させる")

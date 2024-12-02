@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.machine.consume
+package hiiragi283.ragium.common.block.machine.consume
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.insert
@@ -40,6 +40,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
+import kotlin.collections.iterator
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),

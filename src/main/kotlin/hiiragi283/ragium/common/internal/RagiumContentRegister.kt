@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.HTDrumBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.block.transfer.HTCrossPipeBlock
 import hiiragi283.ragium.common.block.transfer.HTExporterBlock
 import hiiragi283.ragium.common.block.transfer.HTPipeBlock
@@ -152,7 +152,7 @@ internal object RagiumContentRegister {
         RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
             val block = HTPipeStationBlock(station.pipeType)
             registerBlock(station, block)
-            registerBlockItem(block)
+            registerBlockItem(block, itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION)))
         }
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
             val block = HTDrumBlock(drum.tier)

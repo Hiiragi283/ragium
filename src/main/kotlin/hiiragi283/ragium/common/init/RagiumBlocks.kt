@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
 import hiiragi283.ragium.common.block.machine.HTLargeProcessorBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
+import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
+import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
 import net.minecraft.block.*
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
