@@ -53,7 +53,7 @@ class HTMachineRecipeProcessor(
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
-            if (fluidStorage.map(slot, result::canMerge).result().orElse(false)) {
+            if (!fluidStorage.map(slot, result::canMerge).result().orElse(false)) {
                 return false
             }
         }
