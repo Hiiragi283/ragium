@@ -326,12 +326,13 @@ object RagiumItems {
     @JvmField
     val MELON_PIE = Item(
         itemSettings().food(
-            FoodComponent.Builder()
+            FoodComponent
+                .Builder()
                 .nutrition(8)
                 .saturationModifier(0.3f)
                 .usingConvertsTo(Items.MELON_SEEDS)
-                .build()
-        )
+                .build(),
+        ),
     )
 
     @JvmField

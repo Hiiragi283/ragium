@@ -320,7 +320,9 @@ internal object RagiumContentRegister {
         registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItem(
             RagiumBlocks.ROPE,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ROPE)),
+            itemSettings()
+                .descriptions(Text.translatable(RagiumTranslationKeys.ROPE))
+                .component(RagiumComponentTypes.REWORK_TARGET, Unit),
             ::HTRopeBlockItem,
         )
         registerBlockItem(RagiumBlocks.SHAFT)
