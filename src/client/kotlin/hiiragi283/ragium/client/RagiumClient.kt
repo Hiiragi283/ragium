@@ -99,6 +99,7 @@ object RagiumClient : ClientModInitializer {
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
+        registerCutoutMipped(RagiumBlocks.CREATIVE_EXPORTER)
         registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
         registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)

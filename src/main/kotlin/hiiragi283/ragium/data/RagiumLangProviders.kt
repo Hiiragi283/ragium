@@ -84,6 +84,10 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "This cake is DIE.")
             // Blocks
+            builder.add(RagiumBlocks.CREATIVE_DRUM, "Creative Drum")
+            builder.add(RagiumBlocks.CREATIVE_EXPORTER, "Creative Exporter")
+            builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
+
             builder.add(RagiumBlocks.MUTATED_SOIL, "Mutated Soil")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
@@ -116,7 +120,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "Auto Illuminator")
             builder.add(RagiumBlocks.BACKPACK_INTERFACE, "Backpack Interface")
-            builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumBlocks.ENCHANTMENT_BOOKSHELF, "Enchantment Bookshelf")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "Large Processor")
@@ -292,7 +295,7 @@ object RagiumLangProviders {
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
-            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "Amount: %s Units")
+            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "Amount: %s B, %s Units")
             builder.add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "Network Energy: %s Units")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "Show preview: %s")
@@ -458,12 +461,15 @@ object RagiumLangProviders {
             }
 
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
-
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "つばさレストラン名物「デスケーキ」")
             // Blocks
+            builder.add(RagiumBlocks.CREATIVE_DRUM, "クリエイティブ用ドラム")
+            builder.add(RagiumBlocks.CREATIVE_EXPORTER, "クリエイティブ用搬出機")
+            builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
+
             builder.add(RagiumBlocks.MUTATED_SOIL, "変異した土壌")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
@@ -496,7 +502,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "光源置き太郎")
             builder.add(RagiumBlocks.BACKPACK_INTERFACE, "バックパックインターフェース")
-            builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.ENCHANTMENT_BOOKSHELF, "エンチャント本棚")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "大型処理装置")
@@ -669,7 +674,7 @@ object RagiumLangProviders {
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
-            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "液体量: %s ユニット")
+            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "液体量: %s B, %s ユニット")
             builder.add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "ネットワーク上のエネルギー量: %s ユニット")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "プレビューの表示: %s")

@@ -9,7 +9,7 @@ import net.minecraft.inventory.SimpleInventory
 class HTFilteringPipeScreenHandler(syncId: Int, playerInv: PlayerInventory, val pipeType: HTPipeType) :
     HTScreenHandlerBase(RagiumScreenHandlerTypes.FILTERING_PIPE, syncId, playerInv, SimpleInventory(0)) {
     init {
-        addPlayerInv(103)
+        addPlayerInv(103 + ((6 - 4) * 18))
     }
 
     override val machineSlotRange: IntRange = IntRange.EMPTY

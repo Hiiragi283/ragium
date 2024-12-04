@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:basic_energetic_generator"
+          "name": "ragium:creative_exporter"
         }
       ],
       "rolls": 1.0

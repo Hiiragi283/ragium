@@ -41,6 +41,10 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
     override fun generate() {
+        addDrop(RagiumBlocks.CREATIVE_DRUM)
+        addDrop(RagiumBlocks.CREATIVE_EXPORTER)
+        addDrop(RagiumBlocks.CREATIVE_SOURCE)
+
         addDrop(RagiumBlocks.MUTATED_SOIL)
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
@@ -84,7 +88,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         )
 
         addDrop(RagiumBlocks.AUTO_ILLUMINATOR)
-        addDrop(RagiumBlocks.CREATIVE_SOURCE, dropsNothing())
         addDrop(RagiumBlocks.LARGE_PROCESSOR)
         addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)

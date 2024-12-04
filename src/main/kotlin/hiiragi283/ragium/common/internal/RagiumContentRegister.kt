@@ -39,6 +39,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
+import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -213,6 +214,13 @@ internal object RagiumContentRegister {
 
     @JvmStatic
     private fun initBlocks() {
+        registerBlock("creative_drum", RagiumBlocks.CREATIVE_DRUM)
+        registerBlock("creative_exporter", RagiumBlocks.CREATIVE_EXPORTER)
+        registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.CREATIVE_DRUM, itemSettings().rarity(Rarity.EPIC))
+        registerBlockItem(RagiumBlocks.CREATIVE_EXPORTER, itemSettings().rarity(Rarity.EPIC))
+        registerBlockItem(RagiumBlocks.CREATIVE_SOURCE, itemSettings().rarity(Rarity.EPIC))
+
         registerBlock("mutated_soil", RagiumBlocks.MUTATED_SOIL)
         registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
         registerBlockItem(
@@ -280,7 +288,6 @@ internal object RagiumContentRegister {
         registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
-        registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
         registerBlock("large_processor", RagiumBlocks.LARGE_PROCESSOR)
         registerBlock("manual_forge", RagiumBlocks.MANUAL_FORGE)
         registerBlock("manual_grinder", RagiumBlocks.MANUAL_GRINDER)
@@ -298,7 +305,6 @@ internal object RagiumContentRegister {
                 ),
             ),
         )
-        registerBlockItem(RagiumBlocks.CREATIVE_SOURCE)
         registerBlockItem(
             RagiumBlocks.LARGE_PROCESSOR,
             itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.LARGE_PROCESSOR)),

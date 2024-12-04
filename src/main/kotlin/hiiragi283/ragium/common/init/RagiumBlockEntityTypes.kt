@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.block.storage.HTCreativeDrumBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.transfer.*
 import net.minecraft.block.Block
@@ -30,6 +31,14 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CRATE: BlockEntityType<HTCrateBlockEntity> =
         register("crate", ::HTCrateBlockEntity)
+
+    @JvmField
+    val CREATIVE_DRUM: BlockEntityType<HTCreativeDrumBlockEntity> =
+        register("creative_drum", ::HTCreativeDrumBlockEntity)
+
+    @JvmField
+    val CREATIVE_EXPORTER: BlockEntityType<HTCreativeExporterBlockEntity> =
+        register("creative_exporter", ::HTCreativeExporterBlockEntity)
 
     @JvmField
     val CROSS_PIPE: BlockEntityType<HTCrossPipeBlockEntity> =
@@ -178,6 +187,7 @@ object RagiumBlockEntityTypes {
         registerBlocks(CRATE, RagiumContents.PipeStations.entries)
         registerBlocks(DRUM, RagiumContents.Drums.entries)
 
+        CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocks.CREATIVE_EXPORTER)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         LARGE_PROCESSOR.addSupportedBlock(RagiumBlocks.LARGE_PROCESSOR)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.gui
 
+import hiiragi283.ragium.api.extension.fluidAmountText
 import hiiragi283.ragium.api.extension.getModName
 import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.extension.toFloatColor
@@ -134,11 +135,7 @@ abstract class HTScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: Play
                     // Tooltips
                     addAll(FluidVariantRendering.getTooltip(variant))
                     // Fluid Amount
-                    add(
-                        Text
-                            .translatable(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, longText(amount))
-                            .formatted(Formatting.GRAY),
-                    )
+                    add(fluidAmountText(amount).formatted(Formatting.GRAY))
                     // Mod Name
                     val id: Identifier = Registries.FLUID.getId(variant.fluid)
                     getModName(id.namespace)?.let { name: String ->

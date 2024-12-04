@@ -194,6 +194,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 put(TextureKey.SIDE, RagiumBlocks.ENCHANTMENT_BOOKSHELF)
             }
         }
+        registerFactory(RagiumBlocks.CREATIVE_DRUM, TexturedModel.CUBE_COLUMN)
 
         RagiumContents.Drums.entries.forEach { registerFactory(it.value, TexturedModel.CUBE_COLUMN) }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
@@ -268,16 +269,34 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block: Block = exporter.value
             val coil: Block = exporter.tier.getCoil().value
-            val modelId: Identifier = RagiumModels.EXPORTER.upload(
+            registerDirectional(
                 block,
-                HTTextureMapBuilder.create {
-                    put(TextureKey.TOP, coil, "_top")
-                    put(TextureKey.SIDE, coil, "_side")
-                },
-                generator.modelCollector,
+                stateVariantOf(
+                    RagiumModels.EXPORTER.upload(
+                        block,
+                        HTTextureMapBuilder.create {
+                            put(TextureKey.TOP, coil, "_top")
+                            put(TextureKey.SIDE, coil, "_side")
+                        },
+                        generator.modelCollector,
+                    ),
+                ),
             )
-            registerDirectional(block, stateVariantOf(modelId))
         }
+        registerDirectional(
+            RagiumBlocks.CREATIVE_EXPORTER,
+            stateVariantOf(
+                RagiumModels.EXPORTER.upload(
+                    RagiumBlocks.CREATIVE_EXPORTER,
+                    HTTextureMapBuilder.create {
+                        put(TextureKey.TOP, RagiumAPI.id("block/creative_coil_top"))
+                        put(TextureKey.SIDE, RagiumAPI.id("block/creative_coil_side"))
+                    },
+                    generator.modelCollector,
+                ),
+            ),
+        )
+
         // pipes
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
             val block: Block = pipe.value

@@ -68,6 +68,7 @@ object RagiumTagProviders {
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
 
             buildList {
+                addAll(RagiumBlocks.CREATIVES)
                 addAll(RagiumBlocks.BUILDINGS)
                 addAll(RagiumBlocks.MECHANICS)
                 addAll(RagiumBlocks.MISC)

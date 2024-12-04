@@ -86,6 +86,8 @@ object RagiumItemGroup {
             icon { RagiumMachineKeys.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
+                    addAll(RagiumBlocks.CREATIVES)
+
                     addAll(RagiumContents.Grates.entries)
                     addAll(RagiumContents.Casings.entries)
                     addAll(RagiumContents.Hulls.entries)
