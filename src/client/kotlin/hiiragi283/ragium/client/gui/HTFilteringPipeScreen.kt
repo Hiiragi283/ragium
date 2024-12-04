@@ -19,16 +19,6 @@ class HTFilteringPipeScreen(handler: HTFilteringPipeScreenHandler, inventory: Pl
         playerInventoryTitleY = backgroundHeight - 94
     }
 
-    override fun render(
-        context: DrawContext,
-        mouseX: Int,
-        mouseY: Int,
-        delta: Float,
-    ) {
-        super.render(context, mouseX, mouseY, delta)
-        drawMouseoverTooltip(context, mouseX, mouseY)
-    }
-
     override fun drawBackground(
         context: DrawContext,
         delta: Float,

@@ -88,9 +88,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
             set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/generator"))
         }
-        helper.modify(RagiumMachineKeys.ENERGETIC_GENERATOR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTEnergeticGeneratorBlockEntity))
-        }
         helper.modify(RagiumMachineKeys.NUCLEAR_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTNuclearReactorBlockEntity))
         }
@@ -121,13 +118,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTThermalGeneratorBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
-        /*helper.modify(RagiumMachineKeys.WATER_GENERATOR) {
-            set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
-                pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
-            }
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
-            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
-        }*/
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
@@ -136,7 +126,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
         }
-        helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
+        helper.modify(
+            RagiumMachineKeys.CHEMICAL_REACTOR,
+            RagiumMachineKeys.ELECTROLYZER,
+            RagiumMachineKeys.EXTRACTOR,
+            RagiumMachineKeys.MIXER,
+        ) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
@@ -149,12 +144,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
-        helper.modify(RagiumMachineKeys.ELECTROLYZER) {
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
-            )
-        }
         helper.modify(RagiumMachineKeys.GRINDER) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
         }
@@ -162,10 +151,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_ANVIL_USE)
         }
         helper.modify(RagiumMachineKeys.MIXER) {
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
-            )
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {

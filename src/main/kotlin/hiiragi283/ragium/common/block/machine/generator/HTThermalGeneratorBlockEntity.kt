@@ -88,9 +88,8 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
                 val variantIn: FluidVariant = storageIn.resource
                 if (variantIn.isBlank) return@flatMap DataResult.error { "Fuels is empty!" }
-                val extracted: Long =
-                    storageIn.extract(variantIn, FluidConstants.BUCKET, transaction)
-                if (extracted == FluidConstants.BUCKET) {
+                val maxAmount: Long = FluidConstants.INGOT
+                if (storageIn.extract(variantIn, maxAmount, transaction) == maxAmount) {
                     transaction.commit()
                     DataResult.success(Unit)
                 } else {

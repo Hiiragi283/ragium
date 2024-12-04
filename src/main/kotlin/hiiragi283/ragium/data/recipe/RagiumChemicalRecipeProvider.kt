@@ -35,6 +35,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         chemicalReactor(exporter)
         distillation(exporter)
         electrolyzer(exporter)
+        extractor(exporter)
         mixer(exporter)
     }
 
@@ -381,6 +382,138 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemOutput(RagiumContents.Dusts.ALKALI)
             .fluidOutput(RagiumFluids.CHLORINE)
             .offerTo(exporter, RagiumContents.Dusts.SALT)
+    }
+
+    //    Extractor    //
+
+    private fun extractor(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.VILLAGER_PLANTABLE_SEEDS, 4)
+            .fluidOutput(RagiumFluids.SEED_OIL)
+            .offerTo(exporter, RagiumFluids.SEED_OIL)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(RagiumItemTags.PROTEIN_FOODS, 4)
+            .fluidOutput(RagiumFluids.TALLOW)
+            .offerTo(exporter, RagiumFluids.TALLOW)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.SMOOTH_BASALT)
+            .itemOutput(RagiumItems.BASALT_MESH)
+            .offerTo(exporter, RagiumItems.BASALT_MESH)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(RagiumItems.CHOCOLATE)
+            .fluidOutput(RagiumFluids.CHOCOLATE)
+            .offerTo(exporter, RagiumFluids.CHOCOLATE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.SWEET_BERRIES, 4)
+            .fluidOutput(RagiumFluids.SWEET_BERRIES)
+            .offerTo(exporter, RagiumFluids.SWEET_BERRIES)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .fluidInput(ConventionalFluidTags.MILK)
+            .itemOutput(RagiumItems.BUTTER)
+            .offerTo(exporter, RagiumItems.BUTTER)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.GLOWSTONE)
+            .itemOutput(RagiumContents.Gems.FLUORITE, 4)
+            .itemOutput(Items.GOLD_NUGGET)
+            .offerTo(exporter, RagiumContents.Gems.FLUORITE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .fluidInput(RagiumFluids.ALKALI_SOLUTION)
+            .itemOutput(RagiumContents.Dusts.ALKALI)
+            .fluidOutput(Fluids.WATER)
+            .offerTo(exporter, RagiumContents.Dusts.ALKALI)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .fluidInput(RagiumFluids.AIR, FluidConstants.BUCKET * 5)
+            .fluidOutput(RagiumFluids.NITROGEN, FluidConstants.BUCKET * 4)
+            .fluidOutput(RagiumFluids.OXYGEN)
+            .offerTo(exporter, RagiumFluids.AIR)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.HONEY_BOTTLE, 4)
+            .itemOutput(Items.GLASS_BOTTLE, 4)
+            .fluidOutput(RagiumFluids.HONEY)
+            .offerTo(exporter, RagiumFluids.HONEY)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .fluidInput(RagiumFluids.SALT_WATER)
+            .itemOutput(RagiumContents.Dusts.SALT)
+            .fluidOutput(Fluids.WATER)
+            .offerTo(exporter, RagiumContents.Dusts.SALT)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.GLOW_INK_SAC)
+            .itemOutput(RagiumItems.LUMINESCENCE_DUST)
+            .itemOutput(Items.INK_SAC)
+            .offerTo(exporter, RagiumItems.LUMINESCENCE_DUST)
+        // uranium enrichment
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .fluidInput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 8)
+            .fluidOutput(RagiumFluids.URANIUM_HEXAFLUORIDE, FluidConstants.BUCKET * 7)
+            .fluidOutput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
+            .offerTo(exporter, RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
+        // sap
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.LOGS)
+            .itemOutput(RagiumItems.PULP, 6)
+            .fluidOutput(RagiumFluids.SAP, FluidConstants.BUCKET)
+            .offerTo(exporter, RagiumFluids.SAP)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .itemInput(ItemTags.CRIMSON_STEMS)
+            .catalyst(ItemTags.CRIMSON_STEMS)
+            .itemOutput(RagiumItems.PULP, 6)
+            .fluidOutput(RagiumFluids.CRIMSON_SAP, FluidConstants.BUCKET)
+            .offerTo(exporter, RagiumFluids.CRIMSON_SAP)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .itemInput(ItemTags.WARPED_STEMS)
+            .catalyst(ItemTags.WARPED_STEMS)
+            .itemOutput(RagiumItems.PULP, 6)
+            .fluidOutput(RagiumFluids.WARPED_SAP, FluidConstants.BUCKET)
+            .offerTo(exporter, RagiumFluids.WARPED_SAP)
+        // crude oil
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.SOUL_SAND)
+            .itemOutput(Items.SAND)
+            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_soul_sand")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.SOUL_SOIL)
+            .itemOutput(Items.SAND)
+            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_soul_soil")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.BASIC)
+            .itemInput(Items.COAL, 3)
+            .fluidOutput(RagiumFluids.CRUDE_OIL)
+            .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_coal")
     }
 
     //    Mixer    //

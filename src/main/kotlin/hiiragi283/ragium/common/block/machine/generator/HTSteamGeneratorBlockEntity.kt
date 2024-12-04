@@ -82,7 +82,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         return if (fuelStack.isIn(ItemTags.COALS)) {
             useTransaction { transaction: Transaction ->
                 return fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
-                    if (storageIn.extract(FluidVariant.of(Fluids.WATER), FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                    if (storageIn.extract(FluidVariant.of(Fluids.WATER), FluidConstants.INGOT, transaction) == FluidConstants.INGOT) {
                         transaction.commit()
                         fuelStack.decrement(1)
                         inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)

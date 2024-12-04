@@ -69,11 +69,11 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             val variantIn: FluidVariant = storageIn.variant
             if (variantIn.isBlank) return@flatMap DataResult.error { "Empty fuels!" }
             val maxAmount: Long = when {
-                variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.INGOT
-                variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.BOTTLE
+                variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.NUGGET
+                variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.INGOT
                 else -> return@flatMap DataResult.error { "Failed to calculate consume amount!" }
             }
-            if (storageIn.extract(variantIn, FluidConstants.BUCKET, transaction) == maxAmount) {
+            if (storageIn.extract(variantIn, maxAmount, transaction) == maxAmount) {
                 transaction.commit()
                 DataResult.success(Unit)
             } else {
