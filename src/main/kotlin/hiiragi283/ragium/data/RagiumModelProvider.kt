@@ -224,7 +224,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         stateVariantOf(
                             RagiumModels.SURFACE.upload(
                                 block,
-                                HTTextureMapBuilder.of(TextureKey.TOP, block), 
+                                HTTextureMapBuilder.of(TextureKey.TOP, block),
                                 generator.modelCollector,
                             ),
                         ),

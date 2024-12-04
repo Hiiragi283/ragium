@@ -87,39 +87,29 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // steel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_HELMET)
-            .patterns(
-                "AAA",
-                "A A",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            .helmetPattern()
+            .input('A', RagiumContents.Ingots.STEEL)
             .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_CHESTPLATE)
-            .patterns(
-                "A A",
-                "AAA",
-                "AAA",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            .chestPlatePattern()
+            .input('A', RagiumContents.Ingots.STEEL)
             .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_LEGGINGS)
-            .patterns(
-                "AAA",
-                "A A",
-                "A A",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            .leggingsPattern()
+            .input('A', RagiumContents.Ingots.STEEL)
             .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.STEEL_BOOTS)
-            .patterns(
-                "A A",
-                "A A",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            .bootsPattern()
+            .input('A', RagiumContents.Ingots.STEEL)
             .unlockedBy(RagiumContents.Ingots.STEEL)
             .offerTo(exporter)
         // stella
@@ -172,19 +162,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // asphalt
         registerSlab(exporter, RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
         registerStair(exporter, RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
-        // lined asphalt
-        /* HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.LINED_ASPHALT, 6)
-            .patterns(
-                "ABA",
-                "ABA",
-                "ABA",
-            ).input('A', RagiumBlocks.ASPHALT)
-            .input('B', ConventionalItemTags.WHITE_DYES)
-            .unlockedBy(RagiumBlocks.ASPHALT)
-            .offerTo(exporter)
-        registerSlab(exporter, RagiumBlocks.LINED_ASPHALT_SLAB, RagiumBlocks.LINED_ASPHALT)
-        registerStair(exporter, RagiumBlocks.LINED_ASPHALT_STAIRS, RagiumBlocks.LINED_ASPHALT) */
         // polished asphalt
         HTStonecuttingRecipeJsonBuilder.register(
             exporter,
@@ -218,6 +195,35 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         registerSlab(exporter, RagiumBlocks.POLISHED_SLATE_SLAB, RagiumBlocks.POLISHED_SLATE)
         registerStair(exporter, RagiumBlocks.POLISHED_SLATE_STAIRS, RagiumBlocks.POLISHED_SLATE)
+        // white line
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.WHITE_LINE)
+            .patterns(
+                "A",
+                "A",
+                "A",
+            ).input('A', ConventionalItemTags.WHITE_DYES)
+            .unlockedBy(ConventionalItemTags.WHITE_DYES)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.T_WHITE_LINE)
+            .patterns(
+                "AAA",
+                " A ",
+            ).input('A', ConventionalItemTags.WHITE_DYES)
+            .unlockedBy(ConventionalItemTags.WHITE_DYES)
+            .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.CROSS_WHITE_LINE)
+            .patterns(
+                " A ",
+                "AAA",
+                " A ",
+            ).input('A', ConventionalItemTags.WHITE_DYES)
+            .unlockedBy(ConventionalItemTags.WHITE_DYES)
+            .offerTo(exporter)
     }
 
     private fun registerSlab(
@@ -229,7 +235,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // shaped crafting
         HTShapedRecipeJsonBuilder
             .create(output, 6)
-            .patterns("AAA")
+            .slabPattern()
             .input('A', input)
             .unlockedBy(input)
             .category(category)
@@ -253,11 +259,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         // shaped crafting
         HTShapedRecipeJsonBuilder
             .create(output, 4)
-            .patterns(
-                "A  ",
-                "AA ",
-                "AAA",
-            ).input('A', input)
+            .stairPattern()
+            .input('A', input)
             .unlockedBy(input)
             .category(category)
             .offerTo(exporter)
@@ -321,22 +324,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.BEDROCK_DYNAMITE, 8)
-            .patterns(
-                "AAA",
-                "ABA",
-                "AAA",
-            ).input('A', RagiumItems.DYNAMITE)
+            .wrapPattern8()
+            .input('A', RagiumItems.DYNAMITE)
             .input('B', Items.DIAMOND_PICKAXE)
             .unlockedBy(RagiumItems.DYNAMITE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.FLATTENING_DYNAMITE, 8)
-            .patterns(
-                "AAA",
-                "ABA",
-                "AAA",
-            ).input('A', RagiumItems.DYNAMITE)
+            .wrapPattern8()
+            .input('A', RagiumItems.DYNAMITE)
             .input('B', Items.NETHER_STAR)
             .unlockedBy(RagiumItems.DYNAMITE)
             .offerTo(exporter)
@@ -503,11 +500,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .patterns(
-                "AAA",
-                "A A",
-                "AAA",
-            ).input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .hollowPattern()
+            .input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
             .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
         // yellow cake
@@ -519,11 +513,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.YELLOW_CAKE)
-            .patterns(
-                "AAA",
-                "A A",
-                "AAA",
-            ).input('A', RagiumItems.YELLOW_CAKE_PIECE)
+            .hollowPattern()
+            .input('A', RagiumItems.YELLOW_CAKE_PIECE)
             .unlockedBy(RagiumItems.YELLOW_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
 
@@ -551,11 +542,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_COOKIE, 8)
-            .patterns(
-                "AAA",
-                "ABA",
-                "AAA",
-            ).input('A', Items.COOKIE)
+            .wrapPattern8()
+            .input('A', Items.COOKIE)
             .input('B', RagiumItems.CHOCOLATE)
             .unlockedBy(Items.COOKIE)
             .offerTo(exporter)
@@ -567,11 +555,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
-            .patterns(
-                "AAA",
-                "ABA",
-                "AAA",
-            ).input('A', RagiumContents.RawMaterials.CRUDE_RAGINITE)
+            .wrapPattern8()
+            .input('A', RagiumContents.RawMaterials.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
             .unlockedBy(RagiumContents.RawMaterials.RAGINITE)
             .offerTo(exporter)

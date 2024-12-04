@@ -17,7 +17,7 @@ class HTTextureMapBuilder private constructor() {
         fun of(key: TextureKey, item: Item, suffix: String = ""): TextureMap = create {
             put(key, item, suffix)
         }
-        
+
         @JvmStatic
         fun create(action: HTTextureMapBuilder.() -> Unit): TextureMap = HTTextureMapBuilder().apply(action).parent
     }

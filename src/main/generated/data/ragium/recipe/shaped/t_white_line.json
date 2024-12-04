@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:dyes/white"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:t_white_line"
+  }
+}

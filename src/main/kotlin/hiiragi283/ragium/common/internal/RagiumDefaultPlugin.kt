@@ -354,11 +354,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 // Shaped Crafting
                 HTShapedRecipeJsonBuilder
                     .create(block)
-                    .patterns(
-                        "AAA",
-                        "AAA",
-                        "AAA",
-                    ).input('A', prefix, key)
+                    .pattern3x3()
+                    .input('A', prefix, key)
                     .offerTo(exporter)
             }
             // block -> ingot/gem
