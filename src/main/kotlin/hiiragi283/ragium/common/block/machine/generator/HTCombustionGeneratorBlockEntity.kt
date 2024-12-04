@@ -48,7 +48,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.FUELS) }
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

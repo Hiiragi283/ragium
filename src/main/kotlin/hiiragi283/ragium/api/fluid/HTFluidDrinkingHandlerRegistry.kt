@@ -1,7 +1,14 @@
 package hiiragi283.ragium.api.fluid
 
+import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumItems
+import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.ItemStack
+import net.minecraft.world.World
 
 object HTFluidDrinkingHandlerRegistry {
     @JvmStatic
@@ -18,5 +25,28 @@ object HTFluidDrinkingHandlerRegistry {
     }
 
     @JvmStatic
-    fun get(fluid: Fluid): HTFluidDrinkingHandler? = registry[fluid]
+    fun get(fluid: Fluid): Entry? = registry[fluid]?.let { handler: HTFluidDrinkingHandler -> Entry(fluid, handler) }
+
+    @JvmStatic
+    fun getHandler(stack: ItemStack): Entry? = stack
+        .get(RagiumComponentTypes.FLUID)
+        ?.let(HTFluidDrinkingHandlerRegistry::get)
+
+    @JvmStatic
+    fun drinkFluid(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
+        getHandler(stack)?.let { (fluid: Fluid, handler: HTFluidDrinkingHandler) ->
+            handler.onDrink(stack, world, user)
+            HTDrankFluidCriterion.trigger(user, fluid)
+            dropStackAt(
+                user,
+                RagiumItems.EMPTY_FLUID_CUBE.defaultStack,
+            )
+            stack.decrementUnlessCreative(1, user)
+        }
+        return stack
+    }
+
+    //    Entry    //
+
+    data class Entry(val fluid: Fluid, val handler: HTFluidDrinkingHandler)
 }

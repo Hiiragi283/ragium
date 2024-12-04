@@ -62,7 +62,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

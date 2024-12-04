@@ -53,7 +53,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .fluidFilter { _: Int, variant: FluidVariant -> variant.isOf(RagiumFluids.BIOMASS.value) }
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

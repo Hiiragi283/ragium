@@ -41,7 +41,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,

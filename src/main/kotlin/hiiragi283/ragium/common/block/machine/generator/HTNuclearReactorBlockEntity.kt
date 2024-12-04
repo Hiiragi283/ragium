@@ -57,7 +57,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.COOLANTS) }
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

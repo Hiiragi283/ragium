@@ -38,7 +38,7 @@ class HTSimpleRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
         .setCallback(this@HTSimpleRecipeProcessorBlockEntity::markDirty)
 
     override val processor = HTMachineRecipeProcessor(

@@ -40,7 +40,7 @@ class HTChemicalRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
         .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
         .setCallback(this@HTChemicalRecipeProcessorBlockEntity::markDirty)
 
     override val processor = HTMachineRecipeProcessor(

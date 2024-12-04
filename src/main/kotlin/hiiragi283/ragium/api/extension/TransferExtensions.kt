@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
-import net.minecraft.component.ComponentMapImpl
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -84,7 +83,7 @@ fun ContainerItemContext.modifyComponent(transaction: TransactionContext, count:
     val newVariant: ItemVariant = itemVariant
         .toStack()
         .apply {
-            (components as? ComponentMapImpl)?.let(MutableComponentMap::of)?.apply(action)
+            MutableComponentMap.orNull(components)?.apply(action)
         }.let(ItemVariant::of)
     return exchange(newVariant, count, transaction)
 }

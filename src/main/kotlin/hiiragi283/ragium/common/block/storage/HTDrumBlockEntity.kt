@@ -29,7 +29,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
     SidedStorageBlockEntity {
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.GENERIC, HTStorageSide.ANY)
-        .buildMachineFluidStorage()
+        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

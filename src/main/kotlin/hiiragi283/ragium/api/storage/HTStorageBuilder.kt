@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.storage
 
+import hiiragi283.ragium.api.machine.HTMachineTier
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -55,9 +56,7 @@ class HTStorageBuilder(val size: Int) {
         this.countFilter = filter
     }
 
-    fun <T : Any> build(builder: (HTStorageBuilder) -> T): T = builder(this)
-
-    fun buildInventory(): SidedInventory = build(::SidedInventoryImpl)
+    fun buildInventory(): SidedInventory = SidedInventoryImpl(this)
 
     fun buildItemStorage(capacity: Long): CombinedSlottedStorage<ItemVariant, SingleItemStorage> =
         CombinedSlottedStorage(sizeRange.map { ioMapper(it).createItemStorage(capacity) })
@@ -65,7 +64,7 @@ class HTStorageBuilder(val size: Int) {
     fun buildFluidStorage(capacity: Long): CombinedSlottedStorage<FluidVariant, SingleFluidStorage> =
         CombinedSlottedStorage(sizeRange.map { ioMapper(it).createFluidStorage(capacity) })
 
-    fun buildMachineFluidStorage(): HTMachineFluidStorage = build(::HTMachineFluidStorage)
+    fun buildMachineFluidStorage(tier: HTMachineTier): HTMachineFluidStorage = HTMachineFluidStorage(this, tier)
 
     //    SidedInventoryImpl    //
 

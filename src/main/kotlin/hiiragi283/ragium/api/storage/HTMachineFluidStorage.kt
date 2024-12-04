@@ -24,15 +24,17 @@ class HTMachineFluidStorage private constructor(
     size: Int,
     private val ioMapper: (Int) -> HTStorageIO,
     private val filter: (Int, FluidVariant) -> Boolean,
+    tier: HTMachineTier,
 ) {
     companion object {
         const val NBT_KEY = "fluid_storages"
     }
 
-    constructor(builder: HTStorageBuilder) : this(
+    constructor(builder: HTStorageBuilder, tier: HTMachineTier) : this(
         builder.size,
         builder.ioMapper,
         builder.fluidFilter,
+        tier,
     )
 
     private var callback: () -> Unit = {}
@@ -41,9 +43,9 @@ class HTMachineFluidStorage private constructor(
         this.callback = callback
     }
 
-    private val parts: Array<SingleFluidStorage> = Array(size, ::childStorage)
+    private val parts: Array<SingleFluidStorage> = Array(size) { slot: Int -> childStorage(slot, tier) }
 
-    private fun childStorage(slot: Int, tier: HTMachineTier = HTMachineTier.PRIMITIVE): SingleFluidStorage = object : SingleFluidStorage() {
+    private fun childStorage(slot: Int, tier: HTMachineTier): SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
         override fun canInsert(variant: FluidVariant): Boolean = filter(slot, variant)

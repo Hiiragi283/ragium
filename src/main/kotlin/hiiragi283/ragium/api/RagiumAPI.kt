@@ -6,19 +6,23 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.Registries
+import net.minecraft.registry.entry.RegistryEntryList
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.jetbrains.annotations.ApiStatus
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.function.Consumer
 
-@ApiStatus.NonExtendable
+@Suppress("DEPRECATION")
 interface RagiumAPI {
     companion object {
         const val MOD_ID = "ragium"
@@ -74,6 +78,14 @@ interface RagiumAPI {
         key: HTMachineKey,
         minTier: HTMachineTier,
     ): AdvancementCriterion<HTInteractMachineCriterion.Condition>
+
+    fun createFluidDrinkCriterion(vararg fluids: Fluid): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
+        createFluidDrinkCriterion(RegistryEntryList.of(Fluid::getRegistryEntry, *fluids))
+
+    fun createFluidDrinkCriterion(tagKey: TagKey<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
+        createFluidDrinkCriterion(Registries.FLUID.getOrCreateEntryList(tagKey))
+
+    fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition>
 
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 

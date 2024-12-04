@@ -93,7 +93,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
             .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
             .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
             .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildMachineFluidStorage()
+            .buildMachineFluidStorage(tier)
             .setCallback { this@Large.markDirty() }
 
         override val processor = HTMachineRecipeProcessor(
