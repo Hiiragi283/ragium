@@ -13,7 +13,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
 import net.minecraft.world.World
 
-object HTTraderCatalogItem : Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.TRADER_CATALOG))) {
+object HTTraderCatalogItem : Item(itemSettings().maxCount(1).descriptions(Text.translatable(RagiumTranslationKeys.TRADER_CATALOG))) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         user.itemCooldownManager.set(this, 20 * 1 * 60)

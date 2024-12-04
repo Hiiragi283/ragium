@@ -224,11 +224,13 @@ object RagiumItems {
 
     @JvmField
     val FLUID_FILTER: Item = Item(
-        itemSettings().descriptions(
-            Text.translatable(RagiumTranslationKeys.FILTER),
-            Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
-            Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
-        ),
+        itemSettings()
+            .maxCount(1)
+            .descriptions(
+                Text.translatable(RagiumTranslationKeys.FILTER),
+                Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
+                Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
+            ),
     )
 
     @JvmField
@@ -239,15 +241,17 @@ object RagiumItems {
 
     @JvmField
     val ITEM_FILTER: Item = Item(
-        itemSettings().descriptions(
-            Text.translatable(RagiumTranslationKeys.FILTER),
-            Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
-            Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
-        ),
+        itemSettings()
+            .maxCount(1)
+            .descriptions(
+                Text.translatable(RagiumTranslationKeys.FILTER),
+                Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
+                Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
+            ),
     )
 
     @JvmField
-    val RAGI_WRENCH: Item = Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.RAGI_WRENCH)))
+    val RAGI_WRENCH: Item = Item(itemSettings().maxCount(1).descriptions(Text.translatable(RagiumTranslationKeys.RAGI_WRENCH)))
 
     @JvmField
     val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
