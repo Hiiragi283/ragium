@@ -5,7 +5,7 @@
   },
   "definition": {
     "type": "ragium:rock_generator",
-    "tier": "primitive"
+    "tier": "advanced"
   },
   "item_outputs": [
     {

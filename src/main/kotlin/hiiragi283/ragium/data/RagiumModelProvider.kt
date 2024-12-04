@@ -66,7 +66,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
 
         fun registerLayered(block: Block, layer0: Identifier, layer1: Identifier) {
             registerFactory(block, RagiumModels.LAYERED) {
-                textureMap {
+                HTTextureMapBuilder.create {
                     put(TextureKey.LAYER0, layer0)
                     put(TextureKey.LAYER1, layer1)
                 }
@@ -74,10 +74,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         fun registerSlab(slabBlock: Block, fullBlock: Block) {
-            val textureMap: TextureMap = textureMap {
-                put(TextureKey.SIDE, TextureMap.getId(fullBlock))
-                put(TextureKey.TOP, TextureMap.getId(fullBlock))
-                put(TextureKey.BOTTOM, TextureMap.getId(fullBlock))
+            val textureMap: TextureMap = HTTextureMapBuilder.create {
+                put(TextureKey.SIDE, fullBlock)
+                put(TextureKey.TOP, fullBlock)
+                put(TextureKey.BOTTOM, fullBlock)
             }
             val slabBottom: Identifier = Models.SLAB.upload(slabBlock, textureMap, generator.modelCollector)
             val slabTop: Identifier = Models.SLAB_TOP.upload(slabBlock, textureMap, generator.modelCollector)
@@ -94,10 +94,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
 
         fun registerStair(stairBlock: Block, fullBlock: Block) {
-            val textureMap: TextureMap = textureMap {
-                put(TextureKey.SIDE, TextureMap.getId(fullBlock))
-                put(TextureKey.TOP, TextureMap.getId(fullBlock))
-                put(TextureKey.BOTTOM, TextureMap.getId(fullBlock))
+            val textureMap: TextureMap = HTTextureMapBuilder.create {
+                put(TextureKey.SIDE, fullBlock)
+                put(TextureKey.TOP, fullBlock)
+                put(TextureKey.BOTTOM, fullBlock)
             }
             val innerId: Identifier = Models.INNER_STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
             val stairId: Identifier = Models.STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
@@ -182,16 +182,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
         // factory
         generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.CROSS_WHITE_LINE)
-        registerFactory(RagiumBlocks.CROSS_WHITE_LINE, Models.CARPET) {
-            TextureMap.wool(RagiumBlocks.CROSS_WHITE_LINE)
+        registerFactory(RagiumBlocks.CROSS_WHITE_LINE, RagiumModels.SURFACE) {
+            HTTextureMapBuilder.of(TextureKey.TOP, RagiumBlocks.CROSS_WHITE_LINE)
         }
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
             TextureMap.all(RagiumBlocks.BACKPACK_INTERFACE)
         }
         registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
-            textureMap {
+            HTTextureMapBuilder.create {
                 put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
-                put(TextureKey.SIDE, TextureMap.getId(RagiumBlocks.ENCHANTMENT_BOOKSHELF))
+                put(TextureKey.SIDE, RagiumBlocks.ENCHANTMENT_BOOKSHELF)
             }
         }
 
@@ -199,7 +199,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
             val tier: HTMachineTier = hull.tier
             registerFactory(hull.value, RagiumModels.HULL) { block: Block ->
-                textureMap {
+                HTTextureMapBuilder.create {
                     put(
                         TextureKey.INSIDE,
                         when (tier) {
@@ -209,7 +209,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                         },
                     )
                     put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
-                    put(TextureKey.SIDE, TextureMap.getId(block))
+                    put(TextureKey.SIDE, block)
                 }
             }
         }
@@ -222,9 +222,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     .create(
                         block,
                         stateVariantOf(
-                            Models.CARPET.upload(
+                            RagiumModels.SURFACE.upload(
                                 block,
-                                TextureMap.wool(block),
+                                HTTextureMapBuilder.of(TextureKey.TOP, block), 
                                 generator.modelCollector,
                             ),
                         ),
@@ -270,9 +270,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             val coil: Block = exporter.tier.getCoil().value
             val modelId: Identifier = RagiumModels.EXPORTER.upload(
                 block,
-                textureMap {
-                    put(TextureKey.TOP, TextureMap.getSubId(coil, "_top"))
-                    put(TextureKey.SIDE, TextureMap.getSubId(coil, "_side"))
+                HTTextureMapBuilder.create {
+                    put(TextureKey.TOP, coil, "_top")
+                    put(TextureKey.SIDE, coil, "_side")
                 },
                 generator.modelCollector,
             )
@@ -403,7 +403,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             register(
                 item,
                 Models.GENERATED_TWO_LAYERS,
-                textureMap {
+                HTTextureMapBuilder.create {
                     put(TextureKey.LAYER0, layer0)
                     put(TextureKey.LAYER1, layer1)
                 },

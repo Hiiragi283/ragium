@@ -73,6 +73,13 @@ object RagiumModels {
             TextureKey.LAYER1,
         )
 
+    @JvmField
+    val SURFACE: Model =
+        model(
+            "block/surface",
+            TextureKey.TOP,
+        )
+
     //    Item    //
 
     @JvmField

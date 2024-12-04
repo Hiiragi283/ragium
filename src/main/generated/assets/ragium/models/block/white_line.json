@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/carpet",
+  "parent": "ragium:block/surface",
   "textures": {
-    "wool": "ragium:block/white_line"
+    "top": "ragium:block/white_line"
   }
 }
