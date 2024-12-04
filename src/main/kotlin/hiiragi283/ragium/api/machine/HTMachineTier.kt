@@ -136,7 +136,7 @@ enum class HTMachineTier(
     fun getSubMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
         PRIMITIVE -> RagiumHardModeContents.COPPER
         BASIC -> RagiumHardModeContents.GOLD
-        ADVANCED -> RagiumHardModeContents.RAGI_ALLOY
+        ADVANCED -> RagiumHardModeContents.ALUMINUM
     }.getContent(hardMode)
 
     fun getSteelMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
