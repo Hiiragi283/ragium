@@ -60,8 +60,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 1 -> stack.isOf(RagiumContents.Dusts.ASH)
                 else -> false
             }
-        }
-        .buildInventory()
+        }.buildInventory()
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

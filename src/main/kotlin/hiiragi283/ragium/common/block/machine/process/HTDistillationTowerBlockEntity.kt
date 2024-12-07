@@ -4,8 +4,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -24,7 +25,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
-    HTMultiblockController {
+    HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
@@ -56,9 +57,9 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTDistillationTowerScreenHandler(syncId, playerInventory, packet, createContext())
 
-    //    HTMultiblockController    //
+    //    HTMultiblockPatternProvider    //
 
-    override var showPreview: Boolean = false
+    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder
@@ -66,33 +67,33 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 -1,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getCasing()),
+                HTMultiblockPattern.of(tier.getCasing()),
             ).addHollow(
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getHull()),
+                HTMultiblockPattern.of(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.Simple(Blocks.RED_CONCRETE),
+                HTMultiblockPattern.of(Blocks.RED_CONCRETE),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.Simple(Blocks.WHITE_CONCRETE),
+                HTMultiblockPattern.of(Blocks.WHITE_CONCRETE),
             ).addCross4(
                 -1..1,
                 3,
                 1..3,
-                HTMultiblockComponent.Simple(Blocks.RED_CONCRETE),
+                HTMultiblockPattern.of(Blocks.RED_CONCRETE),
             )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockComponent.Simple(Blocks.WHITE_CONCRETE),
+            HTMultiblockPattern.of(Blocks.WHITE_CONCRETE),
         )
     }
 }

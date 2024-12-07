@@ -5,11 +5,10 @@ import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.block.BlockState
@@ -30,36 +29,18 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMultiblockController    //
 
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.Simple(tier.getCasing()))
-        builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.Simple(tier.getHull()))
-        builder.addLayer(-1..1, 1, 1..3, HTMultiblockComponent.Simple(tier.getStorageBlock()))
-        builder.add(0, 0, 2, HTMultiblockComponent.Tag(RagiumBlockTags.MACHINES))
-    }
-
-    override fun beforeValidation(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity?,
-    ) {
-        super.beforeValidation(state, world, pos, player)
+    override fun beforeBuild(world: World, pos: BlockPos, player: PlayerEntity?) {
+        super.beforeBuild(world, pos, player)
         val parent: HTMachineBlockEntityBase = world.getMachineEntity(pos.offset(facing.opposite, 2)) ?: return
         key = parent.key
         tier = parent.tier
         player?.sendPacket(HTMachinePacket(key, tier, pos))
     }
 
-    override fun onUpdated(
-        state: BlockState,
-        world: World,
-        pos: BlockPos,
-        player: PlayerEntity,
-        result: Boolean,
-    ) {
-        if (!result) {
-            key = DEFAULT_KEY
-            tier = HTMachineTier.PRIMITIVE
-        }
+    override fun buildMultiblock(builder: HTMultiblockBuilder) {
+        builder.addLayer(-1..1, -1, 1..3, HTMultiblockPattern.of(tier.getCasing()))
+        builder.addHollow(-1..1, 0, 1..3, HTMultiblockPattern.of(tier.getHull()))
+        builder.addLayer(-1..1, 1, 1..3, HTMultiblockPattern.of(tier.getStorageBlock()))
+        builder.add(0, 0, 2, HTMultiblockPattern.tag(RagiumBlockTags.MACHINES))
     }
 }

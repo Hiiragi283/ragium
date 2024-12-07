@@ -27,8 +27,8 @@ import net.minecraft.world.World
 
 abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTTransporterBlockEntityBase(type, pos, state) {
-    protected var fluidFilter: RegistryEntryList<Fluid> = RegistryEntryList.empty()
-    protected var itemFilter: RegistryEntryList<Item> = RegistryEntryList.empty()
+    var fluidFilter: RegistryEntryList<Fluid> = RegistryEntryList.empty()
+    var itemFilter: RegistryEntryList<Item> = RegistryEntryList.empty()
 
     final override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

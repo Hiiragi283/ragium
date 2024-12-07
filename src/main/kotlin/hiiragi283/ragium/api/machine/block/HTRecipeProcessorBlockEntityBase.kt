@@ -2,7 +2,8 @@ package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
@@ -29,8 +30,8 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     HTMachineBlockEntityBase(type, pos, state),
     HTFluidSyncable {
     final override fun process(world: World, pos: BlockPos): DataResult<Unit> {
-        if (this is HTMultiblockController) {
-            if (!updateValidation(cachedState, world, pos)) {
+        if (this is HTMultiblockPatternProvider) {
+            if (multiblockManager.updateValidation(cachedState)) {
                 return DataResult.error { "Invalid multiblock structure found!" }
             }
         }
@@ -75,8 +76,8 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
     abstract class Large(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTRecipeProcessorBlockEntityBase(type, pos, state),
-        HTMultiblockController {
-        final override var showPreview: Boolean = false
+        HTMultiblockPatternProvider {
+        final override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
         final override val inventory: SidedInventory = HTStorageBuilder(7)
             .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)

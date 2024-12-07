@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.block.BlockState
@@ -20,11 +20,11 @@ class HTSawmillBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.add(-1, 0, 0, HTMultiblockComponent.Simple(tier.getHull()))
-        builder.add(1, 0, 0, HTMultiblockComponent.Simple(tier.getHull()))
-        builder.add(-1, 0, 1, HTMultiblockComponent.Simple(Blocks.STONE_SLAB))
-        builder.add(0, 0, 1, HTMultiblockComponent.Simple(Blocks.STONECUTTER))
-        builder.add(1, 0, 1, HTMultiblockComponent.Simple(Blocks.STONE_SLAB))
-        builder.addLayer(-1..1, 0, 2..2, HTMultiblockComponent.Simple(tier.getHull()))
+        builder.add(-1, 0, 0, HTMultiblockPattern.of(tier.getHull()))
+        builder.add(1, 0, 0, HTMultiblockPattern.of(tier.getHull()))
+        builder.add(-1, 0, 1, HTMultiblockPattern.of(Blocks.STONE_SLAB))
+        builder.add(0, 0, 1, HTMultiblockPattern.of(Blocks.STONECUTTER))
+        builder.add(1, 0, 1, HTMultiblockPattern.of(Blocks.STONE_SLAB))
+        builder.addLayer(-1..1, 0, 2..2, HTMultiblockPattern.of(tier.getHull()))
     }
 }

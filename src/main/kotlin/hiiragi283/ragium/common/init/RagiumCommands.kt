@@ -9,8 +9,9 @@ import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.getMultiblockController
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.networkMap
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockConstructor
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
@@ -28,8 +29,6 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 object RagiumCommands {
     @JvmStatic
@@ -180,12 +179,12 @@ object RagiumCommands {
         val pos: BlockPos = BlockPosArgumentType.getBlockPos(context, "pos")
         val world: ServerWorld = context.source.world
         val state: BlockState = world.getBlockState(pos)
-        val controller: HTMultiblockController? = world.getMultiblockController(pos)
-        if (controller != null) {
-            val result: Boolean = if (!controller.updateValidation(state, world, pos)) {
+        val provider: HTMultiblockPatternProvider? = world.getMultiblockController(pos)
+        if (provider != null) {
+            val result: Boolean = if (!provider.multiblockManager.updateValidation(state)) {
                 val facing: Direction =
                     state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                controller.buildMultiblock(HTMultiblockConstructor(world, pos, replace).rotate(facing))
+                provider.buildMultiblock(Constructor(world, pos, replace).rotate(facing))
                 true
             } else {
                 false
@@ -199,6 +198,35 @@ object RagiumCommands {
             context.source.sendError(Text.literal("No multiblock controller exists at $pos!"))
         }
         return Command.SINGLE_SUCCESS
+    }
+
+    private class Constructor(private val world: World, private val pos: BlockPos, private val replace: Boolean = false) :
+        HTMultiblockBuilder {
+        private var isValid: Boolean = true
+
+        override fun add(
+            x: Int,
+            y: Int,
+            z: Int,
+            pattern: HTMultiblockPattern,
+        ): HTMultiblockBuilder = apply {
+            val pos1: BlockPos = pos.add(x, y, z)
+            if (isValid) {
+                if (replace) {
+                    pattern.getPreviewState(world)?.let {
+                        world.setBlockState(pos1, it)
+                    }
+                } else if (!world.isAir(pos1)) {
+                    isValid = false
+                } else {
+                    pattern.getPreviewState(world)?.let {
+                        world.setBlockState(pos1, it)
+                    }
+                }
+            } else {
+                isValid = false
+            }
+        }
     }
 
     //    Energy Network    //

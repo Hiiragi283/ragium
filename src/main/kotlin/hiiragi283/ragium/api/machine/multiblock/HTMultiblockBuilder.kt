@@ -6,8 +6,8 @@ fun interface HTMultiblockBuilder {
     /**
      * @see [reborncore.common.blockentity.MultiblockWriter.rotate]
      */
-    private fun rotate(): HTMultiblockBuilder = HTMultiblockBuilder { x: Int, y: Int, z: Int, component: HTMultiblockComponent ->
-        add(-z, y, x, component)
+    private fun rotate(): HTMultiblockBuilder = HTMultiblockBuilder { x: Int, y: Int, z: Int, pattern: HTMultiblockPattern ->
+        add(-z, y, x, pattern)
     }
 
     fun rotate(direction: Direction?): HTMultiblockBuilder = when (direction) {
@@ -21,10 +21,10 @@ fun interface HTMultiblockBuilder {
         x: Int,
         yRange: IntRange,
         z: Int,
-        component: HTMultiblockComponent,
+        pattern: HTMultiblockPattern,
     ): HTMultiblockBuilder = apply {
         for (y: Int in yRange) {
-            add(x, y, z, component)
+            add(x, y, z, pattern)
         }
     }
 
@@ -32,11 +32,11 @@ fun interface HTMultiblockBuilder {
         xRange: IntRange,
         y: Int,
         zRange: IntRange,
-        component: HTMultiblockComponent,
+        pattern: HTMultiblockPattern,
     ): HTMultiblockBuilder = apply {
         for (x: Int in xRange) {
             for (z: Int in zRange) {
-                add(x, y, z, component)
+                add(x, y, z, pattern)
             }
         }
     }
@@ -45,12 +45,12 @@ fun interface HTMultiblockBuilder {
         xRange: IntRange,
         y: Int,
         zRange: IntRange,
-        component: HTMultiblockComponent,
+        pattern: HTMultiblockPattern,
     ): HTMultiblockBuilder = apply {
         for (x: Int in xRange) {
             for (z: Int in zRange) {
                 if (x == xRange.first || x == xRange.last || z == zRange.first || z == zRange.last) {
-                    add(x, y, z, component)
+                    add(x, y, z, pattern)
                 }
             }
         }
@@ -60,12 +60,12 @@ fun interface HTMultiblockBuilder {
         xRange: IntRange,
         y: Int,
         zRange: IntRange,
-        component: HTMultiblockComponent,
+        pattern: HTMultiblockPattern,
     ): HTMultiblockBuilder = apply {
         for (x: Int in xRange) {
             for (z: Int in zRange) {
                 if ((x != xRange.first && x != xRange.last) || (z != zRange.first && z != zRange.last)) {
-                    add(x, y, z, component)
+                    add(x, y, z, pattern)
                 }
             }
         }
@@ -75,6 +75,6 @@ fun interface HTMultiblockBuilder {
         x: Int,
         y: Int,
         z: Int,
-        component: HTMultiblockComponent,
+        pattern: HTMultiblockPattern,
     ): HTMultiblockBuilder
 }

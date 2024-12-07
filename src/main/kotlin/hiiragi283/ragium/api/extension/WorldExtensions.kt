@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -36,7 +36,7 @@ import net.minecraft.world.*
 
 fun BlockView.getMachineEntity(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
 
-fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockController? = getBlockEntity(pos) as? HTMultiblockController
+fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockPatternProvider? = getBlockEntity(pos) as? HTMultiblockPatternProvider
 
 fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
     registryManager.get(registryKey).getEntryOrNull(key)
@@ -64,7 +64,7 @@ fun World.ifSClient(action: World.() -> Unit): World = apply {
     if (this.isClient) this.action()
 }
 
-fun <T : Any> World.mapIfServer(transform: (ServerWorld) -> T): DataResult<T> =
+fun <T : Any> World?.mapIfServer(transform: (ServerWorld) -> T): DataResult<T> =
     (this as? ServerWorld)?.let(transform).toDataResult { "Target world is not ServerWorld!" }
 
 //    PersistentState    //

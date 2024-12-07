@@ -7,8 +7,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -30,7 +31,7 @@ import net.minecraft.world.World
 
 class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state),
-    HTMultiblockController {
+    HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
@@ -62,46 +63,46 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
-    //    HTMultiblockController    //
+    //    HTMultiblockPatternProvider    //
 
-    override var showPreview: Boolean = false
+    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         // drill
-        builder.add(0, -3, 0, HTMultiblockComponent.Simple(Blocks.BEDROCK))
-        // builder.add(0, -2, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
-        // builder.add(0, -1, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
-        builder.add(-1, 0, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
-        builder.add(0, 0, -1, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
-        builder.add(0, 0, 1, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
-        builder.add(1, 0, 0, HTMultiblockComponent.Simple(RagiumBlocks.SHAFT))
+        builder.add(0, -3, 0, HTMultiblockPattern.of(Blocks.BEDROCK))
+        // builder.add(0, -2, 0, HTMultiblockPattern.of(RagiumBlocks.SHAFT))
+        // builder.add(0, -1, 0, HTMultiblockPattern.of(RagiumBlocks.SHAFT))
+        builder.add(-1, 0, 0, HTMultiblockPattern.of(RagiumBlocks.SHAFT))
+        builder.add(0, 0, -1, HTMultiblockPattern.of(RagiumBlocks.SHAFT))
+        builder.add(0, 0, 1, HTMultiblockPattern.of(RagiumBlocks.SHAFT))
+        builder.add(1, 0, 0, HTMultiblockPattern.of(RagiumBlocks.SHAFT))
         // frame
-        builder.add(-2, -1, 0, HTMultiblockComponent.Simple(tier.getCasing()))
-        builder.add(0, -1, -2, HTMultiblockComponent.Simple(tier.getCasing()))
-        builder.add(0, -1, 2, HTMultiblockComponent.Simple(tier.getCasing()))
-        builder.add(2, -1, 0, HTMultiblockComponent.Simple(tier.getCasing()))
+        builder.add(-2, -1, 0, HTMultiblockPattern.of(tier.getCasing()))
+        builder.add(0, -1, -2, HTMultiblockPattern.of(tier.getCasing()))
+        builder.add(0, -1, 2, HTMultiblockPattern.of(tier.getCasing()))
+        builder.add(2, -1, 0, HTMultiblockPattern.of(tier.getCasing()))
 
-        builder.add(-2, 0, 0, HTMultiblockComponent.Simple(tier.getHull()))
-        builder.add(0, 0, -2, HTMultiblockComponent.Simple(tier.getHull()))
-        builder.add(0, 0, 2, HTMultiblockComponent.Simple(tier.getHull()))
-        builder.add(2, 0, 0, HTMultiblockComponent.Simple(tier.getHull()))
+        builder.add(-2, 0, 0, HTMultiblockPattern.of(tier.getHull()))
+        builder.add(0, 0, -2, HTMultiblockPattern.of(tier.getHull()))
+        builder.add(0, 0, 2, HTMultiblockPattern.of(tier.getHull()))
+        builder.add(2, 0, 0, HTMultiblockPattern.of(tier.getHull()))
 
-        builder.add(-2, 0, -2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(-2, 0, -1, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(-2, 0, 1, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(-2, 0, -2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(-1, 0, -2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(-1, 0, 2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(1, 0, -2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(1, 0, 2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(2, 0, -2, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(2, 0, -1, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(2, 0, 1, HTMultiblockComponent.Simple(tier.getGrate()))
-        builder.add(2, 0, -2, HTMultiblockComponent.Simple(tier.getGrate()))
+        builder.add(-2, 0, -2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(-2, 0, -1, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(-2, 0, 1, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(-2, 0, -2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(-1, 0, -2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(-1, 0, 2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(1, 0, -2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(1, 0, 2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(2, 0, -2, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(2, 0, -1, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(2, 0, 1, HTMultiblockPattern.of(tier.getGrate()))
+        builder.add(2, 0, -2, HTMultiblockPattern.of(tier.getGrate()))
 
-        builder.add(-2, 1, 0, HTMultiblockComponent.Simple(tier.getStorageBlock()))
-        builder.add(0, 1, -2, HTMultiblockComponent.Simple(tier.getStorageBlock()))
-        builder.add(0, 1, 2, HTMultiblockComponent.Simple(tier.getStorageBlock()))
-        builder.add(2, 1, 0, HTMultiblockComponent.Simple(tier.getStorageBlock()))
+        builder.add(-2, 1, 0, HTMultiblockPattern.of(tier.getStorageBlock()))
+        builder.add(0, 1, -2, HTMultiblockPattern.of(tier.getStorageBlock()))
+        builder.add(0, 1, 2, HTMultiblockPattern.of(tier.getStorageBlock()))
+        builder.add(2, 1, 0, HTMultiblockPattern.of(tier.getStorageBlock()))
     }
 }

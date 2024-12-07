@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.block.BlockState
@@ -24,22 +24,22 @@ class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getHull()),
+                HTMultiblockPattern.of(tier.getHull()),
             ).addHollow(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getCoil()),
+                HTMultiblockPattern.of(tier.getCoil()),
             ).addHollow(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getCoil()),
+                HTMultiblockPattern.of(tier.getCoil()),
             ).addLayer(
                 -1..1,
                 3,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getCasing()),
+                HTMultiblockPattern.of(tier.getCasing()),
             )
     }
 }

@@ -2,12 +2,8 @@ package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
@@ -107,7 +103,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             return ActionResult.success(world.isClient)
         }
         // Validate multiblock
-        val result: Boolean = (this as? HTMultiblockController)?.onUseController(state, world, pos, player) != false
+        val result: Boolean = (this as? HTMultiblockPatternProvider)?.multiblockManager?.onUse(state, player) != false
         // open machine screen
         if (result) {
             if (!world.isClient) {

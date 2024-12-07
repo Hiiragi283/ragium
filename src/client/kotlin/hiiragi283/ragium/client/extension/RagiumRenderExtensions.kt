@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
@@ -87,16 +87,16 @@ fun renderItem(
     matrices.pop()
 }
 
-fun <T : HTMultiblockController> renderMultiblock(
-    controller: T,
+fun <T : HTMultiblockPatternProvider> renderMultiblock(
+    provider: T,
     world: World?,
     facing: Direction?,
     matrices: MatrixStack,
     vertexConsumers: VertexConsumerProvider,
 ) {
-    if (!controller.showPreview) return
+    if (!provider.multiblockManager.showPreview) return
     world?.let {
-        controller.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
+        provider.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
     }
 }
 

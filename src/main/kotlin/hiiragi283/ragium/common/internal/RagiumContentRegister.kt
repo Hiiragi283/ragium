@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
+import hiiragi283.ragium.api.storage.HTVoidStorage
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
@@ -22,7 +23,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
@@ -465,11 +465,10 @@ internal object RagiumContentRegister {
                 .result()
                 .getOrNull()
         }, RagiumBlocks.BACKPACK_INTERFACE)
-        ItemStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            object : SingleItemStorage() {
-                override fun getCapacity(variant: ItemVariant): Long = Long.MAX_VALUE
-            }
-        }, RagiumBlocks.TRASH_BOX)
+        ItemStorage.SIDED.registerForBlocks(
+            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
+            RagiumBlocks.TRASH_BOX,
+        )
         ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
                 if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
@@ -502,9 +501,10 @@ internal object RagiumContentRegister {
                 null
             }
         }
-        FluidStorage.SIDED.registerForBlocks({ _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            fluidStorageOf(Long.MAX_VALUE)
-        }, RagiumBlocks.TRASH_BOX)
+        FluidStorage.SIDED.registerForBlocks(
+            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.FLUID },
+            RagiumBlocks.TRASH_BOX,
+        )
 
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },

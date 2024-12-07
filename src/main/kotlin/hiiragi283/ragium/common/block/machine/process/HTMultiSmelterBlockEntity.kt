@@ -4,8 +4,9 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -25,7 +26,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
-    HTMultiblockController {
+    HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
@@ -49,13 +50,13 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
-    //    HTMultiblockController    //
+    //    HTMultiblockPatternProvider    //
 
-    override var showPreview: Boolean = false
+    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTMultiblockComponent.Simple(tier.getCasing()))
-        builder.addHollow(-1..1, 0, 1..3, HTMultiblockComponent.Simple(tier.getCoil()))
-        builder.addLayer(-1..1, 1, 1..3, HTMultiblockComponent.Simple(tier.getStorageBlock()))
+        builder.addLayer(-1..1, -1, 1..3, HTMultiblockPattern.of(tier.getCasing()))
+        builder.addHollow(-1..1, 0, 1..3, HTMultiblockPattern.of(tier.getCoil()))
+        builder.addLayer(-1..1, 1, 1..3, HTMultiblockPattern.of(tier.getStorageBlock()))
     }
 }

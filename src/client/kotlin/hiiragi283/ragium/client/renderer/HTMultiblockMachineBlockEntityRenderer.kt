@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.client.extension.renderMultiblock
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -23,7 +23,7 @@ object HTMultiblockMachineBlockEntityRenderer : BlockEntityRenderer<HTMachineBlo
         overlay: Int,
     ) {
         val world: World = entity.world ?: return
-        if (entity is HTMultiblockController) {
+        if (entity is HTMultiblockPatternProvider) {
             renderMultiblock(
                 entity,
                 world,

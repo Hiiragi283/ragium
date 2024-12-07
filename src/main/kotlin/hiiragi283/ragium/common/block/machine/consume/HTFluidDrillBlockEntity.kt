@@ -8,8 +8,9 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -40,12 +41,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
-import kotlin.collections.iterator
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
     HTFluidSyncable,
-    HTMultiblockController {
+    HTMultiblockPatternProvider {
     companion object {
         @JvmField
         val FLUID_MAP: Map<TagKey<Biome>, ResourceAmount<FluidVariant>> = mapOf(
@@ -84,7 +84,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
     override fun process(world: World, pos: BlockPos): DataResult<Unit> {
-        if (!updateValidation(cachedState, world, pos)) return DataResult.error { "Invalid multiblock structure found!" }
+        if (multiblockManager.updateValidation(cachedState)) return DataResult.error { "Invalid multiblock structure found!" }
         useTransaction { transaction: Transaction ->
             return fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
                 val resource: ResourceAmount<FluidVariant> = findResource(world.getBiome(pos))
@@ -118,9 +118,9 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage.sendPacket(player, sender, 1)
     }
 
-    //    HTMultiblockController    //
+    //    HTMultiblockPatternProvider    //
 
-    override var showPreview: Boolean = false
+    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder
@@ -128,29 +128,29 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getHull()),
+                HTMultiblockPattern.of(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getGrate()),
+                HTMultiblockPattern.of(tier.getGrate()),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockComponent.Simple(tier.getGrate()),
+                HTMultiblockPattern.of(tier.getGrate()),
             )
         builder.add(
             0,
             3,
             2,
-            HTMultiblockComponent.Simple(tier.getGrate()),
+            HTMultiblockPattern.of(tier.getGrate()),
         )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockComponent.Simple(tier.getGrate()),
+            HTMultiblockPattern.of(tier.getGrate()),
         )
     }
 }
