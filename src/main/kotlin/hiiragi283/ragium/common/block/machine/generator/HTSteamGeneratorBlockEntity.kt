@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.machine.generator
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -53,7 +54,13 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .stackFilter { slot: Int, stack: ItemStack -> if (slot == 0) stack.isIn(ItemTags.COALS) else false }
+        .stackFilter { slot: Int, stack: ItemStack ->
+            when (slot) {
+                0 -> stack.isIn(ItemTags.COALS)
+                1 -> stack.isOf(RagiumContents.Dusts.ASH)
+                else -> false
+            }
+        }
         .buildInventory()
 
     private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
