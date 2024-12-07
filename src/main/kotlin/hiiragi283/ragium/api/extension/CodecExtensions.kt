@@ -19,7 +19,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.world.World
@@ -30,18 +29,21 @@ import com.mojang.datafixers.util.Pair as MPair
 //    Network    //
 
 fun BlockEntity.sendPacket(action: (ServerPlayerEntity) -> Unit) {
-    val world: World = world ?: return
-    if (!world.isClient) {
-        PlayerLookup.tracking(this)?.firstOrNull()?.let(action)
+    world?.ifServer {
+        PlayerLookup.tracking(this@sendPacket)?.firstOrNull()?.let(action)
     }
 }
 
 fun World.sendPacket(action: (ServerPlayerEntity) -> Unit) {
-    (this as? ServerWorld)?.let(PlayerLookup::world)?.firstOrNull()?.let(action)
+    ifServer {
+        PlayerLookup.world(this).firstOrNull()?.let(action)
+    }
 }
 
 fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
-    (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
+    ifServer {
+        PlayerLookup.world(this).forEach(action)
+    }
 }
 
 fun PlayerEntity.sendPacket(payload: CustomPayload) {
@@ -125,6 +127,9 @@ fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -
         false -> DataResult.error(errorMessage)
     }
 }
+
+fun <R : Any, T : Any> DataResult<R>.mapNotNull(transform: (R) -> T?): DataResult<T> =
+    flatMap { result: R -> transform(result).toDataResult { "Transformed value was null!" } }
 
 fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T> =
     map(DataResult<T>::success).orElse(DataResult.error(errorMessage))

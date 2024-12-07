@@ -56,6 +56,17 @@ fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean {
     return world.spawnEntity(itemEntity)
 }
 
+fun World.ifServer(action: ServerWorld.() -> Unit): World = apply {
+    (this as? ServerWorld)?.let(action)
+}
+
+fun World.ifSClient(action: World.() -> Unit): World = apply {
+    if (this.isClient) this.action()
+}
+
+fun <T : Any> World.mapIfServer(transform: (ServerWorld) -> T): DataResult<T> =
+    (this as? ServerWorld)?.let(transform).toDataResult { "Target world is not ServerWorld!" }
+
 //    PersistentState    //
 
 fun <T : PersistentState> getState(world: ServerWorld, type: PersistentState.Type<T>, id: Identifier): T = world.persistentStateManager

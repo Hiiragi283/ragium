@@ -1,11 +1,13 @@
 [versions]
-kotlin = "2.0.+"
+kotlin = "2.1.0"
 minecraft = "1.21.1"
-fabric-loom = "1.8-SNAPSHOT"
+fabric-loom = "1.9-SNAPSHOT"
 fabric-loader = "0.16.+"
 fabric-api = "0.110.0+1.21.1"
 fabric-yarn = "1.21.1+build.3"
-fabric-kotlin = "1.12.+"
+fabric-kotlin = "1.13.+"
+
+ktlint = "12.1.2"
 
 energy = "4.1.0"
 jade = "15.8.3+fabric"
@@ -43,4 +45,4 @@ mods-runtime = [
 
 [plugins]
 fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
