@@ -100,24 +100,7 @@ enum class HTPipeType(val isItem: Boolean, val isFluid: Boolean) : StringIdentif
         }
     }
 
-    fun withPos(pos: BlockPos): WithPos = WithPos(this, pos)
-
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()
-
-    //    WithPos    //
-
-    data class WithPos(val type: HTPipeType, val pos: BlockPos) {
-        companion object {
-            @JvmField
-            val PACKET_CODEC: PacketCodec<RegistryByteBuf, WithPos> = PacketCodec.tuple(
-                HTPipeType.PACKET_CODEC,
-                WithPos::type,
-                BlockPos.PACKET_CODEC,
-                WithPos::pos,
-                ::WithPos,
-            )
-        }
-    }
 }

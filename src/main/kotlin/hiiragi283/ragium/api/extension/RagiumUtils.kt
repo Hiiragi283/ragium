@@ -226,7 +226,7 @@ fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path
 fun Entity.asServerPlayer(): ServerPlayerEntity? = this as? ServerPlayerEntity
 
 @Suppress("UNCHECKED_CAST")
-fun <T : ScreenHandler> ServerPlayerEntity.getAsScreenHandler(): T? = currentScreenHandler as? T
+fun <T : ScreenHandler> PlayerEntity.getAsScreenHandler(): T? = currentScreenHandler as? T
 
 //    ServiceLoader    //
 

@@ -140,6 +140,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
                 activateState(world, pos, false)
                 onFailed(world, pos)
             }
+        markDirty()
     }
 
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME

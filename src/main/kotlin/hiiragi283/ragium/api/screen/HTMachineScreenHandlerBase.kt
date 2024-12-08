@@ -8,7 +8,6 @@ import net.minecraft.screen.ArrayPropertyDelegate
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.ScreenHandlerType
-import net.minecraft.util.math.BlockPos
 
 abstract class HTMachineScreenHandlerBase(
     type: ScreenHandlerType<*>,
@@ -24,7 +23,6 @@ abstract class HTMachineScreenHandlerBase(
         inventory,
         ctx,
     ) {
-    val pos: BlockPos = packet.pos
     protected val property: PropertyDelegate =
         ctx.getMachineEntity()?.property ?: ArrayPropertyDelegate(3)
 

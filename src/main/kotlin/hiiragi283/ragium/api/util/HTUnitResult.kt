@@ -29,9 +29,11 @@ sealed interface HTUnitResult {
 
     fun <T : Any> map(supplier: () -> T): DataResult<T>
 
-    fun <T : Any> mapOrElse(success: () -> T, error: (Text) -> T): T
+    fun <T> mapOrElse(success: () -> T, error: (Text) -> T): T
 
     fun toBoolean(): Boolean = mapOrElse({ true }, { false })
+
+    fun <T : Any> toValue(value: T): T? = mapOrElse({ value }, { null })
 
     fun flatMap(supplier: () -> HTUnitResult): HTUnitResult
 
@@ -51,7 +53,7 @@ sealed interface HTUnitResult {
     private data object Success : HTUnitResult {
         override fun <T : Any> map(supplier: () -> T): DataResult<T> = DataResult.success(supplier())
 
-        override fun <T : Any> mapOrElse(success: () -> T, error: (Text) -> T): T = success()
+        override fun <T> mapOrElse(success: () -> T, error: (Text) -> T): T = success()
 
         override fun flatMap(supplier: () -> HTUnitResult): HTUnitResult = supplier()
 
@@ -72,7 +74,7 @@ sealed interface HTUnitResult {
 
         override fun <T : Any> map(supplier: () -> T): DataResult<T> = DataResult.error(this@Error.supplier.invoke()::getString)
 
-        override fun <T : Any> mapOrElse(success: () -> T, error: (Text) -> T): T = error(message)
+        override fun <T> mapOrElse(success: () -> T, error: (Text) -> T): T = error(message)
 
         override fun flatMap(supplier: () -> HTUnitResult): HTUnitResult = this
 
