@@ -213,6 +213,16 @@ object RagiumClient : ClientModInitializer {
             TypedActionResult.pass(stack)
         }
 
+        ItemTooltipCallback.EVENT.register {
+                stack: ItemStack,
+                context: Item.TooltipContext,
+                tooltipType: TooltipType,
+                lines: MutableList<Text>,
+            ->
+            stack.get(RagiumComponentTypes.ITEM_FILTER)?.let(RagiumTexts::itemFilter)?.let(lines::add)
+            stack.get(RagiumComponentTypes.FLUID_FILTER)?.let(RagiumTexts::fluidFilter)?.let(lines::add)
+        }
+
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register block state resolver
             RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->

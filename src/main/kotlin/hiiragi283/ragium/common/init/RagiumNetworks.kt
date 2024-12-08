@@ -2,9 +2,11 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
-import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.network.*
+import hiiragi283.ragium.common.network.HTFloatingItemPayload
+import hiiragi283.ragium.common.network.HTFluidStoragePayload
+import hiiragi283.ragium.common.network.HTFluidSyncPayload
+import hiiragi283.ragium.common.network.HTInventoryPayload
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -101,36 +103,10 @@ object RagiumNetworks {
 
     //    C2S    //
 
-    @JvmField
-    val UPDATE_FLUID_FILTER: CustomPayload.Id<HTUpdateFilterPayload.FluidFilter> =
-        registerC2S("update_fluid_filter", HTUpdateFilterPayload.FLUID_PACKET_CODEC)
-
-    @JvmField
-    val UPDATE_ITEM_FILTER: CustomPayload.Id<HTUpdateFilterPayload.ItemFilter> =
-        registerC2S("update_item_filter", HTUpdateFilterPayload.ITEM_PACKET_CODEC)
-
     @JvmStatic
     private fun <T : CustomPayload> registerC2S(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {
         val id = CustomPayload.Id<T>(RagiumAPI.id(name))
         PayloadTypeRegistry.playC2S().register(id, codec)
         return id
-    }
-
-    init {
-        ServerPlayNetworking.registerGlobalReceiver(
-            UPDATE_FLUID_FILTER,
-        ) { payload: HTUpdateFilterPayload.FluidFilter, context: ServerPlayNetworking.Context ->
-            context
-                .player()
-                .getStackInActiveHand()
-        }
-
-        ServerPlayNetworking.registerGlobalReceiver(
-            UPDATE_ITEM_FILTER,
-        ) { payload: HTUpdateFilterPayload.ItemFilter, context: ServerPlayNetworking.Context ->
-            context
-                .player()
-                .getStackInActiveHand()
-        }
     }
 }

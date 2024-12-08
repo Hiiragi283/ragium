@@ -226,11 +226,7 @@ object RagiumItems {
     val FLUID_FILTER: Item = Item(
         itemSettings()
             .maxCount(1)
-            .descriptions(
-                Text.translatable(RagiumTranslationKeys.FILTER),
-                Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
-                Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
-            ),
+            .descriptions(Text.translatable(RagiumTranslationKeys.FILTER)),
     )
 
     @JvmField
@@ -243,11 +239,7 @@ object RagiumItems {
     val ITEM_FILTER: Item = Item(
         itemSettings()
             .maxCount(1)
-            .descriptions(
-                Text.translatable(RagiumTranslationKeys.FILTER),
-                Text.translatable(RagiumTranslationKeys.FILTER_ID_FORMAT),
-                Text.translatable(RagiumTranslationKeys.FILTER_TAG_FORMAT),
-            ),
+            .descriptions(Text.translatable(RagiumTranslationKeys.FILTER)),
     )
 
     @JvmField

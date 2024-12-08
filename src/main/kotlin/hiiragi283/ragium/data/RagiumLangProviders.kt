@@ -284,9 +284,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "Power: %s")
-            builder.add(RagiumTranslationKeys.FILTER, "Right-click Exporters to apply")
-            builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- ID Format: namespace:path")
-            builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- Tag Format: #namespace:path")
+            builder.add(RagiumTranslationKeys.FILTER, "Right-click on Exporters to apply, or open setting menu")
+            builder.add(RagiumTranslationKeys.FILTER_FORMAT, "Example: \"minecraft:iron_ingot\", [\"minecraft:water\"], \"#c:ores\"")
             builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "Destination: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
@@ -663,9 +662,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "威力: %s")
-            builder.add(RagiumTranslationKeys.FILTER, "右クリックで搬出機に適用")
-            builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- IDフォーマット: namespace:path")
-            builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- タグフォーマット: #namespace:path")
+            builder.add(RagiumTranslationKeys.FILTER, "搬出機に右クリックで適用，または設定画面を開く")
+            builder.add(RagiumTranslationKeys.FILTER_FORMAT, "例: \"minecraft:iron_ingot\", [\"minecraft:water\"], \"#c:ores\"")
             builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "座標: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")

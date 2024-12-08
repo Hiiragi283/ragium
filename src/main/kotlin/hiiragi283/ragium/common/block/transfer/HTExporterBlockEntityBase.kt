@@ -1,10 +1,12 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.getStackInActiveHand
+import hiiragi283.ragium.api.extension.isEmpty
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.init.RagiumTexts
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -21,7 +23,6 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
-import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -65,37 +66,26 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
         hit: BlockHitResult,
     ): ActionResult {
         val stack: ItemStack = player.getStackInActiveHand()
-        if (!world.isClient) {
-            val result: Boolean = when {
-                stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
-                    stack.get(RagiumComponentTypes.FLUID_FILTER)?.let { fluidFilter = it }
-                    true
-                }
-
-                stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
-                    stack.get(RagiumComponentTypes.ITEM_FILTER)?.let { itemFilter = it }
-                    true
-                }
-
-                else -> {
-                    player.sendMessage(
-                        Text.translatable(
-                            RagiumTranslationKeys.EXPORTER_FLUID_FILTER,
-                            fluidFilter.asText(Fluid::name),
-                        ),
-                        false,
-                    )
-                    player.sendMessage(
-                        Text.translatable(
-                            RagiumTranslationKeys.EXPORTER_ITEM_FILTER,
-                            itemFilter.asText(Item::getName),
-                        ),
-                        false,
-                    )
-                    false
-                }
+        val result: Boolean = when {
+            stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
+                stack.get(RagiumComponentTypes.FLUID_FILTER)?.let { fluidFilter = it }
+                true
             }
-            if (result) {
+
+            stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
+                stack.get(RagiumComponentTypes.ITEM_FILTER)?.let { itemFilter = it }
+                true
+            }
+
+            else -> {
+                player.sendMessage(RagiumTexts.fluidFilter(fluidFilter), false)
+                player.sendMessage(RagiumTexts.itemFilter(itemFilter), false)
+                false
+            }
+        }
+        if (result) {
+            if (!world.isClient) {
+                markDirty()
                 RagiumNetworks.sendFloatingItem(
                     player,
                     stack,

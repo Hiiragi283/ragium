@@ -1,13 +1,14 @@
 package hiiragi283.ragium.client.gui
 
+import com.google.gson.JsonElement
+import com.google.gson.JsonParser
 import com.mojang.serialization.DataResult
+import com.mojang.serialization.JsonOps
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.client.MinecraftClient
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtElement
-import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryOps
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.Text
@@ -23,11 +24,11 @@ class HTItemFilterScreen(val stack: ItemStack) : HTFilterScreen(stack.name) {
                 MinecraftClient.getInstance().setScreen(screen)
                 val filter: RegistryEntryList<Item> =
                     stack.getOrDefault(RagiumComponentTypes.ITEM_FILTER, RegistryEntryList.empty())
-                val registryOps: RegistryOps<NbtElement> = world.registryManager.getOps(NbtOps.INSTANCE)
+                val registryOps: RegistryOps<JsonElement> = world.registryManager.getOps(JsonOps.INSTANCE)
                 ITEM_CODEC
                     .encodeStart(registryOps, filter)
-                    .ifSuccess { nbt: NbtElement ->
-                        screen.textField.text = nbt.asString()
+                    .ifSuccess { json: JsonElement ->
+                        screen.textField.text = json.toString()
                     }
                 return true
             }
@@ -37,9 +38,9 @@ class HTItemFilterScreen(val stack: ItemStack) : HTFilterScreen(stack.name) {
 
     override fun applyChange() {
         val client: MinecraftClient = client ?: return
-        val registryOps: RegistryOps<NbtElement> = client.world?.registryManager?.getOps(NbtOps.INSTANCE) ?: return
+        val registryOps: RegistryOps<JsonElement> = client.world?.registryManager?.getOps(JsonOps.INSTANCE) ?: return
         ITEM_CODEC
-            .parse(registryOps, convertText())
+            .parse(registryOps, JsonParser.parseString(textField.text))
             .ifSuccess { entryList: RegistryEntryList<Item> ->
                 stack.set(RagiumComponentTypes.ITEM_FILTER, entryList)
                 client.player?.sendMessage(Text.literal("Applied Change!").formatted(Formatting.GREEN))

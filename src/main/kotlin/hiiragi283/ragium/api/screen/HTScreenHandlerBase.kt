@@ -23,9 +23,6 @@ abstract class HTScreenHandlerBase(
     val world: World = player.world
     val blockEntity: BlockEntity? = ctx.getBlockEntity()
 
-    @Suppress("UNCHECKED_CAST")
-    fun <T : Any> getAsBlockEntity(): T? = blockEntity as? T
-
     override fun canUse(player: PlayerEntity): Boolean = inventory.canPlayerUse(player)
 
     override fun onClosed(player: PlayerEntity) {

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.toNbtList
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
@@ -9,8 +9,6 @@ import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.gui.widget.TextFieldWidget
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
-import net.minecraft.nbt.NbtList
-import net.minecraft.nbt.NbtString
 import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntryList
@@ -45,20 +43,19 @@ abstract class HTFilterScreen(title: Text) : Screen(title) {
                 .dimensions(width / 2 + 4, height / 4 + 120 + 12, 150, 20)
                 .build(),
         )
-        textField = TextFieldWidget(textRenderer, width / 2 - 150, 50, 300, 20, Text.translatable("advMode.command"))
+        textField = TextFieldWidget(
+            textRenderer,
+            width / 2 - 150,
+            50,
+            300,
+            20,
+            Text.translatable(RagiumTranslationKeys.FILTER_FORMAT),
+        )
         textField.setMaxLength(32500)
         addSelectableChild(textField)
     }
 
     protected abstract fun applyChange()
-
-    protected fun convertText(): NbtList = textField
-        .text
-        .removeSurrounding("[", "]")
-        .split(",")
-        .map { string: String -> string.filterNot { char: Char -> char == '"' } }
-        .map(NbtString::of)
-        .toNbtList()
 
     override fun setInitialFocus() {
         setInitialFocus(textField)
@@ -81,14 +78,14 @@ abstract class HTFilterScreen(title: Text) : Screen(title) {
         super.render(context, mouseX, mouseY, delta)
         context.drawCenteredTextWithShadow(
             this.textRenderer,
-            Text.translatable("advMode.setCommand"),
+            title,
             this.width / 2,
             20,
             16777215,
         )
         context.drawTextWithShadow(
             this.textRenderer,
-            Text.translatable("advMode.command"),
+            Text.translatable(RagiumTranslationKeys.FILTER_FORMAT),
             this.width / 2 - 150 + 1,
             40,
             10526880,

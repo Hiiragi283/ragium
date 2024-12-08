@@ -59,8 +59,7 @@ object RagiumTranslationKeys {
     const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"
     const val DYNAMITE_POWER = "tooltip.ragium.item.dynamite.power"
     const val FILTER = "tooltip.ragium.item.filter"
-    const val FILTER_ID_FORMAT = "tooltip.ragium.item.filter.id_format"
-    const val FILTER_TAG_FORMAT = "tooltip.ragium.item.filter.tag_format"
+    const val FILTER_FORMAT = "tooltip.ragium.item.filter.format"
     const val WARPED_CRYSTAL_DESTINATION = "tooltip.ragium.item.warped_crystal.destination"
 
     //    Machine    //
