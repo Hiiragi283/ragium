@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.consume
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -10,6 +9,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
@@ -80,14 +80,14 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> = when {
+    override fun process(world: World, pos: BlockPos): HTUnitResult = when {
         pos
             .getAroundPos { posIn: BlockPos -> world.getFluidState(posIn).isIn(FluidTags.WATER) }
-            .isEmpty() -> DataResult.error { "Require one water source at least around Rock Generator!" }
+            .isEmpty() -> HTUnitResult.errorString { "Require one water source at least around Rock Generator!" }
 
         pos
             .getAroundPos { posIn: BlockPos -> world.getFluidState(posIn).isIn(FluidTags.LAVA) }
-            .isEmpty() -> DataResult.error { "Require one lava source at least around Rock Generator!" }
+            .isEmpty() -> HTUnitResult.errorString { "Require one lava source at least around Rock Generator!" }
 
         else -> processor.process(world, key, tier)
     }

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.restDamage
@@ -15,6 +14,7 @@ import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.tags.RagiumFluidTags
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -75,38 +75,38 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+    override fun process(world: World, pos: BlockPos): HTUnitResult {
         val fuelStack: ItemStack = inventory.getStack(0)
         val wasteStack: ItemStack = inventory.getStack(1)
         val result: HTItemResult = when (fuelStack.item) {
             RagiumItems.URANIUM_FUEL -> RagiumItems.NUCLEAR_WASTE
             RagiumItems.PLUTONIUM_FUEL -> RagiumItems.SLAG
             else -> null
-        }?.let(::HTItemResult) ?: return DataResult.error { "Input slot has no nuclear fuels!" }
+        }?.let(::HTItemResult) ?: return HTUnitResult.errorString { "Input slot has no nuclear fuels!" }
         if (!result.canMerge(wasteStack)) return overheat(world, pos)
         return useTransaction { transaction: Transaction ->
-            fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+            fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
                 val foundVariant: FluidVariant =
-                    StorageUtil.findExtractableResource(storageIn, transaction) ?: return@flatMap overheat(world, pos)
+                    StorageUtil.findExtractableResource(storageIn, transaction) ?: return@unitMap overheat(world, pos)
                 if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
                     transaction.commit()
                     inventory.modifyStack(1, result::merge)
                     fuelStack.damage += 1
-                    return@flatMap DataResult.success(Unit)
+                    return@unitMap HTUnitResult.success()
                 } else {
                     transaction.abort()
-                    return@flatMap overheat(world, pos)
+                    return@unitMap overheat(world, pos)
                 }
             }
         }
     }
 
-    private fun overheat(world: World, pos: BlockPos): DataResult<Unit> {
+    private fun overheat(world: World, pos: BlockPos): HTUnitResult {
         val fuel: ItemStack = inventory.getStack(0).copy()
         inventory.clear()
         val power: Float = fuel.restDamage / 16f
         HTDynamiteItem.Component(power, true).createExplosion(world, pos)
-        return DataResult.error<Unit> { "Overheated!" }
+        return HTUnitResult.errorString { "Overheated!" }
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =

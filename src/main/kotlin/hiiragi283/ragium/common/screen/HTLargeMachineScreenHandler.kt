@@ -17,8 +17,8 @@ class HTLargeMachineScreenHandler(
         syncId,
         playerInv,
         packet,
-        ctx,
         ctx.getInventory(7),
+        ctx,
     ) {
     init {
         inventory.onOpen(player)

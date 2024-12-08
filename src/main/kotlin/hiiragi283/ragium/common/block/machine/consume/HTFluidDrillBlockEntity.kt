@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.consume
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -15,6 +14,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -83,21 +83,22 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
-        if (multiblockManager.updateValidation(cachedState)) return DataResult.error { "Invalid multiblock structure found!" }
-        useTransaction { transaction: Transaction ->
-            return fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
-                val resource: ResourceAmount<FluidVariant> = findResource(world.getBiome(pos))
-                if (storageIn.insert(resource, transaction) == resource.amount) {
-                    transaction.commit()
-                    world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
-                    DataResult.success(Unit)
-                } else {
-                    DataResult.error { "Failed to insert fluid into Fluid Drill!" }
+    override fun process(world: World, pos: BlockPos): HTUnitResult = multiblockManager
+        .updateValidation(cachedState)
+        .flatMap {
+            useTransaction { transaction: Transaction ->
+                fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
+                    val resource: ResourceAmount<FluidVariant> = findResource(world.getBiome(pos))
+                    if (storageIn.insert(resource, transaction) == resource.amount) {
+                        transaction.commit()
+                        world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
+                        HTUnitResult.success()
+                    } else {
+                        HTUnitResult.errorString { "Failed to insert fluid into Fluid Drill!" }
+                    }
                 }
             }
         }
-    }
 
     private fun findResource(biome: RegistryEntry<Biome>): ResourceAmount<FluidVariant> {
         for ((tagKey: TagKey<Biome>, resource: ResourceAmount<FluidVariant>) in FLUID_MAP) {

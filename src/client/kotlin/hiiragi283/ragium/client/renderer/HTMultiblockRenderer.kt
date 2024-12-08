@@ -29,7 +29,7 @@ data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val c
         y: Int,
         z: Int,
         pattern: HTMultiblockPattern,
-    ): HTMultiblockBuilder = apply {
+    ) {
         val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
         matrix.push()
         matrix.translate(x, y, z)

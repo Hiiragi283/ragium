@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getAsScreenHandler
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.network.HTFloatingItemPayload
-import hiiragi283.ragium.common.network.HTFluidStoragePayload
-import hiiragi283.ragium.common.network.HTFluidSyncPayload
-import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntityBase
+import hiiragi283.ragium.common.network.*
+import hiiragi283.ragium.common.screen.HTExporterScreenHandler
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -18,6 +18,8 @@ import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 
 object RagiumNetworks {
+    //    S2C    //
+
     @JvmField
     val FLOATING_ITEM: CustomPayload.Id<HTFloatingItemPayload> =
         registerS2C("floating_item", HTFloatingItemPayload.PACKET_CODEC)
@@ -44,15 +46,6 @@ object RagiumNetworks {
         PayloadTypeRegistry.playS2C().register(id, codec)
         return id
     }
-
-    @JvmStatic
-    private fun <T : CustomPayload> registerC2S(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {
-        val id = CustomPayload.Id<T>(RagiumAPI.id(name))
-        PayloadTypeRegistry.playC2S().register(id, codec)
-        return id
-    }
-
-    //    Utils    //
 
     @JvmStatic
     fun sendFluidSync(
@@ -82,5 +75,48 @@ object RagiumNetworks {
     @JvmStatic
     fun sendFloatingItem(player: ServerPlayerEntity, item: ItemConvertible, count: Int = 1) {
         ServerPlayNetworking.send(player, HTFloatingItemPayload(item, count))
+    }
+
+    //    C2S    //
+
+    @JvmField
+    val UPDATE_FLUID_FILTER: CustomPayload.Id<HTUpdateFilterPayload.FluidFilter> =
+        registerC2S("update_fluid_filter", HTUpdateFilterPayload.FLUID_PACKET_CODEC)
+
+    @JvmField
+    val UPDATE_ITEM_FILTER: CustomPayload.Id<HTUpdateFilterPayload.ItemFilter> =
+        registerC2S("update_item_filter", HTUpdateFilterPayload.ITEM_PACKET_CODEC)
+
+    @JvmStatic
+    private fun <T : CustomPayload> registerC2S(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {
+        val id = CustomPayload.Id<T>(RagiumAPI.id(name))
+        PayloadTypeRegistry.playC2S().register(id, codec)
+        return id
+    }
+
+    init {
+        ServerPlayNetworking.registerGlobalReceiver(
+            UPDATE_FLUID_FILTER,
+        ) { payload: HTUpdateFilterPayload.FluidFilter, context: ServerPlayNetworking.Context ->
+            context
+                .player()
+                .getAsScreenHandler<HTExporterScreenHandler>()
+                ?.getAsBlockEntity<HTExporterBlockEntityBase>()
+                ?.let { exporterBase: HTExporterBlockEntityBase ->
+                    exporterBase.fluidFilter = payload.entryList
+                }
+        }
+
+        ServerPlayNetworking.registerGlobalReceiver(
+            UPDATE_ITEM_FILTER,
+        ) { payload: HTUpdateFilterPayload.ItemFilter, context: ServerPlayNetworking.Context ->
+            context
+                .player()
+                .getAsScreenHandler<HTExporterScreenHandler>()
+                ?.getAsBlockEntity<HTExporterBlockEntityBase>()
+                ?.let { exporterBase: HTExporterBlockEntityBase ->
+                    exporterBase.itemFilter = payload.entryList
+                }
+        }
     }
 }

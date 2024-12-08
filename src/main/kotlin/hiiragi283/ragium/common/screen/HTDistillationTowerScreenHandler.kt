@@ -17,8 +17,8 @@ class HTDistillationTowerScreenHandler(
         syncId,
         playerInv,
         packet,
-        ctx,
         ctx.getInventory(2),
+        ctx,
     ) {
     init {
         inventory.onOpen(player)

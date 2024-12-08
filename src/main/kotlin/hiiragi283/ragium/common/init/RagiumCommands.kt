@@ -181,14 +181,13 @@ object RagiumCommands {
         val state: BlockState = world.getBlockState(pos)
         val provider: HTMultiblockPatternProvider? = world.getMultiblockController(pos)
         if (provider != null) {
-            val result: Boolean = if (!provider.multiblockManager.updateValidation(state)) {
-                val facing: Direction =
-                    state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                provider.buildMultiblock(Constructor(world, pos, replace).rotate(facing))
-                true
-            } else {
-                false
-            }
+            val result: Boolean = provider.multiblockManager
+                .updateValidation(state)
+                .ifSuccess {
+                    val facing: Direction =
+                        state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+                    provider.buildMultiblock(Constructor(world, pos, replace).rotate(facing))
+                }.toBoolean()
             if (result) {
                 context.source.sendFeedback({ Text.literal("Built Multiblock at $pos!") }, true)
             } else {
@@ -209,7 +208,7 @@ object RagiumCommands {
             y: Int,
             z: Int,
             pattern: HTMultiblockPattern,
-        ): HTMultiblockBuilder = apply {
+        ) {
             val pos1: BlockPos = pos.add(x, y, z)
             if (isValid) {
                 if (replace) {

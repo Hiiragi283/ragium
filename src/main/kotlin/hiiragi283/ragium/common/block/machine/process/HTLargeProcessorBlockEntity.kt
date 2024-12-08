@@ -29,9 +29,9 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTMultiblockController    //
 
-    override fun beforeBuild(world: World, pos: BlockPos, player: PlayerEntity?) {
+    override fun beforeBuild(world: World?, pos: BlockPos, player: PlayerEntity?) {
         super.beforeBuild(world, pos, player)
-        val parent: HTMachineBlockEntityBase = world.getMachineEntity(pos.offset(facing.opposite, 2)) ?: return
+        val parent: HTMachineBlockEntityBase = world?.getMachineEntity(pos.offset(facing.opposite, 2)) ?: return
         key = parent.key
         tier = parent.tier
         player?.sendPacket(HTMachinePacket(key, tier, pos))

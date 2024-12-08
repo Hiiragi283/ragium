@@ -1,12 +1,13 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -24,7 +25,7 @@ class HTMachineRecipeProcessor(
 ) : HTRecipeProcessor {
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): DataResult<Unit> {
+    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): HTUnitResult {
         val input: HTMachineInput = HTMachineInput.Companion.create(key, tier) {
             itemInputs.map(inventory::getStack).forEach(::add)
             fluidInputs.map(fluidStorage::getResourceAmount).forEach(::add)
@@ -32,13 +33,13 @@ class HTMachineRecipeProcessor(
         }
         return recipeCache
             .getFirstMatch(input, world)
-            .flatMap { recipe: HTMachineRecipe ->
+            .unitMap { recipe: HTMachineRecipe ->
                 when {
-                    !canAcceptOutputs(recipe) -> DataResult.error { "Failed to merge results into outputs!" }
+                    !canAcceptOutputs(recipe) -> HTUnitResult.errorString { "Failed to merge results into outputs!" }
                     else -> {
                         modifyOutputs(recipe)
                         decrementInputs(recipe)
-                        DataResult.success(Unit)
+                        HTUnitResult.success()
                     }
                 }
             }

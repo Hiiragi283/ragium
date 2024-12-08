@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumBlockTags
+import hiiragi283.ragium.api.util.HTPipeType.entries
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
@@ -99,7 +100,24 @@ enum class HTPipeType(val isItem: Boolean, val isFluid: Boolean) : StringIdentif
         }
     }
 
+    fun withPos(pos: BlockPos): WithPos = WithPos(this, pos)
+
     //    StringIdentifiable    //
 
     override fun asString(): String = name.lowercase()
+
+    //    WithPos    //
+
+    data class WithPos(val type: HTPipeType, val pos: BlockPos) {
+        companion object {
+            @JvmField
+            val PACKET_CODEC: PacketCodec<RegistryByteBuf, WithPos> = PacketCodec.tuple(
+                HTPipeType.PACKET_CODEC,
+                WithPos::type,
+                BlockPos.PACKET_CODEC,
+                WithPos::pos,
+                ::WithPos,
+            )
+        }
+    }
 }

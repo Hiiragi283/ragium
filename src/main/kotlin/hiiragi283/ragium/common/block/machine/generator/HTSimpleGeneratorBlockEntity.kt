@@ -1,11 +1,10 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.validate
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -31,8 +30,7 @@ class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> = DataResult.success(Unit).validate(
-        { key.entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos) },
-        { "Failed to generate energy!" },
-    )
+    override fun process(world: World, pos: BlockPos): HTUnitResult = HTUnitResult.fromBoolString(
+        key.entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos),
+    ) { "Failed to generate energy!" }
 }

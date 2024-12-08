@@ -1,10 +1,13 @@
 package hiiragi283.ragium.api.screen
 
+import hiiragi283.ragium.api.extension.getBlockEntity
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.screen.slot.Slot
 import net.minecraft.world.World
@@ -14,9 +17,14 @@ abstract class HTScreenHandlerBase(
     syncId: Int,
     val playerInv: PlayerInventory,
     val inventory: Inventory,
+    ctx: ScreenHandlerContext,
 ) : ScreenHandler(type, syncId) {
     val player: PlayerEntity = playerInv.player
     val world: World = player.world
+    val blockEntity: BlockEntity? = ctx.getBlockEntity()
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : BlockEntity> getAsBlockEntity(): T? = blockEntity as? T
 
     override fun canUse(player: PlayerEntity): Boolean = inventory.canPlayerUse(player)
 

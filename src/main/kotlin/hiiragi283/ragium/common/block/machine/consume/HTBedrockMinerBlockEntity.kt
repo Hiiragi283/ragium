@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.consume
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -11,6 +10,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -38,22 +38,22 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
         this.tier = tier
     }
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+    override fun process(world: World, pos: BlockPos): HTUnitResult {
         val aboveStorage: Storage<ItemVariant> = ItemStorage.SIDED.find(world, pos.up(), Direction.DOWN)
-            ?: return DataResult.error { "Failed to find above storage!" }
+            ?: return HTUnitResult.errorString { "Failed to find above storage!" }
         val chosenOre: Item = RagiumAPI
             .getInstance()
             .materialRegistry
             .entryMap
             .mapNotNull { it.value.getFirstItem(HTTagPrefix.ORE) }
-            .randomOrNull() ?: return DataResult.error { "Failed to find mineable ore!" }
+            .randomOrNull() ?: return HTUnitResult.errorString { "Failed to find mineable ore!" }
         return useTransaction { transaction: Transaction ->
             if (aboveStorage.insert(ItemVariant.of(chosenOre), 1, transaction) > 0) {
                 transaction.commit()
-                DataResult.success(Unit)
+                HTUnitResult.success()
             } else {
                 transaction.abort()
-                DataResult.error { "Failed to insert ores into the above storage!" }
+                HTUnitResult.errorString { "Failed to insert ores into the above storage!" }
             }
         }
     }

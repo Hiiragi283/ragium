@@ -2,11 +2,15 @@ package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.screen.HTExporterScreenHandler
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -17,6 +21,8 @@ import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
+import net.minecraft.screen.ScreenHandler
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -26,7 +32,8 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTransporterBlockEntityBase(type, pos, state) {
+    HTTransporterBlockEntityBase(type, pos, state),
+    ExtendedScreenHandlerFactory<HTPipeType> {
     var fluidFilter: RegistryEntryList<Fluid> = RegistryEntryList.empty()
     var itemFilter: RegistryEntryList<Item> = RegistryEntryList.empty()
 
@@ -93,6 +100,7 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
                         ),
                         false,
                     )
+                    super.onUse(state, world, pos, player, hit)
                 }
             }
         }
@@ -124,4 +132,13 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
 
     abstract val itemSpeed: Long
     abstract val fluidSpeed: Long
+
+    //    ExtendedScreenHandlerFactory    //
+
+    override fun getDisplayName(): Text = Text.empty()
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
+        HTExporterScreenHandler(syncId, playerInventory, type, createContext())
+
+    override fun getScreenOpeningData(player: ServerPlayerEntity): HTPipeType = type
 }

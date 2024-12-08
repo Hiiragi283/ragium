@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.machine.multiblock
 import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.mapIfServer
+import hiiragi283.ragium.api.extension.unitMap
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -17,9 +19,6 @@ class HTMultiblockManager(private val world: () -> World?, private val pos: Bloc
     HTMultiblockBuilder {
     var showPreview: Boolean = false
 
-    val stateMap: Map<BlockPos, Pair<BlockPos, BlockState>>
-        get() = stateCache
-
     private val stateCache: MutableMap<BlockPos, Pair<BlockPos, BlockState>> = mutableMapOf()
 
     fun onUse(state: BlockState, player: PlayerEntity): Boolean = when {
@@ -30,49 +29,48 @@ class HTMultiblockManager(private val world: () -> World?, private val pos: Bloc
 
         else -> world()
             .mapIfServer { serverWorld: ServerWorld ->
-                val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                if (updateValidation(state, player)) {
+                provider.beforeBuild(world(), pos, player)
+                updateValidation(state) to serverWorld
+            }.unitMap { (result: HTUnitResult, world: ServerWorld) ->
+                if (result.isSuccess) {
+                    val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+                    player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), true)
                     provider.buildMultiblock(
                         HTMultiblockBuilder { x: Int, y: Int, z: Int, pattern: HTMultiblockPattern ->
                             val pos1: BlockPos = pos.add(x, y, z)
-                            stateCache[BlockPos(x, y, z)] = pos1 to serverWorld.getBlockState(pos1)
-                            this
+                            stateCache[BlockPos(x, y, z)] = pos1 to world.getBlockState(pos1)
                         }.rotate(front),
                     )
                 }
-                isValid
-            }.result()
-            .orElse(false)
+                result
+            }.ifSuccess { provider.afterBuild(world(), pos, player, stateCache) }
+            .ifError { stateCache.clear() }
+            .toBoolean()
     }
 
-    fun updateValidation(state: BlockState, player: PlayerEntity? = null): Boolean {
-        this.player = player
+    fun updateValidation(state: BlockState): HTUnitResult {
         val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
         provider.buildMultiblock(this.rotate(front))
-        return isValid
+        return patternResult
     }
 
     //    HTMultiblockBuilder    //
 
-    private var player: PlayerEntity? = null
+    val isValid: Boolean
+        get() = patternResult.isSuccess
 
-    var isValid: Boolean = true
-        private set
+    private var patternResult: HTUnitResult = HTUnitResult.success()
 
     override fun add(
         x: Int,
         y: Int,
         z: Int,
         pattern: HTMultiblockPattern,
-    ): HTMultiblockBuilder = apply {
+    ) {
         val pos1: BlockPos = pos.add(x, y, z)
-        if (isValid) {
-            isValid = world()?.let { pattern.test(it, pos1) } == true
-            if (!isValid) {
-                player?.sendMessage(
-                    Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos1)),
-                    false,
-                )
+        if (patternResult.isSuccess) {
+            patternResult = HTUnitResult.fromNull(world()?.let { pattern.test(it, pos1) }) {
+                Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos1))
             }
         }
     }

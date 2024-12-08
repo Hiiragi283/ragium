@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.machine.block
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
@@ -9,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -29,14 +29,10 @@ import net.minecraft.world.World
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
     HTFluidSyncable {
-    final override fun process(world: World, pos: BlockPos): DataResult<Unit> {
-        if (this is HTMultiblockPatternProvider) {
-            if (multiblockManager.updateValidation(cachedState)) {
-                return DataResult.error { "Invalid multiblock structure found!" }
-            }
-        }
-        return processor.process(world, key, tier)
-    }
+    final override fun process(world: World, pos: BlockPos): HTUnitResult = when (this) {
+        is HTMultiblockPatternProvider -> multiblockManager.updateValidation(cachedState)
+        else -> HTUnitResult.success()
+    }.flatMap { processor.process(world, key, tier) }
 
     protected abstract val inventory: SidedInventory
 

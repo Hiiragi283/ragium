@@ -23,6 +23,7 @@ import net.minecraft.recipe.RecipeEntry
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
@@ -219,6 +220,13 @@ val Fluid.nonEmptyOrNull: Fluid?
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
+
+//    PlayerEntity    //
+
+fun Entity.asServerPlayer(): ServerPlayerEntity? = this as? ServerPlayerEntity
+
+@Suppress("UNCHECKED_CAST")
+fun <T : ScreenHandler> ServerPlayerEntity.getAsScreenHandler(): T? = currentScreenHandler as? T
 
 //    ServiceLoader    //
 

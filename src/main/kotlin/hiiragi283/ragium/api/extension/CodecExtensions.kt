@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.util.HTUnitResult
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -47,7 +48,7 @@ fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
 }
 
 fun PlayerEntity.sendPacket(payload: CustomPayload) {
-    (this as? ServerPlayerEntity)?.let { ServerPlayNetworking.send(it, payload) }
+    asServerPlayer()?.let { ServerPlayNetworking.send(it, payload) }
 }
 
 fun ServerPlayerEntity.sendTitle(title: Text) {
@@ -130,6 +131,9 @@ fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -
 
 fun <R : Any, T : Any> DataResult<R>.mapNotNull(transform: (R) -> T?): DataResult<T> =
     flatMap { result: R -> transform(result).toDataResult { "Transformed value was null!" } }
+
+fun <R : Any> DataResult<R>.unitMap(transform: (R) -> HTUnitResult): HTUnitResult =
+    map(transform).mapOrElse(Function.identity()) { HTUnitResult.errorString { it.message() } }
 
 fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T> =
     map(DataResult<T>::success).orElse(DataResult.error(errorMessage))

@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.advancement
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.advancement.AdvancementCriterion
@@ -9,7 +10,6 @@ import net.minecraft.advancement.criterion.AbstractCriterion
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.predicate.entity.EntityPredicate
 import net.minecraft.predicate.entity.LootContextPredicate
-import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -19,7 +19,7 @@ object HTInteractMachineCriterion : AbstractCriterion<HTInteractMachineCriterion
 
     @JvmStatic
     fun trigger(player: PlayerEntity?, key: HTMachineKey, tier: HTMachineTier) {
-        (player as? ServerPlayerEntity)?.let {
+        player?.asServerPlayer()?.let {
             trigger(it) { condition: Condition ->
                 condition.matches(key, tier)
             }

@@ -181,7 +181,7 @@ object RagiumClient : ClientModInitializer {
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SMALL_MACHINE, ::HTSmallMachineScreen)
 
-        HandledScreens.register(RagiumScreenHandlerTypes.FILTERING_PIPE, ::HTFilteringPipeScreen)
+        HandledScreens.register(RagiumScreenHandlerTypes.EXPORTER, ::HTExporterScreen)
     }
 
     //    Events    //

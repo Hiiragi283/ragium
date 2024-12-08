@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.storage
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.HTUnitResult
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
@@ -55,11 +56,14 @@ class HTMachineFluidStorage private constructor(
         }
     }
 
-    fun <T : Any> map(index: Int, action: (SingleFluidStorage) -> T?): DataResult<T> =
-        parts.getOrNull(index)?.let(action).toDataResult { "Invalid child index: $index" }
+    fun getStorage(index: Int): DataResult<SingleFluidStorage> = parts.getOrNull(index).toDataResult { "Invalid child index: $index" }
 
-    fun <T : Any> flatMap(index: Int, action: (SingleFluidStorage) -> DataResult<T>): DataResult<T> =
-        parts.getOrNull(index)?.let(action) ?: DataResult.error { "Invalid child index: $index" }
+    fun <T : Any> map(index: Int, transform: (SingleFluidStorage) -> T?): DataResult<T> = getStorage(index).map(transform)
+
+    fun <T : Any> flatMap(index: Int, transform: (SingleFluidStorage) -> DataResult<T>): DataResult<T> =
+        getStorage(index).flatMap(transform)
+
+    fun unitMap(index: Int, transform: (SingleFluidStorage) -> HTUnitResult): HTUnitResult = getStorage(index).unitMap(transform)
 
     fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> =
         map(index, SingleFluidStorage::resourceAmount).result().orElse(ResourceAmount(FluidVariant.blank(), 0))

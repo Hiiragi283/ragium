@@ -76,5 +76,5 @@ fun interface HTMultiblockBuilder {
         y: Int,
         z: Int,
         pattern: HTMultiblockPattern,
-    ): HTMultiblockBuilder
+    )
 }

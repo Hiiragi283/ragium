@@ -15,13 +15,14 @@ abstract class HTMachineScreenHandlerBase(
     syncId: Int,
     playerInv: PlayerInventory,
     packet: HTMachinePacket,
-    ctx: ScreenHandlerContext,
     inventory: Inventory,
+    ctx: ScreenHandlerContext,
 ) : HTScreenHandlerBase(
         type,
         syncId,
         playerInv,
         inventory,
+        ctx,
     ) {
     val pos: BlockPos = packet.pos
     protected val property: PropertyDelegate =

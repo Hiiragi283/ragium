@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -12,6 +11,7 @@ import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.tags.RagiumFluidTags
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -64,21 +64,21 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> = useTransaction { transaction: Transaction ->
-        fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+    override fun process(world: World, pos: BlockPos): HTUnitResult = useTransaction { transaction: Transaction ->
+        fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
             val variantIn: FluidVariant = storageIn.variant
-            if (variantIn.isBlank) return@flatMap DataResult.error { "Empty fuels!" }
+            if (variantIn.isBlank) return@unitMap HTUnitResult.errorString { "Empty fuels!" }
             val maxAmount: Long = when {
                 variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.NUGGET
                 variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.INGOT
-                else -> return@flatMap DataResult.error { "Failed to calculate consume amount!" }
+                else -> return@unitMap HTUnitResult.errorString { "Failed to calculate consume amount!" }
             }
             if (storageIn.extract(variantIn, maxAmount, transaction) == maxAmount) {
                 transaction.commit()
-                DataResult.success(Unit)
+                HTUnitResult.success()
             } else {
                 transaction.abort()
-                DataResult.error { "Failed to consume fuels!" }
+                HTUnitResult.errorString { "Failed to consume fuels!" }
             }
         }
     }

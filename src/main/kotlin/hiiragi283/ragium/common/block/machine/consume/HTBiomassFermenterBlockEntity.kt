@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.consume
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -11,6 +10,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -71,20 +71,22 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> = HTRecipeProcessor { _: World, _: HTMachineKey, _: HTMachineTier ->
+    override fun process(world: World, pos: BlockPos): HTUnitResult = HTRecipeProcessor { _: World, _: HTMachineKey, _: HTMachineTier ->
         val inputStack: ItemStack = inventory.getStack(0)
         val chance: Float = CompostingChanceRegistry.INSTANCE.get(inputStack.item)
         val fixedAmount: Long = (FluidConstants.BUCKET * chance).toLong()
         if (fixedAmount <= 0) {
-            return@HTRecipeProcessor DataResult.error { "Failed to calculate biomass amount!" }
+            return@HTRecipeProcessor HTUnitResult.errorString { "Failed to calculate biomass amount!" }
         }
         useTransaction { transaction: Transaction ->
-            fluidStorage.map(0) {
+            fluidStorage.unitMap(0) {
                 if (it.insert(FluidVariant.of(RagiumFluids.BIOMASS.value), fixedAmount, transaction) == fixedAmount) {
                     transaction.commit()
                     inputStack.decrement(1)
+                    HTUnitResult.success()
                 } else {
                     transaction.abort()
+                    HTUnitResult.errorString { "Failed to insert fluid!" }
                 }
             }
         }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import com.google.common.base.Predicates
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
@@ -9,6 +8,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -58,7 +58,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+    override fun process(world: World, pos: BlockPos): HTUnitResult {
         var result = false
         Direction.entries.forEach { dir: Direction ->
             val posTo: BlockPos = pos.offset(dir)
@@ -79,11 +79,11 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
                     ) > 0
                 }
                 if (result) {
-                    return DataResult.success(Unit)
+                    return HTUnitResult.success()
                 }
             }
         }
-        return DataResult.error { "Failed to extract fluid from any sides!" }
+        return HTUnitResult.errorString { "Failed to extract fluid from any sides!" }
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null

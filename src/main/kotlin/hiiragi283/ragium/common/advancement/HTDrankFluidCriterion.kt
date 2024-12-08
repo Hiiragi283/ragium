@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.advancement
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.extension.contains
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.criterion.AbstractCriterion
@@ -12,7 +13,6 @@ import net.minecraft.predicate.entity.LootContextPredicate
 import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntryList
-import net.minecraft.server.network.ServerPlayerEntity
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -22,7 +22,7 @@ object HTDrankFluidCriterion : AbstractCriterion<HTDrankFluidCriterion.Condition
 
     @JvmStatic
     fun trigger(entity: LivingEntity?, fluid: Fluid) {
-        (entity as? ServerPlayerEntity)?.let {
+        entity?.asServerPlayer()?.let {
             trigger(it) { condition: Condition ->
                 condition.matches(fluid)
             }

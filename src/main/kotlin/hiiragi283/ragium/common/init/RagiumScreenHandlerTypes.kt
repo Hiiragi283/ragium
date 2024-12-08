@@ -23,8 +23,8 @@ object RagiumScreenHandlerTypes {
         registerExtended("distillation_tower", ::HTDistillationTowerScreenHandler, HTMachinePacket.PACKET_CODEC)
 
     @JvmField
-    val FILTERING_PIPE: ExtendedScreenHandlerType<HTFilteringPipeScreenHandler, HTPipeType> =
-        registerExtended("filtering_pipe", ::HTFilteringPipeScreenHandler, HTPipeType.PACKET_CODEC)
+    val EXPORTER: ExtendedScreenHandlerType<HTExporterScreenHandler, HTPipeType> =
+        registerExtended("exporter", ::HTExporterScreenHandler, HTPipeType.PACKET_CODEC)
 
     @JvmField
     val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =

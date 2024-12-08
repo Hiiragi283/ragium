@@ -5,11 +5,17 @@ import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SimpleInventory
+import net.minecraft.screen.ScreenHandlerContext
 
-class HTFilteringPipeScreenHandler(syncId: Int, playerInv: PlayerInventory, val pipeType: HTPipeType) :
-    HTScreenHandlerBase(RagiumScreenHandlerTypes.FILTERING_PIPE, syncId, playerInv, SimpleInventory(0)) {
+class HTExporterScreenHandler(
+    syncId: Int,
+    playerInv: PlayerInventory,
+    val pipeType: HTPipeType,
+    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
+) : HTScreenHandlerBase(RagiumScreenHandlerTypes.EXPORTER, syncId, playerInv, SimpleInventory(0), ctx) {
     init {
-        addPlayerInv(103 + ((6 - 4) * 18))
+        // player inventory
+        addPlayerInv()
     }
 
     override val machineSlotRange: IntRange = IntRange.EMPTY

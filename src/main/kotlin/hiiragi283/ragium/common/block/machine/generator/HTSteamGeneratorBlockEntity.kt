@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.useTransaction
@@ -13,6 +12,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -83,23 +83,23 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): DataResult<Unit> {
+    override fun process(world: World, pos: BlockPos): HTUnitResult {
         val fuelStack: ItemStack = inventory.getStack(0)
         return if (fuelStack.isIn(ItemTags.COALS)) {
             useTransaction { transaction: Transaction ->
-                return fluidStorage.flatMap(0) { storageIn: SingleFluidStorage ->
+                return fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
                     if (storageIn.extract(FluidVariant.of(Fluids.WATER), FluidConstants.INGOT, transaction) == FluidConstants.INGOT) {
                         transaction.commit()
                         fuelStack.decrement(1)
                         inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
-                        DataResult.success(Unit)
+                        HTUnitResult.success()
                     } else {
-                        DataResult.error { "Failed to consume fuels!" }
+                        HTUnitResult.errorString { "Failed to consume fuels!" }
                     }
                 }
             }
         } else {
-            DataResult.error { "Required fuels with #minecraft:coals!" }
+            HTUnitResult.errorString { "Required fuels with #minecraft:coals!" }
         }
     }
 
