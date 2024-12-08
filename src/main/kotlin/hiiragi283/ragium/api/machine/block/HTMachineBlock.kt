@@ -16,6 +16,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
+import net.minecraft.particle.ParticleUtil
+import net.minecraft.particle.SimpleParticleType
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.Properties
 import net.minecraft.text.MutableText
@@ -24,8 +26,10 @@ import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
 class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
@@ -51,6 +55,19 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
     )
 
     override fun getName(): MutableText = tier.createPrefixedText(key)
+
+    override fun randomDisplayTick(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        random: Random,
+    ) {
+        if (state.get(RagiumBlockProperties.ACTIVE)) {
+            key.entry.ifPresent(HTMachinePropertyKeys.PARTICLE) { particleType: SimpleParticleType ->
+                ParticleUtil.spawnParticlesAround(world, pos, 20, particleType)
+            }
+        }
+    }
 
     override fun appendTooltip(
         stack: ItemStack,

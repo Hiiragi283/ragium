@@ -1,7 +1,8 @@
-package hiiragi283.ragium.client.gui
+package hiiragi283.ragium.client.gui.machine
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
+import hiiragi283.ragium.client.gui.HTHandledScreenBase
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -13,7 +14,7 @@ import net.minecraft.util.math.MathHelper
 
 @Environment(EnvType.CLIENT)
 abstract class HTMachineScreenBase<T : HTMachineScreenHandlerBase>(handler: T, inventory: PlayerInventory, title: Text) :
-    HTScreenBase<T>(handler, inventory, title) {
+    HTHandledScreenBase<T>(handler, inventory, title) {
     abstract val texture: Identifier
     abstract val fluidCache: Array<FluidVariant>
     abstract val amountCache: LongArray

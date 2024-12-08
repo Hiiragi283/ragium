@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.util.Identifier
 
@@ -32,3 +33,5 @@ fun NbtCompound.getTier(key: String): HTMachineTier =
 //    NbtList    //
 
 fun buildNbtList(builderAction: NbtList.() -> Unit): NbtList = NbtList().apply(builderAction)
+
+fun Iterable<NbtElement>.toNbtList(): NbtList = buildNbtList { this@toNbtList.forEach(this::add) }

@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.screen.*
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
@@ -21,10 +20,6 @@ object RagiumScreenHandlerTypes {
     @JvmField
     val DISTILLATION_TOWER: ExtendedScreenHandlerType<HTDistillationTowerScreenHandler, HTMachinePacket> =
         registerExtended("distillation_tower", ::HTDistillationTowerScreenHandler, HTMachinePacket.PACKET_CODEC)
-
-    @JvmField
-    val EXPORTER: ExtendedScreenHandlerType<HTExporterScreenHandler, HTPipeType> =
-        registerExtended("exporter", ::HTExporterScreenHandler, HTPipeType.PACKET_CODEC)
 
     @JvmField
     val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =

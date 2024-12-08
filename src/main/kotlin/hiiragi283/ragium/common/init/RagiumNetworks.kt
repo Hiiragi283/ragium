@@ -1,20 +1,27 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getAsScreenHandler
+import hiiragi283.ragium.api.extension.asServerPlayer
+import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntityBase
 import hiiragi283.ragium.common.network.*
-import hiiragi283.ragium.common.screen.HTExporterScreenHandler
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.packet.CustomPayload
+import net.minecraft.particle.ParticleType
+import net.minecraft.particle.ParticleTypes
+import net.minecraft.particle.SimpleParticleType
+import net.minecraft.registry.Registries
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundEvent
+import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
 
 object RagiumNetworks {
@@ -68,13 +75,28 @@ object RagiumNetworks {
     }
 
     @JvmStatic
-    fun sendFloatingItem(player: ServerPlayerEntity, stack: ItemStack) {
-        ServerPlayNetworking.send(player, HTFloatingItemPayload(stack))
+    fun sendFloatingItem(
+        player: PlayerEntity,
+        stack: ItemStack,
+        particle: SimpleParticleType = ParticleTypes.TOTEM_OF_UNDYING,
+        soundEvent: SoundEvent = SoundEvents.ITEM_TOTEM_USE,
+    ) {
+        val particleEntry: RegistryEntry<ParticleType<*>> = Registries.PARTICLE_TYPE.getEntry(particle)
+        val soundEntry: RegistryEntry<SoundEvent> = Registries.SOUND_EVENT.getEntry(soundEvent)
+        player
+            .asServerPlayer()
+            ?.let { ServerPlayNetworking.send(it, HTFloatingItemPayload(stack, particleEntry, soundEntry)) }
     }
 
     @JvmStatic
-    fun sendFloatingItem(player: ServerPlayerEntity, item: ItemConvertible, count: Int = 1) {
-        ServerPlayNetworking.send(player, HTFloatingItemPayload(item, count))
+    fun sendFloatingItem(
+        player: PlayerEntity,
+        item: ItemConvertible,
+        count: Int = 1,
+        particle: SimpleParticleType = ParticleTypes.TOTEM_OF_UNDYING,
+        soundEvent: SoundEvent = SoundEvents.ITEM_TOTEM_USE,
+    ) {
+        sendFloatingItem(player, ItemStack(item, count), particle, soundEvent)
     }
 
     //    C2S    //
@@ -100,11 +122,7 @@ object RagiumNetworks {
         ) { payload: HTUpdateFilterPayload.FluidFilter, context: ServerPlayNetworking.Context ->
             context
                 .player()
-                .getAsScreenHandler<HTExporterScreenHandler>()
-                ?.getAsBlockEntity<HTExporterBlockEntityBase>()
-                ?.let { exporterBase: HTExporterBlockEntityBase ->
-                    exporterBase.fluidFilter = payload.entryList
-                }
+                .getStackInActiveHand()
         }
 
         ServerPlayNetworking.registerGlobalReceiver(
@@ -112,11 +130,7 @@ object RagiumNetworks {
         ) { payload: HTUpdateFilterPayload.ItemFilter, context: ServerPlayNetworking.Context ->
             context
                 .player()
-                .getAsScreenHandler<HTExporterScreenHandler>()
-                ?.getAsBlockEntity<HTExporterBlockEntityBase>()
-                ?.let { exporterBase: HTExporterBlockEntityBase ->
-                    exporterBase.itemFilter = payload.entryList
-                }
+                .getStackInActiveHand()
         }
     }
 }

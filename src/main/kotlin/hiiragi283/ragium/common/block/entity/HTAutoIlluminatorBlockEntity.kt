@@ -61,11 +61,11 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }
         }
-        world.breakBlock(pos, false)
         world.ifServer {
             placer
                 ?.let(this::getEntity)
                 ?.let {
+                    world.breakBlock(pos, false)
                     dropStackAt(it, RagiumBlocks.AUTO_ILLUMINATOR)
                     world.playSound(
                         null,

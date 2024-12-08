@@ -45,29 +45,6 @@ object RagiumCommands {
         dispatcher.register(
             CommandManager
                 .literal("ragium")
-                /*.then(
-                    CommandManager
-                        .literal("drive_manager")
-                        .then(
-                            CommandManager
-                                .literal("add")
-                                .then(
-                                    CommandManager
-                                        .argument("id", IdentifierArgumentType.identifier())
-                                        .suggests(SuggestionProviders.ALL_RECIPES)
-                                        .executes(::addDriveRecipe),
-                                ),
-                        ).then(
-                            CommandManager
-                                .literal("remove")
-                                .then(
-                                    CommandManager
-                                        .argument("id", IdentifierArgumentType.identifier())
-                                        .suggests(SuggestionProviders.ALL_RECIPES)
-                                        .executes(::removeDriveRecipe),
-                                ),
-                        ),
-                )*/
                 .then(
                     CommandManager
                         .literal("floating_item")
@@ -109,58 +86,6 @@ object RagiumCommands {
                 ),
         )
     }
-
-    //    Data Drive    //
-
-    /*@JvmStatic
-    private fun addDriveRecipe(context: CommandContext<ServerCommandSource>): Int {
-        val id: Identifier = IdentifierArgumentType.getIdentifier(context, "id")
-        val recipeEntry: RecipeEntry<*>? = context.source.world.recipeManager
-            .get(id)
-            ?.getOrNull()
-        if (recipeEntry != null) {
-            val recipe: Recipe<*> = recipeEntry.value
-            if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                val manager: HTDataDriveManager = context.source.server.dataDriveManager
-                if (id !in manager) {
-                    manager.add(id)
-                    context.source.sendFeedback({ Text.literal("Unlocked the recipe; $id!") }, true)
-                } else {
-                    context.source.sendError(Text.literal("The recipe; $id is already unlocked!"))
-                }
-            } else {
-                context.source.sendError(Text.literal("The recipe; $id does not require scanning!"))
-            }
-        } else {
-            context.source.sendError(Text.literal("Could not find recipe; $id"))
-        }
-        return Command.SINGLE_SUCCESS
-    }
-
-    @JvmStatic
-    private fun removeDriveRecipe(context: CommandContext<ServerCommandSource>): Int {
-        val id: Identifier = IdentifierArgumentType.getIdentifier(context, "id")
-        val recipeEntry: RecipeEntry<*>? = context.source.world.recipeManager
-            .get(id)
-            ?.getOrNull()
-        if (recipeEntry != null) {
-            val recipe: Recipe<*> = recipeEntry.value
-            if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                val manager: HTDataDriveManager = context.source.server.dataDriveManager
-                if (id in manager) {
-                    manager.remove(id)
-                    context.source.sendFeedback({ Text.literal("Locked the recipe; $id!") }, true)
-                } else {
-                    context.source.sendError(Text.literal("The recipe; $id is already locked!"))
-                }
-            } else {
-                context.source.sendError(Text.literal("The recipe; $id does not require scanning!"))
-            }
-        } else {
-            context.source.sendError(Text.literal("Could not find recipe; $id"))
-        }
-        return Command.SINGLE_SUCCESS
-    }*/
 
     //    Floating Item    //
 

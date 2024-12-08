@@ -25,7 +25,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
-abstract class HTScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: PlayerInventory, title: Text) :
+abstract class HTHandledScreenBase<T : HTScreenHandlerBase>(handler: T, inventory: PlayerInventory, title: Text) :
     HandledScreen<T>(handler, inventory, title) {
     override fun render(
         context: DrawContext,

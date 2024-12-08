@@ -2,27 +2,24 @@ package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.api.util.HTPipeType
+import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumNetworks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import hiiragi283.ragium.common.screen.HTExporterScreenHandler
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtOps
-import net.minecraft.nbt.NbtString
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
-import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -32,8 +29,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTransporterBlockEntityBase(type, pos, state),
-    ExtendedScreenHandlerFactory<HTPipeType> {
+    HTTransporterBlockEntityBase(type, pos, state) {
     var fluidFilter: RegistryEntryList<Fluid> = RegistryEntryList.empty()
     var itemFilter: RegistryEntryList<Item> = RegistryEntryList.empty()
 
@@ -70,19 +66,15 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
     ): ActionResult {
         val stack: ItemStack = player.getStackInActiveHand()
         if (!world.isClient) {
-            when {
+            val result: Boolean = when {
                 stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
-                    RegistryCodecs
-                        .entryList(RegistryKeys.FLUID)
-                        .parse(world.registryManager.getOps(NbtOps.INSTANCE), NbtString.of(stack.name.string))
-                        .ifSuccess { fluidFilter = it }
+                    stack.get(RagiumComponentTypes.FLUID_FILTER)?.let { fluidFilter = it }
+                    true
                 }
 
                 stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
-                    RegistryCodecs
-                        .entryList(RegistryKeys.ITEM)
-                        .parse(world.registryManager.getOps(NbtOps.INSTANCE), NbtString.of(stack.name.string))
-                        .ifSuccess { itemFilter = it }
+                    stack.get(RagiumComponentTypes.ITEM_FILTER)?.let { itemFilter = it }
+                    true
                 }
 
                 else -> {
@@ -100,8 +92,16 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
                         ),
                         false,
                     )
-                    super.onUse(state, world, pos, player, hit)
+                    false
                 }
+            }
+            if (result) {
+                RagiumNetworks.sendFloatingItem(
+                    player,
+                    stack,
+                    ParticleTypes.WAX_ON,
+                    SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP,
+                )
             }
         }
         return ActionResult.success(world.isClient)
@@ -132,13 +132,4 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
 
     abstract val itemSpeed: Long
     abstract val fluidSpeed: Long
-
-    //    ExtendedScreenHandlerFactory    //
-
-    override fun getDisplayName(): Text = Text.empty()
-
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTExporterScreenHandler(syncId, playerInventory, type, createContext())
-
-    override fun getScreenOpeningData(player: ServerPlayerEntity): HTPipeType = type
 }

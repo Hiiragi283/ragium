@@ -1,7 +1,7 @@
-package hiiragi283.ragium.client.gui
+package hiiragi283.ragium.client.gui.machine
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.screen.HTChemicalMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -11,9 +11,9 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
 @Environment(EnvType.CLIENT)
-class HTChemicalMachineScreen(handler: HTChemicalMachineScreenHandler, inventory: PlayerInventory, title: Text) :
-    HTMachineScreenBase<HTChemicalMachineScreenHandler>(handler, inventory, title) {
-    override val texture: Identifier = RagiumAPI.id("textures/gui/chemical_machine.png")
+class HTLargeMachineScreen(handler: HTLargeMachineScreenHandler, inventory: PlayerInventory, title: Text) :
+    HTMachineScreenBase<HTLargeMachineScreenHandler>(handler, inventory, title) {
+    override val texture: Identifier = RagiumAPI.id("textures/gui/large_machine.png")
     override val fluidCache: Array<FluidVariant> = Array(4) { FluidVariant.blank() }
     override val amountCache: LongArray = LongArray(4) { 0 }
 

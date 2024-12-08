@@ -184,7 +184,7 @@ object RagiumBlockEntityTypes {
         registerBlocks(PIPE, RagiumContents.Pipes.entries)
         registerBlocks(PIPE_STATION, RagiumContents.PipeStations.entries)
 
-        registerBlocks(CRATE, RagiumContents.PipeStations.entries)
+        registerBlocks(CRATE, RagiumContents.Crates.entries)
         registerBlocks(DRUM, RagiumContents.Drums.entries)
 
         CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocks.CREATIVE_EXPORTER)

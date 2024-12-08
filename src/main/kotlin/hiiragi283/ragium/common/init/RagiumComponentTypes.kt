@@ -17,11 +17,15 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.impl.transfer.VariantCodecs
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.Text
 import net.minecraft.text.TextCodecs
 import net.minecraft.util.DyeColor
@@ -64,8 +68,22 @@ object RagiumComponentTypes {
         register("fluid", Registries.FLUID.codec, PacketCodecs.codec(Registries.FLUID.codec))
 
     @JvmField
+    val FLUID_FILTER: ComponentType<RegistryEntryList<Fluid>> = register(
+        "fluid_filter",
+        RegistryCodecs.entryList(RegistryKeys.FLUID),
+        PacketCodecs.registryEntryList(RegistryKeys.FLUID),
+    )
+
+    @JvmField
     val GLOBAL_POS: ComponentType<GlobalPos> =
         register("global_pos", GlobalPos.CODEC, GlobalPos.PACKET_CODEC)
+
+    @JvmField
+    val ITEM_FILTER: ComponentType<RegistryEntryList<Item>> = register(
+        "item_filter",
+        RegistryCodecs.entryList(RegistryKeys.ITEM),
+        PacketCodecs.registryEntryList(RegistryKeys.ITEM),
+    )
 
     @JvmField
     val MACHINE_KEY: ComponentType<HTMachineKey> =

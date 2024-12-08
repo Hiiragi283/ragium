@@ -13,7 +13,10 @@ import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
-import hiiragi283.ragium.client.gui.*
+import hiiragi283.ragium.client.extension.world
+import hiiragi283.ragium.client.gui.HTFluidFilterScreen
+import hiiragi283.ragium.client.gui.HTItemFilterScreen
+import hiiragi283.ragium.client.gui.machine.*
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
@@ -36,13 +39,16 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.screen.ingame.HandledScreens
+import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
@@ -50,18 +56,26 @@ import net.minecraft.client.render.model.ModelRotation
 import net.minecraft.client.render.model.UnbakedModel
 import net.minecraft.client.render.model.json.ModelVariant
 import net.minecraft.client.render.model.json.WeightedUnbakedModel
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
+import net.minecraft.particle.ParticleType
+import net.minecraft.particle.SimpleParticleType
 import net.minecraft.registry.Registries
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.sound.SoundEvent
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
+import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.BlockRenderView
+import net.minecraft.world.World
 import team.reborn.energy.api.EnergyStorage
 
 @Environment(EnvType.CLIENT)
@@ -180,14 +194,25 @@ object RagiumClient : ClientModInitializer {
         HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
         HandledScreens.register(RagiumScreenHandlerTypes.SMALL_MACHINE, ::HTSmallMachineScreen)
-
-        HandledScreens.register(RagiumScreenHandlerTypes.EXPORTER, ::HTExporterScreen)
     }
 
     //    Events    //
 
     @JvmStatic
     private fun registerEvents() {
+        UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
+            val stack: ItemStack = player.getStackInHand(hand)
+            if (world.isClient) {
+                if (HTItemFilterScreen.openScreen(stack, world)) {
+                    return@register TypedActionResult.success(stack, true)
+                }
+                if (HTFluidFilterScreen.openScreen(stack, world)) {
+                    return@register TypedActionResult.success(stack, true)
+                }
+            }
+            TypedActionResult.pass(stack)
+        }
+
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register block state resolver
             RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->
@@ -283,7 +308,23 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerNetworks() {
         RagiumNetworks.FLOATING_ITEM.registerClientReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
-            context.client().gameRenderer.showFloatingItem(payload.stack)
+            val (stack: ItemStack, particle: RegistryEntry<ParticleType<*>>, soundEvent: RegistryEntry<SoundEvent>) = payload
+            val client: MinecraftClient = context.client()
+            val player: ClientPlayerEntity = context.player()
+            (particle.value() as? SimpleParticleType)?.let { type: SimpleParticleType ->
+                client.particleManager.addEmitter(player, type, 30)
+            }
+            context.world?.playSound(
+                player.x,
+                player.y,
+                player.z,
+                soundEvent.value(),
+                player.soundCategory,
+                1.0F,
+                1.0F,
+                false,
+            )
+            client.gameRenderer.showFloatingItem(stack)
         }
 
         RagiumNetworks.FLUID_SYNC.registerClientReceiver { payload: HTFluidSyncPayload, context: ClientPlayNetworking.Context ->
