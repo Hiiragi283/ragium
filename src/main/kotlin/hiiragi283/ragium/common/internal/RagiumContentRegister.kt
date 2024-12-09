@@ -160,7 +160,7 @@ internal object RagiumContentRegister {
                 block,
                 itemSettings()
                     .descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION))
-                    .component(RagiumComponentTypes.REWORK_TARGET, Unit)
+                    .component(RagiumComponentTypes.REWORK_TARGET, Unit),
             )
         }
         RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->
