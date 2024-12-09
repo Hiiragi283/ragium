@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.extension
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.util.HTUnitResult
 import io.netty.buffer.ByteBuf
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -18,7 +20,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.world.World
@@ -29,22 +30,25 @@ import com.mojang.datafixers.util.Pair as MPair
 //    Network    //
 
 fun BlockEntity.sendPacket(action: (ServerPlayerEntity) -> Unit) {
-    val world: World = world ?: return
-    if (!world.isClient) {
-        PlayerLookup.tracking(this)?.firstOrNull()?.let(action)
+    world?.ifServer {
+        PlayerLookup.tracking(this@sendPacket)?.firstOrNull()?.let(action)
     }
 }
 
 fun World.sendPacket(action: (ServerPlayerEntity) -> Unit) {
-    (this as? ServerWorld)?.let(PlayerLookup::world)?.firstOrNull()?.let(action)
+    ifServer {
+        PlayerLookup.world(this).firstOrNull()?.let(action)
+    }
 }
 
 fun World.sendPacketForPlayers(action: (ServerPlayerEntity) -> Unit) {
-    (this as? ServerWorld)?.let(PlayerLookup::world)?.forEach(action)
+    ifServer {
+        PlayerLookup.world(this).forEach(action)
+    }
 }
 
 fun PlayerEntity.sendPacket(payload: CustomPayload) {
-    (this as? ServerPlayerEntity)?.let { ServerPlayNetworking.send(it, payload) }
+    asServerPlayer()?.let { ServerPlayNetworking.send(it, payload) }
 }
 
 fun ServerPlayerEntity.sendTitle(title: Text) {
@@ -75,14 +79,17 @@ fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     return Codec.LONG.flatXmap(func, func)
 }
 
-fun <T : Any> resourcePacketCodec(resourceCodec: PacketCodec<RegistryByteBuf, T>): PacketCodec<RegistryByteBuf, ResourceAmount<T>> =
-    PacketCodec.tuple(
-        resourceCodec,
-        ResourceAmount<T>::resource,
-        PacketCodecs.VAR_LONG,
-        ResourceAmount<T>::amount,
-        ::ResourceAmount,
-    )
+val NON_NEGATIVE_LONG_CODEC: Codec<Long> = longRangeCodec(0, Long.MAX_VALUE)
+
+val POSITIVE_LONG_CODEC: Codec<Long> = longRangeCodec(1, Long.MAX_VALUE)
+
+fun <T : Any> resourceCodec(resourceCodec: Codec<T>): Codec<ResourceAmount<T>> = RecordCodecBuilder.create { instance ->
+    instance
+        .group(
+            resourceCodec.fieldOf("resource").forGetter(ResourceAmount<T>::resource),
+            NON_NEGATIVE_LONG_CODEC.fieldOf("amount").forGetter(ResourceAmount<T>::amount),
+        ).apply(instance, ::ResourceAmount)
+}
 
 //    PacketCodec    //
 
@@ -104,6 +111,15 @@ val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T
         { entry: RegistryEntry<T> -> entry.key.orElseThrow() },
     )
 
+fun <T : Any> resourcePacketCodec(resourceCodec: PacketCodec<RegistryByteBuf, T>): PacketCodec<RegistryByteBuf, ResourceAmount<T>> =
+    PacketCodec.tuple(
+        resourceCodec,
+        ResourceAmount<T>::resource,
+        PacketCodecs.VAR_LONG,
+        ResourceAmount<T>::amount,
+        ::ResourceAmount,
+    )
+
 //    DataResult    //
 
 fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -> String): DataResult<R> = flatMap { result: R ->
@@ -112,6 +128,12 @@ fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -
         false -> DataResult.error(errorMessage)
     }
 }
+
+fun <R : Any, T : Any> DataResult<R>.mapNotNull(transform: (R) -> T?): DataResult<T> =
+    flatMap { result: R -> transform(result).toDataResult { "Transformed value was null!" } }
+
+fun <R : Any> DataResult<R>.unitMap(transform: (R) -> HTUnitResult): HTUnitResult =
+    map(transform).mapOrElse(Function.identity()) { HTUnitResult.errorString { it.message() } }
 
 fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T> =
     map(DataResult<T>::success).orElse(DataResult.error(errorMessage))

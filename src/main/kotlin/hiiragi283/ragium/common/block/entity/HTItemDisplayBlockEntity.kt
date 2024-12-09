@@ -17,7 +17,7 @@ import net.minecraft.world.World
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state) {
     private val inventory: SidedInventory = HTStorageBuilder(1)
         .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .buildSided()
+        .buildInventory()
 
     override fun asInventory(): SidedInventory = inventory
 

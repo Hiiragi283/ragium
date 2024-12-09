@@ -64,7 +64,3 @@ fun BlockStateVariant.rot(direction: Direction): BlockStateVariant = when (direc
     Direction.WEST -> rotY(VariantSettings.Rotation.R270)
     Direction.EAST -> rotY(VariantSettings.Rotation.R90)
 }
-
-//    TextureMap    //
-
-fun textureMap(action: TextureMap.() -> Unit): TextureMap = TextureMap().apply(action)

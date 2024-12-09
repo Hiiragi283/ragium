@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/layered",
+  "textures": {
+    "layer0": "ragium:block/primitive_coil_side",
+    "layer1": "ragium:block/crate_overlay"
+  }
+}

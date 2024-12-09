@@ -19,12 +19,12 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.machine.consume.*
+import hiiragi283.ragium.common.block.machine.generator.*
+import hiiragi283.ragium.common.block.machine.process.*
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.common.machine.consume.*
-import hiiragi283.ragium.common.machine.generator.*
-import hiiragi283.ragium.common.machine.process.*
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
@@ -32,6 +32,7 @@ import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
@@ -59,10 +60,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.DOWN }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
         helper.modify(RagiumMachineKeys.BIOMASS_FERMENTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBiomassFermenterBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.COMPOSTER)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_COMPOSTER_FILL_SUCCESS)
         }
         helper.modify(RagiumMachineKeys.CANNING_MACHINE) {
@@ -74,22 +77,22 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
         helper.modify(RagiumMachineKeys.ROCK_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTRockGeneratorBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ASH)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
         // generators
         helper.modify(RagiumMachineKeys.GENERATORS::contains) {
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SMOKE)
         }
         helper.modify(RagiumMachineKeys.COMBUSTION_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
             set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/generator"))
-        }
-        helper.modify(RagiumMachineKeys.ENERGETIC_GENERATOR) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTEnergeticGeneratorBlockEntity))
         }
         helper.modify(RagiumMachineKeys.NUCLEAR_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTNuclearReactorBlockEntity))
@@ -97,13 +100,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity),
-            ) // set(HTMachinePropertyKeys.VOXEL_SHAPE, Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity))
         }
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSteamGeneratorBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.POOF)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
         helper.modify(RagiumMachineKeys.THERMAL_GENERATOR) {
@@ -119,64 +120,68 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 }
             }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTThermalGeneratorBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
-        /*helper.modify(RagiumMachineKeys.WATER_GENERATOR) {
-            set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, pos: BlockPos ->
-                pos.getAroundPos { world.getFluidState(it).isIn(FluidTags.WATER) }.size >= 2
-            }
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(HTGeneratorBlockEntityBase::Simple))
-            set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
-        }*/
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
         }
+        helper.modify(RagiumMachineKeys.ALLOY_FURNACE) {
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE)
+        }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
         }
-        helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
+        helper.modify(
+            RagiumMachineKeys.CHEMICAL_REACTOR,
+            RagiumMachineKeys.ELECTROLYZER,
+            RagiumMachineKeys.EXTRACTOR,
+            RagiumMachineKeys.MIXER,
+        ) {
             set(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
             )
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FALLING_DRIPSTONE_LAVA)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
-        helper.modify(RagiumMachineKeys.ELECTROLYZER) {
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
-            )
-        }
         helper.modify(RagiumMachineKeys.GRINDER) {
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
+        }
+        helper.modify(RagiumMachineKeys.GROWTH_CHAMBER) {
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.HAPPY_VILLAGER)
         }
         helper.modify(RagiumMachineKeys.METAL_FORMER) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_ANVIL_USE)
         }
         helper.modify(RagiumMachineKeys.MIXER) {
-            set(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
-            )
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.BUBBLE_POP)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.END_ROD)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL)
         }
         helper.modify(RagiumMachineKeys.SAW_MILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
     }
@@ -340,7 +345,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumContents.RawMaterials.entries)
     }
 
-    override fun registerRuntimeRecipes(
+    override fun registerRuntimeMaterialRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
         entry: HTMaterialRegistry.Entry,
@@ -354,11 +359,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 // Shaped Crafting
                 HTShapedRecipeJsonBuilder
                     .create(block)
-                    .patterns(
-                        "AAA",
-                        "AAA",
-                        "AAA",
-                    ).input('A', prefix, key)
+                    .pattern3x3()
+                    .input('A', prefix, key)
                     .offerTo(exporter)
             }
             // block -> ingot/gem

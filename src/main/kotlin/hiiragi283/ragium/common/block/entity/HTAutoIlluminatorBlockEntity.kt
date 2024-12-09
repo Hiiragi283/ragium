@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.ifServer
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.BlockState
@@ -10,7 +11,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
@@ -61,11 +61,11 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
                 }
             }
         }
-        world.breakBlock(pos, false)
-        (world as? ServerWorld)?.let { serverWorld: ServerWorld ->
+        world.ifServer {
             placer
-                ?.let(serverWorld::getEntity)
+                ?.let(this::getEntity)
                 ?.let {
+                    world.breakBlock(pos, false)
                     dropStackAt(it, RagiumBlocks.AUTO_ILLUMINATOR)
                     world.playSound(
                         null,

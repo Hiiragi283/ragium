@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:block/pipe",
+  "parent": "ragium:block/cross_pipe",
   "textures": {
     "all": "ragium:block/steel_pipe"
   }

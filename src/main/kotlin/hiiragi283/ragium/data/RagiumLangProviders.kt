@@ -84,6 +84,11 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "This cake is DIE.")
             // Blocks
+            builder.add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
+            builder.add(RagiumBlocks.CREATIVE_DRUM, "Creative Drum")
+            builder.add(RagiumBlocks.CREATIVE_EXPORTER, "Creative Exporter")
+            builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
+
             builder.add(RagiumBlocks.MUTATED_SOIL, "Mutated Soil")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
 
@@ -108,13 +113,14 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.WHITE_LINE, "White Line")
             builder.add(RagiumBlocks.T_WHITE_LINE, "White Line (T)")
             builder.add(RagiumBlocks.CROSS_WHITE_LINE, "White Line (Cross)")
+            builder.add(RagiumBlocks.STEEL_GLASS, "Steel Glass")
+            builder.add(RagiumBlocks.RAGIUM_GLASS, "Ragium Glass")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "Auto Illuminator")
             builder.add(RagiumBlocks.BACKPACK_INTERFACE, "Backpack Interface")
-            builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
             builder.add(RagiumBlocks.ENCHANTMENT_BOOKSHELF, "Enchantment Bookshelf")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "Large Processor")
@@ -128,11 +134,20 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "Teleport Anchor")
             builder.add(RagiumBlocks.TRASH_BOX, "Trash Box")
 
-            builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
+            builder.add(RagiumContents.Pipes.STONE, "Stone Pipe")
             builder.add(RagiumContents.Pipes.WOODEN, "Wooden Pipe")
-            builder.add(RagiumContents.Pipes.STEEL, "Steel Pipe")
+            builder.add(RagiumContents.Pipes.IRON, "Iron Pipe")
             builder.add(RagiumContents.Pipes.COPPER, "Copper Pipe")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "Universal Pipe")
+
+            builder.add(RagiumContents.CrossPipes.STEEL, "Steel Pipe")
+            builder.add(RagiumContents.CrossPipes.GOLD, "Gold Pipe")
+
+            builder.add(RagiumContents.PipeStations.ITEM, "Item Pipe Station")
+            builder.add(RagiumContents.PipeStations.FLUID, "Fluid Pipe Station")
+
+            builder.add(RagiumContents.FilteringPipe.ITEM, "Item Filtering Pipe")
+            builder.add(RagiumContents.FilteringPipe.FLUID, "Fluid Filtering Pipe")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "Place lights in area of %s block radius")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "Extend processor machine inside the multiblock")
@@ -143,6 +158,7 @@ object RagiumLangProviders {
                 "Connect Wireless Network and energy cables from other mod",
             )
             builder.add(RagiumTranslationKeys.OPEN_CRATE, "Drop inserted items below")
+            builder.add(RagiumTranslationKeys.PIPE_STATION, "Priority transport to adjacent storage")
             builder.add(RagiumTranslationKeys.POROUS_NETHERRACK, "Absorb around lava like sponge but not reusable")
             builder.add(RagiumTranslationKeys.SPONGE_CAKE, "Decrease falling damage when land on")
             builder.add(RagiumTranslationKeys.TRASH_BOX, "Remove ALL inserted items or fluids")
@@ -162,6 +178,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CIRCUIT, "Circuit")
             builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "circuit Board")
             builder.add(RagiumTranslationKeys.COIL, "Coil")
+            builder.add(RagiumTranslationKeys.CRATE, "Crate")
             builder.add(RagiumTranslationKeys.DRILL_HEAD, "Drill Head")
             builder.add(RagiumTranslationKeys.DRUM, "Drum")
             builder.add(RagiumTranslationKeys.EXPORTER, "Exporter")
@@ -269,9 +286,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "Destroy: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "Power: %s")
-            builder.add(RagiumTranslationKeys.FILTER, "Right-click Exporters to apply")
-            builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- ID Format: namespace:path")
-            builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- Tag Format: #namespace:path")
+            builder.add(RagiumTranslationKeys.FILTER, "Right-click on Exporters to apply, or open setting menu")
+            builder.add(RagiumTranslationKeys.FILTER_FORMAT, "Example: \"minecraft:iron_ingot\", [\"minecraft:water\"], \"#c:ores\"")
             builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "Destination: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - Items")
@@ -280,7 +296,7 @@ object RagiumLangProviders {
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "Name: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "Tier: %s")
-            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "Amount: %s Units")
+            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "Amount: %s B, %s Units")
             builder.add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "Network Energy: %s Units")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "Recipe cost: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "Show preview: %s")
@@ -446,12 +462,16 @@ object RagiumLangProviders {
             }
 
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
-
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "つばさレストラン名物「デスケーキ」")
             // Blocks
+            builder.add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブ用クレート")
+            builder.add(RagiumBlocks.CREATIVE_DRUM, "クリエイティブ用ドラム")
+            builder.add(RagiumBlocks.CREATIVE_EXPORTER, "クリエイティブ用搬出機")
+            builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
+
             builder.add(RagiumBlocks.MUTATED_SOIL, "変異した土壌")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")
 
@@ -476,13 +496,14 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.WHITE_LINE, "白線")
             builder.add(RagiumBlocks.T_WHITE_LINE, "白線（T字）")
             builder.add(RagiumBlocks.CROSS_WHITE_LINE, "白線（交差）")
+            builder.add(RagiumBlocks.STEEL_GLASS, "鋼鉄ガラス")
+            builder.add(RagiumBlocks.RAGIUM_GLASS, "ラギウムガラス")
 
             builder.add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
             builder.add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "光源置き太郎")
             builder.add(RagiumBlocks.BACKPACK_INTERFACE, "バックパックインターフェース")
-            builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
             builder.add(RagiumBlocks.ENCHANTMENT_BOOKSHELF, "エンチャント本棚")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.LARGE_PROCESSOR, "大型処理装置")
@@ -496,11 +517,20 @@ object RagiumLangProviders {
             builder.add(RagiumBlocks.TELEPORT_ANCHOR, "テレポートアンカー")
             builder.add(RagiumBlocks.TRASH_BOX, "ゴミ箱")
 
-            builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
+            builder.add(RagiumContents.Pipes.STONE, "石パイプ")
             builder.add(RagiumContents.Pipes.WOODEN, "木製パイプ")
-            builder.add(RagiumContents.Pipes.STEEL, "鋼鉄パイプ")
+            builder.add(RagiumContents.Pipes.IRON, "鉄パイプ")
             builder.add(RagiumContents.Pipes.COPPER, "銅パイプ")
             builder.add(RagiumContents.Pipes.UNIVERSAL, "万能パイプ")
+
+            builder.add(RagiumContents.CrossPipes.STEEL, "鋼鉄パイプ")
+            builder.add(RagiumContents.CrossPipes.GOLD, "金パイプ")
+
+            builder.add(RagiumContents.PipeStations.ITEM, "アイテムパイプステーション")
+            builder.add(RagiumContents.PipeStations.FLUID, "液体パイプステーション")
+
+            builder.add(RagiumContents.FilteringPipe.ITEM, "アイテムフィルタリングパイプ")
+            builder.add(RagiumContents.FilteringPipe.FLUID, "液体フィルタリングパイプ")
 
             builder.add(RagiumTranslationKeys.AUTO_ILLUMINATOR, "半径%sブロックの範囲に光源を自動で設置する")
             builder.add(RagiumTranslationKeys.LARGE_PROCESSOR, "マルチブロック内の加工機械を拡張する")
@@ -511,6 +541,7 @@ object RagiumLangProviders {
                 "無線ネットワークと他modのエネルギーケーブルをつなげる",
             )
             builder.add(RagiumTranslationKeys.OPEN_CRATE, "搬入されたアイテムを下にドロップする")
+            builder.add(RagiumTranslationKeys.PIPE_STATION, "優先して隣接したストレージに輸送する")
             builder.add(RagiumTranslationKeys.POROUS_NETHERRACK, "スポンジのように溶岩を吸い取る（使い切り）")
             builder.add(RagiumTranslationKeys.SPONGE_CAKE, "着地時のダメージを軽減する")
             builder.add(RagiumTranslationKeys.TRASH_BOX, "搬入された「すべて」のアイテムや液体を消滅させる")
@@ -530,6 +561,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CIRCUIT, "回路")
             builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "回路基板")
             builder.add(RagiumTranslationKeys.COIL, "コイル")
+            builder.add(RagiumTranslationKeys.CRATE, "クレート")
             builder.add(RagiumTranslationKeys.DRILL_HEAD, "ドリルヘッド")
             builder.add(RagiumTranslationKeys.DRUM, "ドラム")
             builder.add(RagiumTranslationKeys.EXPORTER, "搬出機")
@@ -634,9 +666,8 @@ object RagiumLangProviders {
 
             builder.add(RagiumTranslationKeys.DYNAMITE_DESTROY, "地形破壊: %s")
             builder.add(RagiumTranslationKeys.DYNAMITE_POWER, "威力: %s")
-            builder.add(RagiumTranslationKeys.FILTER, "右クリックで搬出機に適用")
-            builder.add(RagiumTranslationKeys.FILTER_ID_FORMAT, "- IDフォーマット: namespace:path")
-            builder.add(RagiumTranslationKeys.FILTER_TAG_FORMAT, "- タグフォーマット: #namespace:path")
+            builder.add(RagiumTranslationKeys.FILTER, "搬出機に右クリックで適用，または設定画面を開く")
+            builder.add(RagiumTranslationKeys.FILTER_FORMAT, "例: \"minecraft:iron_ingot\", [\"minecraft:water\"], \"#c:ores\"")
             builder.add(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, "座標: %s")
             // Item Group
             builder.add(RagiumItemGroup.ITEM_KEY, "Ragium - アイテム")
@@ -645,7 +676,7 @@ object RagiumLangProviders {
             // Machine
             builder.add(RagiumTranslationKeys.MACHINE_NAME, "名称: %s")
             builder.add(RagiumTranslationKeys.MACHINE_TIER, "ティア: %s")
-            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "液体量: %s ユニット")
+            builder.add(RagiumTranslationKeys.MACHINE_FLUID_AMOUNT, "液体量: %s B, %s ユニット")
             builder.add(RagiumTranslationKeys.MACHINE_NETWORK_ENERGY, "ネットワーク上のエネルギー量: %s ユニット")
             builder.add(RagiumTranslationKeys.MACHINE_RECIPE_COST, "処理コスト: %s E")
             builder.add(RagiumTranslationKeys.MACHINE_SHOW_PREVIEW, "プレビューの表示: %s")

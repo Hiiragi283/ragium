@@ -17,8 +17,8 @@ class HTChemicalMachineScreenHandler(
         syncId,
         playerInv,
         packet,
-        ctx,
         ctx.getInventory(5),
+        ctx,
     ) {
     init {
         inventory.onOpen(player)

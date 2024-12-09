@@ -22,6 +22,13 @@ object RagiumModels {
     )
 
     @JvmField
+    val CROSS_PIPE: Model =
+        model(
+            "block/cross_pipe",
+            TextureKey.ALL,
+        )
+
+    @JvmField
     val EXPORTER: Model = model(
         "block/exporter",
         TextureKey.TOP,
@@ -64,6 +71,13 @@ object RagiumModels {
             "block/layered",
             TextureKey.LAYER0,
             TextureKey.LAYER1,
+        )
+
+    @JvmField
+    val SURFACE: Model =
+        model(
+            "block/surface",
+            TextureKey.TOP,
         )
 
     //    Item    //

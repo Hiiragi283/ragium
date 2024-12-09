@@ -39,13 +39,14 @@ interface RagiumPlugin {
 
     fun afterRagiumInit(instance: RagiumAPI) {}
 
-    fun registerRuntimeRecipes(
+    fun registerRuntimeRecipe(exporter: RecipeExporter) {}
+
+    fun registerRuntimeMaterialRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
         entry: HTMaterialRegistry.Entry,
         helper: RecipeHelper,
-    ) {
-    }
+    ) {}
 
     //    MaterialHelper    //
 

@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.util.MutableComponentMap
+import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -76,6 +78,15 @@ fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID, t
 
 val FluidVariant.name: MutableText
     get() = FluidVariantAttributes.getName(this).copy()
+
+fun ContainerItemContext.modifyComponent(transaction: TransactionContext, count: Long = 1, action: (MutableComponentMap) -> Unit): Long {
+    val newVariant: ItemVariant = itemVariant
+        .toStack()
+        .apply {
+            MutableComponentMap.orNull(components)?.apply(action)
+        }.let(ItemVariant::of)
+    return exchange(newVariant, count, transaction)
+}
 
 //    Transaction    //
 

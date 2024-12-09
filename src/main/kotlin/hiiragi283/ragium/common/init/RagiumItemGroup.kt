@@ -91,14 +91,22 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Hulls.entries)
                     addAll(RagiumContents.Coils.entries)
 
+                    addAll(RagiumContents.Crates.entries)
+                    add(RagiumBlocks.CREATIVE_CRATE)
                     addAll(RagiumContents.Drums.entries)
+                    add(RagiumBlocks.CREATIVE_DRUM)
                     addAll(RagiumContents.Exporters.entries)
+                    add(RagiumBlocks.CREATIVE_EXPORTER)
                     addAll(RagiumContents.Pipes.entries)
+                    addAll(RagiumContents.CrossPipes.entries)
+                    addAll(RagiumContents.PipeStations.entries)
+                    addAll(RagiumContents.FilteringPipe.entries)
 
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)
 
                     addAll(RagiumBlocks.MECHANICS)
+                    add(RagiumBlocks.CREATIVE_SOURCE)
                 }.forEach(entries::add)
                 RagiumAPI
                     .getInstance()

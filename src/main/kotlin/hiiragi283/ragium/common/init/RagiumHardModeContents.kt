@@ -9,6 +9,26 @@ import net.minecraft.item.Items
 object RagiumHardModeContents {
     //    Gems    //
 
+    @JvmField
+    val DIAMOND: HTHardModeContent = HTHardModeContent.Companion.of(
+        HTContent.Material.ofWrapped(
+            HTTagPrefix.GEM,
+            RagiumMaterialKeys.DIAMOND,
+            Items.DIAMOND,
+        ),
+        RagiumContents.Plates.DIAMOND,
+    )
+
+    @JvmField
+    val EMERALD: HTHardModeContent = HTHardModeContent.Companion.of(
+        HTContent.Material.ofWrapped(
+            HTTagPrefix.GEM,
+            RagiumMaterialKeys.EMERALD,
+            Items.EMERALD,
+        ),
+        RagiumContents.Plates.EMERALD,
+    )
+
     //    Ingots    //
 
     @JvmField

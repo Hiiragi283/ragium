@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "ragium:crate"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "ragium:basic_crate"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

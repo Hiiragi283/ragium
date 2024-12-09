@@ -1,0 +1,7 @@
+{
+  "parent": "ragium:block/exporter",
+  "textures": {
+    "side": "ragium:block/creative_coil_side",
+    "top": "ragium:block/creative_coil_top"
+  }
+}

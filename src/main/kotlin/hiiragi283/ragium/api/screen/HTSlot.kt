@@ -11,7 +11,7 @@ open class HTSlot(
     x: Int,
     y: Int,
 ) : Slot(inventory, index, x, y) {
-    override fun canInsert(stack: ItemStack): Boolean = isEnabled
+    override fun canInsert(stack: ItemStack): Boolean = isEnabled && inventory.isValid(index, stack)
 
     override fun isEnabled(): Boolean = inventory.getStackOrNull(index) != null
 }

@@ -1,10 +1,13 @@
 package hiiragi283.ragium.api.screen
 
+import hiiragi283.ragium.api.extension.getBlockEntity
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.screen.slot.Slot
 import net.minecraft.world.World
@@ -14,9 +17,11 @@ abstract class HTScreenHandlerBase(
     syncId: Int,
     val playerInv: PlayerInventory,
     val inventory: Inventory,
+    ctx: ScreenHandlerContext,
 ) : ScreenHandler(type, syncId) {
     val player: PlayerEntity = playerInv.player
     val world: World = player.world
+    val blockEntity: BlockEntity? = ctx.getBlockEntity()
 
     override fun canUse(player: PlayerEntity): Boolean = inventory.canPlayerUse(player)
 
@@ -83,14 +88,14 @@ abstract class HTScreenHandlerBase(
         addSlot(HTOutputSlot(inventory, index, getSlotPosX(x), getSlotPosY(y)))
     }
 
-    protected fun addPlayerInv() {
+    protected fun addPlayerInv(yOffset: Int = 0) {
         // inventory
         (0..26).forEach { index: Int ->
-            addSlot(Slot(playerInv, index + 9, getSlotPosX(index % 9), getSlotPosY(3 + (index / 9)) + 12))
+            addSlot(Slot(playerInv, index + 9, getSlotPosX(index % 9), getSlotPosY(3 + (index / 9)) + 12 + yOffset))
         }
         // hotbar
         (0..8).forEach { index: Int ->
-            addSlot(Slot(playerInv, index, getSlotPosX(index), getSlotPosY(7) - 2))
+            addSlot(Slot(playerInv, index, getSlotPosX(index), getSlotPosY(7) - 2 + yOffset))
         }
     }
 }

@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.property.HTPropertyKey
+import net.minecraft.particle.SimpleParticleType
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
@@ -24,6 +25,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.Companion.ofDefaulted(
             RagiumAPI.Companion.id("active_model_id"),
         ) { RagiumAPI.Companion.id("block/active_dynamic_processor") }
+
+    @JvmField
+    val PARTICLE: HTPropertyKey.Simple<SimpleParticleType> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("particle"))
 
     @JvmField
     val SOUND: HTPropertyKey.Simple<SoundEvent> =

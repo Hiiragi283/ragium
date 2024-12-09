@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.entryPacketCodec
 import hiiragi283.ragium.api.extension.isFilledMax
-import hiiragi283.ragium.api.extension.longRangeCodec
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions
@@ -26,7 +26,7 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
                     Registries.FLUID.entryCodec
                         .fieldOf("fluid")
                         .forGetter(HTFluidResult::entry),
-                    longRangeCodec(1, Long.MAX_VALUE)
+                    POSITIVE_LONG_CODEC
                         .optionalFieldOf("amount", FluidConstants.BUCKET)
                         .forGetter(HTFluidResult::amount),
                 ).apply(instance, ::HTFluidResult)

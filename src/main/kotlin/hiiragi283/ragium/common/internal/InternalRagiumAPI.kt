@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.collection.HTTable
+import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -34,6 +35,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.util.Rarity
 import java.nio.file.Files
 import java.nio.file.Path
@@ -52,6 +54,9 @@ internal data object InternalRagiumAPI : RagiumAPI {
         key: HTMachineKey,
         minTier: HTMachineTier,
     ): AdvancementCriterion<HTInteractMachineCriterion.Condition> = HTInteractMachineCriterion.create(key, minTier)
+
+    override fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
+        HTDrankFluidCriterion.create(entryList)
 
     override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
         RagiumItems.FILLED_FLUID_CUBE,

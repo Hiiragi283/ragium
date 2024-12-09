@@ -1,6 +1,0 @@
-{
-  "parent": "ragium:block/pipe_side",
-  "textures": {
-    "all": "ragium:block/steel_pipe"
-  }
-}

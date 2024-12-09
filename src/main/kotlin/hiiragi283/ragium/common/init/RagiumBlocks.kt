@@ -2,6 +2,11 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.machine.HTLargeProcessorBlock
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
+import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
+import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
+import hiiragi283.ragium.common.block.transfer.HTCreativeExporterBlock
 import net.minecraft.block.*
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
@@ -11,6 +16,29 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
 object RagiumBlocks {
+    //    Creatives    //
+
+    @JvmField
+    val CREATIVE_CRATE: Block = HTBlockWithEntity.buildHorizontal(RagiumBlockEntityTypes.CREATIVE_CRATE, blockSettings())
+
+    @JvmField
+    val CREATIVE_DRUM: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_DRUM, blockSettings())
+
+    @JvmField
+    val CREATIVE_EXPORTER: Block = HTCreativeExporterBlock
+
+    @JvmField
+    val CREATIVE_SOURCE: Block =
+        HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_SOURCE, blockSettings(Blocks.COMMAND_BLOCK))
+
+    @JvmField
+    val CREATIVES: List<Block> = listOf(
+        CREATIVE_CRATE,
+        CREATIVE_DRUM,
+        CREATIVE_EXPORTER,
+        CREATIVE_SOURCE,
+    )
+
     //    Minerals    //
     @JvmField
     val MUTATED_SOIL: Block = Block(blockSettings(Blocks.DIRT))
@@ -160,10 +188,6 @@ object RagiumBlocks {
         HTBlockWithEntity.build(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val CREATIVE_SOURCE: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_SOURCE, blockSettings(Blocks.COMMAND_BLOCK))
-
-    @JvmField
     val LARGE_PROCESSOR: Block = HTLargeProcessorBlock
 
     @JvmField
@@ -194,7 +218,6 @@ object RagiumBlocks {
         AUTO_ILLUMINATOR, // yellow
         OPEN_CRATE, // green
         TELEPORT_ANCHOR, // blue
-        CREATIVE_SOURCE, // purple
         TRASH_BOX, // gray
         NETWORK_INTERFACE, // white
         // manual machines

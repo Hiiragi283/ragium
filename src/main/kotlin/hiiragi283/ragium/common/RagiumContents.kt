@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.block.HTPipeType
+import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
@@ -146,6 +146,8 @@ object RagiumContents {
         // tier3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
 
         // tier4
         NETHERITE(RagiumMaterialKeys.NETHERITE),
@@ -241,15 +243,66 @@ object RagiumContents {
     //    Pipes    //
 
     enum class Pipes(override val tier: HTMachineTier, val pipeType: HTPipeType) : HTContent.Tier<Block> {
-        IRON(HTMachineTier.PRIMITIVE, HTPipeType.ITEM),
+        STONE(HTMachineTier.PRIMITIVE, HTPipeType.ITEM),
         WOODEN(HTMachineTier.PRIMITIVE, HTPipeType.FLUID),
-        STEEL(HTMachineTier.BASIC, HTPipeType.ITEM),
+        IRON(HTMachineTier.BASIC, HTPipeType.ITEM),
         COPPER(HTMachineTier.BASIC, HTPipeType.FLUID),
         UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
         ;
 
         override val delegated: HTContent<Block> =
             HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+    }
+
+    enum class CrossPipes(val pipeType: HTPipeType) :
+        HTContent.Delegated<Block>,
+        ItemConvertible {
+        STEEL(HTPipeType.ITEM),
+        GOLD(HTPipeType.FLUID),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+
+        override fun asItem(): Item = value.asItem()
+    }
+
+    enum class PipeStations(val pipeType: HTPipeType) :
+        HTContent.Delegated<Block>,
+        ItemConvertible {
+        ITEM(HTPipeType.ITEM),
+        FLUID(HTPipeType.FLUID),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe_station"))
+
+        override fun asItem(): Item = value.asItem()
+    }
+
+    enum class FilteringPipe(val pipeType: HTPipeType) :
+        HTContent.Delegated<Block>,
+        ItemConvertible {
+        ITEM(HTPipeType.ITEM),
+        FLUID(HTPipeType.FLUID),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_filtering_pipe"))
+
+        override fun asItem(): Item = value.asItem()
+    }
+
+    //    Crate    //
+
+    enum class Crates(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val delegated: HTContent<Block> =
+            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_crate"))
     }
 
     //    Drums    //

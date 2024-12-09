@@ -2,14 +2,11 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTRegistryEntryList
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.State
 import net.minecraft.state.property.Property
 import net.minecraft.util.math.BlockPos
@@ -60,11 +57,3 @@ fun BlockState.isOf(content: HTContent<Block>): Boolean = isOf(content.value)
 fun BlockState.isIn(entryList: HTRegistryEntryList<Block>): Boolean = entryList.storage.map(this::isIn, this::isOf)
 
 //    BlockApiLookup    //
-
-fun <A, C> BlockApiLookup<A, C>.createCache(world: ServerWorld, pos: BlockPos): BlockApiCache<A, C> = BlockApiCache.create(this, world, pos)
-
-fun <A, C> BlockApiLookup<A, C>.createCacheOrNull(world: World, pos: BlockPos): BlockApiCache<A, C>? =
-    (world as? ServerWorld)?.let { createCache(it, pos) }
-
-fun <A, C> BlockApiCache<A, C>.findOrDefault(context: C, defaultValue: A, state: BlockState? = null): A =
-    find(state, context) ?: defaultValue

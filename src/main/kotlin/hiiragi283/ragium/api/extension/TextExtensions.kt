@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.registry.RegistryKey
 import net.minecraft.text.*
 import net.minecraft.util.Language
@@ -38,6 +40,12 @@ fun globalPosText(value: GlobalPos): MutableText = Text
     ).append("]")
 
 fun worldText(value: RegistryKey<World>): MutableText = Text.translatable(Util.createTranslationKey("world", value.value))
+
+fun fluidAmountText(value: Long): MutableText = Text.translatable(
+    RagiumTranslationKeys.MACHINE_FLUID_AMOUNT,
+    NumberFormat.getNumberInstance().format(value / FluidConstants.BUCKET),
+    NumberFormat.getNumberInstance().format(value % FluidConstants.BUCKET),
+)
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
     ?.let(TranslatableTextContent::getKey)

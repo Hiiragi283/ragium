@@ -7,108 +7,76 @@
     },
     {
       "apply": {
-        "model": "ragium:block/steel_pipe_side",
-        "x": 90
+        "model": "ragium:block/cross_pipe_overlay"
       },
       "when": {
-        "down": "true"
+        "cross_direction": "up_north_east"
       }
     },
     {
       "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "x": 90
-      },
-      "when": {
-        "facing": "down"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/steel_pipe_side",
-        "x": 270
-      },
-      "when": {
-        "up": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "x": 270
-      },
-      "when": {
-        "facing": "up"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/steel_pipe_side"
-      },
-      "when": {
-        "north": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay"
-      },
-      "when": {
-        "facing": "north"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/steel_pipe_side",
-        "y": 180
-      },
-      "when": {
-        "south": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "y": 180
-      },
-      "when": {
-        "facing": "south"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/steel_pipe_side",
-        "y": 270
-      },
-      "when": {
-        "west": "true"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "y": 270
-      },
-      "when": {
-        "facing": "west"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/steel_pipe_side",
+        "model": "ragium:block/cross_pipe_overlay",
         "y": 90
       },
       "when": {
-        "east": "true"
+        "cross_direction": "up_east_south"
       }
     },
     {
       "apply": {
-        "model": "ragium:block/pipe_overlay",
+        "model": "ragium:block/cross_pipe_overlay",
+        "y": 180
+      },
+      "when": {
+        "cross_direction": "up_south_west"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/cross_pipe_overlay",
+        "y": 270
+      },
+      "when": {
+        "cross_direction": "up_west_north"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/cross_pipe_overlay",
+        "x": 180
+      },
+      "when": {
+        "cross_direction": "down_north_east"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/cross_pipe_overlay",
+        "x": 180,
         "y": 90
       },
       "when": {
-        "facing": "east"
+        "cross_direction": "down_east_south"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/cross_pipe_overlay",
+        "x": 180,
+        "y": 180
+      },
+      "when": {
+        "cross_direction": "down_south_west"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/cross_pipe_overlay",
+        "x": 180,
+        "y": 270
+      },
+      "when": {
+        "cross_direction": "down_west_north"
       }
     }
   ]

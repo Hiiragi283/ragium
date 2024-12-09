@@ -9,8 +9,9 @@ import hiiragi283.ragium.api.extension.energyNetwork
 import hiiragi283.ragium.api.extension.getMultiblockController
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.networkMap
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockConstructor
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
@@ -28,8 +29,6 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 object RagiumCommands {
     @JvmStatic
@@ -46,29 +45,6 @@ object RagiumCommands {
         dispatcher.register(
             CommandManager
                 .literal("ragium")
-                /*.then(
-                    CommandManager
-                        .literal("drive_manager")
-                        .then(
-                            CommandManager
-                                .literal("add")
-                                .then(
-                                    CommandManager
-                                        .argument("id", IdentifierArgumentType.identifier())
-                                        .suggests(SuggestionProviders.ALL_RECIPES)
-                                        .executes(::addDriveRecipe),
-                                ),
-                        ).then(
-                            CommandManager
-                                .literal("remove")
-                                .then(
-                                    CommandManager
-                                        .argument("id", IdentifierArgumentType.identifier())
-                                        .suggests(SuggestionProviders.ALL_RECIPES)
-                                        .executes(::removeDriveRecipe),
-                                ),
-                        ),
-                )*/
                 .then(
                     CommandManager
                         .literal("floating_item")
@@ -111,58 +87,6 @@ object RagiumCommands {
         )
     }
 
-    //    Data Drive    //
-
-    /*@JvmStatic
-    private fun addDriveRecipe(context: CommandContext<ServerCommandSource>): Int {
-        val id: Identifier = IdentifierArgumentType.getIdentifier(context, "id")
-        val recipeEntry: RecipeEntry<*>? = context.source.world.recipeManager
-            .get(id)
-            ?.getOrNull()
-        if (recipeEntry != null) {
-            val recipe: Recipe<*> = recipeEntry.value
-            if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                val manager: HTDataDriveManager = context.source.server.dataDriveManager
-                if (id !in manager) {
-                    manager.add(id)
-                    context.source.sendFeedback({ Text.literal("Unlocked the recipe; $id!") }, true)
-                } else {
-                    context.source.sendError(Text.literal("The recipe; $id is already unlocked!"))
-                }
-            } else {
-                context.source.sendError(Text.literal("The recipe; $id does not require scanning!"))
-            }
-        } else {
-            context.source.sendError(Text.literal("Could not find recipe; $id"))
-        }
-        return Command.SINGLE_SUCCESS
-    }
-
-    @JvmStatic
-    private fun removeDriveRecipe(context: CommandContext<ServerCommandSource>): Int {
-        val id: Identifier = IdentifierArgumentType.getIdentifier(context, "id")
-        val recipeEntry: RecipeEntry<*>? = context.source.world.recipeManager
-            .get(id)
-            ?.getOrNull()
-        if (recipeEntry != null) {
-            val recipe: Recipe<*> = recipeEntry.value
-            if (recipe is HTRequireScanRecipe && recipe.requireScan) {
-                val manager: HTDataDriveManager = context.source.server.dataDriveManager
-                if (id in manager) {
-                    manager.remove(id)
-                    context.source.sendFeedback({ Text.literal("Locked the recipe; $id!") }, true)
-                } else {
-                    context.source.sendError(Text.literal("The recipe; $id is already locked!"))
-                }
-            } else {
-                context.source.sendError(Text.literal("The recipe; $id does not require scanning!"))
-            }
-        } else {
-            context.source.sendError(Text.literal("Could not find recipe; $id"))
-        }
-        return Command.SINGLE_SUCCESS
-    }*/
-
     //    Floating Item    //
 
     @JvmStatic
@@ -180,16 +104,15 @@ object RagiumCommands {
         val pos: BlockPos = BlockPosArgumentType.getBlockPos(context, "pos")
         val world: ServerWorld = context.source.world
         val state: BlockState = world.getBlockState(pos)
-        val controller: HTMultiblockController? = world.getMultiblockController(pos)
-        if (controller != null) {
-            val result: Boolean = if (!controller.updateValidation(state, world, pos)) {
-                val facing: Direction =
-                    state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                controller.buildMultiblock(HTMultiblockConstructor(world, pos, replace).rotate(facing))
-                true
-            } else {
-                false
-            }
+        val provider: HTMultiblockPatternProvider? = world.getMultiblockController(pos)
+        if (provider != null) {
+            val result: Boolean = provider.multiblockManager
+                .updateValidation(state)
+                .ifSuccess {
+                    val facing: Direction =
+                        state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+                    provider.buildMultiblock(Constructor(world, pos, replace).rotate(facing))
+                }.toBoolean()
             if (result) {
                 context.source.sendFeedback({ Text.literal("Built Multiblock at $pos!") }, true)
             } else {
@@ -199,6 +122,35 @@ object RagiumCommands {
             context.source.sendError(Text.literal("No multiblock controller exists at $pos!"))
         }
         return Command.SINGLE_SUCCESS
+    }
+
+    private class Constructor(private val world: World, private val pos: BlockPos, private val replace: Boolean = false) :
+        HTMultiblockBuilder {
+        private var isValid: Boolean = true
+
+        override fun add(
+            x: Int,
+            y: Int,
+            z: Int,
+            pattern: HTMultiblockPattern,
+        ) {
+            val pos1: BlockPos = pos.add(x, y, z)
+            if (isValid) {
+                if (replace) {
+                    pattern.getPreviewState(world)?.let {
+                        world.setBlockState(pos1, it)
+                    }
+                } else if (!world.isAir(pos1)) {
+                    isValid = false
+                } else {
+                    pattern.getPreviewState(world)?.let {
+                        world.setBlockState(pos1, it)
+                    }
+                }
+            } else {
+                isValid = false
+            }
+        }
     }
 
     //    Energy Network    //

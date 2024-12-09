@@ -2,13 +2,10 @@ package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockController
+import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
+import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
@@ -100,14 +97,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        // Send error message (TODO)
-        // errorMessage?.let { player.sendMessage(Text.translatable(it).formatted(Formatting.RED), false) }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
         }
         // Validate multiblock
-        val result: Boolean = (this as? HTMultiblockController)?.onUseController(state, world, pos, player) != false
+        val result: Boolean = (this as? HTMultiblockPatternProvider)?.multiblockManager?.onUse(state, player) != false
         // open machine screen
         if (result) {
             if (!world.isClient) {
@@ -129,7 +124,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             .validate(
                 { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.recipeCost) },
                 { "Failed to extract required energy from network!" },
-            ).flatMap { network: HTEnergyNetwork -> process(world, pos).map { _: Unit -> network } }
+            ).flatMap { network: HTEnergyNetwork -> process(world, pos).map { network } }
             .validate(
                 { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.recipeCost) },
                 { "Failed to interact energy network" },
@@ -145,11 +140,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
                 activateState(world, pos, false)
                 onFailed(world, pos)
             }
+        markDirty()
     }
 
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
 
-    abstract fun process(world: World, pos: BlockPos): DataResult<Unit>
+    abstract fun process(world: World, pos: BlockPos): HTUnitResult
 
     open fun onSucceeded(world: World, pos: BlockPos) {}
 

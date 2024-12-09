@@ -3,9 +3,18 @@
     "ragium:advanced_exporter",
     "ragium:basic_exporter",
     "ragium:copper_pipe",
+    "ragium:creative_crate",
+    "ragium:creative_drum",
+    "ragium:creative_exporter",
+    "ragium:fluid_filtering_pipe",
+    "ragium:fluid_pipe_station",
+    "ragium:gold_pipe",
     "ragium:iron_pipe",
+    "ragium:item_filtering_pipe",
+    "ragium:item_pipe_station",
     "ragium:primitive_exporter",
     "ragium:steel_pipe",
+    "ragium:stone_pipe",
     "ragium:universal_pipe",
     "ragium:wooden_pipe"
   ]

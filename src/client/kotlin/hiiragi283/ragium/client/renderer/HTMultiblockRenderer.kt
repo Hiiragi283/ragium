@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.client.extension.translate
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -28,14 +28,14 @@ data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val c
         x: Int,
         y: Int,
         z: Int,
-        component: HTMultiblockComponent,
-    ): HTMultiblockBuilder = apply {
+        pattern: HTMultiblockPattern,
+    ) {
         val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
         matrix.push()
         matrix.translate(x, y, z)
         matrix.translate(0.125, 0.125, 0.125)
         matrix.scale(0.75f, 0.75f, 0.75f)
-        component.getPreviewState(world)?.let { state: BlockState ->
+        pattern.getPreviewState(world)?.let { state: BlockState ->
             val consumer: VertexConsumer = consumerProvider.getBuffer(RenderLayers.getBlockLayer(state))
             blockRenderManager.renderBlock(state, DUMMY_POS, world, matrix, consumer, false, Random.create())
         }

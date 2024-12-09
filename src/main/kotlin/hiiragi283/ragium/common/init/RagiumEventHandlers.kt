@@ -82,8 +82,7 @@ object RagiumEventHandlers {
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 // send fluid sync packet
                 (player.currentScreenHandler as? HTMachineScreenHandlerBase)?.let { screen: HTMachineScreenHandlerBase ->
-                    (player.world.getBlockEntity(screen.pos) as? HTFluidSyncable)
-                        ?.sendPacket(player, RagiumNetworks::sendFluidSync)
+                    (screen.blockEntity as? HTFluidSyncable)?.sendPacket(player, RagiumNetworks::sendFluidSync)
                 }
                 // consume energy when worm stella goggles
                 if (player.armorItems.any { it.isOf(RagiumItems.STELLA_GOGGLE) }) {

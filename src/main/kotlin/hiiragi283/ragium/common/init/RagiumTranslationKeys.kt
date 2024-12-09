@@ -17,6 +17,7 @@ object RagiumTranslationKeys {
     const val MUTATED_SOIL = "tooltip.ragium.block.mutated_soil"
     const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"
     const val OPEN_CRATE = "tooltip.ragium.block.open_crate"
+    const val PIPE_STATION = "tooltip.ragium.block.pipe_station"
     const val POROUS_NETHERRACK = "tooltip.ragium.block.porous_netherrack"
     const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
     const val TRASH_BOX = "tooltip.ragium.block.trash_box"
@@ -38,6 +39,7 @@ object RagiumTranslationKeys {
     const val CIRCUIT = "content.ragium.circuit"
     const val CIRCUIT_BOARD = "content.ragium.circuit_board"
     const val COIL = "content.ragium.coil"
+    const val CRATE = "content.ragium.crate"
     const val DRILL_HEAD = "content.ragium.drill_head"
     const val DRUM = "content.ragium.drum"
     const val EXPORTER = "content.ragium.exporter"
@@ -58,8 +60,7 @@ object RagiumTranslationKeys {
     const val DYNAMITE_DESTROY = "tooltip.ragium.item.dynamite.destroy"
     const val DYNAMITE_POWER = "tooltip.ragium.item.dynamite.power"
     const val FILTER = "tooltip.ragium.item.filter"
-    const val FILTER_ID_FORMAT = "tooltip.ragium.item.filter.id_format"
-    const val FILTER_TAG_FORMAT = "tooltip.ragium.item.filter.tag_format"
+    const val FILTER_FORMAT = "tooltip.ragium.item.filter.format"
     const val WARPED_CRYSTAL_DESTINATION = "tooltip.ragium.item.warped_crystal.destination"
 
     //    Machine    //

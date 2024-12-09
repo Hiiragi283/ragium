@@ -1,10 +1,9 @@
 package hiiragi283.ragium.api.storage
 
-import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.extension.buildNbtList
-import hiiragi283.ragium.api.extension.copyTo
-import hiiragi283.ragium.api.extension.resourceAmount
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.util.HTUnitResult
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
@@ -26,15 +25,17 @@ class HTMachineFluidStorage private constructor(
     size: Int,
     private val ioMapper: (Int) -> HTStorageIO,
     private val filter: (Int, FluidVariant) -> Boolean,
+    tier: HTMachineTier,
 ) {
     companion object {
         const val NBT_KEY = "fluid_storages"
     }
 
-    constructor(builder: HTStorageBuilder) : this(
+    constructor(builder: HTStorageBuilder, tier: HTMachineTier) : this(
         builder.size,
         builder.ioMapper,
         builder.fluidFilter,
+        tier,
     )
 
     private var callback: () -> Unit = {}
@@ -43,12 +44,9 @@ class HTMachineFluidStorage private constructor(
         this.callback = callback
     }
 
-    val parts: List<SingleFluidStorage>
-        get() = parts1.toList()
+    private val parts: Array<SingleFluidStorage> = Array(size) { slot: Int -> childStorage(slot, tier) }
 
-    private val parts1: Array<SingleFluidStorage> = Array(size, ::childStorage)
-
-    private fun childStorage(slot: Int, tier: HTMachineTier = HTMachineTier.PRIMITIVE): SingleFluidStorage = object : SingleFluidStorage() {
+    private fun childStorage(slot: Int, tier: HTMachineTier): SingleFluidStorage = object : SingleFluidStorage() {
         override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
         override fun canInsert(variant: FluidVariant): Boolean = filter(slot, variant)
@@ -58,13 +56,21 @@ class HTMachineFluidStorage private constructor(
         }
     }
 
-    fun get(index: Int): SingleFluidStorage = parts1[index]
+    fun getStorage(index: Int): DataResult<SingleFluidStorage> = parts.getOrNull(index).toDataResult { "Invalid child index: $index" }
 
-    fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> = get(index).resourceAmount
+    fun <T : Any> map(index: Int, transform: (SingleFluidStorage) -> T?): DataResult<T> = getStorage(index).map(transform)
+
+    fun <T : Any> flatMap(index: Int, transform: (SingleFluidStorage) -> DataResult<T>): DataResult<T> =
+        getStorage(index).flatMap(transform)
+
+    fun unitMap(index: Int, transform: (SingleFluidStorage) -> HTUnitResult): HTUnitResult = getStorage(index).unitMap(transform)
+
+    fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> =
+        map(index, SingleFluidStorage::resourceAmount).result().orElse(ResourceAmount(FluidVariant.blank(), 0))
 
     fun createWrapped(): Storage<FluidVariant> = CombinedStorage(
         buildList {
-            parts1.forEachIndexed { index: Int, storage: SingleFluidStorage ->
+            parts.forEachIndexed { index: Int, storage: SingleFluidStorage ->
                 add(ioMapper(index).wrapStorage(storage))
             }
         },
@@ -74,7 +80,7 @@ class HTMachineFluidStorage private constructor(
         val handStorage: Storage<FluidVariant> =
             ContainerItemContext.forPlayerInteraction(player, Hand.MAIN_HAND).find(FluidStorage.ITEM) ?: return false
         val variants: List<FluidVariant> = handStorage.nonEmptyViews().map(StorageView<FluidVariant>::getResource)
-        parts1.forEach {
+        parts.forEach {
             // prevent to insert same fluid into multiple parts
             if (it.variant in variants && it.amount == it.capacity) {
                 return false
@@ -87,11 +93,11 @@ class HTMachineFluidStorage private constructor(
     }
 
     fun update(tier: HTMachineTier): HTMachineFluidStorage = apply {
-        val copied: Array<SingleFluidStorage> = parts1.copyOf()
+        val copied: Array<SingleFluidStorage> = parts.copyOf()
         copied.forEachIndexed { index: Int, storage: SingleFluidStorage ->
             val newStorage: SingleFluidStorage = childStorage(index, tier)
             storage.copyTo(newStorage)
-            parts1[index] = newStorage
+            parts[index] = newStorage
         }
     }
 
@@ -100,7 +106,7 @@ class HTMachineFluidStorage private constructor(
         update(tier)
         list.forEachIndexed { index: Int, nbtElement: NbtElement ->
             if (nbtElement is NbtCompound) {
-                parts1.getOrNull(index)?.readNbt(nbtElement, wrapperLookup)
+                parts.getOrNull(index)?.readNbt(nbtElement, wrapperLookup)
             }
         }
     }
@@ -110,7 +116,7 @@ class HTMachineFluidStorage private constructor(
         nbt.put(
             NBT_KEY,
             buildNbtList {
-                parts1.forEach { add(buildNbt { it.writeNbt(this, wrapperLookup) }) }
+                parts.forEach { add(buildNbt { it.writeNbt(this, wrapperLookup) }) }
             },
         )
     }
@@ -119,7 +125,7 @@ class HTMachineFluidStorage private constructor(
 
     fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit, vararg slotRange: Int) {
         slotRange.forEach { index: Int ->
-            parts1.getOrNull(index)?.let { storage: SingleFluidStorage ->
+            parts.getOrNull(index)?.let { storage: SingleFluidStorage ->
                 sender(player, index, storage.variant, storage.amount)
             }
         }

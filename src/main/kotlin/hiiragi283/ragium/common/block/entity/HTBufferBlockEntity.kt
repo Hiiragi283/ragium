@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -29,12 +30,12 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
     private val inventory: SidedInventory =
         HTStorageBuilder(9)
             .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-            .buildSided()
+            .buildInventory()
 
     private val fluidStorage: HTMachineFluidStorage =
         HTStorageBuilder(9)
             .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-            .buildMachineFluidStorage()
+            .buildMachineFluidStorage(HTMachineTier.PRIMITIVE)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

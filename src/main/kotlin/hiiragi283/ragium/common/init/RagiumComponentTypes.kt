@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.fluidStorageOf
-import hiiragi283.ragium.api.extension.longRangeCodec
+import hiiragi283.ragium.api.extension.resourceCodec
+import hiiragi283.ragium.api.extension.resourcePacketCodec
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -13,23 +12,37 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.common.item.HTDynamiteItem
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
+import net.fabricmc.fabric.impl.transfer.VariantCodecs
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.Text
 import net.minecraft.text.TextCodecs
 import net.minecraft.util.DyeColor
 import net.minecraft.util.math.GlobalPos
 
+@Suppress("UnstableApiUsage")
 object RagiumComponentTypes {
     @JvmField
     val COLOR: ComponentType<DyeColor> =
         register("color", DyeColor.CODEC, DyeColor.PACKET_CODEC)
+
+    @JvmField
+    val CRATE: ComponentType<ResourceAmount<ItemVariant>> = register(
+        "crate",
+        resourceCodec(VariantCodecs.ITEM_CODEC),
+        resourcePacketCodec(VariantCodecs.ITEM_PACKET_CODEC),
+    )
 
     @JvmField
     val DAMAGE_INSTEAD_OF_DECREASE: ComponentType<Unit> =
@@ -40,39 +53,11 @@ object RagiumComponentTypes {
         register("description", TextCodecs.CODEC.listOf(), TextCodecs.PACKET_CODEC.toList())
 
     @JvmField
-    val DRUM: ComponentType<SingleFluidStorage> = register(
+    val DRUM: ComponentType<ResourceAmount<FluidVariant>> = register(
         "drum",
-        RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    longRangeCodec(0, Long.MAX_VALUE)
-                        .fieldOf("capacity")
-                        .forGetter(SingleFluidStorage::getCapacity),
-                    longRangeCodec(0, Long.MAX_VALUE)
-                        .fieldOf("amount")
-                        .forGetter(SingleFluidStorage::getAmount),
-                    FluidVariant.CODEC
-                        .fieldOf("variant")
-                        .forGetter(SingleFluidStorage::getResource),
-                ).apply(instance, ::createFluidStorage)
-        },
-        PacketCodec.tuple(
-            PacketCodecs.VAR_LONG,
-            SingleFluidStorage::getCapacity,
-            PacketCodecs.VAR_LONG,
-            SingleFluidStorage::getAmount,
-            FluidVariant.PACKET_CODEC,
-            SingleFluidStorage::getResource,
-            ::createFluidStorage,
-        ),
+        resourceCodec(VariantCodecs.FLUID_CODEC),
+        resourcePacketCodec(VariantCodecs.FLUID_PACKET_CODEC),
     )
-
-    @JvmStatic
-    private fun createFluidStorage(capacity: Long, amount: Long, variant: FluidVariant): SingleFluidStorage =
-        fluidStorageOf(capacity).apply {
-            this.amount = amount
-            this.variant = variant
-        }
 
     @JvmField
     val DYNAMITE: ComponentType<HTDynamiteItem.Component> =
@@ -83,8 +68,22 @@ object RagiumComponentTypes {
         register("fluid", Registries.FLUID.codec, PacketCodecs.codec(Registries.FLUID.codec))
 
     @JvmField
+    val FLUID_FILTER: ComponentType<RegistryEntryList<Fluid>> = register(
+        "fluid_filter",
+        RegistryCodecs.entryList(RegistryKeys.FLUID),
+        PacketCodecs.registryEntryList(RegistryKeys.FLUID),
+    )
+
+    @JvmField
     val GLOBAL_POS: ComponentType<GlobalPos> =
         register("global_pos", GlobalPos.CODEC, GlobalPos.PACKET_CODEC)
+
+    @JvmField
+    val ITEM_FILTER: ComponentType<RegistryEntryList<Item>> = register(
+        "item_filter",
+        RegistryCodecs.entryList(RegistryKeys.ITEM),
+        PacketCodecs.registryEntryList(RegistryKeys.ITEM),
+    )
 
     @JvmField
     val MACHINE_KEY: ComponentType<HTMachineKey> =

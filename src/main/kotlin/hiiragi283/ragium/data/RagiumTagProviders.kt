@@ -68,6 +68,7 @@ object RagiumTagProviders {
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
 
             buildList {
+                addAll(RagiumBlocks.CREATIVES)
                 addAll(RagiumBlocks.BUILDINGS)
                 addAll(RagiumBlocks.MECHANICS)
                 addAll(RagiumBlocks.MISC)
@@ -86,7 +87,14 @@ object RagiumTagProviders {
                 addAll(RagiumContents.Casings.entries)
                 addAll(RagiumContents.Hulls.entries)
                 addAll(RagiumContents.Coils.entries)
+
+                addAll(RagiumContents.Exporters.entries)
                 addAll(RagiumContents.Pipes.entries)
+                addAll(RagiumContents.CrossPipes.entries)
+                addAll(RagiumContents.PipeStations.entries)
+                addAll(RagiumContents.FilteringPipe.entries)
+
+                addAll(RagiumContents.Crates.entries)
                 addAll(RagiumContents.Drums.entries)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
@@ -99,7 +107,13 @@ object RagiumTagProviders {
             buildList {
                 addAll(RagiumContents.Exporters.entries)
                 addAll(RagiumContents.Pipes.entries)
+                addAll(RagiumContents.CrossPipes.entries)
+                addAll(RagiumContents.PipeStations.entries)
+                addAll(RagiumContents.FilteringPipe.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_CRATE)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_DRUM)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_EXPORTER)
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
                 blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->

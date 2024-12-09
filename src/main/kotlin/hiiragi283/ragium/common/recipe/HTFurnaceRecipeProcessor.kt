@@ -1,12 +1,13 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.api.util.HTUnitResult
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.AbstractCookingRecipe
@@ -23,21 +24,21 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
 ) : HTRecipeProcessor {
     private val recipeCache: HTRecipeCache<SingleStackRecipeInput, T> = HTRecipeCache(recipeType)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): DataResult<Unit> {
+    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): HTUnitResult {
         val inputStack: ItemStack = inventory.getStack(inputIndex)
         val processCount: Int = min(inputStack.count, tier.smelterMulti)
         return recipeCache
             .getFirstMatch(SingleStackRecipeInput(inputStack), world)
-            .flatMap { recipe: T ->
+            .unitMap { recipe: T ->
                 val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
                 resultStack.count *= processCount
                 val output = HTItemResult(resultStack)
                 if (!output.canMerge(inventory.getStack(outputIndex))) {
-                    return@flatMap DataResult.error { "Failed to merge result into output!" }
+                    return@unitMap HTUnitResult.errorString { "Failed to merge result into output!" }
                 }
                 inventory.modifyStack(outputIndex, output::merge)
                 inputStack.decrement(processCount)
-                DataResult.success(Unit)
+                HTUnitResult.success()
             }
     }
 }

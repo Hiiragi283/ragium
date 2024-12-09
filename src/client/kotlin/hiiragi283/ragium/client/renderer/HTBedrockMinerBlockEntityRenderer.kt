@@ -1,7 +1,8 @@
 package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.client.extension.renderBeam
-import hiiragi283.ragium.common.machine.consume.HTBedrockMinerBlockEntity
+import hiiragi283.ragium.client.extension.renderMultiblock
+import hiiragi283.ragium.common.block.machine.consume.HTBedrockMinerBlockEntity
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider
@@ -25,6 +26,6 @@ object HTBedrockMinerBlockEntityRenderer : BlockEntityRenderer<HTBedrockMinerBlo
             renderBeam(matrices, vertexConsumers, tickDelta, world)
         }
         // render multiblock
-        HTMultiblockMachineBlockEntityRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay)
+        renderMultiblock(entity, matrices, vertexConsumers)
     }
 }

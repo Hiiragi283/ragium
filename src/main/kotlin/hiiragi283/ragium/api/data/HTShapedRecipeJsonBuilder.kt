@@ -77,6 +77,54 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         }
     }
 
+    fun pattern3x3(): HTShapedRecipeJsonBuilder = patterns(
+        "AAA",
+        "AAA",
+        "AAA",
+    )
+
+    fun hollowPattern(): HTShapedRecipeJsonBuilder = patterns(
+        "AAA",
+        "A A",
+        "AAA",
+    )
+
+    fun wrapPattern8(): HTShapedRecipeJsonBuilder = patterns(
+        "AAA",
+        "ABA",
+        "AAA",
+    )
+
+    fun slabPattern(): HTShapedRecipeJsonBuilder = patterns("AAA")
+
+    fun stairPattern(): HTShapedRecipeJsonBuilder = patterns(
+        "A  ",
+        "AA ",
+        "AAA",
+    )
+
+    fun helmetPattern(): HTShapedRecipeJsonBuilder = patterns(
+        "AAA",
+        "A A",
+    )
+
+    fun chestPlatePattern(): HTShapedRecipeJsonBuilder = patterns(
+        "A A",
+        "AAA",
+        "AAA",
+    )
+
+    fun leggingsPattern(): HTShapedRecipeJsonBuilder = patterns(
+        "AAA",
+        "A A",
+        "A A",
+    )
+
+    fun bootsPattern(): HTShapedRecipeJsonBuilder = patterns(
+        "A A",
+        "A A",
+    )
+
     fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
 
     fun unlockedBy(content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = unlockedBy(content.prefixedTagKey)
