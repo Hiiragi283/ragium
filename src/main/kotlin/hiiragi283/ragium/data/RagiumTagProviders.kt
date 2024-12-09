@@ -111,6 +111,7 @@ object RagiumTagProviders {
                 addAll(RagiumContents.PipeStations.entries)
                 addAll(RagiumContents.FilteringPipe.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_CRATE)
             add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_DRUM)
             add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_EXPORTER)
 

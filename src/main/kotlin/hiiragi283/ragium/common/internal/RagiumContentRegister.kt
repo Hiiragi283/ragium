@@ -156,14 +156,19 @@ internal object RagiumContentRegister {
         RagiumContents.FilteringPipe.entries.forEach { filtering: RagiumContents.FilteringPipe ->
             val block = HTFilteringPipeBlock(filtering.pipeType)
             registerBlock(filtering, block)
-            registerBlockItem(block, itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION)))
+            registerBlockItem(
+                block,
+                itemSettings()
+                    .descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION))
+                    .component(RagiumComponentTypes.REWORK_TARGET, Unit)
+            )
         }
         RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->
             val block = HTCrateBlock(crate.tier)
             registerBlock(crate, block)
             registerBlockItem(
                 block,
-                itemSettings().tieredText(RagiumTranslationKeys.DRUM, crate.tier),
+                itemSettings().tieredText(RagiumTranslationKeys.CRATE, crate.tier),
             )
         }
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
@@ -214,9 +219,11 @@ internal object RagiumContentRegister {
 
     @JvmStatic
     private fun initBlocks() {
+        registerBlock("creative_crate", RagiumBlocks.CREATIVE_CRATE)
         registerBlock("creative_drum", RagiumBlocks.CREATIVE_DRUM)
         registerBlock("creative_exporter", RagiumBlocks.CREATIVE_EXPORTER)
         registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
+        registerBlockItem(RagiumBlocks.CREATIVE_CRATE, itemSettings().rarity(Rarity.EPIC))
         registerBlockItem(RagiumBlocks.CREATIVE_DRUM, itemSettings().rarity(Rarity.EPIC))
         registerBlockItem(RagiumBlocks.CREATIVE_EXPORTER, itemSettings().rarity(Rarity.EPIC))
         registerBlockItem(RagiumBlocks.CREATIVE_SOURCE, itemSettings().rarity(Rarity.EPIC))

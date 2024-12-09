@@ -19,6 +19,9 @@ object RagiumBlocks {
     //    Creatives    //
 
     @JvmField
+    val CREATIVE_CRATE: Block = HTBlockWithEntity.buildHorizontal(RagiumBlockEntityTypes.CREATIVE_CRATE, blockSettings())
+
+    @JvmField
     val CREATIVE_DRUM: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_DRUM, blockSettings())
 
     @JvmField
@@ -30,6 +33,7 @@ object RagiumBlocks {
 
     @JvmField
     val CREATIVES: List<Block> = listOf(
+        CREATIVE_CRATE,
         CREATIVE_DRUM,
         CREATIVE_EXPORTER,
         CREATIVE_SOURCE,

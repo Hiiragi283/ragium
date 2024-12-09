@@ -86,16 +86,17 @@ object RagiumItemGroup {
             icon { RagiumMachineKeys.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
-                    addAll(RagiumBlocks.CREATIVES)
-
                     addAll(RagiumContents.Grates.entries)
                     addAll(RagiumContents.Casings.entries)
                     addAll(RagiumContents.Hulls.entries)
                     addAll(RagiumContents.Coils.entries)
 
                     addAll(RagiumContents.Crates.entries)
+                    add(RagiumBlocks.CREATIVE_CRATE)
                     addAll(RagiumContents.Drums.entries)
+                    add(RagiumBlocks.CREATIVE_DRUM)
                     addAll(RagiumContents.Exporters.entries)
+                    add(RagiumBlocks.CREATIVE_EXPORTER)
                     addAll(RagiumContents.Pipes.entries)
                     addAll(RagiumContents.CrossPipes.entries)
                     addAll(RagiumContents.PipeStations.entries)
@@ -105,6 +106,7 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Circuits.entries)
 
                     addAll(RagiumBlocks.MECHANICS)
+                    add(RagiumBlocks.CREATIVE_SOURCE)
                 }.forEach(entries::add)
                 RagiumAPI
                     .getInstance()

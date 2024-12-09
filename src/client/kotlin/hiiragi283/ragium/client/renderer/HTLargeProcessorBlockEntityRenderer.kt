@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
+import hiiragi283.ragium.client.extension.renderMultiblock
 import hiiragi283.ragium.common.block.machine.process.HTLargeProcessorBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.BlockState
@@ -42,6 +43,6 @@ object HTLargeProcessorBlockEntityRenderer : BlockEntityRenderer<HTLargeProcesso
                 Random.create(),
             )
         // render multiblock
-        HTMultiblockMachineBlockEntityRenderer.render(entity, tickDelta, matrices, vertexConsumers, light, overlay)
+        renderMultiblock(entity, matrices, vertexConsumers)
     }
 }

@@ -174,6 +174,21 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 RagiumAPI.id("block/ore/${ore.material.asString()}"),
             )
         }
+        RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->
+            registerLayered(
+                crate.value,
+                crate.tier
+                    .getCoil()
+                    .id
+                    .withPath { "block/${it}_side" },
+                RagiumAPI.id("block/crate_overlay"),
+            )
+        }
+        registerLayered(
+            RagiumBlocks.CREATIVE_CRATE,
+            RagiumAPI.id("block/creative_coil_side"),
+            RagiumAPI.id("block/crate_overlay"),
+        )
         // static
         registerStaticModel(RagiumBlocks.MANUAL_FORGE)
         registerStaticModel(RagiumBlocks.MANUAL_MIXER)

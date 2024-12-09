@@ -2,10 +2,11 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.network.HTCratePreviewPayload
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -17,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
@@ -27,9 +29,22 @@ import net.minecraft.world.World
 class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
     HTBlockEntityBase(RagiumBlockEntityTypes.CRATE, pos, state),
     SidedStorageBlockEntity {
-    private var itemStorage: SingleItemStorage = HTStorageIO.GENERIC.createItemStorage(tier.bucketUnit * 8)
+    private inner class ItemStorage(val tier: HTMachineTier) : SingleItemStorage() {
+        override fun onFinalCommit() {
+            ifPresentWorld { world: World ->
+                if (!world.isClient) {
+                    sendPacket { playerEntity: ServerPlayerEntity ->
+                        ServerPlayNetworking.send(playerEntity, HTCratePreviewPayload(pos, variant, amount))
+                    }
+                }
+            }
+        }
 
-    val previewStack: ItemStack = itemStorage.variant.toStack()
+        override fun getCapacity(variant: ItemVariant): Long = tier.bucketUnit * 8
+    }
+
+    var itemStorage: SingleItemStorage = ItemStorage(tier)
+        private set
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -39,7 +54,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
         tier = nbt.getTier(TIER_KEY)
-        itemStorage = HTStorageIO.GENERIC.createItemStorage(tier.bucketUnit * 8)
+        itemStorage = ItemStorage(tier)
         itemStorage.readNbt(nbt, wrapperLookup)
     }
 

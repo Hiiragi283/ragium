@@ -22,6 +22,7 @@
     "ragium:basic_hull",
     "ragium:buffer",
     "ragium:copper_pipe",
+    "ragium:creative_crate",
     "ragium:creative_drum",
     "ragium:creative_exporter",
     "ragium:creative_source",

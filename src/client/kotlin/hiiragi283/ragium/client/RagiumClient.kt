@@ -21,7 +21,9 @@ import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.network.HTCratePreviewPayload
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTFluidSyncPayload
 import hiiragi283.ragium.common.network.HTInventoryPayload
@@ -42,6 +44,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -106,6 +109,7 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.CrossPipes.entries)
             addAll(RagiumContents.PipeStations.entries)
             addAll(RagiumContents.FilteringPipe.entries)
+            addAll(RagiumContents.Crates.entries)
         }.map(HTContent<Block>::value).forEach(::registerCutoutMipped)
 
         RagiumAPI
@@ -113,6 +117,7 @@ object RagiumClient : ClientModInitializer {
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
+        registerCutoutMipped(RagiumBlocks.CREATIVE_CRATE)
         registerCutoutMipped(RagiumBlocks.CREATIVE_EXPORTER)
         registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
@@ -123,6 +128,8 @@ object RagiumClient : ClientModInitializer {
         registerCutoutMipped(RagiumBlocks.WHITE_LINE)
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CRATE, ::HTCrateBlockEntityRenderer)
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CREATIVE_CRATE) { HTCreativeCrateBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
@@ -317,6 +324,14 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerNetworks() {
+        RagiumNetworks.CRATE_PREVIEW.registerClientReceiver { payload: HTCratePreviewPayload, context: ClientPlayNetworking.Context ->
+            val (pos: BlockPos, variant: ItemVariant, amount: Long) = payload
+            (context.getBlockEntity(pos) as? HTCrateBlockEntity)?.itemStorage?.apply {
+                this.variant = variant
+                this.amount = amount
+            }
+        }
+
         RagiumNetworks.FLOATING_ITEM.registerClientReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
             val (stack: ItemStack, particle: RegistryEntry<ParticleType<*>>, soundEvent: RegistryEntry<SoundEvent>) = payload
             val client: MinecraftClient = context.client()

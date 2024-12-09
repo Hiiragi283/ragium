@@ -1,12 +1,14 @@
 package hiiragi283.ragium.client.extension
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.minecraft.block.Block
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
@@ -23,6 +25,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.resource.Resource
+import net.minecraft.state.property.Properties
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
@@ -87,6 +90,20 @@ fun renderItem(
     matrices.pop()
 }
 
+fun <T> renderMultiblock(
+    provider: T,
+    matrices: MatrixStack,
+    vertexConsumers: VertexConsumerProvider,
+) where T : HTMultiblockPatternProvider, T : BlockEntity {
+    renderMultiblock(
+        provider,
+        provider.world,
+        provider.world?.getBlockState(provider.pos)?.getOrNull(Properties.HORIZONTAL_FACING),
+        matrices,
+        vertexConsumers,
+    )
+}
+
 fun <T : HTMultiblockPatternProvider> renderMultiblock(
     provider: T,
     world: World?,
@@ -122,6 +139,52 @@ fun renderBeam(
         0.25f,
     )
 }
+
+/*fun renderSide(
+    matrices: MatrixStack,
+    vertexConsumer: VertexConsumerProvider,
+    layer: RenderLayer,
+    side: Direction,
+    yTop: Float = 1f,
+    yBottom: Float = 0f
+) {
+    renderSide(matrices.peek().positionMatrix, vertexConsumer.getBuffer(layer), side, yTop, yBottom)
+}
+
+fun renderSide(
+    matrix: Matrix4f,
+    vertexConsumer: VertexConsumer,
+    side: Direction,
+    yTop: Float = 1f,
+    yBottom: Float = 0f
+) {
+    when (side) {
+        Direction.DOWN -> renderSide(matrix, vertexConsumer, 0f, 1f, yBottom, yBottom, 0f, 0f, 1f, 1f)
+        Direction.UP -> renderSide(matrix, vertexConsumer, 0f, 1f, yTop, yTop, 1f, 1f, 0f, 0f)
+        Direction.NORTH -> renderSide(matrix, vertexConsumer, 0f, 1f, 1f, 0f, 0f, 0f, 0f, 0f)
+        Direction.SOUTH -> renderSide(matrix, vertexConsumer, 0f, 1f, 0f, 1f, 1f, 1f, 1f, 1f)
+        Direction.WEST -> renderSide(matrix, vertexConsumer, 0f, 0f, 0f, 1f, 0f, 1f, 1f, 0f)
+        Direction.EAST -> renderSide(matrix, vertexConsumer, 1f, 1f, 1f, 0f, 0f, 1f, 1f, 0f)
+    }
+}
+
+private fun renderSide(
+    matrix: Matrix4f,
+    vertexConsumer: VertexConsumer,
+    x1: Float,
+    x2: Float,
+    y1: Float,
+    y2: Float,
+    z1: Float,
+    z2: Float,
+    z3: Float,
+    z4: Float
+) {
+    vertexConsumer.vertex(matrix, x1, y1, z1)
+    vertexConsumer.vertex(matrix, x2, y1, z2)
+    vertexConsumer.vertex(matrix, x2, y2, z3)
+    vertexConsumer.vertex(matrix, x1, y2, z4)
+}*/
 
 //    Fluid    //
 

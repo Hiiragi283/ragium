@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
 import hiiragi283.ragium.api.machine.HTMachinePacket
+import hiiragi283.ragium.common.network.HTCratePreviewPayload
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTFluidStoragePayload
 import hiiragi283.ragium.common.network.HTFluidSyncPayload
@@ -28,6 +29,10 @@ import net.minecraft.util.math.BlockPos
 
 object RagiumNetworks {
     //    S2C    //
+
+    @JvmField
+    val CRATE_PREVIEW: CustomPayload.Id<HTCratePreviewPayload> =
+        registerS2C("crate_preview", HTCratePreviewPayload.PACKET_CODEC)
 
     @JvmField
     val FLOATING_ITEM: CustomPayload.Id<HTFloatingItemPayload> =

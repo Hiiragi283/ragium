@@ -84,6 +84,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "This cake is DIE.")
             // Blocks
+            builder.add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
             builder.add(RagiumBlocks.CREATIVE_DRUM, "Creative Drum")
             builder.add(RagiumBlocks.CREATIVE_EXPORTER, "Creative Exporter")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
@@ -177,6 +178,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CIRCUIT, "Circuit")
             builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "circuit Board")
             builder.add(RagiumTranslationKeys.COIL, "Coil")
+            builder.add(RagiumTranslationKeys.CRATE, "Crate")
             builder.add(RagiumTranslationKeys.DRILL_HEAD, "Drill Head")
             builder.add(RagiumTranslationKeys.DRUM, "Drum")
             builder.add(RagiumTranslationKeys.EXPORTER, "Exporter")
@@ -465,6 +467,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "つばさレストラン名物「デスケーキ」")
             // Blocks
+            builder.add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブ用クレート")
             builder.add(RagiumBlocks.CREATIVE_DRUM, "クリエイティブ用ドラム")
             builder.add(RagiumBlocks.CREATIVE_EXPORTER, "クリエイティブ用搬出機")
             builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
@@ -558,6 +561,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.CIRCUIT, "回路")
             builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "回路基板")
             builder.add(RagiumTranslationKeys.COIL, "コイル")
+            builder.add(RagiumTranslationKeys.CRATE, "クレート")
             builder.add(RagiumTranslationKeys.DRILL_HEAD, "ドリルヘッド")
             builder.add(RagiumTranslationKeys.DRUM, "ドラム")
             builder.add(RagiumTranslationKeys.EXPORTER, "搬出機")

@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.block.storage.HTCreativeCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTCreativeDrumBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.transfer.*
@@ -31,6 +32,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CRATE: BlockEntityType<HTCrateBlockEntity> =
         register("crate", ::HTCrateBlockEntity)
+
+    @JvmField
+    val CREATIVE_CRATE: BlockEntityType<HTCreativeCrateBlockEntity> =
+        register("creative_crate", ::HTCreativeCrateBlockEntity)
 
     @JvmField
     val CREATIVE_DRUM: BlockEntityType<HTCreativeDrumBlockEntity> =
