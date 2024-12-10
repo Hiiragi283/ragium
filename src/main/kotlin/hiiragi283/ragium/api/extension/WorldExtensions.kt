@@ -47,7 +47,7 @@ fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Encha
 
 fun dropStackAt(entity: Entity, item: ItemConvertible, count: Int = 1): Boolean = dropStackAt(entity, ItemStack(item, count))
 
-fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.blockPos, stack)
+fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.pos, stack)
 
 fun dropStackAt(
     world: World,
@@ -56,12 +56,16 @@ fun dropStackAt(
     count: Int = 1,
 ): Boolean = dropStackAt(world, pos, ItemStack(item, count))
 
-fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean {
-    val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
+fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean =
+    dropStackAt(world, Vec3d(pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5), stack)
+
+fun dropStackAt(world: World, pos: Vec3d, stack: ItemStack): Boolean {
+    val itemEntity = ItemEntity(world, pos.x, pos.y, pos.z, stack)
     itemEntity.velocity = Vec3d.ZERO
     itemEntity.setPickupDelay(0)
     return world.spawnEntity(itemEntity)
 }
+
 
 fun World.ifServer(action: ServerWorld.() -> Unit): World = apply {
     (this as? ServerWorld)?.let(action)

@@ -100,16 +100,16 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
                     val variantIn: ItemVariant = itemStorage.variant
                     val extracted: Long = itemStorage.extract(variantIn, 64, transaction)
                     if (extracted > 0) {
-                        transaction.commit()
                         dropStackAt(player, variantIn.toStack(extracted.toInt()))
+                        transaction.commit()
                         return ActionResult.success(world.isClient)
                     }
                 }
             } else {
                 val inserted: Long = itemStorage.insert(ItemVariant.of(stack), stack.count.toLong(), transaction)
                 if (inserted > 0) {
-                    transaction.commit()
                     stack.decrement(inserted.toInt())
+                    transaction.commit()
                     return ActionResult.success(world.isClient)
                 }
             }
