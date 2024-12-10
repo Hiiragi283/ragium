@@ -2,7 +2,11 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.util.HTCrossDirection
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
@@ -402,6 +406,32 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 TextureMap.all(block),
                 generator.modelCollector,
             )
+        }
+        // machine
+        RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+            val block: HTMachineBlock = entry.block
+            val coordinateMap: BlockStateVariantMap = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE, HTMachineTier.PROPERTY)
+                .register { front: Direction, isActive: Boolean, _: HTMachineTier ->
+                    val modelId: Identifier = when (isActive) {
+                        true -> HTMachinePropertyKeys.ACTIVE_MODEL_ID
+                        false -> HTMachinePropertyKeys.MODEL_ID
+                    }.let(entry::getOrDefault)
+                    stateVariantOf(modelId).rot(front)
+                }
+            // block state
+            generator.excludeFromSimpleItemModelGeneration(block)
+            registerSupplier(
+                block,
+                VariantsBlockStateSupplier.create(block)
+                    .coordinate(coordinateMap)
+            )
+            // model
+            RagiumModels.model(entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID))
+                .uploadAsItem(
+                    block,
+                    TextureMap(),
+                    generator.modelCollector,
+                )
         }
         // custom
         register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }

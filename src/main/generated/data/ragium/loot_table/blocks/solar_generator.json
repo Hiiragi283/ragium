@@ -20,7 +20,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:solar_panel"
+          "name": "ragium:solar_generator"
         }
       ],
       "rolls": 1.0

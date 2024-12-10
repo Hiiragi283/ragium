@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "active=false,facing=east,tier=advanced": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 90
+    },
+    "active=false,facing=east,tier=basic": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 90
+    },
+    "active=false,facing=east,tier=primitive": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 90
+    },
+    "active=false,facing=north,tier=advanced": {
+      "model": "ragium:block/dynamic_processor"
+    },
+    "active=false,facing=north,tier=basic": {
+      "model": "ragium:block/dynamic_processor"
+    },
+    "active=false,facing=north,tier=primitive": {
+      "model": "ragium:block/dynamic_processor"
+    },
+    "active=false,facing=south,tier=advanced": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 180
+    },
+    "active=false,facing=south,tier=basic": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 180
+    },
+    "active=false,facing=south,tier=primitive": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 180
+    },
+    "active=false,facing=west,tier=advanced": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 270
+    },
+    "active=false,facing=west,tier=basic": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 270
+    },
+    "active=false,facing=west,tier=primitive": {
+      "model": "ragium:block/dynamic_processor",
+      "y": 270
+    },
+    "active=true,facing=east,tier=advanced": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 90
+    },
+    "active=true,facing=east,tier=basic": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 90
+    },
+    "active=true,facing=east,tier=primitive": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 90
+    },
+    "active=true,facing=north,tier=advanced": {
+      "model": "ragium:block/active_dynamic_processor"
+    },
+    "active=true,facing=north,tier=basic": {
+      "model": "ragium:block/active_dynamic_processor"
+    },
+    "active=true,facing=north,tier=primitive": {
+      "model": "ragium:block/active_dynamic_processor"
+    },
+    "active=true,facing=south,tier=advanced": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 180
+    },
+    "active=true,facing=south,tier=basic": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 180
+    },
+    "active=true,facing=south,tier=primitive": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 180
+    },
+    "active=true,facing=west,tier=advanced": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 270
+    },
+    "active=true,facing=west,tier=basic": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 270
+    },
+    "active=true,facing=west,tier=primitive": {
+      "model": "ragium:block/active_dynamic_processor",
+      "y": 270
+    }
+  }
+}

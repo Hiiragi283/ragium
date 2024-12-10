@@ -16,7 +16,7 @@ import net.minecraft.world.World
 
 class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.SIMPLE_GENERATOR, pos, state) {
-    override var key: HTMachineKey = RagiumMachineKeys.SOLAR_PANEL
+    override var key: HTMachineKey = RagiumMachineKeys.SOLAR_GENERATOR
 
     constructor(pos: BlockPos, state: BlockState, key: HTMachineKey) : this(pos, state) {
         this.key = key

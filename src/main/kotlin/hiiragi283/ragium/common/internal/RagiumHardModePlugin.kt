@@ -244,7 +244,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         )
         createProcessor(
             exporter,
-            RagiumMachineKeys.SOLAR_PANEL,
+            RagiumMachineKeys.SOLAR_GENERATOR,
             RagiumItems.SOLAR_PANEL,
         )
         createProcessor(

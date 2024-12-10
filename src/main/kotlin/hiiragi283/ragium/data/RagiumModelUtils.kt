@@ -1,10 +1,13 @@
 package hiiragi283.ragium.data
 
+import com.google.gson.JsonElement
 import net.minecraft.block.Block
 import net.minecraft.data.client.*
 import net.minecraft.state.property.Property
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
+import java.util.function.BiConsumer
+import java.util.function.Supplier
 
 //   VariantsBlockStateSupplier    //
 
@@ -64,3 +67,9 @@ fun BlockStateVariant.rot(direction: Direction): BlockStateVariant = when (direc
     Direction.WEST -> rotY(VariantSettings.Rotation.R270)
     Direction.EAST -> rotY(VariantSettings.Rotation.R90)
 }
+
+//    Model    //
+typealias ModelCollector = BiConsumer<Identifier, Supplier<JsonElement>>
+
+fun Model.uploadAsItem(block: Block, textureMap: TextureMap, modelCollector: ModelCollector): Identifier =
+    upload(TextureMap.getId(block.asItem()), textureMap, modelCollector)

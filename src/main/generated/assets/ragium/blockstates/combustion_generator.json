@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "active=false,facing=east,tier=advanced": {
+      "model": "ragium:block/generator",
+      "y": 90
+    },
+    "active=false,facing=east,tier=basic": {
+      "model": "ragium:block/generator",
+      "y": 90
+    },
+    "active=false,facing=east,tier=primitive": {
+      "model": "ragium:block/generator",
+      "y": 90
+    },
+    "active=false,facing=north,tier=advanced": {
+      "model": "ragium:block/generator"
+    },
+    "active=false,facing=north,tier=basic": {
+      "model": "ragium:block/generator"
+    },
+    "active=false,facing=north,tier=primitive": {
+      "model": "ragium:block/generator"
+    },
+    "active=false,facing=south,tier=advanced": {
+      "model": "ragium:block/generator",
+      "y": 180
+    },
+    "active=false,facing=south,tier=basic": {
+      "model": "ragium:block/generator",
+      "y": 180
+    },
+    "active=false,facing=south,tier=primitive": {
+      "model": "ragium:block/generator",
+      "y": 180
+    },
+    "active=false,facing=west,tier=advanced": {
+      "model": "ragium:block/generator",
+      "y": 270
+    },
+    "active=false,facing=west,tier=basic": {
+      "model": "ragium:block/generator",
+      "y": 270
+    },
+    "active=false,facing=west,tier=primitive": {
+      "model": "ragium:block/generator",
+      "y": 270
+    },
+    "active=true,facing=east,tier=advanced": {
+      "model": "ragium:block/generator",
+      "y": 90
+    },
+    "active=true,facing=east,tier=basic": {
+      "model": "ragium:block/generator",
+      "y": 90
+    },
+    "active=true,facing=east,tier=primitive": {
+      "model": "ragium:block/generator",
+      "y": 90
+    },
+    "active=true,facing=north,tier=advanced": {
+      "model": "ragium:block/generator"
+    },
+    "active=true,facing=north,tier=basic": {
+      "model": "ragium:block/generator"
+    },
+    "active=true,facing=north,tier=primitive": {
+      "model": "ragium:block/generator"
+    },
+    "active=true,facing=south,tier=advanced": {
+      "model": "ragium:block/generator",
+      "y": 180
+    },
+    "active=true,facing=south,tier=basic": {
+      "model": "ragium:block/generator",
+      "y": 180
+    },
+    "active=true,facing=south,tier=primitive": {
+      "model": "ragium:block/generator",
+      "y": 180
+    },
+    "active=true,facing=west,tier=advanced": {
+      "model": "ragium:block/generator",
+      "y": 270
+    },
+    "active=true,facing=west,tier=basic": {
+      "model": "ragium:block/generator",
+      "y": 270
+    },
+    "active=true,facing=west,tier=primitive": {
+      "model": "ragium:block/generator",
+      "y": 270
+    }
+  }
+}

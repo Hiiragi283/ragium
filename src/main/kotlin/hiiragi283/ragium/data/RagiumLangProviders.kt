@@ -354,7 +354,7 @@ object RagiumLangProviders {
                 "Generate energy from radioactive fuels",
             )
             builder.add(
-                RagiumMachineKeys.SOLAR_PANEL,
+                RagiumMachineKeys.SOLAR_GENERATOR,
                 "Solar Generator",
                 "Generate energy in daytime",
             )
@@ -703,7 +703,7 @@ object RagiumLangProviders {
 
             builder.add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
             builder.add(RagiumMachineKeys.NUCLEAR_REACTOR, "原子炉", "放射性燃料から発電する")
-            builder.add(RagiumMachineKeys.SOLAR_PANEL, "太陽光発電機", "日中に発電する")
+            builder.add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
             builder.add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と石炭類から発電する")
             builder.add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
 

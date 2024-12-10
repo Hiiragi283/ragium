@@ -42,7 +42,7 @@ object RagiumMachineKeys {
     val NUCLEAR_REACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("nuclear_reactor"))
 
     @JvmField
-    val SOLAR_PANEL: HTMachineKey = HTMachineKey.of(RagiumAPI.id("solar_panel"))
+    val SOLAR_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("solar_generator"))
 
     @JvmField
     val STEAM_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("steam_generator"))
@@ -54,7 +54,7 @@ object RagiumMachineKeys {
     val GENERATORS: List<HTMachineKey> = listOf(
         COMBUSTION_GENERATOR,
         NUCLEAR_REACTOR,
-        SOLAR_PANEL,
+        SOLAR_GENERATOR,
         STEAM_GENERATOR,
         THERMAL_GENERATOR,
     )
