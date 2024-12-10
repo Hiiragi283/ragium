@@ -29,6 +29,12 @@ object RagiumItemTags {
     @JvmField
     val REFINED_SILICON_PLATES: TagKey<Item> = create("plates/refined_silicon")
 
+    @JvmField
+    val ADVANCED_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/advanced")
+
+    @JvmField
+    val BASIC_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/basic")
+
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))
 

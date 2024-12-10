@@ -244,6 +244,9 @@ object RagiumTagProviders {
             add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
             add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
 
+            add(RagiumItemTags.ADVANCED_UPGRADES, RagiumContents.Hulls.ADVANCED)
+            add(RagiumItemTags.BASIC_UPGRADES, RagiumContents.Hulls.BASIC)
+
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)
                 .addOptionalTag(ConventionalItemTags.RAW_MEAT_FOODS)

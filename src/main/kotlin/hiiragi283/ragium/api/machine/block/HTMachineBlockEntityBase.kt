@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
@@ -21,11 +22,15 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
 import net.minecraft.sound.SoundCategory
+import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
@@ -91,6 +96,13 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
+        // Upgrade machine when clicked with machine hull
+        if (upgrade(world, player, RagiumItemTags.BASIC_UPGRADES, HTMachineTier.BASIC)) {
+            return ActionResult.success(world.isClient)
+        }
+        if (upgrade(world, player, RagiumItemTags.ADVANCED_UPGRADES, HTMachineTier.ADVANCED)) {
+            return ActionResult.success(world.isClient)
+        }
         // Insert fluid from holding stack
         if (interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
@@ -106,6 +118,23 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             return ActionResult.success(world.isClient)
         }
         return ActionResult.PASS
+    }
+
+    private fun upgrade(
+        world: World,
+        player: PlayerEntity,
+        tagKey: TagKey<Item>,
+        newTier: HTMachineTier,
+    ): Boolean {
+        val stack: ItemStack = player.getStackInActiveHand()
+        return if (stack.isIn(tagKey) && tier < newTier) {
+            world.replaceBlockState(pos) { stateIn: BlockState -> stateIn.with(HTMachineTier.PROPERTY, newTier) }
+            world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, player.soundCategory, 1f, 0.5f)
+            stack.decrement(1)
+            true
+        } else {
+            false
+        }
     }
 
     abstract fun interactWithFluidStorage(player: PlayerEntity): Boolean

@@ -87,7 +87,7 @@ object RagiumNetworks {
         val soundEntry: RegistryEntry<SoundEvent> = Registries.SOUND_EVENT.getEntry(soundEvent)
         player
             .asServerPlayer()
-            ?.let { ServerPlayNetworking.send(it, HTFloatingItemPayload(stack, particleEntry, soundEntry)) }
+            ?.let { ServerPlayNetworking.send(it, HTFloatingItemPayload(stack.copy(), particleEntry, soundEntry)) }
     }
 
     @JvmStatic

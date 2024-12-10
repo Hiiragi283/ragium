@@ -19,7 +19,7 @@ data class HTFloatingItemPayload(
     companion object {
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFloatingItemPayload> = PacketCodec.tuple(
-            ItemStack.PACKET_CODEC,
+            ItemStack.OPTIONAL_PACKET_CODEC,
             HTFloatingItemPayload::stack,
             Registries.PARTICLE_TYPE.entryPacketCodec,
             HTFloatingItemPayload::particle,
