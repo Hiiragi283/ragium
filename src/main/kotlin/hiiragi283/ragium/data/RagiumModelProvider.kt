@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -354,10 +353,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
-        buildList {
-            addAll(RagiumContents.PipeStations.entries)
-            addAll(RagiumContents.FilteringPipe.entries)
-        }.forEach { pipe: HTContent<Block> ->
+        RagiumContents.PipeStations.entries.forEach { pipe: RagiumContents.PipeStations ->
             val block: Block = pipe.value
             // blockstate
             registerSupplier(
@@ -380,8 +376,24 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 generator.modelCollector,
             )
         }
+        RagiumContents.FilteringPipe.entries.forEach { filtering: RagiumContents.FilteringPipe ->
+            // blockstate
+            val block: Block = filtering.value
+            registerSupplier(
+                block,
+                VariantsBlockStateSupplier
+                    .create(block, stateVariantOf(block))
+                    .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
+            )
+            // model
+            RagiumModels.FILTERING_PIPE.upload(
+                block,
+                HTTextureMapBuilder.of(TextureKey.BACK, block),
+                generator.modelCollector,
+            )
+        }
         // machine
-        RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+        RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             val block: HTMachineBlock = entry.block
             val coordinateMap: BlockStateVariantMap = BlockStateVariantMap
                 .create(

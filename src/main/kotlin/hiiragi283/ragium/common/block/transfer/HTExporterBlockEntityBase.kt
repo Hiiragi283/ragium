@@ -78,8 +78,10 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
             }
 
             else -> {
-                player.sendMessage(RagiumTexts.fluidFilter(fluidFilter), false)
-                player.sendMessage(RagiumTexts.itemFilter(itemFilter), false)
+                if (!world.isClient) {
+                    player.sendMessage(RagiumTexts.fluidFilter(fluidFilter), false)
+                    player.sendMessage(RagiumTexts.itemFilter(itemFilter), false)
+                }
                 false
             }
         }

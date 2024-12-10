@@ -34,14 +34,16 @@ object HTFluidDrinkingHandlerRegistry {
 
     @JvmStatic
     fun drinkFluid(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
-        getHandler(stack)?.let { (fluid: Fluid, handler: HTFluidDrinkingHandler) ->
-            handler.onDrink(stack, world, user)
-            HTDrankFluidCriterion.trigger(user, fluid)
-            dropStackAt(
-                user,
-                RagiumItems.EMPTY_FLUID_CUBE.defaultStack,
-            )
-            stack.decrementUnlessCreative(1, user)
+        if (!world.isClient) {
+            getHandler(stack)?.let { (fluid: Fluid, handler: HTFluidDrinkingHandler) ->
+                handler.onDrink(stack, world, user)
+                HTDrankFluidCriterion.trigger(user, fluid)
+                dropStackAt(
+                    user,
+                    RagiumItems.EMPTY_FLUID_CUBE.defaultStack,
+                )
+                stack.decrementUnlessCreative(1, user)
+            }
         }
         return stack
     }

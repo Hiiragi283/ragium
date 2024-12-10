@@ -2,7 +2,9 @@ package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.extension.fluidStorageOf
 import hiiragi283.ragium.api.extension.ifPresentWorld
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -12,7 +14,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.state.property.Properties
@@ -21,16 +22,21 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-abstract class HTPipeBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTTransporterBlockEntityBase(type, pos, state),
+class HTSimplePipeBlockEntity(pos: BlockPos, state: BlockState) :
+    HTTransporterBlockEntityBase(RagiumBlockEntityTypes.PIPE, pos, state),
     SidedStorageBlockEntity {
-    final override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier, type: HTPipeType) : this(pos, state) {
+        this.tier = tier
+        this.type = type
+    }
+
+    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         itemStorage.writeNbt(nbt, wrapperLookup)
         fluidStorage.writeNbt(nbt, wrapperLookup)
     }
 
-    final override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
         itemStorage.readNbt(nbt, wrapperLookup)
         fluidStorage.readNbt(nbt, wrapperLookup)
@@ -40,7 +46,7 @@ abstract class HTPipeBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, st
         HTPipeType.canConnect(world, pos, dir, type)
     } == true
 
-    final override fun onStateReplaced(
+    override fun onStateReplaced(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -57,7 +63,7 @@ abstract class HTPipeBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, st
         super.onStateReplaced(state, world, pos, newState, moved)
     }
 
-    protected open val front: Direction
+    val front: Direction
         get() = cachedState.get(Properties.FACING)
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
@@ -83,30 +89,14 @@ abstract class HTPipeBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, st
         }
     }
 
-    protected fun moveItem(world: World, pos: BlockPos, front: Direction): Boolean = StorageUtil.move(
-        itemStorage,
-        getFrontItemStorage(world, pos, front),
-        { true },
-        type.getItemCount(tier),
-        null,
-    ) > 0
-
-    protected fun moveFluid(world: World, pos: BlockPos, front: Direction): Boolean = StorageUtil.move(
-        fluidStorage,
-        getFrontFluidStorage(world, pos, front),
-        { true },
-        type.getFluidCount(tier),
-        null,
-    ) > 0
-
     //    SidedStorageBlockEntity    //
 
-    protected val itemStorage: SingleItemStorage =
+    private val itemStorage: SingleItemStorage =
         object : SingleItemStorage() {
             override fun getCapacity(variant: ItemVariant): Long = 64
         }
 
-    protected val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
+    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = if (type.isItem && side != front) itemStorage else null
 

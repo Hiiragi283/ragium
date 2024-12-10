@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.api.storage.HTVoidStorage
@@ -25,6 +26,7 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
@@ -32,6 +34,7 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
@@ -39,6 +42,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Rarity
@@ -141,17 +145,17 @@ internal object RagiumContentRegister {
             )
         }
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
-            val block = HTPipeBlock(pipe.tier, pipe.pipeType)
+            val block = HTSimplePipeBlock(pipe.tier, pipe.pipeType)
             registerBlock(pipe, block)
             registerBlockItem(block, itemSettings().tier(pipe.tier))
         }
         RagiumContents.CrossPipes.entries.forEach { crossPipe: RagiumContents.CrossPipes ->
-            val block = HTCrossPipeBlock(crossPipe.pipeType)
+            val block = HTPipeBlock()
             registerBlock(crossPipe, block)
             registerBlockItem(block)
         }
         RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
-            val block = HTPipeStationBlock(station.pipeType)
+            val block = HTPipeStationBlock()
             registerBlock(station, block)
             registerBlockItem(block, itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION)))
         }
@@ -466,6 +470,37 @@ internal object RagiumContentRegister {
     @JvmStatic
     fun initRegistry() {
         // ApiLookup
+        registerItemStorages()
+        registerFluidStorages()
+        registerEnergyStorages()
+        // Accessory
+        HTAccessoryRegistry.register(RagiumItems.STELLA_GOGGLE) {
+            equippedAction = HTAccessoryRegistry.EquippedAction {
+                it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
+            }
+            unequippedAction = HTAccessoryRegistry.UnequippedAction {
+                it.removeStatusEffect(StatusEffects.NIGHT_VISION)
+            }
+            slotType = HTAccessorySlotTypes.FACE
+        }
+        // Dispenser
+        DispenserBlock.registerProjectileBehavior(RagiumItems.BEDROCK_DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
+        DispenserBlock.registerProjectileBehavior(RagiumItems.FLATTENING_DYNAMITE)
+        // Fluid Attributes
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            FluidVariantAttributes.register(
+                fluid.value,
+                object : FluidVariantAttributeHandler {
+                    override fun getName(fluidVariant: FluidVariant): Text = Text.translatable(fluid.translationKey)
+                },
+            )
+        }
+
+        registerDrinkHandlers(HTFluidDrinkingHandlerRegistry::register)
+    }
+
+    private fun registerItemStorages() {
         registerItemStorage({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerItemStorage null
             world.backpackManager
@@ -474,21 +509,50 @@ internal object RagiumContentRegister {
                 .result()
                 .getOrNull()
         }, RagiumBlocks.BACKPACK_INTERFACE)
-        registerItemStorage(
-            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
-            RagiumBlocks.TRASH_BOX,
-        )
+
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
                 if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
             }
         }, RagiumBlocks.OPEN_CRATE)
+        // trash box
+        registerItemStorage(
+            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
+            RagiumBlocks.TRASH_BOX,
+        )
+        // cross pipe
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
             direction?.let { front: Direction ->
                 ItemStorage.SIDED.find(world, pos.offset(front.opposite), front)
             }
         }, RagiumContents.CrossPipes.STEEL.value)
+        // pipe station
+        registerItemStorage({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+            val front: Direction = state.getOrDefault(Properties.FACING, Direction.NORTH)
+            val others: List<Direction> =
+                Direction.entries.filterNot { directionIn: Direction -> directionIn.axis == front.axis }
+            CombinedStorage(
+                buildList {
+                    addAll(
+                        others.mapNotNull { direction: Direction ->
+                            ItemStorage.SIDED.find(
+                                world,
+                                pos.offset(direction),
+                                direction.opposite,
+                            )
+                        },
+                    )
+                    add(ItemStorage.SIDED.find(world, pos.offset(front), front.opposite))
+                },
+            )
+        }, RagiumContents.PipeStations.ITEM.value)
+        // filtering pipe
+        registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
+            null
+        }, RagiumContents.FilteringPipe.ITEM.value)
+    }
 
+    private fun registerFluidStorages() {
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
             .register(::HTEmptyFluidCubeStorage)
@@ -514,17 +578,48 @@ internal object RagiumContentRegister {
             } else {
                 null
             }
-        }
+        } // trash box
         registerFluidStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.FLUID },
             RagiumBlocks.TRASH_BOX,
         )
+        // cross pipe
         registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
             direction?.let { front: Direction ->
                 FluidStorage.SIDED.find(world, pos.offset(front.opposite), front)
             }
         }, RagiumContents.CrossPipes.GOLD.value)
+        // pipe station
+        registerFluidStorage({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+            val front: Direction = state.getOrDefault(Properties.FACING, Direction.NORTH)
+            val others: List<Direction> =
+                Direction.entries.filterNot { directionIn: Direction -> directionIn.axis == front.axis }
+            CombinedStorage(
+                buildList {
+                    addAll(
+                        others.mapNotNull { direction: Direction ->
+                            FluidStorage.SIDED.find(
+                                world,
+                                pos.offset(direction),
+                                direction.opposite,
+                            )
+                        },
+                    )
+                    add(FluidStorage.SIDED.find(world, pos.offset(front), front.opposite))
+                },
+            )
+        }, RagiumContents.PipeStations.FLUID.value)
+        // filtering pipe
+        registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
+            null
+        }, RagiumContents.FilteringPipe.FLUID.value)
+    }
 
+    private fun registerItemStorage(provider: BlockApiLookup.BlockApiProvider<Storage<ItemVariant>, Direction?>, block: Block) {
+        ItemStorage.SIDED.registerForBlocks(provider, block)
+    }
+
+    private fun registerEnergyStorages() {
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
             RagiumBlocks.CREATIVE_SOURCE,
@@ -532,79 +627,25 @@ internal object RagiumContentRegister {
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork.result().getOrNull()
         }, RagiumBlocks.NETWORK_INTERFACE)
-
-        // Accessory
-        HTAccessoryRegistry.register(RagiumItems.STELLA_GOGGLE) {
-            equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
-            }
-            unequippedAction = HTAccessoryRegistry.UnequippedAction {
-                it.removeStatusEffect(StatusEffects.NIGHT_VISION)
-            }
-            slotType = HTAccessorySlotTypes.FACE
-        }
-        // Cauldron
-        /*registerCauldron(
-            CauldronBehavior.WATER_CAULDRON_BEHAVIOR,
-            RagiumContents.Dusts.CRUDE_RAGINITE,
-        ) { state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, _: Hand, stack: ItemStack ->
-            if (stack.isOf(RagiumContents.Dusts.CRUDE_RAGINITE)) {
-                if (!world.isClient) {
-                    val count: Int = stack.count
-                    stack.count = -1
-                    dropStackAt(player, ItemStack(RagiumContents.Dusts.RAGINITE, count))
-                    LeveledCauldronBlock.decrementFluidLevel(state, world, pos)
-                }
-                ItemActionResult.success(world.isClient)
-            } else {
-                ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
-            }
-        }*/
-        // Dispenser
-        DispenserBlock.registerProjectileBehavior(RagiumItems.BEDROCK_DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.FLATTENING_DYNAMITE)
-        // Fluid Attributes
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            FluidVariantAttributes.register(
-                fluid.value,
-                object : FluidVariantAttributeHandler {
-                    override fun getName(fluidVariant: FluidVariant): Text = Text.translatable(fluid.translationKey)
-                },
-            )
-        }
-
-        // HTFluidDrinkingHandlerRegistry
-        HTFluidDrinkingHandlerRegistry.register(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->
-            if (!world.isClient) {
-                user.setOnFireFromLava()
-                dropStackAt(user, Items.OBSIDIAN)
-            }
-        }
-        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.MILK) { _: ItemStack, world: World, user: LivingEntity ->
-            if (!world.isClient) {
-                user.clearStatusEffects()
-            }
-        }
-        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.HONEY) { _: ItemStack, world: World, user: LivingEntity ->
-            if (!world.isClient) {
-                user.removeStatusEffect(StatusEffects.POISON)
-            }
-        }
-        HTFluidDrinkingHandlerRegistry.register(RagiumFluids.CHOCOLATE) { _: ItemStack, world: World, user: LivingEntity ->
-            if (!world.isClient) {
-                user.addStatusEffect(
-                    StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1),
-                )
-            }
-        }
-    }
-
-    private fun registerItemStorage(provider: BlockApiLookup.BlockApiProvider<Storage<ItemVariant>, Direction?>, block: Block) {
-        ItemStorage.SIDED.registerForBlocks(provider, block)
     }
 
     private fun registerFluidStorage(provider: BlockApiLookup.BlockApiProvider<Storage<FluidVariant>, Direction?>, block: Block) {
         FluidStorage.SIDED.registerForBlocks(provider, block)
+    }
+
+    private fun registerDrinkHandlers(consumer: (Fluid, HTFluidDrinkingHandler) -> Unit) {
+        consumer(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->
+            user.setOnFireFromLava()
+            dropStackAt(user, Items.OBSIDIAN)
+        }
+        consumer(RagiumFluids.MILK.value) { _: ItemStack, world: World, user: LivingEntity ->
+            user.clearStatusEffects()
+        }
+        consumer(RagiumFluids.HONEY.value) { _: ItemStack, world: World, user: LivingEntity ->
+            user.removeStatusEffect(StatusEffects.POISON)
+        }
+        consumer(RagiumFluids.CHOCOLATE.value) { _: ItemStack, world: World, user: LivingEntity ->
+            user.addStatusEffect(StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1))
+        }
     }
 }

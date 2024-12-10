@@ -43,6 +43,13 @@ object RagiumModels {
     )
 
     @JvmField
+    val FILTERING_PIPE: Model =
+        model(
+            "block/filtering_pipe",
+            TextureKey.BACK,
+        )
+
+    @JvmField
     val PIPE: Model =
         model(
             "block/pipe",

@@ -16,7 +16,10 @@ import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTCreativeCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTCreativeDrumBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.transfer.*
+import hiiragi283.ragium.common.block.transfer.HTCreativeExporterBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTFilteringPipeBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTSimplePipeBlockEntity
 import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
@@ -54,12 +57,8 @@ object RagiumBlockEntityTypes {
         register("exporter", ::HTExporterBlockEntity)
 
     @JvmField
-    val PIPE: BlockEntityType<HTPipeBlockEntity> =
-        register("pipe", ::HTPipeBlockEntity)
-
-    @JvmField
-    val PIPE_STATION: BlockEntityType<HTPipeStationBlockEntity> =
-        register("pipe_station", ::HTPipeStationBlockEntity)
+    val PIPE: BlockEntityType<HTSimplePipeBlockEntity> =
+        register("pipe", ::HTSimplePipeBlockEntity)
 
     //    Machine    //
 
@@ -182,7 +181,6 @@ object RagiumBlockEntityTypes {
         registerBlocks(EXPORTER, RagiumContents.Exporters.entries)
         registerBlocks(FILTERING_PIPE, RagiumContents.FilteringPipe.entries)
         registerBlocks(PIPE, RagiumContents.Pipes.entries)
-        registerBlocks(PIPE_STATION, RagiumContents.PipeStations.entries)
 
         registerBlocks(CRATE, RagiumContents.Crates.entries)
         registerBlocks(DRUM, RagiumContents.Drums.entries)

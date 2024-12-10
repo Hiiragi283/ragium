@@ -1,62 +1,27 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "ragium:block/fluid_filtering_pipe"
-      }
+  "variants": {
+    "facing=down": {
+      "model": "ragium:block/fluid_filtering_pipe",
+      "x": 90
     },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "x": 90
-      },
-      "when": {
-        "facing": "down"
-      }
+    "facing=east": {
+      "model": "ragium:block/fluid_filtering_pipe",
+      "y": 90
     },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "x": 270
-      },
-      "when": {
-        "facing": "up"
-      }
+    "facing=north": {
+      "model": "ragium:block/fluid_filtering_pipe"
     },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay"
-      },
-      "when": {
-        "facing": "north"
-      }
+    "facing=south": {
+      "model": "ragium:block/fluid_filtering_pipe",
+      "y": 180
     },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "y": 180
-      },
-      "when": {
-        "facing": "south"
-      }
+    "facing=up": {
+      "model": "ragium:block/fluid_filtering_pipe",
+      "x": 270
     },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "y": 270
-      },
-      "when": {
-        "facing": "west"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/pipe_overlay",
-        "y": 90
-      },
-      "when": {
-        "facing": "east"
-      }
+    "facing=west": {
+      "model": "ragium:block/fluid_filtering_pipe",
+      "y": 270
     }
-  ]
+  }
 }
