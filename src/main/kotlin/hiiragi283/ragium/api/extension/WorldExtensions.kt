@@ -66,7 +66,6 @@ fun dropStackAt(world: World, pos: Vec3d, stack: ItemStack): Boolean {
     return world.spawnEntity(itemEntity)
 }
 
-
 fun World.ifServer(action: ServerWorld.() -> Unit): World = apply {
     (this as? ServerWorld)?.let(action)
 }

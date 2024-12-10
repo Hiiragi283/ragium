@@ -19,7 +19,7 @@ class HTMachineRegistry(
         get() = types.keys.associateWith(::getEntry)
     val blocks: Collection<HTMachineBlock>
         get() = blockMap.values
-    
+
     operator fun contains(key: HTMachineKey): Boolean = key in types
 
     fun getBlock(key: HTMachineKey): HTMachineBlock? = blockMap[key]

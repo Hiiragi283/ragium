@@ -125,7 +125,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             }
         }
     }
-    
+
     final override val tickRate: Int = tier.tickRate
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {

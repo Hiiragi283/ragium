@@ -410,8 +410,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // machine
         RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             val block: HTMachineBlock = entry.block
-            val coordinateMap: BlockStateVariantMap = BlockStateVariantMap.create(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE, HTMachineTier.PROPERTY)
-                .register { front: Direction, isActive: Boolean, _: HTMachineTier ->
+            val coordinateMap: BlockStateVariantMap = BlockStateVariantMap
+                .create(
+                    Properties.HORIZONTAL_FACING,
+                    RagiumBlockProperties.ACTIVE,
+                    HTMachineTier.PROPERTY,
+                ).register { front: Direction, isActive: Boolean, _: HTMachineTier ->
                     val modelId: Identifier = when (isActive) {
                         true -> HTMachinePropertyKeys.ACTIVE_MODEL_ID
                         false -> HTMachinePropertyKeys.MODEL_ID
@@ -422,11 +426,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             generator.excludeFromSimpleItemModelGeneration(block)
             registerSupplier(
                 block,
-                VariantsBlockStateSupplier.create(block)
-                    .coordinate(coordinateMap)
+                VariantsBlockStateSupplier
+                    .create(block)
+                    .coordinate(coordinateMap),
             )
             // model
-            RagiumModels.model(entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID))
+            RagiumModels
+                .model(entry.getOrDefault(HTMachinePropertyKeys.MODEL_ID))
                 .uploadAsItem(
                     block,
                     TextureMap(),
