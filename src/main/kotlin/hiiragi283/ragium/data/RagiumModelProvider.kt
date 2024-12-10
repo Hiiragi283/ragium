@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
-import hiiragi283.ragium.api.util.HTCrossDirection
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -233,6 +232,9 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 }
             }
         }
+        RagiumContents.CrossPipes.entries.forEach { cross: RagiumContents.CrossPipes ->
+            registerFactory(cross.value, RagiumModels.CROSS_PIPE, TextureMap::all)
+        }
         // supplier
         listOf(RagiumBlocks.WHITE_LINE, RagiumBlocks.T_WHITE_LINE).forEach { block: Block ->
             generator.excludeFromSimpleItemModelGeneration(block)
@@ -348,35 +350,6 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
             RagiumModels.PIPE_SIDE.upload(
                 TextureMap.getSubId(block, "_side"),
-                TextureMap.all(block),
-                generator.modelCollector,
-            )
-        }
-        RagiumContents.CrossPipes.entries.forEach { crossPipe: RagiumContents.CrossPipes ->
-            val block: Block = crossPipe.value
-            // blockstate
-            registerSupplier(
-                block,
-                buildMultipartState(block) {
-                    with(stateVariantOf(block))
-                    HTCrossDirection.entries.forEach { direction: HTCrossDirection ->
-                        // pipe facing
-                        this.with(
-                            When.create().set(RagiumBlockProperties.CROSS_DIRECTION, direction),
-                            stateVariantOf(RagiumAPI.id("block/cross_pipe_overlay"))
-                                .rot(direction.second)
-                                .apply {
-                                    if (direction.first == Direction.DOWN) {
-                                        rotX(VariantSettings.Rotation.R180)
-                                    }
-                                },
-                        )
-                    }
-                },
-            )
-            // model
-            RagiumModels.CROSS_PIPE.upload(
-                block,
                 TextureMap.all(block),
                 generator.modelCollector,
             )

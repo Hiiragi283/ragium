@@ -17,12 +17,14 @@ import hiiragi283.ragium.common.item.HTRopeBlockItem
 import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
 import hiiragi283.ragium.common.storage.HTTieredFluidItemStorage
 import net.fabricmc.fabric.api.event.Event
+import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
@@ -464,23 +466,28 @@ internal object RagiumContentRegister {
     @JvmStatic
     fun initRegistry() {
         // ApiLookup
-        ItemStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
-            val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerForBlocks null
+        registerItemStorage({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
+            val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerItemStorage null
             world.backpackManager
                 .map { it[color] }
                 .map { InventoryStorage.of(it, direction) }
                 .result()
                 .getOrNull()
         }, RagiumBlocks.BACKPACK_INTERFACE)
-        ItemStorage.SIDED.registerForBlocks(
+        registerItemStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
             RagiumBlocks.TRASH_BOX,
         )
-        ItemStorage.SIDED.registerForBlocks({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
+        registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
                 if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
             }
         }, RagiumBlocks.OPEN_CRATE)
+        registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
+            direction?.let { front: Direction ->
+                ItemStorage.SIDED.find(world, pos.offset(front.opposite), front)
+            }
+        }, RagiumContents.CrossPipes.STEEL.value)
 
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
@@ -508,10 +515,15 @@ internal object RagiumContentRegister {
                 null
             }
         }
-        FluidStorage.SIDED.registerForBlocks(
+        registerFluidStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.FLUID },
             RagiumBlocks.TRASH_BOX,
         )
+        registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
+            direction?.let { front: Direction ->
+                FluidStorage.SIDED.find(world, pos.offset(front.opposite), front)
+            }
+        }, RagiumContents.CrossPipes.GOLD.value)
 
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
@@ -586,5 +598,13 @@ internal object RagiumContentRegister {
                 )
             }
         }
+    }
+
+    private fun registerItemStorage(provider: BlockApiLookup.BlockApiProvider<Storage<ItemVariant>, Direction?>, block: Block) {
+        ItemStorage.SIDED.registerForBlocks(provider, block)
+    }
+
+    private fun registerFluidStorage(provider: BlockApiLookup.BlockApiProvider<Storage<FluidVariant>, Direction?>, block: Block) {
+        FluidStorage.SIDED.registerForBlocks(provider, block)
     }
 }

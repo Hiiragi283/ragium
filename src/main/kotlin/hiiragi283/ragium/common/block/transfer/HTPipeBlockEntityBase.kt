@@ -101,12 +101,12 @@ abstract class HTPipeBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, st
 
     //    SidedStorageBlockEntity    //
 
-    val itemStorage: SingleItemStorage =
+    protected val itemStorage: SingleItemStorage =
         object : SingleItemStorage() {
             override fun getCapacity(variant: ItemVariant): Long = 64
         }
 
-    val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
+    protected val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = if (type.isItem && side != front) itemStorage else null
 

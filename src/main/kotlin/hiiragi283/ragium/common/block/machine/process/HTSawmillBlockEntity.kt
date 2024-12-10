@@ -15,11 +15,10 @@ class HTSawmillBlockEntity(pos: BlockPos, state: BlockState) :
     override var key: HTMachineKey = RagiumMachineKeys.SAW_MILL
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.add(-1, 0, 0, HTMultiblockPattern.of(tier.getHull()))
-        builder.add(1, 0, 0, HTMultiblockPattern.of(tier.getHull()))
-        builder.add(-1, 0, 1, HTMultiblockPattern.of(Blocks.STONE_SLAB))
-        builder.add(0, 0, 1, HTMultiblockPattern.of(Blocks.STONECUTTER))
-        builder.add(1, 0, 1, HTMultiblockPattern.of(Blocks.STONE_SLAB))
-        builder.addLayer(-1..1, 0, 2..2, HTMultiblockPattern.of(tier.getHull()))
+        builder.addLayer(-1..1, 0, 1..1, HTMultiblockPattern.of(tier.getHull()))
+        builder.add(-1, 0, 2, HTMultiblockPattern.of(Blocks.STONE_SLAB))
+        builder.add(0, 0, 2, HTMultiblockPattern.of(Blocks.STONECUTTER))
+        builder.add(1, 0, 2, HTMultiblockPattern.of(Blocks.STONE_SLAB))
+        builder.addLayer(-1..1, 0, 3..3, HTMultiblockPattern.of(tier.getHull()))
     }
 }

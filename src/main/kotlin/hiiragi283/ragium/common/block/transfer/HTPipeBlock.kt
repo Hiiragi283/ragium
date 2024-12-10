@@ -93,7 +93,7 @@ class HTPipeBlock(private val tier: HTMachineTier, private val type: HTPipeType)
         neighborPos: BlockPos,
     ): BlockState = state.with(
         ConnectingBlock.FACING_PROPERTIES[direction],
-        (world.getBlockEntity(pos) as? HTPipeBlockEntity)?.canConnect(direction) == true,
+        (world.getBlockEntity(pos) as? HTPipeBlockEntityBase)?.canConnect(direction) == true,
     )
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTPipeBlockEntity(pos, state, tier, type)

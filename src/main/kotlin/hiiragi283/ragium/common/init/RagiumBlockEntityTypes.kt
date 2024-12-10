@@ -46,10 +46,6 @@ object RagiumBlockEntityTypes {
         register("creative_exporter", ::HTCreativeExporterBlockEntity)
 
     @JvmField
-    val CROSS_PIPE: BlockEntityType<HTCrossPipeBlockEntity> =
-        register("cross_pipe", ::HTCrossPipeBlockEntity)
-
-    @JvmField
     val DRUM: BlockEntityType<HTDrumBlockEntity> =
         register("drum", ::HTDrumBlockEntity)
 
@@ -183,7 +179,6 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        registerBlocks(CROSS_PIPE, RagiumContents.CrossPipes.entries)
         registerBlocks(EXPORTER, RagiumContents.Exporters.entries)
         registerBlocks(FILTERING_PIPE, RagiumContents.FilteringPipe.entries)
         registerBlocks(PIPE, RagiumContents.Pipes.entries)

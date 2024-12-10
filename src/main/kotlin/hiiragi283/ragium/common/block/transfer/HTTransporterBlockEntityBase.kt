@@ -44,29 +44,21 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
 
     protected fun getBackItemStorage(world: World, pos: BlockPos, front: Direction): Storage<ItemVariant>? {
         val posFrom: BlockPos = pos.offset(front.opposite)
-        return (world.getBlockEntity(posFrom) as? HTPipeBlockEntityBase)
-            ?.itemStorage
-            ?: ItemStorage.SIDED.find(world, posFrom, front)
+        return ItemStorage.SIDED.find(world, posFrom, front)
     }
 
     protected fun getBackFluidStorage(world: World, pos: BlockPos, front: Direction): Storage<FluidVariant>? {
         val posFrom: BlockPos = pos.offset(front.opposite)
-        return (world.getBlockEntity(posFrom) as? HTPipeBlockEntityBase)
-            ?.fluidStorage
-            ?: FluidStorage.SIDED.find(world, posFrom, front)
+        return FluidStorage.SIDED.find(world, posFrom, front)
     }
 
     protected fun getFrontItemStorage(world: World, pos: BlockPos, front: Direction): Storage<ItemVariant>? {
         val posTo: BlockPos = pos.offset(front)
-        return (world.getBlockEntity(posTo) as? HTPipeBlockEntityBase)
-            ?.itemStorage
-            ?: ItemStorage.SIDED.find(world, posTo, front.opposite)
+        return ItemStorage.SIDED.find(world, posTo, front.opposite)
     }
 
     protected fun getFrontFluidStorage(world: World, pos: BlockPos, front: Direction): Storage<FluidVariant>? {
         val posTo: BlockPos = pos.offset(front)
-        return (world.getBlockEntity(posTo) as? HTPipeBlockEntityBase)
-            ?.fluidStorage
-            ?: FluidStorage.SIDED.find(world, posTo, front.opposite)
+        return FluidStorage.SIDED.find(world, posTo, front.opposite)
     }
 }
