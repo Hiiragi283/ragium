@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -124,8 +126,9 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
         RagiumAPI
             .getInstance()
-            .machineRegistry.blocks
-            .forEach(::addDrop)
+            .machineRegistry
+            .blocks
+            .forEach { block: HTMachineBlock -> dropWithComponent(block, HTMachineTier.COMPONENT_TYPE) }
     }
 
     private fun dropOre(ore: RagiumContents.Ores) {

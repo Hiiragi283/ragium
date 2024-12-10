@@ -13,7 +13,7 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_chemical_reactor"
+      "id": "ragium:chemical_reactor"
     },
     "show_toast": false,
     "title": "Chemistry"

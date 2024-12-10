@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
@@ -28,10 +27,6 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
         .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
@@ -55,7 +50,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     )
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTDistillationTowerScreenHandler(syncId, playerInventory, packet, createContext())
+        HTDistillationTowerScreenHandler(syncId, playerInventory, createContext())
 
     //    HTMultiblockPatternProvider    //
 

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -227,9 +226,8 @@ object RagiumHardModePlugin : RagiumPlugin {
         // generators
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
             // combustion generator
-            val combustion: HTMachineBlock = RagiumMachineKeys.COMBUSTION_GENERATOR.entry.getBlock(tier)
             HTShapedRecipeJsonBuilder
-                .create(combustion)
+                .create(RagiumMachineKeys.COMBUSTION_GENERATOR.createItemStack(tier))
                 .patterns(
                     "AAA",
                     "ABA",
@@ -561,19 +559,20 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .offerTo(exporter, grate)
             // shaped crafting
             HTShapedRecipeJsonBuilder
-                .create(hull, 2)
+                .create(hull, 3)
                 .patterns(
                     "AAA",
-                    "A A",
+                    "ACA",
                     "BBB",
                 ).input('A', tier.getMainMetal(hardMode))
                 .input('B', tier.getCasing())
+                .input('C', tier.getCircuit())
                 .offerTo(exporter)
             // assembler
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.ASSEMBLER)
-                .itemInput(hull.tier.getMainMetal(hardMode), 3)
-                .itemInput(hull.tier.getCasing())
+                .itemInput(tier.getMainMetal(hardMode), 3)
+                .itemInput(tier.getCasing())
                 .itemOutput(hull)
                 .offerTo(exporter, hull)
         }
@@ -636,16 +635,15 @@ object RagiumHardModePlugin : RagiumPlugin {
         right: ItemConvertible = left,
     ) {
         HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            val output: HTMachineBlock = key.entry.getBlock(tier)
             HTShapedRecipeJsonBuilder
-                .create(output)
+                .create(key.createItemStack(tier))
                 .patterns(
                     "AAA",
                     "BCD",
                     "EEE",
                 ).input('A', tier.getMainMetal(hardMode))
                 .input('B', left)
-                .input('C', tier.getHull())
+                .input('C', tier.getGrate())
                 .input('D', right)
                 .input('E', tier.getSteelMetal(hardMode))
                 .offerTo(exporter, tier.createId(key))

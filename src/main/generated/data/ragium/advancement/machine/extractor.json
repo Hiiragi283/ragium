@@ -14,8 +14,11 @@
       "translate": "machine_type.ragium.extractor.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
       "count": 1,
-      "id": "ragium:primitive_extractor"
+      "id": "ragium:extractor"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",

@@ -2,12 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
-import hiiragi283.ragium.api.machine.HTMachinePacket
-import hiiragi283.ragium.common.network.HTCratePreviewPayload
-import hiiragi283.ragium.common.network.HTFloatingItemPayload
-import hiiragi283.ragium.common.network.HTFluidStoragePayload
-import hiiragi283.ragium.common.network.HTFluidSyncPayload
-import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.network.*
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -51,8 +46,8 @@ object RagiumNetworks {
         registerS2C("item_sync", HTInventoryPayload.PACKET_CODEC)
 
     @JvmField
-    val MACHINE_SYNC: CustomPayload.Id<HTMachinePacket> =
-        registerS2C("machine_sync", HTMachinePacket.PACKET_CODEC)
+    val MACHINE_SYNC: CustomPayload.Id<HTMachineKeySyncPayload> =
+        registerS2C("machine_sync", HTMachineKeySyncPayload.PACKET_CODEC)
 
     @JvmStatic
     private fun <T : CustomPayload> registerS2C(name: String, codec: PacketCodec<RegistryByteBuf, T>): CustomPayload.Id<T> {

@@ -19,6 +19,7 @@ import net.minecraft.registry.tag.TagGroupLoader;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -55,13 +56,13 @@ public abstract class TagGroupLoaderMixin {
         if (dataType.endsWith("block")) {
             // machine tags
             HTMachineType.getEntries().forEach(type -> addTag(map, RagiumBlockTags.MACHINES, type.getBlockTag()));
-            RagiumAPI.getInstance().getMachineRegistry().getEntryMap().forEach((HTMachineKey key, HTMachineRegistry.Entry entry) -> {
+            RagiumAPI.getInstance().getMachineRegistry().getEntryMap().forEach((@NotNull HTMachineKey key, HTMachineRegistry.@NotNull Entry entry) -> {
                 // machine type tag
                 addTag(map, entry.getType().getBlockTag(), key.getBlockTag());
                 // pickaxe mineable tag
                 addTag(map, BlockTags.PICKAXE_MINEABLE, key.getBlockTag());
                 // machine key tag
-                entry.getBlocks().forEach(block -> add(map, key.getBlockTag(), block, Registries.BLOCK));
+                add(map, key.getBlockTag(), entry.getBlock(), Registries.BLOCK);
             });
             RagiumAPI.getLOGGER().info("Registered runtime block tags!");
         }
@@ -76,7 +77,7 @@ public abstract class TagGroupLoaderMixin {
                 // machine type tag
                 addTag(map, entry.getType().getItemTag(), key.getItemTag());
                 // machine key tag
-                entry.getBlocks().forEach(block -> add(map, key.getItemTag(), block.asItem(), Registries.ITEM));
+                add(map, key.getItemTag(), entry.getBlock().asItem(), Registries.ITEM);
             });
             // material tags
             RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((HTMaterialKey key, HTMaterialRegistry.Entry entry) -> entry.getItemMap().forEach((HTTagPrefix prefix, Set<Item> items) -> {

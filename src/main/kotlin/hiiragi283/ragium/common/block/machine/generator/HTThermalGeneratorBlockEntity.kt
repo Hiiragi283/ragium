@@ -42,10 +42,6 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(tier)
     }
@@ -115,10 +111,5 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    ExtendedScreenHandlerFactory    //
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(
-            syncId,
-            playerInventory,
-            packet,
-            createContext(),
-        )
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 }

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.extension.restDamage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
@@ -44,10 +43,6 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.NUCLEAR_REACTOR, pos, state),
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.NUCLEAR_REACTOR
-
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
 
     private val inventory: SidedInventory = HTStorageBuilder(2)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -110,12 +105,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSmallMachineScreenHandler(
-            syncId,
-            playerInventory,
-            packet,
-            createContext(),
-        )
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
 

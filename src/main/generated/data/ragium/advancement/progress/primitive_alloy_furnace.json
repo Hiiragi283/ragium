@@ -14,8 +14,11 @@
       "translate": "machine_type.ragium.alloy_furnace.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
       "count": 1,
-      "id": "ragium:primitive_alloy_furnace"
+      "id": "ragium:alloy_furnace"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",

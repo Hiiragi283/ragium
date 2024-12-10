@@ -4,13 +4,13 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.api.util.collection.HTTable
+import net.minecraft.item.ItemConvertible
 import net.minecraft.util.Identifier
 import java.util.stream.Stream
 
 class HTMachineRegistry(
     private val types: Map<HTMachineKey, HTMachineType>,
-    private val blockTables: HTTable<HTMachineKey, HTMachineTier, HTMachineBlock>,
+    private val blockMap: Map<HTMachineKey, HTMachineBlock>,
     private val properties: Map<HTMachineKey, HTPropertyHolder>,
 ) : Keyable {
     val keys: Set<HTMachineKey>
@@ -18,15 +18,15 @@ class HTMachineRegistry(
     val entryMap: Map<HTMachineKey, Entry>
         get() = types.keys.associateWith(::getEntry)
     val blocks: Collection<HTMachineBlock>
-        get() = blockTables.values
-
+        get() = blockMap.values
+    
     operator fun contains(key: HTMachineKey): Boolean = key in types
 
-    fun getBlock(key: HTMachineKey, tier: HTMachineTier): HTMachineBlock? = blockTables.get(key, tier)
+    fun getBlock(key: HTMachineKey): HTMachineBlock? = blockMap[key]
 
     fun getEntry(key: HTMachineKey): Entry = Entry(
         checkNotNull(types[key]) { "Invalid machine key; $key!" },
-        blockTables.row(key),
+        checkNotNull(blockMap[key]) { "Invalid machine key; $key!" },
         properties.getOrDefault(key, HTPropertyHolder.Empty),
     )
 
@@ -40,11 +40,7 @@ class HTMachineRegistry(
 
     //    Entry    //
 
-    data class Entry(val type: HTMachineType, val blockMap: Map<HTMachineTier, HTMachineBlock>, val property: HTPropertyHolder) :
-        HTPropertyHolder by property {
-        val blocks: Collection<HTMachineBlock>
-            get() = blockMap.values
-
-        fun getBlock(tier: HTMachineTier): HTMachineBlock = blockMap[tier]!!
-    }
+    data class Entry(val type: HTMachineType, val block: HTMachineBlock, val property: HTPropertyHolder) :
+        HTPropertyHolder by property,
+        ItemConvertible by block
 }

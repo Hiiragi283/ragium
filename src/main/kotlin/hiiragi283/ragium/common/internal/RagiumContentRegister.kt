@@ -205,7 +205,7 @@ internal object RagiumContentRegister {
         RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
             registerItem(
                 circuit,
-                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, circuit.tier)),
+                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT, circuit.tier)),
             )
         }
 

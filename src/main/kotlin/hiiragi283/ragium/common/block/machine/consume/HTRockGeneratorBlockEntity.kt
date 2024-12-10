@@ -34,10 +34,6 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.ROCK_GENERATOR
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     val inventory: SidedInventory = HTStorageBuilder(5)
         .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
         .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
@@ -93,7 +89,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSimpleMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    HTFluidSyncable    //
 

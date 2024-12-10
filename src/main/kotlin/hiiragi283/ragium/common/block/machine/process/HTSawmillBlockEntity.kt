@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
@@ -14,10 +13,6 @@ import net.minecraft.util.math.BlockPos
 class HTSawmillBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase.Large(RagiumBlockEntityTypes.SAW_MILL, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.SAW_MILL
-
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder.add(-1, 0, 0, HTMultiblockPattern.of(tier.getHull()))

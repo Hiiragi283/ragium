@@ -1,22 +1,16 @@
 package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.extension.getInventory
-import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTSmallMachineScreenHandler(
-    syncId: Int,
-    playerInv: PlayerInventory,
-    packet: HTMachinePacket,
-    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
-) : HTMachineScreenHandlerBase(
+class HTSmallMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
+    HTMachineScreenHandlerBase(
         RagiumScreenHandlerTypes.SMALL_MACHINE,
         syncId,
         playerInv,
-        packet,
         ctx.getInventory(2),
         ctx,
     ) {

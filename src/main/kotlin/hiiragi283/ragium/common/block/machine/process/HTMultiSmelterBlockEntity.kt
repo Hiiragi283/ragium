@@ -29,10 +29,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(tier)
     }
@@ -48,7 +44,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    HTMultiblockPatternProvider    //
 

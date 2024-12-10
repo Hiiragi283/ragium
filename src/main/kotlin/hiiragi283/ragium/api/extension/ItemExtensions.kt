@@ -26,8 +26,7 @@ fun itemSettings(): Item.Settings = Item.Settings()
 
 fun Item.Settings.tier(tier: HTMachineTier): Item.Settings = component(HTMachineTier.COMPONENT_TYPE, tier).rarity(tier.rarity)
 
-fun Item.Settings.machine(key: HTMachineKey, tier: HTMachineTier): Item.Settings =
-    component(HTMachineKey.COMPONENT_TYPE, key).tier(tier).name(tier.createPrefixedText(key))
+fun Item.Settings.machine(key: HTMachineKey): Item.Settings = component(HTMachineKey.COMPONENT_TYPE, key).name(key.text)
 
 fun Item.Settings.material(key: HTMaterialKey, prefix: HTTagPrefix): Item.Settings =
     component(HTMaterialKey.COMPONENT_TYPE, key).component(HTTagPrefix.COMPONENT_TYPE, prefix).name(prefix.createText(key))

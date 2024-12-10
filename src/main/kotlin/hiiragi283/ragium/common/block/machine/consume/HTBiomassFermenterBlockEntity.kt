@@ -38,10 +38,6 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)
     }
@@ -93,7 +89,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     }.process(world, key, tier)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    HTFluidSyncable    //
 

@@ -34,10 +34,6 @@ import net.minecraft.world.World
 class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.DRAIN
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)
     }

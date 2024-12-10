@@ -97,7 +97,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             }
         }
         // register blocks
-        val blockTable: HTTable.Mutable<HTMachineKey, HTMachineTier, HTMachineBlock> = mutableTableOf()
+        /*val blockTable: HTTable.Mutable<HTMachineKey, HTMachineTier, HTMachineBlock> = mutableTableOf()
         sortedKeys.keys.forEach { key: HTMachineKey ->
             HTMachineTier.entries.forEach { tier: HTMachineTier ->
                 val block = HTMachineBlock(key, tier)
@@ -109,9 +109,18 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 )
                 Registry.register(Registries.ITEM, tier.createId(key), item)
             }
-        }
+        }*/
+        val blockMap: Map<HTMachineKey, HTMachineBlock> = sortedKeys.keys
+            .associateWith(::HTMachineBlock)
+            .onEach { (key: HTMachineKey, block: HTMachineBlock) ->
+                Registry.register(Registries.BLOCK, key.id, block)
+                val item = BlockItem(block, itemSettings().machine(key))
+                Registry.register(Registries.ITEM, key.id, item)
+            }
+
         // complete
-        machineRegistry = HTMachineRegistry(sortedKeys, blockTable, propertyCache)
+        machineRegistry =
+            HTMachineRegistry(sortedKeys, blockMap, propertyCache)
         RagiumAPI.LOGGER.info("Registered machine types and properties!")
     }
 

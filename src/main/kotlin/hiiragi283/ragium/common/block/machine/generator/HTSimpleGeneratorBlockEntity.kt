@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.machine.generator
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
@@ -19,9 +18,8 @@ class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.SIMPLE_GENERATOR, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.SOLAR_PANEL
 
-    constructor(pos: BlockPos, state: BlockState, key: HTMachineKey, tier: HTMachineTier) : this(pos, state) {
+    constructor(pos: BlockPos, state: BlockState, key: HTMachineKey) : this(pos, state) {
         this.key = key
-        this.tier = tier
     }
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false

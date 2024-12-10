@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
@@ -13,10 +12,6 @@ import net.minecraft.util.math.BlockPos
 class HTBlastFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase.Large(RagiumBlockEntityTypes.BLAST_FURNACE, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.BLAST_FURNACE
-
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         builder

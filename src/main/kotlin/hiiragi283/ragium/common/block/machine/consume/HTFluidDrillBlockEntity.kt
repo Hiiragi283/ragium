@@ -58,10 +58,6 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)
     }
@@ -81,7 +77,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     override fun process(world: World, pos: BlockPos): HTUnitResult = multiblockManager
         .updateValidation(cachedState)

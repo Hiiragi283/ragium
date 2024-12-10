@@ -14,8 +14,11 @@
       "translate": "machine_type.ragium.rock_generator.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
       "count": 1,
-      "id": "ragium:primitive_rock_generator"
+      "id": "ragium:rock_generator"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",

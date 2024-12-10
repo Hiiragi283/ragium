@@ -12,15 +12,10 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_blast_furnace"
+      "id": "ragium:blast_furnace"
     },
     "title": {
-      "translate": "machine_tier.ragium.primitive.prefix",
-      "with": [
-        {
-          "translate": "machine_type.ragium.blast_furnace"
-        }
-      ]
+      "translate": "machine_type.ragium.blast_furnace"
     }
   },
   "requirements": [

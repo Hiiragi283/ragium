@@ -238,7 +238,7 @@ object RagiumBlockEntityTypes {
             .getInstance()
             .machineRegistry
             .getEntry(key)
-            .blocks
-            .forEach(type::addSupportedBlock)
+            .block
+            .let(type::addSupportedBlock)
     }
 }

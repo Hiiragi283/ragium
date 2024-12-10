@@ -6,9 +6,9 @@ import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.client.extension.getBlockEntity
@@ -23,10 +23,7 @@ import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.network.HTCratePreviewPayload
-import hiiragi283.ragium.common.network.HTFloatingItemPayload
-import hiiragi283.ragium.common.network.HTFluidSyncPayload
-import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.network.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -233,11 +230,12 @@ object RagiumClient : ClientModInitializer {
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
             // register block state resolver
             RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-                entry.blocks.forEach { block: HTMachineBlock ->
-                    context.registerBlockStateResolver(block) { context: BlockStateResolver.Context ->
-                        Properties.HORIZONTAL_FACING.values.forEach { direction: Direction ->
-                            RagiumBlockProperties.ACTIVE.values.forEach { isActive: Boolean ->
-                                val state: BlockState = block.defaultState
+                val block: HTMachineBlock = entry.block
+                context.registerBlockStateResolver(block) { context: BlockStateResolver.Context ->
+                    Properties.HORIZONTAL_FACING.values.forEach { direction: Direction ->
+                        RagiumBlockProperties.ACTIVE.values.forEach { isActive: Boolean ->
+                            HTMachineTier.entries.forEach { tier: HTMachineTier ->
+                                val state: BlockState = block.getTierState(tier)
                                     .with(Properties.HORIZONTAL_FACING, direction)
                                     .with(RagiumBlockProperties.ACTIVE, isActive)
                                 val modelId: Identifier = when (isActive) {
@@ -371,7 +369,7 @@ object RagiumClient : ClientModInitializer {
             }
         }
 
-        RagiumNetworks.MACHINE_SYNC.registerClientReceiver { payload: HTMachinePacket, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.MACHINE_SYNC.registerClientReceiver { payload: HTMachineKeySyncPayload, context: ClientPlayNetworking.Context ->
             (context.getBlockEntity(payload.pos) as? HTMachineBlockEntityBase)?.onPacketReceived(payload)
         }
     }

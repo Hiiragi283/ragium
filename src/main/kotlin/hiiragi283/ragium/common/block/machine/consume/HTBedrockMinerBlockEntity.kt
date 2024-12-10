@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.machine.consume
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
@@ -34,10 +33,6 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun process(world: World, pos: BlockPos): HTUnitResult {
         val aboveStorage: Storage<ItemVariant> = ItemStorage.SIDED.find(world, pos.up(), Direction.DOWN)
             ?: return HTUnitResult.errorString { "Failed to find above storage!" }
@@ -61,7 +56,7 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    HTMultiblockPatternProvider    //
 

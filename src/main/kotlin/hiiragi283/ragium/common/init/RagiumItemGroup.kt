@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.item.HTBackpackItem
@@ -108,11 +109,14 @@ object RagiumItemGroup {
                     addAll(RagiumBlocks.MECHANICS)
                     add(RagiumBlocks.CREATIVE_SOURCE)
                 }.forEach(entries::add)
-                RagiumAPI
-                    .getInstance()
-                    .machineRegistry
-                    .blocks
-                    .forEach(entries::add)
+                HTMachineTier.entries.forEach { tier: HTMachineTier ->
+                    RagiumAPI
+                        .getInstance()
+                        .machineRegistry
+                        .keys
+                        .map { key: HTMachineKey -> key.createItemStack(tier) }
+                        .forEach(entries::add)
+                }
             }
         }
     }

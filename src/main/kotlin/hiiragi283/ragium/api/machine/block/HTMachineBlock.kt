@@ -32,7 +32,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
+class HTMachineBlock(val key: HTMachineKey) :
     HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE).nonOpaque()),
     InventoryProvider {
     init {
@@ -40,7 +40,10 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
             .defaultState
             .with(Properties.HORIZONTAL_FACING, Direction.NORTH)
             .with(RagiumBlockProperties.ACTIVE, false)
+            .with(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
     }
+
+    fun getTierState(tier: HTMachineTier): BlockState = defaultState.with(HTMachineTier.PROPERTY, tier)
 
     override fun getOutlineShape(
         state: BlockState,
@@ -54,7 +57,7 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
         context,
     )
 
-    override fun getName(): MutableText = tier.createPrefixedText(key)
+    override fun getName(): MutableText = key.text
 
     override fun randomDisplayTick(
         state: BlockState,
@@ -78,11 +81,12 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
         stack.machineKeyOrNull?.appendTooltip(tooltip::add, stack.machineTier)
     }
 
-    override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
-        defaultState.with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState = defaultState
+        .with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
+        .with(HTMachineTier.PROPERTY, ctx.stack.machineTier)
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE)
+        builder.add(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE, HTMachineTier.PROPERTY)
     }
 
     override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
@@ -92,7 +96,7 @@ class HTMachineBlock(val key: HTMachineKey, val tier: HTMachineTier) :
         state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
-        key.entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, key, tier)
+        key.entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, key)
 
     //    InventoryProvider    //
 

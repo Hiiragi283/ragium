@@ -14,8 +14,11 @@
       "translate": "machine_type.ragium.saw_mill.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
       "count": 1,
-      "id": "ragium:primitive_saw_mill"
+      "id": "ragium:saw_mill"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",

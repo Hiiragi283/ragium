@@ -2,7 +2,10 @@ package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.util.HTUnitResult
@@ -10,17 +13,18 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockProperties
+import hiiragi283.ragium.common.network.HTMachineKeySyncPayload
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
+import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
@@ -32,62 +36,52 @@ import net.minecraft.world.World
 
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(type, pos, state),
-    ExtendedScreenHandlerFactory<HTMachinePacket>,
+    NamedScreenHandlerFactory,
     SidedStorageBlockEntity {
     abstract var key: HTMachineKey
         protected set
-    var tier: HTMachineTier = HTMachineTier.PRIMITIVE
-        protected set(value) {
-            val old: HTMachineTier = field
-            field = value
-            onTierUpdated(old, value)
-        }
     val definition: HTMachineDefinition
         get() = HTMachineDefinition(key, tier)
-    val packet: HTMachinePacket
-        get() = HTMachinePacket(key, tier, pos)
+    val payload: HTMachineKeySyncPayload
+        get() = HTMachineKeySyncPayload(pos, key)
 
     val facing: Direction
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+    val isActive: Boolean
+        get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
+    val tier: HTMachineTier
+        get() = cachedState.getOrDefault(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
+
     private var errorMessage: String? = null
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
     @Environment(EnvType.CLIENT)
-    open fun onPacketReceived(packet: HTMachinePacket) {
+    open fun onPacketReceived(packet: HTMachineKeySyncPayload) {
         key = packet.key
-        tier = packet.tier
     }
+
+    //    HTBlockEntityBase    //
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
         nbt.putMachineKey(MACHINE_KEY, key)
-        nbt.putTier(TIER_KEY, tier)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
         key = nbt.getMachineKey(MACHINE_KEY)
-        tier = nbt.getTier(TIER_KEY)
     }
 
-    val isActive: Boolean
-        get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
+    override fun addComponents(builder: ComponentMap.Builder) {
+        builder.add(HTMachineTier.COMPONENT_TYPE, tier)
+    }
 
-    protected fun activateState(world: World, pos: BlockPos, newState: Boolean) {
-        if (!world.isClient) {
-            world.replaceBlockState(pos) { stateIn: BlockState ->
-                if (stateIn.contains(RagiumBlockProperties.ACTIVE)) {
-                    if (stateIn.get(RagiumBlockProperties.ACTIVE) == newState) {
-                        null
-                    } else {
-                        stateIn.with(RagiumBlockProperties.ACTIVE, newState)
-                    }
-                } else {
-                    null
-                }
-            }
-        }
+    @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
+    override fun setCachedState(state: BlockState) {
+        val oldTier: HTMachineTier = tier
+        super.setCachedState(state)
+        onTierUpdated(oldTier, tier)
     }
 
     override fun onUse(
@@ -116,6 +110,22 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     abstract fun interactWithFluidStorage(player: PlayerEntity): Boolean
 
+    protected fun activateState(world: World, pos: BlockPos, newState: Boolean) {
+        if (!world.isClient) {
+            world.replaceBlockState(pos) { stateIn: BlockState ->
+                if (stateIn.contains(RagiumBlockProperties.ACTIVE)) {
+                    if (stateIn.get(RagiumBlockProperties.ACTIVE) == newState) {
+                        null
+                    } else {
+                        stateIn.with(RagiumBlockProperties.ACTIVE, newState)
+                    }
+                } else {
+                    null
+                }
+            }
+        }
+    }
+    
     final override val tickRate: Int = tier.tickRate
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
@@ -161,9 +171,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     protected open fun setProperty(index: Int, value: Int) {}
 
-    //    ExtendedScreenHandlerFactory    //
+    //    NamedScreenHandlerFactory    //
 
     final override fun getDisplayName(): Text = tier.createPrefixedText(key)
-
-    final override fun getScreenOpeningData(player: ServerPlayerEntity): HTMachinePacket = HTMachinePacket(key, tier, pos)
 }

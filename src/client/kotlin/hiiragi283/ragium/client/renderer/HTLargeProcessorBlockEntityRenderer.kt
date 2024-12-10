@@ -27,8 +27,8 @@ object HTLargeProcessorBlockEntityRenderer : BlockEntityRenderer<HTLargeProcesso
             true -> RagiumBlocks.LARGE_PROCESSOR.defaultState
             false ->
                 entity.key.entry
-                    .getBlock(entity.tier)
-                    .defaultState
+                    .block
+                    .getTierState(entity.tier)
         }
         MinecraftClient
             .getInstance()

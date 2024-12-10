@@ -16,6 +16,7 @@ import net.minecraft.component.ComponentType
 import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.state.property.EnumProperty
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
@@ -64,6 +65,9 @@ enum class HTMachineTier(
             .codec(CODEC)
             .packetCodec(PACKET_CODEC)
             .build()
+
+        @JvmField
+        val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.of("tier", HTMachineTier::class.java)
     }
 
     val smelterMulti: Int = (recipeCost / 20).toInt()

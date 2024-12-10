@@ -41,10 +41,6 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.CANNING_MACHINE
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)
     }
@@ -148,7 +144,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    HTFluidSyncable    //
 

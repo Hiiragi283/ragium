@@ -178,7 +178,7 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.BATTERY, "Battery")
             builder.add(RagiumTranslationKeys.CASING, "Casing")
             builder.add(RagiumTranslationKeys.CIRCUIT, "Circuit")
-            builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "circuit Board")
+            builder.add(RagiumTranslationKeys.CIRCUIT_BOARD, "Circuit Board")
             builder.add(RagiumTranslationKeys.COIL, "Coil")
             builder.add(RagiumTranslationKeys.CRATE, "Crate")
             builder.add(RagiumTranslationKeys.DRILL_HEAD, "Drill Head")

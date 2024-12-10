@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
@@ -22,9 +21,8 @@ class HTSimpleRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.SIMPLE_PROCESSOR, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.ALLOY_FURNACE
 
-    constructor(pos: BlockPos, state: BlockState, key: HTMachineKey, tier: HTMachineTier) : this(pos, state) {
+    constructor(pos: BlockPos, state: BlockState, key: HTMachineKey) : this(pos, state) {
         this.key = key
-        this.tier = tier
     }
 
     override val inventory: SidedInventory = HTStorageBuilder(5)
@@ -52,5 +50,5 @@ class HTSimpleRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     )
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSimpleMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSimpleMachineScreenHandler(syncId, playerInventory, createContext())
 }

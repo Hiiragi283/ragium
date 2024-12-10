@@ -49,6 +49,13 @@ fun dropStackAt(entity: Entity, item: ItemConvertible, count: Int = 1): Boolean 
 
 fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.blockPos, stack)
 
+fun dropStackAt(
+    world: World,
+    pos: BlockPos,
+    item: ItemConvertible,
+    count: Int = 1,
+): Boolean = dropStackAt(world, pos, ItemStack(item, count))
+
 fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean {
     val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
     itemEntity.velocity = Vec3d.ZERO

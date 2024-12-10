@@ -104,6 +104,6 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
         )
 
         final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTLargeMachineScreenHandler(syncId, playerInventory, packet, createContext())
+            HTLargeMachineScreenHandler(syncId, playerInventory, createContext())
     }
 }

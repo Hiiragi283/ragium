@@ -14,8 +14,11 @@
       "translate": "machine_type.ragium.assembler.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
       "count": 1,
-      "id": "ragium:primitive_assembler"
+      "id": "ragium:assembler"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",
