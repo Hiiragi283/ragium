@@ -20,15 +20,16 @@ class HTCrateBlock(val tier: HTMachineTier) : HTBlockWithEntity.Horizontal(block
         stack: ItemStack,
         context: Item.TooltipContext,
         tooltip: MutableList<Text>,
-        options: TooltipType
+        options: TooltipType,
     ) {
         tooltip.add(
-            Text.translatable(
-                RagiumTranslationKeys.CRATE_CAPACITY,
-                longText(tier.crateCapacity).formatted(Formatting.WHITE)
-            ).formatted(Formatting.GRAY)
+            Text
+                .translatable(
+                    RagiumTranslationKeys.CRATE_CAPACITY,
+                    longText(tier.crateCapacity).formatted(Formatting.WHITE),
+                ).formatted(Formatting.GRAY),
         )
     }
-    
+
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = HTCrateBlockEntity(pos, state, tier)
 }
