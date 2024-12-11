@@ -387,7 +387,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         // ingot/gem -> dust
         entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-            helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
+            helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
                 val dust: Item = map[HTTagPrefix.DUST] ?: return@register
                 // Grinder Recipe
                 HTMachineRecipeJsonBuilder
