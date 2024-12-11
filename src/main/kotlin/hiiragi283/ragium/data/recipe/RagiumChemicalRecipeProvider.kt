@@ -44,7 +44,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
     private fun chemicalReactor(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .itemInput(Items.DEEPSLATE, 16)
+            .itemInput(Items.DEEPSLATE, 4)
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.DEEPANT)
             .offerTo(exporter, RagiumItems.DEEPANT)

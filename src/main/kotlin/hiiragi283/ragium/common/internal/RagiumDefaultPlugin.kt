@@ -464,9 +464,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // dust -> ingot
         helper.register(entry) {
             // Smelting Recipe
-            val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
-                ?: key.entry.getFirstItem(HTTagPrefix.GEM)
-                ?: return@register
+            val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT) ?: return@register
             if (entry.contains(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)) return@register
             val dust: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
             if (!ResourceConditions.tagsPopulated(dust).test(null)) return@register
