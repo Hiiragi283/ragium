@@ -74,10 +74,10 @@ enum class HTPipeType(val isItem: Boolean, val isFluid: Boolean) : StringIdentif
     }
 
     fun getFluidCount(tier: HTMachineTier): Long = when (tier) {
-        HTMachineTier.PRIMITIVE -> FluidConstants.INGOT
-        HTMachineTier.BASIC -> FluidConstants.BOTTLE
-        HTMachineTier.ADVANCED -> FluidConstants.BUCKET
-    }
+        HTMachineTier.PRIMITIVE -> 1
+        HTMachineTier.BASIC -> 2
+        HTMachineTier.ADVANCED -> 4
+    } * FluidConstants.BUCKET
 
     fun appendTooltip(tooltip: Consumer<Text>, tier: HTMachineTier) {
         if (isItem) {
