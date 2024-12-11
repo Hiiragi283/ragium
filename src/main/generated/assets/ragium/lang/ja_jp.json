@@ -308,6 +308,7 @@
   "tag_prefix.ragium.rod": "%s棒",
   "tag_prefix.ragium.storage_block": "%sブロック",
   "tooltip.ragium.block.auto_illuminator": "半径%sブロックの範囲に光源を自動で設置する",
+  "tooltip.ragium.block.crate_capacity": "容量: %s 個",
   "tooltip.ragium.block.drum_amount": "液体量: %s ユニット",
   "tooltip.ragium.block.drum_capacity": "容量: %s ユニット",
   "tooltip.ragium.block.drum_fluid": "液体: %s",

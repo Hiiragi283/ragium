@@ -163,6 +163,8 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.SPONGE_CAKE, "Decrease falling damage when land on")
             builder.add(RagiumTranslationKeys.TRASH_BOX, "Remove ALL inserted items or fluids")
 
+            builder.add(RagiumTranslationKeys.CRATE_CAPACITY, "Capacity: %s Items")
+            
             builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "Amount: %s Unit")
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "Capacity: %s Unit")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "Fluid: %s")
@@ -546,6 +548,8 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.SPONGE_CAKE, "着地時のダメージを軽減する")
             builder.add(RagiumTranslationKeys.TRASH_BOX, "搬入された「すべて」のアイテムや液体を消滅させる")
 
+            builder.add(RagiumTranslationKeys.CRATE_CAPACITY, "容量: %s 個")
+            
             builder.add(RagiumTranslationKeys.DRUM_AMOUNT, "液体量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_CAPACITY, "容量: %s ユニット")
             builder.add(RagiumTranslationKeys.DRUM_FLUID, "液体: %s")

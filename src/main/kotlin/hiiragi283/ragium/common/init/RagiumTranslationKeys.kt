@@ -22,6 +22,8 @@ object RagiumTranslationKeys {
     const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
     const val TRASH_BOX = "tooltip.ragium.block.trash_box"
 
+    const val CRATE_CAPACITY = "tooltip.ragium.block.crate_capacity"
+    
     const val DRUM_AMOUNT = "tooltip.ragium.block.drum_amount"
     const val DRUM_CAPACITY = "tooltip.ragium.block.drum_capacity"
     const val DRUM_FLUID = "tooltip.ragium.block.drum_fluid"

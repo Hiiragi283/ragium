@@ -40,7 +40,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
             }
         }
 
-        override fun getCapacity(variant: ItemVariant): Long = tier.bucketUnit * 8
+        override fun getCapacity(variant: ItemVariant): Long = tier.crateCapacity
     }
 
     var itemStorage: SingleItemStorage = ItemStorage(tier)

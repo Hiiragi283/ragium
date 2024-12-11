@@ -308,6 +308,7 @@
   "tag_prefix.ragium.rod": "%s Rod",
   "tag_prefix.ragium.storage_block": "Block of %s",
   "tooltip.ragium.block.auto_illuminator": "Place lights in area of %s block radius",
+  "tooltip.ragium.block.crate_capacity": "Capacity: %s Items",
   "tooltip.ragium.block.drum_amount": "Amount: %s Unit",
   "tooltip.ragium.block.drum_capacity": "Capacity: %s Unit",
   "tooltip.ragium.block.drum_fluid": "Fluid: %s",

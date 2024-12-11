@@ -68,6 +68,7 @@ enum class HTMachineTier(
 
     val smelterMulti: Int = (recipeCost / 20).toInt()
     val bucketUnit: Long = recipeCost / 20
+    val crateCapacity: Long = bucketUnit * 8
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.${asString()}"

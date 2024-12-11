@@ -169,8 +169,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
             .itemInput(RagiumContents.Gems.CRYOLITE)
-            .fluidInput(RagiumFluids.ALUMINA_SOLUTION)
-            .itemOutput(RagiumContents.Ingots.ALUMINUM)
+            .fluidInput(RagiumFluids.ALUMINA_SOLUTION, FluidConstants.INGOT * 12)
+            .itemOutput(RagiumContents.Ingots.ALUMINUM, 3)
             .itemOutput(RagiumItems.SLAG, 2)
             .offerTo(exporter, RagiumContents.Ingots.ALUMINUM, "_with_cryolite")
         // deep steel
