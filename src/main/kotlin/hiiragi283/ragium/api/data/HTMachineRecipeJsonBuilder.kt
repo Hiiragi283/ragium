@@ -46,8 +46,8 @@ class HTMachineRecipeJsonBuilder private constructor(
         fun createRecipeId(fluid: RagiumFluids): Identifier = createRecipeId(fluid.value)
     }
 
-    private val itemInputs: MutableList<HTItemIngredient> = mutableListOf()
-    private val fluidInputs: MutableList<HTFluidIngredient> = mutableListOf()
+    private val itemInputs: MutableSet<HTItemIngredient> = mutableSetOf()
+    private val fluidInputs: MutableSet<HTFluidIngredient> = mutableSetOf()
     private val itemOutputs: MutableList<HTItemResult> = mutableListOf()
     private val fluidOutputs: MutableList<HTFluidResult> = mutableListOf()
     private var catalyst: HTItemIngredient? = null
@@ -55,7 +55,7 @@ class HTMachineRecipeJsonBuilder private constructor(
     //    Input    //
 
     fun itemInput(ingredient: HTItemIngredient): HTMachineRecipeJsonBuilder = apply {
-        itemInputs.add(ingredient)
+        check(itemInputs.add(ingredient)) { "Duplicated item input: $ingredient found!" }
     }
 
     fun itemInput(
@@ -63,7 +63,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         material: HTMaterialKey,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(prefix, material, count, consumeType))
+    ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
 
     fun itemInput(
         content: HTContent.Material<*>,
@@ -83,17 +83,17 @@ class HTMachineRecipeJsonBuilder private constructor(
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(tagKey, count, consumeType))
 
-    fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.of(fluid, amount))
+    fun fluidInput(ingredient: HTFluidIngredient): HTMachineRecipeJsonBuilder = apply {
+        check(fluidInputs.add(ingredient)) { "Duplicated fluid input $ingredient found!" }
     }
 
-    fun fluidInput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.of(fluid.tagKey, amount))
-    }
+    fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+        fluidInput(HTFluidIngredient.of(fluid, amount))
 
-    fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidInputs.add(HTFluidIngredient.of(tagKey, amount))
-    }
+    fun fluidInput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = fluidInput(fluid.tagKey, amount)
+
+    fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+        fluidInput(HTFluidIngredient.of(tagKey, amount))
 
     //    Output    //
 
@@ -146,8 +146,8 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun <T : Any> transform(transform: (HTMachineRecipe) -> T): T = transform(
         HTMachineRecipe(
             HTMachineDefinition(key, tier),
-            itemInputs,
-            fluidInputs,
+            itemInputs.toList(),
+            fluidInputs.toList(),
             catalyst,
             itemOutputs,
             fluidOutputs,

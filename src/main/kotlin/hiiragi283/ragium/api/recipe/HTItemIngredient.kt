@@ -7,8 +7,6 @@ import hiiragi283.ragium.api.extension.codecOf
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.packetCodecOf
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient.ConsumeType.entries
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -21,6 +19,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.util.StringIdentifiable
+import java.util.*
 import java.util.function.Predicate
 
 class HTItemIngredient private constructor(
@@ -67,14 +66,6 @@ class HTItemIngredient private constructor(
         @JvmStatic
         fun of(tagKey: TagKey<Item>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
             HTItemIngredient(HTRegistryEntryList.ofTag(tagKey, Registries.ITEM), count, consumeType)
-
-        @JvmStatic
-        fun of(
-            prefix: HTTagPrefix,
-            material: HTMaterialKey,
-            count: Int = 1,
-            consumeType: ConsumeType = ConsumeType.DECREMENT,
-        ): HTItemIngredient = of(prefix.createTag(material), count, consumeType)
     }
 
     val isEmpty: Boolean
@@ -112,6 +103,11 @@ class HTItemIngredient private constructor(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean = (other as? HTItemIngredient)
+        ?.let { it.entryList == this.entryList && it.count == this.count } == true
+
+    override fun hashCode(): Int = Objects.hash(entryList, count)
 
     override fun toString(): String = "HTItemIngredient[entryList=${text.string},count=$count]"
 

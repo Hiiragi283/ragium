@@ -66,7 +66,7 @@ sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
 
     //    Direct    //
 
-    private class Direct<T : Any>(val entry: T) : HTRegistryEntryList<T> {
+    private data class Direct<T : Any>(val entry: T) : HTRegistryEntryList<T> {
         override val isEmpty: Boolean = false
 
         override val size: Int = 1
@@ -83,7 +83,7 @@ sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
 
     //    Tag    //
 
-    private class Tag<T : Any>(val tagKey: TagKey<T>, val registry: Registry<T>) : HTRegistryEntryList<T> {
+    private data class Tag<T : Any>(val tagKey: TagKey<T>, val registry: Registry<T>) : HTRegistryEntryList<T> {
         private val entries: List<T>
             get() = registry.iterateEntries(tagKey).map(RegistryEntry<T>::value)
 

@@ -20,6 +20,7 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
+import java.util.*
 import java.util.function.BiPredicate
 
 class HTFluidIngredient private constructor(private val entryList: HTRegistryEntryList<Fluid>, val amount: Long) :
@@ -92,6 +93,11 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
                 }
             }
         }
+
+        override fun equals(other: Any?): Boolean = (other as? HTFluidIngredient)
+            ?.let { it.entryList == this.entryList && it.amount == this.amount } == true
+
+        override fun hashCode(): Int = Objects.hash(entryList, amount)
 
         override fun toString(): String = "HTFluidIngredient[entryList=${text.string},amount=$amount]"
     }

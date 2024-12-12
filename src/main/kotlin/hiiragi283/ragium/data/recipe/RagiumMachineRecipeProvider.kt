@@ -80,7 +80,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
             .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
-            .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
+            // .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.PLUTONIUM_FUEL)
             .offerTo(exporter, RagiumItems.PLUTONIUM_FUEL)
