@@ -100,7 +100,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant> = inventory.toStorage(side)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 
     //    HTFluidSyncable    //
 

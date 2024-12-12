@@ -86,5 +86,5 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

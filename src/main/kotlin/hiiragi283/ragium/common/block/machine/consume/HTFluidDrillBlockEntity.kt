@@ -107,7 +107,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage
 
     //    HTFluidSyncable    //
 

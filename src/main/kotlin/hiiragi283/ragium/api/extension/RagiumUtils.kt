@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
 import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup
@@ -252,6 +253,31 @@ fun RecipeInput.iterable(): Iterable<ItemStack> = buildList<ItemStack> {
     for (index: Int in (0 until this.size)) {
         add(this[index])
     }
+}
+
+fun RecipeInput.mutableIterable(): MutableIterable<ItemStack> = iterable().toMutableList()
+
+fun getMatchingIndices(ingredients: Collection<HTItemIngredient>, stacks: Collection<ItemStack>): Boolean {
+    if (ingredients.size > stacks.size) return false
+    val ingredients1: MutableList<HTItemIngredient> = ingredients.toMutableList()
+    val stacks1: MutableList<ItemStack> = stacks.toMutableList()
+    val ingIterator: MutableIterator<HTItemIngredient> = ingredients1.iterator()
+    val stackIterator: MutableIterator<ItemStack> = stacks1.iterator()
+    while (ingIterator.hasNext()) {
+        ingredient@{
+            val ingredient: HTItemIngredient = ingIterator.next()
+            while (stackIterator.hasNext()) {
+                stack@{
+                    val stack: ItemStack = stackIterator.next()
+                    if (ingredient.test(stack)) {
+                        ingIterator.remove()
+                        stackIterator.remove()
+                    }
+                }
+            }
+        }
+    }
+    return ingredients1.isEmpty() && stacks1.isEmpty()
 }
 
 //    ScreenHandler    //

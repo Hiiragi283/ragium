@@ -71,7 +71,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 
     override fun process(world: World, pos: BlockPos): HTUnitResult {
         val cubeStack: ItemStack = inventory.getStack(0)

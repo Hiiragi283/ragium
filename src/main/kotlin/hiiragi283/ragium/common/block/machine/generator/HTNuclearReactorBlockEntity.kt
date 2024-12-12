@@ -107,7 +107,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 
     //    HTFluidSyncable    //
 

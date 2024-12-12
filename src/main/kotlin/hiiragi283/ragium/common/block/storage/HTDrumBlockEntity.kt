@@ -75,5 +75,5 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

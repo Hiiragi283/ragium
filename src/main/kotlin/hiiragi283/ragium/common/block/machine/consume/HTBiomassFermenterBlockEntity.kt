@@ -65,7 +65,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 
     override fun process(world: World, pos: BlockPos): HTUnitResult = HTRecipeProcessor { _: World, _: HTMachineKey, _: HTMachineTier ->
         val inputStack: ItemStack = inventory.getStack(0)

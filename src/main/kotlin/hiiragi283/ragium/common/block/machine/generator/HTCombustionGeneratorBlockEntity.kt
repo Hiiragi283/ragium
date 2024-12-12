@@ -81,7 +81,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 
     //    HTFluidSyncable    //
 

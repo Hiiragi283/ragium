@@ -61,7 +61,6 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
                             } else {
                                 map.set(RagiumComponentTypes.DRUM, newResourceAmount)
                             }
-                            map.set(RagiumComponentTypes.DRUM, newResourceAmount)
                         }
                         if (changed == 1L) {
                             return extracted

@@ -59,5 +59,5 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant> = InventoryStorage.of(inventory, side)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }
