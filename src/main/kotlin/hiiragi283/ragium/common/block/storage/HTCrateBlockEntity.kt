@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -20,7 +21,6 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.ActionResult
-import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -66,10 +66,13 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
     }
 
     override fun addComponents(builder: ComponentMap.Builder) {
-        builder.add(RagiumComponentTypes.CRATE, itemStorage.resourceAmount)
+        val stack: HTItemVariantStack = itemStorage.variantStack
+        if (stack.isNotEmpty) {
+            builder.add(RagiumComponentTypes.CRATE, stack)
+        }
     }
 
-    override fun onStateReplaced(
+    /*override fun onStateReplaced(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -84,7 +87,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
             itemStorage.variant.toStack(itemStorage.amount.toInt()),
         )
         super.onStateReplaced(state, world, pos, newState, moved)
-    }
+    }*/
 
     override fun onUse(
         state: BlockState,

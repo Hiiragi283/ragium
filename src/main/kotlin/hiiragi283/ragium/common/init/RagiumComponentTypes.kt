@@ -2,19 +2,15 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.resourceCodec
-import hiiragi283.ragium.api.extension.resourcePacketCodec
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.common.item.HTDynamiteItem
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
-import net.fabricmc.fabric.impl.transfer.VariantCodecs
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -31,17 +27,16 @@ import net.minecraft.text.TextCodecs
 import net.minecraft.util.DyeColor
 import net.minecraft.util.math.GlobalPos
 
-@Suppress("UnstableApiUsage")
 object RagiumComponentTypes {
     @JvmField
     val COLOR: ComponentType<DyeColor> =
         register("color", DyeColor.CODEC, DyeColor.PACKET_CODEC)
 
     @JvmField
-    val CRATE: ComponentType<ResourceAmount<ItemVariant>> = register(
+    val CRATE: ComponentType<HTItemVariantStack> = register(
         "crate",
-        resourceCodec(VariantCodecs.ITEM_CODEC),
-        resourcePacketCodec(VariantCodecs.ITEM_PACKET_CODEC),
+        HTItemVariantStack.CODEC,
+        HTItemVariantStack.PACKET_CODEC,
     )
 
     @JvmField
@@ -53,10 +48,10 @@ object RagiumComponentTypes {
         register("description", TextCodecs.CODEC.listOf(), TextCodecs.PACKET_CODEC.toList())
 
     @JvmField
-    val DRUM: ComponentType<ResourceAmount<FluidVariant>> = register(
+    val DRUM: ComponentType<HTFluidVariantStack> = register(
         "drum",
-        resourceCodec(VariantCodecs.FLUID_CODEC),
-        resourcePacketCodec(VariantCodecs.FLUID_PACKET_CODEC),
+        HTFluidVariantStack.CODEC,
+        HTFluidVariantStack.PACKET_CODEC,
     )
 
     @JvmField

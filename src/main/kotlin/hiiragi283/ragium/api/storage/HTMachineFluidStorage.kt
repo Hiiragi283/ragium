@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.fabricmc.fabric.impl.transfer.TransferApiImpl
@@ -60,8 +59,8 @@ class HTMachineFluidStorage private constructor(size: Int, private val filter: (
 
         fun unitMap(index: Int, transform: (SingleFluidStorage) -> HTUnitResult): HTUnitResult = getStorage(index).unitMap(transform)
 
-        fun getResourceAmount(index: Int): ResourceAmount<FluidVariant> =
-            map(index, SingleFluidStorage::resourceAmount).result().orElse(ResourceAmount(FluidVariant.blank(), 0))
+        fun getVariantStack(index: Int): HTFluidVariantStack =
+            map(index, SingleFluidStorage::variantStack).result().orElse(HTFluidVariantStack.EMPTY)
 
         fun interactByPlayer(player: PlayerEntity): Boolean = FluidStorageUtil.interactWithFluidStorage(this, player, Hand.MAIN_HAND)
 

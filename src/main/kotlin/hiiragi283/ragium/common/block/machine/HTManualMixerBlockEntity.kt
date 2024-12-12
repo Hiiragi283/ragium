@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.fluidStorageOf
-import hiiragi283.ragium.api.extension.resourceAmount
+import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
@@ -62,7 +62,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
                 ) {
                     add(stackMain)
                     add(stackOff)
-                    add(fluidStorage.resourceAmount)
+                    add(fluidStorage.variantStack)
                 },
                 world,
             ).result()

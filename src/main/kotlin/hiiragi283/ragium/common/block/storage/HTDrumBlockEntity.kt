@@ -1,11 +1,9 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.getTier
+import hiiragi283.ragium.api.extension.putTier
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.*
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -53,10 +51,9 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
     }
 
     override fun addComponents(builder: ComponentMap.Builder) {
-        fluidStorage.map(0) { storageIn: SingleFluidStorage ->
-            if (!storageIn.isResourceBlank && storageIn.amount > 0) {
-                builder.add(RagiumComponentTypes.DRUM, storageIn.resourceAmount)
-            }
+        val stack: HTFluidVariantStack = fluidStorage.getVariantStack(0)
+        if (stack.isNotEmpty) {
+            builder.add(RagiumComponentTypes.DRUM, stack)
         }
     }
 

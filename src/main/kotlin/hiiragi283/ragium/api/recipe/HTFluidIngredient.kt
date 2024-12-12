@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.fluid.Fluid
@@ -68,7 +68,7 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
         val text: MutableText
             get() = entryList.getText(Fluid::name)
 
-        fun test(resource: ResourceAmount<FluidVariant>): Boolean = test(resource.resource.fluid, resource.amount)
+        fun test(stack: HTFluidVariantStack): Boolean = test(stack.fluid, stack.amount)
 
         override fun test(fluid: Fluid, amount: Long): Boolean = when {
             fluid.isEmpty || amount <= 0 -> this.isEmpty

@@ -26,9 +26,9 @@ class HTMachineRecipeProcessor(
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): HTUnitResult {
-        val input: HTMachineInput = HTMachineInput.Companion.create(key, tier) {
+        val input: HTMachineInput = HTMachineInput.create(key, tier) {
             itemInputs.map(inventory::getStack).forEach(::add)
-            fluidInputs.map(fluidStorage::getResourceAmount).forEach(::add)
+            fluidInputs.map(fluidStorage::getVariantStack).forEach(::add)
             catalyst = inventory.getStack(catalystIndex)
         }
         return recipeCache

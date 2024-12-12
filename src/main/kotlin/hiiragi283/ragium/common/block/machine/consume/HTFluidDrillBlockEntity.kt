@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -23,7 +24,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -48,11 +48,11 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiblockPatternProvider {
     companion object {
         @JvmField
-        val FLUID_MAP: Map<TagKey<Biome>, ResourceAmount<FluidVariant>> = mapOf(
-            BiomeTags.IS_END to ResourceAmount(FluidVariant.of(RagiumFluids.NOBLE_GAS.value), FluidConstants.INGOT),
-            BiomeTags.IS_NETHER to ResourceAmount(FluidVariant.of(RagiumFluids.CRUDE_OIL.value), FluidConstants.BUCKET),
-            BiomeTags.IS_OCEAN to ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BUCKET),
-            BiomeTags.IS_BEACH to ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BOTTLE),
+        val FLUID_MAP: Map<TagKey<Biome>, HTFluidVariantStack> = mapOf(
+            BiomeTags.IS_END to HTFluidVariantStack(RagiumFluids.NOBLE_GAS.value, FluidConstants.INGOT),
+            BiomeTags.IS_NETHER to HTFluidVariantStack(RagiumFluids.CRUDE_OIL.value, FluidConstants.BUCKET),
+            BiomeTags.IS_OCEAN to HTFluidVariantStack(RagiumFluids.SALT_WATER.value, FluidConstants.BUCKET),
+            BiomeTags.IS_BEACH to HTFluidVariantStack(RagiumFluids.SALT_WATER.value, FluidConstants.BOTTLE),
         )
     }
 
@@ -84,8 +84,8 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         .flatMap {
             useTransaction { transaction: Transaction ->
                 fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
-                    val resource: ResourceAmount<FluidVariant> = findResource(world.getBiome(pos))
-                    if (storageIn.insert(resource, transaction) == resource.amount) {
+                    val stack: HTFluidVariantStack = findResource(world.getBiome(pos))
+                    if (storageIn.insert(stack, transaction) == stack.amount) {
                         transaction.commit()
                         world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
                         HTUnitResult.success()
@@ -96,13 +96,13 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
             }
         }
 
-    private fun findResource(biome: RegistryEntry<Biome>): ResourceAmount<FluidVariant> {
-        for ((tagKey: TagKey<Biome>, resource: ResourceAmount<FluidVariant>) in FLUID_MAP) {
+    private fun findResource(biome: RegistryEntry<Biome>): HTFluidVariantStack {
+        for ((tagKey: TagKey<Biome>, stack: HTFluidVariantStack) in FLUID_MAP) {
             if (biome.isIn(tagKey)) {
-                return resource
+                return stack
             }
         }
-        return ResourceAmount(FluidVariant.of(RagiumFluids.AIR.value), FluidConstants.BUCKET)
+        return HTFluidVariantStack.EMPTY
     }
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
