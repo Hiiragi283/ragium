@@ -21,6 +21,17 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
+/**
+ * ```kotlin
+ * HTMachineRecipeJsonBuilder
+ *     .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+ *     .fluidInput(RagiumFluids.NITROGEN)
+ *     .fluidInput(Fluids.WATER)
+ *     .fluidOutput(RagiumFluids.NITRIC_ACID)
+ *     .offerTo(exporter, RagiumFluids.NITRIC_ACID, "_from_nitrogen")
+ *
+ * ```
+ */
 class HTMachineRecipeJsonBuilder private constructor(
     private val key: HTMachineKey,
     private val tier: HTMachineTier = HTMachineTier.PRIMITIVE,
@@ -30,12 +41,18 @@ class HTMachineRecipeJsonBuilder private constructor(
         fun create(key: HTMachineKey, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
             HTMachineRecipeJsonBuilder(key, minTier)
 
+        /**
+         * Create new [Identifier] with [RagiumAPI.MOD_NAME] namespace and [item] path
+         */
         @JvmStatic
         fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
             .getItemId(item)
             .path
             .let { RagiumAPI.id(it) }
 
+        /**
+         * Create new [Identifier] with [RagiumAPI.MOD_NAME] namespace and [fluid] path
+         */
         @JvmStatic
         fun createRecipeId(fluid: Fluid): Identifier = Registries.FLUID
             .getId(fluid)
@@ -54,10 +71,17 @@ class HTMachineRecipeJsonBuilder private constructor(
 
     //    Input    //
 
+    /**
+     * Put an item ingredient
+     * @throws [IllegalStateException] when duplicated [ingredient] registered
+     */
     fun itemInput(ingredient: HTItemIngredient): HTMachineRecipeJsonBuilder = apply {
         check(itemInputs.add(ingredient)) { "Duplicated item input: $ingredient found!" }
     }
 
+    /**
+     * Put an item ingredient based on [HTTagPrefix] and [HTMachineKey]
+     */
     fun itemInput(
         prefix: HTTagPrefix,
         material: HTMaterialKey,
@@ -65,38 +89,63 @@ class HTMachineRecipeJsonBuilder private constructor(
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
 
+    /**
+     * Put an item ingredient based on [HTContent.Material]
+     */
     fun itemInput(
         content: HTContent.Material<*>,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count, consumeType)
 
+    /**
+     * Put an item ingredient based on [ItemConvertible]
+     */
     fun itemInput(
         item: ItemConvertible,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(item, count, consumeType))
 
+    /**
+     * Put an item ingredient based on [TagKey]
+     */
     fun itemInput(
         tagKey: TagKey<Item>,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(tagKey, count, consumeType))
 
+    /**
+     * Put a fluid ingredient
+     * @throws [IllegalStateException] when duplicated [ingredient] registered
+     */
     fun fluidInput(ingredient: HTFluidIngredient): HTMachineRecipeJsonBuilder = apply {
         check(fluidInputs.add(ingredient)) { "Duplicated fluid input $ingredient found!" }
     }
 
+    /**
+     * Put a fluid ingredient based on [Fluid]
+     */
     fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
         fluidInput(HTFluidIngredient.of(fluid, amount))
 
+    /**
+     * Put a fluid ingredient based on [RagiumFluids]
+     */
     fun fluidInput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = fluidInput(fluid.tagKey, amount)
 
+    /**
+     * Put a fluid ingredient based on [TagKey]
+     */
     fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
         fluidInput(HTFluidIngredient.of(tagKey, amount))
 
     //    Output    //
 
+    /**
+     * Put an item output based on [ItemConvertible]
+     */
     fun itemOutput(
         item: ItemConvertible,
         count: Int = 1,
@@ -105,44 +154,81 @@ class HTMachineRecipeJsonBuilder private constructor(
         itemOutputs.add(HTItemResult(item, count, components))
     }
 
+    /**
+     * Put an item output based on [ItemStack]
+     */
     fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult(stack)) }
 
+    /**
+     * Put a fluid output based on [Fluid]
+     */
     fun fluidOutput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
         fluidOutputs.add(HTFluidResult(fluid, amount))
     }
 
+    /**
+     * Put a fluid output based on [RagiumFluids]
+     */
     fun fluidOutput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
         fluidOutputs.add(HTFluidResult(fluid.value, amount))
     }
 
     //    Catalyst    //
 
+    /**
+     * Put a catalyst item based on [ItemConvertible]
+     */
     fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = apply {
         catalyst = HTItemIngredient.of(item)
     }
 
+    /**
+     * Put a catalyst item based on [TagKey]
+     */
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {
         catalyst = HTItemIngredient.of(tagKey)
     }
 
+    /**
+     * Export built [HTMachineRecipe] to [exporter]
+     * @param output used to generate recipe id by [createRecipeId]
+     * @param suffix append to recipe id path by [Identifier.withSuffixedPath]
+     */
     fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {
         offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
+    /**
+     * Export built [HTMachineRecipe] to [exporter]
+     * @param output used to generate recipe id by [createRecipeId]
+     * @param suffix append to recipe id path by [Identifier.withSuffixedPath]
+     */
     fun offerTo(exporter: RecipeExporter, output: Fluid, suffix: String = "") {
         offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
+    /**
+     * Export built [HTMachineRecipe] to [exporter]
+     * @param output used to generate recipe id by [createRecipeId]
+     * @param suffix append to recipe id path by [Identifier.withSuffixedPath]
+     */
     fun offerTo(exporter: RecipeExporter, output: RagiumFluids, suffix: String = "") {
         offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
+    /**
+     * Offer built [HTMachineRecipe] to [exporter] with recipe id prefixed with [HTMachineKey.id]
+     */
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
         export { recipe: HTMachineRecipe -> exporter.accept(prefixedId, recipe, null) }
     }
 
+    /**
+     * Transform built [HTMachineRecipe] into [T]
+     * @return transformed value from [HTMachineRecipe]
+     */
     fun <T : Any> transform(transform: (HTMachineRecipe) -> T): T = transform(
         HTMachineRecipe(
             HTMachineDefinition(key, tier),

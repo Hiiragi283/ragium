@@ -13,14 +13,29 @@ import java.text.NumberFormat
 
 //    Text    //
 
+/**
+ * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ */
 fun intText(value: Int): MutableText = longText(value.toLong())
 
+/**
+ * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ */
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
+/**
+ * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ */
 fun floatText(value: Float): MutableText = doubleText(value.toDouble())
 
+/**
+ * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ */
 fun doubleText(value: Double): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
+/**
+ * Create a new [MutableText] instance by [Boolean.toString]
+ */
 fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
 
 fun blockPosText(value: BlockPos): MutableText = Text.literal("[${value.x}, ${value.y}, ${value.z}]")
@@ -41,6 +56,9 @@ fun globalPosText(value: GlobalPos): MutableText = Text
 
 fun worldText(value: RegistryKey<World>): MutableText = Text.translatable(Util.createTranslationKey("world", value.value))
 
+/**
+ * Create a new [MutableText] instance with the format: "Amount: x B, y Units"
+ */
 fun fluidAmountText(value: Long): MutableText = Text.translatable(
     RagiumTranslationKeys.MACHINE_FLUID_AMOUNT,
     NumberFormat.getNumberInstance().format(value / FluidConstants.BUCKET),

@@ -89,6 +89,9 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
 
     override fun getOutputItem(): Item = output.item
 
+    /**
+     * Offer built [ShapelessRecipe] to [exporter] with recipe id prefixed "shapeless/"
+     */
     override fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val fixedId: Identifier = recipeId.withPrefixedPath("shapeless/")
         val builder: Advancement.Builder = exporter.advancementBuilder

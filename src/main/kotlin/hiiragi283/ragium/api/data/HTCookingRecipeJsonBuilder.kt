@@ -14,6 +14,9 @@ import net.minecraft.util.Identifier
 object HTCookingRecipeJsonBuilder {
     //    Blasting    //
 
+    /**
+     * Register [net.minecraft.recipe.SmeltingRecipe] and [net.minecraft.recipe.BlastingRecipe] with recipe id prefixed with "smelting/" and "blasting/"
+     */
     @JvmStatic
     fun smeltAndBlast(
         exporter: RecipeExporter,
@@ -77,6 +80,9 @@ object HTCookingRecipeJsonBuilder {
 
     //    Smoking    //
 
+    /**
+     * Register [net.minecraft.recipe.SmeltingRecipe], [net.minecraft.recipe.SmokingRecipe] and [net.minecraft.recipe.CampfireCookingRecipe] with recipe id prefixed with "smelting/", "blasting/" and "campfire/"
+     */
     @JvmStatic
     fun smeltAndSmoke(
         exporter: RecipeExporter,

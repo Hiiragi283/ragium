@@ -14,6 +14,9 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.function.Supplier
 
+/**
+ * Represents registerable content holding [RegistryKey] and [RegistryEntry]
+ */
 interface HTContent<T : Any> : Supplier<T> {
     companion object {
         @JvmStatic
@@ -39,6 +42,9 @@ interface HTContent<T : Any> : Supplier<T> {
 
     //    Delegated    //
 
+    /**
+     * Delegated by other [HTContent]
+     */
     interface Delegated<T : Any> : HTContent<T> {
         val delegated: HTContent<T>
 
@@ -50,6 +56,9 @@ interface HTContent<T : Any> : Supplier<T> {
 
     //    Material    //
 
+    /**
+     * a [HTContent] holding [HTMaterialKey] and [HTTagPrefix], and implementing [ItemConvertible]
+     */
     interface Material<T : ItemConvertible> :
         Delegated<T>,
         ItemConvertible {
@@ -76,6 +85,9 @@ interface HTContent<T : Any> : Supplier<T> {
 
     //    Tier    //
 
+    /**
+     * a [HTContent] holding [HTMachineTier], and implementing [ItemConvertible]
+     */
     interface Tier<T : ItemConvertible> :
         Delegated<T>,
         ItemConvertible {

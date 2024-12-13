@@ -1,31 +1,21 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
 import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
-import net.minecraft.inventory.Inventory
-import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Recipe
-import net.minecraft.recipe.RecipeEntry
-import net.minecraft.recipe.RecipeManager
-import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.input.RecipeInput
-import net.minecraft.screen.ScreenHandler
-import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -33,9 +23,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.ChunkPos
-import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.TeleportTarget
 import net.minecraft.world.World
@@ -45,46 +32,17 @@ import kotlin.jvm.optionals.getOrNull
 
 //    ApiLookup    //
 
+/**
+ * Try to find and API instance from [player] holding [ItemStack] in [hand]
+ */
 fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromHand(player: PlayerEntity, hand: Hand = Hand.MAIN_HAND): A? =
     ContainerItemContext.forPlayerInteraction(player, hand).find(this)
 
+/**
+ * Try to find and API instance from [stack]
+ */
 fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromStack(stack: ItemStack): A? =
     ContainerItemContext.withConstant(stack).find(this)
-
-//    BlockEntity    //
-
-fun <T : Any> BlockEntity.ifPresentWorld(action: (World) -> T): T? = world?.let(action)
-
-fun BlockEntity.createContext(): ScreenHandlerContext = world?.let { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
-
-//    BlockPos    //
-
-val BlockPos.aroundPos: List<BlockPos>
-    get() = Direction.entries.map(this::offset)
-
-fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direction.entries.map(this::offset).filter(filter)
-
-//    ChunkPos    //
-
-fun ChunkPos.iterator(yRange: IntRange): Iterator<BlockPos> = buildList {
-    (startX..endX).forEach { x: Int ->
-        (startZ..endZ).forEach { z: Int ->
-            yRange.forEach { y: Int ->
-                add(BlockPos(x, y, z))
-            }
-        }
-    }
-}.iterator()
-
-fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
-    (startX..endX).forEach { x: Int ->
-        (startZ..endZ).forEach { z: Int ->
-            yRange.forEach { y: Int ->
-                action(BlockPos(x, y, z))
-            }
-        }
-    }
-}
 
 //    Entity    //
 
@@ -147,6 +105,10 @@ fun canTeleport(entity: Entity, world: World): Boolean = if (entity.world.regist
     entity.canUsePortals(true)
 }
 
+/**
+ * Throw [ProjectileEntity] by [player] in [world]
+ * @return true if [ProjectileEntity] has successfully spawned on server side, or false if not
+ */
 fun throwEntity(world: World, player: PlayerEntity, entityBuilder: (World, PlayerEntity) -> ProjectileEntity?): Boolean {
     world.playSound(
         null,
@@ -160,15 +122,15 @@ fun throwEntity(world: World, player: PlayerEntity, entityBuilder: (World, Playe
     )
     if (!world.isClient) {
         val entity: ProjectileEntity = entityBuilder(world, player) ?: return false
-        entity.apply {
-            setVelocity(player, player.pitch, player.yaw, 0.0f, 1.5f, 1.0f)
-            world.spawnEntity(this)
-        }
-        return true
+        entity.setVelocity(player, player.pitch, player.yaw, 0.0f, 1.5f, 1.0f)
+        return world.spawnEntity(entity)
     }
     return false
 }
 
+/**
+ * Get [ItemStack] which [this] living entity holding in [LivingEntity.getActiveHand]
+ */
 fun LivingEntity.getStackInActiveHand(): ItemStack = getStackInHand(activeHand)
 
 //    Color    //
@@ -182,6 +144,9 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
 
 //    EnergyStorage    //
 
+/**
+ * Calculate [Float] percentage from [EnergyStorage.getAmount] and [EnergyStorage.getCapacity] of [this] energy storage
+ */
 val EnergyStorage.energyPercent: Float
     get() = (amount.toFloat() / capacity.toFloat()) * 100
 
@@ -195,39 +160,50 @@ fun isClientEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvTy
 
 fun isServerEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.SERVER
 
+/**
+ * Check the current launch is data generation or not
+ */
 fun isDataGen(): Boolean = System.getProperty("fabric-api.datagen") != null
 
+/**
+ * Get [ModMetadata] from [modId], or null if there is no mod with [modId]
+ */
 fun getModMetadata(modId: String): ModMetadata? = FabricLoader
     .getInstance()
     .getModContainer(modId)
     .getOrNull()
     ?.metadata
 
+/**
+ * Get mod name from [modId], or null if there is no mod with [modId]
+ */
 fun getModName(modId: String): String? = getModMetadata(modId)?.name
 
 inline fun <reified T : Any> collectEntrypoints(key: String): List<T> = FabricLoader.getInstance().getEntrypoints(key, T::class.java)
 
 //    Fluid    //
 
+/**
+ * Get fluid name from [FluidVariantAttributes.getName]
+ */
 val Fluid.name: MutableText
     get() = FluidVariant.of(this).name
 
+/**
+ * Get fluid name from [FluidVariantAttributes.getName]
+ */
+val FluidVariant.name: MutableText
+    get() = FluidVariantAttributes.getName(this).copy()
+
+/**
+ * Check [this] fluid is the same as [Fluids.EMPTY]
+ */
 val Fluid.isEmpty: Boolean
     get() = this == Fluids.EMPTY
-
-val Fluid.nonEmptyOrNull: Fluid?
-    get() = takeUnless { it.isEmpty }
 
 //    Identifier    //
 
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
-
-//    PlayerEntity    //
-
-fun Entity.asServerPlayer(): ServerPlayerEntity? = this as? ServerPlayerEntity
-
-@Suppress("UNCHECKED_CAST")
-fun <T : ScreenHandler> PlayerEntity.getAsScreenHandler(): T? = currentScreenHandler as? T
 
 //    ServiceLoader    //
 
@@ -235,27 +211,14 @@ inline fun <reified T : Any> collectInstances(): Iterable<T> = ServiceLoader.loa
 
 //    Recipe    //
 
-fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
-    type: RecipeType<U>,
-    predicate: (RecipeEntry<U>) -> Boolean,
-): RecipeEntry<U>? = listAllOfType(type).firstOrNull(predicate)
-
-fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getAllMatches(
-    type: RecipeType<U>,
-    predicate: (RecipeEntry<U>) -> Boolean,
-): List<RecipeEntry<U>> = listAllOfType(type).filter(predicate)
-
-operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
-
-operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
-
-fun RecipeInput.iterable(): Iterable<ItemStack> = buildList<ItemStack> {
+/**
+ * Create a new list from all stacks in [this] recipe input by [RecipeInput.getStackInSlot]
+ */
+fun RecipeInput.toList(): List<ItemStack> = buildList<ItemStack> {
     for (index: Int in (0 until this.size)) {
         add(this[index])
     }
 }
-
-fun RecipeInput.mutableIterable(): MutableIterable<ItemStack> = iterable().toMutableList()
 
 fun getMatchingIndices(ingredients: Collection<HTItemIngredient>, stacks: Collection<ItemStack>): Boolean {
     if (ingredients.size > stacks.size) return false
@@ -279,14 +242,3 @@ fun getMatchingIndices(ingredients: Collection<HTItemIngredient>, stacks: Collec
     }
     return ingredients1.isEmpty() && stacks1.isEmpty()
 }
-
-//    ScreenHandler    //
-
-fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T? = get(getter, null)
-
-fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
-
-fun ScreenHandlerContext.getInventory(size: Int): Inventory =
-    (getBlockEntity() as? HTBlockEntityBase)?.asInventory() ?: SimpleInventory(size)
-
-fun ScreenHandlerContext.getMachineEntity(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase

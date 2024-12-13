@@ -44,10 +44,12 @@ fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 val <T : Any> RegistryEntryList<T>.isEmpty: Boolean
     get() = size() == 0
 
-fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): MutableText = storage
+/**
+ * Transform [this] registry entry list into [MutableText] by [TagKey.getName] or [transform]
+ * @param transform used when [RegistryEntryList.getStorage] returns a list of [RegistryEntry]
+ */
+fun <T : Any> RegistryEntryList<T>.asText(transform: (T) -> Text): MutableText = storage
     .map(
-        { it.name },
-        { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
+        TagKey<T>::getName,
+        { Texts.join(this.map(RegistryEntry<T>::value), transform) },
     ).copy()
-
-operator fun <T : Any> RegistryEntryList<T>.contains(value: T): Boolean = any { it.isOf(value) }

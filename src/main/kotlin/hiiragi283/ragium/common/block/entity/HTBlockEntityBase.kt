@@ -1,10 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.extension.ifPresentWorld
-import hiiragi283.ragium.api.extension.readNbt
-import hiiragi283.ragium.api.extension.sendPacket
-import hiiragi283.ragium.api.extension.sendS2CPacket
-import hiiragi283.ragium.api.extension.writeNbt
+import hiiragi283.ragium.api.extension.*
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -53,7 +49,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     //    Extensions    //
 
     open fun syncInventory() {
-        sendPacket { asInventory()?.sendS2CPacket(it, pos) }
+        asInventory()?.sendS2CPacket(pos, ::sendPacket)
     }
 
     open fun onUse(

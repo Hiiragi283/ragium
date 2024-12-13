@@ -91,9 +91,9 @@ interface RagiumPlugin {
                 entry.getFirstItem(prefix)?.let(action)
             }
         }
-        
+
         fun useMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
-            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix -> 
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 useIfPresent(entry, prefix, action)
             }
         }

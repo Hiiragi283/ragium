@@ -11,6 +11,9 @@ import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
+/**
+ * Register [net.minecraft.recipe.StonecuttingRecipe] with recipe id prefixed with "stonecutting/"
+ */
 object HTStonecuttingRecipeJsonBuilder {
     @JvmStatic
     fun register(

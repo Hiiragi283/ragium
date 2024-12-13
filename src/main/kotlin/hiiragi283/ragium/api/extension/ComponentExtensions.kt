@@ -23,7 +23,7 @@ fun createArmorAttribute(material: RegistryEntry<ArmorMaterial>, type: ArmorItem
     val kResistance: Float = material.value().knockbackResistance
     val builder: AttributeModifiersComponent.Builder = AttributeModifiersComponent.builder()
     val slot: AttributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.equipmentSlot)
-    val id: Identifier = Identifier.of("armor.${type.getName()}")
+    val id: Identifier = Identifier.of("armor.${type.name}")
     builder.add(
         EntityAttributes.GENERIC_ARMOR,
         EntityAttributeModifier(
@@ -95,6 +95,8 @@ fun foodComponent(
     },
 )
 
+//    Getter    //
+
 val ComponentHolder.machineKeyOrNull: HTMachineKey?
     get() = get(HTMachineKey.COMPONENT_TYPE)
 
@@ -103,5 +105,7 @@ val ComponentHolder.machineTier: HTMachineTier
 
 val ComponentMap.machineTier: HTMachineTier
     get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
+
+//    Misc    //
 
 fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).collect(Collectors.joining(", "))}}"

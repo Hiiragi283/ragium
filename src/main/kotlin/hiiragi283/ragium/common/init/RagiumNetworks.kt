@@ -20,7 +20,6 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
-import net.minecraft.util.math.BlockPos
 
 object RagiumNetworks {
     //    S2C    //
@@ -59,16 +58,6 @@ object RagiumNetworks {
     @JvmStatic
     fun sendFluidSync(player: ServerPlayerEntity, index: Int, stack: HTFluidVariantStack) {
         ServerPlayNetworking.send(player, HTFluidSyncPayload(index, stack))
-    }
-
-    @JvmStatic
-    fun sendItemSync(
-        player: ServerPlayerEntity,
-        pos: BlockPos,
-        slot: Int,
-        stack: ItemStack,
-    ) {
-        ServerPlayNetworking.send(player, HTInventoryPayload(pos, slot, stack))
     }
 
     @JvmStatic

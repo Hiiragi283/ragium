@@ -1,7 +1,10 @@
 package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.buildNbt
+import hiiragi283.ragium.api.extension.buildNbtList
+import hiiragi283.ragium.api.extension.toDataResult
+import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
@@ -57,7 +60,7 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
         val copied: Array<SingleFluidStorage> = parts.copyOf()
         copied.forEachIndexed { index: Int, storage: SingleFluidStorage ->
             val newStorage: SingleFluidStorage = SingleFluidStorage.withFixedCapacity(tier.tankCapacity, callback)
-            storage.copyTo(newStorage)
+            newStorage.variantStack = storage.variantStack
             parts[index] = newStorage
         }
     }

@@ -11,14 +11,11 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.DataComponentTypes
-import net.minecraft.enchantment.Enchantment
-import net.minecraft.enchantment.EnchantmentHelper
+import net.minecraft.inventory.Inventory
 import net.minecraft.item.*
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.Text
-import net.minecraft.world.WorldView
 
 //    Item    //
 
@@ -59,11 +56,6 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
     return ItemStack(entry, count, changes)
 }
 
-fun ItemStack.hasEnchantment(world: WorldView, key: RegistryKey<Enchantment>): Boolean = world
-    .getEnchantment(key)
-    ?.let(EnchantmentHelper.getEnchantments(this)::getLevel)
-    ?.let { it > 0 } == true
-
 fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 
 fun ItemStack.isIn(entryList: HTRegistryEntryList<Item>): Boolean = entryList.storage.map(this::isIn, this::isOf)
@@ -81,3 +73,18 @@ val ItemUsageContext.blockState: BlockState
 
 val ItemUsageContext.blockEntity: BlockEntity?
     get() = world.getBlockEntity(blockPos)
+
+//    Inventory    //
+
+fun Inventory.modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
+    val stackIn: ItemStack = getStack(slot)
+    setStack(slot, mapping(stackIn))
+}
+
+fun Inventory.getStackOrNull(slot: Int): ItemStack? = if (slot in 0..size()) getStack(slot) else null
+
+fun Inventory.getStackOrEmpty(slot: Int): ItemStack = getStackOrNull(slot) ?: ItemStack.EMPTY
+
+fun Inventory.asMap(): Map<Int, ItemStack> = (0 until size()).associateWith(::getStack)
+
+fun Inventory.iterateStacks(): List<ItemStack> = (0 until size()).map(::getStack)

@@ -143,14 +143,6 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
     //    CraftingRecipeJsonBuilder    //
 
-    /*fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapedRecipeJsonBuilder = apply {
-        either.ifBoth(
-            { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
-            { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
-            BothEither.Priority.RIGHT,
-        )
-    }*/
-
     override fun criterion(name: String, criterion: AdvancementCriterion<*>): HTShapedRecipeJsonBuilder = apply {
         criteriaMap[name] = criterion
     }
@@ -161,6 +153,9 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
     override fun getOutputItem(): Item = output.item
 
+    /**
+     * Offer built [ShapedRecipe] to [exporter] with recipe id prefixed "shaped/"
+     */
     override fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val fixedId: Identifier = recipeId.withPrefixedPath("shaped/")
         val rawRecipe: RawShapedRecipe = RawShapedRecipe.create(inputMap, patterns.toList())

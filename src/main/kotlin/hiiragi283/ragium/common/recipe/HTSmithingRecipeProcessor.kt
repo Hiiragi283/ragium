@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.getStackOrEmpty
-import hiiragi283.ragium.api.extension.iterable
 import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -43,7 +43,7 @@ class HTSmithingRecipeProcessor(private val inventory: Inventory, private val in
                     return@unitMap HTUnitResult.errorString { "Failed to merge result into output!" }
                 }
                 inventory.modifyStack(outputIndex, output::merge)
-                input.iterable().forEach { stackIn: ItemStack -> stackIn.decrement(1) }
+                input.toList().forEach { stackIn: ItemStack -> stackIn.decrement(1) }
                 HTUnitResult.success()
             }
     }

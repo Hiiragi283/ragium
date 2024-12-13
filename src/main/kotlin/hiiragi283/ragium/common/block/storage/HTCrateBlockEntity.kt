@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.network.HTCratePreviewPayload
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -19,7 +18,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -33,9 +31,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
         override fun onFinalCommit() {
             ifPresentWorld { world: World ->
                 if (!world.isClient) {
-                    sendPacket { playerEntity: ServerPlayerEntity ->
-                        ServerPlayNetworking.send(playerEntity, HTCratePreviewPayload(pos, variant, amount))
-                    }
+                    sendPacket(HTCratePreviewPayload(pos, variant, amount))
                 }
             }
         }

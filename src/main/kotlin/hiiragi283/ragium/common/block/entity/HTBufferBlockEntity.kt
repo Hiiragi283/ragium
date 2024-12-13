@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
@@ -49,8 +47,6 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getDisplayName(): Text = Text.empty()
 
     //    SidedStorageBlockEntity    //
-
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = InventoryStorage.of(inventory, side)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

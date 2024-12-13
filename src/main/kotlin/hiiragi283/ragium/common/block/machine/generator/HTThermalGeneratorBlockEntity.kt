@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.extractSelf
+import hiiragi283.ragium.api.extension.readFluidStorage
+import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
@@ -16,7 +19,6 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -84,8 +86,6 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     //    SidedStorageBlockEntity    //
-
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = inventory.toStorage(side)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
