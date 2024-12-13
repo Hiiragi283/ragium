@@ -57,11 +57,10 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
-    private val settings = HTTieredFluidStorage.Settings(HTStorageIO.OUTPUT, null, this::markDirty, 1)
-    private var fluidStorage = HTTieredFluidStorage(tier, settings)
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, settings)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {

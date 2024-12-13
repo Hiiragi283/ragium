@@ -13,7 +13,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.network.ServerPlayerEntity
 
-class HTTieredFluidStorage private constructor(
+class HTTieredFluidStorage(
     val tier: HTMachineTier,
     val storageIO: HTStorageIO,
     val inputTag: TagKey<Fluid>?,
@@ -22,14 +22,6 @@ class HTTieredFluidStorage private constructor(
 ) : SingleFluidStorage(),
     HTFluidInteractable,
     HTFluidSyncable {
-    constructor(tier: HTMachineTier, definition: Settings) : this(
-        tier,
-        definition.storageIO,
-        definition.inputTag,
-        definition.callback,
-        definition.syncIndex,
-    )
-
     override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
     override fun canInsert(variant: FluidVariant): Boolean = inputTag?.let(variant::isIn) != false
@@ -40,6 +32,13 @@ class HTTieredFluidStorage private constructor(
 
     fun wrapStorage(): Storage<FluidVariant> = storageIO.wrapStorage(this)
 
+    fun updateTier(newTier: HTMachineTier): HTTieredFluidStorage {
+        val stack: HTFluidVariantStack = this.variantStack
+        val newStorage = HTTieredFluidStorage(newTier, storageIO, inputTag, callback, syncIndex)
+        newStorage.variantStack = stack
+        return newStorage
+    }
+
     //    HTFluidInteractable    //
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = interactWithFluidStorage(player, storageIO)
@@ -49,13 +48,4 @@ class HTTieredFluidStorage private constructor(
     override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
         handler.send(player, syncIndex, variantStack)
     }
-
-    //    Definition    //
-
-    data class Settings(
-        val storageIO: HTStorageIO,
-        val inputTag: TagKey<Fluid>?,
-        val callback: () -> Unit,
-        val syncIndex: Int = 0,
-    )
 }

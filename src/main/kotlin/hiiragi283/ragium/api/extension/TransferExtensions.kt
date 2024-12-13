@@ -31,6 +31,7 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.util.Hand
+import kotlin.math.min
 
 //    Storage    //
 
@@ -73,8 +74,15 @@ fun <T : TransferVariant<*>> Storage<T>.extractSelf(maxAmount: Long, transaction
 val SingleItemStorage.variantStack: HTItemVariantStack
     get() = HTItemVariantStack(variant, amount)
 
-val SingleFluidStorage.variantStack: HTFluidVariantStack
+var SingleFluidStorage.variantStack: HTFluidVariantStack
     get() = HTFluidVariantStack(variant, amount)
+    set(value) {
+        this.variant = value.variant
+        this.amount = min(value.amount, this.capacity)
+        if (value.isEmpty) {
+            this.amount = 0
+        }
+    }
 
 fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? = if (slot in 0..slotCount) getSlot(slot) else null
 

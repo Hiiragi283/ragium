@@ -50,12 +50,11 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private val settings =
-        HTTieredFluidStorage.Settings(HTStorageIO.INPUT, ConventionalFluidTags.WATER, this::markDirty)
-    private var fluidStorage = HTTieredFluidStorage(tier, settings)
+    private var fluidStorage =
+        HTTieredFluidStorage(tier, HTStorageIO.INPUT, ConventionalFluidTags.WATER, this::markDirty)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, settings)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {

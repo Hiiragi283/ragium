@@ -33,11 +33,10 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.COMBUSTION_GENERATOR
 
-    private val settings = HTTieredFluidStorage.Settings(HTStorageIO.INPUT, RagiumFluidTags.FUELS, this::markDirty)
-    private var fluidStorage = HTTieredFluidStorage(tier, settings)
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.FUELS, this::markDirty)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, settings)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {

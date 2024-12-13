@@ -42,12 +42,11 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         override fun isValid(slot: Int, stack: ItemStack): Boolean = stack.isOf(Items.BLAZE_POWDER)
     }
 
-    private val settings =
-        HTTieredFluidStorage.Settings(HTStorageIO.INPUT, RagiumFluidTags.THERMAL_FUELS, this::markDirty)
-    private var fluidStorage = HTTieredFluidStorage(tier, settings)
+    private var fluidStorage =
+        HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.THERMAL_FUELS, this::markDirty)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, settings)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {

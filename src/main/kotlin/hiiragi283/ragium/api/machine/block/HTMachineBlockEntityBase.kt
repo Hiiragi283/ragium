@@ -63,8 +63,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     private var errorMessage: String? = null
 
-    open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
-
     @Environment(EnvType.CLIENT)
     fun onPacketReceived(packet: HTMachineKeySyncPayload) {
         key = packet.key
@@ -97,6 +95,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             }
         }
     }
+
+    open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
     final override fun onUse(
         state: BlockState,
