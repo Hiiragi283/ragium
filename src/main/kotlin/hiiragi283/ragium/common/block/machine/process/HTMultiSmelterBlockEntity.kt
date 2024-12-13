@@ -8,9 +8,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor
@@ -18,7 +16,6 @@ import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.SidedInventory
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.SmeltingRecipe
 import net.minecraft.screen.ScreenHandler
@@ -33,12 +30,9 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage.update(tier)
     }
 
-    override val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildInventory()
+    override val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
 
-    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(0).buildMachineFluidStorage(tier)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Builder(0).build(tier)
 
     override val processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1)

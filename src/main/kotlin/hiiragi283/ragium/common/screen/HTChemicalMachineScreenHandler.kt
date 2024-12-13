@@ -30,5 +30,6 @@ class HTChemicalMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ct
         addProperties(property)
     }
 
-    override val machineSlotRange: IntRange = (0..4)
+    override val inputSlots: IntRange = (0..1)
+    override val outputSlots: IntRange = (3..4)
 }

@@ -26,5 +26,6 @@ class HTSmallMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: 
         addProperties(property)
     }
 
-    override val machineSlotRange: IntRange = (0..1)
+    override val inputSlots: IntRange = (0..0)
+    override val outputSlots: IntRange = (1..1)
 }

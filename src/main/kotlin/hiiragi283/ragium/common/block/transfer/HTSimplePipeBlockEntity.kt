@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.extension.fluidStorageOf
-import hiiragi283.ragium.api.extension.ifPresentWorld
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -32,14 +31,14 @@ class HTSimplePipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        itemStorage.writeNbt(nbt, wrapperLookup)
-        fluidStorage.writeNbt(nbt, wrapperLookup)
+        nbt.writeItemStorage(ITEM_KEY, itemStorage, wrapperLookup)
+        nbt.writeFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        itemStorage.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup)
+        nbt.readItemStorage(ITEM_KEY, itemStorage, wrapperLookup)
+        nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     fun canConnect(dir: Direction): Boolean = ifPresentWorld { world: World ->

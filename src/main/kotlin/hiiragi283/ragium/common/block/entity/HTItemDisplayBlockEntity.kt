@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -15,9 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state) {
-    private val inventory: SidedInventory = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .buildInventory()
+    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).build()
 
     override fun asInventory(): SidedInventory = inventory
 

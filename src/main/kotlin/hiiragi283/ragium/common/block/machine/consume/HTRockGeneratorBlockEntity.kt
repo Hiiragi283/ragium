@@ -6,9 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -34,19 +32,9 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.ROCK_GENERATOR
 
-    val inventory: SidedInventory = HTStorageBuilder(5)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(2, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildInventory()
+    val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
 
-    val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage(tier)
-        .setCallback(this@HTRockGeneratorBlockEntity::markDirty)
+    val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 
     val processor = HTMachineRecipeProcessor(
         inventory,

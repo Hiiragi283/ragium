@@ -100,10 +100,9 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
         useTransaction { transaction: Transaction ->
             if (stack.isEmpty) {
                 if (!itemStorage.isResourceBlank) {
-                    val variantIn: ItemVariant = itemStorage.variant
-                    val extracted: Long = itemStorage.extract(variantIn, 64, transaction)
+                    val extracted: Long = itemStorage.extractSelf(64, transaction)
                     if (extracted > 0) {
-                        dropStackAt(player, variantIn.toStack(extracted.toInt()))
+                        dropStackAt(player, itemStorage.variant.toStack(extracted.toInt()))
                         transaction.commit()
                         return ActionResult.success(world.isClient)
                     }

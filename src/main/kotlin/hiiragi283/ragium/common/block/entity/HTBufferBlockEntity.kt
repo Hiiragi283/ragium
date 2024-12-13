@@ -2,9 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
@@ -27,15 +25,10 @@ class HTBufferBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.BUFFER, pos, state),
     NamedScreenHandlerFactory,
     SidedStorageBlockEntity {
-    private val inventory: SidedInventory =
-        HTStorageBuilder(9)
-            .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-            .buildInventory()
+    private val inventory: HTMachineInventory = HTMachineInventory.Builder(9).generic(0..8).build()
 
     private val fluidStorage: HTMachineFluidStorage =
-        HTStorageBuilder(9)
-            .setAll(HTStorageIO.GENERIC, HTStorageSide.ANY, 0..8)
-            .buildMachineFluidStorage(HTMachineTier.PRIMITIVE)
+        HTMachineFluidStorage.Builder(9).generic(0..8).build(HTMachineTier.PRIMITIVE)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

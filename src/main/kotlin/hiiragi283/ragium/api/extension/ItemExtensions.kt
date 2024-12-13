@@ -71,6 +71,9 @@ fun ItemStack.isIn(entryList: HTRegistryEntryList<Item>): Boolean = entryList.st
 val ItemStack.restDamage: Int
     get() = maxDamage - damage
 
+val ItemStack.isMaxCount: Boolean
+    get() = count == maxCount
+
 //    ItemUsageContext    //
 
 val ItemUsageContext.blockState: BlockState

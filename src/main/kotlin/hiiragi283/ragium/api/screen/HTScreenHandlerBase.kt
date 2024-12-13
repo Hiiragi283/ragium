@@ -30,10 +30,11 @@ abstract class HTScreenHandlerBase(
         inventory.onClose(player)
     }
 
-    abstract val machineSlotRange: IntRange
+    abstract val inputSlots: IntRange
+    abstract val outputSlots: IntRange
 
     private val playerStartIndex: Int
-        get() = machineSlotRange.last + 1
+        get() = outputSlots.last + 1
 
     override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
@@ -42,14 +43,20 @@ abstract class HTScreenHandlerBase(
             val stackIn: ItemStack = slotIn.stack
             result = stackIn.copy()
             when {
-                slot in machineSlotRange -> {
+                slot in inputSlots -> {
+                    if (!insertItem(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
+                        return ItemStack.EMPTY
+                    }
+                }
+
+                slot in outputSlots -> {
                     if (!insertItem(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
                         return ItemStack.EMPTY
                     }
                 }
 
                 else -> {
-                    if (insertItem(stackIn, machineSlotRange.first, playerStartIndex, false)) {
+                    if (insertItem(stackIn, inputSlots.first, inputSlots.last + 1, false)) {
                         if (!insertItem(stackIn, playerStartIndex, playerStartIndex + 36, false)) {
                             return ItemStack.EMPTY
                         }

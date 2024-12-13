@@ -32,7 +32,8 @@ class HTLargeMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: 
         addProperties(property)
     }
 
-    override val machineSlotRange: IntRange = (0..6)
+    override val inputSlots: IntRange = (0..2)
+    override val outputSlots: IntRange = (4..6)
 
     /*override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY

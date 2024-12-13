@@ -43,6 +43,28 @@ fun <T : TransferVariant<*>> Storage<T>.extract(stack: HTVariantStack<*, T>, tra
 val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
     get() = amount == capacity
 
+fun <T : TransferVariant<*>> SingleVariantStorage<T>.insertSelf(maxAmount: Long, transaction: TransactionContext): Long {
+    if (variant.isBlank) return 0
+    return insert(variant, maxAmount, transaction)
+}
+
+fun <T : TransferVariant<*>> SingleVariantStorage<T>.insertSelf(initial: T, maxAmount: Long, transaction: TransactionContext): Long {
+    val toInsert: T = when (variant.isBlank) {
+        true -> when (initial.isBlank) {
+            true -> return 0
+            false -> initial
+        }
+
+        false -> variant
+    }
+    return insert(toInsert, maxAmount, transaction)
+}
+
+fun <T : TransferVariant<*>> SingleVariantStorage<T>.extractSelf(maxAmount: Long, transaction: TransactionContext): Long {
+    if (variant.isBlank) return 0
+    return extract(variant, maxAmount, transaction)
+}
+
 val SingleItemStorage.variantStack: HTItemVariantStack
     get() = HTItemVariantStack(variant, amount)
 

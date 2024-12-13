@@ -24,6 +24,9 @@ import net.minecraft.world.World
 
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
     companion object {
+        const val FLUID_KEY = "fluid_storage"
+        const val ITEM_KEY = "item_storage"
+
         const val MACHINE_KEY = "machine"
         const val TIER_KEY = "tier"
     }

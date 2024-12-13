@@ -1,17 +1,14 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import hiiragi283.ragium.api.extension.isIn
-import hiiragi283.ragium.api.extension.modifyStack
-import hiiragi283.ragium.api.extension.restDamage
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
@@ -22,9 +19,7 @@ import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -44,29 +39,27 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.NUCLEAR_REACTOR
 
-    private val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildInventory()
+    private val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 
-    private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.COOLANTS) }
-        .buildMachineFluidStorage(tier)
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.INPUT, RagiumFluidTags.COOLANTS)
+    }
+
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.COOLANTS)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        fluidStorage.writeNbt(nbt, wrapperLookup)
+        nbt.writeFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup, tier)
+        nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
@@ -80,18 +73,14 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         }?.let(::HTItemResult) ?: return HTUnitResult.errorString { "Input slot has no nuclear fuels!" }
         if (!result.canMerge(wasteStack)) return overheat(world, pos)
         return useTransaction { transaction: Transaction ->
-            fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
-                val foundVariant: FluidVariant =
-                    StorageUtil.findExtractableResource(storageIn, transaction) ?: return@unitMap overheat(world, pos)
-                if (storageIn.extract(foundVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
-                    transaction.commit()
-                    inventory.modifyStack(1, result::merge)
-                    fuelStack.damage += 1
-                    return@unitMap HTUnitResult.success()
-                } else {
-                    transaction.abort()
-                    return@unitMap overheat(world, pos)
-                }
+            if (fluidStorage.extractSelf(FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                transaction.commit()
+                inventory.modifyStack(1, result::merge)
+                fuelStack.damage += 1
+                return HTUnitResult.success()
+            } else {
+                transaction.abort()
+                return overheat(world, pos)
             }
         }
     }
@@ -107,7 +96,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
     //    HTFluidSyncable    //
 

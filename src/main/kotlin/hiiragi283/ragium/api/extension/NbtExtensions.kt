@@ -2,9 +2,12 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
+import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.Identifier
 
 //    NbtCompound    //
@@ -23,12 +26,28 @@ fun NbtCompound.putTier(key: String, value: HTMachineTier) {
     putString(key, value.asString())
 }
 
+fun NbtCompound.writeItemStorage(key: String, storage: SingleItemStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    put(key, buildNbt { storage.writeNbt(this, wrapperLookup) })
+}
+
+fun NbtCompound.writeFluidStorage(key: String, storage: SingleFluidStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    put(key, buildNbt { storage.writeNbt(this, wrapperLookup) })
+}
+
 fun NbtCompound.getIdentifier(key: String): Identifier = Identifier.of(getString(key))
 
 fun NbtCompound.getMachineKey(key: String): HTMachineKey = HTMachineKey.of(getIdentifier(key))
 
 fun NbtCompound.getTier(key: String): HTMachineTier =
     HTMachineTier.entries.firstOrNull { it.asString() == getString(key) } ?: HTMachineTier.PRIMITIVE
+
+fun NbtCompound.readItemStorage(key: String, storage: SingleItemStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    storage.readNbt(getCompound(key), wrapperLookup)
+}
+
+fun NbtCompound.readFluidStorage(key: String, storage: SingleFluidStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
+    storage.readNbt(getCompound(key), wrapperLookup)
+}
 
 //    NbtList    //
 

@@ -5,9 +5,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
@@ -75,23 +73,9 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
         HTMultiblockPatternProvider {
         final override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
-        final override val inventory: SidedInventory = HTStorageBuilder(7)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(2, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(3, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-            .set(4, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .set(5, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .set(6, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildInventory()
+        final override val inventory: SidedInventory = HTMachineInventory.ofLarge()
 
-        final override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
-            .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(1, HTStorageIO.INPUT, HTStorageSide.ANY)
-            .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-            .buildMachineFluidStorage(tier)
-            .setCallback { this@Large.markDirty() }
+        final override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 
         override val processor = HTMachineRecipeProcessor(
             inventory,

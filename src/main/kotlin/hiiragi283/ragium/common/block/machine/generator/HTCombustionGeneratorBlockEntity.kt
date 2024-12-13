@@ -1,15 +1,12 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import hiiragi283.ragium.api.extension.isIn
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
@@ -18,7 +15,6 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -38,50 +34,44 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override var key: HTMachineKey = RagiumMachineKeys.COMBUSTION_GENERATOR
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage.update(newTier)
+        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.INPUT, RagiumFluidTags.FUELS)
     }
 
-    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.FUELS) }
-        .buildMachineFluidStorage(tier)
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.FUELS)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        fluidStorage.writeNbt(nbt, wrapperLookup)
+        nbt.writeFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup, tier)
+        nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
     override fun process(world: World, pos: BlockPos): HTUnitResult = useTransaction { transaction: Transaction ->
-        fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
-            val variantIn: FluidVariant = storageIn.variant
-            if (variantIn.isBlank) return@unitMap HTUnitResult.errorString { "Empty fuels!" }
-            val maxAmount: Long = when {
-                variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.NUGGET
-                variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.INGOT
-                else -> return@unitMap HTUnitResult.errorString { "Failed to calculate consume amount!" }
-            }
-            if (storageIn.extract(variantIn, maxAmount, transaction) == maxAmount) {
-                transaction.commit()
-                HTUnitResult.success()
-            } else {
-                transaction.abort()
-                HTUnitResult.errorString { "Failed to consume fuels!" }
-            }
+        val variantIn: FluidVariant = fluidStorage.variant
+        val maxAmount: Long = when {
+            variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.NUGGET
+            variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.INGOT
+            else -> return HTUnitResult.errorString { "Failed to calculate consume amount!" }
+        }
+        if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
+            transaction.commit()
+            HTUnitResult.success()
+        } else {
+            transaction.abort()
+            HTUnitResult.errorString { "Failed to consume fuels!" }
         }
     }
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
     //    HTFluidSyncable    //
 

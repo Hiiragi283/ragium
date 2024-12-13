@@ -8,9 +8,8 @@ import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -45,17 +44,15 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage.update(newTier)
     }
 
-    private val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .stackFilter { _: Int, stack: ItemStack ->
+    private val inventory: HTMachineInventory = object : HTMachineInventory(
+        2,
+        mapOf(0 to HTStorageIO.INPUT, 1 to HTStorageIO.OUTPUT),
+    ) {
+        override fun isValid(slot: Int, stack: ItemStack): Boolean =
             stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
-        }.buildInventory()
+    }
 
-    private val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage(tier)
+    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -94,11 +91,12 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         if (storageIn.isResourceBlank) return HTUnitResult.errorString { "Input tank is empty!" }
         if (storageIn.amount < FluidConstants.BUCKET) return HTUnitResult.errorString { "Required 81,000 Units or more for canning!" }
         val variantIn: FluidVariant = storageIn.resource
+        if (variantIn.isBlank) return HTUnitResult.errorString { "Blank Fluid!" }
         val filledStack: ItemStack = RagiumAPI.getInstance().createFilledCube(variantIn.fluid)
         val filledResult = HTItemResult(filledStack)
         return if (filledResult.canMerge(inventory.getStack(1))) {
             useTransaction { transaction: Transaction ->
-                if (storageIn.extract(variantIn, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                if (storageIn.extractSelf(FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
                     inventory.modifyStack(1, filledResult::merge)
                     stack.decrement(1)
                     HTUnitResult.success()

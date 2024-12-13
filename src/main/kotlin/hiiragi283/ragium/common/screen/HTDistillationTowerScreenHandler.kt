@@ -26,5 +26,6 @@ class HTDistillationTowerScreenHandler(syncId: Int, playerInv: PlayerInventory, 
         addProperties(property)
     }
 
-    override val machineSlotRange: IntRange = (0..1)
+    override val inputSlots: IntRange = IntRange.EMPTY
+    override val outputSlots: IntRange = (1..1)
 }

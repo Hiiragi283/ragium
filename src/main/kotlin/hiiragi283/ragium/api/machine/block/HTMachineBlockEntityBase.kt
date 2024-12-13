@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.storage.HTFluidInteractable
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.util.HTUnitResult
@@ -29,6 +30,7 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
@@ -42,7 +44,8 @@ import net.minecraft.world.World
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(type, pos, state),
     NamedScreenHandlerFactory,
-    SidedStorageBlockEntity {
+    SidedStorageBlockEntity,
+    HTFluidInteractable {
     abstract var key: HTMachineKey
         protected set
     val definition: HTMachineDefinition
@@ -62,7 +65,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
     @Environment(EnvType.CLIENT)
-    open fun onPacketReceived(packet: HTMachineKeySyncPayload) {
+    fun onPacketReceived(packet: HTMachineKeySyncPayload) {
         key = packet.key
     }
 
@@ -78,24 +81,31 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         key = nbt.getMachineKey(MACHINE_KEY)
     }
 
-    override fun addComponents(builder: ComponentMap.Builder) {
+    final override fun addComponents(builder: ComponentMap.Builder) {
         builder.add(HTMachineTier.COMPONENT_TYPE, tier)
     }
 
     @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
-    override fun setCachedState(state: BlockState) {
+    final override fun setCachedState(state: BlockState) {
         val oldTier: HTMachineTier = tier
         super.setCachedState(state)
         onTierUpdated(oldTier, tier)
     }
 
-    override fun onUse(
+    final override fun onUse(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
+        // Open slot config screen when holding xxx
+        /*if (player.getStackInActiveHand().isOf(RagiumContents.Circuits.PRIMITIVE)) {
+            if (!world.isClient) {
+                player.openHandledScreen(configScreenFactory)
+            }
+            return ActionResult.success(world.isClient)
+        }*/
         // Upgrade machine when clicked with machine hull
         if (upgrade(world, player, RagiumItemTags.BASIC_UPGRADES, HTMachineTier.BASIC)) {
             return ActionResult.success(world.isClient)
@@ -136,8 +146,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             false
         }
     }
-
-    abstract fun interactWithFluidStorage(player: PlayerEntity): Boolean
 
     protected fun activateState(world: World, pos: BlockPos, newState: Boolean) {
         if (!world.isClient) {
@@ -203,4 +211,9 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     //    NamedScreenHandlerFactory    //
 
     final override fun getDisplayName(): Text = tier.createPrefixedText(key)
+
+    private val configScreenFactory = SimpleNamedScreenHandlerFactory(
+        null,
+        Text.literal("Slot Configuration"),
+    )
 }

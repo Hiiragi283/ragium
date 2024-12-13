@@ -7,9 +7,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
@@ -18,7 +16,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.SidedInventory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 
@@ -27,17 +24,9 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiblockPatternProvider {
     override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
-    override val inventory: SidedInventory = HTStorageBuilder(2)
-        .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildInventory()
+    override val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
 
-    override val fluidStorage: HTMachineFluidStorage = HTStorageBuilder(4)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .set(1, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .set(2, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .set(3, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage(tier)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,

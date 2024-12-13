@@ -3,7 +3,8 @@ package hiiragi283.ragium.common.block.storage
 import hiiragi283.ragium.api.extension.getTier
 import hiiragi283.ragium.api.extension.putTier
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.storage.*
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -25,9 +26,10 @@ import net.minecraft.world.World
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
     HTBlockEntityBase(RagiumBlockEntityTypes.DRUM, pos, state),
     SidedStorageBlockEntity {
-    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.GENERIC, HTStorageSide.ANY)
-        .buildMachineFluidStorage(tier)
+    private var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
+        .Builder(1)
+        .generic(0)
+        .build(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
