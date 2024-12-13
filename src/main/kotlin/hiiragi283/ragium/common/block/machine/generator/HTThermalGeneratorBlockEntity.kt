@@ -38,15 +38,17 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.INPUT, RagiumFluidTags.THERMAL_FUELS)
-    }
-
     private val inventory: HTMachineInventory = object : HTMachineInventory(1, mapOf(0 to HTStorageIO.INPUT)) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean = stack.isOf(Items.BLAZE_POWDER)
     }
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.THERMAL_FUELS)
+    private val settings =
+        HTTieredFluidStorage.Settings(HTStorageIO.INPUT, RagiumFluidTags.THERMAL_FUELS, this::markDirty)
+    private var fluidStorage = HTTieredFluidStorage(tier, settings)
+
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, settings)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -77,7 +79,6 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 transaction.commit()
                 HTUnitResult.success()
             } else {
-                transaction.abort()
                 HTUnitResult.errorString { "Failed to consume fuels!" }
             }
         }
@@ -91,8 +92,8 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 
     //    ExtendedScreenHandlerFactory    //

@@ -2,10 +2,10 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.common.network.*
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -57,13 +57,8 @@ object RagiumNetworks {
     }
 
     @JvmStatic
-    fun sendFluidSync(
-        player: ServerPlayerEntity,
-        index: Int,
-        variant: FluidVariant,
-        amount: Long,
-    ) {
-        ServerPlayNetworking.send(player, HTFluidSyncPayload(index, variant, amount))
+    fun sendFluidSync(player: ServerPlayerEntity, index: Int, stack: HTFluidVariantStack) {
+        ServerPlayNetworking.send(player, HTFluidSyncPayload(index, stack))
     }
 
     @JvmStatic

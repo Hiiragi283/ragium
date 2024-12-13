@@ -47,7 +47,6 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
                 transaction.commit()
                 HTUnitResult.success()
             } else {
-                transaction.abort()
                 HTUnitResult.errorString { "Failed to insert ores into the above storage!" }
             }
         }

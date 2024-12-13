@@ -39,10 +39,6 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.INPUT, ConventionalFluidTags.WATER)
-    }
-
     private val inventory: HTMachineInventory = object : HTMachineInventory(
         2,
         mapOf(0 to HTStorageIO.INPUT, 1 to HTStorageIO.OUTPUT),
@@ -54,7 +50,13 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, ConventionalFluidTags.WATER)
+    private val settings =
+        HTTieredFluidStorage.Settings(HTStorageIO.INPUT, ConventionalFluidTags.WATER, this::markDirty)
+    private var fluidStorage = HTTieredFluidStorage(tier, settings)
+
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, settings)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -96,8 +98,8 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 
     //    ExtendedScreenHandlerFactory    //

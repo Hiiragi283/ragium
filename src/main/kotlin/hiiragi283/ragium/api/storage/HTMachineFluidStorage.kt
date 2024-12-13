@@ -3,8 +3,8 @@ package hiiragi283.ragium.api.storage
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
@@ -12,13 +12,11 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.fabricmc.fabric.impl.transfer.TransferApiImpl
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.util.Hand
 
 class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO>, tier: HTMachineTier) : SlottedStorage<FluidVariant> {
     companion object {
@@ -54,8 +52,6 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
 
     fun getVariantStack(index: Int): HTFluidVariantStack =
         map(index, SingleFluidStorage::variantStack).result().orElse(HTFluidVariantStack.EMPTY)
-
-    fun interactByPlayer(player: PlayerEntity): Boolean = FluidStorageUtil.interactWithFluidStorage(this, player, Hand.MAIN_HAND)
 
     fun update(tier: HTMachineTier): HTMachineFluidStorage = apply {
         val copied: Array<SingleFluidStorage> = parts.copyOf()
@@ -103,20 +99,16 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
 
     //    HTFluidSyncable    //
 
-    fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit, vararg slotRange: Int) {
+    fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler, vararg slotRange: Int) {
         slotRange.forEach { index: Int ->
             parts.getOrNull(index)?.let { storage: SingleFluidStorage ->
-                sender(player, index, storage.variant, storage.amount)
+                handler.send(player, index, storage.variantStack)
             }
         }
     }
 
-    fun sendPacket(
-        player: ServerPlayerEntity,
-        sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit,
-        slotRange: IntRange = parts.indices,
-    ) {
-        sendPacket(player, sender, *slotRange.toList().toIntArray())
+    fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler, slotRange: IntRange = parts.indices) {
+        sendPacket(player, handler, *slotRange.toList().toIntArray())
     }
 
     //    SlottedStorage    //

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.extension.getTier
+import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.extension.putTier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -66,9 +67,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult = when {
-        fluidStorage.interactByPlayer(player) ->
-            ActionResult.success(world.isClient)
-
+        fluidStorage.interactWithFluidStorage(player) -> ActionResult.success(world.isClient)
         else -> ActionResult.PASS
     }
 

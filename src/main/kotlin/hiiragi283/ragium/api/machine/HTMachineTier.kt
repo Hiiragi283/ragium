@@ -167,10 +167,7 @@ enum class HTMachineTier(
                             true
                         }
 
-                        else -> {
-                            transaction.abort()
-                            false
-                        }
+                        else -> false
                     }
                 }.result()
                 .orElse(false)

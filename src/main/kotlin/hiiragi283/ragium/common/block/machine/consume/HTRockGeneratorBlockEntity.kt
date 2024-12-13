@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.extension.getAroundPos
+import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.block.HTFluidSyncable
@@ -62,7 +63,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage.update(newTier)
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
     override fun process(world: World, pos: BlockPos): HTUnitResult = when {
         pos
@@ -81,8 +82,8 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 
     //    SidedStorageBlockEntity    //

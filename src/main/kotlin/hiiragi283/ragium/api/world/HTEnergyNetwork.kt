@@ -56,13 +56,9 @@ class HTEnergyNetwork() :
                 if (amount <= 0) return false
                 useTransaction(parent) { transaction: Transaction ->
                     val extracted: Long = network.extract(amount, transaction)
-                    when {
-                        extracted == amount -> {
-                            transaction.commit()
-                            return true
-                        }
-
-                        else -> transaction.abort()
+                    if (extracted == amount) {
+                        transaction.commit()
+                        return true
                     }
                 }
                 return false
@@ -73,13 +69,9 @@ class HTEnergyNetwork() :
                 if (amount <= 0) return false
                 useTransaction(parent) { transaction: Transaction ->
                     val inserted: Long = network.insert(amount, transaction)
-                    when {
-                        inserted == amount -> {
-                            transaction.commit()
-                            return true
-                        }
-
-                        else -> transaction.abort()
+                    if (inserted == amount) {
+                        transaction.commit()
+                        return true
                     }
                 }
                 return false

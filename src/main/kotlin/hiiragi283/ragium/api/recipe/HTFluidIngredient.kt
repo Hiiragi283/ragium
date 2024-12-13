@@ -85,11 +85,7 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
                     ) ?: return
                 if (test(foundVariant.fluid, amount)) {
                     val extracted: Long = storage.extract(foundVariant, amount, transaction)
-                    if (extracted == amount) {
-                        transaction.commit()
-                    } else {
-                        transaction.abort()
-                    }
+                    if (extracted == amount) transaction.commit()
                 }
             }
         }

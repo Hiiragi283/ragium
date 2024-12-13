@@ -33,11 +33,12 @@ import net.minecraft.world.World
 class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state) {
     override var key: HTMachineKey = RagiumMachineKeys.DRAIN
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.OUTPUT, null)
-    }
+    private val settings = HTTieredFluidStorage.Settings(HTStorageIO.OUTPUT, null, this::markDirty)
+    private var fluidStorage = HTTieredFluidStorage(tier, settings)
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null)
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, settings)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

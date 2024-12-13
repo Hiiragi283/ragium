@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.extension.world
@@ -33,7 +34,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -318,11 +318,11 @@ object RagiumClient : ClientModInitializer {
         }
 
         RagiumNetworks.FLUID_SYNC.registerClientReceiver { payload: HTFluidSyncPayload, context: ClientPlayNetworking.Context ->
-            val (index: Int, variant: FluidVariant, amount: Long) = payload
+            val (index: Int, stack: HTFluidVariantStack) = payload
             val screen: Screen = context.client().currentScreen ?: return@registerClientReceiver
             if (screen is HTMachineScreenBase<*>) {
-                screen.fluidCache[index] = variant
-                screen.amountCache[index] = amount
+                screen.fluidCache[index] = stack.variant
+                screen.amountCache[index] = stack.amount
             }
         }
 

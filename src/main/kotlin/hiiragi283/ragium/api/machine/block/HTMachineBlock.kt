@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineKeyOrNull
 import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -31,6 +32,7 @@ import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
+import net.minecraft.world.WorldView
 
 class HTMachineBlock(val key: HTMachineKey) :
     HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE).nonOpaque()),
@@ -71,6 +73,12 @@ class HTMachineBlock(val key: HTMachineKey) :
             }
         }
     }
+
+    override fun getPickStack(world: WorldView, pos: BlockPos, state: BlockState): ItemStack = world
+        .getMachineEntity(pos)
+        ?.let(HTMachineBlockEntityBase::definition)
+        ?.let(HTMachineDefinition::iconStack)
+        ?: super.getPickStack(world, pos, state)
 
     override fun appendTooltip(
         stack: ItemStack,

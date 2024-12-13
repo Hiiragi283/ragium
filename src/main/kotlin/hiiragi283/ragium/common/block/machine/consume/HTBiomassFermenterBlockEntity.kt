@@ -40,13 +40,13 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.OUTPUT, null, 1)
-    }
-
     private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).input(0).build()
+    private val settings = HTTieredFluidStorage.Settings(HTStorageIO.OUTPUT, null, this::markDirty, 1)
+    private var fluidStorage = HTTieredFluidStorage(tier, settings)
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, 1)
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, settings)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -78,7 +78,6 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
                 inputStack.decrement(1)
                 HTUnitResult.success()
             } else {
-                transaction.abort()
                 HTUnitResult.errorString { "Failed to insert fluid!" }
             }
         }
@@ -89,7 +88,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 }

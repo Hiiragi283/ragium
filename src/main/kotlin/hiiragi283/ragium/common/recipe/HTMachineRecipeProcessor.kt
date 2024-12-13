@@ -72,8 +72,6 @@ class HTMachineRecipeProcessor(
                 fluidStorage.map(slot) { storageIn: SingleFluidStorage ->
                     if (result.merge(storageIn, transaction) == result.amount) {
                         transaction.commit()
-                    } else {
-                        transaction.abort()
                     }
                 }
             }

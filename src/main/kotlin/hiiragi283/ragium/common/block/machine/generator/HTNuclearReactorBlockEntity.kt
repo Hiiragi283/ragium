@@ -41,11 +41,12 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.INPUT, RagiumFluidTags.COOLANTS)
-    }
+    private val settings = HTTieredFluidStorage.Settings(HTStorageIO.INPUT, RagiumFluidTags.COOLANTS, this::markDirty)
+    private var fluidStorage = HTTieredFluidStorage(tier, settings)
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.COOLANTS)
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, settings)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -77,10 +78,9 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
                 transaction.commit()
                 inventory.modifyStack(1, result::merge)
                 fuelStack.damage += 1
-                return HTUnitResult.success()
+                HTUnitResult.success()
             } else {
-                transaction.abort()
-                return overheat(world, pos)
+                overheat(world, pos)
             }
         }
     }
@@ -100,7 +100,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 }

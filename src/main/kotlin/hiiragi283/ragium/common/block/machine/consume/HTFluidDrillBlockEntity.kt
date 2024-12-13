@@ -57,11 +57,12 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage = HTTieredFluidStorage(newTier, HTStorageIO.OUTPUT, null, 1)
-    }
+    private val settings = HTTieredFluidStorage.Settings(HTStorageIO.OUTPUT, null, this::markDirty, 1)
+    private var fluidStorage = HTTieredFluidStorage(tier, settings)
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, 1)
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = HTTieredFluidStorage(newTier, settings)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -106,8 +107,8 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 
     //    HTMultiblockPatternProvider    //

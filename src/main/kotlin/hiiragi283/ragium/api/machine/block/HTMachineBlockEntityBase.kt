@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -89,7 +90,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     final override fun setCachedState(state: BlockState) {
         val oldTier: HTMachineTier = tier
         super.setCachedState(state)
-        onTierUpdated(oldTier, tier)
+        ifPresentWorld { world: World ->
+            if (!world.isClient && oldTier != tier) {
+                onTierUpdated(oldTier, tier)
+                RagiumAPI.LOGGER.info("Machine tier updated: $oldTier -> $tier")
+            }
+        }
     }
 
     final override fun onUse(

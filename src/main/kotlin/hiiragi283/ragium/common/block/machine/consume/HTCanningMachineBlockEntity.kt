@@ -40,10 +40,6 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidSyncable {
     override var key: HTMachineKey = RagiumMachineKeys.CANNING_MACHINE
 
-    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage.update(newTier)
-    }
-
     private val inventory: HTMachineInventory = object : HTMachineInventory(
         2,
         mapOf(0 to HTStorageIO.INPUT, 1 to HTStorageIO.OUTPUT),
@@ -53,6 +49,10 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
+
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage.update(newTier)
+    }
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -66,7 +66,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 
@@ -101,7 +101,6 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
                     stack.decrement(1)
                     HTUnitResult.success()
                 } else {
-                    transaction.abort()
                     HTUnitResult.errorString { "Failed to extract 81,000 Units from input tank!" }
                 }
             }
@@ -132,7 +131,6 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
                     transaction.commit()
                     HTUnitResult.success()
                 } else {
-                    transaction.abort()
                     HTUnitResult.errorString { "Failed to extract 81,000 Units from input tank!" }
                 }
             }
@@ -146,7 +144,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    HTFluidSyncable    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
+    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
+        fluidStorage.sendPacket(player, handler)
     }
 }
