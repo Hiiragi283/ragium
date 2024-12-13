@@ -13,6 +13,9 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.server.network.ServerPlayerEntity
 
+/**
+ * A simple [SingleFluidStorage] implementation with tiered capacity
+ */
 class HTTieredFluidStorage(
     val tier: HTMachineTier,
     val storageIO: HTStorageIO,
@@ -30,8 +33,14 @@ class HTTieredFluidStorage(
         callback()
     }
 
+    /**
+     * @see [HTStorageIO.wrapStorage]
+     */
     fun wrapStorage(): Storage<FluidVariant> = storageIO.wrapStorage(this)
 
+    /**
+     * Create a new [hiiragi283.ragium.api.storage.HTTieredFluidStorage] instance and copy before containment
+     */
     fun updateTier(newTier: HTMachineTier): HTTieredFluidStorage {
         val stack: HTFluidVariantStack = this.variantStack
         val newStorage = HTTieredFluidStorage(newTier, storageIO, inputTag, callback, syncIndex)

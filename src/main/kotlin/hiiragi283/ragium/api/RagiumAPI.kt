@@ -22,6 +22,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.function.Consumer
 
+/**
+ * An API instance for Ragium
+ *
+ * Call [RagiumAPI.getInstance] to get singleton instance
+ */
 @Suppress("DEPRECATION")
 interface RagiumAPI {
     companion object {
@@ -42,6 +47,9 @@ interface RagiumAPI {
         @JvmStatic
         fun getInstance(): RagiumAPI = InternalRagiumAPI
 
+        /**
+         * Collected list of [RagiumPlugin]
+         */
         @JvmStatic
         val plugins: List<RagiumPlugin> by lazy {
             LOGGER.info("=== Loaded Ragium Plugins ===")
@@ -74,6 +82,9 @@ interface RagiumAPI {
     val machineRegistry: HTMachineRegistry
     val materialRegistry: HTMaterialRegistry
 
+    /**
+     * Create a new [AdvancementCriterion] instance of [HTInteractMachineCriterion]
+     */
     fun createInteractMachineCriterion(
         key: HTMachineKey,
         minTier: HTMachineTier,
@@ -85,15 +96,27 @@ interface RagiumAPI {
     fun createFluidDrinkCriterion(tagKey: TagKey<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
         createFluidDrinkCriterion(Registries.FLUID.getOrCreateEntryList(tagKey))
 
+    /**
+     * Create a new [AdvancementCriterion] instance of [HTDrankFluidCriterion]
+     */
     fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition>
 
+    /**
+     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
+     */
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 
+    /**
+     * Create a new [ResourceCondition] instance for [Config.isHardMode]
+     */
     fun createHardModeCondition(value: Boolean): ResourceCondition
 
     //    Config    //
     @ApiStatus.NonExtendable
     interface Config {
+        /**
+         * @see [hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity.tickSecond]
+         */
         val autoIlluminatorRadius: Int
 
         val isHardMode: Boolean

@@ -97,7 +97,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         return if (filledResult.canMerge(inventory.getStack(1))) {
             useTransaction { transaction: Transaction ->
                 if (storageIn.extractSelf(FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
-                    inventory.modifyStack(1, filledResult::merge)
+                    inventory.mergeStack(1, filledResult)
                     stack.decrement(1)
                     HTUnitResult.success()
                 } else {
@@ -127,7 +127,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
                     ) == FluidConstants.BUCKET
                 ) {
                     inventory.removeStack(0, 1)
-                    inventory.modifyStack(1, emptyResult::merge)
+                    inventory.mergeStack(1, emptyResult)
                     transaction.commit()
                     HTUnitResult.success()
                 } else {

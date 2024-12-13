@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.util.HTRegistryEntryList
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.BlockState
@@ -60,9 +61,15 @@ fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 
 fun ItemStack.isIn(entryList: HTRegistryEntryList<Item>): Boolean = entryList.storage.map(this::isIn, this::isOf)
 
+/**
+ * Get remaining durability from [this] item stack
+ */
 val ItemStack.restDamage: Int
     get() = maxDamage - damage
 
+/**
+ * Check [this] item stack count is maximum
+ */
 val ItemStack.isMaxCount: Boolean
     get() = count == maxCount
 
@@ -76,9 +83,19 @@ val ItemUsageContext.blockEntity: BlockEntity?
 
 //    Inventory    //
 
+/**
+ * Modify [ItemStack] in given [slot]
+ */
 fun Inventory.modifyStack(slot: Int, mapping: (ItemStack) -> ItemStack) {
     val stackIn: ItemStack = getStack(slot)
     setStack(slot, mapping(stackIn))
+}
+
+/**
+ * @see [HTItemResult.merge]
+ */
+fun Inventory.mergeStack(slot: Int, result: HTItemResult) {
+    modifyStack(slot, result::merge)
 }
 
 fun Inventory.getStackOrNull(slot: Int): ItemStack? = if (slot in 0..size()) getStack(slot) else null

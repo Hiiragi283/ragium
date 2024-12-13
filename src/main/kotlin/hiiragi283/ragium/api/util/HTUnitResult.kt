@@ -3,6 +3,9 @@ package hiiragi283.ragium.api.util
 import com.mojang.serialization.DataResult
 import net.minecraft.text.Text
 
+/**
+ * Simple replacement for [DataResult]<[Unit]>
+ */
 sealed interface HTUnitResult {
     companion object {
         @JvmStatic
@@ -27,20 +30,44 @@ sealed interface HTUnitResult {
         fun fromNull(value: Any?, message: () -> Text): HTUnitResult = value?.let { success() } ?: error(message)
     }
 
+    /**
+     * Transform into [DataResult]
+     */
     fun <T : Any> map(supplier: () -> T): DataResult<T>
 
+    /**
+     * Transform into [T] value
+     */
     fun <T> mapOrElse(success: () -> T, error: (Text) -> T): T
 
+    /**
+     * Transform into [Boolean]
+     */
     fun toBoolean(): Boolean = mapOrElse({ true }, { false })
 
+    /**
+     * Transform into [T] value if [isSuccess], or null if [isError]
+     */
     fun <T : Any> toValue(value: T): T? = mapOrElse({ value }, { null })
 
+    /**
+     * Transform into other [HTUnitResult]
+     */
     fun flatMap(supplier: () -> HTUnitResult): HTUnitResult
 
+    /**
+     * Transform into [DataResult]
+     */
     fun <T : Any> dataMap(supplier: () -> DataResult<T>): DataResult<T>
 
+    /**
+     * Called if [isSuccess]
+     */
     fun ifSuccess(action: () -> Unit): HTUnitResult
 
+    /**
+     * Called if [isError]
+     */
     fun ifError(action: (Text) -> Unit): HTUnitResult
 
     val isSuccess: Boolean

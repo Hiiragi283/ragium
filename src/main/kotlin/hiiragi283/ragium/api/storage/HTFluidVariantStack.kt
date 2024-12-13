@@ -12,6 +12,9 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.tag.TagKey
 
+/**
+ * [HTVariantStack] for [FluidVariant]
+ */
 @Suppress("UnstableApiUsage")
 class HTFluidVariantStack(override val variant: FluidVariant, override val amount: Long) : HTVariantStack<Fluid, FluidVariant> {
     companion object {

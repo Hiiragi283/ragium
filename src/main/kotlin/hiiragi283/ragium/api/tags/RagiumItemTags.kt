@@ -11,9 +11,15 @@ object RagiumItemTags {
     @JvmField
     val ALKALI: TagKey<Item> = create("alkali")
 
+    /**
+     * Act as fluid filter for [hiiragi283.ragium.common.block.transfer.HTExporterBlockEntityBase]
+     */
     @JvmField
     val FLUID_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/fluid")
 
+    /**
+     * Act as item filter for [hiiragi283.ragium.common.block.transfer.HTExporterBlockEntityBase]
+     */
     @JvmField
     val ITEM_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/item")
 
@@ -29,9 +35,15 @@ object RagiumItemTags {
     @JvmField
     val REFINED_SILICON_PLATES: TagKey<Item> = create("plates/refined_silicon")
 
+    /**
+     * Upgrades [hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase] tier to [hiiragi283.ragium.api.machine.HTMachineTier.ADVANCED]
+     */
     @JvmField
     val ADVANCED_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/advanced")
 
+    /**
+     * Upgrades [hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase] tier to [hiiragi283.ragium.api.machine.HTMachineTier.BASIC]
+     */
     @JvmField
     val BASIC_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/basic")
 

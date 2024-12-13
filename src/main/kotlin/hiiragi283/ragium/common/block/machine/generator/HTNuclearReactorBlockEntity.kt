@@ -75,7 +75,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         return useTransaction { transaction: Transaction ->
             if (fluidStorage.extractSelf(FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
                 transaction.commit()
-                inventory.modifyStack(1, result::merge)
+                inventory.mergeStack(1, result)
                 fuelStack.damage += 1
                 HTUnitResult.success()
             } else {

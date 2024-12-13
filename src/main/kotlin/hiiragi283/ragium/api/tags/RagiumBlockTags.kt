@@ -9,10 +9,17 @@ import net.minecraft.util.Identifier
 
 object RagiumBlockTags {
     //    Custom    //
-
+    /**
+     * Include all machines
+     *
+     * This value is registered in runtime by mixin
+     */
     @JvmField
     val MACHINES: TagKey<Block> = create(RagiumAPI.MOD_ID, "machines")
 
+    /**
+     * Include blocks which can always connect to pipes
+     */
     @JvmField
     val PIPE_CONNECTABLES: TagKey<Block> = create(RagiumAPI.MOD_ID, "pipe_connectables")
 

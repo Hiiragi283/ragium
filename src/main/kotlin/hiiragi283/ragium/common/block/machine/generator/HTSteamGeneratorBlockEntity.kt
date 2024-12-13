@@ -80,7 +80,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 if (fluidStorage.extractSelf(FluidConstants.INGOT, transaction) == FluidConstants.INGOT) {
                     transaction.commit()
                     fuelStack.decrement(1)
-                    inventory.modifyStack(1, HTItemResult(RagiumContents.Dusts.ASH)::merge)
+                    inventory.mergeStack(1, HTItemResult(RagiumContents.Dusts.ASH))
                     HTUnitResult.success()
                 } else {
                     HTUnitResult.errorString { "Failed to consume fuels!" }

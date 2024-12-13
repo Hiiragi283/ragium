@@ -17,6 +17,9 @@ import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
 import java.util.function.Predicate
 
+/**
+ * A plugin interface for Ragium
+ */
 @JvmDefaultWithCompatibility
 interface RagiumPlugin {
     companion object {
@@ -42,6 +45,9 @@ interface RagiumPlugin {
 
     fun registerRuntimeRecipe(exporter: RecipeExporter) {}
 
+    /**
+     * Register runtime recipes based on [HTMaterialRegistry]
+     */
     fun registerRuntimeMaterialRecipes(
         exporter: RecipeExporter,
         key: HTMaterialKey,
@@ -85,6 +91,9 @@ interface RagiumPlugin {
     //    RecipeHelper    //
 
     class RecipeHelper {
+        /**
+         * Check give [tagKey] is loaded
+         */
         fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
 
         fun useIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {

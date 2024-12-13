@@ -9,6 +9,10 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.Direction
 
+/**
+ * Represent relative direction
+ * @see [Direction]
+ */
 enum class HTRelativeDirection : StringIdentifiable {
     DOWN,
     UP,
@@ -25,6 +29,10 @@ enum class HTRelativeDirection : StringIdentifiable {
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRelativeDirection> = packetCodecOf(entries)
 
+        /**
+         * Transform [target] into [HTRelativeDirection]
+         * @throws IllegalArgumentException if [front] is [Direction.UP] or [Direction.DOWN]
+         */
         @JvmStatic
         fun fromDirection(front: Direction, target: Direction): HTRelativeDirection = when (front) {
             Direction.NORTH -> getHorizontalSide(target)
@@ -44,6 +52,9 @@ enum class HTRelativeDirection : StringIdentifiable {
         }
     }
 
+    /**
+     * Transform relative direction into [Direction]
+     */
     fun toDirection(front: Direction): Direction = when (this) {
         DOWN -> Direction.DOWN
         UP -> Direction.UP

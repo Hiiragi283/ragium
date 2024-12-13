@@ -14,6 +14,9 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.tag.TagKey
 
+/**
+ * [HTVariantStack] for [ItemVariant]
+ */
 @Suppress("UnstableApiUsage")
 class HTItemVariantStack(override val variant: ItemVariant, override val amount: Long) : HTVariantStack<Item, ItemVariant> {
     companion object {

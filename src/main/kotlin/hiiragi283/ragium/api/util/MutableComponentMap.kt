@@ -5,6 +5,9 @@ import net.minecraft.component.ComponentMap
 import net.minecraft.component.ComponentMapImpl
 import net.minecraft.component.ComponentType
 
+/**
+ * Mutable [ComponentMap]
+ */
 interface MutableComponentMap : ComponentMap {
     fun <T : Any> set(type: ComponentType<T>, value: T?): T?
 
@@ -13,6 +16,9 @@ interface MutableComponentMap : ComponentMap {
     fun getChanges(): ComponentChanges
 
     companion object {
+        /**
+         * Empty, Unmodifiable [MutableComponentMap]
+         */
         @JvmField
         val EMPTY: MutableComponentMap = object : MutableComponentMap {
             override fun <T : Any> set(type: ComponentType<T>, value: T?): T? = null
@@ -26,12 +32,21 @@ interface MutableComponentMap : ComponentMap {
             override fun getTypes(): Set<ComponentType<*>> = setOf()
         }
 
+        /**
+         * Try to cast [ComponentMap] into [MutableComponentMap]. or null if failed
+         */
         @JvmStatic
         fun orNull(map: ComponentMap): MutableComponentMap? = (map as? ComponentMapImpl)?.let(::of)
 
+        /**
+         * Try to cast [ComponentMap] into [MutableComponentMap]. or [EMPTY] if failed
+         */
         @JvmStatic
         fun orEmpty(map: ComponentMap): MutableComponentMap = orNull(map) ?: EMPTY
 
+        /**
+         * Wrap [ComponentMapImpl] into [MutableComponentMap]
+         */
         @JvmStatic
         fun of(mapImpl: ComponentMapImpl): MutableComponentMap = object : MutableComponentMap {
             override fun <T : Any> set(type: ComponentType<T>, value: T?): T? = mapImpl.set(type, value)

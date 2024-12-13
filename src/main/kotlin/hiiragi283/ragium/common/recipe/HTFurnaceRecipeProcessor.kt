@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.mergeStack
 import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -36,7 +36,7 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
                 if (!output.canMerge(inventory.getStack(outputIndex))) {
                     return@unitMap HTUnitResult.errorString { "Failed to merge result into output!" }
                 }
-                inventory.modifyStack(outputIndex, output::merge)
+                inventory.mergeStack(outputIndex, output)
                 inputStack.decrement(processCount)
                 HTUnitResult.success()
             }

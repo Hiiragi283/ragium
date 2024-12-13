@@ -13,6 +13,9 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
 
+/**
+ * Item output data
+ */
 class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val components: ComponentChanges = ComponentChanges.EMPTY) {
     companion object {
         @JvmField
@@ -62,6 +65,9 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     val stack: ItemStack
         get() = ItemStack(entry, count, components)
 
+    /**
+     * Check to merge into [other] stack
+     */
     fun canMerge(other: ItemStack): Boolean = when {
         other.isEmpty -> true
         other.count + this.count > other.maxCount -> false
@@ -69,6 +75,9 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         else -> false
     }
 
+    /**
+     * Merge into [other] stack
+     */
     fun merge(other: ItemStack): ItemStack = when {
         other.isEmpty -> stack
         other.count + this.count > other.maxCount -> other
@@ -77,38 +86,4 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     }
 
     override fun toString(): String = "HTItemResult[item=${entry.idAsString},count=$count,components=$components]"
-
-    /*private class TagRegistryEntry(val tagKey: TagKey<Item>) : RegistryEntry<Item> {
-        private val firstEntry: RegistryEntry<Item>
-            get() = Registries.ITEM
-                .getEntryList(tagKey)
-                .orElseThrow { NoSuchElementException("TagKey; ${tagKey.id} has no entry!") }
-                .sortedWith(entryComparator(Registries.ITEM))
-                .first()
-
-        override fun value(): Item = firstEntry.value()
-
-        override fun hasKeyAndValue(): Boolean = firstEntry.hasKeyAndValue()
-
-        override fun matchesId(id: Identifier): Boolean = firstEntry.matchesId(id)
-
-        override fun streamTags(): Stream<TagKey<Item>> = firstEntry.streamTags()
-
-        override fun getKeyOrValue(): Either<RegistryKey<Item>, Item> = firstEntry.keyOrValue
-
-        override fun getKey(): Optional<RegistryKey<Item>> = firstEntry.key
-
-        override fun getType(): RegistryEntry.Type = firstEntry.type
-
-        override fun ownerEquals(owner: RegistryEntryOwner<Item>): Boolean = firstEntry.ownerEquals(owner)
-
-        override fun isIn(tag: TagKey<Item>): Boolean = firstEntry.isIn(tag)
-
-        @Deprecated("Deprecated in Java")
-        override fun matches(entry: RegistryEntry<Item>): Boolean = firstEntry.matches(entry)
-
-        override fun matches(predicate: Predicate<RegistryKey<Item>>): Boolean = firstEntry.matches(predicate)
-
-        override fun matchesKey(key: RegistryKey<Item>): Boolean = firstEntry.matchesKey(key)
-    }*/
 }

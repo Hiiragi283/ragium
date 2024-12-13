@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.property
 
 /**
- * A mutable [HTPropertyHolder]
+ * Mutable [HTPropertyHolder]
  */
 interface HTMutablePropertyHolder : HTPropertyHolder {
     operator fun <T : Any> set(key: HTPropertyKey<T>, value: T)

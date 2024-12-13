@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.mergeStack
 import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -64,7 +64,7 @@ class HTMachineRecipeProcessor(
     private fun modifyOutputs(recipe: HTMachineRecipe) {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTItemResult = recipe.itemOutputs.getOrNull(index) ?: return@forEachIndexed
-            inventory.modifyStack(slot, result::merge)
+            inventory.mergeStack(slot, result)
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed

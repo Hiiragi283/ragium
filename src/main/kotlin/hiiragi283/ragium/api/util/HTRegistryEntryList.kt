@@ -11,6 +11,9 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
+/**
+ * Holder of [TagKey] or [T] value
+ */
 sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
     companion object {
         @JvmStatic
@@ -44,15 +47,27 @@ sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
                 }
             }
 
+        /**
+         * Create a new [HTRegistryEntryList] instance for [T] value
+         */
         @JvmStatic
         fun <T : Any> of(entry: RegistryEntry<T>): HTRegistryEntryList<T> = of(entry.value())
 
+        /**
+         * Create a new [HTRegistryEntryList] instance for [T] value
+         */
         @JvmStatic
         fun <T : Any> of(entry: T): HTRegistryEntryList<T> = Direct(entry)
 
+        /**
+         * Create a new [HTRegistryEntryList] instance for [TagKey]
+         */
         @JvmStatic
         fun <T : Any> ofTag(tagKey: TagKey<T>, registry: Registry<T>): HTRegistryEntryList<T> = Tag(tagKey, registry::iterateEntries)
 
+        /**
+         * Create a new [HTRegistryEntryList] instance for [TagKey]
+         */
         @JvmStatic
         fun <T : Any> ofTag(tagKey: TagKey<T>, valueGetter: HTTagValueGetter<T>): HTRegistryEntryList<T> = Tag(tagKey, valueGetter)
     }
@@ -61,10 +76,17 @@ sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
 
     val size: Int
 
+    /**
+     * Unwrap [HTRegistryEntryList] into [Either]
+     * @see Either
+     */
     val storage: Either<TagKey<T>, T>
 
     operator fun get(index: Int): T
 
+    /**
+     * Transform entries into [MutableText]
+     */
     fun getText(transform: (T) -> Text): MutableText = storage.map(TagKey<T>::getName, transform).copy()
 
     //    Direct    //
