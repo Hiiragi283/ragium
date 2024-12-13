@@ -68,6 +68,7 @@ object RagiumContents {
         ASH(RagiumMaterialKeys.ASH),
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
+        LAPIS(RagiumMaterialKeys.LAPIS),
         NITER(RagiumMaterialKeys.NITER),
         QUARTZ(RagiumMaterialKeys.QUARTZ),
         SALT(RagiumMaterialKeys.SALT),
@@ -133,14 +134,16 @@ object RagiumContents {
     enum class Plates(override val material: HTMaterialKey) : HTContent.Material<Item> {
         // tier1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
-        IRON(RagiumMaterialKeys.IRON),
         COPPER(RagiumMaterialKeys.COPPER),
+        IRON(RagiumMaterialKeys.IRON),
+        LAPIS(RagiumMaterialKeys.LAPIS),
         WOOD(RagiumMaterialKeys.WOOD),
 
         // tier2
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         GOLD(RagiumMaterialKeys.GOLD),
+        QUARTZ(RagiumMaterialKeys.QUARTZ),
         STEEL(RagiumMaterialKeys.STEEL),
 
         // tier3

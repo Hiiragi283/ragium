@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.machine.multiblock
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTRegistryEntryList
 import hiiragi283.ragium.api.extension.isIn
+import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.registry.Registries

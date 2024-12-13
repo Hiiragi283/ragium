@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTRegistryEntryList
+import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

@@ -1,11 +1,11 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.content.HTRegistryEntryList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
+import hiiragi283.ragium.api.util.HTRegistryEntryList
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity

@@ -581,14 +581,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', ConventionalItemTags.STORAGE_BLOCKS_IRON)
             .unlockedBy(ConventionalItemTags.STORAGE_BLOCKS_IRON)
             .offerTo(exporter)
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.TRADER_CATALOG)
-            .input(Items.BOOK)
-            .input(ConventionalItemTags.EMERALD_GEMS)
-            .input(ConventionalItemTags.CHESTS)
-            .unlockedBy(Items.BOOK)
-            .offerTo(exporter)
         // fluid cubes
         createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
         createEmptyFluidCube(exporter, RagiumItems.PLASTIC_PLATE, 8, "_pe")

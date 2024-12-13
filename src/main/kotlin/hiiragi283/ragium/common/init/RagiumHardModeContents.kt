@@ -29,6 +29,26 @@ object RagiumHardModeContents {
         RagiumContents.Plates.EMERALD,
     )
 
+    @JvmField
+    val LAPIS: HTHardModeContent = HTHardModeContent.Companion.of(
+        HTContent.Material.ofWrapped(
+            HTTagPrefix.GEM,
+            RagiumMaterialKeys.LAPIS,
+            Items.LAPIS_LAZULI,
+        ),
+        RagiumContents.Plates.LAPIS,
+    )
+
+    @JvmField
+    val QUARTZ: HTHardModeContent = HTHardModeContent.Companion.of(
+        HTContent.Material.ofWrapped(
+            HTTagPrefix.GEM,
+            RagiumMaterialKeys.QUARTZ,
+            Items.QUARTZ,
+        ),
+        RagiumContents.Plates.QUARTZ,
+    )
+
     //    Ingots    //
 
     @JvmField

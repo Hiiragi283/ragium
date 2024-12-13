@@ -86,15 +86,15 @@ interface RagiumPlugin {
     class RecipeHelper {
         fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
 
-        fun register(entry: HTMaterialRegistry.Entry, vararg requiredPrefixes: HTTagPrefix, action: (Map<HTTagPrefix, Item>) -> Unit) {
-            if (requiredPrefixes.all { entry.type.isValidPrefix(it) && isPopulated(it.createTag(entry.key)) }) {
-                action(
-                    buildMap {
-                        requiredPrefixes.forEach { prefix: HTTagPrefix ->
-                            entry.getFirstItem(prefix)?.let { put(prefix, it) }
-                        }
-                    },
-                )
+        fun useIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
+            if (entry.type.isValidPrefix(prefix)) {
+                entry.getFirstItem(prefix)?.let(action)
+            }
+        }
+        
+        fun useMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix -> 
+                useIfPresent(entry, prefix, action)
             }
         }
     }

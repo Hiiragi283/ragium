@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
+import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -82,6 +83,14 @@ object RagiumHardModePlugin : RagiumPlugin {
             .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 8)
             .itemOutput(RagiumBlocks.STEEL_GLASS, 8)
             .offerTo(exporter, RagiumBlocks.STEEL_GLASS, "_from_deep_steel")
+        // trader catalog
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.TRADER_CATALOG)
+            .input(Items.BOOK)
+            .input(RagiumHardModeContents.EMERALD.getContent(hardMode))
+            .input(ConventionalItemTags.CHESTS)
+            .unlockedBy(Items.BOOK)
+            .offerTo(exporter)
 
         craftingMachines(exporter)
     }

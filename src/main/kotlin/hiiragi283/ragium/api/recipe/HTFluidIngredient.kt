@@ -2,12 +2,12 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.content.HTRegistryEntryList
 import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil

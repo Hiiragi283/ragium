@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTVariantStack
+import hiiragi283.ragium.api.util.HTTagValueGetter
 import hiiragi283.ragium.api.util.MutableComponentMap
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
@@ -26,7 +27,6 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
@@ -95,13 +95,14 @@ fun <T : TransferVariant<*>> SingleVariantStorage<T>.copyTo(other: SingleVariant
 
 fun <T : Any> TransferVariant<T>.isOf(entry: RegistryEntry<T>): Boolean = isOf(entry.value())
 
-fun <T : Any> TransferVariant<T>.isIn(registry: Registry<T>, tagKey: TagKey<T>): Boolean = registry.iterateEntries(tagKey).any(this::isOf)
+fun <T : Any> TransferVariant<T>.isIn(valueGetter: HTTagValueGetter<T>, tagKey: TagKey<T>): Boolean =
+    valueGetter.getEntries(tagKey).any(this::isOf)
 
 fun ItemVariant.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 
-fun ItemVariant.isIn(tagKey: TagKey<Item>): Boolean = isIn(Registries.ITEM, tagKey)
+fun ItemVariant.isIn(tagKey: TagKey<Item>): Boolean = isIn(Registries.ITEM::iterateEntries, tagKey)
 
-fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID, tagKey)
+fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID::iterateEntries, tagKey)
 
 val FluidVariant.name: MutableText
     get() = FluidVariantAttributes.getName(this).copy()

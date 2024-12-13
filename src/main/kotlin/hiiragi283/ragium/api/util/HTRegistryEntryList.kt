@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.content
+package hiiragi283.ragium.api.util
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
@@ -51,7 +51,10 @@ sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
         fun <T : Any> of(entry: T): HTRegistryEntryList<T> = Direct(entry)
 
         @JvmStatic
-        fun <T : Any> ofTag(tagKey: TagKey<T>, registry: Registry<T>): HTRegistryEntryList<T> = Tag(tagKey, registry)
+        fun <T : Any> ofTag(tagKey: TagKey<T>, registry: Registry<T>): HTRegistryEntryList<T> = Tag(tagKey, registry::iterateEntries)
+
+        @JvmStatic
+        fun <T : Any> ofTag(tagKey: TagKey<T>, valueGetter: HTTagValueGetter<T>): HTRegistryEntryList<T> = Tag(tagKey, valueGetter)
     }
 
     val isEmpty: Boolean
@@ -83,9 +86,9 @@ sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
 
     //    Tag    //
 
-    private data class Tag<T : Any>(val tagKey: TagKey<T>, val registry: Registry<T>) : HTRegistryEntryList<T> {
+    private data class Tag<T : Any>(val tagKey: TagKey<T>, val valueGetter: HTTagValueGetter<T>) : HTRegistryEntryList<T> {
         private val entries: List<T>
-            get() = registry.iterateEntries(tagKey).map(RegistryEntry<T>::value)
+            get() = valueGetter.getValues(tagKey)
 
         override val isEmpty: Boolean
             get() = entries.isEmpty()
