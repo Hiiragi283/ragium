@@ -25,6 +25,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
+/**
+ * A base class for recipe processing machine
+ */
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
     HTFluidSyncable {
@@ -33,7 +36,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
         else -> HTUnitResult.success()
     }.flatMap { processor.process(world, key, tier) }
 
-    protected abstract val inventory: SidedInventory
+    protected abstract val inventory: HTMachineInventory
 
     protected abstract val fluidStorage: HTMachineFluidStorage
 
@@ -69,12 +72,18 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
     //    Large    //
 
+    /**
+     * A base class for multiblock machine block entity
+     * @see [hiiragi283.ragium.common.block.machine.process.HTBlastFurnaceBlockEntity]
+     * @see [hiiragi283.ragium.common.block.machine.process.HTDistillationTowerBlockEntity]
+     * @see [hiiragi283.ragium.common.block.machine.process.HTSawmillBlockEntity]
+     */
     abstract class Large(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTRecipeProcessorBlockEntityBase(type, pos, state),
         HTMultiblockPatternProvider {
         final override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
-        final override val inventory: SidedInventory = HTMachineInventory.ofLarge()
+        final override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
 
         final override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 

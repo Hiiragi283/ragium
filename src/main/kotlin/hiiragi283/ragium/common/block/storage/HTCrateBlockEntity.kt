@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTItemVariantStack
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.network.HTCratePreviewPayload

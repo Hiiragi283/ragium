@@ -8,10 +8,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.getAroundPos
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
@@ -187,59 +184,59 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
     override fun registerMaterial(helper: RagiumPlugin.MaterialHelper) {
         // alloy
-        helper.register(RagiumMaterialKeys.DEEP_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.NETHERITE, HTMaterialKey.Type.ALLOY, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY)
-        helper.register(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialType.ALLOY)
+        helper.register(RagiumMaterialKeys.RAGI_STEEL, HTMaterialType.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialType.ALLOY, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.STEEL, HTMaterialType.ALLOY, Rarity.UNCOMMON)
 
-        helper.register(RagiumMaterialKeys.ELECTRUM, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.ELECTRUM, HTMaterialType.ALLOY, Rarity.UNCOMMON)
         // dust
-        helper.register(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST)
-        helper.register(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST)
+        helper.register(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
+        helper.register(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
         // gem
-        helper.register(RagiumMaterialKeys.COAL, HTMaterialKey.Type.GEM)
-        helper.register(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.DIAMOND, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.EMERALD, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.LAPIS, HTMaterialKey.Type.GEM, Rarity.COMMON)
-        helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.RUBY, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.SAPPHIRE, HTMaterialKey.Type.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.COAL, HTMaterialType.GEM)
+        helper.register(RagiumMaterialKeys.CRYOLITE, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.DIAMOND, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.EMERALD, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.FLUORITE, HTMaterialType.GEM, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.LAPIS, HTMaterialType.GEM, Rarity.COMMON)
+        helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialType.GEM, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.RUBY, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.SAPPHIRE, HTMaterialType.GEM, Rarity.RARE)
         // metal
-        helper.register(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL)
-        helper.register(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL)
-        // helper.register(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.ALUMINUM, HTMaterialType.METAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.GOLD, HTMaterialType.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
+        // helper.register(RagiumMaterialKeys.SILICON, HTMaterialType.METAL, Rarity.UNCOMMON)
 
-        helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.LEAD, HTMaterialKey.Type.METAL)
-        helper.register(RagiumMaterialKeys.NICKEL, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.PLATINUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.SILVER, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.TIN, HTMaterialKey.Type.METAL)
-        helper.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialKey.Type.METAL, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.ZINC, HTMaterialKey.Type.METAL)
+        helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.NICKEL, HTMaterialType.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.PLATINUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.SILVER, HTMaterialType.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
         // mineral
-        helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.SALT, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
-        // helper.register(RagiumMaterialKeys.URANITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
+        // helper.register(RagiumMaterialKeys.URANITE, HTMaterialType.MINERAL, Rarity.RARE)
         // plate
-        // helper.register(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE, Rarity.RARE)
-        // helper.register(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE, Rarity.UNCOMMON)
-        // helper.register(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE)
+        // helper.register(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialType.PLATE, Rarity.RARE)
+        // helper.register(RagiumMaterialKeys.PLASTIC, HTMaterialType.PLATE, Rarity.UNCOMMON)
+        // helper.register(RagiumMaterialKeys.STELLA, HTMaterialType.PLATE, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.WOOD, HTMaterialType.PLATE)
 
         // alternative name
         helper.addAltName(RagiumMaterialKeys.WOOD, "saw")
@@ -402,7 +399,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, output, "_from_plate")
         }
         // ore -> raw/gem
-        helper.useMainPrefix(entry) { output: Item ->
+        helper.useRawPrefix(entry) { output: Item ->
             val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
             // Grinder Recipe
             HTMachineRecipeJsonBuilder

@@ -12,12 +12,18 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
+/**
+ * Multiblock validation manager
+ */
 class HTMultiblockManager(private val world: () -> World?, private val pos: BlockPos, private val provider: HTMultiblockPatternProvider) :
     HTMultiblockBuilder {
     var showPreview: Boolean = false
 
     private val stateCache: MutableMap<BlockPos, Pair<BlockPos, BlockState>> = mutableMapOf()
 
+    /**
+     * @see [hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase.onUse]
+     */
     fun onUse(state: BlockState, player: PlayerEntity): Boolean = if (player.isSneaking) {
         showPreview = !showPreview
         false

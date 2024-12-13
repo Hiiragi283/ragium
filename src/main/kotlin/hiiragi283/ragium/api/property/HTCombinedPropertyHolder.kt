@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.property
 
+/**
+ * Combine multiple [HTPropertyHolder]
+ */
 interface HTCombinedPropertyHolder : HTPropertyHolder {
     val properties: List<HTPropertyHolder>
 

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.machine.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -14,7 +15,6 @@ import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.network.HTMachineKeySyncPayload
 import net.fabricmc.api.EnvType
@@ -42,6 +42,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
+/**
+ * A base class for machine block entity
+ *
+ * All [net.minecraft.block.entity.BlockEntity] using [HTMachineKey] and [HTMachineTier] should extend this class
+ */
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(type, pos, state),
     NamedScreenHandlerFactory,
@@ -96,6 +101,9 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         }
     }
 
+    /**
+     * Called when [HTMachineTier.PROPERTY] was updated
+     */
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
     final override fun onUse(
@@ -196,8 +204,15 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         markDirty()
     }
 
+    /**
+     * Get [HTEnergyNetwork.Flag] for [tickSecond]
+     * @see [HTEnergyNetwork.Flag.processAmount]
+     */
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
 
+    /**
+     * Called when the machine can consume/generate energy
+     */
     abstract fun process(world: World, pos: BlockPos): HTUnitResult
 
     open fun onSucceeded(world: World, pos: BlockPos) {}

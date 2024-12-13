@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.api.storage.HTCreativeStorage
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage

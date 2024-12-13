@@ -15,7 +15,9 @@ import net.minecraft.util.Identifier
 import java.util.function.Supplier
 
 /**
- * Represents registerable content holding [RegistryKey] and [RegistryEntry]
+ * [RegistryKey] and [RegistryEntry] Holder
+ * @see [HTContent.Material]
+ * @see [HTContent.Tier]
  */
 interface HTContent<T : Any> : Supplier<T> {
     companion object {

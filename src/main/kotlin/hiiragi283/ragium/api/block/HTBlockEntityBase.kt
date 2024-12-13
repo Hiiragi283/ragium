@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.api.block
 
 import hiiragi283.ragium.api.extension.*
 import net.minecraft.block.BlockState
@@ -18,6 +18,10 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
+/**
+ * A base class for [BlockEntity]
+ * @see [hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase]
+ */
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
     companion object {
         const val FLUID_KEY = "fluid_storage"
@@ -27,6 +31,9 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         const val TIER_KEY = "tier"
     }
 
+    /**
+     * Expose internal [SidedInventory] object, or null
+     */
     open fun asInventory(): SidedInventory? = null
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
@@ -37,21 +44,28 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         asInventory()?.readNbt(nbt, wrapperLookup)
     }
 
-    override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = createNbt(registryLookup)
+    final override fun toInitialChunkDataNbt(registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = createNbt(registryLookup)
 
-    override fun toUpdatePacket(): BlockEntityUpdateS2CPacket = BlockEntityUpdateS2CPacket.create(this)
+    final override fun toUpdatePacket(): BlockEntityUpdateS2CPacket = BlockEntityUpdateS2CPacket.create(this)
 
-    override fun markDirty() {
+    final override fun markDirty() {
         super.markDirty()
         syncInventory()
     }
 
     //    Extensions    //
 
-    open fun syncInventory() {
+    /**
+     * Synchronize [asInventory] from server-side to client-side
+     * @see [markDirty]
+     */
+    fun syncInventory() {
         asInventory()?.sendS2CPacket(pos, ::sendPacket)
     }
 
+    /**
+     * @see [HTBlockWithEntity.onUse]
+     */
     open fun onUse(
         state: BlockState,
         world: World,
@@ -68,6 +82,9 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         }
     } ?: ActionResult.PASS
 
+    /**
+     * @see [HTBlockWithEntity.onPlaced]
+     */
     open fun onPlaced(
         world: World,
         pos: BlockPos,
@@ -77,6 +94,9 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     ) {
     }
 
+    /**
+     * @see [HTBlockWithEntity.onStateReplaced]
+     */
     open fun onStateReplaced(
         state: BlockState,
         world: World,
@@ -87,6 +107,9 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         asInventory()?.let { ItemScatterer.spawn(world, pos, it) }
     }
 
+    /**
+     * @see [HTBlockWithEntity.getComparatorOutput]
+     */
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
 
     open val shouldTick: Boolean = true
@@ -94,6 +117,9 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         protected set
     open val tickRate: Int = 200
 
+    /**
+     * @see [HTBlockWithEntity.getTicker]
+     */
     fun tick(world: World, pos: BlockPos, state: BlockState) {
         if (!shouldTick) return
         tickEach(world, pos, state, ticks)
@@ -105,13 +131,20 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
         }
     }
 
+    /**
+     * Called on each [tick]
+     */
     open fun tickEach(
         world: World,
         pos: BlockPos,
         state: BlockState,
         ticks: Int,
-    ) {}
+    ) {
+    }
 
+    /**
+     * Called when [ticks] is equals or more than [tickRate]
+     */
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
 
     protected fun createContext(): ScreenHandlerContext = ifPresentWorld { world: World ->

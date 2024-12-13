@@ -6,10 +6,7 @@ import com.google.gson.annotations.SerializedName
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineRegistry
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -126,12 +123,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
     @JvmStatic
     fun registerMaterials() {
-        val keyCache: MutableMap<HTMaterialKey, HTMaterialKey.Type> = mutableMapOf()
+        val keyCache: MutableMap<HTMaterialKey, HTMaterialType> = mutableMapOf()
         val rarityCache: MutableMap<HTMaterialKey, Rarity> = mutableMapOf()
         val altNameCache: MutableMap<String, HTMaterialKey> = mutableMapOf()
 
         // collect keys from plugins
-        fun addMaterial(key: HTMaterialKey, type: HTMaterialKey.Type, rarity: Rarity) {
+        fun addMaterial(key: HTMaterialKey, type: HTMaterialType, rarity: Rarity) {
             check(keyCache.put(key, type) == null) { "Material; ${key.name} is already registered!" }
             rarityCache[key] = rarity
         }
@@ -144,11 +141,11 @@ internal data object InternalRagiumAPI : RagiumAPI {
             it.registerMaterial(RagiumPlugin.MaterialHelper(::addMaterial, ::addAltName))
         }
         // sort keys based on its type and id
-        val sortedKeys: Map<HTMaterialKey, HTMaterialKey.Type> = keyCache
+        val sortedKeys: Map<HTMaterialKey, HTMaterialType> = keyCache
             .toList()
             .sortedWith(
-                compareBy(Pair<HTMaterialKey, HTMaterialKey.Type>::second)
-                    .thenBy(Pair<HTMaterialKey, HTMaterialKey.Type>::first),
+                compareBy(Pair<HTMaterialKey, HTMaterialType>::second)
+                    .thenBy(Pair<HTMaterialKey, HTMaterialType>::first),
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()

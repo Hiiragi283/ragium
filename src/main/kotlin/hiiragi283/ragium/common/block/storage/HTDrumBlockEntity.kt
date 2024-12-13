@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.getTier
 import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.extension.putTier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant

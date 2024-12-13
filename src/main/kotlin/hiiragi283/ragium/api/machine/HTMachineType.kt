@@ -12,6 +12,9 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.StringIdentifiable
 
+/**
+ * Represents machine category
+ */
 enum class HTMachineType : StringIdentifiable {
     GENERATOR,
     PROCESSOR,

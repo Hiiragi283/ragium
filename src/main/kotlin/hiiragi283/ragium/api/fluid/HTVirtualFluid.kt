@@ -15,6 +15,11 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
 
+/**
+ * A simple implementation for [Fluid]
+ * This fluid is virtual, not placeable in [net.minecraft.world.World]
+ * @see [hiiragi283.ragium.common.init.RagiumFluids]
+ */
 class HTVirtualFluid : Fluid() {
     override fun getBucketItem(): Item = Items.AIR
 

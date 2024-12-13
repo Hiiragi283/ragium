@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.HTMaterialType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -51,10 +52,10 @@ interface RagiumPlugin {
     //    MaterialHelper    //
 
     class MaterialHelper(
-        private val consumer: (HTMaterialKey, HTMaterialKey.Type, Rarity) -> Unit,
+        private val consumer: (HTMaterialKey, HTMaterialType, Rarity) -> Unit,
         private val altConsumer: (HTMaterialKey, String) -> Unit,
     ) {
-        fun register(key: HTMaterialKey, type: HTMaterialKey.Type, rarity: Rarity = Rarity.COMMON) {
+        fun register(key: HTMaterialKey, type: HTMaterialType, rarity: Rarity = Rarity.COMMON) {
             consumer(key, type, rarity)
         }
 
@@ -94,6 +95,12 @@ interface RagiumPlugin {
 
         fun useMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                useIfPresent(entry, prefix, action)
+            }
+        }
+
+        fun useRawPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
+            entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
                 useIfPresent(entry, prefix, action)
             }
         }

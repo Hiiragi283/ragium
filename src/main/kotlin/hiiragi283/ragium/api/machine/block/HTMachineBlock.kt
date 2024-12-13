@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.machine.block
 
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineKeyOrNull
@@ -8,7 +9,6 @@ import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity

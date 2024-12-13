@@ -6,6 +6,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 
+/**
+ * [HTMachineKey] and [HTMachineTier] Holder
+ */
 data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
     companion object {
         @JvmField

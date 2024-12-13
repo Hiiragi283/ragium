@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.ifServer
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes

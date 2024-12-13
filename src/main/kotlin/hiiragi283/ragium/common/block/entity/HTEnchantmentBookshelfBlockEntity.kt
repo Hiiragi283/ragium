@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.NON_NEGATIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.api.extension.mappedCodecOf

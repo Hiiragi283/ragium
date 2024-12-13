@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block
 
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
 import net.minecraft.block.BlockState

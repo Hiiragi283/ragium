@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.common.block.HTBlockWithEntity
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

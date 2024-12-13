@@ -2,13 +2,14 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
+import hiiragi283.ragium.api.machine.HTMaterialType
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.item.Item
 import java.util.stream.Stream
 
 class HTMaterialRegistry(
-    private val types: Map<HTMaterialKey, HTMaterialKey.Type>,
+    private val types: Map<HTMaterialKey, HTMaterialType>,
     private val items: HTTable<HTTagPrefix, HTMaterialKey, out Set<Item>>,
     private val properties: Map<HTMaterialKey, HTPropertyHolder>,
 ) : Keyable {
@@ -40,7 +41,7 @@ class HTMaterialRegistry(
 
     data class Entry(
         val key: HTMaterialKey,
-        val type: HTMaterialKey.Type,
+        val type: HTMaterialType,
         val itemMap: Map<HTTagPrefix, Set<Item>>,
         private val property: HTPropertyHolder,
     ) : HTPropertyHolder by property {

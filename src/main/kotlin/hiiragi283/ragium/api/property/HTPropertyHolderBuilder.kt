@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.property
 
+/**
+ * A simple implementation for [HTMutablePropertyHolder]
+ */
 class HTPropertyHolderBuilder(private val map: MutableMap<HTPropertyKey<*>, Any> = mutableMapOf()) : HTMutablePropertyHolder {
     override fun <T : Any> set(key: HTPropertyKey<T>, value: T) {
         map[key] = value

@@ -20,6 +20,11 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 
+/**
+ * Represents machine type
+ *
+ * Must be registered in [HTMachineRegistry]
+ */
 class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachineKey> {
     companion object {
         private val instances: MutableMap<Identifier, HTMachineKey> = mutableMapOf()
@@ -44,6 +49,9 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
                 .packetCodec(PACKET_CODEC)
                 .build()
 
+        /**
+         * Get singleton instance or create new [hiiragi283.ragium.api.machine.HTMachineKey] instance from [id]
+         */
         @JvmStatic
         fun of(id: Identifier): HTMachineKey = instances.computeIfAbsent(id, ::HTMachineKey)
     }

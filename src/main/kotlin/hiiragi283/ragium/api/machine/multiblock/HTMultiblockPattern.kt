@@ -12,6 +12,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.BiPredicate
 
+/**
+ * Represent a predicate for multiblock component
+ */
 interface HTMultiblockPattern : BiPredicate<World, BlockPos> {
     val text: MutableText
 

@@ -8,6 +8,10 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.util.Identifier
 import java.util.stream.Stream
 
+/**
+ * A registry of [HTMachineKey]
+ * @see hiiragi283.ragium.api.RagiumAPI.machineRegistry
+ */
 class HTMachineRegistry(
     private val types: Map<HTMachineKey, HTMachineType>,
     private val blockMap: Map<HTMachineKey, HTMachineBlock>,

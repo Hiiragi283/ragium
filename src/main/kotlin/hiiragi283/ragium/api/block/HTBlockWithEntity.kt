@@ -1,6 +1,5 @@
-package hiiragi283.ragium.common.block
+package hiiragi283.ragium.api.block
 
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
@@ -22,10 +21,17 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
+/**
+ * A base class for [Block] implementing [BlockEntityProvider]
+ * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.Horizontal]
+ */
 abstract class HTBlockWithEntity(settings: Settings) :
     Block(settings),
     BlockEntityProvider {
     companion object {
+        /**
+         * Create a new instance for [hiiragi283.ragium.api.block.HTBlockWithEntity]
+         */
         @JvmStatic
         fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
             init {
@@ -35,6 +41,9 @@ abstract class HTBlockWithEntity(settings: Settings) :
             override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity? = type.instantiate(pos, state)
         }
 
+        /**
+         * Create a new instance for [hiiragi283.ragium.api.block.HTBlockWithEntity.Horizontal]
+         */
         @JvmStatic
         fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : Horizontal(settings) {
             init {
@@ -91,6 +100,9 @@ abstract class HTBlockWithEntity(settings: Settings) :
 
     //    Horizontal    //
 
+    /**
+     * A class which extends [hiiragi283.ragium.api.block.HTBlockWithEntity] and have horizontal property
+     */
     abstract class Horizontal(settings: Settings) : HTBlockWithEntity(settings) {
         init {
             defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)

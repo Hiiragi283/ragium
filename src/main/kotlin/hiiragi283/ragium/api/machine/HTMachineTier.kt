@@ -25,13 +25,17 @@ import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.world.World
 
+/**
+ * Represent machine tier
+ * @param recipeCost an energy amount required to process recipe
+ * @param tickRate a machine process rate
+ */
 enum class HTMachineTier(
     private val idPattern: String,
     val recipeCost: Long,
     val tickRate: Int,
     val rarity: Rarity,
 ) : StringIdentifiable {
-    // NONE(RagiumAPI.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
     PRIMITIVE(
         "primitive_%s",
         160,
@@ -70,6 +74,10 @@ enum class HTMachineTier(
         val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.of("tier", HTMachineTier::class.java)
     }
 
+    /**
+     * Maximum item smelting count
+     * @see hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor.process
+     */
     val smelterMulti: Int = (recipeCost / 20).toInt()
     val bucketUnit: Long = recipeCost / 20
     val crateCapacity: Long = bucketUnit * 8

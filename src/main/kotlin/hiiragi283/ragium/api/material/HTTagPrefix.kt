@@ -16,6 +16,9 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
+/**
+ * Represent [TagKey] prefixes
+ */
 enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : StringIdentifiable {
     DEEP_ORE("ores", false) {
         override fun createPath(key: HTMaterialKey): String = "deepslate_${key.name}_ore"
@@ -72,7 +75,7 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     val commonTagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId(prefix))
 
-    fun createTag(value: StringIdentifiable): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${value.asString()}"))
+    fun createTag(key: HTMaterialKey): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${key.name}"))
 
     //    Translation    //
 

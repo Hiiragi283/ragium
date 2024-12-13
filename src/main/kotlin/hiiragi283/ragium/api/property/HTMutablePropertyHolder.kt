@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.property
 
+/**
+ * A mutable [HTPropertyHolder]
+ */
 interface HTMutablePropertyHolder : HTPropertyHolder {
     operator fun <T : Any> set(key: HTPropertyKey<T>, value: T)
 
@@ -7,6 +10,9 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
         set(key, Unit)
     }
 
+    /**
+     * Set [value] if not null
+     */
     fun <T : Any> setIfNonNull(key: HTPropertyKey<T>, value: T?) {
         value?.let { set(key, it) }
     }
@@ -20,12 +26,8 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
         }
     }
 
-    fun <T : Any> removeIfNull(key: HTPropertyKey<T>, mapping: (T) -> Any?) {
-        val existValue: T = get(key) ?: return
-        if (mapping(existValue) == null) {
-            remove(key)
-        }
-    }
-
+    /**
+     * @see [MutableMap.computeIfAbsent]
+     */
     fun <T : Any> computeIfAbsent(key: HTPropertyKey<T>, mapping: () -> T): T = get(key) ?: mapping().apply { set(key, this) }
 }

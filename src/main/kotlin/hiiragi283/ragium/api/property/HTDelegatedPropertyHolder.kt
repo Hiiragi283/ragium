@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api.property
 
+/**
+ * A simple implementation for [HTPropertyHolder]
+ */
 interface HTDelegatedPropertyHolder : HTPropertyHolder {
     val delegated: HTPropertyHolder
 
