@@ -2,20 +2,18 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.fluidStorageOf
-import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
@@ -79,7 +77,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 4)
+    private val fluidStorage = HTTieredFluidStorage(HTMachineTier.PRIMITIVE, HTStorageIO.INPUT, null, this::markDirty)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

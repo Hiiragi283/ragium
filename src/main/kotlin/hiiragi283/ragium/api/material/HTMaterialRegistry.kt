@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
-import hiiragi283.ragium.api.machine.HTMaterialType
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.item.Item

@@ -18,8 +18,6 @@ fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.cre
 
 fun <T : Any> idComparator(registry: Registry<T>): java.util.Comparator<T> = compareBy(registry::getId)
 
-fun <T : Any> entryComparator(registry: Registry<T>): Comparator<RegistryEntry<T>> = compareBy { it.key.orElseThrow().value }
-
 fun <T : Any> Registry<T>.getKeyOrNull(entry: T): RegistryKey<T>? = getKey(entry).getOrNull()
 
 fun <T : Any> Registry<T>.getKeyOrThrow(entry: T): RegistryKey<T> = getKey(entry).orElseThrow()

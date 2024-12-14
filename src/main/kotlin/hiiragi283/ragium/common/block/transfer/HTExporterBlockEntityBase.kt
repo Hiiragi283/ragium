@@ -1,12 +1,9 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.extension.getStackInActiveHand
-import hiiragi283.ragium.api.extension.isEmpty
-import hiiragi283.ragium.api.extension.isOf
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
-import hiiragi283.ragium.common.init.RagiumTexts
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -79,8 +76,8 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
 
             else -> {
                 if (!world.isClient) {
-                    player.sendMessage(RagiumTexts.fluidFilter(fluidFilter), false)
-                    player.sendMessage(RagiumTexts.itemFilter(itemFilter), false)
+                    player.sendMessage(fluidFilterText(fluidFilter), false)
+                    player.sendMessage(itemFilterText(itemFilter), false)
                 }
                 false
             }

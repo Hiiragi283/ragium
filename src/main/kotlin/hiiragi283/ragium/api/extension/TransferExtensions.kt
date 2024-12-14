@@ -33,11 +33,6 @@ import kotlin.math.min
 //    Storage    //
 
 /**
- * Create a new [SingleFluidStorage] instance with [capacity] and no callbacks for [net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant.onFinalCommit]
- */
-fun fluidStorageOf(capacity: Long): SingleFluidStorage = SingleFluidStorage.withFixedCapacity(capacity) {}
-
-/**
  * Insert resource and amount by [HTVariantStack]
  */
 fun <T : TransferVariant<*>> Storage<T>.insert(stack: HTVariantStack<*, T>, transaction: Transaction): Long = when {
@@ -118,7 +113,7 @@ fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? 
 fun <T : Any> TransferVariant<T>.isOf(entry: RegistryEntry<T>): Boolean = isOf(entry.value())
 
 fun <T : Any> TransferVariant<T>.isIn(valueGetter: HTTagValueGetter<T>, tagKey: TagKey<T>): Boolean =
-    valueGetter.getEntries(tagKey).any(this::isOf)
+    valueGetter.getValues(tagKey).any(this::isOf)
 
 fun ItemVariant.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 

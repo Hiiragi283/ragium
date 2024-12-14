@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.block.transfer
 
 import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.extension.fluidFilterText
 import hiiragi283.ragium.api.extension.getStackInActiveHand
+import hiiragi283.ragium.api.extension.itemFilterText
 import hiiragi283.ragium.api.extension.mappedCodecOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -9,7 +11,6 @@ import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
-import hiiragi283.ragium.common.init.RagiumTexts
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
@@ -92,8 +93,8 @@ class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
             else -> {
                 if (!world.isClient) {
                     player.sendMessage(Text.literal("Side: $side"))
-                    fluidFilterMap[side]?.let { player.sendMessage(RagiumTexts.fluidFilter(it), false) }
-                    itemFilterMap[side]?.let { player.sendMessage(RagiumTexts.itemFilter(it), false) }
+                    fluidFilterMap[side]?.let { player.sendMessage(fluidFilterText(it), false) }
+                    itemFilterMap[side]?.let { player.sendMessage(itemFilterText(it), false) }
                 }
                 false
             }

@@ -2,7 +2,10 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.*
 import net.minecraft.util.Language
 import net.minecraft.util.Util
@@ -63,6 +66,16 @@ fun fluidAmountText(value: Long): MutableText = Text.translatable(
     RagiumTranslationKeys.MACHINE_FLUID_AMOUNT,
     NumberFormat.getNumberInstance().format(value / FluidConstants.BUCKET),
     NumberFormat.getNumberInstance().format(value % FluidConstants.BUCKET),
+)
+
+fun fluidFilterText(entryList: RegistryEntryList<Fluid>): MutableText = Text.translatable(
+    RagiumTranslationKeys.EXPORTER_FLUID_FILTER,
+    entryList.asText(Fluid::name),
+)
+
+fun itemFilterText(entryList: RegistryEntryList<Item>): MutableText = Text.translatable(
+    RagiumTranslationKeys.EXPORTER_ITEM_FILTER,
+    entryList.asText(Item::getName),
 )
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)

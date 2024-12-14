@@ -2,11 +2,11 @@ package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
@@ -95,7 +95,11 @@ class HTSimplePipeBlockEntity(pos: BlockPos, state: BlockState) :
             override fun getCapacity(variant: ItemVariant): Long = 64
         }
 
-    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 16)
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.GENERIC, null, this::markDirty)
+
+    override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
+        fluidStorage = fluidStorage.updateTier(newTier)
+    }
 
     override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = if (type.isItem && side != front) itemStorage else null
 

@@ -1,6 +1,4 @@
-package hiiragi283.ragium.api.machine
-
-import hiiragi283.ragium.api.material.HTTagPrefix
+package hiiragi283.ragium.api.material
 
 /**
  * Represent material type

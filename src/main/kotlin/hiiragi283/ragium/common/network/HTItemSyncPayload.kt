@@ -8,17 +8,17 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.network.packet.CustomPayload
 import net.minecraft.util.math.BlockPos
 
-data class HTInventoryPayload(val pos: BlockPos, val slot: Int, val stack: ItemStack) : CustomPayload {
+data class HTItemSyncPayload(val pos: BlockPos, val slot: Int, val stack: ItemStack) : CustomPayload {
     companion object {
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTInventoryPayload> = PacketCodec.tuple(
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTItemSyncPayload> = PacketCodec.tuple(
             BlockPos.PACKET_CODEC,
-            HTInventoryPayload::pos,
+            HTItemSyncPayload::pos,
             PacketCodecs.VAR_INT,
-            HTInventoryPayload::slot,
+            HTItemSyncPayload::slot,
             ItemStack.OPTIONAL_PACKET_CODEC,
-            HTInventoryPayload::stack,
-            ::HTInventoryPayload,
+            HTItemSyncPayload::stack,
+            ::HTItemSyncPayload,
         )
     }
 

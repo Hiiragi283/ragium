@@ -3,10 +3,9 @@ package hiiragi283.ragium.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.extension.energyPercent
-import hiiragi283.ragium.api.extension.getOrNull
-import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver
 import hiiragi283.ragium.client.extension.world
@@ -34,7 +33,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -210,8 +208,8 @@ object RagiumClient : ClientModInitializer {
                 tooltipType: TooltipType,
                 lines: MutableList<Text>,
             ->
-            stack.get(RagiumComponentTypes.ITEM_FILTER)?.let(RagiumTexts::itemFilter)?.let(lines::add)
-            stack.get(RagiumComponentTypes.FLUID_FILTER)?.let(RagiumTexts::fluidFilter)?.let(lines::add)
+            stack.get(RagiumComponentTypes.ITEM_FILTER)?.let(::itemFilterText)?.let(lines::add)
+            stack.get(RagiumComponentTypes.FLUID_FILTER)?.let(::fluidFilterText)?.let(lines::add)
         }
 
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
@@ -290,11 +288,8 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerNetworks() {
         RagiumNetworks.CRATE_PREVIEW.registerClientReceiver { payload: HTCratePreviewPayload, context: ClientPlayNetworking.Context ->
-            val (pos: BlockPos, variant: ItemVariant, amount: Long) = payload
-            (context.getBlockEntity(pos) as? HTCrateBlockEntity)?.itemStorage?.apply {
-                this.variant = variant
-                this.amount = amount
-            }
+            val (pos: BlockPos, stack: HTItemVariantStack) = payload
+            (context.getBlockEntity(pos) as? HTCrateBlockEntity)?.itemStorage?.variantStack = stack
         }
 
         RagiumNetworks.FLOATING_ITEM.registerClientReceiver { payload: HTFloatingItemPayload, context: ClientPlayNetworking.Context ->
@@ -326,7 +321,7 @@ object RagiumClient : ClientModInitializer {
             }
         }
 
-        RagiumNetworks.ITEM_SYNC.registerClientReceiver { payload: HTInventoryPayload, context: ClientPlayNetworking.Context ->
+        RagiumNetworks.ITEM_SYNC.registerClientReceiver { payload: HTItemSyncPayload, context: ClientPlayNetworking.Context ->
             val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
             val inventory: Inventory = (context.getBlockEntity(pos) as? HTMachineBlockEntityBase)?.asInventory()
                 ?: return@registerClientReceiver

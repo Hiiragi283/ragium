@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.common.network.HTInventoryPayload
+import hiiragi283.ragium.common.network.HTItemSyncPayload
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.minecraft.block.entity.BlockEntity
@@ -17,10 +17,10 @@ import net.minecraft.world.World
 //    Packet    //
 
 /**
- * Run [action] for each [HTInventoryPayload] from [this] inventory
+ * Run [action] for each [HTItemSyncPayload] from [this] inventory
  */
-fun Inventory.sendS2CPacket(pos: BlockPos, action: (HTInventoryPayload) -> Unit) {
-    asMap().map { (slot: Int, stack: ItemStack) -> HTInventoryPayload(pos, slot, stack) }.forEach(action)
+fun Inventory.sendS2CPacket(pos: BlockPos, action: (HTItemSyncPayload) -> Unit) {
+    asMap().map { (slot: Int, stack: ItemStack) -> HTItemSyncPayload(pos, slot, stack) }.forEach(action)
 }
 
 //    Sending    //

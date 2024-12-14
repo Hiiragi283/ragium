@@ -34,11 +34,17 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         HTMachineTier.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("tier"))
-            .ifSuccess { tier = it }
+            .ifSuccess {
+                val oldTier: HTMachineTier = tier
+                tier = it
+                onTierUpdated(oldTier, tier)
+            }
         HTPipeType.CODEC
             .parse(NbtOps.INSTANCE, nbt.get("type"))
             .ifSuccess { type = it }
     }
+
+    open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
     final override val tickRate: Int = 20
 

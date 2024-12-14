@@ -7,12 +7,12 @@ import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
-import hiiragi283.ragium.api.extension.getAroundPos
+import hiiragi283.ragium.api.extension.aroundPos
 import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.api.machine.HTMachineEntityFactory
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.RagiumContents
@@ -109,7 +109,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     world.getBiome(pos).isIn(BiomeTags.IS_NETHER) -> true
                     else ->
                         pos
-                            .getAroundPos {
+                            .aroundPos
+                            .filter {
                                 val fluidState: FluidState = world.getFluidState(it)
                                 fluidState.isIn(FluidTags.LAVA) && fluidState.isStill
                             }.size >= 4

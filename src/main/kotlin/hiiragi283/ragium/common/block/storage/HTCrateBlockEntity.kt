@@ -31,7 +31,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
         override fun onFinalCommit() {
             ifPresentWorld { world: World ->
                 if (!world.isClient) {
-                    sendPacket(HTCratePreviewPayload(pos, variant, amount))
+                    sendPacket(HTCratePreviewPayload(pos, variantStack))
                 }
             }
         }

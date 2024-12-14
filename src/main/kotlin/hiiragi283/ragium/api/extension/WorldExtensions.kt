@@ -77,8 +77,6 @@ fun dropStackAt(world: World, pos: Vec3d, stack: ItemStack): Boolean {
 val BlockPos.aroundPos: List<BlockPos>
     get() = Direction.entries.map(this::offset)
 
-fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = aroundPos.filter(filter)
-
 //    ChunkPos    //
 
 /**

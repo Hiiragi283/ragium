@@ -14,7 +14,6 @@ import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.input.RecipeInput
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -207,14 +206,3 @@ fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path
 //    ServiceLoader    //
 
 inline fun <reified T : Any> collectInstances(): Iterable<T> = ServiceLoader.load(T::class.java)
-
-//    Recipe    //
-
-/**
- * Create a new list from all stacks in [this] recipe input by [RecipeInput.getStackInSlot]
- */
-fun RecipeInput.toList(): List<ItemStack> = buildList<ItemStack> {
-    for (index: Int in (0 until this.size)) {
-        add(this[index])
-    }
-}
