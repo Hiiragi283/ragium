@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.getAroundPos
 import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
+import hiiragi283.ragium.api.machine.HTMachineEntityFactory
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -431,8 +431,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemOutput(output, 2)
                 .offerTo(exporter, output, "_from_raw")
         }
-        // raw -> ingot
         if (HTMaterialPropertyKeys.DISABLE_RAW_SMELTING !in entry) {
+            // raw -> ingot
             helper.useIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
                 val input: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
                 if (!helper.isPopulated(input)) return@useIfPresent
@@ -445,7 +445,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 )
             }
             // dust -> ingot
-            helper.useIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
+            helper.useIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
                 val input: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
                 if (!helper.isPopulated(input)) return@useIfPresent
                 HTCookingRecipeJsonBuilder.smeltAndBlast(

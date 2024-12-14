@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.inventory.Inventory
+import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 class HTMachineRecipeProcessor(
@@ -79,10 +80,15 @@ class HTMachineRecipeProcessor(
     }
 
     private fun decrementInputs(recipe: HTMachineRecipe) {
-        itemInputs.forEachIndexed { index: Int, slot: Int ->
+        HTShapelessInputResolver
+            .resolve(recipe.itemInputs, itemInputs.map(inventory::getStack))
+            .forEach { (ingredient: HTItemIngredient, stack: ItemStack) ->
+                ingredient.onConsume(stack)
+            }
+        /*itemInputs.forEachIndexed { index: Int, slot: Int ->
             val ingredient: HTItemIngredient = recipe.itemInputs.getOrNull(index) ?: return@forEachIndexed
             ingredient.onConsume(inventory.getStack(slot))
-        }
+        }*/
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
             val ingredient: HTFluidIngredient = recipe.fluidInputs.getOrNull(index) ?: return@forEachIndexed
             fluidStorage.map(slot, ingredient::onConsume)

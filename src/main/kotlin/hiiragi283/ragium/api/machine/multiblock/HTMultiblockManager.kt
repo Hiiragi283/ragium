@@ -22,7 +22,7 @@ class HTMultiblockManager(private val world: () -> World?, private val pos: Bloc
     private val stateCache: MutableMap<BlockPos, Pair<BlockPos, BlockState>> = mutableMapOf()
 
     /**
-     * @see [hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase.onUse]
+     * @see [hiiragi283.ragium.api.block.HTMachineBlockEntityBase.onUse]
      */
     fun onUse(state: BlockState, player: PlayerEntity): Boolean = if (player.isSneaking) {
         showPreview = !showPreview

@@ -1,8 +1,7 @@
-package hiiragi283.ragium.api.machine.block
+package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey

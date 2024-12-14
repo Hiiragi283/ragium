@@ -1,12 +1,13 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -30,14 +31,13 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.CANNING_MACHINE, pos, state),
-    HTFluidSyncable {
+    HTScreenFluidProvider {
     override var key: HTMachineKey = RagiumMachineKeys.CANNING_MACHINE
 
     private val inventory: HTMachineInventory = object : HTMachineInventory(
@@ -142,9 +142,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
-        fluidStorage.sendPacket(player, handler)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 }

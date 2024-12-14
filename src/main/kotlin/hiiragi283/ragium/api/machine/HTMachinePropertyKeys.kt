@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
 import hiiragi283.ragium.api.property.HTPropertyKey
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.sound.SoundEvent
@@ -18,7 +17,7 @@ import net.minecraft.world.World
 object HTMachinePropertyKeys {
     /**
      * Provides [HTMachineEntityFactory]
-     * @see [hiiragi283.ragium.api.machine.block.HTMachineBlock.createBlockEntity]
+     * @see [hiiragi283.ragium.api.block.HTMachineBlock.createBlockEntity]
      */
     @JvmField
     val MACHINE_FACTORY: HTPropertyKey.Simple<HTMachineEntityFactory> =
@@ -46,7 +45,7 @@ object HTMachinePropertyKeys {
 
     /**
      * Provides [net.minecraft.particle.ParticleType]
-     * @see [hiiragi283.ragium.api.machine.block.HTMachineBlock.randomDisplayTick]
+     * @see [hiiragi283.ragium.api.block.HTMachineBlock.randomDisplayTick]
      */
     @JvmField
     val PARTICLE: HTPropertyKey.Simple<SimpleParticleType> =
@@ -54,7 +53,7 @@ object HTMachinePropertyKeys {
 
     /**
      * Provides [SoundEvent]
-     * @see hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase.tickSecond
+     * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.tickSecond
      */
     @JvmField
     val SOUND: HTPropertyKey.Simple<SoundEvent> =
@@ -62,7 +61,7 @@ object HTMachinePropertyKeys {
 
     /**
      * Provides [VoxelShape]
-     * @see hiiragi283.ragium.api.machine.block.HTMachineBlock.getOutlineShape
+     * @see hiiragi283.ragium.api.block.HTMachineBlock.getOutlineShape
      */
     @JvmField
     val VOXEL_SHAPE: HTPropertyKey.Simple<VoxelShape> =

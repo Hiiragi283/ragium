@@ -1,11 +1,11 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.longText
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.client.extension.getBlockEntity
 import hiiragi283.ragium.client.extension.registerClientReceiver

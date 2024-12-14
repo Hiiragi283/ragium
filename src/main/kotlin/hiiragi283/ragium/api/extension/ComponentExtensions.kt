@@ -17,13 +17,14 @@ import net.minecraft.util.Identifier
 import java.util.*
 import java.util.stream.Collectors
 
+@Suppress("UsePropertyAccessSyntax")
 fun createArmorAttribute(material: RegistryEntry<ArmorMaterial>, type: ArmorItem.Type): AttributeModifiersComponent.Builder {
     val protection: Int = material.value().getProtection(type)
     val toughness: Float = material.value().toughness
     val kResistance: Float = material.value().knockbackResistance
     val builder: AttributeModifiersComponent.Builder = AttributeModifiersComponent.builder()
     val slot: AttributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(type.equipmentSlot)
-    val id: Identifier = Identifier.of("armor.${type.name}")
+    val id: Identifier = Identifier.of("armor.${type.getName()}")
     builder.add(
         EntityAttributes.GENERIC_ARMOR,
         EntityAttributeModifier(

@@ -1,11 +1,12 @@
 package hiiragi283.ragium.common.block.machine.generator
 
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
@@ -29,14 +30,13 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
-    HTFluidSyncable {
+    HTScreenFluidProvider {
     override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
     private val inventory: HTMachineInventory = object : HTMachineInventory(
@@ -95,11 +95,9 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
-        fluidStorage.sendPacket(player, handler)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 
     //    ExtendedScreenHandlerFactory    //
 

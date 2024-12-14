@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.machine.process
 
+import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.SidedInventory
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 
@@ -23,7 +22,7 @@ class HTSimpleRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         this.key = key
     }
 
-    override val inventory: SidedInventory = HTMachineInventory.ofSmall()
+    override val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 

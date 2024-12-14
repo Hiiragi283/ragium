@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix

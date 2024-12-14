@@ -1,14 +1,15 @@
 package hiiragi283.ragium.common.block.machine.consume
 
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.insertSelf
 import hiiragi283.ragium.api.extension.readFluidStorage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
@@ -30,14 +31,13 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.BIOMASS_FERMENTER, pos, state),
-    HTFluidSyncable {
+    HTScreenFluidProvider {
     override var key: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
     private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).input(0).build()
@@ -85,9 +85,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
-        fluidStorage.sendPacket(player, handler)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 }

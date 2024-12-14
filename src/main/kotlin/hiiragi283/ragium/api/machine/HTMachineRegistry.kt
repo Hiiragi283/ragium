@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
-import hiiragi283.ragium.api.machine.block.HTMachineBlock
+import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import net.minecraft.item.ItemConvertible
 import net.minecraft.util.Identifier

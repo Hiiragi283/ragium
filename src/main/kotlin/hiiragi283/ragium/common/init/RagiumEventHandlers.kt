@@ -7,14 +7,17 @@ import hiiragi283.ragium.api.event.HTBrushingDropRegistry
 import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.sendTitle
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.network.HTFluidSyncPayload
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.block.BlockState
@@ -82,7 +85,11 @@ object RagiumEventHandlers {
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 // send fluid sync packet
                 (player.currentScreenHandler as? HTMachineScreenHandlerBase)?.let { screen: HTMachineScreenHandlerBase ->
-                    (screen.blockEntity as? HTFluidSyncable)?.sendPacket(player, RagiumNetworks::sendFluidSync)
+                    (screen.blockEntity as? HTScreenFluidProvider)
+                        ?.getFluidsToSync()
+                        ?.forEach { (index: Int, stack: HTFluidVariantStack) ->
+                            ServerPlayNetworking.send(player, HTFluidSyncPayload(index, stack))
+                        }
                 }
                 // consume energy when worm stella goggles
                 if (player.armorItems.any { it.isOf(RagiumItems.STELLA_GOGGLE) }) {

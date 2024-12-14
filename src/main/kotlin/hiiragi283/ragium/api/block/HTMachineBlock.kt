@@ -1,6 +1,5 @@
-package hiiragi283.ragium.api.machine.block
+package hiiragi283.ragium.api.block
 
-import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineKeyOrNull

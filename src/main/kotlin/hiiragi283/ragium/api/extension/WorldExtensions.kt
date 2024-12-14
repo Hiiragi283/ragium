@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity

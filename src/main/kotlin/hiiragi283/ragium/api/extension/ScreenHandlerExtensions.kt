@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.entity.BlockEntity

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes

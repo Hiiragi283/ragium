@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import com.google.common.base.Predicates
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.readFluidStorage
 import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult

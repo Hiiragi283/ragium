@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.block.machine.consume
 
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.insert
 import hiiragi283.ragium.api.extension.readFluidStorage
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
@@ -33,7 +33,6 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
@@ -43,7 +42,7 @@ import net.minecraft.world.biome.Biome
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
-    HTFluidSyncable,
+    HTScreenFluidProvider,
     HTMultiblockPatternProvider {
     companion object {
         @JvmField
@@ -104,11 +103,9 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage.wrapStorage()
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
-        fluidStorage.sendPacket(player, handler)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 
     //    HTMultiblockPatternProvider    //
 

@@ -1,10 +1,12 @@
-package hiiragi283.ragium.api.machine.block
+package hiiragi283.ragium.api.block
 
 import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTUnitResult
@@ -20,7 +22,6 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -30,7 +31,7 @@ import net.minecraft.world.World
  */
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
-    HTFluidSyncable {
+    HTScreenFluidProvider {
     final override fun process(world: World, pos: BlockPos): HTUnitResult = when (this) {
         is HTMultiblockPatternProvider -> multiblockManager.updateValidation(cachedState)
         else -> HTUnitResult.success()
@@ -60,11 +61,9 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
     final override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    final override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
-        fluidStorage.sendPacket(player, handler)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 
     //    SidedStorageBlockEntity    //
 

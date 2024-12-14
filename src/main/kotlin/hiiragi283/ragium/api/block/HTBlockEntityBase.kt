@@ -20,7 +20,7 @@ import net.minecraft.world.World
 
 /**
  * A base class for [BlockEntity]
- * @see [hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase]
+ * @see [HTMachineBlockEntityBase]
  */
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
     companion object {

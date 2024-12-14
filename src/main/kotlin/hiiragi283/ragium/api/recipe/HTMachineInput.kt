@@ -11,7 +11,7 @@ import net.minecraft.recipe.input.RecipeInput
 class HTMachineInput private constructor(
     val key: HTMachineKey,
     val tier: HTMachineTier,
-    private val itemInputs: List<ItemStack>,
+    val itemInputs: List<ItemStack>,
     private val fluidInputs: List<HTFluidVariantStack>,
     val catalyst: ItemStack,
 ) : RecipeInput {

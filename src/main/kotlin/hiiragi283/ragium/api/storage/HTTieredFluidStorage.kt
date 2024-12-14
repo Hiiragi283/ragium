@@ -4,14 +4,13 @@ import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.extension.isIn
 import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.server.network.ServerPlayerEntity
 
 /**
  * A simple [SingleFluidStorage] implementation with tiered capacity
@@ -24,7 +23,7 @@ class HTTieredFluidStorage(
     val syncIndex: Int = 0,
 ) : SingleFluidStorage(),
     HTFluidInteractable,
-    HTFluidSyncable {
+    HTScreenFluidProvider {
     override fun getCapacity(variant: FluidVariant): Long = tier.tankCapacity
 
     override fun canInsert(variant: FluidVariant): Boolean = inputTag?.let(variant::isIn) != false
@@ -52,9 +51,7 @@ class HTTieredFluidStorage(
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = interactWithFluidStorage(player, storageIO)
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, handler: HTFluidSyncable.Handler) {
-        handler.send(player, syncIndex, variantStack)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = mapOf(syncIndex to variantStack)
 }

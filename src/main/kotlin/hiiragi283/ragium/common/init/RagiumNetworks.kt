@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.asServerPlayer
-import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.common.network.*
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
@@ -17,7 +16,6 @@ import net.minecraft.particle.ParticleTypes
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundEvent
 import net.minecraft.sound.SoundEvents
 
@@ -53,11 +51,6 @@ object RagiumNetworks {
         val id = CustomPayload.Id<T>(RagiumAPI.id(name))
         PayloadTypeRegistry.playS2C().register(id, codec)
         return id
-    }
-
-    @JvmStatic
-    fun sendFluidSync(player: ServerPlayerEntity, index: Int, stack: HTFluidVariantStack) {
-        ServerPlayNetworking.send(player, HTFluidSyncPayload(index, stack))
     }
 
     @JvmStatic

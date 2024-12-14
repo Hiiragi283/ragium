@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.machine.process
 
+import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes

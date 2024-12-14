@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlock
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -173,7 +173,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             registerLayered(
                 ore.value,
                 TextureMap.getId(ore.baseStone),
-                RagiumAPI.id("block/ore/${ore.material.asString()}"),
+                RagiumAPI.id("block/ore/${ore.material.name}"),
             )
         }
         RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->
