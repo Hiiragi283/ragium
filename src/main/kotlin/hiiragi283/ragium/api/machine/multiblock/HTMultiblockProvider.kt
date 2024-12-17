@@ -8,7 +8,7 @@ import net.minecraft.world.World
 /**
  * Multiblock structure provider
  */
-interface HTMultiblockPatternProvider {
+interface HTMultiblockProvider {
     val multiblockManager: HTMultiblockManager
 
     /**

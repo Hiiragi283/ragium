@@ -1,6 +1,5 @@
-package hiiragi283.ragium.client.extension
+package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.extension.networkMap
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 import net.minecraft.block.entity.BlockEntity

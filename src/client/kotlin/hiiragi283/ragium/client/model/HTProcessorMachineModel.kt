@@ -1,8 +1,10 @@
 package hiiragi283.ragium.client.model
 
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.getBlockModel
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getOrDefault
+import hiiragi283.ragium.api.extension.hullModel
 import hiiragi283.ragium.api.extension.machineKeyOrNull
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -10,8 +12,6 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.client.extension.getBlockModel
-import hiiragi283.ragium.client.extension.hullModel
 import hiiragi283.ragium.common.RagiumContents
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

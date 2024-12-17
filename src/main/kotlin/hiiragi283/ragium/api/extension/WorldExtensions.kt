@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemConvertible
@@ -21,7 +21,7 @@ import net.minecraft.world.WorldView
 
 fun BlockView.getMachineEntity(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
 
-fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockPatternProvider? = getBlockEntity(pos) as? HTMultiblockPatternProvider
+fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockProvider? = getBlockEntity(pos) as? HTMultiblockProvider
 
 fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
     registryManager.get(registryKey).getEntryOrNull(key)

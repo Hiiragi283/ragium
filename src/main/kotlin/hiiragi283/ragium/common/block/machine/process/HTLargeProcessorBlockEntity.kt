@@ -7,9 +7,10 @@ import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.machine.HTBlockTagPattern
+import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.math.BlockPos
@@ -37,9 +38,9 @@ class HTLargeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTMultiblockPattern.of(tier.getCasing()))
-        builder.addHollow(-1..1, 0, 1..3, HTMultiblockPattern.of(tier.getHull()))
-        builder.addLayer(-1..1, 1, 1..3, HTMultiblockPattern.of(tier.getStorageBlock()))
-        builder.add(0, 0, 2, HTMultiblockPattern.tag(RagiumBlockTags.MACHINES))
+        builder.addLayer(-1..1, -1, 1..3, HTSimpleBlockPattern(tier.getCasing()))
+        builder.addHollow(-1..1, 0, 1..3, HTSimpleBlockPattern(tier.getHull()))
+        builder.addLayer(-1..1, 1, 1..3, HTSimpleBlockPattern(tier.getStorageBlock()))
+        builder.add(0, 0, 2, HTBlockTagPattern(RagiumBlockTags.MACHINES))
     }
 }

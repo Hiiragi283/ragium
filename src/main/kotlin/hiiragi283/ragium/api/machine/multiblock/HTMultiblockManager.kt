@@ -15,7 +15,7 @@ import net.minecraft.world.World
 /**
  * Multiblock validation manager
  */
-class HTMultiblockManager(private val world: () -> World?, private val pos: BlockPos, private val provider: HTMultiblockPatternProvider) :
+class HTMultiblockManager(private val world: () -> World?, private val pos: BlockPos, private val provider: HTMultiblockProvider) :
     HTMultiblockBuilder {
     var showPreview: Boolean = false
 

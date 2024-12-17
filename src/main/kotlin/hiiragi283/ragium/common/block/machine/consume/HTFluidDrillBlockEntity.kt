@@ -9,8 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -19,6 +18,7 @@ import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -43,7 +43,7 @@ import net.minecraft.world.biome.Biome
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
     HTScreenFluidProvider,
-    HTMultiblockPatternProvider {
+    HTMultiblockProvider {
     companion object {
         @JvmField
         val FLUID_MAP: Map<TagKey<Biome>, HTFluidVariantStack> = mapOf(
@@ -117,29 +117,29 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockPattern.of(tier.getHull()),
+                HTSimpleBlockPattern(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockPattern.of(tier.getGrate()),
+                HTSimpleBlockPattern(tier.getGrate()),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockPattern.of(tier.getGrate()),
+                HTSimpleBlockPattern(tier.getGrate()),
             )
         builder.add(
             0,
             3,
             2,
-            HTMultiblockPattern.of(tier.getGrate()),
+            HTSimpleBlockPattern(tier.getGrate()),
         )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockPattern.of(tier.getGrate()),
+            HTSimpleBlockPattern(tier.getGrate()),
         )
     }
 }

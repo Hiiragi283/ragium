@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.block
 import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -33,7 +33,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     HTMachineBlockEntityBase(type, pos, state),
     HTScreenFluidProvider {
     final override fun process(world: World, pos: BlockPos): HTUnitResult = when (this) {
-        is HTMultiblockPatternProvider -> multiblockManager.updateValidation(cachedState)
+        is HTMultiblockProvider -> multiblockManager.updateValidation(cachedState)
         else -> HTUnitResult.success()
     }.flatMap { processor.process(world, key, tier) }
 
@@ -79,7 +79,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
      */
     abstract class Large(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTRecipeProcessorBlockEntityBase(type, pos, state),
-        HTMultiblockPatternProvider {
+        HTMultiblockProvider {
         final override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
         final override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()

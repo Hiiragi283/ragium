@@ -2,15 +2,10 @@ package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.client.extension.translate
+import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
-import net.minecraft.block.BlockState
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.render.RenderLayers
-import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.block.BlockRenderManager
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
@@ -22,6 +17,9 @@ data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val c
     companion object {
         @JvmField
         val DUMMY_POS = BlockPos(0, 260, 0)
+
+        @JvmField
+        val RANDOM: Random = Random.create()
     }
 
     override fun add(
@@ -30,15 +28,6 @@ data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val c
         z: Int,
         pattern: HTMultiblockPattern,
     ) {
-        val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
-        matrix.push()
-        matrix.translate(x, y, z)
-        matrix.translate(0.125, 0.125, 0.125)
-        matrix.scale(0.75f, 0.75f, 0.75f)
-        pattern.getPreviewState(world)?.let { state: BlockState ->
-            val consumer: VertexConsumer = consumerProvider.getBuffer(RenderLayers.getBlockLayer(state))
-            blockRenderManager.renderBlock(state, DUMMY_POS, world, matrix, consumer, false, Random.create())
-        }
-        matrix.pop()
+        HTMultiblockPatternRendererRegistry.render(x, y, z, pattern, world, matrix, consumerProvider, RANDOM)
     }
 }

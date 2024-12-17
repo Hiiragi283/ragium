@@ -1,9 +1,8 @@
-package hiiragi283.ragium.client.extension
+package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
@@ -94,7 +93,7 @@ fun <T> renderMultiblock(
     provider: T,
     matrices: MatrixStack,
     vertexConsumers: VertexConsumerProvider,
-) where T : HTMultiblockPatternProvider, T : BlockEntity {
+) where T : HTMultiblockProvider, T : BlockEntity {
     renderMultiblock(
         provider,
         provider.world,
@@ -104,7 +103,7 @@ fun <T> renderMultiblock(
     )
 }
 
-fun <T : HTMultiblockPatternProvider> renderMultiblock(
+fun <T : HTMultiblockProvider> renderMultiblock(
     provider: T,
     world: World?,
     facing: Direction?,

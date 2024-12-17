@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTFluidInteractable
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
@@ -131,7 +131,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             return ActionResult.success(world.isClient)
         }
         // Validate multiblock
-        val result: Boolean = (this as? HTMultiblockPatternProvider)?.multiblockManager?.onUse(state, player) != false
+        val result: Boolean = (this as? HTMultiblockProvider)?.multiblockManager?.onUse(state, player) != false
         // open machine screen
         if (result) {
             if (!world.isClient) {

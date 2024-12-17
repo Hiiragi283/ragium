@@ -5,12 +5,12 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.minecraft.block.BlockState
@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
-    HTMultiblockPatternProvider {
+    HTMultiblockProvider {
     override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
@@ -45,8 +45,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTMultiblockPattern.of(tier.getCasing()))
-        builder.addHollow(-1..1, 0, 1..3, HTMultiblockPattern.of(tier.getCoil()))
-        builder.addLayer(-1..1, 1, 1..3, HTMultiblockPattern.of(tier.getStorageBlock()))
+        builder.addLayer(-1..1, -1, 1..3, HTSimpleBlockPattern(tier.getCasing()))
+        builder.addHollow(-1..1, 0, 1..3, HTSimpleBlockPattern(tier.getCoil()))
+        builder.addLayer(-1..1, 1, 1..3, HTSimpleBlockPattern(tier.getStorageBlock()))
     }
 }

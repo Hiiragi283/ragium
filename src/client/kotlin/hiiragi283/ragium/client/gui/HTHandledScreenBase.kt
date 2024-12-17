@@ -1,12 +1,12 @@
 package hiiragi283.ragium.client.gui
 
+import hiiragi283.ragium.api.extension.CLIENT_NETWORK_MAP
 import hiiragi283.ragium.api.extension.fluidAmountText
 import hiiragi283.ragium.api.extension.getModName
+import hiiragi283.ragium.api.extension.getSpriteAndColor
 import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.extension.toFloatColor
 import hiiragi283.ragium.api.screen.HTScreenHandlerBase
-import hiiragi283.ragium.client.extension.CLIENT_NETWORK_MAP
-import hiiragi283.ragium.client.extension.getSpriteAndColor
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment

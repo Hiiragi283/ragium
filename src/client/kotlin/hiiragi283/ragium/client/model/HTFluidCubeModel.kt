@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.model
 
-import hiiragi283.ragium.client.extension.FLUID_CUBE_TRANSFORM
-import hiiragi283.ragium.client.extension.getSpriteAndColor
+import hiiragi283.ragium.api.extension.FLUID_CUBE_TRANSFORM
+import hiiragi283.ragium.api.extension.getSpriteAndColor
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.api.EnvType

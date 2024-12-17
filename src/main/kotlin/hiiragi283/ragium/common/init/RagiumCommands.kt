@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.networkMap
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
@@ -104,7 +104,7 @@ object RagiumCommands {
         val pos: BlockPos = BlockPosArgumentType.getBlockPos(context, "pos")
         val world: ServerWorld = context.source.world
         val state: BlockState = world.getBlockState(pos)
-        val provider: HTMultiblockPatternProvider? = world.getMultiblockController(pos)
+        val provider: HTMultiblockProvider? = world.getMultiblockController(pos)
         if (provider != null) {
             val result: Boolean = provider.multiblockManager
                 .updateValidation(state)
@@ -136,7 +136,7 @@ object RagiumCommands {
         ) {
             val pos1: BlockPos = pos.add(x, y, z)
             if (isValid) {
-                if (replace) {
+                /*if (replace) {
                     pattern.getPreviewState(world)?.let {
                         world.setBlockState(pos1, it)
                     }
@@ -146,7 +146,7 @@ object RagiumCommands {
                     pattern.getPreviewState(world)?.let {
                         world.setBlockState(pos1, it)
                     }
-                }
+                }*/
             } else {
                 isValid = false
             }

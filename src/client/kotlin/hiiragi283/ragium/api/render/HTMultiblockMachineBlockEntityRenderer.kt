@@ -1,8 +1,8 @@
-package hiiragi283.ragium.client.renderer
+package hiiragi283.ragium.api.render
 
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
-import hiiragi283.ragium.client.extension.renderMultiblock
+import hiiragi283.ragium.api.extension.renderMultiblock
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider
@@ -19,7 +19,7 @@ object HTMultiblockMachineBlockEntityRenderer : BlockEntityRenderer<HTMachineBlo
         light: Int,
         overlay: Int,
     ) {
-        if (entity is HTMultiblockPatternProvider) {
+        if (entity is HTMultiblockProvider) {
             renderMultiblock(entity, matrices, vertexConsumers)
         }
     }

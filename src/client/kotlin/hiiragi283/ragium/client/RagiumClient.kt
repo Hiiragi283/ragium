@@ -4,20 +4,26 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.getBlockEntity
+import hiiragi283.ragium.api.extension.registerClientReceiver
+import hiiragi283.ragium.api.extension.world
+import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
+import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
-import hiiragi283.ragium.client.extension.getBlockEntity
-import hiiragi283.ragium.client.extension.registerClientReceiver
-import hiiragi283.ragium.client.extension.world
 import hiiragi283.ragium.client.gui.HTFluidFilterScreen
 import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.machine.*
+import hiiragi283.ragium.client.machine.HTBlockTagPatternRenderer
+import hiiragi283.ragium.client.machine.HTSimpleBlockPatternRenderer
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.machine.HTBlockTagPattern
+import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.network.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
@@ -72,6 +78,7 @@ object RagiumClient : ClientModInitializer {
         registerScreens()
         registerEvents()
         registerNetworks()
+        registerPattern()
 
         RagiumAPI.LOGGER.info("Ragium-Client initialized!")
     }
@@ -330,5 +337,18 @@ object RagiumClient : ClientModInitializer {
         RagiumNetworks.MACHINE_SYNC.registerClientReceiver { payload: HTMachineKeySyncPayload, context: ClientPlayNetworking.Context ->
             (context.getBlockEntity(payload.pos) as? HTMachineBlockEntityBase)?.onPacketReceived(payload)
         }
+    }
+
+    //    Machine    //
+
+    private fun registerPattern() {
+        HTMultiblockPatternRendererRegistry.register(
+            HTSimpleBlockPattern::class.java,
+            HTSimpleBlockPatternRenderer,
+        )
+        HTMultiblockPatternRendererRegistry.register(
+            HTBlockTagPattern::class.java,
+            HTBlockTagPatternRenderer,
+        )
     }
 }

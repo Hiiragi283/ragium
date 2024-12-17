@@ -4,12 +4,12 @@ import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTDistillationTowerScreenHandler
 import net.minecraft.block.BlockState
@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
-    HTMultiblockPatternProvider {
+    HTMultiblockProvider {
     override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
     override val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
@@ -51,33 +51,33 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 -1,
                 1..3,
-                HTMultiblockPattern.of(tier.getCasing()),
+                HTSimpleBlockPattern(tier.getCasing()),
             ).addHollow(
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockPattern.of(tier.getHull()),
+                HTSimpleBlockPattern(tier.getHull()),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockPattern.of(Blocks.RED_CONCRETE),
+                HTSimpleBlockPattern(Blocks.RED_CONCRETE),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockPattern.of(Blocks.WHITE_CONCRETE),
+                HTSimpleBlockPattern(Blocks.WHITE_CONCRETE),
             ).addCross4(
                 -1..1,
                 3,
                 1..3,
-                HTMultiblockPattern.of(Blocks.RED_CONCRETE),
+                HTSimpleBlockPattern(Blocks.RED_CONCRETE),
             )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockPattern.of(Blocks.WHITE_CONCRETE),
+            HTSimpleBlockPattern(Blocks.WHITE_CONCRETE),
         )
     }
 }
