@@ -34,7 +34,7 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
             .setCallback(machine::markDirty)
 
         @JvmStatic
-        fun ofSmall(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(4)
+        fun ofLarge(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(4)
             .input(0, 1)
             .output(2, 3)
             .build(machine.tier)

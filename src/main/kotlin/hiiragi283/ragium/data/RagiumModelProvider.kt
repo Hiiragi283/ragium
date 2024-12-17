@@ -467,6 +467,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // contents
         buildList {
             addAll(RagiumContents.Dusts.entries)
+            addAll(RagiumContents.Gears.entries)
             addAll(RagiumContents.Gems.entries)
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)

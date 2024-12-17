@@ -91,6 +91,30 @@ object RagiumContents {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
+    //    Gears    //
+
+    enum class Gears(override val material: HTMaterialKey) : HTContent.Material<Item> {
+        // tier 1
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        IRON(RagiumMaterialKeys.IRON),
+
+        // tier 2
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        GOLD(RagiumMaterialKeys.GOLD),
+        STEEL(RagiumMaterialKeys.STEEL),
+
+        // tier 3
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
+        ;
+
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_gear"))
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.GEAR
+    }
+
     //    Gems    //
 
     enum class Gems(override val material: HTMaterialKey) : HTContent.Material<Item> {

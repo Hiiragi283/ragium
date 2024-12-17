@@ -10,7 +10,7 @@ object RagiumHardModeContents {
     //    Gems    //
 
     @JvmField
-    val DIAMOND: HTHardModeContent = HTHardModeContent.Companion.of(
+    val DIAMOND: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.DIAMOND,
@@ -20,7 +20,7 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val EMERALD: HTHardModeContent = HTHardModeContent.Companion.of(
+    val EMERALD: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.EMERALD,
@@ -30,7 +30,7 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val LAPIS: HTHardModeContent = HTHardModeContent.Companion.of(
+    val LAPIS: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.LAPIS,
@@ -40,7 +40,7 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val QUARTZ: HTHardModeContent = HTHardModeContent.Companion.of(
+    val QUARTZ: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.QUARTZ,
@@ -52,13 +52,13 @@ object RagiumHardModeContents {
     //    Ingots    //
 
     @JvmField
-    val ALUMINUM: HTHardModeContent = HTHardModeContent.Companion.of(
+    val ALUMINUM: HTHardModeContent = HTHardModeContent.of(
         RagiumContents.Ingots.ALUMINUM,
         RagiumContents.Plates.ALUMINUM,
     )
 
     @JvmField
-    val COPPER: HTHardModeContent = HTHardModeContent.Companion.of(
+    val COPPER: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.COPPER,
@@ -68,13 +68,13 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val DEEP_STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
+    val DEEP_STEEL: HTHardModeContent = HTHardModeContent.of(
         RagiumContents.Ingots.DEEP_STEEL,
         RagiumContents.Plates.DEEP_STEEL,
     )
 
     @JvmField
-    val GOLD: HTHardModeContent = HTHardModeContent.Companion.of(
+    val GOLD: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.GOLD,
@@ -84,7 +84,7 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val IRON: HTHardModeContent = HTHardModeContent.Companion.of(
+    val IRON: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.IRON,
@@ -94,7 +94,7 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val NETHERITE: HTHardModeContent = HTHardModeContent.Companion.of(
+    val NETHERITE: HTHardModeContent = HTHardModeContent.of(
         HTContent.Material.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.NETHERITE,
@@ -104,25 +104,25 @@ object RagiumHardModeContents {
     )
 
     @JvmField
-    val RAGI_ALLOY: HTHardModeContent = HTHardModeContent.Companion.of(
+    val RAGI_ALLOY: HTHardModeContent = HTHardModeContent.of(
         RagiumContents.Ingots.RAGI_ALLOY,
         RagiumContents.Plates.RAGI_ALLOY,
     )
 
     @JvmField
-    val RAGI_STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
+    val RAGI_STEEL: HTHardModeContent = HTHardModeContent.of(
         RagiumContents.Ingots.RAGI_STEEL,
         RagiumContents.Plates.RAGI_STEEL,
     )
 
     @JvmField
-    val REFINED_RAGI_STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
+    val REFINED_RAGI_STEEL: HTHardModeContent = HTHardModeContent.of(
         RagiumContents.Ingots.REFINED_RAGI_STEEL,
         RagiumContents.Plates.REFINED_RAGI_STEEL,
     )
 
     @JvmField
-    val STEEL: HTHardModeContent = HTHardModeContent.Companion.of(
+    val STEEL: HTHardModeContent = HTHardModeContent.of(
         RagiumContents.Ingots.STEEL,
         RagiumContents.Plates.STEEL,
     )

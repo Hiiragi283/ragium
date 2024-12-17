@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.block.Block
@@ -78,6 +79,9 @@ interface HTContent<T : Any> : Supplier<T> {
 
         val material: HTMaterialKey
         val tagPrefix: HTTagPrefix
+
+        val definition: HTMaterialDefinition
+            get() = HTMaterialDefinition(tagPrefix, material)
 
         val prefixedTagKey: TagKey<Item>
             get() = tagPrefix.createTag(material)

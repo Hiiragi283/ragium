@@ -84,7 +84,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
         final override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
 
-        final override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
+        final override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofLarge(this)
 
         override val processor = HTMachineRecipeProcessor(
             inventory,

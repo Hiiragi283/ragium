@@ -21,7 +21,7 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val MACHINE_FACTORY: HTPropertyKey.Simple<HTMachineEntityFactory> =
-        HTPropertyKey.Companion.ofSimple(RagiumAPI.Companion.id("machine_factory"))
+        HTPropertyKey.ofSimple(RagiumAPI.id("machine_factory"))
 
     /**
      * Provides machine model [Identifier]
@@ -30,7 +30,7 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val MODEL_ID: HTPropertyKey.Defaulted<Identifier> =
-        HTPropertyKey.Companion.ofDefaulted(RagiumAPI.Companion.id("model_id")) { RagiumAPI.Companion.id("block/dynamic_processor") }
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("model_id")) { RagiumAPI.id("block/dynamic_processor") }
 
     /**
      * Provides active machine model [Identifier]
@@ -39,9 +39,9 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val ACTIVE_MODEL_ID: HTPropertyKey.Defaulted<Identifier> =
-        HTPropertyKey.Companion.ofDefaulted(
-            RagiumAPI.Companion.id("active_model_id"),
-        ) { RagiumAPI.Companion.id("block/active_dynamic_processor") }
+        HTPropertyKey.ofDefaulted(
+            RagiumAPI.id("active_model_id"),
+        ) { RagiumAPI.id("block/active_dynamic_processor") }
 
     /**
      * Provides [net.minecraft.particle.ParticleType]
@@ -57,7 +57,7 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val SOUND: HTPropertyKey.Simple<SoundEvent> =
-        HTPropertyKey.Companion.ofSimple(RagiumAPI.Companion.id("sound"))
+        HTPropertyKey.ofSimple(RagiumAPI.id("sound"))
 
     /**
      * Provides [VoxelShape]
@@ -65,7 +65,7 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val VOXEL_SHAPE: HTPropertyKey.Simple<VoxelShape> =
-        HTPropertyKey.Companion.ofSimple(RagiumAPI.Companion.id("voxel_shape"))
+        HTPropertyKey.ofSimple(RagiumAPI.id("voxel_shape"))
 
     //    Generator    //
     /**
@@ -74,7 +74,7 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val GENERATOR_PREDICATE: HTPropertyKey.Defaulted<(World, BlockPos) -> Boolean> =
-        HTPropertyKey.Companion.ofDefaulted(RagiumAPI.Companion.id("generator_predicate")) { _: World, _: BlockPos -> false }
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("generator_predicate")) { _: World, _: BlockPos -> false }
 
     //    Processor    //
     /**
@@ -82,8 +82,8 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val FRONT_TEX: HTPropertyKey.Defaulted<(Identifier) -> Identifier> =
-        HTPropertyKey.Companion.ofDefaulted(
-            RagiumAPI.Companion.id("front_tex"),
+        HTPropertyKey.ofDefaulted(
+            RagiumAPI.id("front_tex"),
         ) { id: Identifier -> id.withPath { "block/machine/$it" } }
 
     /**
@@ -91,8 +91,8 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val ACTIVE_FRONT_TEX: HTPropertyKey.Defaulted<(Identifier) -> Identifier> =
-        HTPropertyKey.Companion.ofDefaulted(
-            RagiumAPI.Companion.id("active_front_tex"),
+        HTPropertyKey.ofDefaulted(
+            RagiumAPI.id("active_front_tex"),
         ) { id: Identifier -> id.withPath { "block/machine/${it}_active" } }
 
     /**
@@ -100,5 +100,5 @@ object HTMachinePropertyKeys {
      */
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =
-        HTPropertyKey.Companion.ofDefaulted(RagiumAPI.Companion.id("front_mapper"), value = { it })
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("front_mapper"), value = { it })
 }

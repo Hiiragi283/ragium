@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
+import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
@@ -53,19 +54,20 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
+        val stackIn: ItemStack = inventory.getStack(0)
         val recipe: HTMachineRecipe =
             recipeCache
                 .getFirstMatch(
                     HTMachineInput.create(
                         RagiumMachineKeys.GRINDER,
                         HTMachineTier.PRIMITIVE,
-                    ) { add(inventory.getStack(0)) },
+                    ) { add(stackIn) },
                     world,
                 ).result()
                 ?.getOrNull()
                 ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        inventory.getStack(0).decrement(recipe.itemInputs[0].count)
+        stackIn.decrement(recipe.itemInputs[0].count)
         RagiumMachineKeys.GRINDER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

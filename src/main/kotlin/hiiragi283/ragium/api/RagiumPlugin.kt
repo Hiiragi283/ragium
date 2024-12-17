@@ -96,21 +96,19 @@ interface RagiumPlugin {
          */
         fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
 
-        fun useIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
-            if (entry.type.isValidPrefix(prefix)) {
-                entry.getFirstItem(prefix)?.let(action)
-            }
+        fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
+            entry.getFirstItem(prefix)?.let(action)
         }
 
-        fun useMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
+        fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                useIfPresent(entry, prefix, action)
+                useItemIfPresent(entry, prefix, action)
             }
         }
 
-        fun useRawPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
+        fun useItemFromRawPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
-                useIfPresent(entry, prefix, action)
+                useItemIfPresent(entry, prefix, action)
             }
         }
     }

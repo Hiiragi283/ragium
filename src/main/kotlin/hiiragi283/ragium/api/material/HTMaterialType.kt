@@ -4,12 +4,13 @@ package hiiragi283.ragium.api.material
  * Represent material type
  */
 enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
-    ALLOY(HTTagPrefix.DUST, HTTagPrefix.INGOT, HTTagPrefix.PLATE, HTTagPrefix.STORAGE_BLOCK),
+    ALLOY(HTTagPrefix.DUST, HTTagPrefix.GEAR, HTTagPrefix.INGOT, HTTagPrefix.PLATE, HTTagPrefix.STORAGE_BLOCK),
     DUST(HTTagPrefix.DUST),
     GEM(
         HTTagPrefix.END_ORE,
         HTTagPrefix.DEEP_ORE,
         HTTagPrefix.DUST,
+        HTTagPrefix.GEAR,
         HTTagPrefix.GEM,
         HTTagPrefix.ORE,
         HTTagPrefix.STORAGE_BLOCK,
@@ -18,6 +19,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.END_ORE,
         HTTagPrefix.DEEP_ORE,
         HTTagPrefix.DUST,
+        HTTagPrefix.GEAR,
         HTTagPrefix.INGOT,
         HTTagPrefix.ORE,
         HTTagPrefix.PLATE,
@@ -40,7 +42,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
 
     /**
      * Transform main prefix
-     * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useMainPrefix]
+     * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useItemFromMainPrefix]
      */
     fun getMainPrefix(): HTTagPrefix? = when (this) {
         ALLOY -> HTTagPrefix.INGOT
@@ -53,7 +55,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
 
     /**
      * Transform raw material prefix
-     * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useRawPrefix]
+     * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useItemFromRawPrefix]
      */
     fun getRawPrefix(): HTTagPrefix? = when (this) {
         ALLOY -> null

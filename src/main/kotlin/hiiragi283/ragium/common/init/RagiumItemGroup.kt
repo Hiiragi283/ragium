@@ -45,6 +45,7 @@ object RagiumItemGroup {
                     addAll(RagiumBlocks.BUILDINGS)
 
                     addAll(RagiumContents.Dusts.entries)
+                    addAll(RagiumContents.Gears.entries)
                     addAll(RagiumContents.Gems.entries)
                     addAll(RagiumContents.Ingots.entries)
                     if (RagiumAPI.getInstance().config.isHardMode) {

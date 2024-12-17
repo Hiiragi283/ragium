@@ -332,6 +332,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumContents.Ores.entries)
         bindContents(RagiumContents.StorageBlocks.entries)
         bindContents(RagiumContents.Dusts.entries)
+        bindContents(RagiumContents.Gears.entries)
         bindContents(RagiumContents.Gems.entries)
         bindContents(RagiumContents.Ingots.entries)
         bindContents(RagiumContents.Plates.entries)
@@ -346,8 +347,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
     ) {
         if (HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING !in entry) {
             // ingot/gem -> block
-            helper.useIfPresent(entry, HTTagPrefix.STORAGE_BLOCK) { output: Item ->
-                val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@useIfPresent
+            helper.useItemIfPresent(entry, HTTagPrefix.STORAGE_BLOCK) { output: Item ->
+                val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@useItemIfPresent
                 // Shaped Crafting
                 HTShapedRecipeJsonBuilder
                     .create(output)
@@ -356,7 +357,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .offerTo(exporter)
             }
             // block -> ingot/gem
-            helper.useMainPrefix(entry) { output: Item ->
+            helper.useItemFromMainPrefix(entry) { output: Item ->
                 // Shapeless Crafting
                 HTShapelessRecipeJsonBuilder
                     .create(output, 9)
@@ -364,8 +365,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .offerTo(exporter)
             }
         }
+
         // ingot/gem -> plate
-        helper.useIfPresent(entry, HTTagPrefix.PLATE) { output: Item ->
+        helper.useItemIfPresent(entry, HTTagPrefix.PLATE) { output: Item ->
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 // Compressor Recipe
                 HTMachineRecipeJsonBuilder
@@ -383,28 +385,54 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .offerTo(exporter, output)
             }
         }
-        // ingot/gem -> dust
-        helper.useIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
+        // xxx -> dust
+        helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
+            // ingot/gem -> dust
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                // Grinder Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.GRINDER)
                     .itemInput(prefix, key)
                     .itemOutput(output)
                     .offerTo(exporter, output, "_from_${prefix.asString()}")
             }
-        }
-        // plate -> dust
-        helper.useIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
-            // Grinder Recipe
+            // plate -> dust
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.PLATE, key)
                 .itemOutput(output)
                 .offerTo(exporter, output, "_from_plate")
+            // gear -> dust
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.GRINDER)
+                .itemInput(HTTagPrefix.GEAR, key)
+                .itemOutput(output, 4)
+                .offerTo(exporter, output, "_from_gear")
         }
+        // ingot/gem -> gear
+        helper.useItemIfPresent(entry, HTTagPrefix.GEAR) { output: Item ->
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                // Shaped Recipe
+                HTShapedRecipeJsonBuilder
+                    .create(output)
+                    .patterns(
+                        " A ",
+                        "ABA",
+                        " A ",
+                    ).input('A', prefix, key)
+                    .input('B', HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON)
+                    .offerTo(exporter)
+                // Compressor Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.COMPRESSOR)
+                    .itemInput(prefix, key, 4)
+                    .catalyst(RagiumContents.PressMold.GEAR)
+                    .itemOutput(output)
+                    .offerTo(exporter, output)
+            }
+        }
+
         // ore -> raw/gem
-        helper.useRawPrefix(entry) { output: Item ->
+        helper.useItemFromRawPrefix(entry) { output: Item ->
             val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
@@ -428,7 +456,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, output, "_4x")
         }
         // raw -> dust
-        helper.useIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
+        helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
@@ -438,9 +466,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         if (HTMaterialPropertyKeys.DISABLE_RAW_SMELTING !in entry) {
             // raw -> ingot
-            helper.useIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
+            helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
                 val input: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
-                if (!helper.isPopulated(input)) return@useIfPresent
+                if (!helper.isPopulated(input)) return@useItemIfPresent
                 HTCookingRecipeJsonBuilder.smeltAndBlast(
                     exporter,
                     input,
@@ -450,9 +478,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 )
             }
             // dust -> ingot
-            helper.useIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
+            helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
                 val input: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
-                if (!helper.isPopulated(input)) return@useIfPresent
+                if (!helper.isPopulated(input)) return@useItemIfPresent
                 HTCookingRecipeJsonBuilder.smeltAndBlast(
                     exporter,
                     input,

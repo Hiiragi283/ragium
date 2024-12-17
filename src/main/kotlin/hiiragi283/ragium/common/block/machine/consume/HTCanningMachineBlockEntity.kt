@@ -48,7 +48,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
             stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
     }
 
-    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
+    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(newTier)

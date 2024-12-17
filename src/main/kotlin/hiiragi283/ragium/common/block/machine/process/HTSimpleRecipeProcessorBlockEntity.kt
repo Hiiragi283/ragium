@@ -22,9 +22,9 @@ class HTSimpleRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         this.key = key
     }
 
-    override val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
+    override val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,
