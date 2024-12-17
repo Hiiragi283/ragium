@@ -10,6 +10,7 @@ object HTShapelessInputResolver {
         if (ingredients.size > stacks.size) return false
         val stacks1: MutableList<ItemStack> = stacks.filterNot(ItemStack::isEmpty).toMutableList()
         // RagiumAPI.LOGGER.info("===")
+        var successCount = 0
         ingredient@ for (ingredient: HTItemIngredient in ingredients) {
             // RagiumAPI.LOGGER.info("Current ingredient: $ingredient")
             for (stack: ItemStack in stacks1) {
@@ -17,11 +18,12 @@ object HTShapelessInputResolver {
                 if (ingredient.test(stack)) {
                     // RagiumAPI.LOGGER.info("$ingredient matches $stack!")
                     stacks1.remove(stack)
+                    successCount++
                     continue@ingredient
                 }
             }
         }
-        return stacks1.isEmpty()
+        return stacks1.isEmpty() && ingredients.size == successCount
     }
 
     @JvmStatic

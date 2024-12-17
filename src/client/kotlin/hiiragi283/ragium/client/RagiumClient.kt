@@ -56,7 +56,6 @@ import net.minecraft.sound.SoundEvent
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
-import net.minecraft.util.Identifier
 import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
@@ -128,11 +127,6 @@ object RagiumClient : ClientModInitializer {
     }
 
     @JvmStatic
-    private fun registerCutout(block: Block) {
-        BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout())
-    }
-
-    @JvmStatic
     private fun registerCutoutMipped(block: Block) {
         BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
     }
@@ -154,11 +148,13 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerFluids() {
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            val type: RagiumFluids.TextureType = fluid.type
             FluidRenderHandlerRegistry.INSTANCE.register(
                 fluid.value,
                 SimpleFluidRenderHandler(
-                    Identifier.of("block/white_concrete"),
-                    Identifier.of("block/white_concrete"),
+                    type.stillTex,
+                    type.floatingTex,
+                    type.overTex,
                     fluid.color.rgb,
                 ),
             )

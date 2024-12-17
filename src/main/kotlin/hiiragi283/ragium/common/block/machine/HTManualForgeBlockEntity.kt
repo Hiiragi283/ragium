@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTMachineInventory
+import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -62,9 +63,12 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
             recipeCache
                 .getFirstMatch(
                     HTMachineInput.create(
-                        RagiumMachineKeys.METAL_FORMER,
+                        RagiumMachineKeys.COMPRESSOR,
                         HTMachineTier.PRIMITIVE,
-                    ) { add(invStack) },
+                    ) {
+                        add(invStack)
+                        catalyst = ItemStack(RagiumContents.PressMold.PLATE)
+                    },
                     world,
                 ).result()
                 .getOrNull()
@@ -72,7 +76,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
         invStack.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
-        RagiumMachineKeys.METAL_FORMER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+        RagiumMachineKeys.COMPRESSOR.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }
     }

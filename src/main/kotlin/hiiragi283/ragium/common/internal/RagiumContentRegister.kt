@@ -215,6 +215,10 @@ internal object RagiumContentRegister {
             )
         }
 
+        RagiumContents.PressMold.entries.forEach { mold: RagiumContents.PressMold ->
+            registerItem(mold, Item(itemSettings()))
+        }
+
         initItems()
 
         // fluid

@@ -271,6 +271,11 @@ object RagiumLangProviders {
             builder.add(RagiumItems.YELLOW_CAKE, "Yellow Cake")
             builder.add(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
+            builder.add(RagiumContents.PressMold.GEAR, "Press Mold (Gear)")
+            builder.add(RagiumContents.PressMold.PIPE, "Press Mold (Pipe)")
+            builder.add(RagiumContents.PressMold.PLATE, "Press Mold (Plate)")
+            builder.add(RagiumContents.PressMold.ROD, "Press Mold (Rod)")
+
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "Place Anvil when land on")
             builder.add(RagiumTranslationKeys.BACKPACK, "Shares inventory between the same color")
             builder.add(RagiumTranslationKeys.BEDROCK_DYNAMITE, "Flatten Bedrocks inside hit chunk")
@@ -380,7 +385,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.GRINDER, "Grinder", "Crush Up")
             builder.add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber")
             builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer")
-            builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
+            // builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
             builder.add(RagiumMachineKeys.MIXER, "Mixer", "Genomix...")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
             builder.add(RagiumMachineKeys.SAW_MILL, "Saw Mill", "Process Logs more efficiently")
@@ -656,6 +661,11 @@ object RagiumLangProviders {
             builder.add(RagiumItems.YELLOW_CAKE, "イエローケーキ")
             builder.add(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
+            builder.add(RagiumContents.PressMold.GEAR, "プレス型（歯車）")
+            builder.add(RagiumContents.PressMold.PIPE, "プレス型（パイプ）")
+            builder.add(RagiumContents.PressMold.PLATE, "プレス型（板材）")
+            builder.add(RagiumContents.PressMold.ROD, "プレス型（棒材）")
+
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "着弾点に金床を設置する")
             builder.add(RagiumTranslationKeys.BACKPACK, "同じ色同士でインベントリを共有する")
             builder.add(RagiumTranslationKeys.BEDROCK_DYNAMITE, "着弾したチャンク内の岩盤を整地する")
@@ -718,7 +728,7 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.GRINDER, "粉砕機", "クラッシュ・アップ")
             builder.add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー")
             builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機")
-            builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
+            // builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
             builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス...")
             builder.add(RagiumMachineKeys.SAW_MILL, "製材機", "より効率的に原木を加工する")

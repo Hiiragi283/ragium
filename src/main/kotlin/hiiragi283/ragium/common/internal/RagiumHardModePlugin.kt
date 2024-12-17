@@ -324,12 +324,12 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumMachineKeys.LASER_TRANSFORMER,
             RagiumItems.LASER_EMITTER,
         )
-        createProcessor(
+        /*createProcessor(
             exporter,
             RagiumMachineKeys.METAL_FORMER,
             RagiumBlocks.MANUAL_FORGE,
-            RagiumItems.FORGE_HAMMER,
-        )
+            RagiumItems.FORGE_HAMMER
+        )*/
         createProcessor(
             exporter,
             RagiumMachineKeys.MIXER,
@@ -387,11 +387,11 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .input('A', input)
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .offerTo(exporter)
-            // metal former
+            // compressor
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.METAL_FORMER)
+                .create(RagiumMachineKeys.COMPRESSOR)
                 .itemInput(input, 2)
-                .catalyst(pipe)
+                .catalyst(RagiumContents.PressMold.PIPE)
                 .itemOutput(pipe, 2)
                 .offerTo(exporter, pipe)
         }
@@ -410,11 +410,11 @@ object RagiumHardModePlugin : RagiumPlugin {
                 ).input('A', input)
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .offerTo(exporter)
-            // metal former
+            // compressor
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.METAL_FORMER)
+                .create(RagiumMachineKeys.COMPRESSOR)
                 .itemInput(input, 4)
-                .catalyst(crossPipe)
+                .catalyst(RagiumContents.PressMold.PIPE)
                 .itemOutput(crossPipe, 2)
                 .offerTo(exporter, crossPipe)
         }
@@ -559,9 +559,9 @@ object RagiumHardModePlugin : RagiumPlugin {
                     " A ",
                 ).input('A', tier.getSteelMetal(hardMode))
                 .offerTo(exporter)
-            // metal former
+            // assembler
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.METAL_FORMER)
+                .create(RagiumMachineKeys.ASSEMBLER)
                 .itemInput(grate.tier.getSteelMetal(), 4)
                 .catalyst(grate)
                 .itemOutput(grate, 4)

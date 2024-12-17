@@ -9,11 +9,7 @@ import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.aroundPos
 import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.machine.consume.*
@@ -160,9 +156,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.GROWTH_CHAMBER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.HAPPY_VILLAGER)
         }
-        helper.modify(RagiumMachineKeys.METAL_FORMER) {
+        /*helper.modify(RagiumMachineKeys.METAL_FORMER) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_ANVIL_USE)
-        }
+        }*/
         helper.modify(RagiumMachineKeys.MIXER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.BUBBLE_POP)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
@@ -373,8 +369,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 // Metal Former Recipe
                 HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.METAL_FORMER)
+                    .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key)
+                    .catalyst(RagiumContents.PressMold.PLATE)
                     .itemOutput(output)
                     .offerTo(exporter, output)
             }

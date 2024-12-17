@@ -34,7 +34,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         grinder(exporter)
         growthChamber(exporter)
         laserTransformer(exporter)
-        metalFormer(exporter)
         rockGenerator(exporter)
         sawMill(exporter)
     }
@@ -229,6 +228,20 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.NITROGEN, FluidConstants.BUCKET * 8)
             .fluidOutput(RagiumFluids.LIQUID_NITROGEN)
             .offerTo(exporter, RagiumFluids.LIQUID_NITROGEN)
+        // shaft
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(RagiumContents.Ingots.STEEL, 2)
+            .itemOutput(RagiumBlocks.SHAFT)
+            .catalyst(RagiumBlocks.SHAFT)
+            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_steel")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(RagiumContents.Ingots.DEEP_STEEL)
+            .itemOutput(RagiumBlocks.SHAFT)
+            .catalyst(RagiumBlocks.SHAFT)
+            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_deep_steel")
     }
 
     //    Grinder    //
@@ -447,25 +460,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(Items.APPLE)
             .itemOutput(Items.ENCHANTED_GOLDEN_APPLE)
             .offerTo(exporter, Items.ENCHANTED_GOLDEN_APPLE)
-    }
-
-    //    Metal Former    //
-
-    private fun metalFormer(exporter: RecipeExporter) {
-        // shaft
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.METAL_FORMER)
-            .itemInput(RagiumContents.Ingots.STEEL, 2)
-            .itemOutput(RagiumBlocks.SHAFT)
-            .catalyst(RagiumBlocks.SHAFT)
-            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_steel")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.METAL_FORMER)
-            .itemInput(RagiumContents.Ingots.DEEP_STEEL)
-            .itemOutput(RagiumBlocks.SHAFT)
-            .catalyst(RagiumBlocks.SHAFT)
-            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_deep_steel")
     }
 
     //    Rock Generator    //

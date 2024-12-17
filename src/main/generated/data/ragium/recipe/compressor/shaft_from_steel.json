@@ -4,12 +4,13 @@
     "items": "ragium:shaft"
   },
   "definition": {
-    "type": "ragium:metal_former",
+    "type": "ragium:compressor",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "items": "#c:ingots/deep_steel"
+      "count": 2,
+      "items": "#c:ingots/steel"
     }
   ],
   "item_outputs": [

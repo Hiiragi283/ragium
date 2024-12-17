@@ -347,4 +347,19 @@ object RagiumContents {
         override val delegated: HTContent<Item> =
             HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_circuit"))
     }
+
+    enum class PressMold(val prefix: HTTagPrefix?) :
+        HTContent.Delegated<Item>,
+        ItemConvertible {
+        GEAR(HTTagPrefix.GEAR),
+        PIPE(null),
+        PLATE(HTTagPrefix.PLATE),
+        ROD(HTTagPrefix.ROD),
+        ;
+
+        override val delegated: HTContent<Item> =
+            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_press_mold"))
+
+        override fun asItem(): Item = value
+    }
 }
