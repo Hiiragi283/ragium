@@ -119,7 +119,7 @@ enum class RagiumFluids(
     //    TextureType    //
 
     enum class TextureType(
-        val stillTex: Identifier = RagiumAPI.id("block/bone_block_side"),
+        val stillTex: Identifier = Identifier.of("block/bone_block_side"),
         val floatingTex: Identifier = stillTex,
         val overTex: Identifier? = null,
     ) {

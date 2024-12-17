@@ -204,7 +204,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.BEDROCK_MINER,
-            Items.NETHERITE_PICKAXE,
+            RagiumContents.Gears.DIAMOND,
         )
         createProcessor(
             exporter,
