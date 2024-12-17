@@ -1,18 +1,18 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:saw_mill",
+    "type": "ragium:cutting_machine",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "items": "#minecraft:acacia_logs"
+      "items": "#minecraft:cherry_logs"
     }
   ],
   "item_outputs": [
     {
       "count": 6,
-      "item": "minecraft:acacia_planks"
+      "item": "minecraft:cherry_planks"
     },
     {
       "item": "ragium:pulp"

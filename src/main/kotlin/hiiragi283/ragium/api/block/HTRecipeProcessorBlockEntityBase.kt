@@ -74,8 +74,8 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     /**
      * A base class for multiblock machine block entity
      * @see [hiiragi283.ragium.common.block.machine.process.HTBlastFurnaceBlockEntity]
+     * @see [hiiragi283.ragium.common.block.machine.process.HTCuttingMachineBlockEntity]
      * @see [hiiragi283.ragium.common.block.machine.process.HTDistillationTowerBlockEntity]
-     * @see [hiiragi283.ragium.common.block.machine.process.HTSawmillBlockEntity]
      */
     abstract class Large(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTRecipeProcessorBlockEntityBase(type, pos, state),

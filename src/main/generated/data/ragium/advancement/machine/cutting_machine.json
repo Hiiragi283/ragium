@@ -1,9 +1,9 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:machine/root",
   "criteria": {
     "interact_machine": {
       "conditions": {
-        "machine_type": "ragium:alloy_furnace"
+        "machine_type": "ragium:cutting_machine"
       },
       "trigger": "ragium:interact_machine"
     }
@@ -11,20 +11,20 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.ragium.alloy_furnace.description"
+      "translate": "machine_type.ragium.cutting_machine.description"
     },
     "icon": {
       "components": {
         "ragium:machine_tier": "primitive"
       },
       "count": 1,
-      "id": "ragium:alloy_furnace"
+      "id": "ragium:cutting_machine"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",
       "with": [
         {
-          "translate": "machine_type.ragium.alloy_furnace"
+          "translate": "machine_type.ragium.cutting_machine"
         }
       ]
     }

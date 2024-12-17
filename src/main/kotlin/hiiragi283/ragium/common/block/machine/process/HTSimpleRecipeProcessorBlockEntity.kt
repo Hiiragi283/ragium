@@ -16,7 +16,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTSimpleRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.SIMPLE_PROCESSOR, pos, state) {
-    override var key: HTMachineKey = RagiumMachineKeys.ALLOY_FURNACE
+    override var key: HTMachineKey = RagiumMachineKeys.ASSEMBLER
 
     constructor(pos: BlockPos, state: BlockState, key: HTMachineKey) : this(pos, state) {
         this.key = key

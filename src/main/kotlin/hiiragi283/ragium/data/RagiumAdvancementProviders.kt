@@ -282,13 +282,13 @@ object RagiumAdvancementProviders {
                 ragiAlloy,
                 RagiumContents.Hulls.PRIMITIVE,
             ) { hasAllItems(RagiumContents.Hulls.PRIMITIVE) }
-            val alloyFurnace: AdvancementEntry = createMachineChild(
+            /*val alloyFurnace: AdvancementEntry = createMachineChild(
                 consumer,
                 "progress/primitive_alloy_furnace",
                 primitiveHull,
                 RagiumMachineKeys.ALLOY_FURNACE,
-                HTMachineTier.PRIMITIVE,
-            )
+                HTMachineTier.PRIMITIVE
+            )*/
             val blastFurnace: AdvancementEntry = createChild(
                 consumer,
                 "progress/primitive_blast_furnace",
@@ -443,6 +443,14 @@ object RagiumAdvancementProviders {
                 compressor,
                 RagiumItems.MEAT_INGOT,
             ) { hasAllItems(RagiumItems.MEAT_INGOT) }
+            // cutting machine
+            val cuttingMachine: AdvancementEntry = createMachineChild(
+                consumer,
+                "machine/cutting_machine",
+                root,
+                RagiumMachineKeys.CUTTING_MACHINE,
+                HTMachineTier.PRIMITIVE,
+            )
             // extractor
             val extractor: AdvancementEntry = createMachineChild(
                 consumer,
@@ -512,15 +520,6 @@ object RagiumAdvancementProviders {
                 RagiumMachineKeys.ROCK_GENERATOR,
                 HTMachineTier.PRIMITIVE,
             )
-            // saw mill
-            val sawMill: AdvancementEntry = createMachineChild(
-                consumer,
-                "machine/saw_mill",
-                root,
-                RagiumMachineKeys.SAW_MILL,
-                HTMachineTier.PRIMITIVE,
-            )
-
             // large processor
             val largeProcessor: AdvancementEntry = createChild(
                 consumer,

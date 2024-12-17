@@ -7,11 +7,14 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumHardModeContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
 import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
@@ -162,6 +165,12 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumContents.StorageBlocks.RAGI_ALLOY
         BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
+    }
+
+    fun getGlassBlock(): Block = when (this) {
+        HTMachineTier.PRIMITIVE -> Blocks.GLASS
+        HTMachineTier.BASIC -> Blocks.TINTED_GLASS
+        HTMachineTier.ADVANCED -> RagiumBlocks.STEEL_GLASS
     }
 
     fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =

@@ -84,7 +84,7 @@ object RagiumItemGroup {
 
         register(MACHINE_KEY) {
             displayName(Text.translatable("itemGroup.ragium.machine"))
-            icon { RagiumMachineKeys.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
+            icon { RagiumMachineKeys.ASSEMBLER.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 buildList {
                     addAll(RagiumContents.Grates.entries)

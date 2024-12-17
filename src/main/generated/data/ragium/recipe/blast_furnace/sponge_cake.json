@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:alloy_furnace",
+    "type": "ragium:blast_furnace",
     "tier": "primitive"
   },
   "fluid_inputs": [

@@ -1,18 +1,18 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:saw_mill",
+    "type": "ragium:cutting_machine",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "items": "#minecraft:warped_stems"
+      "items": "#minecraft:mangrove_logs"
     }
   ],
   "item_outputs": [
     {
       "count": 6,
-      "item": "minecraft:warped_planks"
+      "item": "minecraft:mangrove_planks"
     },
     {
       "item": "ragium:pulp"

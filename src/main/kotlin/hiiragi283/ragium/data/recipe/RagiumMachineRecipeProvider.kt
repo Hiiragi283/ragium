@@ -27,40 +27,14 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     override fun getName(): String = "Recipes/Machine"
 
     override fun generate(exporter: RecipeExporter) {
-        alloyFurnaceRecipes(exporter)
         assembler(exporter)
         blastFurnace(exporter)
         compressor(exporter)
+        cuttingMachine(exporter)
         grinder(exporter)
         growthChamber(exporter)
         laserTransformer(exporter)
         rockGenerator(exporter)
-        sawMill(exporter)
-    }
-
-    //    Alloy Furnace    //
-
-    private fun alloyFurnaceRecipes(exporter: RecipeExporter) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ALLOY_FURNACE)
-            .itemInput(ConventionalItemTags.COPPER_INGOTS)
-            .itemInput(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
-            .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
-            .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ALLOY_FURNACE)
-            .itemInput(ConventionalItemTags.COPPER_INGOTS)
-            .itemInput(RagiumContents.Dusts.RAGINITE)
-            .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
-            .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY, "_alt")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ALLOY_FURNACE)
-            .fluidInput(RagiumFluids.BATTER)
-            .itemInput(RagiumItems.BUTTER)
-            .itemOutput(RagiumBlocks.SPONGE_CAKE)
-            .offerTo(exporter, RagiumBlocks.SPONGE_CAKE)
     }
 
     //    Assembler    //
@@ -110,6 +84,27 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Blast Furnace    //
 
     private fun blastFurnace(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(ConventionalItemTags.COPPER_INGOTS)
+            .itemInput(RagiumContents.Dusts.CRUDE_RAGINITE, 4)
+            .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(ConventionalItemTags.COPPER_INGOTS)
+            .itemInput(RagiumContents.Dusts.RAGINITE)
+            .itemOutput(RagiumContents.Ingots.RAGI_ALLOY)
+            .offerTo(exporter, RagiumContents.Ingots.RAGI_ALLOY, "_alt")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .fluidInput(RagiumFluids.BATTER)
+            .itemInput(RagiumItems.BUTTER)
+            .itemOutput(RagiumBlocks.SPONGE_CAKE)
+            .offerTo(exporter, RagiumBlocks.SPONGE_CAKE)
+
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(ConventionalItemTags.IRON_INGOTS)
@@ -242,6 +237,36 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumBlocks.SHAFT)
             .catalyst(RagiumBlocks.SHAFT)
             .offerTo(exporter, RagiumBlocks.SHAFT, "_from_deep_steel")
+    }
+
+    //    Cutting Machine    //
+
+    private fun cuttingMachine(exporter: RecipeExporter) {
+        registerPlank(exporter, ItemTags.OAK_LOGS, Items.OAK_PLANKS)
+        registerPlank(exporter, ItemTags.SPRUCE_LOGS, Items.SPRUCE_PLANKS)
+        registerPlank(exporter, ItemTags.BIRCH_LOGS, Items.BIRCH_PLANKS)
+        registerPlank(exporter, ItemTags.JUNGLE_LOGS, Items.JUNGLE_PLANKS)
+        registerPlank(exporter, ItemTags.ACACIA_LOGS, Items.ACACIA_PLANKS)
+        registerPlank(exporter, ItemTags.CHERRY_LOGS, Items.CHERRY_PLANKS)
+        registerPlank(exporter, ItemTags.DARK_OAK_LOGS, Items.DARK_OAK_PLANKS)
+        registerPlank(exporter, ItemTags.MANGROVE_LOGS, Items.MANGROVE_PLANKS)
+        registerPlank(exporter, ItemTags.CRIMSON_STEMS, Items.CRIMSON_PLANKS)
+        registerPlank(exporter, ItemTags.WARPED_STEMS, Items.WARPED_PLANKS)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CUTTING_MACHINE)
+            .itemInput(ItemTags.PLANKS)
+            .itemOutput(Items.STICK, 4)
+            .offerTo(exporter, Items.STICK)
+    }
+
+    private fun registerPlank(exporter: RecipeExporter, log: TagKey<Item>, plank: ItemConvertible) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.CUTTING_MACHINE)
+            .itemInput(log)
+            .itemOutput(plank, 6)
+            .itemOutput(RagiumItems.PULP)
+            .offerTo(exporter, plank)
     }
 
     //    Grinder    //
@@ -499,35 +524,5 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .catalyst(rock)
             .itemOutput(rock, 8)
             .offerTo(exporter, rock)
-    }
-
-    //    Saw Mill    //
-
-    private fun sawMill(exporter: RecipeExporter) {
-        registerPlank(exporter, ItemTags.OAK_LOGS, Items.OAK_PLANKS)
-        registerPlank(exporter, ItemTags.SPRUCE_LOGS, Items.SPRUCE_PLANKS)
-        registerPlank(exporter, ItemTags.BIRCH_LOGS, Items.BIRCH_PLANKS)
-        registerPlank(exporter, ItemTags.JUNGLE_LOGS, Items.JUNGLE_PLANKS)
-        registerPlank(exporter, ItemTags.ACACIA_LOGS, Items.ACACIA_PLANKS)
-        registerPlank(exporter, ItemTags.CHERRY_LOGS, Items.CHERRY_PLANKS)
-        registerPlank(exporter, ItemTags.DARK_OAK_LOGS, Items.DARK_OAK_PLANKS)
-        registerPlank(exporter, ItemTags.MANGROVE_LOGS, Items.MANGROVE_PLANKS)
-        registerPlank(exporter, ItemTags.CRIMSON_STEMS, Items.CRIMSON_PLANKS)
-        registerPlank(exporter, ItemTags.WARPED_STEMS, Items.WARPED_PLANKS)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.SAW_MILL)
-            .itemInput(ItemTags.PLANKS)
-            .itemOutput(Items.STICK, 4)
-            .offerTo(exporter, Items.STICK)
-    }
-
-    private fun registerPlank(exporter: RecipeExporter, log: TagKey<Item>, plank: ItemConvertible) {
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.SAW_MILL)
-            .itemInput(log)
-            .itemOutput(plank, 6)
-            .itemOutput(RagiumItems.PULP)
-            .offerTo(exporter, plank)
     }
 }

@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:alloy_furnace",
+    "type": "ragium:blast_furnace",
     "tier": "primitive"
   },
   "item_inputs": [
@@ -9,8 +9,7 @@
       "items": "#c:ingots/copper"
     },
     {
-      "count": 4,
-      "items": "#c:dusts/crude_raginite"
+      "items": "#c:dusts/raginite"
     }
   ],
   "item_outputs": [

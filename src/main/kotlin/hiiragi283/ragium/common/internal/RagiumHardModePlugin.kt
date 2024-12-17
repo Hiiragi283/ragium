@@ -268,11 +268,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.MAGMA_BLOCK,
         )
         // processors
-        createProcessor(
+        /*createProcessor(
             exporter,
             RagiumMachineKeys.ALLOY_FURNACE,
-            Items.FURNACE,
-        )
+            Items.FURNACE
+        )*/
         createProcessor(
             exporter,
             RagiumMachineKeys.ASSEMBLER,
@@ -292,6 +292,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumMachineKeys.COMPRESSOR,
             Items.PISTON,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.CUTTING_MACHINE,
+            Items.STONECUTTER,
         )
         createProcessor(
             exporter,
@@ -339,11 +344,6 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumMachineKeys.MULTI_SMELTER,
             RagiumItems.BLAZING_CARBON_ELECTRODE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.SAW_MILL,
-            Items.STONECUTTER,
         )
     }
 

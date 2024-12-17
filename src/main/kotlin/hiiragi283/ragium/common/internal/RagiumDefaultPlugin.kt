@@ -120,10 +120,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
         }
-        helper.modify(RagiumMachineKeys.ALLOY_FURNACE) {
+        /*helper.modify(RagiumMachineKeys.ALLOY_FURNACE) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE)
-        }
+        }*/
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
@@ -143,6 +143,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
+        }
+        helper.modify(RagiumMachineKeys.CUTTING_MACHINE) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCuttingMachineBlockEntity))
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
@@ -171,11 +176,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.END_ROD)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL)
-        }
-        helper.modify(RagiumMachineKeys.SAW_MILL) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
-            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
-            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
     }
 
@@ -367,10 +367,17 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // ingot/gem -> plate
         helper.useIfPresent(entry, HTTagPrefix.PLATE) { output: Item ->
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                // Metal Former Recipe
+                // Compressor Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key)
+                    .catalyst(RagiumContents.PressMold.PLATE)
+                    .itemOutput(output)
+                    .offerTo(exporter, output)
+                // Cutting Machine Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.CUTTING_MACHINE)
+                    .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
                     .catalyst(RagiumContents.PressMold.PLATE)
                     .itemOutput(output)
                     .offerTo(exporter, output)

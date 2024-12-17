@@ -119,7 +119,7 @@ object RagiumClient : ClientModInitializer {
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
         registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
-        registerMachineRenderer(RagiumBlockEntityTypes.SAW_MILL)
+        registerMachineRenderer(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1

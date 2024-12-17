@@ -374,11 +374,12 @@ object RagiumLangProviders {
                 "Generate energy from hot fluids",
             )
 
-            builder.add(RagiumMachineKeys.ALLOY_FURNACE, "Alloy Furnace", "Smelt two ingredients into one")
+            // builder.add(RagiumMachineKeys.ALLOY_FURNACE, "Alloy Furnace", "Smelt two ingredients into one")
             builder.add(RagiumMachineKeys.ASSEMBLER, "Assembler", "Dr.Doom, Assemble!")
             builder.add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
             builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
             builder.add(RagiumMachineKeys.COMPRESSOR, "Compressor", "saves.zip.zip")
+            builder.add(RagiumMachineKeys.CUTTING_MACHINE, "Cutting Machine", "Process Logs more efficiently")
             builder.add(RagiumMachineKeys.DISTILLATION_TOWER, "Distillation Tower", "Process Crude Oil")
             builder.add(RagiumMachineKeys.ELECTROLYZER, "Electrolyzer", "Elek On")
             builder.add(RagiumMachineKeys.EXTRACTOR, "Extractor", "Something like Centrifuge")
@@ -388,7 +389,6 @@ object RagiumLangProviders {
             // builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
             builder.add(RagiumMachineKeys.MIXER, "Mixer", "Genomix...")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
-            builder.add(RagiumMachineKeys.SAW_MILL, "Saw Mill", "Process Logs more efficiently")
             // Material
             builder.add(RagiumMaterialKeys.CRUDE_RAGINITE, "Crude Raginite")
             builder.add(RagiumMaterialKeys.RAGI_ALLOY, "Ragi-Alloy")
@@ -717,11 +717,12 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と石炭類から発電する")
             builder.add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
 
-            builder.add(RagiumMachineKeys.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
+            // builder.add(RagiumMachineKeys.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
             builder.add(RagiumMachineKeys.ASSEMBLER, "組立機", "悪魔博士，アッセンブル！")
             builder.add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
             builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
             builder.add(RagiumMachineKeys.COMPRESSOR, "圧縮機", "saves.zip.zip")
+            builder.add(RagiumMachineKeys.CUTTING_MACHINE, "裁断機", "")
             builder.add(RagiumMachineKeys.DISTILLATION_TOWER, "蒸留塔", "原油を処理する")
             builder.add(RagiumMachineKeys.ELECTROLYZER, "電解槽", "エレキ オン")
             builder.add(RagiumMachineKeys.EXTRACTOR, "抽出器", "遠心分離機みたいなやつ")
@@ -731,7 +732,6 @@ object RagiumLangProviders {
             // builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
             builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス...")
-            builder.add(RagiumMachineKeys.SAW_MILL, "製材機", "より効率的に原木を加工する")
             // Material
             builder.add(RagiumMaterialKeys.CRUDE_RAGINITE, "粗製ラギナイト")
             builder.add(RagiumMaterialKeys.RAGI_ALLOY, "ラギ合金")

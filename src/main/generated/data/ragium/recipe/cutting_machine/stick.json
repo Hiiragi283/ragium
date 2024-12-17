@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:saw_mill",
+    "type": "ragium:cutting_machine",
     "tier": "primitive"
   },
   "item_inputs": [

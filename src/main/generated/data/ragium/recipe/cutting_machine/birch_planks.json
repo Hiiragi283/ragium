@@ -1,18 +1,18 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:saw_mill",
+    "type": "ragium:cutting_machine",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "items": "#minecraft:spruce_logs"
+      "items": "#minecraft:birch_logs"
     }
   ],
   "item_outputs": [
     {
       "count": 6,
-      "item": "minecraft:spruce_planks"
+      "item": "minecraft:birch_planks"
     },
     {
       "item": "ragium:pulp"

@@ -1,18 +1,18 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:saw_mill",
+    "type": "ragium:cutting_machine",
     "tier": "primitive"
   },
   "item_inputs": [
     {
-      "items": "#minecraft:jungle_logs"
+      "items": "#minecraft:dark_oak_logs"
     }
   ],
   "item_outputs": [
     {
       "count": 6,
-      "item": "minecraft:jungle_planks"
+      "item": "minecraft:dark_oak_planks"
     },
     {
       "item": "ragium:pulp"
