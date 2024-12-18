@@ -172,7 +172,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         )
         createMechanics(
             exporter,
-            RagiumBlocks.LARGE_PROCESSOR,
+            RagiumBlocks.EXTENDED_PROCESSOR,
             RagiumHardModeContents.RAGI_ALLOY.getContent(hardMode),
             RagiumItems.RAGI_CRYSTAL_PROCESSOR,
         )

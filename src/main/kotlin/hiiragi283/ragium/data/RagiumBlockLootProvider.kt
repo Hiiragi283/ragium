@@ -91,7 +91,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         )
 
         addDrop(RagiumBlocks.AUTO_ILLUMINATOR)
-        addDrop(RagiumBlocks.LARGE_PROCESSOR)
+        addDrop(RagiumBlocks.EXTENDED_PROCESSOR)
         addDrop(RagiumBlocks.MANUAL_FORGE)
         addDrop(RagiumBlocks.MANUAL_GRINDER)
         addDrop(RagiumBlocks.MANUAL_MIXER)

@@ -67,6 +67,10 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     private var errorMessage: String? = null
 
+    init {
+        sendPacket(payload)
+    }
+
     @Environment(EnvType.CLIENT)
     fun onPacketReceived(packet: HTMachineKeySyncPayload) {
         key = packet.key

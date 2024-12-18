@@ -15,7 +15,7 @@ import net.minecraft.world.World
 /**
  * Multiblock validation manager
  */
-class HTMultiblockManager(private val world: () -> World?, private val pos: BlockPos, private val provider: HTMultiblockProvider) :
+class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, private val provider: HTMultiblockProvider) :
     HTMultiblockBuilder {
     var showPreview: Boolean = false
 
@@ -72,7 +72,7 @@ class HTMultiblockManager(private val world: () -> World?, private val pos: Bloc
     ) {
         val pos1: BlockPos = pos.add(x, y, z)
         if (patternResult.isSuccess) {
-            patternResult = HTUnitResult.fromBool(world()?.let { pattern.test(it, pos1) } == true) {
+            patternResult = HTUnitResult.fromBool(world()?.let { pattern.test(it, pos1, provider) } == true) {
                 Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos1))
             }
         }

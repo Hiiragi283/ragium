@@ -18,7 +18,7 @@ import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
+import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -117,29 +117,29 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTSimpleBlockPattern(tier.getHull()),
+                HTTieredBlockPattern.ofContent(HTMachineTier::getHull),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTSimpleBlockPattern(tier.getGrate()),
+                HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTSimpleBlockPattern(tier.getGrate()),
+                HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
             )
         builder.add(
             0,
             3,
             2,
-            HTSimpleBlockPattern(tier.getGrate()),
+            HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
         )
         builder.add(
             0,
             4,
             2,
-            HTSimpleBlockPattern(tier.getGrate()),
+            HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
         )
     }
 }

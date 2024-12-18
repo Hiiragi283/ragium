@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.block.machine.HTLargeProcessorBlock
+import hiiragi283.ragium.common.block.machine.HTExtendedProcessorBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
@@ -189,7 +189,7 @@ object RagiumBlocks {
         HTBlockWithEntity.build(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
-    val LARGE_PROCESSOR: Block = HTLargeProcessorBlock
+    val EXTENDED_PROCESSOR: Block = HTExtendedProcessorBlock
 
     @JvmField
     val MANUAL_FORGE: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.BRICKS).nonOpaque())
@@ -215,7 +215,7 @@ object RagiumBlocks {
     @JvmField
     val MECHANICS: List<Block> = listOf(
         // colored
-        LARGE_PROCESSOR, // red
+        EXTENDED_PROCESSOR, // red
         AUTO_ILLUMINATOR, // yellow
         OPEN_CRATE, // green
         TELEPORT_ANCHOR, // blue

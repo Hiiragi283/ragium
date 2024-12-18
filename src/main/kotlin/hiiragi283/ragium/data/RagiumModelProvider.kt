@@ -283,8 +283,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             },
         )
         registerHorizontal(
-            RagiumBlocks.LARGE_PROCESSOR,
-            TexturedModel.CUBE_ALL.upload(RagiumBlocks.LARGE_PROCESSOR, generator.modelCollector),
+            RagiumBlocks.EXTENDED_PROCESSOR,
+            TexturedModel.CUBE_ALL.upload(RagiumBlocks.EXTENDED_PROCESSOR, generator.modelCollector),
         )
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
             val block: Block = exporter.value

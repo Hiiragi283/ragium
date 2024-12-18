@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.property.HTPropertyKey
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.sound.SoundEvent
@@ -42,6 +43,10 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofDefaulted(
             RagiumAPI.id("active_model_id"),
         ) { RagiumAPI.id("block/active_dynamic_processor") }
+
+    @JvmField
+    val MULTIBLOCK_PATTERN: HTPropertyKey.Simple<(HTMultiblockBuilder) -> Unit> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("multiblock_pattern"))
 
     /**
      * Provides [net.minecraft.particle.ParticleType]

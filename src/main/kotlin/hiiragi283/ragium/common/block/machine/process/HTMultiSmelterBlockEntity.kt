@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.minecraft.block.BlockState
@@ -45,8 +45,6 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder.addLayer(-1..1, -1, 1..3, HTSimpleBlockPattern(tier.getCasing()))
-        builder.addHollow(-1..1, 0, 1..3, HTSimpleBlockPattern(tier.getCoil()))
-        builder.addLayer(-1..1, 1, 1..3, HTSimpleBlockPattern(tier.getStorageBlock()))
+        key.entry[HTMachinePropertyKeys.MULTIBLOCK_PATTERN]?.invoke(builder)
     }
 }

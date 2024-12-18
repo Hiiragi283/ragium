@@ -520,14 +520,14 @@ object RagiumAdvancementProviders {
                 RagiumMachineKeys.ROCK_GENERATOR,
                 HTMachineTier.PRIMITIVE,
             )
-            // large processor
-            val largeProcessor: AdvancementEntry = createChild(
+            // extended processor
+            val extendedProcessor: AdvancementEntry = createChild(
                 consumer,
-                "machine/large_processor",
+                "machine/extended_processor",
                 processor,
-                RagiumBlocks.LARGE_PROCESSOR,
+                RagiumBlocks.EXTENDED_PROCESSOR,
                 frame = AdvancementFrame.CHALLENGE,
-            ) { hasAllItems(RagiumBlocks.LARGE_PROCESSOR) }
+            ) { hasAllItems(RagiumBlocks.EXTENDED_PROCESSOR) }
         }
     }
 

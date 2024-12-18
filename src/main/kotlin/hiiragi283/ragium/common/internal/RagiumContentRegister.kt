@@ -3,11 +3,13 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTVoidStorage
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
@@ -306,7 +308,7 @@ internal object RagiumContentRegister {
         registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
-        registerBlock("large_processor", RagiumBlocks.LARGE_PROCESSOR)
+        registerBlock("extended_processor", RagiumBlocks.EXTENDED_PROCESSOR)
         registerBlock("manual_forge", RagiumBlocks.MANUAL_FORGE)
         registerBlock("manual_grinder", RagiumBlocks.MANUAL_GRINDER)
         registerBlock("manual_mixer", RagiumBlocks.MANUAL_MIXER)
@@ -324,7 +326,7 @@ internal object RagiumContentRegister {
             ),
         )
         registerBlockItem(
-            RagiumBlocks.LARGE_PROCESSOR,
+            RagiumBlocks.EXTENDED_PROCESSOR,
             itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.LARGE_PROCESSOR)),
         )
         registerBlockItem(RagiumBlocks.MANUAL_FORGE)
@@ -478,6 +480,7 @@ internal object RagiumContentRegister {
         registerItemStorages()
         registerFluidStorages()
         registerEnergyStorages()
+        registerTierProviders()
         // Accessory
         HTAccessoryRegistry.register(RagiumItems.STELLA_GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
@@ -632,6 +635,12 @@ internal object RagiumContentRegister {
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork.result().getOrNull()
         }, RagiumBlocks.NETWORK_INTERFACE)
+    }
+
+    private fun registerTierProviders() {
+        HTMachineTier.SIDED_LOOKUP.registerFallback { _: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction? ->
+            (blockEntity as? HTMachineBlockEntityBase)?.tier
+        }
     }
 
     private fun registerFluidStorage(provider: BlockApiLookup.BlockApiProvider<Storage<FluidVariant>, Direction?>, block: Block) {

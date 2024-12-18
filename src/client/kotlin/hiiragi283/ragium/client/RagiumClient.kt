@@ -4,9 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.extension.getBlockEntity
-import hiiragi283.ragium.api.extension.registerClientReceiver
-import hiiragi283.ragium.api.extension.world
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
 import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -16,6 +13,7 @@ import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.machine.*
 import hiiragi283.ragium.client.machine.HTBlockTagPatternRenderer
 import hiiragi283.ragium.client.machine.HTSimpleBlockPatternRenderer
+import hiiragi283.ragium.client.machine.HTTieredBlockPatternRenderer
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
@@ -24,6 +22,7 @@ import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTBlockTagPattern
 import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
+import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import hiiragi283.ragium.common.network.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
@@ -118,15 +117,14 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CRATE, ::HTCrateBlockEntityRenderer)
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CREATIVE_CRATE) { HTCreativeCrateBlockEntityRenderer }
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.EXTENDED_PROCESSOR) { HTExtendedProcessorBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.LARGE_PROCESSOR) { HTLargeProcessorBlockEntityRenderer }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
 
-        registerMachineRenderer(RagiumBlockEntityTypes.BLAST_FURNACE)
         registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
+        registerMachineRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
-        registerMachineRenderer(RagiumBlockEntityTypes.CUTTING_MACHINE)
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
@@ -349,6 +347,10 @@ object RagiumClient : ClientModInitializer {
         HTMultiblockPatternRendererRegistry.register(
             HTBlockTagPattern::class.java,
             HTBlockTagPatternRenderer,
+        )
+        HTMultiblockPatternRendererRegistry.register(
+            HTTieredBlockPattern::class.java,
+            HTTieredBlockPatternRenderer,
         )
     }
 }

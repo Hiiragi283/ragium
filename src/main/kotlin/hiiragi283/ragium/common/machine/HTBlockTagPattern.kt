@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.block.Block
 import net.minecraft.registry.Registries
@@ -14,5 +15,5 @@ class HTBlockTagPattern(val tagKey: TagKey<Block>) : HTMultiblockPattern {
 
     override val text: MutableText = tagKey.name.copy()
 
-    override fun test(world: World, pos: BlockPos): Boolean = world.getBlockState(pos).isIn(tagKey)
+    override fun test(world: World, pos: BlockPos, provider: HTMultiblockProvider): Boolean = world.getBlockState(pos).isIn(tagKey)
 }

@@ -1,33 +1,31 @@
 package hiiragi283.ragium.client.machine
 
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.render.HTMultiblockPatternRenderer
-import hiiragi283.ragium.api.util.HTRegistryEntryList
-import hiiragi283.ragium.common.machine.HTBlockTagPattern
-import net.minecraft.block.Block
+import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import net.minecraft.block.BlockState
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-object HTBlockTagPatternRenderer : HTMultiblockPatternRenderer<HTBlockTagPattern> {
+object HTTieredBlockPatternRenderer : HTMultiblockPatternRenderer<HTTieredBlockPattern> {
     override fun render(
         x: Int,
         y: Int,
         z: Int,
-        pattern: HTBlockTagPattern,
+        pattern: HTTieredBlockPattern,
         world: World,
         matrix: MatrixStack,
         consumerProvider: VertexConsumerProvider,
         random: Random,
     ) {
-        val state: BlockState = getPreviewState(pattern.entryList, world) ?: return
+        val state: BlockState =
+            HTMachineTier.SIDED_LOOKUP
+                .find(world, BlockPos(x, y, z), null)
+                ?.let(pattern.blockGetter)
+                ?.defaultState ?: return
         renderState(state, x, y, z, pattern, world, matrix, consumerProvider, random)
-    }
-
-    private fun getPreviewState(entryList: HTRegistryEntryList<Block>, world: World): BlockState? = when (entryList.size) {
-        0 -> null
-        1 -> entryList[0].defaultState
-        else -> entryList[((world.time % (20 * entryList.size)) / 20).toInt()].defaultState
     }
 }

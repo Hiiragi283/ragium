@@ -80,10 +80,6 @@ object RagiumBlockEntityTypes {
         register("biomass_fermenter", ::HTBiomassFermenterBlockEntity)
 
     @JvmField
-    val BLAST_FURNACE: BlockEntityType<HTBlastFurnaceBlockEntity> =
-        register("blast_furnace", ::HTBlastFurnaceBlockEntity)
-
-    @JvmField
     val CANNING_MACHINE: BlockEntityType<HTCanningMachineBlockEntity> =
         register("exporter", ::HTCanningMachineBlockEntity)
 
@@ -100,10 +96,6 @@ object RagiumBlockEntityTypes {
         register("combustion_generator", ::HTCombustionGeneratorBlockEntity)
 
     @JvmField
-    val CUTTING_MACHINE: BlockEntityType<HTCuttingMachineBlockEntity> =
-        register("cutting_machine", ::HTCuttingMachineBlockEntity)
-
-    @JvmField
     val DISTILLATION_TOWER: BlockEntityType<HTDistillationTowerBlockEntity> =
         register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
@@ -118,6 +110,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val FLUID_DRILL: BlockEntityType<HTFluidDrillBlockEntity> =
         register("fluid_drill", ::HTFluidDrillBlockEntity)
+
+    @JvmField
+    val LARGE_PROCESSOR: BlockEntityType<HTLargeRecipeProcessorBlockEntity> =
+        register("large_processor", ::HTLargeRecipeProcessorBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: BlockEntityType<HTMultiSmelterBlockEntity> =
@@ -166,8 +162,8 @@ object RagiumBlockEntityTypes {
         register("item_display", ::HTItemDisplayBlockEntity)
 
     @JvmField
-    val LARGE_PROCESSOR: BlockEntityType<HTLargeProcessorBlockEntity> =
-        register("large_processor", ::HTLargeProcessorBlockEntity)
+    val EXTENDED_PROCESSOR: BlockEntityType<HTExtendedProcessorBlockEntity> =
+        register("extended_processor", ::HTExtendedProcessorBlockEntity)
 
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
@@ -187,8 +183,8 @@ object RagiumBlockEntityTypes {
         registerBlocks(DRUM, RagiumContents.Drums.entries)
 
         CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocks.CREATIVE_EXPORTER)
+        EXTENDED_PROCESSOR.addSupportedBlock(RagiumBlocks.EXTENDED_PROCESSOR)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
-        LARGE_PROCESSOR.addSupportedBlock(RagiumBlocks.LARGE_PROCESSOR)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
@@ -211,9 +207,9 @@ object RagiumBlockEntityTypes {
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
-        registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, BLAST_FURNACE)
+        registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
-        registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, CUTTING_MACHINE)
+        registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)

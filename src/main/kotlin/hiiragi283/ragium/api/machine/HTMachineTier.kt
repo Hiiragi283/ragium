@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumHardModeContents
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
@@ -26,6 +27,7 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
+import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 /**
@@ -75,6 +77,10 @@ enum class HTMachineTier(
 
         @JvmField
         val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.of("tier", HTMachineTier::class.java)
+
+        @JvmField
+        val SIDED_LOOKUP: BlockApiLookup<HTMachineTier, Direction?> =
+            BlockApiLookup.get(RagiumAPI.id("machine_tier"), HTMachineTier::class.java, Direction::class.java)
     }
 
     /**

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.extension.renderMultiblock
-import hiiragi283.ragium.common.block.machine.process.HTLargeProcessorBlockEntity
+import hiiragi283.ragium.common.block.machine.process.HTExtendedProcessorBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
@@ -12,9 +12,9 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-object HTLargeProcessorBlockEntityRenderer : BlockEntityRenderer<HTLargeProcessorBlockEntity> {
+object HTExtendedProcessorBlockEntityRenderer : BlockEntityRenderer<HTExtendedProcessorBlockEntity> {
     override fun render(
-        entity: HTLargeProcessorBlockEntity,
+        entity: HTExtendedProcessorBlockEntity,
         tickDelta: Float,
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
@@ -24,7 +24,7 @@ object HTLargeProcessorBlockEntityRenderer : BlockEntityRenderer<HTLargeProcesso
         val world: World = entity.world ?: return
         // render machine
         val state: BlockState = when (entity.isDefault) {
-            true -> RagiumBlocks.LARGE_PROCESSOR.defaultState
+            true -> RagiumBlocks.EXTENDED_PROCESSOR.defaultState
             false ->
                 entity.key.entry
                     .block

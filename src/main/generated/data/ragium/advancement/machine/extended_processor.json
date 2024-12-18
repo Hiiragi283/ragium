@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:large_processor"
+            "items": "ragium:extended_processor"
           }
         ]
       },
@@ -19,10 +19,10 @@
     "frame": "challenge",
     "icon": {
       "count": 1,
-      "id": "ragium:large_processor"
+      "id": "ragium:extended_processor"
     },
     "title": {
-      "translate": "block.ragium.large_processor"
+      "translate": "block.ragium.extended_processor"
     }
   },
   "requirements": [

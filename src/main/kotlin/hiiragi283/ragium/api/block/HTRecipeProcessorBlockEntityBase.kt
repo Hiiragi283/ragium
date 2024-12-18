@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block
 
 import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
@@ -10,18 +9,14 @@ import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTUnitResult
-import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
-import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -68,35 +63,4 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     //    SidedStorageBlockEntity    //
 
     final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
-
-    //    Large    //
-
-    /**
-     * A base class for multiblock machine block entity
-     * @see [hiiragi283.ragium.common.block.machine.process.HTBlastFurnaceBlockEntity]
-     * @see [hiiragi283.ragium.common.block.machine.process.HTCuttingMachineBlockEntity]
-     * @see [hiiragi283.ragium.common.block.machine.process.HTDistillationTowerBlockEntity]
-     */
-    abstract class Large(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-        HTRecipeProcessorBlockEntityBase(type, pos, state),
-        HTMultiblockProvider {
-        final override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
-
-        final override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
-
-        final override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofLarge(this)
-
-        override val processor = HTMachineRecipeProcessor(
-            inventory,
-            intArrayOf(0, 1, 2),
-            intArrayOf(4, 5, 6),
-            3,
-            fluidStorage,
-            intArrayOf(0, 1),
-            intArrayOf(2, 3),
-        )
-
-        final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-            HTLargeMachineScreenHandler(syncId, playerInventory, createContext())
-    }
 }

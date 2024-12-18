@@ -9,16 +9,21 @@ import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.aroundPos
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
+import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.minecraft.block.Blocks
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
@@ -52,6 +57,44 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.DOWN }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
+                // drill
+                builder.add(0, -3, 0, HTSimpleBlockPattern(Blocks.BEDROCK))
+                // builder.add(0, -2, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                // builder.add(0, -1, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(-1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(0, 0, -1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(0, 0, 1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                // frame
+                builder.add(-2, -1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+                builder.add(0, -1, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+                builder.add(0, -1, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+                builder.add(2, -1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+
+                builder.add(-2, 0, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.add(0, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.add(0, 0, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.add(2, 0, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+
+                builder.add(-2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(-2, 0, -1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(-2, 0, 1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(-2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(-1, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(-1, 0, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(1, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(1, 0, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(2, 0, -1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(2, 0, 1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+
+                builder.add(-2, 1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+                builder.add(0, 1, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+                builder.add(0, 1, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+                builder.add(2, 1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+            }
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
@@ -125,7 +168,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE)
         }*/
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
+                builder.addLayer(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.addHollow(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
+                builder.addHollow(-1..1, 2, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
+                builder.addLayer(-1..1, 3, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+            }
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
         }
@@ -145,12 +194,33 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
         }
         helper.modify(RagiumMachineKeys.CUTTING_MACHINE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCuttingMachineBlockEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
+                // bottom
+                builder.addLayer(-1..1, 0, 1..1, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.add(-1, 0, 2, HTSimpleBlockPattern(Blocks.STONE_SLAB))
+                builder.add(0, 0, 2, HTSimpleBlockPattern(Blocks.STONECUTTER))
+                builder.add(1, 0, 2, HTSimpleBlockPattern(Blocks.STONE_SLAB))
+                builder.addLayer(-1..1, 0, 3..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                // middle
+                builder.addLayer(-1..1, 1, 1..1, HTTieredBlockPattern.ofBlock(HTMachineTier::getGlassBlock))
+                builder.addLayer(-1..1, 1, 3..3, HTTieredBlockPattern.ofBlock(HTMachineTier::getGlassBlock))
+                // top
+                builder.addLayer(-1..1, 2, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+            }
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
+                builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+                builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.addCross4(-1..1, 1, 1..3, HTSimpleBlockPattern(Blocks.RED_CONCRETE))
+                builder.addCross4(-1..1, 2, 1..3, HTSimpleBlockPattern(Blocks.WHITE_CONCRETE))
+                builder.addCross4(-1..1, 3, 1..3, HTSimpleBlockPattern(Blocks.RED_CONCRETE))
+                builder.add(0, 4, 2, HTSimpleBlockPattern(Blocks.WHITE_CONCRETE))
+            }
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FALLING_DRIPSTONE_LAVA)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
@@ -170,6 +240,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
+                builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+                builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
+                builder.addLayer(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+            }
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
