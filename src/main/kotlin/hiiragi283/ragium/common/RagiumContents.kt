@@ -372,13 +372,15 @@ object RagiumContents {
             HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_circuit"))
     }
 
-    enum class PressMold(val prefix: HTTagPrefix?) :
+    //    Press Molds    //
+
+    enum class PressMolds :
         HTContent.Delegated<Item>,
         ItemConvertible {
-        GEAR(HTTagPrefix.GEAR),
-        PIPE(null),
-        PLATE(HTTagPrefix.PLATE),
-        ROD(HTTagPrefix.ROD),
+        GEAR,
+        PIPE,
+        PLATE,
+        ROD,
         ;
 
         override val delegated: HTContent<Item> =

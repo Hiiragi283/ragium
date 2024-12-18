@@ -448,14 +448,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key)
-                    .catalyst(RagiumContents.PressMold.PLATE)
+                    .catalyst(RagiumContents.PressMolds.PLATE)
                     .itemOutput(output)
                     .offerTo(exporter, output)
                 // Cutting Machine Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.CUTTING_MACHINE)
                     .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
-                    .catalyst(RagiumContents.PressMold.PLATE)
+                    .catalyst(RagiumContents.PressMolds.PLATE)
                     .itemOutput(output, 9)
                     .offerTo(exporter, output)
             }
@@ -500,7 +500,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key, 4)
-                    .catalyst(RagiumContents.PressMold.GEAR)
+                    .catalyst(RagiumContents.PressMolds.GEAR)
                     .itemOutput(output)
                     .offerTo(exporter, output)
             }

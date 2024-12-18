@@ -67,7 +67,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
                         HTMachineTier.PRIMITIVE,
                     ) {
                         add(invStack)
-                        catalyst = ItemStack(RagiumContents.PressMold.PLATE)
+                        catalyst = ItemStack(RagiumContents.PressMolds.PLATE)
                     },
                     world,
                 ).result()

@@ -271,10 +271,10 @@ object RagiumLangProviders {
             builder.add(RagiumItems.YELLOW_CAKE, "Yellow Cake")
             builder.add(RagiumItems.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
 
-            builder.add(RagiumContents.PressMold.GEAR, "Press Mold (Gear)")
-            builder.add(RagiumContents.PressMold.PIPE, "Press Mold (Pipe)")
-            builder.add(RagiumContents.PressMold.PLATE, "Press Mold (Plate)")
-            builder.add(RagiumContents.PressMold.ROD, "Press Mold (Rod)")
+            builder.add(RagiumContents.PressMolds.GEAR, "Press Mold (Gear)")
+            builder.add(RagiumContents.PressMolds.PIPE, "Press Mold (Pipe)")
+            builder.add(RagiumContents.PressMolds.PLATE, "Press Mold (Plate)")
+            builder.add(RagiumContents.PressMolds.ROD, "Press Mold (Rod)")
 
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "Place Anvil when land on")
             builder.add(RagiumTranslationKeys.BACKPACK, "Shares inventory between the same color")
@@ -661,10 +661,10 @@ object RagiumLangProviders {
             builder.add(RagiumItems.YELLOW_CAKE, "イエローケーキ")
             builder.add(RagiumItems.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
 
-            builder.add(RagiumContents.PressMold.GEAR, "プレス型（歯車）")
-            builder.add(RagiumContents.PressMold.PIPE, "プレス型（パイプ）")
-            builder.add(RagiumContents.PressMold.PLATE, "プレス型（板材）")
-            builder.add(RagiumContents.PressMold.ROD, "プレス型（棒材）")
+            builder.add(RagiumContents.PressMolds.GEAR, "プレス型（歯車）")
+            builder.add(RagiumContents.PressMolds.PIPE, "プレス型（パイプ）")
+            builder.add(RagiumContents.PressMolds.PLATE, "プレス型（板材）")
+            builder.add(RagiumContents.PressMolds.ROD, "プレス型（棒材）")
 
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "着弾点に金床を設置する")
             builder.add(RagiumTranslationKeys.BACKPACK, "同じ色同士でインベントリを共有する")

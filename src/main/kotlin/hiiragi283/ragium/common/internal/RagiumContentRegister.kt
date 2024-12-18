@@ -218,7 +218,7 @@ internal object RagiumContentRegister {
             )
         }
 
-        RagiumContents.PressMold.entries.forEach { mold: RagiumContents.PressMold ->
+        RagiumContents.PressMolds.entries.forEach { mold: RagiumContents.PressMolds ->
             registerItem(mold, Item(itemSettings()))
         }
 

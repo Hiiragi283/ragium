@@ -107,7 +107,7 @@ object RagiumItemGroup {
                     addAll(RagiumContents.CircuitBoards.entries)
                     addAll(RagiumContents.Circuits.entries)
 
-                    addAll(RagiumContents.PressMold.entries)
+                    addAll(RagiumContents.PressMolds.entries)
 
                     addAll(RagiumBlocks.MECHANICS)
                     add(RagiumBlocks.CREATIVE_SOURCE)

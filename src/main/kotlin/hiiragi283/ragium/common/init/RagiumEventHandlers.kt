@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
+import hiiragi283.ragium.api.block.HTBlockRotationHandler
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.extension.energyPercent
 import hiiragi283.ragium.api.extension.sendTitle
@@ -30,7 +31,6 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.*
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
 import net.minecraft.util.BlockRotation
@@ -116,15 +116,10 @@ object RagiumEventHandlers {
             if (stack.isOf(RagiumItems.RAGI_WRENCH)) {
                 val pos: BlockPos = result.blockPos
                 val state: BlockState = world.getBlockState(pos)
+                val handler: HTBlockRotationHandler =
+                    HTBlockRotationHandler.LOOKUP.find(world, pos, null) ?: return@register ActionResult.PASS
                 val rotated: BlockState = when (player.isSneaking) {
-                    true -> {
-                        if (Properties.FACING in state) {
-                            state.with(Properties.FACING, result.side)
-                        } else {
-                            state
-                        }
-                    }
-
+                    true -> handler.rotate(state, result.side)
                     false -> state.rotate(BlockRotation.COUNTERCLOCKWISE_90)
                 }
                 if (rotated != state) {

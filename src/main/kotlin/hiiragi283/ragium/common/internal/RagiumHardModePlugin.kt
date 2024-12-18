@@ -391,7 +391,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
                 .itemInput(input, 2)
-                .catalyst(RagiumContents.PressMold.PIPE)
+                .catalyst(RagiumContents.PressMolds.PIPE)
                 .itemOutput(pipe, 2)
                 .offerTo(exporter, pipe)
         }
@@ -414,7 +414,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
                 .itemInput(input, 4)
-                .catalyst(RagiumContents.PressMold.PIPE)
+                .catalyst(RagiumContents.PressMolds.PIPE)
                 .itemOutput(crossPipe, 2)
                 .offerTo(exporter, crossPipe)
         }

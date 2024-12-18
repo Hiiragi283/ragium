@@ -30,7 +30,6 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
@@ -66,10 +65,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         get() = cachedState.getOrDefault(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
 
     private var errorMessage: String? = null
-
-    init {
-        sendPacket(payload)
-    }
 
     @Environment(EnvType.CLIENT)
     fun onPacketReceived(packet: HTMachineKeySyncPayload) {
@@ -205,6 +200,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
                 onFailed(world, pos)
             }
         markDirty()
+        sendPacket(payload)
     }
 
     /**
@@ -235,9 +231,4 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     //    NamedScreenHandlerFactory    //
 
     final override fun getDisplayName(): Text = tier.createPrefixedText(key)
-
-    private val configScreenFactory = SimpleNamedScreenHandlerFactory(
-        null,
-        Text.literal("Slot Configuration"),
-    )
 }

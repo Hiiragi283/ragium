@@ -474,7 +474,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumContents.RawMaterials.entries)
             addAll(RagiumContents.CircuitBoards.entries)
             addAll(RagiumContents.Circuits.entries)
-            addAll(RagiumContents.PressMold.entries)
+            addAll(RagiumContents.PressMolds.entries)
 
             addAll(RagiumItems.TOOLS)
             addAll(RagiumItems.ARMORS)
