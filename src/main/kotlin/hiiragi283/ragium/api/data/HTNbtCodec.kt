@@ -7,7 +7,8 @@ import net.minecraft.nbt.NbtOps
 import kotlin.reflect.KMutableProperty0
 
 class HTNbtCodec<T : Any>(val key: String, val codec: Codec<T>) {
-    fun writeTo(nbt: NbtCompound, value: T) {
+    fun writeTo(nbt: NbtCompound, value: T?) {
+        if (value == null) return
         codec
             .encodeStart(NbtOps.INSTANCE, value)
             .ifSuccess { nbt.put(key, it) }
@@ -20,6 +21,10 @@ class HTNbtCodec<T : Any>(val key: String, val codec: Codec<T>) {
     }
 
     fun readAndSet(nbt: NbtCompound, property: KMutableProperty0<T>) {
+        readFrom(nbt).ifSuccess(property::set)
+    }
+
+    fun readAndSetNullable(nbt: NbtCompound, property: KMutableProperty0<T?>) {
         readFrom(nbt).ifSuccess(property::set)
     }
 }

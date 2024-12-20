@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.machine.generator
+package hiiragi283.ragium.common.unused
 
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.recipe.HTItemIngredient
@@ -21,8 +21,8 @@ object HTEnergeticFuelRegistry : Item2ObjectMap<Int> {
     @JvmStatic
     val ENTRY_MAP: Map<HTItemIngredient, Int>
         get() = buildMap {
-            itemMap.forEach { (item: Item, damage: Int) -> put(HTItemIngredient.of(item), damage) }
-            tagMap.forEach { (tagKey: TagKey<Item>, damage: Int) -> put(HTItemIngredient.of(tagKey), damage) }
+            itemMap.forEach { (item: Item, damage: Int) -> put(HTItemIngredient.Companion.of(item), damage) }
+            tagMap.forEach { (tagKey: TagKey<Item>, damage: Int) -> put(HTItemIngredient.Companion.of(tagKey), damage) }
         }
 
     @JvmStatic

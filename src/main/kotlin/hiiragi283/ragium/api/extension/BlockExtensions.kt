@@ -106,6 +106,6 @@ fun BlockEntityType<*>.addAll(blocks: Iterable<Block>) {
     blocks.forEach(this::addSupportedBlock)
 }
 
-fun BlockEntityType<*>.addAll(blocks: Iterable<HTBlockContent>) {
+fun BlockEntityType<*>.addAllContents(blocks: Iterable<HTBlockContent>) {
     blocks.forEach(this::add)
 }

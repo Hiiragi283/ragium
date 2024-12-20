@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:buffer"
+          "name": "ragium:creative_source"
         }
       ],
       "rolls": 1.0

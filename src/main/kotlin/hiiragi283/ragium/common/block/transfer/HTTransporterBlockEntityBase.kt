@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
@@ -11,7 +12,6 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -23,25 +23,17 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
     protected var type: HTPipeType = HTPipeType.NONE
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        HTMachineTier.CODEC
-            .encodeStart(NbtOps.INSTANCE, tier)
-            .ifSuccess { nbt.put("tier", it) }
-        HTPipeType.CODEC
-            .encodeStart(NbtOps.INSTANCE, type)
-            .ifSuccess { nbt.put("type", it) }
+        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, tier)
+        HTNbtCodecs.PIPE_TYPE.writeTo(nbt, type)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        HTMachineTier.CODEC
-            .parse(NbtOps.INSTANCE, nbt.get("tier"))
-            .ifSuccess {
-                val oldTier: HTMachineTier = tier
-                tier = it
-                onTierUpdated(oldTier, tier)
-            }
-        HTPipeType.CODEC
-            .parse(NbtOps.INSTANCE, nbt.get("type"))
-            .ifSuccess { type = it }
+        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt) { newTier: HTMachineTier ->
+            val oldTier: HTMachineTier = tier
+            tier = newTier
+            onTierUpdated(oldTier, tier)
+        }
+        HTNbtCodecs.PIPE_TYPE.readAndSet(nbt, this::type)
     }
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}

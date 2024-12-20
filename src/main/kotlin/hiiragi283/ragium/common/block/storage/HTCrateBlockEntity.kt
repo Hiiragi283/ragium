@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTItemVariantStack
@@ -44,12 +45,13 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
+        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, tier)
         itemStorage.writeNbt(nbt, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        tier = nbt.getTier(TIER_KEY)
+        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt, this::tier)
         itemStorage = ItemStorage(tier)
         itemStorage.readNbt(nbt, wrapperLookup)
     }

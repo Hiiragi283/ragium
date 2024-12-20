@@ -4,11 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.add
-import hiiragi283.ragium.api.extension.addAll
+import hiiragi283.ragium.api.extension.addAllContents
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity
+import hiiragi283.ragium.common.block.entity.HTCreativeSourceBlockEntity
+import hiiragi283.ragium.common.block.entity.HTEnchantmentBookshelfBlockEntity
+import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity
@@ -29,10 +32,6 @@ import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
     //    Transfer    //
-
-    @JvmField
-    val BUFFER: BlockEntityType<HTBufferBlockEntity> =
-        register("buffer", ::HTBufferBlockEntity)
 
     @JvmField
     val CRATE: BlockEntityType<HTCrateBlockEntity> =
@@ -176,12 +175,12 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        EXPORTER.addAll(RagiumContents.Exporters.entries)
-        FILTERING_PIPE.addAll(RagiumContents.FilteringPipe.entries)
-        PIPE.addAll(RagiumContents.Pipes.entries)
+        EXPORTER.addAllContents(RagiumContents.Exporters.entries)
+        FILTERING_PIPE.addAllContents(RagiumContents.FilteringPipe.entries)
+        PIPE.addAllContents(RagiumContents.Pipes.entries)
 
-        CRATE.addAll(RagiumContents.Crates.entries)
-        DRUM.addAll(RagiumContents.Drums.entries)
+        CRATE.addAllContents(RagiumContents.Crates.entries)
+        DRUM.addAllContents(RagiumContents.Drums.entries)
 
         CREATIVE_EXPORTER.add(RagiumBlocksNew.CREATIVE_EXPORTER)
         EXTENDED_PROCESSOR.addSupportedBlock(RagiumBlocks.EXTENDED_PROCESSOR)

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.transfer
 
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -12,10 +13,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtOps
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.sound.SoundEvents
@@ -33,26 +31,14 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
 
     final override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        RegistryCodecs
-            .entryList(RegistryKeys.FLUID)
-            .encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), fluidFilter)
-            .ifSuccess { nbt.put("fluid_filter", it) }
-        RegistryCodecs
-            .entryList(RegistryKeys.ITEM)
-            .encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), itemFilter)
-            .ifSuccess { nbt.put("item_filter", it) }
+        HTNbtCodecs.FLUID_FILTER.writeTo(nbt, fluidFilter)
+        HTNbtCodecs.ITEM_FILTER.writeTo(nbt, itemFilter)
     }
 
     final override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        RegistryCodecs
-            .entryList(RegistryKeys.FLUID)
-            .parse(wrapperLookup.getOps(NbtOps.INSTANCE), nbt.get("fluid_filter"))
-            .ifSuccess { fluidFilter = it }
-        RegistryCodecs
-            .entryList(RegistryKeys.ITEM)
-            .parse(wrapperLookup.getOps(NbtOps.INSTANCE), nbt.get("item_filter"))
-            .ifSuccess { itemFilter = it }
+        HTNbtCodecs.FLUID_FILTER.readAndSet(nbt, this::fluidFilter)
+        HTNbtCodecs.ITEM_FILTER.readAndSet(nbt, this::itemFilter)
     }
 
     final override fun onUse(

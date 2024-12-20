@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.extension.getTier
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.interactWithFluidStorage
-import hiiragi283.ragium.api.extension.putTier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
@@ -34,13 +33,13 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMa
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        nbt.putTier(TIER_KEY, tier)
+        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, tier)
         fluidStorage.writeNbt(nbt, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        tier = nbt.getTier(TIER_KEY)
+        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt, this::tier)
         fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
 

@@ -375,7 +375,7 @@ internal object RagiumContentRegister {
         )
 
         registerBlock("backpack_interface", RagiumBlocks.BACKPACK_INTERFACE)
-        registerBlock("buffer", RagiumBlocks.BUFFER)
+        // registerBlock("buffer", RagiumBlocks.BUFFER)
         registerBlock("enchantment_bookshelf", RagiumBlocks.ENCHANTMENT_BOOKSHELF)
         registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
         registerBlock("shaft", RagiumBlocks.SHAFT)
@@ -385,10 +385,10 @@ internal object RagiumContentRegister {
             RagiumBlocks.BACKPACK_INTERFACE,
             itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
         )
-        registerBlockItem(
+        /*registerBlockItem(
             RagiumBlocks.BUFFER,
             itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
-        )
+        )*/
         registerBlockItem(
             RagiumBlocks.ENCHANTMENT_BOOKSHELF,
             itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),

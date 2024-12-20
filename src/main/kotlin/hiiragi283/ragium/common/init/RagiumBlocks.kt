@@ -208,9 +208,7 @@ object RagiumBlocks {
     @JvmField
     val BACKPACK_INTERFACE: Block = HTBackpackInterfaceBlock
 
-    @JvmField
-    val BUFFER: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.BUFFER, blockSettings(Blocks.SMOOTH_STONE))
+    // val BUFFER: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.BUFFER, blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
     val ENCHANTMENT_BOOKSHELF: Block =
@@ -231,7 +229,7 @@ object RagiumBlocks {
     @JvmField
     val MISC: List<Block> = listOf(
         BACKPACK_INTERFACE,
-        BUFFER,
+        // BUFFER,
         ENCHANTMENT_BOOKSHELF,
         ITEM_DISPLAY,
         ROPE,

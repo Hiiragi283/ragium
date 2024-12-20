@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -75,12 +76,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        nbt.putMachineKey(MACHINE_KEY, key)
+        HTNbtCodecs.MACHINE_KEY.writeTo(nbt, key)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        key = nbt.getMachineKey(MACHINE_KEY)
+        HTNbtCodecs.MACHINE_KEY.readAndSet(nbt, this::key)
     }
 
     final override fun addComponents(builder: ComponentMap.Builder) {

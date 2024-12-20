@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachineTier
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.minecraft.inventory.Inventory
@@ -32,14 +30,6 @@ fun NbtCompound.putIdentifier(key: String, value: Identifier) {
     putString(key, value.toString())
 }
 
-fun NbtCompound.putMachineKey(key: String, value: HTMachineKey) {
-    putIdentifier(key, value.id)
-}
-
-fun NbtCompound.putTier(key: String, value: HTMachineTier) {
-    putString(key, value.asString())
-}
-
 fun Inventory.writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC
         .listOf()
@@ -59,11 +49,6 @@ fun NbtCompound.writeFluidStorage(key: String, storage: SingleFluidStorage, wrap
 //    Reading    //
 
 fun NbtCompound.getIdentifier(key: String): Identifier = Identifier.of(getString(key))
-
-fun NbtCompound.getMachineKey(key: String): HTMachineKey = HTMachineKey.of(getIdentifier(key))
-
-fun NbtCompound.getTier(key: String): HTMachineTier =
-    HTMachineTier.entries.firstOrNull { it.asString() == getString(key) } ?: HTMachineTier.PRIMITIVE
 
 fun Inventory.readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC
