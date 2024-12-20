@@ -1,25 +1,25 @@
 package hiiragi283.ragium.common.init
 
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
-import net.minecraft.block.Block
 
 object RagiumBlocksNew {
     //    Creatives    //
 
     @JvmField
-    val CREATIVE_CRATE: HTContent<Block> = HTContent.ofBlock("creative_crate")
+    val CREATIVE_CRATE: HTBlockContent = HTContent.ofBlock("creative_crate")
 
     @JvmField
-    val CREATIVE_DRUM: HTContent<Block> = HTContent.ofBlock("creative_drum")
+    val CREATIVE_DRUM: HTBlockContent = HTContent.ofBlock("creative_drum")
 
     @JvmField
-    val CREATIVE_EXPORTER: HTContent<Block> = HTContent.ofBlock("creative_exporter")
+    val CREATIVE_EXPORTER: HTBlockContent = HTContent.ofBlock("creative_exporter")
 
     @JvmField
-    val CREATIVE_SOURCE: HTContent<Block> = HTContent.ofBlock("creative_source")
+    val CREATIVE_SOURCE: HTBlockContent = HTContent.ofBlock("creative_source")
 
     @JvmField
-    val CREATIVES: List<HTContent<Block>> = listOf(
+    val CREATIVES: List<HTBlockContent> = listOf(
         CREATIVE_CRATE,
         CREATIVE_DRUM,
         CREATIVE_EXPORTER,

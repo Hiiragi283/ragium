@@ -25,29 +25,40 @@ import java.util.function.Supplier
 interface HTContent<T : Any> : Supplier<T> {
     companion object {
         @JvmStatic
-        fun <T : Any> of(key: RegistryKey<T>, entryGetter: (RegistryKey<T>) -> T?): HTContent<T> = object : HTContent<T> {
-            override val key: RegistryKey<T> = key
+        fun ofBlock(id: Identifier): HTBlockContent = object : HTBlockContent {
+            override val delegated: HTContent<Block> = this
 
-            override fun get(): T = entryGetter(key) ?: error("Unregistered value: $key")
+            override val key: RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, id)
+
+            override fun get(): Block = Registries.BLOCK.get(key) ?: error("Unregistered value: $key")
         }
 
         @JvmStatic
-        fun ofBlock(id: Identifier): HTContent<Block> = of(RegistryKey.of(RegistryKeys.BLOCK, id), Registries.BLOCK::get)
+        fun ofBlock(path: String): HTBlockContent = ofBlock(RagiumAPI.id(path))
 
         @JvmStatic
-        fun ofBlock(path: String): HTContent<Block> = ofBlock(RagiumAPI.id(path))
+        fun ofFluid(id: Identifier): HTFluidContent = object : HTFluidContent {
+            override val delegated: HTFluidContent = this
+
+            override val key: RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, id)
+
+            override fun get(): Fluid = Registries.FLUID.get(key) ?: error("Unregistered value: $key")
+        }
 
         @JvmStatic
-        fun ofFluid(id: Identifier): HTContent<Fluid> = of(RegistryKey.of(RegistryKeys.FLUID, id), Registries.FLUID::get)
+        fun ofFluid(path: String): HTFluidContent = ofFluid(RagiumAPI.id(path))
 
         @JvmStatic
-        fun ofFluid(path: String): HTContent<Fluid> = ofFluid(RagiumAPI.id(path))
+        fun ofItem(id: Identifier): HTItemContent = object : HTItemContent {
+            override val delegated: HTItemContent = this
+
+            override val key: RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, id)
+
+            override fun get(): Item = Registries.ITEM.get(key) ?: error("Unregistered value: $key")
+        }
 
         @JvmStatic
-        fun ofItem(id: Identifier): HTContent<Item> = of(RegistryKey.of(RegistryKeys.ITEM, id), Registries.ITEM::get)
-
-        @JvmStatic
-        fun ofItem(path: String): HTContent<Item> = ofItem(RagiumAPI.id(path))
+        fun ofItem(path: String): HTItemContent = ofItem(RagiumAPI.id(path))
     }
 
     val key: RegistryKey<T>
