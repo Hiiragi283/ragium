@@ -88,6 +88,9 @@ object RagiumClient : ClientModInitializer {
     private fun registerBlocks() {
         // cutout
         buildList {
+            add(RagiumBlocksNew.CREATIVE_CRATE)
+            add(RagiumBlocksNew.CREATIVE_EXPORTER)
+
             addAll(RagiumContents.Ores.entries)
             addAll(RagiumContents.Grates.entries)
             addAll(RagiumContents.Hulls.entries)
@@ -97,15 +100,13 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.PipeStations.entries)
             addAll(RagiumContents.FilteringPipe.entries)
             addAll(RagiumContents.Crates.entries)
-        }.map(HTContent<Block>::value).forEach(::registerCutoutMipped)
+        }.map(HTContent<Block>::get).forEach(::registerCutoutMipped)
 
         RagiumAPI
             .getInstance()
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
-        registerCutoutMipped(RagiumBlocks.CREATIVE_CRATE)
-        registerCutoutMipped(RagiumBlocks.CREATIVE_EXPORTER)
         registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
         registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
         registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
@@ -155,7 +156,7 @@ object RagiumClient : ClientModInitializer {
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             val type: RagiumFluids.TextureType = fluid.type
             FluidRenderHandlerRegistry.INSTANCE.register(
-                fluid.value,
+                fluid.get(),
                 SimpleFluidRenderHandler(
                     type.stillTex,
                     type.floatingTex,

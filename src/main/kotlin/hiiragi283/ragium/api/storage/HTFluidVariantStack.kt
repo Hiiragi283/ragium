@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.NON_NEGATIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.isIn
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -42,6 +43,8 @@ class HTFluidVariantStack(override val variant: FluidVariant, override val amoun
     }
 
     constructor(fluid: Fluid, amount: Long) : this(FluidVariant.of(fluid), amount)
+
+    constructor(content: HTFluidContent, amount: Long) : this(content.get(), amount)
 
     val fluid: Fluid = variant.fluid
 

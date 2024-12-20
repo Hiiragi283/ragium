@@ -67,7 +67,7 @@ enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identi
 
     override fun isBuiltin(): Boolean = false
 
-    override fun getParticleSprite(): Sprite = getBlockModel(RagiumContents.StorageBlocks.RAGI_STEEL.value).particleSprite
+    override fun getParticleSprite(): Sprite = getBlockModel(RagiumContents.StorageBlocks.RAGI_STEEL.get()).particleSprite
 
     override fun getTransformation(): ModelTransformation = ModelHelper.MODEL_TRANSFORM_BLOCK
 

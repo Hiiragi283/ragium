@@ -68,7 +68,7 @@ public abstract class TagGroupLoaderMixin {
         }
         if (dataType.endsWith("fluid")) {
             // fluid tags
-            RagiumFluids.getEntries().forEach(fluid -> add(map, fluid.getTagKey(), fluid.getValue(), Registries.FLUID));
+            RagiumFluids.getEntries().forEach(fluid -> add(map, fluid.getTagKey(), fluid.get(), Registries.FLUID));
             RagiumAPI.getLOGGER().info("Registered runtime fluid tags!");
         }
         if (dataType.endsWith("item")) {

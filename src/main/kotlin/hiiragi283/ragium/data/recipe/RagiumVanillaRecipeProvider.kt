@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -470,6 +471,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     //    Crafting - Foods    //
 
+    private fun fluidIngredient(content: HTFluidContent): Ingredient = fluidIngredient(content.get())
+
     private fun fluidIngredient(fluid: Fluid): Ingredient = DefaultCustomIngredients.components(
         Ingredient.ofItems(RagiumItems.FILLED_FLUID_CUBE),
     ) { builder: ComponentChanges.Builder ->
@@ -484,7 +487,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "CDC",
                 "EEE",
-            ).input('A', fluidIngredient(RagiumFluids.MILK.value))
+            ).input('A', fluidIngredient(RagiumFluids.MILK))
             .input('B', Items.SWEET_BERRIES)
             .input('C', RagiumItems.CHOCOLATE)
             .input('D', Items.EGG)
@@ -529,14 +532,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_APPLE)
             .input(Items.APPLE)
-            .input(fluidIngredient(RagiumFluids.CHOCOLATE.value))
+            .input(fluidIngredient(RagiumFluids.CHOCOLATE))
             .unlockedBy(Items.APPLE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_BREAD)
             .input(Items.BREAD)
-            .input(fluidIngredient(RagiumFluids.CHOCOLATE.value))
+            .input(fluidIngredient(RagiumFluids.CHOCOLATE))
             .unlockedBy(Items.BREAD)
             .offerTo(exporter)
 

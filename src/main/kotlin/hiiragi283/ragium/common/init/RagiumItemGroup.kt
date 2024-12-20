@@ -94,11 +94,11 @@ object RagiumItemGroup {
                     addAll(RagiumContents.Coils.entries)
 
                     addAll(RagiumContents.Crates.entries)
-                    add(RagiumBlocks.CREATIVE_CRATE)
+                    add(RagiumBlocksNew.CREATIVE_CRATE.get())
                     addAll(RagiumContents.Drums.entries)
-                    add(RagiumBlocks.CREATIVE_DRUM)
+                    add(RagiumBlocksNew.CREATIVE_DRUM.get())
                     addAll(RagiumContents.Exporters.entries)
-                    add(RagiumBlocks.CREATIVE_EXPORTER)
+                    add(RagiumBlocksNew.CREATIVE_EXPORTER.get())
                     addAll(RagiumContents.Pipes.entries)
                     addAll(RagiumContents.CrossPipes.entries)
                     addAll(RagiumContents.PipeStations.entries)
@@ -110,7 +110,7 @@ object RagiumItemGroup {
                     addAll(RagiumContents.PressMolds.entries)
 
                     addAll(RagiumBlocks.MECHANICS)
-                    add(RagiumBlocks.CREATIVE_SOURCE)
+                    add(RagiumBlocksNew.CREATIVE_SOURCE.get())
                 }.forEach(entries::add)
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->
                     RagiumAPI

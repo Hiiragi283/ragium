@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
@@ -56,21 +57,28 @@ import team.reborn.energy.api.base.InfiniteEnergyStorage
 import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumContentRegister {
-    fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T = Registry.register(registry, RagiumAPI.id(name), value)
+    private fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T =
+        Registry.register(registry, RagiumAPI.id(name), value)
 
     //    Block    //
 
-    fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
+    private fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
 
-    fun registerBlock(content: HTContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
+    private fun registerBlock(content: HTContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
+
+    private fun registerBlockNew(content: HTContent<Block>, block: (AbstractBlock.Settings) -> Block): Block =
+        Registry.register(Registries.BLOCK, content.id, block(blockSettings()))
 
     //    Item    //
 
-    fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
+    private fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
 
-    fun registerItem(content: HTContent<Item>, item: Item): Item = registerItem(content.id.path, item)
+    private fun registerItem(content: HTContent<Item>, item: Item): Item = registerItem(content.id.path, item)
 
-    fun <T : Block> registerBlockItem(
+    private fun registerItemNew(content: HTContent<Item>, item: (Item.Settings) -> Item): Item =
+        Registry.register(Registries.ITEM, content.id, item(itemSettings()))
+
+    private fun <T : Block> registerBlockItem(
         block: T,
         settings: Item.Settings = itemSettings(),
         factory: (T, Item.Settings) -> Item = ::BlockItem,
@@ -82,6 +90,14 @@ internal object RagiumContentRegister {
                 .path,
             factory(block, settings),
         )
+    }
+
+    private fun registerBlockItemNew(
+        block: HTContent<Block>,
+        settings: (Item.Settings) -> Item.Settings = { it },
+        factory: (Block, Item.Settings) -> Item = ::BlockItem,
+    ) {
+        Registry.register(Registries.ITEM, block.id, factory(block.get(), settings(itemSettings())))
     }
 
     //    Init    //
@@ -232,14 +248,22 @@ internal object RagiumContentRegister {
 
     @JvmStatic
     private fun initBlocks() {
-        registerBlock("creative_crate", RagiumBlocks.CREATIVE_CRATE)
-        registerBlock("creative_drum", RagiumBlocks.CREATIVE_DRUM)
-        registerBlock("creative_exporter", RagiumBlocks.CREATIVE_EXPORTER)
-        registerBlock("creative_source", RagiumBlocks.CREATIVE_SOURCE)
-        registerBlockItem(RagiumBlocks.CREATIVE_CRATE, itemSettings().rarity(Rarity.EPIC))
-        registerBlockItem(RagiumBlocks.CREATIVE_DRUM, itemSettings().rarity(Rarity.EPIC))
-        registerBlockItem(RagiumBlocks.CREATIVE_EXPORTER, itemSettings().rarity(Rarity.EPIC))
-        registerBlockItem(RagiumBlocks.CREATIVE_SOURCE, itemSettings().rarity(Rarity.EPIC))
+        registerBlockNew(RagiumBlocksNew.CREATIVE_CRATE) {
+            HTBlockWithEntity.buildHorizontal(RagiumBlockEntityTypes.CREATIVE_CRATE, it)
+        }
+        registerBlockNew(RagiumBlocksNew.CREATIVE_DRUM) {
+            HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_DRUM, it)
+        }
+        registerBlockNew(RagiumBlocksNew.CREATIVE_EXPORTER) {
+            HTCreativeExporterBlock(it.solid().nonOpaque().strength(2f, 6f))
+        }
+        registerBlockNew(RagiumBlocksNew.CREATIVE_SOURCE) {
+            HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_SOURCE, it)
+        }
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_CRATE, settings = { it.rarity(Rarity.EPIC) })
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_DRUM, settings = { it.rarity(Rarity.EPIC) })
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_EXPORTER, settings = { it.rarity(Rarity.EPIC) })
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_SOURCE, settings = { it.rarity(Rarity.EPIC) })
 
         registerBlock("mutated_soil", RagiumBlocks.MUTATED_SOIL)
         registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
@@ -498,7 +522,7 @@ internal object RagiumContentRegister {
         // Fluid Attributes
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidVariantAttributes.register(
-                fluid.value,
+                fluid.get(),
                 object : FluidVariantAttributeHandler {
                     override fun getName(fluidVariant: FluidVariant): Text = Text.translatable(fluid.translationKey)
                 },
@@ -533,7 +557,7 @@ internal object RagiumContentRegister {
             direction?.let { front: Direction ->
                 ItemStorage.SIDED.find(world, pos.offset(front.opposite), front)
             }
-        }, RagiumContents.CrossPipes.STEEL.value)
+        }, RagiumContents.CrossPipes.STEEL.get())
         // pipe station
         registerItemStorage({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val front: Direction = state.getOrDefault(Properties.FACING, Direction.NORTH)
@@ -553,11 +577,11 @@ internal object RagiumContentRegister {
                     add(ItemStorage.SIDED.find(world, pos.offset(front), front.opposite))
                 },
             )
-        }, RagiumContents.PipeStations.ITEM.value)
+        }, RagiumContents.PipeStations.ITEM.get())
         // filtering pipe
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
             null
-        }, RagiumContents.FilteringPipe.ITEM.value)
+        }, RagiumContents.FilteringPipe.ITEM.get())
     }
 
     private fun registerFluidStorages() {
@@ -596,7 +620,7 @@ internal object RagiumContentRegister {
             direction?.let { front: Direction ->
                 FluidStorage.SIDED.find(world, pos.offset(front.opposite), front)
             }
-        }, RagiumContents.CrossPipes.GOLD.value)
+        }, RagiumContents.CrossPipes.GOLD.get())
         // pipe station
         registerFluidStorage({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val front: Direction = state.getOrDefault(Properties.FACING, Direction.NORTH)
@@ -616,11 +640,11 @@ internal object RagiumContentRegister {
                     add(FluidStorage.SIDED.find(world, pos.offset(front), front.opposite))
                 },
             )
-        }, RagiumContents.PipeStations.FLUID.value)
+        }, RagiumContents.PipeStations.FLUID.get())
         // filtering pipe
         registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
             null
-        }, RagiumContents.FilteringPipe.FLUID.value)
+        }, RagiumContents.FilteringPipe.FLUID.get())
     }
 
     private fun registerItemStorage(provider: BlockApiLookup.BlockApiProvider<Storage<ItemVariant>, Direction?>, block: Block) {
@@ -630,7 +654,7 @@ internal object RagiumContentRegister {
     private fun registerEnergyStorages() {
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
-            RagiumBlocks.CREATIVE_SOURCE,
+            RagiumBlocksNew.CREATIVE_SOURCE.get(),
         )
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork.result().getOrNull()
@@ -652,13 +676,13 @@ internal object RagiumContentRegister {
             user.setOnFireFromLava()
             dropStackAt(user, Items.OBSIDIAN)
         }
-        consumer(RagiumFluids.MILK.value) { _: ItemStack, world: World, user: LivingEntity ->
+        consumer(RagiumFluids.MILK.get()) { _: ItemStack, world: World, user: LivingEntity ->
             user.clearStatusEffects()
         }
-        consumer(RagiumFluids.HONEY.value) { _: ItemStack, world: World, user: LivingEntity ->
+        consumer(RagiumFluids.HONEY.get()) { _: ItemStack, world: World, user: LivingEntity ->
             user.removeStatusEffect(StatusEffects.POISON)
         }
-        consumer(RagiumFluids.CHOCOLATE.value) { _: ItemStack, world: World, user: LivingEntity ->
+        consumer(RagiumFluids.CHOCOLATE.get()) { _: ItemStack, world: World, user: LivingEntity ->
             user.addStatusEffect(StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1))
         }
     }

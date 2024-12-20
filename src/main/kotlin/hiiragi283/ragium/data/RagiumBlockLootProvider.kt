@@ -2,9 +2,11 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlock
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -42,11 +44,15 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
+    private fun addDrop(content: HTContent<Block>) {
+        addDrop(content.get())
+    }
+
     override fun generate() {
-        addDrop(RagiumBlocks.CREATIVE_CRATE)
-        addDrop(RagiumBlocks.CREATIVE_DRUM)
-        addDrop(RagiumBlocks.CREATIVE_EXPORTER)
-        addDrop(RagiumBlocks.CREATIVE_SOURCE)
+        addDrop(RagiumBlocksNew.CREATIVE_CRATE)
+        addDrop(RagiumBlocksNew.CREATIVE_DRUM)
+        addDrop(RagiumBlocksNew.CREATIVE_EXPORTER)
+        addDrop(RagiumBlocksNew.CREATIVE_SOURCE)
 
         addDrop(RagiumBlocks.MUTATED_SOIL)
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
@@ -115,13 +121,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.CrossPipes.entries)
             addAll(RagiumContents.PipeStations.entries)
             addAll(RagiumContents.FilteringPipe.entries)
-        }.map { it.value }.forEach(::addDrop)
+        }.forEach(::addDrop)
 
         RagiumContents.Crates.entries
-            .map(RagiumContents.Crates::value)
+            .map(RagiumContents.Crates::get)
             .forEach { dropWithComponent(it, RagiumComponentTypes.CRATE) }
         RagiumContents.Drums.entries
-            .map(RagiumContents.Drums::value)
+            .map(RagiumContents.Drums::get)
             .forEach { dropWithComponent(it, RagiumComponentTypes.DRUM) }
 
         RagiumAPI
@@ -133,9 +139,9 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
     private fun dropOre(ore: RagiumContents.Ores) {
         addDrop(
-            ore.value,
+            ore.get(),
             dropsWithSilkTouch(
-                ore.value,
+                ore.get(),
                 applyExplosionDecay(
                     ore,
                     ItemEntry

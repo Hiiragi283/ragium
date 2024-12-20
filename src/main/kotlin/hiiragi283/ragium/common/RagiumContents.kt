@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -27,8 +27,7 @@ object RagiumContents {
         END_RAGI_CRYSTAL("end_ragi_crystal_ore", HTTagPrefix.END_ORE, RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id(path))
+        override val delegated: HTContent<Block> = HTContent.ofBlock(path)
 
         val dropMineral: ItemConvertible
             get() = when (this) {
@@ -54,8 +53,7 @@ object RagiumContents {
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_block"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_block")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
@@ -86,8 +84,7 @@ object RagiumContents {
         EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_dust"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_dust")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
@@ -110,8 +107,7 @@ object RagiumContents {
         EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_gear"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_gear")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEAR
     }
 
@@ -127,8 +123,7 @@ object RagiumContents {
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id(name.lowercase()))
+        override val delegated: HTContent<Item> = HTContent.ofItem(name.lowercase())
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEM
     }
 
@@ -148,8 +143,7 @@ object RagiumContents {
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_ingot"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_ingot")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
@@ -180,8 +174,7 @@ object RagiumContents {
         NETHERITE(RagiumMaterialKeys.NETHERITE),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_plate"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_plate")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.PLATE
     }
 
@@ -202,8 +195,7 @@ object RagiumContents {
         BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("raw_${name.lowercase()}"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("raw_${name.lowercase()}")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
@@ -215,8 +207,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_grate"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_grate")
     }
 
     //    Casings    //
@@ -227,8 +218,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_casing"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_casing")
     }
 
     //    Hulls    //
@@ -239,8 +229,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_hull"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_hull")
     }
 
     //    Coils    //
@@ -251,8 +240,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_coil"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_coil")
     }
 
     //    Exporter    //
@@ -263,8 +251,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_exporter"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_exporter")
     }
 
     //    Pipes    //
@@ -277,8 +264,7 @@ object RagiumContents {
         UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_pipe")
     }
 
     enum class CrossPipes(val pipeType: HTPipeType) :
@@ -288,10 +274,9 @@ object RagiumContents {
         GOLD(HTPipeType.FLUID),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_pipe")
 
-        override fun asItem(): Item = value.asItem()
+        override fun asItem(): Item = get().asItem()
     }
 
     enum class PipeStations(val pipeType: HTPipeType) :
@@ -301,10 +286,9 @@ object RagiumContents {
         FLUID(HTPipeType.FLUID),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_pipe_station"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_pipe_station")
 
-        override fun asItem(): Item = value.asItem()
+        override fun asItem(): Item = get().asItem()
     }
 
     enum class FilteringPipe(val pipeType: HTPipeType) :
@@ -314,10 +298,9 @@ object RagiumContents {
         FLUID(HTPipeType.FLUID),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_filtering_pipe"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_filtering_pipe")
 
-        override fun asItem(): Item = value.asItem()
+        override fun asItem(): Item = get().asItem()
     }
 
     //    Crate    //
@@ -328,8 +311,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_crate"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_crate")
     }
 
     //    Drums    //
@@ -340,8 +322,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> =
-            HTContent.ofBlock(RagiumAPI.id("${name.lowercase()}_drum"))
+        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_drum")
     }
 
     //    Circuits    //
@@ -352,8 +333,7 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_circuit_board"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_circuit_board")
 
         fun getCircuit(): Circuits = when (this) {
             PRIMITIVE -> Circuits.PRIMITIVE
@@ -368,24 +348,18 @@ object RagiumContents {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_circuit"))
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_circuit")
     }
 
     //    Press Molds    //
 
-    enum class PressMolds :
-        HTContent.Delegated<Item>,
-        ItemConvertible {
+    enum class PressMolds : HTItemContent {
         GEAR,
         PIPE,
         PLATE,
         ROD,
         ;
 
-        override val delegated: HTContent<Item> =
-            HTContent.ofItem(RagiumAPI.id("${name.lowercase()}_press_mold"))
-
-        override fun asItem(): Item = value
+        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_press_mold")
     }
 }

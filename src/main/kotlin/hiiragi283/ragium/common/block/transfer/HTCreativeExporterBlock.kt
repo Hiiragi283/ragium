@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
-import hiiragi283.ragium.api.extension.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -13,7 +12,7 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 
-object HTCreativeExporterBlock : HTBlockWithEntity(blockSettings().solid().nonOpaque().strength(2f, 6f)) {
+class HTCreativeExporterBlock(settings: Settings) : HTBlockWithEntity(settings) {
     init {
         defaultState = stateManager.defaultState.with(Properties.FACING, Direction.NORTH)
     }

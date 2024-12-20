@@ -71,7 +71,7 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrDefault(property: Pro
 /**
  * Check if [this] block state has the same block from [content]
  */
-fun BlockState.isOf(content: HTContent<Block>): Boolean = isOf(content.value)
+fun BlockState.isOf(content: HTContent<Block>): Boolean = isOf(content.get())
 
 /**
  * Check if [this] block state has the same block from [entryList]

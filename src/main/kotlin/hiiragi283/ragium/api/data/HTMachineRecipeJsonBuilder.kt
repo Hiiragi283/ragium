@@ -2,13 +2,14 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTFluidContent
+import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder.Companion.createRecipeId
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.common.init.RagiumFluids
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
@@ -60,7 +61,7 @@ class HTMachineRecipeJsonBuilder private constructor(
             .let { RagiumAPI.id(it) }
 
         @JvmStatic
-        fun createRecipeId(fluid: RagiumFluids): Identifier = createRecipeId(fluid.value)
+        fun createRecipeId(content: HTFluidContent): Identifier = createRecipeId(content.get())
     }
 
     private val itemInputs: MutableSet<HTItemIngredient> = mutableSetOf()
@@ -131,9 +132,10 @@ class HTMachineRecipeJsonBuilder private constructor(
         fluidInput(HTFluidIngredient.of(fluid, amount))
 
     /**
-     * Put a fluid ingredient based on [RagiumFluids]
+     * Put a fluid ingredient based on [HTFluidContent]
      */
-    fun fluidInput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = fluidInput(fluid.tagKey, amount)
+    fun fluidInput(fluid: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+        fluidInput(fluid.tagKey, amount)
 
     /**
      * Put a fluid ingredient based on [TagKey]
@@ -167,10 +169,10 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     /**
-     * Put a fluid output based on [RagiumFluids]
+     * Put a fluid output based on [HTContent]
      */
-    fun fluidOutput(fluid: RagiumFluids, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
-        fluidOutputs.add(HTFluidResult(fluid.value, amount))
+    fun fluidOutput(fluid: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+        fluidOutputs.add(HTFluidResult(fluid.get(), amount))
     }
 
     //    Catalyst    //
@@ -212,7 +214,7 @@ class HTMachineRecipeJsonBuilder private constructor(
      * @param output used to generate recipe id by [createRecipeId]
      * @param suffix append to recipe id path by [Identifier.withSuffixedPath]
      */
-    fun offerTo(exporter: RecipeExporter, output: RagiumFluids, suffix: String = "") {
+    fun offerTo(exporter: RecipeExporter, output: HTFluidContent, suffix: String = "") {
         offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 

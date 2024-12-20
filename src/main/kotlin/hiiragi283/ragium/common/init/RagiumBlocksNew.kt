@@ -1,23 +1,33 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.block.HTBlockWithEntity
-import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.block.machine.HTExtendedProcessorBlock
-import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
-import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
-import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
-import net.minecraft.block.*
-import net.minecraft.registry.tag.FluidTags
-import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
+import hiiragi283.ragium.api.content.HTContent
+import net.minecraft.block.Block
 
-object RagiumBlocks {
-    //    Minerals    //
+object RagiumBlocksNew {
+    //    Creatives    //
+
     @JvmField
+    val CREATIVE_CRATE: HTContent<Block> = HTContent.ofBlock("creative_crate")
+
+    @JvmField
+    val CREATIVE_DRUM: HTContent<Block> = HTContent.ofBlock("creative_drum")
+
+    @JvmField
+    val CREATIVE_EXPORTER: HTContent<Block> = HTContent.ofBlock("creative_exporter")
+
+    @JvmField
+    val CREATIVE_SOURCE: HTContent<Block> = HTContent.ofBlock("creative_source")
+
+    @JvmField
+    val CREATIVES: List<HTContent<Block>> = listOf(
+        CREATIVE_CRATE,
+        CREATIVE_DRUM,
+        CREATIVE_EXPORTER,
+        CREATIVE_SOURCE,
+    )
+
+    //    Minerals    //
+    /*@JvmField
     val MUTATED_SOIL: Block = Block(blockSettings(Blocks.DIRT))
 
     @JvmField
@@ -168,7 +178,8 @@ object RagiumBlocks {
     val EXTENDED_PROCESSOR: Block = HTExtendedProcessorBlock
 
     @JvmField
-    val MANUAL_FORGE: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.BRICKS).nonOpaque())
+    val MANUAL_FORGE: Block =
+        HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.BRICKS).nonOpaque())
 
     @JvmField
     val MANUAL_GRINDER: Block = HTManualGrinderBlock
@@ -236,5 +247,5 @@ object RagiumBlocks {
         ITEM_DISPLAY,
         ROPE,
         SHAFT,
-    )
+    )*/
 }

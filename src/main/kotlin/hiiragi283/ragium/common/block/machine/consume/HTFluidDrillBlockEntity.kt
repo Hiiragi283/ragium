@@ -47,10 +47,10 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     companion object {
         @JvmField
         val FLUID_MAP: Map<TagKey<Biome>, HTFluidVariantStack> = mapOf(
-            BiomeTags.IS_END to HTFluidVariantStack(RagiumFluids.NOBLE_GAS.value, FluidConstants.INGOT),
-            BiomeTags.IS_NETHER to HTFluidVariantStack(RagiumFluids.CRUDE_OIL.value, FluidConstants.BUCKET),
-            BiomeTags.IS_OCEAN to HTFluidVariantStack(RagiumFluids.SALT_WATER.value, FluidConstants.BUCKET),
-            BiomeTags.IS_BEACH to HTFluidVariantStack(RagiumFluids.SALT_WATER.value, FluidConstants.BOTTLE),
+            BiomeTags.IS_END to HTFluidVariantStack(RagiumFluids.NOBLE_GAS, FluidConstants.INGOT),
+            BiomeTags.IS_NETHER to HTFluidVariantStack(RagiumFluids.CRUDE_OIL, FluidConstants.BUCKET),
+            BiomeTags.IS_OCEAN to HTFluidVariantStack(RagiumFluids.SALT_WATER, FluidConstants.BUCKET),
+            BiomeTags.IS_BEACH to HTFluidVariantStack(RagiumFluids.SALT_WATER, FluidConstants.BOTTLE),
         )
     }
 

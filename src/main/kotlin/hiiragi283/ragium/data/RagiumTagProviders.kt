@@ -3,11 +3,13 @@ package hiiragi283.ragium.data
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -49,7 +51,7 @@ object RagiumTagProviders {
             }
 
             fun add(tagKey: TagKey<Block>, content: HTContent<Block>) {
-                add(tagKey, content.value)
+                add(tagKey, content.get())
             }
 
             // vanilla
@@ -68,7 +70,6 @@ object RagiumTagProviders {
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
 
             buildList {
-                addAll(RagiumBlocks.CREATIVES)
                 addAll(RagiumBlocks.BUILDINGS)
                 addAll(RagiumBlocks.MECHANICS)
                 addAll(RagiumBlocks.MISC)
@@ -111,9 +112,9 @@ object RagiumTagProviders {
                 addAll(RagiumContents.PipeStations.entries)
                 addAll(RagiumContents.FilteringPipe.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_CRATE)
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_DRUM)
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_EXPORTER)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_CRATE.get())
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_DRUM.get())
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_EXPORTER.get())
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
                 blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->
@@ -154,8 +155,8 @@ object RagiumTagProviders {
                 getOrCreateTagBuilder(tagKey).add(fluid)
             }
 
-            fun add(tagKey: TagKey<Fluid>, fluid: RagiumFluids) {
-                add(tagKey, fluid.value)
+            fun add(tagKey: TagKey<Fluid>, fluid: HTFluidContent) {
+                add(tagKey, fluid.get())
             }
 
             fun add(tagKey: TagKey<Fluid>, child: TagKey<Fluid>) {

@@ -71,7 +71,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
             return@HTRecipeProcessor HTUnitResult.errorString { "Failed to calculate biomass amount!" }
         }
         useTransaction { transaction: Transaction ->
-            val variant: FluidVariant = FluidVariant.of(RagiumFluids.BIOMASS.value)
+            val variant: FluidVariant = FluidVariant.of(RagiumFluids.BIOMASS.get())
             if (fluidStorage.insertSelf(variant, fixedAmount, transaction) == fixedAmount) {
                 transaction.commit()
                 inputStack.decrement(1)

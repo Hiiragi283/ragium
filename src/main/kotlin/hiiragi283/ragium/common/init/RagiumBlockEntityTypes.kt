@@ -182,7 +182,7 @@ object RagiumBlockEntityTypes {
         registerBlocks(CRATE, RagiumContents.Crates.entries)
         registerBlocks(DRUM, RagiumContents.Drums.entries)
 
-        CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocks.CREATIVE_EXPORTER)
+        CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocksNew.CREATIVE_EXPORTER.get())
         EXTENDED_PROCESSOR.addSupportedBlock(RagiumBlocks.EXTENDED_PROCESSOR)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
@@ -219,7 +219,7 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     private fun registerBlocks(type: BlockEntityType<*>, blocks: Collection<HTContent<Block>>) {
-        blocks.map(HTContent<Block>::value).forEach(type::addSupportedBlock)
+        blocks.map(HTContent<Block>::get).forEach(type::addSupportedBlock)
     }
 
     @JvmStatic

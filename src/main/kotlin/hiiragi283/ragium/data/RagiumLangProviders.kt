@@ -30,13 +30,13 @@ object RagiumLangProviders {
 
     @JvmName("addBlock")
     fun TranslationBuilder.add(entry: HTContent<Block>, value: String) {
-        val block: Block = entry.value
+        val block: Block = entry.get()
         add(block, value)
     }
 
     @JvmName("addItem")
     fun TranslationBuilder.add(entry: HTContent<Item>, value: String) {
-        add(entry.value, value)
+        add(entry.get(), value)
     }
 
     fun TranslationBuilder.add(enchantment: RegistryKey<Enchantment>, value: String) {
@@ -84,10 +84,10 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "This cake is DIE.")
             // Blocks
-            builder.add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
-            builder.add(RagiumBlocks.CREATIVE_DRUM, "Creative Drum")
-            builder.add(RagiumBlocks.CREATIVE_EXPORTER, "Creative Exporter")
-            builder.add(RagiumBlocks.CREATIVE_SOURCE, "Creative Power Source")
+            builder.add(RagiumBlocksNew.CREATIVE_CRATE, "Creative Crate")
+            builder.add(RagiumBlocksNew.CREATIVE_DRUM, "Creative Drum")
+            builder.add(RagiumBlocksNew.CREATIVE_EXPORTER, "Creative Exporter")
+            builder.add(RagiumBlocksNew.CREATIVE_SOURCE, "Creative Power Source")
 
             builder.add(RagiumBlocks.MUTATED_SOIL, "Mutated Soil")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "Porous Netherrack")
@@ -474,10 +474,10 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "ｽｺﾞｲ ﾂﾖｸﾃ ｴｹﾞﾂﾅｲｸﾗｲ Love-Loveﾅ ｱｰﾏｰ")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE, "つばさレストラン名物「デスケーキ」")
             // Blocks
-            builder.add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブ用クレート")
-            builder.add(RagiumBlocks.CREATIVE_DRUM, "クリエイティブ用ドラム")
-            builder.add(RagiumBlocks.CREATIVE_EXPORTER, "クリエイティブ用搬出機")
-            builder.add(RagiumBlocks.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
+            builder.add(RagiumBlocksNew.CREATIVE_CRATE, "クリエイティブ用クレート")
+            builder.add(RagiumBlocksNew.CREATIVE_DRUM, "クリエイティブ用ドラム")
+            builder.add(RagiumBlocksNew.CREATIVE_EXPORTER, "クリエイティブ用搬出機")
+            builder.add(RagiumBlocksNew.CREATIVE_SOURCE, "クリエイティブ用エネルギー源")
 
             builder.add(RagiumBlocks.MUTATED_SOIL, "変異した土壌")
             builder.add(RagiumBlocks.POROUS_NETHERRACK, "多孔質ネザーラック")

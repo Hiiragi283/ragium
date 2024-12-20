@@ -15,7 +15,7 @@ class HTTieredBlockPattern private constructor(val blockGetter: (HTMachineTier) 
         fun ofBlock(blockGetter: (HTMachineTier) -> Block): HTTieredBlockPattern = HTTieredBlockPattern(blockGetter)
 
         @JvmStatic
-        fun ofContent(blockGetter: (HTMachineTier) -> HTContent<Block>): HTTieredBlockPattern = ofBlock { blockGetter(it).value }
+        fun ofContent(blockGetter: (HTMachineTier) -> HTContent<Block>): HTTieredBlockPattern = ofBlock { blockGetter(it).get() }
     }
 
     override val text: MutableText = blockGetter(HTMachineTier.PRIMITIVE).name

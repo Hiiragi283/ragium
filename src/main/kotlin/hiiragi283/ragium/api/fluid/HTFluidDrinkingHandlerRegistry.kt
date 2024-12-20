@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.fluid
 
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
@@ -18,8 +18,8 @@ object HTFluidDrinkingHandlerRegistry {
     private val registry: MutableMap<Fluid, HTFluidDrinkingHandler> = mutableMapOf()
 
     @JvmStatic
-    fun register(fluid: RagiumFluids, handler: HTFluidDrinkingHandler) {
-        register(fluid.value, handler)
+    fun register(fluid: HTFluidContent, handler: HTFluidDrinkingHandler) {
+        register(fluid.get(), handler)
     }
 
     /**

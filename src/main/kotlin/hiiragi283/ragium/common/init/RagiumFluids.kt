@@ -1,15 +1,8 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
-import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import hiiragi283.ragium.api.content.HTFluidContent
 import net.minecraft.fluid.Fluid
-import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import java.awt.Color
@@ -19,7 +12,7 @@ enum class RagiumFluids(
     val enName: String,
     val jaName: String,
     val type: TextureType = TextureType.LIQUID,
-) : HTContent<Fluid> {
+) : HTFluidContent {
     // Vanilla
     MILK(Color(0xffffff), "Milk", "牛乳"),
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
@@ -106,15 +99,9 @@ enum class RagiumFluids(
         type,
     )
 
-    override val key: RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, RagiumAPI.id(name.lowercase()))
-    override val entry: RegistryEntry<Fluid> by lazy { Registries.FLUID.entryOf(key) }
+    override val delegated: HTContent<Fluid> = HTContent.ofFluid(name.lowercase())
 
     val translationKey: String = Util.createTranslationKey("fluid", id)
-
-    val tagKey: TagKey<Fluid> = TagKey.of(RegistryKeys.FLUID, Identifier.of(TagUtil.C_TAG_NAMESPACE, name.lowercase()))
-
-    val variant: FluidVariant
-        get() = FluidVariant.of(value)
 
     //    TextureType    //
 

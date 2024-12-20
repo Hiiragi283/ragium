@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -160,8 +161,8 @@ object RagiumAdvancementProviders {
         consumer: Consumer<AdvancementEntry>,
         path: String,
         parent: AdvancementEntry,
-        fluid: Fluid,
-        title: Text = fluid.name,
+        fluid: HTFluidContent,
+        title: Text = fluid.get().name,
         desc: Text = Text.empty(),
         frame: AdvancementFrame = AdvancementFrame.TASK,
         showToast: Boolean = true,
@@ -225,6 +226,8 @@ object RagiumAdvancementProviders {
     )
 
     private fun Advancement.Builder.hasAnyItems(content: HTContent.Material<*>): Advancement.Builder = hasAnyItems(content.prefixedTagKey)
+
+    private fun Advancement.Builder.hasFluid(content: HTFluidContent): Advancement.Builder = hasFluid(content.get())
 
     private fun Advancement.Builder.hasFluid(fluid: Fluid): Advancement.Builder = criterion(
         "has_fluids",
@@ -463,7 +466,7 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/sap",
                 extractor,
-                RagiumFluids.SAP.value,
+                RagiumFluids.SAP,
             )
             val crimsonCrystal: AdvancementEntry = createChild(
                 consumer,
@@ -551,19 +554,19 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/hydrogen",
                 root,
-                RagiumFluids.HYDROGEN.value,
+                RagiumFluids.HYDROGEN,
             )
             val alcohol: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/alcohol",
                 hydrogen,
-                RagiumFluids.ALCOHOL.value,
+                RagiumFluids.ALCOHOL,
             )
             val bioFuel: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/bio_fuel",
                 alcohol,
-                RagiumFluids.BIO_FUEL.value,
+                RagiumFluids.BIO_FUEL,
                 frame = AdvancementFrame.GOAL,
             )
             // oxygen
@@ -571,26 +574,26 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/air",
                 root,
-                RagiumFluids.AIR.value,
+                RagiumFluids.AIR,
             )
             val nitrogen: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/nitrogen",
                 air,
-                RagiumFluids.NITROGEN.value,
+                RagiumFluids.NITROGEN,
             )
             val liquidNitrogen: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/liquid_nitrogen",
                 nitrogen,
-                RagiumFluids.LIQUID_NITROGEN.value,
+                RagiumFluids.LIQUID_NITROGEN,
                 frame = AdvancementFrame.GOAL,
             )
             val oxygen: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/oxygen",
                 air,
-                RagiumFluids.OXYGEN.value,
+                RagiumFluids.OXYGEN,
             )
             // nitrogen
             val niter: AdvancementEntry = createContentChild(
@@ -603,13 +606,13 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/nitric_acid",
                 niter,
-                RagiumFluids.NITRIC_ACID.value,
+                RagiumFluids.NITRIC_ACID,
             )
             val mixtureAcid: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/mixture_acid",
                 nitricAcid,
-                RagiumFluids.MIXTURE_ACID.value,
+                RagiumFluids.MIXTURE_ACID,
             )
             val dynamite: AdvancementEntry = createChild(
                 consumer,
@@ -662,26 +665,26 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/sulfuric_acid",
                 sulfur,
-                RagiumFluids.SULFURIC_ACID.value,
+                RagiumFluids.SULFURIC_ACID,
             )
             // chlorine
             val chlorine: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/chlorine",
                 root,
-                RagiumFluids.CHLORINE.value,
+                RagiumFluids.CHLORINE,
             )
             val hydrochloricAcid: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/hydrochloric_acid",
                 chlorine,
-                RagiumFluids.HYDROCHLORIC_ACID.value,
+                RagiumFluids.HYDROCHLORIC_ACID,
             )
             val aquaRegia: AdvancementEntry = createFluidChild(
                 consumer,
                 "chemistry/aqua_regia",
                 hydrochloricAcid,
-                RagiumFluids.AQUA_REGIA.value,
+                RagiumFluids.AQUA_REGIA,
             )
             val deepSteel: AdvancementEntry = createContentChild(
                 consumer,
@@ -750,11 +753,11 @@ object RagiumAdvancementProviders {
             val root: AdvancementEntry = createRoot(
                 consumer,
                 "petro_chemistry/root",
-                RagiumAPI.getInstance().createFilledCube(RagiumFluids.CRUDE_OIL.value),
+                RagiumAPI.getInstance().createFilledCube(RagiumFluids.CRUDE_OIL),
                 Text.literal("Petro Chemistry"),
                 Text.empty(),
                 Identifier.of("textures/block/blast_furnace_top.png"),
-            ) { hasFluid(RagiumFluids.CRUDE_OIL.value) }
+            ) { hasFluid(RagiumFluids.CRUDE_OIL) }
             val distillation: AdvancementEntry = createMachineChild(
                 consumer,
                 "petro_chemistry/distillation_tower",
@@ -781,26 +784,26 @@ object RagiumAdvancementProviders {
                 consumer,
                 "petro_chemistry/refined_gas",
                 distillation,
-                RagiumFluids.REFINED_GAS.value,
+                RagiumFluids.REFINED_GAS,
             )
             val nobleGas: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/noble_gas",
                 refinedGas,
-                RagiumFluids.NOBLE_GAS.value,
+                RagiumFluids.NOBLE_GAS,
             )
             // fuel
             val fuel: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/fuel",
                 distillation,
-                RagiumFluids.FUEL.value,
+                RagiumFluids.FUEL,
             )
             val nitroFuel: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/nitro_fuel",
                 fuel,
-                RagiumFluids.NITRO_FUEL.value,
+                RagiumFluids.NITRO_FUEL,
                 frame = AdvancementFrame.GOAL,
             )
             // residual
@@ -808,13 +811,13 @@ object RagiumAdvancementProviders {
                 consumer,
                 "petro_chemistry/residual_oil",
                 distillation,
-                RagiumFluids.RESIDUAL_OIL.value,
+                RagiumFluids.RESIDUAL_OIL,
             )
             val aromaticCompound: AdvancementEntry = createFluidChild(
                 consumer,
                 "petro_chemistry/aromatic_compound",
                 residualOil,
-                RagiumFluids.AROMATIC_COMPOUNDS.value,
+                RagiumFluids.AROMATIC_COMPOUNDS,
             )
         }
     }

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.collectEntrypoints
 import hiiragi283.ragium.api.extension.isClientEnv
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -100,6 +101,11 @@ interface RagiumAPI {
      * Create a new [AdvancementCriterion] instance of [HTDrankFluidCriterion]
      */
     fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition>
+
+    /**
+     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
+     */
+    fun createFilledCube(content: HTFluidContent, count: Int = 1): ItemStack = createFilledCube(content.get(), count)
 
     /**
      * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
