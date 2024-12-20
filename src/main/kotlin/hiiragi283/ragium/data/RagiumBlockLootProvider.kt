@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlock
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -44,7 +44,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
     private val fortune: RegistryEntry.Reference<Enchantment> by lazy { getEnchant(Enchantments.FORTUNE) }
 
-    private fun addDrop(content: HTContent<Block>) {
+    private fun addDrop(content: HTBlockContent) {
         addDrop(content.get())
     }
 

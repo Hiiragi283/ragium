@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTHardModeContent
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.item.Items
@@ -11,7 +11,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val DIAMOND: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.DIAMOND,
             Items.DIAMOND,
@@ -21,7 +21,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val EMERALD: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.EMERALD,
             Items.EMERALD,
@@ -31,7 +31,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val LAPIS: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.LAPIS,
             Items.LAPIS_LAZULI,
@@ -41,7 +41,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val QUARTZ: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.GEM,
             RagiumMaterialKeys.QUARTZ,
             Items.QUARTZ,
@@ -59,7 +59,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val COPPER: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.COPPER,
             Items.COPPER_INGOT,
@@ -75,7 +75,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val GOLD: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.GOLD,
             Items.GOLD_INGOT,
@@ -85,7 +85,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val IRON: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.IRON,
             Items.IRON_INGOT,
@@ -95,7 +95,7 @@ object RagiumHardModeContents {
 
     @JvmField
     val NETHERITE: HTHardModeContent = HTHardModeContent.of(
-        HTContent.Material.ofWrapped(
+        HTMaterialProvider.ofWrapped(
             HTTagPrefix.INGOT,
             RagiumMaterialKeys.NETHERITE,
             Items.NETHERITE_INGOT,

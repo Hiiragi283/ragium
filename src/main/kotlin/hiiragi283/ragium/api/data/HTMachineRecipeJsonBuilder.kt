@@ -1,13 +1,13 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder.Companion.createRecipeId
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -91,10 +91,10 @@ class HTMachineRecipeJsonBuilder private constructor(
     ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
 
     /**
-     * Put an item ingredient based on [HTContent.Material]
+     * Put an item ingredient based on [HTMaterialProvider]
      */
     fun itemInput(
-        content: HTContent.Material<*>,
+        content: HTMaterialProvider,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(content.prefixedTagKey, count, consumeType)
@@ -169,7 +169,7 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     /**
-     * Put a fluid output based on [HTContent]
+     * Put a fluid output based on [HTFluidContent]
      */
     fun fluidOutput(fluid: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
         fluidOutputs.add(HTFluidResult(fluid.get(), amount))

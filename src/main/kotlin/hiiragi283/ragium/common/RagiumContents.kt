@@ -1,8 +1,10 @@
 package hiiragi283.ragium.common
 
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTPipeType
@@ -20,7 +22,7 @@ object RagiumContents {
         override val tagPrefix: HTTagPrefix,
         override val material: HTMaterialKey,
         val baseStone: Block,
-    ) : HTContent.Material<Block> {
+    ) : HTBlockContent.Material {
         CRUDE_RAGINITE("raginite_ore", HTTagPrefix.ORE, RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
         DEEP_RAGINITE("deepslate_raginite_ore", HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
         NETHER_RAGINITE("nether_raginite_ore", HTTagPrefix.NETHER_ORE, RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
@@ -40,7 +42,7 @@ object RagiumContents {
 
     //    Storage Blocks    //
 
-    enum class StorageBlocks(override val material: HTMaterialKey) : HTContent.Material<Block> {
+    enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
@@ -59,7 +61,7 @@ object RagiumContents {
 
     //    Dusts    //
 
-    enum class Dusts(override val material: HTMaterialKey) : HTContent.Material<Item> {
+    enum class Dusts(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 1
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
         ALKALI(RagiumMaterialKeys.ALKALI),
@@ -90,7 +92,7 @@ object RagiumContents {
 
     //    Gears    //
 
-    enum class Gears(override val material: HTMaterialKey) : HTContent.Material<Item> {
+    enum class Gears(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         IRON(RagiumMaterialKeys.IRON),
@@ -113,7 +115,7 @@ object RagiumContents {
 
     //    Gems    //
 
-    enum class Gems(override val material: HTMaterialKey) : HTContent.Material<Item> {
+    enum class Gems(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 3
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
         CRYOLITE(RagiumMaterialKeys.CRYOLITE),
@@ -129,7 +131,7 @@ object RagiumContents {
 
     //    Ingots    //
 
-    enum class Ingots(override val material: HTMaterialKey) : HTContent.Material<Item> {
+    enum class Ingots(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
 
@@ -149,7 +151,7 @@ object RagiumContents {
 
     //    Plates    //
 
-    enum class Plates(override val material: HTMaterialKey) : HTContent.Material<Item> {
+    enum class Plates(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         COPPER(RagiumMaterialKeys.COPPER),
@@ -180,7 +182,7 @@ object RagiumContents {
 
     //    Raw Materials    //
 
-    enum class RawMaterials(override val material: HTMaterialKey) : HTContent.Material<Item> {
+    enum class RawMaterials(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 1
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
         NITER(RagiumMaterialKeys.NITER),
@@ -201,7 +203,9 @@ object RagiumContents {
 
     //    Grates    //
 
-    enum class Grates(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Grates(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -212,7 +216,9 @@ object RagiumContents {
 
     //    Casings    //
 
-    enum class Casings(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Casings(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -223,7 +229,9 @@ object RagiumContents {
 
     //    Hulls    //
 
-    enum class Hulls(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Hulls(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -234,7 +242,9 @@ object RagiumContents {
 
     //    Coils    //
 
-    enum class Coils(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Coils(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -245,7 +255,9 @@ object RagiumContents {
 
     //    Exporter    //
 
-    enum class Exporters(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Exporters(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -256,7 +268,9 @@ object RagiumContents {
 
     //    Pipes    //
 
-    enum class Pipes(override val tier: HTMachineTier, val pipeType: HTPipeType) : HTContent.Tier<Block> {
+    enum class Pipes(override val tier: HTMachineTier, val pipeType: HTPipeType) :
+        HTBlockContent,
+        HTMachineTierProvider {
         STONE(HTMachineTier.PRIMITIVE, HTPipeType.ITEM),
         WOODEN(HTMachineTier.PRIMITIVE, HTPipeType.FLUID),
         IRON(HTMachineTier.BASIC, HTPipeType.ITEM),
@@ -268,7 +282,7 @@ object RagiumContents {
     }
 
     enum class CrossPipes(val pipeType: HTPipeType) :
-        HTContent.Delegated<Block>,
+        HTBlockContent,
         ItemConvertible {
         STEEL(HTPipeType.ITEM),
         GOLD(HTPipeType.FLUID),
@@ -280,7 +294,7 @@ object RagiumContents {
     }
 
     enum class PipeStations(val pipeType: HTPipeType) :
-        HTContent.Delegated<Block>,
+        HTBlockContent,
         ItemConvertible {
         ITEM(HTPipeType.ITEM),
         FLUID(HTPipeType.FLUID),
@@ -292,7 +306,7 @@ object RagiumContents {
     }
 
     enum class FilteringPipe(val pipeType: HTPipeType) :
-        HTContent.Delegated<Block>,
+        HTBlockContent,
         ItemConvertible {
         ITEM(HTPipeType.ITEM),
         FLUID(HTPipeType.FLUID),
@@ -305,7 +319,9 @@ object RagiumContents {
 
     //    Crate    //
 
-    enum class Crates(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Crates(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -316,7 +332,9 @@ object RagiumContents {
 
     //    Drums    //
 
-    enum class Drums(override val tier: HTMachineTier) : HTContent.Tier<Block> {
+    enum class Drums(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -327,7 +345,9 @@ object RagiumContents {
 
     //    Circuits    //
 
-    enum class CircuitBoards(override val tier: HTMachineTier) : HTContent.Tier<Item> {
+    enum class CircuitBoards(override val tier: HTMachineTier) :
+        HTItemContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
@@ -342,7 +362,9 @@ object RagiumContents {
         }
     }
 
-    enum class Circuits(override val tier: HTMachineTier) : HTContent.Tier<Item> {
+    enum class Circuits(override val tier: HTMachineTier) :
+        HTItemContent,
+        HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),

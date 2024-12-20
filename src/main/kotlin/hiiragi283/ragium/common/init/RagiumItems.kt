@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.content.HTArmorType
-import hiiragi283.ragium.api.content.HTToolType
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.util.HTArmorType
+import hiiragi283.ragium.api.util.HTToolType
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
 import net.minecraft.block.Block

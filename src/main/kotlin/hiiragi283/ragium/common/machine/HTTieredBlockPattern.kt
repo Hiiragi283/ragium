@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
@@ -15,7 +15,7 @@ class HTTieredBlockPattern private constructor(val blockGetter: (HTMachineTier) 
         fun ofBlock(blockGetter: (HTMachineTier) -> Block): HTTieredBlockPattern = HTTieredBlockPattern(blockGetter)
 
         @JvmStatic
-        fun ofContent(blockGetter: (HTMachineTier) -> HTContent<Block>): HTTieredBlockPattern = ofBlock { blockGetter(it).get() }
+        fun ofContent(blockGetter: (HTMachineTier) -> HTBlockContent): HTTieredBlockPattern = ofBlock { blockGetter(it).get() }
     }
 
     override val text: MutableText = blockGetter(HTMachineTier.PRIMITIVE).name

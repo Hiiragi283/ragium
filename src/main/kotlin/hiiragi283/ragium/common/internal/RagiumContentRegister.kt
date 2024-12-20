@@ -5,7 +5,8 @@ import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
@@ -64,18 +65,18 @@ internal object RagiumContentRegister {
 
     private fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
 
-    private fun registerBlock(content: HTContent<Block>, block: Block): Block = registerBlock(content.id.path, block)
+    private fun registerBlock(content: HTBlockContent, block: Block): Block = registerBlock(content.id.path, block)
 
-    private fun registerBlockNew(content: HTContent<Block>, block: (AbstractBlock.Settings) -> Block): Block =
+    private fun registerBlockNew(content: HTBlockContent, block: (AbstractBlock.Settings) -> Block): Block =
         Registry.register(Registries.BLOCK, content.id, block(blockSettings()))
 
     //    Item    //
 
     private fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
 
-    private fun registerItem(content: HTContent<Item>, item: Item): Item = registerItem(content.id.path, item)
+    private fun registerItem(content: HTItemContent, item: Item): Item = registerItem(content.id.path, item)
 
-    private fun registerItemNew(content: HTContent<Item>, item: (Item.Settings) -> Item): Item =
+    private fun registerItemNew(content: HTItemContent, item: (Item.Settings) -> Item): Item =
         Registry.register(Registries.ITEM, content.id, item(itemSettings()))
 
     private fun <T : Block> registerBlockItem(
@@ -93,7 +94,7 @@ internal object RagiumContentRegister {
     }
 
     private fun registerBlockItemNew(
-        block: HTContent<Block>,
+        block: HTBlockContent,
         settings: (Item.Settings) -> Item.Settings = { it },
         factory: (Block, Item.Settings) -> Item = ::BlockItem,
     ) {
@@ -213,7 +214,7 @@ internal object RagiumContentRegister {
             addAll(RagiumContents.Ingots.entries)
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
-        }.forEach { content: HTContent.Material<Item> ->
+        }.forEach { content ->
             registerItem(
                 content,
                 Item(

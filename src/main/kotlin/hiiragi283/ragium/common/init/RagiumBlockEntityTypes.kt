@@ -2,7 +2,9 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addAll
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.RagiumContents
@@ -21,7 +23,6 @@ import hiiragi283.ragium.common.block.transfer.HTCreativeExporterBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTFilteringPipeBlockEntity
 import hiiragi283.ragium.common.block.transfer.HTSimplePipeBlockEntity
-import net.minecraft.block.Block
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -175,14 +176,14 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        registerBlocks(EXPORTER, RagiumContents.Exporters.entries)
-        registerBlocks(FILTERING_PIPE, RagiumContents.FilteringPipe.entries)
-        registerBlocks(PIPE, RagiumContents.Pipes.entries)
+        EXPORTER.addAll(RagiumContents.Exporters.entries)
+        FILTERING_PIPE.addAll(RagiumContents.FilteringPipe.entries)
+        PIPE.addAll(RagiumContents.Pipes.entries)
 
-        registerBlocks(CRATE, RagiumContents.Crates.entries)
-        registerBlocks(DRUM, RagiumContents.Drums.entries)
+        CRATE.addAll(RagiumContents.Crates.entries)
+        DRUM.addAll(RagiumContents.Drums.entries)
 
-        CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocksNew.CREATIVE_EXPORTER.get())
+        CREATIVE_EXPORTER.add(RagiumBlocksNew.CREATIVE_EXPORTER)
         EXTENDED_PROCESSOR.addSupportedBlock(RagiumBlocks.EXTENDED_PROCESSOR)
         ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
@@ -218,8 +219,8 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun registerBlocks(type: BlockEntityType<*>, blocks: Collection<HTContent<Block>>) {
-        blocks.map(HTContent<Block>::get).forEach(type::addSupportedBlock)
+    private fun registerBlocks(type: BlockEntityType<*>, blocks: Collection<HTBlockContent>) {
+        blocks.map(HTBlockContent::get).forEach(type::addSupportedBlock)
     }
 
     @JvmStatic

@@ -2,7 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
 import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
@@ -100,7 +100,7 @@ object RagiumClient : ClientModInitializer {
             addAll(RagiumContents.PipeStations.entries)
             addAll(RagiumContents.FilteringPipe.entries)
             addAll(RagiumContents.Crates.entries)
-        }.map(HTContent<Block>::get).forEach(::registerCutoutMipped)
+        }.map(HTBlockContent::get).forEach(::registerCutoutMipped)
 
         RagiumAPI
             .getInstance()

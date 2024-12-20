@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -135,7 +135,7 @@ object RagiumAdvancementProviders {
         consumer: Consumer<AdvancementEntry>,
         path: String,
         parent: AdvancementEntry,
-        icon: HTContent.Material<*>,
+        icon: HTMaterialProvider,
         title: Text = ItemStack(icon).name,
         desc: Text = Text.empty(),
         frame: AdvancementFrame = AdvancementFrame.TASK,
@@ -225,7 +225,7 @@ object RagiumAdvancementProviders {
         InventoryChangedCriterion.Conditions.items(ItemPredicate.Builder.create().tag(tagKey)),
     )
 
-    private fun Advancement.Builder.hasAnyItems(content: HTContent.Material<*>): Advancement.Builder = hasAnyItems(content.prefixedTagKey)
+    private fun Advancement.Builder.hasAnyItems(provider: HTMaterialProvider): Advancement.Builder = hasAnyItems(provider.prefixedTagKey)
 
     private fun Advancement.Builder.hasFluid(content: HTFluidContent): Advancement.Builder = hasFluid(content.get())
 

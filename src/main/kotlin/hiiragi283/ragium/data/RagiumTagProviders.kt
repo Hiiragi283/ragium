@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
@@ -50,7 +50,7 @@ object RagiumTagProviders {
                 blockCache.put(tagKey, block)
             }
 
-            fun add(tagKey: TagKey<Block>, content: HTContent<Block>) {
+            fun add(tagKey: TagKey<Block>, content: HTBlockContent) {
                 add(tagKey, content.get())
             }
 

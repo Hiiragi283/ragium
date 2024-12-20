@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.content
+package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.extension.createToolAttribute
 import hiiragi283.ragium.api.extension.itemSettings

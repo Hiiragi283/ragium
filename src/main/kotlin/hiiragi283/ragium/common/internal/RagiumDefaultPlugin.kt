@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
@@ -351,7 +350,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
     }
 
     override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {
-        fun bindContents(contents: List<HTContent.Material<*>>) {
+        fun bindContents(contents: List<HTMaterialProvider>) {
             contents.forEach { consumer.accept(it.tagPrefix, it.material, it) }
         }
         consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COAL, Items.DEEPSLATE_COAL_ORE)

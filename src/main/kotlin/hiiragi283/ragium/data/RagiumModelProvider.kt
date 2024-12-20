@@ -2,7 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlock
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -165,7 +165,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         buildList {
             addAll(RagiumContents.StorageBlocks.entries)
             addAll(RagiumContents.Grates.entries)
-        }.map(HTContent<Block>::get).forEach(::registerSimple)
+        }.map(HTBlockContent::get).forEach(::registerSimple)
 
         registerSimple(RagiumContents.Casings.PRIMITIVE.get(), Identifier.of("block/blast_furnace_top"))
         registerSimple(RagiumContents.Casings.BASIC.get())

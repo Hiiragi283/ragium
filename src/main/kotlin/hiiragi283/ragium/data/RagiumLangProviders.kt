@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -14,7 +15,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider.TranslationBuilder
 import net.minecraft.block.Block
 import net.minecraft.enchantment.Enchantment
-import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.Util
@@ -29,13 +29,13 @@ object RagiumLangProviders {
     }
 
     @JvmName("addBlock")
-    fun TranslationBuilder.add(entry: HTContent<Block>, value: String) {
+    fun TranslationBuilder.add(entry: HTBlockContent, value: String) {
         val block: Block = entry.get()
         add(block, value)
     }
 
     @JvmName("addItem")
-    fun TranslationBuilder.add(entry: HTContent<Item>, value: String) {
+    fun TranslationBuilder.add(entry: HTItemContent, value: String) {
         add(entry.get(), value)
     }
 

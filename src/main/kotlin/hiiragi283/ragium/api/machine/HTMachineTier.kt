@@ -2,9 +2,9 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier.entries
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -17,7 +17,6 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
-import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.state.property.EnumProperty
@@ -149,19 +148,19 @@ enum class HTMachineTier(
         ADVANCED -> RagiumContents.Hulls.ADVANCED
     }
 
-    fun getMainMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
+    fun getMainMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTMaterialProvider = when (this) {
         PRIMITIVE -> RagiumHardModeContents.RAGI_ALLOY
         BASIC -> RagiumHardModeContents.RAGI_STEEL
         ADVANCED -> RagiumHardModeContents.REFINED_RAGI_STEEL
     }.getContent(hardMode)
 
-    fun getSubMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
+    fun getSubMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTMaterialProvider = when (this) {
         PRIMITIVE -> RagiumHardModeContents.COPPER
         BASIC -> RagiumHardModeContents.GOLD
         ADVANCED -> RagiumHardModeContents.ALUMINUM
     }.getContent(hardMode)
 
-    fun getSteelMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
+    fun getSteelMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTMaterialProvider = when (this) {
         PRIMITIVE -> RagiumHardModeContents.IRON
         BASIC -> RagiumHardModeContents.STEEL
         ADVANCED -> RagiumHardModeContents.DEEP_STEEL

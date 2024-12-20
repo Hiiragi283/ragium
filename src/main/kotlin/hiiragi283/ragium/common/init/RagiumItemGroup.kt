@@ -63,11 +63,11 @@ object RagiumItemGroup {
 
                 entries.addAll(RagiumItems.ARMORS)
                 entries.addAll(
-                    buildList<Item> { 
+                    buildList<Item> {
                         addAll(RagiumItems.TOOLS)
                         remove(RagiumItems.BACKPACK)
                         remove(RagiumItems.FILLED_FLUID_CUBE)
-                    }
+                    },
                 )
 
                 entries.addAll(RagiumItems.INGREDIENTS)

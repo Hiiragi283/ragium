@@ -2,12 +2,12 @@ package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -396,7 +396,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .offerTo(exporter, pipe)
         }
         RagiumContents.CrossPipes.entries.forEach { crossPipe: RagiumContents.CrossPipes ->
-            val input: HTContent.Material<Item> = when (crossPipe) {
+            val input: HTMaterialProvider = when (crossPipe) {
                 RagiumContents.CrossPipes.STEEL -> RagiumHardModeContents.STEEL
                 RagiumContents.CrossPipes.GOLD -> RagiumHardModeContents.GOLD
             }.getContent(hardMode)
@@ -436,7 +436,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .offerTo(exporter)
         }
         RagiumContents.FilteringPipe.entries.forEach { filtering: RagiumContents.FilteringPipe ->
-            val input: HTContent.Material<Item> = when (filtering) {
+            val input: HTMaterialProvider = when (filtering) {
                 RagiumContents.FilteringPipe.ITEM -> RagiumHardModeContents.DIAMOND
                 RagiumContents.FilteringPipe.FLUID -> RagiumHardModeContents.EMERALD
             }.getContent(hardMode)
@@ -622,7 +622,7 @@ object RagiumHardModePlugin : RagiumPlugin {
     private fun createMechanics(
         exporter: RecipeExporter,
         output: ItemConvertible,
-        side: HTContent.Material<Item>,
+        side: HTMaterialProvider,
         core: ItemConvertible,
     ) {
         HTShapedRecipeJsonBuilder

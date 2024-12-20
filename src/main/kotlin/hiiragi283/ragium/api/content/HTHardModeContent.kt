@@ -1,13 +1,13 @@
 package hiiragi283.ragium.api.content
 
-import net.minecraft.item.Item
+import hiiragi283.ragium.api.material.HTMaterialProvider
 
 fun interface HTHardModeContent {
-    fun getContent(hardMode: Boolean): HTContent.Material<Item>
+    fun getContent(hardMode: Boolean): HTMaterialProvider
 
     companion object {
         @JvmStatic
-        fun of(normal: HTContent.Material<Item>, hard: HTContent.Material<Item>): HTHardModeContent = HTHardModeContent {
+        fun of(normal: HTMaterialProvider, hard: HTMaterialProvider): HTHardModeContent = HTHardModeContent {
             when (it) {
                 true -> hard
                 false -> normal
