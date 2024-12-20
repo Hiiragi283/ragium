@@ -598,20 +598,6 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .fluidInput(Fluids.LAVA)
             .itemOutput(RagiumBlocks.POROUS_NETHERRACK)
             .offerTo(exporter, RagiumBlocks.POROUS_NETHERRACK)
-        // carbon electrodes
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .itemInput(RagiumItems.CARBON_ELECTRODE)
-            .itemInput(Items.BLAZE_POWDER, 8)
-            .itemOutput(RagiumItems.BLAZING_CARBON_ELECTRODE)
-            .offerTo(exporter, RagiumItems.BLAZING_CARBON_ELECTRODE)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .itemInput(RagiumItems.CARBON_ELECTRODE)
-            .itemInput(Items.WIND_CHARGE, 8)
-            .itemOutput(RagiumItems.CHARGED_CARBON_ELECTRODE)
-            .offerTo(exporter, RagiumItems.CHARGED_CARBON_ELECTRODE)
         // acids
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)

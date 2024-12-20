@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialProvider
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
@@ -91,6 +92,25 @@ object RagiumHardModePlugin : RagiumPlugin {
             .input(ConventionalItemTags.CHESTS)
             .unlockedBy(Items.BOOK)
             .offerTo(exporter)
+        // press molds
+        mapOf(
+            RagiumContents.PressMolds.GEAR to HTTagPrefix.GEAR.commonTagKey,
+            RagiumContents.PressMolds.PIPE to ConventionalItemTags.CHESTS,
+            RagiumContents.PressMolds.PLATE to HTTagPrefix.PLATE.commonTagKey,
+            RagiumContents.PressMolds.ROD to HTTagPrefix.ROD.commonTagKey,
+        ).forEach { (pressMold: RagiumContents.PressMolds, input: TagKey<Item>) ->
+            HTShapedRecipeJsonBuilder
+                .create(pressMold)
+                .patterns(
+                    "AA",
+                    "AA",
+                    "BC",
+                ).input('A', RagiumHardModeContents.STEEL.getContent(hardMode))
+                .input('B', RagiumItems.FORGE_HAMMER)
+                .input('C', input)
+                .unlockedBy(input)
+                .offerTo(exporter)
+        }
 
         craftingMachines(exporter)
     }

@@ -30,14 +30,6 @@ object RagiumContents {
         ;
 
         override val delegated: HTContent<Block> = HTContent.ofBlock(path)
-
-        val dropMineral: ItemConvertible
-            get() = when (this) {
-                CRUDE_RAGINITE -> RawMaterials.CRUDE_RAGINITE
-                DEEP_RAGINITE -> RawMaterials.RAGINITE
-                NETHER_RAGINITE -> RawMaterials.RAGINITE
-                END_RAGI_CRYSTAL -> Gems.RAGI_CRYSTAL
-            }
     }
 
     //    Storage Blocks    //

@@ -2,12 +2,14 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
@@ -182,9 +184,31 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .itemInput(RagiumItems.PULP)
+            .catalyst(RagiumContents.PressMolds.PLATE)
             .itemOutput(RagiumContents.Plates.WOOD)
             .offerTo(exporter, RagiumContents.Plates.WOOD)
 
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.WOOD)
+            .catalyst(RagiumContents.PressMolds.ROD)
+            .itemOutput(Items.STICK, 4)
+            .offerTo(exporter, Items.STICK)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(Items.BLAZE_POWDER, 4)
+            .catalyst(RagiumContents.PressMolds.ROD)
+            .itemOutput(Items.BLAZE_ROD)
+            .offerTo(exporter, Items.BLAZE_ROD)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(Items.WIND_CHARGE, 4)
+            .catalyst(RagiumContents.PressMolds.ROD)
+            .itemOutput(Items.BREEZE_ROD)
+            .offerTo(exporter, Items.BREEZE_ROD)
+        // polymer
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .itemInput(RagiumItems.POLYMER_RESIN)
@@ -205,12 +229,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .catalyst(Items.GLASS)
             .itemOutput(Items.GLASS)
             .offerTo(exporter, Items.GLASS)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.COMPRESSOR)
-            .itemInput(ItemTags.COALS, 8)
-            .itemOutput(RagiumItems.CARBON_ELECTRODE)
-            .offerTo(exporter, RagiumItems.CARBON_ELECTRODE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
@@ -237,6 +255,29 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemOutput(RagiumBlocks.SHAFT)
             .catalyst(RagiumBlocks.SHAFT)
             .offerTo(exporter, RagiumBlocks.SHAFT, "_from_deep_steel")
+        // carbon electrodes
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(ItemTags.COALS, 8)
+            .catalyst(RagiumContents.PressMolds.ROD)
+            .itemOutput(RagiumItems.CARBON_ELECTRODE)
+            .offerTo(exporter, RagiumItems.CARBON_ELECTRODE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(RagiumItems.CARBON_ELECTRODE)
+            .itemInput(Items.BLAZE_POWDER, 8)
+            .catalyst(RagiumContents.PressMolds.ROD)
+            .itemOutput(RagiumItems.BLAZING_CARBON_ELECTRODE)
+            .offerTo(exporter, RagiumItems.BLAZING_CARBON_ELECTRODE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(RagiumItems.CARBON_ELECTRODE)
+            .itemInput(Items.WIND_CHARGE, 8)
+            .catalyst(RagiumContents.PressMolds.ROD)
+            .itemOutput(RagiumItems.CHARGED_CARBON_ELECTRODE)
+            .offerTo(exporter, RagiumItems.CHARGED_CARBON_ELECTRODE)
     }
 
     //    Cutting Machine    //

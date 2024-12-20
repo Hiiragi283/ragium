@@ -593,7 +593,13 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumItems.EMPTY_FLUID_CUBE)
             .input(RagiumItems.EMPTY_FLUID_CUBE)
             .unlockedBy(RagiumItems.EMPTY_FLUID_CUBE)
-            .offerTo(exporter, RagiumAPI.id("clear_fluid_cube"))
+            .offerTo(exporter, RagiumAPI.id("clear_empty_fluid_cube"))
+
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.EMPTY_FLUID_CUBE)
+            .input(RagiumItems.FILLED_FLUID_CUBE)
+            .unlockedBy(RagiumItems.FILLED_FLUID_CUBE)
+            .offerTo(exporter, RagiumAPI.id("clear_filled_fluid_cube"))
     }
 
     private fun createEmptyFluidCube(

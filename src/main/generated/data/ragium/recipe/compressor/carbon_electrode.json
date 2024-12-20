@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:rod_press_mold"
+  },
   "definition": {
     "type": "ragium:compressor",
     "tier": "primitive"

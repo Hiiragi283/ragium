@@ -112,9 +112,9 @@ object RagiumTagProviders {
                 addAll(RagiumContents.PipeStations.entries)
                 addAll(RagiumContents.FilteringPipe.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_CRATE.get())
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_DRUM.get())
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_EXPORTER.get())
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_CRATE)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_DRUM)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_EXPORTER)
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
                 blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->

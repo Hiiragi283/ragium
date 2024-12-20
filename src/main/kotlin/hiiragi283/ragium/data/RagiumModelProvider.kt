@@ -175,7 +175,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             registerLayered(
                 ore.get(),
                 TextureMap.getId(ore.baseStone),
-                RagiumAPI.id("block/ore/${ore.material.name}"),
+                RagiumAPI.id("block/${ore.material.name}"),
             )
         }
         RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->

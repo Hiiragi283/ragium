@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "catalyst": {
-    "items": "ragium:plate_press_mold"
+    "items": "ragium:rod_press_mold"
   },
   "definition": {
     "type": "ragium:compressor",
@@ -9,12 +9,13 @@
   },
   "item_inputs": [
     {
-      "items": "ragium:pulp"
+      "items": "#c:dusts/wood"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:wood_plate"
+      "count": 4,
+      "item": "minecraft:stick"
     }
   ]
 }

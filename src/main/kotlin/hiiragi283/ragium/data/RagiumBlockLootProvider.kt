@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.RagiumContents.RawMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -138,6 +139,13 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     }
 
     private fun dropOre(ore: RagiumContents.Ores) {
+        val dropMineral: ItemConvertible = when (ore) {
+            RagiumContents.Ores.CRUDE_RAGINITE -> RawMaterials.CRUDE_RAGINITE
+            RagiumContents.Ores.DEEP_RAGINITE -> RawMaterials.RAGINITE
+            RagiumContents.Ores.NETHER_RAGINITE -> RawMaterials.RAGINITE
+            RagiumContents.Ores.END_RAGI_CRYSTAL -> RagiumContents.Gems.RAGI_CRYSTAL
+        }
+
         addDrop(
             ore.get(),
             dropsWithSilkTouch(
@@ -145,7 +153,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
                 applyExplosionDecay(
                     ore,
                     ItemEntry
-                        .builder(ore.dropMineral)
+                        .builder(dropMineral)
                         .applyDropRange(1, 3)
                         .applyFortune(),
                 ),

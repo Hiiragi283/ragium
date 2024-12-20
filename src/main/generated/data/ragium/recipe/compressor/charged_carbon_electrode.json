@@ -1,7 +1,10 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "items": "ragium:rod_press_mold"
+  },
   "definition": {
-    "type": "ragium:mixer",
+    "type": "ragium:compressor",
     "tier": "primitive"
   },
   "item_inputs": [
@@ -10,12 +13,12 @@
     },
     {
       "count": 8,
-      "items": "minecraft:blaze_powder"
+      "items": "minecraft:wind_charge"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:blazing_carbon_electrode"
+      "item": "ragium:charged_carbon_electrode"
     }
   ]
 }
