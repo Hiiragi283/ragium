@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.block.transfer
 
-import com.mojang.serialization.Codec
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.fluidFilterText
 import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.api.extension.itemFilterText
-import hiiragi283.ragium.api.extension.mappedCodecOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.api.util.HTPipeType
@@ -17,10 +16,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtOps
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.sound.SoundEvents
@@ -33,20 +29,6 @@ import net.minecraft.world.World
 
 class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
     HTTransporterBlockEntityBase(RagiumBlockEntityTypes.FILTERING_PIPE, pos, state) {
-    companion object {
-        @JvmField
-        val FLUID_CODEC: Codec<Map<Direction, RegistryEntryList<Fluid>>> = mappedCodecOf(
-            Direction.CODEC.fieldOf("direction"),
-            RegistryCodecs.entryList(RegistryKeys.FLUID).fieldOf("fluids"),
-        )
-
-        @JvmField
-        val ITEM_CODEC: Codec<Map<Direction, RegistryEntryList<Item>>> = mappedCodecOf(
-            Direction.CODEC.fieldOf("direction"),
-            RegistryCodecs.entryList(RegistryKeys.ITEM).fieldOf("items"),
-        )
-    }
-
     init {
         this.tier = HTMachineTier.ADVANCED
     }
@@ -60,14 +42,14 @@ class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        FLUID_CODEC.encodeStart(NbtOps.INSTANCE, fluidFilterMap).ifSuccess { nbt.put("fluid_filter", it) }
-        ITEM_CODEC.encodeStart(NbtOps.INSTANCE, itemFilterMap).ifSuccess { nbt.put("item_filter", it) }
+        HTNbtCodecs.SIDED_FLUID_FILTER.writeTo(nbt, fluidFilterMap)
+        HTNbtCodecs.SIDED_ITEM_FILTER.writeTo(nbt, itemFilterMap)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        FLUID_CODEC.parse(NbtOps.INSTANCE, nbt.getCompound("fluid_filter")).ifSuccess(fluidFilterMap::putAll)
-        ITEM_CODEC.parse(NbtOps.INSTANCE, nbt.getCompound("item_filter")).ifSuccess(itemFilterMap::putAll)
+        HTNbtCodecs.SIDED_FLUID_FILTER.readAndSet(nbt, fluidFilterMap::putAll)
+        HTNbtCodecs.SIDED_ITEM_FILTER.readAndSet(nbt, itemFilterMap::putAll)
     }
 
     override fun onUse(

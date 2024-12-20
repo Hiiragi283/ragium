@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.extension.mappedCodecOf
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
@@ -12,7 +13,8 @@ import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.util.Uuids
-import java.util.UUID
+import net.minecraft.util.math.Direction
+import java.util.*
 
 @Suppress("UnstableApiUsage")
 object HTNbtCodecs {
@@ -41,4 +43,24 @@ object HTNbtCodecs {
 
     @JvmField
     val PLACER: HTNbtCodec<UUID> = HTNbtCodec("placer", Uuids.CODEC)
+
+    @JvmField
+    val SIDED_FLUID_FILTER: HTNbtCodec<Map<Direction, RegistryEntryList<Fluid>>> =
+        HTNbtCodec(
+            "fluid_filter",
+            mappedCodecOf(
+                Direction.CODEC.fieldOf("direction"),
+                RegistryCodecs.entryList(RegistryKeys.FLUID).fieldOf("fluids"),
+            ),
+        )
+
+    @JvmField
+    val SIDED_ITEM_FILTER: HTNbtCodec<Map<Direction, RegistryEntryList<Item>>> =
+        HTNbtCodec(
+            "item_filter",
+            mappedCodecOf(
+                Direction.CODEC.fieldOf("direction"),
+                RegistryCodecs.entryList(RegistryKeys.ITEM).fieldOf("items"),
+            ),
+        )
 }
