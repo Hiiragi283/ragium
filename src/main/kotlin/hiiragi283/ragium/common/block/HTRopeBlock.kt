@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.blockSettings
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.piston.PistonBehavior
 import net.minecraft.entity.player.PlayerEntity
@@ -23,9 +21,17 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
-object HTRopeBlock : Block(blockSettings(Blocks.BROWN_WOOL).noCollision().pistonBehavior(PistonBehavior.DESTROY)) {
-    @JvmField
-    val SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 16.0, 10.0)
+class HTRopeBlock(settings: Settings) :
+    Block(
+        settings
+            .burnable()
+            .noCollision()
+            .pistonBehavior(PistonBehavior.DESTROY),
+    ) {
+    companion object {
+        @JvmField
+        val SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 16.0, 10.0)
+    }
 
     override fun onUseWithItem(
         stack: ItemStack,

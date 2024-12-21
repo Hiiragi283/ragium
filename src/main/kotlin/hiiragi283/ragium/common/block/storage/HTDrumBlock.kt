@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -16,7 +16,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.math.BlockPos
 
-class HTDrumBlock(val tier: HTMachineTier) : HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE)) {
+class HTDrumBlock(val tier: HTMachineTier, settings: Settings) : HTBlockWithEntity(settings) {
     override fun appendTooltip(
         stack: ItemStack,
         context: Item.TooltipContext,

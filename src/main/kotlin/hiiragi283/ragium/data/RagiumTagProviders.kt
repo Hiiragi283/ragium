@@ -55,8 +55,8 @@ object RagiumTagProviders {
             }
 
             // vanilla
-            add(BlockTags.SHOVEL_MINEABLE, RagiumBlocks.MUTATED_SOIL)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
+            add(BlockTags.SHOVEL_MINEABLE, RagiumBlocksNew.MUTATED_SOIL)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocksNew.POROUS_NETHERRACK)
 
             add(BlockTags.SLABS, RagiumBlocks.ASPHALT_SLAB)
             add(BlockTags.SLABS, RagiumBlocks.POLISHED_ASPHALT_SLAB)
@@ -67,20 +67,21 @@ object RagiumTagProviders {
             add(BlockTags.STAIRS, RagiumBlocks.GYPSUM_STAIRS)
             add(BlockTags.STAIRS, RagiumBlocks.POLISHED_GYPSUM_SLAB)
 
-            RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
+            
 
             buildList {
                 addAll(RagiumBlocks.BUILDINGS)
                 addAll(RagiumBlocks.MECHANICS)
-                addAll(RagiumBlocks.MISC)
 
                 remove(RagiumBlocks.WHITE_LINE)
                 remove(RagiumBlocks.T_WHITE_LINE)
                 remove(RagiumBlocks.CROSS_WHITE_LINE)
-                remove(RagiumBlocks.ROPE)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
-            add(BlockTags.AXE_MINEABLE, RagiumBlocks.ROPE)
+            
+            add(BlockTags.AXE_MINEABLE, RagiumBlocksNew.ROPE)
 
+            RagiumBlocksNew.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
+            
             buildList {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
@@ -97,9 +98,12 @@ object RagiumTagProviders {
 
                 addAll(RagiumContents.Crates.entries)
                 addAll(RagiumContents.Drums.entries)
+                
+                addAll(RagiumBlocksNew.CREATIVES)
+                addAll(RagiumBlocksNew.MISC)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
-            add(BlockTags.CLIMBABLE, RagiumBlocks.ROPE)
+            add(BlockTags.CLIMBABLE, RagiumBlocksNew.ROPE)
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore)

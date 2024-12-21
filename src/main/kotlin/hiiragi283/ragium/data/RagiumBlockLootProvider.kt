@@ -49,14 +49,22 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(content.get())
     }
 
+    private fun addDrop(content: HTBlockContent, builder: (Block) -> LootTable.Builder) {
+        addDrop(content.get(), builder)
+    }
+
+    private fun addDrop(content: HTBlockContent, builder: LootTable.Builder) {
+        addDrop(content.get(), builder)
+    }
+
     override fun generate() {
         addDrop(RagiumBlocksNew.CREATIVE_CRATE)
         addDrop(RagiumBlocksNew.CREATIVE_DRUM)
         addDrop(RagiumBlocksNew.CREATIVE_EXPORTER)
         addDrop(RagiumBlocksNew.CREATIVE_SOURCE)
 
-        addDrop(RagiumBlocks.MUTATED_SOIL)
-        addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
+        addDrop(RagiumBlocksNew.MUTATED_SOIL)
+        addDrop(RagiumBlocksNew.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
         // asphalt
         addDrop(RagiumBlocks.ASPHALT)
@@ -87,11 +95,11 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.STEEL_GLASS)
         addDrop(RagiumBlocks.RAGIUM_GLASS)
 
-        addDrop(RagiumBlocks.SPONGE_CAKE)
+        addDrop(RagiumBlocksNew.SPONGE_CAKE)
         addDrop(
-            RagiumBlocks.SWEET_BERRIES_CAKE,
+            RagiumBlocksNew.SWEET_BERRIES_CAKE,
             drops(
-                RagiumBlocks.SWEET_BERRIES_CAKE,
+                RagiumBlocksNew.SWEET_BERRIES_CAKE.get(),
                 RagiumItems.SWEET_BERRIES_CAKE_PIECE,
                 ConstantLootNumberProvider.create(8f),
             ),
@@ -107,8 +115,6 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         addDrop(RagiumBlocks.TELEPORT_ANCHOR)
         addDrop(RagiumBlocks.TRASH_BOX)
 
-        RagiumBlocks.MISC.forEach(::addDrop)
-
         RagiumContents.Ores.entries.forEach(::dropOre)
 
         buildList {
@@ -122,6 +128,8 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.CrossPipes.entries)
             addAll(RagiumContents.PipeStations.entries)
             addAll(RagiumContents.FilteringPipe.entries)
+
+            addAll(RagiumBlocksNew.MISC)
         }.forEach(::addDrop)
 
         RagiumContents.Crates.entries

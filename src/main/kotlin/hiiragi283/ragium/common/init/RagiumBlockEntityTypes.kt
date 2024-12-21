@@ -184,7 +184,7 @@ object RagiumBlockEntityTypes {
 
         CREATIVE_EXPORTER.add(RagiumBlocksNew.CREATIVE_EXPORTER)
         EXTENDED_PROCESSOR.addSupportedBlock(RagiumBlocks.EXTENDED_PROCESSOR)
-        ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
+        ITEM_DISPLAY.add(RagiumBlocksNew.ITEM_DISPLAY)
         MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)

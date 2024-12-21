@@ -1,84 +1,53 @@
 package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
-import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.block.HTBlockWithEntity
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
-import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.storage.HTVoidStorage
 import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.block.transfer.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTRopeBlockItem
-import hiiragi283.ragium.common.storage.HTEmptyFluidCubeStorage
-import hiiragi283.ragium.common.storage.HTTieredFluidItemStorage
-import net.fabricmc.fabric.api.event.Event
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
-import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
-import net.fabricmc.fabric.api.transfer.v1.fluid.*
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.*
-import net.minecraft.block.entity.BlockEntity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.fluid.Fluid
-import net.minecraft.fluid.Fluids
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
-import net.minecraft.state.property.Properties
+import net.minecraft.registry.tag.FluidTags
+import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.text.Text
-import net.minecraft.util.DyeColor
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
+import net.minecraft.util.shape.VoxelShape
+import net.minecraft.world.BlockView
 import net.minecraft.world.World
-import team.reborn.energy.api.EnergyStorage
-import team.reborn.energy.api.base.InfiniteEnergyStorage
-import kotlin.jvm.optionals.getOrNull
+import java.util.function.UnaryOperator
 
 internal object RagiumContentRegister {
-    private fun <T : Any> register(registry: Registry<in T>, name: String, value: (T)): T =
-        Registry.register(registry, RagiumAPI.id(name), value)
-
     //    Block    //
+    @Deprecated("")
+    private fun registerBlock(name: String, block: Block): Block = Registry.register(Registries.BLOCK, RagiumAPI.id(name), block)
 
-    private fun <T : Block> registerBlock(name: String, block: T): T = register(Registries.BLOCK, name, block)
-
-    private fun registerBlock(content: HTBlockContent, block: Block): Block = registerBlock(content.id.path, block)
-
-    private fun registerBlockNew(content: HTBlockContent, block: (AbstractBlock.Settings) -> Block): Block =
-        Registry.register(Registries.BLOCK, content.id, block(blockSettings()))
+    private fun registerBlockNew(
+        content: HTBlockContent,
+        parent: AbstractBlock.Settings = blockSettings(),
+        block: (AbstractBlock.Settings) -> Block,
+    ): Block = Registry.register(Registries.BLOCK, content.id, block(parent))
 
     //    Item    //
+    @Deprecated("")
+    private fun registerItem(name: String, item: Item): Item = Registry.register(Registries.ITEM, RagiumAPI.id(name), item)
 
-    private fun <T : Item> registerItem(name: String, item: T): T = register(Registries.ITEM, name, item)
-
-    private fun registerItem(content: HTItemContent, item: Item): Item = registerItem(content.id.path, item)
-
-    private fun registerItemNew(content: HTItemContent, item: (Item.Settings) -> Item): Item =
+    private fun registerItemNew(content: HTItemContent, item: (Item.Settings) -> Item = ::Item): Item =
         Registry.register(Registries.ITEM, content.id, item(itemSettings()))
 
+    @Deprecated("")
     private fun <T : Block> registerBlockItem(
         block: T,
         settings: Item.Settings = itemSettings(),
@@ -93,12 +62,12 @@ internal object RagiumContentRegister {
         )
     }
 
-    private fun registerBlockItemNew(
-        block: HTBlockContent,
-        settings: (Item.Settings) -> Item.Settings = { it },
-        factory: (Block, Item.Settings) -> Item = ::BlockItem,
-    ) {
-        Registry.register(Registries.ITEM, block.id, factory(block.get(), settings(itemSettings())))
+    private fun registerBlockItemNew(block: HTBlockContent, settings: UnaryOperator<Item.Settings> = UnaryOperator.identity()) {
+        Registry.register(Registries.ITEM, block.id, BlockItem(block.get(), settings.apply(itemSettings())))
+    }
+
+    private fun registerBlockItemNew(block: HTBlockContent, factory: (Block, Item.Settings) -> Item) {
+        Registry.register(Registries.ITEM, block.id, factory(block.get(), itemSettings()))
     }
 
     //    Init    //
@@ -107,102 +76,63 @@ internal object RagiumContentRegister {
     fun registerContents() {
         // block
         RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
-            val block = Block(blockSettings(ore.baseStone))
-            registerBlock(ore, block)
-            registerBlockItem(
-                block,
-                itemSettings().material(ore.material, ore.tagPrefix),
-            )
+            registerBlockNew(ore, blockSettings(ore.baseStone), ::Block)
+            registerBlockItemNew(ore) { it.material(ore.material, ore.tagPrefix) }
         }
         RagiumContents.StorageBlocks.entries.forEach { storage: RagiumContents.StorageBlocks ->
-            val block = Block(blockSettings(Blocks.IRON_BLOCK))
-            registerBlock(storage, block)
-            registerBlockItem(
-                block,
-                itemSettings().material(storage.material, storage.tagPrefix),
-            )
+            registerBlockNew(storage, blockSettings(Blocks.IRON_BLOCK), ::Block)
+            registerBlockItemNew(storage) { it.material(storage.material, storage.tagPrefix) }
         }
 
         RagiumContents.Grates.entries.forEach { grate: RagiumContents.Grates ->
-            val block = TransparentBlock(blockSettings(Blocks.COPPER_GRATE))
-            registerBlock(grate, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.GRATE, grate.tier),
-            )
+            registerBlockNew(grate, blockSettings(Blocks.COPPER_GRATE), ::TransparentBlock)
+            registerBlockItemNew(grate) { it.tieredText(RagiumTranslationKeys.GRATE, grate.tier) }
         }
         RagiumContents.Casings.entries.forEach { casings: RagiumContents.Casings ->
-            val block = Block(blockSettings(Blocks.SMOOTH_STONE))
-            registerBlock(casings, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.CASING, casings.tier),
-            )
+            registerBlockNew(casings, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+            registerBlockItemNew(casings) { it.tieredText(RagiumTranslationKeys.CASING, casings.tier) }
         }
         RagiumContents.Hulls.entries.forEach { hull: RagiumContents.Hulls ->
-            val block = TransparentBlock(blockSettings(Blocks.SMOOTH_STONE))
-            registerBlock(hull, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.HULL, hull.tier),
-            )
+            registerBlockNew(hull, blockSettings(Blocks.SMOOTH_STONE), ::TransparentBlock)
+            registerBlockItemNew(hull) { it.tieredText(RagiumTranslationKeys.HULL, hull.tier) }
         }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
-            val block = PillarBlock(blockSettings(Blocks.COPPER_BLOCK))
-            registerBlock(coil, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.COIL, coil.tier),
-            )
+            registerBlockNew(coil, blockSettings(Blocks.COPPER_BLOCK), ::PillarBlock)
+            registerBlockItemNew(coil) { it.tieredText(RagiumTranslationKeys.COIL, coil.tier) }
         }
         RagiumContents.Exporters.entries.forEach { exporter: RagiumContents.Exporters ->
-            val block = HTExporterBlock(exporter.tier)
-            registerBlock(exporter, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.EXPORTER, exporter.tier),
-            )
+            registerBlockNew(exporter) { HTExporterBlock(exporter.tier, it) }
+            registerBlockItemNew(exporter) { it.tieredText(RagiumTranslationKeys.EXPORTER, exporter.tier) }
         }
         RagiumContents.Pipes.entries.forEach { pipe: RagiumContents.Pipes ->
-            val block = HTSimplePipeBlock(pipe.tier, pipe.pipeType)
-            registerBlock(pipe, block)
-            registerBlockItem(block, itemSettings().tier(pipe.tier))
+            registerBlockNew(pipe) { HTSimplePipeBlock(pipe.tier, pipe.pipeType, it) }
+            registerBlockItemNew(pipe) { it.tier(pipe.tier) }
         }
         RagiumContents.CrossPipes.entries.forEach { crossPipe: RagiumContents.CrossPipes ->
-            val block = HTPipeBlock()
-            registerBlock(crossPipe, block)
-            registerBlockItem(block)
+            registerBlockNew(crossPipe, block = ::HTPipeBlock)
+            registerBlockItemNew(crossPipe)
         }
         RagiumContents.PipeStations.entries.forEach { station: RagiumContents.PipeStations ->
-            val block = HTPipeStationBlock()
-            registerBlock(station, block)
-            registerBlockItem(block, itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION)))
+            registerBlockNew(station, block = ::HTPipeStationBlock)
+            registerBlockItemNew(station) {
+                it.descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION))
+            }
         }
         RagiumContents.FilteringPipe.entries.forEach { filtering: RagiumContents.FilteringPipe ->
-            val block = HTFilteringPipeBlock(filtering.pipeType)
-            registerBlock(filtering, block)
-            registerBlockItem(
-                block,
-                itemSettings()
+            registerBlockNew(filtering) { HTFilteringPipeBlock(filtering.pipeType, it) }
+            registerBlockItemNew(filtering) {
+                it
                     .descriptions(Text.translatable(RagiumTranslationKeys.PIPE_STATION))
-                    .component(RagiumComponentTypes.REWORK_TARGET, Unit),
-            )
+                    .component(RagiumComponentTypes.REWORK_TARGET, Unit)
+            }
         }
         RagiumContents.Crates.entries.forEach { crate: RagiumContents.Crates ->
-            val block = HTCrateBlock(crate.tier)
-            registerBlock(crate, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.CRATE, crate.tier),
-            )
+            registerBlockNew(crate, blockSettings(Blocks.SMOOTH_STONE)) { HTCrateBlock(crate.tier, it) }
+            registerBlockItemNew(crate) { it.tieredText(RagiumTranslationKeys.CRATE, crate.tier) }
         }
         RagiumContents.Drums.entries.forEach { drum: RagiumContents.Drums ->
-            val block = HTDrumBlock(drum.tier)
-            registerBlock(drum, block)
-            registerBlockItem(
-                block,
-                itemSettings().tieredText(RagiumTranslationKeys.DRUM, drum.tier),
-            )
+            registerBlockNew(drum, blockSettings(Blocks.SMOOTH_STONE)) { HTDrumBlock(drum.tier, it) }
+            registerBlockItemNew(drum) { it.tieredText(RagiumTranslationKeys.DRUM, drum.tier) }
         }
         initBlocks()
 
@@ -215,29 +145,15 @@ internal object RagiumContentRegister {
             addAll(RagiumContents.Plates.entries)
             addAll(RagiumContents.RawMaterials.entries)
         }.forEach { content ->
-            registerItem(
-                content,
-                Item(
-                    itemSettings().material(content.material, content.tagPrefix),
-                ),
-            )
+            registerItemNew(content) { Item(it.material(content.material, content.tagPrefix)) }
         }
         RagiumContents.CircuitBoards.entries.forEach { board: RagiumContents.CircuitBoards ->
-            registerItem(
-                board,
-                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, board.tier)),
-            )
+            registerItemNew(board) { Item(it.tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, board.tier)) }
         }
         RagiumContents.Circuits.entries.forEach { circuit: RagiumContents.Circuits ->
-            registerItem(
-                circuit,
-                Item(itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT, circuit.tier)),
-            )
+            registerItemNew(circuit) { Item(it.tieredText(RagiumTranslationKeys.CIRCUIT, circuit.tier)) }
         }
-
-        RagiumContents.PressMolds.entries.forEach { mold: RagiumContents.PressMolds ->
-            registerItem(mold, Item(itemSettings()))
-        }
+        RagiumContents.PressMolds.entries.forEach(::registerItemNew)
 
         initItems()
 
@@ -250,32 +166,59 @@ internal object RagiumContentRegister {
     @JvmStatic
     private fun initBlocks() {
         registerBlockNew(RagiumBlocksNew.CREATIVE_CRATE) {
-            HTBlockWithEntity.buildHorizontal(RagiumBlockEntityTypes.CREATIVE_CRATE, it)
+            HTBlockWithEntity.buildHorizontal(
+                RagiumBlockEntityTypes.CREATIVE_CRATE,
+                it.mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+            )
         }
         registerBlockNew(RagiumBlocksNew.CREATIVE_DRUM) {
-            HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_DRUM, it)
+            HTBlockWithEntity.build(
+                RagiumBlockEntityTypes.CREATIVE_DRUM,
+                it.mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+            )
         }
         registerBlockNew(RagiumBlocksNew.CREATIVE_EXPORTER) {
-            HTCreativeExporterBlock(it.solid().nonOpaque().strength(2f, 6f))
+            HTCreativeExporterBlock(
+                it
+                    .mapColor(MapColor.PURPLE)
+                    .requiresTool()
+                    .strength(2f, 6f)
+                    .solid()
+                    .nonOpaque(),
+            )
         }
         registerBlockNew(RagiumBlocksNew.CREATIVE_SOURCE) {
-            HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_SOURCE, it)
+            HTBlockWithEntity.build(
+                RagiumBlockEntityTypes.CREATIVE_SOURCE,
+                it.mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+            )
         }
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_CRATE, settings = { it.rarity(Rarity.EPIC) })
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_DRUM, settings = { it.rarity(Rarity.EPIC) })
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_EXPORTER, settings = { it.rarity(Rarity.EPIC) })
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_SOURCE, settings = { it.rarity(Rarity.EPIC) })
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_CRATE) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_DRUM) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_EXPORTER) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocksNew.CREATIVE_SOURCE) { it.rarity(Rarity.EPIC) }
 
-        registerBlock("mutated_soil", RagiumBlocks.MUTATED_SOIL)
-        registerBlock("porous_netherrack", RagiumBlocks.POROUS_NETHERRACK)
-        registerBlockItem(
-            RagiumBlocks.MUTATED_SOIL,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.MUTATED_SOIL)),
-        )
-        registerBlockItem(
-            RagiumBlocks.POROUS_NETHERRACK,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK)),
-        )
+        registerBlockNew(RagiumBlocksNew.MUTATED_SOIL) {
+            Block(it.mapColor(MapColor.GREEN).strength(0.5f).sounds(BlockSoundGroup.GRAVEL))
+        }
+        registerBlockNew(RagiumBlocksNew.POROUS_NETHERRACK) {
+            HTSpongeBlock(
+                it
+                    .mapColor(MapColor.DARK_RED)
+                    .requiresTool()
+                    .strength(0.4f)
+                    .sounds(BlockSoundGroup.NETHERRACK),
+                Blocks.MAGMA_BLOCK::getDefaultState,
+            ) { world: World, pos: BlockPos ->
+                world.getFluidState(pos).isIn(FluidTags.LAVA)
+            }
+        }
+        registerBlockItemNew(RagiumBlocksNew.MUTATED_SOIL) {
+            it.descriptions(Text.translatable(RagiumTranslationKeys.MUTATED_SOIL))
+        }
+        registerBlockItemNew(RagiumBlocksNew.POROUS_NETHERRACK) {
+            it.descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK))
+        }
 
         registerBlock("asphalt", RagiumBlocks.ASPHALT)
         registerBlock("asphalt_slab", RagiumBlocks.ASPHALT_SLAB)
@@ -324,13 +267,21 @@ internal object RagiumContentRegister {
         registerBlockItem(RagiumBlocks.STEEL_GLASS)
         registerBlockItem(RagiumBlocks.RAGIUM_GLASS)
 
-        registerBlock("sponge_cake", RagiumBlocks.SPONGE_CAKE)
-        registerBlock("sweet_berries_cake", RagiumBlocks.SWEET_BERRIES_CAKE)
-        registerBlockItem(
-            RagiumBlocks.SPONGE_CAKE,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)),
-        )
-        registerBlockItem(RagiumBlocks.SWEET_BERRIES_CAKE)
+        registerBlockNew(RagiumBlocksNew.SPONGE_CAKE) {
+            HayBlock(it.mapColor(MapColor.YELLOW).strength(0.5f).sounds(BlockSoundGroup.WOOL))
+        }
+        registerBlockNew(RagiumBlocksNew.SWEET_BERRIES_CAKE) {
+            object : Block(it.solid().strength(0.5f).sounds(BlockSoundGroup.WOOL)) {
+                override fun getOutlineShape(
+                    state: BlockState,
+                    world: BlockView,
+                    pos: BlockPos,
+                    context: ShapeContext,
+                ): VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
+            }
+        }
+        registerBlockItemNew(RagiumBlocksNew.SPONGE_CAKE) { it.descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)) }
+        registerBlockItemNew(RagiumBlocksNew.SWEET_BERRIES_CAKE)
 
         registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
         registerBlock("extended_processor", RagiumBlocks.EXTENDED_PROCESSOR)
@@ -374,34 +325,45 @@ internal object RagiumContentRegister {
             itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.TRASH_BOX)),
         )
 
-        registerBlock("backpack_interface", RagiumBlocks.BACKPACK_INTERFACE)
-        // registerBlock("buffer", RagiumBlocks.BUFFER)
-        registerBlock("enchantment_bookshelf", RagiumBlocks.ENCHANTMENT_BOOKSHELF)
-        registerBlock("item_display", RagiumBlocks.ITEM_DISPLAY)
-        registerBlock("shaft", RagiumBlocks.SHAFT)
-        registerBlock("rope", RagiumBlocks.ROPE)
-        registerBlock("infesting", RagiumBlocks.INFESTING)
-        registerBlockItem(
-            RagiumBlocks.BACKPACK_INTERFACE,
-            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
-        )
-        /*registerBlockItem(
-            RagiumBlocks.BUFFER,
-            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
-        )*/
-        registerBlockItem(
-            RagiumBlocks.ENCHANTMENT_BOOKSHELF,
-            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
-        )
-        registerBlockItem(RagiumBlocks.ITEM_DISPLAY)
-        registerBlockItem(
-            RagiumBlocks.ROPE,
-            itemSettings()
-                .descriptions(Text.translatable(RagiumTranslationKeys.ROPE))
-                .component(RagiumComponentTypes.REWORK_TARGET, Unit),
-            ::HTRopeBlockItem,
-        )
-        registerBlockItem(RagiumBlocks.SHAFT)
+        registerBlockNew(RagiumBlocksNew.BACKPACK_INTERFACE) {
+            HTBackpackInterfaceBlock(it.mapColor(MapColor.BLACK).requiresTool().strength(2f, 6f))
+        }
+        registerBlockNew(RagiumBlocksNew.ENCHANTMENT_BOOKSHELF) {
+            HTBlockWithEntity.build(
+                RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF,
+                it.mapColor(MapColor.OAK_TAN).strength(1.5f).sounds(BlockSoundGroup.WOOD),
+            )
+        }
+        registerBlockNew(RagiumBlocksNew.ITEM_DISPLAY) {
+            HTItemDisplayBlock(it.strength(0.5f).sounds(BlockSoundGroup.GLASS))
+        }
+        registerBlockNew(RagiumBlocksNew.ROPE) {
+            HTRopeBlock(it.mapColor(MapColor.BROWN).strength(0.8F).sounds(BlockSoundGroup.WOOL))
+        }
+        registerBlockNew(RagiumBlocksNew.SHAFT) {
+            HTThinPillarBlock(it.requiresTool().strength(5f).sounds(BlockSoundGroup.METAL))
+        }
+        registerBlockNew(RagiumBlocksNew.INFESTING) {
+            HTInfectingBlock(it.ticksRandomly().dropsNothing())
+        }
+        registerBlockItemNew(
+            RagiumBlocksNew.BACKPACK_INTERFACE,
+        ) { it.component(RagiumComponentTypes.REWORK_TARGET, Unit) }
+        registerBlockItemNew(
+            RagiumBlocksNew.ENCHANTMENT_BOOKSHELF,
+        ) { it.component(RagiumComponentTypes.REWORK_TARGET, Unit) }
+        registerBlockItemNew(RagiumBlocksNew.ITEM_DISPLAY)
+        registerBlockItemNew(
+            RagiumBlocksNew.ROPE,
+        ) { block: Block, settings: Item.Settings ->
+            HTRopeBlockItem(
+                block,
+                settings
+                    .descriptions(Text.translatable(RagiumTranslationKeys.ROPE))
+                    .component(RagiumComponentTypes.REWORK_TARGET, Unit),
+            )
+        }
+        registerBlockItemNew(RagiumBlocksNew.SHAFT)
     }
 
     @JvmStatic
@@ -497,194 +459,5 @@ internal object RagiumContentRegister {
         registerItem("nuclear_waste", RagiumItems.NUCLEAR_WASTE)
 
         registerItem("ragi_ticket", RagiumItems.RAGI_TICKET)
-    }
-
-    @JvmStatic
-    fun initRegistry() {
-        // ApiLookup
-        registerItemStorages()
-        registerFluidStorages()
-        registerEnergyStorages()
-        registerTierProviders()
-        // Accessory
-        HTAccessoryRegistry.register(RagiumItems.STELLA_GOGGLE) {
-            equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
-            }
-            unequippedAction = HTAccessoryRegistry.UnequippedAction {
-                it.removeStatusEffect(StatusEffects.NIGHT_VISION)
-            }
-            slotType = HTAccessorySlotTypes.FACE
-        }
-        // Dispenser
-        DispenserBlock.registerProjectileBehavior(RagiumItems.BEDROCK_DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.FLATTENING_DYNAMITE)
-        // Fluid Attributes
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            FluidVariantAttributes.register(
-                fluid.get(),
-                object : FluidVariantAttributeHandler {
-                    override fun getName(fluidVariant: FluidVariant): Text = Text.translatable(fluid.translationKey)
-                },
-            )
-        }
-
-        registerDrinkHandlers(HTFluidDrinkingHandlerRegistry::register)
-    }
-
-    private fun registerItemStorages() {
-        registerItemStorage({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
-            val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerItemStorage null
-            world.backpackManager
-                .map { it[color] }
-                .map { InventoryStorage.of(it, direction) }
-                .result()
-                .getOrNull()
-        }, RagiumBlocks.BACKPACK_INTERFACE)
-
-        registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
-                if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
-            }
-        }, RagiumBlocks.OPEN_CRATE)
-        // trash box
-        registerItemStorage(
-            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
-            RagiumBlocks.TRASH_BOX,
-        )
-        // cross pipe
-        registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
-            direction?.let { front: Direction ->
-                ItemStorage.SIDED.find(world, pos.offset(front.opposite), front)
-            }
-        }, RagiumContents.CrossPipes.STEEL.get())
-        // pipe station
-        registerItemStorage({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
-            val front: Direction = state.getOrDefault(Properties.FACING, Direction.NORTH)
-            val others: List<Direction> =
-                Direction.entries.filterNot { directionIn: Direction -> directionIn.axis == front.axis }
-            CombinedStorage(
-                buildList {
-                    addAll(
-                        others.mapNotNull { direction: Direction ->
-                            ItemStorage.SIDED.find(
-                                world,
-                                pos.offset(direction),
-                                direction.opposite,
-                            )
-                        },
-                    )
-                    add(ItemStorage.SIDED.find(world, pos.offset(front), front.opposite))
-                },
-            )
-        }, RagiumContents.PipeStations.ITEM.get())
-        // filtering pipe
-        registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
-            null
-        }, RagiumContents.FilteringPipe.ITEM.get())
-    }
-
-    private fun registerFluidStorages() {
-        FluidStorage
-            .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
-            .register(::HTEmptyFluidCubeStorage)
-        RagiumContents.Drums.entries
-            .map(RagiumContents.Drums::asItem)
-            .map(FluidStorage::combinedItemApiProvider)
-            .forEach { event: Event<FluidStorage.CombinedItemApiProvider> -> event.register(HTTieredFluidItemStorage::find) }
-        FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
-                context
-                    .itemVariant
-                    .componentMap
-                    .get(RagiumComponentTypes.FLUID)
-                    ?.let {
-                        FullItemFluidStorage(
-                            context,
-                            RagiumItems.EMPTY_FLUID_CUBE,
-                            FluidVariant.of(it),
-                            FluidConstants.BUCKET,
-                        )
-                    }
-                    ?: return@register null
-            } else {
-                null
-            }
-        } // trash box
-        registerFluidStorage(
-            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.FLUID },
-            RagiumBlocks.TRASH_BOX,
-        )
-        // cross pipe
-        registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
-            direction?.let { front: Direction ->
-                FluidStorage.SIDED.find(world, pos.offset(front.opposite), front)
-            }
-        }, RagiumContents.CrossPipes.GOLD.get())
-        // pipe station
-        registerFluidStorage({ world: World, pos: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
-            val front: Direction = state.getOrDefault(Properties.FACING, Direction.NORTH)
-            val others: List<Direction> =
-                Direction.entries.filterNot { directionIn: Direction -> directionIn.axis == front.axis }
-            CombinedStorage(
-                buildList {
-                    addAll(
-                        others.mapNotNull { direction: Direction ->
-                            FluidStorage.SIDED.find(
-                                world,
-                                pos.offset(direction),
-                                direction.opposite,
-                            )
-                        },
-                    )
-                    add(FluidStorage.SIDED.find(world, pos.offset(front), front.opposite))
-                },
-            )
-        }, RagiumContents.PipeStations.FLUID.get())
-        // filtering pipe
-        registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
-            null
-        }, RagiumContents.FilteringPipe.FLUID.get())
-    }
-
-    private fun registerItemStorage(provider: BlockApiLookup.BlockApiProvider<Storage<ItemVariant>, Direction?>, block: Block) {
-        ItemStorage.SIDED.registerForBlocks(provider, block)
-    }
-
-    private fun registerEnergyStorages() {
-        EnergyStorage.SIDED.registerForBlocks(
-            { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
-            RagiumBlocksNew.CREATIVE_SOURCE.get(),
-        )
-        EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            world.energyNetwork.result().getOrNull()
-        }, RagiumBlocks.NETWORK_INTERFACE)
-    }
-
-    private fun registerTierProviders() {
-        HTMachineTier.SIDED_LOOKUP.registerFallback { _: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction? ->
-            (blockEntity as? HTMachineBlockEntityBase)?.tier
-        }
-    }
-
-    private fun registerFluidStorage(provider: BlockApiLookup.BlockApiProvider<Storage<FluidVariant>, Direction?>, block: Block) {
-        FluidStorage.SIDED.registerForBlocks(provider, block)
-    }
-
-    private fun registerDrinkHandlers(consumer: (Fluid, HTFluidDrinkingHandler) -> Unit) {
-        consumer(Fluids.LAVA) { _: ItemStack, world: World, user: LivingEntity ->
-            user.setOnFireFromLava()
-            dropStackAt(user, Items.OBSIDIAN)
-        }
-        consumer(RagiumFluids.MILK.get()) { _: ItemStack, world: World, user: LivingEntity ->
-            user.clearStatusEffects()
-        }
-        consumer(RagiumFluids.HONEY.get()) { _: ItemStack, world: World, user: LivingEntity ->
-            user.removeStatusEffect(StatusEffects.POISON)
-        }
-        consumer(RagiumFluids.CHOCOLATE.get()) { _: ItemStack, world: World, user: LivingEntity ->
-            user.addStatusEffect(StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1))
-        }
     }
 }

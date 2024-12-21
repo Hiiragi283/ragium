@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.openBackpackScreen
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemPlacementContext
 import net.minecraft.item.ItemStack
@@ -21,7 +19,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-object HTBackpackInterfaceBlock : Block(blockSettings(Blocks.SMOOTH_STONE)) {
+class HTBackpackInterfaceBlock(settings: Settings) : Block(settings) {
     private val COLOR: EnumProperty<DyeColor>
         get() = RagiumBlockProperties.COLOR
 

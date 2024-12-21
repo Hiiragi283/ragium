@@ -46,7 +46,7 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumContents.Ores.entries)
                 entries.addAll(RagiumContents.StorageBlocks.entries)
-                entries.addAll(RagiumBlocks.NATURAL)
+                entries.addAll(RagiumBlocksNew.NATURAL)
                 entries.addAll(RagiumBlocks.BUILDINGS)
 
                 entries.addAll(RagiumContents.Dusts.entries)
@@ -58,7 +58,7 @@ object RagiumItemGroup {
                 }
                 entries.addAll(RagiumContents.RawMaterials.entries)
 
-                entries.addAll(RagiumBlocks.FOODS)
+                entries.addAll(RagiumBlocksNew.FOODS)
                 entries.addAll(RagiumItems.FOODS)
 
                 entries.addAll(RagiumItems.ARMORS)
@@ -72,7 +72,7 @@ object RagiumItemGroup {
 
                 entries.addAll(RagiumItems.INGREDIENTS)
 
-                entries.addAll(RagiumBlocks.MISC)
+                entries.addAll(RagiumBlocksNew.MISC)
                 entries.addAll(RagiumItems.MISC)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)

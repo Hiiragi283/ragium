@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -589,15 +590,15 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.MIXER)
             .itemInput(ItemTags.DIRT)
             .itemInput(RagiumItems.NUCLEAR_WASTE)
-            .itemOutput(RagiumBlocks.MUTATED_SOIL)
-            .offerTo(exporter, RagiumBlocks.MUTATED_SOIL)
+            .itemOutput(RagiumBlocksNew.MUTATED_SOIL)
+            .offerTo(exporter, RagiumBlocksNew.MUTATED_SOIL)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)
             .itemInput(Items.GRAVEL)
             .fluidInput(Fluids.LAVA)
-            .itemOutput(RagiumBlocks.POROUS_NETHERRACK)
-            .offerTo(exporter, RagiumBlocks.POROUS_NETHERRACK)
+            .itemOutput(RagiumBlocksNew.POROUS_NETHERRACK)
+            .offerTo(exporter, RagiumBlocksNew.POROUS_NETHERRACK)
         // acids
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)

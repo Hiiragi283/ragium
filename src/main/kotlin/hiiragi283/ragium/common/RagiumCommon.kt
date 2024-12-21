@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
+import hiiragi283.ragium.common.internal.RagiumCompatRegister
 import hiiragi283.ragium.common.internal.RagiumContentRegister
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import net.fabricmc.api.ModInitializer
@@ -38,7 +39,7 @@ object RagiumCommon : ModInitializer {
             RagiumItemGroup.init()
             RagiumNetworks
 
-            RagiumContentRegister.initRegistry()
+            RagiumCompatRegister.initRegistry()
 
             RagiumAPI.LOGGER.info("Ragium initialized!")
         }

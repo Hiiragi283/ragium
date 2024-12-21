@@ -15,7 +15,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
-import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -59,12 +59,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
                 // drill
                 builder.add(0, -3, 0, HTSimpleBlockPattern(Blocks.BEDROCK))
-                // builder.add(0, -2, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                // builder.add(0, -1, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(-1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(0, 0, -1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(0, 0, 1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                // builder.add(0, -2, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
+                // builder.add(0, -1, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
+                builder.add(-1, 0, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
+                builder.add(0, 0, -1, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
+                builder.add(0, 0, 1, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
+                builder.add(1, 0, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
                 // frame
                 builder.add(-2, -1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
                 builder.add(0, -1, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))

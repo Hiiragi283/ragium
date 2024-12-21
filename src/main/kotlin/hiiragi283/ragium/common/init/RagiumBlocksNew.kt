@@ -27,26 +27,21 @@ object RagiumBlocksNew {
     )
 
     //    Minerals    //
-    /*@JvmField
-    val MUTATED_SOIL: Block = Block(blockSettings(Blocks.DIRT))
+    @JvmField
+    val MUTATED_SOIL: HTBlockContent = HTContent.ofBlock("mutated_soil")
 
     @JvmField
-    val POROUS_NETHERRACK: Block = HTSpongeBlock(
-        blockSettings(Blocks.NETHERRACK),
-        Blocks.MAGMA_BLOCK::getDefaultState,
-    ) { world: World, pos: BlockPos ->
-        world.getFluidState(pos).isIn(FluidTags.LAVA)
-    }
+    val POROUS_NETHERRACK: HTBlockContent = HTContent.ofBlock("porous_netherrack")
 
     @JvmField
-    val NATURAL: List<Block> = listOf(
+    val NATURAL: List<HTBlockContent> = listOf(
         MUTATED_SOIL,
         POROUS_NETHERRACK,
     )
 
     //    Buildings    //
 
-    @JvmField
+    /*@JvmField
     val ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
 
     @JvmField
@@ -145,32 +140,25 @@ object RagiumBlocksNew {
         // glass
         STEEL_GLASS,
         RAGIUM_GLASS,
-    )
+    )*/
 
     //    Foods    //
 
     @JvmField
-    val SPONGE_CAKE: Block = HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL))
+    val SPONGE_CAKE: HTBlockContent = HTContent.ofBlock("sponge_cake")
 
     @JvmField
-    val SWEET_BERRIES_CAKE: Block = object : Block(blockSettings(Blocks.CAKE)) {
-        override fun getOutlineShape(
-            state: BlockState,
-            world: BlockView,
-            pos: BlockPos,
-            context: ShapeContext,
-        ): VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
-    }
+    val SWEET_BERRIES_CAKE: HTBlockContent = HTContent.ofBlock("sweet_berries_cake")
 
     @JvmField
-    val FOODS: List<Block> = listOf(
+    val FOODS: List<HTBlockContent> = listOf(
         SPONGE_CAKE,
         SWEET_BERRIES_CAKE,
     )
 
     //    Mechanics    //
 
-    @JvmField
+    /*@JvmField
     val AUTO_ILLUMINATOR: Block =
         HTBlockWithEntity.build(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, blockSettings(Blocks.SMOOTH_STONE))
 
@@ -212,40 +200,34 @@ object RagiumBlocksNew {
         MANUAL_FORGE,
         MANUAL_GRINDER,
         MANUAL_MIXER,
-    )
+    )*/
 
     //    Misc    //
 
     @JvmField
-    val BACKPACK_INTERFACE: Block = HTBackpackInterfaceBlock
+    val BACKPACK_INTERFACE: HTBlockContent = HTContent.ofBlock("backpack_interface")
 
     @JvmField
-    val BUFFER: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.BUFFER, blockSettings(Blocks.SMOOTH_STONE))
+    val ENCHANTMENT_BOOKSHELF: HTBlockContent = HTContent.ofBlock("enchantment_bookshelf")
 
     @JvmField
-    val ENCHANTMENT_BOOKSHELF: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, blockSettings(Blocks.BOOKSHELF))
+    val ITEM_DISPLAY: HTBlockContent = HTContent.ofBlock("item_display")
 
     @JvmField
-    val ITEM_DISPLAY: Block = HTItemDisplayBlock
+    val ROPE: HTBlockContent = HTContent.ofBlock("rope")
 
     @JvmField
-    val ROPE: Block = HTRopeBlock
+    val SHAFT: HTBlockContent = HTContent.ofBlock("shaft")
 
     @JvmField
-    val SHAFT: Block = HTThinPillarBlock(blockSettings(Blocks.CHAIN))
+    val INFESTING: HTBlockContent = HTContent.ofBlock("infesting")
 
     @JvmField
-    val INFESTING: Block = HTInfectingBlock
-
-    @JvmField
-    val MISC: List<Block> = listOf(
+    val MISC: List<HTBlockContent> = listOf(
         BACKPACK_INTERFACE,
-        BUFFER,
         ENCHANTMENT_BOOKSHELF,
         ITEM_DISPLAY,
         ROPE,
         SHAFT,
-    )*/
+    )
 }

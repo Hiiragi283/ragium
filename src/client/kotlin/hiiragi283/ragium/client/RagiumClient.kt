@@ -108,8 +108,8 @@ object RagiumClient : ClientModInitializer {
             .forEach(::registerCutoutMipped)
 
         registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
-        registerCutoutMipped(RagiumBlocks.ITEM_DISPLAY)
-        registerCutoutMipped(RagiumBlocks.POROUS_NETHERRACK)
+        registerCutoutMipped(RagiumBlocksNew.ITEM_DISPLAY)
+        registerCutoutMipped(RagiumBlocksNew.POROUS_NETHERRACK)
         registerCutoutMipped(RagiumBlocks.RAGIUM_GLASS)
         registerCutoutMipped(RagiumBlocks.STEEL_GLASS)
         registerCutoutMipped(RagiumBlocks.T_WHITE_LINE)
@@ -129,12 +129,19 @@ object RagiumClient : ClientModInitializer {
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
-        }, RagiumBlocks.BACKPACK_INTERFACE)
+        }, RagiumBlocksNew.BACKPACK_INTERFACE.get())
     }
 
     @JvmStatic
     private fun registerCutoutMipped(block: Block) {
         BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
+    }
+
+    @JvmStatic
+    private fun registerCutoutMipped(vararg contents: HTBlockContent) {
+        contents.map(HTBlockContent::get).forEach { block: Block ->
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
+        }
     }
 
     @JvmStatic

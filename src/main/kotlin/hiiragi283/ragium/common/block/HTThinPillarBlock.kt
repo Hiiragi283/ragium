@@ -8,7 +8,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 
-class HTThinPillarBlock(settings: Settings) : PillarBlock(settings) {
+class HTThinPillarBlock(settings: Settings) : PillarBlock(settings.solid().nonOpaque()) {
     companion object {
         @JvmField
         val Y_SHAPE: VoxelShape = createCuboidShape(4.0, 0.0, 4.0, 12.0, 16.0, 12.0)

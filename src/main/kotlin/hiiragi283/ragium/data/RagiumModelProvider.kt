@@ -32,8 +32,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             action(block)
         }
 
+        fun register(content: HTBlockContent, action: (Block) -> Unit) {
+            action(content.get())
+        }
+
         // supplier-based
         fun registerSupplier(block: Block, supplier: BlockStateSupplier) {
+            generator.blockStateCollector.accept(supplier)
+        }
+
+        fun registerSupplier(content: HTBlockContent, supplier: BlockStateSupplier) {
             generator.blockStateCollector.accept(supplier)
         }
 
@@ -64,8 +72,16 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             registerFactory(block, factory = TexturedModel.makeFactory(getter, model))
         }
 
+        fun registerFactory(content: HTBlockContent, model: Model, getter: (Block) -> TextureMap) {
+            registerFactory(content.get(), factory = TexturedModel.makeFactory(getter, model))
+        }
+
         fun registerSimple(block: Block, id: Identifier = TextureMap.getId(block)) {
             generator.registerSingleton(block) { TexturedModel.getCubeAll(id) }
+        }
+
+        fun registerSimple(content: HTBlockContent, id: Identifier = content.id.withPrefixedPath("block/")) {
+            generator.registerSingleton(content.get()) { TexturedModel.getCubeAll(id) }
         }
 
         fun registerLayered(block: Block, layer0: Identifier, layer1: Identifier) {
@@ -122,6 +138,10 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             registerSupplier(block, VariantsBlockStateSupplier.create(block, stateVariantOf(modelId)))
         }
 
+        fun registerStaticModel(content: HTBlockContent, modelId: Identifier = content.id.withPrefixedPath("block/")) {
+            registerSupplier(content, VariantsBlockStateSupplier.create(content.get(), stateVariantOf(modelId)))
+        }
+
         // simple
         // asphalt
         registerSimple(RagiumBlocks.ASPHALT)
@@ -152,13 +172,13 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         registerSimple(RagiumBlocks.RAGIUM_GLASS)
 
         registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
-        registerSimple(RagiumBlocksNew.CREATIVE_SOURCE.get())
-        registerSimple(RagiumBlocks.ITEM_DISPLAY)
-        registerSimple(RagiumBlocks.MUTATED_SOIL)
+        registerSimple(RagiumBlocksNew.CREATIVE_SOURCE)
+        registerSimple(RagiumBlocksNew.ITEM_DISPLAY)
+        registerSimple(RagiumBlocksNew.MUTATED_SOIL)
         registerSimple(RagiumBlocks.NETWORK_INTERFACE)
         registerSimple(RagiumBlocks.OPEN_CRATE)
-        registerSimple(RagiumBlocks.POROUS_NETHERRACK)
-        registerSimple(RagiumBlocks.SPONGE_CAKE)
+        registerSimple(RagiumBlocksNew.POROUS_NETHERRACK)
+        registerSimple(RagiumBlocksNew.SPONGE_CAKE)
         registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
         registerSimple(RagiumBlocks.TRASH_BOX)
 
@@ -196,21 +216,19 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // static
         registerStaticModel(RagiumBlocks.MANUAL_FORGE)
         registerStaticModel(RagiumBlocks.MANUAL_MIXER)
-        generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.ROPE)
-        registerStaticModel(RagiumBlocks.ROPE)
-        registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
+        generator.excludeFromSimpleItemModelGeneration(RagiumBlocksNew.ROPE.get())
+        registerStaticModel(RagiumBlocksNew.ROPE)
+        registerStaticModel(RagiumBlocksNew.SWEET_BERRIES_CAKE)
         // factory
         generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.CROSS_WHITE_LINE)
         registerFactory(RagiumBlocks.CROSS_WHITE_LINE, RagiumModels.SURFACE) {
             HTTextureMapBuilder.of(TextureKey.TOP, RagiumBlocks.CROSS_WHITE_LINE)
         }
-        registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED) {
-            TextureMap.all(RagiumBlocks.BACKPACK_INTERFACE)
-        }
-        registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
+        registerFactory(RagiumBlocksNew.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED, TextureMap::all)
+        registerFactory(RagiumBlocksNew.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
             HTTextureMapBuilder.create {
                 put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
-                put(TextureKey.SIDE, RagiumBlocks.ENCHANTMENT_BOOKSHELF)
+                put(TextureKey.SIDE, RagiumBlocksNew.ENCHANTMENT_BOOKSHELF)
             }
         }
         registerFactory(RagiumBlocksNew.CREATIVE_DRUM.get(), TexturedModel.CUBE_COLUMN)
@@ -427,7 +445,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 )
         }
         // custom
-        register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
+        register(RagiumBlocksNew.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
         RagiumContents.Coils.entries.forEach { coil: RagiumContents.Coils ->
             register(coil.get()) {
                 generator.registerAxisRotated(
@@ -484,7 +502,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumItems.INGREDIENTS)
             addAll(RagiumItems.MISC)
 
-            add(RagiumBlocks.ROPE)
+            add(RagiumBlocksNew.ROPE)
 
             remove(RagiumItems.GIGANT_HAMMER)
             remove(RagiumItems.CHOCOLATE_APPLE)

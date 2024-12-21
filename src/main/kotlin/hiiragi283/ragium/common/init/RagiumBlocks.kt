@@ -2,38 +2,14 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.HTSurfaceBlock
+import hiiragi283.ragium.common.block.HTSurfaceLineBlock
 import hiiragi283.ragium.common.block.machine.HTExtendedProcessorBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
-import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
 import net.minecraft.block.*
-import net.minecraft.registry.tag.FluidTags
-import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
-import net.minecraft.world.World
 
 object RagiumBlocks {
-    //    Minerals    //
-    @JvmField
-    val MUTATED_SOIL: Block = Block(blockSettings(Blocks.DIRT))
-
-    @JvmField
-    val POROUS_NETHERRACK: Block = HTSpongeBlock(
-        blockSettings(Blocks.NETHERRACK),
-        Blocks.MAGMA_BLOCK::getDefaultState,
-    ) { world: World, pos: BlockPos ->
-        world.getFluidState(pos).isIn(FluidTags.LAVA)
-    }
-
-    @JvmField
-    val NATURAL: List<Block> = listOf(
-        MUTATED_SOIL,
-        POROUS_NETHERRACK,
-    )
-
     //    Buildings    //
 
     @JvmField
@@ -137,27 +113,6 @@ object RagiumBlocks {
         RAGIUM_GLASS,
     )
 
-    //    Foods    //
-
-    @JvmField
-    val SPONGE_CAKE: Block = HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL))
-
-    @JvmField
-    val SWEET_BERRIES_CAKE: Block = object : Block(blockSettings(Blocks.CAKE)) {
-        override fun getOutlineShape(
-            state: BlockState,
-            world: BlockView,
-            pos: BlockPos,
-            context: ShapeContext,
-        ): VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
-    }
-
-    @JvmField
-    val FOODS: List<Block> = listOf(
-        SPONGE_CAKE,
-        SWEET_BERRIES_CAKE,
-    )
-
     //    Mechanics    //
 
     @JvmField
@@ -201,38 +156,5 @@ object RagiumBlocks {
         MANUAL_FORGE,
         MANUAL_GRINDER,
         MANUAL_MIXER,
-    )
-
-    //    Misc    //
-
-    @JvmField
-    val BACKPACK_INTERFACE: Block = HTBackpackInterfaceBlock
-
-    // val BUFFER: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.BUFFER, blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val ENCHANTMENT_BOOKSHELF: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, blockSettings(Blocks.BOOKSHELF))
-
-    @JvmField
-    val ITEM_DISPLAY: Block = HTItemDisplayBlock
-
-    @JvmField
-    val ROPE: Block = HTRopeBlock
-
-    @JvmField
-    val SHAFT: Block = HTThinPillarBlock(blockSettings(Blocks.CHAIN))
-
-    @JvmField
-    val INFESTING: Block = HTInfectingBlock
-
-    @JvmField
-    val MISC: List<Block> = listOf(
-        BACKPACK_INTERFACE,
-        // BUFFER,
-        ENCHANTMENT_BOOKSHELF,
-        ITEM_DISPLAY,
-        ROPE,
-        SHAFT,
     )
 }

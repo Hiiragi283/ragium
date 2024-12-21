@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.WorldAccess
 
-class HTSimplePipeBlock(private val tier: HTMachineTier, private val type: HTPipeType) : HTPipeBlock() {
+class HTSimplePipeBlock(private val tier: HTMachineTier, private val type: HTPipeType, settings: Settings) : HTPipeBlock(settings) {
     init {
         defaultState = stateManager.defaultState
             .with(Properties.DOWN, false)

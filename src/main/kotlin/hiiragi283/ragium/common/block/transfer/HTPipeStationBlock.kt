@@ -9,7 +9,7 @@ import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.Direction
 
-class HTPipeStationBlock : HTPipeBlock() {
+class HTPipeStationBlock(settings: Settings) : HTPipeBlock(settings) {
     init {
         defaultState = stateManager.defaultState.with(Properties.FACING, Direction.NORTH)
     }
