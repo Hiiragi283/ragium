@@ -24,7 +24,7 @@ object HTExtendedProcessorBlockEntityRenderer : BlockEntityRenderer<HTExtendedPr
         val world: World = entity.world ?: return
         // render machine
         val state: BlockState = when (entity.isDefault) {
-            true -> RagiumBlocks.EXTENDED_PROCESSOR.defaultState
+            true -> RagiumBlocks.EXTENDED_PROCESSOR.get().defaultState
             false ->
                 entity.key.entry
                     .block

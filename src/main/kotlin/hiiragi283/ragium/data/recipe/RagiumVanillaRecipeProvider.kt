@@ -160,42 +160,35 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     //    Crafting - Buildings    //
 
     private fun craftingBuildings(exporter: RecipeExporter) {
-        // asphalt
-        registerSlab(exporter, RagiumBlocks.ASPHALT_SLAB, RagiumBlocks.ASPHALT)
-        registerStair(exporter, RagiumBlocks.ASPHALT_STAIRS, RagiumBlocks.ASPHALT)
+        // slabs
+        RagiumBlocks.Slabs.entries.forEach { slabs: RagiumBlocks.Slabs ->
+            registerSlab(exporter, slabs, slabs.baseStone)
+        }
+        // stairs
+        RagiumBlocks.Stairs.entries.forEach { stair: RagiumBlocks.Stairs ->
+            registerStair(exporter, stair, stair.baseStone)
+        }
         // polished asphalt
         HTStonecuttingRecipeJsonBuilder.register(
             exporter,
-            RagiumBlocks.ASPHALT,
-            RagiumBlocks.POLISHED_ASPHALT,
+            RagiumBlocks.Stones.ASPHALT,
+            RagiumBlocks.Stones.POLISHED_ASPHALT,
             category = RecipeCategory.BUILDING_BLOCKS,
         )
-        registerSlab(exporter, RagiumBlocks.POLISHED_ASPHALT_SLAB, RagiumBlocks.POLISHED_ASPHALT)
-        registerStair(exporter, RagiumBlocks.POLISHED_ASPHALT_STAIRS, RagiumBlocks.POLISHED_ASPHALT)
-        // gypsum
-        registerSlab(exporter, RagiumBlocks.GYPSUM_SLAB, RagiumBlocks.GYPSUM)
-        registerStair(exporter, RagiumBlocks.GYPSUM_STAIRS, RagiumBlocks.GYPSUM)
         // polished gypsum
         HTStonecuttingRecipeJsonBuilder.register(
             exporter,
-            RagiumBlocks.GYPSUM,
-            RagiumBlocks.POLISHED_GYPSUM,
+            RagiumBlocks.Stones.GYPSUM,
+            RagiumBlocks.Stones.POLISHED_GYPSUM,
             category = RecipeCategory.BUILDING_BLOCKS,
         )
-        registerSlab(exporter, RagiumBlocks.POLISHED_GYPSUM_SLAB, RagiumBlocks.POLISHED_GYPSUM)
-        registerStair(exporter, RagiumBlocks.POLISHED_GYPSUM_STAIRS, RagiumBlocks.POLISHED_GYPSUM)
-        // slate
-        registerSlab(exporter, RagiumBlocks.SLATE_SLAB, RagiumBlocks.SLATE)
-        registerStair(exporter, RagiumBlocks.SLATE_STAIRS, RagiumBlocks.SLATE)
         // polished slate
         HTStonecuttingRecipeJsonBuilder.register(
             exporter,
-            RagiumBlocks.SLATE,
-            RagiumBlocks.POLISHED_SLATE,
+            RagiumBlocks.Stones.SLATE,
+            RagiumBlocks.Stones.POLISHED_SLATE,
             category = RecipeCategory.BUILDING_BLOCKS,
         )
-        registerSlab(exporter, RagiumBlocks.POLISHED_SLATE_SLAB, RagiumBlocks.POLISHED_SLATE)
-        registerStair(exporter, RagiumBlocks.POLISHED_SLATE_STAIRS, RagiumBlocks.POLISHED_SLATE)
         // white line
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.WHITE_LINE)
@@ -299,7 +292,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocksNew.ROPE, 8)
+            .create(RagiumBlocks.ROPE, 8)
             .patterns(
                 "A",
                 "A",
@@ -417,7 +410,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A",
                 "A",
             ).input('A', RagiumItems.STELLA_PLATE)
-            .input('B', RagiumBlocksNew.SHAFT)
+            .input('B', RagiumBlocks.SHAFT)
             .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
 
@@ -440,7 +433,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " C ",
             ).input('A', RagiumContents.StorageBlocks.DEEP_STEEL)
             .input('B', RagiumContents.Gems.RAGIUM)
-            .input('C', RagiumBlocksNew.SHAFT)
+            .input('C', RagiumBlocks.SHAFT)
             .unlockedBy(RagiumContents.Gems.RAGIUM)
             .offerTo(exporter)
         // backpack
@@ -482,7 +475,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingFoods(exporter: RecipeExporter) {
         // sweet berries cake
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocksNew.SWEET_BERRIES_CAKE)
+            .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .patterns(
                 "ABA",
                 "CDC",
@@ -491,18 +484,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', Items.SWEET_BERRIES)
             .input('C', RagiumItems.CHOCOLATE)
             .input('D', Items.EGG)
-            .input('E', RagiumBlocksNew.SPONGE_CAKE)
-            .unlockedBy(RagiumBlocksNew.SPONGE_CAKE)
+            .input('E', RagiumBlocks.SPONGE_CAKE)
+            .unlockedBy(RagiumBlocks.SPONGE_CAKE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.SWEET_BERRIES_CAKE_PIECE, 8)
-            .input(RagiumBlocksNew.SWEET_BERRIES_CAKE)
+            .input(RagiumBlocks.SWEET_BERRIES_CAKE)
             .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocksNew.SWEET_BERRIES_CAKE)
+            .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .hollowPattern()
             .input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
             .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
@@ -577,7 +570,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerSuffix(exporter, "_1")
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocksNew.SHAFT, 6)
+            .create(RagiumBlocks.SHAFT, 6)
             .patterns(
                 "A",
                 "A",

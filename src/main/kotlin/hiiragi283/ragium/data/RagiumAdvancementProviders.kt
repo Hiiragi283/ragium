@@ -500,8 +500,8 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/porous_netherrack",
                 mixer,
-                RagiumBlocksNew.POROUS_NETHERRACK,
-            ) { hasAllItems(RagiumBlocksNew.POROUS_NETHERRACK) }
+                RagiumBlocks.POROUS_NETHERRACK,
+            ) { hasAllItems(RagiumBlocks.POROUS_NETHERRACK) }
             val chocolate: AdvancementEntry = createChild(
                 consumer,
                 "machine/chocolate",
@@ -512,9 +512,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/sweet_berries_cake",
                 chocolate,
-                RagiumBlocksNew.SWEET_BERRIES_CAKE,
+                RagiumBlocks.SWEET_BERRIES_CAKE,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumBlocksNew.SWEET_BERRIES_CAKE) }
+            ) { hasAllItems(RagiumBlocks.SWEET_BERRIES_CAKE) }
             // rock generator
             val rockGenerator: AdvancementEntry = createMachineChild(
                 consumer,
@@ -730,9 +730,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/mutated_soil",
                 uraniumFuel,
-                RagiumBlocksNew.MUTATED_SOIL,
+                RagiumBlocks.MUTATED_SOIL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumBlocksNew.MUTATED_SOIL) }
+            ) { hasAllItems(RagiumBlocks.MUTATED_SOIL) }
             val plutoniumFuel: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/plutonium_fuel",

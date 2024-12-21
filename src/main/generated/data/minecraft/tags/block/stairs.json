@@ -3,6 +3,8 @@
     "ragium:asphalt_stairs",
     "ragium:gypsum_stairs",
     "ragium:polished_asphalt_stairs",
-    "ragium:polished_gypsum_slab"
+    "ragium:polished_gypsum_stairs",
+    "ragium:polished_slate_stairs",
+    "ragium:slate_stairs"
   ]
 }

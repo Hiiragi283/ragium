@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -137,7 +136,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .itemInput(RagiumContents.Gems.FLUORITE)
             .fluidInput(RagiumFluids.SULFURIC_ACID)
-            .itemOutput(RagiumBlocks.GYPSUM)
+            .itemOutput(RagiumBlocks.Stones.GYPSUM)
             .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE, FluidConstants.BUCKET * 2)
             .offerTo(exporter, RagiumFluids.HYDROGEN_FLUORIDE)
 
@@ -569,8 +568,8 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.MIXER)
             .itemInput(Items.GRAVEL)
             .fluidInput(RagiumFluids.ASPHALT)
-            .itemOutput(RagiumBlocks.ASPHALT, 4)
-            .offerTo(exporter, RagiumBlocks.ASPHALT)
+            .itemOutput(RagiumBlocks.Stones.ASPHALT, 4)
+            .offerTo(exporter, RagiumBlocks.Stones.ASPHALT)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)
@@ -590,15 +589,15 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.MIXER)
             .itemInput(ItemTags.DIRT)
             .itemInput(RagiumItems.NUCLEAR_WASTE)
-            .itemOutput(RagiumBlocksNew.MUTATED_SOIL)
-            .offerTo(exporter, RagiumBlocksNew.MUTATED_SOIL)
+            .itemOutput(RagiumBlocks.MUTATED_SOIL)
+            .offerTo(exporter, RagiumBlocks.MUTATED_SOIL)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)
             .itemInput(Items.GRAVEL)
             .fluidInput(Fluids.LAVA)
-            .itemOutput(RagiumBlocksNew.POROUS_NETHERRACK)
-            .offerTo(exporter, RagiumBlocksNew.POROUS_NETHERRACK)
+            .itemOutput(RagiumBlocks.POROUS_NETHERRACK)
+            .offerTo(exporter, RagiumBlocks.POROUS_NETHERRACK)
         // acids
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)

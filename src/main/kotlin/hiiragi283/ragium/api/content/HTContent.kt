@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getKeyOrThrow
 import net.minecraft.block.Block
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -25,6 +26,15 @@ interface HTContent<T : Any> : Supplier<T> {
         fun ofBlock(path: String): HTBlockContent = ofBlock(RagiumAPI.id(path))
 
         @JvmStatic
+        fun fromBlock(block: Block): HTBlockContent = object : HTBlockContent {
+            override val delegated: HTContent<Block> = this
+
+            override val key: RegistryKey<Block> by lazy { Registries.BLOCK.getKeyOrThrow(block) }
+
+            override fun get(): Block = block
+        }
+
+        @JvmStatic
         fun ofFluid(id: Identifier): HTFluidContent = object : HTFluidContent {
             override val delegated: HTFluidContent = this
 
@@ -37,6 +47,15 @@ interface HTContent<T : Any> : Supplier<T> {
         fun ofFluid(path: String): HTFluidContent = ofFluid(RagiumAPI.id(path))
 
         @JvmStatic
+        fun fromFluid(fluid: Fluid): HTFluidContent = object : HTFluidContent {
+            override val delegated: HTContent<Fluid> = this
+
+            override val key: RegistryKey<Fluid> by lazy { Registries.FLUID.getKeyOrThrow(fluid) }
+
+            override fun get(): Fluid = fluid
+        }
+
+        @JvmStatic
         fun ofItem(id: Identifier): HTItemContent = object : HTItemContent {
             override val delegated: HTItemContent = this
 
@@ -47,6 +66,15 @@ interface HTContent<T : Any> : Supplier<T> {
 
         @JvmStatic
         fun ofItem(path: String): HTItemContent = ofItem(RagiumAPI.id(path))
+
+        @JvmStatic
+        fun fromItem(item: Item): HTItemContent = object : HTItemContent {
+            override val delegated: HTContent<Item> = this
+
+            override val key: RegistryKey<Item> by lazy { Registries.ITEM.getKeyOrThrow(item) }
+
+            override fun get(): Item = item
+        }
     }
 
     val key: RegistryKey<T>

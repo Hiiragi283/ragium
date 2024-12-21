@@ -9,7 +9,7 @@ import net.minecraft.util.BlockMirror
 import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.Direction
 
-class HTSurfaceLineBlock(settings: Settings) : HTSurfaceBlock(settings) {
+class HTSurfaceLineBlock(settings: Settings) : HTSurfaceBlock(settings.breakInstantly()) {
     init {
         defaultState = stateManager.defaultState.with(Properties.HORIZONTAL_FACING, Direction.NORTH)
     }

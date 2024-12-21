@@ -88,8 +88,8 @@ object RagiumClient : ClientModInitializer {
     private fun registerBlocks() {
         // cutout
         buildList {
-            add(RagiumBlocksNew.CREATIVE_CRATE)
-            add(RagiumBlocksNew.CREATIVE_EXPORTER)
+            add(RagiumBlocks.CREATIVE_CRATE)
+            add(RagiumBlocks.CREATIVE_EXPORTER)
 
             addAll(RagiumContents.Ores.entries)
             addAll(RagiumContents.Grates.entries)
@@ -107,13 +107,15 @@ object RagiumClient : ClientModInitializer {
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
 
-        registerCutoutMipped(RagiumBlocks.CROSS_WHITE_LINE)
-        registerCutoutMipped(RagiumBlocksNew.ITEM_DISPLAY)
-        registerCutoutMipped(RagiumBlocksNew.POROUS_NETHERRACK)
-        registerCutoutMipped(RagiumBlocks.RAGIUM_GLASS)
-        registerCutoutMipped(RagiumBlocks.STEEL_GLASS)
-        registerCutoutMipped(RagiumBlocks.T_WHITE_LINE)
-        registerCutoutMipped(RagiumBlocks.WHITE_LINE)
+        registerCutoutMipped(
+            RagiumBlocks.CROSS_WHITE_LINE,
+            RagiumBlocks.ITEM_DISPLAY,
+            RagiumBlocks.POROUS_NETHERRACK,
+            RagiumBlocks.RAGIUM_GLASS,
+            RagiumBlocks.STEEL_GLASS,
+            RagiumBlocks.T_WHITE_LINE,
+            RagiumBlocks.WHITE_LINE,
+        )
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CRATE, ::HTCrateBlockEntityRenderer)
@@ -129,7 +131,7 @@ object RagiumClient : ClientModInitializer {
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
-        }, RagiumBlocksNew.BACKPACK_INTERFACE.get())
+        }, RagiumBlocks.BACKPACK_INTERFACE.get())
     }
 
     @JvmStatic

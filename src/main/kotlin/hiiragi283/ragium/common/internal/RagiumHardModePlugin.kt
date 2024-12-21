@@ -244,7 +244,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.FLUID_DRILL,
-            RagiumBlocksNew.SHAFT,
+            RagiumBlocks.SHAFT,
         )
         createProcessor(
             exporter,
@@ -612,7 +612,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.ASSEMBLER)
                 .itemInput(coil.tier.getSubMetal(hardMode), 8)
-                .itemInput(RagiumBlocksNew.SHAFT)
+                .itemInput(RagiumBlocks.SHAFT)
                 .itemOutput(coil, 2)
                 .offerTo(exporter, coil)
         }

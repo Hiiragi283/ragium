@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -105,8 +104,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineKeys.BLAST_FURNACE)
             .fluidInput(RagiumFluids.BATTER)
             .itemInput(RagiumItems.BUTTER)
-            .itemOutput(RagiumBlocksNew.SPONGE_CAKE)
-            .offerTo(exporter, RagiumBlocksNew.SPONGE_CAKE)
+            .itemOutput(RagiumBlocks.SPONGE_CAKE)
+            .offerTo(exporter, RagiumBlocks.SPONGE_CAKE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
@@ -246,16 +245,16 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .itemInput(RagiumContents.Ingots.STEEL, 2)
-            .itemOutput(RagiumBlocksNew.SHAFT)
-            .catalyst(RagiumBlocksNew.SHAFT)
-            .offerTo(exporter, RagiumBlocksNew.SHAFT, "_from_steel")
+            .itemOutput(RagiumBlocks.SHAFT)
+            .catalyst(RagiumBlocks.SHAFT)
+            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_steel")
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
             .itemInput(RagiumContents.Ingots.DEEP_STEEL)
-            .itemOutput(RagiumBlocksNew.SHAFT)
-            .catalyst(RagiumBlocksNew.SHAFT)
-            .offerTo(exporter, RagiumBlocksNew.SHAFT, "_from_deep_steel")
+            .itemOutput(RagiumBlocks.SHAFT)
+            .catalyst(RagiumBlocks.SHAFT)
+            .offerTo(exporter, RagiumBlocks.SHAFT, "_from_deep_steel")
         // carbon electrodes
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)
@@ -432,12 +431,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerCrop(exporter, Items.WHEAT_SEEDS, Items.WHEAT)
 
         // registerCrop(exporter, Items.BEETROOT_SEEDS, Items.NETHER_WART, RagiumBlocksNew.MUTATED_SOIL)
-        registerCrop(exporter, Items.BROWN_MUSHROOM, Items.WARPED_FUNGUS, RagiumBlocksNew.MUTATED_SOIL)
-        registerCrop(exporter, Items.POTATO, Items.POISONOUS_POTATO, RagiumBlocksNew.MUTATED_SOIL)
-        registerCrop(exporter, Items.PUMPKIN_SEEDS, Items.CARVED_PUMPKIN, RagiumBlocksNew.MUTATED_SOIL)
-        registerCrop(exporter, Items.RED_MUSHROOM, Items.CRIMSON_FUNGUS, RagiumBlocksNew.MUTATED_SOIL)
+        registerCrop(exporter, Items.BROWN_MUSHROOM, Items.WARPED_FUNGUS, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.POTATO, Items.POISONOUS_POTATO, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.PUMPKIN_SEEDS, Items.CARVED_PUMPKIN, RagiumBlocks.MUTATED_SOIL)
+        registerCrop(exporter, Items.RED_MUSHROOM, Items.CRIMSON_FUNGUS, RagiumBlocks.MUTATED_SOIL)
         // registerCrop(exporter, Items.SWEET_BERRIES, Items.GLOW_BERRIES, RagiumBlocksNew.MUTATED_SOIL)
-        registerCrop(exporter, Items.TORCHFLOWER_SEEDS, Items.TORCH, RagiumBlocksNew.MUTATED_SOIL)
+        registerCrop(exporter, Items.TORCHFLOWER_SEEDS, Items.TORCH, RagiumBlocks.MUTATED_SOIL)
         // trees
         registerTree(exporter, Items.ACACIA_SAPLING, Items.ACACIA_LOG)
         registerTree(exporter, Items.BIRCH_SAPLING, Items.BIRCH_LOG)
@@ -537,7 +536,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerRock(exporter, Items.GRANITE, HTMachineTier.PRIMITIVE)
         registerRock(exporter, Items.DIORITE, HTMachineTier.PRIMITIVE)
         registerRock(exporter, Items.ANDESITE, HTMachineTier.PRIMITIVE)
-        registerRock(exporter, RagiumBlocks.SLATE, HTMachineTier.PRIMITIVE)
+        registerRock(exporter, RagiumBlocks.Stones.SLATE, HTMachineTier.PRIMITIVE)
 
         registerRock(exporter, Items.DEEPSLATE, HTMachineTier.BASIC)
         registerRock(exporter, Items.COBBLED_DEEPSLATE, HTMachineTier.BASIC)
@@ -547,8 +546,8 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerRock(exporter, Items.NETHERRACK, HTMachineTier.BASIC)
         registerRock(exporter, Items.BASALT, HTMachineTier.BASIC)
         registerRock(exporter, Items.BLACKSTONE, HTMachineTier.BASIC)
-        registerRock(exporter, RagiumBlocks.ASPHALT, HTMachineTier.BASIC)
-        registerRock(exporter, RagiumBlocks.GYPSUM, HTMachineTier.BASIC)
+        registerRock(exporter, RagiumBlocks.Stones.ASPHALT, HTMachineTier.BASIC)
+        registerRock(exporter, RagiumBlocks.Stones.GYPSUM, HTMachineTier.BASIC)
 
         registerRock(exporter, Items.END_STONE, HTMachineTier.ADVANCED)
 

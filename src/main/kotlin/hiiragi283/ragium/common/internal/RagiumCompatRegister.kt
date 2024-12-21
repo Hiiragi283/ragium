@@ -88,17 +88,17 @@ internal object RagiumCompatRegister {
                 .map { InventoryStorage.of(it, direction) }
                 .result()
                 .getOrNull()
-        }, RagiumBlocksNew.BACKPACK_INTERFACE.get())
+        }, RagiumBlocks.BACKPACK_INTERFACE.get())
 
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
                 if (dropStackAt(world, pos.down(), resource.toStack(maxAmount.toInt()))) maxAmount else 0
             }
-        }, RagiumBlocks.OPEN_CRATE)
+        }, RagiumBlocks.OPEN_CRATE.get())
         // trash box
         registerItemStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
-            RagiumBlocks.TRASH_BOX,
+            RagiumBlocks.TRASH_BOX.get(),
         )
         // cross pipe
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
@@ -161,7 +161,7 @@ internal object RagiumCompatRegister {
         } // trash box
         registerFluidStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.FLUID },
-            RagiumBlocks.TRASH_BOX,
+            RagiumBlocks.TRASH_BOX.get(),
         )
         // cross pipe
         registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
@@ -202,11 +202,11 @@ internal object RagiumCompatRegister {
     private fun registerEnergyStorages() {
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
-            RagiumBlocksNew.CREATIVE_SOURCE.get(),
+            RagiumBlocks.CREATIVE_SOURCE.get(),
         )
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             world.energyNetwork.result().getOrNull()
-        }, RagiumBlocks.NETWORK_INTERFACE)
+        }, RagiumBlocks.NETWORK_INTERFACE.get())
     }
 
     private fun registerTierProviders() {

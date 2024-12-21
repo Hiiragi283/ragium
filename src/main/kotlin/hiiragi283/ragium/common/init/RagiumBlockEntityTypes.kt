@@ -182,12 +182,12 @@ object RagiumBlockEntityTypes {
         CRATE.addAllContents(RagiumContents.Crates.entries)
         DRUM.addAllContents(RagiumContents.Drums.entries)
 
-        CREATIVE_EXPORTER.add(RagiumBlocksNew.CREATIVE_EXPORTER)
-        EXTENDED_PROCESSOR.addSupportedBlock(RagiumBlocks.EXTENDED_PROCESSOR)
-        ITEM_DISPLAY.add(RagiumBlocksNew.ITEM_DISPLAY)
-        MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
-        MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
-        MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
+        CREATIVE_EXPORTER.add(RagiumBlocks.CREATIVE_EXPORTER)
+        EXTENDED_PROCESSOR.add(RagiumBlocks.EXTENDED_PROCESSOR)
+        ITEM_DISPLAY.add(RagiumBlocks.ITEM_DISPLAY)
+        MANUAL_FORGE.add(RagiumBlocks.MANUAL_FORGE)
+        MANUAL_GRINDER.add(RagiumBlocks.MANUAL_GRINDER)
+        MANUAL_MIXER.add(RagiumBlocks.MANUAL_MIXER)
         // consumers
         registerMachineBlocks(RagiumMachineKeys.BEDROCK_MINER, BEDROCK_MINER)
         registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)

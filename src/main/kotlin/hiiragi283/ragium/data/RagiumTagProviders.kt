@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
@@ -46,42 +45,31 @@ object RagiumTagProviders {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
             val blockCache: Multimap<TagKey<Block>, Block> = HashMultimap.create()
 
-            fun add(tagKey: TagKey<Block>, block: Block) {
-                blockCache.put(tagKey, block)
-            }
-
             fun add(tagKey: TagKey<Block>, content: HTBlockContent) {
-                add(tagKey, content.get())
+                blockCache.put(tagKey, content.get())
             }
 
             // vanilla
-            add(BlockTags.SHOVEL_MINEABLE, RagiumBlocksNew.MUTATED_SOIL)
-            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocksNew.POROUS_NETHERRACK)
+            add(BlockTags.SHOVEL_MINEABLE, RagiumBlocks.MUTATED_SOIL)
+            add(BlockTags.PICKAXE_MINEABLE, RagiumBlocks.POROUS_NETHERRACK)
 
-            add(BlockTags.SLABS, RagiumBlocks.ASPHALT_SLAB)
-            add(BlockTags.SLABS, RagiumBlocks.POLISHED_ASPHALT_SLAB)
-            add(BlockTags.SLABS, RagiumBlocks.GYPSUM_SLAB)
-            add(BlockTags.SLABS, RagiumBlocks.POLISHED_GYPSUM_SLAB)
-            add(BlockTags.STAIRS, RagiumBlocks.ASPHALT_STAIRS)
-            add(BlockTags.STAIRS, RagiumBlocks.POLISHED_ASPHALT_STAIRS)
-            add(BlockTags.STAIRS, RagiumBlocks.GYPSUM_STAIRS)
-            add(BlockTags.STAIRS, RagiumBlocks.POLISHED_GYPSUM_SLAB)
+            add(BlockTags.SLABS, RagiumBlocks.Slabs.ASPHALT)
+            add(BlockTags.SLABS, RagiumBlocks.Slabs.POLISHED_ASPHALT)
+            add(BlockTags.SLABS, RagiumBlocks.Slabs.GYPSUM)
+            add(BlockTags.SLABS, RagiumBlocks.Slabs.POLISHED_GYPSUM)
+            add(BlockTags.SLABS, RagiumBlocks.Slabs.SLATE)
+            add(BlockTags.SLABS, RagiumBlocks.Slabs.POLISHED_SLATE)
+            add(BlockTags.STAIRS, RagiumBlocks.Stairs.ASPHALT)
+            add(BlockTags.STAIRS, RagiumBlocks.Stairs.POLISHED_ASPHALT)
+            add(BlockTags.STAIRS, RagiumBlocks.Stairs.GYPSUM)
+            add(BlockTags.STAIRS, RagiumBlocks.Stairs.POLISHED_GYPSUM)
+            add(BlockTags.STAIRS, RagiumBlocks.Stairs.SLATE)
+            add(BlockTags.STAIRS, RagiumBlocks.Stairs.POLISHED_SLATE)
 
-            
+            add(BlockTags.AXE_MINEABLE, RagiumBlocks.ROPE)
 
-            buildList {
-                addAll(RagiumBlocks.BUILDINGS)
-                addAll(RagiumBlocks.MECHANICS)
+            RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
 
-                remove(RagiumBlocks.WHITE_LINE)
-                remove(RagiumBlocks.T_WHITE_LINE)
-                remove(RagiumBlocks.CROSS_WHITE_LINE)
-            }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
-            
-            add(BlockTags.AXE_MINEABLE, RagiumBlocksNew.ROPE)
-
-            RagiumBlocksNew.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
-            
             buildList {
                 addAll(RagiumContents.Ores.entries)
                 addAll(RagiumContents.StorageBlocks.entries)
@@ -98,12 +86,18 @@ object RagiumTagProviders {
 
                 addAll(RagiumContents.Crates.entries)
                 addAll(RagiumContents.Drums.entries)
-                
-                addAll(RagiumBlocksNew.CREATIVES)
-                addAll(RagiumBlocksNew.MISC)
+
+                addAll(RagiumBlocks.CREATIVES)
+                addAll(RagiumBlocks.Stones.entries)
+                addAll(RagiumBlocks.Slabs.entries)
+                addAll(RagiumBlocks.Stairs.entries)
+                add(RagiumBlocks.STEEL_GLASS)
+                add(RagiumBlocks.RAGIUM_GLASS)
+                addAll(RagiumBlocks.MECHANICS)
+                addAll(RagiumBlocks.MISC)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
-            add(BlockTags.CLIMBABLE, RagiumBlocksNew.ROPE)
+            add(BlockTags.CLIMBABLE, RagiumBlocks.ROPE)
 
             RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore)
@@ -116,9 +110,9 @@ object RagiumTagProviders {
                 addAll(RagiumContents.PipeStations.entries)
                 addAll(RagiumContents.FilteringPipe.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_CRATE)
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_DRUM)
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocksNew.CREATIVE_EXPORTER)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_CRATE)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_DRUM)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_EXPORTER)
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
                 blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->

@@ -194,7 +194,9 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 listOf(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD),
-                        RagiumBlocks.ASPHALT.defaultState,
+                        RagiumBlocks.Stones.ASPHALT
+                            .get()
+                            .defaultState,
                     ),
                 ),
                 64,
@@ -205,7 +207,9 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 listOf(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD),
-                        RagiumBlocks.GYPSUM.defaultState,
+                        RagiumBlocks.Stones.GYPSUM
+                            .get()
+                            .defaultState,
                     ),
                 ),
                 64,
@@ -216,7 +220,9 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 listOf(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.BASE_STONE_OVERWORLD),
-                        RagiumBlocks.SLATE.defaultState,
+                        RagiumBlocks.Stones.SLATE
+                            .get()
+                            .defaultState,
                     ),
                 ),
                 64,

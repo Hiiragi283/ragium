@@ -46,7 +46,11 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumContents.Ores.entries)
                 entries.addAll(RagiumContents.StorageBlocks.entries)
-                entries.addAll(RagiumBlocksNew.NATURAL)
+                entries.addAll(RagiumBlocks.NATURAL)
+
+                entries.addAll(RagiumBlocks.Stones.entries)
+                entries.addAll(RagiumBlocks.Slabs.entries)
+                entries.addAll(RagiumBlocks.Stairs.entries)
                 entries.addAll(RagiumBlocks.BUILDINGS)
 
                 entries.addAll(RagiumContents.Dusts.entries)
@@ -58,7 +62,7 @@ object RagiumItemGroup {
                 }
                 entries.addAll(RagiumContents.RawMaterials.entries)
 
-                entries.addAll(RagiumBlocksNew.FOODS)
+                entries.addAll(RagiumBlocks.FOODS)
                 entries.addAll(RagiumItems.FOODS)
 
                 entries.addAll(RagiumItems.ARMORS)
@@ -72,7 +76,7 @@ object RagiumItemGroup {
 
                 entries.addAll(RagiumItems.INGREDIENTS)
 
-                entries.addAll(RagiumBlocksNew.MISC)
+                entries.addAll(RagiumBlocks.MISC)
                 entries.addAll(RagiumItems.MISC)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
@@ -100,11 +104,11 @@ object RagiumItemGroup {
                 entries.addAll(RagiumContents.Coils.entries)
 
                 entries.addAll(RagiumContents.Crates.entries)
-                entries.add(RagiumBlocksNew.CREATIVE_CRATE)
+                entries.add(RagiumBlocks.CREATIVE_CRATE)
                 entries.addAll(RagiumContents.Drums.entries)
-                entries.add(RagiumBlocksNew.CREATIVE_DRUM)
+                entries.add(RagiumBlocks.CREATIVE_DRUM)
                 entries.addAll(RagiumContents.Exporters.entries)
-                entries.add(RagiumBlocksNew.CREATIVE_EXPORTER)
+                entries.add(RagiumBlocks.CREATIVE_EXPORTER)
                 entries.addAll(RagiumContents.Pipes.entries)
                 entries.addAll(RagiumContents.CrossPipes.entries)
                 entries.addAll(RagiumContents.PipeStations.entries)
@@ -116,7 +120,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumContents.PressMolds.entries)
 
                 entries.addAll(RagiumBlocks.MECHANICS)
-                entries.add(RagiumBlocksNew.CREATIVE_SOURCE)
+                entries.add(RagiumBlocks.CREATIVE_SOURCE)
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->
                     RagiumAPI
                         .getInstance()

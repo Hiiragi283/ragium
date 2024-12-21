@@ -2,6 +2,8 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.material.HTMaterialProvider
@@ -14,7 +16,6 @@ import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
-import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
@@ -172,10 +173,10 @@ enum class HTMachineTier(
         ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
 
-    fun getGlassBlock(): Block = when (this) {
-        HTMachineTier.PRIMITIVE -> Blocks.GLASS
-        HTMachineTier.BASIC -> Blocks.TINTED_GLASS
-        HTMachineTier.ADVANCED -> RagiumBlocks.STEEL_GLASS
+    fun getGlassBlock(): HTBlockContent = when (this) {
+        PRIMITIVE -> HTContent.fromBlock(Blocks.GLASS)
+        BASIC -> HTContent.fromBlock(Blocks.TINTED_GLASS)
+        ADVANCED -> RagiumBlocks.STEEL_GLASS
     }
 
     fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =

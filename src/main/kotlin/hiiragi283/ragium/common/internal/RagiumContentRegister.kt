@@ -8,6 +8,9 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.*
+import hiiragi283.ragium.common.block.machine.HTExtendedProcessorBlock
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
+import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
@@ -165,19 +168,19 @@ internal object RagiumContentRegister {
 
     @JvmStatic
     private fun initBlocks() {
-        registerBlockNew(RagiumBlocksNew.CREATIVE_CRATE) {
+        registerBlockNew(RagiumBlocks.CREATIVE_CRATE) {
             HTBlockWithEntity.buildHorizontal(
                 RagiumBlockEntityTypes.CREATIVE_CRATE,
                 it.mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
             )
         }
-        registerBlockNew(RagiumBlocksNew.CREATIVE_DRUM) {
+        registerBlockNew(RagiumBlocks.CREATIVE_DRUM) {
             HTBlockWithEntity.build(
                 RagiumBlockEntityTypes.CREATIVE_DRUM,
                 it.mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
             )
         }
-        registerBlockNew(RagiumBlocksNew.CREATIVE_EXPORTER) {
+        registerBlockNew(RagiumBlocks.CREATIVE_EXPORTER) {
             HTCreativeExporterBlock(
                 it
                     .mapColor(MapColor.PURPLE)
@@ -187,21 +190,21 @@ internal object RagiumContentRegister {
                     .nonOpaque(),
             )
         }
-        registerBlockNew(RagiumBlocksNew.CREATIVE_SOURCE) {
+        registerBlockNew(RagiumBlocks.CREATIVE_SOURCE) {
             HTBlockWithEntity.build(
                 RagiumBlockEntityTypes.CREATIVE_SOURCE,
                 it.mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
             )
         }
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_CRATE) { it.rarity(Rarity.EPIC) }
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_DRUM) { it.rarity(Rarity.EPIC) }
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_EXPORTER) { it.rarity(Rarity.EPIC) }
-        registerBlockItemNew(RagiumBlocksNew.CREATIVE_SOURCE) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocks.CREATIVE_CRATE) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocks.CREATIVE_DRUM) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocks.CREATIVE_EXPORTER) { it.rarity(Rarity.EPIC) }
+        registerBlockItemNew(RagiumBlocks.CREATIVE_SOURCE) { it.rarity(Rarity.EPIC) }
 
-        registerBlockNew(RagiumBlocksNew.MUTATED_SOIL) {
+        registerBlockNew(RagiumBlocks.MUTATED_SOIL) {
             Block(it.mapColor(MapColor.GREEN).strength(0.5f).sounds(BlockSoundGroup.GRAVEL))
         }
-        registerBlockNew(RagiumBlocksNew.POROUS_NETHERRACK) {
+        registerBlockNew(RagiumBlocks.POROUS_NETHERRACK) {
             HTSpongeBlock(
                 it
                     .mapColor(MapColor.DARK_RED)
@@ -213,64 +216,51 @@ internal object RagiumContentRegister {
                 world.getFluidState(pos).isIn(FluidTags.LAVA)
             }
         }
-        registerBlockItemNew(RagiumBlocksNew.MUTATED_SOIL) {
+        registerBlockItemNew(RagiumBlocks.MUTATED_SOIL) {
             it.descriptions(Text.translatable(RagiumTranslationKeys.MUTATED_SOIL))
         }
-        registerBlockItemNew(RagiumBlocksNew.POROUS_NETHERRACK) {
+        registerBlockItemNew(RagiumBlocks.POROUS_NETHERRACK) {
             it.descriptions(Text.translatable(RagiumTranslationKeys.POROUS_NETHERRACK))
         }
 
-        registerBlock("asphalt", RagiumBlocks.ASPHALT)
-        registerBlock("asphalt_slab", RagiumBlocks.ASPHALT_SLAB)
-        registerBlock("asphalt_stairs", RagiumBlocks.ASPHALT_STAIRS)
-        registerBlock("polished_asphalt", RagiumBlocks.POLISHED_ASPHALT)
-        registerBlock("polished_asphalt_slab", RagiumBlocks.POLISHED_ASPHALT_SLAB)
-        registerBlock("polished_asphalt_stairs", RagiumBlocks.POLISHED_ASPHALT_STAIRS)
-        registerBlock("gypsum", RagiumBlocks.GYPSUM)
-        registerBlock("gypsum_slab", RagiumBlocks.GYPSUM_SLAB)
-        registerBlock("gypsum_stairs", RagiumBlocks.GYPSUM_STAIRS)
-        registerBlock("polished_gypsum", RagiumBlocks.POLISHED_GYPSUM)
-        registerBlock("polished_gypsum_slab", RagiumBlocks.POLISHED_GYPSUM_SLAB)
-        registerBlock("polished_gypsum_stairs", RagiumBlocks.POLISHED_GYPSUM_STAIRS)
-        registerBlock("slate", RagiumBlocks.SLATE)
-        registerBlock("slate_slab", RagiumBlocks.SLATE_SLAB)
-        registerBlock("slate_stairs", RagiumBlocks.SLATE_STAIRS)
-        registerBlock("polished_slate", RagiumBlocks.POLISHED_SLATE)
-        registerBlock("polished_slate_slab", RagiumBlocks.POLISHED_SLATE_SLAB)
-        registerBlock("polished_slate_stairs", RagiumBlocks.POLISHED_SLATE_STAIRS)
-        registerBlock("white_line", RagiumBlocks.WHITE_LINE)
-        registerBlock("t_white_line", RagiumBlocks.T_WHITE_LINE)
-        registerBlock("cross_white_line", RagiumBlocks.CROSS_WHITE_LINE)
-        registerBlock("steel_glass", RagiumBlocks.STEEL_GLASS)
-        registerBlock("ragium_glass", RagiumBlocks.RAGIUM_GLASS)
-        registerBlockItem(RagiumBlocks.ASPHALT)
-        registerBlockItem(RagiumBlocks.ASPHALT_SLAB)
-        registerBlockItem(RagiumBlocks.ASPHALT_STAIRS)
-        registerBlockItem(RagiumBlocks.POLISHED_ASPHALT)
-        registerBlockItem(RagiumBlocks.POLISHED_ASPHALT_SLAB)
-        registerBlockItem(RagiumBlocks.POLISHED_ASPHALT_STAIRS)
-        registerBlockItem(RagiumBlocks.GYPSUM)
-        registerBlockItem(RagiumBlocks.GYPSUM_SLAB)
-        registerBlockItem(RagiumBlocks.GYPSUM_STAIRS)
-        registerBlockItem(RagiumBlocks.POLISHED_GYPSUM)
-        registerBlockItem(RagiumBlocks.POLISHED_GYPSUM_SLAB)
-        registerBlockItem(RagiumBlocks.POLISHED_GYPSUM_STAIRS)
-        registerBlockItem(RagiumBlocks.SLATE)
-        registerBlockItem(RagiumBlocks.SLATE_SLAB)
-        registerBlockItem(RagiumBlocks.SLATE_STAIRS)
-        registerBlockItem(RagiumBlocks.POLISHED_SLATE)
-        registerBlockItem(RagiumBlocks.POLISHED_SLATE_SLAB)
-        registerBlockItem(RagiumBlocks.POLISHED_SLATE_STAIRS)
-        registerBlockItem(RagiumBlocks.WHITE_LINE)
-        registerBlockItem(RagiumBlocks.T_WHITE_LINE)
-        registerBlockItem(RagiumBlocks.CROSS_WHITE_LINE)
-        registerBlockItem(RagiumBlocks.STEEL_GLASS)
-        registerBlockItem(RagiumBlocks.RAGIUM_GLASS)
+        RagiumBlocks.Stones.entries.forEach { stone: RagiumBlocks.Stones ->
+            registerBlockNew(stone, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+            registerBlockItemNew(stone)
+        }
+        RagiumBlocks.Slabs.entries.forEach { slab: RagiumBlocks.Slabs ->
+            registerBlockNew(slab, blockSettings(Blocks.SMOOTH_STONE), ::SlabBlock)
+            registerBlockItemNew(slab)
+        }
+        RagiumBlocks.Stairs.entries.forEach { stair: RagiumBlocks.Stairs ->
+            registerBlockNew(stair, blockSettings(Blocks.SMOOTH_STONE)) {
+                StairsBlock(stair.baseStone.get().defaultState, it)
+            }
+            registerBlockItemNew(stair)
+        }
 
-        registerBlockNew(RagiumBlocksNew.SPONGE_CAKE) {
+        registerBlockNew(RagiumBlocks.WHITE_LINE, block = ::HTSurfaceLineBlock)
+        registerBlockNew(RagiumBlocks.T_WHITE_LINE, block = ::HTSurfaceLineBlock)
+        registerBlockNew(RagiumBlocks.CROSS_WHITE_LINE, block = ::HTSurfaceLineBlock)
+        registerBlockNew(
+            RagiumBlocks.STEEL_GLASS,
+            blockSettings(Blocks.GLASS).strength(2f, 1200f),
+            ::TransparentBlock,
+        )
+        registerBlockNew(
+            RagiumBlocks.RAGIUM_GLASS,
+            blockSettings(Blocks.GLASS).strength(2f, 3600000.0F),
+            ::TransparentBlock,
+        )
+        registerBlockItemNew(RagiumBlocks.WHITE_LINE)
+        registerBlockItemNew(RagiumBlocks.T_WHITE_LINE)
+        registerBlockItemNew(RagiumBlocks.CROSS_WHITE_LINE)
+        registerBlockItemNew(RagiumBlocks.STEEL_GLASS)
+        registerBlockItemNew(RagiumBlocks.RAGIUM_GLASS)
+
+        registerBlockNew(RagiumBlocks.SPONGE_CAKE) {
             HayBlock(it.mapColor(MapColor.YELLOW).strength(0.5f).sounds(BlockSoundGroup.WOOL))
         }
-        registerBlockNew(RagiumBlocksNew.SWEET_BERRIES_CAKE) {
+        registerBlockNew(RagiumBlocks.SWEET_BERRIES_CAKE) {
             object : Block(it.solid().strength(0.5f).sounds(BlockSoundGroup.WOOL)) {
                 override fun getOutlineShape(
                     state: BlockState,
@@ -280,81 +270,87 @@ internal object RagiumContentRegister {
                 ): VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
             }
         }
-        registerBlockItemNew(RagiumBlocksNew.SPONGE_CAKE) { it.descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)) }
-        registerBlockItemNew(RagiumBlocksNew.SWEET_BERRIES_CAKE)
+        registerBlockItemNew(RagiumBlocks.SPONGE_CAKE) { it.descriptions(Text.translatable(RagiumTranslationKeys.SPONGE_CAKE)) }
+        registerBlockItemNew(RagiumBlocks.SWEET_BERRIES_CAKE)
 
-        registerBlock("auto_illuminator", RagiumBlocks.AUTO_ILLUMINATOR)
-        registerBlock("extended_processor", RagiumBlocks.EXTENDED_PROCESSOR)
-        registerBlock("manual_forge", RagiumBlocks.MANUAL_FORGE)
-        registerBlock("manual_grinder", RagiumBlocks.MANUAL_GRINDER)
-        registerBlock("manual_mixer", RagiumBlocks.MANUAL_MIXER)
-        registerBlock("network_interface", RagiumBlocks.NETWORK_INTERFACE)
-        registerBlock("open_crate", RagiumBlocks.OPEN_CRATE)
-        registerBlock("teleport_anchor", RagiumBlocks.TELEPORT_ANCHOR)
-        registerBlock("trash_box", RagiumBlocks.TRASH_BOX)
-        registerBlockItem(
-            RagiumBlocks.AUTO_ILLUMINATOR,
-            itemSettings().descriptions(
+        registerBlockNew(RagiumBlocks.AUTO_ILLUMINATOR, blockSettings(Blocks.SMOOTH_STONE)) {
+            HTBlockWithEntity.build(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, it)
+        }
+        registerBlockNew(
+            RagiumBlocks.EXTENDED_PROCESSOR,
+            blockSettings(Blocks.SMOOTH_STONE),
+            ::HTExtendedProcessorBlock,
+        )
+        registerBlockNew(RagiumBlocks.MANUAL_FORGE, blockSettings(Blocks.BRICKS)) {
+            HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, it.nonOpaque())
+        }
+        registerBlockNew(RagiumBlocks.MANUAL_GRINDER, blockSettings(Blocks.BRICKS), ::HTManualGrinderBlock)
+        registerBlockNew(RagiumBlocks.MANUAL_MIXER, blockSettings(Blocks.BRICKS)) {
+            HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_MIXER, it)
+        }
+        registerBlockNew(
+            RagiumBlocks.NETWORK_INTERFACE,
+            blockSettings(Blocks.SMOOTH_STONE),
+            ::HTNetworkInterfaceBlock,
+        )
+        registerBlockNew(RagiumBlocks.OPEN_CRATE, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockNew(RagiumBlocks.TELEPORT_ANCHOR, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockNew(RagiumBlocks.TRASH_BOX, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItemNew(RagiumBlocks.AUTO_ILLUMINATOR) {
+            it.descriptions(
                 Text.translatable(
                     RagiumTranslationKeys.AUTO_ILLUMINATOR,
                     RagiumAPI.getInstance().config.autoIlluminatorRadius,
                 ),
-            ),
-        )
-        registerBlockItem(
-            RagiumBlocks.EXTENDED_PROCESSOR,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.LARGE_PROCESSOR)),
-        )
-        registerBlockItem(RagiumBlocks.MANUAL_FORGE)
-        registerBlockItem(
-            RagiumBlocks.MANUAL_GRINDER,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.MANUAL_GRINDER)),
-        )
-        registerBlockItem(RagiumBlocks.MANUAL_MIXER)
-        registerBlockItem(
-            RagiumBlocks.NETWORK_INTERFACE,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.NETWORK_INTERFACE)),
-        )
-        registerBlockItem(
-            RagiumBlocks.OPEN_CRATE,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.OPEN_CRATE)),
-        )
-        registerBlockItem(RagiumBlocks.TELEPORT_ANCHOR)
-        registerBlockItem(
-            RagiumBlocks.TRASH_BOX,
-            itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.TRASH_BOX)),
-        )
+            )
+        }
+        registerBlockItemNew(RagiumBlocks.EXTENDED_PROCESSOR) {
+            it.descriptions(
+                Text.translatable(
+                    RagiumTranslationKeys.LARGE_PROCESSOR,
+                ),
+            )
+        }
+        registerBlockItemNew(RagiumBlocks.MANUAL_FORGE)
+        registerBlockItemNew(RagiumBlocks.MANUAL_GRINDER) { it.descriptions(Text.translatable(RagiumTranslationKeys.MANUAL_GRINDER)) }
+        registerBlockItemNew(RagiumBlocks.MANUAL_MIXER)
+        registerBlockItemNew(RagiumBlocks.NETWORK_INTERFACE) {
+            it.descriptions(Text.translatable(RagiumTranslationKeys.NETWORK_INTERFACE))
+        }
+        registerBlockItemNew(RagiumBlocks.OPEN_CRATE) { it.descriptions(Text.translatable(RagiumTranslationKeys.OPEN_CRATE)) }
+        registerBlockItemNew(RagiumBlocks.TELEPORT_ANCHOR)
+        registerBlockItemNew(RagiumBlocks.TRASH_BOX) { it.descriptions(Text.translatable(RagiumTranslationKeys.TRASH_BOX)) }
 
-        registerBlockNew(RagiumBlocksNew.BACKPACK_INTERFACE) {
+        registerBlockNew(RagiumBlocks.BACKPACK_INTERFACE) {
             HTBackpackInterfaceBlock(it.mapColor(MapColor.BLACK).requiresTool().strength(2f, 6f))
         }
-        registerBlockNew(RagiumBlocksNew.ENCHANTMENT_BOOKSHELF) {
+        registerBlockNew(RagiumBlocks.ENCHANTMENT_BOOKSHELF) {
             HTBlockWithEntity.build(
                 RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF,
                 it.mapColor(MapColor.OAK_TAN).strength(1.5f).sounds(BlockSoundGroup.WOOD),
             )
         }
-        registerBlockNew(RagiumBlocksNew.ITEM_DISPLAY) {
+        registerBlockNew(RagiumBlocks.ITEM_DISPLAY) {
             HTItemDisplayBlock(it.strength(0.5f).sounds(BlockSoundGroup.GLASS))
         }
-        registerBlockNew(RagiumBlocksNew.ROPE) {
+        registerBlockNew(RagiumBlocks.ROPE) {
             HTRopeBlock(it.mapColor(MapColor.BROWN).strength(0.8F).sounds(BlockSoundGroup.WOOL))
         }
-        registerBlockNew(RagiumBlocksNew.SHAFT) {
+        registerBlockNew(RagiumBlocks.SHAFT) {
             HTThinPillarBlock(it.requiresTool().strength(5f).sounds(BlockSoundGroup.METAL))
         }
-        registerBlockNew(RagiumBlocksNew.INFESTING) {
+        registerBlockNew(RagiumBlocks.INFESTING) {
             HTInfectingBlock(it.ticksRandomly().dropsNothing())
         }
         registerBlockItemNew(
-            RagiumBlocksNew.BACKPACK_INTERFACE,
+            RagiumBlocks.BACKPACK_INTERFACE,
         ) { it.component(RagiumComponentTypes.REWORK_TARGET, Unit) }
         registerBlockItemNew(
-            RagiumBlocksNew.ENCHANTMENT_BOOKSHELF,
+            RagiumBlocks.ENCHANTMENT_BOOKSHELF,
         ) { it.component(RagiumComponentTypes.REWORK_TARGET, Unit) }
-        registerBlockItemNew(RagiumBlocksNew.ITEM_DISPLAY)
+        registerBlockItemNew(RagiumBlocks.ITEM_DISPLAY)
         registerBlockItemNew(
-            RagiumBlocksNew.ROPE,
+            RagiumBlocks.ROPE,
         ) { block: Block, settings: Item.Settings ->
             HTRopeBlockItem(
                 block,
@@ -363,7 +359,7 @@ internal object RagiumContentRegister {
                     .component(RagiumComponentTypes.REWORK_TARGET, Unit),
             )
         }
-        registerBlockItemNew(RagiumBlocksNew.SHAFT)
+        registerBlockItemNew(RagiumBlocks.SHAFT)
     }
 
     @JvmStatic

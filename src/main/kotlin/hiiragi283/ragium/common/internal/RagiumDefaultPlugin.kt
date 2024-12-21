@@ -15,7 +15,7 @@ import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
-import hiiragi283.ragium.common.init.RagiumBlocksNew
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -61,10 +61,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 builder.add(0, -3, 0, HTSimpleBlockPattern(Blocks.BEDROCK))
                 // builder.add(0, -2, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
                 // builder.add(0, -1, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
-                builder.add(-1, 0, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
-                builder.add(0, 0, -1, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
-                builder.add(0, 0, 1, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
-                builder.add(1, 0, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
+                builder.add(-1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(0, 0, -1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(0, 0, 1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                builder.add(1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
                 // frame
                 builder.add(-2, -1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
                 builder.add(0, -1, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
@@ -202,8 +202,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 builder.add(1, 0, 2, HTSimpleBlockPattern(Blocks.STONE_SLAB))
                 builder.addLayer(-1..1, 0, 3..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
                 // middle
-                builder.addLayer(-1..1, 1, 1..1, HTTieredBlockPattern.ofBlock(HTMachineTier::getGlassBlock))
-                builder.addLayer(-1..1, 1, 3..3, HTTieredBlockPattern.ofBlock(HTMachineTier::getGlassBlock))
+                builder.addLayer(-1..1, 1, 1..1, HTTieredBlockPattern.ofContent(HTMachineTier::getGlassBlock))
+                builder.addLayer(-1..1, 1, 3..3, HTTieredBlockPattern.ofContent(HTMachineTier::getGlassBlock))
                 // top
                 builder.addLayer(-1..1, 2, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
             }

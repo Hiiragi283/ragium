@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.RagiumContents.RawMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumBlocksNew
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -58,62 +57,28 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     }
 
     override fun generate() {
-        addDrop(RagiumBlocksNew.CREATIVE_CRATE)
-        addDrop(RagiumBlocksNew.CREATIVE_DRUM)
-        addDrop(RagiumBlocksNew.CREATIVE_EXPORTER)
-        addDrop(RagiumBlocksNew.CREATIVE_SOURCE)
+        addDrop(RagiumBlocks.CREATIVE_CRATE)
+        addDrop(RagiumBlocks.CREATIVE_DRUM)
+        addDrop(RagiumBlocks.CREATIVE_EXPORTER)
+        addDrop(RagiumBlocks.CREATIVE_SOURCE)
 
-        addDrop(RagiumBlocksNew.MUTATED_SOIL)
-        addDrop(RagiumBlocksNew.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
+        addDrop(RagiumBlocks.MUTATED_SOIL)
+        addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
-        // asphalt
-        addDrop(RagiumBlocks.ASPHALT)
-        addDrop(RagiumBlocks.ASPHALT_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.ASPHALT_STAIRS)
-        addDrop(RagiumBlocks.POLISHED_ASPHALT)
-        addDrop(RagiumBlocks.POLISHED_ASPHALT_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.POLISHED_ASPHALT_STAIRS)
-        // gypsum
-        addDrop(RagiumBlocks.GYPSUM)
-        addDrop(RagiumBlocks.GYPSUM_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.GYPSUM_STAIRS)
-        addDrop(RagiumBlocks.POLISHED_GYPSUM)
-        addDrop(RagiumBlocks.POLISHED_GYPSUM_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.POLISHED_GYPSUM_STAIRS)
-        // slate
-        addDrop(RagiumBlocks.SLATE)
-        addDrop(RagiumBlocks.SLATE_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.SLATE_STAIRS)
-        addDrop(RagiumBlocks.POLISHED_SLATE)
-        addDrop(RagiumBlocks.POLISHED_SLATE_SLAB, ::slabDrops)
-        addDrop(RagiumBlocks.POLISHED_SLATE_STAIRS)
-        // white line
-        addDrop(RagiumBlocks.WHITE_LINE)
-        addDrop(RagiumBlocks.T_WHITE_LINE)
-        addDrop(RagiumBlocks.CROSS_WHITE_LINE)
-        // glass
-        addDrop(RagiumBlocks.STEEL_GLASS)
-        addDrop(RagiumBlocks.RAGIUM_GLASS)
+        RagiumBlocks.Stones.entries.forEach(::addDrop)
+        RagiumBlocks.Slabs.entries.forEach { addDrop(it, ::slabDrops) }
+        RagiumBlocks.Stairs.entries.forEach(::addDrop)
+        RagiumBlocks.BUILDINGS.forEach(::addDrop)
 
-        addDrop(RagiumBlocksNew.SPONGE_CAKE)
+        addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(
-            RagiumBlocksNew.SWEET_BERRIES_CAKE,
+            RagiumBlocks.SWEET_BERRIES_CAKE,
             drops(
-                RagiumBlocksNew.SWEET_BERRIES_CAKE.get(),
+                RagiumBlocks.SWEET_BERRIES_CAKE.get(),
                 RagiumItems.SWEET_BERRIES_CAKE_PIECE,
                 ConstantLootNumberProvider.create(8f),
             ),
         )
-
-        addDrop(RagiumBlocks.AUTO_ILLUMINATOR)
-        addDrop(RagiumBlocks.EXTENDED_PROCESSOR)
-        addDrop(RagiumBlocks.MANUAL_FORGE)
-        addDrop(RagiumBlocks.MANUAL_GRINDER)
-        addDrop(RagiumBlocks.MANUAL_MIXER)
-        addDrop(RagiumBlocks.NETWORK_INTERFACE)
-        addDrop(RagiumBlocks.OPEN_CRATE)
-        addDrop(RagiumBlocks.TELEPORT_ANCHOR)
-        addDrop(RagiumBlocks.TRASH_BOX)
 
         RagiumContents.Ores.entries.forEach(::dropOre)
 
@@ -129,7 +94,8 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumContents.PipeStations.entries)
             addAll(RagiumContents.FilteringPipe.entries)
 
-            addAll(RagiumBlocksNew.MISC)
+            addAll(RagiumBlocks.MECHANICS)
+            addAll(RagiumBlocks.MISC)
         }.forEach(::addDrop)
 
         RagiumContents.Crates.entries
