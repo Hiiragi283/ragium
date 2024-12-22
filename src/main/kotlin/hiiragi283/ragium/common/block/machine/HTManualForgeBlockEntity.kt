@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getStackInActiveHand
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.modifyStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -45,7 +46,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
         val stackMain: ItemStack = player.getStackInActiveHand()
-        if (!stackMain.isOf(RagiumItems.FORGE_HAMMER)) {
+        if (!stackMain.isOf(RagiumItemsNew.FORGE_HAMMER)) {
             inventory.modifyStack(0) { stack: ItemStack ->
                 dropStackAt(player, stack)
                 val copies: ItemStack = stackMain.copy()

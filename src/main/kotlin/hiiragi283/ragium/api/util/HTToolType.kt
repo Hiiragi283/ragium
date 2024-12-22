@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.util
 
 import hiiragi283.ragium.api.extension.createToolAttribute
-import hiiragi283.ragium.api.extension.itemSettings
 import net.minecraft.item.*
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
@@ -19,8 +18,16 @@ enum class HTToolType(
     SWORD(::SwordItem, ItemTags.SWORDS, 3.0, -2.0),
     ;
 
-    fun createToolItem(material: ToolMaterial, settings: Item.Settings = itemSettings()): ToolItem = factory(
+    fun createToolItem(material: ToolMaterial, settings: Item.Settings): ToolItem = factory(
         material,
         settings.attributeModifiers(createToolAttribute(material, baseAttack, attackSpeed).build()),
     )
+
+    fun getShapedPattern(): List<String> = when (this) {
+        AXE -> listOf("B ", "BA", "AA")
+        HOE -> listOf("B ", "B ", "AA")
+        PICKAXE -> listOf(" B ", " B ", "AAA")
+        SHOVEL -> listOf("B", "B", "A")
+        SWORD -> listOf("B", "A", "A")
+    }
 }

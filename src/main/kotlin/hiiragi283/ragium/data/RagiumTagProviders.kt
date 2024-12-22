@@ -207,26 +207,28 @@ object RagiumTagProviders {
                 itemCache.put(tagKey, item1)
             }
 
-            add(ItemTags.HEAD_ARMOR, RagiumItemsNew.STEEL_HELMET)
-            add(ItemTags.HEAD_ARMOR, RagiumItemsNew.STELLA_GOGGLE)
-            add(ItemTags.CHEST_ARMOR, RagiumItemsNew.STEEL_CHESTPLATE)
-            add(ItemTags.CHEST_ARMOR, RagiumItemsNew.STELLA_JACKET)
-            add(ItemTags.LEG_ARMOR, RagiumItemsNew.STEEL_LEGGINGS)
-            add(ItemTags.LEG_ARMOR, RagiumItemsNew.STELLA_LEGGINGS)
-            add(ItemTags.FOOT_ARMOR, RagiumItemsNew.STEEL_BOOTS)
-            add(ItemTags.FOOT_ARMOR, RagiumItemsNew.STELLA_BOOTS)
+            RagiumItemsNew.SteelArmors.entries.forEach {
+                add(it.armorType.armorTag, it)
+            }
+            RagiumItemsNew.DeepSteelArmors.entries.forEach {
+                add(it.armorType.armorTag, it)
+            }
+            RagiumItemsNew.StellaSuits.entries.forEach {
+                add(it.armorType.armorTag, it)
+            }
+            RagiumItemsNew.SteelTools.entries.forEach {
+                add(it.toolType.toolTag, it)
+            }
+            RagiumItemsNew.DeepSteelTools.entries.forEach {
+                add(it.toolType.toolTag, it)
+            }
 
-            add(ItemTags.AXES, RagiumItems.GIGANT_HAMMER)
-            add(ItemTags.AXES, RagiumItems.STEEL_AXE)
-            add(ItemTags.HOES, RagiumItems.GIGANT_HAMMER)
-            add(ItemTags.HOES, RagiumItems.STEEL_HOE)
-            add(ItemTags.PICKAXES, RagiumItems.GIGANT_HAMMER)
-            add(ItemTags.PICKAXES, RagiumItems.STEEL_PICKAXE)
-            add(ItemTags.SHOVELS, RagiumItems.GIGANT_HAMMER)
-            add(ItemTags.SHOVELS, RagiumItems.STEEL_SHOVEL)
-            add(ItemTags.SWORDS, RagiumItems.STEEL_SWORD)
-            add(ItemTags.SWORDS, RagiumItems.STELLA_SABER)
-            add(ItemTags.SWORDS, RagiumItems.RAGIUM_SABER)
+            add(ItemTags.AXES, RagiumItemsNew.GIGANT_HAMMER)
+            add(ItemTags.HOES, RagiumItemsNew.GIGANT_HAMMER)
+            add(ItemTags.PICKAXES, RagiumItemsNew.GIGANT_HAMMER)
+            add(ItemTags.SHOVELS, RagiumItemsNew.GIGANT_HAMMER)
+            add(ItemTags.SWORDS, RagiumItemsNew.STELLA_SABER)
+            add(ItemTags.SWORDS, RagiumItemsNew.RAGIUM_SABER)
 
             add(ItemTags.PLANKS, RagiumItemsNew.Plates.WOOD)
             add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
@@ -234,9 +236,9 @@ object RagiumTagProviders {
             add(RagiumItemTags.ALKALI, RagiumItemsNew.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumItemsNew.Dusts.ASH)
 
-            add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItems.FLUID_FILTER)
+            add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItemsNew.FLUID_FILTER)
 
-            add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItems.ITEM_FILTER)
+            add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItemsNew.ITEM_FILTER)
 
             add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
             add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)

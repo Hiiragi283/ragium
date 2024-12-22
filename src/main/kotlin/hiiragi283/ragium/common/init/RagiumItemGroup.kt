@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
 import net.minecraft.registry.Registries
@@ -69,14 +68,23 @@ object RagiumItemGroup {
                 entries.addAll(RagiumBlocks.FOODS)
                 entries.addAll(RagiumItemsNew.FOODS)
 
-                entries.addAll(RagiumItemsNew.ARMORS)
-                entries.addAll(
-                    buildList<Item> {
-                        addAll(RagiumItems.TOOLS)
-                        remove(RagiumItems.BACKPACK)
-                        remove(RagiumItems.FILLED_FLUID_CUBE)
-                    },
-                )
+                entries.addAll(RagiumItemsNew.SteelArmors.entries)
+                entries.addAll(RagiumItemsNew.DeepSteelArmors.entries)
+                entries.addAll(RagiumItemsNew.StellaSuits.entries)
+
+                entries.addAll(RagiumItemsNew.SteelTools.entries)
+                entries.addAll(RagiumItemsNew.DeepSteelTools.entries)
+                entries.add(RagiumItemsNew.FORGE_HAMMER)
+                entries.add(RagiumItemsNew.RAGI_WRENCH)
+                entries.add(RagiumItemsNew.STELLA_SABER)
+                entries.add(RagiumItemsNew.RAGIUM_SABER)
+                entries.add(RagiumItemsNew.GIGANT_HAMMER)
+                entries.addAll(RagiumItemsNew.Dynamites.entries)
+                entries.add(RagiumItemsNew.EMPTY_FLUID_CUBE)
+                entries.add(RagiumItemsNew.FLUID_FILTER)
+                entries.add(RagiumItemsNew.ITEM_FILTER)
+                entries.add(RagiumItemsNew.GUIDE_BOOK)
+                entries.add(RagiumItemsNew.TRADER_CATALOG)
 
                 entries.addAll(RagiumItemsNew.CircuitBoards.entries)
                 entries.addAll(RagiumItemsNew.Circuits.entries)
@@ -92,7 +100,7 @@ object RagiumItemGroup {
 
         register(FLUID_KEY) {
             displayName(Text.translatable("itemGroup.ragium.fluid"))
-            icon { RagiumItems.EMPTY_FLUID_CUBE.defaultStack }
+            icon { RagiumItemsNew.EMPTY_FLUID_CUBE.get().defaultStack }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 Registries.FLUID
                     .filter { it.isStill(it.defaultState) }

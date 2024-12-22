@@ -91,7 +91,7 @@ object RagiumEventHandlers {
                         }
                 }
                 // consume energy when worm stella goggles
-                if (player.armorItems.any { it.isOf(RagiumItemsNew.STELLA_GOGGLE) }) {
+                if (player.armorItems.any { it.isOf(RagiumItemsNew.StellaSuits.GOGGLE) }) {
                     if (!HTMachineTier.BASIC.consumerEnergy(player.world)) {
                         player.removeStatusEffect(StatusEffects.NIGHT_VISION)
                     }
@@ -113,7 +113,7 @@ object RagiumEventHandlers {
         // rotate block by ragi-wrench
         UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.isOf(RagiumItems.RAGI_WRENCH)) {
+            if (stack.isOf(RagiumItemsNew.RAGI_WRENCH)) {
                 val pos: BlockPos = result.blockPos
                 val state: BlockState = world.getBlockState(pos)
                 val handler: HTBlockRotationHandler =

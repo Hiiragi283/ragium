@@ -39,7 +39,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun assembler(exporter: RecipeExporter) {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
+            .itemInput(RagiumItemsNew.EMPTY_FLUID_CUBE)
             .fluidInput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
             .fluidInput(Fluids.WATER)
             .itemOutput(RagiumItems.URANIUM_FUEL)
@@ -48,7 +48,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
+            .itemInput(RagiumItemsNew.EMPTY_FLUID_CUBE)
             .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
             // .itemInput(RagiumItems.NUCLEAR_WASTE, 64)
             .fluidInput(RagiumFluids.AQUA_REGIA)

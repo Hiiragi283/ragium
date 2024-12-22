@@ -199,8 +199,8 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemInput(Items.PAPER)
             .itemInput(ConventionalItemTags.STRINGS)
             .fluidInput(RagiumFluids.NITRO_GLYCERIN)
-            .itemOutput(RagiumItems.DYNAMITE, 2)
-            .offerTo(exporter, RagiumItems.DYNAMITE)
+            .itemOutput(RagiumItemsNew.Dynamites.SIMPLE, 2)
+            .offerTo(exporter, RagiumItemsNew.Dynamites.SIMPLE)
         // TNT
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)

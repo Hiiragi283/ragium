@@ -85,7 +85,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             .offerTo(exporter, RagiumBlocks.Glasses.STEEL, "_from_deep_steel")
         // trader catalog
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.TRADER_CATALOG)
+            .create(RagiumItemsNew.TRADER_CATALOG)
             .input(Items.BOOK)
             .input(RagiumHardModeContents.EMERALD.getContent(hardMode))
             .input(ConventionalItemTags.CHESTS)
@@ -105,7 +105,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                     "AA",
                     "BC",
                 ).input('A', RagiumHardModeContents.STEEL.getContent(hardMode))
-                .input('B', RagiumItems.FORGE_HAMMER)
+                .input('B', RagiumItemsNew.FORGE_HAMMER)
                 .input('C', input)
                 .unlockedBy(input)
                 .offerTo(exporter)
@@ -233,7 +233,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.CANNING_MACHINE,
-            RagiumItems.EMPTY_FLUID_CUBE,
+            RagiumItemsNew.EMPTY_FLUID_CUBE,
         )
         createProcessor(
             exporter,

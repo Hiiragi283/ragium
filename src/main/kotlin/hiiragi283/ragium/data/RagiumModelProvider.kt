@@ -473,18 +473,31 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumItemsNew.Circuits.entries)
             addAll(RagiumItemsNew.PressMolds.entries)
 
-            addAll(RagiumItems.TOOLS)
-            addAll(RagiumItemsNew.ARMORS)
+            addAll(RagiumItemsNew.SteelArmors.entries)
+            addAll(RagiumItemsNew.DeepSteelArmors.entries)
+            addAll(RagiumItemsNew.StellaSuits.entries)
+
+            addAll(RagiumItemsNew.SteelTools.entries)
+            addAll(RagiumItemsNew.DeepSteelTools.entries)
+            addAll(RagiumItemsNew.Dynamites.entries)
+
+            add(RagiumItemsNew.BACKPACK)
+            add(RagiumItemsNew.FLUID_FILTER)
+            add(RagiumItemsNew.FORGE_HAMMER)
+            add(RagiumItemsNew.GUIDE_BOOK)
+            add(RagiumItemsNew.ITEM_FILTER)
+            add(RagiumItemsNew.RAGI_WRENCH)
+            add(RagiumItemsNew.RAGIUM_SABER)
+            add(RagiumItemsNew.STELLA_SABER)
+            add(RagiumItemsNew.TRADER_CATALOG)
+
             addAll(RagiumItemsNew.FOODS)
             addAll(RagiumItems.INGREDIENTS)
             addAll(RagiumItemsNew.MISC)
 
             add(RagiumBlocks.ROPE)
 
-            remove(RagiumItems.GIGANT_HAMMER)
             remove(RagiumItemsNew.CHOCOLATE_APPLE)
-            remove(RagiumItems.EMPTY_FLUID_CUBE)
-            remove(RagiumItems.FILLED_FLUID_CUBE)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
         }.map(ItemConvertible::asItem).forEach(::register)
 
@@ -494,11 +507,11 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             TextureMap.getId(RagiumItems.RAGI_ALLOY_COMPOUND.asItem()),
         )
         registerLayered(
-            RagiumItemsNew.CHOCOLATE_APPLE.asItem(),
+            RagiumItemsNew.CHOCOLATE_APPLE.get(),
             TextureMap.getId(Items.APPLE),
-            TextureMap.getId(RagiumItemsNew.CHOCOLATE_APPLE.asItem()),
+            TextureMap.getId(RagiumItemsNew.CHOCOLATE_APPLE.get()),
         )
-        register(RagiumItems.FILLED_FLUID_CUBE.asItem(), RagiumModels.FILLED_FLUID_CUBE)
+        register(RagiumItemsNew.FILLED_FLUID_CUBE.get(), RagiumModels.FILLED_FLUID_CUBE)
 
         RagiumBlocks.WhiteLines.entries.forEach { content: HTBlockContent ->
             val block: Block = content.get()

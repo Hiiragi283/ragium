@@ -178,7 +178,7 @@ object RagiumClient : ClientModInitializer {
     private fun registerItems() {
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
             stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
-        }, RagiumItems.BACKPACK)
+        }, RagiumItemsNew.BACKPACK.get())
     }
 
     //    Screens    //

@@ -53,7 +53,7 @@ internal object RagiumContentRegister {
         registerEnergyStorages()
         registerTierProviders()
         // Accessory
-        HTAccessoryRegistry.register(RagiumItemsNew.STELLA_GOGGLE) {
+        HTAccessoryRegistry.register(RagiumItemsNew.StellaSuits.GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
             }
@@ -63,9 +63,7 @@ internal object RagiumContentRegister {
             slotType = HTAccessorySlotTypes.FACE
         }
         // Dispenser
-        DispenserBlock.registerProjectileBehavior(RagiumItems.BEDROCK_DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.DYNAMITE)
-        DispenserBlock.registerProjectileBehavior(RagiumItems.FLATTENING_DYNAMITE)
+        RagiumItemsNew.Dynamites.entries.forEach(DispenserBlock::registerProjectileBehavior)
         // Fluid Attributes
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidVariantAttributes.register(
@@ -133,14 +131,14 @@ internal object RagiumContentRegister {
 
     private fun registerFluidStorages() {
         FluidStorage
-            .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE)
+            .combinedItemApiProvider(RagiumItemsNew.EMPTY_FLUID_CUBE.get())
             .register(::HTEmptyFluidCubeStorage)
         RagiumBlocks.Drums.entries
             .map(RagiumBlocks.Drums::asItem)
             .map(FluidStorage::combinedItemApiProvider)
             .forEach { event: Event<FluidStorage.CombinedItemApiProvider> -> event.register(HTTieredFluidItemStorage::find) }
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
+            if (context.itemVariant.isOf(RagiumItemsNew.FILLED_FLUID_CUBE)) {
                 context
                     .itemVariant
                     .componentMap
@@ -148,7 +146,7 @@ internal object RagiumContentRegister {
                     ?.let {
                         FullItemFluidStorage(
                             context,
-                            RagiumItems.EMPTY_FLUID_CUBE,
+                            RagiumItemsNew.EMPTY_FLUID_CUBE.get(),
                             FluidVariant.of(it),
                             FluidConstants.BUCKET,
                         )

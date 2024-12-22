@@ -17,4 +17,11 @@ enum class HTArmorType(val armorTag: TagKey<Item>, val itemType: ArmorItem.Type)
 
     fun createItem(material: RegistryEntry<ArmorMaterial>, multiplier: Int, settings: Settings): ArmorItem =
         ArmorItem(material, itemType, settings.maxDamage(itemType.getMaxDamage(multiplier)))
+
+    fun getShapedPattern(): List<String> = when (this) {
+        HELMET -> listOf("AAA", "A A")
+        CHESTPLATE -> listOf("A A", "AAA", "AAA")
+        LEGGINGS -> listOf("AAA", "A A", "A A")
+        BOOTS -> listOf("A A", "A A")
+    }
 }

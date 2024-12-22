@@ -66,6 +66,8 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         }
     }
 
+    fun patterns(patterns: List<String>): HTShapedRecipeJsonBuilder = patterns(*patterns.toTypedArray())
+
     fun patterns(vararg patterns: String): HTShapedRecipeJsonBuilder = apply {
         when {
             patterns
@@ -101,28 +103,6 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         "A  ",
         "AA ",
         "AAA",
-    )
-
-    fun helmetPattern(): HTShapedRecipeJsonBuilder = patterns(
-        "AAA",
-        "A A",
-    )
-
-    fun chestPlatePattern(): HTShapedRecipeJsonBuilder = patterns(
-        "A A",
-        "AAA",
-        "AAA",
-    )
-
-    fun leggingsPattern(): HTShapedRecipeJsonBuilder = patterns(
-        "AAA",
-        "A A",
-        "A A",
-    )
-
-    fun bootsPattern(): HTShapedRecipeJsonBuilder = patterns(
-        "A A",
-        "A A",
     )
 
     fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = unlockedBy(prefix.createTag(material))

@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 /**
- * Handle [LivingEntity] interaction for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE]
+ * Handle [LivingEntity] interaction for [hiiragi283.ragium.common.init.RagiumItemsNew.FILLED_FLUID_CUBE]
  * @see [HTFluidDrinkingHandlerRegistry]
  */
 fun interface HTFluidDrinkingHandler {

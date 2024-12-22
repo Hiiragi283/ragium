@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.descriptions
 import hiiragi283.ragium.api.extension.openBackpackScreen
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
@@ -24,7 +24,7 @@ class HTBackpackItem(settings: Settings) :
     ) {
     companion object {
         @JvmStatic
-        fun createStack(color: DyeColor): ItemStack = buildItemStack(RagiumItems.BACKPACK) {
+        fun createStack(color: DyeColor): ItemStack = buildItemStack(RagiumItemsNew.BACKPACK) {
             add(RagiumComponentTypes.COLOR, color)
         }
     }

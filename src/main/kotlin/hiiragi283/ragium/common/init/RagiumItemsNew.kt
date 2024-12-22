@@ -3,18 +3,22 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTItemContent
-import hiiragi283.ragium.api.extension.createArmorAttribute
-import hiiragi283.ragium.api.extension.itemSettings
-import hiiragi283.ragium.api.extension.material
-import hiiragi283.ragium.api.extension.tieredText
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTArmorType
+import hiiragi283.ragium.api.util.HTToolType
+import hiiragi283.ragium.common.entity.HTDynamiteEntity
+import hiiragi283.ragium.common.item.*
+import net.minecraft.block.Block
+import net.minecraft.block.Blocks
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
+import net.minecraft.component.type.UnbreakableComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffectInstance
@@ -23,11 +27,20 @@ import net.minecraft.item.ArmorItem
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.Item
 import net.minecraft.item.Items
+import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
+import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.EntityHitResult
+import net.minecraft.util.hit.HitResult
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
+import net.minecraft.util.math.Direction
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.World
 
 object RagiumItemsNew {
     //    Materials    //
@@ -164,199 +177,105 @@ object RagiumItemsNew {
 
     //    Armors    //
 
-    @JvmField
-    val STEEL_HELMET: HTItemContent = HTContent.ofItem("steel_helmet")
+    enum class SteelArmors(val armorType: HTArmorType) : HTItemContent {
+        HELMET(HTArmorType.HELMET),
+        CHESTPLATE(HTArmorType.CHESTPLATE),
+        LEGGINGS(HTArmorType.LEGGINGS),
+        BOOTS(HTArmorType.BOOTS),
+        ;
 
-    @JvmField
-    val STEEL_CHESTPLATE: HTItemContent = HTContent.ofItem("steel_chestplate")
+        override val delegated: HTContent<Item> = HTContent.ofItem("steel_${name.lowercase()}")
+    }
 
-    @JvmField
-    val STEEL_LEGGINGS: HTItemContent = HTContent.ofItem("steel_leggings")
+    enum class DeepSteelArmors(val armorType: HTArmorType) : HTItemContent {
+        HELMET(HTArmorType.HELMET),
+        CHESTPLATE(HTArmorType.CHESTPLATE),
+        LEGGINGS(HTArmorType.LEGGINGS),
+        BOOTS(HTArmorType.BOOTS),
+        ;
 
-    @JvmField
-    val STEEL_BOOTS: HTItemContent = HTContent.ofItem("steel_boots")
+        override val delegated: HTContent<Item> = HTContent.ofItem("deep_steel_${name.lowercase()}")
+    }
 
-    @JvmField
-    val STELLA_GOGGLE: HTItemContent = HTContent.ofItem("stella_goggle")
+    enum class StellaSuits(val armorType: HTArmorType) : HTItemContent {
+        GOGGLE(HTArmorType.HELMET),
+        JACKET(HTArmorType.CHESTPLATE),
+        LEGGINGS(HTArmorType.LEGGINGS),
+        BOOTS(HTArmorType.BOOTS),
+        ;
 
-    @JvmField
-    val STELLA_JACKET: HTItemContent = HTContent.ofItem("stella_jacket")
-
-    @JvmField
-    val STELLA_LEGGINGS: HTItemContent = HTContent.ofItem("stella_leggings")
-
-    @JvmField
-    val STELLA_BOOTS: HTItemContent = HTContent.ofItem("stella_boots")
-
-    @JvmField
-    val ARMORS: List<HTItemContent> = listOf(
-        STEEL_HELMET,
-        STEEL_CHESTPLATE,
-        STEEL_LEGGINGS,
-        STEEL_BOOTS,
-        STELLA_GOGGLE,
-        STELLA_JACKET,
-        STELLA_LEGGINGS,
-        STELLA_BOOTS,
-    )
+        override val delegated: HTContent<Item> = HTContent.ofItem("stella_${name.lowercase()}")
+    }
 
     //    Tools    //
 
-    /*@JvmField
-    val ANVIL_DYNAMITE= HTDynamiteItem(
-        { entity: HTDynamiteEntity, result: HitResult ->
-            val world: World = entity.world
-            when (result) {
-                is BlockHitResult -> {
-                    world.setBlockState(result.blockPos.offset(result.side), Blocks.ANVIL.defaultState)
-                }
-                is EntityHitResult -> {
-                    result.entity.damage(world.damageSources.fallingAnvil(entity), 10f)
-                }
-                else -> {}
-            }
-        },
-        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.ANVIL_DYNAMITE)),
-    )
+    enum class SteelTools(val toolType: HTToolType) : HTItemContent {
+        AXE(HTToolType.AXE),
+        HOE(HTToolType.HOE),
+        PICKAXE(HTToolType.PICKAXE),
+        SHOVEL(HTToolType.SHOVEL),
+        SWORD(HTToolType.SWORD),
+        ;
+
+        override val delegated: HTContent<Item> = HTContent.ofItem("steel_${name.lowercase()}")
+    }
+
+    enum class DeepSteelTools(val toolType: HTToolType) : HTItemContent {
+        AXE(HTToolType.AXE),
+        HOE(HTToolType.HOE),
+        PICKAXE(HTToolType.PICKAXE),
+        SHOVEL(HTToolType.SHOVEL),
+        SWORD(HTToolType.SWORD),
+        ;
+
+        override val delegated: HTContent<Item> = HTContent.ofItem("deep_steel_${name.lowercase()}")
+    }
+
+    enum class Dynamites(name: String) : HTItemContent {
+        SIMPLE(""),
+        ANVIL("anvil_"),
+        BEDROCK("bedrock_"),
+        FLATTENING("flattening_"),
+        ;
+
+        override val delegated: HTContent<Item> = HTContent.ofItem(name + "dynamite")
+    }
 
     @JvmField
-    val BACKPACK: Item = HTBackpackItem
+    val BACKPACK: HTItemContent = HTContent.ofItem("backpack")
 
     @JvmField
-    val BEDROCK_DYNAMITE: Item = HTDynamiteItem(
-        { entity: HTDynamiteEntity, result: HitResult ->
-            if (result is BlockHitResult) {
-                val world: World = entity.world
-                val bottomY: Int = world.bottomY
-                ChunkPos(result.blockPos).forEach(bottomY + 1..bottomY + 5) { pos ->
-                    if (world.getBlockState(pos).isOf(Blocks.BEDROCK)) {
-                        world.removeBlock(pos, false)
-                    }
-                }
-            }
-        },
-        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.BEDROCK_DYNAMITE)),
-    )
+    val EMPTY_FLUID_CUBE: HTItemContent = HTContent.ofItem("empty_fluid_cube")
 
     @JvmField
-    val DYNAMITE: Item = HTDynamiteItem(
-        { entity: HTDynamiteEntity, result: HitResult ->
-            val pos: Vec3d = result.pos
-            entity.stack
-                .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT)
-                .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
-        },
-        itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT),
-    )
+    val FILLED_FLUID_CUBE: HTItemContent = HTContent.ofItem("filled_fluid_cube")
 
     @JvmField
-    val EMPTY_FLUID_CUBE: Item = Item(itemSettings())
+    val FLUID_FILTER: HTItemContent = HTContent.ofItem("fluid_filter")
 
     @JvmField
-    val FILLED_FLUID_CUBE: Item = HTFilledFluidCubeItem
+    val FORGE_HAMMER: HTItemContent = HTContent.ofItem("forge_hammer")
 
     @JvmField
-    val FLATTENING_DYNAMITE: Item = HTDynamiteItem(
-        { entity: HTDynamiteEntity, result: HitResult ->
-            if (result is BlockHitResult) {
-                val world: World = entity.world
-                val pos: BlockPos = result.blockPos
-                val hitY: Int = pos.y
-                val minY: Int = when (result.side) {
-                    Direction.UP -> hitY + 1
-                    else -> hitY
-                }
-                ChunkPos(pos).forEach(minY..world.height) { pos: BlockPos ->
-                    world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
-                }
-            }
-        },
-        itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.FLATTENING_DYNAMITE)),
-    )
+    val GIGANT_HAMMER: HTItemContent = HTContent.ofItem("gigant_hammer")
 
     @JvmField
-    val FLUID_FILTER: Item = Item(
-        itemSettings()
-            .maxCount(1)
-            .descriptions(Text.translatable(RagiumTranslationKeys.FILTER)),
-    )
+    val GUIDE_BOOK: HTItemContent = HTContent.ofItem("guide_book")
 
     @JvmField
-    val FORGE_HAMMER: Item = HTForgeHammerItem
+    val ITEM_FILTER: HTItemContent = HTContent.ofItem("item_filter")
 
     @JvmField
-    val GUIDE_BOOK: Item = HTGuideBookItem
+    val RAGI_WRENCH: HTItemContent = HTContent.ofItem("ragi_wrench")
 
     @JvmField
-    val ITEM_FILTER: Item = Item(
-        itemSettings()
-            .maxCount(1)
-            .descriptions(Text.translatable(RagiumTranslationKeys.FILTER)),
-    )
+    val STELLA_SABER: HTItemContent = HTContent.ofItem("stella_saber")
 
     @JvmField
-    val RAGI_WRENCH: Item = Item(itemSettings().maxCount(1).descriptions(Text.translatable(RagiumTranslationKeys.RAGI_WRENCH)))
+    val RAGIUM_SABER: HTItemContent = HTContent.ofItem("ragium_saber")
 
     @JvmField
-    val STEEL_AXE: Item = HTToolType.AXE.createToolItem(RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STEEL_HOE: Item = HTToolType.HOE.createToolItem(RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STEEL_PICKAXE: Item = HTToolType.PICKAXE.createToolItem(RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STEEL_SHOVEL: Item = HTToolType.SHOVEL.createToolItem(RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STEEL_SWORD: Item = HTToolType.SWORD.createToolItem(RagiumToolMaterials.STEEL)
-
-    @JvmField
-    val STELLA_SABER: Item =
-        HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, itemSettings().rarity(Rarity.RARE))
-
-    @JvmField
-    val RAGIUM_SABER: Item = SwordItem(
-        RagiumToolMaterials.STELLA,
-        itemSettings()
-            .rarity(Rarity.EPIC)
-            .attributeModifiers(createToolAttribute(RagiumToolMaterials.STELLA, 7.0, 0.0).build()),
-    )
-
-    @JvmField
-    val GIGANT_HAMMER: Item = HTGigantHammerItem
-
-    @JvmField
-    val TRADER_CATALOG: Item = HTTraderCatalogItem
-
-    @JvmField
-    val TOOLS: List<Item> = listOf(
-        // damageable tool
-        FORGE_HAMMER,
-        STEEL_AXE,
-        STEEL_HOE,
-        STEEL_PICKAXE,
-        STEEL_SHOVEL,
-        STEEL_SWORD,
-        STELLA_SABER,
-        RAGIUM_SABER,
-        GIGANT_HAMMER,
-        // dynamite
-        DYNAMITE,
-        ANVIL_DYNAMITE,
-        BEDROCK_DYNAMITE,
-        FLATTENING_DYNAMITE,
-        // non-damageable tool
-        BACKPACK,
-        EMPTY_FLUID_CUBE,
-        FILLED_FLUID_CUBE,
-        FLUID_FILTER,
-        GUIDE_BOOK,
-        ITEM_FILTER,
-        RAGI_WRENCH,
-        TRADER_CATALOG,
-    )*/
+    val TRADER_CATALOG: HTItemContent = HTContent.ofItem("trader_catalog")
 
     //    Foods    //
 
@@ -653,7 +572,7 @@ object RagiumItemsNew {
         }.forEach { content ->
             registerItem(content) { Item(it.material(content.material, content.tagPrefix)) }
         }
-        RagiumItemsNew.CircuitBoards.entries.forEach { board: RagiumItemsNew.CircuitBoards ->
+        CircuitBoards.entries.forEach { board: CircuitBoards ->
             registerItem(board) {
                 Item(
                     it.tieredText(
@@ -663,7 +582,7 @@ object RagiumItemsNew {
                 )
             }
         }
-        RagiumItemsNew.Circuits.entries.forEach { circuit: RagiumItemsNew.Circuits ->
+        Circuits.entries.forEach { circuit: Circuits ->
             registerItem(circuit) {
                 Item(
                     it.tieredText(
@@ -673,21 +592,23 @@ object RagiumItemsNew {
                 )
             }
         }
-        RagiumItemsNew.PressMolds.entries.forEach(::registerItem)
+        PressMolds.entries.forEach(::registerItem)
         // armor
-        registerArmor(STEEL_HELMET, HTArmorType.HELMET, RagiumArmorMaterials.STEEL, 25)
-        registerArmor(STEEL_CHESTPLATE, HTArmorType.CHESTPLATE, RagiumArmorMaterials.STEEL, 25)
-        registerArmor(STEEL_LEGGINGS, HTArmorType.LEGGINGS, RagiumArmorMaterials.STEEL, 25)
-        registerArmor(STEEL_BOOTS, HTArmorType.BOOTS, RagiumArmorMaterials.STEEL, 25)
+        SteelArmors.entries.forEach {
+            registerArmor(it, it.armorType, RagiumArmorMaterials.STEEL, 25)
+        }
+        DeepSteelArmors.entries.forEach {
+            registerArmor(it, it.armorType, RagiumArmorMaterials.DEEP_STEEL, 33)
+        }
         registerArmor(
-            STELLA_GOGGLE,
+            StellaSuits.GOGGLE,
             HTArmorType.HELMET,
             RagiumArmorMaterials.STELLA,
             33,
             itemSettings().rarity(Rarity.EPIC),
         )
         registerArmor(
-            STELLA_JACKET,
+            StellaSuits.JACKET,
             HTArmorType.CHESTPLATE,
             RagiumArmorMaterials.STELLA,
             33,
@@ -715,7 +636,7 @@ object RagiumItemsNew {
                 ),
         )
         registerArmor(
-            STELLA_LEGGINGS,
+            StellaSuits.LEGGINGS,
             HTArmorType.LEGGINGS,
             RagiumArmorMaterials.STELLA,
             33,
@@ -743,7 +664,7 @@ object RagiumItemsNew {
                 ),
         )
         registerArmor(
-            STELLA_BOOTS,
+            StellaSuits.BOOTS,
             HTArmorType.BOOTS,
             RagiumArmorMaterials.STELLA,
             33,
@@ -770,6 +691,145 @@ object RagiumItemsNew {
                         ).build(),
                 ),
         )
+        // steel tool
+        SteelTools.entries.forEach { tool: SteelTools ->
+            registerItem(tool) {
+                tool.toolType.createToolItem(RagiumToolMaterials.STEEL, it)
+            }
+        }
+        // deep steel tool
+        DeepSteelTools.entries.forEach { tool: DeepSteelTools ->
+            registerItem(tool) {
+                tool.toolType.createToolItem(RagiumToolMaterials.DEEP_STEEL, it)
+            }
+        }
+        // dynamite
+        registerItem(
+            Dynamites.SIMPLE,
+            itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT),
+        ) {
+            HTDynamiteItem(
+                { entity: HTDynamiteEntity, result: HitResult ->
+                    val pos: Vec3d = result.pos
+                    entity.stack
+                        .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT)
+                        .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
+                },
+                it,
+            )
+        }
+        registerItem(
+            Dynamites.ANVIL,
+            itemSettings().descriptions(RagiumTranslationKeys.ANVIL_DYNAMITE),
+        ) {
+            HTDynamiteItem(
+                { entity: HTDynamiteEntity, result: HitResult ->
+                    val world: World = entity.world
+                    when (result) {
+                        is BlockHitResult -> {
+                            world.setBlockState(result.blockPos.offset(result.side), Blocks.ANVIL.defaultState)
+                        }
+
+                        is EntityHitResult -> {
+                            result.entity.damage(world.damageSources.fallingAnvil(entity), 10f)
+                        }
+
+                        else -> {}
+                    }
+                },
+                it,
+            )
+        }
+        registerItem(
+            Dynamites.BEDROCK,
+            itemSettings().descriptions(RagiumTranslationKeys.BEDROCK_DYNAMITE),
+        ) {
+            HTDynamiteItem(
+                { entity: HTDynamiteEntity, result: HitResult ->
+                    if (result is BlockHitResult) {
+                        val world: World = entity.world
+                        val bottomY: Int = world.bottomY
+                        ChunkPos(result.blockPos).forEach(bottomY + 1..bottomY + 5) { pos ->
+                            if (world.getBlockState(pos).isOf(Blocks.BEDROCK)) {
+                                world.removeBlock(pos, false)
+                            }
+                        }
+                    }
+                },
+                it,
+            )
+        }
+        registerItem(
+            Dynamites.FLATTENING,
+            itemSettings().descriptions(RagiumTranslationKeys.FLATTENING_DYNAMITE),
+        ) {
+            HTDynamiteItem(
+                { entity: HTDynamiteEntity, result: HitResult ->
+                    if (result is BlockHitResult) {
+                        val world: World = entity.world
+                        val pos: BlockPos = result.blockPos
+                        val hitY: Int = pos.y
+                        val minY: Int = when (result.side) {
+                            Direction.UP -> hitY + 1
+                            else -> hitY
+                        }
+                        ChunkPos(pos).forEach(minY..world.height) { pos: BlockPos ->
+                            world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
+                        }
+                    }
+                },
+                it,
+            )
+        }
+
+        registerItem(BACKPACK, item = ::HTBackpackItem)
+        registerItem(EMPTY_FLUID_CUBE)
+        registerItem(FILLED_FLUID_CUBE, item = ::HTFilledFluidCubeItem)
+        registerItem(FLUID_FILTER, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.FILTER))
+        registerItem(FORGE_HAMMER, itemSettings().maxDamage(63), ::HTForgeHammerItem)
+        registerItem(
+            GIGANT_HAMMER,
+            itemSettings()
+                .component(DataComponentTypes.UNBREAKABLE, UnbreakableComponent(true))
+                .maxCount(1)
+                .rarity(Rarity.EPIC)
+                .attributeModifiers(
+                    createToolAttribute(ToolMaterials.NETHERITE, 15.0, -3.0)
+                        .add(
+                            EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,
+                            EntityAttributeModifier(
+                                RagiumAPI.id("gigant_hammer_range"),
+                                12.0,
+                                EntityAttributeModifier.Operation.ADD_VALUE,
+                            ),
+                            AttributeModifierSlot.MAINHAND,
+                        ).add(
+                            EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
+                            EntityAttributeModifier(
+                                RagiumAPI.id("gigant_hammer_range"),
+                                12.0,
+                                EntityAttributeModifier.Operation.ADD_VALUE,
+                            ),
+                            AttributeModifierSlot.MAINHAND,
+                        ).build(),
+                ),
+            ::HTGigantHammerItem,
+        )
+        registerItem(GUIDE_BOOK, itemSettings().maxCount(1), ::HTGuideBookItem)
+        registerItem(ITEM_FILTER, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.FILTER))
+        registerItem(RAGI_WRENCH, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.RAGI_WRENCH))
+        registerItem(STELLA_SABER, itemSettings().rarity(Rarity.RARE)) {
+            HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, it)
+        }
+        registerItem(
+            RAGIUM_SABER,
+            itemSettings()
+                .rarity(Rarity.EPIC)
+                .attributeModifiers(createToolAttribute(RagiumToolMaterials.STELLA, 7.0, 0.0).build()),
+        ) {
+            HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, it)
+        }
+        registerItem(TRADER_CATALOG, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.TRADER_CATALOG), ::HTTraderCatalogItem)
         // food
         registerItem(
             SWEET_BERRIES_CAKE_PIECE,
@@ -819,30 +879,6 @@ object RagiumItemsNew {
         registerItem(COOKED_MEAT_INGOT, itemSettings().food(FoodComponents.COOKED_BEEF))
         // misc
         registerItem(RAGI_TICKET, itemSettings().rarity(Rarity.EPIC))
-
-        registerItem("forge_hammer", RagiumItems.FORGE_HAMMER)
-        registerItem("steel_axe", RagiumItems.STEEL_AXE)
-        registerItem("steel_hoe", RagiumItems.STEEL_HOE)
-        registerItem("steel_pickaxe", RagiumItems.STEEL_PICKAXE)
-        registerItem("steel_shovel", RagiumItems.STEEL_SHOVEL)
-        registerItem("steel_sword", RagiumItems.STEEL_SWORD)
-        registerItem("stella_saber", RagiumItems.STELLA_SABER)
-        registerItem("ragium_saber", RagiumItems.RAGIUM_SABER)
-        registerItem("gigant_hammer", RagiumItems.GIGANT_HAMMER)
-
-        registerItem("dynamite", RagiumItems.DYNAMITE)
-        registerItem("anvil_dynamite", RagiumItems.ANVIL_DYNAMITE)
-        registerItem("bedrock_dynamite", RagiumItems.BEDROCK_DYNAMITE)
-        registerItem("flattening_dynamite", RagiumItems.FLATTENING_DYNAMITE)
-
-        registerItem("backpack", RagiumItems.BACKPACK)
-        registerItem("empty_fluid_cube", RagiumItems.EMPTY_FLUID_CUBE)
-        registerItem("filled_fluid_cube", RagiumItems.FILLED_FLUID_CUBE)
-        registerItem("fluid_filter", RagiumItems.FLUID_FILTER)
-        registerItem("guide_book", RagiumItems.GUIDE_BOOK)
-        registerItem("item_filter", RagiumItems.ITEM_FILTER)
-        registerItem("ragi_wrench", RagiumItems.RAGI_WRENCH)
-        registerItem("trader_catalog", RagiumItems.TRADER_CATALOG)
 
         registerItem("bee_wax", RagiumItems.BEE_WAX)
         registerItem("pulp", RagiumItems.PULP)

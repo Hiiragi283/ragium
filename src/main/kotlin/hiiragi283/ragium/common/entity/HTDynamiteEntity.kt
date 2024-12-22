@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.entity
 
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
@@ -22,7 +22,7 @@ class HTDynamiteEntity : ThrownItemEntity {
         this.action = action
     }
 
-    override fun getDefaultItem(): Item = RagiumItems.DYNAMITE
+    override fun getDefaultItem(): Item = RagiumItemsNew.Dynamites.SIMPLE.asItem()
 
     override fun onCollision(hitResult: HitResult) {
         super.onCollision(hitResult)

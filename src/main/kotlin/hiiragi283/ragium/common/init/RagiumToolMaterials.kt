@@ -15,8 +15,12 @@ enum class RagiumToolMaterials(
     private val repairment: () -> Ingredient,
 ) : ToolMaterial {
     STEEL(
-        ToolMaterials.DIAMOND,
+        ToolMaterials.IRON,
         { Ingredient.fromTag(RagiumItemsNew.Ingots.STEEL.prefixedTagKey) },
+    ),
+    DEEP_STEEL(
+        ToolMaterials.DIAMOND,
+        { Ingredient.fromTag(RagiumItemsNew.Ingots.DEEP_STEEL.prefixedTagKey) },
     ),
     STELLA(
         ToolMaterials.NETHERITE,

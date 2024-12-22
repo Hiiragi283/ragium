@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -45,7 +45,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         mapOf(0 to HTStorageIO.INPUT, 1 to HTStorageIO.OUTPUT),
     ) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean =
-            stack.isOf(RagiumItems.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItems.FILLED_FLUID_CUBE)
+            stack.isOf(RagiumItemsNew.EMPTY_FLUID_CUBE) || stack.isOf(RagiumItemsNew.FILLED_FLUID_CUBE)
     }
 
     private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
@@ -73,12 +73,12 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(world: World, pos: BlockPos): HTUnitResult {
         val cubeStack: ItemStack = inventory.getStack(0)
         return when {
-            cubeStack.isOf(RagiumItems.EMPTY_FLUID_CUBE) ->
+            cubeStack.isOf(RagiumItemsNew.EMPTY_FLUID_CUBE) ->
                 fluidStorage
                     .getStorage(0)
                     .unitMap { tryInsertCube(cubeStack, it) }
 
-            cubeStack.isOf(RagiumItems.FILLED_FLUID_CUBE) ->
+            cubeStack.isOf(RagiumItemsNew.FILLED_FLUID_CUBE) ->
                 fluidStorage
                     .getStorage(1)
                     .unitMap { tryExtractCube(cubeStack, it) }
@@ -114,7 +114,7 @@ class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
         val cubeStorage: Storage<FluidVariant> =
             FluidStorage.ITEM.findFromStack(stack)
                 ?: return HTUnitResult.errorString { "Failed to find fluid storage from cube" }
-        val emptyResult = HTItemResult(RagiumItems.EMPTY_FLUID_CUBE)
+        val emptyResult = HTItemResult(RagiumItemsNew.EMPTY_FLUID_CUBE)
         if (!emptyResult.canMerge(inventory.getStack(1))) return HTUnitResult.errorString { "Failed to merge result into output!" }
         val cubeResource: FluidVariant = StorageUtil.findStoredResource(cubeStorage)
             ?: return HTUnitResult.errorString { "No extractable fluid in given cube!" }

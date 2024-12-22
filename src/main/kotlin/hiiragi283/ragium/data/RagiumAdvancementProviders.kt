@@ -233,7 +233,7 @@ object RagiumAdvancementProviders {
         InventoryChangedCriterion.Conditions.items(
             ItemPredicate.Builder
                 .create()
-                .items(RagiumItems.FILLED_FLUID_CUBE)
+                .items(RagiumItemsNew.FILLED_FLUID_CUBE)
                 .component(
                     ComponentPredicate
                         .builder()
@@ -362,16 +362,11 @@ object RagiumAdvancementProviders {
                 consumer,
                 "progress/stella_suit",
                 ragium,
-                RagiumItemsNew.STELLA_GOGGLE,
+                RagiumItemsNew.StellaSuits.GOGGLE,
                 title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT),
                 frame = AdvancementFrame.CHALLENGE,
             ) {
-                hasAllItems(
-                    RagiumItemsNew.STELLA_GOGGLE,
-                    RagiumItemsNew.STELLA_JACKET,
-                    RagiumItemsNew.STELLA_LEGGINGS,
-                    RagiumItemsNew.STELLA_BOOTS,
-                )
+                hasAllItems(*RagiumItemsNew.StellaSuits.values())
             }
         }
     }
@@ -617,9 +612,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/dynamite",
                 mixtureAcid,
-                RagiumItems.DYNAMITE,
+                RagiumItemsNew.Dynamites.SIMPLE,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.DYNAMITE) }
+            ) { hasAllItems(RagiumItemsNew.Dynamites.SIMPLE) }
             // alkali
             val alkali: AdvancementEntry = createContentChild(
                 consumer,
