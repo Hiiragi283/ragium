@@ -20,7 +20,7 @@ import net.minecraft.util.math.GlobalPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
-object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL))) {
+class HTWarpedCrystalItem(settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         user.itemCooldownManager.set(this, 20)

@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addAllContents
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity
 import hiiragi283.ragium.common.block.entity.HTCreativeSourceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTEnchantmentBookshelfBlockEntity
@@ -175,14 +174,14 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        EXPORTER.addAllContents(RagiumContents.Exporters.entries)
-        FILTERING_PIPE.addAllContents(RagiumContents.FilteringPipe.entries)
-        PIPE.addAllContents(RagiumContents.Pipes.entries)
+        EXPORTER.addAllContents(RagiumBlocks.Exporters.entries)
+        FILTERING_PIPE.addAllContents(RagiumBlocks.FilteringPipes.entries)
+        PIPE.addAllContents(RagiumBlocks.Pipes.entries)
 
-        CRATE.addAllContents(RagiumContents.Crates.entries)
-        DRUM.addAllContents(RagiumContents.Drums.entries)
+        CRATE.addAllContents(RagiumBlocks.Crates.entries)
+        DRUM.addAllContents(RagiumBlocks.Drums.entries)
 
-        CREATIVE_EXPORTER.add(RagiumBlocks.CREATIVE_EXPORTER)
+        CREATIVE_EXPORTER.add(RagiumBlocks.Creatives.EXPORTER)
         EXTENDED_PROCESSOR.add(RagiumBlocks.EXTENDED_PROCESSOR)
         ITEM_DISPLAY.add(RagiumBlocks.ITEM_DISPLAY)
         MANUAL_FORGE.add(RagiumBlocks.MANUAL_FORGE)

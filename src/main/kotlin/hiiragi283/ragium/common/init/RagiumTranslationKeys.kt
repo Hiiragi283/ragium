@@ -16,10 +16,13 @@ object RagiumTranslationKeys {
     const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
     const val MUTATED_SOIL = "tooltip.ragium.block.mutated_soil"
     const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"
+    const val OBSIDIAN_GLASS = "tooltip.ragium.block.obsidian_glass"
     const val OPEN_CRATE = "tooltip.ragium.block.open_crate"
     const val PIPE_STATION = "tooltip.ragium.block.pipe_station"
     const val POROUS_NETHERRACK = "tooltip.ragium.block.porous_netherrack"
+    const val RAGIUM_GLASS = "tooltip.ragium.block.ragium_glass"
     const val SPONGE_CAKE = "tooltip.ragium.block.sponge_cake"
+    const val STEEL_GLASS = "tooltip.ragium.block.steel_glass"
     const val TRASH_BOX = "tooltip.ragium.block.trash_box"
 
     const val CRATE_CAPACITY = "tooltip.ragium.block.crate_capacity"

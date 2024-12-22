@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -15,7 +14,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.*
 import net.minecraft.world.World
 
-object HTFilledFluidCubeItem : Item(itemSettings()) {
+class HTFilledFluidCubeItem(settings: Settings) : Item(settings) {
     override fun getName(stack: ItemStack): Text = stack
         .get(RagiumComponentTypes.FLUID)
         ?.name

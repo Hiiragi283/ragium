@@ -4,10 +4,7 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTFluidInteractable
 import hiiragi283.ragium.api.tags.RagiumItemTags
@@ -50,7 +47,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     HTBlockEntityBase(type, pos, state),
     NamedScreenHandlerFactory,
     SidedStorageBlockEntity,
-    HTFluidInteractable {
+    HTFluidInteractable,
+    HTMachineTierProvider {
     abstract var key: HTMachineKey
         protected set
     val definition: HTMachineDefinition
@@ -62,7 +60,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
     val isActive: Boolean
         get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
-    val tier: HTMachineTier
+    override val tier: HTMachineTier
         get() = cachedState.getOrDefault(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
 
     private var errorMessage: String? = null
@@ -113,7 +111,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         hit: BlockHitResult,
     ): ActionResult {
         // Open slot config screen when holding xxx
-        /*if (player.getStackInActiveHand().isOf(RagiumContents.Circuits.PRIMITIVE)) {
+        /*if (player.getStackInActiveHand().isOf(RagiumItemsNew.Circuits.PRIMITIVE)) {
             if (!world.isClient) {
                 player.openHandledScreen(configScreenFactory)
             }

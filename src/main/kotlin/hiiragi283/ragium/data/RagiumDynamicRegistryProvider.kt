@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFeatures
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -233,13 +232,13 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 listOf(
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.STONE_ORE_REPLACEABLES),
-                        RagiumContents.Ores.CRUDE_RAGINITE
+                        RagiumBlocks.Ores.CRUDE_RAGINITE
                             .get()
                             .defaultState,
                     ),
                     OreFeatureConfig.createTarget(
                         TagMatchRuleTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
-                        RagiumContents.Ores.DEEP_RAGINITE
+                        RagiumBlocks.Ores.DEEP_RAGINITE
                             .get()
                             .defaultState,
                     ),
@@ -251,7 +250,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 listOf(
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.NETHERRACK),
-                        RagiumContents.Ores.NETHER_RAGINITE
+                        RagiumBlocks.Ores.NETHER_RAGINITE
                             .get()
                             .defaultState,
                     ),
@@ -263,7 +262,7 @@ class RagiumDynamicRegistryProvider(output: FabricDataOutput, registriesFuture: 
                 listOf(
                     OreFeatureConfig.createTarget(
                         BlockMatchRuleTest(Blocks.END_STONE),
-                        RagiumContents.Ores.END_RAGI_CRYSTAL
+                        RagiumBlocks.Ores.END_RAGI_CRYSTAL
                             .get()
                             .defaultState,
                     ),

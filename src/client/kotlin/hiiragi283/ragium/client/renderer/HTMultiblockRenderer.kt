@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.renderer
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -12,8 +13,12 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
-data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val consumerProvider: VertexConsumerProvider) :
-    HTMultiblockBuilder {
+data class HTMultiblockRenderer(
+    val world: World,
+    val matrix: MatrixStack,
+    val consumerProvider: VertexConsumerProvider,
+    val provider: HTMultiblockProvider,
+) : HTMultiblockBuilder {
     companion object {
         @JvmField
         val DUMMY_POS = BlockPos(0, 260, 0)
@@ -28,6 +33,6 @@ data class HTMultiblockRenderer(val world: World, val matrix: MatrixStack, val c
         z: Int,
         pattern: HTMultiblockPattern,
     ) {
-        HTMultiblockPatternRendererRegistry.render(x, y, z, pattern, world, matrix, consumerProvider, RANDOM)
+        HTMultiblockPatternRendererRegistry.render(provider, x, y, z, pattern, world, matrix, consumerProvider, RANDOM)
     }
 }

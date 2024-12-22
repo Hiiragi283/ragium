@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import hiiragi283.ragium.common.internal.RagiumCompatRegister
 import hiiragi283.ragium.common.internal.RagiumContentRegister
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import net.fabricmc.api.ModInitializer
@@ -29,7 +28,9 @@ object RagiumCommon : ModInitializer {
             RagiumRecipeSerializers
             RagiumRecipeTypes
 
-            RagiumContentRegister.registerContents()
+            RagiumBlocks.register()
+            RagiumItemsNew.register()
+            RagiumFluids.register()
             InternalRagiumAPI.registerMachines()
 
             RagiumBlockEntityTypes.init()
@@ -39,7 +40,7 @@ object RagiumCommon : ModInitializer {
             RagiumItemGroup.init()
             RagiumNetworks
 
-            RagiumCompatRegister.initRegistry()
+            RagiumContentRegister.initRegistry()
 
             RagiumAPI.LOGGER.info("Ragium initialized!")
         }

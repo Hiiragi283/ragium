@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -71,48 +71,47 @@ object RagiumTagProviders {
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
 
             buildList {
-                addAll(RagiumContents.Ores.entries)
-                addAll(RagiumContents.StorageBlocks.entries)
-                addAll(RagiumContents.Grates.entries)
-                addAll(RagiumContents.Casings.entries)
-                addAll(RagiumContents.Hulls.entries)
-                addAll(RagiumContents.Coils.entries)
+                addAll(RagiumBlocks.Ores.entries)
+                addAll(RagiumBlocks.StorageBlocks.entries)
+                addAll(RagiumBlocks.Grates.entries)
+                addAll(RagiumBlocks.Casings.entries)
+                addAll(RagiumBlocks.Hulls.entries)
+                addAll(RagiumBlocks.Coils.entries)
 
-                addAll(RagiumContents.Exporters.entries)
-                addAll(RagiumContents.Pipes.entries)
-                addAll(RagiumContents.CrossPipes.entries)
-                addAll(RagiumContents.PipeStations.entries)
-                addAll(RagiumContents.FilteringPipe.entries)
+                addAll(RagiumBlocks.Exporters.entries)
+                addAll(RagiumBlocks.Pipes.entries)
+                addAll(RagiumBlocks.CrossPipes.entries)
+                addAll(RagiumBlocks.PipeStations.entries)
+                addAll(RagiumBlocks.FilteringPipes.entries)
 
-                addAll(RagiumContents.Crates.entries)
-                addAll(RagiumContents.Drums.entries)
+                addAll(RagiumBlocks.Crates.entries)
+                addAll(RagiumBlocks.Drums.entries)
 
-                addAll(RagiumBlocks.CREATIVES)
+                addAll(RagiumBlocks.Creatives.entries)
                 addAll(RagiumBlocks.Stones.entries)
                 addAll(RagiumBlocks.Slabs.entries)
                 addAll(RagiumBlocks.Stairs.entries)
-                add(RagiumBlocks.STEEL_GLASS)
-                add(RagiumBlocks.RAGIUM_GLASS)
+                addAll(RagiumBlocks.Glasses.entries)
                 addAll(RagiumBlocks.MECHANICS)
                 addAll(RagiumBlocks.MISC)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
 
             add(BlockTags.CLIMBABLE, RagiumBlocks.ROPE)
 
-            RagiumContents.Ores.entries.forEach { ore: RagiumContents.Ores ->
+            RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore)
             }
 
             buildList {
-                addAll(RagiumContents.Exporters.entries)
-                addAll(RagiumContents.Pipes.entries)
-                addAll(RagiumContents.CrossPipes.entries)
-                addAll(RagiumContents.PipeStations.entries)
-                addAll(RagiumContents.FilteringPipe.entries)
+                addAll(RagiumBlocks.Exporters.entries)
+                addAll(RagiumBlocks.Pipes.entries)
+                addAll(RagiumBlocks.CrossPipes.entries)
+                addAll(RagiumBlocks.PipeStations.entries)
+                addAll(RagiumBlocks.FilteringPipes.entries)
             }.forEach { add(RagiumBlockTags.PIPE_CONNECTABLES, it) }
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_CRATE)
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_DRUM)
-            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.CREATIVE_EXPORTER)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.Creatives.CRATE)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.Creatives.DRUM)
+            add(RagiumBlockTags.PIPE_CONNECTABLES, RagiumBlocks.Creatives.EXPORTER)
 
             blockCache.asMap().forEach { (tagKey: TagKey<Block>, blocks: Collection<Block>) ->
                 blocks.sortedBy(Registries.BLOCK::getId).forEach { block: Block ->
@@ -208,14 +207,14 @@ object RagiumTagProviders {
                 itemCache.put(tagKey, item1)
             }
 
-            add(ItemTags.HEAD_ARMOR, RagiumItems.STEEL_HELMET)
-            add(ItemTags.HEAD_ARMOR, RagiumItems.STELLA_GOGGLE)
-            add(ItemTags.CHEST_ARMOR, RagiumItems.STEEL_CHESTPLATE)
-            add(ItemTags.CHEST_ARMOR, RagiumItems.STELLA_JACKET)
-            add(ItemTags.LEG_ARMOR, RagiumItems.STEEL_LEGGINGS)
-            add(ItemTags.LEG_ARMOR, RagiumItems.STELLA_LEGGINGS)
-            add(ItemTags.FOOT_ARMOR, RagiumItems.STEEL_BOOTS)
-            add(ItemTags.FOOT_ARMOR, RagiumItems.STELLA_BOOTS)
+            add(ItemTags.HEAD_ARMOR, RagiumItemsNew.STEEL_HELMET)
+            add(ItemTags.HEAD_ARMOR, RagiumItemsNew.STELLA_GOGGLE)
+            add(ItemTags.CHEST_ARMOR, RagiumItemsNew.STEEL_CHESTPLATE)
+            add(ItemTags.CHEST_ARMOR, RagiumItemsNew.STELLA_JACKET)
+            add(ItemTags.LEG_ARMOR, RagiumItemsNew.STEEL_LEGGINGS)
+            add(ItemTags.LEG_ARMOR, RagiumItemsNew.STELLA_LEGGINGS)
+            add(ItemTags.FOOT_ARMOR, RagiumItemsNew.STEEL_BOOTS)
+            add(ItemTags.FOOT_ARMOR, RagiumItemsNew.STELLA_BOOTS)
 
             add(ItemTags.AXES, RagiumItems.GIGANT_HAMMER)
             add(ItemTags.AXES, RagiumItems.STEEL_AXE)
@@ -229,11 +228,11 @@ object RagiumTagProviders {
             add(ItemTags.SWORDS, RagiumItems.STELLA_SABER)
             add(ItemTags.SWORDS, RagiumItems.RAGIUM_SABER)
 
-            add(ItemTags.PLANKS, RagiumContents.Plates.WOOD)
+            add(ItemTags.PLANKS, RagiumItemsNew.Plates.WOOD)
             add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
             // ragium
-            add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ALKALI)
-            add(RagiumItemTags.ALKALI, RagiumContents.Dusts.ASH)
+            add(RagiumItemTags.ALKALI, RagiumItemsNew.Dusts.ALKALI)
+            add(RagiumItemTags.ALKALI, RagiumItemsNew.Dusts.ASH)
 
             add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItems.FLUID_FILTER)
 
@@ -243,8 +242,8 @@ object RagiumTagProviders {
             add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
             add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
 
-            add(RagiumItemTags.ADVANCED_UPGRADES, RagiumContents.Hulls.ADVANCED)
-            add(RagiumItemTags.BASIC_UPGRADES, RagiumContents.Hulls.BASIC)
+            add(RagiumItemTags.ADVANCED_UPGRADES, RagiumBlocks.Hulls.ADVANCED)
+            add(RagiumItemTags.BASIC_UPGRADES, RagiumBlocks.Hulls.BASIC)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)

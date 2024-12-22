@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.util
 
-import hiiragi283.ragium.api.extension.itemSettings
 import net.minecraft.item.ArmorItem
 import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.Item
@@ -16,6 +15,6 @@ enum class HTArmorType(val armorTag: TagKey<Item>, val itemType: ArmorItem.Type)
     BOOTS(ItemTags.FOOT_ARMOR, ArmorItem.Type.BOOTS),
     ;
 
-    fun createItem(material: RegistryEntry<ArmorMaterial>, multiplier: Int, settings: Settings = itemSettings()): ArmorItem =
+    fun createItem(material: RegistryEntry<ArmorMaterial>, multiplier: Int, settings: Settings): ArmorItem =
         ArmorItem(material, itemType, settings.maxDamage(itemType.getMaxDamage(multiplier)))
 }

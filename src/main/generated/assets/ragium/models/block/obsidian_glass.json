@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/primitive_casing"
+    "all": "ragium:block/obsidian_glass"
   }
 }

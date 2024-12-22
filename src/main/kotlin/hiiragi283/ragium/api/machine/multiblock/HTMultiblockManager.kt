@@ -72,7 +72,7 @@ class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, pr
     ) {
         val pos1: BlockPos = pos.add(x, y, z)
         if (patternResult.isSuccess) {
-            patternResult = HTUnitResult.fromBool(world()?.let { pattern.test(it, pos1, provider) } == true) {
+            patternResult = HTUnitResult.fromBool(world()?.let { pattern.checkState(it, pos1, provider) } == true) {
                 Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos1))
             }
         }

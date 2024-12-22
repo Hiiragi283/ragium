@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.text.MutableText
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -20,8 +21,14 @@ class HTTieredBlockPattern private constructor(val blockGetter: (HTMachineTier) 
 
     override val text: MutableText = blockGetter(HTMachineTier.PRIMITIVE).name
 
-    override fun test(world: World, pos: BlockPos, provider: HTMultiblockProvider): Boolean {
-        val block: Block = HTMachineTier.SIDED_LOOKUP.find(world, provider.multiblockManager.pos, null)?.let(blockGetter) ?: return false
+    fun getBlock(world: World, provider: HTMultiblockProvider): Block? =
+        HTMachineTier.SIDED_LOOKUP.find(world, provider.multiblockManager.pos, null)?.let(blockGetter)
+
+    override fun checkState(world: World, pos: BlockPos, provider: HTMultiblockProvider): Boolean {
+        val block: Block = getBlock(world, provider) ?: return false
         return world.getBlockState(pos).isOf(block)
     }
+
+    override fun getPlacementState(world: World, pos: BlockPos, provider: HTMultiblockProvider): BlockState? =
+        getBlock(world, provider)?.defaultState
 }

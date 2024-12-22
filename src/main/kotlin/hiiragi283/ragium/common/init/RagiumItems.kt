@@ -1,25 +1,27 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.util.HTArmorType
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.createToolAttribute
+import hiiragi283.ragium.api.extension.descriptions
+import hiiragi283.ragium.api.extension.forEach
+import hiiragi283.ragium.api.extension.itemSettings
 import hiiragi283.ragium.api.util.HTToolType
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponent
-import net.minecraft.component.type.FoodComponents
+import net.minecraft.component.type.UnbreakableComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.item.ArmorItem
 import net.minecraft.item.Item
-import net.minecraft.item.Items
 import net.minecraft.item.SwordItem
+import net.minecraft.item.ToolMaterials
 import net.minecraft.text.Text
-import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
@@ -31,123 +33,6 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
 object RagiumItems {
-    //    Armors    //
-
-    @JvmField
-    val STEEL_HELMET: Item = HTArmorType.HELMET.createItem(RagiumArmorMaterials.STEEL, 25)
-
-    @JvmField
-    val STEEL_CHESTPLATE: Item = HTArmorType.CHESTPLATE.createItem(RagiumArmorMaterials.STEEL, 25)
-
-    @JvmField
-    val STEEL_LEGGINGS: Item = HTArmorType.LEGGINGS.createItem(RagiumArmorMaterials.STEEL, 25)
-
-    @JvmField
-    val STEEL_BOOTS: Item = HTArmorType.BOOTS.createItem(RagiumArmorMaterials.STEEL, 25)
-
-    @JvmField
-    val STELLA_GOGGLE: Item =
-        HTArmorType.HELMET.createItem(RagiumArmorMaterials.STELLA, 33, itemSettings().rarity(Rarity.EPIC))
-
-    @JvmField
-    val STELLA_JACKET: Item =
-        HTArmorType.CHESTPLATE.createItem(
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings()
-                .rarity(Rarity.EPIC)
-                .attributeModifiers(
-                    createArmorAttribute(RagiumArmorMaterials.STELLA, ArmorItem.Type.CHESTPLATE)
-                        .add(
-                            EntityAttributes.PLAYER_MINING_EFFICIENCY,
-                            EntityAttributeModifier(
-                                Identifier.of("armor.chestplate"),
-                                2.0,
-                                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,
-                            ),
-                            AttributeModifierSlot.CHEST,
-                        ).add(
-                            EntityAttributes.GENERIC_MAX_HEALTH,
-                            EntityAttributeModifier(
-                                Identifier.of("armor.chestplate"),
-                                20.0,
-                                EntityAttributeModifier.Operation.ADD_VALUE,
-                            ),
-                            AttributeModifierSlot.CHEST,
-                        ).build(),
-                ),
-        )
-
-    @JvmField
-    val STELLA_LEGGINGS: Item =
-        HTArmorType.LEGGINGS.createItem(
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings()
-                .rarity(Rarity.EPIC)
-                .attributeModifiers(
-                    createArmorAttribute(RagiumArmorMaterials.STELLA, ArmorItem.Type.LEGGINGS)
-                        .add(
-                            EntityAttributes.GENERIC_MOVEMENT_SPEED,
-                            EntityAttributeModifier(
-                                Identifier.of("armor.leggings"),
-                                0.4,
-                                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,
-                            ),
-                            AttributeModifierSlot.LEGS,
-                        ).add(
-                            EntityAttributes.GENERIC_JUMP_STRENGTH,
-                            EntityAttributeModifier(
-                                Identifier.of("armor.leggings"),
-                                1.0,
-                                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL,
-                            ),
-                            AttributeModifierSlot.LEGS,
-                        ).build(),
-                ),
-        )
-
-    @JvmField
-    val STELLA_BOOTS: Item =
-        HTArmorType.BOOTS.createItem(
-            RagiumArmorMaterials.STELLA,
-            33,
-            itemSettings()
-                .rarity(Rarity.EPIC)
-                .attributeModifiers(
-                    createArmorAttribute(RagiumArmorMaterials.STELLA, ArmorItem.Type.BOOTS)
-                        .add(
-                            EntityAttributes.GENERIC_FALL_DAMAGE_MULTIPLIER,
-                            EntityAttributeModifier(
-                                Identifier.of("armor.boots"),
-                                -100.0,
-                                EntityAttributeModifier.Operation.ADD_VALUE,
-                            ),
-                            AttributeModifierSlot.FEET,
-                        ).add(
-                            EntityAttributes.GENERIC_STEP_HEIGHT,
-                            EntityAttributeModifier(
-                                Identifier.of("armor.boots"),
-                                1.0,
-                                EntityAttributeModifier.Operation.ADD_VALUE,
-                            ),
-                            AttributeModifierSlot.FEET,
-                        ).build(),
-                ),
-        )
-
-    @JvmField
-    val ARMORS: List<Item> = listOf(
-        STEEL_HELMET,
-        STEEL_CHESTPLATE,
-        STEEL_LEGGINGS,
-        STEEL_BOOTS,
-        STELLA_GOGGLE,
-        STELLA_JACKET,
-        STELLA_LEGGINGS,
-        STELLA_BOOTS,
-    )
-
     //    Tools    //
 
     @JvmField
@@ -168,7 +53,7 @@ object RagiumItems {
     )
 
     @JvmField
-    val BACKPACK: Item = HTBackpackItem
+    val BACKPACK: Item = HTBackpackItem(itemSettings())
 
     @JvmField
     val BEDROCK_DYNAMITE: Item = HTDynamiteItem(
@@ -201,7 +86,7 @@ object RagiumItems {
     val EMPTY_FLUID_CUBE: Item = Item(itemSettings())
 
     @JvmField
-    val FILLED_FLUID_CUBE: Item = HTFilledFluidCubeItem
+    val FILLED_FLUID_CUBE: Item = HTFilledFluidCubeItem(itemSettings())
 
     @JvmField
     val FLATTENING_DYNAMITE: Item = HTDynamiteItem(
@@ -230,10 +115,11 @@ object RagiumItems {
     )
 
     @JvmField
-    val FORGE_HAMMER: Item = HTForgeHammerItem
+    val FORGE_HAMMER: Item = HTForgeHammerItem(itemSettings().maxDamage(63))
 
     @JvmField
-    val GUIDE_BOOK: Item = HTGuideBookItem
+    val GUIDE_BOOK: Item =
+        HTGuideBookItem(itemSettings().maxCount(1).component(RagiumComponentTypes.REWORK_TARGET, Unit))
 
     @JvmField
     val ITEM_FILTER: Item = Item(
@@ -273,10 +159,37 @@ object RagiumItems {
     )
 
     @JvmField
-    val GIGANT_HAMMER: Item = HTGigantHammerItem
+    val GIGANT_HAMMER: Item = HTGigantHammerItem(
+        itemSettings()
+            .component(DataComponentTypes.UNBREAKABLE, UnbreakableComponent(true))
+            .maxCount(1)
+            .rarity(Rarity.EPIC)
+            .attributeModifiers(
+                createToolAttribute(ToolMaterials.NETHERITE, 15.0, -3.0)
+                    .add(
+                        EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE,
+                        EntityAttributeModifier(
+                            RagiumAPI.id("gigant_hammer_range"),
+                            12.0,
+                            EntityAttributeModifier.Operation.ADD_VALUE,
+                        ),
+                        AttributeModifierSlot.MAINHAND,
+                    ).add(
+                        EntityAttributes.PLAYER_ENTITY_INTERACTION_RANGE,
+                        EntityAttributeModifier(
+                            RagiumAPI.id("gigant_hammer_range"),
+                            12.0,
+                            EntityAttributeModifier.Operation.ADD_VALUE,
+                        ),
+                        AttributeModifierSlot.MAINHAND,
+                    ).build(),
+            ),
+    )
 
     @JvmField
-    val TRADER_CATALOG: Item = HTTraderCatalogItem
+    val TRADER_CATALOG: Item = HTTraderCatalogItem(
+        itemSettings().maxCount(1).descriptions(Text.translatable(RagiumTranslationKeys.TRADER_CATALOG)),
+    )
 
     @JvmField
     val TOOLS: List<Item> = listOf(
@@ -304,94 +217,6 @@ object RagiumItems {
         ITEM_FILTER,
         RAGI_WRENCH,
         TRADER_CATALOG,
-    )
-
-    //    Foods    //
-
-    @JvmField
-    val SWEET_BERRIES_CAKE_PIECE: Item = Item(
-        itemSettings().food(
-            FoodComponent
-                .Builder()
-                .nutrition(2)
-                .saturationModifier(0.1f)
-                .build(),
-        ),
-    )
-
-    @JvmField
-    val MELON_PIE = Item(
-        itemSettings().food(
-            FoodComponent
-                .Builder()
-                .nutrition(8)
-                .saturationModifier(0.3f)
-                .usingConvertsTo(Items.MELON_SEEDS)
-                .build(),
-        ),
-    )
-
-    @JvmField
-    val BUTTER: Item = Item(itemSettings().food(FoodComponents.APPLE))
-
-    @JvmField
-    val CARAMEL: Item = Item(itemSettings().food(FoodComponents.DRIED_KELP))
-
-    @JvmField
-    val DOUGH: Item = Item(itemSettings())
-
-    @JvmField
-    val FLOUR: Item = Item(itemSettings())
-
-    @JvmField
-    val CHOCOLATE: Item = Item(
-        itemSettings().food(
-            FoodComponent
-                .Builder()
-                .nutrition(3)
-                .saturationModifier(0.3f)
-                .statusEffect(
-                    StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
-                    1.0f,
-                ).snack()
-                .alwaysEdible()
-                .build(),
-        ),
-    )
-
-    @JvmField
-    val CHOCOLATE_APPLE: Item = Item(itemSettings().food(FoodComponents.COOKED_CHICKEN))
-
-    @JvmField
-    val CHOCOLATE_BREAD: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
-
-    @JvmField
-    val CHOCOLATE_COOKIE: Item = Item(itemSettings().food(FoodComponents.COOKIE))
-
-    @JvmField
-    val MINCED_MEAT: Item = Item(itemSettings())
-
-    @JvmField
-    val MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.BEEF))
-
-    @JvmField
-    val COOKED_MEAT_INGOT: Item = Item(itemSettings().food(FoodComponents.COOKED_BEEF))
-
-    @JvmField
-    val FOODS: List<Item> = listOf(
-        SWEET_BERRIES_CAKE_PIECE,
-        MELON_PIE,
-        BUTTER,
-        CARAMEL,
-        DOUGH,
-        FLOUR,
-        CHOCOLATE,
-        CHOCOLATE_APPLE,
-        CHOCOLATE_BREAD,
-        CHOCOLATE_COOKIE,
-        MINCED_MEAT,
-        MEAT_INGOT,
-        COOKED_MEAT_INGOT,
     )
 
     //    Ingredients    //
@@ -450,7 +275,8 @@ object RagiumItems {
     val CRIMSON_CRYSTAL: Item = Item(itemSettings())
 
     @JvmField
-    val WARPED_CRYSTAL: Item = HTWarpedCrystalItem
+    val WARPED_CRYSTAL: Item =
+        HTWarpedCrystalItem(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL)))
 
     @JvmField
     val OBSIDIAN_TEAR = Item(itemSettings())
@@ -551,15 +377,5 @@ object RagiumItems {
         YELLOW_CAKE,
         YELLOW_CAKE_PIECE,
         NUCLEAR_WASTE,
-    )
-
-    //    Misc    //
-
-    @JvmField
-    val RAGI_TICKET: Item = Item(itemSettings().rarity(Rarity.EPIC))
-
-    @JvmField
-    val MISC: List<Item> = listOf(
-        RAGI_TICKET,
     )
 }

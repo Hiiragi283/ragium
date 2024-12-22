@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.transfer
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.util.HTPipeType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -18,8 +19,10 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBlockEntityBase(type, pos, state) {
-    protected var tier: HTMachineTier = HTMachineTier.PRIMITIVE
+    HTBlockEntityBase(type, pos, state),
+    HTMachineTierProvider {
+    override var tier: HTMachineTier = HTMachineTier.PRIMITIVE
+        protected set
     protected var type: HTPipeType = HTPipeType.NONE
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {

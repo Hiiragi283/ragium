@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
@@ -67,7 +67,7 @@ enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identi
 
     override fun isBuiltin(): Boolean = false
 
-    override fun getParticleSprite(): Sprite = getBlockModel(RagiumContents.StorageBlocks.RAGI_STEEL.get()).particleSprite
+    override fun getParticleSprite(): Sprite = getBlockModel(RagiumBlocks.StorageBlocks.RAGI_STEEL.get()).particleSprite
 
     override fun getTransformation(): ModelTransformation = ModelHelper.MODEL_TRANSFORM_BLOCK
 

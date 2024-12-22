@@ -112,7 +112,7 @@ fun <T : HTMultiblockProvider> renderMultiblock(
 ) {
     if (!provider.multiblockManager.showPreview) return
     world?.let {
-        provider.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers).rotate(facing))
+        provider.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers, provider).rotate(facing))
     }
 }
 

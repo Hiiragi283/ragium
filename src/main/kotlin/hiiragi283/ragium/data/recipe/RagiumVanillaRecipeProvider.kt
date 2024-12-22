@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.data.*
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
@@ -87,72 +86,72 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
     private fun craftingArmors(exporter: RecipeExporter) {
         // steel
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STEEL_HELMET)
+            .create(RagiumItemsNew.STEEL_HELMET)
             .helmetPattern()
-            .input('A', RagiumContents.Ingots.STEEL)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .input('A', RagiumItemsNew.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STEEL_CHESTPLATE)
+            .create(RagiumItemsNew.STEEL_CHESTPLATE)
             .chestPlatePattern()
-            .input('A', RagiumContents.Ingots.STEEL)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .input('A', RagiumItemsNew.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STEEL_LEGGINGS)
+            .create(RagiumItemsNew.STEEL_LEGGINGS)
             .leggingsPattern()
-            .input('A', RagiumContents.Ingots.STEEL)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .input('A', RagiumItemsNew.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STEEL_BOOTS)
+            .create(RagiumItemsNew.STEEL_BOOTS)
             .bootsPattern()
-            .input('A', RagiumContents.Ingots.STEEL)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .input('A', RagiumItemsNew.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
         // stella
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STELLA_GOGGLE)
+            .create(RagiumItemsNew.STELLA_GOGGLE)
             .patterns(
                 "ABA",
                 "A A",
             ).input('A', RagiumItems.STELLA_PLATE)
-            .input('B', RagiumContents.Gems.RAGIUM)
+            .input('B', RagiumItemsNew.Gems.RAGIUM)
             .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STELLA_JACKET)
+            .create(RagiumItemsNew.STELLA_JACKET)
             .patterns(
                 "A A",
                 "ABA",
                 "AAA",
             ).input('A', RagiumItems.STELLA_PLATE)
-            .input('B', RagiumContents.Gems.RAGIUM)
+            .input('B', RagiumItemsNew.Gems.RAGIUM)
             .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STELLA_LEGGINGS)
+            .create(RagiumItemsNew.STELLA_LEGGINGS)
             .patterns(
                 "ABA",
                 "A A",
                 "A A",
             ).input('A', RagiumItems.STELLA_PLATE)
-            .input('B', RagiumContents.Gems.RAGIUM)
+            .input('B', RagiumItemsNew.Gems.RAGIUM)
             .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.STELLA_BOOTS)
+            .create(RagiumItemsNew.STELLA_BOOTS)
             .patterns(
                 "A A",
                 "ABA",
             ).input('A', RagiumItems.STELLA_PLATE)
-            .input('B', RagiumContents.Gems.RAGIUM)
+            .input('B', RagiumItemsNew.Gems.RAGIUM)
             .unlockedBy(RagiumItems.STELLA_PLATE)
             .offerTo(exporter)
     }
@@ -191,7 +190,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         // white line
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.WHITE_LINE)
+            .create(RagiumBlocks.WhiteLines.SIMPLE)
             .patterns(
                 "A",
                 "A",
@@ -201,7 +200,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.T_WHITE_LINE)
+            .create(RagiumBlocks.WhiteLines.T_SHAPED)
             .patterns(
                 "AAA",
                 " A ",
@@ -210,7 +209,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.CROSS_WHITE_LINE)
+            .create(RagiumBlocks.WhiteLines.CROSS)
             .patterns(
                 " A ",
                 "AAA",
@@ -276,9 +275,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " AA",
                 "BBA",
                 " AA",
-            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
+            ).input('A', RagiumItemsNew.Ingots.RAGI_ALLOY)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
+            .unlockedBy(RagiumItemsNew.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -287,8 +286,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "A A",
                 "AAA",
                 " A ",
-            ).input('A', RagiumContents.Ingots.RAGI_ALLOY)
-            .unlockedBy(RagiumContents.Ingots.RAGI_ALLOY)
+            ).input('A', RagiumItemsNew.Ingots.RAGI_ALLOY)
+            .unlockedBy(RagiumItemsNew.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -304,9 +303,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.GUIDE_BOOK)
             .input(Items.BOOK)
-            .input(RagiumContents.RawMaterials.CRUDE_RAGINITE)
+            .input(RagiumItemsNew.RawMaterials.CRUDE_RAGINITE)
             .input(ConventionalItemTags.IRON_INGOTS)
-            .unlockedBy(RagiumContents.RawMaterials.CRUDE_RAGINITE)
+            .unlockedBy(RagiumItemsNew.RawMaterials.CRUDE_RAGINITE)
             .offerTo(exporter)
         // dynamites
         HTShapelessRecipeJsonBuilder
@@ -336,7 +335,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumItems.FLUID_FILTER)
             .input(Items.PAPER)
             .input(ConventionalItemTags.LIGHT_BLUE_DYES)
-            .input(RagiumContents.Dusts.RAGINITE)
+            .input(RagiumItemsNew.Dusts.RAGINITE)
             .unlockedBy(Items.PAPER)
             .offerTo(exporter)
 
@@ -344,7 +343,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumItems.ITEM_FILTER)
             .input(Items.PAPER)
             .input(ConventionalItemTags.ORANGE_DYES)
-            .input(RagiumContents.Dusts.RAGINITE)
+            .input(RagiumItemsNew.Dusts.RAGINITE)
             .unlockedBy(Items.PAPER)
             .offerTo(exporter)
         // steel
@@ -354,9 +353,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B",
                 "A",
                 "A",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            ).input('A', RagiumItemsNew.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -365,9 +364,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B",
                 "B",
                 "A",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            ).input('A', RagiumItemsNew.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -376,9 +375,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " B ",
                 " B ",
                 "AAA",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            ).input('A', RagiumItemsNew.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -387,9 +386,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B ",
                 "BA",
                 "AA",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            ).input('A', RagiumItemsNew.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -398,9 +397,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "B ",
                 "B ",
                 "AA",
-            ).input('A', RagiumContents.Ingots.STEEL)
+            ).input('A', RagiumItemsNew.Ingots.STEEL)
             .input('B', ConventionalItemTags.WOODEN_RODS)
-            .unlockedBy(RagiumContents.Ingots.STEEL)
+            .unlockedBy(RagiumItemsNew.Ingots.STEEL)
             .offerTo(exporter)
         // stella
         HTShapedRecipeJsonBuilder
@@ -420,9 +419,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "  A",
                 " A ",
                 "B  ",
-            ).input('A', RagiumContents.Gems.RAGIUM)
+            ).input('A', RagiumItemsNew.Gems.RAGIUM)
             .input('B', RagiumItems.STELLA_SABER)
-            .unlockedBy(RagiumContents.Gems.RAGIUM)
+            .unlockedBy(RagiumItemsNew.Gems.RAGIUM)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -431,10 +430,10 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABB",
                 "AC ",
                 " C ",
-            ).input('A', RagiumContents.StorageBlocks.DEEP_STEEL)
-            .input('B', RagiumContents.Gems.RAGIUM)
+            ).input('A', RagiumBlocks.StorageBlocks.DEEP_STEEL)
+            .input('B', RagiumItemsNew.Gems.RAGIUM)
             .input('C', RagiumBlocks.SHAFT)
-            .unlockedBy(RagiumContents.Gems.RAGIUM)
+            .unlockedBy(RagiumItemsNew.Gems.RAGIUM)
             .offerTo(exporter)
         // backpack
         HTShapedRecipeJsonBuilder
@@ -482,23 +481,23 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "EEE",
             ).input('A', fluidIngredient(RagiumFluids.MILK))
             .input('B', Items.SWEET_BERRIES)
-            .input('C', RagiumItems.CHOCOLATE)
+            .input('C', RagiumItemsNew.CHOCOLATE)
             .input('D', Items.EGG)
             .input('E', RagiumBlocks.SPONGE_CAKE)
             .unlockedBy(RagiumBlocks.SPONGE_CAKE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.SWEET_BERRIES_CAKE_PIECE, 8)
+            .create(RagiumItemsNew.SWEET_BERRIES_CAKE_PIECE, 8)
             .input(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .unlockedBy(RagiumItemsNew.SWEET_BERRIES_CAKE_PIECE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .hollowPattern()
-            .input('A', RagiumItems.SWEET_BERRIES_CAKE_PIECE)
-            .unlockedBy(RagiumItems.SWEET_BERRIES_CAKE_PIECE)
+            .input('A', RagiumItemsNew.SWEET_BERRIES_CAKE_PIECE)
+            .unlockedBy(RagiumItemsNew.SWEET_BERRIES_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
         // yellow cake
         HTShapelessRecipeJsonBuilder
@@ -515,7 +514,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerSuffix(exporter, "_from_piece")
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.MELON_PIE)
+            .create(RagiumItemsNew.MELON_PIE)
             .input(Items.MELON)
             .input(Items.SUGAR)
             .input(Items.EGG)
@@ -523,24 +522,24 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
         // chocolate
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.CHOCOLATE_APPLE)
+            .create(RagiumItemsNew.CHOCOLATE_APPLE)
             .input(Items.APPLE)
             .input(fluidIngredient(RagiumFluids.CHOCOLATE))
             .unlockedBy(Items.APPLE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.CHOCOLATE_BREAD)
+            .create(RagiumItemsNew.CHOCOLATE_BREAD)
             .input(Items.BREAD)
             .input(fluidIngredient(RagiumFluids.CHOCOLATE))
             .unlockedBy(Items.BREAD)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.CHOCOLATE_COOKIE, 8)
+            .create(RagiumItemsNew.CHOCOLATE_COOKIE, 8)
             .wrapPattern8()
             .input('A', Items.COOKIE)
-            .input('B', RagiumItems.CHOCOLATE)
+            .input('B', RagiumItemsNew.CHOCOLATE)
             .unlockedBy(Items.COOKIE)
             .offerTo(exporter)
     }
@@ -552,9 +551,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumItems.RAGI_ALLOY_COMPOUND)
             .group("ragi_alloy_compound")
             .wrapPattern8()
-            .input('A', RagiumContents.RawMaterials.CRUDE_RAGINITE)
+            .input('A', RagiumItemsNew.RawMaterials.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
-            .unlockedBy(RagiumContents.RawMaterials.RAGINITE)
+            .unlockedBy(RagiumItemsNew.RawMaterials.RAGINITE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
@@ -564,9 +563,9 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 " A ",
                 "ABA",
                 " A ",
-            ).input('A', RagiumContents.Dusts.CRUDE_RAGINITE)
+            ).input('A', RagiumItemsNew.Dusts.CRUDE_RAGINITE)
             .input('B', ConventionalItemTags.COPPER_INGOTS)
-            .unlockedBy(RagiumContents.Dusts.CRUDE_RAGINITE)
+            .unlockedBy(RagiumItemsNew.Dusts.CRUDE_RAGINITE)
             .offerSuffix(exporter, "_1")
 
         HTShapedRecipeJsonBuilder
@@ -627,7 +626,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
             RagiumItems.RAGI_ALLOY_COMPOUND,
-            RagiumContents.Ingots.RAGI_ALLOY,
+            RagiumItemsNew.Ingots.RAGI_ALLOY,
         )
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
@@ -641,19 +640,19 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         HTCookingRecipeJsonBuilder.smeltAndBlast(
             exporter,
-            RagiumContents.Dusts.QUARTZ.prefixedTagKey,
+            RagiumItemsNew.Dusts.QUARTZ.prefixedTagKey,
             RagiumItems.CRUDE_SILICON,
         )
 
         HTCookingRecipeJsonBuilder.smeltAndSmoke(
             exporter,
-            RagiumItems.DOUGH,
+            RagiumItemsNew.DOUGH,
             Items.BREAD,
         )
         HTCookingRecipeJsonBuilder.smeltAndSmoke(
             exporter,
-            RagiumItems.MEAT_INGOT,
-            RagiumItems.COOKED_MEAT_INGOT,
+            RagiumItemsNew.MEAT_INGOT,
+            RagiumItemsNew.COOKED_MEAT_INGOT,
         )
     }
 }

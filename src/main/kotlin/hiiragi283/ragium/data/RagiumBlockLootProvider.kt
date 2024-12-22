@@ -4,11 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.RagiumContents.RawMaterials
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -57,52 +55,51 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
     }
 
     override fun generate() {
-        addDrop(RagiumBlocks.CREATIVE_CRATE)
-        addDrop(RagiumBlocks.CREATIVE_DRUM)
-        addDrop(RagiumBlocks.CREATIVE_EXPORTER)
-        addDrop(RagiumBlocks.CREATIVE_SOURCE)
-
         addDrop(RagiumBlocks.MUTATED_SOIL)
         addDrop(RagiumBlocks.POROUS_NETHERRACK) { block: Block -> withSilkTouch(block, Items.NETHERRACK) }
 
         RagiumBlocks.Stones.entries.forEach(::addDrop)
         RagiumBlocks.Slabs.entries.forEach { addDrop(it, ::slabDrops) }
         RagiumBlocks.Stairs.entries.forEach(::addDrop)
-        RagiumBlocks.BUILDINGS.forEach(::addDrop)
 
         addDrop(RagiumBlocks.SPONGE_CAKE)
         addDrop(
             RagiumBlocks.SWEET_BERRIES_CAKE,
             drops(
                 RagiumBlocks.SWEET_BERRIES_CAKE.get(),
-                RagiumItems.SWEET_BERRIES_CAKE_PIECE,
+                RagiumItemsNew.SWEET_BERRIES_CAKE_PIECE,
                 ConstantLootNumberProvider.create(8f),
             ),
         )
 
-        RagiumContents.Ores.entries.forEach(::dropOre)
+        RagiumBlocks.Ores.entries.forEach(::dropOre)
 
         buildList {
-            addAll(RagiumContents.StorageBlocks.entries)
-            addAll(RagiumContents.Grates.entries)
-            addAll(RagiumContents.Casings.entries)
-            addAll(RagiumContents.Hulls.entries)
-            addAll(RagiumContents.Coils.entries)
-            addAll(RagiumContents.Exporters.entries)
-            addAll(RagiumContents.Pipes.entries)
-            addAll(RagiumContents.CrossPipes.entries)
-            addAll(RagiumContents.PipeStations.entries)
-            addAll(RagiumContents.FilteringPipe.entries)
+            addAll(RagiumBlocks.StorageBlocks.entries)
 
+            addAll(RagiumBlocks.Grates.entries)
+            addAll(RagiumBlocks.Casings.entries)
+            addAll(RagiumBlocks.Hulls.entries)
+            addAll(RagiumBlocks.Coils.entries)
+
+            addAll(RagiumBlocks.Exporters.entries)
+            addAll(RagiumBlocks.Pipes.entries)
+            addAll(RagiumBlocks.CrossPipes.entries)
+            addAll(RagiumBlocks.PipeStations.entries)
+            addAll(RagiumBlocks.FilteringPipes.entries)
+
+            addAll(RagiumBlocks.Creatives.entries)
+            addAll(RagiumBlocks.WhiteLines.entries)
+            addAll(RagiumBlocks.Glasses.entries)
             addAll(RagiumBlocks.MECHANICS)
             addAll(RagiumBlocks.MISC)
         }.forEach(::addDrop)
 
-        RagiumContents.Crates.entries
-            .map(RagiumContents.Crates::get)
+        RagiumBlocks.Crates.entries
+            .map(RagiumBlocks.Crates::get)
             .forEach { dropWithComponent(it, RagiumComponentTypes.CRATE) }
-        RagiumContents.Drums.entries
-            .map(RagiumContents.Drums::get)
+        RagiumBlocks.Drums.entries
+            .map(RagiumBlocks.Drums::get)
             .forEach { dropWithComponent(it, RagiumComponentTypes.DRUM) }
 
         RagiumAPI
@@ -112,12 +109,12 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             .forEach { block: HTMachineBlock -> dropWithComponent(block, HTMachineTier.COMPONENT_TYPE) }
     }
 
-    private fun dropOre(ore: RagiumContents.Ores) {
+    private fun dropOre(ore: RagiumBlocks.Ores) {
         val dropMineral: ItemConvertible = when (ore) {
-            RagiumContents.Ores.CRUDE_RAGINITE -> RawMaterials.CRUDE_RAGINITE
-            RagiumContents.Ores.DEEP_RAGINITE -> RawMaterials.RAGINITE
-            RagiumContents.Ores.NETHER_RAGINITE -> RawMaterials.RAGINITE
-            RagiumContents.Ores.END_RAGI_CRYSTAL -> RagiumContents.Gems.RAGI_CRYSTAL
+            RagiumBlocks.Ores.CRUDE_RAGINITE -> RagiumItemsNew.RawMaterials.CRUDE_RAGINITE
+            RagiumBlocks.Ores.DEEP_RAGINITE -> RagiumItemsNew.RawMaterials.RAGINITE
+            RagiumBlocks.Ores.NETHER_RAGINITE -> RagiumItemsNew.RawMaterials.RAGINITE
+            RagiumBlocks.Ores.END_RAGI_CRYSTAL -> RagiumItemsNew.Gems.RAGI_CRYSTAL
         }
 
         addDrop(

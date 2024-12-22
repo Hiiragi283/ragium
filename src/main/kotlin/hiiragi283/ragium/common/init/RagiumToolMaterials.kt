@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.common.RagiumContents
 import net.minecraft.block.Block
 import net.minecraft.item.ToolMaterial
 import net.minecraft.item.ToolMaterials
@@ -17,7 +16,7 @@ enum class RagiumToolMaterials(
 ) : ToolMaterial {
     STEEL(
         ToolMaterials.DIAMOND,
-        { Ingredient.fromTag(RagiumContents.Ingots.STEEL.prefixedTagKey) },
+        { Ingredient.fromTag(RagiumItemsNew.Ingots.STEEL.prefixedTagKey) },
     ),
     STELLA(
         ToolMaterials.NETHERITE,

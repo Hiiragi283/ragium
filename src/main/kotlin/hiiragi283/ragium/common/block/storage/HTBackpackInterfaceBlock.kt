@@ -20,8 +20,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTBackpackInterfaceBlock(settings: Settings) : Block(settings) {
-    private val COLOR: EnumProperty<DyeColor>
-        get() = RagiumBlockProperties.COLOR
+    companion object {
+        private val COLOR: EnumProperty<DyeColor> by lazy { RagiumBlockProperties.COLOR }
+    }
 
     init {
         defaultState = stateManager.defaultState.with(COLOR, DyeColor.WHITE)

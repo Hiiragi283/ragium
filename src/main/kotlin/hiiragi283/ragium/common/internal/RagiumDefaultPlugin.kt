@@ -11,14 +11,10 @@ import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.util.TriConsumer
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -52,6 +48,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
     }
 
     override fun setupMachineProperties(helper: RagiumPlugin.PropertyHelper<HTMachineKey>) {
+        val shaft = HTSimpleBlockPattern(RagiumBlocks.SHAFT)
+        val casing: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getCasing)
+        val hull: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getHull)
+        val grate: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getGrate)
         // consumers
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.DOWN }
@@ -59,35 +59,35 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN) { builder: HTMultiblockBuilder ->
                 // drill
                 builder.add(0, -3, 0, HTSimpleBlockPattern(Blocks.BEDROCK))
-                // builder.add(0, -2, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
-                // builder.add(0, -1, 0, HTSimpleBlockPattern(RagiumBlocksNew.SHAFT))
-                builder.add(-1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(0, 0, -1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(0, 0, 1, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
-                builder.add(1, 0, 0, HTSimpleBlockPattern(RagiumBlocks.SHAFT))
+                // builder.add(0, -2, 0, shaft)
+                // builder.add(0, -1, 0, shaft)
+                builder.add(-1, 0, 0, shaft)
+                builder.add(0, 0, -1, shaft)
+                builder.add(0, 0, 1, shaft)
+                builder.add(1, 0, 0, shaft)
                 // frame
-                builder.add(-2, -1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
-                builder.add(0, -1, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
-                builder.add(0, -1, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
-                builder.add(2, -1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+                builder.add(-2, -1, 0, casing)
+                builder.add(0, -1, -2, casing)
+                builder.add(0, -1, 2, casing)
+                builder.add(2, -1, 0, casing)
 
-                builder.add(-2, 0, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
-                builder.add(0, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
-                builder.add(0, 0, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
-                builder.add(2, 0, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+                builder.add(-2, 0, 0, hull)
+                builder.add(0, 0, -2, hull)
+                builder.add(0, 0, 2, hull)
+                builder.add(2, 0, 0, hull)
 
-                builder.add(-2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(-2, 0, -1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(-2, 0, 1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(-2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(-1, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(-1, 0, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(1, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(1, 0, 2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(2, 0, -1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(2, 0, 1, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
-                builder.add(2, 0, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getGrate))
+                builder.add(-2, 0, -2, grate)
+                builder.add(-2, 0, -1, grate)
+                builder.add(-2, 0, 1, grate)
+                builder.add(-2, 0, -2, grate)
+                builder.add(-1, 0, -2, grate)
+                builder.add(-1, 0, 2, grate)
+                builder.add(1, 0, -2, grate)
+                builder.add(1, 0, 2, grate)
+                builder.add(2, 0, -2, grate)
+                builder.add(2, 0, -1, grate)
+                builder.add(2, 0, 1, grate)
+                builder.add(2, 0, -2, grate)
 
                 builder.add(-2, 1, 0, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
                 builder.add(0, 1, -2, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
@@ -403,14 +403,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.LAPIS, Items.LAPIS_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.NETHERITE, Items.NETHERITE_BLOCK)
 
-        bindContents(RagiumContents.Ores.entries)
-        bindContents(RagiumContents.StorageBlocks.entries)
-        bindContents(RagiumContents.Dusts.entries)
-        bindContents(RagiumContents.Gears.entries)
-        bindContents(RagiumContents.Gems.entries)
-        bindContents(RagiumContents.Ingots.entries)
-        bindContents(RagiumContents.Plates.entries)
-        bindContents(RagiumContents.RawMaterials.entries)
+        bindContents(RagiumBlocks.Ores.entries)
+        bindContents(RagiumBlocks.StorageBlocks.entries)
+        bindContents(RagiumItemsNew.Dusts.entries)
+        bindContents(RagiumItemsNew.Gears.entries)
+        bindContents(RagiumItemsNew.Gems.entries)
+        bindContents(RagiumItemsNew.Ingots.entries)
+        bindContents(RagiumItemsNew.Plates.entries)
+        bindContents(RagiumItemsNew.RawMaterials.entries)
     }
 
     override fun registerRuntimeMaterialRecipes(
@@ -447,14 +447,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key)
-                    .catalyst(RagiumContents.PressMolds.PLATE)
+                    .catalyst(RagiumItemsNew.PressMolds.PLATE)
                     .itemOutput(output)
                     .offerTo(exporter, output)
                 // Cutting Machine Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.CUTTING_MACHINE)
                     .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
-                    .catalyst(RagiumContents.PressMolds.PLATE)
+                    .catalyst(RagiumItemsNew.PressMolds.PLATE)
                     .itemOutput(output, 9)
                     .offerTo(exporter, output)
             }
@@ -499,7 +499,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key, 4)
-                    .catalyst(RagiumContents.PressMolds.GEAR)
+                    .catalyst(RagiumItemsNew.PressMolds.GEAR)
                     .itemOutput(output)
                     .offerTo(exporter, output)
             }

@@ -5,13 +5,13 @@ import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.extension.energyPercent
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.api.extension.sendTitle
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.network.HTFluidSyncPayload
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
@@ -51,19 +51,19 @@ object RagiumEventHandlers {
         HTAdvancementRewardCallback.EVENT.register { player: ServerPlayerEntity, entry: AdvancementEntry ->
             if (entry.id == RagiumAPI.id("tier1/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier1!").formatted(Rarity.COMMON.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.RAGI_ALLOY)
+                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Ingots.RAGI_ALLOY)
             }
             if (entry.id == RagiumAPI.id("tier2/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier2!").formatted(Rarity.UNCOMMON.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.RAGI_STEEL)
+                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Ingots.RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier3/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier3!").formatted(Rarity.RARE.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumContents.Ingots.REFINED_RAGI_STEEL)
+                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Ingots.REFINED_RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier4/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier4!").formatted(Rarity.EPIC.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumContents.Gems.RAGIUM)
+                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Gems.RAGIUM)
             }
         }
 
@@ -91,7 +91,7 @@ object RagiumEventHandlers {
                         }
                 }
                 // consume energy when worm stella goggles
-                if (player.armorItems.any { it.isOf(RagiumItems.STELLA_GOGGLE) }) {
+                if (player.armorItems.any { it.isOf(RagiumItemsNew.STELLA_GOGGLE) }) {
                     if (!HTMachineTier.BASIC.consumerEnergy(player.world)) {
                         player.removeStatusEffect(StatusEffects.NIGHT_VISION)
                     }

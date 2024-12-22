@@ -17,7 +17,6 @@ import hiiragi283.ragium.client.machine.HTTieredBlockPatternRenderer
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTBlockTagPattern
@@ -88,18 +87,20 @@ object RagiumClient : ClientModInitializer {
     private fun registerBlocks() {
         // cutout
         buildList {
-            add(RagiumBlocks.CREATIVE_CRATE)
-            add(RagiumBlocks.CREATIVE_EXPORTER)
+            add(RagiumBlocks.Creatives.CRATE)
+            add(RagiumBlocks.Creatives.EXPORTER)
+            addAll(RagiumBlocks.WhiteLines.entries)
+            addAll(RagiumBlocks.Glasses.entries)
 
-            addAll(RagiumContents.Ores.entries)
-            addAll(RagiumContents.Grates.entries)
-            addAll(RagiumContents.Hulls.entries)
-            addAll(RagiumContents.Exporters.entries)
-            addAll(RagiumContents.Pipes.entries)
-            addAll(RagiumContents.CrossPipes.entries)
-            addAll(RagiumContents.PipeStations.entries)
-            addAll(RagiumContents.FilteringPipe.entries)
-            addAll(RagiumContents.Crates.entries)
+            addAll(RagiumBlocks.Ores.entries)
+            addAll(RagiumBlocks.Grates.entries)
+            addAll(RagiumBlocks.Hulls.entries)
+            addAll(RagiumBlocks.Exporters.entries)
+            addAll(RagiumBlocks.Pipes.entries)
+            addAll(RagiumBlocks.CrossPipes.entries)
+            addAll(RagiumBlocks.PipeStations.entries)
+            addAll(RagiumBlocks.FilteringPipes.entries)
+            addAll(RagiumBlocks.Crates.entries)
         }.map(HTBlockContent::get).forEach(::registerCutoutMipped)
 
         RagiumAPI
@@ -108,13 +109,8 @@ object RagiumClient : ClientModInitializer {
             .forEach(::registerCutoutMipped)
 
         registerCutoutMipped(
-            RagiumBlocks.CROSS_WHITE_LINE,
             RagiumBlocks.ITEM_DISPLAY,
             RagiumBlocks.POROUS_NETHERRACK,
-            RagiumBlocks.RAGIUM_GLASS,
-            RagiumBlocks.STEEL_GLASS,
-            RagiumBlocks.T_WHITE_LINE,
-            RagiumBlocks.WHITE_LINE,
         )
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }

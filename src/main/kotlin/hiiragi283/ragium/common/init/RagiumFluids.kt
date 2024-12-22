@@ -2,7 +2,10 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
+import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import net.minecraft.fluid.Fluid
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import java.awt.Color
@@ -102,6 +105,15 @@ enum class RagiumFluids(
     override val delegated: HTContent<Fluid> = HTContent.ofFluid(name.lowercase())
 
     val translationKey: String = Util.createTranslationKey("fluid", id)
+
+    companion object {
+        @JvmStatic
+        internal fun register() {
+            RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+                Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
+            }
+        }
+    }
 
     //    TextureType    //
 

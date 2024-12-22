@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -23,9 +24,17 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTDrumBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
+class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.DRUM, pos, state),
-    SidedStorageBlockEntity {
+    SidedStorageBlockEntity,
+    HTMachineTierProvider {
+    override var tier: HTMachineTier = HTMachineTier.PRIMITIVE
+        private set
+
+    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
+        this.tier = tier
+    }
+
     private var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
         .Builder(1)
         .generic(0)

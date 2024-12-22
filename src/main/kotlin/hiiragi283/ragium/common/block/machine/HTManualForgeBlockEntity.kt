@@ -10,11 +10,7 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTMachineInventory
-import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.init.*
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
@@ -67,7 +63,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
                         HTMachineTier.PRIMITIVE,
                     ) {
                         add(invStack)
-                        catalyst = ItemStack(RagiumContents.PressMolds.PLATE)
+                        catalyst = ItemStack(RagiumItemsNew.PressMolds.PLATE)
                     },
                     world,
                 ).result()

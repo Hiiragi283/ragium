@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.render
 
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.random.Random
@@ -17,6 +18,7 @@ object HTMultiblockPatternRendererRegistry {
     @Suppress("UNCHECKED_CAST")
     @JvmStatic
     fun <T : HTMultiblockPattern> render(
+        provider: HTMultiblockProvider,
         x: Int,
         y: Int,
         z: Int,
@@ -27,6 +29,7 @@ object HTMultiblockPatternRendererRegistry {
         random: Random,
     ) {
         (registry[pattern::class.java] as? HTMultiblockPatternRenderer<T>)?.render(
+            provider,
             x,
             y,
             z,

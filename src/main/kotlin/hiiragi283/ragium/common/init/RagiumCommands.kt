@@ -106,16 +106,12 @@ object RagiumCommands {
         val state: BlockState = world.getBlockState(pos)
         val provider: HTMultiblockProvider? = world.getMultiblockController(pos)
         if (provider != null) {
-            val result: Boolean = provider.multiblockManager
-                .updateValidation(state)
-                .ifSuccess {
-                    val facing: Direction =
-                        state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                    provider.buildMultiblock(Constructor(world, pos, replace).rotate(facing))
-                }.toBoolean()
-            if (result) {
+            runCatching {
+                val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
+                provider.buildMultiblock(Constructor(world, pos, provider, replace).rotate(front))
+            }.onSuccess {
                 context.source.sendFeedback({ Text.literal("Built Multiblock at $pos!") }, true)
-            } else {
+            }.onFailure {
                 context.source.sendError(Text.literal("Failed to build multiblock!"))
             }
         } else {
@@ -124,8 +120,12 @@ object RagiumCommands {
         return Command.SINGLE_SUCCESS
     }
 
-    private class Constructor(private val world: World, private val pos: BlockPos, private val replace: Boolean = false) :
-        HTMultiblockBuilder {
+    private class Constructor(
+        private val world: World,
+        private val pos: BlockPos,
+        private val provider: HTMultiblockProvider,
+        private val replace: Boolean = false,
+    ) : HTMultiblockBuilder {
         private var isValid: Boolean = true
 
         override fun add(
@@ -136,17 +136,17 @@ object RagiumCommands {
         ) {
             val pos1: BlockPos = pos.add(x, y, z)
             if (isValid) {
-                /*if (replace) {
-                    pattern.getPreviewState(world)?.let {
+                if (replace) {
+                    pattern.getPlacementState(world, pos1, provider)?.let {
                         world.setBlockState(pos1, it)
                     }
                 } else if (!world.isAir(pos1)) {
                     isValid = false
                 } else {
-                    pattern.getPreviewState(world)?.let {
+                    pattern.getPlacementState(world, pos1, provider)?.let {
                         world.setBlockState(pos1, it)
                     }
-                }*/
+                }
             } else {
                 isValid = false
             }

@@ -31,6 +31,8 @@ fun Item.Settings.material(key: HTMaterialKey, prefix: HTTagPrefix): Item.Settin
 
 fun Item.Settings.descriptions(vararg texts: Text): Item.Settings = component(RagiumComponentTypes.DESCRIPTION, texts.toList())
 
+fun Item.Settings.descriptions(key: String): Item.Settings = descriptions(Text.translatable(key))
+
 fun Item.Settings.name(text: Text): Item.Settings = component(DataComponentTypes.ITEM_NAME, text)
 
 fun Item.Settings.repairment(item: ItemConvertible, count: Int = 1): Item.Settings =

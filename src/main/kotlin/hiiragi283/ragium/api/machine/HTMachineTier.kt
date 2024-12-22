@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumHardModeContents
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -113,40 +113,40 @@ enum class HTMachineTier(
 
     fun createId(key: HTMachineKey): Identifier = key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
-    fun getCircuitBoard(): RagiumContents.CircuitBoards = when (this) {
-        PRIMITIVE -> RagiumContents.CircuitBoards.PRIMITIVE
-        BASIC -> RagiumContents.CircuitBoards.BASIC
-        ADVANCED -> RagiumContents.CircuitBoards.ADVANCED
+    fun getCircuitBoard(): RagiumItemsNew.CircuitBoards = when (this) {
+        PRIMITIVE -> RagiumItemsNew.CircuitBoards.PRIMITIVE
+        BASIC -> RagiumItemsNew.CircuitBoards.BASIC
+        ADVANCED -> RagiumItemsNew.CircuitBoards.ADVANCED
     }
 
-    fun getCircuit(): RagiumContents.Circuits = when (this) {
-        PRIMITIVE -> RagiumContents.Circuits.PRIMITIVE
-        BASIC -> RagiumContents.Circuits.BASIC
-        ADVANCED -> RagiumContents.Circuits.ADVANCED
+    fun getCircuit(): RagiumItemsNew.Circuits = when (this) {
+        PRIMITIVE -> RagiumItemsNew.Circuits.PRIMITIVE
+        BASIC -> RagiumItemsNew.Circuits.BASIC
+        ADVANCED -> RagiumItemsNew.Circuits.ADVANCED
     }
 
-    fun getCoil(): RagiumContents.Coils = when (this) {
-        PRIMITIVE -> RagiumContents.Coils.PRIMITIVE
-        BASIC -> RagiumContents.Coils.BASIC
-        ADVANCED -> RagiumContents.Coils.ADVANCED
+    fun getCoil(): RagiumBlocks.Coils = when (this) {
+        PRIMITIVE -> RagiumBlocks.Coils.PRIMITIVE
+        BASIC -> RagiumBlocks.Coils.BASIC
+        ADVANCED -> RagiumBlocks.Coils.ADVANCED
     }
 
-    fun getGrate(): RagiumContents.Grates = when (this) {
-        PRIMITIVE -> RagiumContents.Grates.PRIMITIVE
-        BASIC -> RagiumContents.Grates.BASIC
-        ADVANCED -> RagiumContents.Grates.ADVANCED
+    fun getGrate(): RagiumBlocks.Grates = when (this) {
+        PRIMITIVE -> RagiumBlocks.Grates.PRIMITIVE
+        BASIC -> RagiumBlocks.Grates.BASIC
+        ADVANCED -> RagiumBlocks.Grates.ADVANCED
     }
 
-    fun getCasing(): RagiumContents.Casings = when (this) {
-        PRIMITIVE -> RagiumContents.Casings.PRIMITIVE
-        BASIC -> RagiumContents.Casings.BASIC
-        ADVANCED -> RagiumContents.Casings.ADVANCED
+    fun getCasing(): RagiumBlocks.Casings = when (this) {
+        PRIMITIVE -> RagiumBlocks.Casings.PRIMITIVE
+        BASIC -> RagiumBlocks.Casings.BASIC
+        ADVANCED -> RagiumBlocks.Casings.ADVANCED
     }
 
-    fun getHull(): RagiumContents.Hulls = when (this) {
-        PRIMITIVE -> RagiumContents.Hulls.PRIMITIVE
-        BASIC -> RagiumContents.Hulls.BASIC
-        ADVANCED -> RagiumContents.Hulls.ADVANCED
+    fun getHull(): RagiumBlocks.Hulls = when (this) {
+        PRIMITIVE -> RagiumBlocks.Hulls.PRIMITIVE
+        BASIC -> RagiumBlocks.Hulls.BASIC
+        ADVANCED -> RagiumBlocks.Hulls.ADVANCED
     }
 
     fun getMainMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTMaterialProvider = when (this) {
@@ -167,16 +167,16 @@ enum class HTMachineTier(
         ADVANCED -> RagiumHardModeContents.DEEP_STEEL
     }.getContent(hardMode)
 
-    fun getStorageBlock(): RagiumContents.StorageBlocks = when (this) {
-        PRIMITIVE -> RagiumContents.StorageBlocks.RAGI_ALLOY
-        BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
-        ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
+    fun getStorageBlock(): RagiumBlocks.StorageBlocks = when (this) {
+        PRIMITIVE -> RagiumBlocks.StorageBlocks.RAGI_ALLOY
+        BASIC -> RagiumBlocks.StorageBlocks.RAGI_STEEL
+        ADVANCED -> RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL
     }
 
     fun getGlassBlock(): HTBlockContent = when (this) {
         PRIMITIVE -> HTContent.fromBlock(Blocks.GLASS)
-        BASIC -> HTContent.fromBlock(Blocks.TINTED_GLASS)
-        ADVANCED -> RagiumBlocks.STEEL_GLASS
+        BASIC -> RagiumBlocks.Glasses.STEEL
+        ADVANCED -> RagiumBlocks.Glasses.OBSIDIAN
     }
 
     fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =

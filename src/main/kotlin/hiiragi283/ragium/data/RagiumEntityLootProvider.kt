@@ -22,7 +22,7 @@ class RagiumEntityLootProvider(output: FabricDataOutput, registryLookup: Complet
                         .rolls(ConstantLootNumberProvider.create(1.0f))
                         .with(
                             ItemEntry
-                                .builder(RagiumContents.Gems.OBLIVION_CRYSTAL)
+                                .builder(RagiumItemsNew.Gems.OBLIVION_CRYSTAL)
                                 .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 4.0f))),
                         ),
                 ),

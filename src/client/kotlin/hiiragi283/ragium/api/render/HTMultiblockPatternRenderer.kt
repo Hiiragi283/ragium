@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.render
 
 import hiiragi283.ragium.api.extension.translate
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
@@ -15,6 +16,7 @@ import net.minecraft.world.World
 
 fun interface HTMultiblockPatternRenderer<T : HTMultiblockPattern> {
     fun render(
+        provider: HTMultiblockProvider,
         x: Int,
         y: Int,
         z: Int,

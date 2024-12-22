@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -25,9 +26,10 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
+class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.CRATE, pos, state),
-    SidedStorageBlockEntity {
+    SidedStorageBlockEntity,
+    HTMachineTierProvider {
     private inner class ItemStorage(val tier: HTMachineTier) : SingleItemStorage() {
         override fun onFinalCommit() {
             ifPresentWorld { world: World ->
@@ -38,6 +40,13 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, private var tier: HTM
         }
 
         override fun getCapacity(variant: ItemVariant): Long = tier.crateCapacity
+    }
+
+    override var tier: HTMachineTier = HTMachineTier.PRIMITIVE
+        private set
+
+    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
+        this.tier = tier
     }
 
     var itemStorage: SingleItemStorage = ItemStorage(tier)
