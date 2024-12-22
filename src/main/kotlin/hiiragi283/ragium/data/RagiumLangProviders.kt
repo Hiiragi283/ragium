@@ -221,7 +221,7 @@ object RagiumLangProviders {
             builder.add(RagiumItemsNew.DeepSteelTools.PICKAXE, "Deep Steel Pickaxe")
             builder.add(RagiumItemsNew.DeepSteelTools.SHOVEL, "Deep Steel Shovel")
             builder.add(RagiumItemsNew.DeepSteelTools.SWORD, "Deep Steel Sword")
-            
+
             builder.add(RagiumItemsNew.Dynamites.SIMPLE, "Dynamite")
             builder.add(RagiumItemsNew.Dynamites.ANVIL, "Anvil Dynamite")
             builder.add(RagiumItemsNew.Dynamites.BEDROCK, "Bedrock Dynamite")
