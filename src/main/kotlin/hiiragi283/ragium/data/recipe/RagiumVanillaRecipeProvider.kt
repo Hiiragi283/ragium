@@ -180,7 +180,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         )
         // white line
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.WhiteLines.SIMPLE)
+            .create(RagiumBlocks.WhiteLines.SIMPLE, 12)
             .patterns(
                 "A",
                 "A",
@@ -190,7 +190,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.WhiteLines.T_SHAPED)
+            .create(RagiumBlocks.WhiteLines.T_SHAPED, 12)
             .patterns(
                 "AAA",
                 " A ",
@@ -199,7 +199,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.WhiteLines.CROSS)
+            .create(RagiumBlocks.WhiteLines.CROSS, 12)
             .patterns(
                 " A ",
                 "AAA",

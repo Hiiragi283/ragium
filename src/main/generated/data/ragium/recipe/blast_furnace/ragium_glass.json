@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:assembler",
+    "type": "ragium:blast_furnace",
     "tier": "primitive"
   },
   "item_inputs": [
@@ -9,7 +9,7 @@
       "items": "#c:gems/ragium"
     },
     {
-      "items": "ragium:steel_glass"
+      "items": "ragium:obsidian_glass"
     }
   ],
   "item_outputs": [

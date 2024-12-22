@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:assembler",
+    "type": "ragium:blast_furnace",
     "tier": "primitive"
   },
   "item_inputs": [
@@ -9,13 +9,11 @@
       "items": "#c:obsidians"
     },
     {
-      "count": 2,
-      "items": "#c:glass_blocks/colorless"
+      "items": "ragium:steel_glass"
     }
   ],
   "item_outputs": [
     {
-      "count": 2,
       "item": "ragium:obsidian_glass"
     }
   ]

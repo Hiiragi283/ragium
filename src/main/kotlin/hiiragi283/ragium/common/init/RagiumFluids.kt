@@ -21,6 +21,7 @@ enum class RagiumFluids(
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
 
     // Molten Materials
+    GLASS("Molten Glass", "溶融ガラス", TextureType.GLASS),
 
     // Organics
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
@@ -124,6 +125,7 @@ enum class RagiumFluids(
     ) {
         EXPLOSIVE,
         GASEOUS(Identifier.of("block/white_concrete")),
+        GLASS(Identifier.of("block/glass")),
         HONEY(Identifier.of("block/honey_block_top")),
         LIQUID,
         RADIOACTIVE,

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialProvider
@@ -13,11 +14,17 @@ import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.*
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
+import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
+import net.minecraft.util.Identifier
+import kotlin.jvm.optionals.getOrNull
 
 object RagiumHardModePlugin : RagiumPlugin {
     override val priority: Int = -90
@@ -72,13 +79,13 @@ object RagiumHardModePlugin : RagiumPlugin {
             .offerTo(exporter, RagiumItems.LED)
         // glasses
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
+            .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(RagiumHardModeContents.STEEL.getContent(hardMode))
             .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 4)
             .itemOutput(RagiumBlocks.Glasses.STEEL, 4)
             .offerTo(exporter, RagiumBlocks.Glasses.STEEL, "_from_steel")
         HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
+            .create(RagiumMachineKeys.BLAST_FURNACE)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getContent(hardMode))
             .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 8)
             .itemOutput(RagiumBlocks.Glasses.STEEL, 8)
@@ -109,6 +116,35 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .input('C', input)
                 .unlockedBy(input)
                 .offerTo(exporter)
+        }
+
+        Registries.FLUID.streamEntries().forEach { entry: RegistryEntry<Fluid> ->
+            val id: Identifier = entry.key.map(RegistryKey<Fluid>::getValue).getOrNull() ?: return@forEach
+            val fluid: Fluid = entry.value()
+            if (!fluid.isStill(fluid.defaultState)) return@forEach
+            val bucket: Item = fluid.bucketItem
+            if (bucket.isAir) return@forEach
+            // insert to cube
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.INFUSER)
+                .itemInput(RagiumItemsNew.EMPTY_FLUID_CUBE)
+                .fluidInput(fluid)
+                .itemOutput(RagiumAPI.getInstance().createFilledCube(fluid))
+                .offerTo(exporter, id.withPrefixedPath("filling_cube/"))
+            // insert to bucket
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.INFUSER)
+                .itemInput(Items.BUCKET)
+                .fluidInput(fluid)
+                .itemOutput(bucket)
+                .offerTo(exporter, id.withPrefixedPath("filling_bucket/"))
+            // extract from bucket
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.EXTRACTOR)
+                .itemInput(bucket)
+                .itemOutput(Items.BUCKET)
+                .fluidOutput(fluid)
+                .offerTo(exporter, id.withPrefixedPath("extract_bucket/"))
         }
 
         craftingMachines(exporter)
@@ -342,6 +378,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumMachineKeys.GROWTH_CHAMBER,
             Items.IRON_HOE,
             Items.IRON_AXE,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.INFUSER,
+            Items.GLASS_BOTTLE,
         )
         createProcessor(
             exporter,

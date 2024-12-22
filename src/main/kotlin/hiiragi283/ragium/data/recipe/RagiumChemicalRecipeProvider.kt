@@ -10,11 +10,15 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
+import net.minecraft.component.ComponentChanges
+import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.PotionContentsComponent
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
+import net.minecraft.potion.Potions
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.ItemTags
@@ -32,6 +36,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         distillation(exporter)
         electrolyzer(exporter)
         extractor(exporter)
+        infuser(exporter)
         mixer(exporter)
     }
 
@@ -442,13 +447,6 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
-            .itemInput(Items.HONEY_BOTTLE, 4)
-            .itemOutput(Items.GLASS_BOTTLE, 4)
-            .fluidOutput(RagiumFluids.HONEY)
-            .offerTo(exporter, RagiumFluids.HONEY)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.EXTRACTOR)
             .fluidInput(RagiumFluids.SALT_WATER)
             .itemOutput(RagiumItemsNew.Dusts.SALT)
             .fluidOutput(Fluids.WATER)
@@ -460,6 +458,34 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemOutput(RagiumItems.LUMINESCENCE_DUST)
             .itemOutput(Items.INK_SAC)
             .offerTo(exporter, RagiumItems.LUMINESCENCE_DUST)
+        // milk
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.MILK_BUCKET)
+            .itemOutput(Items.BUCKET)
+            .fluidOutput(RagiumFluids.MILK)
+            .offerTo(exporter, RagiumFluids.MILK)
+        // honey
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.HONEYCOMB)
+            .itemOutput(RagiumItems.BEE_WAX)
+            .fluidOutput(RagiumFluids.HONEY, FluidConstants.BUCKET / 4)
+            .offerTo(exporter, RagiumFluids.HONEY)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.HONEYCOMB_BLOCK)
+            .itemOutput(RagiumItems.BEE_WAX, 4)
+            .fluidOutput(RagiumFluids.HONEY)
+            .offerTo(exporter, RagiumFluids.HONEY, "_from_block")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.HONEY_BOTTLE, 4)
+            .itemOutput(Items.GLASS_BOTTLE, 4)
+            .fluidOutput(RagiumFluids.HONEY)
+            .offerTo(exporter, RagiumFluids.HONEY, "_from_bottle")
         // uranium enrichment
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
@@ -510,6 +536,30 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemInput(Items.COAL, 3)
             .fluidOutput(RagiumFluids.CRUDE_OIL)
             .offerTo(exporter, RagiumFluids.CRUDE_OIL, "_from_coal")
+    }
+
+    //    Infuser    //
+
+    private fun infuser(exporter: RecipeExporter) {
+        // bottle
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.INFUSER)
+            .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(Fluids.WATER, FluidConstants.BOTTLE)
+            .itemOutput(
+                Items.POTION,
+                components = ComponentChanges
+                    .builder()
+                    .add(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent(Potions.WATER))
+                    .build(),
+            ).offerTo(exporter, Items.POTION)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.INFUSER)
+            .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(RagiumFluids.HONEY, FluidConstants.BUCKET / 4)
+            .itemOutput(Items.HONEY_BOTTLE)
+            .offerTo(exporter, Items.HONEY_BOTTLE)
     }
 
     //    Mixer    //

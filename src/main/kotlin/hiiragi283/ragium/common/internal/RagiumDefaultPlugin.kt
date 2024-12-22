@@ -181,6 +181,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             RagiumMachineKeys.CHEMICAL_REACTOR,
             RagiumMachineKeys.ELECTROLYZER,
             RagiumMachineKeys.EXTRACTOR,
+            RagiumMachineKeys.INFUSER,
             RagiumMachineKeys.MIXER,
         ) {
             set(

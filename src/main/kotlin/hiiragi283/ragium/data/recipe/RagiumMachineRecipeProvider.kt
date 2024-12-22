@@ -54,19 +54,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.PLUTONIUM_FUEL)
             .offerTo(exporter, RagiumItems.PLUTONIUM_FUEL)
-        // glass
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(ConventionalItemTags.OBSIDIANS)
-            .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 2)
-            .itemOutput(RagiumBlocks.Glasses.OBSIDIAN, 2)
-            .offerTo(exporter, RagiumBlocks.Glasses.OBSIDIAN)
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(RagiumItemsNew.Gems.RAGIUM)
-            .itemInput(RagiumBlocks.Glasses.STEEL)
-            .itemOutput(RagiumBlocks.Glasses.RAGIUM)
-            .offerTo(exporter, RagiumBlocks.Glasses.RAGIUM)
         // LED
         // processor
         HTMachineRecipeJsonBuilder
@@ -177,6 +164,37 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumItems.DEEPANT, 4)
             .itemOutput(RagiumItemsNew.Ingots.DEEP_STEEL)
             .offerTo(exporter, RagiumItemsNew.Ingots.DEEP_STEEL)
+        // glass
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(ItemTags.SAND)
+            .fluidOutput(RagiumFluids.GLASS)
+            .offerTo(exporter, RagiumFluids.GLASS, "_from_sand")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(ConventionalItemTags.SANDSTONE_BLOCKS)
+            .fluidOutput(RagiumFluids.GLASS, FluidConstants.BUCKET * 4)
+            .offerTo(exporter, RagiumFluids.GLASS, "_from_sandstone")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(ConventionalItemTags.GLASS_BLOCKS)
+            .fluidOutput(RagiumFluids.GLASS)
+            .offerTo(exporter, RagiumFluids.GLASS, "_from_glass")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(ConventionalItemTags.OBSIDIANS)
+            .itemInput(RagiumBlocks.Glasses.STEEL)
+            .itemOutput(RagiumBlocks.Glasses.OBSIDIAN)
+            .offerTo(exporter, RagiumBlocks.Glasses.OBSIDIAN)
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(RagiumItemsNew.Gems.RAGIUM)
+            .itemInput(RagiumBlocks.Glasses.OBSIDIAN)
+            .itemOutput(RagiumBlocks.Glasses.RAGIUM)
+            .offerTo(exporter, RagiumBlocks.Glasses.RAGIUM)
     }
 
     //    Compressor    //

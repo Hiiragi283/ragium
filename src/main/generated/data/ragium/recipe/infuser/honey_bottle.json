@@ -1,23 +1,23 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:extractor",
+    "type": "ragium:infuser",
     "tier": "primitive"
   },
-  "fluid_outputs": [
+  "fluid_inputs": [
     {
       "amount": 20250,
-      "fluid": "ragium:honey"
+      "fluids": "#c:honey"
     }
   ],
   "item_inputs": [
     {
-      "items": "minecraft:honeycomb"
+      "items": "minecraft:glass_bottle"
     }
   ],
   "item_outputs": [
     {
-      "item": "ragium:bee_wax"
+      "item": "minecraft:honey_bottle"
     }
   ]
 }

@@ -212,6 +212,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.INFUSER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
     }

@@ -91,6 +91,9 @@ object RagiumMachineKeys {
     val GROWTH_CHAMBER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("growth_chamber"))
 
     @JvmField
+    val INFUSER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("infuser"))
+
+    @JvmField
     val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("laser_transformer"))
 
     @JvmField
@@ -111,6 +114,7 @@ object RagiumMachineKeys {
         EXTRACTOR,
         GRINDER,
         GROWTH_CHAMBER,
+        INFUSER,
         LASER_TRANSFORMER,
         MIXER,
         MULTI_SMELTER,

@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.item.HTWarpedCrystalItem
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
+import net.minecraft.item.HoneycombItem
 import net.minecraft.item.Item
 import net.minecraft.text.Text
 
@@ -14,7 +15,7 @@ object RagiumItems {
 
     // organic
     @JvmField
-    val BEE_WAX: Item = Item(itemSettings())
+    val BEE_WAX: Item = HoneycombItem(itemSettings())
 
     @JvmField
     val PULP: Item = Item(itemSettings())

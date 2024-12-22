@@ -6,17 +6,17 @@
   },
   "fluid_outputs": [
     {
-      "amount": 20250,
       "fluid": "ragium:honey"
     }
   ],
   "item_inputs": [
     {
-      "items": "minecraft:honeycomb"
+      "items": "minecraft:honeycomb_block"
     }
   ],
   "item_outputs": [
     {
+      "count": 4,
       "item": "ragium:bee_wax"
     }
   ]
