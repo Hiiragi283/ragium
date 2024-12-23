@@ -245,6 +245,7 @@ object RagiumLangProviders {
             builder.add(RagiumItemsNew.TRADER_CATALOG, "Trader Catalog")
 
             builder.add(RagiumItemsNew.BUTTER, "Butter")
+            builder.add(RagiumItemsNew.CANNED_COOKED_MEAT, "Canned Cooked Meat")
             builder.add(RagiumItemsNew.CARAMEL, "Caramel")
             builder.add(RagiumItemsNew.CHOCOLATE, "Chocolate")
             builder.add(RagiumItemsNew.CHOCOLATE_APPLE, "Chocolate Apple")
@@ -656,6 +657,7 @@ object RagiumLangProviders {
             builder.add(RagiumItemsNew.TRADER_CATALOG, "行商人カタログ")
 
             builder.add(RagiumItemsNew.BUTTER, "バター")
+            builder.add(RagiumItemsNew.CANNED_COOKED_MEAT, "焼肉缶詰")
             builder.add(RagiumItemsNew.CARAMEL, "キャラメル")
             builder.add(RagiumItemsNew.CHOCOLATE, "チョコレート")
             builder.add(RagiumItemsNew.CHOCOLATE_APPLE, "チョコリンゴ")

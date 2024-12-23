@@ -440,6 +440,12 @@ object RagiumAdvancementProviders {
                 compressor,
                 RagiumItemsNew.MEAT_INGOT,
             ) { hasAllItems(RagiumItemsNew.MEAT_INGOT) }
+            val cannedCookedMeat: AdvancementEntry = createChild(
+                consumer,
+                "machine/canned_cooked_meat",
+                meatIngot,
+                RagiumItemsNew.CANNED_COOKED_MEAT,
+            ) { hasAllItems(RagiumItemsNew.CANNED_COOKED_MEAT) }
             // cutting machine
             val cuttingMachine: AdvancementEntry = createMachineChild(
                 consumer,

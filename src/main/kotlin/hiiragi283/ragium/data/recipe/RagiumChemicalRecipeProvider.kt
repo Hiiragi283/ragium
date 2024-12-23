@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.*
@@ -536,6 +537,12 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
     //    Infuser    //
 
     private fun infuser(exporter: RecipeExporter) {
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.INFUSER)
+            .itemInput(RagiumItemsNew.COOKED_MEAT_INGOT, 8)
+            .itemInput(HTTagPrefix.PLATE, RagiumMaterialKeys.IRON)
+            .itemOutput(RagiumItemsNew.CANNED_COOKED_MEAT, 8)
+            .offerTo(exporter, RagiumItemsNew.CANNED_COOKED_MEAT)
         // bottle
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.INFUSER)

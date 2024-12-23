@@ -13,13 +13,10 @@ import hiiragi283.ragium.api.util.HTToolType
 import hiiragi283.ragium.common.item.*
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
-import net.minecraft.component.type.FoodComponent
 import net.minecraft.component.type.FoodComponents
 import net.minecraft.component.type.UnbreakableComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
-import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -305,6 +302,9 @@ object RagiumItemsNew {
     val COOKED_MEAT_INGOT: HTItemContent = HTContent.ofItem("cooked_meat_ingot")
 
     @JvmField
+    val CANNED_COOKED_MEAT: HTItemContent = HTContent.ofItem("canned_cooked_meat")
+
+    @JvmField
     val FOODS: List<HTItemContent> = listOf(
         SWEET_BERRIES_CAKE_PIECE,
         MELON_PIE,
@@ -319,6 +319,7 @@ object RagiumItemsNew {
         MINCED_MEAT,
         MEAT_INGOT,
         COOKED_MEAT_INGOT,
+        CANNED_COOKED_MEAT,
     )
 
     //    Ingredients    //
@@ -744,52 +745,20 @@ object RagiumItemsNew {
         }
         registerItem(TRADER_CATALOG, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.TRADER_CATALOG), ::HTTraderCatalogItem)
         // food
-        registerItem(
-            SWEET_BERRIES_CAKE_PIECE,
-            itemSettings().food(
-                FoodComponent
-                    .Builder()
-                    .nutrition(2)
-                    .saturationModifier(0.1f)
-                    .build(),
-            ),
-        )
-        registerItem(
-            MELON_PIE,
-            itemSettings().food(
-                FoodComponent
-                    .Builder()
-                    .nutrition(8)
-                    .saturationModifier(0.3f)
-                    .usingConvertsTo(Items.MELON_SEEDS)
-                    .build(),
-            ),
-        )
+        registerItem(SWEET_BERRIES_CAKE_PIECE, itemSettings().food(RagiumFoodComponents.SWEET_BERRIES_CAKE))
+        registerItem(MELON_PIE, itemSettings().food(RagiumFoodComponents.MELON_PIE))
         registerItem(BUTTER, itemSettings().food(FoodComponents.APPLE))
         registerItem(CARAMEL, itemSettings().food(FoodComponents.DRIED_KELP))
         registerItem(DOUGH)
         registerItem(FLOUR)
-        registerItem(
-            CHOCOLATE,
-            itemSettings().food(
-                FoodComponent
-                    .Builder()
-                    .nutrition(3)
-                    .saturationModifier(0.3f)
-                    .statusEffect(
-                        StatusEffectInstance(StatusEffects.STRENGTH, 10 * 20, 0),
-                        1.0f,
-                    ).snack()
-                    .alwaysEdible()
-                    .build(),
-            ),
-        )
+        registerItem(CHOCOLATE, itemSettings().food(RagiumFoodComponents.CHOCOLATE))
         registerItem(CHOCOLATE_APPLE, itemSettings().food(FoodComponents.COOKED_CHICKEN))
         registerItem(CHOCOLATE_BREAD, itemSettings().food(FoodComponents.COOKED_BEEF))
         registerItem(CHOCOLATE_COOKIE, itemSettings().food(FoodComponents.COOKIE))
         registerItem(MINCED_MEAT)
         registerItem(MEAT_INGOT, itemSettings().food(FoodComponents.BEEF))
         registerItem(COOKED_MEAT_INGOT, itemSettings().food(FoodComponents.COOKED_BEEF))
+        registerItem(CANNED_COOKED_MEAT, itemSettings().food(RagiumFoodComponents.CANNED_COOKED_MEAT))
         // misc
         registerItem(RAGI_TICKET, itemSettings().rarity(Rarity.EPIC))
 
