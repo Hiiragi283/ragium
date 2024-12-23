@@ -268,11 +268,6 @@ object RagiumHardModePlugin : RagiumPlugin {
         )
         createProcessor(
             exporter,
-            RagiumMachineKeys.CANNING_MACHINE,
-            RagiumItemsNew.EMPTY_FLUID_CUBE,
-        )
-        createProcessor(
-            exporter,
             RagiumMachineKeys.DRAIN,
             Items.BUCKET,
         )

@@ -122,7 +122,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "Auto Illuminator")
             builder.add(RagiumBlocks.BACKPACK_INTERFACE, "Backpack Interface")
-            builder.add(RagiumBlocks.ENCHANTMENT_BOOKSHELF, "Enchantment Bookshelf")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "Item Display")
             builder.add(RagiumBlocks.EXTENDED_PROCESSOR, "Extended Processor")
             builder.add(RagiumBlocks.MANUAL_FORGE, "Ragi-Anvil")
@@ -348,11 +347,6 @@ object RagiumLangProviders {
                 "Produce Biomass from Composter inputs",
             )
             builder.add(
-                RagiumMachineKeys.CANNING_MACHINE,
-                "Canning Machine",
-                "Insert or Extract fluids from Fluid Cube",
-            )
-            builder.add(
                 RagiumMachineKeys.DRAIN,
                 "Drain",
                 "Drains fluids from each side",
@@ -534,7 +528,6 @@ object RagiumLangProviders {
 
             builder.add(RagiumBlocks.AUTO_ILLUMINATOR, "光源置き太郎")
             builder.add(RagiumBlocks.BACKPACK_INTERFACE, "バックパックインターフェース")
-            builder.add(RagiumBlocks.ENCHANTMENT_BOOKSHELF, "エンチャント本棚")
             builder.add(RagiumBlocks.ITEM_DISPLAY, "アイテムティスプレイ")
             builder.add(RagiumBlocks.EXTENDED_PROCESSOR, "拡張処理装置")
             builder.add(RagiumBlocks.MANUAL_FORGE, "らぎ金床")
@@ -748,7 +741,6 @@ object RagiumLangProviders {
             // Machine Type
             builder.add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
             builder.add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")
-            builder.add(RagiumMachineKeys.CANNING_MACHINE, "缶詰機", "液体キューブに液体を出し入れできる")
             builder.add(RagiumMachineKeys.DRAIN, "排水溝", "各面から液体を吸い取る")
             builder.add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
             builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "水と溶岩を少なくとも一つずつ隣接させる")

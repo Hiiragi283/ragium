@@ -102,9 +102,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.COMPOSTER)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_COMPOSTER_FILL_SUCCESS)
         }
-        helper.modify(RagiumMachineKeys.CANNING_MACHINE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCanningMachineBlockEntity))
-        }
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)

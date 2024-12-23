@@ -9,6 +9,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.EntityHitResult
+import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ChunkPos
 import net.minecraft.util.math.Direction
@@ -91,3 +94,16 @@ fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
         }
     }
 }
+
+//    HitResult    //
+
+fun HitResult.onBlockHit(action: (BlockHitResult) -> Unit): HitResult = apply {
+    (this as? BlockHitResult)?.let(action)
+}
+
+fun HitResult.onEntityHit(action: (EntityHitResult) -> Unit): HitResult = apply {
+    (this as? EntityHitResult)?.let(action)
+}
+
+val BlockHitResult.sidedPos: BlockPos
+    get() = blockPos.offset(side)

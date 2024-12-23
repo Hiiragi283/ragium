@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.extension.descriptions
 import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.maybeRework
 import hiiragi283.ragium.common.item.HTWarpedCrystalItem
 import net.minecraft.component.type.FoodComponent
 import net.minecraft.entity.effect.StatusEffectInstance
@@ -41,13 +42,13 @@ object RagiumItems {
 
     // plastic
     @JvmField
-    val POLYMER_RESIN: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
+    val POLYMER_RESIN: Item = Item(itemSettings().maybeRework())
 
     @JvmField
-    val PLASTIC_PLATE: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
+    val PLASTIC_PLATE: Item = Item(itemSettings().maybeRework())
 
     @JvmField
-    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
+    val ENGINEERING_PLASTIC_PLATE: Item = Item(itemSettings().maybeRework())
 
     @JvmField
     val STELLA_PLATE: Item = Item(itemSettings())
@@ -75,7 +76,7 @@ object RagiumItems {
 
     // parts
     @JvmField
-    val BASALT_MESH: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
+    val BASALT_MESH: Item = Item(itemSettings())
 
     @JvmField
     val BLAZING_CARBON_ELECTRODE: Item = Item(itemSettings())
@@ -96,10 +97,10 @@ object RagiumItems {
     val LED: Item = Item(itemSettings())
 
     @JvmField
-    val PROCESSOR_SOCKET: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
+    val PROCESSOR_SOCKET: Item = Item(itemSettings().maybeRework())
 
     @JvmField
-    val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit))
+    val RAGI_CRYSTAL_PROCESSOR: Item = Item(itemSettings().maybeRework())
 
     @JvmField
     val SOLAR_PANEL: Item = Item(itemSettings())

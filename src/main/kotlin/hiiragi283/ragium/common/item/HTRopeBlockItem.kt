@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.onBlockHit
+import hiiragi283.ragium.api.extension.sidedPos
 import hiiragi283.ragium.api.extension.throwEntity
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -30,8 +32,8 @@ class HTRopeBlockItem(block: Block, settings: Settings) : BlockItem(block, setti
                     this.stack.count = count
                 }.setAction { entity: HTDynamiteEntity, result: HitResult ->
                     val world: World = entity.world
-                    if (result is BlockHitResult) {
-                        var pos: BlockPos = result.blockPos.offset(result.side)
+                    result.onBlockHit { blockResult: BlockHitResult ->
+                        var pos: BlockPos = blockResult.sidedPos
                         val ropeState: BlockState = RagiumBlocks.ROPE.get().defaultState
                         if (ropeState.canPlaceAt(world, pos)) {
                             while (world.getBlockState(pos).isAir) {

@@ -44,6 +44,8 @@ fun Item.Settings.repairment(tagKey: TagKey<Item>, count: Int = 1): Item.Setting
 fun Item.Settings.tieredText(translationKey: String, tier: HTMachineTier): Item.Settings =
     component(DataComponentTypes.ITEM_NAME, tier.createPrefixedText(translationKey)).tier(tier)
 
+fun Item.Settings.maybeRework(): Item.Settings = component(RagiumComponentTypes.REWORK_TARGET, Unit)
+
 val Item.isAir: Boolean
     get() = this == Items.AIR
 

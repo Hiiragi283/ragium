@@ -25,6 +25,7 @@ import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.text.Text
@@ -42,7 +43,7 @@ object RagiumBlocks {
         SOURCE,
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("creative_${name.lowercase()}")
+        override val key: RegistryKey<Block> = HTContent.blockKey("creative_${name.lowercase()}")
     }
 
     //    Minerals    //
@@ -69,7 +70,7 @@ object RagiumBlocks {
         POLISHED_SLATE,
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock(name.lowercase())
+        override val key: RegistryKey<Block> = HTContent.blockKey(name.lowercase())
     }
 
     enum class Slabs : HTBlockContent {
@@ -84,7 +85,7 @@ object RagiumBlocks {
         val baseStone: Stones
             get() = Stones.entries.first { it.name == this.name }
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_slab")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_slab")
     }
 
     enum class Stairs : HTBlockContent {
@@ -99,7 +100,7 @@ object RagiumBlocks {
         val baseStone: Stones
             get() = Stones.entries.first { it.name == this.name }
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_stairs")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_stairs")
     }
 
     enum class Glasses : HTBlockContent {
@@ -108,7 +109,7 @@ object RagiumBlocks {
         RAGIUM,
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_glass")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_glass")
     }
 
     enum class WhiteLines(name: String) : HTBlockContent {
@@ -117,7 +118,7 @@ object RagiumBlocks {
         CROSS("cross_"),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name}white_line")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name}white_line")
     }
 
     enum class Ores(
@@ -137,7 +138,7 @@ object RagiumBlocks {
         ),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock(path)
+        override val key: RegistryKey<Block> = HTContent.blockKey(path)
     }
 
     enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {
@@ -153,7 +154,7 @@ object RagiumBlocks {
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_block")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_block")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
@@ -165,7 +166,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_grate")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_grate")
     }
 
     enum class Casings(override val tier: HTMachineTier) :
@@ -176,7 +177,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_casing")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_casing")
     }
 
     enum class Hulls(override val tier: HTMachineTier) :
@@ -187,7 +188,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_hull")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_hull")
     }
 
     enum class Coils(override val tier: HTMachineTier) :
@@ -198,7 +199,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_coil")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_coil")
     }
 
     //    Foods    //
@@ -225,7 +226,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_crate")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_crate")
     }
 
     enum class Drums(override val tier: HTMachineTier) :
@@ -236,7 +237,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_drum")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_drum")
     }
 
     enum class Exporters(override val tier: HTMachineTier) :
@@ -247,7 +248,7 @@ object RagiumBlocks {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_exporter")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_exporter")
     }
 
     enum class Pipes(override val tier: HTMachineTier, val pipeType: HTPipeType) :
@@ -260,7 +261,7 @@ object RagiumBlocks {
         UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_pipe")
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_pipe")
     }
 
     enum class CrossPipes(val pipeType: HTPipeType) : HTBlockContent {
@@ -268,9 +269,7 @@ object RagiumBlocks {
         GOLD(HTPipeType.FLUID),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_pipe")
-
-        override fun asItem(): Item = get().asItem()
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_pipe")
     }
 
     enum class PipeStations(val pipeType: HTPipeType) : HTBlockContent {
@@ -278,9 +277,7 @@ object RagiumBlocks {
         FLUID(HTPipeType.FLUID),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_pipe_station")
-
-        override fun asItem(): Item = get().asItem()
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_pipe_station")
     }
 
     enum class FilteringPipes(val pipeType: HTPipeType) : HTBlockContent {
@@ -288,9 +285,7 @@ object RagiumBlocks {
         FLUID(HTPipeType.FLUID),
         ;
 
-        override val delegated: HTContent<Block> = HTContent.ofBlock("${name.lowercase()}_filtering_pipe")
-
-        override fun asItem(): Item = get().asItem()
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_filtering_pipe")
     }
 
     //    Mechanics    //
@@ -342,9 +337,6 @@ object RagiumBlocks {
     val BACKPACK_INTERFACE: HTBlockContent = HTContent.ofBlock("backpack_interface")
 
     @JvmField
-    val ENCHANTMENT_BOOKSHELF: HTBlockContent = HTContent.ofBlock("enchantment_bookshelf")
-
-    @JvmField
     val ITEM_DISPLAY: HTBlockContent = HTContent.ofBlock("item_display")
 
     @JvmField
@@ -359,7 +351,6 @@ object RagiumBlocks {
     @JvmField
     val MISC: List<HTBlockContent> = listOf(
         BACKPACK_INTERFACE,
-        ENCHANTMENT_BOOKSHELF,
         ITEM_DISPLAY,
         ROPE,
         SHAFT,
@@ -568,7 +559,7 @@ object RagiumBlocks {
                 filtering,
                 itemSettings()
                     .descriptions(RagiumTranslationKeys.PIPE_STATION)
-                    .component(RagiumComponentTypes.REWORK_TARGET, Unit),
+                    .maybeRework(),
             )
         }
         // mechanics
@@ -624,11 +615,6 @@ object RagiumBlocks {
             blockSettings().mapColor(MapColor.BLACK).requiresTool().strength(2f, 6f),
             ::HTBackpackInterfaceBlock,
         )
-        registerBlockWithBE(
-            ENCHANTMENT_BOOKSHELF,
-            RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF,
-            blockSettings().mapColor(MapColor.OAK_TAN).strength(1.5f).sounds(BlockSoundGroup.WOOD),
-        )
         registerBlock(
             ITEM_DISPLAY,
             blockSettings().strength(0.5f).sounds(BlockSoundGroup.GLASS),
@@ -651,11 +637,7 @@ object RagiumBlocks {
         )
         registerBlockItem(
             BACKPACK_INTERFACE,
-            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
-        )
-        registerBlockItem(
-            ENCHANTMENT_BOOKSHELF,
-            itemSettings().component(RagiumComponentTypes.REWORK_TARGET, Unit),
+            itemSettings().maybeRework(),
         )
         registerBlockItem(ITEM_DISPLAY)
         registerBlockItem(
@@ -665,7 +647,7 @@ object RagiumBlocks {
                 block,
                 settings
                     .descriptions(Text.translatable(RagiumTranslationKeys.ROPE))
-                    .component(RagiumComponentTypes.REWORK_TARGET, Unit),
+                    .maybeRework(),
             )
         }
         registerBlockItem(SHAFT)

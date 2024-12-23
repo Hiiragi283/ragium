@@ -8,9 +8,6 @@ interface HTMaterialProvider : ItemConvertible {
     val material: HTMaterialKey
     val tagPrefix: HTTagPrefix
 
-    val definition: HTMaterialDefinition
-        get() = HTMaterialDefinition(tagPrefix, material)
-
     val prefixedTagKey: TagKey<Item>
         get() = tagPrefix.createTag(material)
 

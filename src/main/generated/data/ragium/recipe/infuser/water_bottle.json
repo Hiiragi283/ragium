@@ -17,6 +17,11 @@
   ],
   "item_outputs": [
     {
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        }
+      },
       "item": "minecraft:potion"
     }
   ]

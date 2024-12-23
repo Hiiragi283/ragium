@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.fluid.HTVirtualFluid
 import net.minecraft.fluid.Fluid
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 import java.awt.Color
@@ -21,6 +22,7 @@ enum class RagiumFluids(
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
 
     // Molten Materials
+    BASALT("Molten Basalt", "溶融バサルト", TextureType.BASALT),
     GLASS("Molten Glass", "溶融ガラス", TextureType.GLASS),
 
     // Organics
@@ -103,10 +105,6 @@ enum class RagiumFluids(
         type,
     )
 
-    override val delegated: HTContent<Fluid> = HTContent.ofFluid(name.lowercase())
-
-    val translationKey: String = Util.createTranslationKey("fluid", id)
-
     companion object {
         @JvmStatic
         internal fun register() {
@@ -116,6 +114,10 @@ enum class RagiumFluids(
         }
     }
 
+    override val key: RegistryKey<Fluid> = HTContent.fluidKey(name.lowercase())
+
+    val translationKey: String = Util.createTranslationKey("fluid", id)
+
     //    TextureType    //
 
     enum class TextureType(
@@ -123,6 +125,7 @@ enum class RagiumFluids(
         val floatingTex: Identifier = stillTex,
         val overTex: Identifier? = null,
     ) {
+        BASALT(Identifier.of("block/smooth_basalt")),
         EXPLOSIVE,
         GASEOUS(Identifier.of("block/white_concrete")),
         GLASS(Identifier.of("block/glass")),

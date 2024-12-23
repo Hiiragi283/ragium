@@ -10,7 +10,7 @@ import net.minecraft.util.math.Direction
 open class HTMachineInventory(size: Int, private val slotMap: Map<Int, HTStorageIO>) : SidedInventory {
     companion object {
         @JvmStatic
-        fun ofSmall(): HTMachineInventory = Builder(3).input(0).output(2).build()
+        fun ofSmall(): HTMachineInventory = Builder(2).input(0).output(1).build()
 
         @JvmStatic
         fun ofSimple(): HTMachineInventory = Builder(5).input(0, 1).output(3, 4).build()

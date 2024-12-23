@@ -187,12 +187,12 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         // factory
 
         registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED, TextureMap::all)
-        registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
+        /*registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
             HTTextureMapBuilder.create {
                 put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
                 put(TextureKey.SIDE, RagiumBlocks.ENCHANTMENT_BOOKSHELF)
             }
-        }
+        }*/
 
         RagiumBlocks.Drums.entries.forEach { registerFactory(it.get(), TexturedModel.CUBE_COLUMN) }
         RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->

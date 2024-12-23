@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTExplosionComponent
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
-import hiiragi283.ragium.common.item.HTDynamiteItem
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -55,8 +55,8 @@ object RagiumComponentTypes {
     )
 
     @JvmField
-    val DYNAMITE: ComponentType<HTDynamiteItem.Component> =
-        register("dynamite", HTDynamiteItem.Component.CODEC, HTDynamiteItem.Component.PACKET_CODEC)
+    val DYNAMITE: ComponentType<HTExplosionComponent> =
+        register("dynamite", HTExplosionComponent.COMPONENT_TYPE)
 
     @JvmField
     val FLUID: ComponentType<Fluid> =

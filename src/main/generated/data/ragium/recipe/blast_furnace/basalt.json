@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "basic"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:basalt"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "minecraft:smooth_basalt"
+    }
+  ]
+}

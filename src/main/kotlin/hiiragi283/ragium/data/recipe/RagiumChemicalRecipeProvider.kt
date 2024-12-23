@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumFluidTags
@@ -402,12 +403,6 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
-            .itemInput(Items.SMOOTH_BASALT)
-            .itemOutput(RagiumItems.BASALT_MESH)
-            .offerTo(exporter, RagiumItems.BASALT_MESH)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(RagiumItemsNew.CHOCOLATE)
             .fluidOutput(RagiumFluids.CHOCOLATE)
             .offerTo(exporter, RagiumFluids.CHOCOLATE)
@@ -552,7 +547,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
                     .builder()
                     .add(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent(Potions.WATER))
                     .build(),
-            ).offerTo(exporter, Items.POTION)
+            ).offerTo(exporter, RagiumAPI.id("water_bottle"))
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.INFUSER)

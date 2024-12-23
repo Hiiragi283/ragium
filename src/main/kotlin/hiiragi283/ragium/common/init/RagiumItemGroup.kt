@@ -46,6 +46,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumBlocks.Stones.entries)
                 entries.addAll(RagiumBlocks.Slabs.entries)
                 entries.addAll(RagiumBlocks.Stairs.entries)
+                entries.add(RagiumBlocks.ITEM_DISPLAY)
                 entries.addAll(RagiumBlocks.Glasses.entries)
                 entries.addAll(RagiumBlocks.WhiteLines.entries)
 
@@ -54,6 +55,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumBlocks.Grates.entries)
                 entries.addAll(RagiumBlocks.Casings.entries)
                 entries.addAll(RagiumBlocks.Hulls.entries)
+                entries.add(RagiumBlocks.SHAFT)
                 entries.addAll(RagiumBlocks.Coils.entries)
 
                 entries.addAll(RagiumItemsNew.Dusts.entries)
@@ -91,7 +93,6 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItemsNew.PressMolds.entries)
                 entries.addAll(RagiumItems.INGREDIENTS)
 
-                entries.addAll(RagiumBlocks.MISC)
                 entries.addAll(RagiumItemsNew.MISC)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
@@ -125,6 +126,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumBlocks.FilteringPipes.entries)
 
                 entries.addAll(RagiumBlocks.MECHANICS)
+                entries.add(RagiumBlocks.BACKPACK_INTERFACE)
 
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->
                     RagiumAPI

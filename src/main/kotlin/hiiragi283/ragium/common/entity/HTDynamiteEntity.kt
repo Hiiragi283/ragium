@@ -16,9 +16,9 @@ class HTDynamiteEntity : ThrownItemEntity {
 
     constructor(world: World, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.DYNAMITE, x, y, z, world)
 
-    private var action: Action = Action { _: HTDynamiteEntity, _: HitResult -> }
+    private var action: (HTDynamiteEntity, HitResult) -> Unit = { _: HTDynamiteEntity, _: HitResult -> }
 
-    fun setAction(action: Action): HTDynamiteEntity = apply {
+    fun setAction(action: (HTDynamiteEntity, HitResult) -> Unit): HTDynamiteEntity = apply {
         this.action = action
     }
 
@@ -27,14 +27,8 @@ class HTDynamiteEntity : ThrownItemEntity {
     override fun onCollision(hitResult: HitResult) {
         super.onCollision(hitResult)
         if (!world.isClient) {
-            action.onCollision(this, hitResult)
+            action(this, hitResult)
             discard()
         }
-    }
-
-    //    Action    //
-
-    fun interface Action {
-        fun onCollision(entity: HTDynamiteEntity, hitResult: HitResult)
     }
 }

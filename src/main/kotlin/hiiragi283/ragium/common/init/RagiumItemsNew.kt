@@ -10,10 +10,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTArmorType
 import hiiragi283.ragium.api.util.HTToolType
-import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.item.*
-import net.minecraft.block.Block
-import net.minecraft.block.Blocks
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponent
@@ -23,24 +20,13 @@ import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
-import net.minecraft.item.ArmorItem
-import net.minecraft.item.ArmorMaterial
-import net.minecraft.item.Item
-import net.minecraft.item.Items
-import net.minecraft.item.ToolMaterials
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
-import net.minecraft.util.hit.BlockHitResult
-import net.minecraft.util.hit.EntityHitResult
-import net.minecraft.util.hit.HitResult
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.ChunkPos
-import net.minecraft.util.math.Direction
-import net.minecraft.util.math.Vec3d
-import net.minecraft.world.World
 
 object RagiumItemsNew {
     //    Materials    //
@@ -70,7 +56,7 @@ object RagiumItemsNew {
         EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_dust")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_dust")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
@@ -91,7 +77,7 @@ object RagiumItemsNew {
         EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_gear")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_gear")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEAR
     }
 
@@ -105,7 +91,7 @@ object RagiumItemsNew {
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem(name.lowercase())
+        override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEM
     }
 
@@ -123,7 +109,7 @@ object RagiumItemsNew {
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_ingot")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_ingot")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
@@ -152,7 +138,7 @@ object RagiumItemsNew {
         NETHERITE(RagiumMaterialKeys.NETHERITE),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_plate")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_plate")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.PLATE
     }
 
@@ -171,7 +157,7 @@ object RagiumItemsNew {
         BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("raw_${name.lowercase()}")
+        override val key: RegistryKey<Item> = HTContent.itemKey("raw_${name.lowercase()}")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
@@ -184,7 +170,7 @@ object RagiumItemsNew {
         BOOTS(HTArmorType.BOOTS),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("steel_${name.lowercase()}")
+        override val key: RegistryKey<Item> = HTContent.itemKey("steel_${name.lowercase()}")
     }
 
     enum class DeepSteelArmors(val armorType: HTArmorType) : HTItemContent {
@@ -194,7 +180,7 @@ object RagiumItemsNew {
         BOOTS(HTArmorType.BOOTS),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("deep_steel_${name.lowercase()}")
+        override val key: RegistryKey<Item> = HTContent.itemKey("deep_steel_${name.lowercase()}")
     }
 
     enum class StellaSuits(val armorType: HTArmorType) : HTItemContent {
@@ -204,7 +190,7 @@ object RagiumItemsNew {
         BOOTS(HTArmorType.BOOTS),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("stella_${name.lowercase()}")
+        override val key: RegistryKey<Item> = HTContent.itemKey("stella_${name.lowercase()}")
     }
 
     //    Tools    //
@@ -217,7 +203,7 @@ object RagiumItemsNew {
         SWORD(HTToolType.SWORD),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("steel_${name.lowercase()}")
+        override val key: RegistryKey<Item> = HTContent.itemKey("steel_${name.lowercase()}")
     }
 
     enum class DeepSteelTools(val toolType: HTToolType) : HTItemContent {
@@ -228,7 +214,7 @@ object RagiumItemsNew {
         SWORD(HTToolType.SWORD),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("deep_steel_${name.lowercase()}")
+        override val key: RegistryKey<Item> = HTContent.itemKey("deep_steel_${name.lowercase()}")
     }
 
     enum class Dynamites(name: String) : HTItemContent {
@@ -238,7 +224,7 @@ object RagiumItemsNew {
         FLATTENING("flattening_"),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem(name + "dynamite")
+        override val key: RegistryKey<Item> = HTContent.itemKey(name + "dynamite")
     }
 
     @JvmField
@@ -345,7 +331,7 @@ object RagiumItemsNew {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_circuit_board")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_circuit_board")
 
         fun getCircuit(): Circuits = when (this) {
             PRIMITIVE -> Circuits.PRIMITIVE
@@ -362,7 +348,7 @@ object RagiumItemsNew {
         ADVANCED(HTMachineTier.ADVANCED),
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_circuit")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_circuit")
     }
 
     enum class PressMolds : HTItemContent {
@@ -372,7 +358,7 @@ object RagiumItemsNew {
         ROD,
         ;
 
-        override val delegated: HTContent<Item> = HTContent.ofItem("${name.lowercase()}_press_mold")
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_press_mold")
     }
 
     // organic
@@ -704,83 +690,10 @@ object RagiumItemsNew {
             }
         }
         // dynamite
-        registerItem(
-            Dynamites.SIMPLE,
-            itemSettings().component(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT),
-        ) {
-            HTDynamiteItem(
-                { entity: HTDynamiteEntity, result: HitResult ->
-                    val pos: Vec3d = result.pos
-                    entity.stack
-                        .getOrDefault(RagiumComponentTypes.DYNAMITE, HTDynamiteItem.Component.DEFAULT)
-                        .createExplosion(entity.world, entity, pos.x, pos.y, pos.z)
-                },
-                it,
-            )
-        }
-        registerItem(
-            Dynamites.ANVIL,
-            itemSettings().descriptions(RagiumTranslationKeys.ANVIL_DYNAMITE),
-        ) {
-            HTDynamiteItem(
-                { entity: HTDynamiteEntity, result: HitResult ->
-                    val world: World = entity.world
-                    when (result) {
-                        is BlockHitResult -> {
-                            world.setBlockState(result.blockPos.offset(result.side), Blocks.ANVIL.defaultState)
-                        }
-
-                        is EntityHitResult -> {
-                            result.entity.damage(world.damageSources.fallingAnvil(entity), 10f)
-                        }
-
-                        else -> {}
-                    }
-                },
-                it,
-            )
-        }
-        registerItem(
-            Dynamites.BEDROCK,
-            itemSettings().descriptions(RagiumTranslationKeys.BEDROCK_DYNAMITE),
-        ) {
-            HTDynamiteItem(
-                { entity: HTDynamiteEntity, result: HitResult ->
-                    if (result is BlockHitResult) {
-                        val world: World = entity.world
-                        val bottomY: Int = world.bottomY
-                        ChunkPos(result.blockPos).forEach(bottomY + 1..bottomY + 5) { pos ->
-                            if (world.getBlockState(pos).isOf(Blocks.BEDROCK)) {
-                                world.removeBlock(pos, false)
-                            }
-                        }
-                    }
-                },
-                it,
-            )
-        }
-        registerItem(
-            Dynamites.FLATTENING,
-            itemSettings().descriptions(RagiumTranslationKeys.FLATTENING_DYNAMITE),
-        ) {
-            HTDynamiteItem(
-                { entity: HTDynamiteEntity, result: HitResult ->
-                    if (result is BlockHitResult) {
-                        val world: World = entity.world
-                        val pos: BlockPos = result.blockPos
-                        val hitY: Int = pos.y
-                        val minY: Int = when (result.side) {
-                            Direction.UP -> hitY + 1
-                            else -> hitY
-                        }
-                        ChunkPos(pos).forEach(minY..world.height) { pos: BlockPos ->
-                            world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
-                        }
-                    }
-                },
-                it,
-            )
-        }
+        registerItem(Dynamites.SIMPLE, item = ::HTDynamiteItem)
+        registerItem(Dynamites.ANVIL, item = ::HTAnvilDynamiteItem)
+        registerItem(Dynamites.BEDROCK, item = ::HTBedrockDynamiteItem)
+        registerItem(Dynamites.FLATTENING, item = ::HTFlatteningDynamiteItem)
 
         registerItem(BACKPACK, item = ::HTBackpackItem)
         registerItem(EMPTY_FLUID_CUBE)

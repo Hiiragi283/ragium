@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.machine.generator
 
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.component.HTExplosionComponent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -16,7 +17,6 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.item.HTDynamiteItem
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -88,7 +88,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         val fuel: ItemStack = inventory.getStack(0).copy()
         inventory.clear()
         val power: Float = fuel.restDamage / 16f
-        HTDynamiteItem.Component(power, true).createExplosion(world, pos)
+        HTExplosionComponent(power, true).createExplosion(world, pos)
         return HTUnitResult.errorString { "Overheated!" }
     }
 

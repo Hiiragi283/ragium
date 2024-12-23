@@ -12,9 +12,6 @@ object RagiumMachineKeys {
     val BIOMASS_FERMENTER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("biomass_fermenter"))
 
     @JvmField
-    val CANNING_MACHINE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("canning_machine"))
-
-    @JvmField
     val DRAIN: HTMachineKey = HTMachineKey.of(RagiumAPI.id("drain"))
 
     @JvmField
@@ -27,7 +24,6 @@ object RagiumMachineKeys {
     val CONSUMERS: List<HTMachineKey> = listOf(
         BEDROCK_MINER,
         BIOMASS_FERMENTER,
-        CANNING_MACHINE,
         DRAIN,
         FLUID_DRILL,
         ROCK_GENERATOR,

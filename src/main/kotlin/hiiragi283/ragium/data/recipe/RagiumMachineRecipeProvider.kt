@@ -195,6 +195,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumBlocks.Glasses.OBSIDIAN)
             .itemOutput(RagiumBlocks.Glasses.RAGIUM)
             .offerTo(exporter, RagiumBlocks.Glasses.RAGIUM)
+        // basalt
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
+            .itemInput(Items.SMOOTH_BASALT)
+            .fluidOutput(RagiumFluids.BASALT)
+            .offerTo(exporter, RagiumFluids.BASALT)
     }
 
     //    Compressor    //
@@ -227,6 +233,12 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .catalyst(RagiumItemsNew.PressMolds.ROD)
             .itemOutput(Items.BREEZE_ROD)
             .offerTo(exporter, Items.BREEZE_ROD)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .fluidInput(RagiumFluids.BASALT)
+            .itemOutput(RagiumItems.BASALT_MESH)
+            .offerTo(exporter, RagiumItems.BASALT_MESH)
         // polymer
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR)

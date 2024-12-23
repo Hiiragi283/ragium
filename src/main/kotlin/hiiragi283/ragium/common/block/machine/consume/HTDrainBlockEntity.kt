@@ -2,26 +2,34 @@ package hiiragi283.ragium.common.block.machine.consume
 
 import com.google.common.base.Predicates
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.readFluidStorage
-import hiiragi283.ragium.api.extension.writeFluidStorage
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTItemResult
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumItemsNew
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.FluidDrainable
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
@@ -30,10 +38,16 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state) {
+class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state),
+    HTScreenFluidProvider {
     override var key: HTMachineKey = RagiumMachineKeys.DRAIN
 
-    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty)
+    private val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
+
+    override fun asInventory(): SidedInventory = inventory
+
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage = fluidStorage.updateTier(newTier)
@@ -52,34 +66,71 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntit
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
     override fun process(world: World, pos: BlockPos): HTUnitResult {
+        if (fluidStorage.isFilledMax) return HTUnitResult.errorString { "Fluid storage is already full!" }
         var result = false
-        Direction.entries.forEach { dir: Direction ->
-            val posTo: BlockPos = pos.offset(dir)
-            val stateTo: BlockState = world.getBlockState(posTo)
-            val blockTo: Block = stateTo.block
-            if (blockTo is FluidDrainable) {
-                val drained: ItemStack = blockTo.tryDrainFluid(null, world, posTo, stateTo)
-                val storage: Storage<FluidVariant> =
-                    FluidStorage.ITEM.find(drained, ContainerItemContext.withConstant(drained)) ?: return@forEach
-                val maxAmount: Long = storage.sumOf(StorageView<FluidVariant>::getCapacity)
-                result = StorageUtil.move(
-                    storage,
-                    fluidStorage,
-                    Predicates.alwaysTrue(),
-                    maxAmount,
-                    null,
-                ) > 0
-                if (result) {
-                    return HTUnitResult.success()
+        // drain fluid from input slot
+        result = extractFromCube()
+        // drain fluid from front
+        if (!result) {
+            result = extractFromFront(world)
+        }
+        return when {
+            result -> HTUnitResult.success()
+            else -> HTUnitResult.errorString { "Failed to interact with fluid!" }
+        }
+    }
+
+    private fun extractFromCube(): Boolean {
+        // drain fluid from input slot
+        val inputStack: ItemStack = inventory.getStack(0)
+        if (inputStack.isOf(RagiumItemsNew.FILLED_FLUID_CUBE)) {
+            val storage: Storage<FluidVariant> =
+                ContainerItemContext.withConstant(inputStack).find(FluidStorage.ITEM) ?: return false
+            val emptyResult = HTItemResult(RagiumItemsNew.EMPTY_FLUID_CUBE)
+            if (!emptyResult.canMerge(inventory.getStack(1))) return false
+            val cubeVariant: FluidVariant = StorageUtil.findStoredResource(storage) ?: return false
+            useTransaction { transaction: Transaction ->
+                if (fluidStorage.insert(cubeVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+                    inventory.removeStack(0, 1)
+                    inventory.mergeStack(1, emptyResult)
+                    transaction.commit()
+                    return true
                 }
             }
         }
-        return HTUnitResult.errorString { "Failed to extract fluid from any sides!" }
+        return false
     }
 
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = null
+    private fun extractFromFront(world: World): Boolean {
+        val posTo: BlockPos = pos.offset(facing)
+        val stateTo: BlockState = world.getBlockState(posTo)
+        val blockTo: Block = stateTo.block
+        if (blockTo is FluidDrainable) {
+            val drained: ItemStack = blockTo.tryDrainFluid(null, world, posTo, stateTo)
+            val storage: Storage<FluidVariant> =
+                ContainerItemContext.withConstant(drained).find(FluidStorage.ITEM)
+                    ?: return false
+            val maxAmount: Long = storage.sumOf(StorageView<FluidVariant>::getCapacity)
+            return StorageUtil.move(
+                storage,
+                fluidStorage,
+                Predicates.alwaysTrue(),
+                maxAmount,
+                null,
+            ) > 0
+        } else {
+            return false
+        }
+    }
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    SidedStorageBlockEntity    //
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
+
+    //    HTScreenFluidProvider    //
+
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 }

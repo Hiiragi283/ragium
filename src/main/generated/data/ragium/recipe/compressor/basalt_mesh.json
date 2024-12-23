@@ -1,12 +1,12 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:extractor",
+    "type": "ragium:compressor",
     "tier": "primitive"
   },
-  "item_inputs": [
+  "fluid_inputs": [
     {
-      "items": "minecraft:smooth_basalt"
+      "fluids": "#c:basalt"
     }
   ],
   "item_outputs": [

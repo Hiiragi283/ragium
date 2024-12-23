@@ -8,7 +8,6 @@ import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtList
 import net.minecraft.nbt.NbtOps
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.util.Identifier
 
 //    NbtCompound    //
 
@@ -25,10 +24,6 @@ fun buildNbt(builderAction: NbtCompound.() -> Unit): NbtCompound = NbtCompound()
 fun buildNbtList(builderAction: NbtList.() -> Unit): NbtList = NbtList().apply(builderAction)
 
 //    Writing    //
-
-fun NbtCompound.putIdentifier(key: String, value: Identifier) {
-    putString(key, value.toString())
-}
 
 fun Inventory.writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC
@@ -47,8 +42,6 @@ fun NbtCompound.writeFluidStorage(key: String, storage: SingleFluidStorage, wrap
 }
 
 //    Reading    //
-
-fun NbtCompound.getIdentifier(key: String): Identifier = Identifier.of(getString(key))
 
 fun Inventory.readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC

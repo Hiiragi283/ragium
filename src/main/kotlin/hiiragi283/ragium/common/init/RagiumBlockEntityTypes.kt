@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity
 import hiiragi283.ragium.common.block.entity.HTCreativeSourceBlockEntity
-import hiiragi283.ragium.common.block.entity.HTEnchantmentBookshelfBlockEntity
 import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
@@ -77,10 +76,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val BIOMASS_FERMENTER: BlockEntityType<HTBiomassFermenterBlockEntity> =
         register("biomass_fermenter", ::HTBiomassFermenterBlockEntity)
-
-    @JvmField
-    val CANNING_MACHINE: BlockEntityType<HTCanningMachineBlockEntity> =
-        register("exporter", ::HTCanningMachineBlockEntity)
 
     @JvmField
     val BEDROCK_MINER: BlockEntityType<HTBedrockMinerBlockEntity> =
@@ -153,10 +148,6 @@ object RagiumBlockEntityTypes {
         register("creative_source", ::HTCreativeSourceBlockEntity)
 
     @JvmField
-    val ENCHANTMENT_BOOKSHELF: BlockEntityType<HTEnchantmentBookshelfBlockEntity> =
-        register("enchantment_bookshelf", ::HTEnchantmentBookshelfBlockEntity)
-
-    @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
@@ -190,7 +181,6 @@ object RagiumBlockEntityTypes {
         // consumers
         registerMachineBlocks(RagiumMachineKeys.BEDROCK_MINER, BEDROCK_MINER)
         registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)
-        registerMachineBlocks(RagiumMachineKeys.CANNING_MACHINE, CANNING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
         registerMachineBlocks(RagiumMachineKeys.ROCK_GENERATOR, ROCK_GENERATOR)
