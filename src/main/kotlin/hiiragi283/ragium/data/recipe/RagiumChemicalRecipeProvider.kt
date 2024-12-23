@@ -552,6 +552,13 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.INFUSER)
             .itemInput(Items.GLASS_BOTTLE)
+            .fluidInput(RagiumFluids.EXPERIENCE, FluidConstants.NUGGET)
+            .itemOutput(Items.EXPERIENCE_BOTTLE)
+            .offerTo(exporter, Items.EXPERIENCE_BOTTLE)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.INFUSER)
+            .itemInput(Items.GLASS_BOTTLE)
             .fluidInput(RagiumFluids.HONEY, FluidConstants.BUCKET / 4)
             .itemOutput(Items.HONEY_BOTTLE)
             .offerTo(exporter, Items.HONEY_BOTTLE)

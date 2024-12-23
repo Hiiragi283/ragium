@@ -20,6 +20,7 @@ enum class RagiumFluids(
     // Vanilla
     MILK(Color(0xffffff), "Milk", "牛乳"),
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
+    EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
 
     // Molten Materials
     BASALT("Molten Basalt", "溶融バサルト", TextureType.BASALT),

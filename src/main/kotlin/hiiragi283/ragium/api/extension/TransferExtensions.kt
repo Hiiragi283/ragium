@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.extension
 
-import com.google.common.base.Predicates
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -55,6 +54,8 @@ fun <T : TransferVariant<*>> Storage<T>.extract(stack: HTVariantStack<*, T>, tra
 fun Storage<FluidVariant>.interactWithFluidStorage(player: PlayerEntity, storageIO: HTStorageIO = HTStorageIO.GENERIC): Boolean =
     FluidStorageUtil.interactWithFluidStorage(storageIO.wrapStorage(this), player, Hand.MAIN_HAND)
 
+fun Storage<FluidVariant>.findMatching(tagKey: TagKey<Fluid>): FluidVariant? = StorageUtil.findStoredResource(this) { it.isIn(tagKey) }
+
 /**
  * Check [this] storage is full
  */
@@ -65,7 +66,7 @@ val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
  * Insert [TransferVariant] in [this] storage or [initial] if blank
  */
 fun <T : TransferVariant<*>> Storage<T>.insertSelf(initial: T, maxAmount: Long, transaction: TransactionContext): Long {
-    val foundVariant: T = StorageUtil.findStoredResource(this, Predicates.alwaysTrue()) ?: when (initial.isBlank) {
+    val foundVariant: T = StorageUtil.findStoredResource(this) ?: when (initial.isBlank) {
         true -> return 0
         false -> initial
     }

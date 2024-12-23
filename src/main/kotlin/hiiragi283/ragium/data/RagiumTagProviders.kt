@@ -7,13 +7,11 @@ import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.tags.RagiumItemTags
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.*
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
@@ -25,6 +23,7 @@ import net.minecraft.item.Items
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.BlockTags
+import net.minecraft.registry.tag.EntityTypeTags
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import java.util.concurrent.CompletableFuture
@@ -33,7 +32,7 @@ object RagiumTagProviders {
     @JvmStatic
     fun init(pack: FabricDataGenerator.Pack) {
         pack.addProvider(::BlockProvider)
-        // pack.addProvider(::EnchantmentProvider)
+        pack.addProvider(::EntityProvider)
         pack.addProvider(::FluidProvider)
         pack.addProvider(::ItemProvider)
     }
@@ -121,27 +120,30 @@ object RagiumTagProviders {
         }
     }
 
-    //    Enchantment    //
+    //    EntityType    //
 
-    /*private class EnchantmentProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
-        FabricTagProvider.EnchantmentTagProvider(output, completableFuture) {
+    private class EntityProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
+        FabricTagProvider.EntityTypeTagProvider(output, completableFuture) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            getOrCreateTagBuilder(EnchantmentTags.TRADEABLE)
-                .add(RagiumEnchantments.SMELTING)
-                .add(RagiumEnchantments.SLEDGE_HAMMER)
-                .add(RagiumEnchantments.BUZZ_SAW)
+            getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES)
+                .add(RagiumEntityTypes.DYNAMITE)
+                .add(RagiumEntityTypes.ANVIL_DYNAMITE)
+                .add(RagiumEntityTypes.BEDROCK_DYNAMITE)
+                .add(RagiumEntityTypes.FLATTENING_DYNAMITE)
 
-            getOrCreateTagBuilder(EnchantmentTags.TREASURE)
-                .add(RagiumEnchantments.SMELTING)
-                .add(RagiumEnchantments.SLEDGE_HAMMER)
-                .add(RagiumEnchantments.BUZZ_SAW)
+            getOrCreateTagBuilder(ConventionalEntityTypeTags.CAPTURING_NOT_SUPPORTED)
+                .add(RagiumEntityTypes.DYNAMITE)
+                .add(RagiumEntityTypes.ANVIL_DYNAMITE)
+                .add(RagiumEntityTypes.BEDROCK_DYNAMITE)
+                .add(RagiumEntityTypes.FLATTENING_DYNAMITE)
 
-            getOrCreateTagBuilder(RagiumEnchantmentTags.MODIFYING_EXCLUSIVE_SET)
-                .add(RagiumEnchantments.SMELTING)
-                .add(RagiumEnchantments.SLEDGE_HAMMER)
-                .add(RagiumEnchantments.BUZZ_SAW)
+            getOrCreateTagBuilder(ConventionalEntityTypeTags.TELEPORTING_NOT_SUPPORTED)
+                .add(RagiumEntityTypes.DYNAMITE)
+                .add(RagiumEntityTypes.ANVIL_DYNAMITE)
+                .add(RagiumEntityTypes.BEDROCK_DYNAMITE)
+                .add(RagiumEntityTypes.FLATTENING_DYNAMITE)
         }
-    }*/
+    }
 
     //    Fluid    //
 
@@ -162,6 +164,7 @@ object RagiumTagProviders {
 
             add(ConventionalFluidTags.MILK, RagiumFluids.MILK)
             add(ConventionalFluidTags.HONEY, RagiumFluids.HONEY)
+            add(ConventionalFluidTags.EXPERIENCE, RagiumFluids.EXPERIENCE)
 
             add(ConventionalFluidTags.GASEOUS, RagiumFluids.AIR)
             add(ConventionalFluidTags.GASEOUS, RagiumFluids.HYDROGEN)

@@ -152,6 +152,9 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerEntities() {
         EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(RagiumEntityTypes.ANVIL_DYNAMITE, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(RagiumEntityTypes.BEDROCK_DYNAMITE, ::FlyingItemEntityRenderer)
+        EntityRendererRegistry.register(RagiumEntityTypes.FLATTENING_DYNAMITE, ::FlyingItemEntityRenderer)
     }
 
     //    Fluids    //

@@ -193,7 +193,12 @@ object RagiumLangProviders {
             // builder.add(RagiumEnchantments.SMELTING, "Smelting")
             // builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
             // builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
-            // Items
+            // Entity
+            builder.add(RagiumEntityTypes.DYNAMITE, "Dynamite")
+            builder.add(RagiumEntityTypes.ANVIL_DYNAMITE, "Anvil Dynamite")
+            builder.add(RagiumEntityTypes.BEDROCK_DYNAMITE, "Bedrock Dynamite")
+            builder.add(RagiumEntityTypes.FLATTENING_DYNAMITE, "Flattening Dynamite")
+            // Item
             builder.add(RagiumItemsNew.SteelArmors.HELMET, "Steel Helmet")
             builder.add(RagiumItemsNew.SteelArmors.CHESTPLATE, "Steel Chestplate")
             builder.add(RagiumItemsNew.SteelArmors.LEGGINGS, "Steel Leggings")
@@ -349,7 +354,7 @@ object RagiumLangProviders {
             builder.add(
                 RagiumMachineKeys.DRAIN,
                 "Drain",
-                "Drains fluids from each side",
+                "Drains fluids from front, experience from up, and fluid cube in slot",
             )
             builder.add(
                 RagiumMachineKeys.FLUID_DRILL,
@@ -599,7 +604,12 @@ object RagiumLangProviders {
             // builder.add(RagiumEnchantments.SMELTING, "精錬")
             // builder.add(RagiumEnchantments.SLEDGE_HAMMER, "粉砕")
             // builder.add(RagiumEnchantments.BUZZ_SAW, "製材")
-            // Items
+            // Entity
+            builder.add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
+            builder.add(RagiumEntityTypes.ANVIL_DYNAMITE, "金床ダイナマイト")
+            builder.add(RagiumEntityTypes.BEDROCK_DYNAMITE, "岩盤ダイナマイト")
+            builder.add(RagiumEntityTypes.FLATTENING_DYNAMITE, "整地用ダイナマイト")
+            // Item
             builder.add(RagiumItemsNew.SteelArmors.HELMET, "スチールのヘルメット")
             builder.add(RagiumItemsNew.SteelArmors.CHESTPLATE, "スチールのチェストプレート")
             builder.add(RagiumItemsNew.SteelArmors.LEGGINGS, "スチールのレギンス")
@@ -741,7 +751,7 @@ object RagiumLangProviders {
             // Machine Type
             builder.add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
             builder.add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")
-            builder.add(RagiumMachineKeys.DRAIN, "排水溝", "各面から液体を吸い取る")
+            builder.add(RagiumMachineKeys.DRAIN, "排水溝", "正面から液体を，上から経験値を，スロット内の液体キューブから中身を吸い取る")
             builder.add(RagiumMachineKeys.FLUID_DRILL, "液体採掘機", "特定のバイオームから液体を汲み上げる")
             builder.add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "水と溶岩を少なくとも一つずつ隣接させる")
 

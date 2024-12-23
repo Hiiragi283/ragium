@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItemsNew
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
@@ -34,6 +35,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -70,6 +72,10 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
         var result = false
         // drain fluid from input slot
         result = extractFromCube()
+        // drain experience from player
+        if (!result) {
+            result = extractFromPlayer(world)
+        }
         // drain fluid from front
         if (!result) {
             result = extractFromFront(world)
@@ -93,6 +99,29 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
                 if (fluidStorage.insert(cubeVariant, FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
                     inventory.removeStack(0, 1)
                     inventory.mergeStack(1, emptyResult)
+                    transaction.commit()
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private fun extractFromPlayer(world: World): Boolean {
+        val abovePlayer: ServerPlayerEntity = world
+            .asServerWorld()
+            ?.players
+            ?.firstOrNull { it.blockPos.down() == this.pos }
+            ?: return false
+        if (abovePlayer.experienceLevel > 0) {
+            useTransaction { transaction: Transaction ->
+                if (fluidStorage.insertSelf(
+                        RagiumFluids.EXPERIENCE.variant,
+                        FluidConstants.BUCKET,
+                        transaction,
+                    ) == FluidConstants.BUCKET
+                ) {
+                    abovePlayer.applyEnchantmentCosts(ItemStack.EMPTY, 1)
                     transaction.commit()
                     return true
                 }
