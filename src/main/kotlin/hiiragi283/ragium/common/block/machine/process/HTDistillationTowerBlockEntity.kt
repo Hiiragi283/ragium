@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
@@ -20,7 +18,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
-    HTMultiblockProvider {
+    HTMultiblockProvider.Machine {
     override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
     override val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
@@ -43,8 +41,4 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockPatternProvider    //
 
     override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
-
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        key.entry[HTMachinePropertyKeys.MULTIBLOCK_PATTERN]?.invoke(builder)
-    }
 }

@@ -99,7 +99,7 @@ enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identi
     }
 
     private fun emitMachineFront(frontDir: Direction, key: HTMachineKey, context: RenderContext) {
-        val properties: HTPropertyHolder = key.entry
+        val properties: HTPropertyHolder = key.getEntryOrNull() ?: return
         val frontSprite: Sprite = MinecraftClient
             .getInstance()
             .getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE)

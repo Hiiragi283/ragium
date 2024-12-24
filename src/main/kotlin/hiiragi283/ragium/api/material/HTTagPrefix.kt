@@ -20,21 +20,12 @@ import net.minecraft.util.StringIdentifiable
  * Represent [TagKey] prefixes
  */
 enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : StringIdentifiable {
-    DEEP_ORE("ores", false) {
-        override fun createPath(key: HTMaterialKey): String = "deepslate_${key.name}_ore"
-    },
-    END_ORE("ores", false) {
-        override fun createPath(key: HTMaterialKey): String = "end_${key.name}_ore"
-    },
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {
         override fun createPath(key: HTMaterialKey): String = key.name
     },
     INGOT("ingots"),
-    NETHER_ORE("ores", false) {
-        override fun createPath(key: HTMaterialKey): String = "nether_${key.name}_ore"
-    },
     NUGGET("nuggets"),
     ORE("ores", false),
     PLATE("plates"),

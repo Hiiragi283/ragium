@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -28,7 +26,7 @@ import net.minecraft.world.World
 
 class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state),
-    HTMultiblockProvider {
+    HTMultiblockProvider.Machine {
     override var key: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
     override fun process(world: World, pos: BlockPos): HTUnitResult {
@@ -38,7 +36,7 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
             .getInstance()
             .materialRegistry
             .entryMap
-            .mapNotNull { it.value.getFirstItem(HTTagPrefix.ORE) }
+            .mapNotNull { it.value.getFirstItemOrNull(HTTagPrefix.ORE) }
             .randomOrNull() ?: return HTUnitResult.errorString { "Failed to find mineable ore!" }
         return useTransaction { transaction: Transaction ->
             if (aboveStorage.insert(ItemVariant.of(chosenOre), 1, transaction) > 0) {
@@ -58,8 +56,4 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockPatternProvider    //
 
     override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
-
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        key.entry[HTMachinePropertyKeys.MULTIBLOCK_PATTERN]?.invoke(builder)
-    }
 }

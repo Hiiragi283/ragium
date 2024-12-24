@@ -1,9 +1,11 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildItemStack
 import hiiragi283.ragium.api.extension.hasValidTranslation
+import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
@@ -21,9 +23,11 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.Util
 
 /**
- * Represents machine type
+ * 機械の種類を管理するキー
  *
- * Must be registered in [HTMachineRegistry]
+ * すべてのキーは[HTMachineRegistry]に登録される必要があります。
+ *
+ * @see [hiiragi283.ragium.api.RagiumPlugin.registerMachine]
  */
 class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachineKey> {
     companion object {
@@ -50,7 +54,7 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
                 .build()
 
         /**
-         * Get singleton instance or create new [hiiragi283.ragium.api.machine.HTMachineKey] instance from [id]
+         * 指定された[id]から単一のインスタンスを返します。
          */
         @JvmStatic
         fun of(id: Identifier): HTMachineKey = instances.computeIfAbsent(id, ::HTMachineKey)
@@ -67,7 +71,21 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
     val blockTag: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id.withPrefixedPath("machines/"))
     val itemTag: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
 
+    @Deprecated("")
     val entry: HTMachineRegistry.Entry by lazy { RagiumAPI.getInstance().machineRegistry.getEntry(this) }
+
+    /**
+     * [HTMachineRegistry.Entry]を返します。
+     * @return このキーが登録されていない場合はnullを返す
+     */
+    fun getEntryOrNull(): HTMachineRegistry.Entry? = RagiumAPI.getInstance().machineRegistry.getEntryOrNull(this)
+
+    /**
+     * [getEntryOrNull]がnullでない場合に[action]を実行します。
+     * @return [action]の戻り値を[DataResult]で包みます
+     */
+    fun <T : Any> useEntry(action: (HTMachineRegistry.Entry) -> T): DataResult<T> =
+        getEntryOrNull()?.let(action).toDataResult { "Unknown machine key: $this" }
 
     fun appendTooltip(consumer: (Text) -> Unit, tier: HTMachineTier, allowDescription: Boolean = true) {
         consumer(
@@ -86,15 +104,21 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
         }
     }
 
-    fun isConsumer(): Boolean = entry.type == HTMachineType.CONSUMER
+    fun isConsumer(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.CONSUMER }.orElse(false)
 
-    fun isGenerator(): Boolean = entry.type == HTMachineType.GENERATOR
+    fun isGenerator(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.GENERATOR }.orElse(false)
 
-    fun isProcessor(): Boolean = entry.type == HTMachineType.PROCESSOR
+    fun isProcessor(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.PROCESSOR }.orElse(false)
 
-    fun createItemStack(tier: HTMachineTier): ItemStack = buildItemStack(entry) {
-        add(HTMachineTier.COMPONENT_TYPE, tier)
-    }
+    /**
+     * 指定された[tier]から[ItemStack]を返します。
+     * @return [getEntryOrNull]がnullの場合は[ItemStack.EMPTY]を返す
+     */
+    fun createItemStack(tier: HTMachineTier): ItemStack = useEntry { entry: HTMachineRegistry.Entry ->
+        buildItemStack(entry) {
+            add(HTMachineTier.COMPONENT_TYPE, tier)
+        }
+    }.orElse(ItemStack.EMPTY)
 
     override fun toString(): String = "HTMachineKey[$id]"
 

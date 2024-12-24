@@ -31,13 +31,13 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 /**
- * Represent machine tier
- * @param recipeCost an energy amount required to process recipe
- * @param tickRate a machine process rate
+ * 機械のティアを表す列挙型
+ * @param processCost 機械処理に必要なエネルギー量
+ * @param tickRate 機械の稼働間隔
  */
 enum class HTMachineTier(
     private val idPattern: String,
-    val recipeCost: Long,
+    val processCost: Long,
     val tickRate: Int,
     val rarity: Rarity,
 ) : StringIdentifiable {
@@ -83,12 +83,8 @@ enum class HTMachineTier(
             BlockApiLookup.get(RagiumAPI.id("machine_tier"), HTMachineTier::class.java, Direction::class.java)
     }
 
-    /**
-     * Maximum item smelting count
-     * @see hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor.process
-     */
-    val smelterMulti: Int = (recipeCost / 20).toInt()
-    val bucketUnit: Long = recipeCost / 20
+    val smelterMulti: Int = (processCost / 20).toInt()
+    val bucketUnit: Long = processCost / 20
     val crateCapacity: Long = bucketUnit * 8
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
@@ -102,7 +98,7 @@ enum class HTMachineTier(
     val recipeCostText: MutableText = Text
         .translatable(
             RagiumTranslationKeys.MACHINE_RECIPE_COST,
-            longText(recipeCost).formatted(Formatting.YELLOW),
+            longText(processCost).formatted(Formatting.YELLOW),
         ).formatted(Formatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
@@ -183,7 +179,7 @@ enum class HTMachineTier(
         useTransaction(parent) { transaction: Transaction ->
             world.energyNetwork
                 .map { network: HTEnergyNetwork ->
-                    val extracted: Long = network.extract(recipeCost * multiplier, transaction)
+                    val extracted: Long = network.extract(processCost * multiplier, transaction)
                     when {
                         extracted > 0 -> {
                             transaction.commit()

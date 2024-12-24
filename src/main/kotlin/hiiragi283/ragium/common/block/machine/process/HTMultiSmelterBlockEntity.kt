@@ -2,9 +2,7 @@ package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
@@ -23,7 +21,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
-    HTMultiblockProvider {
+    HTMultiblockProvider.Machine {
     override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
@@ -43,8 +41,4 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockPatternProvider    //
 
     override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
-
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        key.entry[HTMachinePropertyKeys.MULTIBLOCK_PATTERN]?.invoke(builder)
-    }
 }

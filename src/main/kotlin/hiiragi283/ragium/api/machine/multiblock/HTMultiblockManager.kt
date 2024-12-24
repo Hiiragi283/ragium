@@ -13,7 +13,9 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 /**
- * Multiblock validation manager
+ * マルチブロックの判定を行うマネージャー
+ * @param world [provider]が存在するワールド
+ * @param pos [provider]が存在する座標
  */
 class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, private val provider: HTMultiblockProvider) :
     HTMultiblockBuilder {
@@ -21,9 +23,6 @@ class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, pr
 
     private val stateCache: MutableMap<BlockPos, Pair<BlockPos, BlockState>> = mutableMapOf()
 
-    /**
-     * @see [hiiragi283.ragium.api.block.HTMachineBlockEntityBase.onUse]
-     */
     fun onUse(state: BlockState, player: PlayerEntity): Boolean = if (player.isSneaking) {
         showPreview = !showPreview
         false
@@ -51,6 +50,10 @@ class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, pr
         }
     }
 
+    /**
+     * マルチブロックの判定を更新します。
+     * @return 更新された[patternResult]
+     */
     fun updateValidation(state: BlockState): HTUnitResult {
         val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
         provider.buildMultiblock(this.rotate(front))

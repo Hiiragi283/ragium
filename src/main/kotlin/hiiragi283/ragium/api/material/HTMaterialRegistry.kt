@@ -7,27 +7,57 @@ import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.item.Item
 import java.util.stream.Stream
 
+/**
+ * [HTMaterialKey]のレジストリ
+ * @see hiiragi283.ragium.api.RagiumAPI.materialRegistry
+ */
 class HTMaterialRegistry(
     private val types: Map<HTMaterialKey, HTMaterialType>,
     private val items: HTTable<HTTagPrefix, HTMaterialKey, out Set<Item>>,
     private val properties: Map<HTMaterialKey, HTPropertyHolder>,
 ) : Keyable {
+    /**
+     * 登録された[HTMaterialKey]の一覧
+     */
     val keys: Set<HTMaterialKey>
         get() = types.keys
 
+    /**
+     * 登録された[HTMaterialKey]とその[Entry]のマップ
+     */
     val entryMap: Map<HTMaterialKey, Entry>
-        get() = types.keys.associateWith(::getEntry)
+        get() = types.keys.associateWith(::createEntry)
 
+    /**
+     * 指定された[key]が登録されているか判定します。
+     */
     operator fun contains(key: HTMaterialKey): Boolean = key in types
 
+    /**
+     * 指定された[prefix]と[key]に紐づいたアイテムの一覧を返します。
+     *
+     * @return 値がない場合は[emptySet]
+     */
     fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): Set<Item> = items.get(prefix, key) ?: setOf()
 
-    fun getEntry(key: HTMaterialKey): Entry = Entry(
+    private fun createEntry(key: HTMaterialKey): Entry = Entry(
         key,
-        checkNotNull(types[key]) { "Invalid material key; $key!" },
+        types[key] ?: error("Unknown material key: $key"),
         items.column(key),
         properties.getOrDefault(key, HTPropertyHolder.Empty),
     )
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
+     * @throws IllegalStateException [key]が登録されていない場合
+     */
+    fun getEntry(key: HTMaterialKey): Entry = getEntryOrNull(key) ?: error("Unknown material key: $key")
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
+     * @return [key]が登録されていない場合はnull
+     */
+    fun getEntryOrNull(key: HTMaterialKey): Entry? = entryMap[key]
 
     //    Keyable    //
 
@@ -38,6 +68,9 @@ class HTMaterialRegistry(
 
     //    Entry    //
 
+    /**
+     * 素材の情報をまとめたクラス
+     */
     data class Entry(
         val key: HTMaterialKey,
         val type: HTMaterialType,
@@ -46,8 +79,8 @@ class HTMaterialRegistry(
     ) : HTPropertyHolder by property {
         fun getItems(prefix: HTTagPrefix): Set<Item> = itemMap.getOrDefault(prefix, setOf())
 
-        fun getFirstItem(prefix: HTTagPrefix): Item? = getItems(prefix).firstOrNull()
+        fun getFirstItemOrNull(prefix: HTTagPrefix): Item? = getItems(prefix).firstOrNull()
 
-        fun getFirstItemOrThrow(prefix: HTTagPrefix): Item = getItems(prefix).first()
+        fun getFirstItem(prefix: HTTagPrefix): Item = getItems(prefix).first()
     }
 }

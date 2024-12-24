@@ -7,8 +7,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
     ALLOY(HTTagPrefix.DUST, HTTagPrefix.GEAR, HTTagPrefix.INGOT, HTTagPrefix.PLATE, HTTagPrefix.STORAGE_BLOCK),
     DUST(HTTagPrefix.DUST),
     GEM(
-        HTTagPrefix.END_ORE,
-        HTTagPrefix.DEEP_ORE,
         HTTagPrefix.DUST,
         HTTagPrefix.GEAR,
         HTTagPrefix.GEM,
@@ -16,8 +14,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.STORAGE_BLOCK,
     ),
     METAL(
-        HTTagPrefix.END_ORE,
-        HTTagPrefix.DEEP_ORE,
         HTTagPrefix.DUST,
         HTTagPrefix.GEAR,
         HTTagPrefix.INGOT,
@@ -27,8 +23,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.STORAGE_BLOCK,
     ),
     MINERAL(
-        HTTagPrefix.END_ORE,
-        HTTagPrefix.DEEP_ORE,
         HTTagPrefix.DUST,
         HTTagPrefix.ORE,
         HTTagPrefix.RAW_MATERIAL,

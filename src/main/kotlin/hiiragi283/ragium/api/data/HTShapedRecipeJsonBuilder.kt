@@ -19,21 +19,34 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RawShapedRecipe
 import net.minecraft.recipe.ShapedRecipe
 import net.minecraft.recipe.book.RecipeCategory
-import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
+/**
+ * [net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder]を改良したクラス
+ *
+ * レシピIDは最終的に"shaped/"で前置されます。
+ */
 class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : CraftingRecipeJsonBuilder {
     companion object {
+        /**
+         * 指定した[output]を完成品とするビルダーを返します。
+         * @throws IllegalStateException [ItemStack.isEmpty]がtrueの場合
+         */
         @JvmStatic
         fun create(output: ItemStack): HTShapedRecipeJsonBuilder = HTShapedRecipeJsonBuilder(output)
 
+        /**
+         * 指定した[output], [count], [components]を完成品とするビルダーを返します。
+         * @throws IllegalStateException [ItemStack.isEmpty]がtrueの場合
+         */
+        @Suppress("DEPRECATION")
         @JvmStatic
         fun create(
             output: ItemConvertible,
             count: Int = 1,
             components: ComponentChanges = ComponentChanges.EMPTY,
-        ): HTShapedRecipeJsonBuilder = create(ItemStack(Registries.ITEM.getEntry(output.asItem()), count, components))
+        ): HTShapedRecipeJsonBuilder = create(ItemStack(output.asItem().registryEntry, count, components))
     }
 
     private lateinit var patterns: Array<out String>
@@ -113,10 +126,16 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
     fun unlockedBy(tagKey: TagKey<Item>): HTShapedRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromTag(tagKey))
 
+    /**
+     * 完成品のアイテムIDを[prefix]で前置したものをレシピIDとして使用します。
+     */
     fun offerPrefix(exporter: RecipeExporter, prefix: String) {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withPrefixedPath(prefix))
     }
 
+    /**
+     * 完成品のアイテムIDを[suffix]で後置したものをレシピIDとして使用します。
+     */
     fun offerSuffix(exporter: RecipeExporter, suffix: String) {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withSuffixedPath(suffix))
     }
@@ -133,9 +152,6 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
     override fun getOutputItem(): Item = output.item
 
-    /**
-     * Offer built [ShapedRecipe] to [exporter] with recipe id prefixed "shaped/"
-     */
     override fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val fixedId: Identifier = recipeId.withPrefixedPath("shaped/")
         val rawRecipe: RawShapedRecipe = RawShapedRecipe.create(inputMap, patterns.toList())

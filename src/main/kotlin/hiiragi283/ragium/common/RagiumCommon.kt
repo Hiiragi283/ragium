@@ -35,11 +35,11 @@ object RagiumCommon : ModInitializer {
 
             RagiumBlockEntityTypes.init()
             RagiumCommands.init()
-            RagiumEventHandlers.init()
             RagiumFeatures.init()
             RagiumItemGroup.init()
             RagiumNetworks
 
+            RagiumContentRegister.initEvents()
             RagiumContentRegister.initRegistry()
 
             RagiumAPI.LOGGER.info("Ragium initialized!")

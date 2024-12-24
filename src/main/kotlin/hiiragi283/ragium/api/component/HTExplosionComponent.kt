@@ -20,6 +20,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.function.Consumer
 
+/**
+ * ダイナマイトの爆発を管理するクラス
+ * @param power 爆発の威力，0f~16fを取りうる
+ * @param canDestroy trueの場合はブロックを破壊する
+ */
 data class HTExplosionComponent(val power: Float, val canDestroy: Boolean) : TooltipAppender {
     companion object {
         @JvmField
@@ -56,10 +61,16 @@ data class HTExplosionComponent(val power: Float, val canDestroy: Boolean) : Too
         false -> World.ExplosionSourceType.NONE
     }
 
+    /**
+     * 指定した[world]の[pos]に爆発を起こします。
+     */
     fun createExplosion(world: World, pos: BlockPos) {
         createExplosion(world, null, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
     }
 
+    /**
+     * 指定した[world]の[x], [y], [z]に[entity]が着火した爆発を起こします。
+     */
     fun createExplosion(
         world: World,
         entity: Entity?,

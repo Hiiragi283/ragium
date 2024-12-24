@@ -3,7 +3,9 @@ package hiiragi283.ragium.api.property
 import net.minecraft.util.Identifier
 
 /**
- * Typed Key for [HTPropertyHolder]
+ * [HTPropertyHolder]のキー
+ * @param T 値のクラス
+ * @param id ユニークな値
  */
 sealed class HTPropertyKey<T : Any>(val id: Identifier) {
     companion object {
@@ -11,7 +13,7 @@ sealed class HTPropertyKey<T : Any>(val id: Identifier) {
         fun <T : Any> ofSimple(id: Identifier): Simple<T> = Simple(id)
 
         @JvmStatic
-        fun <T : Any> ofDefaulted(id: Identifier, value: T): Defaulted<T> = ofDefaulted(id) { value }
+        fun <T : Any> ofDefaulted(id: Identifier, value: T): Defaulted<T> = Defaulted(id, value)
 
         @JvmStatic
         fun <T : Any> ofDefaulted(id: Identifier, initializer: () -> T): Defaulted<T> = Defaulted(id, initializer)
@@ -21,7 +23,8 @@ sealed class HTPropertyKey<T : Any>(val id: Identifier) {
     }
 
     /**
-     * Try to cast [obj] into [T], or null if failed
+     * 指定された[obj]を[T]にキャストします。
+     * @return キャストできなかった場合はnull
      */
     @Suppress("UNCHECKED_CAST")
     fun cast(obj: Any?): T? = obj as? T
@@ -31,16 +34,19 @@ sealed class HTPropertyKey<T : Any>(val id: Identifier) {
     //    Simple    //
 
     /**
-     * [hiiragi283.ragium.api.property.HTPropertyKey] without default value
+     * デフォルト値を持たない[hiiragi283.ragium.api.property.HTPropertyKey]
      */
     class Simple<T : Any>(id: Identifier) : HTPropertyKey<T>(id)
 
     //    Defaulted    //
 
     /**
-     * [hiiragi283.ragium.api.property.HTPropertyKey] with default value
+     * デフォルト値を持つ[hiiragi283.ragium.api.property.HTPropertyKey]
+     * @param initializer デフォルト値を渡すブロック
      */
-    class Defaulted<T : Any>(id: Identifier, val initializer: () -> T) : HTPropertyKey<T>(id) {
+    class Defaulted<T : Any>(id: Identifier, private val initializer: () -> T) : HTPropertyKey<T>(id) {
+        constructor(id: Identifier, defaultValue: T) : this(id, { defaultValue })
+
         fun getDefaultValue(): T = initializer()
     }
 }

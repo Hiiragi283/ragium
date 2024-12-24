@@ -51,8 +51,13 @@ class HTEnergyNetwork() :
     //    Flag    //
 
     enum class Flag {
+        /**
+         * エネルギーを消費します。
+         * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.energyFlag
+         */
         CONSUME() {
-            override fun processAmount(network: HTEnergyNetwork, amount: Long, parent: TransactionContext?): Boolean {
+            override fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext?): Boolean {
+                if (network == null) return false
                 if (amount <= 0) return false
                 useTransaction(parent) { transaction: Transaction ->
                     val extracted: Long = network.extract(amount, transaction)
@@ -64,8 +69,14 @@ class HTEnergyNetwork() :
                 return false
             }
         },
+
+        /**
+         * エネルギーを生産します。
+         * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.energyFlag
+         */
         GENERATE() {
-            override fun processAmount(network: HTEnergyNetwork, amount: Long, parent: TransactionContext?): Boolean {
+            override fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext?): Boolean {
+                if (network == null) return false
                 if (amount <= 0) return false
                 useTransaction(parent) { transaction: Transaction ->
                     val inserted: Long = network.insert(amount, transaction)
@@ -79,7 +90,7 @@ class HTEnergyNetwork() :
         },
         ;
 
-        abstract fun processAmount(network: HTEnergyNetwork, amount: Long, parent: TransactionContext? = null): Boolean
+        abstract fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext? = null): Boolean
     }
 
     //    Storage    //

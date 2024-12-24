@@ -11,10 +11,12 @@ import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
-/**
- * Register [net.minecraft.recipe.StonecuttingRecipe] with recipe id prefixed with "stonecutting/"
- */
 object HTStonecuttingRecipeJsonBuilder {
+    /**
+     * 石切台レシピを登録します。
+     *
+     * レシピIDは"stonecutting/"で前置されます
+     */
     @JvmStatic
     fun register(
         exporter: RecipeExporter,

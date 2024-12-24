@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 /**
- * A registry for [HTFluidDrinkingHandler]
+ * [HTFluidDrinkingHandler]のレジストリ
  */
 object HTFluidDrinkingHandlerRegistry {
     @JvmStatic
@@ -22,31 +22,22 @@ object HTFluidDrinkingHandlerRegistry {
         register(fluid.get(), handler)
     }
 
-    /**
-     * Register [handler] for [fluid]
-     */
     @JvmStatic
     fun register(fluid: Fluid, handler: HTFluidDrinkingHandler) {
         registry[fluid] = handler
     }
 
-    /**
-     * Get [Entry] from [fluid]
-     */
     @JvmStatic
     fun get(fluid: Fluid): Entry? = registry[fluid]?.let { handler: HTFluidDrinkingHandler -> Entry(fluid, handler) }
 
-    /**
-     * Get [Entry] from [stack]
-     */
     @JvmStatic
     fun getHandler(stack: ItemStack): Entry? = stack
         .get(RagiumComponentTypes.FLUID)
         ?.let(HTFluidDrinkingHandlerRegistry::get)
 
     /**
-     * Run [HTFluidDrinkingHandler.onDrink] for give parameters
-     * @return transformed [stack]
+     * [HTFluidDrinkingHandler.onDrink]を実行します。
+     * @return 使用された[stack]
      */
     @JvmStatic
     fun drinkFluid(stack: ItemStack, world: World, user: LivingEntity): ItemStack {

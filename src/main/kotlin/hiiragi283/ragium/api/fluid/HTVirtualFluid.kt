@@ -16,9 +16,9 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
 
 /**
- * A simple implementation for [Fluid]
- * This fluid is virtual, not placeable in [net.minecraft.world.World]
- * @see [hiiragi283.ragium.common.init.RagiumFluids]
+ * [Fluid]のシンプルな実装
+ *
+ * ワールドには設置できず，主にレシピ加工で用いられる。
  */
 class HTVirtualFluid : Fluid() {
     override fun getBucketItem(): Item = Items.AIR

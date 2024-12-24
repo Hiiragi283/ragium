@@ -22,15 +22,14 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 /**
- * A base class for [Block] implementing [BlockEntityProvider]
- * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.Horizontal]
+ * Ragiumで使用する[BlockEntityProvider]を実装した[Block]クラス
  */
 abstract class HTBlockWithEntity(settings: Settings) :
     Block(settings),
     BlockEntityProvider {
     companion object {
         /**
-         * Create a new instance for [hiiragi283.ragium.api.block.HTBlockWithEntity]
+         * 指定された[type]と[settings]からブロックを返します。。
          */
         @JvmStatic
         fun build(type: BlockEntityType<*>, settings: Settings): Block = object : HTBlockWithEntity(settings) {
@@ -42,7 +41,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
         }
 
         /**
-         * Create a new instance for [hiiragi283.ragium.api.block.HTBlockWithEntity.Horizontal]
+         * 指定された[type]と[settings]から水平方向の回転が可能なブロックを返します。
          */
         @JvmStatic
         fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : Horizontal(settings) {
@@ -101,7 +100,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
     //    Horizontal    //
 
     /**
-     * A class which extends [hiiragi283.ragium.api.block.HTBlockWithEntity] and have horizontal property
+     * 水平方向の回転が可能な[hiiragi283.ragium.api.block.HTBlockWithEntity]クラス
      */
     abstract class Horizontal(settings: Settings) : HTBlockWithEntity(settings) {
         init {

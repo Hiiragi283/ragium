@@ -76,7 +76,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             check(keyCache.put(key, type) == null) { "Machine; ${key.id} is already registered!" }
         }
         RagiumAPI.forEachPlugins {
-            it.registerMachineType(::addMachine)
+            it.registerMachine(::addMachine)
         }
         // sort keys based on its type and id
         val sortedKeys: Map<HTMachineKey, HTMachineType> = keyCache

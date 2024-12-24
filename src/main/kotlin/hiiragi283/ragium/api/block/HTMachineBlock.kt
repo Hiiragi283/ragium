@@ -51,7 +51,7 @@ class HTMachineBlock(val key: HTMachineKey) :
         world: BlockView,
         pos: BlockPos,
         context: ShapeContext,
-    ): VoxelShape = key.entry[HTMachinePropertyKeys.VOXEL_SHAPE] ?: super.getOutlineShape(
+    ): VoxelShape = key.getEntryOrNull()?.get(HTMachinePropertyKeys.VOXEL_SHAPE) ?: super.getOutlineShape(
         state,
         world,
         pos,
@@ -67,7 +67,7 @@ class HTMachineBlock(val key: HTMachineKey) :
         random: Random,
     ) {
         if (state.get(RagiumBlockProperties.ACTIVE)) {
-            key.entry.ifPresent(HTMachinePropertyKeys.PARTICLE) { particleType: SimpleParticleType ->
+            key.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.PARTICLE) { particleType: SimpleParticleType ->
                 ParticleUtil.spawnParticlesAround(world, pos, 20, particleType)
             }
         }
@@ -103,7 +103,7 @@ class HTMachineBlock(val key: HTMachineKey) :
         state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
-        key.entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, key)
+        key.getEntryOrNull()?.get(HTMachinePropertyKeys.MACHINE_FACTORY)?.create(pos, state, key)
 
     //    InventoryProvider    //
 

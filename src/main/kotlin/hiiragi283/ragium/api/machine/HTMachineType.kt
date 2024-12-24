@@ -13,7 +13,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.StringIdentifiable
 
 /**
- * Represents machine category
+ * 機械のタイプを表す列挙型
  */
 enum class HTMachineType : StringIdentifiable {
     GENERATOR,

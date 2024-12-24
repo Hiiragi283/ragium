@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 /**
- * A base class for [BlockEntity]
+ * Ragiumで使用する[BlockEntity]クラスの基礎
  * @see [HTMachineBlockEntityBase]
  */
 abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
@@ -29,7 +29,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     }
 
     /**
-     * Expose internal [SidedInventory] object, or null
+     * 外部に[SidedInventory]を公開します。
      */
     open fun asInventory(): SidedInventory? = null
 
@@ -53,7 +53,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     //    Extensions    //
 
     /**
-     * Synchronize [asInventory] from server-side to client-side
+     * [asInventory]で取得した[SidedInventory]をクライアント側に同期します。
      * @see [markDirty]
      */
     fun syncInventory() {
@@ -61,6 +61,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     }
 
     /**
+     * ブロックが右クリックされたときに呼ばれます。
      * @see [HTBlockWithEntity.onUse]
      */
     open fun onUse(
@@ -80,6 +81,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     } ?: ActionResult.PASS
 
     /**
+     * ブロックが設置されたときに呼ばれます。
      * @see [HTBlockWithEntity.onPlaced]
      */
     open fun onPlaced(
@@ -92,6 +94,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     }
 
     /**
+     * ブロックが置換されたときに呼ばれます。
      * @see [HTBlockWithEntity.onStateReplaced]
      */
     open fun onStateReplaced(
@@ -105,6 +108,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     }
 
     /**
+     * ブロックのコンパレータ出力を返します。
      * @see [HTBlockWithEntity.getComparatorOutput]
      */
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
@@ -115,6 +119,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     open val tickRate: Int = 200
 
     /**
+     * 毎tick呼び出されます。
      * @see [HTBlockWithEntity.getTicker]
      */
     fun tick(world: World, pos: BlockPos, state: BlockState) {
@@ -129,7 +134,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     }
 
     /**
-     * Called on each [tick]
+     * 毎[tick]呼び出されます。
      */
     open fun tickEach(
         world: World,
@@ -140,10 +145,13 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
     }
 
     /**
-     * Called when [ticks] is equals or more than [tickRate]
+     * [ticks]が[tickRate]以上の値となったときに呼び出されます。
      */
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
 
+    /**
+     * [ScreenHandlerContext]を返します。
+     */
     protected fun createContext(): ScreenHandlerContext = ifPresentWorld { world: World ->
         ScreenHandlerContext.create(world, pos)
     } ?: ScreenHandlerContext.EMPTY

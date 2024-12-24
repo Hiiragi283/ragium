@@ -70,7 +70,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         stackMain.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
         stackOff.decrement(recipe.itemInputs.getOrNull(1)?.count ?: 0)
         recipe.fluidInputs.getOrNull(0)?.onConsume(fluidStorage)
-        RagiumMachineKeys.MIXER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+        RagiumMachineKeys.MIXER.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }
     }

@@ -22,7 +22,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 /**
- * A base class for recipe processing machine
+ * レシピを用いた加工を行う機械
  */
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
@@ -32,10 +32,19 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
         else -> HTUnitResult.success()
     }.flatMap { processor.process(world, key, tier) }
 
+    /**
+     * 機械のインベントリ
+     */
     protected abstract val inventory: HTMachineInventory
 
+    /**
+     * 機械の液体ストレージ
+     */
     protected abstract val fluidStorage: HTMachineFluidStorage
 
+    /**
+     * レシピの処理部分
+     */
     protected abstract val processor: HTRecipeProcessor
 
     final override fun asInventory(): SidedInventory = inventory
@@ -58,7 +67,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
     //    HTScreenFluidProvider    //
 
-    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
+    final override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 
     //    SidedStorageBlockEntity    //
 

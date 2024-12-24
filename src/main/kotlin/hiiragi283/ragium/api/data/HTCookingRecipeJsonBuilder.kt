@@ -15,7 +15,9 @@ object HTCookingRecipeJsonBuilder {
     //    Blasting    //
 
     /**
-     * Register [net.minecraft.recipe.SmeltingRecipe] and [net.minecraft.recipe.BlastingRecipe] with recipe id prefixed with "smelting/" and "blasting/"
+     * かまどレシピと溶鉱炉レシピを同時に登録します。
+     *
+     * 前者は"smelting/"，後者は"blasting/"でレシピIDが前置されます
      */
     @JvmStatic
     fun smeltAndBlast(
@@ -81,7 +83,9 @@ object HTCookingRecipeJsonBuilder {
     //    Smoking    //
 
     /**
-     * Register [net.minecraft.recipe.SmeltingRecipe], [net.minecraft.recipe.SmokingRecipe] and [net.minecraft.recipe.CampfireCookingRecipe] with recipe id prefixed with "smelting/", "blasting/" and "campfire/"
+     * かまどレシピと燻製機レシピ，キャンプファイヤレシピを同時に登録します。
+     *
+     * それぞれ"smelting/"，"smoking/"，"campfire/"でレシピIDが前置されます
      */
     @JvmStatic
     fun smeltAndSmoke(

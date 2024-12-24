@@ -5,8 +5,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 /**
- * Handle [LivingEntity] interaction for [hiiragi283.ragium.common.init.RagiumItemsNew.FILLED_FLUID_CUBE]
+ * 液体キューブを右クリックした時の処理を行う
  * @see [HTFluidDrinkingHandlerRegistry]
+ * @see [hiiragi283.ragium.common.item.HTFilledFluidCubeItem.finishUsing]
  */
 fun interface HTFluidDrinkingHandler {
     fun onDrink(stack: ItemStack, world: World, user: LivingEntity)

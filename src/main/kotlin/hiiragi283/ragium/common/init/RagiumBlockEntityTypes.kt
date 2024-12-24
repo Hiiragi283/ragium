@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addAllContents
 import hiiragi283.ragium.api.extension.blockEntityType
@@ -208,17 +207,12 @@ object RagiumBlockEntityTypes {
     }
 
     @JvmStatic
-    private fun registerBlocks(type: BlockEntityType<*>, blocks: Collection<HTBlockContent>) {
-        blocks.map(HTBlockContent::get).forEach(type::addSupportedBlock)
-    }
-
-    @JvmStatic
     private fun registerMachineBlocks(key: HTMachineKey, type: BlockEntityType<*>) {
         RagiumAPI
             .getInstance()
             .machineRegistry
-            .getEntry(key)
-            .block
-            .let(type::addSupportedBlock)
+            .getEntryOrNull(key)
+            ?.block
+            ?.let(type::addSupportedBlock)
     }
 }

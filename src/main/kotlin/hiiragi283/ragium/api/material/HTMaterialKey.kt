@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.toDataResult
 import io.netty.buffer.ByteBuf
@@ -11,9 +12,11 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 
 /**
- * Represents material type
+ * 素材の種類を管理するキー
  *
- * Must be registered in [HTMaterialRegistry]
+ * すべてのキーは[HTMaterialRegistry]に登録される必要があります。
+ *
+ * @see [hiiragi283.ragium.api.RagiumPlugin.registerMaterial]
  */
 class HTMaterialKey private constructor(val name: String) : Comparable<HTMaterialKey> {
     companion object {
@@ -40,7 +43,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
                 .build()
 
         /**
-         * Get singleton instance or create new [hiiragi283.ragium.api.material.HTMaterialKey] instance from [name]
+         * 指定された[name]から単一のインスタンスを返します。
          */
         @JvmStatic
         fun of(name: String): HTMaterialKey = instances.computeIfAbsent(name, ::HTMaterialKey)
@@ -50,7 +53,18 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
     val text: MutableText
         get() = Text.translatable(translationKey)
 
-    val entry: HTMaterialRegistry.Entry by lazy { RagiumAPI.getInstance().materialRegistry.getEntry(this) }
+    /**
+     * [HTMaterialRegistry.Entry]を返します。
+     * @return このキーが登録されていない場合はnullを返す
+     */
+    fun getEntryOrNull(): HTMaterialRegistry.Entry? = RagiumAPI.getInstance().materialRegistry.getEntryOrNull(this)
+
+    /**
+     * [getEntryOrNull]がnullでない場合に[action]を実行します。
+     * @return [action]の戻り値を[DataResult]で包みます
+     */
+    fun <T : Any> useEntry(action: (HTMaterialRegistry.Entry) -> T): DataResult<T> =
+        getEntryOrNull()?.let(action).toDataResult { "Unknown machine key: $this" }
 
     //    Comparable    //
 

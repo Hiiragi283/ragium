@@ -6,7 +6,9 @@ import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.server.network.ServerPlayerEntity
 
 /**
- * Callback for unlocking advancement, is hooked in giving rewards at [net.minecraft.advancement.PlayerAdvancementTracker.rewardEmptyAdvancements] and [net.minecraft.advancement.PlayerAdvancementTracker.grantCriterion]
+ * 進捗を解除したときに呼ばれるイベント
+ *
+ * [net.minecraft.advancement.PlayerAdvancementTracker.rewardEmptyAdvancements]と[net.minecraft.advancement.PlayerAdvancementTracker.grantCriterion]にフックされています。
  */
 fun interface HTAdvancementRewardCallback {
     companion object {
@@ -20,8 +22,8 @@ fun interface HTAdvancementRewardCallback {
     }
 
     /**
-     * @param player a player which unlocked the advancement
-     * @param entry a [AdvancementEntry] which [player] unlocked
+     * @param player 進捗を解除したプレイヤー
+     * @param entry 解除された進捗
      */
     fun onRewards(player: ServerPlayerEntity, entry: AdvancementEntry)
 }

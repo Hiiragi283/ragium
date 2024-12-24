@@ -16,6 +16,7 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.StringIdentifiable
 import java.util.*
 import java.util.function.Function
+import kotlin.jvm.optionals.getOrNull
 
 //    Codec    //
 
@@ -132,6 +133,10 @@ fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T
  */
 fun <T : Any> T?.toDataResult(errorMessage: () -> String): DataResult<T> =
     this?.let(DataResult<T>::success) ?: DataResult.error(errorMessage)
+
+fun <T : Any> DataResult<T>.getOrNull(): T? = result().getOrNull()
+
+fun <T : Any> DataResult<T>.orElse(other: T): T = result().orElse(other)
 
 //    Pair    //
 

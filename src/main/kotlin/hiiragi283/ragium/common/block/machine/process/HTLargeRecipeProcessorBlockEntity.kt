@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
@@ -20,7 +18,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTLargeRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.LARGE_PROCESSOR, pos, state),
-    HTMultiblockProvider {
+    HTMultiblockProvider.Machine {
     override var key: HTMachineKey = RagiumMachineKeys.BLAST_FURNACE
 
     constructor(pos: BlockPos, state: BlockState, key: HTMachineKey) : this(pos, state) {
@@ -47,8 +45,4 @@ class HTLargeRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTMultiblockProvider    //
 
     override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
-
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        key.entry[HTMachinePropertyKeys.MULTIBLOCK_PATTERN]?.invoke(builder)
-    }
 }

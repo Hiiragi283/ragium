@@ -39,9 +39,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 /**
- * A base class for machine block entity
- *
- * All [net.minecraft.block.entity.BlockEntity] using [HTMachineKey] and [HTMachineTier] should extend this class
+ * Ragiumで使用する機械の基礎クラス
  */
 abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(type, pos, state),
@@ -99,7 +97,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     }
 
     /**
-     * Called when [HTMachineTier.PROPERTY] was updated
+     * [HTMachineTier.PROPERTY]が更新されたときに呼び出されます。
      */
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
@@ -180,14 +178,14 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         if (world.isClient) return
         world.energyNetwork
             .validate(
-                { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.recipeCost) },
+                { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.processCost) },
                 { "Failed to extract required energy from network!" },
             ).flatMap { network: HTEnergyNetwork -> process(world, pos).map { network } }
             .validate(
-                { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.recipeCost) },
+                { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.processCost) },
                 { "Failed to interact energy network" },
             ).ifSuccess { _: HTEnergyNetwork ->
-                key.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+                key.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
                     world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
                 errorMessage = null
@@ -202,14 +200,11 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         sendPacket(payload)
     }
 
-    /**
-     * Get [HTEnergyNetwork.Flag] for [tickSecond]
-     * @see [HTEnergyNetwork.Flag.processAmount]
-     */
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
 
     /**
-     * Called when the machine can consume/generate energy
+     * 機械の処理を行います。
+     * @return 機械がエネルギーを消費する場合は[HTUnitResult.success]
      */
     abstract fun process(world: World, pos: BlockPos): HTUnitResult
 

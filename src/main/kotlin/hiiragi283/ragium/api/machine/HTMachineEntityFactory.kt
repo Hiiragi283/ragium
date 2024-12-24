@@ -5,12 +5,12 @@ import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 
 /**
- * A custom [net.minecraft.block.entity.BlockEntityType.BlockEntityFactory] for [HTMachineBlockEntityBase]
+ * [HTMachineBlockEntityBase]を返すファクトリー
  */
 fun interface HTMachineEntityFactory {
     companion object {
         /**
-         * Create a new [HTMachineEntityFactory] instance for the class which has constant [HTMachineBlockEntityBase.key]
+         * 固定の[HTMachineKey]を持った[HTMachineBlockEntityBase]向けの[HTMachineEntityFactory]
          */
         @JvmStatic
         fun of(factory: (BlockPos, BlockState) -> HTMachineBlockEntityBase?): HTMachineEntityFactory =
@@ -19,8 +19,5 @@ fun interface HTMachineEntityFactory {
             }
     }
 
-    /**
-     * Create new [HTMachineBlockEntityBase] instance or null
-     */
     fun create(pos: BlockPos, state: BlockState, key: HTMachineKey): HTMachineBlockEntityBase?
 }

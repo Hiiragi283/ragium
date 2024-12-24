@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier
 import java.util.stream.Stream
 
 /**
- * A registry of [HTMachineKey]
+ * [HTMachineKey]のレジストリ
  * @see hiiragi283.ragium.api.RagiumAPI.machineRegistry
  */
 class HTMachineRegistry(
@@ -17,22 +17,53 @@ class HTMachineRegistry(
     private val blockMap: Map<HTMachineKey, HTMachineBlock>,
     private val properties: Map<HTMachineKey, HTPropertyHolder>,
 ) : Keyable {
+    /**
+     * 登録された[HTMachineKey]の一覧
+     */
     val keys: Set<HTMachineKey>
         get() = types.keys
+
+    /**
+     * 登録された[HTMachineKey]とその[Entry]のマップ
+     */
     val entryMap: Map<HTMachineKey, Entry>
-        get() = types.keys.associateWith(::getEntry)
+        get() = types.keys.associateWith(::createEntry)
+
+    /**
+     * 登録された[HTMachineKey]に紐づいたブロックの一覧
+     */
     val blocks: Collection<HTMachineBlock>
         get() = blockMap.values
 
+    /**
+     * 指定された[key]が登録されているか判定します。
+     */
     operator fun contains(key: HTMachineKey): Boolean = key in types
 
+    /**
+     * 指定された[key]に紐づいたブロックを返します。
+     *
+     * @return 値がない場合はnull
+     */
     fun getBlock(key: HTMachineKey): HTMachineBlock? = blockMap[key]
 
-    fun getEntry(key: HTMachineKey): Entry = Entry(
-        checkNotNull(types[key]) { "Invalid machine key; $key!" },
-        checkNotNull(blockMap[key]) { "Invalid machine key; $key!" },
+    private fun createEntry(key: HTMachineKey): Entry = Entry(
+        types[key] ?: error("Unknown machine key: $key"),
+        blockMap[key] ?: error("Unknown machine key: $key"),
         properties.getOrDefault(key, HTPropertyHolder.Empty),
     )
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
+     * @throws IllegalStateException [key]が登録されていない場合
+     */
+    fun getEntry(key: HTMachineKey): Entry = getEntryOrNull(key) ?: error("Unknown machine key: $key")
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
+     * @return [key]が登録されていない場合はnull
+     */
+    fun getEntryOrNull(key: HTMachineKey): Entry? = entryMap[key]
 
     //    Keyable    //
 
@@ -44,6 +75,9 @@ class HTMachineRegistry(
 
     //    Entry    //
 
+    /**
+     * 機械の情報をまとめたクラス
+     */
     data class Entry(val type: HTMachineType, val block: HTMachineBlock, val property: HTPropertyHolder) :
         HTPropertyHolder by property,
         ItemConvertible by block

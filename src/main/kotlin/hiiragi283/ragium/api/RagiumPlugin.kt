@@ -31,7 +31,7 @@ interface RagiumPlugin {
 
     fun shouldLoad(): Boolean = true
 
-    fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
+    fun registerMachine(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
     fun registerMaterial(helper: MaterialHelper) {}
 
@@ -97,7 +97,7 @@ interface RagiumPlugin {
         fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
 
         fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
-            entry.getFirstItem(prefix)?.let(action)
+            entry.getFirstItemOrNull(prefix)?.let(action)
         }
 
         fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {

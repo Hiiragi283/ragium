@@ -121,24 +121,15 @@ object RagiumBlocks {
         override val key: RegistryKey<Block> = HTContent.blockKey("${name}white_line")
     }
 
-    enum class Ores(
-        path: String,
-        override val tagPrefix: HTTagPrefix,
-        override val material: HTMaterialKey,
-        val baseStone: Block,
-    ) : HTBlockContent.Material {
-        CRUDE_RAGINITE("raginite_ore", HTTagPrefix.ORE, RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
-        DEEP_RAGINITE("deepslate_raginite_ore", HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
-        NETHER_RAGINITE("nether_raginite_ore", HTTagPrefix.NETHER_ORE, RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
-        END_RAGI_CRYSTAL(
-            "end_ragi_crystal_ore",
-            HTTagPrefix.END_ORE,
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-            Blocks.END_STONE,
-        ),
+    enum class Ores(path: String, override val material: HTMaterialKey, val baseStone: Block) : HTBlockContent.Material {
+        CRUDE_RAGINITE("raginite_ore", RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
+        DEEP_RAGINITE("deepslate_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
+        NETHER_RAGINITE("nether_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
+        END_RAGI_CRYSTAL("end_ragi_crystal_ore", RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE),
         ;
 
         override val key: RegistryKey<Block> = HTContent.blockKey(path)
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
     }
 
     enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {

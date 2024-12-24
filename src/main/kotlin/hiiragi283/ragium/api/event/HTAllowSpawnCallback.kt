@@ -9,7 +9,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.ServerWorldAccess
 
 /**
- * Callback for allowing mob spawn, is hooked before mod spawning at [net.minecraft.entity.SpawnRestriction.canSpawn]
+ * モブのスポーンを判定するイベント
+ *
+ * [net.minecraft.entity.SpawnRestriction.canSpawn]にフックされています。
  */
 fun interface HTAllowSpawnCallback {
     companion object {
@@ -28,11 +30,11 @@ fun interface HTAllowSpawnCallback {
     }
 
     /**
-     * @param entityType an [EntityType] which try to spawn
-     * @param world a [ServerWorldAccess] which the entity will spawn in
-     * @param pos a [BlockPos] which the entity will spawn at
-     * @param reason a [SpawnReason] which the entity spawn by
-     * @return Force spawning if [TriState.TRUE], Disable spawning if [TriState.FALSE], or use default condition if [TriState.DEFAULT]
+     * @param entityType スポーンしようとしているエンティティの[EntityType]
+     * @param world スポーンしようとしているワールド
+     * @param pos スポーンしようとしている座標
+     * @param reason スポーンする理由
+     * @return [TriState.TRUE]の場合は強制的にスポーン，[TriState.FALSE]の場合はスポーンしない, [TriState.DEFAULT]の場合はデフォルトの判定にゆだねる
      */
     fun canSpawn(
         entityType: EntityType<*>,

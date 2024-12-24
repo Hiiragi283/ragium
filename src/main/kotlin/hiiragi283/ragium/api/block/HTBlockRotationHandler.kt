@@ -9,6 +9,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
+/**
+ * ブロックの回転処理を行います。
+ */
 fun interface HTBlockRotationHandler {
     fun rotate(state: BlockState, direction: Direction): BlockState
 

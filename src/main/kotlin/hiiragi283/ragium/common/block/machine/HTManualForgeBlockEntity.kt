@@ -73,7 +73,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
         invStack.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
-        RagiumMachineKeys.COMPRESSOR.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+        RagiumMachineKeys.COMPRESSOR.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }
     }
