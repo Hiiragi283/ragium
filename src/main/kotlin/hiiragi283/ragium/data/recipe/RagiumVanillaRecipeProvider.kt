@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.item.HTBackpackItem
+import hiiragi283.ragium.common.recipe.HTDynamiteUpgradingRecipe
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
 import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
@@ -36,6 +37,8 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         exporterCache = exporter
         craftingRecipes(exporter)
         cookingRecipes(exporter)
+
+        exporter.accept(RagiumAPI.id("smithing/dynamite_upgrade"), HTDynamiteUpgradingRecipe, null)
     }
 
     //    Crafting    //

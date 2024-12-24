@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.component.HTExplosionComponent
 import hiiragi283.ragium.api.extension.getStackInActiveHand
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
@@ -14,6 +15,8 @@ import net.minecraft.util.math.Position
 import net.minecraft.world.World
 
 class HTDynamiteItem(settings: Settings) : HTThrowableItem(settings) {
+    override fun hasGlint(stack: ItemStack): Boolean = super.hasGlint(stack) || stack.contains(RagiumComponentTypes.DYNAMITE)
+
     override fun appendTooltip(
         stack: ItemStack,
         context: TooltipContext,
