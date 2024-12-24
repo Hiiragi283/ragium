@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.entity
 
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
@@ -26,7 +26,7 @@ class HTBlazingDynamiteEntity : ThrownItemEntity {
         world,
     )
 
-    override fun getDefaultItem(): Item = RagiumItemsNew.Dynamites.BLAZING.asItem()
+    override fun getDefaultItem(): Item = RagiumItems.Dynamites.BLAZING.asItem()
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)

@@ -103,12 +103,12 @@ interface RagiumAPI {
     fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition>
 
     /**
-     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItemsNew.FILLED_FLUID_CUBE] with [fluid]
+     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
      */
     fun createFilledCube(content: HTFluidContent, count: Int = 1): ItemStack = createFilledCube(content.get(), count)
 
     /**
-     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItemsNew.FILLED_FLUID_CUBE] with [fluid]
+     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
      */
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 

@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumHardModeContents
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -109,16 +109,16 @@ enum class HTMachineTier(
 
     fun createId(key: HTMachineKey): Identifier = key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
-    fun getCircuitBoard(): RagiumItemsNew.CircuitBoards = when (this) {
-        PRIMITIVE -> RagiumItemsNew.CircuitBoards.PRIMITIVE
-        BASIC -> RagiumItemsNew.CircuitBoards.BASIC
-        ADVANCED -> RagiumItemsNew.CircuitBoards.ADVANCED
+    fun getCircuitBoard(): RagiumItems.CircuitBoards = when (this) {
+        PRIMITIVE -> RagiumItems.CircuitBoards.PRIMITIVE
+        BASIC -> RagiumItems.CircuitBoards.BASIC
+        ADVANCED -> RagiumItems.CircuitBoards.ADVANCED
     }
 
-    fun getCircuit(): RagiumItemsNew.Circuits = when (this) {
-        PRIMITIVE -> RagiumItemsNew.Circuits.PRIMITIVE
-        BASIC -> RagiumItemsNew.Circuits.BASIC
-        ADVANCED -> RagiumItemsNew.Circuits.ADVANCED
+    fun getCircuit(): RagiumItems.Circuits = when (this) {
+        PRIMITIVE -> RagiumItems.Circuits.PRIMITIVE
+        BASIC -> RagiumItems.Circuits.BASIC
+        ADVANCED -> RagiumItems.Circuits.ADVANCED
     }
 
     fun getCoil(): RagiumBlocks.Coils = when (this) {

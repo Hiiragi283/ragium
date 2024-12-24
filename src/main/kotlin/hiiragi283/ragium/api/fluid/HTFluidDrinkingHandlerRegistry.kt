@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -47,7 +47,7 @@ object HTFluidDrinkingHandlerRegistry {
                 HTDrankFluidCriterion.trigger(user, fluid)
                 dropStackAt(
                     user,
-                    RagiumItemsNew.EMPTY_FLUID_CUBE,
+                    RagiumItems.EMPTY_FLUID_CUBE,
                 )
                 stack.decrementUnlessCreative(1, user)
             }

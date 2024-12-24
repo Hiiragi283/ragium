@@ -34,7 +34,7 @@ object RagiumHardModePlugin : RagiumPlugin {
     override fun registerRuntimeRecipe(exporter: RecipeExporter) {
         // solar panel
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.SOLAR_PANEL)
+            .create(RagiumItems.Ingredients.SOLAR_PANEL)
             .patterns(
                 "AAA",
                 "BBB",
@@ -45,7 +45,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             .offerTo(exporter)
         // primitive circuit
         HTShapedRecipeJsonBuilder
-            .create(RagiumItemsNew.Circuits.PRIMITIVE)
+            .create(RagiumItems.Circuits.PRIMITIVE)
             .patterns(
                 "ABA",
                 "CDC",
@@ -58,25 +58,25 @@ object RagiumHardModePlugin : RagiumPlugin {
             .offerTo(exporter)
         // basic circuit
         HTShapedRecipeJsonBuilder
-            .create(RagiumItemsNew.Circuits.BASIC)
+            .create(RagiumItems.Circuits.BASIC)
             .patterns(
                 "ABA",
                 "CDC",
                 "ABA",
-            ).input('A', RagiumItemsNew.Dusts.RAGINITE)
+            ).input('A', RagiumItems.Dusts.RAGINITE)
             .input('B', RagiumHardModeContents.STEEL.getContent(hardMode))
             .input('C', RagiumHardModeContents.GOLD.getContent(hardMode))
-            .input('D', RagiumItemsNew.Circuits.PRIMITIVE)
-            .unlockedBy(RagiumItemsNew.Dusts.RAGINITE)
+            .input('D', RagiumItems.Circuits.PRIMITIVE)
+            .unlockedBy(RagiumItems.Dusts.RAGINITE)
             .offerTo(exporter)
         // led
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(RagiumItems.LUMINESCENCE_DUST)
+            .itemInput(RagiumItems.Ingredients.LUMINESCENCE_DUST)
             .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS)
             .itemInput(RagiumHardModeContents.COPPER.getContent(hardMode))
-            .itemOutput(RagiumItems.LED, 4)
-            .offerTo(exporter, RagiumItems.LED)
+            .itemOutput(RagiumItems.Ingredients.LED, 4)
+            .offerTo(exporter, RagiumItems.Ingredients.LED)
         // glasses
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.BLAST_FURNACE)
@@ -92,7 +92,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             .offerTo(exporter, RagiumBlocks.Glasses.STEEL, "_from_deep_steel")
         // trader catalog
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItemsNew.TRADER_CATALOG)
+            .create(RagiumItems.TRADER_CATALOG)
             .input(Items.BOOK)
             .input(RagiumHardModeContents.EMERALD.getContent(hardMode))
             .input(ConventionalItemTags.CHESTS)
@@ -100,11 +100,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             .offerTo(exporter)
         // press molds
         mapOf(
-            RagiumItemsNew.PressMolds.GEAR to HTTagPrefix.GEAR.commonTagKey,
-            RagiumItemsNew.PressMolds.PIPE to ConventionalItemTags.CHESTS,
-            RagiumItemsNew.PressMolds.PLATE to HTTagPrefix.PLATE.commonTagKey,
-            RagiumItemsNew.PressMolds.ROD to HTTagPrefix.ROD.commonTagKey,
-        ).forEach { (pressMold: RagiumItemsNew.PressMolds, input: TagKey<Item>) ->
+            RagiumItems.PressMolds.GEAR to HTTagPrefix.GEAR.commonTagKey,
+            RagiumItems.PressMolds.PIPE to ConventionalItemTags.CHESTS,
+            RagiumItems.PressMolds.PLATE to HTTagPrefix.PLATE.commonTagKey,
+            RagiumItems.PressMolds.ROD to HTTagPrefix.ROD.commonTagKey,
+        ).forEach { (pressMold: RagiumItems.PressMolds, input: TagKey<Item>) ->
             HTShapedRecipeJsonBuilder
                 .create(pressMold)
                 .patterns(
@@ -112,7 +112,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                     "AA",
                     "BC",
                 ).input('A', RagiumHardModeContents.STEEL.getContent(hardMode))
-                .input('B', RagiumItemsNew.FORGE_HAMMER)
+                .input('B', RagiumItems.FORGE_HAMMER)
                 .input('C', input)
                 .unlockedBy(input)
                 .offerTo(exporter)
@@ -127,7 +127,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             // insert to cube
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.INFUSER)
-                .itemInput(RagiumItemsNew.EMPTY_FLUID_CUBE)
+                .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
                 .fluidInput(fluid)
                 .itemOutput(RagiumAPI.getInstance().createFilledCube(fluid))
                 .offerTo(exporter, id.withPrefixedPath("filling_cube/"))
@@ -166,25 +166,25 @@ object RagiumHardModePlugin : RagiumPlugin {
             .create(RagiumMachineKeys.ASSEMBLER)
             .itemInput(RagiumHardModeContents.STEEL.getContent(hardMode), 8)
             .itemInput(RagiumHardModeContents.RAGI_STEEL.getContent(hardMode), 8)
-            .itemOutput(RagiumItems.ENGINE)
-            .offerTo(exporter, RagiumItems.ENGINE)
+            .itemOutput(RagiumItems.Ingredients.ENGINE)
+            .offerTo(exporter, RagiumItems.Ingredients.ENGINE)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItemsNew.Circuits.ADVANCED, 2)
+            .itemInput(RagiumItems.Circuits.ADVANCED, 2)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getContent(hardMode), 4)
-            .itemInput(RagiumItems.ENGINEERING_PLASTIC_PLATE, 4)
+            .itemInput(RagiumItems.Ingredients.ENGINEERING_PLASTIC_PLATE, 4)
             .fluidInput(RagiumFluids.NOBLE_GAS)
-            .itemOutput(RagiumItems.LASER_EMITTER)
-            .offerTo(exporter, RagiumItems.LASER_EMITTER)
+            .itemOutput(RagiumItems.Ingredients.LASER_EMITTER)
+            .offerTo(exporter, RagiumItems.Ingredients.LASER_EMITTER)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR, HTMachineTier.ADVANCED)
             .itemInput(RagiumHardModeContents.ALUMINUM.getContent(hardMode))
-            .itemInput(RagiumItems.ENGINEERING_PLASTIC_PLATE)
+            .itemInput(RagiumItems.Ingredients.ENGINEERING_PLASTIC_PLATE)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getContent(hardMode), 2)
-            .itemOutput(RagiumItems.STELLA_PLATE)
-            .offerTo(exporter, RagiumItems.STELLA_PLATE)
+            .itemOutput(RagiumItems.Ingredients.STELLA_PLATE)
+            .offerTo(exporter, RagiumItems.Ingredients.STELLA_PLATE)
 
         // machines
         HTShapedRecipeJsonBuilder
@@ -223,30 +223,30 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumBlocks.NETWORK_INTERFACE,
             RagiumHardModeContents.STEEL.getContent(hardMode),
-            RagiumItemsNew.Circuits.ADVANCED,
+            RagiumItems.Circuits.ADVANCED,
         )
         createMechanics(
             exporter,
             RagiumBlocks.EXTENDED_PROCESSOR,
             RagiumHardModeContents.RAGI_ALLOY.getContent(hardMode),
-            RagiumItems.RAGI_CRYSTAL_PROCESSOR,
+            RagiumItems.Ingredients.RAGI_CRYSTAL_PROCESSOR,
         )
         createMechanics(
             exporter,
             RagiumBlocks.AUTO_ILLUMINATOR,
             RagiumHardModeContents.GOLD.getContent(hardMode),
-            RagiumItems.CRIMSON_CRYSTAL,
+            RagiumItems.Ingredients.CRIMSON_CRYSTAL,
         )
         createMechanics(
             exporter,
             RagiumBlocks.TELEPORT_ANCHOR,
             RagiumHardModeContents.ALUMINUM.getContent(hardMode),
-            RagiumItems.WARPED_CRYSTAL,
+            RagiumItems.Ingredients.WARPED_CRYSTAL,
         )
         createMechanics(
             exporter,
             RagiumBlocks.OPEN_CRATE,
-            RagiumItemsNew.Gems.FLUORITE,
+            RagiumItems.Gems.FLUORITE,
             Items.HOPPER,
         )
         createMechanics(
@@ -259,7 +259,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.BEDROCK_MINER,
-            RagiumItemsNew.Gears.DIAMOND,
+            RagiumItems.Gears.DIAMOND,
         )
         createProcessor(
             exporter,
@@ -292,19 +292,19 @@ object RagiumHardModePlugin : RagiumPlugin {
                     "ABA",
                     "ACA",
                 ).input('A', tier.getSteelMetal(hardMode))
-                .input('B', RagiumItems.ENGINE)
+                .input('B', RagiumItems.Ingredients.ENGINE)
                 .input('C', tier.getCircuit())
                 .offerTo(exporter, tier.createId(RagiumMachineKeys.COMBUSTION_GENERATOR))
         }
         createProcessor(
             exporter,
             RagiumMachineKeys.NUCLEAR_REACTOR,
-            RagiumItems.STELLA_PLATE,
+            RagiumItems.Ingredients.STELLA_PLATE,
         )
         createProcessor(
             exporter,
             RagiumMachineKeys.SOLAR_GENERATOR,
-            RagiumItems.SOLAR_PANEL,
+            RagiumItems.Ingredients.SOLAR_PANEL,
         )
         createProcessor(
             exporter,
@@ -326,7 +326,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.ASSEMBLER,
-            RagiumItemsNew.Circuits.PRIMITIVE,
+            RagiumItems.Circuits.PRIMITIVE,
         )
         createProcessor(
             exporter,
@@ -356,7 +356,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.ELECTROLYZER,
-            RagiumItems.CHARGED_CARBON_ELECTRODE,
+            RagiumItems.Ingredients.CHARGED_CARBON_ELECTRODE,
         )
         createProcessor(
             exporter,
@@ -382,13 +382,13 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.LASER_TRANSFORMER,
-            RagiumItems.LASER_EMITTER,
+            RagiumItems.Ingredients.LASER_EMITTER,
         )
         /*createProcessor(
             exporter,
             RagiumMachineKeys.METAL_FORMER,
             RagiumBlocks.MANUAL_FORGE,
-            RagiumItems.FORGE_HAMMER
+            RagiumItemsNew.Ingredients.FORGE_HAMMER
         )*/
         createProcessor(
             exporter,
@@ -398,7 +398,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.MULTI_SMELTER,
-            RagiumItems.BLAZING_CARBON_ELECTRODE,
+            RagiumItems.Ingredients.BLAZING_CARBON_ELECTRODE,
         )
     }
 
@@ -446,7 +446,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
                 .itemInput(input, 2)
-                .catalyst(RagiumItemsNew.PressMolds.PIPE)
+                .catalyst(RagiumItems.PressMolds.PIPE)
                 .itemOutput(pipe, 2)
                 .offerTo(exporter, pipe)
         }
@@ -469,7 +469,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
                 .itemInput(input, 4)
-                .catalyst(RagiumItemsNew.PressMolds.PIPE)
+                .catalyst(RagiumItems.PressMolds.PIPE)
                 .itemOutput(crossPipe, 2)
                 .offerTo(exporter, crossPipe)
         }
@@ -486,7 +486,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                     "BCB",
                     "AAA",
                 ).input('A', input)
-                .input('B', RagiumItemsNew.Circuits.BASIC)
+                .input('B', RagiumItems.Circuits.BASIC)
                 .input('C', ConventionalItemTags.GLASS_BLOCKS)
                 .offerTo(exporter)
         }
@@ -503,7 +503,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                     "BCB",
                     "AAA",
                 ).input('A', input)
-                .input('B', RagiumItemsNew.Circuits.ADVANCED)
+                .input('B', RagiumItems.Circuits.ADVANCED)
                 .input('C', RagiumBlocks.Glasses.STEEL)
                 .offerTo(exporter)
         }
@@ -566,10 +566,10 @@ object RagiumHardModePlugin : RagiumPlugin {
             mapOf(
                 HTMachineTier.PRIMITIVE to ConventionalItemTags.REDSTONE_DUSTS,
                 HTMachineTier.BASIC to ConventionalItemTags.GLOWSTONE_DUSTS,
-                HTMachineTier.ADVANCED to RagiumItemsNew.Dusts.RAGI_CRYSTAL.prefixedTagKey,
+                HTMachineTier.ADVANCED to RagiumItems.Dusts.RAGI_CRYSTAL.prefixedTagKey,
             )
 
-        RagiumItemsNew.CircuitBoards.entries.forEach { board: RagiumItemsNew.CircuitBoards ->
+        RagiumItems.CircuitBoards.entries.forEach { board: RagiumItems.CircuitBoards ->
             val tier: HTMachineTier = board.tier
             val plate: TagKey<Item> = boardMap[tier] ?: return@forEach
             val dope: TagKey<Item> = circuitMap[tier] ?: return@forEach
@@ -590,14 +590,14 @@ object RagiumHardModePlugin : RagiumPlugin {
         }
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.PROCESSOR_SOCKET)
+            .create(RagiumItems.Ingredients.PROCESSOR_SOCKET)
             .patterns(
                 "ABA",
                 "BCB",
                 "ABA",
-            ).input('A', RagiumItemsNew.Circuits.ADVANCED)
+            ).input('A', RagiumItems.Circuits.ADVANCED)
             .input('B', RagiumHardModeContents.GOLD.getContent(hardMode))
-            .input('C', RagiumItems.STELLA_PLATE)
+            .input('C', RagiumItems.Ingredients.STELLA_PLATE)
             .offerTo(exporter)
     }
 

@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -89,10 +89,10 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
     private fun extractFromCube(): Boolean {
         // drain fluid from input slot
         val inputStack: ItemStack = inventory.getStack(0)
-        if (inputStack.isOf(RagiumItemsNew.FILLED_FLUID_CUBE)) {
+        if (inputStack.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
             val storage: Storage<FluidVariant> =
                 ContainerItemContext.withConstant(inputStack).find(FluidStorage.ITEM) ?: return false
-            val emptyResult = HTItemResult(RagiumItemsNew.EMPTY_FLUID_CUBE)
+            val emptyResult = HTItemResult(RagiumItems.EMPTY_FLUID_CUBE)
             if (!emptyResult.canMerge(inventory.getStack(1))) return false
             val cubeVariant: FluidVariant = StorageUtil.findStoredResource(storage) ?: return false
             useTransaction { transaction: Transaction ->

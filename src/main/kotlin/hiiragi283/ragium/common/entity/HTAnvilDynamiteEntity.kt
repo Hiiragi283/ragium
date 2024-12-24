@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity
 
 import hiiragi283.ragium.api.extension.sidedPos
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
@@ -18,7 +18,7 @@ class HTAnvilDynamiteEntity : ThrownItemEntity {
 
     constructor(world: World, x: Double, y: Double, z: Double) : super(RagiumEntityTypes.ANVIL_DYNAMITE, x, y, z, world)
 
-    override fun getDefaultItem(): Item = RagiumItemsNew.Dynamites.ANVIL.asItem()
+    override fun getDefaultItem(): Item = RagiumItems.Dynamites.ANVIL.asItem()
 
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         super.onBlockHit(blockHitResult)

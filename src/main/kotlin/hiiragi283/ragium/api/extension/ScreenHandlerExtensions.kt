@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -67,7 +67,7 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor
             player.openHandledScreen(
                 SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
                     GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
-                }, RagiumItemsNew.BACKPACK.get().name),
+                }, RagiumItems.BACKPACK.get().name),
             )
             player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
         }

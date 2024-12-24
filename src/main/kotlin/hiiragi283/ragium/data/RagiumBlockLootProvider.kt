@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider
 import net.minecraft.block.Block
@@ -67,7 +67,7 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             RagiumBlocks.SWEET_BERRIES_CAKE,
             drops(
                 RagiumBlocks.SWEET_BERRIES_CAKE.get(),
-                RagiumItemsNew.SWEET_BERRIES_CAKE_PIECE,
+                RagiumItems.SWEET_BERRIES_CAKE_PIECE,
                 ConstantLootNumberProvider.create(8f),
             ),
         )
@@ -111,10 +111,10 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
 
     private fun dropOre(ore: RagiumBlocks.Ores) {
         val dropMineral: ItemConvertible = when (ore) {
-            RagiumBlocks.Ores.CRUDE_RAGINITE -> RagiumItemsNew.RawMaterials.CRUDE_RAGINITE
-            RagiumBlocks.Ores.DEEP_RAGINITE -> RagiumItemsNew.RawMaterials.RAGINITE
-            RagiumBlocks.Ores.NETHER_RAGINITE -> RagiumItemsNew.RawMaterials.RAGINITE
-            RagiumBlocks.Ores.END_RAGI_CRYSTAL -> RagiumItemsNew.Gems.RAGI_CRYSTAL
+            RagiumBlocks.Ores.CRUDE_RAGINITE -> RagiumItems.RawMaterials.CRUDE_RAGINITE
+            RagiumBlocks.Ores.DEEP_RAGINITE -> RagiumItems.RawMaterials.RAGINITE
+            RagiumBlocks.Ores.NETHER_RAGINITE -> RagiumItems.RawMaterials.RAGINITE
+            RagiumBlocks.Ores.END_RAGI_CRYSTAL -> RagiumItems.Gems.RAGI_CRYSTAL
         }
 
         addDrop(

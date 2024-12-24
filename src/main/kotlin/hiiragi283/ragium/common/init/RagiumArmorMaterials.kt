@@ -28,7 +28,7 @@ object RagiumArmorMaterials {
     val STELLA: RegistryEntry<ArmorMaterial> = register(
         "stella",
         ArmorMaterials.NETHERITE,
-    ) { Ingredient.ofItems(RagiumItems.STELLA_PLATE) }
+    ) { Ingredient.ofItems(RagiumItems.Ingredients.STELLA_PLATE) }
 
     @JvmStatic
     private fun register(name: String, entry: RegistryEntry<ArmorMaterial>, repairment: () -> Ingredient): RegistryEntry<ArmorMaterial> =

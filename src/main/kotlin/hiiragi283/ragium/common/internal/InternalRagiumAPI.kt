@@ -18,7 +18,7 @@ import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
@@ -57,7 +57,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         HTDrankFluidCriterion.create(entryList)
 
     override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
-        RagiumItemsNew.FILLED_FLUID_CUBE,
+        RagiumItems.FILLED_FLUID_CUBE,
         count,
     ) {
         add(RagiumComponentTypes.FLUID, fluid)

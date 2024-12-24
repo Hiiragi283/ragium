@@ -37,7 +37,7 @@ object RagiumItemGroup {
         register(ITEM_KEY) {
             displayName(Text.translatable("itemGroup.ragium.item"))
             icon {
-                RagiumItemsNew.Gems.RAGIUM
+                RagiumItems.Gems.RAGIUM
                     .asItem()
                     .defaultStack
             }
@@ -58,42 +58,42 @@ object RagiumItemGroup {
                 entries.add(RagiumBlocks.SHAFT)
                 entries.addAll(RagiumBlocks.Coils.entries)
 
-                entries.addAll(RagiumItemsNew.Dusts.entries)
-                entries.addAll(RagiumItemsNew.Gears.entries)
-                entries.addAll(RagiumItemsNew.Gems.entries)
-                entries.addAll(RagiumItemsNew.Ingots.entries)
+                entries.addAll(RagiumItems.Dusts.entries)
+                entries.addAll(RagiumItems.Gears.entries)
+                entries.addAll(RagiumItems.Gems.entries)
+                entries.addAll(RagiumItems.Ingots.entries)
                 if (RagiumAPI.getInstance().config.isHardMode) {
-                    entries.addAll(RagiumItemsNew.Plates.entries)
+                    entries.addAll(RagiumItems.Plates.entries)
                 }
-                entries.addAll(RagiumItemsNew.RawMaterials.entries)
+                entries.addAll(RagiumItems.RawMaterials.entries)
 
                 entries.addAll(RagiumBlocks.FOODS)
-                entries.addAll(RagiumItemsNew.FOODS)
+                entries.addAll(RagiumItems.FOODS)
 
-                entries.addAll(RagiumItemsNew.SteelArmors.entries)
-                entries.addAll(RagiumItemsNew.DeepSteelArmors.entries)
-                entries.addAll(RagiumItemsNew.StellaSuits.entries)
+                entries.addAll(RagiumItems.SteelArmors.entries)
+                entries.addAll(RagiumItems.DeepSteelArmors.entries)
+                entries.addAll(RagiumItems.StellaSuits.entries)
 
-                entries.addAll(RagiumItemsNew.SteelTools.entries)
-                entries.addAll(RagiumItemsNew.DeepSteelTools.entries)
-                entries.add(RagiumItemsNew.FORGE_HAMMER)
-                entries.add(RagiumItemsNew.RAGI_WRENCH)
-                entries.add(RagiumItemsNew.STELLA_SABER)
-                entries.add(RagiumItemsNew.RAGIUM_SABER)
-                entries.add(RagiumItemsNew.GIGANT_HAMMER)
-                entries.addAll(RagiumItemsNew.Dynamites.entries)
-                entries.add(RagiumItemsNew.EMPTY_FLUID_CUBE)
-                entries.add(RagiumItemsNew.FLUID_FILTER)
-                entries.add(RagiumItemsNew.ITEM_FILTER)
-                entries.add(RagiumItemsNew.GUIDE_BOOK)
-                entries.add(RagiumItemsNew.TRADER_CATALOG)
+                entries.addAll(RagiumItems.SteelTools.entries)
+                entries.addAll(RagiumItems.DeepSteelTools.entries)
+                entries.add(RagiumItems.FORGE_HAMMER)
+                entries.add(RagiumItems.RAGI_WRENCH)
+                entries.add(RagiumItems.STELLA_SABER)
+                entries.add(RagiumItems.RAGIUM_SABER)
+                entries.add(RagiumItems.GIGANT_HAMMER)
+                entries.addAll(RagiumItems.Dynamites.entries)
+                entries.add(RagiumItems.EMPTY_FLUID_CUBE)
+                entries.add(RagiumItems.FLUID_FILTER)
+                entries.add(RagiumItems.ITEM_FILTER)
+                entries.add(RagiumItems.GUIDE_BOOK)
+                entries.add(RagiumItems.TRADER_CATALOG)
 
-                entries.addAll(RagiumItemsNew.CircuitBoards.entries)
-                entries.addAll(RagiumItemsNew.Circuits.entries)
-                entries.addAll(RagiumItemsNew.PressMolds.entries)
-                entries.addAll(RagiumItems.INGREDIENTS)
+                entries.addAll(RagiumItems.CircuitBoards.entries)
+                entries.addAll(RagiumItems.Circuits.entries)
+                entries.addAll(RagiumItems.PressMolds.entries)
+                entries.addAll(RagiumItems.Ingredients.entries)
 
-                entries.addAll(RagiumItemsNew.MISC)
+                entries.addAll(RagiumItems.MISC)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
             }
@@ -101,7 +101,7 @@ object RagiumItemGroup {
 
         register(FLUID_KEY) {
             displayName(Text.translatable("itemGroup.ragium.fluid"))
-            icon { RagiumItemsNew.EMPTY_FLUID_CUBE.get().defaultStack }
+            icon { RagiumItems.EMPTY_FLUID_CUBE.get().defaultStack }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 Registries.FLUID
                     .filter { it.isStill(it.defaultState) }

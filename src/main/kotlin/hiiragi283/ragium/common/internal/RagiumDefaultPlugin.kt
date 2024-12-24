@@ -327,12 +327,12 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
         bindContents(RagiumBlocks.Ores.entries)
         bindContents(RagiumBlocks.StorageBlocks.entries)
-        bindContents(RagiumItemsNew.Dusts.entries)
-        bindContents(RagiumItemsNew.Gears.entries)
-        bindContents(RagiumItemsNew.Gems.entries)
-        bindContents(RagiumItemsNew.Ingots.entries)
-        bindContents(RagiumItemsNew.Plates.entries)
-        bindContents(RagiumItemsNew.RawMaterials.entries)
+        bindContents(RagiumItems.Dusts.entries)
+        bindContents(RagiumItems.Gears.entries)
+        bindContents(RagiumItems.Gems.entries)
+        bindContents(RagiumItems.Ingots.entries)
+        bindContents(RagiumItems.Plates.entries)
+        bindContents(RagiumItems.RawMaterials.entries)
     }
 
     override fun registerRuntimeMaterialRecipes(
@@ -369,14 +369,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key)
-                    .catalyst(RagiumItemsNew.PressMolds.PLATE)
+                    .catalyst(RagiumItems.PressMolds.PLATE)
                     .itemOutput(output)
                     .offerTo(exporter, output)
                 // Cutting Machine Recipe
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.CUTTING_MACHINE)
                     .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
-                    .catalyst(RagiumItemsNew.PressMolds.PLATE)
+                    .catalyst(RagiumItems.PressMolds.PLATE)
                     .itemOutput(output, 9)
                     .offerTo(exporter, output)
             }
@@ -421,7 +421,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.COMPRESSOR)
                     .itemInput(prefix, key, 4)
-                    .catalyst(RagiumItemsNew.PressMolds.GEAR)
+                    .catalyst(RagiumItems.PressMolds.GEAR)
                     .itemOutput(output)
                     .offerTo(exporter, output)
             }

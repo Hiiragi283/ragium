@@ -233,7 +233,7 @@ object RagiumAdvancementProviders {
         InventoryChangedCriterion.Conditions.items(
             ItemPredicate.Builder
                 .create()
-                .items(RagiumItemsNew.FILLED_FLUID_CUBE)
+                .items(RagiumItems.FILLED_FLUID_CUBE)
                 .component(
                     ComponentPredicate
                         .builder()
@@ -258,12 +258,12 @@ object RagiumAdvancementProviders {
                 Text.literal(RagiumAPI.MOD_NAME),
                 Text.empty(),
                 Identifier.of("textures/block/bricks.png"),
-            ) { hasAnyItems(RagiumItemsNew.RawMaterials.CRUDE_RAGINITE) }
+            ) { hasAnyItems(RagiumItems.RawMaterials.CRUDE_RAGINITE) }
             val ragiAlloy: AdvancementEntry = createContentChild(
                 consumer,
                 "progress/ragi_alloy",
                 root,
-                RagiumItemsNew.Ingots.RAGI_ALLOY,
+                RagiumItems.Ingots.RAGI_ALLOY,
                 frame = AdvancementFrame.GOAL,
             )
             val manualGrinder: AdvancementEntry = createChild(
@@ -302,7 +302,7 @@ object RagiumAdvancementProviders {
                 consumer,
                 "progress/ragi_steel",
                 blastFurnace,
-                RagiumItemsNew.Ingots.RAGI_STEEL,
+                RagiumItems.Ingots.RAGI_STEEL,
                 frame = AdvancementFrame.GOAL,
             )
             val basicHull: AdvancementEntry = createChild(
@@ -322,13 +322,13 @@ object RagiumAdvancementProviders {
                 consumer,
                 "progress/ragi_crystal",
                 blastFurnace1,
-                RagiumItemsNew.Gems.RAGI_CRYSTAL,
+                RagiumItems.Gems.RAGI_CRYSTAL,
             )
             val refinedRagiSteel: AdvancementEntry = createContentChild(
                 consumer,
                 "progress/refined_ragi_steel",
                 ragiCrystal,
-                RagiumItemsNew.Ingots.REFINED_RAGI_STEEL,
+                RagiumItems.Ingots.REFINED_RAGI_STEEL,
                 frame = AdvancementFrame.GOAL,
             )
             val advancedHull: AdvancementEntry = createChild(
@@ -355,18 +355,18 @@ object RagiumAdvancementProviders {
                 consumer,
                 "progress/ragium",
                 laserTransformer,
-                RagiumItemsNew.Gems.RAGIUM,
+                RagiumItems.Gems.RAGIUM,
                 frame = AdvancementFrame.CHALLENGE,
             )
             val stellaSuit: AdvancementEntry = createChild(
                 consumer,
                 "progress/stella_suit",
                 ragium,
-                RagiumItemsNew.StellaSuits.GOGGLE,
+                RagiumItems.StellaSuits.GOGGLE,
                 title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT),
                 frame = AdvancementFrame.CHALLENGE,
             ) {
-                hasAllItems(*RagiumItemsNew.StellaSuits.values())
+                hasAllItems(*RagiumItems.StellaSuits.values())
             }
         }
     }
@@ -405,27 +405,27 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/primitive_circuit",
                 assembler,
-                RagiumItemsNew.Circuits.PRIMITIVE,
-            ) { hasAllItems(RagiumItemsNew.Circuits.PRIMITIVE) }
+                RagiumItems.Circuits.PRIMITIVE,
+            ) { hasAllItems(RagiumItems.Circuits.PRIMITIVE) }
             val basicCircuit: AdvancementEntry = createChild(
                 consumer,
                 "machine/basic_circuit",
                 primitiveCircuit,
-                RagiumItemsNew.Circuits.BASIC,
-            ) { hasAllItems(RagiumItemsNew.Circuits.BASIC) }
+                RagiumItems.Circuits.BASIC,
+            ) { hasAllItems(RagiumItems.Circuits.BASIC) }
             val advancedCircuit: AdvancementEntry = createChild(
                 consumer,
                 "machine/advanced_circuit",
                 basicCircuit,
-                RagiumItemsNew.Circuits.ADVANCED,
-            ) { hasAllItems(RagiumItemsNew.Circuits.ADVANCED) }
+                RagiumItems.Circuits.ADVANCED,
+            ) { hasAllItems(RagiumItems.Circuits.ADVANCED) }
             val processor: AdvancementEntry = createChild(
                 consumer,
                 "machine/processor",
                 advancedCircuit,
-                RagiumItems.RAGI_CRYSTAL_PROCESSOR,
+                RagiumItems.Ingredients.RAGI_CRYSTAL_PROCESSOR,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.RAGI_CRYSTAL_PROCESSOR) }
+            ) { hasAllItems(RagiumItems.Ingredients.RAGI_CRYSTAL_PROCESSOR) }
             // compressor
             val compressor: AdvancementEntry = createMachineChild(
                 consumer,
@@ -438,14 +438,14 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/meat_ingot",
                 compressor,
-                RagiumItemsNew.MEAT_INGOT,
-            ) { hasAllItems(RagiumItemsNew.MEAT_INGOT) }
+                RagiumItems.MEAT_INGOT,
+            ) { hasAllItems(RagiumItems.MEAT_INGOT) }
             val cannedCookedMeat: AdvancementEntry = createChild(
                 consumer,
                 "machine/canned_cooked_meat",
                 meatIngot,
-                RagiumItemsNew.CANNED_COOKED_MEAT,
-            ) { hasAllItems(RagiumItemsNew.CANNED_COOKED_MEAT) }
+                RagiumItems.CANNED_COOKED_MEAT,
+            ) { hasAllItems(RagiumItems.CANNED_COOKED_MEAT) }
             // cutting machine
             val cuttingMachine: AdvancementEntry = createMachineChild(
                 consumer,
@@ -472,22 +472,22 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/crimson_crystal",
                 sap,
-                RagiumItems.CRIMSON_CRYSTAL,
+                RagiumItems.Ingredients.CRIMSON_CRYSTAL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.CRIMSON_CRYSTAL) }
+            ) { hasAllItems(RagiumItems.Ingredients.CRIMSON_CRYSTAL) }
             val warpedCrystal: AdvancementEntry = createChild(
                 consumer,
                 "machine/warped_crystal",
                 sap,
-                RagiumItems.WARPED_CRYSTAL,
+                RagiumItems.Ingredients.WARPED_CRYSTAL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.WARPED_CRYSTAL) }
+            ) { hasAllItems(RagiumItems.Ingredients.WARPED_CRYSTAL) }
             val luminescenceDust: AdvancementEntry = createChild(
                 consumer,
                 "machine/luminescence_dust",
                 extractor,
-                RagiumItems.LUMINESCENCE_DUST,
-            ) { hasAllItems(RagiumItems.LUMINESCENCE_DUST) }
+                RagiumItems.Ingredients.LUMINESCENCE_DUST,
+            ) { hasAllItems(RagiumItems.Ingredients.LUMINESCENCE_DUST) }
             // mixer
             val mixer: AdvancementEntry = createMachineChild(
                 consumer,
@@ -506,8 +506,8 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/chocolate",
                 mixer,
-                RagiumItemsNew.CHOCOLATE,
-            ) { hasAllItems(RagiumItemsNew.CHOCOLATE) }
+                RagiumItems.CHOCOLATE,
+            ) { hasAllItems(RagiumItems.CHOCOLATE) }
             val sweetBerriesCake: AdvancementEntry = createChild(
                 consumer,
                 "machine/sweet_berries_cake",
@@ -600,7 +600,7 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/niter",
                 root,
-                RagiumItemsNew.Dusts.NITER,
+                RagiumItems.Dusts.NITER,
             )
             val nitricAcid: AdvancementEntry = createFluidChild(
                 consumer,
@@ -618,48 +618,48 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/dynamite",
                 mixtureAcid,
-                RagiumItemsNew.Dynamites.SIMPLE,
+                RagiumItems.Dynamites.SIMPLE,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItemsNew.Dynamites.SIMPLE) }
+            ) { hasAllItems(RagiumItems.Dynamites.SIMPLE) }
             // alkali
             val alkali: AdvancementEntry = createContentChild(
                 consumer,
                 "chemistry/alkali",
                 root,
-                RagiumItemsNew.Dusts.ALKALI,
+                RagiumItems.Dusts.ALKALI,
             )
             val soap: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/soap",
                 alkali,
-                RagiumItems.SOAP_INGOT,
-            ) { hasAllItems(RagiumItems.SOAP_INGOT) }
+                RagiumItems.Ingredients.SOAP_INGOT,
+            ) { hasAllItems(RagiumItems.Ingredients.SOAP_INGOT) }
             // aluminum
             val bauxite: AdvancementEntry = createContentChild(
                 consumer,
                 "chemistry/bauxite",
                 root,
-                RagiumItemsNew.Dusts.BAUXITE,
+                RagiumItems.Dusts.BAUXITE,
             )
             val aluminum: AdvancementEntry = createContentChild(
                 consumer,
                 "chemistry/aluminum",
                 bauxite,
-                RagiumItemsNew.Ingots.ALUMINUM,
+                RagiumItems.Ingots.ALUMINUM,
                 frame = AdvancementFrame.GOAL,
             )
             val cryolite: AdvancementEntry = createContentChild(
                 consumer,
                 "chemistry/cryolite",
                 aluminum,
-                RagiumItemsNew.Gems.CRYOLITE,
+                RagiumItems.Gems.CRYOLITE,
             )
             // sulfur
             val sulfur: AdvancementEntry = createContentChild(
                 consumer,
                 "chemistry/sulfur",
                 root,
-                RagiumItemsNew.Dusts.SULFUR,
+                RagiumItems.Dusts.SULFUR,
             )
             val sulfuricAcid: AdvancementEntry = createFluidChild(
                 consumer,
@@ -690,7 +690,7 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/deep_steel",
                 aquaRegia,
-                RagiumItemsNew.Ingots.DEEP_STEEL,
+                RagiumItems.Ingots.DEEP_STEEL,
                 frame = AdvancementFrame.GOAL,
             )
             // uranium
@@ -704,28 +704,28 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/yellow_cake",
                 uranium,
-                RagiumItems.YELLOW_CAKE,
-            ) { hasAllItems(RagiumItems.YELLOW_CAKE) }
+                RagiumItems.Ingredients.YELLOW_CAKE,
+            ) { hasAllItems(RagiumItems.Ingredients.YELLOW_CAKE) }
             val thisCakeIsDie: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/this_cake_is_die",
                 yellowCake,
-                RagiumItems.YELLOW_CAKE_PIECE,
+                RagiumItems.Ingredients.YELLOW_CAKE_PIECE,
                 title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE),
                 frame = AdvancementFrame.CHALLENGE,
                 hidden = true,
             ) {
                 criterion(
                     "consumed_item",
-                    ConsumeItemCriterion.Conditions.item(RagiumItems.YELLOW_CAKE_PIECE),
+                    ConsumeItemCriterion.Conditions.item(RagiumItems.Ingredients.YELLOW_CAKE_PIECE),
                 )
             }
             val uraniumFuel: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/uranium_fuel",
                 yellowCake,
-                RagiumItems.URANIUM_FUEL,
-            ) { hasAllItems(RagiumItems.URANIUM_FUEL) }
+                RagiumItems.Ingredients.URANIUM_FUEL,
+            ) { hasAllItems(RagiumItems.Ingredients.URANIUM_FUEL) }
             val mutatedSoil: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/mutated_soil",
@@ -737,9 +737,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/plutonium_fuel",
                 uraniumFuel,
-                RagiumItems.PLUTONIUM_FUEL,
+                RagiumItems.Ingredients.PLUTONIUM_FUEL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.PLUTONIUM_FUEL) }
+            ) { hasAllItems(RagiumItems.Ingredients.PLUTONIUM_FUEL) }
         }
     }
 
@@ -770,15 +770,15 @@ object RagiumAdvancementProviders {
                 consumer,
                 "petro_chemistry/polymer_resin",
                 distillation,
-                RagiumItems.POLYMER_RESIN,
-            ) { hasAllItems(RagiumItems.POLYMER_RESIN) }
+                RagiumItems.Ingredients.POLYMER_RESIN,
+            ) { hasAllItems(RagiumItems.Ingredients.POLYMER_RESIN) }
             val engineeringPlastic: AdvancementEntry = createChild(
                 consumer,
                 "petro_chemistry/engineering_plastic",
                 polymerResin,
-                RagiumItems.ENGINEERING_PLASTIC_PLATE,
+                RagiumItems.Ingredients.ENGINEERING_PLASTIC_PLATE,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.ENGINEERING_PLASTIC_PLATE) }
+            ) { hasAllItems(RagiumItems.Ingredients.ENGINEERING_PLASTIC_PLATE) }
             // refined gas
             val refinedGas: AdvancementEntry = createFluidChild(
                 consumer,

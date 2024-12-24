@@ -15,7 +15,7 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.DIAMOND,
             Items.DIAMOND,
         ),
-        RagiumItemsNew.Plates.DIAMOND,
+        RagiumItems.Plates.DIAMOND,
     )
 
     @JvmField
@@ -25,7 +25,7 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.EMERALD,
             Items.EMERALD,
         ),
-        RagiumItemsNew.Plates.EMERALD,
+        RagiumItems.Plates.EMERALD,
     )
 
     @JvmField
@@ -35,7 +35,7 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.LAPIS,
             Items.LAPIS_LAZULI,
         ),
-        RagiumItemsNew.Plates.LAPIS,
+        RagiumItems.Plates.LAPIS,
     )
 
     @JvmField
@@ -45,15 +45,15 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.QUARTZ,
             Items.QUARTZ,
         ),
-        RagiumItemsNew.Plates.QUARTZ,
+        RagiumItems.Plates.QUARTZ,
     )
 
     //    Ingots    //
 
     @JvmField
     val ALUMINUM: HTHardModeContent = HTHardModeContent.of(
-        RagiumItemsNew.Ingots.ALUMINUM,
-        RagiumItemsNew.Plates.ALUMINUM,
+        RagiumItems.Ingots.ALUMINUM,
+        RagiumItems.Plates.ALUMINUM,
     )
 
     @JvmField
@@ -63,13 +63,13 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.COPPER,
             Items.COPPER_INGOT,
         ),
-        RagiumItemsNew.Plates.COPPER,
+        RagiumItems.Plates.COPPER,
     )
 
     @JvmField
     val DEEP_STEEL: HTHardModeContent = HTHardModeContent.of(
-        RagiumItemsNew.Ingots.DEEP_STEEL,
-        RagiumItemsNew.Plates.DEEP_STEEL,
+        RagiumItems.Ingots.DEEP_STEEL,
+        RagiumItems.Plates.DEEP_STEEL,
     )
 
     @JvmField
@@ -79,7 +79,7 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.GOLD,
             Items.GOLD_INGOT,
         ),
-        RagiumItemsNew.Plates.GOLD,
+        RagiumItems.Plates.GOLD,
     )
 
     @JvmField
@@ -89,7 +89,7 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.IRON,
             Items.IRON_INGOT,
         ),
-        RagiumItemsNew.Plates.IRON,
+        RagiumItems.Plates.IRON,
     )
 
     @JvmField
@@ -99,30 +99,30 @@ object RagiumHardModeContents {
             RagiumMaterialKeys.NETHERITE,
             Items.NETHERITE_INGOT,
         ),
-        RagiumItemsNew.Plates.NETHERITE,
+        RagiumItems.Plates.NETHERITE,
     )
 
     @JvmField
     val RAGI_ALLOY: HTHardModeContent = HTHardModeContent.of(
-        RagiumItemsNew.Ingots.RAGI_ALLOY,
-        RagiumItemsNew.Plates.RAGI_ALLOY,
+        RagiumItems.Ingots.RAGI_ALLOY,
+        RagiumItems.Plates.RAGI_ALLOY,
     )
 
     @JvmField
     val RAGI_STEEL: HTHardModeContent = HTHardModeContent.of(
-        RagiumItemsNew.Ingots.RAGI_STEEL,
-        RagiumItemsNew.Plates.RAGI_STEEL,
+        RagiumItems.Ingots.RAGI_STEEL,
+        RagiumItems.Plates.RAGI_STEEL,
     )
 
     @JvmField
     val REFINED_RAGI_STEEL: HTHardModeContent = HTHardModeContent.of(
-        RagiumItemsNew.Ingots.REFINED_RAGI_STEEL,
-        RagiumItemsNew.Plates.REFINED_RAGI_STEEL,
+        RagiumItems.Ingots.REFINED_RAGI_STEEL,
+        RagiumItems.Plates.REFINED_RAGI_STEEL,
     )
 
     @JvmField
     val STEEL: HTHardModeContent = HTHardModeContent.of(
-        RagiumItemsNew.Ingots.STEEL,
-        RagiumItemsNew.Plates.STEEL,
+        RagiumItems.Ingots.STEEL,
+        RagiumItems.Plates.STEEL,
     )
 }

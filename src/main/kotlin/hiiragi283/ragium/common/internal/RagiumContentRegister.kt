@@ -76,19 +76,19 @@ internal object RagiumContentRegister {
         HTAdvancementRewardCallback.EVENT.register { player: ServerPlayerEntity, entry: AdvancementEntry ->
             if (entry.id == RagiumAPI.id("tier1/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier1!").formatted(Rarity.COMMON.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Ingots.RAGI_ALLOY)
+                RagiumNetworks.sendFloatingItem(player, RagiumItems.Ingots.RAGI_ALLOY)
             }
             if (entry.id == RagiumAPI.id("tier2/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier2!").formatted(Rarity.UNCOMMON.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Ingots.RAGI_STEEL)
+                RagiumNetworks.sendFloatingItem(player, RagiumItems.Ingots.RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier3/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier3!").formatted(Rarity.RARE.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Ingots.REFINED_RAGI_STEEL)
+                RagiumNetworks.sendFloatingItem(player, RagiumItems.Ingots.REFINED_RAGI_STEEL)
             }
             if (entry.id == RagiumAPI.id("tier4/root")) {
                 player.sendTitle(Text.literal("Welcome to Tier4!").formatted(Rarity.EPIC.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumItemsNew.Gems.RAGIUM)
+                RagiumNetworks.sendFloatingItem(player, RagiumItems.Gems.RAGIUM)
             }
         }
 
@@ -116,7 +116,7 @@ internal object RagiumContentRegister {
                         }
                 }
                 // consume energy when worm stella goggles
-                if (player.armorItems.any { it.isOf(RagiumItemsNew.StellaSuits.GOGGLE) }) {
+                if (player.armorItems.any { it.isOf(RagiumItems.StellaSuits.GOGGLE) }) {
                     if (!HTEnergyNetwork.Flag.CONSUME.processAmount(
                             player.world.energyNetwork.getOrNull(),
                             HTMachineTier.BASIC.processCost,
@@ -143,7 +143,7 @@ internal object RagiumContentRegister {
         // rotate block by ragi-wrench
         UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
-            if (stack.isOf(RagiumItemsNew.RAGI_WRENCH)) {
+            if (stack.isOf(RagiumItems.RAGI_WRENCH)) {
                 val pos: BlockPos = result.blockPos
                 val state: BlockState = world.getBlockState(pos)
                 val handler: HTBlockRotationHandler =
@@ -198,7 +198,7 @@ internal object RagiumContentRegister {
         registerEnergyStorages()
         registerTierProviders()
         // Accessory
-        HTAccessoryRegistry.register(RagiumItemsNew.StellaSuits.GOGGLE) {
+        HTAccessoryRegistry.register(RagiumItems.StellaSuits.GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
                 it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
             }
@@ -208,7 +208,7 @@ internal object RagiumContentRegister {
             slotType = HTAccessorySlotTypes.FACE
         }
         // Dispenser
-        RagiumItemsNew.Dynamites.entries.forEach(DispenserBlock::registerProjectileBehavior)
+        RagiumItems.Dynamites.entries.forEach(DispenserBlock::registerProjectileBehavior)
         // Fluid Attributes
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             FluidVariantAttributes.register(
@@ -276,14 +276,14 @@ internal object RagiumContentRegister {
 
     private fun registerFluidStorages() {
         FluidStorage
-            .combinedItemApiProvider(RagiumItemsNew.EMPTY_FLUID_CUBE.get())
+            .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE.get())
             .register(::HTEmptyFluidCubeStorage)
         RagiumBlocks.Drums.entries
             .map(RagiumBlocks.Drums::asItem)
             .map(FluidStorage::combinedItemApiProvider)
             .forEach { event: Event<FluidStorage.CombinedItemApiProvider> -> event.register(HTTieredFluidItemStorage::find) }
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
-            if (context.itemVariant.isOf(RagiumItemsNew.FILLED_FLUID_CUBE)) {
+            if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context
                     .itemVariant
                     .componentMap
@@ -291,7 +291,7 @@ internal object RagiumContentRegister {
                     ?.let {
                         FullItemFluidStorage(
                             context,
-                            RagiumItemsNew.EMPTY_FLUID_CUBE.get(),
+                            RagiumItems.EMPTY_FLUID_CUBE.get(),
                             FluidVariant.of(it),
                             FluidConstants.BUCKET,
                         )

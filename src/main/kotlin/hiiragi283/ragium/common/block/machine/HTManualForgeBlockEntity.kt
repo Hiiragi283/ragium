@@ -46,7 +46,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
         val stackMain: ItemStack = player.getStackInActiveHand()
-        if (!stackMain.isOf(RagiumItemsNew.FORGE_HAMMER)) {
+        if (!stackMain.isOf(RagiumItems.FORGE_HAMMER)) {
             inventory.modifyStack(0) { stack: ItemStack ->
                 dropStackAt(player, stack)
                 val copies: ItemStack = stackMain.copy()
@@ -64,7 +64,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
                         HTMachineTier.PRIMITIVE,
                     ) {
                         add(invStack)
-                        catalyst = ItemStack(RagiumItemsNew.PressMolds.PLATE)
+                        catalyst = ItemStack(RagiumItems.PressMolds.PLATE)
                     },
                     world,
                 ).result()

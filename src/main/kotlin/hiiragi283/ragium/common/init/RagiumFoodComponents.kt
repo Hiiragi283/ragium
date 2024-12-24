@@ -40,10 +40,15 @@ object RagiumFoodComponents {
     @JvmField
     val CANNED_COOKED_MEAT: FoodComponent = FoodComponent
         .Builder()
-        .nutrition(
-            8,
-        ).saturationModifier(0.8f)
+        .nutrition(8)
+        .saturationModifier(0.8f)
         .snack()
         .usingConvertsTo(Items.IRON_NUGGET)
+        .build()
+
+    @JvmField
+    val YELLOW_CAKE_PIECE: FoodComponent = FoodComponent
+        .Builder()
+        .statusEffect(StatusEffectInstance(StatusEffects.WITHER, -1, 1), 1f)
         .build()
 }

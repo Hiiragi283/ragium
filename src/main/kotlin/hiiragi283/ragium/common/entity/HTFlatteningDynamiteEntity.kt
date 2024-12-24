@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity
 
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
@@ -28,7 +28,7 @@ class HTFlatteningDynamiteEntity : ThrownItemEntity {
         world,
     )
 
-    override fun getDefaultItem(): Item = RagiumItemsNew.Dynamites.FLATTENING.asItem()
+    override fun getDefaultItem(): Item = RagiumItems.Dynamites.FLATTENING.asItem()
 
     override fun onBlockHit(blockHitResult: BlockHitResult) {
         super.onBlockHit(blockHitResult)

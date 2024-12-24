@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
@@ -45,7 +45,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
             0 -> stack.isIn(ItemTags.COALS)
-            1 -> stack.isOf(RagiumItemsNew.Dusts.ASH)
+            1 -> stack.isOf(RagiumItems.Dusts.ASH)
             else -> false
         }
     }
@@ -80,7 +80,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 if (fluidStorage.extractSelf(FluidConstants.INGOT, transaction) == FluidConstants.INGOT) {
                     transaction.commit()
                     fuelStack.decrement(1)
-                    inventory.mergeStack(1, HTItemResult(RagiumItemsNew.Dusts.ASH))
+                    inventory.mergeStack(1, HTItemResult(RagiumItems.Dusts.ASH))
                     HTUnitResult.success()
                 } else {
                     HTUnitResult.errorString { "Failed to consume fuels!" }

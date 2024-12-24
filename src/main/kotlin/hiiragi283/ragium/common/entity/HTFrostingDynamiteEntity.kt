@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.entity
 
 import hiiragi283.ragium.common.init.RagiumEntityTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
@@ -26,7 +26,7 @@ class HTFrostingDynamiteEntity : ThrownItemEntity {
         world,
     )
 
-    override fun getDefaultItem(): Item = RagiumItemsNew.Dynamites.FROSTING.asItem()
+    override fun getDefaultItem(): Item = RagiumItems.Dynamites.FROSTING.asItem()
 
     override fun onEntityHit(entityHitResult: EntityHitResult) {
         super.onEntityHit(entityHitResult)
@@ -40,7 +40,7 @@ class HTFrostingDynamiteEntity : ThrownItemEntity {
 
     private fun placeSnow(hitPos: BlockPos) {
         if (!world.isClient) {
-            BlockPos.stream(hitPos.add(2, 2, 2), hitPos.add(-2, -2, -2)).forEach { posIn: BlockPos ->
+            BlockPos.stream(hitPos.add(2, 0, 2), hitPos.add(-2, 0, -2)).forEach { posIn: BlockPos ->
                 val state: BlockState = Blocks.POWDER_SNOW.defaultState
                 val stateAt: BlockState = world.getBlockState(posIn)
                 if (stateAt.isReplaceable && state.canPlaceAt(world, posIn)) {

@@ -16,15 +16,15 @@ enum class RagiumToolMaterials(
 ) : ToolMaterial {
     STEEL(
         ToolMaterials.IRON,
-        { Ingredient.fromTag(RagiumItemsNew.Ingots.STEEL.prefixedTagKey) },
+        { Ingredient.fromTag(RagiumItems.Ingots.STEEL.prefixedTagKey) },
     ),
     DEEP_STEEL(
         ToolMaterials.DIAMOND,
-        { Ingredient.fromTag(RagiumItemsNew.Ingots.DEEP_STEEL.prefixedTagKey) },
+        { Ingredient.fromTag(RagiumItems.Ingots.DEEP_STEEL.prefixedTagKey) },
     ),
     STELLA(
         ToolMaterials.NETHERITE,
-        { Ingredient.ofItems(RagiumItems.STELLA_PLATE) },
+        { Ingredient.ofItems(RagiumItems.Ingredients.STELLA_PLATE) },
     ),
     ;
 

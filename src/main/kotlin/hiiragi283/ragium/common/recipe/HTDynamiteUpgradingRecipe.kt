@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.component.HTExplosionComponent
 import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItemsNew
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipeSerializers
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
@@ -15,7 +15,7 @@ import net.minecraft.registry.tag.ItemTags
 import net.minecraft.world.World
 
 object HTDynamiteUpgradingRecipe : SmithingRecipe {
-    override fun testTemplate(stack: ItemStack): Boolean = stack.isOf(RagiumItemsNew.Dynamites.SIMPLE)
+    override fun testTemplate(stack: ItemStack): Boolean = stack.isOf(RagiumItems.Dynamites.SIMPLE)
 
     override fun testBase(stack: ItemStack): Boolean = stack.isOf(Items.GUNPOWDER)
 
@@ -35,7 +35,7 @@ object HTDynamiteUpgradingRecipe : SmithingRecipe {
         return result
     }
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = ItemStack(RagiumItemsNew.Dynamites.SIMPLE)
+    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = ItemStack(RagiumItems.Dynamites.SIMPLE)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.DYNAMITE_UPGRADE
 }

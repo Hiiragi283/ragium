@@ -200,42 +200,42 @@ object RagiumTagProviders {
                 itemCache.put(tagKey, item1)
             }
 
-            RagiumItemsNew.SteelArmors.entries.forEach {
+            RagiumItems.SteelArmors.entries.forEach {
                 add(it.armorType.armorTag, it)
             }
-            RagiumItemsNew.DeepSteelArmors.entries.forEach {
+            RagiumItems.DeepSteelArmors.entries.forEach {
                 add(it.armorType.armorTag, it)
             }
-            RagiumItemsNew.StellaSuits.entries.forEach {
+            RagiumItems.StellaSuits.entries.forEach {
                 add(it.armorType.armorTag, it)
             }
-            RagiumItemsNew.SteelTools.entries.forEach {
+            RagiumItems.SteelTools.entries.forEach {
                 add(it.toolType.toolTag, it)
             }
-            RagiumItemsNew.DeepSteelTools.entries.forEach {
+            RagiumItems.DeepSteelTools.entries.forEach {
                 add(it.toolType.toolTag, it)
             }
 
-            add(ItemTags.AXES, RagiumItemsNew.GIGANT_HAMMER)
-            add(ItemTags.HOES, RagiumItemsNew.GIGANT_HAMMER)
-            add(ItemTags.PICKAXES, RagiumItemsNew.GIGANT_HAMMER)
-            add(ItemTags.SHOVELS, RagiumItemsNew.GIGANT_HAMMER)
-            add(ItemTags.SWORDS, RagiumItemsNew.STELLA_SABER)
-            add(ItemTags.SWORDS, RagiumItemsNew.RAGIUM_SABER)
+            add(ItemTags.AXES, RagiumItems.GIGANT_HAMMER)
+            add(ItemTags.HOES, RagiumItems.GIGANT_HAMMER)
+            add(ItemTags.PICKAXES, RagiumItems.GIGANT_HAMMER)
+            add(ItemTags.SHOVELS, RagiumItems.GIGANT_HAMMER)
+            add(ItemTags.SWORDS, RagiumItems.STELLA_SABER)
+            add(ItemTags.SWORDS, RagiumItems.RAGIUM_SABER)
 
-            add(ItemTags.PLANKS, RagiumItemsNew.Plates.WOOD)
-            add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
+            add(ItemTags.PLANKS, RagiumItems.Plates.WOOD)
+            add(ItemTags.COALS, RagiumItems.Ingredients.RESIDUAL_COKE)
             // ragium
-            add(RagiumItemTags.ALKALI, RagiumItemsNew.Dusts.ALKALI)
-            add(RagiumItemTags.ALKALI, RagiumItemsNew.Dusts.ASH)
+            add(RagiumItemTags.ALKALI, RagiumItems.Dusts.ALKALI)
+            add(RagiumItemTags.ALKALI, RagiumItems.Dusts.ASH)
 
-            add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItemsNew.FLUID_FILTER)
+            add(RagiumItemTags.FLUID_EXPORTER_FILTERS, RagiumItems.FLUID_FILTER)
 
-            add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItemsNew.ITEM_FILTER)
+            add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItems.ITEM_FILTER)
 
-            add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
-            add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
-            add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
+            add(RagiumItemTags.SILICON, RagiumItems.Ingredients.CRUDE_SILICON)
+            add(RagiumItemTags.SILICON_PLATES, RagiumItems.Ingredients.SILICON)
+            add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.Ingredients.REFINED_SILICON)
 
             add(RagiumItemTags.ADVANCED_UPGRADES, RagiumBlocks.Hulls.ADVANCED)
             add(RagiumItemTags.BASIC_UPGRADES, RagiumBlocks.Hulls.BASIC)

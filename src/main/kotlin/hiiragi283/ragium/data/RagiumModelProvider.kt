@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumItemsNew
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
@@ -463,55 +462,55 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         }
         // contents
         buildList {
-            addAll(RagiumItemsNew.Dusts.entries)
-            addAll(RagiumItemsNew.Gears.entries)
-            addAll(RagiumItemsNew.Gems.entries)
-            addAll(RagiumItemsNew.Ingots.entries)
-            addAll(RagiumItemsNew.Plates.entries)
-            addAll(RagiumItemsNew.RawMaterials.entries)
-            addAll(RagiumItemsNew.CircuitBoards.entries)
-            addAll(RagiumItemsNew.Circuits.entries)
-            addAll(RagiumItemsNew.PressMolds.entries)
+            addAll(RagiumItems.Dusts.entries)
+            addAll(RagiumItems.Gears.entries)
+            addAll(RagiumItems.Gems.entries)
+            addAll(RagiumItems.Ingots.entries)
+            addAll(RagiumItems.Plates.entries)
+            addAll(RagiumItems.RawMaterials.entries)
+            addAll(RagiumItems.CircuitBoards.entries)
+            addAll(RagiumItems.Circuits.entries)
+            addAll(RagiumItems.PressMolds.entries)
 
-            addAll(RagiumItemsNew.SteelArmors.entries)
-            addAll(RagiumItemsNew.DeepSteelArmors.entries)
-            addAll(RagiumItemsNew.StellaSuits.entries)
+            addAll(RagiumItems.SteelArmors.entries)
+            addAll(RagiumItems.DeepSteelArmors.entries)
+            addAll(RagiumItems.StellaSuits.entries)
 
-            addAll(RagiumItemsNew.SteelTools.entries)
-            addAll(RagiumItemsNew.DeepSteelTools.entries)
-            addAll(RagiumItemsNew.Dynamites.entries)
+            addAll(RagiumItems.SteelTools.entries)
+            addAll(RagiumItems.DeepSteelTools.entries)
+            addAll(RagiumItems.Dynamites.entries)
 
-            add(RagiumItemsNew.BACKPACK)
-            add(RagiumItemsNew.FLUID_FILTER)
-            add(RagiumItemsNew.FORGE_HAMMER)
-            add(RagiumItemsNew.GUIDE_BOOK)
-            add(RagiumItemsNew.ITEM_FILTER)
-            add(RagiumItemsNew.RAGI_WRENCH)
-            add(RagiumItemsNew.RAGIUM_SABER)
-            add(RagiumItemsNew.STELLA_SABER)
-            add(RagiumItemsNew.TRADER_CATALOG)
+            add(RagiumItems.BACKPACK)
+            add(RagiumItems.FLUID_FILTER)
+            add(RagiumItems.FORGE_HAMMER)
+            add(RagiumItems.GUIDE_BOOK)
+            add(RagiumItems.ITEM_FILTER)
+            add(RagiumItems.RAGI_WRENCH)
+            add(RagiumItems.RAGIUM_SABER)
+            add(RagiumItems.STELLA_SABER)
+            add(RagiumItems.TRADER_CATALOG)
 
-            addAll(RagiumItemsNew.FOODS)
-            addAll(RagiumItems.INGREDIENTS)
-            addAll(RagiumItemsNew.MISC)
+            addAll(RagiumItems.FOODS)
+            addAll(RagiumItems.Ingredients.entries)
+            addAll(RagiumItems.MISC)
 
             add(RagiumBlocks.ROPE)
 
-            remove(RagiumItemsNew.CHOCOLATE_APPLE)
-            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.CHOCOLATE_APPLE)
+            remove(RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND)
         }.map(ItemConvertible::asItem).forEach(::register)
 
         registerLayered(
-            RagiumItems.RAGI_ALLOY_COMPOUND.asItem(),
+            RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND.asItem(),
             TextureMap.getId(Items.COPPER_INGOT),
-            TextureMap.getId(RagiumItems.RAGI_ALLOY_COMPOUND.asItem()),
+            TextureMap.getId(RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND.asItem()),
         )
         registerLayered(
-            RagiumItemsNew.CHOCOLATE_APPLE.get(),
+            RagiumItems.CHOCOLATE_APPLE.get(),
             TextureMap.getId(Items.APPLE),
-            TextureMap.getId(RagiumItemsNew.CHOCOLATE_APPLE.get()),
+            TextureMap.getId(RagiumItems.CHOCOLATE_APPLE.get()),
         )
-        register(RagiumItemsNew.FILLED_FLUID_CUBE.get(), RagiumModels.FILLED_FLUID_CUBE)
+        register(RagiumItems.FILLED_FLUID_CUBE.get(), RagiumModels.FILLED_FLUID_CUBE)
 
         RagiumBlocks.WhiteLines.entries.forEach { content: HTBlockContent ->
             val block: Block = content.get()

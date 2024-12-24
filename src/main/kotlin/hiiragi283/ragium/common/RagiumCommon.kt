@@ -24,12 +24,11 @@ object RagiumCommon : ModInitializer {
             RagiumBlockEntityTypes
             RagiumBlocks
             RagiumEntityTypes
-            RagiumItems
             RagiumRecipeSerializers
             RagiumRecipeTypes
 
             RagiumBlocks.register()
-            RagiumItemsNew.register()
+            RagiumItems.register()
             RagiumFluids.register()
             InternalRagiumAPI.registerMachines()
 
