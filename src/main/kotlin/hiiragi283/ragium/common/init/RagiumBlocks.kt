@@ -18,7 +18,6 @@ import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.block.transfer.*
-import hiiragi283.ragium.common.item.HTRopeBlockItem
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.item.BlockItem
@@ -342,8 +341,7 @@ object RagiumBlocks {
     @JvmField
     val MISC: List<HTBlockContent> = listOf(
         BACKPACK_INTERFACE,
-        ITEM_DISPLAY,
-        ROPE,
+        ITEM_DISPLAY, 
         SHAFT,
     )
 
@@ -353,7 +351,7 @@ object RagiumBlocks {
         content: HTBlockContent,
         parent: AbstractBlock.Settings = blockSettings(),
         block: (AbstractBlock.Settings) -> Block,
-    ): Block = Registry.register(Registries.BLOCK, content.id, block(parent))
+    ): Block = Registry.register(Registries.BLOCK, content.key, block(parent))
 
     private fun registerSimpleBlock(content: HTBlockContent, parent: AbstractBlock.Settings = blockSettings()): Block =
         registerBlock(content, parent, ::Block)
@@ -612,11 +610,6 @@ object RagiumBlocks {
             ::HTItemDisplayBlock,
         )
         registerBlock(
-            ROPE,
-            blockSettings().mapColor(MapColor.BROWN).strength(0.8F).sounds(BlockSoundGroup.WOOL),
-            ::HTRopeBlock,
-        )
-        registerBlock(
             SHAFT,
             blockSettings().requiresTool().strength(5f).sounds(BlockSoundGroup.METAL),
             ::HTThinPillarBlock,
@@ -631,16 +624,6 @@ object RagiumBlocks {
             itemSettings().maybeRework(),
         )
         registerBlockItem(ITEM_DISPLAY)
-        registerBlockItem(
-            ROPE,
-        ) { block: Block, settings: Item.Settings ->
-            HTRopeBlockItem(
-                block,
-                settings
-                    .descriptions(Text.translatable(RagiumTranslationKeys.ROPE))
-                    .maybeRework(),
-            )
-        }
         registerBlockItem(SHAFT)
     }
 }

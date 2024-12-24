@@ -1,6 +1,8 @@
 package hiiragi283.ragium.data
 
 import com.google.gson.JsonElement
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTItemContent
 import net.minecraft.block.Block
 import net.minecraft.data.client.*
 import net.minecraft.state.property.Property
@@ -11,43 +13,25 @@ import java.util.function.Supplier
 
 //   VariantsBlockStateSupplier    //
 
-fun buildVariantState(block: Block, action: MutableList<BlockStateVariant>.() -> Unit): VariantsBlockStateSupplier {
-    val variants: List<BlockStateVariant> = buildList(action)
-    return when (variants.size) {
-        0 -> VariantsBlockStateSupplier.create(block)
-        1 -> VariantsBlockStateSupplier.create(block, variants[0])
-        else -> VariantsBlockStateSupplier.create(block, *variants.toTypedArray())
-    }
-}
-
 //   MultipartBlockStateSupplier    //
 
 fun buildMultipartState(block: Block, action: MultipartBlockStateSupplier.() -> Unit): BlockStateSupplier =
     MultipartBlockStateSupplier.create(block).apply(action)
 
+fun buildMultipartState(content: HTBlockContent, action: MultipartBlockStateSupplier.() -> Unit): BlockStateSupplier =
+    MultipartBlockStateSupplier.create(content.get()).apply(action)
+
 fun <T : Comparable<T>> buildWhen(property: Property<T>, value: T): When.PropertyCondition = When.create().set(property, value)
 
-fun buildWhen(action: When.PropertyCondition.() -> Unit): When = When.create().apply(action)
+// fun buildWhen(action: When.PropertyCondition.() -> Unit): When = When.create().apply(action)
 
 //    BlockStateVariant    //
 
-fun stateVariantOf(action: BlockStateVariant.() -> Unit): BlockStateVariant = BlockStateVariant.create().apply(action)
+fun stateVariantOf(content: HTBlockContent): BlockStateVariant = stateVariantOf(content.get())
 
-fun stateVariantOf(block: Block): BlockStateVariant = stateVariantOf {
-    model(TextureMap.getId(block))
-}
+fun stateVariantOf(block: Block): BlockStateVariant = stateVariantOf(TextureMap.getId(block))
 
-fun stateVariantOf(modelId: Identifier): BlockStateVariant = stateVariantOf {
-    model(modelId)
-}
-
-fun stateVariantOf(namespace: String, path: String): BlockStateVariant = stateVariantOf {
-    model(namespace, path)
-}
-
-fun stateVariantOf(path: String): BlockStateVariant = stateVariantOf {
-    model(path)
-}
+fun stateVariantOf(modelId: Identifier): BlockStateVariant = BlockStateVariant.create().model(modelId)
 
 fun BlockStateVariant.rotX(rot: VariantSettings.Rotation): BlockStateVariant = put(VariantSettings.X, rot)
 
@@ -69,7 +53,14 @@ fun BlockStateVariant.rot(direction: Direction): BlockStateVariant = when (direc
 }
 
 //    Model    //
+
 typealias ModelCollector = BiConsumer<Identifier, Supplier<JsonElement>>
+
+fun Model.upload(content: HTBlockContent, textureMap: TextureMap, modelCollector: ModelCollector): Identifier =
+    upload(content.get(), textureMap, modelCollector)
+
+fun Model.upload(content: HTItemContent, textureMap: TextureMap, modelCollector: ModelCollector): Identifier =
+    upload(content.id.withPrefixedPath("item/"), textureMap, modelCollector)
 
 fun Model.uploadAsItem(block: Block, textureMap: TextureMap, modelCollector: ModelCollector): Identifier =
     upload(TextureMap.getId(block.asItem()), textureMap, modelCollector)

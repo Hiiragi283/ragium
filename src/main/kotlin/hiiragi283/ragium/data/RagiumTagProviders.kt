@@ -67,7 +67,8 @@ object RagiumTagProviders {
             add(BlockTags.STAIRS, RagiumBlocks.Stairs.SLATE)
             add(BlockTags.STAIRS, RagiumBlocks.Stairs.POLISHED_SLATE)
 
-            add(BlockTags.AXE_MINEABLE, RagiumBlocks.ROPE)
+            // add(BlockTags.AXE_MINEABLE, RagiumBlocks.ROPE)
+            // add(BlockTags.CLIMBABLE, RagiumBlocks.ROPE)
 
             RagiumBlocks.FOODS.forEach { add(BlockTags.HOE_MINEABLE, it) }
 
@@ -96,8 +97,6 @@ object RagiumTagProviders {
                 addAll(RagiumBlocks.MECHANICS)
                 addAll(RagiumBlocks.MISC)
             }.forEach { add(BlockTags.PICKAXE_MINEABLE, it) }
-
-            add(BlockTags.CLIMBABLE, RagiumBlocks.ROPE)
 
             RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
                 add(BlockTags.DRAGON_IMMUNE, ore)

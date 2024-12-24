@@ -429,7 +429,7 @@ object RagiumItems {
     //    Register    //
 
     private fun registerItem(content: HTItemContent, parent: Item.Settings = itemSettings(), item: (Item.Settings) -> Item = ::Item): Item =
-        Registry.register(Registries.ITEM, content.id, item(parent))
+        Registry.register(Registries.ITEM, content.key, item(parent))
 
     private fun registerArmor(
         content: HTItemContent,

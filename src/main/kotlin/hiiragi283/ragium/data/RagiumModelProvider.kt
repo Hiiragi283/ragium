@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -15,8 +16,6 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
 import net.minecraft.block.Block
 import net.minecraft.block.ConnectingBlock
 import net.minecraft.data.client.*
-import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.state.property.Properties
 import net.minecraft.util.Identifier
@@ -25,178 +24,181 @@ import net.minecraft.util.math.Direction
 class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output) {
     //   BlockState    //
 
+    private lateinit var blockGenerator: BlockStateModelGenerator
+    private val modelCollector: ModelCollector
+        get() = blockGenerator.modelCollector
+
+    fun register(content: HTBlockContent, action: (Block) -> Unit) {
+        action(content.get())
+    }
+
+    // supplier-based
+    fun registerSupplier(content: HTBlockContent, supplier: BlockStateSupplier) {
+        blockGenerator.blockStateCollector.accept(supplier)
+    }
+
+    fun registerDirectional(content: HTBlockContent, model: BlockStateVariant = stateVariantOf(content)) {
+        registerSupplier(
+            content,
+            VariantsBlockStateSupplier
+                .create(content.get(), model)
+                .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
+        )
+    }
+
+    fun registerHorizontal(content: HTBlockContent, modelId: Identifier = content.id.withPrefixedPath("block/")) {
+        registerSupplier(
+            content,
+            VariantsBlockStateSupplier
+                .create(content.get(), stateVariantOf(modelId))
+                .coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
+        )
+    }
+
+    // model-based
+    fun registerFactory(content: HTBlockContent, factory: TexturedModel.Factory) {
+        blockGenerator.registerSingleton(content.get(), factory)
+    }
+
+    fun registerFactory(content: HTBlockContent, model: Model, getter: (Block) -> TextureMap) {
+        blockGenerator.registerSingleton(content.get(), TexturedModel.makeFactory(getter, model))
+    }
+
+    fun registerSimple(content: HTBlockContent, id: Identifier = content.id.withPrefixedPath("block/")) {
+        blockGenerator.registerSingleton(content.get()) { TexturedModel.getCubeAll(id) }
+    }
+
+    fun registerLayered(content: HTBlockContent, layer0: Identifier, layer1: Identifier) {
+        registerFactory(content, RagiumModels.LAYERED) {
+            HTTextureMapBuilder.create {
+                put(TextureKey.LAYER0, layer0)
+                put(TextureKey.LAYER1, layer1)
+            }
+        }
+    }
+
+    fun registerSlab(slabBlock: HTBlockContent, fullBlock: HTBlockContent) {
+        val textureMap: TextureMap = HTTextureMapBuilder.create {
+            put(TextureKey.SIDE, fullBlock)
+            put(TextureKey.TOP, fullBlock)
+            put(TextureKey.BOTTOM, fullBlock)
+        }
+        val slabBottom: Identifier = Models.SLAB.upload(slabBlock, textureMap, modelCollector)
+        val slabTop: Identifier = Models.SLAB_TOP.upload(slabBlock, textureMap, modelCollector)
+        registerSupplier(
+            slabBlock,
+            BlockStateModelGenerator.createSlabBlockState(
+                slabBlock.get(),
+                slabBottom,
+                slabTop,
+                fullBlock.id.withPrefixedPath("block/"),
+            ),
+        )
+        blockGenerator.registerParentedItemModel(slabBlock.get(), slabBottom)
+    }
+
+    fun registerSlab(slabs: RagiumBlocks.Slabs) {
+        registerSlab(slabs, slabs.baseStone)
+    }
+
+    fun registerStair(stairBlock: HTBlockContent, fullBlock: HTBlockContent) {
+        val textureMap: TextureMap = HTTextureMapBuilder.create {
+            put(TextureKey.SIDE, fullBlock)
+            put(TextureKey.TOP, fullBlock)
+            put(TextureKey.BOTTOM, fullBlock)
+        }
+        val innerId: Identifier =
+            Models.INNER_STAIRS.upload(stairBlock, textureMap, modelCollector)
+        val stairId: Identifier = Models.STAIRS.upload(stairBlock, textureMap, modelCollector)
+        val outerId: Identifier =
+            Models.OUTER_STAIRS.upload(stairBlock, textureMap, modelCollector)
+        registerSupplier(
+            stairBlock,
+            BlockStateModelGenerator.createStairsBlockState(
+                stairBlock.get(),
+                innerId,
+                stairId,
+                outerId,
+            ),
+        )
+        blockGenerator.registerParentedItemModel(stairBlock.get(), stairId)
+    }
+
+    fun registerStair(stair: RagiumBlocks.Stairs) {
+        registerStair(stair, stair.baseStone)
+    }
+
+    fun registerStaticModel(content: HTBlockContent, modelId: Identifier = content.id.withPrefixedPath("block/")) {
+        registerSupplier(content, VariantsBlockStateSupplier.create(content.get(), stateVariantOf(modelId)))
+    }
+
     override fun generateBlockStateModels(generator: BlockStateModelGenerator) {
-        fun register(block: Block, action: (Block) -> Unit) {
-            action(block)
-        }
-
-        fun register(content: HTBlockContent, action: (Block) -> Unit) {
-            action(content.get())
-        }
-
-        // supplier-based
-        fun registerSupplier(block: Block, supplier: BlockStateSupplier) {
-            generator.blockStateCollector.accept(supplier)
-        }
-
-        fun registerSupplier(content: HTBlockContent, supplier: BlockStateSupplier) {
-            generator.blockStateCollector.accept(supplier)
-        }
-
-        fun registerDirectional(block: Block, model: BlockStateVariant = stateVariantOf(block)) {
-            registerSupplier(
-                block,
-                VariantsBlockStateSupplier
-                    .create(block, model)
-                    .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
-            )
-        }
-
-        fun registerHorizontal(block: Block, modelId: Identifier = TextureMap.getId(block)) {
-            registerSupplier(
-                block,
-                VariantsBlockStateSupplier
-                    .create(block, stateVariantOf(modelId))
-                    .coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
-        }
-
-        // model-based
-        fun registerFactory(block: Block, factory: TexturedModel.Factory) {
-            generator.registerSingleton(block, factory)
-        }
-
-        fun registerFactory(block: Block, model: Model, getter: (Block) -> TextureMap) {
-            registerFactory(block, factory = TexturedModel.makeFactory(getter, model))
-        }
-
-        fun registerFactory(content: HTBlockContent, model: Model, getter: (Block) -> TextureMap) {
-            registerFactory(content.get(), factory = TexturedModel.makeFactory(getter, model))
-        }
-
-        fun registerSimple(block: Block, id: Identifier = TextureMap.getId(block)) {
-            generator.registerSingleton(block) { TexturedModel.getCubeAll(id) }
-        }
-
-        fun registerSimple(content: HTBlockContent, id: Identifier = content.id.withPrefixedPath("block/")) {
-            generator.registerSingleton(content.get()) { TexturedModel.getCubeAll(id) }
-        }
-
-        fun registerLayered(block: Block, layer0: Identifier, layer1: Identifier) {
-            registerFactory(block, RagiumModels.LAYERED) {
-                HTTextureMapBuilder.create {
-                    put(TextureKey.LAYER0, layer0)
-                    put(TextureKey.LAYER1, layer1)
-                }
-            }
-        }
-
-        fun registerSlab(slabBlock: Block, fullBlock: Block) {
-            val textureMap: TextureMap = HTTextureMapBuilder.create {
-                put(TextureKey.SIDE, fullBlock)
-                put(TextureKey.TOP, fullBlock)
-                put(TextureKey.BOTTOM, fullBlock)
-            }
-            val slabBottom: Identifier = Models.SLAB.upload(slabBlock, textureMap, generator.modelCollector)
-            val slabTop: Identifier = Models.SLAB_TOP.upload(slabBlock, textureMap, generator.modelCollector)
-            registerSupplier(
-                slabBlock,
-                BlockStateModelGenerator.createSlabBlockState(
-                    slabBlock,
-                    slabBottom,
-                    slabTop,
-                    TextureMap.getId(fullBlock),
+        blockGenerator = generator
+        // creative
+        registerLayered(
+            RagiumBlocks.Creatives.CRATE,
+            RagiumAPI.id("block/creative_coil_side"),
+            RagiumAPI.id("block/crate_overlay"),
+        )
+        registerFactory(RagiumBlocks.Creatives.DRUM, TexturedModel.CUBE_COLUMN)
+        registerDirectional(
+            RagiumBlocks.Creatives.EXPORTER,
+            stateVariantOf(
+                RagiumModels.EXPORTER.upload(
+                    RagiumBlocks.Creatives.EXPORTER,
+                    HTTextureMapBuilder.create {
+                        put(TextureKey.TOP, RagiumAPI.id("block/creative_coil_top"))
+                        put(TextureKey.SIDE, RagiumAPI.id("block/creative_coil_side"))
+                    },
+                    modelCollector,
                 ),
-            )
-            generator.registerParentedItemModel(slabBlock, slabBottom)
-        }
+            ),
+        )
+        registerSimple(RagiumBlocks.Creatives.SOURCE)
 
-        fun registerSlab(slabs: RagiumBlocks.Slabs) {
-            registerSlab(slabs.get(), slabs.baseStone.get())
-        }
-
-        fun registerStair(stairBlock: Block, fullBlock: Block) {
-            val textureMap: TextureMap = HTTextureMapBuilder.create {
-                put(TextureKey.SIDE, fullBlock)
-                put(TextureKey.TOP, fullBlock)
-                put(TextureKey.BOTTOM, fullBlock)
-            }
-            val innerId: Identifier = Models.INNER_STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
-            val stairId: Identifier = Models.STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
-            val outerId: Identifier = Models.OUTER_STAIRS.upload(stairBlock, textureMap, generator.modelCollector)
+        // stone
+        RagiumBlocks.Stones.entries.forEach(::registerSimple)
+        // slab
+        RagiumBlocks.Slabs.entries.forEach(::registerSlab)
+        // stair
+        RagiumBlocks.Stairs.entries.forEach(::registerStair)
+        // glass
+        RagiumBlocks.Glasses.entries.forEach(::registerSimple)
+        // white line
+        listOf(RagiumBlocks.WhiteLines.SIMPLE, RagiumBlocks.WhiteLines.T_SHAPED).forEach { content: HTBlockContent ->
+            val block: Block = content.get()
+            blockGenerator.excludeFromSimpleItemModelGeneration(block)
             registerSupplier(
-                stairBlock,
-                BlockStateModelGenerator.createStairsBlockState(
-                    stairBlock,
-                    innerId,
-                    stairId,
-                    outerId,
-                ),
+                content,
+                VariantsBlockStateSupplier
+                    .create(
+                        block,
+                        stateVariantOf(
+                            RagiumModels.SURFACE.upload(
+                                content,
+                                HTTextureMapBuilder.of(TextureKey.TOP, block),
+                                modelCollector,
+                            ),
+                        ),
+                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
             )
-            generator.registerParentedItemModel(stairBlock, stairId)
         }
-
-        fun registerStair(stair: RagiumBlocks.Stairs) {
-            registerStair(stair.get(), stair.baseStone.get())
+        blockGenerator.excludeFromSimpleItemModelGeneration(RagiumBlocks.WhiteLines.CROSS.get())
+        registerFactory(RagiumBlocks.WhiteLines.CROSS, RagiumModels.SURFACE) {
+            HTTextureMapBuilder.of(TextureKey.TOP, RagiumBlocks.WhiteLines.CROSS)
         }
-
-        fun registerStaticModel(content: HTBlockContent, modelId: Identifier = content.id.withPrefixedPath("block/")) {
-            registerSupplier(content, VariantsBlockStateSupplier.create(content.get(), stateVariantOf(modelId)))
-        }
-
-        registerSimple(RagiumBlocks.AUTO_ILLUMINATOR)
-        registerSimple(RagiumBlocks.ITEM_DISPLAY)
-        registerSimple(RagiumBlocks.MUTATED_SOIL)
-        registerSimple(RagiumBlocks.NETWORK_INTERFACE)
-        registerSimple(RagiumBlocks.OPEN_CRATE)
-        registerSimple(RagiumBlocks.POROUS_NETHERRACK)
-        registerSimple(RagiumBlocks.SPONGE_CAKE)
-        registerSimple(RagiumBlocks.TELEPORT_ANCHOR)
-        registerSimple(RagiumBlocks.TRASH_BOX)
-
-        buildList {
-            addAll(RagiumBlocks.StorageBlocks.entries)
-            addAll(RagiumBlocks.Grates.entries)
-            addAll(RagiumBlocks.Casings.entries)
-        }.map(HTBlockContent::get).forEach(::registerSimple)
-        // layered
+        // ore
         RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
             registerLayered(
-                ore.get(),
+                ore,
                 TextureMap.getId(ore.baseStone),
                 RagiumAPI.id("block/${ore.material.name}"),
             )
         }
-        RagiumBlocks.Crates.entries.forEach { crate: RagiumBlocks.Crates ->
-            registerLayered(
-                crate.get(),
-                crate.tier
-                    .getCoil()
-                    .id
-                    .withPath { "block/${it}_side" },
-                RagiumAPI.id("block/crate_overlay"),
-            )
-        }
-        // static
-        registerStaticModel(RagiumBlocks.MANUAL_FORGE)
-        registerStaticModel(RagiumBlocks.MANUAL_MIXER)
-        generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.ROPE.get())
-        registerStaticModel(RagiumBlocks.ROPE)
-        registerStaticModel(RagiumBlocks.SWEET_BERRIES_CAKE)
-        // factory
-
-        registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED, TextureMap::all)
-        /*registerFactory(RagiumBlocks.ENCHANTMENT_BOOKSHELF, Models.CUBE_COLUMN) {
-            HTTextureMapBuilder.create {
-                put(TextureKey.END, Identifier.of("block/chiseled_bookshelf_top"))
-                put(TextureKey.SIDE, RagiumBlocks.ENCHANTMENT_BOOKSHELF)
-            }
-        }*/
-
-        RagiumBlocks.Drums.entries.forEach { registerFactory(it.get(), TexturedModel.CUBE_COLUMN) }
+        // hull
         RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
             val tier: HTMachineTier = hull.tier
-            registerFactory(hull.get(), RagiumModels.HULL) { block: Block ->
+            registerFactory(hull, RagiumModels.HULL) { block: Block ->
                 HTTextureMapBuilder.create {
                     put(TextureKey.INSIDE, tier.getCasing())
                     put(TextureKey.TOP, tier.getStorageBlock().id.withPrefixedPath("block/"))
@@ -204,49 +206,37 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 }
             }
         }
-        RagiumBlocks.CrossPipes.entries.forEach { cross: RagiumBlocks.CrossPipes ->
-            registerFactory(cross.get(), RagiumModels.CROSS_PIPE, TextureMap::all)
+        // coil
+        RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->
+            register(coil) {
+                blockGenerator.registerAxisRotated(
+                    it,
+                    TexturedModel.CUBE_COLUMN.upload(
+                        it,
+                        modelCollector,
+                    ),
+                )
+            }
         }
-        // supplier
-
-        registerSupplier(
-            RagiumBlocks.MANUAL_GRINDER,
-            buildMultipartState(RagiumBlocks.MANUAL_GRINDER.get()) {
-                RagiumBlockProperties.LEVEL_7.values.forEach { level: Int ->
-                    with(
-                        buildWhen(RagiumBlockProperties.LEVEL_7, level),
-                        stateVariantOf {
-                            model(
-                                RagiumAPI.id(
-                                    when (level % 2 == 0) {
-                                        true -> "block/manual_grinder"
-                                        false -> "block/manual_grinder_diagonal"
-                                    },
-                                ),
-                            )
-                            rotY(
-                                when (level / 2) {
-                                    0 -> VariantSettings.Rotation.R0
-                                    1 -> VariantSettings.Rotation.R90
-                                    2 -> VariantSettings.Rotation.R180
-                                    3 -> VariantSettings.Rotation.R270
-                                    else -> throw IllegalStateException()
-                                },
-                            )
-                        },
-                    )
-                }
-            },
-        )
-        registerHorizontal(
-            RagiumBlocks.EXTENDED_PROCESSOR.get(),
-            TexturedModel.CUBE_ALL.upload(RagiumBlocks.EXTENDED_PROCESSOR.get(), generator.modelCollector),
-        )
+        // crate
+        RagiumBlocks.Crates.entries.forEach { crate: RagiumBlocks.Crates ->
+            registerLayered(
+                crate,
+                crate.tier
+                    .getCoil()
+                    .id
+                    .withPath { "block/${it}_side" },
+                RagiumAPI.id("block/crate_overlay"),
+            )
+        }
+        // drum
+        RagiumBlocks.Drums.entries.forEach { registerFactory(it, TexturedModel.CUBE_COLUMN) }
+        // exporter
         RagiumBlocks.Exporters.entries.forEach { exporter: RagiumBlocks.Exporters ->
             val block: Block = exporter.get()
             val coil: Block = exporter.tier.getCoil().get()
             registerDirectional(
-                block,
+                exporter,
                 stateVariantOf(
                     RagiumModels.EXPORTER.upload(
                         block,
@@ -254,19 +244,19 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                             put(TextureKey.TOP, coil, "_top")
                             put(TextureKey.SIDE, coil, "_side")
                         },
-                        generator.modelCollector,
+                        modelCollector,
                     ),
                 ),
             )
         }
-        // pipes
+        // pipe
         RagiumBlocks.Pipes.entries.forEach { pipe: RagiumBlocks.Pipes ->
             val block: Block = pipe.get()
             // blockstate
             registerSupplier(
-                block,
-                buildMultipartState(block) {
-                    with(stateVariantOf(block))
+                pipe,
+                buildMultipartState(pipe) {
+                    with(stateVariantOf(pipe))
                     apply {
                         Direction.entries.forEach { direction: Direction ->
                             // pipe connection
@@ -285,23 +275,27 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
             // model
             RagiumModels.PIPE.upload(
-                block,
+                pipe,
                 TextureMap.all(block),
-                generator.modelCollector,
+                modelCollector,
             )
             RagiumModels.PIPE_SIDE.upload(
                 TextureMap.getSubId(block, "_side"),
                 TextureMap.all(block),
-                generator.modelCollector,
+                modelCollector,
             )
         }
+        // cross pipe
+        RagiumBlocks.CrossPipes.entries.forEach { cross: RagiumBlocks.CrossPipes ->
+            registerFactory(cross, RagiumModels.CROSS_PIPE, TextureMap::all)
+        }
+        // pipe station
         RagiumBlocks.PipeStations.entries.forEach { pipe: RagiumBlocks.PipeStations ->
-            val block: Block = pipe.get()
             // blockstate
             registerSupplier(
-                block,
-                buildMultipartState(block) {
-                    with(stateVariantOf(block))
+                pipe,
+                buildMultipartState(pipe) {
+                    with(stateVariantOf(pipe))
                     Direction.entries.forEach { direction: Direction ->
                         // pipe facing
                         this.with(
@@ -313,28 +307,89 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             )
             // model
             RagiumModels.CROSS_PIPE.upload(
-                block,
-                TextureMap.all(block),
-                generator.modelCollector,
+                pipe,
+                TextureMap.all(pipe.get()),
+                modelCollector,
             )
         }
+        // filtering pipe
         RagiumBlocks.FilteringPipes.entries.forEach { filtering: RagiumBlocks.FilteringPipes ->
             // blockstate
             val block: Block = filtering.get()
             registerSupplier(
-                block,
+                filtering,
                 VariantsBlockStateSupplier
-                    .create(block, stateVariantOf(block))
+                    .create(block, stateVariantOf(filtering))
                     .coordinate(BlockStateModelGenerator.createNorthDefaultRotationStates()),
             )
             // model
             RagiumModels.FILTERING_PIPE.upload(
                 block,
-                HTTextureMapBuilder.of(TextureKey.BACK, block),
-                generator.modelCollector,
+                HTTextureMapBuilder.of(TextureKey.BACK, filtering),
+                modelCollector,
             )
         }
-        // machine
+        // other
+        buildList {
+            addAll(RagiumBlocks.StorageBlocks.entries)
+            addAll(RagiumBlocks.Grates.entries)
+            addAll(RagiumBlocks.Casings.entries)
+
+            add(RagiumBlocks.AUTO_ILLUMINATOR)
+            add(RagiumBlocks.ITEM_DISPLAY)
+            add(RagiumBlocks.MUTATED_SOIL)
+            add(RagiumBlocks.NETWORK_INTERFACE)
+            add(RagiumBlocks.OPEN_CRATE)
+            add(RagiumBlocks.POROUS_NETHERRACK)
+            add(RagiumBlocks.SPONGE_CAKE)
+            add(RagiumBlocks.TELEPORT_ANCHOR)
+            add(RagiumBlocks.TRASH_BOX)
+        }.forEach(::registerSimple)
+
+        // blockGenerator.excludeFromSimpleItemModelGeneration(RagiumBlocks.ROPE.get())
+        buildList {
+            add(RagiumBlocks.MANUAL_FORGE)
+            add(RagiumBlocks.MANUAL_MIXER)
+            // add(RagiumBlocks.ROPE)
+            add(RagiumBlocks.SWEET_BERRIES_CAKE)
+        }.forEach(::registerStaticModel)
+
+        registerFactory(RagiumBlocks.BACKPACK_INTERFACE, RagiumModels.ALL_TINTED, TextureMap::all)
+
+        registerHorizontal(
+            RagiumBlocks.EXTENDED_PROCESSOR,
+            TexturedModel.CUBE_ALL.upload(RagiumBlocks.EXTENDED_PROCESSOR.get(), modelCollector),
+        )
+
+        registerSupplier(
+            RagiumBlocks.MANUAL_GRINDER,
+            buildMultipartState(RagiumBlocks.MANUAL_GRINDER.get()) {
+                RagiumBlockProperties.LEVEL_7.values.forEach { level: Int ->
+                    with(
+                        buildWhen(RagiumBlockProperties.LEVEL_7, level),
+                        stateVariantOf(
+                            RagiumAPI.id(
+                                when (level % 2 == 0) {
+                                    true -> "block/manual_grinder"
+                                    false -> "block/manual_grinder_diagonal"
+                                },
+                            ),
+                        ).rotY(
+                            when (level / 2) {
+                                0 -> VariantSettings.Rotation.R0
+                                1 -> VariantSettings.Rotation.R90
+                                2 -> VariantSettings.Rotation.R180
+                                3 -> VariantSettings.Rotation.R270
+                                else -> throw IllegalStateException()
+                            },
+                        ),
+                    )
+                }
+            },
+        )
+
+        register(RagiumBlocks.SHAFT) { blockGenerator.registerAxisRotated(it, TextureMap.getId(it)) }
+
         RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             val block: HTMachineBlock = entry.block
             val coordinateMap: BlockStateVariantMap = BlockStateVariantMap
@@ -350,9 +405,8 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                     stateVariantOf(modelId).rot(front)
                 }
             // block state
-            generator.excludeFromSimpleItemModelGeneration(block)
-            registerSupplier(
-                block,
+            blockGenerator.excludeFromSimpleItemModelGeneration(block)
+            blockGenerator.blockStateCollector.accept(
                 VariantsBlockStateSupplier
                     .create(block)
                     .coordinate(coordinateMap),
@@ -363,103 +417,40 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
                 .uploadAsItem(
                     block,
                     TextureMap(),
-                    generator.modelCollector,
+                    modelCollector,
                 )
         }
-        // custom
-        register(RagiumBlocks.SHAFT) { generator.registerAxisRotated(it, TextureMap.getId(it)) }
-        RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->
-            register(coil.get()) {
-                generator.registerAxisRotated(
-                    it,
-                    TexturedModel.CUBE_COLUMN.upload(
-                        it,
-                        generator.modelCollector,
-                    ),
-                )
-            }
-        }
-
-        // creative
-        registerLayered(
-            RagiumBlocks.Creatives.CRATE.get(),
-            RagiumAPI.id("block/creative_coil_side"),
-            RagiumAPI.id("block/crate_overlay"),
-        )
-        registerFactory(RagiumBlocks.Creatives.DRUM.get(), TexturedModel.CUBE_COLUMN)
-        registerDirectional(
-            RagiumBlocks.Creatives.EXPORTER.get(),
-            stateVariantOf(
-                RagiumModels.EXPORTER.upload(
-                    RagiumBlocks.Creatives.EXPORTER.get(),
-                    HTTextureMapBuilder.create {
-                        put(TextureKey.TOP, RagiumAPI.id("block/creative_coil_top"))
-                        put(TextureKey.SIDE, RagiumAPI.id("block/creative_coil_side"))
-                    },
-                    generator.modelCollector,
-                ),
-            ),
-        )
-        registerSimple(RagiumBlocks.Creatives.SOURCE)
-
-        // stone
-        RagiumBlocks.Stones.entries.forEach(::registerSimple)
-        // slab
-        RagiumBlocks.Slabs.entries.forEach(::registerSlab)
-        // stair
-        RagiumBlocks.Stairs.entries.forEach(::registerStair)
-        // white line
-        listOf(RagiumBlocks.WhiteLines.SIMPLE, RagiumBlocks.WhiteLines.T_SHAPED).forEach { content: HTBlockContent ->
-            val block: Block = content.get()
-            generator.excludeFromSimpleItemModelGeneration(block)
-            registerSupplier(
-                block,
-                VariantsBlockStateSupplier
-                    .create(
-                        block,
-                        stateVariantOf(
-                            RagiumModels.SURFACE.upload(
-                                block,
-                                HTTextureMapBuilder.of(TextureKey.TOP, block),
-                                generator.modelCollector,
-                            ),
-                        ),
-                    ).coordinate(BlockStateModelGenerator.createNorthDefaultHorizontalRotationStates()),
-            )
-        }
-        generator.excludeFromSimpleItemModelGeneration(RagiumBlocks.WhiteLines.CROSS.get())
-        registerFactory(RagiumBlocks.WhiteLines.CROSS, RagiumModels.SURFACE) {
-            HTTextureMapBuilder.of(TextureKey.TOP, RagiumBlocks.WhiteLines.CROSS)
-        }
-        // glass
-        RagiumBlocks.Glasses.entries.forEach(::registerSimple)
     }
 
     //    Model    //
 
+    private lateinit var itemGenerator: ItemModelGenerator
+
+    fun register(content: HTItemContent, model: Model = Models.GENERATED) {
+        itemGenerator.register(content.get(), model)
+    }
+
+    fun register(content: HTItemContent, model: Model, textureMap: TextureMap = TextureMap()) {
+        model.upload(
+            content.id.withPrefixedPath("item/"),
+            textureMap,
+            itemGenerator.writer,
+        )
+    }
+
+    fun registerLayered(content: HTItemContent, layer0: Identifier, layer1: Identifier) {
+        register(
+            content,
+            Models.GENERATED_TWO_LAYERS,
+            HTTextureMapBuilder.create {
+                put(TextureKey.LAYER0, layer0)
+                put(TextureKey.LAYER1, layer1)
+            },
+        )
+    }
+
     override fun generateItemModels(generator: ItemModelGenerator) {
-        fun register(item: Item, model: Model = Models.GENERATED) {
-            generator.register(item, model)
-        }
-
-        fun register(item: Item, model: Model, textureMap: TextureMap = TextureMap()) {
-            model.upload(
-                TextureMap.getId(item),
-                textureMap,
-                generator.writer,
-            )
-        }
-
-        fun registerLayered(item: Item, layer0: Identifier, layer1: Identifier) {
-            register(
-                item,
-                Models.GENERATED_TWO_LAYERS,
-                HTTextureMapBuilder.create {
-                    put(TextureKey.LAYER0, layer0)
-                    put(TextureKey.LAYER1, layer1)
-                },
-            )
-        }
+        itemGenerator = generator
         // contents
         buildList {
             addAll(RagiumItems.Dusts.entries)
@@ -494,29 +485,28 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             addAll(RagiumItems.Ingredients.entries)
             addAll(RagiumItems.MISC)
 
-            add(RagiumBlocks.ROPE)
-
             remove(RagiumItems.CHOCOLATE_APPLE)
             remove(RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND)
-        }.map(ItemConvertible::asItem).forEach(::register)
+        }.forEach(::register)
+
+        // generator.register(RagiumBlocks.ROPE.get().asItem(), Models.GENERATED)
 
         registerLayered(
-            RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND.asItem(),
+            RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND,
             TextureMap.getId(Items.COPPER_INGOT),
             TextureMap.getId(RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND.asItem()),
         )
         registerLayered(
-            RagiumItems.CHOCOLATE_APPLE.get(),
+            RagiumItems.CHOCOLATE_APPLE,
             TextureMap.getId(Items.APPLE),
-            TextureMap.getId(RagiumItems.CHOCOLATE_APPLE.get()),
+            RagiumItems.CHOCOLATE_APPLE.id.withPrefixedPath("item/"),
         )
-        register(RagiumItems.FILLED_FLUID_CUBE.get(), RagiumModels.FILLED_FLUID_CUBE)
+        register(RagiumItems.FILLED_FLUID_CUBE, RagiumModels.FILLED_FLUID_CUBE)
 
         RagiumBlocks.WhiteLines.entries.forEach { content: HTBlockContent ->
-            val block: Block = content.get()
-            Models.GENERATED.upload(
-                TextureMap.getId(block.asItem()),
-                TextureMap.layer0(block),
+            Models.GENERATED.uploadAsItem(
+                content.get(),
+                HTTextureMapBuilder.of(TextureKey.LAYER0, content),
                 generator.writer,
             )
         }

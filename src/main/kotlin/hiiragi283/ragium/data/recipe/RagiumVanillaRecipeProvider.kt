@@ -282,16 +282,6 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', RagiumItems.Ingots.RAGI_ALLOY)
             .unlockedBy(RagiumItems.Ingots.RAGI_ALLOY)
             .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumBlocks.ROPE, 8)
-            .patterns(
-                "A",
-                "A",
-                "A",
-            ).input('A', ItemTags.WOOL)
-            .unlockedBy(ItemTags.WOOL)
-            .offerTo(exporter)
         // patchouli
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.GUIDE_BOOK)

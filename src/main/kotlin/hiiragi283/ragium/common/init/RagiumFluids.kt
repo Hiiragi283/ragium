@@ -110,7 +110,7 @@ enum class RagiumFluids(
         @JvmStatic
         internal fun register() {
             RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-                Registry.register(Registries.FLUID, fluid.id, HTVirtualFluid())
+                Registry.register(Registries.FLUID, fluid.key, HTVirtualFluid())
             }
         }
     }
