@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.render
 
+import hiiragi283.ragium.api.extension.renderItem
 import hiiragi283.ragium.api.extension.translate
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
@@ -11,6 +12,8 @@ import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.BlockRenderManager
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.item.ItemStack
+import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
@@ -27,32 +30,64 @@ fun interface HTMultiblockPatternRenderer<T : HTMultiblockPattern> {
         random: Random,
     )
 
-    fun renderState(
-        state: BlockState,
-        x: Int,
-        y: Int,
-        z: Int,
-        pattern: T,
-        world: World,
-        matrix: MatrixStack,
-        consumerProvider: VertexConsumerProvider,
-        random: Random,
-    ) {
-        val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
-        matrix.push()
-        matrix.translate(x, y, z)
-        matrix.translate(0.125, 0.125, 0.125)
-        matrix.scale(0.75f, 0.75f, 0.75f)
-        val consumer: VertexConsumer = consumerProvider.getBuffer(RenderLayers.getBlockLayer(state))
-        blockRenderManager.renderBlock(
-            state,
-            HTMultiblockRenderer.DUMMY_POS,
-            world,
-            matrix,
-            consumer,
-            false,
-            Random.create(),
-        )
-        matrix.pop()
+    fun interface BlockRender<T : HTMultiblockPattern> : HTMultiblockPatternRenderer<T> {
+        fun getBlockState(pattern: T, world: World, provider: HTMultiblockProvider): BlockState?
+
+        override fun render(
+            provider: HTMultiblockProvider,
+            x: Int,
+            y: Int,
+            z: Int,
+            pattern: T,
+            world: World,
+            matrix: MatrixStack,
+            consumerProvider: VertexConsumerProvider,
+            random: Random,
+        ) {
+            getBlockState(pattern, world, provider)?.let { state: BlockState ->
+                val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
+                matrix.push()
+                matrix.translate(x, y, z)
+                matrix.translate(0.125, 0.125, 0.125)
+                matrix.scale(0.75f, 0.75f, 0.75f)
+                val consumer: VertexConsumer = consumerProvider.getBuffer(RenderLayers.getBlockLayer(state))
+                blockRenderManager.renderBlock(
+                    state,
+                    HTMultiblockRenderer.DUMMY_POS,
+                    world,
+                    matrix,
+                    consumer,
+                    false,
+                    Random.create(),
+                )
+                matrix.pop()
+            }
+        }
+    }
+
+    fun interface ItemRender<T : HTMultiblockPattern> : HTMultiblockPatternRenderer<T> {
+        fun getItemStack(pattern: T, world: World, provider: HTMultiblockProvider): ItemStack?
+
+        override fun render(
+            provider: HTMultiblockProvider,
+            x: Int,
+            y: Int,
+            z: Int,
+            pattern: T,
+            world: World,
+            matrix: MatrixStack,
+            consumerProvider: VertexConsumerProvider,
+            random: Random,
+        ) {
+            getItemStack(pattern, world, provider)?.let { stack: ItemStack ->
+                renderItem(
+                    world,
+                    Vec3d(x.toDouble(), y.toDouble(), z.toDouble()),
+                    stack,
+                    matrix,
+                    consumerProvider,
+                )
+            }
+        }
     }
 }
