@@ -38,6 +38,9 @@ object RagiumMaterialKeys {
     //    Gem    //
 
     @JvmField
+    val CINNABAR: HTMaterialKey = HTMaterialKey.of("cinnabar")
+
+    @JvmField
     val COAL: HTMaterialKey = HTMaterialKey.of("coal")
 
     @JvmField

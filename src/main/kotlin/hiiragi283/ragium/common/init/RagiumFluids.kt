@@ -52,6 +52,7 @@ enum class RagiumFluids(
     NITROGEN(Color(0x66cccc), "Nitrogen", "窒素", TextureType.GASEOUS),
     OXYGEN(Color(0x99ccff), "Oxygen", "酸素", TextureType.GASEOUS),
     CHLORINE(Color(0xccff33), "Chlorine", "塩素", TextureType.GASEOUS),
+    MERCURY(Color(0xcccccc), "Mercury", "水銀"),
 
     // Non-organic Chemical Compounds
     CARBON_MONOXIDE(Color(0x99ccff), "Carbon Monoxide", "一酸化炭素", TextureType.GASEOUS),
@@ -82,7 +83,6 @@ enum class RagiumFluids(
 
     ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
-    ASPHALT(Color(0x000066), "Asphalt", "アスファルト", TextureType.STICKY),
     NOBLE_GAS(Color(0xff00ff), "Noble Gas", "希ガス", TextureType.GASEOUS),
 
     // Fuels

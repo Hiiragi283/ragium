@@ -330,9 +330,6 @@ object RagiumBlocks {
     val ITEM_DISPLAY: HTBlockContent = HTContent.ofBlock("item_display")
 
     @JvmField
-    val ROPE: HTBlockContent = HTContent.ofBlock("rope")
-
-    @JvmField
     val SHAFT: HTBlockContent = HTContent.ofBlock("shaft")
 
     @JvmField
@@ -341,7 +338,7 @@ object RagiumBlocks {
     @JvmField
     val MISC: List<HTBlockContent> = listOf(
         BACKPACK_INTERFACE,
-        ITEM_DISPLAY, 
+        ITEM_DISPLAY,
         SHAFT,
     )
 

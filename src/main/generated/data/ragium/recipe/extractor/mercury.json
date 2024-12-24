@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "fluid": "ragium:mercury"
+    }
+  ],
+  "item_inputs": [
+    {
+      "items": "#c:gems/cinnabar"
+    }
+  ]
+}

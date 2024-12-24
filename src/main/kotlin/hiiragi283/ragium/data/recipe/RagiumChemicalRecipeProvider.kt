@@ -318,9 +318,9 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.RESIDUAL_OIL, FluidConstants.BUCKET * 8)
             .catalyst(RagiumItems.Circuits.PRIMITIVE)
+            .itemOutput(RagiumBlocks.Stones.ASPHALT, 5)
             .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 3)
-            .fluidOutput(RagiumFluids.ASPHALT, FluidConstants.BUCKET * 5)
-            .offerTo(exporter, RagiumFluids.ASPHALT)
+            .offerTo(exporter, RagiumBlocks.Stones.ASPHALT)
         // residual oil -> residual coke + fuel
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -454,6 +454,12 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemOutput(RagiumItems.Ingredients.LUMINESCENCE_DUST)
             .itemOutput(Items.INK_SAC)
             .offerTo(exporter, RagiumItems.Ingredients.LUMINESCENCE_DUST)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(RagiumItems.Gems.CINNABAR)
+            .fluidOutput(RagiumFluids.MERCURY)
+            .offerTo(exporter, RagiumFluids.MERCURY)
         // milk
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
@@ -618,13 +624,6 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .fluidInput(ConventionalFluidTags.MILK)
             .fluidOutput(RagiumFluids.BATTER)
             .offerTo(exporter, RagiumFluids.BATTER)
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .itemInput(Items.GRAVEL)
-            .fluidInput(RagiumFluids.ASPHALT)
-            .itemOutput(RagiumBlocks.Stones.ASPHALT, 4)
-            .offerTo(exporter, RagiumBlocks.Stones.ASPHALT)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)

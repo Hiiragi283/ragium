@@ -81,6 +81,7 @@ object RagiumItems {
     enum class Gems(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 3
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        CINNABAR(RagiumMaterialKeys.CINNABAR),
         CRYOLITE(RagiumMaterialKeys.CRYOLITE),
         FLUORITE(RagiumMaterialKeys.FLUORITE),
 

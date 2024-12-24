@@ -189,6 +189,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
         helper.register(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
         // gem
+        helper.register(RagiumMaterialKeys.CINNABAR, HTMaterialType.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.COAL, HTMaterialType.GEM)
         helper.register(RagiumMaterialKeys.CRYOLITE, HTMaterialType.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.DIAMOND, HTMaterialType.GEM, Rarity.RARE)
@@ -206,7 +207,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
         helper.register(RagiumMaterialKeys.GOLD, HTMaterialType.METAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
-        // helper.register(RagiumMaterialKeys.SILICON, HTMaterialType.METAL, Rarity.UNCOMMON)
 
         helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
@@ -224,11 +224,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
         helper.register(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
-        // helper.register(RagiumMaterialKeys.URANITE, HTMaterialType.MINERAL, Rarity.RARE)
         // plate
-        // helper.register(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialType.PLATE, Rarity.RARE)
-        // helper.register(RagiumMaterialKeys.PLASTIC, HTMaterialType.PLATE, Rarity.UNCOMMON)
-        // helper.register(RagiumMaterialKeys.STELLA, HTMaterialType.PLATE, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.WOOD, HTMaterialType.PLATE)
 
         // alternative name
@@ -268,6 +264,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // mineral
         helper.modify(RagiumMaterialKeys.REDSTONE) {
             set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 2)
+            set(HTMaterialPropertyKeys.ORE_SUB_PRODUCT, RagiumItems.Gems.CINNABAR)
         }
     }
 
@@ -426,30 +423,56 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .offerTo(exporter, output)
             }
         }
+        // ingot/gem -> rod
+        helper.useItemIfPresent(entry, HTTagPrefix.ROD) { output: Item ->
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                // Compressor Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.COMPRESSOR)
+                    .itemInput(prefix, key)
+                    .catalyst(RagiumItems.PressMolds.ROD)
+                    .itemOutput(output, 2)
+                    .offerTo(exporter, output)
+            }
+        }
 
         // ore -> raw/gem
         helper.useItemFromRawPrefix(entry) { output: Item ->
             val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
+            val subProduction: ItemConvertible? = entry[HTMaterialPropertyKeys.ORE_SUB_PRODUCT]
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.ORE, key)
                 .itemOutput(output, count * 2)
-                .offerTo(exporter, output)
+                .apply {
+                    subProduction?.let(::itemOutput)
+                }.offerTo(exporter, output)
             // 3x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
                 .itemOutput(output, count * 3)
-                .offerTo(exporter, output, "_3x")
+                .apply {
+                    subProduction?.let(::itemOutput)
+                }.offerTo(exporter, output, "_3x")
             // 4x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
                 .itemOutput(output, count * 4)
-                .offerTo(exporter, output, "_4x")
+                .apply {
+                    subProduction?.let { itemOutput(it, 2) }
+                }.offerTo(exporter, output, "_4x")
+            // 5x Chemical Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+                .itemInput(HTTagPrefix.ORE, key)
+                .fluidInput(RagiumFluids.MERCURY, FluidConstants.INGOT)
+                .itemOutput(output, count * 5)
+                .offerTo(exporter, output, "_5x")
         }
         // raw -> dust
         helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->

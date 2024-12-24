@@ -17,10 +17,12 @@
     {
       "amount": 243000,
       "fluid": "ragium:fuel"
-    },
+    }
+  ],
+  "item_outputs": [
     {
-      "amount": 405000,
-      "fluid": "ragium:asphalt"
+      "count": 5,
+      "item": "ragium:asphalt"
     }
   ]
 }

@@ -443,6 +443,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.RAGIUM, "Ragium")
             builder.add(RagiumMaterialKeys.NETHERITE, "Netherite")
 
+            builder.add(RagiumMaterialKeys.CINNABAR, "Cinnabar")
             builder.add(RagiumMaterialKeys.COAL, "Coal")
             builder.add(RagiumMaterialKeys.DIAMOND, "Diamond")
             builder.add(RagiumMaterialKeys.EMERALD, "Emerald")
@@ -816,6 +817,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.RAGIUM, "ラギウム")
             builder.add(RagiumMaterialKeys.NETHERITE, "ネザライト")
 
+            builder.add(RagiumMaterialKeys.CINNABAR, "辰砂")
             builder.add(RagiumMaterialKeys.COAL, "石炭")
             builder.add(RagiumMaterialKeys.DIAMOND, "ダイアモンド")
             builder.add(RagiumMaterialKeys.EMERALD, "エメラルド")
