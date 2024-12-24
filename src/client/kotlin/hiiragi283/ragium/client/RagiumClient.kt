@@ -48,7 +48,9 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer
 import net.minecraft.client.render.model.UnbakedModel
+import net.minecraft.entity.EntityType
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -151,10 +153,9 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerEntities() {
-        EntityRendererRegistry.register(RagiumEntityTypes.DYNAMITE, ::FlyingItemEntityRenderer)
-        EntityRendererRegistry.register(RagiumEntityTypes.ANVIL_DYNAMITE, ::FlyingItemEntityRenderer)
-        EntityRendererRegistry.register(RagiumEntityTypes.BEDROCK_DYNAMITE, ::FlyingItemEntityRenderer)
-        EntityRendererRegistry.register(RagiumEntityTypes.FLATTENING_DYNAMITE, ::FlyingItemEntityRenderer)
+        RagiumEntityTypes.DYNAMITES.forEach { entityType: EntityType<out ThrownItemEntity> ->
+            EntityRendererRegistry.register(entityType, ::FlyingItemEntityRenderer)
+        }
     }
 
     //    Fluids    //

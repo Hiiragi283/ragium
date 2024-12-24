@@ -2,7 +2,9 @@
   "values": [
     "ragium:dynamite",
     "ragium:anvil_dynamite",
+    "ragium:blazing_dynamite",
     "ragium:bedrock_dynamite",
-    "ragium:flattening_dynamite"
+    "ragium:flattening_dynamite",
+    "ragium:frosting_dynamite"
   ]
 }

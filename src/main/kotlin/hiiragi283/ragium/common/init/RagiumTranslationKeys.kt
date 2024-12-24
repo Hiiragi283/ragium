@@ -55,8 +55,10 @@ object RagiumTranslationKeys {
 
     const val ANVIL_DYNAMITE = "tooltip.ragium.item.anvil_dynamite"
     const val BACKPACK = "tooltip.ragium.item.backpack"
+    const val BLAZING_DYNAMITE = "tooltip.ragium.item.blazing_dynamite"
     const val BEDROCK_DYNAMITE = "tooltip.ragium.item.bedrock_dynamite"
     const val FLATTENING_DYNAMITE = "tooltip.ragium.item.flatten_dynamite"
+    const val FROSTING_DYNAMITE = "tooltip.ragium.item.frosting_dynamite"
     const val RAGI_WRENCH = "tooltip.ragium.item.ragi_wrench"
     const val ROPE = "tooltip.ragium.item.rope"
     const val TRADER_CATALOG = "tooltip.ragium.item.trader_catalog"

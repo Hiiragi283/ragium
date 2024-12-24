@@ -17,7 +17,10 @@ import net.minecraft.component.type.FoodComponents
 import net.minecraft.component.type.UnbreakableComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
-import net.minecraft.item.*
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterial
+import net.minecraft.item.Item
+import net.minecraft.item.ToolMaterials
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -217,8 +220,10 @@ object RagiumItemsNew {
     enum class Dynamites(name: String) : HTItemContent {
         SIMPLE(""),
         ANVIL("anvil_"),
+        BLAZING("blazing_"),
         BEDROCK("bedrock_"),
         FLATTENING("flattening_"),
+        FROSTING("frosting_"),
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey(name + "dynamite")
@@ -693,8 +698,10 @@ object RagiumItemsNew {
         // dynamite
         registerItem(Dynamites.SIMPLE, item = ::HTDynamiteItem)
         registerItem(Dynamites.ANVIL, item = ::HTAnvilDynamiteItem)
+        registerItem(Dynamites.BLAZING, item = ::HTBlazingDynamiteItem)
         registerItem(Dynamites.BEDROCK, item = ::HTBedrockDynamiteItem)
         registerItem(Dynamites.FLATTENING, item = ::HTFlatteningDynamiteItem)
+        registerItem(Dynamites.FROSTING, item = ::HTFrostingDynamiteItem)
 
         registerItem(BACKPACK, item = ::HTBackpackItem)
         registerItem(EMPTY_FLUID_CUBE)

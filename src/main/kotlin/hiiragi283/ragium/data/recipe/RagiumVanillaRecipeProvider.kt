@@ -298,28 +298,21 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .unlockedBy(RagiumItemsNew.RawMaterials.CRUDE_RAGINITE)
             .offerTo(exporter)
         // dynamites
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumItemsNew.Dynamites.ANVIL)
-            .input(RagiumItemsNew.Dynamites.SIMPLE)
-            .input(ItemTags.ANVIL)
-            .unlockedBy(RagiumItemsNew.Dynamites.SIMPLE)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumItemsNew.Dynamites.BEDROCK, 8)
-            .wrapPattern8()
-            .input('A', RagiumItemsNew.Dynamites.SIMPLE)
-            .input('B', Items.DIAMOND_PICKAXE)
-            .unlockedBy(RagiumItemsNew.Dynamites.SIMPLE)
-            .offerTo(exporter)
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumItemsNew.Dynamites.FLATTENING, 64)
-            .wrapPattern8()
-            .input('A', RagiumItemsNew.Dynamites.SIMPLE)
-            .input('B', Items.NETHER_STAR)
-            .unlockedBy(RagiumItemsNew.Dynamites.SIMPLE)
-            .offerTo(exporter)
+        mapOf(
+            RagiumItemsNew.Dynamites.ANVIL to Items.ANVIL,
+            RagiumItemsNew.Dynamites.BLAZING to Items.BLAZE_POWDER,
+            RagiumItemsNew.Dynamites.BEDROCK to Items.DIAMOND_PICKAXE,
+            RagiumItemsNew.Dynamites.FLATTENING to Items.NETHER_STAR,
+            RagiumItemsNew.Dynamites.FROSTING to Items.POWDER_SNOW_BUCKET,
+        ).forEach { (dynamite: RagiumItemsNew.Dynamites, input: Item) ->
+            HTShapedRecipeJsonBuilder
+                .create(dynamite, 8)
+                .wrapPattern8()
+                .input('A', RagiumItemsNew.Dynamites.SIMPLE)
+                .input('B', input)
+                .unlockedBy(RagiumItemsNew.Dynamites.SIMPLE)
+                .offerTo(exporter)
+        }
         // filter
         HTShapelessRecipeJsonBuilder
             .create(RagiumItemsNew.FLUID_FILTER)

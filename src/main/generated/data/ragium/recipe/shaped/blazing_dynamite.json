@@ -6,7 +6,7 @@
       "item": "ragium:dynamite"
     },
     "B": {
-      "item": "minecraft:nether_star"
+      "item": "minecraft:blaze_powder"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 8,
-    "id": "ragium:flattening_dynamite"
+    "id": "ragium:blazing_dynamite"
   }
 }

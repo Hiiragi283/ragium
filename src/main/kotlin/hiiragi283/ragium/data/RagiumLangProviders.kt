@@ -196,8 +196,10 @@ object RagiumLangProviders {
             // Entity
             builder.add(RagiumEntityTypes.DYNAMITE, "Dynamite")
             builder.add(RagiumEntityTypes.ANVIL_DYNAMITE, "Anvil Dynamite")
+            builder.add(RagiumEntityTypes.BLAZING_DYNAMITE, "Blazing Dynamite")
             builder.add(RagiumEntityTypes.BEDROCK_DYNAMITE, "Bedrock Dynamite")
             builder.add(RagiumEntityTypes.FLATTENING_DYNAMITE, "Flattening Dynamite")
+            builder.add(RagiumEntityTypes.FROSTING_DYNAMITE, "Frosting Dynamite")
             // Item
             builder.add(RagiumItemsNew.SteelArmors.HELMET, "Steel Helmet")
             builder.add(RagiumItemsNew.SteelArmors.CHESTPLATE, "Steel Chestplate")
@@ -229,7 +231,9 @@ object RagiumLangProviders {
             builder.add(RagiumItemsNew.Dynamites.SIMPLE, "Dynamite")
             builder.add(RagiumItemsNew.Dynamites.ANVIL, "Anvil Dynamite")
             builder.add(RagiumItemsNew.Dynamites.BEDROCK, "Bedrock Dynamite")
+            builder.add(RagiumItemsNew.Dynamites.BLAZING, "Fire Dynamite")
             builder.add(RagiumItemsNew.Dynamites.FLATTENING, "Flattening Dynamite")
+            builder.add(RagiumItemsNew.Dynamites.FROSTING, "Frosting Dynamite")
 
             builder.add(RagiumItemsNew.BACKPACK, "Backpack")
             builder.add(RagiumItemsNew.EMPTY_FLUID_CUBE, "Fluid Cube (Empty)")
@@ -301,10 +305,12 @@ object RagiumLangProviders {
             builder.add(RagiumItemsNew.PressMolds.PLATE, "Press Mold (Plate)")
             builder.add(RagiumItemsNew.PressMolds.ROD, "Press Mold (Rod)")
 
-            builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "Place Anvil when land on")
+            builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "Place Anvil when hit")
             builder.add(RagiumTranslationKeys.BACKPACK, "Shares inventory between the same color")
             builder.add(RagiumTranslationKeys.BEDROCK_DYNAMITE, "Flatten Bedrocks inside hit chunk")
+            builder.add(RagiumTranslationKeys.BLAZING_DYNAMITE, "Ignite fire when hit on entity or block")
             builder.add(RagiumTranslationKeys.FLATTENING_DYNAMITE, "Remove ALL blocks above when hit")
+            builder.add(RagiumTranslationKeys.FROSTING_DYNAMITE, "Place Powder Snow when hit")
             builder.add(
                 RagiumTranslationKeys.RAGI_WRENCH,
                 "Right-click to rotate horizontally, change front when sneaking",
@@ -608,8 +614,10 @@ object RagiumLangProviders {
             // Entity
             builder.add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
             builder.add(RagiumEntityTypes.ANVIL_DYNAMITE, "金床ダイナマイト")
+            builder.add(RagiumEntityTypes.BLAZING_DYNAMITE, "燃え盛るダイナマイト")
             builder.add(RagiumEntityTypes.BEDROCK_DYNAMITE, "岩盤ダイナマイト")
             builder.add(RagiumEntityTypes.FLATTENING_DYNAMITE, "整地用ダイナマイト")
+            builder.add(RagiumEntityTypes.FROSTING_DYNAMITE, "凍えるダイナマイト")
             // Item
             builder.add(RagiumItemsNew.SteelArmors.HELMET, "スチールのヘルメット")
             builder.add(RagiumItemsNew.SteelArmors.CHESTPLATE, "スチールのチェストプレート")
@@ -641,7 +649,9 @@ object RagiumLangProviders {
             builder.add(RagiumItemsNew.Dynamites.SIMPLE, "ダイナマイト")
             builder.add(RagiumItemsNew.Dynamites.ANVIL, "金床ダイナマイト")
             builder.add(RagiumItemsNew.Dynamites.BEDROCK, "岩盤ダイナマイト")
+            builder.add(RagiumItemsNew.Dynamites.BLAZING, "燃え盛るダイナマイト")
             builder.add(RagiumItemsNew.Dynamites.FLATTENING, "整地用ダイナマイト")
+            builder.add(RagiumItemsNew.Dynamites.FROSTING, "凍えるダイナマイト")
 
             builder.add(RagiumItemsNew.BACKPACK, "バックパック")
             builder.add(RagiumItemsNew.EMPTY_FLUID_CUBE, "液体キューブ（なし）")
@@ -716,7 +726,9 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.ANVIL_DYNAMITE, "着弾点に金床を設置する")
             builder.add(RagiumTranslationKeys.BACKPACK, "同じ色同士でインベントリを共有する")
             builder.add(RagiumTranslationKeys.BEDROCK_DYNAMITE, "着弾したチャンク内の岩盤を整地する")
+            builder.add(RagiumTranslationKeys.BLAZING_DYNAMITE, "エンティティやブロックに当たると着火する")
             builder.add(RagiumTranslationKeys.FLATTENING_DYNAMITE, "着弾点より上のブロックを「すべて」消滅させる")
+            builder.add(RagiumTranslationKeys.FROSTING_DYNAMITE, "着弾点に粉雪を設置する")
             builder.add(RagiumTranslationKeys.RAGI_WRENCH, "右クリックで水平方向の回転，シフト右クリックで正面を変更")
             builder.add(RagiumTranslationKeys.ROPE, "着弾点からロープを下す")
             builder.add(RagiumTranslationKeys.TRADER_CATALOG, "右クリックで行商人との取引を行う")

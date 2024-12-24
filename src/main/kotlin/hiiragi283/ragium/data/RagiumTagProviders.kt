@@ -15,6 +15,8 @@ import net.fabricmc.fabric.api.tag.convention.v2.ConventionalEntityTypeTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.block.Block
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.Item
@@ -125,23 +127,11 @@ object RagiumTagProviders {
     private class EntityProvider(output: FabricDataOutput, completableFuture: CompletableFuture<RegistryWrapper.WrapperLookup>) :
         FabricTagProvider.EntityTypeTagProvider(output, completableFuture) {
         override fun configure(wrapperLookup: RegistryWrapper.WrapperLookup) {
-            getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES)
-                .add(RagiumEntityTypes.DYNAMITE)
-                .add(RagiumEntityTypes.ANVIL_DYNAMITE)
-                .add(RagiumEntityTypes.BEDROCK_DYNAMITE)
-                .add(RagiumEntityTypes.FLATTENING_DYNAMITE)
-
-            getOrCreateTagBuilder(ConventionalEntityTypeTags.CAPTURING_NOT_SUPPORTED)
-                .add(RagiumEntityTypes.DYNAMITE)
-                .add(RagiumEntityTypes.ANVIL_DYNAMITE)
-                .add(RagiumEntityTypes.BEDROCK_DYNAMITE)
-                .add(RagiumEntityTypes.FLATTENING_DYNAMITE)
-
-            getOrCreateTagBuilder(ConventionalEntityTypeTags.TELEPORTING_NOT_SUPPORTED)
-                .add(RagiumEntityTypes.DYNAMITE)
-                .add(RagiumEntityTypes.ANVIL_DYNAMITE)
-                .add(RagiumEntityTypes.BEDROCK_DYNAMITE)
-                .add(RagiumEntityTypes.FLATTENING_DYNAMITE)
+            RagiumEntityTypes.DYNAMITES.forEach { entityType: EntityType<out ThrownItemEntity> ->
+                getOrCreateTagBuilder(EntityTypeTags.IMPACT_PROJECTILES).add(entityType)
+                getOrCreateTagBuilder(ConventionalEntityTypeTags.CAPTURING_NOT_SUPPORTED).add(entityType)
+                getOrCreateTagBuilder(ConventionalEntityTypeTags.TELEPORTING_NOT_SUPPORTED).add(entityType)
+            }
         }
     }
 
