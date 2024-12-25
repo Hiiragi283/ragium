@@ -2,10 +2,10 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.extension.codecOf
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.extension.isIn
-import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.api.recipe.HTItemIngredient.ConsumeType.entries
 import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.item.Item
@@ -120,10 +120,10 @@ class HTItemIngredient private constructor(
 
         companion object {
             @JvmField
-            val CODEC: Codec<ConsumeType> = codecOf(entries)
+            val CODEC: Codec<ConsumeType> = identifiedCodec(entries)
 
             @JvmField
-            val PACKET_CODEC: PacketCodec<RegistryByteBuf, ConsumeType> = packetCodecOf(entries)
+            val PACKET_CODEC: PacketCodec<RegistryByteBuf, ConsumeType> = identifiedPacketCodec(entries)
         }
 
         override fun asString(): String = name.lowercase()

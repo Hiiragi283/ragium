@@ -4,7 +4,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
+import hiiragi283.ragium.api.event.HTInventoryTickCallback
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
@@ -43,11 +45,11 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.boss.BossBar
 import net.minecraft.entity.boss.ServerBossBar
-import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
@@ -91,7 +93,7 @@ internal object RagiumContentRegister {
                 RagiumNetworks.sendFloatingItem(player, RagiumItems.Gems.RAGIUM)
             }
         }
-
+        // invoke accessory action when swapped armor
         ServerEntityEvents.EQUIPMENT_CHANGE.register { entity: LivingEntity, slot: EquipmentSlot, old: ItemStack, new: ItemStack ->
             if (slot.type == EquipmentSlot.Type.HUMANOID_ARMOR) {
                 if (old.isEmpty && !new.isEmpty) {
@@ -117,11 +119,7 @@ internal object RagiumContentRegister {
                 }
                 // consume energy when worm stella goggles
                 if (player.armorItems.any { it.isOf(RagiumItems.StellaSuits.GOGGLE) }) {
-                    if (!HTEnergyNetwork.Flag.CONSUME.processAmount(
-                            player.world.energyNetwork.getOrNull(),
-                            HTMachineTier.BASIC.processCost,
-                        )
-                    ) {
+                    if (!player.world.processEnergy(HTEnergyNetwork.Flag.CONSUME, HTMachineTier.BASIC.processCost)) {
                         player.removeStatusEffect(StatusEffects.NIGHT_VISION)
                     }
                 }
@@ -139,7 +137,6 @@ internal object RagiumContentRegister {
                     } ?: run { ENERGY_BAR.removePlayer(player) }
             }
         }
-
         // rotate block by ragi-wrench
         UseBlockCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand, result: BlockHitResult ->
             val stack: ItemStack = player.getStackInHand(hand)
@@ -188,6 +185,10 @@ internal object RagiumContentRegister {
                 )
             }
         }
+        // radioactive effects
+        HTInventoryTickCallback.EVENT.register { stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean ->
+            stack.get(HTRadioactiveComponent.COMPONENT_TYPE)?.applyEffect(entity)
+        }
     }
 
     @JvmStatic
@@ -200,7 +201,7 @@ internal object RagiumContentRegister {
         // Accessory
         HTAccessoryRegistry.register(RagiumItems.StellaSuits.GOGGLE) {
             equippedAction = HTAccessoryRegistry.EquippedAction {
-                it.addStatusEffect(StatusEffectInstance(StatusEffects.NIGHT_VISION, -1, 0))
+                it.addInfinityStatusEffect(StatusEffects.NIGHT_VISION)
             }
             unequippedAction = HTAccessoryRegistry.UnequippedAction {
                 it.removeStatusEffect(StatusEffects.NIGHT_VISION)
@@ -347,7 +348,7 @@ internal object RagiumContentRegister {
             RagiumBlocks.Creatives.SOURCE.get(),
         )
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            world.energyNetwork.result().getOrNull()
+            world.energyNetwork.getOrNull()
         }, RagiumBlocks.NETWORK_INTERFACE.get())
     }
 
@@ -375,7 +376,7 @@ internal object RagiumContentRegister {
             user.removeStatusEffect(StatusEffects.POISON)
         }
         consumer(RagiumFluids.CHOCOLATE.get()) { _: ItemStack, world: World, user: LivingEntity ->
-            user.addStatusEffect(StatusEffectInstance(StatusEffects.STRENGTH, 20 * 5, 1))
+            user.addStatusEffect(StatusEffects.STRENGTH, 20 * 5, 1)
         }
     }
 }

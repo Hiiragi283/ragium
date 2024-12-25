@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.Item
+import net.minecraft.registry.tag.FluidTags
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.hit.EntityHitResult
 import net.minecraft.util.math.BlockPos
@@ -44,7 +45,13 @@ class HTFrostingDynamiteEntity : ThrownItemEntity {
                 val state: BlockState = Blocks.POWDER_SNOW.defaultState
                 val stateAt: BlockState = world.getBlockState(posIn)
                 if (stateAt.isReplaceable && state.canPlaceAt(world, posIn)) {
-                    world.setBlockState(posIn, state)
+                    world.setBlockState(
+                        posIn,
+                        when {
+                            world.getFluidState(posIn).isIn(FluidTags.WATER) -> Blocks.ICE.defaultState
+                            else -> state
+                        },
+                    )
                 }
             }
             discard()

@@ -442,16 +442,16 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerSuffix(exporter, "_from_piece")
         // yellow cake
         HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.Ingredients.YELLOW_CAKE_PIECE, 8)
-            .input(RagiumItems.Ingredients.YELLOW_CAKE)
-            .unlockedBy(RagiumItems.Ingredients.YELLOW_CAKE_PIECE)
+            .create(RagiumItems.Radioactives.YELLOW_CAKE_PIECE, 8)
+            .input(RagiumItems.Radioactives.YELLOW_CAKE)
+            .unlockedBy(RagiumItems.Radioactives.YELLOW_CAKE_PIECE)
             .offerTo(exporter)
 
         HTShapedRecipeJsonBuilder
-            .create(RagiumItems.Ingredients.YELLOW_CAKE)
+            .create(RagiumItems.Radioactives.YELLOW_CAKE)
             .hollowPattern()
-            .input('A', RagiumItems.Ingredients.YELLOW_CAKE_PIECE)
-            .unlockedBy(RagiumItems.Ingredients.YELLOW_CAKE_PIECE)
+            .input('A', RagiumItems.Radioactives.YELLOW_CAKE_PIECE)
+            .unlockedBy(RagiumItems.Radioactives.YELLOW_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
 
         HTShapelessRecipeJsonBuilder

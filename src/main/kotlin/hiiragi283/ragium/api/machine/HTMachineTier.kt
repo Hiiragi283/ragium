@@ -4,18 +4,17 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
+import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.machine.HTMachineTier.entries
 import hiiragi283.ragium.api.material.HTMaterialProvider
-import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumHardModeContents
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
 import net.minecraft.network.RegistryByteBuf
@@ -28,7 +27,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.Direction
-import net.minecraft.world.World
 
 /**
  * 機械のティアを表す列挙型
@@ -63,10 +61,10 @@ enum class HTMachineTier(
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineTier> = codecOf(entries)
+        val CODEC: Codec<HTMachineTier> = identifiedCodec(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = identifiedPacketCodec(entries)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTMachineTier> = ComponentType
@@ -174,23 +172,6 @@ enum class HTMachineTier(
         BASIC -> RagiumBlocks.Glasses.STEEL
         ADVANCED -> RagiumBlocks.Glasses.OBSIDIAN
     }
-
-    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =
-        useTransaction(parent) { transaction: Transaction ->
-            world.energyNetwork
-                .map { network: HTEnergyNetwork ->
-                    val extracted: Long = network.extract(processCost * multiplier, transaction)
-                    when {
-                        extracted > 0 -> {
-                            transaction.commit()
-                            true
-                        }
-
-                        else -> false
-                    }
-                }.result()
-                .orElse(false)
-        }
 
     //    StringIdentifiable    //
 

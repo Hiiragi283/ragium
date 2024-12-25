@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -45,6 +46,8 @@ fun Item.Settings.tieredText(translationKey: String, tier: HTMachineTier): Item.
     component(DataComponentTypes.ITEM_NAME, tier.createPrefixedText(translationKey)).tier(tier)
 
 fun Item.Settings.maybeRework(): Item.Settings = component(RagiumComponentTypes.REWORK_TARGET, Unit)
+
+fun Item.Settings.radioactive(level: HTRadioactiveComponent): Item.Settings = component(HTRadioactiveComponent.COMPONENT_TYPE, level)
 
 val Item.isAir: Boolean
     get() = this == Items.AIR

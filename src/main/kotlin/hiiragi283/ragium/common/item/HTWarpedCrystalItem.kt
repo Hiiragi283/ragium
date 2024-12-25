@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -29,7 +30,7 @@ class HTWarpedCrystalItem(settings: Settings) : Item(settings) {
             stack.remove(DataComponentTypes.LODESTONE_TRACKER)
             return super.use(world, user, hand)
         }
-        if (HTMachineTier.ADVANCED.consumerEnergy(world, null, 64)) {
+        if (world.processEnergy(HTEnergyNetwork.Flag.CONSUME, HTMachineTier.ADVANCED.processCost * 64)) {
             world.server?.getWorld(globalPos.dimension)?.let { worldTo: ServerWorld ->
                 val vec3d = Vec3d(
                     globalPos.pos.x.toDouble() + 0.5,

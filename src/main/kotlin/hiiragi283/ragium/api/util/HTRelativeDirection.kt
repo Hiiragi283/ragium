@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.util
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.codecOf
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.util.HTRelativeDirection.entries
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -24,10 +24,10 @@ enum class HTRelativeDirection : StringIdentifiable {
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTRelativeDirection> = codecOf(entries)
+        val CODEC: Codec<HTRelativeDirection> = identifiedCodec(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRelativeDirection> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRelativeDirection> = identifiedPacketCodec(entries)
 
         /**
          * Transform [target] into [HTRelativeDirection]

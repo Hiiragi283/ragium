@@ -23,17 +23,15 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * Create a new [Codec] instance for an enum implementing [StringIdentifiable]
  */
-fun <T : StringIdentifiable> codecOf(entries: Iterable<T>): Codec<T> = Codec.STRING.comapFlatMap(
+fun <T : StringIdentifiable> identifiedCodec(entries: Iterable<T>): Codec<T> = Codec.STRING.comapFlatMap(
     { name: String ->
         entries.firstOrNull { it.asString() == name }.toDataResult { "Unknown entry: $name!" }
     },
     StringIdentifiable::asString,
 )
 
-fun <A : Any, B : Any> pairCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<MPair<A, B>> = Codec.pair(first.codec(), second.codec())
-
-fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> = pairCodecOf(first, second)
-    .toMap()
+fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> =
+    Codec.pair(first.codec(), second.codec()).toMap()
 
 fun <A : Any, B : Any> Codec<MPair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf().xmap(
     { pairs: List<MPair<A, B>> -> pairs.associate(MPair<A, B>::toKotlin) },
@@ -73,15 +71,10 @@ fun <T : Inventory> createInventoryCodec(builder: (Int) -> T): Codec<T> = ItemSt
  */
 fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> = collect(PacketCodecs.toList())
 
-fun <B : ByteBuf, V : Any> PacketCodec<B, V>.validate(checker: (V) -> DataResult<V>): PacketCodec<B, V> = xmap(
-    { checker(it).orThrow },
-    { checker(it).orThrow },
-)
-
 /**
  * Create a new [PacketCodecs] instance for an enum implementing [StringIdentifiable]
  */
-fun <T : StringIdentifiable> packetCodecOf(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
+fun <T : StringIdentifiable> identifiedPacketCodec(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
     PacketCodecs.STRING,
     StringIdentifiable::asString,
 ) { name: String -> entries.firstOrNull { it.asString() == name } }

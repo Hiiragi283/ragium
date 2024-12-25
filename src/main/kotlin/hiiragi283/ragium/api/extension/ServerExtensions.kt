@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.world.HTBackpackManager
 import hiiragi283.ragium.api.world.HTEnergyNetwork
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.entity.Entity
 import net.minecraft.registry.RegistryKey
 import net.minecraft.server.MinecraftServer
@@ -95,3 +96,6 @@ val ServerWorld.energyNetwork: HTEnergyNetwork
 
 val World.energyNetwork: DataResult<HTEnergyNetwork>
     get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID).toDataResult { "Failed to find energy network!" }
+
+fun World.processEnergy(flag: HTEnergyNetwork.Flag, amount: Long, parent: TransactionContext? = null): Boolean =
+    flag.processAmount(energyNetwork.getOrNull(), amount, parent)

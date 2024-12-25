@@ -92,6 +92,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItems.Circuits.entries)
                 entries.addAll(RagiumItems.PressMolds.entries)
                 entries.addAll(RagiumItems.Ingredients.entries)
+                entries.addAll(RagiumItems.Radioactives.entries)
 
                 entries.addAll(RagiumItems.MISC)
 

@@ -42,18 +42,18 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
             .fluidInput(RagiumFluids.ENRICHED_URANIUM_HEXAFLUORIDE)
             .fluidInput(Fluids.WATER)
-            .itemOutput(RagiumItems.Ingredients.URANIUM_FUEL)
+            .itemOutput(RagiumItems.Radioactives.URANIUM_FUEL)
             .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
-            .offerTo(exporter, RagiumItems.Ingredients.URANIUM_FUEL)
+            .offerTo(exporter, RagiumItems.Radioactives.URANIUM_FUEL)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
-            .itemInput(RagiumItems.Ingredients.NUCLEAR_WASTE, 64)
-            // .itemInput(RagiumItemsNew.Ingredients.NUCLEAR_WASTE, 64)
+            .itemInput(RagiumItems.Radioactives.NUCLEAR_WASTE, 64)
+            // .itemInput(RagiumItemsNew.Radioactives.NUCLEAR_WASTE, 64)
             .fluidInput(RagiumFluids.AQUA_REGIA)
-            .itemOutput(RagiumItems.Ingredients.PLUTONIUM_FUEL)
-            .offerTo(exporter, RagiumItems.Ingredients.PLUTONIUM_FUEL)
+            .itemOutput(RagiumItems.Radioactives.PLUTONIUM_FUEL)
+            .offerTo(exporter, RagiumItems.Radioactives.PLUTONIUM_FUEL)
         // LED
         // processor
         HTMachineRecipeJsonBuilder

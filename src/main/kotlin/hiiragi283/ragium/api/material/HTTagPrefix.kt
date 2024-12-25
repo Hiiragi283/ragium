@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.codecOf
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.component.ComponentType
 import net.minecraft.item.Item
@@ -40,10 +40,10 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTTagPrefix> = codecOf(entries)
+        val CODEC: Codec<HTTagPrefix> = identifiedCodec(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTagPrefix> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTagPrefix> = identifiedPacketCodec(entries)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTTagPrefix> =

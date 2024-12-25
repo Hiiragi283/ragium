@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.*
@@ -376,7 +377,7 @@ object RagiumItems {
         LUMINESCENCE_DUST,
         RAGI_ALLOY_COMPOUND,
         SLAG,
-        SOAP_INGOT,
+        SOAP,
 
         // plastic
         POLYMER_RESIN,
@@ -405,13 +406,17 @@ object RagiumItems {
         PROCESSOR_SOCKET,
         RAGI_CRYSTAL_PROCESSOR,
         SOLAR_PANEL,
+        ;
 
-        // nuclear
-        URANIUM_FUEL,
-        PLUTONIUM_FUEL,
-        YELLOW_CAKE,
-        YELLOW_CAKE_PIECE,
-        NUCLEAR_WASTE,
+        override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
+    }
+
+    enum class Radioactives(val level: HTRadioactiveComponent) : HTItemContent {
+        URANIUM_FUEL(HTRadioactiveComponent.MEDIUM),
+        PLUTONIUM_FUEL(HTRadioactiveComponent.HIGH),
+        YELLOW_CAKE(HTRadioactiveComponent.MEDIUM),
+        YELLOW_CAKE_PIECE(HTRadioactiveComponent.LOW),
+        NUCLEAR_WASTE(HTRadioactiveComponent.LOW),
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
@@ -668,11 +673,20 @@ object RagiumItems {
                 )
                 Ingredients.PROCESSOR_SOCKET -> registerItem(ingredient, itemSettings().maybeRework())
                 Ingredients.RAGI_CRYSTAL_PROCESSOR -> registerItem(ingredient, itemSettings().maybeRework())
-                Ingredients.URANIUM_FUEL -> registerItem(ingredient, itemSettings().maxDamage(1024))
-                Ingredients.PLUTONIUM_FUEL -> registerItem(ingredient, itemSettings().maxDamage(1024))
-                Ingredients.YELLOW_CAKE_PIECE -> registerItem(ingredient, itemSettings().food(RagiumFoodComponents.YELLOW_CAKE_PIECE))
                 else -> registerItem(ingredient)
             }
+        }
+        Radioactives.entries.forEach { radioactive: Radioactives ->
+            registerItem(
+                radioactive,
+                when (radioactive) {
+                    Radioactives.URANIUM_FUEL -> itemSettings().maxDamage(1024)
+                    Radioactives.PLUTONIUM_FUEL -> itemSettings().maxDamage(1024)
+                    Radioactives.YELLOW_CAKE -> itemSettings()
+                    Radioactives.YELLOW_CAKE_PIECE -> itemSettings().food(RagiumFoodComponents.YELLOW_CAKE_PIECE)
+                    Radioactives.NUCLEAR_WASTE -> itemSettings()
+                }.radioactive(radioactive.level),
+            )
         }
         // misc
         registerItem(RAGI_TICKET, itemSettings().rarity(Rarity.EPIC))

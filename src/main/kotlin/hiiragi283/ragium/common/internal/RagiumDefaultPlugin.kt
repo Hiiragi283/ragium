@@ -445,33 +445,34 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.ORE, key)
                 .itemOutput(output, count * 2)
-                .apply {
-                    subProduction?.let(::itemOutput)
-                }.offerTo(exporter, output)
+                .apply { subProduction?.let(::itemOutput) }
+                .itemOutput(RagiumItems.Ingredients.SLAG)
+                .offerTo(exporter, output)
             // 3x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
                 .itemOutput(output, count * 3)
-                .apply {
-                    subProduction?.let(::itemOutput)
-                }.offerTo(exporter, output, "_3x")
+                .apply { subProduction?.let(::itemOutput) }
+                .itemOutput(RagiumItems.Ingredients.SLAG, 2)
+                .offerTo(exporter, output, "_3x")
             // 4x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
                 .itemOutput(output, count * 4)
-                .apply {
-                    subProduction?.let { itemOutput(it, 2) }
-                }.offerTo(exporter, output, "_4x")
+                .apply { subProduction?.let { itemOutput(it, 2) } }
+                .itemOutput(RagiumItems.Ingredients.SLAG, 3)
+                .offerTo(exporter, output, "_4x")
             // 5x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.MERCURY, FluidConstants.INGOT)
                 .itemOutput(output, count * 5)
+                .itemOutput(RagiumItems.Ingredients.SLAG, 4)
                 .offerTo(exporter, output, "_5x")
         }
         // raw -> dust

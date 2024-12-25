@@ -67,8 +67,8 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         val fuelStack: ItemStack = inventory.getStack(0)
         val wasteStack: ItemStack = inventory.getStack(1)
         val result: HTItemResult = when (fuelStack.item) {
-            RagiumItems.Ingredients.URANIUM_FUEL.get() -> RagiumItems.Ingredients.NUCLEAR_WASTE
-            RagiumItems.Ingredients.PLUTONIUM_FUEL.get() -> RagiumItems.Ingredients.SLAG
+            RagiumItems.Radioactives.URANIUM_FUEL.get() -> RagiumItems.Radioactives.NUCLEAR_WASTE
+            RagiumItems.Radioactives.PLUTONIUM_FUEL.get() -> RagiumItems.Ingredients.SLAG
             else -> null
         }?.let(::HTItemResult) ?: return HTUnitResult.errorString { "Input slot has no nuclear fuels!" }
         if (!result.canMerge(wasteStack)) return overheat(world, pos)

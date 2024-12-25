@@ -483,6 +483,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
 
             addAll(RagiumItems.FOODS)
             addAll(RagiumItems.Ingredients.entries)
+            addAll(RagiumItems.Radioactives.entries)
             addAll(RagiumItems.MISC)
 
             remove(RagiumItems.CHOCOLATE_APPLE)

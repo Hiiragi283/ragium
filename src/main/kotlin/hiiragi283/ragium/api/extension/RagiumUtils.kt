@@ -9,11 +9,14 @@ import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.effect.StatusEffect
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -130,6 +133,44 @@ fun throwEntity(world: World, player: PlayerEntity, entityBuilder: (World, Playe
  * Get [ItemStack] which [this] living entity holding in [LivingEntity.getActiveHand]
  */
 fun LivingEntity.getStackInActiveHand(): ItemStack = getStackInHand(activeHand)
+
+fun LivingEntity.addStatusEffect(
+    effect: RegistryEntry<StatusEffect>,
+    duration: Int,
+    amplifier: Int = 0,
+    ambient: Boolean = false,
+    showParticles: Boolean = true,
+    showIcon: Boolean = false,
+) {
+    addStatusEffect(
+        StatusEffectInstance(
+            effect,
+            duration,
+            amplifier,
+            ambient,
+            showParticles,
+            showIcon,
+            null,
+        ),
+    )
+}
+
+fun LivingEntity.addInfinityStatusEffect(
+    effect: RegistryEntry<StatusEffect>,
+    amplifier: Int = 0,
+    ambient: Boolean = false,
+    showParticles: Boolean = true,
+    showIcon: Boolean = false,
+) {
+    addStatusEffect(
+        effect,
+        -1,
+        amplifier,
+        ambient,
+        showParticles,
+        showIcon,
+    )
+}
 
 //    Color    //
 

@@ -632,8 +632,8 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/soap",
                 alkali,
-                RagiumItems.Ingredients.SOAP_INGOT,
-            ) { hasAllItems(RagiumItems.Ingredients.SOAP_INGOT) }
+                RagiumItems.Ingredients.SOAP,
+            ) { hasAllItems(RagiumItems.Ingredients.SOAP) }
             // aluminum
             val bauxite: AdvancementEntry = createContentChild(
                 consumer,
@@ -704,28 +704,28 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/yellow_cake",
                 uranium,
-                RagiumItems.Ingredients.YELLOW_CAKE,
-            ) { hasAllItems(RagiumItems.Ingredients.YELLOW_CAKE) }
+                RagiumItems.Radioactives.YELLOW_CAKE,
+            ) { hasAllItems(RagiumItems.Radioactives.YELLOW_CAKE) }
             val thisCakeIsDie: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/this_cake_is_die",
                 yellowCake,
-                RagiumItems.Ingredients.YELLOW_CAKE_PIECE,
+                RagiumItems.Radioactives.YELLOW_CAKE_PIECE,
                 title = Text.translatable(RagiumTranslationKeys.ADVANCEMENT_THIS_CAKE_IS_DIE),
                 frame = AdvancementFrame.CHALLENGE,
                 hidden = true,
             ) {
                 criterion(
                     "consumed_item",
-                    ConsumeItemCriterion.Conditions.item(RagiumItems.Ingredients.YELLOW_CAKE_PIECE),
+                    ConsumeItemCriterion.Conditions.item(RagiumItems.Radioactives.YELLOW_CAKE_PIECE),
                 )
             }
             val uraniumFuel: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/uranium_fuel",
                 yellowCake,
-                RagiumItems.Ingredients.URANIUM_FUEL,
-            ) { hasAllItems(RagiumItems.Ingredients.URANIUM_FUEL) }
+                RagiumItems.Radioactives.URANIUM_FUEL,
+            ) { hasAllItems(RagiumItems.Radioactives.URANIUM_FUEL) }
             val mutatedSoil: AdvancementEntry = createChild(
                 consumer,
                 "chemistry/mutated_soil",
@@ -737,9 +737,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/plutonium_fuel",
                 uraniumFuel,
-                RagiumItems.Ingredients.PLUTONIUM_FUEL,
+                RagiumItems.Radioactives.PLUTONIUM_FUEL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.Ingredients.PLUTONIUM_FUEL) }
+            ) { hasAllItems(RagiumItems.Radioactives.PLUTONIUM_FUEL) }
         }
     }
 

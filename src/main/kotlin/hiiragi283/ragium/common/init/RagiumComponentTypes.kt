@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTExplosionComponent
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -91,6 +92,10 @@ object RagiumComponentTypes {
     @JvmField
     val MATERIAL_KEY: ComponentType<HTMaterialKey> =
         register("material_key", HTMaterialKey.COMPONENT_TYPE)
+
+    @JvmField
+    val RADIOACTIVE: ComponentType<HTRadioactiveComponent> =
+        register("radioactive", HTRadioactiveComponent.COMPONENT_TYPE)
 
     @JvmField
     val REPAIRMENT: ComponentType<HTItemIngredient> =

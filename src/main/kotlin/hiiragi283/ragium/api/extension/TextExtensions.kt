@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.fluid.Fluid
@@ -7,6 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.*
+import net.minecraft.util.Formatting
 import net.minecraft.util.Language
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
@@ -68,15 +70,23 @@ fun fluidAmountText(value: Long): MutableText = Text.translatable(
     NumberFormat.getNumberInstance().format(value % FluidConstants.BUCKET),
 )
 
-fun fluidFilterText(entryList: RegistryEntryList<Fluid>): MutableText = Text.translatable(
-    RagiumTranslationKeys.EXPORTER_FLUID_FILTER,
-    entryList.asText(Fluid::name),
-)
+fun fluidFilterText(entryList: RegistryEntryList<Fluid>): MutableText = Text
+    .translatable(
+        RagiumTranslationKeys.EXPORTER_FLUID_FILTER,
+        entryList.asText(Fluid::name).formatted(Formatting.DARK_AQUA),
+    ).formatted(Formatting.GRAY)
 
-fun itemFilterText(entryList: RegistryEntryList<Item>): MutableText = Text.translatable(
-    RagiumTranslationKeys.EXPORTER_ITEM_FILTER,
-    entryList.asText(Item::getName),
-)
+fun itemFilterText(entryList: RegistryEntryList<Item>): MutableText = Text
+    .translatable(
+        RagiumTranslationKeys.EXPORTER_ITEM_FILTER,
+        entryList.asText(Item::getName).formatted(Formatting.GOLD),
+    ).formatted(Formatting.GRAY)
+
+fun radioactivityText(level: HTRadioactiveComponent): MutableText = Text
+    .translatable(
+        RagiumTranslationKeys.RADIOACTIVITY,
+        level.text,
+    ).formatted(Formatting.GRAY)
 
 fun Text.hasValidTranslation(): Boolean = (this.content as? TranslatableTextContent)
     ?.let(TranslatableTextContent::getKey)

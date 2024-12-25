@@ -2,6 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
@@ -36,7 +37,6 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.event.player.UseItemCallback
-import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -66,7 +66,6 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 import net.minecraft.world.World
-import team.reborn.energy.api.EnergyStorage
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
@@ -200,6 +199,7 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerEvents() {
+        // open filter screen
         UseItemCallback.EVENT.register { player: PlayerEntity, world: World, hand: Hand ->
             val stack: ItemStack = player.getStackInHand(hand)
             if (world.isClient) {
@@ -211,16 +211,6 @@ object RagiumClient : ClientModInitializer {
                 }
             }
             TypedActionResult.pass(stack)
-        }
-
-        ItemTooltipCallback.EVENT.register {
-                stack: ItemStack,
-                context: Item.TooltipContext,
-                tooltipType: TooltipType,
-                lines: MutableList<Text>,
-            ->
-            stack.get(RagiumComponentTypes.ITEM_FILTER)?.let(::itemFilterText)?.let(lines::add)
-            stack.get(RagiumComponentTypes.FLUID_FILTER)?.let(::fluidFilterText)?.let(lines::add)
         }
 
         ModelLoadingPlugin.register { context: ModelLoadingPlugin.Context ->
@@ -271,6 +261,7 @@ object RagiumClient : ClientModInitializer {
             }
             RagiumAPI.LOGGER.info("Loaded runtime models!")
         }
+
         ItemTooltipCallback.EVENT.register(
             RagiumAPI.id("description"),
         ) { stack: ItemStack, _: Item.TooltipContext, _: TooltipType, tooltips: MutableList<Text> ->
@@ -278,13 +269,18 @@ object RagiumClient : ClientModInitializer {
             if (stack.contains(RagiumComponentTypes.REWORK_TARGET)) {
                 tooltips.add(Text.literal("This content may be updated or REMOVED!").formatted(Formatting.DARK_RED))
             }
-            // descriptions
-            val texts: List<Text> = buildList {
-                stack.get(RagiumComponentTypes.DESCRIPTION)?.let(this::addAll)
-                ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
-                    add(Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"))
-                }
+            // radioactivity
+            stack.get(HTRadioactiveComponent.COMPONENT_TYPE)?.let(::radioactivityText)?.let(tooltips::add)
+            // filter
+            stack.get(RagiumComponentTypes.ITEM_FILTER)?.let(::itemFilterText)?.let(tooltips::add)
+            stack.get(RagiumComponentTypes.FLUID_FILTER)?.let(::fluidFilterText)?.let(tooltips::add)
+            /*
+            ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
+                add(Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"))
             }
+             */
+            // descriptions
+            val texts: List<Text> = stack.get(RagiumComponentTypes.DESCRIPTION) ?: return@register
             if (texts.isEmpty()) return@register
             if (Screen.hasControlDown()) {
                 texts.map(Text::copy).map { it.formatted(Formatting.AQUA) }.forEach(tooltips::add)

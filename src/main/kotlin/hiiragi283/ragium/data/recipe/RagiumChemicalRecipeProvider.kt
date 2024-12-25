@@ -56,11 +56,11 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .itemInput(Items.POISONOUS_POTATO, 8)
             .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.BUCKET * 4)
-            .itemOutput(RagiumItems.Ingredients.YELLOW_CAKE)
-            .offerTo(exporter, RagiumItems.Ingredients.YELLOW_CAKE)
+            .itemOutput(RagiumItems.Radioactives.YELLOW_CAKE)
+            .offerTo(exporter, RagiumItems.Radioactives.YELLOW_CAKE)
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItems.Ingredients.YELLOW_CAKE)
+            .itemInput(RagiumItems.Radioactives.YELLOW_CAKE)
             .fluidInput(RagiumFluids.HYDROGEN_FLUORIDE, FluidConstants.BUCKET * 6)
             .fluidOutput(RagiumFluids.URANIUM_HEXAFLUORIDE)
             .offerTo(exporter, RagiumFluids.URANIUM_HEXAFLUORIDE)
@@ -591,9 +591,9 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumItemTags.ALKALI)
             .fluidInput(RagiumFluidTags.ORGANIC_OILS)
-            .itemOutput(RagiumItems.Ingredients.SOAP_INGOT)
+            .itemOutput(RagiumItems.Ingredients.SOAP)
             .fluidOutput(RagiumFluids.GLYCEROL)
-            .offerTo(exporter, RagiumItems.Ingredients.SOAP_INGOT)
+            .offerTo(exporter, RagiumItems.Ingredients.SOAP)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)
@@ -642,7 +642,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)
             .itemInput(ItemTags.DIRT)
-            .itemInput(RagiumItems.Ingredients.NUCLEAR_WASTE)
+            .itemInput(RagiumItems.Radioactives.NUCLEAR_WASTE)
             .itemOutput(RagiumBlocks.MUTATED_SOIL)
             .offerTo(exporter, RagiumBlocks.MUTATED_SOIL)
 
@@ -717,7 +717,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)
             .itemInput(input)
-            .itemInput(RagiumItems.Ingredients.SOAP_INGOT)
+            .itemInput(RagiumItems.Ingredients.SOAP)
             .fluidInput(Fluids.WATER)
             .itemOutput(output)
             .offerTo(exporter, output, "_breaching")
