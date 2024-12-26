@@ -118,6 +118,7 @@ object RagiumItems {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         LAPIS(RagiumMaterialKeys.LAPIS),
+        STONE(RagiumMaterialKeys.STONE),
         WOOD(RagiumMaterialKeys.WOOD),
 
         // tier2
@@ -297,6 +298,15 @@ object RagiumItems {
     val CHOCOLATE_COOKIE: HTItemContent = HTContent.ofItem("chocolate_cookie")
 
     @JvmField
+    val CINNAMON_STICK: HTItemContent = HTContent.ofItem("cinnamon_stick")
+
+    @JvmField
+    val CINNAMON_POWDER: HTItemContent = HTContent.ofItem("cinnamon_powder")
+
+    @JvmField
+    val CINNAMON_ROLL: HTItemContent = HTContent.ofItem("cinnamon_roll")
+
+    @JvmField
     val MINCED_MEAT: HTItemContent = HTContent.ofItem("minced_meat")
 
     @JvmField
@@ -309,21 +319,34 @@ object RagiumItems {
     val CANNED_COOKED_MEAT: HTItemContent = HTContent.ofItem("canned_cooked_meat")
 
     @JvmField
+    val AMBROSIA: HTItemContent = HTContent.ofItem("ambrosia")
+
+    @JvmField
     val FOODS: List<HTItemContent> = listOf(
+        // cake
         SWEET_BERRIES_CAKE_PIECE,
         MELON_PIE,
+        // ingredient
         BUTTER,
         CARAMEL,
         DOUGH,
         FLOUR,
+        // chocolate
         CHOCOLATE,
         CHOCOLATE_APPLE,
         CHOCOLATE_BREAD,
         CHOCOLATE_COOKIE,
+        // cinnamon
+        CINNAMON_STICK,
+        CINNAMON_POWDER,
+        CINNAMON_ROLL,
+        // meat
         MINCED_MEAT,
         MEAT_INGOT,
         COOKED_MEAT_INGOT,
         CANNED_COOKED_MEAT,
+        // end-contents
+        AMBROSIA,
     )
 
     //    Ingredients    //
@@ -658,10 +681,14 @@ object RagiumItems {
         registerItem(CHOCOLATE_APPLE, itemSettings().food(FoodComponents.COOKED_CHICKEN))
         registerItem(CHOCOLATE_BREAD, itemSettings().food(FoodComponents.COOKED_BEEF))
         registerItem(CHOCOLATE_COOKIE, itemSettings().food(FoodComponents.COOKIE))
+        registerItem(CINNAMON_STICK, itemSettings())
+        registerItem(CINNAMON_POWDER, itemSettings())
+        registerItem(CINNAMON_ROLL, itemSettings().food(FoodComponents.COOKED_BEEF))
         registerItem(MINCED_MEAT)
         registerItem(MEAT_INGOT, itemSettings().food(FoodComponents.BEEF))
         registerItem(COOKED_MEAT_INGOT, itemSettings().food(FoodComponents.COOKED_BEEF))
         registerItem(CANNED_COOKED_MEAT, itemSettings().food(RagiumFoodComponents.CANNED_COOKED_MEAT))
+        registerItem(AMBROSIA, itemSettings().rarity(Rarity.EPIC))
         // ingredients
         Ingredients.entries.forEach { ingredient: Ingredients ->
             when (ingredient) {

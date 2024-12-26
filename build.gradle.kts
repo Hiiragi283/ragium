@@ -158,9 +158,9 @@ tasks {
     }
 
     processResources {
-        inputs.property("version", project.version)
+        inputs.property("version", version)
         filesMatching("fabric.mod.json") {
-            expand("version" to project.version)
+            expand("version" to version)
         }
         exclude(".cache")
     }

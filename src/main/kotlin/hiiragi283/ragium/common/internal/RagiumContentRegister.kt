@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
+import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -45,6 +46,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
+import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -63,6 +65,7 @@ import net.minecraft.util.*
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.village.TradeOffers
 import net.minecraft.world.World
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
@@ -159,13 +162,14 @@ internal object RagiumContentRegister {
             ActionResult.PASS
         }
         // hard mode repair
+        val hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             context.modify({
                 (it as? ToolItem)?.material == ToolMaterials.IRON || (it as? ArmorItem)?.material == ArmorMaterials.IRON
             }) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
                     RagiumComponentTypes.REPAIRMENT,
-                    HTItemIngredient.of(RagiumHardModeContents.IRON.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                    HTItemIngredient.of(RagiumHardModeContents.IRON.getPrefixedTag(hardMode)),
                 )
             }
             context.modify({
@@ -173,7 +177,7 @@ internal object RagiumContentRegister {
             }) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
                     RagiumComponentTypes.REPAIRMENT,
-                    HTItemIngredient.of(RagiumHardModeContents.GOLD.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                    HTItemIngredient.of(RagiumHardModeContents.GOLD.getPrefixedTag(hardMode)),
                 )
             }
             context.modify({
@@ -181,8 +185,11 @@ internal object RagiumContentRegister {
             }) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
                     RagiumComponentTypes.REPAIRMENT,
-                    HTItemIngredient.of(RagiumHardModeContents.NETHERITE.getContent(RagiumAPI.getInstance().config.isHardMode)),
+                    HTItemIngredient.of(RagiumHardModeContents.NETHERITE.getPrefixedTag(hardMode)),
                 )
+            }
+            context.modify(RagiumItems.AMBROSIA.get()) { builder: ComponentMap.Builder ->
+                builder.add(DataComponentTypes.FOOD, RagiumFoodComponents.AMBROSIA)
             }
         }
         // radioactive effects
@@ -221,6 +228,10 @@ internal object RagiumContentRegister {
         }
 
         registerDrinkHandlers(HTFluidDrinkingHandlerRegistry::register)
+
+        TradeOfferHelper.registerWanderingTraderOffers(1) { factories: MutableList<TradeOffers.Factory> ->
+            factories.add(TradeOffers.SellItemFactory(RagiumItems.CINNAMON_STICK.get(), 5, 5, 1, 1))
+        }
     }
 
     private fun registerItemStorages() {

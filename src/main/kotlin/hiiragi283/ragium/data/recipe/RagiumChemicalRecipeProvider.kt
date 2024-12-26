@@ -652,6 +652,14 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .fluidInput(Fluids.LAVA)
             .itemOutput(RagiumBlocks.POROUS_NETHERRACK)
             .offerTo(exporter, RagiumBlocks.POROUS_NETHERRACK)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)
+            .itemInput(RagiumItems.CINNAMON_POWDER, 64)
+            .fluidInput(RagiumFluids.CHOCOLATE, FluidConstants.BUCKET * 128)
+            .fluidInput(RagiumFluids.HONEY, FluidConstants.BUCKET * 128)
+            .itemOutput(RagiumItems.AMBROSIA)
+            .offerTo(exporter, RagiumItems.AMBROSIA)
         // acids
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.MIXER)

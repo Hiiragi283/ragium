@@ -354,7 +354,6 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ItemTags.FENCE_GATES to 1, RagiumItems.Ingredients.PULP to 4, suffix = "_from_fence_gate")
         registerGrinder(exporter, ItemTags.LOGS to 1, RagiumItems.Ingredients.PULP to 4, suffix = "_from_log")
         registerGrinder(exporter, ItemTags.PLANKS to 1, RagiumItems.Ingredients.PULP to 1, suffix = "_from_plank")
-        // registerGrinder(exporter, ItemTags.REDSTONE_ORES to 1, Items.REDSTONE to 8)
         registerGrinder(exporter, ItemTags.SAPLINGS to 2, RagiumItems.Ingredients.PULP to 1, suffix = "_from_sapling")
         registerGrinder(exporter, ItemTags.WOODEN_BUTTONS to 1, RagiumItems.Ingredients.PULP to 1, suffix = "_from_button")
         registerGrinder(exporter, ItemTags.WOODEN_DOORS to 1, RagiumItems.Ingredients.PULP to 2, suffix = "_from_door")
@@ -364,8 +363,9 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         registerGrinder(exporter, ItemTags.WOODEN_STAIRS to 4, RagiumItems.Ingredients.PULP to 6, suffix = "_from_stair")
         registerGrinder(exporter, ItemTags.WOODEN_TRAPDOORS to 1, RagiumItems.Ingredients.PULP to 3, suffix = "_from_trap_door")
         registerGrinder(exporter, ItemTags.WOOL to 1, Items.STRING to 4)
-        registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumItems.MINCED_MEAT to 1)
+        registerGrinder(exporter, RagiumItems.CINNAMON_STICK to 1, RagiumItems.CINNAMON_POWDER to 2)
         registerGrinder(exporter, RagiumItems.Ingredients.SLAG to 1, Items.GRAVEL to 1, "_from_slag")
+        registerGrinder(exporter, RagiumItemTags.PROTEIN_FOODS to 1, RagiumItems.MINCED_MEAT to 1)
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.GRINDER)

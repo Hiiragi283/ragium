@@ -30,7 +30,6 @@ rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version.ref 
 [bundles]
 mods-fabric = [
     "fabric-api",
-    "fabric-kotlin",
     "fabric-loader",
 ]
 mods-include = [
@@ -38,6 +37,7 @@ mods-include = [
 ]
 mods-compile = []
 mods-runtime = [
+    "fabric-kotlin",
     "jade",
     "mod-modmenu",
     "rei"

@@ -1,8 +1,12 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumItems
+import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -12,6 +16,7 @@ import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -78,6 +83,15 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
             else -> inputMap[char] = ingredient
         }
     }
+
+    fun fluidInput(char: Char, content: HTFluidContent): HTShapedRecipeJsonBuilder = fluidInput(char, content.get())
+
+    fun fluidInput(char: Char, fluid: Fluid): HTShapedRecipeJsonBuilder = input(
+        char,
+        DefaultCustomIngredients.components(Ingredient.ofItems(RagiumItems.FILLED_FLUID_CUBE)) { builder: ComponentChanges.Builder ->
+            builder.add(RagiumComponentTypes.FLUID, fluid)
+        },
+    )
 
     fun patterns(patterns: List<String>): HTShapedRecipeJsonBuilder = patterns(*patterns.toTypedArray())
 

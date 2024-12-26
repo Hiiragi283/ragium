@@ -79,8 +79,8 @@ fun createToolAttribute(material: ToolMaterial, baseAttack: Double, attackSpeed:
         )
 
 fun foodComponent(
-    nutrition: Int,
-    saturation: Float,
+    nutrition: Int = 0,
+    saturation: Float = 0f,
     alwaysEat: Boolean = false,
     eatSeconds: Float = 1.0f,
     convertTo: ItemStack? = null,

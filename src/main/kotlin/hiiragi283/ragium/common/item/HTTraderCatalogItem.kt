@@ -12,7 +12,7 @@ import net.minecraft.world.World
 class HTTraderCatalogItem(settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
-        user.itemCooldownManager.set(this, 20 * 1 * 60)
+        // user.itemCooldownManager.set(this, 20 * 1 * 60)
         return if (stack.isOf(this)) {
             WanderingTraderEntity(EntityType.WANDERING_TRADER, world).interactMob(user, Hand.MAIN_HAND)
             TypedActionResult.success(stack, world.isClient)

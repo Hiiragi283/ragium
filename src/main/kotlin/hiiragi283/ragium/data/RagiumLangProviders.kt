@@ -247,20 +247,29 @@ object RagiumLangProviders {
             builder.add(RagiumItems.STELLA_SABER, "S.T.E.L.L.A. Saber")
             builder.add(RagiumItems.TRADER_CATALOG, "Trader Catalog")
 
+            builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
+            builder.add(RagiumItems.MELON_PIE, "Melon Pie")
+
             builder.add(RagiumItems.BUTTER, "Butter")
-            builder.add(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
             builder.add(RagiumItems.CARAMEL, "Caramel")
+            builder.add(RagiumItems.DOUGH, "Dough")
+            builder.add(RagiumItems.FLOUR, "Flour")
+
             builder.add(RagiumItems.CHOCOLATE, "Chocolate")
             builder.add(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
             builder.add(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
             builder.add(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
-            builder.add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
-            builder.add(RagiumItems.FLOUR, "Flour")
-            builder.add(RagiumItems.DOUGH, "Dough")
-            builder.add(RagiumItems.MEAT_INGOT, "Meat Ingot")
-            builder.add(RagiumItems.MELON_PIE, "Melon Pie")
+
+            builder.add(RagiumItems.CINNAMON_STICK, "Cinnamon Stick")
+            builder.add(RagiumItems.CINNAMON_POWDER, "Cinnamon Powder")
+            builder.add(RagiumItems.CINNAMON_ROLL, "Cinnamon Roll")
+
             builder.add(RagiumItems.MINCED_MEAT, "Minced Meat")
-            builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
+            builder.add(RagiumItems.MEAT_INGOT, "Meat Ingot")
+            builder.add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
+            builder.add(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
+
+            builder.add(RagiumItems.AMBROSIA, "Ambrosia")
 
             builder.add(RagiumItems.Ingredients.BASALT_MESH, "Basalt Mesh")
             builder.add(RagiumItems.Ingredients.BEE_WAX, "Bee Wax")
@@ -425,6 +434,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.IRON, "Iron")
             builder.add(RagiumMaterialKeys.NITER, "Niter")
             builder.add(RagiumMaterialKeys.SALT, "Salt")
+            builder.add(RagiumMaterialKeys.STONE, "Stone")
             builder.add(RagiumMaterialKeys.SULFUR, "Sulfur")
             builder.add(RagiumMaterialKeys.WOOD, "Wood")
 
@@ -666,20 +676,29 @@ object RagiumLangProviders {
             builder.add(RagiumItems.STELLA_SABER, "S.T.E.L.L.A.セイバー")
             builder.add(RagiumItems.TRADER_CATALOG, "行商人カタログ")
 
+            builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
+            builder.add(RagiumItems.MELON_PIE, "メロンパイ")
+
             builder.add(RagiumItems.BUTTER, "バター")
-            builder.add(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
             builder.add(RagiumItems.CARAMEL, "キャラメル")
+            builder.add(RagiumItems.DOUGH, "生地")
+            builder.add(RagiumItems.FLOUR, "小麦粉")
+
             builder.add(RagiumItems.CHOCOLATE, "チョコレート")
             builder.add(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
             builder.add(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
             builder.add(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
-            builder.add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
-            builder.add(RagiumItems.FLOUR, "小麦粉")
-            builder.add(RagiumItems.DOUGH, "生地")
-            builder.add(RagiumItems.MEAT_INGOT, "生肉インゴット")
-            builder.add(RagiumItems.MELON_PIE, "メロンパイ")
+
+            builder.add(RagiumItems.CINNAMON_STICK, "シナモンスティック")
+            builder.add(RagiumItems.CINNAMON_POWDER, "シナモンパウダー")
+            builder.add(RagiumItems.CINNAMON_ROLL, "シナモンロール")
+
             builder.add(RagiumItems.MINCED_MEAT, "ひき肉")
-            builder.add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
+            builder.add(RagiumItems.MEAT_INGOT, "生肉インゴット")
+            builder.add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
+            builder.add(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
+
+            builder.add(RagiumItems.AMBROSIA, "アンブロシア")
 
             builder.add(RagiumItems.Ingredients.BASALT_MESH, "玄武岩メッシュ")
             builder.add(RagiumItems.Ingredients.BEE_WAX, "蜜蠟")
@@ -801,6 +820,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.IRON, "鉄")
             builder.add(RagiumMaterialKeys.NITER, "硝石")
             builder.add(RagiumMaterialKeys.SALT, "塩")
+            builder.add(RagiumMaterialKeys.STONE, "石材")
             builder.add(RagiumMaterialKeys.SULFUR, "硫黄")
             builder.add(RagiumMaterialKeys.WOOD, "木材")
 

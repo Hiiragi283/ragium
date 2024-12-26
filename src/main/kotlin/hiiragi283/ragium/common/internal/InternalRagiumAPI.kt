@@ -2,12 +2,19 @@ package hiiragi283.ragium.common.internal
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
+import com.google.gson.JsonElement
+import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
+import com.mojang.serialization.JsonOps
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
@@ -34,6 +41,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.entry.RegistryEntryList
+import net.minecraft.util.JsonHelper
 import net.minecraft.util.Rarity
 import java.nio.file.Files
 import java.nio.file.Path
@@ -95,19 +103,6 @@ internal data object InternalRagiumAPI : RagiumAPI {
             }
         }
         // register blocks
-        /*val blockTable: HTTable.Mutable<HTMachineKey, HTMachineTier, HTMachineBlock> = mutableTableOf()
-        sortedKeys.keys.forEach { key: HTMachineKey ->
-            HTMachineTier.entries.forEach { tier: HTMachineTier ->
-                val block = HTMachineBlock(key, tier)
-                Registry.register(Registries.BLOCK, tier.createId(key), block)
-                blockTable.put(key, tier, block)
-                val item = BlockItem(
-                    block,
-                    itemSettings().machine(key, tier),
-                )
-                Registry.register(Registries.ITEM, tier.createId(key), item)
-            }
-        }*/
         val blockMap: Map<HTMachineKey, HTMachineBlock> = sortedKeys.keys
             .associateWith(::HTMachineBlock)
             .onEach { (key: HTMachineKey, block: HTMachineBlock) ->
@@ -210,14 +205,22 @@ internal data object InternalRagiumAPI : RagiumAPI {
 
     @JvmStatic
     private fun readConfig(): RagiumAPI.Config {
-        var config = ConfigImpl()
+        var config: ConfigImpl = ConfigImpl.DEFAULT
         if (Files.exists(configPath)) {
             configPath
                 .bufferedReader()
-                .use { gson.fromJson(it, ConfigImpl::class.java) }
-                ?.let { config = it }
+                .use { JsonHelper.deserializeNullable(gson, it, JsonElement::class.java, false) }
+                ?.let { json: JsonElement ->
+                    ConfigImpl.CODEC
+                        .parse(JsonOps.INSTANCE, json)
+                        .ifSuccess { config = it }
+                        .ifError(::error)
+                } ?: error("Failed to read config file!")
         } else {
-            configPath.bufferedWriter().use { gson.toJson(config, it) }
+            ConfigImpl.CODEC
+                .encodeStart(JsonOps.INSTANCE, config)
+                .ifSuccess { json: JsonElement -> configPath.bufferedWriter().use { gson.toJson(json, it) } }
+                .ifError(::error)
         }
         return config
     }
@@ -225,22 +228,34 @@ internal data object InternalRagiumAPI : RagiumAPI {
     @JvmStatic
     private fun getVersion(): String = getModMetadata(RagiumAPI.MOD_ID)?.version?.friendlyString ?: "MISSING"
 
-    class ConfigImpl(
-        val version: String,
-        @SerializedName("auto_illuminator_radius")
-        override val autoIlluminatorRadius: Int,
-        @SerializedName("hard_mode")
-        override val isHardMode: Boolean,
-    ) : RagiumAPI.Config {
-        constructor() : this(getVersion(), 64, false)
+    private class ConfigImpl(val version: String, override val autoIlluminatorRadius: Int, override val isHardMode: Boolean) :
+        RagiumAPI.Config {
+        companion object {
+            @JvmField
+            val CODEC: Codec<ConfigImpl> = RecordCodecBuilder
+                .create { instance ->
+                    instance
+                        .group(
+                            Codec.STRING.fieldOf("version").forGetter(ConfigImpl::version),
+                            Codec
+                                .intRange(
+                                    0,
+                                    Int.MAX_VALUE,
+                                ).fieldOf("auto_illuminator_radius")
+                                .forGetter(ConfigImpl::autoIlluminatorRadius),
+                            Codec.BOOL.fieldOf("hard_mode").forGetter(ConfigImpl::isHardMode),
+                        ).apply(instance, ::ConfigImpl)
+                }.validate { config: ConfigImpl ->
+                    DataResult
+                        .success(config)
+                        .validate(
+                            { it.version == getVersion() },
+                            { "Not matching config version! Remove old config file!" },
+                        )
+                }
 
-        init {
-            validate()
-        }
-
-        fun validate(): ConfigImpl = apply {
-            check(version == getVersion()) { "Not matching config version! Remove old config file!" }
-            RagiumAPI.LOGGER.info("Loaded config!")
+            @JvmField
+            val DEFAULT = ConfigImpl(getVersion(), 64, false)
         }
     }
 }

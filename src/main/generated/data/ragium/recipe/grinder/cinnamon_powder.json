@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:grinder",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "items": "ragium:cinnamon_stick"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "ragium:cinnamon_powder"
+    }
+  ]
+}

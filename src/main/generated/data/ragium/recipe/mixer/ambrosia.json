@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 10368000,
+      "fluids": "#c:chocolate"
+    },
+    {
+      "amount": 10368000,
+      "fluids": "#c:honey"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 64,
+      "items": "ragium:cinnamon_powder"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:ambrosia"
+    }
+  ]
+}

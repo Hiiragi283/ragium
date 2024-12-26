@@ -225,6 +225,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
         helper.register(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
         // plate
+        helper.register(RagiumMaterialKeys.STONE, HTMaterialType.PLATE)
         helper.register(RagiumMaterialKeys.WOOD, HTMaterialType.PLATE)
 
         // alternative name

@@ -1,23 +1,21 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.data.*
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.item.HTBackpackItem
 import hiiragi283.ragium.common.recipe.HTDynamiteUpgradingRecipe
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider
-import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
-import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.RecipeExporter
-import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
-import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.book.RecipeCategory
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
@@ -404,15 +402,15 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
     //    Crafting - Foods    //
 
-    private fun fluidIngredient(content: HTFluidContent): Ingredient = fluidIngredient(content.get())
-
-    private fun fluidIngredient(fluid: Fluid): Ingredient = DefaultCustomIngredients.components(
-        Ingredient.ofItems(RagiumItems.FILLED_FLUID_CUBE),
-    ) { builder: ComponentChanges.Builder ->
-        builder.add(RagiumComponentTypes.FLUID, fluid)
-    }
-
     private fun craftingFoods(exporter: RecipeExporter) {
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.MELON_PIE)
+            .input(Items.MELON)
+            .input(Items.SUGAR)
+            .input(Items.EGG)
+            .unlockedBy(Items.MELON)
+            .offerTo(exporter)
+
         // sweet berries cake
         HTShapedRecipeJsonBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -420,7 +418,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
                 "ABA",
                 "CDC",
                 "EEE",
-            ).input('A', fluidIngredient(RagiumFluids.MILK))
+            ).fluidInput('A', RagiumFluids.MILK)
             .input('B', Items.SWEET_BERRIES)
             .input('C', RagiumItems.CHOCOLATE)
             .input('D', Items.EGG)
@@ -453,26 +451,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('A', RagiumItems.Radioactives.YELLOW_CAKE_PIECE)
             .unlockedBy(RagiumItems.Radioactives.YELLOW_CAKE_PIECE)
             .offerSuffix(exporter, "_from_piece")
-
-        HTShapelessRecipeJsonBuilder
-            .create(RagiumItems.MELON_PIE)
-            .input(Items.MELON)
-            .input(Items.SUGAR)
-            .input(Items.EGG)
-            .unlockedBy(Items.MELON)
-            .offerTo(exporter)
         // chocolate
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_APPLE)
             .input(Items.APPLE)
-            .input(fluidIngredient(RagiumFluids.CHOCOLATE))
+            .fluidInput(RagiumFluids.CHOCOLATE)
             .unlockedBy(Items.APPLE)
             .offerTo(exporter)
 
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.CHOCOLATE_BREAD)
             .input(Items.BREAD)
-            .input(fluidIngredient(RagiumFluids.CHOCOLATE))
+            .fluidInput(RagiumFluids.CHOCOLATE)
             .unlockedBy(Items.BREAD)
             .offerTo(exporter)
 
@@ -482,6 +472,14 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('A', Items.COOKIE)
             .input('B', RagiumItems.CHOCOLATE)
             .unlockedBy(Items.COOKIE)
+            .offerTo(exporter)
+        // cinnamon
+        HTShapelessRecipeJsonBuilder
+            .create(RagiumItems.CINNAMON_ROLL)
+            .input(Items.BREAD)
+            .input(RagiumItems.CINNAMON_POWDER)
+            .fluidInput(RagiumFluids.MILK)
+            .unlockedBy(RagiumItems.CINNAMON_POWDER)
             .offerTo(exporter)
     }
 

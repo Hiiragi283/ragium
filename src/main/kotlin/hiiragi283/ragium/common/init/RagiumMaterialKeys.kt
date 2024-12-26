@@ -141,5 +141,8 @@ object RagiumMaterialKeys {
     //    Plate    //
 
     @JvmField
+    val STONE: HTMaterialKey = HTMaterialKey.of("stone")
+
+    @JvmField
     val WOOD: HTMaterialKey = HTMaterialKey.of("wood")
 }
