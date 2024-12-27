@@ -21,7 +21,9 @@ import kotlin.jvm.optionals.getOrNull
 //    Codec    //
 
 /**
- * Create a new [Codec] instance for an enum implementing [StringIdentifiable]
+ * 指定した[entries]から[Codec]を返します。
+ * @param T [StringIdentifiable]を継承したクラス
+ * @return [Codec.STRING]をベースに変換された[Codec]
  */
 fun <T : StringIdentifiable> identifiedCodec(entries: Iterable<T>): Codec<T> = Codec.STRING.comapFlatMap(
     { name: String ->
@@ -30,16 +32,17 @@ fun <T : StringIdentifiable> identifiedCodec(entries: Iterable<T>): Codec<T> = C
     StringIdentifiable::asString,
 )
 
+/**
+ * 指定した[first]と [second]から[Map]の[Codec]を返します。
+ */
 fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> =
-    Codec.pair(first.codec(), second.codec()).toMap()
-
-fun <A : Any, B : Any> Codec<MPair<A, B>>.toMap(): Codec<Map<A, B>> = this.listOf().xmap(
-    { pairs: List<MPair<A, B>> -> pairs.associate(MPair<A, B>::toKotlin) },
-    { map: Map<A, B> -> map.toList().map(Pair<A, B>::toMojang) },
-)
+    Codec.pair(first.codec(), second.codec()).listOf().xmap(
+        { pairs: List<MPair<A, B>> -> pairs.associate(MPair<A, B>::toKotlin) },
+        { map: Map<A, B> -> map.toList().map(Pair<A, B>::toMojang) },
+    )
 
 /**
- * Create a new [Codec] instance of [Long] range from [min] to [max]
+ * 指定した[min]と[max]を含む範囲の[Codec]を返します。
  */
 fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     val func: Function<Long, DataResult<Long>> = Codec.checkRange(min, max)
@@ -47,40 +50,52 @@ fun longRangeCodec(min: Long, max: Long): Codec<Long> {
 }
 
 /**
- * An [Long] ranged [Codec] instance from 0 to [Long.MAX_VALUE]
+ * 0から[Long.MAX_VALUE]までの範囲を含む[Codec]です。
  */
 val NON_NEGATIVE_LONG_CODEC: Codec<Long> = longRangeCodec(0, Long.MAX_VALUE)
 
 /**
- * An [Long] ranged [Codec] instance from 1 to [Long.MAX_VALUE]
+ * 1から[Long.MAX_VALUE]までの範囲を含む[Codec]です。
  */
 val POSITIVE_LONG_CODEC: Codec<Long> = longRangeCodec(1, Long.MAX_VALUE)
 
+/**
+ * 指定した[builder]から[Inventory]の[Codec]を返します。
+ * @param T [Inventory]を継承したクラス
+ * @return [ItemStack.OPTIONAL_CODEC]をベースに変換された[Codec]
+ */
 fun <T : Inventory> createInventoryCodec(builder: (Int) -> T): Codec<T> = ItemStack.OPTIONAL_CODEC.listOf().xmap(
     { list: List<ItemStack> ->
         builder(list.size).apply {
             list.forEachIndexed(this::setStack)
         }
     },
-) { it.iterateStacks() }
+    Inventory::iterateStacks,
+)
 
 //    PacketCodec    //
 
 /**
- * Create a new list [PacketCodec] instance
+ * [List]の[PacketCodec]に変換します。
  */
 fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toList(): PacketCodec<B, List<V>> = collect(PacketCodecs.toList())
 
 /**
- * Create a new [PacketCodecs] instance for an enum implementing [StringIdentifiable]
+ * [Set]の[PacketCodec]に変換します。
  */
-fun <T : StringIdentifiable> identifiedPacketCodec(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
-    PacketCodecs.STRING,
-    StringIdentifiable::asString,
-) { name: String -> entries.firstOrNull { it.asString() == name } }
+fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toSet(): PacketCodec<B, Set<V>> =
+    collect { codec: PacketCodec<B, V> -> PacketCodecs.collection(::HashSet, codec) }
 
 /**
- * Create a new [PacketCodec] instance for [RegistryEntry], based on [RegistryKey.createPacketCodec]
+ * 指定した[entries]から[PacketCodec]を返します。
+ * @param T [StringIdentifiable]を継承したクラス
+ * @return [identifiedCodec]をベースに変換された[PacketCodec]
+ */
+fun <T : StringIdentifiable> identifiedPacketCodec(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> =
+    PacketCodecs.registryCodec(identifiedCodec(entries))
+
+/**
+ * [RegistryEntry]の[PacketCodec]を返します。
  */
 val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T>>
     get() = RegistryKey.createPacketCodec(key).xmap(
@@ -91,9 +106,9 @@ val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T
 //    DataResult    //
 
 /**
- * validate [this] data result
- * @param checker check [this] data result is valid
- * @param errorMessage used when [checker] returns [DataResult.Error]
+ * [checker]で検証された[DataResult]を返します。
+ * @param errorMessage [DataResult.error]を返す場合のメッセージ
+ * @return [checker]がtrueの場合は[DataResult.success]，それ以外の場合は[DataResult.error]
  */
 fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -> String): DataResult<R> = flatMap { result: R ->
     when (checker(result)) {
@@ -102,33 +117,53 @@ fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -
     }
 }
 
-fun <R : Any, T : Any> DataResult<R>.mapNotNull(transform: (R) -> T?): DataResult<T> =
-    flatMap { result: R -> transform(result).toDataResult { "Transformed value was null!" } }
-
 /**
- * Transform [this] data result into [HTUnitResult] by [transform]
+ * 指定した[transform]で[HTUnitResult]に変換します。
  */
 fun <R : Any> DataResult<R>.unitMap(transform: (R) -> HTUnitResult): HTUnitResult =
     map(transform).mapOrElse(Function.identity()) { HTUnitResult.errorString { it.message() } }
 
 /**
- * Transform [this] optional value into [DataResult]
- * @param errorMessage used when [this] optional value is empty
- * @return [DataResult.Success] if [Optional.isPresent], or [DataResult.Error] if [Optional.isEmpty]
+ * [Optional]を[DataResult]に変換します。
+ * @param errorMessage [DataResult.error]を返す場合のメッセージ
+ * @return [Optional.isPresent]がtrueの場合は[DataResult.success]，それ以外の場合は[DataResult.error]
  */
 fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T> =
     map(DataResult<T>::success).orElse(DataResult.error(errorMessage))
 
+fun OptionalDouble.toDataResult(errorMessage: () -> String): DataResult<Double> = when (this.isPresent) {
+    true -> DataResult.success(this.asDouble)
+    false -> DataResult.error(errorMessage)
+}
+
+fun OptionalInt.toDataResult(errorMessage: () -> String): DataResult<Int> = when (this.isPresent) {
+    true -> DataResult.success(this.asInt)
+    false -> DataResult.error(errorMessage)
+}
+
+fun OptionalLong.toDataResult(errorMessage: () -> String): DataResult<Long> = when (this.isPresent) {
+    true -> DataResult.success(this.asLong)
+    false -> DataResult.error(errorMessage)
+}
+
 /**
- * Transform [this] nullable value into [DataResult]
- * @param errorMessage used when [this] optional value is empty
- * @return [DataResult.Success] if [this] is not null, or [DataResult.Error] if [this] is null
+ * [T]を[DataResult]に変換します。
+ * @param errorMessage [DataResult.error]を返す場合のメッセージ
+ * @return [T]がnullの場合は[DataResult.error]，それ以外の場合は[DataResult.success]
  */
 fun <T : Any> T?.toDataResult(errorMessage: () -> String): DataResult<T> =
     this?.let(DataResult<T>::success) ?: DataResult.error(errorMessage)
 
+/**
+ * [DataResult]の結果を返します。
+ * @return 結果がない場合はnull
+ */
 fun <T : Any> DataResult<T>.getOrNull(): T? = result().getOrNull()
 
+/**
+ * [DataResult]の結果を返します。
+ * @return 結果がない場合は[other]
+ */
 fun <T : Any> DataResult<T>.orElse(other: T): T = result().orElse(other)
 
 //    Pair    //

@@ -24,7 +24,7 @@ enum class RagiumToolMaterials(
     ),
     STELLA(
         ToolMaterials.NETHERITE,
-        { Ingredient.ofItems(RagiumItems.Ingredients.STELLA_PLATE) },
+        { Ingredient.ofItems(RagiumItems.STELLA_PLATE) },
     ),
     ;
 

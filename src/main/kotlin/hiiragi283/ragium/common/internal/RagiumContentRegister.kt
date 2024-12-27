@@ -299,8 +299,7 @@ internal object RagiumContentRegister {
                 context
                     .itemVariant
                     .componentMap
-                    .get(RagiumComponentTypes.FLUID)
-                    ?.let {
+                    .ifPresent(RagiumComponentTypes.FLUID) {
                         FullItemFluidStorage(
                             context,
                             RagiumItems.EMPTY_FLUID_CUBE.get(),

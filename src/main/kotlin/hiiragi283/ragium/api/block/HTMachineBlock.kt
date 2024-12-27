@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block
 
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.machineKeyOrNull
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -85,7 +84,7 @@ class HTMachineBlock(val key: HTMachineKey) :
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
-        stack.machineKeyOrNull?.appendTooltip(tooltip::add, stack.machineTier)
+        stack.get(HTMachineKey.COMPONENT_TYPE)?.appendTooltip(tooltip::add, stack.machineTier)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState = defaultState

@@ -83,7 +83,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         fun addMachine(key: HTMachineKey, type: HTMachineType) {
             check(keyCache.put(key, type) == null) { "Machine; ${key.id} is already registered!" }
         }
-        RagiumAPI.forEachPlugins {
+        RagiumAPI.plugins.forEach {
             it.registerMachine(::addMachine)
         }
         // sort keys based on its type and id
@@ -95,7 +95,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMachineKey, HTPropertyHolderBuilder> = mutableMapOf()
-        RagiumAPI.forEachPlugins { plugin: RagiumPlugin ->
+        RagiumAPI.plugins.forEach { plugin: RagiumPlugin ->
             sortedKeys.keys.forEach { key: HTMachineKey ->
                 val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
                 val helper: RagiumPlugin.PropertyHelper<HTMachineKey> = RagiumPlugin.PropertyHelper(key, builder)
@@ -133,7 +133,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             check(parent.name != child) { "Could not register same alternative name!" }
             check(altNameCache.put(child, parent) == null) { "Alternative Name: $child already has redirect material!" }
         }
-        RagiumAPI.forEachPlugins {
+        RagiumAPI.plugins.forEach {
             it.registerMaterial(RagiumPlugin.MaterialHelper(::addMaterial, ::addAltName))
         }
         // sort keys based on its type and id
@@ -145,7 +145,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
             ).toMap()
         // register properties
         val propertyCache: MutableMap<HTMaterialKey, HTPropertyHolderBuilder> = mutableMapOf()
-        RagiumAPI.forEachPlugins { plugin: RagiumPlugin ->
+        RagiumAPI.plugins.forEach { plugin: RagiumPlugin ->
             sortedKeys.keys.forEach { key: HTMaterialKey ->
                 val builder: HTMutablePropertyHolder = propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() }
                 val helper: RagiumPlugin.PropertyHelper<HTMaterialKey> = RagiumPlugin.PropertyHelper(key, builder)
@@ -154,7 +154,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         }
         // bind items
         val itemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableSet<Item>> = mutableTableOf()
-        RagiumAPI.forEachPlugins {
+        RagiumAPI.plugins.forEach {
             it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: ItemConvertible ->
                 itemCache
                     .computeIfAbsent(prefix, key) { _: HTTagPrefix, _: HTMaterialKey -> mutableSetOf() }

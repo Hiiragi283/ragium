@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.extension.getOrDefault
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.openBackpackScreen
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -36,10 +37,13 @@ class HTBackpackInterfaceBlock(settings: Settings) : Block(settings) {
         player: PlayerEntity,
         hand: Hand,
         hit: BlockHitResult,
-    ): ItemActionResult = stack.get(RagiumComponentTypes.COLOR)?.let { color: DyeColor ->
+    ): ItemActionResult = stack.ifPresent(
+        RagiumComponentTypes.COLOR,
+        ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION,
+    ) { color: DyeColor ->
         world.setBlockState(pos, state.with(COLOR, color))
         ItemActionResult.success(world.isClient)
-    } ?: ItemActionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    }
 
     override fun onUse(
         state: BlockState,

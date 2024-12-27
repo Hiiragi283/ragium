@@ -19,27 +19,27 @@ import java.text.NumberFormat
 //    Text    //
 
 /**
- * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ * フォーマットされた[Int]の[Text]を返します。
  */
 fun intText(value: Int): MutableText = longText(value.toLong())
 
 /**
- * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ * フォーマットされた[Long]の[Text]を返します。
  */
 fun longText(value: Long): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
 /**
- * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ * フォーマットされた[Float]の[Text]を返します。
  */
 fun floatText(value: Float): MutableText = doubleText(value.toDouble())
 
 /**
- * Create a new [MutableText] instance with formatted [value] by [NumberFormat.format]
+ * フォーマットされた[Double]の[Text]を返します。
  */
 fun doubleText(value: Double): MutableText = Text.literal(NumberFormat.getNumberInstance().format(value))
 
 /**
- * Create a new [MutableText] instance by [Boolean.toString]
+ * フォーマットされた[Boolean]の[Text]を返します。
  */
 fun boolText(value: Boolean): MutableText = Text.literal(value.toString())
 
@@ -62,7 +62,9 @@ fun globalPosText(value: GlobalPos): MutableText = Text
 fun worldText(value: RegistryKey<World>): MutableText = Text.translatable(Util.createTranslationKey("world", value.value))
 
 /**
- * Create a new [MutableText] instance with the format: "Amount: x B, y Units"
+ * フォーマットされた液体量の[Text]を返します。
+ *
+ * フォーマットは次に従います: `Amount: x B, y Units`
  */
 fun fluidAmountText(value: Long): MutableText = Text.translatable(
     RagiumTranslationKeys.MACHINE_FLUID_AMOUNT,

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -42,7 +43,7 @@ class HTFilledFluidCubeItem(settings: Settings) : Item(settings) {
         type: TooltipType,
     ) {
         if (type.isAdvanced) {
-            val id: Identifier = stack.get(RagiumComponentTypes.FLUID)?.let(Registries.FLUID::getId) ?: return
+            val id: Identifier = stack.ifPresent(RagiumComponentTypes.FLUID, Registries.FLUID::getId) ?: return
             tooltip.add(Text.literal("Fluid Id: $id").formatted(Formatting.DARK_GRAY))
         }
     }

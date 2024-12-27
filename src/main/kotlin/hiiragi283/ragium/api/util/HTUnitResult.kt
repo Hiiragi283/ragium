@@ -4,7 +4,7 @@ import com.mojang.serialization.DataResult
 import net.minecraft.text.Text
 
 /**
- * Simple replacement for [DataResult]<[Unit]>
+ * [DataResult]の[Unit]版
  */
 sealed interface HTUnitResult {
     companion object {

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
@@ -60,6 +61,7 @@ import net.minecraft.particle.SimpleParticleType
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.sound.SoundEvent
 import net.minecraft.text.Text
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
@@ -180,7 +182,7 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerItems() {
         ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
-            stack.get(RagiumComponentTypes.COLOR)?.entityColor ?: -1
+            stack.ifPresent(RagiumComponentTypes.COLOR, -1, DyeColor::getEntityColor)
         }, RagiumItems.BACKPACK.get())
     }
 
@@ -328,13 +330,15 @@ object RagiumClient : ClientModInitializer {
             }
         }
 
-        RagiumNetworks.ITEM_SYNC.registerClientReceiver { payload: HTItemSyncPayload, context: ClientPlayNetworking.Context ->
-            val (pos: BlockPos, slot: Int, stack: ItemStack) = payload
-            val inventory: Inventory = (context.getBlockEntity(pos) as? HTMachineBlockEntityBase)?.asInventory()
+        RagiumNetworks.INVENTORY_SYNC.registerClientReceiver { payload: HTInventorySyncPayload, context: ClientPlayNetworking.Context ->
+            val (pos: BlockPos, stackMap: Map<Int, ItemStack>) = payload
+            val inventory: Inventory = (context.getBlockEntity(pos) as? HTBlockEntityBase)?.asInventory()
                 ?: return@registerClientReceiver
-            when {
-                stack.isEmpty -> inventory.removeStack(slot)
-                else -> inventory.setStack(slot, stack)
+            stackMap.forEach { (slot: Int, stack: ItemStack) ->
+                when {
+                    stack.isEmpty -> inventory.removeStack(slot)
+                    else -> inventory.setStack(slot, stack)
+                }
             }
         }
 

@@ -482,20 +482,22 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
             add(RagiumItems.TRADER_CATALOG)
 
             addAll(RagiumItems.FOODS)
-            addAll(RagiumItems.Ingredients.entries)
+
             addAll(RagiumItems.Radioactives.entries)
+            addAll(RagiumItems.INGREDIENTS)
+
             addAll(RagiumItems.MISC)
 
             remove(RagiumItems.CHOCOLATE_APPLE)
-            remove(RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
         }.forEach(::register)
 
         // generator.register(RagiumBlocks.ROPE.get().asItem(), Models.GENERATED)
 
         registerLayered(
-            RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND,
+            RagiumItems.RAGI_ALLOY_COMPOUND,
             TextureMap.getId(Items.COPPER_INGOT),
-            TextureMap.getId(RagiumItems.Ingredients.RAGI_ALLOY_COMPOUND.asItem()),
+            TextureMap.getId(RagiumItems.RAGI_ALLOY_COMPOUND.asItem()),
         )
         registerLayered(
             RagiumItems.CHOCOLATE_APPLE,

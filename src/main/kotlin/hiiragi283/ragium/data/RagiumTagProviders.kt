@@ -223,7 +223,7 @@ object RagiumTagProviders {
             add(ItemTags.SWORDS, RagiumItems.RAGIUM_SABER)
 
             add(ItemTags.PLANKS, RagiumItems.Plates.WOOD)
-            add(ItemTags.COALS, RagiumItems.Ingredients.RESIDUAL_COKE)
+            add(ItemTags.COALS, RagiumItems.RESIDUAL_COKE)
             // ragium
             add(RagiumItemTags.ALKALI, RagiumItems.Dusts.ALKALI)
             add(RagiumItemTags.ALKALI, RagiumItems.Dusts.ASH)
@@ -232,9 +232,9 @@ object RagiumTagProviders {
 
             add(RagiumItemTags.ITEM_EXPORTER_FILTERS, RagiumItems.ITEM_FILTER)
 
-            add(RagiumItemTags.SILICON, RagiumItems.Ingredients.CRUDE_SILICON)
-            add(RagiumItemTags.SILICON_PLATES, RagiumItems.Ingredients.SILICON)
-            add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.Ingredients.REFINED_SILICON)
+            add(RagiumItemTags.SILICON, RagiumItems.CRUDE_SILICON)
+            add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
+            add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
 
             add(RagiumItemTags.ADVANCED_UPGRADES, RagiumBlocks.Hulls.ADVANCED)
             add(RagiumItemTags.BASIC_UPGRADES, RagiumBlocks.Hulls.BASIC)

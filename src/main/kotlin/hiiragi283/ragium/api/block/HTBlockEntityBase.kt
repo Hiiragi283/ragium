@@ -1,6 +1,9 @@
 package hiiragi283.ragium.api.block
 
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.readNbt
+import hiiragi283.ragium.api.extension.sendPacket
+import hiiragi283.ragium.api.extension.writeNbt
+import hiiragi283.ragium.common.network.HTInventorySyncPayload
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -11,7 +14,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.ScreenHandlerContext
 import net.minecraft.util.ActionResult
 import net.minecraft.util.ItemScatterer
 import net.minecraft.util.hit.BlockHitResult
@@ -57,7 +59,8 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
      * @see [markDirty]
      */
     fun syncInventory() {
-        asInventory()?.sendS2CPacket(pos, ::sendPacket)
+        val inventory: SidedInventory = asInventory() ?: return
+        sendPacket(HTInventorySyncPayload(pos, inventory))
     }
 
     /**
@@ -148,11 +151,4 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
      * [ticks]が[tickRate]以上の値となったときに呼び出されます。
      */
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
-
-    /**
-     * [ScreenHandlerContext]を返します。
-     */
-    protected fun createContext(): ScreenHandlerContext = ifPresentWorld { world: World ->
-        ScreenHandlerContext.create(world, pos)
-    } ?: ScreenHandlerContext.EMPTY
 }

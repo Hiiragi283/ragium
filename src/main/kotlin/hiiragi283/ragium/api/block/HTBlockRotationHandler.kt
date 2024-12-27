@@ -13,6 +13,10 @@ import net.minecraft.world.World
  * ブロックの回転処理を行います。
  */
 fun interface HTBlockRotationHandler {
+    /**
+     * 指定した[state]を[direction]で回転させます。
+     * @return 回転した[BlockState]
+     */
     fun rotate(state: BlockState, direction: Direction): BlockState
 
     companion object {

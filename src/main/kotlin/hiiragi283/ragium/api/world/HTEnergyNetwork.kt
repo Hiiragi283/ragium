@@ -11,6 +11,9 @@ import net.minecraft.world.PersistentState
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.SimpleEnergyStorage
 
+/**
+ * 無線電力ネットワークを管理するマネージャー
+ */
 class HTEnergyNetwork() :
     PersistentState(),
     EnergyStorage {

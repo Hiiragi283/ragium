@@ -1,12 +1,7 @@
 package hiiragi283.ragium.client.model
 
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.getBlockModel
-import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.extension.hullModel
-import hiiragi283.ragium.api.extension.machineKeyOrNull
-import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -94,7 +89,7 @@ enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identi
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
         stack.machineTier.hullModel.emitItemQuads(stack, randomSupplier, context)
-        val key: HTMachineKey = stack.machineKeyOrNull ?: return
+        val key: HTMachineKey = stack.get(HTMachineKey.COMPONENT_TYPE) ?: return
         emitMachineFront(Direction.NORTH, key, context)
     }
 

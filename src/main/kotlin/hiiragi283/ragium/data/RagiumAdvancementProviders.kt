@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -108,8 +109,7 @@ object RagiumAdvancementProviders {
         desc: Text = icon
             .asItem()
             .components
-            .get(RagiumComponentTypes.DESCRIPTION)
-            ?.getOrNull(0) ?: Text.empty(),
+            .ifPresent(RagiumComponentTypes.DESCRIPTION, Text.empty(), List<Text>::firstOrNull),
         frame: AdvancementFrame = AdvancementFrame.TASK,
         showToast: Boolean = true,
         announce: Boolean = true,
@@ -423,9 +423,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/processor",
                 advancedCircuit,
-                RagiumItems.Ingredients.RAGI_CRYSTAL_PROCESSOR,
+                RagiumItems.RAGI_CRYSTAL_PROCESSOR,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.Ingredients.RAGI_CRYSTAL_PROCESSOR) }
+            ) { hasAllItems(RagiumItems.RAGI_CRYSTAL_PROCESSOR) }
             // compressor
             val compressor: AdvancementEntry = createMachineChild(
                 consumer,
@@ -472,22 +472,22 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/crimson_crystal",
                 sap,
-                RagiumItems.Ingredients.CRIMSON_CRYSTAL,
+                RagiumItems.CRIMSON_CRYSTAL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.Ingredients.CRIMSON_CRYSTAL) }
+            ) { hasAllItems(RagiumItems.CRIMSON_CRYSTAL) }
             val warpedCrystal: AdvancementEntry = createChild(
                 consumer,
                 "machine/warped_crystal",
                 sap,
-                RagiumItems.Ingredients.WARPED_CRYSTAL,
+                RagiumItems.WARPED_CRYSTAL,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.Ingredients.WARPED_CRYSTAL) }
+            ) { hasAllItems(RagiumItems.WARPED_CRYSTAL) }
             val luminescenceDust: AdvancementEntry = createChild(
                 consumer,
                 "machine/luminescence_dust",
                 extractor,
-                RagiumItems.Ingredients.LUMINESCENCE_DUST,
-            ) { hasAllItems(RagiumItems.Ingredients.LUMINESCENCE_DUST) }
+                RagiumItems.LUMINESCENCE_DUST,
+            ) { hasAllItems(RagiumItems.LUMINESCENCE_DUST) }
             // mixer
             val mixer: AdvancementEntry = createMachineChild(
                 consumer,
@@ -632,8 +632,8 @@ object RagiumAdvancementProviders {
                 consumer,
                 "chemistry/soap",
                 alkali,
-                RagiumItems.Ingredients.SOAP,
-            ) { hasAllItems(RagiumItems.Ingredients.SOAP) }
+                RagiumItems.SOAP,
+            ) { hasAllItems(RagiumItems.SOAP) }
             // aluminum
             val bauxite: AdvancementEntry = createContentChild(
                 consumer,
@@ -770,15 +770,15 @@ object RagiumAdvancementProviders {
                 consumer,
                 "petro_chemistry/polymer_resin",
                 distillation,
-                RagiumItems.Ingredients.POLYMER_RESIN,
-            ) { hasAllItems(RagiumItems.Ingredients.POLYMER_RESIN) }
+                RagiumItems.POLYMER_RESIN,
+            ) { hasAllItems(RagiumItems.POLYMER_RESIN) }
             val engineeringPlastic: AdvancementEntry = createChild(
                 consumer,
                 "petro_chemistry/engineering_plastic",
                 polymerResin,
-                RagiumItems.Ingredients.ENGINEERING_PLASTIC_PLATE,
+                RagiumItems.ENGINEERING_PLASTIC_PLATE,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.Ingredients.ENGINEERING_PLASTIC_PLATE) }
+            ) { hasAllItems(RagiumItems.ENGINEERING_PLASTIC_PLATE) }
             // refined gas
             val refinedGas: AdvancementEntry = createFluidChild(
                 consumer,

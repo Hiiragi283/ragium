@@ -35,8 +35,8 @@ object RagiumNetworks {
         registerS2C("fluid_sync", HTFluidSyncPayload.PACKET_CODEC)
 
     @JvmField
-    val ITEM_SYNC: CustomPayload.Id<HTItemSyncPayload> =
-        registerS2C("item_sync", HTItemSyncPayload.PACKET_CODEC)
+    val INVENTORY_SYNC: CustomPayload.Id<HTInventorySyncPayload> =
+        registerS2C("inventory_sync", HTInventorySyncPayload.PACKET_CODEC)
 
     @JvmField
     val MACHINE_SYNC: CustomPayload.Id<HTMachineKeySyncPayload> =

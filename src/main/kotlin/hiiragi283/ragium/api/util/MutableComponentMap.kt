@@ -6,18 +6,30 @@ import net.minecraft.component.ComponentMapImpl
 import net.minecraft.component.ComponentType
 
 /**
- * Mutable [ComponentMap]
+ * ミューテーブルな[ComponentMap]
+ * @see [ComponentMapImpl]
  */
 interface MutableComponentMap : ComponentMap {
+    /**
+     * 指定した[type]に[value]を紐づけます。
+     * @return 以前に紐づいていた値
+     */
     fun <T : Any> set(type: ComponentType<T>, value: T?): T?
 
+    /**
+     * 指定した[type]に紐づいた値を削除します。
+     * @return [type]に紐づいていた値
+     */
     fun <T : Any> remove(type: ComponentType<T>): T?
 
+    /**
+     * [ComponentChanges]を返します。
+     */
     fun getChanges(): ComponentChanges
 
     companion object {
         /**
-         * Empty, Unmodifiable [MutableComponentMap]
+         * 空で不変の[MutableComponentMap]の実装
          */
         @JvmField
         val EMPTY: MutableComponentMap = object : MutableComponentMap {
@@ -33,19 +45,21 @@ interface MutableComponentMap : ComponentMap {
         }
 
         /**
-         * Try to cast [ComponentMap] into [MutableComponentMap]. or null if failed
+         * 指定した[map]から[MutableComponentMap]を返します。
+         * @return [map]が[ComponentMapImpl]を継承していない場合はnull
          */
         @JvmStatic
         fun orNull(map: ComponentMap): MutableComponentMap? = (map as? ComponentMapImpl)?.let(::of)
 
         /**
-         * Try to cast [ComponentMap] into [MutableComponentMap]. or [EMPTY] if failed
+         * 指定した[map]から[MutableComponentMap]を返します。
+         * @return [map]が[ComponentMapImpl]を継承していない場合は[MutableComponentMap.EMPTY]
          */
         @JvmStatic
         fun orEmpty(map: ComponentMap): MutableComponentMap = orNull(map) ?: EMPTY
 
         /**
-         * Wrap [ComponentMapImpl] into [MutableComponentMap]
+         * 指定した[mapImpl]を[MutableComponentMap]に変換します。
          */
         @JvmStatic
         fun of(mapImpl: ComponentMapImpl): MutableComponentMap = object : MutableComponentMap {

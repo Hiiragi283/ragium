@@ -122,7 +122,7 @@ object HTEnergeticFuelRegistry : Item2ObjectMap<Int> {
         add(Items.GOLDEN_APPLE, 64)
         add(Items.ENCHANTED_GOLDEN_APPLE, 1024)
 
-        add(RagiumItems.Ingredients.LUMINESCENCE_DUST, 4)
-        add(RagiumItems.Ingredients.OBSIDIAN_TEAR, 64)
+        add(RagiumItems.LUMINESCENCE_DUST, 4)
+        add(RagiumItems.OBSIDIAN_TEAR, 64)
     }
 }

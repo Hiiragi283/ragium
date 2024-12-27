@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -23,7 +24,7 @@ class HTDrumBlock(val tier: HTMachineTier, settings: Settings) : HTBlockWithEnti
         tooltip: MutableList<Text>,
         options: TooltipType?,
     ) {
-        stack.get(RagiumComponentTypes.DRUM)?.let { (variant: FluidVariant, amount: Long) ->
+        stack.ifPresent(RagiumComponentTypes.DRUM) { (variant: FluidVariant, amount: Long) ->
             if (!variant.isBlank) {
                 tooltip.add(
                     Text
@@ -41,7 +42,7 @@ class HTDrumBlock(val tier: HTMachineTier, settings: Settings) : HTBlockWithEnti
                 )
             }
         }
-        stack.get(HTMachineTier.COMPONENT_TYPE)?.let { tierIn: HTMachineTier ->
+        stack.ifPresent(HTMachineTier.COMPONENT_TYPE) { tierIn: HTMachineTier ->
             tooltip.add(
                 Text
                     .translatable(

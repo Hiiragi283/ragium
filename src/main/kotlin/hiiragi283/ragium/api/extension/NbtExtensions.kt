@@ -12,19 +12,26 @@ import net.minecraft.registry.RegistryWrapper
 //    NbtCompound    //
 
 /**
- * Build new [NbtCompound] instance with [builderAction]
+ * [NbtCompound]を返します。
+ * @param builderAction [NbtCompound]を初期化するブロック
  */
 fun buildNbt(builderAction: NbtCompound.() -> Unit): NbtCompound = NbtCompound().apply(builderAction)
 
 //    NbtList    //
 
 /**
- * Build new [NbtList] instance with [builderAction]
+ * [NbtList]を返します。
+ * @param builderAction [NbtList]を初期化するブロック
  */
 fun buildNbtList(builderAction: NbtList.() -> Unit): NbtList = NbtList().apply(builderAction)
 
 //    Writing    //
 
+/**
+ * インベントリを[nbt]に書き込みます。
+ *
+ * エンコードに失敗した場合は空の[NbtList]が書き込まれます。
+ */
 fun Inventory.writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC
         .listOf()
@@ -33,16 +40,25 @@ fun Inventory.writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperL
         .ifError { nbt.put("Inventory", NbtList()) }
 }
 
+/**
+ * [storage]をNBTに書き込みます。
+ */
 fun NbtCompound.writeItemStorage(key: String, storage: SingleItemStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
     put(key, buildNbt { storage.writeNbt(this, wrapperLookup) })
 }
 
+/**
+ * [storage]をNBTに書き込みます。
+ */
 fun NbtCompound.writeFluidStorage(key: String, storage: SingleFluidStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
     put(key, buildNbt { storage.writeNbt(this, wrapperLookup) })
 }
 
 //    Reading    //
 
+/**
+ * [nbt]からインベントリを読み取ります。
+ */
 fun Inventory.readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
     ItemStack.OPTIONAL_CODEC
         .listOf()
@@ -50,10 +66,16 @@ fun Inventory.readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLo
         .ifSuccess { it.forEachIndexed(::setStack) }
 }
 
+/**
+ * [storage]を[NbtCompound]から読み取ります。
+ */
 fun NbtCompound.readItemStorage(key: String, storage: SingleItemStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
     storage.readNbt(getCompound(key), wrapperLookup)
 }
 
+/**
+ * [storage]を[NbtCompound]から読み取ります。
+ */
 fun NbtCompound.readFluidStorage(key: String, storage: SingleFluidStorage, wrapperLookup: RegistryWrapper.WrapperLookup) {
     storage.readNbt(getCompound(key), wrapperLookup)
 }

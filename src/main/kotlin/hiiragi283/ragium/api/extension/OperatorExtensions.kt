@@ -17,16 +17,8 @@ operator fun <T : Any> RegistryEntryList<T>.contains(value: T): Boolean = any { 
 
 //    component    //
 
-/**
- * Used to destructuring declaration for [RecipeEntry]
- * @return [RecipeEntry.id]
- */
 operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
 
-/**
- * Used to destructuring declaration for [RecipeEntry]
- * @return [RecipeEntry.value]
- */
 operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
 
 operator fun <F : Any, S : Any> MPair<F, S>.component1(): F = first

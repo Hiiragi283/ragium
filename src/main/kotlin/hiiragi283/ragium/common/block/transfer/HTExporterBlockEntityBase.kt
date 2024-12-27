@@ -51,12 +51,12 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
         val stack: ItemStack = player.getStackInActiveHand()
         val result: Boolean = when {
             stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
-                stack.get(RagiumComponentTypes.FLUID_FILTER)?.let { fluidFilter = it }
+                stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) { fluidFilter = it }
                 true
             }
 
             stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
-                stack.get(RagiumComponentTypes.ITEM_FILTER)?.let { itemFilter = it }
+                stack.ifPresent(RagiumComponentTypes.ITEM_FILTER) { itemFilter = it }
                 true
             }
 

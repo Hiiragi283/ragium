@@ -16,6 +16,9 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.StringIdentifiable
 
+/**
+ * 放射能レベルを管理するクラス
+ */
 enum class HTRadioactiveComponent(color: Formatting) : StringIdentifiable {
     LOW(Formatting.YELLOW),
     MEDIUM(Formatting.RED),
@@ -40,6 +43,9 @@ enum class HTRadioactiveComponent(color: Formatting) : StringIdentifiable {
 
     val text: MutableText = Text.literal(name).formatted(color)
 
+    /**
+     * 指定した[entity]にデバフを付与する
+     */
     fun applyEffect(entity: Entity?) {
         val livingEntity: LivingEntity = entity as? LivingEntity ?: return
         // low

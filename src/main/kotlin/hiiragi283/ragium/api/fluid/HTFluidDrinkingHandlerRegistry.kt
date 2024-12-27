@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.fluid
 
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -31,9 +32,7 @@ object HTFluidDrinkingHandlerRegistry {
     fun get(fluid: Fluid): Entry? = registry[fluid]?.let { handler: HTFluidDrinkingHandler -> Entry(fluid, handler) }
 
     @JvmStatic
-    fun getHandler(stack: ItemStack): Entry? = stack
-        .get(RagiumComponentTypes.FLUID)
-        ?.let(HTFluidDrinkingHandlerRegistry::get)
+    fun getHandler(stack: ItemStack): Entry? = stack.ifPresent(RagiumComponentTypes.FLUID, HTFluidDrinkingHandlerRegistry::get)
 
     /**
      * [HTFluidDrinkingHandler.onDrink]を実行します。

@@ -18,35 +18,85 @@ import java.util.function.BiConsumer
 import java.util.function.Predicate
 
 /**
- * A plugin interface for Ragium
+ * Ragiumのプラグイン向けのインターフェース
  */
 @JvmDefaultWithCompatibility
 interface RagiumPlugin {
     companion object {
+        /**
+         * サーバー側で読み込まれるエントリポイントのキー
+         */
         const val SERVER_KEY = "ragium.plugin.server"
+
+        /**
+         * クライアント側で読み込まれるエントリポイントのキー
+         */
         const val CLIENT_KEY = "ragium.plugin.client"
     }
 
+    /**
+     * プラグインを読み込む優先度
+     *
+     * 値が小さいほど優先して読み込まれます。
+     */
     val priority: Int
 
+    /**
+     * プラグインを読み込むかどうか判定します。
+     */
     fun shouldLoad(): Boolean = true
 
+    /**
+     * [HTMachineKey]を登録します。
+     * @param consumer [HTMachineKey]をそのタイプを渡すブロック
+     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.registerMachine]
+     */
     fun registerMachine(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
+    /**
+     * [HTMaterialKey]を登録します。
+     *
+     *　@sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.registerMaterial]
+     */
     fun registerMaterial(helper: MaterialHelper) {}
 
+    /**
+     * 機械のプロパティを設定します。
+     *
+     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.setupMachineProperties]
+     */
     fun setupMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
 
+    /**
+     * 素材のプロパティを設定します。
+     *
+     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.setupMaterialProperties]
+     */
     fun setupMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
 
+    /**
+     * アイテムを素材とプレフィックスに紐づけます。
+     *
+     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.bindMaterialToItem]
+     */
     fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {}
 
+    /**
+     * Ragiumが読み込まれた後に呼び出されます。
+     */
     fun afterRagiumInit(instance: RagiumAPI) {}
 
+    /**
+     * レシピを動的に登録します。
+     *
+     * [net.minecraft.recipe.RecipeManager.apply]の最後にフックされます。
+     */
     fun registerRuntimeRecipe(exporter: RecipeExporter) {}
 
     /**
-     * Register runtime recipes based on [HTMaterialRegistry]
+     * 素材データに基づいたレシピを動的に登録します。
+     *
+     * [net.minecraft.recipe.RecipeManager.apply]の最後にフックされます。
      */
     fun registerRuntimeMaterialRecipes(
         exporter: RecipeExporter,
@@ -61,10 +111,21 @@ interface RagiumPlugin {
         private val consumer: (HTMaterialKey, HTMaterialType, Rarity) -> Unit,
         private val altConsumer: (HTMaterialKey, String) -> Unit,
     ) {
+        /**
+         * 指定した値から素材を登録します。
+         * @param key 素材のキー
+         * @param type 素材の種類
+         * @param rarity 素材のレアリティ
+         */
         fun register(key: HTMaterialKey, type: HTMaterialType, rarity: Rarity = Rarity.COMMON) {
             consumer(key, type, rarity)
         }
 
+        /**
+         * 素材の別名を登録します。
+         * @param parent 統一する素材のキー
+         * @param child 統一される素材のキー
+         */
         fun addAltName(parent: HTMaterialKey, child: String) {
             altConsumer(parent, child)
         }
@@ -72,15 +133,28 @@ interface RagiumPlugin {
 
     //    PropertyHelper    //
 
+    /**
+     * @param key 現在のキー
+     * @param properties 現在のプロパティ
+     */
     class PropertyHelper<T : Any>(private val key: T, private val properties: HTMutablePropertyHolder) {
+        /**
+         * 現在のキーが指定した[keys]に含まれている場合のみ[builderAction]を実行します。
+         */
         fun modify(vararg keys: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify(keys::contains, builderAction)
         }
 
+        /**
+         * 現在のキーが指定した[key]と一致する場合のみ[builderAction]を実行します。
+         */
         fun modify(key: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
             modify({ it == key }, builderAction)
         }
 
+        /**
+         * 現在のキーが[filter]と一致する場合のみ[builderAction]を実行します。
+         */
         fun modify(filter: Predicate<T>, builderAction: HTMutablePropertyHolder.() -> Unit) {
             if (filter.test(this.key)) {
                 properties.builderAction()
@@ -92,20 +166,36 @@ interface RagiumPlugin {
 
     class RecipeHelper {
         /**
-         * Check give [tagKey] is loaded
+         * 指定した[tagKey]が読み込まれているかどうか判定します。
          */
         fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
 
+        /**
+         * 動的に完成品を取得します。
+         * @param entry 素材のエントリ
+         * @param prefix 完成品に紐づいたプレフィックス
+         * @param action 完成品を扱うブロック
+         */
         fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
             entry.getFirstItemOrNull(prefix)?.let(action)
         }
 
+        /**
+         * [HTMaterialType.getMainPrefix]を元に動的に完成品を取得します。
+         * @param entry 素材のエントリ
+         * @param action 完成品を扱うブロック
+         */
         fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
             }
         }
 
+        /**
+         * [HTMaterialType.getRawPrefix]を元に動的に完成品を取得します。
+         * @param entry 素材のエントリ
+         * @param action 完成品を扱うブロック
+         */
         fun useItemFromRawPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)

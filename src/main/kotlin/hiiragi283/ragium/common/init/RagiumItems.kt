@@ -389,51 +389,6 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_press_mold")
     }
 
-    enum class Ingredients : HTItemContent {
-        // organic
-        BEE_WAX,
-        PULP,
-        RESIDUAL_COKE,
-
-        // inorganic
-        DEEPANT,
-        LUMINESCENCE_DUST,
-        RAGI_ALLOY_COMPOUND,
-        SLAG,
-        SOAP,
-
-        // plastic
-        POLYMER_RESIN,
-        PLASTIC_PLATE,
-        ENGINEERING_PLASTIC_PLATE,
-        STELLA_PLATE,
-
-        // silicon
-        CRUDE_SILICON,
-        SILICON,
-        REFINED_SILICON,
-
-        // magical
-        CRIMSON_CRYSTAL,
-        WARPED_CRYSTAL,
-        OBSIDIAN_TEAR,
-
-        // parts
-        BASALT_MESH,
-        BLAZING_CARBON_ELECTRODE,
-        CARBON_ELECTRODE,
-        CHARGED_CARBON_ELECTRODE,
-        ENGINE,
-        LASER_EMITTER,
-        LED,
-        PROCESSOR_SOCKET,
-        RAGI_CRYSTAL_PROCESSOR,
-        SOLAR_PANEL,
-        ;
-
-        override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
-    }
-
     enum class Radioactives(val level: HTRadioactiveComponent) : HTItemContent {
         URANIUM_FUEL(HTRadioactiveComponent.MEDIUM),
         PLUTONIUM_FUEL(HTRadioactiveComponent.HIGH),
@@ -443,6 +398,128 @@ object RagiumItems {
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
+    }
+
+    @JvmField
+    val BEE_WAX: HTItemContent = HTContent.ofItem("bee_wax")
+
+    @JvmField
+    val PULP: HTItemContent = HTContent.ofItem("pulp")
+
+    @JvmField
+    val RESIDUAL_COKE: HTItemContent = HTContent.ofItem("residual_coke")
+
+    @JvmField
+    val DEEPANT: HTItemContent = HTContent.ofItem("deepant")
+
+    @JvmField
+    val LUMINESCENCE_DUST: HTItemContent = HTContent.ofItem("luminescence_dust")
+
+    @JvmField
+    val RAGI_ALLOY_COMPOUND: HTItemContent = HTContent.ofItem("ragi_alloy_compound")
+
+    @JvmField
+    val SLAG: HTItemContent = HTContent.ofItem("slag")
+
+    @JvmField
+    val SOAP: HTItemContent = HTContent.ofItem("soap")
+
+    @JvmField
+    val POLYMER_RESIN: HTItemContent = HTContent.ofItem("polymer_resin")
+
+    @JvmField
+    val PLASTIC_PLATE: HTItemContent = HTContent.ofItem("plastic_plate")
+
+    @JvmField
+    val ENGINEERING_PLASTIC_PLATE: HTItemContent = HTContent.ofItem("engineering_plastic_plate")
+
+    @JvmField
+    val STELLA_PLATE: HTItemContent = HTContent.ofItem("stella_plate")
+
+    @JvmField
+    val CRUDE_SILICON: HTItemContent = HTContent.ofItem("crude_silicon")
+
+    @JvmField
+    val SILICON: HTItemContent = HTContent.ofItem("silicon")
+
+    @JvmField
+    val REFINED_SILICON: HTItemContent = HTContent.ofItem("refined_silicon")
+
+    @JvmField
+    val CRIMSON_CRYSTAL: HTItemContent = HTContent.ofItem("crimson_crystal")
+
+    @JvmField
+    val WARPED_CRYSTAL: HTItemContent = HTContent.ofItem("warped_crystal")
+
+    @JvmField
+    val OBSIDIAN_TEAR: HTItemContent = HTContent.ofItem("obsidian_tear")
+
+    @JvmField
+    val BASALT_MESH: HTItemContent = HTContent.ofItem("basalt_mesh")
+
+    @JvmField
+    val BLAZING_CARBON_ELECTRODE: HTItemContent = HTContent.ofItem("blazing_carbon_electrode")
+
+    @JvmField
+    val CARBON_ELECTRODE: HTItemContent = HTContent.ofItem("carbon_electrode")
+
+    @JvmField
+    val CHARGED_CARBON_ELECTRODE: HTItemContent = HTContent.ofItem("charged_carbon_electrode")
+
+    @JvmField
+    val ENGINE: HTItemContent = HTContent.ofItem("engine")
+
+    @JvmField
+    val LASER_EMITTER: HTItemContent = HTContent.ofItem("laser_emitter")
+
+    @JvmField
+    val LED: HTItemContent = HTContent.ofItem("led")
+
+    @JvmField
+    val PROCESSOR_SOCKET: HTItemContent = HTContent.ofItem("processor_socket")
+
+    @JvmField
+    val RAGI_CRYSTAL_PROCESSOR: HTItemContent = HTContent.ofItem("ragi_crystal_processor")
+
+    @JvmField
+    val SOLAR_PANEL: HTItemContent = HTContent.ofItem("solar_panel")
+
+    @JvmField
+    val INGREDIENTS: List<HTItemContent> = buildList {
+        // organic
+        add(BEE_WAX)
+        add(PULP)
+        add(RESIDUAL_COKE)
+        // inorganic
+        add(DEEPANT)
+        add(LUMINESCENCE_DUST)
+        add(RAGI_ALLOY_COMPOUND)
+        add(SLAG)
+        add(SOAP)
+        // plastic
+        add(POLYMER_RESIN)
+        add(PLASTIC_PLATE)
+        add(ENGINEERING_PLASTIC_PLATE)
+        add(STELLA_PLATE)
+        // silicon
+        add(CRUDE_SILICON)
+        add(SILICON)
+        add(REFINED_SILICON)
+        // magical
+        add(CRIMSON_CRYSTAL)
+        add(WARPED_CRYSTAL)
+        add(OBSIDIAN_TEAR)
+        // parts
+        add(BASALT_MESH)
+        add(BLAZING_CARBON_ELECTRODE)
+        add(CARBON_ELECTRODE)
+        add(CHARGED_CARBON_ELECTRODE)
+        add(ENGINE)
+        add(LASER_EMITTER)
+        add(LED)
+        add(PROCESSOR_SOCKET)
+        add(RAGI_CRYSTAL_PROCESSOR)
+        add(SOLAR_PANEL)
     }
 
     //    Misc    //
@@ -690,19 +767,6 @@ object RagiumItems {
         registerItem(CANNED_COOKED_MEAT, itemSettings().food(RagiumFoodComponents.CANNED_COOKED_MEAT))
         registerItem(AMBROSIA, itemSettings().rarity(Rarity.EPIC))
         // ingredients
-        Ingredients.entries.forEach { ingredient: Ingredients ->
-            when (ingredient) {
-                Ingredients.BEE_WAX -> registerItem(ingredient, item = ::HoneycombItem)
-                Ingredients.WARPED_CRYSTAL -> registerItem(
-                    ingredient,
-                    itemSettings().descriptions(RagiumTranslationKeys.WARPED_CRYSTAL),
-                    ::HTWarpedCrystalItem,
-                )
-                Ingredients.PROCESSOR_SOCKET -> registerItem(ingredient, itemSettings().maybeRework())
-                Ingredients.RAGI_CRYSTAL_PROCESSOR -> registerItem(ingredient, itemSettings().maybeRework())
-                else -> registerItem(ingredient)
-            }
-        }
         Radioactives.entries.forEach { radioactive: Radioactives ->
             registerItem(
                 radioactive,
@@ -714,6 +778,21 @@ object RagiumItems {
                     Radioactives.NUCLEAR_WASTE -> itemSettings()
                 }.radioactive(radioactive.level),
             )
+        }
+
+        INGREDIENTS.forEach { ingredient: HTItemContent ->
+            when (ingredient) {
+                BEE_WAX -> registerItem(ingredient, item = ::HoneycombItem)
+                WARPED_CRYSTAL -> registerItem(
+                    ingredient,
+                    itemSettings().descriptions(RagiumTranslationKeys.WARPED_CRYSTAL),
+                    ::HTWarpedCrystalItem,
+                )
+
+                PROCESSOR_SOCKET -> registerItem(ingredient, itemSettings().maybeRework())
+                RAGI_CRYSTAL_PROCESSOR -> registerItem(ingredient, itemSettings().maybeRework())
+                else -> registerItem(ingredient)
+            }
         }
         // misc
         registerItem(RAGI_TICKET, itemSettings().rarity(Rarity.EPIC))

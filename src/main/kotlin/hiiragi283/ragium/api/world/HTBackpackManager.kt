@@ -12,6 +12,9 @@ import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import net.minecraft.world.PersistentState
 
+/**
+ * バックパックのインベントリを管理するマネージャー
+ */
 class HTBackpackManager : PersistentState() {
     companion object {
         const val KEY = "backpack"
@@ -44,6 +47,9 @@ class HTBackpackManager : PersistentState() {
 
     private val backpacks: MutableMap<DyeColor, SimpleInventory> = mutableMapOf()
 
+    /**
+     * 指定した[color]に対応するインベントリを返します。
+     */
     operator fun get(color: DyeColor): SimpleInventory = backpacks.computeIfAbsent(color) { SimpleInventory(56) }
 
     override fun writeNbt(nbt: NbtCompound, registryLookup: RegistryWrapper.WrapperLookup): NbtCompound = nbt.apply {

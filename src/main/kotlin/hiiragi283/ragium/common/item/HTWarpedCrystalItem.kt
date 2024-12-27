@@ -63,7 +63,7 @@ class HTWarpedCrystalItem(settings: Settings) : Item(settings) {
         tooltip: MutableList<Text>,
         type: TooltipType,
     ) {
-        stack.get(RagiumComponentTypes.GLOBAL_POS)?.let(::globalPosText)?.let {
+        stack.ifPresent(RagiumComponentTypes.GLOBAL_POS, ::globalPosText)?.let {
             tooltip.add(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, it))
         }
     }

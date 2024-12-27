@@ -21,12 +21,9 @@ import net.minecraft.util.Identifier
 import org.jetbrains.annotations.ApiStatus
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.util.function.Consumer
 
 /**
- * An API instance for Ragium
- *
- * Call [RagiumAPI.getInstance] to get singleton instance
+ * RagiumのAPI
  */
 @Suppress("DEPRECATION")
 interface RagiumAPI {
@@ -40,16 +37,14 @@ interface RagiumAPI {
         @JvmStatic
         val LOGGER: Logger = LoggerFactory.getLogger(MOD_NAME)
 
-        @JvmStatic
-        inline fun log(action: Logger.() -> Unit) {
-            LOGGER.action()
-        }
-
+        /**
+         * [RagiumAPI]の単一のインスタンスを返します。
+         */
         @JvmStatic
         fun getInstance(): RagiumAPI = InternalRagiumAPI
 
         /**
-         * Collected list of [RagiumPlugin]
+         * [RagiumPlugin]の一覧です。
          */
         @JvmStatic
         val plugins: List<RagiumPlugin> by lazy {
@@ -65,55 +60,65 @@ interface RagiumAPI {
                     LOGGER.info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
                 }.apply { LOGGER.info("=============================") }
         }
-
-        @JvmStatic
-        fun forEachPlugins(action: Consumer<RagiumPlugin>) {
-            plugins.forEach(action)
-        }
-
-        @JvmName("forEachPluginsKt")
-        @JvmStatic
-        inline fun forEachPlugins(action: (RagiumPlugin) -> Unit) {
-            plugins.forEach(action)
-        }
     }
 
+    /**
+     * Ragiumのコンフィグです。
+     */
     val config: Config
 
+    /**
+     * 機械レジストリのインスタンスです。
+     */
     val machineRegistry: HTMachineRegistry
+
+    /**
+     * 素材レジストリのインスタンスです。
+     */
     val materialRegistry: HTMaterialRegistry
 
     /**
-     * Create a new [AdvancementCriterion] instance of [HTInteractMachineCriterion]
+     * 機械ブロックを右クリックした時に呼び出される進捗の条件を返します。
+     * @param key 対象の機械
+     * @param minTier 条件を満たしうる最低の[HTMachineTier]
      */
     fun createInteractMachineCriterion(
         key: HTMachineKey,
         minTier: HTMachineTier,
     ): AdvancementCriterion<HTInteractMachineCriterion.Condition>
 
-    fun createFluidDrinkCriterion(vararg fluids: Fluid): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
-        createFluidDrinkCriterion(RegistryEntryList.of(Fluid::getRegistryEntry, *fluids))
+    /**
+     * 液体キューブを飲んだ時に呼び出される進捗の条件を返します。
+     * @param fluid 条件に一致する液体
+     */
+    fun createFluidDrinkCriterion(fluid: Fluid): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
+        createFluidDrinkCriterion(RegistryEntryList.of(fluid.registryEntry))
 
+    /**
+     * 液体キューブを飲んだ時に呼び出される進捗の条件を返します。
+     * @param tagKey 条件に一致する液体のタグ
+     */
     fun createFluidDrinkCriterion(tagKey: TagKey<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
         createFluidDrinkCriterion(Registries.FLUID.getOrCreateEntryList(tagKey))
 
     /**
-     * Create a new [AdvancementCriterion] instance of [HTDrankFluidCriterion]
+     * 液体キューブを飲んだ時に呼び出される進捗の条件を返します。
+     * @param entryList 条件に一致する液体の一覧
      */
     fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition>
 
     /**
-     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
+     * 指定した[content]で満たされた液体キューブの[ItemStack]を返します。
      */
     fun createFilledCube(content: HTFluidContent, count: Int = 1): ItemStack = createFilledCube(content.get(), count)
 
     /**
-     * Create a new [ItemStack] instance for [hiiragi283.ragium.common.init.RagiumItems.FILLED_FLUID_CUBE] with [fluid]
+     * 指定した[fluid]で満たされた液体キューブの[ItemStack]を返します。
      */
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 
     /**
-     * Create a new [ResourceCondition] instance for [Config.isHardMode]
+     * [Config.isHardMode]に基づいだ[ResourceCondition]を返します。
      */
     fun createHardModeCondition(value: Boolean): ResourceCondition
 
@@ -121,10 +126,13 @@ interface RagiumAPI {
     @ApiStatus.NonExtendable
     interface Config {
         /**
-         * @see [hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity.tickSecond]
+         * Auto Illuminatorの可動範囲
          */
         val autoIlluminatorRadius: Int
 
+        /**
+         * ハードモードかどうかの判定
+         */
         val isHardMode: Boolean
     }
 }

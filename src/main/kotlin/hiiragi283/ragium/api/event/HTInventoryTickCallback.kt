@@ -6,6 +6,11 @@ import net.minecraft.entity.Entity
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
+/**
+ * プレイヤーのインベントリで毎tick呼ばれるイベント
+ *
+ * [net.minecraft.item.Item.inventoryTick]の最後にフックされています。
+ */
 fun interface HTInventoryTickCallback {
     companion object {
         @JvmField
@@ -19,6 +24,13 @@ fun interface HTInventoryTickCallback {
             }
     }
 
+    /**
+     * @param stack 対象となる[ItemStack]
+     * @param world [entity]がいるワールド
+     * @param entity インベントリを保有しているエンティティ
+     * @param slot [stack]が入っているスロットのインデックス
+     * @param selected プレイヤーが[slot]を選択中かどうか
+     */
     fun inventoryTick(
         stack: ItemStack,
         world: World,

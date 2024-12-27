@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage
 
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.modifyComponent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -19,8 +20,9 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
             fun find(context: ContainerItemContext): HTTieredFluidItemStorage? = context
                 .itemVariant
                 .componentMap
-                .get(HTMachineTier.COMPONENT_TYPE)
-                ?.let { tier: HTMachineTier -> HTTieredFluidItemStorage(context, tier) }
+                .ifPresent(HTMachineTier.COMPONENT_TYPE) { tier: HTMachineTier ->
+                    HTTieredFluidItemStorage(context, tier)
+                }
         }
 
         val resourceAmount: HTFluidVariantStack?

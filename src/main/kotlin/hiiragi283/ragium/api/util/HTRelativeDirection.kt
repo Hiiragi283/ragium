@@ -10,7 +10,7 @@ import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.Direction
 
 /**
- * Represent relative direction
+ * 相対的な方角を管理するクラス
  * @see [Direction]
  */
 enum class HTRelativeDirection : StringIdentifiable {
@@ -30,8 +30,10 @@ enum class HTRelativeDirection : StringIdentifiable {
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRelativeDirection> = identifiedPacketCodec(entries)
 
         /**
-         * Transform [target] into [HTRelativeDirection]
-         * @throws IllegalArgumentException if [front] is [Direction.UP] or [Direction.DOWN]
+         * 指定した値から[HTRelativeDirection]を返します。
+         * @param front 正面となる方角
+         * @param target 変換したい方角
+         * @throws IllegalArgumentException [front]が[Direction.UP]か[Direction.DOWN]の場合
          */
         @JvmStatic
         fun fromDirection(front: Direction, target: Direction): HTRelativeDirection = when (front) {
@@ -53,7 +55,8 @@ enum class HTRelativeDirection : StringIdentifiable {
     }
 
     /**
-     * Transform relative direction into [Direction]
+     * この方角を[Direction]に変換します。
+     * @param front 正面となる方角
      */
     fun toDirection(front: Direction): Direction = when (this) {
         DOWN -> Direction.DOWN

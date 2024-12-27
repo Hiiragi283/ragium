@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager

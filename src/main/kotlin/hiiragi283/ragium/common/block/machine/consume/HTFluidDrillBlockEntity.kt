@@ -1,10 +1,7 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.insert
-import hiiragi283.ragium.api.extension.readFluidStorage
-import hiiragi283.ragium.api.extension.useTransaction
-import hiiragi283.ragium.api.extension.writeFluidStorage
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder

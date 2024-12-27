@@ -14,12 +14,14 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 /**
- * Create a new [AbstractBlock.Settings] instance
+ * [AbstractBlock.Settings]を返します。
+ * @return [AbstractBlock.Settings.create]
  */
 fun blockSettings(): AbstractBlock.Settings = AbstractBlock.Settings.create()
 
 /**
- * Create a new [AbstractBlock.Settings] instance with copied [block] settings
+ * 指定した[block]の設定をコピーした[AbstractBlock.Settings]を返します。
+ * @return [isShallow]がtrueの場合は[AbstractBlock.Settings.copyShallow]，それ以外の場合は[AbstractBlock.Settings.copy]
  */
 @Suppress("DEPRECATION")
 fun blockSettings(block: AbstractBlock, isShallow: Boolean = false): AbstractBlock.Settings = when (isShallow) {
@@ -28,16 +30,15 @@ fun blockSettings(block: AbstractBlock, isShallow: Boolean = false): AbstractBlo
 }
 
 /**
- * Try to replace [BlockState] in [this] world at [pos]
- * @param doBreak break block if true, or replace if false
- * @param mapping transform current [BlockState] into new one (may replace) or null (not replaced)
- * @return true if successfully replaced on server side, or false if failed to replace or on client side
+ * 指定した[pos]に存在する[BlockState]を置き換えようとします。
+ * @param doBreak trueの場合は[World.breakBlock]，それ以外の場合は[World.setBlockState]
+ * @return サーバー側で置換に成功したらtrue，それ以外の場合はfalse
  */
-fun World.replaceBlockState(pos: BlockPos, doBreak: Boolean = false, mapping: (BlockState) -> BlockState?): Boolean {
+fun World.replaceBlockState(pos: BlockPos, doBreak: Boolean = false, transform: (BlockState) -> BlockState?): Boolean {
     val stateIn: BlockState = getBlockState(pos)
     return when {
         isClient -> false
-        else -> mapping(stateIn)?.let { state: BlockState ->
+        else -> transform(stateIn)?.let { state: BlockState ->
             if (doBreak) breakBlock(pos, false)
             setBlockState(pos, state)
         } == true
@@ -47,7 +48,8 @@ fun World.replaceBlockState(pos: BlockPos, doBreak: Boolean = false, mapping: (B
 //    BlockState    //
 
 /**
- * Get [property] value if [this] state has the [property], or null if not
+ * 指定した[property]の値を返します。
+ * @return [property]が含まれていない場合はnull
  */
 fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrNull(property: Property<T>): T? = when (contains(property)) {
     true -> get(property)
@@ -55,7 +57,8 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrNull(property: Proper
 }
 
 /**
- * Get [property] value if [this] state has the [property], or [defaultValue] if not
+ * 指定した[property]の値を返します。
+ * @return [property]が含まれていない場合は[defaultValue]
  */
 fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrDefault(property: Property<T>, defaultValue: T): T = when (contains(property)) {
     true -> get(property)
@@ -63,49 +66,63 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrDefault(property: Pro
 }
 
 /**
- * Check if [this] block state has the same block from [content]
+ * 指定した[content]とブロックが一致するか判定します。
  */
 fun BlockState.isOf(content: HTBlockContent): Boolean = isOf(content.get())
 
 /**
- * Check if [this] block state has the same block from [entryList]
+ * 指定した[entryList]の中にブロックが含まれているか判定します。
  */
 fun BlockState.isIn(entryList: HTRegistryEntryList<Block>): Boolean = entryList.storage.map(this::isIn, this::isOf)
 
 //    BlockEntity    //
 
 /**
- * Run [action] if [this] block entity has [BlockEntity.world]
- * @return return [action] result, or null if [this] doesn't have [BlockEntity.world]
+ * [BlockEntity.hasWorld]がtrueの場合のみに[action]を実行します。
+ * @param T 戻り値のクラス
+ * @return [action]を実行した場合はその戻り値を，それ以外の場合はnull
  */
 fun <T : Any> BlockEntity.ifPresentWorld(action: (World) -> T): T? = world?.let(action)
 
 /**
- * Create a new [ScreenHandlerContext] instance based on [this] block entity
- * @return return a new instance, or [ScreenHandlerContext.EMPTY] if [this] doesn't have [BlockEntity.world]
+ * [ScreenHandlerContext]を返します。
+ * @return [BlockEntity.hasWorld]がfalseの場合は[ScreenHandlerContext.EMPTY]
  */
-fun BlockEntity.createContext(): ScreenHandlerContext = world?.let { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
+fun BlockEntity.createContext(): ScreenHandlerContext =
+    ifPresentWorld { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
 
 //    BlockEntityType    //
 
 /**
- * Create a new [BlockEntityType] instance with [factory] and [blocks]
+ * 指定した[factory]と[blocks]から[BlockEntityType]を返します。
  */
 fun <T : BlockEntity> blockEntityType(factory: BlockEntityType.BlockEntityFactory<T>, vararg blocks: Block): BlockEntityType<T> =
     BlockEntityType.Builder.create(factory, *blocks).build()
 
+/**
+ * 指定した[content]を[BlockEntityType]に追加します。
+ */
 fun BlockEntityType<*>.add(content: HTBlockContent) {
     addSupportedBlock(content.get())
 }
 
+/**
+ * 指定した[blocks]を[BlockEntityType]に追加します。
+ */
 fun BlockEntityType<*>.addAll(vararg blocks: Block) {
     blocks.forEach(this::addSupportedBlock)
 }
 
+/**
+ * 指定した[blocks]を[BlockEntityType]に追加します。
+ */
 fun BlockEntityType<*>.addAll(blocks: Iterable<Block>) {
     blocks.forEach(this::addSupportedBlock)
 }
 
-fun BlockEntityType<*>.addAllContents(blocks: Iterable<HTBlockContent>) {
-    blocks.forEach(this::add)
+/**
+ * 指定した[contents]を[BlockEntityType]に追加します。
+ */
+fun BlockEntityType<*>.addAllContents(contents: Iterable<HTBlockContent>) {
+    contents.forEach(this::add)
 }
