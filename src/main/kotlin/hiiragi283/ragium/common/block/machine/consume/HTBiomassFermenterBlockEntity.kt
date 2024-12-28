@@ -35,7 +35,7 @@ import net.minecraft.world.World
 class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.BIOMASS_FERMENTER, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
+    override var machineKey: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
     private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).input(0).build()
     private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
@@ -77,7 +77,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
                 HTUnitResult.errorString { "Failed to insert fluid!" }
             }
         }
-    }.process(world, key, tier)
+    }.process(world, machineKey, tier)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())

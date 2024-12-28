@@ -51,7 +51,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
+    override var machineKey: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
     private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
 

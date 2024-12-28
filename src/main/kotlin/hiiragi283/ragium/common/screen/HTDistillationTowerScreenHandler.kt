@@ -16,10 +16,15 @@ class HTDistillationTowerScreenHandler(syncId: Int, playerInv: PlayerInventory, 
     ) {
     init {
         inventory.onOpen(player)
+        // inputs
+        addFluidSlot(0, 3, 2)
         // catalyst
         addSlot(0, 4, 2)
         // outputs
         addOutputSlot(1, 5, 1)
+        addFluidSlot(1, 5, 2)
+        addFluidSlot(2, 6, 2)
+        addFluidSlot(3, 7, 2)
         // player inventory
         addPlayerInv()
         // register property

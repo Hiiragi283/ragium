@@ -19,11 +19,13 @@ class HTSimpleMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx:
         // inputs
         addSlot(0, 1, 1)
         addSlot(1, 2, 1)
+        addFluidSlot(0, 2, 2)
         // catalyst
         addSlot(2, 4, 2)
         // outputs
         addOutputSlot(3, 6, 1)
         addOutputSlot(4, 7, 1)
+        addFluidSlot(1, 6, 2)
         // player inventory
         addPlayerInv()
         // register property

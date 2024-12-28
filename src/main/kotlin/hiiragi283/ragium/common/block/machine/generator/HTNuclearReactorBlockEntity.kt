@@ -37,7 +37,7 @@ import net.minecraft.world.World
 class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.NUCLEAR_REACTOR, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.NUCLEAR_REACTOR
+    override var machineKey: HTMachineKey = RagiumMachineKeys.NUCLEAR_REACTOR
 
     private val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 

@@ -31,7 +31,7 @@ import net.minecraft.world.World
 class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.COMBUSTION_GENERATOR, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.COMBUSTION_GENERATOR
+    override var machineKey: HTMachineKey = RagiumMachineKeys.COMBUSTION_GENERATOR
 
     private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.FUELS, this::markDirty)
 

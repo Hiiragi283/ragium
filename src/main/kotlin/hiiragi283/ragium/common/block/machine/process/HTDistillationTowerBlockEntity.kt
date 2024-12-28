@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
     HTMultiblockProvider.Machine {
-    override var key: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
+    override var machineKey: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
     override val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
 

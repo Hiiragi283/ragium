@@ -30,7 +30,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     final override fun process(world: World, pos: BlockPos): HTUnitResult = when (this) {
         is HTMultiblockProvider -> multiblockManager.updateValidation(cachedState)
         else -> HTUnitResult.success()
-    }.flatMap { processor.process(world, key, tier) }
+    }.flatMap { processor.process(world, machineKey, tier) }
 
     /**
      * 機械のインベントリ

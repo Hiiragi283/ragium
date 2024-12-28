@@ -3,10 +3,7 @@ package hiiragi283.ragium.api.block
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineTier
-import hiiragi283.ragium.api.machine.HTMachineDefinition
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
@@ -32,9 +29,10 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.WorldView
 
-class HTMachineBlock(val key: HTMachineKey) :
+class HTMachineBlock(override val machineKey: HTMachineKey) :
     HTBlockWithEntity(blockSettings(Blocks.SMOOTH_STONE).nonOpaque()),
-    InventoryProvider {
+    InventoryProvider,
+    HTMachineProvider {
     init {
         defaultState = stateManager
             .defaultState
@@ -50,14 +48,14 @@ class HTMachineBlock(val key: HTMachineKey) :
         world: BlockView,
         pos: BlockPos,
         context: ShapeContext,
-    ): VoxelShape = key.getEntryOrNull()?.get(HTMachinePropertyKeys.VOXEL_SHAPE) ?: super.getOutlineShape(
+    ): VoxelShape = machineKey.getEntryOrNull()?.get(HTMachinePropertyKeys.VOXEL_SHAPE) ?: super.getOutlineShape(
         state,
         world,
         pos,
         context,
     )
 
-    override fun getName(): MutableText = key.text
+    override fun getName(): MutableText = machineKey.text
 
     override fun randomDisplayTick(
         state: BlockState,
@@ -66,7 +64,7 @@ class HTMachineBlock(val key: HTMachineKey) :
         random: Random,
     ) {
         if (state.get(RagiumBlockProperties.ACTIVE)) {
-            key.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.PARTICLE) { particleType: SimpleParticleType ->
+            machineKey.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.PARTICLE) { particleType: SimpleParticleType ->
                 ParticleUtil.spawnParticlesAround(world, pos, 20, particleType)
             }
         }
@@ -102,7 +100,7 @@ class HTMachineBlock(val key: HTMachineKey) :
         state.with(Properties.HORIZONTAL_FACING, mirror.apply(state.get(Properties.HORIZONTAL_FACING)))
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? =
-        key.getEntryOrNull()?.get(HTMachinePropertyKeys.MACHINE_FACTORY)?.create(pos, state, key)
+        machineKey.getEntryOrNull()?.get(HTMachinePropertyKeys.MACHINE_FACTORY)?.create(pos, state, machineKey)
 
     //    InventoryProvider    //
 

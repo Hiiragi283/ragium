@@ -92,7 +92,7 @@ abstract class HTBlockWithEntity(settings: Settings) :
 
     final override fun hasComparatorOutput(state: BlockState): Boolean = true
 
-    final override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? =
+    final override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T> =
         BlockEntityTicker { world1: World, pos: BlockPos, state1: BlockState, blockEntity: T ->
             (blockEntity as? HTBlockEntityBase)?.tick(world1, pos, state1)
         }

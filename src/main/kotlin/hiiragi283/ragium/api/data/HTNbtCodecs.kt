@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.extension.mappedCodecOf
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -31,9 +30,6 @@ object HTNbtCodecs {
 
     @JvmField
     val ITEM_VARIANT: HTNbtCodec<ItemVariant> = HTNbtCodec("item_variant", VariantCodecs.ITEM_CODEC)
-
-    @JvmField
-    val MACHINE_KEY: HTNbtCodec<HTMachineKey> = HTNbtCodec("machine", HTMachineKey.CODEC)
 
     @JvmField
     val MACHINE_TIER: HTNbtCodec<HTMachineTier> = HTNbtCodec("tier", HTMachineTier.CODEC)

@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
     HTMultiblockProvider.Machine {
-    override var key: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
+    override var machineKey: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
         fluidStorage.update(tier)

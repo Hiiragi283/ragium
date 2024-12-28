@@ -43,7 +43,7 @@ import net.minecraft.world.World
 class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.DRAIN, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.DRAIN
+    override var machineKey: HTMachineKey = RagiumMachineKeys.DRAIN
 
     private val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 

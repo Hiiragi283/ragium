@@ -32,7 +32,7 @@ import net.minecraft.world.World
 class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.ROCK_GENERATOR, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.ROCK_GENERATOR
+    override var machineKey: HTMachineKey = RagiumMachineKeys.ROCK_GENERATOR
 
     val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
 
@@ -75,7 +75,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             world.getFluidState(posIn).isIn(FluidTags.LAVA)
         } -> HTUnitResult.errorString { "Require one lava source at least around Rock Generator!" }
 
-        else -> processor.process(world, key, tier)
+        else -> processor.process(world, machineKey, tier)
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =

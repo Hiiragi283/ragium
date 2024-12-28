@@ -28,7 +28,7 @@ import net.minecraft.world.World
 class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state),
     HTMultiblockProvider.Machine {
-    override var key: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
+    override var machineKey: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
     override fun process(world: World, pos: BlockPos): HTUnitResult {
         val aboveStorage: Storage<ItemVariant> = ItemStorage.SIDED.find(world, pos.up(), Direction.DOWN)

@@ -37,7 +37,7 @@ import net.minecraft.world.World
 class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.STEAM_GENERATOR, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
+    override val machineKey: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
     private val inventory: HTMachineInventory = object : HTMachineInventory(
         2,

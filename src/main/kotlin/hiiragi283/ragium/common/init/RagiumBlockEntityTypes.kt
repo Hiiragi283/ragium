@@ -82,7 +82,7 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val CHEMICAL_PROCESSOR: BlockEntityType<HTChemicalRecipeProcessorBlockEntity> =
-        register("chemical_processor", ::HTChemicalRecipeProcessorBlockEntity)
+        register("chemical_processor", HTChemicalRecipeProcessorBlockEntity::fromState)
 
     @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
@@ -106,7 +106,7 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val LARGE_PROCESSOR: BlockEntityType<HTLargeRecipeProcessorBlockEntity> =
-        register("large_processor", ::HTLargeRecipeProcessorBlockEntity)
+        register("large_processor", HTLargeRecipeProcessorBlockEntity::fromState)
 
     @JvmField
     val MULTI_SMELTER: BlockEntityType<HTMultiSmelterBlockEntity> =
@@ -122,11 +122,11 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val SIMPLE_GENERATOR: BlockEntityType<HTSimpleGeneratorBlockEntity> =
-        register("simple_generator", ::HTSimpleGeneratorBlockEntity)
+        register("simple_generator", HTSimpleGeneratorBlockEntity::fromState)
 
     @JvmField
     val SIMPLE_PROCESSOR: BlockEntityType<HTSimpleRecipeProcessorBlockEntity> =
-        register("simple_processor", ::HTSimpleRecipeProcessorBlockEntity)
+        register("simple_processor", HTSimpleRecipeProcessorBlockEntity::fromState)
 
     @JvmField
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =

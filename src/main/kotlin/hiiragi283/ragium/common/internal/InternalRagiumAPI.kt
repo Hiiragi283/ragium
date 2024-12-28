@@ -214,7 +214,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
                     ConfigImpl.CODEC
                         .parse(JsonOps.INSTANCE, json)
                         .ifSuccess { config = it }
-                        .ifError(::error)
+                        .ifError(DataResult.Error<ConfigImpl>::getOrThrow)
                 } ?: error("Failed to read config file!")
         } else {
             ConfigImpl.CODEC

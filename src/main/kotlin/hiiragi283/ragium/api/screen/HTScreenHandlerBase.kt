@@ -83,16 +83,25 @@ abstract class HTScreenHandlerBase(
 
     //    Extensions    //
 
-    protected fun getSlotPosX(index: Int): Int = 8 + index * 18
+    val itemSlots: MutableList<Pair<Int, Int>> = mutableListOf()
+    val fluidSlots: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
 
-    protected fun getSlotPosY(index: Int): Int = 18 + index * 18
+    private fun getSlotPosX(index: Int): Int = 8 + index * 18
+
+    private fun getSlotPosY(index: Int): Int = 18 + index * 18
 
     protected fun addSlot(index: Int, x: Int, y: Int) {
         addSlot(HTSlot(inventory, index, getSlotPosX(x), getSlotPosY(y)))
+        itemSlots.add(x to y)
     }
 
     protected fun addOutputSlot(index: Int, x: Int, y: Int) {
         addSlot(HTOutputSlot(inventory, index, getSlotPosX(x), getSlotPosY(y)))
+        itemSlots.add(x to y)
+    }
+
+    protected fun addFluidSlot(index: Int, x: Int, y: Int) {
+        fluidSlots.put(index, x to y)
     }
 
     protected fun addPlayerInv(yOffset: Int = 0) {

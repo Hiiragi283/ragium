@@ -8,11 +8,12 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
 import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
+import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.client.gui.HTFluidFilterScreen
 import hiiragi283.ragium.client.gui.HTItemFilterScreen
-import hiiragi283.ragium.client.gui.machine.*
+import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.machine.HTBlockTagPatternRenderer
 import hiiragi283.ragium.client.machine.HTSimpleBlockPatternRenderer
 import hiiragi283.ragium.client.machine.HTTieredBlockPatternRenderer
@@ -24,7 +25,10 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.machine.HTBlockTagPattern
 import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
 import hiiragi283.ragium.common.machine.HTTieredBlockPattern
-import hiiragi283.ragium.common.network.*
+import hiiragi283.ragium.common.network.HTCratePreviewPayload
+import hiiragi283.ragium.common.network.HTFloatingItemPayload
+import hiiragi283.ragium.common.network.HTFluidSyncPayload
+import hiiragi283.ragium.common.network.HTInventorySyncPayload
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -59,6 +63,7 @@ import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.particle.ParticleType
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.sound.SoundEvent
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
@@ -92,29 +97,26 @@ object RagiumClient : ClientModInitializer {
         buildList {
             add(RagiumBlocks.Creatives.CRATE)
             add(RagiumBlocks.Creatives.EXPORTER)
-            addAll(RagiumBlocks.WhiteLines.entries)
-            addAll(RagiumBlocks.Glasses.entries)
+            add(RagiumBlocks.ITEM_DISPLAY)
+            add(RagiumBlocks.POROUS_NETHERRACK)
 
-            addAll(RagiumBlocks.Ores.entries)
+            addAll(RagiumBlocks.Crates.entries)
+            addAll(RagiumBlocks.CrossPipes.entries)
+            addAll(RagiumBlocks.Exporters.entries)
+            addAll(RagiumBlocks.FilteringPipes.entries)
+            addAll(RagiumBlocks.Glasses.entries)
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Hulls.entries)
-            addAll(RagiumBlocks.Exporters.entries)
+            addAll(RagiumBlocks.Ores.entries)
             addAll(RagiumBlocks.Pipes.entries)
-            addAll(RagiumBlocks.CrossPipes.entries)
             addAll(RagiumBlocks.PipeStations.entries)
-            addAll(RagiumBlocks.FilteringPipes.entries)
-            addAll(RagiumBlocks.Crates.entries)
-        }.map(HTBlockContent::get).forEach(::registerCutoutMipped)
+            addAll(RagiumBlocks.WhiteLines.entries)
+        }.forEach(::registerCutoutMipped)
 
         RagiumAPI
             .getInstance()
             .machineRegistry.blocks
             .forEach(::registerCutoutMipped)
-
-        registerCutoutMipped(
-            RagiumBlocks.ITEM_DISPLAY,
-            RagiumBlocks.POROUS_NETHERRACK,
-        )
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CRATE, ::HTCrateBlockEntityRenderer)
@@ -139,10 +141,8 @@ object RagiumClient : ClientModInitializer {
     }
 
     @JvmStatic
-    private fun registerCutoutMipped(vararg contents: HTBlockContent) {
-        contents.map(HTBlockContent::get).forEach { block: Block ->
-            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutoutMipped())
-        }
+    private fun registerCutoutMipped(content: HTBlockContent) {
+        registerCutoutMipped(content.get())
     }
 
     @JvmStatic
@@ -190,11 +190,16 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerScreens() {
-        HandledScreens.register(RagiumScreenHandlerTypes.CHEMICAL_MACHINE, ::HTChemicalMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.DISTILLATION_TOWER, ::HTDistillationTowerScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.LARGE_MACHINE, ::HTLargeMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.SIMPLE_MACHINE, ::HTSimpleMachineScreen)
-        HandledScreens.register(RagiumScreenHandlerTypes.SMALL_MACHINE, ::HTSmallMachineScreen)
+        registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
+        registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
+        registerMachineScreen(RagiumScreenHandlerTypes.LARGE_MACHINE)
+        registerMachineScreen(RagiumScreenHandlerTypes.SIMPLE_MACHINE)
+        registerMachineScreen(RagiumScreenHandlerTypes.SMALL_MACHINE)
+    }
+
+    @JvmStatic
+    private fun <T : HTMachineScreenHandlerBase> registerMachineScreen(type: ScreenHandlerType<T>) {
+        HandledScreens.register(type, ::HTMachineScreen)
     }
 
     //    Events    //
@@ -276,11 +281,6 @@ object RagiumClient : ClientModInitializer {
             // filter
             stack.get(RagiumComponentTypes.ITEM_FILTER)?.let(::itemFilterText)?.let(tooltips::add)
             stack.get(RagiumComponentTypes.FLUID_FILTER)?.let(::fluidFilterText)?.let(tooltips::add)
-            /*
-            ContainerItemContext.withConstant(stack).find(EnergyStorage.ITEM)?.let { storage: EnergyStorage ->
-                add(Text.literal("- Stored Energy: ${longText(storage.amount).string} E (${storage.energyPercent} %)"))
-            }
-             */
             // descriptions
             val texts: List<Text> = stack.get(RagiumComponentTypes.DESCRIPTION) ?: return@register
             if (texts.isEmpty()) return@register
@@ -324,7 +324,7 @@ object RagiumClient : ClientModInitializer {
         RagiumNetworks.FLUID_SYNC.registerClientReceiver { payload: HTFluidSyncPayload, context: ClientPlayNetworking.Context ->
             val (index: Int, stack: HTFluidVariantStack) = payload
             val screen: Screen = context.client().currentScreen ?: return@registerClientReceiver
-            if (screen is HTMachineScreenBase<*>) {
+            if (screen is HTMachineScreen<*>) {
                 screen.fluidCache[index] = stack.variant
                 screen.amountCache[index] = stack.amount
             }
@@ -340,10 +340,6 @@ object RagiumClient : ClientModInitializer {
                     else -> inventory.setStack(slot, stack)
                 }
             }
-        }
-
-        RagiumNetworks.MACHINE_SYNC.registerClientReceiver { payload: HTMachineKeySyncPayload, context: ClientPlayNetworking.Context ->
-            (context.getBlockEntity(payload.pos) as? HTMachineBlockEntityBase)?.onPacketReceived(payload)
         }
     }
 

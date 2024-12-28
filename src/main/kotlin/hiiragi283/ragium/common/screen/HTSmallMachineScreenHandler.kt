@@ -18,8 +18,10 @@ class HTSmallMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: 
         inventory.onOpen(player)
         // input
         addSlot(0, 2, 1)
+        addFluidSlot(0, 2, 2)
         // output
         addOutputSlot(1, 6, 1)
+        addFluidSlot(1, 6, 2)
         // player inventory
         addPlayerInv()
         // register property

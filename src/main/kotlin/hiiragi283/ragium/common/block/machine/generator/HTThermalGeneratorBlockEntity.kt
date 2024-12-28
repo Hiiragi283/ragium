@@ -35,7 +35,7 @@ import net.minecraft.world.World
 class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.THERMAL_GENERATOR, pos, state),
     HTScreenFluidProvider {
-    override var key: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
+    override var machineKey: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
 
     private val inventory: HTMachineInventory = object : HTMachineInventory(1, mapOf(0 to HTStorageIO.INPUT)) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean = stack.isOf(Items.BLAZE_POWDER)

@@ -45,7 +45,7 @@ object HTMachinePropertyKeys {
         ) { RagiumAPI.id("block/active_dynamic_processor") }
 
     @JvmField
-    val MULTIBLOCK_PATTERN: HTPropertyKey.Simple<(HTMultiblockBuilder) -> Unit> =
+    val MULTIBLOCK_PATTERN: HTPropertyKey.Simple<HTMultiblockBuilder.Consumer> =
         HTPropertyKey.ofSimple(RagiumAPI.id("multiblock_pattern"))
 
     /**

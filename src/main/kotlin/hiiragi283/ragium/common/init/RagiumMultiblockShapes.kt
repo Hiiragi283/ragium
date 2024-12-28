@@ -13,7 +13,7 @@ object RagiumMultiblockShapes {
     private val GRATE: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getGrate)
 
     @JvmField
-    val BEDROCK_MINER: (HTMultiblockBuilder) -> Unit = { builder: HTMultiblockBuilder ->
+    val BEDROCK_MINER: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
         // drill
         builder.add(0, -3, 0, HTSimpleBlockPattern(Blocks.BEDROCK))
         // builder.add(0, -2, 0, shaft)
@@ -53,7 +53,7 @@ object RagiumMultiblockShapes {
     }
 
     @JvmField
-    val BLAST_FURNACE: (HTMultiblockBuilder) -> Unit = { builder: HTMultiblockBuilder ->
+    val BLAST_FURNACE: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
         builder.addLayer(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
         builder.addHollow(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
         builder.addHollow(-1..1, 2, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
@@ -61,7 +61,7 @@ object RagiumMultiblockShapes {
     }
 
     @JvmField
-    val CUTTING_MACHINE: (HTMultiblockBuilder) -> Unit = { builder: HTMultiblockBuilder ->
+    val CUTTING_MACHINE: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
         // bottom
         builder.addLayer(-1..1, 0, 1..1, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
         builder.add(-1, 0, 2, HTSimpleBlockPattern(Blocks.STONE_SLAB))
@@ -76,17 +76,18 @@ object RagiumMultiblockShapes {
     }
 
     @JvmField
-    val DISTILLATION_TOWER: (HTMultiblockBuilder) -> Unit = { builder: HTMultiblockBuilder ->
-        builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
-        builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
-        builder.addCross4(-1..1, 1, 1..3, HTSimpleBlockPattern(Blocks.RED_CONCRETE))
-        builder.addCross4(-1..1, 2, 1..3, HTSimpleBlockPattern(Blocks.WHITE_CONCRETE))
-        builder.addCross4(-1..1, 3, 1..3, HTSimpleBlockPattern(Blocks.RED_CONCRETE))
-        builder.add(0, 4, 2, HTSimpleBlockPattern(Blocks.WHITE_CONCRETE))
-    }
+    val DISTILLATION_TOWER: HTMultiblockBuilder.Consumer =
+        HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
+            builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+            builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
+            builder.addCross4(-1..1, 1, 1..3, HTSimpleBlockPattern(Blocks.RED_CONCRETE))
+            builder.addCross4(-1..1, 2, 1..3, HTSimpleBlockPattern(Blocks.WHITE_CONCRETE))
+            builder.addCross4(-1..1, 3, 1..3, HTSimpleBlockPattern(Blocks.RED_CONCRETE))
+            builder.add(0, 4, 2, HTSimpleBlockPattern(Blocks.WHITE_CONCRETE))
+        }
 
     @JvmField
-    val MULTI_SMELTER: (HTMultiblockBuilder) -> Unit = { builder: HTMultiblockBuilder ->
+    val MULTI_SMELTER: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
         builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
         builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
         builder.addLayer(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))

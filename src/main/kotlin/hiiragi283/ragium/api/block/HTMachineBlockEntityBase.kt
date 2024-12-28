@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
@@ -13,9 +12,6 @@ import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumBlockProperties
-import hiiragi283.ragium.common.network.HTMachineKeySyncPayload
-import net.fabricmc.api.EnvType
-import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -23,8 +19,6 @@ import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NbtCompound
-import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
@@ -46,13 +40,10 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     NamedScreenHandlerFactory,
     SidedStorageBlockEntity,
     HTFluidInteractable,
+    HTMachineProvider,
     HTMachineTierProvider {
-    abstract var key: HTMachineKey
-        protected set
     val definition: HTMachineDefinition
-        get() = HTMachineDefinition(key, tier)
-    val payload: HTMachineKeySyncPayload
-        get() = HTMachineKeySyncPayload(pos, key)
+        get() = HTMachineDefinition(machineKey, tier)
 
     val facing: Direction
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
@@ -63,23 +54,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     private var errorMessage: String? = null
 
-    @Environment(EnvType.CLIENT)
-    fun onPacketReceived(packet: HTMachineKeySyncPayload) {
-        key = packet.key
-    }
-
     //    HTBlockEntityBase    //
-
-    override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.MACHINE_KEY.writeTo(nbt, key)
-    }
-
-    override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.MACHINE_KEY.readAndSet(nbt, this::key)
-    }
-
     final override fun addComponents(builder: ComponentMap.Builder) {
         builder.add(HTMachineTier.COMPONENT_TYPE, tier)
     }
@@ -132,7 +107,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         if (result) {
             if (!world.isClient) {
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
-                HTInteractMachineCriterion.trigger(player, key, tier)
+                HTInteractMachineCriterion.trigger(player, machineKey, tier)
             }
             return ActionResult.success(world.isClient)
         }
@@ -185,7 +160,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
                 { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.processCost) },
                 { "Failed to interact energy network" },
             ).ifSuccess { _: HTEnergyNetwork ->
-                key.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
+                machineKey.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
                     world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
                 errorMessage = null
@@ -197,7 +172,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
                 onFailed(world, pos)
             }
         markDirty()
-        sendPacket(payload)
     }
 
     open val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.CONSUME
@@ -224,5 +198,5 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     //    NamedScreenHandlerFactory    //
 
-    final override fun getDisplayName(): Text = tier.createPrefixedText(key)
+    final override fun getDisplayName(): Text = tier.createPrefixedText(machineKey)
 }

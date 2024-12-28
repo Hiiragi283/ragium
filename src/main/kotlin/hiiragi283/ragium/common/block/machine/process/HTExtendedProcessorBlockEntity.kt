@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.sendPacket
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
@@ -32,7 +31,7 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
         private val DEFAULT_KEY: HTMachineKey = HTMachineKey.of(RagiumAPI.id("large_processor"))
     }
 
-    override var key: HTMachineKey = DEFAULT_KEY
+    override var machineKey: HTMachineKey = DEFAULT_KEY
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
 
@@ -58,13 +57,12 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun beforeBuild(world: World?, pos: BlockPos, player: PlayerEntity?) {
         super.beforeBuild(world, pos, player)
         val parent: HTMachineBlockEntityBase = world?.getMachineEntity(pos.offset(facing.opposite, 2)) ?: return
-        key = parent.key
+        machineKey = parent.machineKey
         // tier = parent.tier TODO
-        player?.sendPacket(payload)
     }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        RagiumMultiblockShapes.MULTI_SMELTER(builder)
+        RagiumMultiblockShapes.MULTI_SMELTER.buildMultiblock(builder)
         builder.add(0, 0, 2, HTBlockTagPattern(RagiumBlockTags.MACHINES))
     }
 }

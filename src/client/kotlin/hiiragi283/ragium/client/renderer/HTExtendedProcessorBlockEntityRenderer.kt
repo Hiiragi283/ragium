@@ -26,7 +26,7 @@ object HTExtendedProcessorBlockEntityRenderer : BlockEntityRenderer<HTExtendedPr
         val world: World = entity.world ?: return
         // render machine
         val state: BlockState =
-            entity.key
+            entity.machineKey
                 .useEntry { entry: HTMachineRegistry.Entry -> entry.block.getTierState(entity.tier) }
                 .orElse(RagiumBlocks.EXTENDED_PROCESSOR.get().defaultState)
         MinecraftClient
