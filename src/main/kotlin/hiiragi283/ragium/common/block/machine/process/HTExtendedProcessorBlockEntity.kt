@@ -11,10 +11,9 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
-import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMultiblockShapes
-import hiiragi283.ragium.common.machine.HTBlockTagPattern
+import hiiragi283.ragium.common.machine.HTMachineBlockPattern
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.minecraft.block.BlockState
@@ -63,6 +62,6 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
         RagiumMultiblockShapes.MULTI_SMELTER.buildMultiblock(builder)
-        builder.add(0, 0, 2, HTBlockTagPattern(RagiumBlockTags.MACHINES))
+        builder.add(0, 0, 2, HTMachineBlockPattern)
     }
 }

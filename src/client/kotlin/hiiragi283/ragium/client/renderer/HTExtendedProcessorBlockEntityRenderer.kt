@@ -1,8 +1,7 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.renderMultiblock
-import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.machine.process.HTExtendedProcessorBlockEntity
 import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.block.BlockState
@@ -27,8 +26,11 @@ object HTExtendedProcessorBlockEntityRenderer : BlockEntityRenderer<HTExtendedPr
         // render machine
         val state: BlockState =
             entity.machineKey
-                .useEntry { entry: HTMachineRegistry.Entry -> entry.block.getTierState(entity.tier) }
-                .orElse(RagiumBlocks.EXTENDED_PROCESSOR.get().defaultState)
+                .getEntryOrNull()
+                ?.get()
+                ?.defaultState
+                ?.with(HTMachineTier.PROPERTY, entity.tier)
+                ?: RagiumBlocks.EXTENDED_PROCESSOR.get().defaultState
         MinecraftClient
             .getInstance()
             .blockRenderManager

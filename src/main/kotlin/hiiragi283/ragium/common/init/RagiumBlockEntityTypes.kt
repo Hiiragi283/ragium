@@ -212,7 +212,6 @@ object RagiumBlockEntityTypes {
             .getInstance()
             .machineRegistry
             .getEntryOrNull(key)
-            ?.block
-            ?.let(type::addSupportedBlock)
+            ?.let(type::add)
     }
 }

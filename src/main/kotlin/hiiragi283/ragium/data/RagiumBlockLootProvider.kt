@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumBlocks
@@ -95,18 +94,14 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
             addAll(RagiumBlocks.MISC)
         }.forEach(::addDrop)
 
-        RagiumBlocks.Crates.entries
-            .map(RagiumBlocks.Crates::get)
-            .forEach { dropWithComponent(it, RagiumComponentTypes.CRATE) }
-        RagiumBlocks.Drums.entries
-            .map(RagiumBlocks.Drums::get)
-            .forEach { dropWithComponent(it, RagiumComponentTypes.DRUM) }
+        RagiumBlocks.Crates.entries.forEach { dropWithComponent(it, RagiumComponentTypes.CRATE) }
+        RagiumBlocks.Drums.entries.forEach { dropWithComponent(it, RagiumComponentTypes.DRUM) }
 
         RagiumAPI
             .getInstance()
             .machineRegistry
             .blocks
-            .forEach { block: HTMachineBlock -> dropWithComponent(block, HTMachineTier.COMPONENT_TYPE) }
+            .forEach { content: HTBlockContent -> dropWithComponent(content, HTMachineTier.COMPONENT_TYPE) }
     }
 
     private fun dropOre(ore: RagiumBlocks.Ores) {
@@ -132,8 +127,8 @@ class RagiumBlockLootProvider(dataOutput: FabricDataOutput, registryLookup: Comp
         )
     }
 
-    private fun dropWithComponent(block: Block, vararg types: ComponentType<*>) {
-        addDrop(block) { block1: Block ->
+    private fun dropWithComponent(content: HTBlockContent, vararg types: ComponentType<*>) {
+        addDrop(content) { block1: Block ->
             LootTable
                 .builder()
                 .pool(

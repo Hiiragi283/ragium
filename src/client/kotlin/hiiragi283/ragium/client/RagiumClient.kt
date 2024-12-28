@@ -12,6 +12,7 @@ import hiiragi283.ragium.client.gui.HTFluidFilterScreen
 import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.machine.HTBlockTagPatternRenderer
+import hiiragi283.ragium.client.machine.HTMachineBlockPatternRenderer
 import hiiragi283.ragium.client.machine.HTSimpleBlockPatternRenderer
 import hiiragi283.ragium.client.machine.HTTieredBlockPatternRenderer
 import hiiragi283.ragium.client.model.HTFluidCubeModel
@@ -327,8 +328,9 @@ object RagiumClient : ClientModInitializer {
     //    Machine    //
 
     private fun registerPattern() {
-        RagiumClientAPI.registerPatternRenderer(HTSimpleBlockPatternRenderer)
         RagiumClientAPI.registerPatternRenderer(HTBlockTagPatternRenderer)
+        RagiumClientAPI.registerPatternRenderer(HTMachineBlockPatternRenderer)
+        RagiumClientAPI.registerPatternRenderer(HTSimpleBlockPatternRenderer)
         RagiumClientAPI.registerPatternRenderer(HTTieredBlockPatternRenderer)
     }
 }

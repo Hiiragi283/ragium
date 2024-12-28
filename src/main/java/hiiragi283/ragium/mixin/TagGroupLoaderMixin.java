@@ -3,11 +3,9 @@ package hiiragi283.ragium.mixin;
 import hiiragi283.ragium.api.RagiumAPI;
 import hiiragi283.ragium.api.machine.HTMachineKey;
 import hiiragi283.ragium.api.machine.HTMachineRegistry;
-import hiiragi283.ragium.api.machine.HTMachineType;
 import hiiragi283.ragium.api.material.HTMaterialKey;
 import hiiragi283.ragium.api.material.HTMaterialRegistry;
 import hiiragi283.ragium.api.material.HTTagPrefix;
-import hiiragi283.ragium.api.tags.RagiumBlockTags;
 import hiiragi283.ragium.common.init.RagiumFluids;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -55,14 +53,14 @@ public abstract class TagGroupLoaderMixin {
         Map<Identifier, List<TagGroupLoader.TrackedEntry>> map = cir.getReturnValue();
         if (dataType.endsWith("block")) {
             // machine tags
-            HTMachineType.getEntries().forEach(type -> addTag(map, RagiumBlockTags.MACHINES, type.getBlockTag()));
+            // HTMachineType.getEntries().forEach(type -> addTag(map, RagiumBlockTags.MACHINES, type.getBlockTag()));
             RagiumAPI.getInstance().getMachineRegistry().getEntryMap().forEach((@NotNull HTMachineKey key, HTMachineRegistry.@NotNull Entry entry) -> {
                 // machine type tag
-                addTag(map, entry.getType().getBlockTag(), key.getBlockTag());
+                // addTag(map, entry.getType().getBlockTag(), key.getBlockTag());
                 // pickaxe mineable tag
-                addTag(map, BlockTags.PICKAXE_MINEABLE, key.getBlockTag());
+                add(map, BlockTags.PICKAXE_MINEABLE, entry.get(), Registries.BLOCK);
                 // machine key tag
-                add(map, key.getBlockTag(), entry.getBlock(), Registries.BLOCK);
+                // add(map, key.getBlockTag(), entry.get(), Registries.BLOCK);
             });
             RagiumAPI.getLOGGER().info("Registered runtime block tags!");
         }
@@ -75,9 +73,9 @@ public abstract class TagGroupLoaderMixin {
             // machine tags
             RagiumAPI.getInstance().getMachineRegistry().getEntryMap().forEach((HTMachineKey key, HTMachineRegistry.Entry entry) -> {
                 // machine type tag
-                addTag(map, entry.getType().getItemTag(), key.getItemTag());
+                // addTag(map, entry.getType().getItemTag(), key.getItemTag());
                 // machine key tag
-                add(map, key.getItemTag(), entry.getBlock().asItem(), Registries.ITEM);
+                // add(map, key.getItemTag(), entry.asItem(), Registries.ITEM);
             });
             // material tags
             RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((HTMaterialKey key, HTMaterialRegistry.Entry entry) -> entry.getItemMap().forEach((HTTagPrefix prefix, Set<Item> items) -> {

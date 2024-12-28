@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -391,7 +390,7 @@ class RagiumModelProvider(output: FabricDataOutput) : FabricModelProvider(output
         register(RagiumBlocks.SHAFT) { blockGenerator.registerAxisRotated(it, TextureMap.getId(it)) }
 
         RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (_: HTMachineKey, entry: HTMachineRegistry.Entry) ->
-            val block: HTMachineBlock = entry.block
+            val block: Block = entry.get()
             val coordinateMap: BlockStateVariantMap = BlockStateVariantMap
                 .create(
                     Properties.HORIZONTAL_FACING,

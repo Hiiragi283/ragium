@@ -10,6 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.block.HTMachineBlock
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -31,6 +32,7 @@ import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
+import net.minecraft.block.Block
 import net.minecraft.component.ComponentMap
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.fluid.Fluid
@@ -40,6 +42,8 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.util.JsonHelper
 import net.minecraft.util.Rarity
@@ -103,18 +107,26 @@ internal data object InternalRagiumAPI : RagiumAPI {
             }
         }
         // register blocks
-        val blockMap: Map<HTMachineKey, HTMachineBlock> = sortedKeys.keys
-            .associateWith(::HTMachineBlock)
-            .onEach { (key: HTMachineKey, block: HTMachineBlock) ->
-                Registry.register(Registries.BLOCK, key.id, block)
-                val item = BlockItem(block, itemSettings().machine(key))
-                Registry.register(Registries.ITEM, key.id, item)
+        val blockMap: Map<HTMachineKey, MachineContent> = sortedKeys.keys
+            .associateWith(::MachineContent)
+            .onEach { (key: HTMachineKey, content: MachineContent) ->
+                Registry.register(Registries.BLOCK, content.id, content.get())
+                val item = BlockItem(content.get(), itemSettings().machine(key))
+                Registry.register(Registries.ITEM, content.id, item)
             }
 
         // complete
         machineRegistry =
             HTMachineRegistry(sortedKeys, blockMap, propertyCache)
         RagiumAPI.LOGGER.info("Registered machine types and properties!")
+    }
+
+    private class MachineContent(machineKey: HTMachineKey) : HTBlockContent {
+        override val key: RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, machineKey.id)
+
+        private val block: HTMachineBlock = HTMachineBlock(machineKey)
+
+        override fun get(): Block = block
     }
 
     @JvmStatic

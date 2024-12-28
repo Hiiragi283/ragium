@@ -41,8 +41,6 @@ class HTMachineBlock(override val machineKey: HTMachineKey) :
             .with(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
     }
 
-    fun getTierState(tier: HTMachineTier): BlockState = defaultState.with(HTMachineTier.PROPERTY, tier)
-
     override fun getOutlineShape(
         state: BlockState,
         world: BlockView,

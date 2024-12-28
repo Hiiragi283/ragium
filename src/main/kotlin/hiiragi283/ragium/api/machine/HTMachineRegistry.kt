@@ -2,9 +2,8 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
-import hiiragi283.ragium.api.block.HTMachineBlock
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import net.minecraft.item.ItemConvertible
 import net.minecraft.util.Identifier
 import java.util.stream.Stream
 
@@ -14,7 +13,7 @@ import java.util.stream.Stream
  */
 class HTMachineRegistry(
     private val types: Map<HTMachineKey, HTMachineType>,
-    private val blockMap: Map<HTMachineKey, HTMachineBlock>,
+    private val blockMap: Map<HTMachineKey, HTBlockContent>,
     private val properties: Map<HTMachineKey, HTPropertyHolder>,
 ) : Keyable {
     /**
@@ -26,13 +25,15 @@ class HTMachineRegistry(
     /**
      * 登録された[HTMachineKey]とその[Entry]のマップ
      */
-    val entryMap: Map<HTMachineKey, Entry>
-        get() = types.keys.associateWith(::createEntry)
+    /**
+     * 登録された[HTMachineKey]とその[Entry]のマップ
+     */
+    val entryMap: Map<HTMachineKey, Entry> by lazy { types.keys.associateWith(::createEntry) }
 
     /**
      * 登録された[HTMachineKey]に紐づいたブロックの一覧
      */
-    val blocks: Collection<HTMachineBlock>
+    val blocks: Collection<HTBlockContent>
         get() = blockMap.values
 
     /**
@@ -45,7 +46,7 @@ class HTMachineRegistry(
      *
      * @return 値がない場合はnull
      */
-    fun getBlock(key: HTMachineKey): HTMachineBlock? = blockMap[key]
+    fun getBlock(key: HTMachineKey): HTBlockContent? = blockMap[key]
 
     private fun createEntry(key: HTMachineKey): Entry = Entry(
         types[key] ?: error("Unknown machine key: $key"),
@@ -78,7 +79,7 @@ class HTMachineRegistry(
     /**
      * 機械の情報をまとめたクラス
      */
-    data class Entry(val type: HTMachineType, val block: HTMachineBlock, val property: HTPropertyHolder) :
+    data class Entry(val type: HTMachineType, val content: HTBlockContent, val property: HTPropertyHolder) :
         HTPropertyHolder by property,
-        ItemConvertible by block
+        HTBlockContent by content
 }
