@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
@@ -27,7 +26,6 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
-import net.minecraft.text.Text
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -580,12 +578,12 @@ object RagiumBlocks {
         registerBlock(TRASH_BOX, blockSettings(Blocks.SMOOTH_STONE), ::Block)
         registerBlockItem(
             AUTO_ILLUMINATOR,
-            itemSettings().descriptions(
+            /*itemSettings().descriptions(
                 Text.translatable(
                     RagiumTranslationKeys.AUTO_ILLUMINATOR,
                     RagiumAPI.getInstance().config.autoIlluminatorRadius,
                 ),
-            ),
+            ),*/
         )
         registerBlockItem(EXTENDED_PROCESSOR, itemSettings().descriptions(RagiumTranslationKeys.LARGE_PROCESSOR))
         registerBlockItem(MANUAL_FORGE)

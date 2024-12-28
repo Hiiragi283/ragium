@@ -1,14 +1,11 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumClientAPI
 import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
-import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
-import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.client.gui.HTFluidFilterScreen
@@ -22,9 +19,6 @@ import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.machine.HTBlockTagPattern
-import hiiragi283.ragium.common.machine.HTSimpleBlockPattern
-import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import hiiragi283.ragium.common.network.HTCratePreviewPayload
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTFluidSyncPayload
@@ -44,10 +38,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.screen.ingame.HandledScreens
 import net.minecraft.client.network.ClientPlayerEntity
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories
@@ -63,7 +55,6 @@ import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.particle.ParticleType
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.sound.SoundEvent
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
@@ -125,10 +116,10 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
 
-        registerMachineRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
-        registerMachineRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
-        registerMachineRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
-        registerMachineRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
             state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
@@ -143,11 +134,6 @@ object RagiumClient : ClientModInitializer {
     @JvmStatic
     private fun registerCutoutMipped(content: HTBlockContent) {
         registerCutoutMipped(content.get())
-    }
-
-    @JvmStatic
-    private fun <T : HTMachineBlockEntityBase> registerMachineRenderer(type: BlockEntityType<T>) {
-        BlockEntityRendererFactories.register(type) { HTMultiblockMachineBlockEntityRenderer }
     }
 
     //    Entities    //
@@ -190,16 +176,11 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerScreens() {
-        registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
-        registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
-        registerMachineScreen(RagiumScreenHandlerTypes.LARGE_MACHINE)
-        registerMachineScreen(RagiumScreenHandlerTypes.SIMPLE_MACHINE)
-        registerMachineScreen(RagiumScreenHandlerTypes.SMALL_MACHINE)
-    }
-
-    @JvmStatic
-    private fun <T : HTMachineScreenHandlerBase> registerMachineScreen(type: ScreenHandlerType<T>) {
-        HandledScreens.register(type, ::HTMachineScreen)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.LARGE_MACHINE)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.SIMPLE_MACHINE)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.SMALL_MACHINE)
     }
 
     //    Events    //
@@ -346,17 +327,8 @@ object RagiumClient : ClientModInitializer {
     //    Machine    //
 
     private fun registerPattern() {
-        HTMultiblockPatternRendererRegistry.register(
-            HTSimpleBlockPattern::class.java,
-            HTSimpleBlockPatternRenderer,
-        )
-        HTMultiblockPatternRendererRegistry.register(
-            HTBlockTagPattern::class.java,
-            HTBlockTagPatternRenderer,
-        )
-        HTMultiblockPatternRendererRegistry.register(
-            HTTieredBlockPattern::class.java,
-            HTTieredBlockPatternRenderer,
-        )
+        RagiumClientAPI.registerPatternRenderer(HTSimpleBlockPatternRenderer)
+        RagiumClientAPI.registerPatternRenderer(HTBlockTagPatternRenderer)
+        RagiumClientAPI.registerPatternRenderer(HTTieredBlockPatternRenderer)
     }
 }

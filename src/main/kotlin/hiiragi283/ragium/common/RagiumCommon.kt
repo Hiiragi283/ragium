@@ -10,7 +10,6 @@ import net.fabricmc.api.ModInitializer
 
 object RagiumCommon : ModInitializer {
     override fun onInitialize() {
-        InternalRagiumAPI.config
         HTHardModeResourceCondition
 
         RagiumAPI.LOGGER.info("Registering game objects...")

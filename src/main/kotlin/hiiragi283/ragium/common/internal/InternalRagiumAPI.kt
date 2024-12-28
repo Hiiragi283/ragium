@@ -206,22 +206,24 @@ internal data object InternalRagiumAPI : RagiumAPI {
     @JvmStatic
     private fun readConfig(): RagiumAPI.Config {
         var config: ConfigImpl = ConfigImpl.DEFAULT
-        if (Files.exists(configPath)) {
-            configPath
-                .bufferedReader()
-                .use { JsonHelper.deserializeNullable(gson, it, JsonElement::class.java, false) }
-                ?.let { json: JsonElement ->
-                    ConfigImpl.CODEC
-                        .parse(JsonOps.INSTANCE, json)
-                        .ifSuccess { config = it }
-                        .ifError(DataResult.Error<ConfigImpl>::getOrThrow)
-                } ?: error("Failed to read config file!")
-        } else {
-            ConfigImpl.CODEC
-                .encodeStart(JsonOps.INSTANCE, config)
-                .ifSuccess { json: JsonElement -> configPath.bufferedWriter().use { gson.toJson(json, it) } }
-                .ifError(::error)
-        }
+        runCatching {
+            if (Files.exists(configPath)) {
+                configPath
+                    .bufferedReader()
+                    .use { JsonHelper.deserializeNullable(gson, it, JsonElement::class.java, false) }
+                    ?.let { json: JsonElement ->
+                        ConfigImpl.CODEC
+                            .parse(JsonOps.INSTANCE, json)
+                            .ifSuccess { config = it }
+                            .ifError(DataResult.Error<ConfigImpl>::getOrThrow)
+                    } ?: error("Failed to read config file!")
+            } else {
+                ConfigImpl.CODEC
+                    .encodeStart(JsonOps.INSTANCE, config)
+                    .ifSuccess { json: JsonElement -> configPath.bufferedWriter().use { gson.toJson(json, it) } }
+                    .ifError(::error)
+            }
+        }.onFailure { throwable: Throwable -> RagiumAPI.LOGGER.error(throwable.message) }
         return config
     }
 
