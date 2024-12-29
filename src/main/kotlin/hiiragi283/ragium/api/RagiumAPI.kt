@@ -18,7 +18,6 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import org.jetbrains.annotations.ApiStatus
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -31,6 +30,9 @@ interface RagiumAPI {
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
 
+        /**
+         * 名前空間が`ragium`となる[Identifier]を返します。
+         */
         @JvmStatic
         fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
 
@@ -65,7 +67,10 @@ interface RagiumAPI {
     /**
      * Ragiumのコンフィグです。
      */
-    val config: Config
+    val config: RagiumConfig
+
+    val isHardMode: Boolean
+        get() = config.common.isHardMode
 
     /**
      * 機械レジストリのインスタンスです。
@@ -118,21 +123,7 @@ interface RagiumAPI {
     fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
 
     /**
-     * [Config.isHardMode]に基づいだ[ResourceCondition]を返します。
+     * [RagiumConfig.Common.isHardMode]に基づいだ[ResourceCondition]を返します。
      */
     fun createHardModeCondition(value: Boolean): ResourceCondition
-
-    //    Config    //
-    @ApiStatus.NonExtendable
-    interface Config {
-        /**
-         * Auto Illuminatorの可動範囲
-         */
-        val autoIlluminatorRadius: Int
-
-        /**
-         * ハードモードかどうかの判定
-         */
-        val isHardMode: Boolean
-    }
 }

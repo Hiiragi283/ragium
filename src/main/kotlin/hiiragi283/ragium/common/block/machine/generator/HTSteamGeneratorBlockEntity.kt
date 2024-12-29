@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine.generator
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -17,7 +18,6 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -77,7 +77,10 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         val fuelStack: ItemStack = inventory.getStack(0)
         return if (fuelStack.isIn(ItemTags.COALS)) {
             useTransaction { transaction: Transaction ->
-                if (fluidStorage.extractSelf(FluidConstants.INGOT, transaction) == FluidConstants.INGOT) {
+                val maxAmount: Long = RagiumAPI
+                    .getInstance()
+                    .config.machine.generator.steamWater
+                if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
                     transaction.commit()
                     fuelStack.decrement(1)
                     inventory.mergeStack(1, HTItemResult(RagiumItems.Dusts.ASH))

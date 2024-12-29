@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.BlockState
@@ -41,7 +42,10 @@ class HTFrostingDynamiteEntity : ThrownItemEntity {
 
     private fun placeSnow(hitPos: BlockPos) {
         if (!world.isClient) {
-            BlockPos.stream(hitPos.add(2, 0, 2), hitPos.add(-2, 0, -2)).forEach { posIn: BlockPos ->
+            val radius: Int = RagiumAPI
+                .getInstance()
+                .config.utility.dynamitePlaceRadius
+            BlockPos.stream(hitPos.add(radius, 0, radius), hitPos.add(-radius, 0, -radius)).forEach { posIn: BlockPos ->
                 val state: BlockState = Blocks.POWDER_SNOW.defaultState
                 val stateAt: BlockState = world.getBlockState(posIn)
                 if (stateAt.isReplaceable && state.canPlaceAt(world, posIn)) {

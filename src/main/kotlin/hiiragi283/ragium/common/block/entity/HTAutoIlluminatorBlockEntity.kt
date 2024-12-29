@@ -48,7 +48,9 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
     override val tickRate: Int = 1
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        val radius: Int = RagiumAPI.getInstance().config.autoIlluminatorRadius
+        val radius: Int = RagiumAPI
+            .getInstance()
+            .config.utility.autoIlluminatorRadius
         for (x: Int in (pos.x - radius..pos.x + radius)) {
             for (z: Int in (pos.z - radius..pos.z + radius)) {
                 for (y: Int in yRange) {

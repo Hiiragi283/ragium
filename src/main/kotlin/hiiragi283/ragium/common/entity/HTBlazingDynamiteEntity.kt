@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.entity
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.init.RagiumEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.BlockState
@@ -40,13 +41,18 @@ class HTBlazingDynamiteEntity : ThrownItemEntity {
         super.onBlockHit(blockHitResult)
         if (!world.isClient) {
             val hitPos: BlockPos = blockHitResult.blockPos
-            BlockPos.stream(hitPos.add(2, 2, 2), hitPos.add(-2, -2, -2)).forEach { posIn: BlockPos ->
-                val state: BlockState = Blocks.FIRE.defaultState
-                val stateAt: BlockState = world.getBlockState(posIn)
-                if (stateAt.isReplaceable && state.canPlaceAt(world, posIn)) {
-                    world.setBlockState(posIn, state)
+            val radius: Int = RagiumAPI
+                .getInstance()
+                .config.utility.dynamitePlaceRadius
+            BlockPos
+                .stream(hitPos.add(radius, radius, radius), hitPos.add(-radius, -radius, -radius))
+                .forEach { posIn: BlockPos ->
+                    val state: BlockState = Blocks.FIRE.defaultState
+                    val stateAt: BlockState = world.getBlockState(posIn)
+                    if (stateAt.isReplaceable && state.canPlaceAt(world, posIn)) {
+                        world.setBlockState(posIn, state)
+                    }
                 }
-            }
             discard()
         }
     }

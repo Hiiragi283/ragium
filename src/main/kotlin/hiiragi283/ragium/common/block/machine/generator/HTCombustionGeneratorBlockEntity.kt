@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.block.machine.generator
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -14,7 +16,6 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -56,10 +57,14 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(world: World, pos: BlockPos): HTUnitResult = useTransaction { transaction: Transaction ->
         val variantIn: FluidVariant = fluidStorage.variant
         val maxAmount: Long = when {
-            variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> FluidConstants.NUGGET
-            variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> FluidConstants.INGOT
+            variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> RagiumConfig.Generator::nitroFuel
+            variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> RagiumConfig.Generator::nonNitroFuel
             else -> return HTUnitResult.errorString { "Failed to calculate consume amount!" }
-        }
+        }(
+            RagiumAPI
+                .getInstance()
+                .config.machine.generator,
+        )
         if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
             transaction.commit()
             HTUnitResult.success()

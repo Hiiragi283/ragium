@@ -85,4 +85,30 @@ object RagiumTranslationKeys {
 
     const val MULTI_SHAPE_ERROR = "message.ragium.multi_shape.error"
     const val MULTI_SHAPE_SUCCESS = "message.ragium.multi_shape.success"
+
+    //    Config    //
+
+    const val CONFIG_CATEGORY_COMMON = "text.autoconfig.ragium.category.common"
+    const val CONFIG_CATEGORY_MACHINE = "text.autoconfig.ragium.category.machine"
+    const val CONFIG_CATEGORY_UTILITY = "text.autoconfig.ragium.category.utility"
+
+    // common
+    const val CONFIG_HARD_MODE = "text.autoconfig.ragium.option.common.isHardMode"
+    const val CONFIG_RADIOACTIVE = "text.autoconfig.ragium.option.common.enableRadioactiveEffect"
+
+    // machine
+    const val CONFIG_SHOW_PARTICLE = "text.autoconfig.ragium.option.machine.showParticle"
+
+    const val CONFIG_GENERATOR = "text.autoconfig.ragium.option.machine.generator"
+    const val CONFIG_GENERATOR_COOLANT = "text.autoconfig.ragium.option.machine.generator.coolant"
+    const val CONFIG_GENERATOR_NITRO = "text.autoconfig.ragium.option.machine.generator.nitroFuel"
+    const val CONFIG_GENERATOR_NON_NITRO = "text.autoconfig.ragium.option.machine.generator.nonNitroFuel"
+    const val CONFIG_GENERATOR_STEAM = "text.autoconfig.ragium.option.machine.generator.steamWater"
+    const val CONFIG_GENERATOR_THERMAL = "text.autoconfig.ragium.option.machine.generator.thermalFuel"
+
+    // utility
+    const val CONFIG_AUTO_ILLUMINATOR = "text.autoconfig.ragium.option.utility.autoIlluminatorRadius"
+    const val CONFIG_DYNAMITE_RADIUS = "text.autoconfig.ragium.option.utility.dynamitePlaceRadius"
+    const val CONFIG_DYNAMITE_POWER = "text.autoconfig.ragium.option.utility.defaultDynamitePower"
+    const val CONFIG_GIGANT_HAMMER = "text.autoconfig.ragium.option.utility.gigantHammerMiningSpeed"
 }

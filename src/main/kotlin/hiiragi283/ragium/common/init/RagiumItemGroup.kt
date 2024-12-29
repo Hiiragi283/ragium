@@ -62,7 +62,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItems.Gears.entries)
                 entries.addAll(RagiumItems.Gems.entries)
                 entries.addAll(RagiumItems.Ingots.entries)
-                if (RagiumAPI.getInstance().config.isHardMode) {
+                if (RagiumAPI.getInstance().isHardMode) {
                     entries.addAll(RagiumItems.Plates.entries)
                 }
                 entries.addAll(RagiumItems.RawMaterials.entries)

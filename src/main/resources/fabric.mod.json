@@ -3,7 +3,7 @@
   "id": "ragium",
   "version": "${version}",
   "name": "Ragium",
-  "description": "A simple tech mod for Fabric",
+  "description": "A new tech mod for Fabric",
   "authors": [
     "Hiiragi283"
   ],
@@ -33,6 +33,12 @@
         "adapter": "kotlin"
       }
     ],
+    "modmenu": [
+      {
+        "value": "hiiragi283.ragium.client.RagiumModMenuPlugin",
+        "adapter": "kotlin"
+      }
+    ],
     "ragium.plugin.server": [
       {
         "value": "hiiragi283.ragium.common.internal.RagiumDefaultPlugin",
@@ -54,6 +60,7 @@
     "minecraft": ">=1.21- <1.22-",
     "java": ">=21",
     "fabric-api": "*",
-    "fabric-language-kotlin": "*"
+    "fabric-language-kotlin": "*",
+    "cloth-config": "*"
   }
 }

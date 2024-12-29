@@ -13,6 +13,7 @@ import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemStack
@@ -193,6 +194,10 @@ fun LivingEntity.addInfinityStatusEffect(
         showParticles,
         showIcon,
     )
+}
+
+fun ThrownItemEntity.setItemFromOwner(owner: LivingEntity): ThrownItemEntity = apply {
+    setItem(owner.getStackInActiveHand())
 }
 
 //    Color    //

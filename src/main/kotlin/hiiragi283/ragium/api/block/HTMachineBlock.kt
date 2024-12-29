@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.machineTier
@@ -61,7 +62,11 @@ class HTMachineBlock(override val machineKey: HTMachineKey) :
         pos: BlockPos,
         random: Random,
     ) {
-        if (state.get(RagiumBlockProperties.ACTIVE)) {
+        if (state.get(RagiumBlockProperties.ACTIVE) &&
+            RagiumAPI
+                .getInstance()
+                .config.machine.showParticle
+        ) {
             machineKey.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.PARTICLE) { particleType: SimpleParticleType ->
                 ParticleUtil.spawnParticlesAround(world, pos, 20, particleType)
             }

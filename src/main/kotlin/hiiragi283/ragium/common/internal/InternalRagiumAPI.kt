@@ -1,13 +1,7 @@
 package hiiragi283.ragium.common.internal
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonElement
-import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
-import com.mojang.serialization.JsonOps
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
@@ -28,9 +22,11 @@ import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
+import me.shedaniel.autoconfig.AutoConfig
+import me.shedaniel.autoconfig.ConfigHolder
+import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.block.Block
 import net.minecraft.component.ComponentMap
@@ -45,12 +41,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntryList
-import net.minecraft.util.JsonHelper
 import net.minecraft.util.Rarity
-import java.nio.file.Files
-import java.nio.file.Path
-import kotlin.io.path.bufferedReader
-import kotlin.io.path.bufferedWriter
 
 internal data object InternalRagiumAPI : RagiumAPI {
     //    RagiumAPI    //
@@ -208,68 +199,11 @@ internal data object InternalRagiumAPI : RagiumAPI {
     //    ConfigImpl    //
 
     @JvmStatic
-    private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-
-    @JvmStatic
-    private val configPath: Path = FabricLoader.getInstance().configDir.resolve("${RagiumAPI.MOD_ID}.json")
-
-    override val config: RagiumAPI.Config by lazy { readConfig() }
-
-    @JvmStatic
-    private fun readConfig(): RagiumAPI.Config {
-        var config: ConfigImpl = ConfigImpl.DEFAULT
-        runCatching {
-            if (Files.exists(configPath)) {
-                configPath
-                    .bufferedReader()
-                    .use { JsonHelper.deserializeNullable(gson, it, JsonElement::class.java, false) }
-                    ?.let { json: JsonElement ->
-                        ConfigImpl.CODEC
-                            .parse(JsonOps.INSTANCE, json)
-                            .ifSuccess { config = it }
-                            .ifError(DataResult.Error<ConfigImpl>::getOrThrow)
-                    } ?: error("Failed to read config file!")
-            } else {
-                ConfigImpl.CODEC
-                    .encodeStart(JsonOps.INSTANCE, config)
-                    .ifSuccess { json: JsonElement -> configPath.bufferedWriter().use { gson.toJson(json, it) } }
-                    .ifError(::error)
-            }
-        }.onFailure { throwable: Throwable -> RagiumAPI.LOGGER.error(throwable.message) }
-        return config
+    val CONFIG_HOLDER: ConfigHolder<RagiumConfig> by lazy {
+        AutoConfig.register(RagiumConfig::class.java, ::Toml4jConfigSerializer)
+        AutoConfig.getConfigHolder(RagiumConfig::class.java)
     }
 
-    @JvmStatic
-    private fun getVersion(): String = getModMetadata(RagiumAPI.MOD_ID)?.version?.friendlyString ?: "MISSING"
-
-    private class ConfigImpl(val version: String, override val autoIlluminatorRadius: Int, override val isHardMode: Boolean) :
-        RagiumAPI.Config {
-        companion object {
-            @JvmField
-            val CODEC: Codec<ConfigImpl> = RecordCodecBuilder
-                .create { instance ->
-                    instance
-                        .group(
-                            Codec.STRING.fieldOf("version").forGetter(ConfigImpl::version),
-                            Codec
-                                .intRange(
-                                    0,
-                                    Int.MAX_VALUE,
-                                ).fieldOf("auto_illuminator_radius")
-                                .forGetter(ConfigImpl::autoIlluminatorRadius),
-                            Codec.BOOL.fieldOf("hard_mode").forGetter(ConfigImpl::isHardMode),
-                        ).apply(instance, ::ConfigImpl)
-                }.validate { config: ConfigImpl ->
-                    DataResult
-                        .success(config)
-                        .validate(
-                            { it.version == getVersion() },
-                            { "Not matching config version! Remove old config file!" },
-                        )
-                }
-
-            @JvmField
-            val DEFAULT = ConfigImpl(getVersion(), 64, false)
-        }
-    }
+    override val config: RagiumConfig
+        get() = CONFIG_HOLDER.get()
 }

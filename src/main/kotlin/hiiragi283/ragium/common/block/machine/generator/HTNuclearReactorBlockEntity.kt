@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine.generator
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.component.HTExplosionComponent
 import hiiragi283.ragium.api.extension.*
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -73,7 +73,10 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
         }?.let(::HTItemResult) ?: return HTUnitResult.errorString { "Input slot has no nuclear fuels!" }
         if (!result.canMerge(wasteStack)) return overheat(world, pos)
         return useTransaction { transaction: Transaction ->
-            if (fluidStorage.extractSelf(FluidConstants.BUCKET, transaction) == FluidConstants.BUCKET) {
+            val maxAmount: Long = RagiumAPI
+                .getInstance()
+                .config.machine.generator.coolant
+            if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
                 transaction.commit()
                 inventory.mergeStack(1, result)
                 fuelStack.damage += 1

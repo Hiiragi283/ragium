@@ -9,6 +9,7 @@ fabric-kotlin = "1.13.+"
 
 ktlint = "12.1.2"
 
+cloth-config = "15.0.140"
 energy = "4.1.0"
 jade = "15.8.3+fabric"
 mod-menu = "11.0.3"
@@ -21,6 +22,7 @@ fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = 
 fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
 fabric-kotlin = { group = "net.fabricmc", name = "fabric-language-kotlin", version.ref = "fabric-kotlin" }
 
+cloth-config = { group = "me.shedaniel.cloth", name = "cloth-config-fabric", version.ref = "cloth-config" }
 energy = { group = "teamreborn", name = "energy", version.ref = "energy" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mod-modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "mod-menu" }
@@ -31,6 +33,8 @@ rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-fabric", version.ref 
 mods-fabric = [
     "fabric-api",
     "fabric-loader",
+    "cloth-config",
+    "mod-modmenu",
 ]
 mods-include = [
     "energy"
@@ -39,7 +43,6 @@ mods-compile = []
 mods-runtime = [
     "fabric-kotlin",
     "jade",
-    "mod-modmenu",
     "rei"
 ]
 

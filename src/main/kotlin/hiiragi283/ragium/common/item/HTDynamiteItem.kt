@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.component.HTExplosionComponent
-import hiiragi283.ragium.api.extension.getStackInActiveHand
+import hiiragi283.ragium.api.extension.setItemFromOwner
 import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.LivingEntity
@@ -29,7 +29,7 @@ class HTDynamiteItem(settings: Settings) : HTThrowableItem(settings) {
     }
 
     override fun createEntity(world: World, user: LivingEntity): ThrownItemEntity = HTDynamiteEntity(world, user)
-        .apply { setItem(user.getStackInActiveHand()) }
+        .setItemFromOwner(user)
 
     override fun createEntity(
         world: World,

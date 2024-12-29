@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.machine.generator
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -15,7 +16,6 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -73,7 +73,10 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         // try to consume fluid
         return useTransaction { transaction: Transaction ->
-            if (fluidStorage.extractSelf(FluidConstants.INGOT, transaction) == FluidConstants.INGOT) {
+            val maxAmount: Long = RagiumAPI
+                .getInstance()
+                .config.machine.generator.thermalFuel
+            if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
                 transaction.commit()
                 HTUnitResult.success()
             } else {

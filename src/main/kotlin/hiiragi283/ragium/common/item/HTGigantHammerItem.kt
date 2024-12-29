@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
@@ -8,7 +9,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTGigantHammerItem(settings: Settings) : Item(settings) {
-    override fun getMiningSpeed(stack: ItemStack, state: BlockState): Float = 12f
+    override fun getMiningSpeed(stack: ItemStack, state: BlockState): Float = RagiumAPI
+        .getInstance()
+        .config.utility.gigantHammerMiningSpeed
 
     override fun isCorrectForDrops(stack: ItemStack, state: BlockState): Boolean = true
 

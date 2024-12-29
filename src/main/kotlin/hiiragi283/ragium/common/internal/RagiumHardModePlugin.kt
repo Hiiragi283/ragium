@@ -29,7 +29,7 @@ import kotlin.jvm.optionals.getOrNull
 object RagiumHardModePlugin : RagiumPlugin {
     override val priority: Int = -90
 
-    private val hardMode: Boolean by lazy { RagiumAPI.getInstance().config.isHardMode }
+    private val hardMode: Boolean by lazy { RagiumAPI.getInstance().isHardMode }
 
     override fun registerRuntimeRecipe(exporter: RecipeExporter) {
         // solar panel

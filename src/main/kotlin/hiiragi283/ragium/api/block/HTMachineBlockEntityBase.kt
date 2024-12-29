@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.block
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
@@ -66,7 +65,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         ifPresentWorld { world: World ->
             if (!world.isClient && oldTier != tier) {
                 onTierUpdated(oldTier, tier)
-                RagiumAPI.LOGGER.info("Machine tier updated: $oldTier -> $tier")
+                // RagiumAPI.LOGGER.info("Machine tier updated: $oldTier -> $tier")
             }
         }
     }
@@ -83,13 +82,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        // Open slot config screen when holding xxx
-        /*if (player.getStackInActiveHand().isOf(RagiumItemsNew.Circuits.PRIMITIVE)) {
-            if (!world.isClient) {
-                player.openHandledScreen(configScreenFactory)
-            }
-            return ActionResult.success(world.isClient)
-        }*/
         // Upgrade machine when clicked with machine hull
         if (upgrade(world, player, RagiumItemTags.BASIC_UPGRADES, HTMachineTier.BASIC)) {
             return ActionResult.success(world.isClient)

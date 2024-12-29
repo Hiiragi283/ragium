@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.splitWith
@@ -76,8 +77,10 @@ object RagiumLangProviders {
                 )
             }
 
+            builder.add("modmenu.descriptionTranslation.ragium", "A new tech mod for Fabric")
+            builder.add("modmenu.nameTranslation.ragium", RagiumAPI.MOD_NAME)
+            builder.add("text.autoconfig.ragium.title", RagiumAPI.MOD_NAME)
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Press Ctrl to show descriptions")
-
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "Tycoon the Racoon")
             builder.add(RagiumTranslationKeys.ADVANCEMENT_STELLA_SUIT, "Synthetically Treated External Lightweight-Layered Augment")
@@ -188,10 +191,6 @@ object RagiumLangProviders {
             builder.add(RagiumTranslationKeys.EXPORTER, "Exporter")
             builder.add(RagiumTranslationKeys.GRATE, "Grate")
             builder.add(RagiumTranslationKeys.HULL, "Hull")
-            // Enchantments
-            // builder.add(RagiumEnchantments.SMELTING, "Smelting")
-            // builder.add(RagiumEnchantments.SLEDGE_HAMMER, "Sledge Hammer")
-            // builder.add(RagiumEnchantments.BUZZ_SAW, "Buzz Saw")
             // Entity
             builder.add(RagiumEntityTypes.DYNAMITE, "Dynamite")
             builder.add(RagiumEntityTypes.ANVIL_DYNAMITE, "Anvil Dynamite")
@@ -409,7 +408,6 @@ object RagiumLangProviders {
                 "Generate energy from hot fluids",
             )
 
-            // builder.add(RagiumMachineKeys.ALLOY_FURNACE, "Alloy Furnace", "Smelt two ingredients into one")
             builder.add(RagiumMachineKeys.ASSEMBLER, "Assembler", "Dr.Doom, Assemble!")
             builder.add(RagiumMachineKeys.BLAST_FURNACE, "Large Blast Furnace", "Smelt multiple ingredients into one")
             builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "Chemical Reactor", "Are You Ready?")
@@ -422,7 +420,6 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.GROWTH_CHAMBER, "Growth Chamber")
             builder.add(RagiumMachineKeys.INFUSER, "Infuser", "Something not like Centrifuge")
             builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "Laser Transformer")
-            // builder.add(RagiumMachineKeys.METAL_FORMER, "Metal Former", "It's High Quality.")
             builder.add(RagiumMachineKeys.MIXER, "Mixer", "Genomix...")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "Multi Smelter", "Smelt multiple items at once")
             // Material
@@ -474,13 +471,10 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.TUNGSTEN, "Tungsten")
             builder.add(RagiumMaterialKeys.ZINC, "Zinc")
             // Tag Prefix
-            // builder.add(HTTagPrefix.DEEP_ORE, "Deepslate %s Ore")
-            // builder.add(HTTagPrefix.END_ORE, "End %s Ore")
             builder.add(HTTagPrefix.DUST, "%s Dust")
             builder.add(HTTagPrefix.GEAR, "%s Gear")
             builder.add(HTTagPrefix.GEM, "%s")
             builder.add(HTTagPrefix.INGOT, "%s Ingot")
-            // builder.add(HTTagPrefix.NETHER_ORE, "Nether %s Ore")
             builder.add(HTTagPrefix.NUGGET, "%s Nugget")
             builder.add(HTTagPrefix.ORE, "%s Ore")
             builder.add(HTTagPrefix.PLATE, "%s Plate")
@@ -491,6 +485,26 @@ object RagiumLangProviders {
             builder.addWorld(World.OVERWORLD, "Overworld")
             builder.addWorld(World.NETHER, "Nether")
             builder.addWorld(World.END, "The End")
+            // config
+            builder.add(RagiumTranslationKeys.CONFIG_CATEGORY_COMMON, "Common")
+            builder.add(RagiumTranslationKeys.CONFIG_CATEGORY_MACHINE, "Machine")
+            builder.add(RagiumTranslationKeys.CONFIG_CATEGORY_UTILITY, "Utility")
+
+            builder.add(RagiumTranslationKeys.CONFIG_HARD_MODE, "Enable Hard Mode")
+            builder.add(RagiumTranslationKeys.CONFIG_RADIOACTIVE, "Enable Radioactive Effect")
+
+            builder.add(RagiumTranslationKeys.CONFIG_SHOW_PARTICLE, "Show Particle")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR, "Generator")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_COOLANT, "Coolant for Nuclear Generator")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_NITRO, "Nitro Fuel for Combustion Generator")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_NON_NITRO, "Non-Nitro Fuel for Combustion Generator")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_STEAM, "Water for Steam Generator")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_THERMAL, "Fuel for Thermal Generator")
+
+            builder.add(RagiumTranslationKeys.CONFIG_AUTO_ILLUMINATOR, "Auto Illuminator Radius")
+            builder.add(RagiumTranslationKeys.CONFIG_DYNAMITE_RADIUS, "Block Placing Radius for Dynamites")
+            builder.add(RagiumTranslationKeys.CONFIG_DYNAMITE_POWER, "Default Dynamite Power")
+            builder.add(RagiumTranslationKeys.CONFIG_GIGANT_HAMMER, "Mining Speed for Gigant Hammer")
         }
     }
 
@@ -506,6 +520,9 @@ object RagiumLangProviders {
                 )
             }
 
+            builder.add("modmenu.descriptionTranslation.ragium", "Fabric向けの新しい工業mod")
+            builder.add("modmenu.nameTranslation.ragium", RagiumAPI.MOD_NAME)
+            builder.add("text.autoconfig.ragium.title", RagiumAPI.MOD_NAME)
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")
@@ -795,7 +812,6 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と石炭類から発電する")
             builder.add(RagiumMachineKeys.THERMAL_GENERATOR, "地熱発電機", "高温の液体から発電する")
 
-            // builder.add(RagiumMachineKeys.ALLOY_FURNACE, "合金かまど", "二つの素材を一つに焼き上げる")
             builder.add(RagiumMachineKeys.ASSEMBLER, "組立機", "悪魔博士，アッセンブル！")
             builder.add(RagiumMachineKeys.BLAST_FURNACE, "大型高炉", "複数の素材を一つに焼き上げる")
             builder.add(RagiumMachineKeys.CHEMICAL_REACTOR, "化学反応槽", "Are You Ready?")
@@ -808,7 +824,6 @@ object RagiumLangProviders {
             builder.add(RagiumMachineKeys.GROWTH_CHAMBER, "成長チャンバー")
             builder.add(RagiumMachineKeys.INFUSER, "注入機", "遠心分離機じゃないみたいなやつ")
             builder.add(RagiumMachineKeys.LASER_TRANSFORMER, "レーザー変換機")
-            // builder.add(RagiumMachineKeys.METAL_FORMER, "金属加工機", "It's High Quality.")
             builder.add(RagiumMachineKeys.MULTI_SMELTER, "並列精錬機", "複数のアイテムを一度に製錬する")
             builder.add(RagiumMachineKeys.MIXER, "ミキサー", "ゲノミクス...")
             // Material
@@ -860,14 +875,11 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.TUNGSTEN, "タングステン")
             builder.add(RagiumMaterialKeys.ZINC, "亜鉛")
             // Tag Prefix
-            // builder.add(HTTagPrefix.DEEP_ORE, "深層%s鉱石")
-            // builder.add(HTTagPrefix.END_ORE, "エンド%s鉱石")
             builder.add(HTTagPrefix.DUST, "%sの粉")
             builder.add(HTTagPrefix.GEAR, "%sの歯車")
             builder.add(HTTagPrefix.GEM, "%s")
             builder.add(HTTagPrefix.INGOT, "%sインゴット")
             builder.add(HTTagPrefix.NUGGET, "%sのナゲット")
-            // builder.add(HTTagPrefix.NETHER_ORE, "ネザー%s鉱石")
             builder.add(HTTagPrefix.ORE, "%s鉱石")
             builder.add(HTTagPrefix.PLATE, "%s板")
             builder.add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
@@ -877,6 +889,26 @@ object RagiumLangProviders {
             builder.addWorld(World.OVERWORLD, "オーバーワールド")
             builder.addWorld(World.NETHER, "ネザー")
             builder.addWorld(World.END, "ジ・エンド")
+            // config
+            builder.add(RagiumTranslationKeys.CONFIG_CATEGORY_COMMON, "一般")
+            builder.add(RagiumTranslationKeys.CONFIG_CATEGORY_MACHINE, "機械")
+            builder.add(RagiumTranslationKeys.CONFIG_CATEGORY_UTILITY, "ユーティリティ")
+
+            builder.add(RagiumTranslationKeys.CONFIG_HARD_MODE, "ハードモード")
+            builder.add(RagiumTranslationKeys.CONFIG_RADIOACTIVE, "放射線によるデバフ")
+
+            builder.add(RagiumTranslationKeys.CONFIG_SHOW_PARTICLE, "パーティクルの表示")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR, "発電機")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_COOLANT, "原子炉の冷却液")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_NITRO, "燃焼発電機のニトロ燃料")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_NON_NITRO, "燃焼発電機の非ニトロ燃料")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_STEAM, "蒸気発電機の水")
+            builder.add(RagiumTranslationKeys.CONFIG_GENERATOR_THERMAL, "地熱発電機の液体")
+
+            builder.add(RagiumTranslationKeys.CONFIG_AUTO_ILLUMINATOR, "光源置き太郎の稼働半径")
+            builder.add(RagiumTranslationKeys.CONFIG_DYNAMITE_RADIUS, "ダイナマイトによるブロック設置の半径")
+            builder.add(RagiumTranslationKeys.CONFIG_DYNAMITE_POWER, "ダイナマイトの威力のデフォルト値")
+            builder.add(RagiumTranslationKeys.CONFIG_GIGANT_HAMMER, "ギガントハンマーの採掘速度")
         }
     }
 }

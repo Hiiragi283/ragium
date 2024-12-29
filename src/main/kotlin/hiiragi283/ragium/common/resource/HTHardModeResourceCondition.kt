@@ -32,5 +32,5 @@ data class HTHardModeResourceCondition(val value: Boolean) : ResourceCondition {
 
     override fun getType(): ResourceConditionType<*> = TYPE
 
-    override fun test(registryLookup: RegistryWrapper.WrapperLookup?): Boolean = value == RagiumAPI.getInstance().config.isHardMode
+    override fun test(registryLookup: RegistryWrapper.WrapperLookup?): Boolean = value == RagiumAPI.getInstance().isHardMode
 }

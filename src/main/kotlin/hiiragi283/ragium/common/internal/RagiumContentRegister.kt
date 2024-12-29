@@ -162,7 +162,7 @@ internal object RagiumContentRegister {
             ActionResult.PASS
         }
         // hard mode repair
-        val hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode
+        val hardMode: Boolean = RagiumAPI.getInstance().isHardMode
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             context.modify({
                 (it as? ToolItem)?.material == ToolMaterials.IRON || (it as? ArmorItem)?.material == ArmorMaterials.IRON
@@ -194,7 +194,12 @@ internal object RagiumContentRegister {
         }
         // radioactive effects
         HTInventoryTickCallback.EVENT.register { stack: ItemStack, world: World, entity: Entity, slot: Int, selected: Boolean ->
-            stack.get(HTRadioactiveComponent.COMPONENT_TYPE)?.applyEffect(entity)
+            if (RagiumAPI
+                    .getInstance()
+                    .config.common.enableRadioactiveEffect
+            ) {
+                stack.get(HTRadioactiveComponent.COMPONENT_TYPE)?.applyEffect(entity)
+            }
         }
     }
 

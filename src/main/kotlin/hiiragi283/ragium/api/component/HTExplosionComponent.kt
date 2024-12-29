@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.boolText
 import hiiragi283.ragium.api.extension.floatText
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -28,7 +29,12 @@ import java.util.function.Consumer
 data class HTExplosionComponent(val power: Float, val canDestroy: Boolean) : TooltipAppender {
     companion object {
         @JvmField
-        val DEFAULT = HTExplosionComponent(2f, true)
+        val DEFAULT = HTExplosionComponent(
+            RagiumAPI
+                .getInstance()
+                .config.utility.defaultDynamitePower,
+            true,
+        )
 
         @JvmField
         val CODEC: Codec<HTExplosionComponent> = RecordCodecBuilder.create { instance ->
