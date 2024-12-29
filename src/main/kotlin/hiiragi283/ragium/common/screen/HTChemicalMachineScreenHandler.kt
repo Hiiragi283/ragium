@@ -20,14 +20,14 @@ class HTChemicalMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ct
         addSlot(0, 2, 1)
         addSlot(1, 3, 1)
         addFluidSlot(0, 2, 2)
-        addFluidSlot(1, 2, 3)
+        addFluidSlot(1, 3, 2)
         // catalyst
         addSlot(2, 4, 2)
         // outputs
         addOutputSlot(3, 5, 1)
         addOutputSlot(4, 6, 1)
         addFluidSlot(2, 5, 2)
-        addFluidSlot(3, 6, 3)
+        addFluidSlot(3, 6, 2)
         // player inventory
         addPlayerInv()
         // register property

@@ -22,7 +22,7 @@ import net.minecraft.world.World
 
 class HTBackpackInterfaceBlock(settings: Settings) : Block(settings) {
     companion object {
-        private val COLOR: EnumProperty<DyeColor> by lazy { RagiumBlockProperties.COLOR }
+        private val COLOR: EnumProperty<DyeColor> by lazy(RagiumBlockProperties::COLOR)
     }
 
     init {
