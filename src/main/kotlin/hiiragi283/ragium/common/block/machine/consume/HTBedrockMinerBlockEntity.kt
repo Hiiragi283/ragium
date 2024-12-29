@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -37,8 +39,10 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
             .getInstance()
             .materialRegistry
             .entryMap
-            .mapNotNull { it.value.getFirstItemOrNull(HTTagPrefix.ORE) }
-            .randomOrNull() ?: return HTUnitResult.errorString { "Failed to find mineable ore!" }
+            .mapNotNull { (_: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
+                val prefix: HTTagPrefix = entry.type.getRawPrefix() ?: return@mapNotNull null
+                entry.getFirstItemOrNull(prefix)
+            }.randomOrNull() ?: return HTUnitResult.errorString { "Failed to find mineable raw material!" }
         return useTransaction { transaction: Transaction ->
             if (aboveStorage.insert(ItemVariant.of(chosenOre), 1, transaction) > 0) {
                 transaction.commit()
