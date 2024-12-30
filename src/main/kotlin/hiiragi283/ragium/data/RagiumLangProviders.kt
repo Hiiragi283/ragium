@@ -289,7 +289,6 @@ object RagiumLangProviders {
             builder.add(RagiumItems.PROCESSOR_SOCKET, "Processor Socket")
             builder.add(RagiumItems.PULP, "Pulp")
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-            builder.add(RagiumItems.RAGI_CRYSTAL_PROCESSOR, "Ragi-Crystal Processor")
             builder.add(RagiumItems.REFINED_SILICON, "Refined Silicon")
             builder.add(RagiumItems.RESIDUAL_COKE, "Residual Coke")
             builder.add(RagiumItems.SILICON, "Silicon")
@@ -306,6 +305,11 @@ object RagiumLangProviders {
             builder.add(RagiumItems.Radioactives.NUCLEAR_WASTE, "Nuclear Waste")
 
             builder.add(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
+
+            builder.add(RagiumItems.Processors.DIAMOND, "Diamond Processor")
+            builder.add(RagiumItems.Processors.EMERALD, "Emerald Processor")
+            builder.add(RagiumItems.Processors.NETHER_STAR, "Nether Star Processor")
+            builder.add(RagiumItems.Processors.RAGI_CRYSTAL, "Ragi-Crystal Processor")
 
             builder.add(RagiumItems.PressMolds.GEAR, "Press Mold (Gear)")
             builder.add(RagiumItems.PressMolds.PIPE, "Press Mold (Pipe)")
@@ -457,6 +461,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.DIAMOND, "Diamond")
             builder.add(RagiumMaterialKeys.EMERALD, "Emerald")
             builder.add(RagiumMaterialKeys.LAPIS, "Lapis")
+            builder.add(RagiumMaterialKeys.NETHER_STAR, "Nether Star")
             builder.add(RagiumMaterialKeys.PERIDOT, "Peridot")
             builder.add(RagiumMaterialKeys.QUARTZ, "Quartz")
             builder.add(RagiumMaterialKeys.SAPPHIRE, "Sapphire")
@@ -736,7 +741,6 @@ object RagiumLangProviders {
             builder.add(RagiumItems.PROCESSOR_SOCKET, "プロセッサソケット")
             builder.add(RagiumItems.PULP, "パルプ")
             builder.add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-            builder.add(RagiumItems.RAGI_CRYSTAL_PROCESSOR, "ラギクリスタリルプロセッサ")
             builder.add(RagiumItems.REFINED_SILICON, "精製シリコン")
             builder.add(RagiumItems.RESIDUAL_COKE, "残渣油コークス")
             builder.add(RagiumItems.SILICON, "シリコン")
@@ -753,6 +757,11 @@ object RagiumLangProviders {
             builder.add(RagiumItems.Radioactives.NUCLEAR_WASTE, "核廃棄物")
 
             builder.add(RagiumItems.RAGI_TICKET, "らぎチケット")
+
+            builder.add(RagiumItems.Processors.DIAMOND, "ダイヤモンドプロセッサ")
+            builder.add(RagiumItems.Processors.EMERALD, "エメラルドプロセッサ")
+            builder.add(RagiumItems.Processors.NETHER_STAR, "ネザースタープロセッサ")
+            builder.add(RagiumItems.Processors.RAGI_CRYSTAL, "ラギクリスタルプロセッサ")
 
             builder.add(RagiumItems.PressMolds.GEAR, "プレス型（歯車）")
             builder.add(RagiumItems.PressMolds.PIPE, "プレス型（パイプ）")
@@ -861,6 +870,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.DIAMOND, "ダイアモンド")
             builder.add(RagiumMaterialKeys.EMERALD, "エメラルド")
             builder.add(RagiumMaterialKeys.LAPIS, "ラピス")
+            builder.add(RagiumMaterialKeys.NETHER_STAR, "ネザースター")
             builder.add(RagiumMaterialKeys.PERIDOT, "ペリドット")
             builder.add(RagiumMaterialKeys.QUARTZ, "水晶")
             builder.add(RagiumMaterialKeys.SAPPHIRE, "サファイア")

@@ -107,7 +107,7 @@ class RagiumConfig(
         val gigantHammerMiningSpeed: Float,
     ) : ConfigData {
         constructor() : this(
-            autoIlluminatorRadius = 64,
+            autoIlluminatorRadius = 16,
             dynamitePlaceRadius = 2,
             defaultDynamitePower = 2f,
             gigantHammerMiningSpeed = 12f,

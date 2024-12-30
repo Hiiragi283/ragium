@@ -55,8 +55,7 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
             for (z: Int in (pos.z - radius..pos.z + radius)) {
                 for (y: Int in yRange) {
                     val posIn = BlockPos(x, y, z)
-                    val stateIn: BlockState = world.getBlockState(posIn)
-                    if (stateIn.isAir) {
+                    if (world.isAir(posIn)) {
                         if (!world.isSkyVisible(posIn) && world.getLightLevel(posIn) <= 7) {
                             world.setBlockState(posIn, Blocks.LIGHT.defaultState)
                             return

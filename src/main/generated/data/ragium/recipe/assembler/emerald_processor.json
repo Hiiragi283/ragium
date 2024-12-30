@@ -6,7 +6,8 @@
   },
   "item_inputs": [
     {
-      "items": "#c:gems/ragium"
+      "count": 8,
+      "items": "#c:gems/emerald"
     },
     {
       "items": "ragium:processor_socket"
@@ -14,7 +15,7 @@
   ],
   "item_outputs": [
     {
-      "item": "ragium:ragi_crystal_processor"
+      "item": "ragium:emerald_processor"
     }
   ]
 }

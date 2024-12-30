@@ -379,6 +379,16 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_circuit")
     }
 
+    enum class Processors(val material: HTMaterialKey) : HTItemContent {
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
+        NETHER_STAR(RagiumMaterialKeys.NETHER_STAR),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        ;
+
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_processor")
+    }
+
     enum class PressMolds : HTItemContent {
         GEAR,
         PIPE,
@@ -479,9 +489,6 @@ object RagiumItems {
     val PROCESSOR_SOCKET: HTItemContent = HTContent.ofItem("processor_socket")
 
     @JvmField
-    val RAGI_CRYSTAL_PROCESSOR: HTItemContent = HTContent.ofItem("ragi_crystal_processor")
-
-    @JvmField
     val SOLAR_PANEL: HTItemContent = HTContent.ofItem("solar_panel")
 
     @JvmField
@@ -518,7 +525,6 @@ object RagiumItems {
         add(LASER_EMITTER)
         add(LED)
         add(PROCESSOR_SOCKET)
-        add(RAGI_CRYSTAL_PROCESSOR)
         add(SOLAR_PANEL)
     }
 
@@ -580,6 +586,7 @@ object RagiumItems {
                 )
             }
         }
+        Processors.entries.forEach(::registerItem)
         PressMolds.entries.forEach(::registerItem)
         // armor
         SteelArmors.entries.forEach {
@@ -788,9 +795,6 @@ object RagiumItems {
                     itemSettings().descriptions(RagiumTranslationKeys.WARPED_CRYSTAL),
                     ::HTWarpedCrystalItem,
                 )
-
-                PROCESSOR_SOCKET -> registerItem(ingredient, itemSettings().maybeRework())
-                RAGI_CRYSTAL_PROCESSOR -> registerItem(ingredient, itemSettings().maybeRework())
                 else -> registerItem(ingredient)
             }
         }

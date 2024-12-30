@@ -56,19 +56,22 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .offerTo(exporter, RagiumItems.Radioactives.PLUTONIUM_FUEL)
         // LED
         // processor
+        // processor
+        RagiumItems.Processors.entries.forEach { processor: RagiumItems.Processors ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
+                .itemInput(HTTagPrefix.GEM, processor.material, 8)
+                .itemInput(RagiumItems.PROCESSOR_SOCKET)
+                .itemOutput(processor)
+                .offerTo(exporter, processor)
+        }
+
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.Gems.RAGI_CRYSTAL, 8)
             .itemInput(RagiumItems.PROCESSOR_SOCKET)
-            .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-            .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR, "_from_crystal")
-
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-            .itemInput(RagiumItems.Gems.RAGIUM)
-            .itemInput(RagiumItems.PROCESSOR_SOCKET)
-            .itemOutput(RagiumItems.RAGI_CRYSTAL_PROCESSOR)
-            .offerTo(exporter, RagiumItems.RAGI_CRYSTAL_PROCESSOR, "_from_ragium")
+            .itemOutput(RagiumItems.Processors.RAGI_CRYSTAL)
+            .offerTo(exporter, RagiumItems.Processors.RAGI_CRYSTAL, "_from_crystal")
     }
 
     //    Blast Furnace    //

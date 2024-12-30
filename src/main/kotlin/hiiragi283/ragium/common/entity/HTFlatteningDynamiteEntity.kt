@@ -40,7 +40,9 @@ class HTFlatteningDynamiteEntity : ThrownItemEntity {
                 else -> hitY
             }
             ChunkPos(pos).forEach(minY..world.height) { pos: BlockPos ->
-                world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
+                if (!world.isAir(pos)) {
+                    world.setBlockState(pos, Blocks.AIR.defaultState, Block.NOTIFY_ALL)
+                }
             }
             discard()
         }

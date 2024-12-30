@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "#c:gems/diamond"
+    },
+    {
+      "items": "ragium:processor_socket"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:diamond_processor"
+    }
+  ]
+}

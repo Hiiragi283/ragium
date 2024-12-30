@@ -88,7 +88,7 @@ val BlockPos.aroundPos: List<BlockPos>
 fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
     (startX..endX).forEach { x: Int ->
         (startZ..endZ).forEach { z: Int ->
-            yRange.forEach { y: Int ->
+            yRange.sortedDescending().forEach { y: Int ->
                 action(BlockPos(x, y, z))
             }
         }

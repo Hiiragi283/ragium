@@ -515,6 +515,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             ).input('A', ConventionalItemTags.STORAGE_BLOCKS_IRON)
             .unlockedBy(ConventionalItemTags.STORAGE_BLOCKS_IRON)
             .offerTo(exporter)
+
+        HTShapedRecipeJsonBuilder
+            .create(RagiumItems.PROCESSOR_SOCKET)
+            .patterns(
+                "ABA",
+                "BCB",
+                "ABA",
+            ).input('A', RagiumItems.LASER_EMITTER)
+            .input('B', RagiumItems.Circuits.ADVANCED)
+            .input('C', RagiumItems.STELLA_PLATE)
+            .offerTo(exporter)
         // fluid cubes
         createEmptyFluidCube(exporter, Items.GLASS_PANE, 4)
         createEmptyFluidCube(exporter, RagiumItems.PLASTIC_PLATE, 8, "_pe")

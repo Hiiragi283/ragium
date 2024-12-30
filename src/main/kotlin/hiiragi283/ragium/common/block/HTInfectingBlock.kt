@@ -32,7 +32,7 @@ class HTInfectingBlock(settings: Settings) : Block(settings) {
                 Blocks.SANDSTONE,
             )
             if (posTo.y < 63) {
-                if (stateTo.isAir) {
+                if (world.isAir(posTo)) {
                     world.setBlockState(posTo, defaultState.with(Properties.ENABLED, true))
                 } else if (stateTo.block is Waterloggable) {
                     world.replaceBlockState(posTo) { it.with(Properties.WATERLOGGED, true) }

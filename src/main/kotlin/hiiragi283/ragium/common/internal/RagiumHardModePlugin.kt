@@ -223,13 +223,13 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumBlocks.NETWORK_INTERFACE,
             RagiumHardModeContents.STEEL.getContent(hardMode),
-            RagiumItems.Circuits.ADVANCED,
+            RagiumItems.Processors.DIAMOND,
         )
         createMechanics(
             exporter,
             RagiumBlocks.EXTENDED_PROCESSOR,
             RagiumHardModeContents.RAGI_ALLOY.getContent(hardMode),
-            RagiumItems.RAGI_CRYSTAL_PROCESSOR,
+            RagiumItems.Processors.RAGI_CRYSTAL,
         )
         createMechanics(
             exporter,
@@ -588,17 +588,6 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .itemOutput(board.getCircuit())
                 .offerTo(exporter, board.getCircuit())
         }
-
-        HTShapedRecipeJsonBuilder
-            .create(RagiumItems.PROCESSOR_SOCKET)
-            .patterns(
-                "ABA",
-                "BCB",
-                "ABA",
-            ).input('A', RagiumItems.Circuits.ADVANCED)
-            .input('B', RagiumHardModeContents.GOLD.getPrefixedTag(hardMode))
-            .input('C', RagiumItems.STELLA_PLATE)
-            .offerTo(exporter)
     }
 
     private fun craftHulls(exporter: RecipeExporter) {

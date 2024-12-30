@@ -88,10 +88,6 @@ class HTMachineRecipeProcessor(
             .forEach { (ingredient: HTItemIngredient, stack: ItemStack) ->
                 ingredient.onConsume(stack)
             }
-        /*itemInputs.forEachIndexed { index: Int, slot: Int ->
-            val ingredient: HTItemIngredient = recipe.itemInputs.getOrNull(index) ?: return@forEachIndexed
-            ingredient.onConsume(inventory.getStack(slot))
-        }*/
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
             val ingredient: HTFluidIngredient = recipe.getFluidIngredient(index) ?: return@forEachIndexed
             fluidStorage.map(slot, ingredient::onConsume)
