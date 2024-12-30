@@ -24,7 +24,11 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
+        .Builder(4)
+        .input(0)
+        .output(1, 2, 3)
+        .build(this)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,

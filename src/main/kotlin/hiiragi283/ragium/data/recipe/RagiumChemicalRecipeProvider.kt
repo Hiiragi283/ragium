@@ -278,6 +278,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.BIOMASS)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .fluidOutput(RagiumFluids.ALCOHOL)
             .offerTo(exporter, RagiumFluids.ALCOHOL, "_from_bio")
         // biomass -> bio fuel
@@ -292,6 +293,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.CRUDE_OIL, FluidConstants.BUCKET * 6)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .fluidOutput(RagiumFluids.REFINED_GAS, FluidConstants.BUCKET * 2)
             .fluidOutput(RagiumFluids.NAPHTHA, FluidConstants.BUCKET * 3)
             .fluidOutput(RagiumFluids.RESIDUAL_OIL, FluidConstants.BUCKET * 1)
@@ -301,6 +303,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.REFINED_GAS, FluidConstants.BUCKET * 8)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .fluidOutput(RagiumFluids.ALCOHOL, FluidConstants.BUCKET * 6)
             .fluidOutput(RagiumFluids.NOBLE_GAS, FluidConstants.BUCKET * 2)
             .offerTo(exporter, RagiumFluids.REFINED_GAS)
@@ -309,6 +312,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.NAPHTHA, FluidConstants.BUCKET * 8)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .itemOutput(RagiumItems.POLYMER_RESIN, 4)
             .fluidOutput(RagiumFluids.FUEL, FluidConstants.BUCKET * 4)
             .offerTo(exporter, RagiumFluids.NAPHTHA)
@@ -342,6 +346,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.SAP, FluidConstants.BUCKET * 2)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .fluidOutput(RagiumFluids.REFINED_GAS)
             .fluidOutput(RagiumFluids.ALCOHOL)
             .offerTo(exporter, RagiumFluids.SAP)
@@ -349,6 +354,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
             .fluidInput(RagiumFluids.CRIMSON_SAP, FluidConstants.BUCKET * 4)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidConstants.BUCKET * 3)
             .offerTo(exporter, RagiumItems.CRIMSON_CRYSTAL)
@@ -356,6 +362,7 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
             .fluidInput(RagiumFluids.WARPED_SAP, FluidConstants.BUCKET * 4)
+            .catalyst(RagiumItems.Circuits.PRIMITIVE)
             .itemOutput(RagiumItems.WARPED_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidConstants.BUCKET * 3)
             .offerTo(exporter, RagiumItems.WARPED_CRYSTAL)

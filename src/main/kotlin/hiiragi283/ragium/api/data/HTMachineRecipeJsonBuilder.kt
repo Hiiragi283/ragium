@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.*
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder

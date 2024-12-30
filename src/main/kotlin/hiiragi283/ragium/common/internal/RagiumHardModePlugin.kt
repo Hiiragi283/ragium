@@ -702,14 +702,13 @@ object RagiumHardModePlugin : RagiumPlugin {
             HTShapedRecipeJsonBuilder
                 .create(key.createItemStack(tier))
                 .patterns(
-                    "AAA",
+                    "AEA",
                     "BCD",
-                    "EEE",
                 ).input('A', tier.getMainMetal().getPrefixedTag(hardMode))
                 .input('B', left)
                 .input('C', tier.getCasing())
                 .input('D', right)
-                .input('E', tier.getSteelMetal().getPrefixedTag(hardMode))
+                .input('E', tier.getCircuit())
                 .offerTo(exporter, tier.createId(key))
         }
     }

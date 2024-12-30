@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.mergeStack
+import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -13,6 +14,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
+import net.minecraft.recipe.RecipeType
 import net.minecraft.world.World
 
 class HTMachineRecipeProcessor(
@@ -23,8 +25,9 @@ class HTMachineRecipeProcessor(
     private val fluidStorage: HTMachineFluidStorage,
     private val fluidInputs: IntArray,
     private val fluidOutputs: IntArray,
+    recipeType: RecipeType<out HTMachineRecipeBase> = RagiumRecipeTypes.MACHINE,
 ) : HTRecipeProcessor {
-    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> = HTRecipeCache(RagiumRecipeTypes.MACHINE)
+    private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipeBase> = HTRecipeCache(recipeType)
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): HTUnitResult {
         val input: HTMachineInput = HTMachineInput.create(key, tier) {
@@ -34,7 +37,7 @@ class HTMachineRecipeProcessor(
         }
         return recipeCache
             .getFirstMatch(input, world)
-            .unitMap { recipe: HTMachineRecipe ->
+            .unitMap { recipe: HTMachineRecipeBase ->
                 when {
                     !canAcceptOutputs(recipe) -> HTUnitResult.errorString { "Failed to merge results into outputs!" }
                     else -> {
@@ -46,29 +49,29 @@ class HTMachineRecipeProcessor(
             }
     }
 
-    private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
+    private fun canAcceptOutputs(recipe: HTMachineRecipeBase): Boolean {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            val result: HTItemResult = recipe.itemOutputs.getOrNull(index) ?: return@forEachIndexed
+            val result: HTItemResult = recipe.getItemResult(index) ?: return@forEachIndexed
             if (!result.canMerge(inventory.getStack(slot))) {
                 return false
             }
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
-            if (!fluidStorage.map(slot, result::canMerge).result().orElse(false)) {
+            val result: HTFluidResult = recipe.getFluidResult(index) ?: return@forEachIndexed
+            if (!fluidStorage.map(slot, result::canMerge).orElse(false)) {
                 return false
             }
         }
         return true
     }
 
-    private fun modifyOutputs(recipe: HTMachineRecipe) {
+    private fun modifyOutputs(recipe: HTMachineRecipeBase) {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
-            val result: HTItemResult = recipe.itemOutputs.getOrNull(index) ?: return@forEachIndexed
+            val result: HTItemResult = recipe.getItemResult(index) ?: return@forEachIndexed
             inventory.mergeStack(slot, result)
         }
         fluidOutputs.forEachIndexed { index: Int, slot: Int ->
-            val result: HTFluidResult = recipe.fluidOutputs.getOrNull(index) ?: return@forEachIndexed
+            val result: HTFluidResult = recipe.getFluidResult(index) ?: return@forEachIndexed
             useTransaction { transaction: Transaction ->
                 fluidStorage.map(slot) { storageIn: SingleFluidStorage ->
                     if (result.merge(storageIn, transaction) == result.amount) {
@@ -79,9 +82,9 @@ class HTMachineRecipeProcessor(
         }
     }
 
-    private fun decrementInputs(recipe: HTMachineRecipe) {
+    private fun decrementInputs(recipe: HTMachineRecipeBase) {
         HTShapelessInputResolver
-            .resolve(recipe.itemInputs, itemInputs.map(inventory::getStack))
+            .resolve(recipe.itemIngredients, itemInputs.map(inventory::getStack))
             .forEach { (ingredient: HTItemIngredient, stack: ItemStack) ->
                 ingredient.onConsume(stack)
             }
@@ -90,7 +93,7 @@ class HTMachineRecipeProcessor(
             ingredient.onConsume(inventory.getStack(slot))
         }*/
         fluidInputs.forEachIndexed { index: Int, slot: Int ->
-            val ingredient: HTFluidIngredient = recipe.fluidInputs.getOrNull(index) ?: return@forEachIndexed
+            val ingredient: HTFluidIngredient = recipe.getFluidIngredient(index) ?: return@forEachIndexed
             fluidStorage.map(slot, ingredient::onConsume)
         }
     }

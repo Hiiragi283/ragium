@@ -31,7 +31,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Builder(0).build(tier)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Builder(0).build(this)
 
     override val processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1)

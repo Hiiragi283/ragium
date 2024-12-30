@@ -69,7 +69,6 @@ import net.minecraft.village.TradeOffers
 import net.minecraft.world.World
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
-import kotlin.jvm.optionals.getOrNull
 
 internal object RagiumContentRegister {
     @JvmField
@@ -245,7 +244,6 @@ internal object RagiumContentRegister {
             world.backpackManager
                 .map { it[color] }
                 .map { InventoryStorage.of(it, direction) }
-                .result()
                 .getOrNull()
         }, RagiumBlocks.BACKPACK_INTERFACE.get())
 

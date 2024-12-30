@@ -2,17 +2,18 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
@@ -22,7 +23,6 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import kotlin.jvm.optionals.getOrNull
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state) {
@@ -63,11 +63,9 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
                         HTMachineTier.PRIMITIVE,
                     ) { add(stackIn) },
                     world,
-                ).result()
-                ?.getOrNull()
-                ?: return
+                ).getOrNull() ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        stackIn.decrement(recipe.itemInputs[0].count)
+        stackIn.decrement(recipe.getItemIngredient(0)?.count ?: 0)
         RagiumMachineKeys.GRINDER.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

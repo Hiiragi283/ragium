@@ -295,7 +295,7 @@ object RagiumAdvancementProviders {
                 consumer,
                 "progress/primitive_blast_furnace",
                 primitiveHull,
-                RagiumMachineKeys.BLAST_FURNACE.entry,
+                RagiumMachineKeys.BLAST_FURNACE.getEntryOrNull()!!,
             ) { interactMachine(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.PRIMITIVE) }
             // tier 2
             val ragiSteel: AdvancementEntry = createContentChild(
@@ -315,7 +315,7 @@ object RagiumAdvancementProviders {
                 consumer,
                 "progress/basic_blast_furnace",
                 basicHull,
-                RagiumMachineKeys.BLAST_FURNACE.entry,
+                RagiumMachineKeys.BLAST_FURNACE.getEntryOrNull()!!,
             ) { interactMachine(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC) }
             // tier 3
             val ragiCrystal: AdvancementEntry = createContentChild(
@@ -544,7 +544,7 @@ object RagiumAdvancementProviders {
             val root: AdvancementEntry = createRoot(
                 consumer,
                 "chemistry/root",
-                RagiumMachineKeys.CHEMICAL_REACTOR.entry,
+                RagiumMachineKeys.CHEMICAL_REACTOR.getEntryOrNull()!!,
                 Text.literal("Chemistry"),
                 Text.empty(),
                 Identifier.of("textures/block/quartz_block_top.png"),

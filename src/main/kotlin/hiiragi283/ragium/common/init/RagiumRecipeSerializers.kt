@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTDynamiteUpgradingRecipe
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.Recipe

@@ -67,9 +67,6 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
     // val blockTag: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id.withPrefixedPath("machines/"))
     // val itemTag: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
 
-    @Deprecated("")
-    val entry: HTMachineRegistry.Entry by lazy { RagiumAPI.getInstance().machineRegistry.getEntry(this) }
-
     /**
      * [HTMachineRegistry.Entry]を返します。
      * @return このキーが登録されていない場合はnullを返す

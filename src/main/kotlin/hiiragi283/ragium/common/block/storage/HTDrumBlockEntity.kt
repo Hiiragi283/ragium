@@ -38,7 +38,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
     private var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
         .Builder(1)
         .generic(0)
-        .build(tier)
+        .build(this)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)

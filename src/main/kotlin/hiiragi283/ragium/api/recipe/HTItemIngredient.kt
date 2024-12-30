@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.identifiedCodec
 import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.extension.isIn
-import hiiragi283.ragium.api.recipe.HTItemIngredient.ConsumeType.entries
 import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -14,7 +13,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.recipe.Ingredient
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
@@ -78,12 +76,6 @@ class HTItemIngredient private constructor(
 
     val entryMap: Map<Item, Int> = entryList.associateWith { count }
 
-    val matchingStacks: List<ItemStack>
-        get() = entryMap.map { (item: Item, count: Int) -> ItemStack(item, count) }
-
-    val vanillaIngredient: Ingredient
-        get() = entryList.storage.map(Ingredient::fromTag, Ingredient::ofItems)
-
     override fun test(stack: ItemStack): Boolean = when (stack.isEmpty) {
         true -> this.isEmpty
         false -> stack.isIn(entryList) && stack.count >= count
@@ -120,10 +112,10 @@ class HTItemIngredient private constructor(
 
         companion object {
             @JvmField
-            val CODEC: Codec<ConsumeType> = identifiedCodec(entries)
+            val CODEC: Codec<ConsumeType> = identifiedCodec(ConsumeType.entries)
 
             @JvmField
-            val PACKET_CODEC: PacketCodec<RegistryByteBuf, ConsumeType> = identifiedPacketCodec(entries)
+            val PACKET_CODEC: PacketCodec<RegistryByteBuf, ConsumeType> = identifiedPacketCodec(ConsumeType.entries)
         }
 
         override fun asString(): String = name.lowercase()

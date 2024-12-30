@@ -66,19 +66,19 @@ class RagiumConfig(
 
     class Generator(
         @JvmField
-        @ConfigEntry.BoundedDiscrete(max = FluidConstants.BUCKET)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = FluidConstants.BUCKET)
         val coolant: Long,
         @JvmField
-        @ConfigEntry.BoundedDiscrete(max = FluidConstants.BUCKET)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = FluidConstants.BUCKET)
         val nitroFuel: Long,
         @JvmField
-        @ConfigEntry.BoundedDiscrete(max = FluidConstants.BUCKET)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = FluidConstants.BUCKET)
         val nonNitroFuel: Long,
         @JvmField
-        @ConfigEntry.BoundedDiscrete(max = FluidConstants.BUCKET)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = FluidConstants.BUCKET)
         val steamWater: Long,
         @JvmField
-        @ConfigEntry.BoundedDiscrete(max = FluidConstants.BUCKET)
+        @ConfigEntry.BoundedDiscrete(min = 1, max = FluidConstants.BUCKET)
         val thermalFuel: Long,
     ) {
         constructor() : this(

@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.getStackInActiveHand
-import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTMachineInventory
-import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
@@ -22,7 +22,6 @@ import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import kotlin.jvm.optionals.getOrNull
 
 class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_FORGE, pos, state) {
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
@@ -67,12 +66,10 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
                         catalyst = ItemStack(RagiumItems.PressMolds.PLATE)
                     },
                     world,
-                ).result()
-                .getOrNull()
-                ?: return
+                ).getOrNull() ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
         stackMain.damage(1, player, EquipmentSlot.MAINHAND)
-        invStack.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
+        invStack.decrement(recipe.getItemIngredient(0)?.count ?: 0)
         RagiumMachineKeys.COMPRESSOR.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

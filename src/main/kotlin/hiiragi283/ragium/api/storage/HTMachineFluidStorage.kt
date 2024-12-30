@@ -2,11 +2,9 @@ package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.buildNbt
-import hiiragi283.ragium.api.extension.buildNbtList
-import hiiragi283.ragium.api.extension.toDataResult
-import hiiragi283.ragium.api.extension.variantStack
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -15,6 +13,7 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.fabricmc.fabric.impl.transfer.TransferApiImpl
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
@@ -30,15 +29,13 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
         fun ofSimple(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(2)
             .input(0)
             .output(1)
-            .build(machine.tier)
-            .setCallback(machine::markDirty)
+            .build(machine)
 
         @JvmStatic
         fun ofLarge(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(4)
             .input(0, 1)
             .output(2, 3)
-            .build(machine.tier)
-            .setCallback(machine::markDirty)
+            .build(machine)
     }
 
     private var callback: () -> Unit = {}
@@ -54,8 +51,7 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
 
     fun <T : Any> map(index: Int, transform: (SingleFluidStorage) -> T?): DataResult<T> = getStorage(index).map(transform)
 
-    fun getVariantStack(index: Int): HTFluidVariantStack =
-        map(index, SingleFluidStorage::variantStack).result().orElse(HTFluidVariantStack.EMPTY)
+    fun getVariantStack(index: Int): HTFluidVariantStack = map(index, SingleFluidStorage::variantStack).orElse(HTFluidVariantStack.EMPTY)
 
     fun update(tier: HTMachineTier): HTMachineFluidStorage = apply {
         val copied: Array<SingleFluidStorage> = parts.copyOf()
@@ -122,7 +118,7 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
 
     override fun getSlotCount(): Int = parts.size
 
-    override fun getSlot(slot: Int): SingleSlotStorage<FluidVariant> = getStorage(slot).result().orElseThrow()
+    override fun getSlot(slot: Int): SingleSlotStorage<FluidVariant> = getStorage(slot).orThrow
 
     //    Builder    //
 
@@ -163,5 +159,8 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
             slotArray.mapIndexed { slot: Int, storageIO: HTStorageIO -> slot to storageIO }.toMap(),
             tier,
         )
+
+        fun <T> build(machine: T): HTMachineFluidStorage where T : BlockEntity, T : HTMachineTierProvider =
+            build(machine.tier).setCallback(machine::markDirty)
     }
 }

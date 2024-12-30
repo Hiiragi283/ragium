@@ -2,17 +2,18 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
@@ -26,7 +27,6 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import kotlin.jvm.optionals.getOrNull
 
 class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_MIXER, pos, state),
@@ -63,13 +63,11 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
                     add(fluidStorage.variantStack)
                 },
                 world,
-            ).result()
-            ?.getOrNull()
-            ?: return
+            ).getOrNull() ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        stackMain.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
-        stackOff.decrement(recipe.itemInputs.getOrNull(1)?.count ?: 0)
-        recipe.fluidInputs.getOrNull(0)?.onConsume(fluidStorage)
+        stackMain.decrement(recipe.getItemIngredient(0)?.count ?: 0)
+        stackOff.decrement(recipe.getItemIngredient(1)?.count ?: 0)
+        recipe.getFluidIngredient(0)?.onConsume(fluidStorage)
         RagiumMachineKeys.MIXER.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }

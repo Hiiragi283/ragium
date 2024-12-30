@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.extension
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.util.HTUnitResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.inventory.Inventory
@@ -72,6 +73,11 @@ fun <T : Inventory> createInventoryCodec(builder: (Int) -> T): Codec<T> = ItemSt
     },
     Inventory::iterateStacks,
 )
+
+//    MapCodec    //
+
+fun <O : Any, A : Any> MapCodec<Optional<A>>.forOptionalGetter(getter: Function<O, A?>): RecordCodecBuilder<O, Optional<A>> =
+    forGetter(getter.andThen(Optional<A>::ofNullable))
 
 //    PacketCodec    //
 

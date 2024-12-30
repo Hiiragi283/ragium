@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
@@ -49,24 +48,18 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
         hit: BlockHitResult,
     ): ActionResult {
         val stack: ItemStack = player.getStackInActiveHand()
-        val result: Boolean = when {
-            stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
-                stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) { fluidFilter = it }
-                true
+        val result: Boolean = stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) {
+            fluidFilter = it
+            true
+        } ?: stack.ifPresent(RagiumComponentTypes.ITEM_FILTER) {
+            itemFilter = it
+            true
+        } ?: let {
+            if (!world.isClient) {
+                player.sendMessage(fluidFilterText(fluidFilter), false)
+                player.sendMessage(itemFilterText(itemFilter), false)
             }
-
-            stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
-                stack.ifPresent(RagiumComponentTypes.ITEM_FILTER) { itemFilter = it }
-                true
-            }
-
-            else -> {
-                if (!world.isClient) {
-                    player.sendMessage(fluidFilterText(fluidFilter), false)
-                    player.sendMessage(itemFilterText(itemFilter), false)
-                }
-                false
-            }
+            false
         }
         if (result) {
             if (!world.isClient) {
