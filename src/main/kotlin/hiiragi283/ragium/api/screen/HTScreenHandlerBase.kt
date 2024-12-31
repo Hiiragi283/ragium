@@ -12,6 +12,9 @@ import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.screen.slot.Slot
 import net.minecraft.world.World
 
+/**
+ * Ragiumで使用する[ScreenHandler]クラスの基礎
+ */
 abstract class HTScreenHandlerBase(
     type: ScreenHandlerType<*>,
     syncId: Int,

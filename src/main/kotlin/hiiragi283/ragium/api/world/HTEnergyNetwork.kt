@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.world
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.useTransaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
@@ -94,6 +96,9 @@ class HTEnergyNetwork() :
         ;
 
         abstract fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext? = null): Boolean
+
+        fun processAmount(network: DataResult<HTEnergyNetwork>, amount: Long, parent: TransactionContext? = null): Boolean =
+            processAmount(network.getOrNull(), amount, parent)
     }
 
     //    Storage    //

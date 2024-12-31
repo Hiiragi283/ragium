@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.util.HTUnitResult
 import net.minecraft.world.World
 
 /**
- * Handler to process [net.minecraft.recipe.Recipe]
+ * レシピの処理を体系化するクラス
  * @see [hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor]
  * @see [hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor]
  * @see [hiiragi283.ragium.common.recipe.HTSmithingRecipeProcessor]

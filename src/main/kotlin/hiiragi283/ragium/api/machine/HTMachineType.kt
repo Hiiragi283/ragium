@@ -8,7 +8,7 @@ import net.minecraft.network.codec.PacketCodec
 import net.minecraft.util.StringIdentifiable
 
 /**
- * 機械のタイプを表す列挙型
+ * 機械のタイプを管理するクラス
  */
 enum class HTMachineType : StringIdentifiable {
     GENERATOR,

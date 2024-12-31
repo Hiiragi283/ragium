@@ -6,18 +6,18 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.InsertionOnlyStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 
 /**
- * A simple [InsertionOnlyStorage] implementation which removes all inserted resource
+ * 中身を常に消去する[InsertionOnlyStorage]の実装
  */
 class HTVoidStorage<T : Any> : InsertionOnlyStorage<T> {
     companion object {
         /**
-         * [HTVoidStorage] for [ItemVariant]
+         * [ItemVariant]に対する[HTVoidStorage]のインスタンス
          */
         @JvmField
         val ITEM: HTVoidStorage<ItemVariant> = HTVoidStorage()
 
         /**
-         * [HTVoidStorage] for [FluidVariant]
+         * [FluidVariant]に対する[HTVoidStorage]のインスタンス
          */
         @JvmField
         val FLUID: HTVoidStorage<FluidVariant> = HTVoidStorage()

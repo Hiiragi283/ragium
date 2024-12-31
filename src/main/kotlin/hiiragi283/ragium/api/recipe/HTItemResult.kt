@@ -14,7 +14,10 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
 
 /**
- * Item output data
+ * アイテムの完成品を扱うクラス
+ * @param entry アイテムの[RegistryEntry]
+ * @param count 完成品の個数
+ * @param components 完成品のコンポーネント
  */
 class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val components: ComponentChanges = ComponentChanges.EMPTY) {
     companion object {
@@ -58,6 +61,9 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         components,
     )
 
+    /**
+     * 指定した[stack]から[HTItemResult]を返します。
+     */
     constructor(stack: ItemStack) : this(stack.registryEntry, stack.count, stack.componentChanges)
 
     val item: Item
@@ -66,7 +72,7 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         get() = ItemStack(entry, count, components)
 
     /**
-     * Check to merge into [other] stack
+     * 指定した[other]にマージできるか判定します。
      */
     fun canMerge(other: ItemStack): Boolean = when {
         other.isEmpty -> true
@@ -76,7 +82,8 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     }
 
     /**
-     * Merge into [other] stack
+     * 指定した[other]にマージします。
+     * @return [other]とマージした[ItemStack]
      */
     fun merge(other: ItemStack): ItemStack = when {
         other.isEmpty -> stack

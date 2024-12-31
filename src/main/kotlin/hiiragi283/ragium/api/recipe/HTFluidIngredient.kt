@@ -21,10 +21,15 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import java.util.*
-import java.util.function.BiPredicate
+import java.util.function.Predicate
 
+/**
+ * 液体を扱う材料のクラス
+ * @param entryList 条件に一致する液体の一覧
+ * @param amount 条件に一致する液体の量
+ */
 class HTFluidIngredient private constructor(private val entryList: HTRegistryEntryList<Fluid>, val amount: Long) :
-    BiPredicate<Fluid, Long> {
+    Predicate<HTFluidVariantStack> {
         companion object {
             @JvmField
             val CODEC: Codec<HTFluidIngredient> = RecordCodecBuilder.create { instance ->
@@ -50,11 +55,17 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
                     ::HTFluidIngredient,
                 )
 
+            /**
+             * 指定した[fluid]と[amount]から[HTFluidIngredient]を返します。
+             */
             @Suppress("DEPRECATION")
             @JvmStatic
             fun of(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
                 HTFluidIngredient(HTRegistryEntryList.of(fluid.registryEntry), amount)
 
+            /**
+             * 指定した[tagKey]と[amount]から[HTFluidIngredient]を返します。
+             */
             @JvmStatic
             fun of(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
                 HTFluidIngredient(HTRegistryEntryList.ofTag(tagKey, Registries.FLUID), amount)
@@ -68,12 +79,12 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
         val text: MutableText
             get() = entryList.getText(Fluid::name)
 
-        fun test(stack: HTFluidVariantStack): Boolean = test(stack.fluid, stack.amount)
-
-        override fun test(fluid: Fluid, amount: Long): Boolean = when {
-            fluid.isEmpty || amount <= 0 -> this.isEmpty
-            else -> fluid in entryList && amount >= this.amount
+        override fun test(stack: HTFluidVariantStack): Boolean = when (stack.isEmpty) {
+            true -> this.isEmpty
+            false -> stack.fluid in entryList && stack.amount >= this.amount
         }
+
+        fun test(fluid: Fluid, amount: Long): Boolean = test(HTFluidVariantStack(fluid, amount))
 
         fun onConsume(storage: SingleSlotStorage<FluidVariant>) {
             useTransaction { transaction: Transaction ->

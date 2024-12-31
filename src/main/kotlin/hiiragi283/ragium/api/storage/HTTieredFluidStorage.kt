@@ -13,7 +13,12 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.registry.tag.TagKey
 
 /**
- * A simple [SingleFluidStorage] implementation with tiered capacity
+ * [HTMachineTier]によって容量を変化できる[SingleFluidStorage]の実装
+ * @param tier ストレージのティア
+ * @param storageIO ストレージの搬入出の制限
+ * @param inputTag 搬入可能な液体のタグ
+ * @param callback ストレージの中身が変化したときのみ呼ばれる
+ * @param syncIndex [HTScreenFluidProvider.getFluidsToSync]に用いられるインデックス
  */
 class HTTieredFluidStorage(
     val tier: HTMachineTier,
@@ -38,7 +43,8 @@ class HTTieredFluidStorage(
     fun wrapStorage(): Storage<FluidVariant> = storageIO.wrapStorage(this)
 
     /**
-     * Create a new [hiiragi283.ragium.api.storage.HTTieredFluidStorage] instance and copy before containment
+     * 指定した[newTier]で[tier]を更新します。
+     * @return 更新された[HTTieredFluidStorage]
      */
     fun updateTier(newTier: HTMachineTier): HTTieredFluidStorage {
         val stack: HTFluidVariantStack = this.variantStack

@@ -241,7 +241,8 @@ internal object RagiumContentRegister {
     private fun registerItemStorages() {
         registerItemStorage({ world: World, _: BlockPos, state: BlockState, _: BlockEntity?, direction: Direction? ->
             val color: DyeColor = state.getOrNull(RagiumBlockProperties.COLOR) ?: return@registerItemStorage null
-            world.backpackManager
+            world
+                .getBackpackManager()
                 .map { it[color] }
                 .map { InventoryStorage.of(it, direction) }
                 .getOrNull()
@@ -361,7 +362,7 @@ internal object RagiumContentRegister {
             RagiumBlocks.Creatives.SOURCE.get(),
         )
         EnergyStorage.SIDED.registerForBlocks({ world: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
-            world.energyNetwork.getOrNull()
+            world.getEnergyNetwork().getOrNull()
         }, RagiumBlocks.NETWORK_INTERFACE.get())
     }
 

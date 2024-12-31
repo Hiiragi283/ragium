@@ -20,6 +20,12 @@ import net.minecraft.util.StringIdentifiable
 import java.util.*
 import java.util.function.Predicate
 
+/**
+ * アイテムと個数を扱う材料のクラス
+ * @param entryList 条件に一致するアイテムの一覧
+ * @param count 条件に一致するアイテムの個数
+ * @param consumeType アイテムを減らす処理のタイプ
+ */
 class HTItemIngredient private constructor(
     private val entryList: HTRegistryEntryList<Item>,
     val count: Int,

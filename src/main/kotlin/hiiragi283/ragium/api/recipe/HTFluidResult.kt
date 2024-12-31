@@ -17,6 +17,11 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
 
+/**
+ * 液体の完成品を扱うクラス
+ * @param entry 液体の[RegistryEntry]
+ * @param amount 液体の量
+ */
 class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidConstants.BUCKET) {
     companion object {
         @JvmField
@@ -54,6 +59,9 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
     val variant: FluidVariant
         get() = FluidVariant.of(fluid)
 
+    /**
+     * 指定した[storage]にマージできるか判定します。
+     */
     fun canMerge(storage: SingleSlotStorage<FluidVariant>): Boolean = when {
         storage.isFilledMax -> false
         storage.isResourceBlank -> storage.amount + this.amount <= storage.capacity
@@ -61,6 +69,10 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
         else -> false
     }
 
+    /**
+     * 指定した[storage]にマージします。
+     * @return [storage]に搬入できた量
+     */
     fun merge(storage: SingleSlotStorage<FluidVariant>, transaction: TransactionContext): Long = when {
         canMerge(storage) -> storage.insert(variant, amount, transaction)
         else -> 0

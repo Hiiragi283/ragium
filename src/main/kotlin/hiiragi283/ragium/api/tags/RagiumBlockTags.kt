@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier
 object RagiumBlockTags {
     //    Custom    //
     /**
-     * Include blocks which can always connect to pipes
+     * 常にパイプと接続するブロックのタグ
      */
     @JvmField
     val PIPE_CONNECTABLES: TagKey<Block> = create(RagiumAPI.MOD_ID, "pipe_connectables")

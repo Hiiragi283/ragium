@@ -26,6 +26,7 @@ import net.minecraft.util.Identifier
 
 /**
  * 機械レシピを構築するビルダー
+ * @see HTMachineRecipeBase
  */
 class HTMachineRecipeJsonBuilder private constructor(
     private val key: HTMachineKey,

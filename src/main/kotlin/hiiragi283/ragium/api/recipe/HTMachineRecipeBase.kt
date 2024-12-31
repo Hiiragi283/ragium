@@ -7,6 +7,11 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.Recipe
 import net.minecraft.registry.RegistryWrapper
 
+/**
+ * 機械レシピのベースとなるクラス
+ * @see hiiragi283.ragium.common.recipe.HTMachineRecipe
+ * @see hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
+ */
 interface HTMachineRecipeBase : Recipe<HTMachineInput> {
     val definition: HTMachineDefinition
 
@@ -15,16 +20,34 @@ interface HTMachineRecipeBase : Recipe<HTMachineInput> {
     val tier: HTMachineTier
         get() = definition.tier
 
+    /**
+     * アイテムの材料の一覧
+     */
     val itemIngredients: List<HTItemIngredient>
 
+    /**
+     * 指定した[index]から[HTItemIngredient]を返します。
+     */
     fun getItemIngredient(index: Int): HTItemIngredient? = itemIngredients.getOrNull(index)
 
+    /**
+     * 指定した[index]から[HTFluidIngredient]を返します。
+     */
     fun getFluidIngredient(index: Int): HTFluidIngredient?
 
+    /**
+     * 触媒となる[HTItemIngredient]
+     */
     val catalyst: HTItemIngredient?
 
+    /**
+     * 指定した[index]から[HTItemResult]を返します。
+     */
     fun getItemResult(index: Int): HTItemResult?
 
+    /**
+     * 指定した[index]から[HTFluidResult]を返します。
+     */
     fun getFluidResult(index: Int): HTFluidResult?
 
     //    Recipe    //

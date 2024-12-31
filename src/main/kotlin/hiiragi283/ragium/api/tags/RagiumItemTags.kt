@@ -11,18 +11,6 @@ object RagiumItemTags {
     @JvmField
     val ALKALI: TagKey<Item> = create("alkali")
 
-    /**
-     * Act as fluid filter for [hiiragi283.ragium.common.block.transfer.HTExporterBlockEntityBase]
-     */
-    @JvmField
-    val FLUID_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/fluid")
-
-    /**
-     * Act as item filter for [hiiragi283.ragium.common.block.transfer.HTExporterBlockEntityBase]
-     */
-    @JvmField
-    val ITEM_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/item")
-
     @JvmField
     val PROTEIN_FOODS: TagKey<Item> = create("foods/protein")
 
@@ -36,16 +24,28 @@ object RagiumItemTags {
     val REFINED_SILICON_PLATES: TagKey<Item> = create("plates/refined_silicon")
 
     /**
-     * Upgrades [hiiragi283.ragium.api.block.HTMachineBlockEntityBase] tier to [hiiragi283.ragium.api.machine.HTMachineTier.ADVANCED]
+     * [hiiragi283.ragium.api.block.HTMachineBlockEntityBase]を強化できるアイテムの一覧
      */
     @JvmField
     val ADVANCED_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/advanced")
 
     /**
-     * Upgrades [hiiragi283.ragium.api.block.HTMachineBlockEntityBase] tier to [hiiragi283.ragium.api.machine.HTMachineTier.BASIC]
+     * [hiiragi283.ragium.api.block.HTMachineBlockEntityBase]を強化できるアイテムの一覧
      */
     @JvmField
     val BASIC_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/basic")
+
+    /**
+     * 液体フィルタとして機能するアイテムのタグ
+     */
+    @JvmField
+    val FLUID_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/fluid")
+
+    /**
+     * アイテムフィルタとして機能するアイテムのタグ
+     */
+    @JvmField
+    val ITEM_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/item")
 
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.material
 
 /**
- * Represent material type
+ * 素材のタイプを管理するクラス
  */
 enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
     ALLOY(HTTagPrefix.DUST, HTTagPrefix.GEAR, HTTagPrefix.INGOT, HTTagPrefix.PLATE, HTTagPrefix.STORAGE_BLOCK),
@@ -35,8 +35,9 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
     fun isValidPrefix(prefix: HTTagPrefix): Boolean = prefix in validPrefixes
 
     /**
-     * Transform main prefix
+     * 指定した[HTTagPrefix]をインゴットや宝石といったメインの[HTTagPrefix]に変換します。
      * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useItemFromMainPrefix]
+     * @return 対応する値がなければnull
      */
     fun getMainPrefix(): HTTagPrefix? = when (this) {
         ALLOY -> HTTagPrefix.INGOT
@@ -48,8 +49,9 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
     }
 
     /**
-     * Transform raw material prefix
+     * 指定した[HTTagPrefix]を原石や宝石といった鉱石ドロップの[HTTagPrefix]に変換します。
      * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useItemFromRawPrefix]
+     * @return 対応する値がなければnull
      */
     fun getRawPrefix(): HTTagPrefix? = when (this) {
         ALLOY -> null

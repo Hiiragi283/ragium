@@ -143,7 +143,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
-        world.energyNetwork
+        world
+            .getEnergyNetwork()
             .validate(
                 { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.processCost) },
                 { "Failed to extract required energy from network!" },

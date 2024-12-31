@@ -102,7 +102,7 @@ class HTMachineRecipe(
         if (input.tier < this.tier) return false
         if (!HTShapelessInputResolver.canMatch(itemIngredients, input.itemInputs)) return false
         fluidInputs.forEachIndexed { index: Int, fluid: HTFluidIngredient ->
-            if (!fluid.test(input.getFluid(index))) {
+            if (!fluid.test(input.getFluidInSlot(index))) {
                 return false
             }
         }

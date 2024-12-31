@@ -13,14 +13,4 @@ interface HTMaterialProvider : ItemConvertible {
 
     val prefixedTagKey: TagKey<Item>
         get() = tagPrefix.createTag(material)
-
-    companion object {
-        @JvmStatic
-        fun ofWrapped(prefix: HTTagPrefix, key: HTMaterialKey, item: ItemConvertible): HTMaterialProvider = object : HTMaterialProvider {
-            override val material: HTMaterialKey = key
-            override val tagPrefix: HTTagPrefix = prefix
-
-            override fun asItem(): Item = item.asItem()
-        }
-    }
 }

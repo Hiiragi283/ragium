@@ -12,7 +12,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
@@ -32,7 +31,9 @@ import kotlin.math.min
 //    Storage    //
 
 /**
- * Insert resource and amount by [HTVariantStack]
+ * 指定した[stack]をストレージに搬入します。
+ * @param T [TransferVariant]を継承したクラス
+ * @return 搬入できた量
  */
 fun <T : TransferVariant<*>> Storage<T>.insert(stack: HTVariantStack<*, T>, transaction: Transaction): Long = when {
     stack.isEmpty -> 0
@@ -40,7 +41,9 @@ fun <T : TransferVariant<*>> Storage<T>.insert(stack: HTVariantStack<*, T>, tran
 }
 
 /**
- * Extract resource and amount by [HTVariantStack]
+ * 指定した[stack]をストレージから搬出します。
+ * @param T [TransferVariant]を継承したクラス
+ * @return 搬出できた量
  */
 fun <T : TransferVariant<*>> Storage<T>.extract(stack: HTVariantStack<*, T>, transaction: Transaction): Long = when {
     stack.isEmpty -> 0
@@ -48,8 +51,9 @@ fun <T : TransferVariant<*>> Storage<T>.extract(stack: HTVariantStack<*, T>, tra
 }
 
 /**
- * Interact [this] fluid storage with other fluid storage from [player] holding [net.minecraft.item.ItemStack]] in [Hand.MAIN_HAND]
- * @param storageIO wrap [this] fluid storage to restrict insertion/extraction
+ * 指定した[player]が[Hand.MAIN_HAND]に持っている[net.minecraft.item.ItemStack]でストレージに干渉します。
+ * @param storageIO この処理の搬出入を制御
+ * @return 液体が移動した場合はtrue，それ以外の場合はfalse
  */
 fun Storage<FluidVariant>.interactWithFluidStorage(player: PlayerEntity, storageIO: HTStorageIO = HTStorageIO.GENERIC): Boolean =
     FluidStorageUtil.interactWithFluidStorage(storageIO.wrapStorage(this), player, Hand.MAIN_HAND)
@@ -57,13 +61,16 @@ fun Storage<FluidVariant>.interactWithFluidStorage(player: PlayerEntity, storage
 fun Storage<FluidVariant>.findMatching(tagKey: TagKey<Fluid>): FluidVariant? = StorageUtil.findStoredResource(this) { it.isIn(tagKey) }
 
 /**
- * Check [this] storage is full
+ * 指定した[SingleSlotStorage]の容量が満タンかどうか判定します。
  */
 val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
     get() = amount == capacity
 
 /**
- * Insert [TransferVariant] in [this] storage or [initial] if blank
+ * 指定した[Storage]の中身と同じ[TransferVariant]を搬入します。
+ * @param T [TransferVariant]を継承したクラス
+ * @param initial [Storage]が空の場合に使う[TransferVariant]
+ * @return 搬入できた量
  */
 fun <T : TransferVariant<*>> Storage<T>.insertSelf(initial: T, maxAmount: Long, transaction: TransactionContext): Long {
     val foundVariant: T = StorageUtil.findStoredResource(this) ?: when (initial.isBlank) {
@@ -74,7 +81,9 @@ fun <T : TransferVariant<*>> Storage<T>.insertSelf(initial: T, maxAmount: Long, 
 }
 
 /**
- * Extract [TransferVariant] in [this] storage
+ * 指定した[Storage]の中身と同じ[TransferVariant]を搬出します。
+ * @param T [TransferVariant]を継承したクラス
+ * @return 搬出できた量
  */
 fun <T : TransferVariant<*>> Storage<T>.extractSelf(maxAmount: Long, transaction: TransactionContext): Long {
     val foundVariant: T = StorageUtil.findExtractableResource(this, transaction) ?: return 0
@@ -82,7 +91,7 @@ fun <T : TransferVariant<*>> Storage<T>.extractSelf(maxAmount: Long, transaction
 }
 
 /**
- * Get or Set [HTItemVariantStack] from [this] storage
+ * 指定したに[SingleItemStorage]対して[HTItemVariantStack]の取得と代入を行います。
  */
 var SingleItemStorage.variantStack: HTItemVariantStack
     get() = HTItemVariantStack(variant, amount)
@@ -95,7 +104,7 @@ var SingleItemStorage.variantStack: HTItemVariantStack
     }
 
 /**
- * Get or Set [HTFluidVariantStack] from [this] storage
+ * 指定したに[SingleFluidStorage]対して[HTFluidVariantStack]の取得と代入を行います。
  */
 var SingleFluidStorage.variantStack: HTFluidVariantStack
     get() = HTFluidVariantStack(variant, amount)
@@ -107,21 +116,38 @@ var SingleFluidStorage.variantStack: HTFluidVariantStack
         }
     }
 
-fun <T : Any> SlottedStorage<T>.getSlotOrNull(slot: Int): SingleSlotStorage<T>? = if (slot in 0..slotCount) getSlot(slot) else null
-
 //    TransferVariant    //
 
+/**
+ * 指定した[TransferVariant]のオブジェクトが[entry]の値と一致するかどうか判定します。
+ */
 fun <T : Any> TransferVariant<T>.isOf(entry: RegistryEntry<T>): Boolean = isOf(entry.value())
 
+/**
+ * 指定した[TransferVariant]のオブジェクトが[tagKey]に含まれているかどうか判定します。
+ * @param valueGetter [tagKey]の値を提供するブロック
+ */
 fun <T : Any> TransferVariant<T>.isIn(valueGetter: HTTagValueGetter<T>, tagKey: TagKey<T>): Boolean =
     valueGetter.getValues(tagKey).any(this::isOf)
 
+/**
+ * 指定した[ItemVariant]のオブジェクトが[item]と一致するか判定します。
+ */
 fun ItemVariant.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 
+/**
+ * 指定した[ItemVariant]のオブジェクトが[tagKey]に含まれているか判定します。
+ */
 fun ItemVariant.isIn(tagKey: TagKey<Item>): Boolean = isIn(Registries.ITEM::iterateEntries, tagKey)
 
+/**
+ * 指定した[FluidVariant]のオブジェクトが[tagKey]に含まれているか判定します。
+ */
 fun FluidVariant.isIn(tagKey: TagKey<Fluid>): Boolean = isIn(Registries.FLUID::iterateEntries, tagKey)
 
+/**
+ * 指定した[ContainerItemContext]内の[ItemVariant]のコンポーネントを変化させます。
+ */
 fun ContainerItemContext.modifyComponent(transaction: TransactionContext, count: Long = 1, action: (MutableComponentMap) -> Unit): Long {
     val newVariant: ItemVariant = itemVariant
         .toStack()
@@ -134,8 +160,11 @@ fun ContainerItemContext.modifyComponent(transaction: TransactionContext, count:
 //    Transaction    //
 
 /**
- * Try to use [Transaction] safely
- * @param parent current [TransactionContext], or null if there is no one
+ * [Transaction]を安全に使えます。
+ * @param R 戻り値の値
+ * @param parent 現在開いている[TransactionContext]
+ * @param action [Transaction]を扱うブロック
+ * @return [action]の戻り値
  */
 inline fun <R> useTransaction(parent: TransactionContext? = null, action: (Transaction) -> R): R =
     Transaction.openNested(parent).use(action)

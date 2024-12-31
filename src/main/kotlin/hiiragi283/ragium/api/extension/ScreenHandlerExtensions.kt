@@ -96,7 +96,8 @@ fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, stack: ItemStac
  * @param color バックパックの色
  * @return スクリーンを開けた場合はtrue，それ以外の場合はfalse
  */
-fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor): Boolean = world.backpackManager
+fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor): Boolean = world
+    .getBackpackManager()
     .map { it[color] }
     .map { inventory: SimpleInventory ->
         player.openHandledScreen(
