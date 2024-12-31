@@ -24,17 +24,10 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTDrumBlockEntity(pos: BlockPos, state: BlockState) :
+class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
     HTBlockEntityBase(RagiumBlockEntityTypes.DRUM, pos, state),
     SidedStorageBlockEntity,
     HTMachineTierProvider {
-    override var tier: HTMachineTier = HTMachineTier.PRIMITIVE
-        private set
-
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
-
     private var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
         .Builder(1)
         .generic(0)

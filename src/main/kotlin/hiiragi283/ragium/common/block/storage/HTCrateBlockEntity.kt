@@ -26,7 +26,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
+class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
     HTBlockEntityBase(RagiumBlockEntityTypes.CRATE, pos, state),
     SidedStorageBlockEntity,
     HTMachineTierProvider {
@@ -40,14 +40,6 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun getCapacity(variant: ItemVariant): Long = tier.crateCapacity
-    }
-
-    override var tier: HTMachineTier = HTMachineTier.PRIMITIVE
-        private set
-
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-        this.itemStorage = ItemStorage(tier)
     }
 
     var itemStorage: SingleItemStorage = ItemStorage(tier)

@@ -37,6 +37,7 @@ object RagiumItems {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         LAPIS(RagiumMaterialKeys.LAPIS),
+        LEAD(RagiumMaterialKeys.LEAD),
         NITER(RagiumMaterialKeys.NITER),
         QUARTZ(RagiumMaterialKeys.QUARTZ),
         SALT(RagiumMaterialKeys.SALT),
@@ -45,6 +46,7 @@ object RagiumItems {
         // tier 2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
         GOLD(RagiumMaterialKeys.GOLD),
+        SILVER(RagiumMaterialKeys.SILVER),
 
         // tier 3
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTInventoryTickCallback
@@ -360,6 +361,13 @@ internal object RagiumContentRegister {
     }
 
     private fun registerEnergyStorages() {
+        EnergyStorage.SIDED.registerFallback { world: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, direction: Direction? ->
+            if (blockEntity is HTMachineBlockEntityBase) {
+                world.getEnergyNetwork().getOrNull()
+            } else {
+                null
+            }
+        }
         EnergyStorage.SIDED.registerForBlocks(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> InfiniteEnergyStorage.INSTANCE },
             RagiumBlocks.Creatives.SOURCE.get(),
