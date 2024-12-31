@@ -30,6 +30,7 @@ import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
+import net.fabricmc.fabric.api.registry.FuelRegistry
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage
@@ -232,6 +233,8 @@ internal object RagiumContentRegister {
         }
 
         registerDrinkHandlers(HTFluidDrinkingHandlerRegistry::register)
+
+        FuelRegistry.INSTANCE.add(RagiumItems.COAL_CHIP, 200)
 
         TradeOfferHelper.registerWanderingTraderOffers(1) { factories: MutableList<TradeOffers.Factory> ->
             factories.add(TradeOffers.SellItemFactory(RagiumItems.CINNAMON_STICK.get(), 5, 5, 1, 1))

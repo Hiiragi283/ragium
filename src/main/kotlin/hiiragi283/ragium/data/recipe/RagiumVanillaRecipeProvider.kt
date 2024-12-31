@@ -35,6 +35,7 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
         exporterCache = exporter
         craftingRecipes(exporter)
         cookingRecipes(exporter)
+        cuttingRecipes(exporter)
 
         exporter.accept(RagiumAPI.id("smithing/dynamite_upgrade"), HTDynamiteUpgradingRecipe, null)
     }
@@ -603,6 +604,17 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             exporter,
             RagiumItems.MEAT_INGOT,
             RagiumItems.COOKED_MEAT_INGOT,
+        )
+    }
+
+    //    Stonecutting    //
+
+    private fun cuttingRecipes(exporter: RecipeExporter) {
+        HTStonecuttingRecipeJsonBuilder.register(
+            exporter,
+            ItemTags.COALS,
+            RagiumItems.COAL_CHIP,
+            8,
         )
     }
 }

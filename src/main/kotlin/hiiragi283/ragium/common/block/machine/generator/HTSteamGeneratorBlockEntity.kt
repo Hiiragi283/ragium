@@ -28,7 +28,6 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.ItemTags
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -44,7 +43,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         mapOf(0 to HTStorageIO.INPUT, 1 to HTStorageIO.OUTPUT),
     ) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
-            0 -> stack.isIn(ItemTags.COALS)
+            0 -> stack.isOf(RagiumItems.COAL_CHIP)
             1 -> stack.isOf(RagiumItems.Dusts.ASH)
             else -> false
         }
@@ -75,7 +74,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun process(world: World, pos: BlockPos): HTUnitResult {
         val fuelStack: ItemStack = inventory.getStack(0)
-        return if (fuelStack.isIn(ItemTags.COALS)) {
+        return if (fuelStack.isOf(RagiumItems.COAL_CHIP)) {
             useTransaction { transaction: Transaction ->
                 val maxAmount: Long = RagiumAPI
                     .getInstance()

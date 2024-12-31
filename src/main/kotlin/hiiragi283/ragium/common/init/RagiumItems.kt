@@ -414,6 +414,9 @@ object RagiumItems {
     val BEE_WAX: HTItemContent = HTContent.ofItem("bee_wax")
 
     @JvmField
+    val COAL_CHIP: HTItemContent = HTContent.ofItem("coal_chip")
+
+    @JvmField
     val PULP: HTItemContent = HTContent.ofItem("pulp")
 
     @JvmField
@@ -495,6 +498,7 @@ object RagiumItems {
     val INGREDIENTS: List<HTItemContent> = buildList {
         // organic
         add(BEE_WAX)
+        add(COAL_CHIP)
         add(PULP)
         add(RESIDUAL_COKE)
         // inorganic
