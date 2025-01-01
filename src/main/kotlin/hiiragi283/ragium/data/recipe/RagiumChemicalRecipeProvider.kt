@@ -392,6 +392,13 @@ class RagiumChemicalRecipeProvider(output: FabricDataOutput, registriesFuture: C
             .itemOutput(RagiumItems.Dusts.ALKALI)
             .fluidOutput(RagiumFluids.CHLORINE)
             .offerTo(exporter, RagiumItems.Dusts.SALT)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ELECTROLYZER)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.GALENA, 2)
+            .itemOutput(RagiumItems.Dusts.LEAD)
+            .itemOutput(RagiumItems.Dusts.SULFUR)
+            .offerTo(exporter, RagiumAPI.id("galena_dust"))
     }
 
     //    Extractor    //

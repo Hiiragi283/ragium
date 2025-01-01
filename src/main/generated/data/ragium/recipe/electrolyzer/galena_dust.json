@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:electrolyzer",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:dusts/galena"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "ragium:lead_dust"
+    },
+    {
+      "item": "ragium:sulfur_dust"
+    }
+  ]
+}

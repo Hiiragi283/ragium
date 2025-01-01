@@ -225,8 +225,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
         // mineral
-        helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.GALENA, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
         helper.register(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
@@ -375,7 +376,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .create(RagiumMachineKeys.BLAST_FURNACE)
                 .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD)
                 .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.SILVER)
-                .itemOutput(output)
+                .itemOutput(output, 2)
                 .offerTo(exporter, output)
         }
         // invar
@@ -391,7 +392,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.useItemIfPresent(RagiumMaterialKeys.TITANIUM, HTTagPrefix.INGOT) { output: Item ->
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
-                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.TITANIUM)
+                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.TITANIUM)
                 .itemOutput(output)
                 .offerTo(exporter, output)
         }

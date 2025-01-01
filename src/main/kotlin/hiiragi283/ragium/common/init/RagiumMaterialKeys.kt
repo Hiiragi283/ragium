@@ -145,6 +145,9 @@ object RagiumMaterialKeys {
     val CRUDE_RAGINITE: HTMaterialKey = HTMaterialKey.of("crude_raginite")
 
     @JvmField
+    val GALENA: HTMaterialKey = HTMaterialKey.of("galena")
+
+    @JvmField
     val NITER: HTMaterialKey = HTMaterialKey.of("niter")
 
     @JvmField
