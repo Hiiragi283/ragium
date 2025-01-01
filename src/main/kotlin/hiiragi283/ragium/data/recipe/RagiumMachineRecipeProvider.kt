@@ -89,7 +89,7 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
 
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.ASSEMBLER)
-            .itemInput(ConventionalItemTags.IRON_INGOTS)
+            .itemInput(ConventionalItemTags.IRON_INGOTS, 5)
             .itemInput(ItemTags.LOGS, 2)
             .registerShortcut(exporter, Items.HOPPER)
     }

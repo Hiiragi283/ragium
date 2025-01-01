@@ -81,6 +81,18 @@ class RagiumVanillaRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .input('B', RagiumItems.BEE_WAX)
             .unlockedBy(RagiumItems.BEE_WAX)
             .offerTo(exporter)
+
+        HTShapelessRecipeJsonBuilder
+            .create(Items.AMETHYST_SHARD, 4)
+            .input(Items.AMETHYST_BLOCK)
+            .unlockedBy(Items.AMETHYST_BLOCK)
+            .offerTo(exporter)
+
+        HTShapelessRecipeJsonBuilder
+            .create(Items.NETHER_WART, 9)
+            .input(Items.NETHER_WART_BLOCK)
+            .unlockedBy(Items.NETHER_WART_BLOCK)
+            .offerTo(exporter)
     }
 
     //    Crafting - Armors    //

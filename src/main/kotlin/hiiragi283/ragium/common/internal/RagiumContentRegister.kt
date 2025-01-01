@@ -53,8 +53,6 @@ import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.boss.BossBar
-import net.minecraft.entity.boss.ServerBossBar
 import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
@@ -74,8 +72,7 @@ import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.InfiniteEnergyStorage
 
 internal object RagiumContentRegister {
-    @JvmField
-    val ENERGY_BAR = ServerBossBar(Text.empty(), BossBar.Color.YELLOW, BossBar.Style.PROGRESS)
+    // val ENERGY_BAR = ServerBossBar(Text.empty(), BossBar.Color.YELLOW, BossBar.Style.PROGRESS)
 
     @JvmStatic
     fun initEvents() {
@@ -129,7 +126,7 @@ internal object RagiumContentRegister {
                     }
                 }
                 // show energy bar (boss bar) when holding energy item
-                val itemContext: ContainerItemContext =
+                /*val itemContext: ContainerItemContext =
                     ContainerItemContext.forPlayerInteraction(player, Hand.MAIN_HAND)
                 itemContext
                     .find(EnergyStorage.ITEM)
@@ -139,7 +136,7 @@ internal object RagiumContentRegister {
                             percent = storage.energyPercent
                             addPlayer(player)
                         }
-                    } ?: run { ENERGY_BAR.removePlayer(player) }
+                    } ?: run { ENERGY_BAR.removePlayer(player) }*/
             }
         }
         // rotate block by ragi-wrench

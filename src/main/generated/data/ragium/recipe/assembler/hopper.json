@@ -9,6 +9,7 @@
   },
   "item_inputs": [
     {
+      "count": 5,
       "items": "#c:ingots/iron"
     },
     {
