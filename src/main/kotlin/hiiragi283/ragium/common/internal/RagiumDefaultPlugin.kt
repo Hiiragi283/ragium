@@ -185,7 +185,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialType.ALLOY, Rarity.RARE)
         helper.register(RagiumMaterialKeys.STEEL, HTMaterialType.ALLOY, Rarity.UNCOMMON)
 
+        helper.register(RagiumMaterialKeys.BRASS, HTMaterialType.ALLOY)
+        helper.register(RagiumMaterialKeys.BRONZE, HTMaterialType.ALLOY)
         helper.register(RagiumMaterialKeys.ELECTRUM, HTMaterialType.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.INVAR, HTMaterialType.ALLOY, Rarity.UNCOMMON)
         // dust
         helper.register(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
         helper.register(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
@@ -217,6 +220,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.PLUTONIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.SILVER, HTMaterialType.METAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.TITANIUM, HTMaterialType.METAL, Rarity.RARE)
         helper.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL, Rarity.RARE)
         helper.register(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
@@ -240,17 +244,24 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
     override fun setupMaterialProperties(helper: RagiumPlugin.PropertyHelper<HTMaterialKey>) {
         // metal
-        helper.modify(RagiumMaterialKeys.COPPER, RagiumMaterialKeys.GOLD, RagiumMaterialKeys.IRON) {
+        helper.modify(RagiumMaterialKeys.IRON) {
             add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
         }
         helper.modify(RagiumMaterialKeys.COPPER, RagiumMaterialKeys.IRON) {
+            add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
             set(HTMaterialPropertyKeys.SMELTING_EXP, 0.7f)
         }
         helper.modify(RagiumMaterialKeys.GOLD) {
+            add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
             set(HTMaterialPropertyKeys.SMELTING_EXP, 1f)
         }
 
-        helper.modify(RagiumMaterialKeys.IRIDIUM, RagiumMaterialKeys.TUNGSTEN, RagiumMaterialKeys.URANIUM) {
+        helper.modify(
+            RagiumMaterialKeys.IRIDIUM,
+            RagiumMaterialKeys.TITANIUM,
+            RagiumMaterialKeys.TUNGSTEN,
+            RagiumMaterialKeys.URANIUM,
+        ) {
             add(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)
             add(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)
         }
@@ -337,6 +348,53 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumItems.Ingots.entries)
         bindContents(RagiumItems.Plates.entries)
         bindContents(RagiumItems.RawMaterials.entries)
+    }
+
+    override fun registerRuntimeRecipe(exporter: RecipeExporter, helper: RagiumPlugin.RecipeHelper) {
+        // brass
+        helper.useItemIfPresent(RagiumMaterialKeys.BRASS, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, 3)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.ZINC)
+                .itemOutput(output, 4)
+                .offerTo(exporter, output)
+        }
+        // bronze
+        helper.useItemIfPresent(RagiumMaterialKeys.BRONZE, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, 3)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.TIN)
+                .itemOutput(output, 4)
+                .offerTo(exporter, output)
+        }
+        // electrum
+        helper.useItemIfPresent(RagiumMaterialKeys.ELECTRUM, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.SILVER)
+                .itemOutput(output)
+                .offerTo(exporter, output)
+        }
+        // invar
+        helper.useItemIfPresent(RagiumMaterialKeys.INVAR, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, 2)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.NICKEL)
+                .itemOutput(output, 3)
+                .offerTo(exporter, output)
+        }
+        // titanium
+        helper.useItemIfPresent(RagiumMaterialKeys.TITANIUM, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.TITANIUM)
+                .itemOutput(output)
+                .offerTo(exporter, output)
+        }
     }
 
     override fun registerRuntimeMaterialRecipes(

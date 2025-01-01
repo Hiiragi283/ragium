@@ -31,7 +31,7 @@ object RagiumHardModePlugin : RagiumPlugin {
 
     private val hardMode: Boolean by lazy(RagiumAPI.getInstance()::isHardMode)
 
-    override fun registerRuntimeRecipe(exporter: RecipeExporter) {
+    override fun registerRuntimeRecipe(exporter: RecipeExporter, helper: RagiumPlugin.RecipeHelper) {
         // solar panel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.SOLAR_PANEL)

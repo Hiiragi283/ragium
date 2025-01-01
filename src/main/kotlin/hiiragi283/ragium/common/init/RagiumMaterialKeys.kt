@@ -25,7 +25,16 @@ object RagiumMaterialKeys {
 
     // integrations
     @JvmField
+    val BRASS: HTMaterialKey = HTMaterialKey.of("brass")
+
+    @JvmField
+    val BRONZE: HTMaterialKey = HTMaterialKey.of("bronze")
+
+    @JvmField
     val ELECTRUM: HTMaterialKey = HTMaterialKey.of("electrum")
+
+    @JvmField
+    val INVAR: HTMaterialKey = HTMaterialKey.of("invar")
 
     //    Dust    //
 
@@ -114,6 +123,9 @@ object RagiumMaterialKeys {
 
     @JvmField
     val TIN: HTMaterialKey = HTMaterialKey.of("tin")
+
+    @JvmField
+    val TITANIUM: HTMaterialKey = HTMaterialKey.of("titanium")
 
     @JvmField
     val TUNGSTEN: HTMaterialKey = HTMaterialKey.of("tungsten")
