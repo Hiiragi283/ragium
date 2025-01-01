@@ -50,17 +50,15 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
             .itemInput(RagiumItems.Radioactives.NUCLEAR_WASTE, 64)
-            // .itemInput(RagiumItemsNew.Radioactives.NUCLEAR_WASTE, 64)
             .fluidInput(RagiumFluids.AQUA_REGIA)
             .itemOutput(RagiumItems.Radioactives.PLUTONIUM_FUEL)
             .offerTo(exporter, RagiumItems.Radioactives.PLUTONIUM_FUEL)
         // LED
         // processor
-        // processor
         RagiumItems.Processors.entries.forEach { processor: RagiumItems.Processors ->
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
-                .itemInput(HTTagPrefix.GEM, processor.material, 8)
+                .itemInput(HTTagPrefix.GEM, processor.material)
                 .itemInput(RagiumItems.PROCESSOR_SOCKET)
                 .itemOutput(processor)
                 .offerTo(exporter, processor)
@@ -70,8 +68,41 @@ class RagiumMachineRecipeProvider(output: FabricDataOutput, registriesFuture: Co
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.Gems.RAGI_CRYSTAL, 8)
             .itemInput(RagiumItems.PROCESSOR_SOCKET)
-            .itemOutput(RagiumItems.Processors.RAGI_CRYSTAL)
-            .offerTo(exporter, RagiumItems.Processors.RAGI_CRYSTAL, "_from_crystal")
+            .itemOutput(RagiumItems.Processors.RAGIUM)
+            .offerTo(exporter, RagiumItems.Processors.RAGIUM, "_from_crystal")
+
+        // shortcuts
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(ItemTags.LOGS, 2)
+            .registerShortcut(exporter, Items.CHEST)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(ItemTags.PLANKS, 7)
+            .registerShortcut(exporter, Items.BARREL)
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(ItemTags.LOGS, 7)
+            .registerShortcut(exporter, Items.BARREL, 4, "_from_logs")
+
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(ConventionalItemTags.IRON_INGOTS)
+            .itemInput(ItemTags.LOGS, 2)
+            .registerShortcut(exporter, Items.HOPPER)
+    }
+
+    fun HTMachineRecipeJsonBuilder.registerShortcut(
+        exporter: RecipeExporter,
+        output: ItemConvertible,
+        count: Int = 1,
+        suffix: String = "",
+    ) {
+        catalyst(output)
+        itemOutput(output, count)
+        offerTo(exporter, output, suffix)
     }
 
     //    Blast Furnace    //

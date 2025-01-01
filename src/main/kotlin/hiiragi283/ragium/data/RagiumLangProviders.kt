@@ -310,7 +310,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.Processors.DIAMOND, "Diamond Processor")
             builder.add(RagiumItems.Processors.EMERALD, "Emerald Processor")
             builder.add(RagiumItems.Processors.NETHER_STAR, "Nether Star Processor")
-            builder.add(RagiumItems.Processors.RAGI_CRYSTAL, "Ragi-Crystal Processor")
+            builder.add(RagiumItems.Processors.RAGIUM, "Ragium Processor")
 
             builder.add(RagiumItems.PressMolds.GEAR, "Press Mold (Gear)")
             builder.add(RagiumItems.PressMolds.PIPE, "Press Mold (Pipe)")
@@ -763,7 +763,7 @@ object RagiumLangProviders {
             builder.add(RagiumItems.Processors.DIAMOND, "ダイヤモンドプロセッサ")
             builder.add(RagiumItems.Processors.EMERALD, "エメラルドプロセッサ")
             builder.add(RagiumItems.Processors.NETHER_STAR, "ネザースタープロセッサ")
-            builder.add(RagiumItems.Processors.RAGI_CRYSTAL, "ラギクリスタルプロセッサ")
+            builder.add(RagiumItems.Processors.RAGIUM, "ラギウムプロセッサ")
 
             builder.add(RagiumItems.PressMolds.GEAR, "プレス型（歯車）")
             builder.add(RagiumItems.PressMolds.PIPE, "プレス型（パイプ）")

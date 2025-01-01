@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "items": "minecraft:barrel"
+  },
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 7,
+      "items": "#minecraft:planks"
+    }
+  ],
+  "item_outputs": [
+    {
+      "item": "minecraft:barrel"
+    }
+  ]
+}

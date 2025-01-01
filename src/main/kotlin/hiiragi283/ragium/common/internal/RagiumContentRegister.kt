@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTVoidStorage
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.*
@@ -363,7 +364,7 @@ internal object RagiumContentRegister {
     private fun registerEnergyStorages() {
         EnergyStorage.SIDED.registerFallback { world: World, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, direction: Direction? ->
             if (blockEntity is HTMachineBlockEntityBase) {
-                world.getEnergyNetwork().getOrNull()
+                world.getEnergyNetwork().getOrNull()?.let(HTStorageIO.INPUT::wrapEnergyStorage)
             } else {
                 null
             }

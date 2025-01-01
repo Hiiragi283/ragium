@@ -423,9 +423,9 @@ object RagiumAdvancementProviders {
                 consumer,
                 "machine/processor",
                 advancedCircuit,
-                RagiumItems.Processors.RAGI_CRYSTAL,
+                RagiumItems.Processors.RAGIUM,
                 frame = AdvancementFrame.GOAL,
-            ) { hasAllItems(RagiumItems.Processors.RAGI_CRYSTAL) }
+            ) { hasAllItems(RagiumItems.Processors.RAGIUM) }
             // compressor
             val compressor: AdvancementEntry = createMachineChild(
                 consumer,

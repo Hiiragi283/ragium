@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:ragi_crystal_processor"
+            "items": "ragium:ragium_processor"
           }
         ]
       },
@@ -17,10 +17,10 @@
     "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragi_crystal_processor"
+      "id": "ragium:ragium_processor"
     },
     "title": {
-      "translate": "item.ragium.ragi_crystal_processor"
+      "translate": "item.ragium.ragium_processor"
     }
   },
   "requirements": [

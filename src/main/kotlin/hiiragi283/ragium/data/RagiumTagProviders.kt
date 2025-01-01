@@ -236,8 +236,8 @@ object RagiumTagProviders {
             add(RagiumItemTags.SILICON_PLATES, RagiumItems.SILICON)
             add(RagiumItemTags.REFINED_SILICON_PLATES, RagiumItems.REFINED_SILICON)
 
-            add(RagiumItemTags.ADVANCED_UPGRADES, RagiumBlocks.Hulls.ADVANCED)
-            add(RagiumItemTags.BASIC_UPGRADES, RagiumBlocks.Hulls.BASIC)
+            add(RagiumItemTags.ADVANCED_UPGRADES, RagiumBlocks.Casings.ADVANCED)
+            add(RagiumItemTags.BASIC_UPGRADES, RagiumBlocks.Casings.BASIC)
 
             getOrCreateTagBuilder(RagiumItemTags.PROTEIN_FOODS)
                 .add(Items.ROTTEN_FLESH)

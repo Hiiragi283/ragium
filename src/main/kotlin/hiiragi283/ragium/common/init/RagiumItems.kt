@@ -385,7 +385,7 @@ object RagiumItems {
         DIAMOND(RagiumMaterialKeys.DIAMOND),
         EMERALD(RagiumMaterialKeys.EMERALD),
         NETHER_STAR(RagiumMaterialKeys.NETHER_STAR),
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_processor")
