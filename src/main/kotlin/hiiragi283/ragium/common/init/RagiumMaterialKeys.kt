@@ -107,6 +107,9 @@ object RagiumMaterialKeys {
     val PLATINUM: HTMaterialKey = HTMaterialKey.of("platinum")
 
     @JvmField
+    val PLUTONIUM: HTMaterialKey = HTMaterialKey.of("plutonium")
+
+    @JvmField
     val SILVER: HTMaterialKey = HTMaterialKey.of("silver")
 
     @JvmField
@@ -114,6 +117,9 @@ object RagiumMaterialKeys {
 
     @JvmField
     val TUNGSTEN: HTMaterialKey = HTMaterialKey.of("tungsten")
+
+    @JvmField
+    val URANIUM: HTMaterialKey = HTMaterialKey.of("uranium")
 
     @JvmField
     val ZINC: HTMaterialKey = HTMaterialKey.of("zinc")
@@ -128,6 +134,9 @@ object RagiumMaterialKeys {
 
     @JvmField
     val NITER: HTMaterialKey = HTMaterialKey.of("niter")
+
+    @JvmField
+    val PYRITE: HTMaterialKey = HTMaterialKey.of("pyrite")
 
     @JvmField
     val RAGINITE: HTMaterialKey = HTMaterialKey.of("raginite")

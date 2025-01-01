@@ -213,14 +213,17 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
         helper.register(RagiumMaterialKeys.NICKEL, HTMaterialType.METAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.PLATINUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.PLUTONIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.SILVER, HTMaterialType.METAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
         helper.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
         // mineral
         helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL, Rarity.RARE)
         helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
         helper.register(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
@@ -246,7 +249,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMaterialPropertyKeys.SMELTING_EXP, 1f)
         }
 
-        helper.modify(RagiumMaterialKeys.IRIDIUM, RagiumMaterialKeys.TUNGSTEN) {
+        helper.modify(RagiumMaterialKeys.IRIDIUM, RagiumMaterialKeys.TUNGSTEN, RagiumMaterialKeys.URANIUM) {
             add(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)
             add(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)
         }

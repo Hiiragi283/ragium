@@ -444,6 +444,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.RAGI_STEEL, "Ragi-Steel")
             builder.add(RagiumMaterialKeys.FLUORITE, "Fluorite")
             builder.add(RagiumMaterialKeys.GOLD, "Gold")
+            builder.add(RagiumMaterialKeys.PYRITE, "Pyrite")
             builder.add(RagiumMaterialKeys.REDSTONE, "Redstone")
             builder.add(RagiumMaterialKeys.STEEL, "Steel")
 
@@ -472,9 +473,11 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.LEAD, "Lead")
             builder.add(RagiumMaterialKeys.NICKEL, "Nickel")
             builder.add(RagiumMaterialKeys.PLATINUM, "Platinum")
+            builder.add(RagiumMaterialKeys.PLUTONIUM, "Plutonium")
             builder.add(RagiumMaterialKeys.SILVER, "Silver")
             builder.add(RagiumMaterialKeys.TIN, "Tin")
             builder.add(RagiumMaterialKeys.TUNGSTEN, "Tungsten")
+            builder.add(RagiumMaterialKeys.URANIUM, "Uranium")
             builder.add(RagiumMaterialKeys.ZINC, "Zinc")
             // Tag Prefix
             builder.add(HTTagPrefix.DUST, "%s Dust")
@@ -854,6 +857,7 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.RAGI_STEEL, "ラギスチール")
             builder.add(RagiumMaterialKeys.FLUORITE, "蛍石")
             builder.add(RagiumMaterialKeys.GOLD, "金")
+            builder.add(RagiumMaterialKeys.PYRITE, "黄鉄鉱")
             builder.add(RagiumMaterialKeys.REDSTONE, "レッドストーン")
             builder.add(RagiumMaterialKeys.STEEL, "スチール")
 
@@ -882,9 +886,11 @@ object RagiumLangProviders {
             builder.add(RagiumMaterialKeys.LEAD, "鉛")
             builder.add(RagiumMaterialKeys.NICKEL, "ニッケル")
             builder.add(RagiumMaterialKeys.PLATINUM, "白金")
+            builder.add(RagiumMaterialKeys.PLUTONIUM, "プルトニウム")
             builder.add(RagiumMaterialKeys.SILVER, "銀")
             builder.add(RagiumMaterialKeys.TIN, "スズ")
             builder.add(RagiumMaterialKeys.TUNGSTEN, "タングステン")
+            builder.add(RagiumMaterialKeys.URANIUM, "ウラニウム")
             builder.add(RagiumMaterialKeys.ZINC, "亜鉛")
             // Tag Prefix
             builder.add(HTTagPrefix.DUST, "%sの粉")
