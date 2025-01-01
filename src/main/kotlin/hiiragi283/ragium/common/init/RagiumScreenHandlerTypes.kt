@@ -21,6 +21,10 @@ object RagiumScreenHandlerTypes {
         register("distillation_tower", ::HTDistillationTowerScreenHandler)
 
     @JvmField
+    val GRINDER: ScreenHandlerType<HTGrinderScreenHandler> =
+        register("grinder", ::HTGrinderScreenHandler)
+
+    @JvmField
     val LARGE_MACHINE: ScreenHandlerType<HTLargeMachineScreenHandler> =
         register("large_machine", ::HTLargeMachineScreenHandler)
 

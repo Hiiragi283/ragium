@@ -105,6 +105,10 @@ object RagiumBlockEntityTypes {
         register("fluid_drill", ::HTFluidDrillBlockEntity)
 
     @JvmField
+    val GRINDER: BlockEntityType<HTGrinderBlockEntity> =
+        register("grinder", ::HTGrinderBlockEntity)
+
+    @JvmField
     val LARGE_PROCESSOR: BlockEntityType<HTLargeRecipeProcessorBlockEntity> =
         register("large_processor", HTLargeRecipeProcessorBlockEntity::fromState)
 
@@ -201,6 +205,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.GRINDER, GRINDER)
         registerMachineBlocks(RagiumMachineKeys.INFUSER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)

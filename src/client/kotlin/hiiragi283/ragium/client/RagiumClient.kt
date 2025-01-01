@@ -179,6 +179,7 @@ object RagiumClient : ClientModInitializer {
     private fun registerScreens() {
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.GRINDER)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.LARGE_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.SIMPLE_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.SMALL_MACHINE)
