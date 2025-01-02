@@ -382,6 +382,7 @@
   "tooltip.ragium.block.transporter.fluid": "Fluid Speed: %s Units/s",
   "tooltip.ragium.block.transporter.item": "Item Speed: %s /s",
   "tooltip.ragium.block.trash_box": "Remove ALL inserted items or fluids",
+  "tooltip.ragium.for_integration": "Contents for integration with other mods",
   "tooltip.ragium.item.anvil_dynamite": "Place Anvil when hit",
   "tooltip.ragium.item.backpack": "Shares inventory between the same color",
   "tooltip.ragium.item.bedrock_dynamite": "Flatten Bedrocks inside hit chunk",

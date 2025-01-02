@@ -45,12 +45,9 @@ object RagiumFoodComponents {
     )
 
     @JvmStatic
-    val AMBROSIA: FoodComponent by lazy {
-        foodComponent(
-            nutrition = 20,
-            saturation = 20f,
-            alwaysEat = true,
-            convertTo = RagiumItems.AMBROSIA.get().defaultStack,
-        )
-    }
+    val AMBROSIA: FoodComponent = foodComponent(
+        nutrition = 20,
+        saturation = 20f,
+        alwaysEat = true,
+    )
 }

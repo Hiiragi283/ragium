@@ -80,6 +80,7 @@ object RagiumLangProviders {
             builder.add("modmenu.descriptionTranslation.ragium", "A new tech mod for Fabric")
             builder.add("modmenu.nameTranslation.ragium", RagiumAPI.MOD_NAME)
             builder.add("text.autoconfig.ragium.title", RagiumAPI.MOD_NAME)
+            builder.add(RagiumTranslationKeys.FOR_INTEGRATION, "Contents for integration with other mods")
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Press Ctrl to show descriptions")
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "Tycoon the Racoon")
@@ -538,6 +539,7 @@ object RagiumLangProviders {
             builder.add("modmenu.descriptionTranslation.ragium", "Fabric向けの新しい工業mod")
             builder.add("modmenu.nameTranslation.ragium", RagiumAPI.MOD_NAME)
             builder.add("text.autoconfig.ragium.title", RagiumAPI.MOD_NAME)
+            builder.add(RagiumTranslationKeys.FOR_INTEGRATION, "他modとの連携用のコンテンツ")
             builder.add(RagiumTranslationKeys.PRESS_CTRL, "Ctrlキーを押して説明を表示")
             // Advancements
             builder.add(RagiumTranslationKeys.ADVANCEMENT_BUJIN, "タイクーン将軍")

@@ -71,6 +71,9 @@ object RagiumComponentTypes {
     )
 
     @JvmField
+    val FOR_INTEGRATION: ComponentType<Unit> = registerUnit("for_integration")
+
+    @JvmField
     val GLOBAL_POS: ComponentType<GlobalPos> =
         register("global_pos", GlobalPos.CODEC, GlobalPos.PACKET_CODEC)
 

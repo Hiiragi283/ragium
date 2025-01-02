@@ -49,7 +49,6 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
-import net.minecraft.component.DataComponentTypes
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
@@ -160,9 +159,10 @@ internal object RagiumContentRegister {
             }
             ActionResult.PASS
         }
-        // hard mode repair
+        // modify item components
         val hardMode: Boolean = RagiumAPI.getInstance().isHardMode
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
+            // hard mode repair
             context.modify({
                 (it as? ToolItem)?.material == ToolMaterials.IRON || (it as? ArmorItem)?.material == ArmorMaterials.IRON
             }) { builder: ComponentMap.Builder, item: Item ->
@@ -187,8 +187,19 @@ internal object RagiumContentRegister {
                     HTItemIngredient.of(RagiumHardModeContents.NETHERITE.getPrefixedTag(hardMode)),
                 )
             }
-            context.modify(RagiumItems.AMBROSIA.get()) { builder: ComponentMap.Builder ->
-                builder.add(DataComponentTypes.FOOD, RagiumFoodComponents.AMBROSIA)
+            // add integration flag
+            val integrationItems: List<Item> = listOf<ItemConvertible>(
+                RagiumItems.Dusts.LEAD,
+                RagiumItems.Dusts.SILVER,
+                RagiumItems.RawMaterials.BAUXITE,
+                RagiumItems.RawMaterials.GALENA,
+                RagiumItems.RawMaterials.NITER,
+                RagiumItems.RawMaterials.PYRITE,
+                RagiumItems.RawMaterials.SALT,
+                RagiumItems.RawMaterials.SULFUR,
+            ).map(ItemConvertible::asItem)
+            context.modify(integrationItems) { builder: ComponentMap.Builder, item: Item ->
+                builder.add(RagiumComponentTypes.FOR_INTEGRATION, Unit)
             }
         }
         // radioactive effects

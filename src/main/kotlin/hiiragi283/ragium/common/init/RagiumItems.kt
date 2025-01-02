@@ -154,6 +154,8 @@ object RagiumItems {
 
         // tier2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
+        GALENA(RagiumMaterialKeys.GALENA),
+        PYRITE(RagiumMaterialKeys.PYRITE),
 
         // tier 3
         BAUXITE(RagiumMaterialKeys.BAUXITE),
@@ -778,7 +780,7 @@ object RagiumItems {
         registerItem(MEAT_INGOT, itemSettings().food(FoodComponents.BEEF))
         registerItem(COOKED_MEAT_INGOT, itemSettings().food(FoodComponents.COOKED_BEEF))
         registerItem(CANNED_COOKED_MEAT, itemSettings().food(RagiumFoodComponents.CANNED_COOKED_MEAT))
-        registerItem(AMBROSIA, itemSettings().rarity(Rarity.EPIC))
+        registerItem(AMBROSIA, itemSettings().rarity(Rarity.EPIC).food(RagiumFoodComponents.AMBROSIA), ::HTAmbrosiaItem)
         // ingredients
         Radioactives.entries.forEach { radioactive: Radioactives ->
             registerItem(

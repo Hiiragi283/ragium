@@ -259,6 +259,10 @@ object RagiumClient : ClientModInitializer {
             if (stack.contains(RagiumComponentTypes.REWORK_TARGET)) {
                 tooltips.add(Text.literal("This content may be updated or REMOVED!").formatted(Formatting.DARK_RED))
             }
+            // integration flag
+            if (stack.contains(RagiumComponentTypes.FOR_INTEGRATION)) {
+                tooltips.add(Text.translatable(RagiumTranslationKeys.FOR_INTEGRATION).formatted(Formatting.GREEN))
+            }
             // radioactivity
             stack.get(HTRadioactiveComponent.COMPONENT_TYPE)?.let(::radioactivityText)?.let(tooltips::add)
             // filter

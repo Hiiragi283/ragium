@@ -382,6 +382,7 @@
   "tooltip.ragium.block.transporter.fluid": "液体速度: %s ユニット/秒",
   "tooltip.ragium.block.transporter.item": "アイテム速度: %s個/秒",
   "tooltip.ragium.block.trash_box": "搬入された「すべて」のアイテムや液体を消滅させる",
+  "tooltip.ragium.for_integration": "他modとの連携用のコンテンツ",
   "tooltip.ragium.item.anvil_dynamite": "着弾点に金床を設置する",
   "tooltip.ragium.item.backpack": "同じ色同士でインベントリを共有する",
   "tooltip.ragium.item.bedrock_dynamite": "着弾したチャンク内の岩盤を整地する",

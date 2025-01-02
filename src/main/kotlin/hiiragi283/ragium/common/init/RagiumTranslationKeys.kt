@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 object RagiumTranslationKeys {
+    const val FOR_INTEGRATION = "tooltip.ragium.for_integration"
     const val PRESS_CTRL = "tooltip.ragium.press_ctrl"
 
     //    Advancement    //
