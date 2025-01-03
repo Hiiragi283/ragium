@@ -5,13 +5,13 @@ import net.minecraft.item.ItemStack
 object HTShapelessInputResolver {
     @JvmStatic
     fun canMatch(ingredients: Collection<HTItemIngredient>, stacks: Collection<ItemStack>): Boolean {
-        if (ingredients.isEmpty() && stacks.isEmpty()) return true
-        if (ingredients.isEmpty() || stacks.isEmpty()) return false
-        if (ingredients.size > stacks.size) return false
+        val ingredients1: List<HTItemIngredient> = ingredients.filterNot(HTItemIngredient::isEmpty)
+        if (ingredients1.isEmpty()) return true
         val stacks1: MutableList<ItemStack> = stacks.filterNot(ItemStack::isEmpty).toMutableList()
+        if (stacks1.isEmpty()) return false
         // RagiumAPI.LOGGER.info("===")
         var successCount = 0
-        ingredient@ for (ingredient: HTItemIngredient in ingredients) {
+        ingredient@ for (ingredient: HTItemIngredient in ingredients1) {
             // RagiumAPI.LOGGER.info("Current ingredient: $ingredient")
             for (stack: ItemStack in stacks1) {
                 // RagiumAPI.LOGGER.info("Current stack: $stack")
@@ -23,12 +23,11 @@ object HTShapelessInputResolver {
                 }
             }
         }
-        return stacks1.isEmpty() && ingredients.size == successCount
+        return stacks1.isEmpty() && ingredients1.size == successCount
     }
 
     @JvmStatic
     fun resolve(ingredients: Collection<HTItemIngredient>, stacks: Collection<ItemStack>): Map<HTItemIngredient, ItemStack> {
-        if (ingredients.size > stacks.size) return mapOf()
         val builder: MutableMap<HTItemIngredient, ItemStack> = mutableMapOf()
         ingredient@ for (ingredient: HTItemIngredient in ingredients) {
             for (stack: ItemStack in stacks) {

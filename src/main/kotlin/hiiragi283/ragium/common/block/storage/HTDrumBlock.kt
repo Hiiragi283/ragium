@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockWithEntity
+import hiiragi283.ragium.api.extension.fluidAmountText
 import hiiragi283.ragium.api.extension.ifPresent
-import hiiragi283.ragium.api.extension.longText
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -29,15 +29,15 @@ class HTDrumBlock(val tier: HTMachineTier, settings: Settings) : HTBlockWithEnti
                 tooltip.add(
                     Text
                         .translatable(
-                            RagiumTranslationKeys.DRUM_FLUID,
+                            RagiumTranslationKeys.FLUID_TITLE,
                             variant.name.formatted(Formatting.WHITE),
                         ).formatted(Formatting.GRAY),
                 )
                 tooltip.add(
                     Text
                         .translatable(
-                            RagiumTranslationKeys.DRUM_AMOUNT,
-                            longText(amount).formatted(Formatting.WHITE),
+                            RagiumTranslationKeys.FLUID_AMOUNT,
+                            fluidAmountText(amount).formatted(Formatting.WHITE),
                         ).formatted(Formatting.GRAY),
                 )
             }
@@ -46,8 +46,8 @@ class HTDrumBlock(val tier: HTMachineTier, settings: Settings) : HTBlockWithEnti
             tooltip.add(
                 Text
                     .translatable(
-                        RagiumTranslationKeys.DRUM_CAPACITY,
-                        longText(tierIn.tankCapacity).formatted(Formatting.WHITE),
+                        RagiumTranslationKeys.FLUID_CAPACITY,
+                        fluidAmountText(tierIn.tankCapacity).formatted(Formatting.WHITE),
                     ).formatted(Formatting.GRAY),
             )
         }

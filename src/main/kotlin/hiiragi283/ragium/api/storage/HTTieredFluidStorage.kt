@@ -55,7 +55,7 @@ class HTTieredFluidStorage(
 
     //    HTFluidInteractable    //
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = interactWithFluidStorage(player, storageIO)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = player.interactWithFluidStorage(this, storageIO)
 
     //    HTScreenFluidProvider    //
 

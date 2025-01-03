@@ -85,7 +85,6 @@ object RagiumItemGroup {
                 entries.add(RagiumItems.EMPTY_FLUID_CUBE)
                 entries.add(RagiumItems.FLUID_FILTER)
                 entries.add(RagiumItems.ITEM_FILTER)
-                entries.add(RagiumItems.GUIDE_BOOK)
                 entries.add(RagiumItems.TRADER_CATALOG)
 
                 entries.addAll(RagiumItems.CircuitBoards.entries)

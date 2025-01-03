@@ -1,4 +1,12 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "patchouli"
+      ]
+    }
+  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
     "has_the_item": {
@@ -13,7 +21,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shapeless/guide_book"
+        "recipe": "patchouli:shapeless/guide_book"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +34,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shapeless/guide_book"
+      "patchouli:shapeless/guide_book"
     ]
   }
 }

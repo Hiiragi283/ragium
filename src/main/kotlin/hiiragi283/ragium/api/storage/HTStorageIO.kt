@@ -1,7 +1,9 @@
 package hiiragi283.ragium.api.storage
 
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.LimitingEnergyStorage
 
@@ -24,6 +26,24 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
         OUTPUT -> FilteringStorage.extractOnlyOf(storage)
         GENERIC -> storage
         INTERNAL -> FilteringStorage.readOnlyOf(storage)
+    }
+
+    /**
+     * 指定した[view]の搬出を制限した[StorageView]を返します。
+     */
+    fun <T : Any> wrapView(view: StorageView<T>): StorageView<T> = when (canExtract) {
+        true -> view
+        false -> object : StorageView<T> {
+            override fun extract(resource: T?, maxAmount: Long, transaction: TransactionContext?): Long = 0
+
+            override fun isResourceBlank(): Boolean = view.isResourceBlank
+
+            override fun getResource(): T? = view.resource
+
+            override fun getAmount(): Long = view.amount
+
+            override fun getCapacity(): Long = view.capacity
+        }
     }
 
     /**

@@ -67,7 +67,7 @@ fun worldText(value: RegistryKey<World>): MutableText = Text.translatable(Util.c
  * フォーマットは次に従います: `Amount: x B, y Units`
  */
 fun fluidAmountText(value: Long): MutableText = Text.translatable(
-    RagiumTranslationKeys.MACHINE_FLUID_AMOUNT,
+    RagiumTranslationKeys.FORMATTED_FLUID,
     NumberFormat.getNumberInstance().format(value / FluidConstants.BUCKET),
     NumberFormat.getNumberInstance().format(value % FluidConstants.BUCKET),
 )

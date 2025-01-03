@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.block
 
-import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor

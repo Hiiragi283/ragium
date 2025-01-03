@@ -252,9 +252,6 @@ object RagiumItems {
     val GIGANT_HAMMER: HTItemContent = HTContent.ofItem("gigant_hammer")
 
     @JvmField
-    val GUIDE_BOOK: HTItemContent = HTContent.ofItem("guide_book")
-
-    @JvmField
     val ITEM_FILTER: HTItemContent = HTContent.ofItem("item_filter")
 
     @JvmField
@@ -747,7 +744,6 @@ object RagiumItems {
                 ),
             ::HTGigantHammerItem,
         )
-        registerItem(GUIDE_BOOK, itemSettings().maxCount(1), ::HTGuideBookItem)
         registerItem(ITEM_FILTER, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.FILTER))
         registerItem(RAGI_WRENCH, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.RAGI_WRENCH))
         registerItem(STELLA_SABER, itemSettings().rarity(Rarity.RARE)) {

@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
-import hiiragi283.ragium.api.extension.interactWithFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack

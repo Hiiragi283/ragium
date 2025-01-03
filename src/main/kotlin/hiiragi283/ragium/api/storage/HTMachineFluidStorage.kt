@@ -12,8 +12,8 @@ import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
-import net.fabricmc.fabric.impl.transfer.TransferApiImpl
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
@@ -21,6 +21,7 @@ import net.minecraft.registry.RegistryWrapper
 
 class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO>, tier: HTMachineTier) :
     SlottedStorage<FluidVariant>,
+    HTFluidInteractable,
     HTScreenFluidProvider {
     companion object {
         const val NBT_KEY = "fluid_storages"
@@ -97,6 +98,24 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
         )
     }
 
+    //    HTFluidInteractable    //
+
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean {
+        parts.forEachIndexed { index: Int, storageIn: SingleFluidStorage ->
+            val storageIO: HTStorageIO = getStorageIO(index)
+            if (!storageIO.canExtract) return false
+            if (player.interactWithFluidStorage(storageIn, storageIO)) {
+                return true
+            }
+        }
+        parts.forEachIndexed { index: Int, storageIn: SingleFluidStorage ->
+            if (player.interactWithFluidStorage(storageIn, getStorageIO(index))) {
+                return true
+            }
+        }
+        return false
+    }
+
     //    HTScreenFluidProvider    //
 
     fun createFluidPackets(vararg slotRange: Int): Map<Int, HTFluidVariantStack> = slotRange.associateWith { parts[it].variantStack }
@@ -113,8 +132,11 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
     override fun extract(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long =
         findExtractableStorage(resource)?.extract(resource, maxAmount, transaction) ?: 0
 
-    @Suppress("UnstableApiUsage")
-    override fun iterator(): MutableIterator<StorageView<FluidVariant>> = TransferApiImpl.makeListView(this).iterator()
+    override fun iterator(): MutableIterator<StorageView<FluidVariant>> = object : AbstractList<StorageView<FluidVariant>>() {
+        override val size: Int = parts.size
+
+        override fun get(index: Int): StorageView<FluidVariant> = getStorageIO(index).wrapView(parts[index])
+    }.toMutableList().iterator()
 
     override fun getSlotCount(): Int = parts.size
 

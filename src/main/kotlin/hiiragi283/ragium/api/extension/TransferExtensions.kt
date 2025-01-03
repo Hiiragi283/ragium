@@ -51,12 +51,12 @@ fun <T : TransferVariant<*>> Storage<T>.extract(stack: HTVariantStack<*, T>, tra
 }
 
 /**
- * 指定した[player]が[Hand.MAIN_HAND]に持っている[net.minecraft.item.ItemStack]でストレージに干渉します。
+ * 指定した[PlayerEntity]が[Hand.MAIN_HAND]に持っている[net.minecraft.item.ItemStack]でストレージに干渉します。
  * @param storageIO この処理の搬出入を制御
  * @return 液体が移動した場合はtrue，それ以外の場合はfalse
  */
-fun Storage<FluidVariant>.interactWithFluidStorage(player: PlayerEntity, storageIO: HTStorageIO = HTStorageIO.GENERIC): Boolean =
-    FluidStorageUtil.interactWithFluidStorage(storageIO.wrapStorage(this), player, Hand.MAIN_HAND)
+fun PlayerEntity.interactWithFluidStorage(storage: Storage<FluidVariant>, storageIO: HTStorageIO = HTStorageIO.GENERIC): Boolean =
+    FluidStorageUtil.interactWithFluidStorage(storageIO.wrapStorage(storage), this, Hand.MAIN_HAND)
 
 fun Storage<FluidVariant>.findMatching(tagKey: TagKey<Fluid>): FluidVariant? = StorageUtil.findStoredResource(this) { it.isIn(tagKey) }
 
