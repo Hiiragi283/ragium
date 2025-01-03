@@ -1,5 +1,6 @@
 {
   "type": "ragium:machine",
+  "catalyst": "minecraft:gravel",
   "definition": {
     "type": "ragium:grinder",
     "tier": "primitive"

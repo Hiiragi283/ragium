@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 27000,
+      "fluids": "#c:residual_oil"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "ragium:slag"
+    }
+  ],
+  "item_outputs": [
+    "ragium:asphalt"
+  ]
+}

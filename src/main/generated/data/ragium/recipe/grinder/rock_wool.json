@@ -1,13 +1,13 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:compressor",
+    "type": "ragium:grinder",
     "tier": "primitive"
   },
-  "fluid_inputs": [
-    "#c:basalt"
+  "item_inputs": [
+    "ragium:slag"
   ],
   "item_outputs": [
-    "ragium:basalt_mesh"
+    "ragium:rock_wool"
   ]
 }

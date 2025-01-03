@@ -436,6 +436,9 @@ object RagiumItems {
     val RAGI_ALLOY_COMPOUND: HTItemContent = HTContent.ofItem("ragi_alloy_compound")
 
     @JvmField
+    val ROCK_WOOL: HTItemContent = HTContent.ofItem("rock_wool")
+
+    @JvmField
     val SLAG: HTItemContent = HTContent.ofItem("slag")
 
     @JvmField
@@ -470,9 +473,6 @@ object RagiumItems {
 
     @JvmField
     val OBSIDIAN_TEAR: HTItemContent = HTContent.ofItem("obsidian_tear")
-
-    @JvmField
-    val BASALT_MESH: HTItemContent = HTContent.ofItem("basalt_mesh")
 
     @JvmField
     val BLAZING_CARBON_ELECTRODE: HTItemContent = HTContent.ofItem("blazing_carbon_electrode")
@@ -510,6 +510,7 @@ object RagiumItems {
         add(GLASS_SHARD)
         add(LUMINESCENCE_DUST)
         add(RAGI_ALLOY_COMPOUND)
+        add(ROCK_WOOL)
         add(SLAG)
         add(SOAP)
         // plastic
@@ -526,7 +527,6 @@ object RagiumItems {
         add(WARPED_CRYSTAL)
         add(OBSIDIAN_TEAR)
         // parts
-        add(BASALT_MESH)
         add(BLAZING_CARBON_ELECTRODE)
         add(CARBON_ELECTRODE)
         add(CHARGED_CARBON_ELECTRODE)

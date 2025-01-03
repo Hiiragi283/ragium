@@ -1,15 +1,18 @@
 {
   "type": "ragium:machine",
-  "catalyst": "ragium:basalt_mesh",
+  "catalyst": "ragium:rock_wool",
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"
   },
   "item_inputs": [
-    "ragium:basalt_mesh",
     {
       "count": 4,
       "items": "ragium:polymer_resin"
+    },
+    {
+      "count": 4,
+      "items": "ragium:rock_wool"
     }
   ],
   "item_outputs": [

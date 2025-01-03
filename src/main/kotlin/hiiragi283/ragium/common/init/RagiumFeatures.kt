@@ -13,9 +13,6 @@ import net.minecraft.world.gen.feature.PlacedFeature
 
 object RagiumFeatures {
     @JvmField
-    val ORE_ASPHALT: Data = create("ore_asphalt")
-
-    @JvmField
     val ORE_GYPSUM: Data = create("ore_gypsum")
 
     @JvmField
@@ -38,11 +35,11 @@ object RagiumFeatures {
 
     @JvmStatic
     fun init() {
-        BiomeModifications.addFeature(
+        /*BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,
             ORE_ASPHALT.featureKey,
-        )
+        )*/
         BiomeModifications.addFeature(
             BiomeSelectors.foundInOverworld(),
             GenerationStep.Feature.UNDERGROUND_ORES,

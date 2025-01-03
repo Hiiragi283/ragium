@@ -23,7 +23,7 @@ enum class RagiumFluids(
     EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
 
     // Molten Materials
-    BASALT("Molten Basalt", "溶融バサルト", TextureType.BASALT),
+    // BASALT("Molten Basalt", "溶融バサルト", TextureType.BASALT),
     GLASS("Molten Glass", "溶融ガラス", TextureType.GLASS),
 
     // Organics
