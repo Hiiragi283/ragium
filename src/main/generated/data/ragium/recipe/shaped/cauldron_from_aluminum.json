@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/aluminum"
+    }
+  },
+  "pattern": [
+    "A A",
+    "A A",
+    "AAA"
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:cauldron"
+  }
+}

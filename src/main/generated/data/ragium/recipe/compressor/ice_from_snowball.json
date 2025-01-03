@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "minecraft:snowball"
+    }
+  ],
+  "item_outputs": [
+    "minecraft:ice"
+  ]
+}

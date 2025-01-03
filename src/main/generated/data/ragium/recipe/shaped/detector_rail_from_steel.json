@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/steel"
+    },
+    "B": {
+      "item": "minecraft:stone_pressure_plate"
+    },
+    "C": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "A A",
+    "ABA",
+    "ACA"
+  ],
+  "result": {
+    "count": 12,
+    "id": "minecraft:detector_rail"
+  }
+}

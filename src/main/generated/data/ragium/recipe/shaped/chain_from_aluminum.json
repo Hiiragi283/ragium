@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:nuggets/iron"
+    },
+    "B": {
+      "tag": "c:ingots/aluminum"
+    }
+  },
+  "pattern": [
+    "A",
+    "B",
+    "A"
+  ],
+  "result": {
+    "count": 3,
+    "id": "minecraft:chain"
+  }
+}

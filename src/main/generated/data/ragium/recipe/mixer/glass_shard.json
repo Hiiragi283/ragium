@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    "minecraft:water"
+  ],
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "minecraft:sand"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 8,
+      "item": "ragium:glass_shard"
+    },
+    "minecraft:iron_nugget"
+  ]
+}

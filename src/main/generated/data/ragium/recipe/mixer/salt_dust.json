@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    "minecraft:water"
+  ],
+  "item_inputs": [
+    {
+      "count": 8,
+      "items": "minecraft:clay_ball"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "minecraft:sand"
+    },
+    {
+      "count": 4,
+      "item": "ragium:salt_dust"
+    },
+    "ragium:bauxite_dust"
+  ]
+}

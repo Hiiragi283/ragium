@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "C": {
+      "tag": "c:ingots/steel"
+    },
+    "D": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "BDB"
+  ],
+  "result": {
+    "count": 2,
+    "id": "minecraft:piston"
+  }
+}

@@ -427,6 +427,9 @@ object RagiumItems {
     val DEEPANT: HTItemContent = HTContent.ofItem("deepant")
 
     @JvmField
+    val GLASS_SHARD: HTItemContent = HTContent.ofItem("glass_shard")
+
+    @JvmField
     val LUMINESCENCE_DUST: HTItemContent = HTContent.ofItem("luminescence_dust")
 
     @JvmField
@@ -504,6 +507,7 @@ object RagiumItems {
         add(RESIDUAL_COKE)
         // inorganic
         add(DEEPANT)
+        add(GLASS_SHARD)
         add(LUMINESCENCE_DUST)
         add(RAGI_ALLOY_COMPOUND)
         add(SLAG)
