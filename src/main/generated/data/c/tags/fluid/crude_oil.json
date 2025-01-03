@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "oritech:still_oil",
+      "required": false
+    },
+    {
+      "id": "techreborn:oil",
+      "required": false
+    }
+  ]
+}

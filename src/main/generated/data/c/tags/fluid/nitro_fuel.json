@@ -1,6 +1,9 @@
 {
   "values": [
-    "ragium:nitro_fuel",
+    {
+      "id": "oritech:still_fuel",
+      "required": false
+    },
     {
       "id": "techreborn:nitrocoal_fuel",
       "required": false

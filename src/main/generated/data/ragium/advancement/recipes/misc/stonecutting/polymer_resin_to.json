@@ -1,0 +1,40 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "oritech"
+      ]
+    }
+  ],
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_input": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:polymer_resin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "oritech:stonecutting/polymer_resin_to"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_input"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "oritech:stonecutting/polymer_resin_to"
+    ]
+  }
+}
