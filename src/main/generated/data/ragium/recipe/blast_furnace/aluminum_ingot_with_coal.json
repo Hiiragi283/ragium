@@ -5,9 +5,7 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:alumina_solution"
-    }
+    "#c:alumina_solution"
   ],
   "item_inputs": [
     {
@@ -16,8 +14,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:aluminum_ingot"
-    }
+    "ragium:aluminum_ingot"
   ]
 }

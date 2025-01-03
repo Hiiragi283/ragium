@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:slate"
-  },
+  "catalyst": "ragium:slate",
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "primitive"

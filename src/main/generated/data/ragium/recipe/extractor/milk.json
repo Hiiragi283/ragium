@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:milk"
-    }
+    "ragium:milk"
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:milk_bucket"
-    }
+    "minecraft:milk_bucket"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:bucket"
-    }
+    "minecraft:bucket"
   ]
 }

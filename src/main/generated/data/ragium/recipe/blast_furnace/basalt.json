@@ -5,13 +5,9 @@
     "tier": "basic"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:basalt"
-    }
+    "ragium:basalt"
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:smooth_basalt"
-    }
+    "minecraft:smooth_basalt"
   ]
 }

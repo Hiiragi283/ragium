@@ -5,17 +5,11 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:nitro_glycerin"
-    }
+    "#c:nitro_glycerin"
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:paper"
-    },
-    {
-      "items": "#c:strings"
-    }
+    "minecraft:paper",
+    "#c:strings"
   ],
   "item_outputs": [
     {

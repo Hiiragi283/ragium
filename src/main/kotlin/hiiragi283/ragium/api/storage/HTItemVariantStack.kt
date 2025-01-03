@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.NON_NEGATIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.isIn
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -29,7 +30,7 @@ class HTItemVariantStack(override val variant: ItemVariant, override val amount:
             .create<HTItemVariantStack> { instance ->
                 instance
                     .group(
-                        ItemVariant.CODEC.fieldOf("variant").forGetter(HTItemVariantStack::variant),
+                        RagiumCodecs.ITEM_VARIANT.fieldOf("variant").forGetter(HTItemVariantStack::variant),
                         NON_NEGATIVE_LONG_CODEC.fieldOf("amount").forGetter(HTItemVariantStack::amount),
                     ).apply(instance, ::HTItemVariantStack)
             }.validate(HTVariantStack.Companion::validate)

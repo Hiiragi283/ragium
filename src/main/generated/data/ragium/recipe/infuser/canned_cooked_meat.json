@@ -9,9 +9,7 @@
       "count": 8,
       "items": "ragium:cooked_meat_ingot"
     },
-    {
-      "items": "#c:plates/iron"
-    }
+    "#c:plates/iron"
   ],
   "item_outputs": [
     {

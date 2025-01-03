@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:basalt"
-    }
+    "#c:basalt"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:basalt_mesh"
-    }
+    "ragium:basalt_mesh"
   ]
 }

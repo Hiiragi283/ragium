@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.entryPacketCodec
 import hiiragi283.ragium.api.extension.isFilledMax
@@ -25,17 +26,20 @@ import net.minecraft.registry.entry.RegistryEntry
 class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidConstants.BUCKET) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTFluidResult> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    Registries.FLUID.entryCodec
-                        .fieldOf("fluid")
-                        .forGetter(HTFluidResult::entry),
-                    POSITIVE_LONG_CODEC
-                        .optionalFieldOf("amount", FluidConstants.BUCKET)
-                        .forGetter(HTFluidResult::amount),
-                ).apply(instance, ::HTFluidResult)
-        }
+        val CODEC: Codec<HTFluidResult> = RagiumCodecs.simpleOrComplex(
+            Registries.FLUID.entryCodec.xmap(::HTFluidResult, HTFluidResult::entry),
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        Registries.FLUID.entryCodec
+                            .fieldOf("fluid")
+                            .forGetter(HTFluidResult::entry),
+                        POSITIVE_LONG_CODEC
+                            .optionalFieldOf("amount", FluidConstants.BUCKET)
+                            .forGetter(HTFluidResult::amount),
+                    ).apply(instance, ::HTFluidResult)
+            },
+        ) { result: HTFluidResult -> result.amount == FluidConstants.BUCKET }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFluidResult> = PacketCodec.tuple(

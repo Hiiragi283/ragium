@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:chlorine"
-    }
+    "#c:chlorine"
   ],
   "item_inputs": [
-    {
-      "items": "#c:concretes"
-    }
+    "#c:concretes"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:white_concrete"
-    }
+    "minecraft:white_concrete"
   ]
 }

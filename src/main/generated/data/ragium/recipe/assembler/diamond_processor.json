@@ -5,16 +5,10 @@
     "tier": "advanced"
   },
   "item_inputs": [
-    {
-      "items": "#c:gems/diamond"
-    },
-    {
-      "items": "ragium:processor_socket"
-    }
+    "#c:gems/diamond",
+    "ragium:processor_socket"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:diamond_processor"
-    }
+    "ragium:diamond_processor"
   ]
 }

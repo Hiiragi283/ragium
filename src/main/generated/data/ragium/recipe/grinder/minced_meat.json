@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:foods/protein"
-    }
+    "#c:foods/protein"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:minced_meat"
-    }
+    "ragium:minced_meat"
   ]
 }

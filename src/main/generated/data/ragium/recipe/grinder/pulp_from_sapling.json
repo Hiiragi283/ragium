@@ -11,8 +11,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:pulp"
-    }
+    "ragium:pulp"
   ]
 }

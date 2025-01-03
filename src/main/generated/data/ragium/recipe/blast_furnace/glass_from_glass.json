@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:glass"
-    }
+    "ragium:glass"
   ],
   "item_inputs": [
-    {
-      "items": "#c:glass_blocks"
-    }
+    "#c:glass_blocks"
   ]
 }

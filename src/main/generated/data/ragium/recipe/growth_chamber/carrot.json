@@ -1,23 +1,15 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dirt"
-  },
+  "catalyst": "minecraft:dirt",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:carrot"
-    }
+    "minecraft:carrot"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:carrot"
-    }
+    "minecraft:carrot",
+    "minecraft:carrot"
   ]
 }

@@ -5,9 +5,7 @@
     "tier": "basic"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:crude_oil"
-    }
+    "ragium:crude_oil"
   ],
   "item_inputs": [
     {

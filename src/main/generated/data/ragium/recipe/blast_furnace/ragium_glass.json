@@ -5,16 +5,10 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:gems/ragium"
-    },
-    {
-      "items": "ragium:obsidian_glass"
-    }
+    "#c:gems/ragium",
+    "ragium:obsidian_glass"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:ragium_glass"
-    }
+    "ragium:ragium_glass"
   ]
 }

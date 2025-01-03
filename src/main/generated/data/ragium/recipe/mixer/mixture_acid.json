@@ -5,12 +5,8 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:nitric_acid"
-    },
-    {
-      "fluids": "#c:sulfuric_acid"
-    }
+    "#c:nitric_acid",
+    "#c:sulfuric_acid"
   ],
   "fluid_outputs": [
     {

@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:milk"
-    }
+    "#c:milk"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:butter"
-    }
+    "ragium:butter"
   ]
 }

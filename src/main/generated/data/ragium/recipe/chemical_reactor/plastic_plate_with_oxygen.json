@@ -5,14 +5,10 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:oxygen"
-    }
+    "#c:oxygen"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:polymer_resin"
-    }
+    "ragium:polymer_resin"
   ],
   "item_outputs": [
     {

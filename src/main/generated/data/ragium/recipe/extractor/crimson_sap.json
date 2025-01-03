@@ -1,21 +1,15 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "#minecraft:crimson_stems"
-  },
+  "catalyst": "#minecraft:crimson_stems",
   "definition": {
     "type": "ragium:extractor",
     "tier": "advanced"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:crimson_sap"
-    }
+    "ragium:crimson_sap"
   ],
   "item_inputs": [
-    {
-      "items": "#minecraft:crimson_stems"
-    }
+    "#minecraft:crimson_stems"
   ],
   "item_outputs": [
     {

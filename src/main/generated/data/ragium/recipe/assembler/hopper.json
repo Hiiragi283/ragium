@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:hopper"
-  },
+  "catalyst": "minecraft:hopper",
   "definition": {
     "type": "ragium:assembler",
     "tier": "primitive"
@@ -18,8 +16,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:hopper"
-    }
+    "minecraft:hopper"
   ]
 }

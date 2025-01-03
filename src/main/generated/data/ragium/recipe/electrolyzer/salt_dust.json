@@ -5,18 +5,12 @@
     "tier": "basic"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:chlorine"
-    }
+    "ragium:chlorine"
   ],
   "item_inputs": [
-    {
-      "items": "#c:dusts/salt"
-    }
+    "#c:dusts/salt"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:alkali_dust"
-    }
+    "ragium:alkali_dust"
   ]
 }

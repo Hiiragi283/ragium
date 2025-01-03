@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:ice"
-    }
+    "minecraft:ice"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:prismarine_crystals"
-    }
+    "minecraft:prismarine_crystals"
   ]
 }

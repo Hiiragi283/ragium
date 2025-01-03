@@ -5,16 +5,10 @@
     "tier": "advanced"
   },
   "item_inputs": [
-    {
-      "items": "#c:gems/emerald"
-    },
-    {
-      "items": "ragium:processor_socket"
-    }
+    "#c:gems/emerald",
+    "ragium:processor_socket"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:emerald_processor"
-    }
+    "ragium:emerald_processor"
   ]
 }

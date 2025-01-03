@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:salt_water"
-    }
+    "#c:salt_water"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:salt_dust"
-    }
+    "ragium:salt_dust"
   ]
 }

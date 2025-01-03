@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:cyan_concrete_powder"
-    }
+    "minecraft:cyan_concrete_powder"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:cyan_concrete"
-    }
+    "minecraft:cyan_concrete"
   ]
 }

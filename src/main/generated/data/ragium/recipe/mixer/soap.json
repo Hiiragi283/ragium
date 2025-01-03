@@ -5,23 +5,15 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#ragium:organic_oils"
-    }
+    "#ragium:organic_oils"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:glycerol"
-    }
+    "ragium:glycerol"
   ],
   "item_inputs": [
-    {
-      "items": "#c:alkali"
-    }
+    "#c:alkali"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:soap"
-    }
+    "ragium:soap"
   ]
 }

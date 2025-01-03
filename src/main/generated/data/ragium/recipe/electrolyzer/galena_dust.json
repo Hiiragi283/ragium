@@ -11,11 +11,7 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:lead_dust"
-    },
-    {
-      "item": "ragium:sulfur_dust"
-    }
+    "ragium:lead_dust",
+    "ragium:sulfur_dust"
   ]
 }

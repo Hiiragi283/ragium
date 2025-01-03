@@ -5,17 +5,11 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "item_inputs": [
-    {
-      "items": "#c:gems/amethyst"
-    },
-    {
-      "items": "#c:dusts/quartz"
-    }
+    "#c:gems/amethyst",
+    "#c:dusts/quartz"
   ],
   "item_outputs": [
     {

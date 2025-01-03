@@ -27,8 +27,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "energizedpower:advanced_alloy_ingot"
-    }
+    "energizedpower:advanced_alloy_ingot"
   ]
 }

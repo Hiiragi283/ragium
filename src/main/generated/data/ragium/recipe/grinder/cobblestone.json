@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:stone"
-    }
+    "minecraft:stone"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:cobblestone"
-    }
+    "minecraft:cobblestone"
   ]
 }

@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:chocolate"
-    }
+    "ragium:chocolate"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:chocolate"
-    }
+    "ragium:chocolate"
   ]
 }

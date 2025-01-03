@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:mercury"
-    }
+    "ragium:mercury"
   ],
   "item_inputs": [
-    {
-      "items": "#c:gems/cinnabar"
-    }
+    "#c:gems/cinnabar"
   ]
 }

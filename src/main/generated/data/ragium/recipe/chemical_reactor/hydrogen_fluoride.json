@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:sulfuric_acid"
-    }
+    "#c:sulfuric_acid"
   ],
   "fluid_outputs": [
     {
@@ -16,13 +14,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "#c:gems/fluorite"
-    }
+    "#c:gems/fluorite"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:gypsum"
-    }
+    "ragium:gypsum"
   ]
 }

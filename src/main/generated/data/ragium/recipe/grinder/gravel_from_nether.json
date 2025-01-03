@@ -15,8 +15,6 @@
       "count": 2,
       "item": "ragium:bauxite_dust"
     },
-    {
-      "item": "ragium:sulfur_dust"
-    }
+    "ragium:sulfur_dust"
   ]
 }

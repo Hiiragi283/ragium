@@ -15,8 +15,6 @@
       "amount": 324000,
       "fluid": "ragium:nitrogen"
     },
-    {
-      "fluid": "ragium:oxygen"
-    }
+    "ragium:oxygen"
   ]
 }

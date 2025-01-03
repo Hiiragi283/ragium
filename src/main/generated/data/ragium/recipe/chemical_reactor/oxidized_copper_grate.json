@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:copper_grate"
-    }
+    "minecraft:copper_grate"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:oxidized_copper_grate"
-    }
+    "minecraft:oxidized_copper_grate"
   ]
 }

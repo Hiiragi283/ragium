@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.entryPacketCodec
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
@@ -22,21 +23,24 @@ import net.minecraft.registry.entry.RegistryEntry
 class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val components: ComponentChanges = ComponentChanges.EMPTY) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTItemResult> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    Registries.ITEM.entryCodec
-                        .fieldOf("item")
-                        .forGetter(HTItemResult::entry),
-                    Codec
-                        .intRange(1, Int.MAX_VALUE)
-                        .optionalFieldOf("count", 1)
-                        .forGetter(HTItemResult::count),
-                    ComponentChanges.CODEC
-                        .optionalFieldOf("components", ComponentChanges.EMPTY)
-                        .forGetter(HTItemResult::components),
-                ).apply(instance, ::HTItemResult)
-        }
+        val CODEC: Codec<HTItemResult> = RagiumCodecs.simpleOrComplex(
+            Registries.ITEM.entryCodec.xmap(::HTItemResult, HTItemResult::entry),
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        Registries.ITEM.entryCodec
+                            .fieldOf("item")
+                            .forGetter(HTItemResult::entry),
+                        Codec
+                            .intRange(1, Int.MAX_VALUE)
+                            .optionalFieldOf("count", 1)
+                            .forGetter(HTItemResult::count),
+                        ComponentChanges.CODEC
+                            .optionalFieldOf("components", ComponentChanges.EMPTY)
+                            .forGetter(HTItemResult::components),
+                    ).apply(instance, ::HTItemResult)
+            },
+        ) { result: HTItemResult -> result.count == 1 && result.components.isEmpty }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTItemResult> = PacketCodec.tuple(

@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:crude_oil"
-    }
+    "ragium:crude_oil"
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:soul_sand"
-    }
+    "minecraft:soul_sand"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:sand"
-    }
+    "minecraft:sand"
   ]
 }

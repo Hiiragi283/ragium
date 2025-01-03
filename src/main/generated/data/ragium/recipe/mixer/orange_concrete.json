@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:orange_concrete_powder"
-    }
+    "minecraft:orange_concrete_powder"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:orange_concrete"
-    }
+    "minecraft:orange_concrete"
   ]
 }

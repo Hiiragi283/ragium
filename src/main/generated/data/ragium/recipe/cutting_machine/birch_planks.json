@@ -5,17 +5,13 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:birch_logs"
-    }
+    "#minecraft:birch_logs"
   ],
   "item_outputs": [
     {
       "count": 6,
       "item": "minecraft:birch_planks"
     },
-    {
-      "item": "ragium:pulp"
-    }
+    "ragium:pulp"
   ]
 }

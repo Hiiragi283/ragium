@@ -5,16 +5,10 @@
     "tier": "advanced"
   },
   "item_inputs": [
-    {
-      "items": "#c:gems/nether_star"
-    },
-    {
-      "items": "ragium:processor_socket"
-    }
+    "#c:gems/nether_star",
+    "ragium:processor_socket"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:nether_star_processor"
-    }
+    "ragium:nether_star_processor"
   ]
 }

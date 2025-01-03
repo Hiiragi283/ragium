@@ -5,17 +5,13 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:glowstone"
-    }
+    "minecraft:glowstone"
   ],
   "item_outputs": [
     {
       "count": 4,
       "item": "ragium:fluorite"
     },
-    {
-      "item": "minecraft:gold_nugget"
-    }
+    "minecraft:gold_nugget"
   ]
 }

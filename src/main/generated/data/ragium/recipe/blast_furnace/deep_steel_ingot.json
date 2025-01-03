@@ -5,17 +5,13 @@
     "tier": "basic"
   },
   "item_inputs": [
-    {
-      "items": "#c:ingots/steel"
-    },
+    "#c:ingots/steel",
     {
       "count": 4,
       "items": "ragium:deepant"
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:deep_steel_ingot"
-    }
+    "ragium:deep_steel_ingot"
   ]
 }

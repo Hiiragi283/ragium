@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:wooden_buttons"
-    }
+    "#minecraft:wooden_buttons"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:pulp"
-    }
+    "ragium:pulp"
   ]
 }

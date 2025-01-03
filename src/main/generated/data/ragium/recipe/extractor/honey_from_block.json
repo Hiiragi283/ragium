@@ -5,14 +5,10 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:honey"
-    }
+    "ragium:honey"
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:honeycomb_block"
-    }
+    "minecraft:honeycomb_block"
   ],
   "item_outputs": [
     {

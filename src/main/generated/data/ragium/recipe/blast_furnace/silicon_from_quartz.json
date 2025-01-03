@@ -15,9 +15,7 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:silicon"
-    },
+    "ragium:silicon",
     {
       "count": 2,
       "item": "ragium:slag"

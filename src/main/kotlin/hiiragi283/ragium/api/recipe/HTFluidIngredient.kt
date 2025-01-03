@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.name
@@ -28,22 +29,25 @@ import java.util.function.Predicate
  * @param entryList 条件に一致する液体の一覧
  * @param amount 条件に一致する液体の量
  */
-class HTFluidIngredient private constructor(private val entryList: HTRegistryEntryList<Fluid>, val amount: Long) :
+class HTFluidIngredient private constructor(private val entryList: HTRegistryEntryList<Fluid>, val amount: Long = FluidConstants.BUCKET) :
     Predicate<HTFluidVariantStack> {
         companion object {
             @JvmField
-            val CODEC: Codec<HTFluidIngredient> = RecordCodecBuilder.create { instance ->
-                instance
-                    .group(
-                        HTRegistryEntryList
-                            .codec(Registries.FLUID)
-                            .fieldOf("fluids")
-                            .forGetter(HTFluidIngredient::entryList),
-                        POSITIVE_LONG_CODEC
-                            .optionalFieldOf("amount", FluidConstants.BUCKET)
-                            .forGetter(HTFluidIngredient::amount),
-                    ).apply(instance, ::HTFluidIngredient)
-            }
+            val CODEC: Codec<HTFluidIngredient> = RagiumCodecs.simpleOrComplex(
+                HTRegistryEntryList.codec(Registries.FLUID).xmap(::HTFluidIngredient, HTFluidIngredient::entryList),
+                RecordCodecBuilder.create { instance ->
+                    instance
+                        .group(
+                            HTRegistryEntryList
+                                .codec(Registries.FLUID)
+                                .fieldOf("fluids")
+                                .forGetter(HTFluidIngredient::entryList),
+                            POSITIVE_LONG_CODEC
+                                .optionalFieldOf("amount", FluidConstants.BUCKET)
+                                .forGetter(HTFluidIngredient::amount),
+                        ).apply(instance, ::HTFluidIngredient)
+                },
+            ) { ingredient: HTFluidIngredient -> ingredient.amount == FluidConstants.BUCKET }
 
             @JvmField
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFluidIngredient> = PacketCodec

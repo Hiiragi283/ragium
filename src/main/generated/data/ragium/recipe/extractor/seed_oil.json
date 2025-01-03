@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:seed_oil"
-    }
+    "ragium:seed_oil"
   ],
   "item_inputs": [
     {

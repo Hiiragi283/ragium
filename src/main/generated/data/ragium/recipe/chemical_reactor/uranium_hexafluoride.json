@@ -11,13 +11,9 @@
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:uranium_hexafluoride"
-    }
+    "ragium:uranium_hexafluoride"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:yellow_cake"
-    }
+    "ragium:yellow_cake"
   ]
 }

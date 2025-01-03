@@ -5,16 +5,10 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:ingots/copper"
-    },
-    {
-      "items": "#c:dusts/raginite"
-    }
+    "#c:ingots/copper",
+    "#c:dusts/raginite"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:ragi_alloy_ingot"
-    }
+    "ragium:ragi_alloy_ingot"
   ]
 }

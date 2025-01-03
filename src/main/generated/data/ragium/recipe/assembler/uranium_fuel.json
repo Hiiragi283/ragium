@@ -5,26 +5,16 @@
     "tier": "advanced"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:enriched_uranium_hexafluoride"
-    },
-    {
-      "fluids": "minecraft:water"
-    }
+    "#c:enriched_uranium_hexafluoride",
+    "minecraft:water"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:hydrogen_fluoride"
-    }
+    "ragium:hydrogen_fluoride"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:empty_fluid_cube"
-    }
+    "ragium:empty_fluid_cube"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:uranium_fuel"
-    }
+    "ragium:uranium_fuel"
   ]
 }

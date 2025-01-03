@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:aqua_regia"
-    }
+    "#c:aqua_regia"
   ],
   "item_inputs": [
     {
@@ -16,8 +14,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:deepant"
-    }
+    "ragium:deepant"
   ]
 }

@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:honey"
-    }
+    "ragium:honey"
   ],
   "item_inputs": [
     {

@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dripstone_block"
-  },
+  "catalyst": "minecraft:dripstone_block",
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "basic"

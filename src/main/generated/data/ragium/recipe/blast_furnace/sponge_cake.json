@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:batter"
-    }
+    "#c:batter"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:butter"
-    }
+    "ragium:butter"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:sponge_cake"
-    }
+    "ragium:sponge_cake"
   ]
 }

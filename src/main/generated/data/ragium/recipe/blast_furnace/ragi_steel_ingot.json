@@ -5,20 +5,14 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:ingots/iron"
-    },
+    "#c:ingots/iron",
     {
       "count": 4,
       "items": "#c:dusts/raginite"
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:ragi_steel_ingot"
-    },
-    {
-      "item": "ragium:slag"
-    }
+    "ragium:ragi_steel_ingot",
+    "ragium:slag"
   ]
 }

@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:glass_bottle"
-    }
+    "minecraft:glass_bottle"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:experience_bottle"
-    }
+    "minecraft:experience_bottle"
   ]
 }

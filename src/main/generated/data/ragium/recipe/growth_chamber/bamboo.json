@@ -1,23 +1,15 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dirt"
-  },
+  "catalyst": "minecraft:dirt",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:bamboo"
-    }
+    "minecraft:bamboo"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:bamboo"
-    },
-    {
-      "item": "minecraft:bamboo"
-    }
+    "minecraft:bamboo",
+    "minecraft:bamboo"
   ]
 }

@@ -1,24 +1,18 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:rod_press_mold"
-  },
+  "catalyst": "ragium:rod_press_mold",
   "definition": {
     "type": "ragium:compressor",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "ragium:carbon_electrode"
-    },
+    "ragium:carbon_electrode",
     {
       "count": 8,
       "items": "minecraft:blaze_powder"
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:blazing_carbon_electrode"
-    }
+    "ragium:blazing_carbon_electrode"
   ]
 }

@@ -5,21 +5,13 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "item_inputs": [
-    {
-      "items": "#c:concretes"
-    },
-    {
-      "items": "ragium:soap"
-    }
+    "#c:concretes",
+    "ragium:soap"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:white_concrete"
-    }
+    "minecraft:white_concrete"
   ]
 }

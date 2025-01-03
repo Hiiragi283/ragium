@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:advanced_circuit"
-  },
+  "catalyst": "ragium:advanced_circuit",
   "definition": {
     "type": "ragium:distillation_tower",
     "tier": "primitive"

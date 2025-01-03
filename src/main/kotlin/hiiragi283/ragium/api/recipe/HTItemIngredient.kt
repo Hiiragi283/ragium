@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.identifiedCodec
 import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.extension.isAir
@@ -28,27 +29,30 @@ import java.util.function.Predicate
  */
 class HTItemIngredient private constructor(
     private val entryList: HTRegistryEntryList<Item>,
-    val count: Int,
-    val consumeType: ConsumeType,
+    val count: Int = 1,
+    val consumeType: ConsumeType = ConsumeType.DECREMENT,
 ) : Predicate<ItemStack> {
     companion object {
         @JvmField
-        val CODEC: Codec<HTItemIngredient> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    HTRegistryEntryList
-                        .codec(Registries.ITEM)
-                        .fieldOf("items")
-                        .forGetter(HTItemIngredient::entryList),
-                    Codec
-                        .intRange(1, Int.MAX_VALUE)
-                        .optionalFieldOf("count", 1)
-                        .forGetter(HTItemIngredient::count),
-                    ConsumeType.CODEC
-                        .optionalFieldOf("consume_type", ConsumeType.DECREMENT)
-                        .forGetter(HTItemIngredient::consumeType),
-                ).apply(instance, ::HTItemIngredient)
-        }
+        val CODEC: Codec<HTItemIngredient> = RagiumCodecs.simpleOrComplex(
+            HTRegistryEntryList.codec(Registries.ITEM).xmap(::HTItemIngredient, HTItemIngredient::entryList),
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        HTRegistryEntryList
+                            .codec(Registries.ITEM)
+                            .fieldOf("items")
+                            .forGetter(HTItemIngredient::entryList),
+                        Codec
+                            .intRange(1, Int.MAX_VALUE)
+                            .optionalFieldOf("count", 1)
+                            .forGetter(HTItemIngredient::count),
+                        ConsumeType.CODEC
+                            .optionalFieldOf("consume_type", ConsumeType.DECREMENT)
+                            .forGetter(HTItemIngredient::consumeType),
+                    ).apply(instance, ::HTItemIngredient)
+            },
+        ) { ingredient: HTItemIngredient -> ingredient.count == 1 && ingredient.consumeType == ConsumeType.DECREMENT }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTItemIngredient> = PacketCodec

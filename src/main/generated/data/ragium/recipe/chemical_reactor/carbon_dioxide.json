@@ -1,26 +1,16 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:blazing_carbon_electrode"
-  },
+  "catalyst": "ragium:blazing_carbon_electrode",
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:carbon_monoxide"
-    },
-    {
-      "fluids": "minecraft:water"
-    }
+    "#c:carbon_monoxide",
+    "minecraft:water"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:hydrogen"
-    },
-    {
-      "fluid": "ragium:carbon_dioxide"
-    }
+    "ragium:hydrogen",
+    "ragium:carbon_dioxide"
   ]
 }

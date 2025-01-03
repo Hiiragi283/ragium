@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:cobblestones"
-    }
+    "#c:cobblestones"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:gravel"
-    }
+    "minecraft:gravel"
   ]
 }

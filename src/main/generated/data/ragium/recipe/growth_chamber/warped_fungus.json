@@ -1,23 +1,15 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:mutated_soil"
-  },
+  "catalyst": "ragium:mutated_soil",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:brown_mushroom"
-    }
+    "minecraft:brown_mushroom"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:warped_fungus"
-    },
-    {
-      "item": "minecraft:brown_mushroom"
-    }
+    "minecraft:warped_fungus",
+    "minecraft:brown_mushroom"
   ]
 }

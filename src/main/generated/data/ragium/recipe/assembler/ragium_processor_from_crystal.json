@@ -9,13 +9,9 @@
       "count": 8,
       "items": "#c:gems/ragi_crystal"
     },
-    {
-      "items": "ragium:processor_socket"
-    }
+    "ragium:processor_socket"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:ragium_processor"
-    }
+    "ragium:ragium_processor"
   ]
 }

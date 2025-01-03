@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:coarse_dirt"
-    }
+    "minecraft:coarse_dirt"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:dirt"
-    }
+    "minecraft:dirt"
   ]
 }

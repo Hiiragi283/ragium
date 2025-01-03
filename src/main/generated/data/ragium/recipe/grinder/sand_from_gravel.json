@@ -1,20 +1,14 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:sand"
-  },
+  "catalyst": "minecraft:sand",
   "definition": {
     "type": "ragium:grinder",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:gravel"
-    }
+    "minecraft:gravel"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:sand"
-    }
+    "minecraft:sand"
   ]
 }

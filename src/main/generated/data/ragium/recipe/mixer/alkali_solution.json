@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:alkali_solution"
-    }
+    "ragium:alkali_solution"
   ],
   "item_inputs": [
-    {
-      "items": "#c:alkali"
-    }
+    "#c:alkali"
   ]
 }

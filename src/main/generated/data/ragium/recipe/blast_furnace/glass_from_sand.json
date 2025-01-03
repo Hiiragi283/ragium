@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:glass"
-    }
+    "ragium:glass"
   ],
   "item_inputs": [
-    {
-      "items": "#minecraft:sand"
-    }
+    "#minecraft:sand"
   ]
 }

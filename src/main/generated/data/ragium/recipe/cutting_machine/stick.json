@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:planks"
-    }
+    "#minecraft:planks"
   ],
   "item_outputs": [
     {

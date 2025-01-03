@@ -5,18 +5,12 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:alkali_solution"
-    }
+    "#c:alkali_solution"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:alumina_solution"
-    }
+    "ragium:alumina_solution"
   ],
   "item_inputs": [
-    {
-      "items": "#c:dusts/bauxite"
-    }
+    "#c:dusts/bauxite"
   ]
 }

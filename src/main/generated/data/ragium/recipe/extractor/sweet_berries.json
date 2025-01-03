@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:sweet_berries"
-    }
+    "ragium:sweet_berries"
   ],
   "item_inputs": [
     {

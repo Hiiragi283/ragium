@@ -1,24 +1,18 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dirt"
-  },
+  "catalyst": "minecraft:dirt",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:birch_sapling"
-    }
+    "minecraft:birch_sapling"
   ],
   "item_outputs": [
     {
       "count": 8,
       "item": "minecraft:birch_log"
     },
-    {
-      "item": "minecraft:birch_sapling"
-    }
+    "minecraft:birch_sapling"
   ]
 }

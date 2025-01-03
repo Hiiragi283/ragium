@@ -15,8 +15,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:ragi_crystal"
-    }
+    "ragium:ragi_crystal"
   ]
 }

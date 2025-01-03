@@ -11,8 +11,6 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "#c:sandstone/blocks"
-    }
+    "#c:sandstone/blocks"
   ]
 }

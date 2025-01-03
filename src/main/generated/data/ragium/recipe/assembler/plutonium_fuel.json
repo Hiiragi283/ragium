@@ -5,22 +5,16 @@
     "tier": "advanced"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:aqua_regia"
-    }
+    "#c:aqua_regia"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:empty_fluid_cube"
-    },
+    "ragium:empty_fluid_cube",
     {
       "count": 64,
       "items": "ragium:nuclear_waste"
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:plutonium_fuel"
-    }
+    "ragium:plutonium_fuel"
   ]
 }

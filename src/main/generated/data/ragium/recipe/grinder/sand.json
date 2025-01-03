@@ -5,17 +5,13 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:sandstone/uncolored_blocks"
-    }
+    "#c:sandstone/uncolored_blocks"
   ],
   "item_outputs": [
     {
       "count": 4,
       "item": "minecraft:sand"
     },
-    {
-      "item": "ragium:niter_dust"
-    }
+    "ragium:niter_dust"
   ]
 }

@@ -45,10 +45,6 @@ repositories {
     } // RS2
 }
 
-fabricApi {
-    configureDataGeneration()
-}
-
 loom {
     accessWidenerPath = file("src/main/resources/ragium.accesswidener")
     splitEnvironmentSourceSets()
@@ -66,30 +62,6 @@ loom {
         getByName("server") {
             runDir = "run/server"
         }
-        getByName("datagen") {
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=ragium")
-        }
-        /*create("datagen") {
-            inherit(getByName("client"))
-            name = "Data Generation"
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=ragium")
-            runDir("build/datagen")
-            source(sourceSets.getByName("client"))
-        }
-        create("test") {
-            inherit(getByName("client"))
-            name = "Game Test Client"
-            vmArg("-Dfabric-api.gametest")
-            mods {
-                create("ht_materials") {
-                    sourceSet(sourceSets.getByName("test"))
-                }
-            }
-        }*/
     }
 }
 

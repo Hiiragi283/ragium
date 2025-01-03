@@ -5,16 +5,10 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:nitrogen"
-    },
-    {
-      "fluids": "minecraft:water"
-    }
+    "#c:nitrogen",
+    "minecraft:water"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:nitric_acid"
-    }
+    "ragium:nitric_acid"
   ]
 }

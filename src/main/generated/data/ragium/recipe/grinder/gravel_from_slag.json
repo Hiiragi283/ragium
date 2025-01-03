@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "ragium:slag"
-    }
+    "ragium:slag"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:gravel"
-    }
+    "minecraft:gravel"
   ]
 }

@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:netherrack"
-  },
+  "catalyst": "minecraft:netherrack",
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "basic"

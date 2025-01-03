@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:chest"
-  },
+  "catalyst": "minecraft:chest",
   "definition": {
     "type": "ragium:assembler",
     "tier": "primitive"
@@ -14,8 +12,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:chest"
-    }
+    "minecraft:chest"
   ]
 }

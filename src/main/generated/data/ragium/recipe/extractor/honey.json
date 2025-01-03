@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:honeycomb"
-    }
+    "minecraft:honeycomb"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:bee_wax"
-    }
+    "ragium:bee_wax"
   ]
 }

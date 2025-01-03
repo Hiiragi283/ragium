@@ -5,17 +5,13 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:crops/sugar_cane"
-    }
+    "#c:crops/sugar_cane"
   ],
   "item_outputs": [
     {
       "count": 2,
       "item": "minecraft:sugar"
     },
-    {
-      "item": "ragium:pulp"
-    }
+    "ragium:pulp"
   ]
 }

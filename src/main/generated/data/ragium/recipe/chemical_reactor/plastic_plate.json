@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "ragium:polymer_resin"
-    }
+    "ragium:polymer_resin"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:plastic_plate"
-    }
+    "ragium:plastic_plate"
   ]
 }

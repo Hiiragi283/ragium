@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:ancient_debris"
-    }
+    "minecraft:ancient_debris"
   ],
   "item_outputs": [
     {

@@ -5,16 +5,10 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:hydrogen"
-    },
-    {
-      "fluids": "#c:chlorine"
-    }
+    "#c:hydrogen",
+    "#c:chlorine"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:hydrogen_chloride"
-    }
+    "ragium:hydrogen_chloride"
   ]
 }

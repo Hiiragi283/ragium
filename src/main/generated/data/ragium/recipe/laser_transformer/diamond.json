@@ -11,8 +11,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:diamond"
-    }
+    "minecraft:diamond"
   ]
 }

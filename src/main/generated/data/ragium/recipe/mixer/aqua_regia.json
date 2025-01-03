@@ -9,9 +9,7 @@
       "amount": 243000,
       "fluids": "#c:nitric_acid"
     },
-    {
-      "fluids": "#c:hydrochloric_acid"
-    }
+    "#c:hydrochloric_acid"
   ],
   "fluid_outputs": [
     {

@@ -5,17 +5,11 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:pulp"
-    },
-    {
-      "items": "#c:alkali"
-    }
+    "ragium:pulp",
+    "#c:alkali"
   ],
   "item_outputs": [
     {

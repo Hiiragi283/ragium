@@ -9,17 +9,13 @@
       "amount": 243000,
       "fluids": "#c:alcohol"
     },
-    {
-      "fluids": "#ragium:organic_oils"
-    }
+    "#ragium:organic_oils"
   ],
   "fluid_outputs": [
     {
       "amount": 243000,
       "fluid": "ragium:bio_fuel"
     },
-    {
-      "fluid": "ragium:glycerol"
-    }
+    "ragium:glycerol"
   ]
 }

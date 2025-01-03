@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:barrel"
-  },
+  "catalyst": "minecraft:barrel",
   "definition": {
     "type": "ragium:assembler",
     "tier": "primitive"

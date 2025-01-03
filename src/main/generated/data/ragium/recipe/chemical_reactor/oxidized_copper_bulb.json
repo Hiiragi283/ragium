@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:copper_bulb"
-    }
+    "minecraft:copper_bulb"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:oxidized_copper_bulb"
-    }
+    "minecraft:oxidized_copper_bulb"
   ]
 }

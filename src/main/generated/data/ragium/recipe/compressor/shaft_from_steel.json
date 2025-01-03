@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:shaft"
-  },
+  "catalyst": "ragium:shaft",
   "definition": {
     "type": "ragium:compressor",
     "tier": "primitive"
@@ -14,8 +12,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:shaft"
-    }
+    "ragium:shaft"
   ]
 }

@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "ragium:flour"
-    }
+    "ragium:flour"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:dough"
-    }
+    "ragium:dough"
   ]
 }
