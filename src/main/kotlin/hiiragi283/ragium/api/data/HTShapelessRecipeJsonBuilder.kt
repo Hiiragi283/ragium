@@ -1,11 +1,10 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
@@ -81,11 +80,8 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
 
     fun fluidInput(content: HTFluidContent): HTShapelessRecipeJsonBuilder = fluidInput(content.get())
 
-    fun fluidInput(fluid: Fluid): HTShapelessRecipeJsonBuilder = input(
-        DefaultCustomIngredients.components(Ingredient.ofItems(RagiumItems.FILLED_FLUID_CUBE)) { builder: ComponentChanges.Builder ->
-            builder.add(RagiumComponentTypes.FLUID, fluid)
-        },
-    )
+    fun fluidInput(fluid: Fluid): HTShapelessRecipeJsonBuilder =
+        input(DefaultCustomIngredients.components(RagiumAPI.getInstance().createFilledCube(fluid)))
 
     fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapelessRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
 

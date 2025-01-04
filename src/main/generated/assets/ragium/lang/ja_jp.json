@@ -229,6 +229,7 @@
   "itemGroup.ragium.fluid": "Ragium - 液体",
   "itemGroup.ragium.item": "Ragium - アイテム",
   "itemGroup.ragium.machine": "Ragium - 機械",
+  "itemGroup.ragium.transfer": "Ragium - 輸送",
   "key.ragium.open_backpack": "バックパックを開く",
   "machine_tier.ragium.advanced": "発展",
   "machine_tier.ragium.advanced.prefix": "発展型%s",

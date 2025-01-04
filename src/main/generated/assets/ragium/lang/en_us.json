@@ -229,6 +229,7 @@
   "itemGroup.ragium.fluid": "Ragium - Fluids",
   "itemGroup.ragium.item": "Ragium - Items",
   "itemGroup.ragium.machine": "Ragium - Machines",
+  "itemGroup.ragium.transfer": "Ragium - Transfer",
   "key.ragium.open_backpack": "Open Backpack",
   "machine_tier.ragium.advanced": "Advanced",
   "machine_tier.ragium.advanced.prefix": "Advanced %s",

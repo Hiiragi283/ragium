@@ -15,6 +15,7 @@ import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
@@ -120,7 +121,12 @@ interface RagiumAPI {
     /**
      * 指定した[fluid]で満たされた液体キューブの[ItemStack]を返します。
      */
-    fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack
+    fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack = createFilledCube(fluid.registryEntry, count)
+
+    /**
+     * 指定した[entry]で満たされた液体キューブの[ItemStack]を返します。
+     */
+    fun createFilledCube(entry: RegistryEntry<Fluid>, count: Int = 1): ItemStack
 
     /**
      * [RagiumConfig.Common.isHardMode]に基づいだ[ResourceCondition]を返します。

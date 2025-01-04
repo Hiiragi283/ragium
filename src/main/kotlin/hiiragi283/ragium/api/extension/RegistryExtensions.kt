@@ -10,6 +10,7 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
+import net.minecraft.util.Identifier
 import java.util.Comparator
 import kotlin.jvm.optionals.getOrNull
 
@@ -47,6 +48,9 @@ fun <T : Any> Registry<T>.getEntryOrNull(key: RegistryKey<T>): RegistryEntry.Ref
 fun <T : Any> Registry<T>.getEntryOrThrow(key: RegistryKey<T>): RegistryEntry.Reference<T> = getEntry(key).orElseThrow()
 
 //    RegistryEntry    //
+
+val <T : Any> RegistryEntry<T>.id: Identifier?
+    get() = key.getOrNull()?.value
 
 /**
  * 指定した[value]が一致するか判定します。

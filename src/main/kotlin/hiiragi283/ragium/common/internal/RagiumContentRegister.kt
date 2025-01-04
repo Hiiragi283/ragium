@@ -320,7 +320,7 @@ internal object RagiumContentRegister {
                         FullItemFluidStorage(
                             context,
                             RagiumItems.EMPTY_FLUID_CUBE.get(),
-                            FluidVariant.of(it),
+                            FluidVariant.of(it.value()),
                             FluidConstants.BUCKET,
                         )
                     }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.extension.id
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -19,12 +20,10 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.registry.Registries
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
-import kotlin.jvm.optionals.getOrNull
 
 object RagiumHardModePlugin : RagiumPlugin {
     override val priority: Int = -90
@@ -119,7 +118,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         }
 
         Registries.FLUID.streamEntries().forEach { entry: RegistryEntry<Fluid> ->
-            val id: Identifier = entry.key.map(RegistryKey<Fluid>::getValue).getOrNull() ?: return@forEach
+            val id: Identifier = entry.id ?: return@forEach
             val fluid: Fluid = entry.value()
             if (!fluid.isStill(fluid.defaultState)) return@forEach
             val bucket: Item = fluid.bucketItem

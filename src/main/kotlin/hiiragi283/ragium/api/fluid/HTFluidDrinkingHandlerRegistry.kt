@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.entity.LivingEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.world.World
 
 /**
@@ -27,6 +28,9 @@ object HTFluidDrinkingHandlerRegistry {
     fun register(fluid: Fluid, handler: HTFluidDrinkingHandler) {
         registry[fluid] = handler
     }
+
+    @JvmStatic
+    fun get(entry: RegistryEntry<Fluid>): Entry? = get(entry.value())
 
     @JvmStatic
     fun get(fluid: Fluid): Entry? = registry[fluid]?.let { handler: HTFluidDrinkingHandler -> Entry(fluid, handler) }

@@ -1,32 +1,53 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.splitWith
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 
 object RagiumItemGroup {
     @JvmField
-    val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("item"))
+    val FLUID: RegistryKey<ItemGroup> = create("fluid")
 
     @JvmField
-    val FLUID_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("fluid"))
+    val ITEM: RegistryKey<ItemGroup> = create("item")
 
     @JvmField
-    val MACHINE_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("machine"))
+    val MACHINE: RegistryKey<ItemGroup> = create("machine")
+
+    @JvmField
+    val TRANSFER: RegistryKey<ItemGroup> = create("transfer")
 
     @JvmStatic
-    private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup =
-        Registry.register(Registries.ITEM_GROUP, key, FabricItemGroup.builder().apply(action).build())
+    private fun create(path: String): RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id(path))
+
+    @JvmStatic
+    private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup = Registry.register(
+        Registries.ITEM_GROUP,
+        key,
+        FabricItemGroup
+            .builder()
+            .apply(action)
+            .displayName(key.text)
+            .build(),
+    )
+
+    private val RegistryKey<ItemGroup>.text: MutableText
+        get() = Text.translatable("itemGroup.${value.splitWith('.')}")
 
     private fun ItemGroup.Entries.addAll(items: List<ItemConvertible>) {
         items.forEach(this::add)
@@ -34,8 +55,21 @@ object RagiumItemGroup {
 
     @JvmStatic
     fun init() {
-        register(ITEM_KEY) {
-            displayName(Text.translatable("itemGroup.ragium.item"))
+        register(FLUID) {
+            icon { RagiumItems.EMPTY_FLUID_CUBE.get().defaultStack }
+            entries { context: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                context.lookup
+                    .getWrapperOrThrow(RegistryKeys.FLUID)
+                    .streamEntries()
+                    .filter { entry: RegistryEntry.Reference<Fluid> ->
+                        val fluid: Fluid = entry.value()
+                        fluid.isStill(fluid.defaultState)
+                    }.map(RagiumAPI.getInstance()::createFilledCube)
+                    .forEach(entries::add)
+            }
+        }
+
+        register(ITEM) {
             icon {
                 RagiumItems.Gems.RAGIUM
                     .asItem()
@@ -100,31 +134,10 @@ object RagiumItemGroup {
             }
         }
 
-        register(FLUID_KEY) {
-            displayName(Text.translatable("itemGroup.ragium.fluid"))
-            icon { RagiumItems.EMPTY_FLUID_CUBE.get().defaultStack }
-            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                Registries.FLUID
-                    .filter { it.isStill(it.defaultState) }
-                    .map(RagiumAPI.getInstance()::createFilledCube)
-                    .forEach(entries::add)
-            }
-        }
-
-        register(MACHINE_KEY) {
-            displayName(Text.translatable("itemGroup.ragium.machine"))
+        register(MACHINE) {
             icon { RagiumMachineKeys.ASSEMBLER.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumBlocks.Creatives.entries)
-
-                entries.addAll(RagiumBlocks.Crates.entries)
-                entries.addAll(RagiumBlocks.Drums.entries)
-
-                entries.addAll(RagiumBlocks.Exporters.entries)
-                entries.addAll(RagiumBlocks.Pipes.entries)
-                entries.addAll(RagiumBlocks.CrossPipes.entries)
-                entries.addAll(RagiumBlocks.PipeStations.entries)
-                entries.addAll(RagiumBlocks.FilteringPipes.entries)
 
                 entries.addAll(RagiumBlocks.MECHANICS)
                 entries.add(RagiumBlocks.BACKPACK_INTERFACE)
@@ -137,6 +150,20 @@ object RagiumItemGroup {
                         .map { key: HTMachineKey -> key.createItemStack(tier) }
                         .forEach(entries::add)
                 }
+            }
+        }
+
+        register(TRANSFER) {
+            icon { ItemStack(RagiumBlocks.Crates.PRIMITIVE) }
+            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                entries.addAll(RagiumBlocks.Crates.entries)
+                entries.addAll(RagiumBlocks.Drums.entries)
+
+                entries.addAll(RagiumBlocks.Exporters.entries)
+                entries.addAll(RagiumBlocks.Pipes.entries)
+                entries.addAll(RagiumBlocks.CrossPipes.entries)
+                entries.addAll(RagiumBlocks.PipeStations.entries)
+                entries.addAll(RagiumBlocks.FilteringPipes.entries)
             }
         }
     }

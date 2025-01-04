@@ -22,6 +22,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.Text
 import net.minecraft.text.TextCodecs
@@ -60,8 +61,8 @@ object RagiumComponentTypes {
         register("dynamite", HTExplosionComponent.COMPONENT_TYPE)
 
     @JvmField
-    val FLUID: ComponentType<Fluid> =
-        register("fluid", Registries.FLUID.codec, PacketCodecs.codec(Registries.FLUID.codec))
+    val FLUID: ComponentType<RegistryEntry<Fluid>> =
+        register("fluid", Registries.FLUID.entryCodec, PacketCodecs.registryEntry(RegistryKeys.FLUID))
 
     @JvmField
     val FLUID_FILTER: ComponentType<RegistryEntryList<Fluid>> = register(

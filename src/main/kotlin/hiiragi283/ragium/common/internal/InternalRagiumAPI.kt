@@ -40,6 +40,7 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.util.Rarity
 
@@ -59,11 +60,11 @@ internal data object InternalRagiumAPI : RagiumAPI {
     override fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
         HTDrankFluidCriterion.create(entryList)
 
-    override fun createFilledCube(fluid: Fluid, count: Int): ItemStack = buildItemStack(
+    override fun createFilledCube(entry: RegistryEntry<Fluid>, count: Int): ItemStack = buildItemStack(
         RagiumItems.FILLED_FLUID_CUBE,
         count,
     ) {
-        add(RagiumComponentTypes.FLUID, fluid)
+        add(RagiumComponentTypes.FLUID, entry)
     }
 
     override fun createHardModeCondition(value: Boolean): ResourceCondition = HTHardModeResourceCondition(value)
