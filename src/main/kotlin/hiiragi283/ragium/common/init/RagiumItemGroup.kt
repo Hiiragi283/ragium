@@ -21,6 +21,9 @@ import net.minecraft.util.DyeColor
 
 object RagiumItemGroup {
     @JvmField
+    val BUILDING: RegistryKey<ItemGroup> = create("building")
+
+    @JvmField
     val FLUID: RegistryKey<ItemGroup> = create("fluid")
 
     @JvmField
@@ -55,6 +58,22 @@ object RagiumItemGroup {
 
     @JvmStatic
     fun init() {
+        register(BUILDING) {
+            icon { ItemStack(RagiumBlocks.Grates.PRIMITIVE) }
+            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                entries.addAll(RagiumBlocks.Stones.entries)
+                entries.addAll(RagiumBlocks.Slabs.entries)
+                entries.addAll(RagiumBlocks.Stairs.entries)
+
+                entries.add(RagiumBlocks.ITEM_DISPLAY)
+                entries.addAll(RagiumBlocks.Glasses.entries)
+                entries.addAll(RagiumBlocks.WhiteLines.entries)
+
+                entries.add(RagiumBlocks.PLASTIC_BLOCK)
+                entries.addAll(RagiumBlocks.Decorations.entries)
+            }
+        }
+
         register(FLUID) {
             icon { RagiumItems.EMPTY_FLUID_CUBE.get().defaultStack }
             entries { context: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
@@ -77,20 +96,8 @@ object RagiumItemGroup {
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumBlocks.NATURAL)
-                entries.addAll(RagiumBlocks.Stones.entries)
-                entries.addAll(RagiumBlocks.Slabs.entries)
-                entries.addAll(RagiumBlocks.Stairs.entries)
-                entries.add(RagiumBlocks.ITEM_DISPLAY)
-                entries.addAll(RagiumBlocks.Glasses.entries)
-                entries.addAll(RagiumBlocks.WhiteLines.entries)
-
                 entries.addAll(RagiumBlocks.Ores.entries)
                 entries.addAll(RagiumBlocks.StorageBlocks.entries)
-                entries.addAll(RagiumBlocks.Grates.entries)
-                entries.addAll(RagiumBlocks.Casings.entries)
-                entries.addAll(RagiumBlocks.Hulls.entries)
-                entries.add(RagiumBlocks.SHAFT)
-                entries.addAll(RagiumBlocks.Coils.entries)
 
                 entries.addAll(RagiumItems.Dusts.entries)
                 entries.addAll(RagiumItems.Gears.entries)
@@ -138,9 +145,14 @@ object RagiumItemGroup {
             icon { RagiumMachineKeys.ASSEMBLER.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumBlocks.Creatives.entries)
-
                 entries.addAll(RagiumBlocks.MECHANICS)
                 entries.add(RagiumBlocks.BACKPACK_INTERFACE)
+
+                entries.addAll(RagiumBlocks.Grates.entries)
+                entries.addAll(RagiumBlocks.Casings.entries)
+                entries.addAll(RagiumBlocks.Hulls.entries)
+                entries.add(RagiumBlocks.SHAFT)
+                entries.addAll(RagiumBlocks.Coils.entries)
 
                 HTMachineTier.entries.forEach { tier: HTMachineTier ->
                     RagiumAPI

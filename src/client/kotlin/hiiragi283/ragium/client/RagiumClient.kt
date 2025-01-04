@@ -94,6 +94,7 @@ object RagiumClient : ClientModInitializer {
 
             addAll(RagiumBlocks.Crates.entries)
             addAll(RagiumBlocks.CrossPipes.entries)
+            addAll(RagiumBlocks.Decorations.entries.filter(RagiumBlocks.Decorations::cutout))
             addAll(RagiumBlocks.Exporters.entries)
             addAll(RagiumBlocks.FilteringPipes.entries)
             addAll(RagiumBlocks.Glasses.entries)

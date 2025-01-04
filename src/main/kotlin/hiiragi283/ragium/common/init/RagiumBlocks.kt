@@ -56,6 +56,17 @@ object RagiumBlocks {
         POROUS_NETHERRACK,
     )
 
+    enum class Ores(path: String, override val material: HTMaterialKey, val baseStone: Block) : HTBlockContent.Material {
+        CRUDE_RAGINITE("raginite_ore", RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
+        DEEP_RAGINITE("deepslate_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
+        NETHER_RAGINITE("nether_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
+        END_RAGI_CRYSTAL("end_ragi_crystal_ore", RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey(path)
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
+    }
+
     //    Buildings    //
 
     enum class Stones : HTBlockContent {
@@ -118,16 +129,39 @@ object RagiumBlocks {
         override val key: RegistryKey<Block> = HTContent.blockKey("${name}white_line")
     }
 
-    enum class Ores(path: String, override val material: HTMaterialKey, val baseStone: Block) : HTBlockContent.Material {
-        CRUDE_RAGINITE("raginite_ore", RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
-        DEEP_RAGINITE("deepslate_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
-        NETHER_RAGINITE("nether_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
-        END_RAGI_CRYSTAL("end_ragi_crystal_ore", RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE),
+    @JvmField
+    val PLASTIC_BLOCK: HTBlockContent = HTContent.ofBlock("plastic_block")
+
+    enum class Decorations(
+        val factory: (AbstractBlock.Settings) -> Block = ::Block,
+        val cutout: Boolean = false,
+        val isPillar: Boolean = false,
+    ) : HTBlockContent {
+        // storage
+        RAGI_ALLOY_BLOCK,
+        RAGI_STEEL_BLOCK,
+        REFINED_RAGI_STEEL_BLOCK,
+
+        // casing
+        PRIMITIVE_CASING,
+        BASIC_CASING,
+        ADVANCED_CASING,
+
+        // hull
+        PRIMITIVE_HULL(::TransparentBlock, true),
+        BASIC_HULL(::TransparentBlock, true),
+        ADVANCED_HULL(::TransparentBlock, true),
+
+        // coil
+        PRIMITIVE_COIL(::PillarBlock, isPillar = true),
+        BASIC_COIL(::PillarBlock, isPillar = true),
+        ADVANCED_COIL(::PillarBlock, isPillar = true),
         ;
 
-        override val key: RegistryKey<Block> = HTContent.blockKey(path)
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_decoration")
     }
+
+    //    Components    //
 
     enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
@@ -419,6 +453,11 @@ object RagiumBlocks {
         }
         registerBlockItem(MUTATED_SOIL, itemSettings().descriptions(RagiumTranslationKeys.MUTATED_SOIL))
         registerBlockItem(POROUS_NETHERRACK, itemSettings().descriptions(RagiumTranslationKeys.POROUS_NETHERRACK))
+        // ore
+        Ores.entries.forEach { ore: Ores ->
+            registerSimpleBlock(ore, blockSettings(ore.baseStone))
+            registerBlockItem(ore, itemSettings().material(ore.material, ore.tagPrefix))
+        }
         // stone
         Stones.entries.forEach { stone: Stones ->
             registerSimpleBlock(stone, blockSettings(Blocks.SMOOTH_STONE))
@@ -441,6 +480,13 @@ object RagiumBlocks {
             registerBlock(it, block = ::HTSurfaceLineBlock)
             registerBlockItem(it)
         }
+        // decoration
+        registerBlock(PLASTIC_BLOCK, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItem(PLASTIC_BLOCK)
+        Decorations.entries.forEach { decoration: Decorations ->
+            registerBlock(decoration, blockSettings(Blocks.SMOOTH_STONE), decoration.factory)
+            registerBlockItem(decoration)
+        }
         // glass
         registerBlock(
             Glasses.STEEL,
@@ -460,11 +506,6 @@ object RagiumBlocks {
         registerBlockItem(Glasses.STEEL, itemSettings().descriptions(RagiumTranslationKeys.STEEL_GLASS))
         registerBlockItem(Glasses.OBSIDIAN, itemSettings().descriptions(RagiumTranslationKeys.OBSIDIAN_GLASS))
         registerBlockItem(Glasses.RAGIUM, itemSettings().descriptions(RagiumTranslationKeys.RAGIUM_GLASS))
-        // ore
-        Ores.entries.forEach { ore: Ores ->
-            registerSimpleBlock(ore, blockSettings(ore.baseStone))
-            registerBlockItem(ore, itemSettings().material(ore.material, ore.tagPrefix))
-        }
         // storage block
         StorageBlocks.entries.forEach { storage: StorageBlocks ->
             registerSimpleBlock(storage, blockSettings(Blocks.IRON_BLOCK))
