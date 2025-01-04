@@ -9,10 +9,7 @@
       "count": 2,
       "items": "#c:silicon"
     },
-    {
-      "count": 2,
-      "items": "#minecraft:coals"
-    }
+    "#minecraft:coals"
   ],
   "item_outputs": [
     "ragium:silicon",

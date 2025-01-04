@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.registry.BuiltinRegistries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -11,7 +12,6 @@ import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
 import net.minecraft.util.Identifier
-import java.util.Comparator
 import kotlin.jvm.optionals.getOrNull
 
 //    Registry    //
@@ -75,3 +75,11 @@ fun <T : Any> RegistryEntryList<T>.asText(transform: (T) -> Text): MutableText =
         TagKey<T>::getName,
         { Texts.join(this.map(RegistryEntry<T>::value), transform) },
     ).copy()
+
+/**
+ * この[RegistryEntryList]を[Text]に変換します。
+ * @param transform 値を[Text]に変換するブロック
+ * @return [TagKey]の場合は[TagKey.getName]，それ以外の場合は[transform]を連結
+ */
+fun <T : Any> HTRegistryEntryList<T>.asText(transform: (T) -> Text): MutableText =
+    storage.map(TagKey<T>::getName, { Texts.join(it, transform) }).copy()

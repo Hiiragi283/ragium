@@ -3,12 +3,11 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.RagiumCodecs
-import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
-import hiiragi283.ragium.api.extension.isEmpty
-import hiiragi283.ragium.api.extension.name
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.util.HTRegistryEntryList
+import hiiragi283.ragium.api.util.codec.HTRegistryEntryListCodec
+import hiiragi283.ragium.api.util.codec.HTRegistryEntryPacketCodec
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
@@ -32,14 +31,16 @@ import java.util.function.Predicate
 class HTFluidIngredient private constructor(private val entryList: HTRegistryEntryList<Fluid>, val amount: Long = FluidConstants.BUCKET) :
     Predicate<HTFluidVariantStack> {
         companion object {
+            @JvmStatic
+            private val FLUID_CODEC: HTRegistryEntryListCodec<Fluid> = HTRegistryEntryListCodec(Registries.FLUID)
+
             @JvmField
             val CODEC: Codec<HTFluidIngredient> = RagiumCodecs.simpleOrComplex(
-                HTRegistryEntryList.codec(Registries.FLUID).xmap(::HTFluidIngredient, HTFluidIngredient::entryList),
+                FLUID_CODEC.xmap(::HTFluidIngredient, HTFluidIngredient::entryList),
                 RecordCodecBuilder.create { instance ->
                     instance
                         .group(
-                            HTRegistryEntryList
-                                .codec(Registries.FLUID)
+                            FLUID_CODEC
                                 .fieldOf("fluids")
                                 .forGetter(HTFluidIngredient::entryList),
                             POSITIVE_LONG_CODEC
@@ -52,7 +53,7 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
             @JvmField
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFluidIngredient> = PacketCodec
                 .tuple(
-                    HTRegistryEntryList.packetCodec(Registries.FLUID),
+                    HTRegistryEntryPacketCodec(Registries.FLUID),
                     HTFluidIngredient::entryList,
                     PacketCodecs.VAR_LONG,
                     HTFluidIngredient::amount,
@@ -62,26 +63,32 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
             /**
              * 指定した[fluid]と[amount]から[HTFluidIngredient]を返します。
              */
-            @Suppress("DEPRECATION")
             @JvmStatic
             fun of(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
-                HTFluidIngredient(HTRegistryEntryList.of(fluid.registryEntry), amount)
+                HTFluidIngredient(HTRegistryEntryList.direct(fluid), amount)
+
+            /**
+             * 指定した[fluids]と[amount]から[HTFluidIngredient]を返します。
+             */
+            @JvmStatic
+            fun of(fluids: List<Fluid>, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
+                HTFluidIngredient(HTRegistryEntryList.direct(fluids), amount)
 
             /**
              * 指定した[tagKey]と[amount]から[HTFluidIngredient]を返します。
              */
             @JvmStatic
             fun of(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
-                HTFluidIngredient(HTRegistryEntryList.ofTag(tagKey, Registries.FLUID), amount)
+                HTFluidIngredient(HTRegistryEntryList.fromTag(tagKey, Registries.FLUID), amount)
         }
 
         val isEmpty: Boolean
-            get() = entryList.storage.map({ false }, { it.isEmpty }) || amount <= 0
+            get() = entryList.storage.map({ false }, { it.isEmpty() || it.all(Fluid::isEmpty) }) || amount <= 0
 
         fun <T : Any> map(transform: (Fluid, Long) -> T): List<T> = entryList.map { transform(it, amount) }
 
         val text: MutableText
-            get() = entryList.getText(Fluid::name)
+            get() = entryList.asText(Fluid::name)
 
         override fun test(stack: HTFluidVariantStack): Boolean = when (stack.isEmpty) {
             true -> this.isEmpty

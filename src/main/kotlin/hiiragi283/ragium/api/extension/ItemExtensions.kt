@@ -120,7 +120,8 @@ fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
 /**
  * 指定した[entryList]にアイテムが含まれているか判定します。
  */
-fun ItemStack.isIn(entryList: HTRegistryEntryList<Item>): Boolean = entryList.storage.map(this::isIn, this::isOf)
+fun ItemStack.isIn(entryList: HTRegistryEntryList<Item>): Boolean =
+    entryList.storage.map(this::isIn) { items: List<Item> -> items.any(this::isOf) }
 
 /**
  * 残りの耐久値を返します。

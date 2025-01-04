@@ -521,7 +521,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
                 .itemOutput(output, count * 3)
                 .apply { subProduction?.let(::itemOutput) }
-                .itemOutput(RagiumItems.SLAG, 2)
+                .itemOutput(RagiumItems.SLAG)
                 .offerTo(exporter, output, "_3x")
             // 4x Chemical Recipe
             HTMachineRecipeJsonBuilder
@@ -530,7 +530,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
                 .itemOutput(output, count * 4)
                 .apply { subProduction?.let { itemOutput(it, 2) } }
-                .itemOutput(RagiumItems.SLAG, 3)
+                .itemOutput(RagiumItems.SLAG)
                 .offerTo(exporter, output, "_4x")
             // 5x Chemical Recipe
             HTMachineRecipeJsonBuilder
@@ -538,7 +538,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.MERCURY, FluidConstants.INGOT)
                 .itemOutput(output, count * 5)
-                .itemOutput(RagiumItems.SLAG, 4)
+                .itemOutput(RagiumItems.SLAG)
                 .offerTo(exporter, output, "_5x")
         }
         // raw -> dust

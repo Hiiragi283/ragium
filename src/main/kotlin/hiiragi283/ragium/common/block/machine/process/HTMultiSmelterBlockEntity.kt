@@ -29,7 +29,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage.update(tier)
     }
 
-    override val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
+    override val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Builder(0).build(this)
 

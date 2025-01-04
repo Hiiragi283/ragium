@@ -73,7 +73,8 @@ fun BlockState.isOf(content: HTBlockContent): Boolean = isOf(content.get())
 /**
  * 指定した[entryList]の中にブロックが含まれているか判定します。
  */
-fun BlockState.isIn(entryList: HTRegistryEntryList<Block>): Boolean = entryList.storage.map(this::isIn, this::isOf)
+fun BlockState.isIn(entryList: HTRegistryEntryList<Block>): Boolean =
+    entryList.storage.map(this::isIn) { blocks: List<Block> -> blocks.any(this::isOf) }
 
 //    BlockEntity    //
 

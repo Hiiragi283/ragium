@@ -1,127 +1,116 @@
 package hiiragi283.ragium.api.util
 
 import com.mojang.datafixers.util.Either
-import com.mojang.serialization.Codec
-import net.minecraft.network.RegistryByteBuf
-import net.minecraft.network.codec.PacketCodec
 import net.minecraft.registry.Registry
-import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.RegistryEntryLookup
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.text.MutableText
-import net.minecraft.text.Text
-import net.minecraft.util.Identifier
+import kotlin.random.Random
 
 /**
- * Holder of [TagKey] or [T] value
+ * [T]値の[List]または[TagKey]を持つオブジェクトです。
  */
 sealed interface HTRegistryEntryList<T : Any> : Iterable<T> {
     companion object {
-        @JvmStatic
-        fun <T : Any> codec(registry: Registry<T>): Codec<HTRegistryEntryList<T>> =
-            Codec.either(TagKey.codec(registry.key), registry.entryCodec).xmap(
-                { either: Either<TagKey<T>, RegistryEntry<T>> -> either.map({ ofTag(it, registry) }, ::of) },
-                { entryList: HTRegistryEntryList<T> -> entryList.storage.mapRight(registry::getEntry) },
-            )
-
-        @JvmStatic
-        fun <T : Any> packetCodec(registry: Registry<T>): PacketCodec<RegistryByteBuf, HTRegistryEntryList<T>> =
-            object : PacketCodec<RegistryByteBuf, HTRegistryEntryList<T>> {
-                override fun decode(buf: RegistryByteBuf): HTRegistryEntryList<T> {
-                    val isTag: Boolean = buf.readBoolean()
-                    val id: Identifier = buf.readIdentifier()
-                    return when (isTag) {
-                        true -> ofTag(TagKey.of(registry.key, id), registry)
-                        false -> of(registry.getEntry(id).orElseThrow())
-                    }
-                }
-
-                override fun encode(buf: RegistryByteBuf, value: HTRegistryEntryList<T>) {
-                    value.storage
-                        .ifLeft { tagKey: TagKey<T> ->
-                            buf.writeBoolean(true)
-                            buf.writeIdentifier(tagKey.id)
-                        }.ifRight { entry: T ->
-                            buf.writeBoolean(false)
-                            buf.writeIdentifier(registry.getId(entry))
-                        }
-                }
-            }
-
         /**
-         * Create a new [HTRegistryEntryList] instance for [T] value
+         * 空の[HTRegistryEntryList]を返します。
          */
         @JvmStatic
-        fun <T : Any> of(entry: RegistryEntry<T>): HTRegistryEntryList<T> = of(entry.value())
+        fun <T : Any> empty(): HTRegistryEntryList<T> = Empty()
 
         /**
-         * Create a new [HTRegistryEntryList] instance for [T] value
+         * [value]を持つ[HTRegistryEntryList]を返します。
          */
         @JvmStatic
-        fun <T : Any> of(entry: T): HTRegistryEntryList<T> = Direct(entry)
+        fun <T : Any> direct(value: T): HTRegistryEntryList<T> = direct(listOf(value))
 
         /**
-         * Create a new [HTRegistryEntryList] instance for [TagKey]
+         * [values]を持つ[HTRegistryEntryList]を返します。
          */
         @JvmStatic
-        fun <T : Any> ofTag(tagKey: TagKey<T>, registry: Registry<T>): HTRegistryEntryList<T> = Tag(tagKey, registry::iterateEntries)
+        fun <T : Any> direct(vararg values: T): HTRegistryEntryList<T> = direct(values.toList())
 
         /**
-         * Create a new [HTRegistryEntryList] instance for [TagKey]
+         * [values]を持つ[HTRegistryEntryList]を返します。
          */
         @JvmStatic
-        fun <T : Any> ofTag(tagKey: TagKey<T>, valueGetter: HTTagValueGetter<T>): HTRegistryEntryList<T> = Tag(tagKey, valueGetter)
+        fun <T : Any> direct(values: List<T>): HTRegistryEntryList<T> = Direct(values)
+
+        /**
+         * [tagKey]を持つ[HTRegistryEntryList]を返します。
+         */
+        @JvmStatic
+        fun <T : Any> fromTag(tagKey: TagKey<T>, lookup: RegistryEntryLookup<T>): HTRegistryEntryList<T> =
+            fromTag(tagKey, HTTagValueGetter.ofLookup(lookup))
+
+        /**
+         * [tagKey]を持つ[HTRegistryEntryList]を返します。
+         */
+        @JvmStatic
+        fun <T : Any> fromTag(tagKey: TagKey<T>, registry: Registry<T>): HTRegistryEntryList<T> = fromTag(tagKey, registry::iterateEntries)
+
+        /**
+         * [tagKey]を持つ[HTRegistryEntryList]を返します。
+         */
+        @JvmStatic
+        fun <T : Any> fromTag(tagKey: TagKey<T>, valueGetter: HTTagValueGetter<T>): HTRegistryEntryList<T> = Tagged(tagKey, valueGetter)
     }
 
+    /**
+     * [TagKey]または[List]を持つ[Either]を返します。
+     */
+    val storage: Either<TagKey<T>, List<T>>
+
+    /**
+     * この[HTRegistryEntryList]の要素が空か判定します。
+     */
     val isEmpty: Boolean
+        get() = entries.isEmpty()
 
+    /**
+     * この[HTRegistryEntryList]の要素の個数を返します。
+     */
     val size: Int
+        get() = entries.size
 
     /**
-     * Unwrap [HTRegistryEntryList] into [Either]
-     * @see Either
+     * この[HTRegistryEntryList]の要素のリストを返します。
      */
-    val storage: Either<TagKey<T>, T>
-
-    operator fun get(index: Int): T
+    val entries: List<T>
 
     /**
-     * Transform entries into [MutableText]
+     * この[HTRegistryEntryList]からランダムな要素を返します。
      */
-    fun getText(transform: (T) -> Text): MutableText = storage.map(TagKey<T>::getName, transform).copy()
+    fun getRandom(random: Random): T? = entries.randomOrNull(random)
 
-    //    Direct    //
+    /**
+     * 指定された[index]に対応する要素を返します。
+     */
+    operator fun get(index: Int): T? = entries.getOrNull(index)
 
-    private data class Direct<T : Any>(val entry: T) : HTRegistryEntryList<T> {
-        override val isEmpty: Boolean = false
+    /**
+     * 指定された要素[entry]が含まれるか判定します。
+     */
+    operator fun contains(entry: T): Boolean = entries.contains(entry)
 
-        override val size: Int = 1
+    override fun iterator(): Iterator<T> = entries.iterator()
 
-        override val storage: Either<TagKey<T>, T> = Either.right(entry)
+    private class Empty<T : Any> : HTRegistryEntryList<T> {
+        override val storage: Either<TagKey<T>, List<T>> = Either.right(listOf())
 
-        override fun get(index: Int): T = when (index) {
-            0 -> entry
-            else -> throw IndexOutOfBoundsException()
-        }
-
-        override fun iterator(): Iterator<T> = listOf(entry).iterator()
+        override val entries: List<T> = listOf()
     }
 
-    //    Tag    //
+    private class Direct<T : Any>(values: List<T>) : HTRegistryEntryList<T> {
+        override val storage: Either<TagKey<T>, List<T>> = Either.right(values)
 
-    private data class Tag<T : Any>(val tagKey: TagKey<T>, val valueGetter: HTTagValueGetter<T>) : HTRegistryEntryList<T> {
-        private val entries: List<T>
+        override val entries: List<T> = values
+    }
+
+    private class Tagged<T : Any>(private val tagKey: TagKey<T>, private val valueGetter: HTTagValueGetter<T>) :
+        HTRegistryEntryList<T> {
+        override val storage: Either<TagKey<T>, List<T>> = Either.left(tagKey)
+
+        override val entries: List<T>
             get() = valueGetter.getValues(tagKey)
-
-        override val isEmpty: Boolean
-            get() = entries.isEmpty()
-
-        override val size: Int
-            get() = entries.size
-
-        override val storage: Either<TagKey<T>, T> = Either.left(tagKey)
-
-        override fun get(index: Int): T = entries[index]
-
-        override fun iterator(): Iterator<T> = entries.iterator()
     }
 }

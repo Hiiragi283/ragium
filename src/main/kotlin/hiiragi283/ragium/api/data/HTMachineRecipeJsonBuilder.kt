@@ -78,6 +78,42 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     /**
+     * アイテムの材料を[item]から追加します。
+     * @param count 必要なアイテムの個数
+     * @param consumeType アイテムを消費するときの挙動
+     * @throws IllegalStateException 重複した材料が登録された場合
+     */
+    fun itemInput(
+        item: ItemConvertible,
+        count: Int = 1,
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(item, count, consumeType))
+
+    /**
+     * アイテムの材料を[items]から追加します。
+     * @param count 必要なアイテムの個数
+     * @param consumeType アイテムを消費するときの挙動
+     * @throws IllegalStateException 重複した材料が登録された場合
+     */
+    fun itemInput(
+        vararg items: ItemConvertible,
+        count: Int = 1,
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(items.toList(), count, consumeType)
+
+    /**
+     * アイテムの材料を[items]から追加します。
+     * @param count 必要なアイテムの個数
+     * @param consumeType アイテムを消費するときの挙動
+     * @throws IllegalStateException 重複した材料が登録された場合
+     */
+    fun itemInput(
+        items: List<ItemConvertible>,
+        count: Int = 1,
+        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
+    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(items, count, consumeType))
+
+    /**
      * アイテムの材料を[prefix]と[material]から追加します。
      * @param count 必要なアイテムの個数
      * @param consumeType アイテムを消費するときの挙動
@@ -101,18 +137,6 @@ class HTMachineRecipeJsonBuilder private constructor(
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
     ): HTMachineRecipeJsonBuilder = itemInput(provider.prefixedTagKey, count, consumeType)
-
-    /**
-     * アイテムの材料を[item]から追加します。
-     * @param count 必要なアイテムの個数
-     * @param consumeType アイテムを消費するときの挙動
-     * @throws IllegalStateException 重複した材料が登録された場合
-     */
-    fun itemInput(
-        item: ItemConvertible,
-        count: Int = 1,
-        consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(item, count, consumeType))
 
     /**
      * アイテムの材料を[tagKey]から追加します。
@@ -141,6 +165,14 @@ class HTMachineRecipeJsonBuilder private constructor(
      */
     fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
         fluidInput(HTFluidIngredient.of(fluid, amount))
+
+    /**
+     * 液体の材料を[fluids]から追加します。
+     * @param amount 必要な液体の量
+     * @throws IllegalStateException 重複した材料が登録された場合
+     */
+    fun fluidInput(fluids: List<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+        fluidInput(HTFluidIngredient.of(fluids, amount))
 
     /**
      * 液体の材料を[content]から追加します。

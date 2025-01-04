@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTBlockTagPattern(val tagKey: TagKey<Block>) : HTMultiblockPattern {
-    private val entryList: HTRegistryEntryList<Block> = HTRegistryEntryList.ofTag(tagKey, Registries.BLOCK)
+    private val entryList: HTRegistryEntryList<Block> = HTRegistryEntryList.fromTag(tagKey, Registries.BLOCK)
 
     override val text: MutableText = tagKey.name.copy()
 
@@ -22,7 +22,7 @@ class HTBlockTagPattern(val tagKey: TagKey<Block>) : HTMultiblockPattern {
 
     fun getCurrentState(world: World): BlockState? = when (entryList.size) {
         0 -> null
-        1 -> entryList[0].defaultState
-        else -> entryList[((world.time % (20 * entryList.size)) / 20).toInt()].defaultState
-    }
+        1 -> entryList[0]
+        else -> entryList[((world.time % (20 * entryList.size)) / 20).toInt()]
+    }?.defaultState
 }

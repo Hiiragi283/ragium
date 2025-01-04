@@ -1,14 +1,17 @@
 {
   "type": "ragium:machine",
-  "catalyst": "minecraft:gravel",
   "definition": {
     "type": "ragium:grinder",
     "tier": "primitive"
   },
   "item_inputs": [
-    "ragium:slag"
+    "#c:sandstone/uncolored_blocks"
   ],
   "item_outputs": [
-    "minecraft:gravel"
+    {
+      "count": 4,
+      "item": "minecraft:sand"
+    },
+    "ragium:niter_dust"
   ]
 }

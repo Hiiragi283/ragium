@@ -12,7 +12,6 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.StringIdentifiable
 import java.util.*
@@ -103,11 +102,8 @@ fun <T : StringIdentifiable> identifiedPacketCodec(entries: Iterable<T>): Packet
 /**
  * [RegistryEntry]の[PacketCodec]を返します。
  */
-val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<ByteBuf, RegistryEntry<T>>
-    get() = RegistryKey.createPacketCodec(key).xmap(
-        this::getEntryOrThrow,
-        { entry: RegistryEntry<T> -> entry.key.orElseThrow() },
-    )
+val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<RegistryByteBuf, RegistryEntry<T>>
+    get() = PacketCodecs.registryEntry(this.key)
 
 //    DataResult    //
 

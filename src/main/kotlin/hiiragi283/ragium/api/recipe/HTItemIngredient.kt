@@ -3,11 +3,10 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.RagiumCodecs
-import hiiragi283.ragium.api.extension.identifiedCodec
-import hiiragi283.ragium.api.extension.identifiedPacketCodec
-import hiiragi283.ragium.api.extension.isAir
-import hiiragi283.ragium.api.extension.isIn
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.util.HTRegistryEntryList
+import hiiragi283.ragium.api.util.codec.HTRegistryEntryListCodec
+import hiiragi283.ragium.api.util.codec.HTRegistryEntryPacketCodec
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -33,14 +32,16 @@ class HTItemIngredient private constructor(
     val consumeType: ConsumeType = ConsumeType.DECREMENT,
 ) : Predicate<ItemStack> {
     companion object {
+        @JvmStatic
+        private val ITEM_CODEC: HTRegistryEntryListCodec<Item> = HTRegistryEntryListCodec(Registries.ITEM)
+
         @JvmField
         val CODEC: Codec<HTItemIngredient> = RagiumCodecs.simpleOrComplex(
-            HTRegistryEntryList.codec(Registries.ITEM).xmap(::HTItemIngredient, HTItemIngredient::entryList),
+            ITEM_CODEC.xmap(::HTItemIngredient, HTItemIngredient::entryList),
             RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        HTRegistryEntryList
-                            .codec(Registries.ITEM)
+                        ITEM_CODEC
                             .fieldOf("items")
                             .forGetter(HTItemIngredient::entryList),
                         Codec
@@ -57,7 +58,7 @@ class HTItemIngredient private constructor(
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTItemIngredient> = PacketCodec
             .tuple(
-                HTRegistryEntryList.packetCodec(Registries.ITEM),
+                HTRegistryEntryPacketCodec(Registries.ITEM),
                 HTItemIngredient::entryList,
                 PacketCodecs.VAR_INT,
                 HTItemIngredient::count,
@@ -66,23 +67,26 @@ class HTItemIngredient private constructor(
                 ::HTItemIngredient,
             )
 
-        @Suppress("DEPRECATION")
         @JvmStatic
         fun of(item: ItemConvertible, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
-            HTItemIngredient(HTRegistryEntryList.of(item.asItem()), count, consumeType)
+            HTItemIngredient(HTRegistryEntryList.direct(item.asItem()), count, consumeType)
+
+        @JvmStatic
+        fun of(items: List<ItemConvertible>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
+            HTItemIngredient(HTRegistryEntryList.direct(items.map(ItemConvertible::asItem)), count, consumeType)
 
         @JvmStatic
         fun of(tagKey: TagKey<Item>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
-            HTItemIngredient(HTRegistryEntryList.ofTag(tagKey, Registries.ITEM), count, consumeType)
+            HTItemIngredient(HTRegistryEntryList.fromTag(tagKey, Registries.ITEM), count, consumeType)
     }
 
     val isEmpty: Boolean
-        get() = entryList.storage.map({ false }, { it.isAir }) || count <= 0
+        get() = entryList.storage.map({ false }, { it.isEmpty() || it.all(Item::isAir) }) || count <= 0
 
     fun <T : Any> map(transform: (Item, Int) -> T): List<T> = entryList.map { transform(it, count) }
 
     val text: MutableText
-        get() = entryList.getText(Item::getName)
+        get() = entryList.asText(Item::getName)
 
     val entryMap: Map<Item, Int> = entryList.associateWith { count }
 
