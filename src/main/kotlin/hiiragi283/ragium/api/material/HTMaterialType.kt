@@ -12,6 +12,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.GEM,
         HTTagPrefix.ORE,
         HTTagPrefix.STORAGE_BLOCK,
+        HTTagPrefix.WIRE,
     ),
     METAL(
         HTTagPrefix.DUST,
@@ -22,6 +23,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.RAW_MATERIAL,
         HTTagPrefix.ROD,
         HTTagPrefix.STORAGE_BLOCK,
+        HTTagPrefix.WIRE,
     ),
     MINERAL(
         HTTagPrefix.DUST,

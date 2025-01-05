@@ -9,24 +9,20 @@
   ],
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:blast_furnace",
+    "type": "ragium:assembler",
     "tier": "primitive"
   },
   "item_inputs": [
+    "#minecraft:wool",
     {
-      "count": 3,
-      "items": "#c:ingots/steel"
-    },
-    {
-      "count": 3,
-      "items": "#c:ingots/copper"
-    },
-    {
-      "count": 3,
-      "items": "#c:ingots/tin"
+      "consume_type": "damage",
+      "items": "minecraft:shears"
     }
   ],
   "item_outputs": [
-    "energizedpower:advanced_alloy_ingot"
+    {
+      "count": 18,
+      "item": "energizedpower:cable_insulator"
+    }
   ]
 }

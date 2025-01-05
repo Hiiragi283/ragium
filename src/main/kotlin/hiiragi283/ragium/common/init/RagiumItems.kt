@@ -411,6 +411,7 @@ object RagiumItems {
         PIPE,
         PLATE,
         ROD,
+        WIRE,
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_press_mold")

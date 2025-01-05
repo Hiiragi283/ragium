@@ -13,9 +13,12 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    "#c:ingots/iron",
+    "#c:ingots/tin",
     "#c:silicon",
-    "#c:ingots/copper"
+    {
+      "count": 2,
+      "items": "#c:dusts/redstone"
+    }
   ],
   "item_outputs": [
     "energizedpower:redstone_alloy_ingot"

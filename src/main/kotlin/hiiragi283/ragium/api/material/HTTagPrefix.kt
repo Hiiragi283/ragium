@@ -36,6 +36,7 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
     STORAGE_BLOCK("storage_blocks", false) {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },
+    WIRE("wires"),
     ;
 
     companion object {

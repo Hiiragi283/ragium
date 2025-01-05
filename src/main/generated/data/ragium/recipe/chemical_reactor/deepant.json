@@ -5,7 +5,10 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    "#c:aqua_regia"
+    {
+      "amount": 27000,
+      "fluids": "#c:aqua_regia"
+    }
   ],
   "item_inputs": [
     {

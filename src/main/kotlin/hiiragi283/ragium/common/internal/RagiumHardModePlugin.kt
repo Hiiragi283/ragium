@@ -103,6 +103,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumItems.PressMolds.PIPE to ConventionalItemTags.CHESTS,
             RagiumItems.PressMolds.PLATE to HTTagPrefix.PLATE.commonTagKey,
             RagiumItems.PressMolds.ROD to HTTagPrefix.ROD.commonTagKey,
+            RagiumItems.PressMolds.WIRE to HTTagPrefix.WIRE.commonTagKey,
         ).forEach { (pressMold: RagiumItems.PressMolds, input: TagKey<Item>) ->
             HTShapedRecipeJsonBuilder
                 .create(pressMold)

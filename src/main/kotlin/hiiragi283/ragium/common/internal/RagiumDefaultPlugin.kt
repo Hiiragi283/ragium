@@ -513,6 +513,16 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .offerTo(exporter, output)
             }
         }
+        // ingot -> wire
+        helper.useItemIfPresent(entry, HTTagPrefix.WIRE) { output: Item ->
+            // Compressor Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.COMPRESSOR)
+                .itemInput(HTTagPrefix.INGOT, key)
+                .catalyst(RagiumItems.PressMolds.WIRE)
+                .itemOutput(output, 3)
+                .offerTo(exporter, output)
+        }
 
         // ore -> raw/gem
         helper.useItemFromRawPrefix(entry) { output: Item ->
