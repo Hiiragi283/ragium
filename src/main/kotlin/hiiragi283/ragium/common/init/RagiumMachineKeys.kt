@@ -60,6 +60,9 @@ object RagiumMachineKeys {
     val ASSEMBLER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("assembler"))
 
     @JvmField
+    val ASSEMBLY_LINE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("assembly_line"))
+
+    @JvmField
     val BLAST_FURNACE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("blast_furnace"))
 
     @JvmField
@@ -101,6 +104,7 @@ object RagiumMachineKeys {
     @JvmField
     val PROCESSORS: List<HTMachineKey> = listOf(
         ASSEMBLER,
+        ASSEMBLY_LINE,
         BLAST_FURNACE,
         CHEMICAL_REACTOR,
         COMPRESSOR,

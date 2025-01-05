@@ -18,13 +18,13 @@ import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 class HTMachineRecipe(
-    override val definition: HTMachineDefinition,
+    definition: HTMachineDefinition,
     override val itemIngredients: List<HTItemIngredient>,
-    private val fluidInputs: List<HTFluidIngredient>,
+    override val fluidIngredients: List<HTFluidIngredient>,
     override val catalyst: HTItemIngredient?,
-    private val itemOutputs: List<HTItemResult>,
-    private val fluidOutputs: List<HTFluidResult>,
-) : HTMachineRecipeBase {
+    override val itemResults: List<HTItemResult>,
+    override val fluidResults: List<HTFluidResult>,
+) : HTMachineRecipeBase(definition) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMachineRecipe> = RecordCodecBuilder.mapCodec { instance ->
@@ -40,35 +40,35 @@ class HTMachineRecipe(
                     HTFluidIngredient.Companion.CODEC
                         .listOf()
                         .optionalFieldOf("fluid_inputs", listOf())
-                        .forGetter(HTMachineRecipe::fluidInputs),
+                        .forGetter(HTMachineRecipe::fluidIngredients),
                     HTItemIngredient.Companion.CODEC
                         .optionalFieldOf("catalyst")
                         .forOptionalGetter(HTMachineRecipe::catalyst),
                     HTItemResult.Companion.CODEC
                         .listOf()
                         .optionalFieldOf("item_outputs", listOf())
-                        .forGetter(HTMachineRecipe::itemOutputs),
+                        .forGetter(HTMachineRecipe::itemResults),
                     HTFluidResult.Companion.CODEC
                         .listOf()
                         .optionalFieldOf("fluid_outputs", listOf())
-                        .forGetter(HTMachineRecipe::fluidOutputs),
+                        .forGetter(HTMachineRecipe::fluidResults),
                 ).apply(instance, ::HTMachineRecipe)
         }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineRecipe> = PacketCodec.tuple(
-            HTMachineDefinition.Companion.PACKET_CODEC,
+            HTMachineDefinition.PACKET_CODEC,
             HTMachineRecipe::definition,
-            HTItemIngredient.Companion.PACKET_CODEC.toList(),
+            HTItemIngredient.PACKET_CODEC.toList(),
             HTMachineRecipe::itemIngredients,
-            HTFluidIngredient.Companion.PACKET_CODEC.toList(),
-            HTMachineRecipe::fluidInputs,
-            PacketCodecs.optional(HTItemIngredient.Companion.PACKET_CODEC),
+            HTFluidIngredient.PACKET_CODEC.toList(),
+            HTMachineRecipe::fluidIngredients,
+            PacketCodecs.optional(HTItemIngredient.PACKET_CODEC),
             { Optional.ofNullable(it.catalyst) },
-            HTItemResult.Companion.PACKET_CODEC.toList(),
-            HTMachineRecipe::itemOutputs,
-            HTFluidResult.Companion.PACKET_CODEC.toList(),
-            HTMachineRecipe::fluidOutputs,
+            HTItemResult.PACKET_CODEC.toList(),
+            HTMachineRecipe::itemResults,
+            HTFluidResult.PACKET_CODEC.toList(),
+            HTMachineRecipe::fluidResults,
             ::HTMachineRecipe,
         )
     }
@@ -91,17 +91,11 @@ class HTMachineRecipe(
 
     //    HTMachineRecipeBase    //
 
-    override fun getFluidIngredient(index: Int): HTFluidIngredient? = fluidInputs.getOrNull(index)
-
-    override fun getItemResult(index: Int): HTItemResult? = itemOutputs.getOrNull(index)
-
-    override fun getFluidResult(index: Int): HTFluidResult? = fluidOutputs.getOrNull(index)
-
     override fun matches(input: HTMachineInput, world: World): Boolean {
         if (input.key != this.key) return false
         if (input.tier < this.tier) return false
         if (!HTShapelessInputResolver.canMatch(itemIngredients, input.itemInputs)) return false
-        fluidInputs.forEachIndexed { index: Int, fluid: HTFluidIngredient ->
+        fluidIngredients.forEachIndexed { index: Int, fluid: HTFluidIngredient ->
             if (!fluid.test(input.getFluidInSlot(index))) {
                 return false
             }

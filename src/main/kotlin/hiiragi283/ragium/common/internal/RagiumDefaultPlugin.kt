@@ -114,10 +114,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
         }
-        /*helper.modify(RagiumMachineKeys.ALLOY_FURNACE) {
-            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
-            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE)
-        }*/
+        helper.modify(RagiumMachineKeys.ASSEMBLY_LINE) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTAssemblyLineBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.ASSEMBLY_LINE)
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_CRAFTER_CRAFT)
+        }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.BLAST_FURNACE)

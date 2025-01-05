@@ -318,15 +318,15 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.MAGMA_BLOCK,
         )
         // processors
-        /*createProcessor(
-            exporter,
-            RagiumMachineKeys.ALLOY_FURNACE,
-            Items.FURNACE
-        )*/
         createProcessor(
             exporter,
             RagiumMachineKeys.ASSEMBLER,
             RagiumItems.Circuits.PRIMITIVE,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.ASSEMBLY_LINE,
+            Items.CRAFTER,
         )
         createProcessor(
             exporter,

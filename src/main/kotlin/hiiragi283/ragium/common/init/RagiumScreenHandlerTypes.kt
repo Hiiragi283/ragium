@@ -13,6 +13,10 @@ import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
     @JvmField
+    val ASSEMBLY_LINE: ScreenHandlerType<HTAssemblyLineScreenHandler> =
+        register("assembly_line", ::HTAssemblyLineScreenHandler)
+
+    @JvmField
     val CHEMICAL_MACHINE: ScreenHandlerType<HTChemicalMachineScreenHandler> =
         register("chemical_machine", ::HTChemicalMachineScreenHandler)
 
@@ -27,6 +31,10 @@ object RagiumScreenHandlerTypes {
     @JvmField
     val LARGE_MACHINE: ScreenHandlerType<HTLargeMachineScreenHandler> =
         register("large_machine", ::HTLargeMachineScreenHandler)
+
+    @JvmField
+    val ROCK_GENERATOR: ScreenHandlerType<HTRockGeneratorScreenHandler> =
+        register("rock_generator", ::HTRockGeneratorScreenHandler)
 
     @JvmField
     val SMALL_MACHINE: ScreenHandlerType<HTSmallMachineScreenHandler> =

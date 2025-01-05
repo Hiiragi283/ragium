@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
-import hiiragi283.ragium.common.screen.HTSimpleMachineScreenHandler
+import hiiragi283.ragium.common.screen.HTRockGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
@@ -33,15 +33,15 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTScreenFluidProvider {
     override var machineKey: HTMachineKey = RagiumMachineKeys.ROCK_GENERATOR
 
-    val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
+    val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
 
     val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     val processor = HTMachineRecipeProcessor(
         inventory,
-        intArrayOf(0, 1),
-        intArrayOf(3, 4),
-        2,
+        intArrayOf(),
+        intArrayOf(1),
+        0,
         fluidStorage,
         intArrayOf(0),
         intArrayOf(1),
@@ -78,7 +78,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSimpleMachineScreenHandler(syncId, playerInventory, createContext())
+        HTRockGeneratorScreenHandler(syncId, playerInventory, createContext())
 
     //    HTScreenFluidProvider    //
 

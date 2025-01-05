@@ -73,6 +73,10 @@ object RagiumBlockEntityTypes {
         register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
+    val ASSEMBLY_LINE: BlockEntityType<HTAssemblyLineBlockEntity> =
+        register("assembly_line", ::HTAssemblyLineBlockEntity)
+
+    @JvmField
     val BIOMASS_FERMENTER: BlockEntityType<HTBiomassFermenterBlockEntity> =
         register("biomass_fermenter", ::HTBiomassFermenterBlockEntity)
 
@@ -199,6 +203,7 @@ object RagiumBlockEntityTypes {
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
+        registerMachineBlocks(RagiumMachineKeys.ASSEMBLY_LINE, ASSEMBLY_LINE)
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, LARGE_PROCESSOR)

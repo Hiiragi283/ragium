@@ -12,18 +12,34 @@ import net.minecraft.registry.RegistryWrapper
  * @see hiiragi283.ragium.common.recipe.HTMachineRecipe
  * @see hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
  */
-interface HTMachineRecipeBase : Recipe<HTMachineInput> {
-    val definition: HTMachineDefinition
-
-    val key: HTMachineKey
-        get() = definition.key
-    val tier: HTMachineTier
-        get() = definition.tier
+abstract class HTMachineRecipeBase(val definition: HTMachineDefinition) : Recipe<HTMachineInput> {
+    val key: HTMachineKey = definition.key
+    val tier: HTMachineTier = definition.tier
 
     /**
      * アイテムの材料の一覧
      */
-    val itemIngredients: List<HTItemIngredient>
+    abstract val itemIngredients: List<HTItemIngredient>
+
+    /**
+     * 液体の材料の一覧
+     */
+    abstract val fluidIngredients: List<HTFluidIngredient>
+
+    /**
+     * 触媒となる[HTItemIngredient]
+     */
+    abstract val catalyst: HTItemIngredient?
+
+    /**
+     * アイテムの完成品の一覧
+     */
+    abstract val itemResults: List<HTItemResult>
+
+    /**
+     * 液体の完成品の一覧
+     */
+    abstract val fluidResults: List<HTFluidResult>
 
     /**
      * 指定した[index]から[HTItemIngredient]を返します。
@@ -33,36 +49,31 @@ interface HTMachineRecipeBase : Recipe<HTMachineInput> {
     /**
      * 指定した[index]から[HTFluidIngredient]を返します。
      */
-    fun getFluidIngredient(index: Int): HTFluidIngredient?
-
-    /**
-     * 触媒となる[HTItemIngredient]
-     */
-    val catalyst: HTItemIngredient?
+    fun getFluidIngredient(index: Int): HTFluidIngredient? = fluidIngredients.getOrNull(index)
 
     /**
      * 指定した[index]から[HTItemResult]を返します。
      */
-    fun getItemResult(index: Int): HTItemResult?
+    fun getItemResult(index: Int): HTItemResult? = itemResults.getOrNull(index)
 
     /**
      * 指定した[index]から[HTFluidResult]を返します。
      */
-    fun getFluidResult(index: Int): HTFluidResult?
+    fun getFluidResult(index: Int): HTFluidResult? = fluidResults.getOrNull(index)
 
     //    Recipe    //
 
-    override fun craft(input: HTMachineInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)
+    final override fun craft(input: HTMachineInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)
 
-    override fun fits(width: Int, height: Int): Boolean = true
+    final override fun fits(width: Int, height: Int): Boolean = true
 
-    override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = getItemResult(0)?.stack ?: ItemStack.EMPTY
+    final override fun getResult(registriesLookup: RegistryWrapper.WrapperLookup): ItemStack = getItemResult(0)?.stack ?: ItemStack.EMPTY
 
-    override fun isIgnoredInRecipeBook(): Boolean = true
+    final override fun isIgnoredInRecipeBook(): Boolean = true
 
-    override fun showNotification(): Boolean = false
+    final override fun showNotification(): Boolean = false
 
-    override fun createIcon(): ItemStack = definition.iconStack
+    final override fun createIcon(): ItemStack = definition.iconStack
 
-    override fun isEmpty(): Boolean = true
+    final override fun isEmpty(): Boolean = true
 }
