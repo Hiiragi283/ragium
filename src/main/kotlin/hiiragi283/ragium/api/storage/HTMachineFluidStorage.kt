@@ -101,9 +101,10 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
     //    HTFluidInteractable    //
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean {
+        
         parts.forEachIndexed { index: Int, storageIn: SingleFluidStorage ->
             val storageIO: HTStorageIO = getStorageIO(index)
-            if (!storageIO.canExtract) return false
+            if (!storageIO.canExtract) return@forEachIndexed
             if (player.interactWithFluidStorage(storageIn, storageIO)) {
                 return true
             }
