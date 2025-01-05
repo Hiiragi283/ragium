@@ -20,6 +20,7 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.ORE,
         HTTagPrefix.PLATE,
         HTTagPrefix.RAW_MATERIAL,
+        HTTagPrefix.ROD,
         HTTagPrefix.STORAGE_BLOCK,
     ),
     MINERAL(

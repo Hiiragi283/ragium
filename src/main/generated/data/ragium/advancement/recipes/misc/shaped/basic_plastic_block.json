@@ -1,19 +1,11 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "oritech"
-      ]
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_the_item": {
       "conditions": {
         "items": [
           {
-            "items": "oritech:plastic_sheet"
+            "items": "#c:plastics/basic"
           }
         ]
       },
@@ -21,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:stonecutting/plastic_plate_from"
+        "recipe": "ragium:shaped/basic_plastic_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -29,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_the_item"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:stonecutting/plastic_plate_from"
+      "ragium:shaped/basic_plastic_block"
     ]
   }
 }

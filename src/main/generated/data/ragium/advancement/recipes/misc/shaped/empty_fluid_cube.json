@@ -1,19 +1,11 @@
 {
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "oritech"
-      ]
-    }
-  ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_input": {
+    "has_the_item": {
       "conditions": {
         "items": [
           {
-            "items": "oritech:polymer_resin"
+            "items": "#c:glass_panes"
           }
         ]
       },
@@ -21,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:stonecutting/polymer_resin_from"
+        "recipe": "ragium:shaped/empty_fluid_cube"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -29,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_input"
+      "has_the_item"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:stonecutting/polymer_resin_from"
+      "ragium:shaped/empty_fluid_cube"
     ]
   }
 }

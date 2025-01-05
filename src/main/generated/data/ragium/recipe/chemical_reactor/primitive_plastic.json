@@ -4,16 +4,10 @@
     "type": "ragium:chemical_reactor",
     "tier": "primitive"
   },
-  "fluid_inputs": [
-    "#c:oxygen"
-  ],
   "item_inputs": [
     "ragium:polymer_resin"
   ],
   "item_outputs": [
-    {
-      "count": 2,
-      "item": "ragium:plastic_plate"
-    }
+    "ragium:primitive_plastic"
   ]
 }

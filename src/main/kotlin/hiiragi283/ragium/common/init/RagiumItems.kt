@@ -22,7 +22,9 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 
@@ -353,6 +355,19 @@ object RagiumItems {
 
     //    Ingredients    //
 
+    enum class Plastics(override val tier: HTMachineTier) :
+        HTItemContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_plastic")
+
+        val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "plastics/${name.lowercase()}"))
+    }
+
     enum class CircuitBoards(override val tier: HTMachineTier) :
         HTItemContent,
         HTMachineTierProvider {
@@ -449,12 +464,6 @@ object RagiumItems {
     val POLYMER_RESIN: HTItemContent = HTContent.ofItem("polymer_resin")
 
     @JvmField
-    val PLASTIC_PLATE: HTItemContent = HTContent.ofItem("plastic_plate")
-
-    @JvmField
-    val ENGINEERING_PLASTIC_PLATE: HTItemContent = HTContent.ofItem("engineering_plastic_plate")
-
-    @JvmField
     val STELLA_PLATE: HTItemContent = HTContent.ofItem("stella_plate")
 
     @JvmField
@@ -516,8 +525,6 @@ object RagiumItems {
         add(SOAP)
         // plastic
         add(POLYMER_RESIN)
-        add(PLASTIC_PLATE)
-        add(ENGINEERING_PLASTIC_PLATE)
         add(STELLA_PLATE)
         // silicon
         add(CRUDE_SILICON)
@@ -576,25 +583,14 @@ object RagiumItems {
         }.forEach { content ->
             registerItem(content) { Item(it.material(content.material, content.tagPrefix)) }
         }
+        Plastics.entries.forEach { plastic: Plastics ->
+            registerItem(plastic, itemSettings().tieredText(RagiumTranslationKeys.PLASTIC, plastic.tier))
+        }
         CircuitBoards.entries.forEach { board: CircuitBoards ->
-            registerItem(board) {
-                Item(
-                    it.tieredText(
-                        RagiumTranslationKeys.CIRCUIT_BOARD,
-                        board.tier,
-                    ),
-                )
-            }
+            registerItem(board, itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, board.tier))
         }
         Circuits.entries.forEach { circuit: Circuits ->
-            registerItem(circuit) {
-                Item(
-                    it.tieredText(
-                        RagiumTranslationKeys.CIRCUIT,
-                        circuit.tier,
-                    ),
-                )
-            }
+            registerItem(circuit, itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT, circuit.tier))
         }
         Processors.entries.forEach(::registerItem)
         PressMolds.entries.forEach(::registerItem)

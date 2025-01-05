@@ -103,6 +103,11 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         }
     }
 
+    fun pattern2x2(): HTShapedRecipeJsonBuilder = patterns(
+        "AA",
+        "AA",
+    )
+
     fun pattern3x3(): HTShapedRecipeJsonBuilder = patterns(
         "AAA",
         "AAA",

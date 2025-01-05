@@ -56,15 +56,4 @@ object HTStonecuttingRecipeJsonBuilder {
             ).criterion("has_input", RecipeProvider.conditionsFromTag(input))
             .offerTo(exporter, id.withPrefixedPath("stonecutting/").withSuffixedPath(suffix))
     }
-
-    @JvmStatic
-    fun registerExchange(
-        exporter: RecipeExporter,
-        input: ItemConvertible,
-        output: ItemConvertible,
-        category: RecipeCategory = RecipeCategory.MISC,
-    ) {
-        register(exporter, input, output, category = category, suffix = "_to")
-        register(exporter, output, input, category = category, suffix = "_from")
-    }
 }

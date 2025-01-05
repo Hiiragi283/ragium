@@ -47,6 +47,7 @@ object RagiumTranslationKeys {
     const val EXPORTER = "content.ragium.exporter"
     const val GRATE = "content.ragium.grate"
     const val HULL = "content.ragium.hull"
+    const val PLASTIC = "content.ragium.plastic"
 
     //    Fluid    //
 

@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:petro_chemistry/polymer_resin",
+  "parent": "ragium:petro_chemistry/plastic1",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:engineering_plastic_plate"
+            "items": "#c:plastics/basic"
           }
         ]
       },
@@ -14,13 +14,17 @@
   },
   "display": {
     "description": "",
-    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:engineering_plastic_plate"
+      "id": "ragium:basic_plastic"
     },
     "title": {
-      "translate": "item.ragium.engineering_plastic_plate"
+      "translate": "machine_tier.ragium.basic.prefix",
+      "with": [
+        {
+          "translate": "content.ragium.plastic"
+        }
+      ]
     }
   },
   "requirements": [

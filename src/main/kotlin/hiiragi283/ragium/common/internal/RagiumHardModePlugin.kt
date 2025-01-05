@@ -172,7 +172,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(RagiumItems.Circuits.ADVANCED, 2)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getPrefixedTag(hardMode), 4)
-            .itemInput(RagiumItems.ENGINEERING_PLASTIC_PLATE, 4)
+            .itemInput(RagiumItems.Plastics.ADVANCED.tagKey, 4)
             .fluidInput(RagiumFluids.NOBLE_GAS)
             .itemOutput(RagiumItems.LASER_EMITTER)
             .offerTo(exporter, RagiumItems.LASER_EMITTER)
@@ -180,7 +180,7 @@ object RagiumHardModePlugin : RagiumPlugin {
         HTMachineRecipeJsonBuilder
             .create(RagiumMachineKeys.COMPRESSOR, HTMachineTier.ADVANCED)
             .itemInput(RagiumHardModeContents.ALUMINUM.getPrefixedTag(hardMode))
-            .itemInput(RagiumItems.ENGINEERING_PLASTIC_PLATE)
+            .itemInput(RagiumItems.Plastics.ADVANCED.tagKey)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getPrefixedTag(hardMode), 2)
             .itemOutput(RagiumItems.STELLA_PLATE)
             .offerTo(exporter, RagiumItems.STELLA_PLATE)
@@ -561,17 +561,17 @@ object RagiumHardModePlugin : RagiumPlugin {
                 HTMachineTier.BASIC to RagiumItemTags.SILICON_PLATES,
                 HTMachineTier.ADVANCED to RagiumItemTags.REFINED_SILICON_PLATES,
             )
-        val circuitMap: Map<HTMachineTier, TagKey<Item>> =
+        val circuitMap: Map<HTMachineTier, ItemConvertible> =
             mapOf(
-                HTMachineTier.PRIMITIVE to ConventionalItemTags.REDSTONE_DUSTS,
-                HTMachineTier.BASIC to ConventionalItemTags.GLOWSTONE_DUSTS,
-                HTMachineTier.ADVANCED to RagiumItems.Dusts.RAGI_CRYSTAL.prefixedTagKey,
+                HTMachineTier.PRIMITIVE to Items.REDSTONE,
+                HTMachineTier.BASIC to Items.GLOWSTONE_DUST,
+                HTMachineTier.ADVANCED to RagiumItems.LUMINESCENCE_DUST,
             )
 
         RagiumItems.CircuitBoards.entries.forEach { board: RagiumItems.CircuitBoards ->
             val tier: HTMachineTier = board.tier
             val plate: TagKey<Item> = boardMap[tier] ?: return@forEach
-            val dope: TagKey<Item> = circuitMap[tier] ?: return@forEach
+            val dope: ItemConvertible = circuitMap[tier] ?: return@forEach
             // board
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.ASSEMBLER, tier)

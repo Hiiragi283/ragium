@@ -3,15 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:engineering_plastic_plate"
+      "tag": "c:glass_panes"
     }
   },
   "pattern": [
-    "AA",
-    "AA"
+    " A ",
+    "A A",
+    " A "
   ],
   "result": {
-    "count": 16,
-    "id": "ragium:plastic_block"
+    "count": 4,
+    "id": "ragium:empty_fluid_cube"
   }
 }

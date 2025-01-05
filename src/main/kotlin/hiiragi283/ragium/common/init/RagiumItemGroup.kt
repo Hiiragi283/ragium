@@ -128,6 +128,7 @@ object RagiumItemGroup {
                 entries.add(RagiumItems.ITEM_FILTER)
                 entries.add(RagiumItems.TRADER_CATALOG)
 
+                entries.addAll(RagiumItems.Plastics.entries)
                 entries.addAll(RagiumItems.CircuitBoards.entries)
                 entries.addAll(RagiumItems.Circuits.entries)
                 entries.addAll(RagiumItems.Processors.entries)

@@ -106,6 +106,12 @@ enum class HTMachineTier(
 
     fun createId(key: HTMachineKey): Identifier = key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
+    fun getPlastic(): RagiumItems.Plastics = when (this) {
+        PRIMITIVE -> RagiumItems.Plastics.PRIMITIVE
+        BASIC -> RagiumItems.Plastics.BASIC
+        ADVANCED -> RagiumItems.Plastics.ADVANCED
+    }
+
     fun getCircuitBoard(): RagiumItems.CircuitBoards = when (this) {
         PRIMITIVE -> RagiumItems.CircuitBoards.PRIMITIVE
         BASIC -> RagiumItems.CircuitBoards.BASIC

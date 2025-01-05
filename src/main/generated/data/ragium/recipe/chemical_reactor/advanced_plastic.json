@@ -1,21 +1,22 @@
 {
   "type": "ragium:machine",
-  "catalyst": "ragium:rock_wool",
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"
   },
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "#c:aromatic_compounds"
+    }
+  ],
   "item_inputs": [
     {
-      "count": 4,
+      "count": 2,
       "items": "ragium:polymer_resin"
-    },
-    {
-      "count": 4,
-      "items": "ragium:rock_wool"
     }
   ],
   "item_outputs": [
-    "ragium:engineering_plastic_plate"
+    "ragium:advanced_plastic"
   ]
 }

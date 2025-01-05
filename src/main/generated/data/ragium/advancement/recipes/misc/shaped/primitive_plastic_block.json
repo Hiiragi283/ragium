@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:plastic_plate"
+            "items": "#c:plastics/primitive"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/plastic_block"
+        "recipe": "ragium:shaped/primitive_plastic_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/plastic_block"
+      "ragium:shaped/primitive_plastic_block"
     ]
   }
 }

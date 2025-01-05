@@ -5,13 +5,16 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    "#c:aromatic_compounds",
-    {
-      "amount": 27000,
-      "fluids": "#c:oxygen"
-    }
+    "#c:hydrochloric_acid",
+    "#c:oxygen"
+  ],
+  "item_inputs": [
+    "ragium:polymer_resin"
   ],
   "item_outputs": [
-    "ragium:engineering_plastic_plate"
+    {
+      "count": 2,
+      "item": "ragium:basic_plastic"
+    }
   ]
 }

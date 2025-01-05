@@ -3,15 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:plastic_plate"
+      "tag": "c:plastics/basic"
     }
   },
   "pattern": [
-    "AA",
-    "AA"
+    " A ",
+    "A A",
+    " A "
   ],
   "result": {
-    "count": 4,
-    "id": "ragium:plastic_block"
+    "count": 8,
+    "id": "ragium:empty_fluid_cube"
   }
 }

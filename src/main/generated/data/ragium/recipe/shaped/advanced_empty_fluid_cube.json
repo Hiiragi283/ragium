@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:plastic_plate"
+      "tag": "c:plastics/advanced"
     }
   },
   "pattern": [
@@ -12,7 +12,7 @@
     " A "
   ],
   "result": {
-    "count": 8,
+    "count": 16,
     "id": "ragium:empty_fluid_cube"
   }
 }
