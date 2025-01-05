@@ -196,6 +196,7 @@ internal object RagiumContentRegister {
                 RagiumItems.RawMaterials.NITER,
                 RagiumItems.RawMaterials.PYRITE,
                 RagiumItems.RawMaterials.SALT,
+                RagiumItems.RawMaterials.SPHALERITE,
                 RagiumItems.RawMaterials.SULFUR,
             ).map(ItemConvertible::asItem)
             context.modify(integrationItems) { builder: ComponentMap.Builder, item: Item ->

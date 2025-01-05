@@ -156,6 +156,7 @@ object RagiumItems {
         RAGINITE(RagiumMaterialKeys.RAGINITE),
         GALENA(RagiumMaterialKeys.GALENA),
         PYRITE(RagiumMaterialKeys.PYRITE),
+        SPHALERITE(RagiumMaterialKeys.SPHALERITE),
 
         // tier 3
         BAUXITE(RagiumMaterialKeys.BAUXITE),
