@@ -1,18 +1,21 @@
 {
   "values": [
     "ragium:air",
-    "ragium:hydrogen",
-    "ragium:nitrogen",
-    "ragium:oxygen",
-    "ragium:chlorine",
-    "ragium:carbon_monoxide",
+    "ragium:ammonia",
     "ragium:carbon_dioxide",
-    "ragium:hydrogen_fluoride",
-    "ragium:hydrogen_chloride",
+    "ragium:carbon_monoxide",
+    "ragium:chlorine",
     "ragium:chlorosilane",
-    "ragium:refined_gas",
+    "ragium:enriched_uranium_hexafluoride",
+    "ragium:hydrogen",
+    "ragium:hydrogen_chloride",
+    "ragium:hydrogen_fluoride",
+    "ragium:nitrogen",
     "ragium:noble_gas",
-    "ragium:uranium_hexafluoride",
-    "ragium:enriched_uranium_hexafluoride"
+    "ragium:oxygen",
+    "ragium:refined_gas",
+    "ragium:sulfur_dioxide",
+    "ragium:sulfur_trioxide",
+    "ragium:uranium_hexafluoride"
   ]
 }

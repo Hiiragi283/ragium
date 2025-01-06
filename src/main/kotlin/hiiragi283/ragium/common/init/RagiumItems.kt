@@ -746,7 +746,7 @@ object RagiumItems {
             RAGI_WRENCH,
             itemSettings()
                 .maxCount(1)
-                .descriptions(RagiumTranslationKeys.RAGI_WRENCH)
+                .descriptions(RagiumTranslationKeys.RAGI_WRENCH),
         )
         registerItem(STELLA_SABER, itemSettings().rarity(Rarity.RARE)) {
             HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, it)
@@ -765,14 +765,14 @@ object RagiumItems {
             itemSettings()
                 .maxCount(1)
                 .descriptions(RagiumTranslationKeys.FILTER)
-                .component(RagiumComponentTypes.FLUID_FILTER, RegistryEntryList.empty())
+                .component(RagiumComponentTypes.FLUID_FILTER, RegistryEntryList.empty()),
         )
         registerItem(
             ITEM_FILTER,
             itemSettings()
                 .maxCount(1)
                 .descriptions(RagiumTranslationKeys.FILTER)
-                .component(RagiumComponentTypes.ITEM_FILTER, RegistryEntryList.empty())
+                .component(RagiumComponentTypes.ITEM_FILTER, RegistryEntryList.empty()),
         )
         registerItem(TRADER_CATALOG, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.TRADER_CATALOG), ::HTTraderCatalogItem)
         // food
