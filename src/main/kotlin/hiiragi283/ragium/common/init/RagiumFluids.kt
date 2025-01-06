@@ -67,6 +67,7 @@ enum class RagiumFluids(
 
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
 
+    SULFUR_DIOXIDE(Color(0xff6600), "Sulfur Dioxide", "二酸化硫黄", TextureType.STICKY),
     SULFUR_TRIOXIDE(Color(0xff6600), "Sulfur Trioxide", "三酸化硫黄", TextureType.STICKY),
     SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸", TextureType.STICKY),
     MIXTURE_ACID(Color(0xff9900), "Mixture Acid", "混酸"),

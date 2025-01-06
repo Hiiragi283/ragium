@@ -404,14 +404,23 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, output)
         }
 
-        // zinc
-        helper.useItemIfPresent(RagiumMaterialKeys.ZINC, HTTagPrefix.DUST) { output: Item ->
+        // galena -> lead
+        helper.useItemIfPresent(RagiumMaterialKeys.LEAD, HTTagPrefix.INGOT) { output: Item ->
             HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.ELECTROLYZER)
-                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.SPHALERITE, 2)
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.GALENA)
                 .itemOutput(output)
-                .itemOutput(RagiumItems.Dusts.SULFUR)
-                .offerTo(exporter, RagiumAPI.id("sphalerite_dust"))
+                .fluidOutput(RagiumFluids.SULFUR_DIOXIDE)
+                .offerTo(exporter, RagiumAPI.id("lead_ingot"))
+        }
+        // sphalerite -> zinc
+        helper.useItemIfPresent(RagiumMaterialKeys.ZINC, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.SPHALERITE)
+                .itemOutput(output)
+                .fluidOutput(RagiumFluids.SULFUR_DIOXIDE)
+                .offerTo(exporter, RagiumAPI.id("zinc_ingot"))
         }
     }
 

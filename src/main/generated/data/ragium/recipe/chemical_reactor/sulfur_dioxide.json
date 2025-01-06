@@ -5,10 +5,15 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    "#c:sulfur_dioxide",
-    "#c:oxygen"
+    {
+      "amount": 162000,
+      "fluids": "#c:oxygen"
+    }
   ],
   "fluid_outputs": [
-    "ragium:sulfur_trioxide"
+    "ragium:sulfur_dioxide"
+  ],
+  "item_inputs": [
+    "#c:dusts/sulfur"
   ]
 }

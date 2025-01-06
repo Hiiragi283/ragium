@@ -20,7 +20,6 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
-import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
@@ -44,16 +43,6 @@ class HTMachineRecipeJsonBuilder private constructor(
         @JvmStatic
         fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
             .getItemId(item)
-            .path
-            .let { RagiumAPI.id(it) }
-
-        /**
-         * 指定された[fluid]のIDの名前空間を"ragium"で置換したものを返します。
-         * @see [hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder.offerTo]
-         */
-        @JvmStatic
-        fun createRecipeId(fluid: Fluid): Identifier = Registries.FLUID
-            .getId(fluid)
             .path
             .let { RagiumAPI.id(it) }
 
@@ -249,10 +238,6 @@ class HTMachineRecipeJsonBuilder private constructor(
             else -> createRecipeId(output)
         }.withSuffixedPath(suffix)
         offerTo(exporter, id)
-    }
-
-    fun offerTo(exporter: RecipeExporter, output: Fluid, suffix: String = "") {
-        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
     fun offerTo(exporter: RecipeExporter, output: HTFluidContent, suffix: String = "") {

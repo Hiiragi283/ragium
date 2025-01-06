@@ -283,19 +283,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             Items.WATER_BUCKET,
         )
         // generators
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            // combustion generator
-            HTShapedRecipeJsonBuilder
-                .create(RagiumMachineKeys.COMBUSTION_GENERATOR.createItemStack(tier))
-                .patterns(
-                    "AAA",
-                    "ABA",
-                    "ACA",
-                ).input('A', tier.getSteelMetal().getPrefixedTag(hardMode))
-                .input('B', RagiumItems.ENGINE)
-                .input('C', tier.getCircuit())
-                .offerTo(exporter, tier.createId(RagiumMachineKeys.COMBUSTION_GENERATOR))
-        }
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.COMBUSTION_GENERATOR,
+            RagiumItems.ENGINE,
+        )
         createProcessor(
             exporter,
             RagiumMachineKeys.NUCLEAR_REACTOR,
