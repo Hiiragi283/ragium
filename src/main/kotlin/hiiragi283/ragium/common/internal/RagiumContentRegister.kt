@@ -188,7 +188,7 @@ internal object RagiumContentRegister {
                 )
             }
             // add integration flag
-            val integrationItems: List<Item> = listOf<ItemConvertible>(
+            val integrationItems: List<ItemConvertible> = listOf<ItemConvertible>(
                 RagiumItems.Dusts.LEAD,
                 RagiumItems.Dusts.SILVER,
                 RagiumItems.RawMaterials.BAUXITE,
@@ -198,9 +198,13 @@ internal object RagiumContentRegister {
                 RagiumItems.RawMaterials.SALT,
                 RagiumItems.RawMaterials.SPHALERITE,
                 RagiumItems.RawMaterials.SULFUR,
-            ).map(ItemConvertible::asItem)
-            context.modify(integrationItems) { builder: ComponentMap.Builder, item: Item ->
-                builder.add(RagiumComponentTypes.FOR_INTEGRATION, Unit)
+            )
+            context.modify(integrationItems) { item: Item ->
+                add(RagiumComponentTypes.FOR_INTEGRATION, Unit)
+            }
+            // add rework flag
+            context.modify(RagiumItems.Gems.RAGIUM) {
+                add(RagiumComponentTypes.REWORK_TARGET, Unit)
             }
         }
         // radioactive effects
