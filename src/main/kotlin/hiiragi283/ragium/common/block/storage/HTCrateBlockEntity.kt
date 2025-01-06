@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.network.HTCratePreviewPayload
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -89,7 +90,7 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HT
         super.onStateReplaced(state, world, pos, newState, moved)
     }*/
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -117,8 +118,11 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HT
                 }
             }
         }
-        return super.onUse(state, world, pos, player, hit)
+        return super.onRightClicked(state, world, pos, player, hit)
     }
+
+    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
+        StorageUtil.calculateComparatorOutput(itemStorage)
 
     //    SidedStorageBlockEntity    //
 

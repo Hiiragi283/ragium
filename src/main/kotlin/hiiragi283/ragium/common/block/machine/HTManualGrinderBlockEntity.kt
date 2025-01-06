@@ -30,7 +30,7 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,

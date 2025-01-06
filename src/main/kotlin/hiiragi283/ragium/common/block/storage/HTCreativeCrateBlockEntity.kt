@@ -34,7 +34,7 @@ class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) :
         HTNbtCodecs.ITEM_VARIANT.readAndSet(nbt, itemStorage::setResource)
     }
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,

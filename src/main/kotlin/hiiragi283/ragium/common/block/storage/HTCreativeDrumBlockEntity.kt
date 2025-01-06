@@ -36,7 +36,7 @@ class HTCreativeDrumBlockEntity(pos: BlockPos, state: BlockState) :
         HTNbtCodecs.FLUID_VARIANT.readAndSet(nbt, fluidStorage::setResource)
     }
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -45,7 +45,7 @@ class HTCreativeDrumBlockEntity(pos: BlockPos, state: BlockState) :
     ): ActionResult {
         val handStorage: Storage<FluidVariant> = ContainerItemContext
             .forPlayerInteraction(player, Hand.MAIN_HAND)
-            .find(FluidStorage.ITEM) ?: return super.onUse(state, world, pos, player, hit)
+            .find(FluidStorage.ITEM) ?: return super.onRightClicked(state, world, pos, player, hit)
         val firstView: StorageView<FluidVariant> = handStorage.nonEmptyViews().firstOrNull() ?: return ActionResult.PASS
         fluidStorage.resource = firstView.resource
         return ActionResult.success(world.isClient)

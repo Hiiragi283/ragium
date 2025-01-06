@@ -31,7 +31,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,

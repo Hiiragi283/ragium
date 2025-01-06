@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
@@ -18,7 +19,7 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -32,4 +33,7 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         player.setStackInHand(hand, stackIn)
         return ActionResult.success(world.isClient)
     }
+
+    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
+        ScreenHandler.calculateComparatorOutput(inventory)
 }

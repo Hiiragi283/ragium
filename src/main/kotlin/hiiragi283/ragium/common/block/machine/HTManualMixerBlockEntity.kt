@@ -34,7 +34,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,

@@ -62,7 +62,17 @@ abstract class HTBlockWithEntity(settings: Settings) :
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
-    ): ActionResult = (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onUse(state, world, pos, player, hit) ?: ActionResult.PASS
+    ): ActionResult = (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onRightClicked(state, world, pos, player, hit)
+        ?: ActionResult.PASS
+
+    final override fun onBlockBreakStart(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+    ) {
+        (world.getBlockEntity(pos) as? HTBlockEntityBase)?.onLeftClicked(state, world, pos, player)
+    }
 
     final override fun onPlaced(
         world: World,

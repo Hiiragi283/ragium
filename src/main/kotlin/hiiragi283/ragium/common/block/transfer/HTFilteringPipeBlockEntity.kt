@@ -53,7 +53,7 @@ class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
         HTNbtCodecs.SIDED_ITEM_FILTER.readAndSet(nbt, itemFilterMap::putAll)
     }
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,

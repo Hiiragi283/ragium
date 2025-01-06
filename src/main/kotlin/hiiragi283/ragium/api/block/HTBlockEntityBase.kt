@@ -67,7 +67,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
      * ブロックが右クリックされたときに呼ばれます。
      * @see [HTBlockWithEntity.onUse]
      */
-    open fun onUse(
+    open fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -82,6 +82,17 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
             }
         }
     } ?: ActionResult.PASS
+
+    /**
+     * ブロックが左クリックされたときに呼ばれます。
+     * @see [HTBlockWithEntity.onBlockBreakStart]
+     */
+    open fun onLeftClicked(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+    ) {}
 
     /**
      * ブロックが設置されたときに呼ばれます。

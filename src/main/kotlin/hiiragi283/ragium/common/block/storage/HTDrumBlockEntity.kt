@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
@@ -60,7 +61,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTM
         }
     }
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -70,6 +71,9 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTM
         fluidStorage.interactWithFluidStorage(player) -> ActionResult.success(world.isClient)
         else -> ActionResult.PASS
     }
+
+    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
+        StorageUtil.calculateComparatorOutput(fluidStorage)
 
     //    SidedStorageBlockEntity    //
 

@@ -40,7 +40,7 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
         HTNbtCodecs.ITEM_FILTER.readAndSet(nbt, this::itemFilter)
     }
 
-    final override fun onUse(
+    final override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,

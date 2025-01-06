@@ -75,7 +75,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
      */
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
-    final override fun onUse(
+    final override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
