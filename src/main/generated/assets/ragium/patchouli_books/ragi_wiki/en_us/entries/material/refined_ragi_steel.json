@@ -1,0 +1,14 @@
+{
+  "advancement": "ragium:progress/refined_ragi_steel",
+  "category": "ragium:material",
+  "icon": "ragium:refined_ragi_steel_ingot",
+  "name": "material.ragium.refined_ragi_steel",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "ragium:refined_ragi_steel_ingot",
+      "link_recipe": true,
+      "text": "Refined Ragi-Steel is steel material for Tier 3"
+    }
+  ]
+}

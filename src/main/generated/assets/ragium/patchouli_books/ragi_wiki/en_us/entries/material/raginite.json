@@ -1,0 +1,14 @@
+{
+  "advancement": "ragium:progress/ragi_steel",
+  "category": "ragium:material",
+  "icon": "ragium:raginite_dust",
+  "name": "material.ragium.raginite",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "ragium:raginite_dust",
+      "link_recipe": true,
+      "text": "Raginite is common material"
+    }
+  ]
+}

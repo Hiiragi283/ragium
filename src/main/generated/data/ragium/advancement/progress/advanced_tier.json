@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/laser_transformer",
+  "parent": "ragium:machine/basic_tier",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/ragium"
+            "items": "ragium:advanced_hull"
           }
         ]
       },
@@ -14,16 +14,15 @@
   },
   "display": {
     "description": "",
-    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragium"
+      "id": "ragium:advanced_hull"
     },
     "title": {
-      "translate": "tag_prefix.ragium.gem",
+      "translate": "machine_tier.ragium.advanced.prefix",
       "with": [
         {
-          "translate": "material.ragium.ragium"
+          "translate": "content.ragium.hull"
         }
       ]
     }

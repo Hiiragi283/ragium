@@ -1,0 +1,14 @@
+{
+  "advancement": "ragium:progress/ragi_crystal",
+  "category": "ragium:material",
+  "icon": "ragium:ragi_crystal",
+  "name": "material.ragium.ragi_crystal",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "ragium:ragi_crystal",
+      "link_recipe": true,
+      "text": "Ragi-Crystal is crystallized form of Raginite"
+    }
+  ]
+}

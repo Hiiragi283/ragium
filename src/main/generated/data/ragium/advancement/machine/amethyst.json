@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_alloy",
+  "parent": "ragium:machine/growth_chamber",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:primitive_hull"
+            "items": "minecraft:amethyst_shard"
           }
         ]
       },
@@ -16,15 +16,10 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:primitive_hull"
+      "id": "minecraft:amethyst_shard"
     },
     "title": {
-      "translate": "machine_tier.ragium.primitive.prefix",
-      "with": [
-        {
-          "translate": "content.ragium.hull"
-        }
-      ]
+      "translate": "item.minecraft.amethyst_shard"
     }
   },
   "requirements": [

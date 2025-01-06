@@ -1,10 +1,9 @@
 {
-  "parent": "ragium:progress/advanced_casing",
+  "parent": "ragium:machine/root",
   "criteria": {
     "interact_machine": {
       "conditions": {
-        "machine_type": "ragium:laser_transformer",
-        "min_tier": "advanced"
+        "machine_type": "ragium:growth_chamber"
       },
       "trigger": "ragium:interact_machine"
     }
@@ -12,20 +11,20 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.ragium.laser_transformer.description"
+      "translate": "machine_type.ragium.growth_chamber.description"
     },
     "icon": {
       "components": {
-        "ragium:machine_tier": "advanced"
+        "ragium:machine_tier": "primitive"
       },
       "count": 1,
-      "id": "ragium:laser_transformer"
+      "id": "ragium:growth_chamber"
     },
     "title": {
-      "translate": "machine_tier.ragium.advanced.prefix",
+      "translate": "machine_tier.ragium.primitive.prefix",
       "with": [
         {
-          "translate": "machine_type.ragium.laser_transformer"
+          "translate": "machine_type.ragium.growth_chamber"
         }
       ]
     }

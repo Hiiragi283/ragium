@@ -1,10 +1,9 @@
 {
-  "parent": "ragium:progress/advanced_casing",
+  "parent": "ragium:chemistry/root",
   "criteria": {
     "interact_machine": {
       "conditions": {
-        "machine_type": "ragium:laser_transformer",
-        "min_tier": "advanced"
+        "machine_type": "ragium:large_chemical_reactor"
       },
       "trigger": "ragium:interact_machine"
     }
@@ -12,20 +11,21 @@
   "display": {
     "description": {
       "color": "aqua",
-      "translate": "machine_type.ragium.laser_transformer.description"
+      "translate": "machine_type.ragium.large_chemical_reactor.description"
     },
+    "frame": "goal",
     "icon": {
       "components": {
-        "ragium:machine_tier": "advanced"
+        "ragium:machine_tier": "primitive"
       },
       "count": 1,
-      "id": "ragium:laser_transformer"
+      "id": "ragium:large_chemical_reactor"
     },
     "title": {
-      "translate": "machine_tier.ragium.advanced.prefix",
+      "translate": "machine_tier.ragium.primitive.prefix",
       "with": [
         {
-          "translate": "machine_type.ragium.laser_transformer"
+          "translate": "machine_type.ragium.large_chemical_reactor"
         }
       ]
     }

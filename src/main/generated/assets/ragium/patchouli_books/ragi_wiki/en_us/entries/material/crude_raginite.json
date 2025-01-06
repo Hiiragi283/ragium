@@ -1,0 +1,14 @@
+{
+  "advancement": "ragium:progress/root",
+  "category": "ragium:material",
+  "icon": "ragium:crude_raginite_dust",
+  "name": "material.ragium.crude_raginite",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "ragium:crude_raginite_dust",
+      "link_recipe": true,
+      "text": "Crude Raginite is the most fundamental material in Ragium"
+    }
+  ]
+}

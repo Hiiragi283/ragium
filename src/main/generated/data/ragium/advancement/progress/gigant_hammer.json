@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/laser_transformer",
+  "parent": "ragium:progress/ragium",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/ragium"
+            "items": "ragium:gigant_hammer"
           }
         ]
       },
@@ -14,18 +14,14 @@
   },
   "display": {
     "description": "",
-    "frame": "goal",
+    "frame": "challenge",
+    "hidden": true,
     "icon": {
       "count": 1,
-      "id": "ragium:ragium"
+      "id": "ragium:gigant_hammer"
     },
     "title": {
-      "translate": "tag_prefix.ragium.gem",
-      "with": [
-        {
-          "translate": "material.ragium.ragium"
-        }
-      ]
+      "translate": "item.ragium.gigant_hammer"
     }
   },
   "requirements": [

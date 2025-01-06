@@ -80,7 +80,7 @@ internal object RagiumContentRegister {
     @JvmStatic
     fun initEvents() {
         // send title and floating item packet when unlock advancement
-        HTAdvancementRewardCallback.EVENT.register { helper: HTAdvancementRewardCallback.Helper -> 
+        HTAdvancementRewardCallback.EVENT.register { helper: HTAdvancementRewardCallback.Helper ->
             // enter tier 1
             helper.onMatchingEntry(RagiumAPI.id("progress/ragi_alloy")) { player: ServerPlayerEntity, entry: AdvancementEntry ->
                 player.sendTitle(Text.literal("Welcome to Tier 1!").formatted(Rarity.COMMON.formatting))

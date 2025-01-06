@@ -1,12 +1,12 @@
 {
-  "parent": "ragium:chemistry/sulfur_trioxide",
+  "parent": "ragium:chemistry/sulfur_dioxide",
   "criteria": {
     "has_fluids": {
       "conditions": {
         "items": [
           {
             "components": {
-              "ragium:fluid": "ragium:sulfuric_acid"
+              "ragium:fluid": "ragium:sulfur_trioxide"
             },
             "items": "ragium:filled_fluid_cube"
           }
@@ -19,13 +19,13 @@
     "description": "",
     "icon": {
       "components": {
-        "ragium:fluid": "ragium:sulfuric_acid"
+        "ragium:fluid": "ragium:sulfur_trioxide"
       },
       "count": 1,
       "id": "ragium:filled_fluid_cube"
     },
     "title": {
-      "translate": "fluid.ragium.sulfuric_acid"
+      "translate": "fluid.ragium.sulfur_trioxide"
     }
   },
   "requirements": [

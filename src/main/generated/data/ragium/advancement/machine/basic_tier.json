@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/refined_ragi_steel",
+  "parent": "ragium:machine/root",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:advanced_hull"
+            "items": "ragium:basic_hull"
           }
         ]
       },
@@ -16,10 +16,10 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:advanced_hull"
+      "id": "ragium:basic_hull"
     },
     "title": {
-      "translate": "machine_tier.ragium.advanced.prefix",
+      "translate": "machine_tier.ragium.basic.prefix",
       "with": [
         {
           "translate": "content.ragium.hull"

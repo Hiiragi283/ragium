@@ -33,8 +33,8 @@ object RagiumFoodComponents {
 
     @JvmField
     val CANNED_COOKED_MEAT: FoodComponent = foodComponent(
-        nutrition = 8,
-        saturation = 0.8f,
+        nutrition = 2,
+        saturation = 0.2f,
         eatSeconds = 0.8f,
         convertTo = Items.IRON_NUGGET.defaultStack,
     )

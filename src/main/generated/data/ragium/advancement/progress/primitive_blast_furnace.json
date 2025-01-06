@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:progress/primitive_hull",
+  "parent": "ragium:progress/primitive_casing",
   "criteria": {
     "interact_machine": {
       "conditions": {

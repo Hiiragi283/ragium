@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:chemistry/niter",
+  "parent": "ragium:chemistry/ammonia",
   "criteria": {
     "has_fluids": {
       "conditions": {

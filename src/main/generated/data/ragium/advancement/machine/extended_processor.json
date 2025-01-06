@@ -16,7 +16,7 @@
     "description": {
       "translate": "tooltip.ragium.block.large_processor"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "icon": {
       "count": 1,
       "id": "ragium:extended_processor"

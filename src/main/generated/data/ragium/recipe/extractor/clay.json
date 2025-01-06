@@ -1,7 +1,7 @@
 {
   "type": "ragium:machine",
   "definition": {
-    "type": "ragium:infuser",
+    "type": "ragium:extractor",
     "tier": "primitive"
   },
   "item_inputs": [

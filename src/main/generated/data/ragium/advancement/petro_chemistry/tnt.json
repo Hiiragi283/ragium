@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:progress/ragi_steel",
+  "parent": "ragium:petro_chemistry/aromatic_compound",
   "criteria": {
     "has_items": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:basic_hull"
+            "items": "minecraft:tnt"
           }
         ]
       },
@@ -16,15 +16,10 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:basic_hull"
+      "id": "minecraft:tnt"
     },
     "title": {
-      "translate": "machine_tier.ragium.basic.prefix",
-      "with": [
-        {
-          "translate": "content.ragium.hull"
-        }
-      ]
+      "translate": "block.minecraft.tnt"
     }
   },
   "requirements": [
