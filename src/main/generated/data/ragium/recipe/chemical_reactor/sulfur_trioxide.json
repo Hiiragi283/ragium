@@ -5,10 +5,15 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    "minecraft:water",
-    "#c:sulfur_trioxide"
+    {
+      "amount": 243000,
+      "fluids": "#c:oxygen"
+    }
   ],
   "fluid_outputs": [
-    "ragium:sulfuric_acid"
+    "ragium:sulfur_trioxide"
+  ],
+  "item_inputs": [
+    "#c:dusts/sulfur"
   ]
 }

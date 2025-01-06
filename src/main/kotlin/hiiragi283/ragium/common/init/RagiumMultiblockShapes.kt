@@ -92,7 +92,7 @@ object RagiumMultiblockShapes {
         builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
         builder.addLayer(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
     }
-    
+
     @JvmField
     val LARGE_MACHINE = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
         builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))

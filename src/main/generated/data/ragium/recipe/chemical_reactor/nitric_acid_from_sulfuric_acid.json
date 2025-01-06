@@ -2,10 +2,10 @@
   "type": "ragium:machine",
   "definition": {
     "type": "ragium:chemical_reactor",
-    "tier": "basic"
+    "tier": "primitive"
   },
   "fluid_inputs": [
-    "minecraft:water"
+    "#c:sulfuric_acid"
   ],
   "fluid_outputs": [
     "ragium:nitric_acid"

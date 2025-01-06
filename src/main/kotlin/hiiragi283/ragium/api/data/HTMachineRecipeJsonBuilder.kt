@@ -232,6 +232,11 @@ class HTMachineRecipeJsonBuilder private constructor(
     }
 
     /**
+     * 触媒アイテムを[prefix]と[material]から指定します。
+     */
+    fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeJsonBuilder = catalyst(prefix.createTag(material))
+
+    /**
      * 触媒アイテムを[tagKey]から指定します。
      */
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {

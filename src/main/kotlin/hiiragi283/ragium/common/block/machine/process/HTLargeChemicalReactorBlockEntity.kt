@@ -19,7 +19,7 @@ import net.minecraft.util.math.BlockPos
 
 class HTLargeChemicalReactorBlockEntity(pos: BlockPos, state: BlockState) :
     HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.LARGE_CHEMICAL_REACTOR, pos, state),
-    HTMultiblockProvider.Machine{
+    HTMultiblockProvider.Machine {
     override var machineKey: HTMachineKey = RagiumMachineKeys.LARGE_CHEMICAL_REACTOR
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
@@ -38,7 +38,7 @@ class HTLargeChemicalReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTLargeMachineScreenHandler(syncId, playerInventory, createContext())
-    
+
     //    HTMultiblockPatternProvider    //
 
     override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)

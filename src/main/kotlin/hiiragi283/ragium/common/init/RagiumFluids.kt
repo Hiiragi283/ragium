@@ -59,6 +59,7 @@ enum class RagiumFluids(
     CARBON_DIOXIDE(Color(0x99ccff), "Carbon Dioxide", "二酸化炭素", TextureType.GASEOUS),
 
     LIQUID_NITROGEN(Color(0x66cccc), "Liquid Nitrogen", "液体窒素"),
+    AMMONIA(Color(0x9999ff), "Ammonia", "アンモニア", TextureType.GASEOUS),
     NITRIC_ACID(Color(0xcc99ff), "Nitric Acid", "硝酸"),
     AQUA_REGIA(Color(0xffff00), "Aqua Regia", "王水"),
 
@@ -66,8 +67,9 @@ enum class RagiumFluids(
 
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
 
+    SULFUR_TRIOXIDE(Color(0xff6600), "Sulfur Trioxide", "三酸化硫黄", TextureType.STICKY),
     SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸", TextureType.STICKY),
-    MIXTURE_ACID(Color(0xff3300), "Mixture Acid", "混酸"),
+    MIXTURE_ACID(Color(0xff9900), "Mixture Acid", "混酸"),
 
     HYDROCHLORIC_ACID(Color(0xccff99), "Hydrochloric Acid", "塩酸"),
     HYDROGEN_CHLORIDE(Color(0xccff66), "Hydrogen Chloride", "塩化水素"),
