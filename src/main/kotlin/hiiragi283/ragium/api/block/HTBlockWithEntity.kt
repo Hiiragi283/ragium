@@ -44,6 +44,18 @@ abstract class HTBlockWithEntity(settings: Settings) :
          * 指定された[type]と[settings]から水平方向の回転が可能なブロックを返します。
          */
         @JvmStatic
+        fun buildFacing(type: BlockEntityType<*>, settings: Settings): Block = object : Facing(settings) {
+            init {
+                type.addSupportedBlock(this)
+            }
+
+            override fun createBlockEntity(pos: BlockPos?, state: BlockState?): BlockEntity? = type.instantiate(pos, state)
+        }
+
+        /**
+         * 指定された[type]と[settings]から水平方向の回転が可能なブロックを返します。
+         */
+        @JvmStatic
         fun buildHorizontal(type: BlockEntityType<*>, settings: Settings): Block = object : Horizontal(settings) {
             init {
                 type.addSupportedBlock(this)
@@ -107,10 +119,34 @@ abstract class HTBlockWithEntity(settings: Settings) :
             (blockEntity as? HTBlockEntityBase)?.tick(world1, pos, state1)
         }
 
+    //    Facing    //
+
+    /**
+     * 六方向の回転が可能な[HTBlockWithEntity]クラス
+     */
+    abstract class Facing(settings: Settings) : HTBlockWithEntity(settings) {
+        init {
+            defaultState = stateManager.defaultState.with(Properties.FACING, Direction.NORTH)
+        }
+
+        override fun getPlacementState(ctx: ItemPlacementContext): BlockState =
+            defaultState.with(Properties.FACING, ctx.playerLookDirection.opposite)
+
+        override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+            builder.add(Properties.FACING)
+        }
+
+        override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =
+            state.with(Properties.FACING, rotation.rotate(state.get(Properties.FACING)))
+
+        override fun mirror(state: BlockState, mirror: BlockMirror): BlockState =
+            state.with(Properties.FACING, mirror.apply(state.get(Properties.FACING)))
+    }
+
     //    Horizontal    //
 
     /**
-     * 水平方向の回転が可能な[hiiragi283.ragium.api.block.HTBlockWithEntity]クラス
+     * 水平方向の回転が可能な[HTBlockWithEntity]クラス
      */
     abstract class Horizontal(settings: Settings) : HTBlockWithEntity(settings) {
         init {

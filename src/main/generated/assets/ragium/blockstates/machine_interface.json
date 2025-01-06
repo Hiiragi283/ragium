@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "ragium:block/machine_interface",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "ragium:block/machine_interface",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ragium:block/machine_interface"
+    },
+    "facing=south": {
+      "model": "ragium:block/machine_interface",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "ragium:block/machine_interface",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "ragium:block/machine_interface",
+      "y": 270
+    }
+  }
+}

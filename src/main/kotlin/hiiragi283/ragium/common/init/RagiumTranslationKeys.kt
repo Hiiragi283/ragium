@@ -14,6 +14,7 @@ object RagiumTranslationKeys {
 
     const val AUTO_ILLUMINATOR = "tooltip.ragium.block.auto_illuminator"
     const val LARGE_PROCESSOR = "tooltip.ragium.block.large_processor"
+    const val MACHINE_INTERFACE = "tooltip.ragium.block.machine_interface"
     const val MANUAL_GRINDER = "tooltip.ragium.block.manual_grinder"
     const val MUTATED_SOIL = "tooltip.ragium.block.mutated_soil"
     const val NETWORK_INTERFACE = "tooltip.ragium.block.network_interface"

@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity
 import hiiragi283.ragium.common.block.entity.HTCreativeSourceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
+import hiiragi283.ragium.common.block.entity.HTMachineInterfaceBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity
@@ -159,12 +160,16 @@ object RagiumBlockEntityTypes {
         register("creative_source", ::HTCreativeSourceBlockEntity)
 
     @JvmField
+    val EXTENDED_PROCESSOR: BlockEntityType<HTExtendedProcessorBlockEntity> =
+        register("extended_processor", ::HTExtendedProcessorBlockEntity)
+
+    @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
     @JvmField
-    val EXTENDED_PROCESSOR: BlockEntityType<HTExtendedProcessorBlockEntity> =
-        register("extended_processor", ::HTExtendedProcessorBlockEntity)
+    val MACHINE_INTERFACE: BlockEntityType<HTMachineInterfaceBlockEntity> =
+        register("machine_interface", ::HTMachineInterfaceBlockEntity)
 
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =

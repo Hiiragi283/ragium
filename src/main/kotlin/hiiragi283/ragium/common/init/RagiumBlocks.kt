@@ -336,6 +336,9 @@ object RagiumBlocks {
     val MANUAL_MIXER: HTBlockContent = HTContent.ofBlock("manual_mixer")
 
     @JvmField
+    val MACHINE_INTERFACE: HTBlockContent = HTContent.ofBlock("machine_interface")
+
+    @JvmField
     val NETWORK_INTERFACE: HTBlockContent = HTContent.ofBlock("network_interface")
 
     @JvmField
@@ -347,6 +350,7 @@ object RagiumBlocks {
         EXTENDED_PROCESSOR, // red
         AUTO_ILLUMINATOR, // yellow
         TELEPORT_ANCHOR, // blue
+        MACHINE_INTERFACE, // white
         NETWORK_INTERFACE, // white
         // manual machines
         MANUAL_FORGE,
@@ -388,6 +392,12 @@ object RagiumBlocks {
         type: BlockEntityType<*>,
         parent: AbstractBlock.Settings = blockSettings(),
     ): Block = registerBlock(content, parent) { HTBlockWithEntity.build(type, it) }
+
+    private fun registerFacingBlockWithBE(
+        content: HTBlockContent,
+        type: BlockEntityType<*>,
+        parent: AbstractBlock.Settings = blockSettings(),
+    ): Block = registerBlock(content, parent) { HTBlockWithEntity.buildFacing(type, it) }
 
     private fun registerHorizontalBlockWithBE(
         content: HTBlockContent,
@@ -617,6 +627,11 @@ object RagiumBlocks {
             RagiumBlockEntityTypes.MANUAL_MIXER,
             blockSettings(Blocks.BRICKS),
         )
+        registerFacingBlockWithBE(
+            MACHINE_INTERFACE,
+            RagiumBlockEntityTypes.MACHINE_INTERFACE,
+            blockSettings(Blocks.SMOOTH_STONE),
+        )
         registerBlock(
             NETWORK_INTERFACE,
             blockSettings(Blocks.SMOOTH_STONE),
@@ -636,6 +651,7 @@ object RagiumBlocks {
         registerBlockItem(MANUAL_FORGE)
         registerBlockItem(MANUAL_GRINDER, itemSettings().descriptions(RagiumTranslationKeys.MANUAL_GRINDER))
         registerBlockItem(MANUAL_MIXER)
+        registerBlockItem(MACHINE_INTERFACE, itemSettings().descriptions(RagiumTranslationKeys.MACHINE_INTERFACE))
         registerBlockItem(NETWORK_INTERFACE, itemSettings().descriptions(RagiumTranslationKeys.NETWORK_INTERFACE))
         registerBlockItem(TELEPORT_ANCHOR)
         // misc

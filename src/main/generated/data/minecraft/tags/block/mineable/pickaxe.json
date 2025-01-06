@@ -41,6 +41,7 @@
     "ragium:item_display",
     "ragium:item_filtering_pipe",
     "ragium:item_pipe_station",
+    "ragium:machine_interface",
     "ragium:manual_forge",
     "ragium:manual_grinder",
     "ragium:manual_mixer",
