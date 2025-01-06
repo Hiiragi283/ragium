@@ -35,18 +35,6 @@ object RagiumItemTags {
     @JvmField
     val BASIC_UPGRADES: TagKey<Item> = create(RagiumAPI.MOD_ID, "upgrades/basic")
 
-    /**
-     * 液体フィルタとして機能するアイテムのタグ
-     */
-    @JvmField
-    val FLUID_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/fluid")
-
-    /**
-     * アイテムフィルタとして機能するアイテムのタグ
-     */
-    @JvmField
-    val ITEM_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/item")
-
     @JvmStatic
     fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))
 

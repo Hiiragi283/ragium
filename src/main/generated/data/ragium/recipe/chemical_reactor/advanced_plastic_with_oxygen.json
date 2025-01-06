@@ -1,5 +1,6 @@
 {
   "type": "ragium:machine",
+  "catalyst": "ragium:advanced_plastic",
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"
@@ -8,7 +9,8 @@
     {
       "amount": 9000,
       "fluids": "#c:aromatic_compounds"
-    }
+    },
+    "#c:oxygen"
   ],
   "item_inputs": [
     {

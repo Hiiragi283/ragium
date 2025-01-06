@@ -4,7 +4,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonParser
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.JsonOps
-import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.client.MinecraftClient
 import net.minecraft.item.Item
@@ -15,11 +14,11 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.world.World
 
-class HTItemFilterScreen(val stack: ItemStack) : HTFilterScreen(stack.name) {
+class HTItemFilterScreen private constructor(val stack: ItemStack) : HTFilterScreen(stack.name) {
     companion object {
         @JvmStatic
         fun openScreen(stack: ItemStack, world: World): Boolean {
-            if (stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS)) {
+            if (stack.contains(RagiumComponentTypes.ITEM_FILTER)) {
                 val screen = HTItemFilterScreen(stack)
                 MinecraftClient.getInstance().setScreen(screen)
                 val filter: RegistryEntryList<Item> =

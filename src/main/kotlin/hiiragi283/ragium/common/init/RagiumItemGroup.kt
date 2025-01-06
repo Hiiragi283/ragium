@@ -77,6 +77,9 @@ object RagiumItemGroup {
         register(FLUID) {
             icon { RagiumItems.EMPTY_FLUID_CUBE.get().defaultStack }
             entries { context: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                // empty cubes
+                entries.add(RagiumItems.EMPTY_FLUID_CUBE)
+                // filled cubes
                 context.lookup
                     .getWrapperOrThrow(RegistryKeys.FLUID)
                     .streamEntries()
@@ -121,7 +124,7 @@ object RagiumItemGroup {
                 entries.add(RagiumItems.RAGIUM_SABER)
                 entries.add(RagiumItems.GIGANT_HAMMER)
                 entries.addAll(RagiumItems.Dynamites.entries)
-                entries.add(RagiumItems.EMPTY_FLUID_CUBE)
+
                 entries.add(RagiumItems.FLUID_FILTER)
                 entries.add(RagiumItems.ITEM_FILTER)
                 entries.add(RagiumItems.TRADER_CATALOG)

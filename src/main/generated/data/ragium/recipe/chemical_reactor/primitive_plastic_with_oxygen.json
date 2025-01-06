@@ -1,5 +1,6 @@
 {
   "type": "ragium:machine",
+  "catalyst": "ragium:primitive_plastic",
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"

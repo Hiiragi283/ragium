@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.extension.getStackInMainHand
 import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.itemFilterText
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -63,12 +62,12 @@ class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
         val side: Direction = hit.side
         val stack: ItemStack = player.getStackInMainHand()
         val result: Boolean = when {
-            stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
+            stack.contains(RagiumComponentTypes.FLUID_FILTER) -> {
                 stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) { fluidFilterMap[side] = it }
                 true
             }
 
-            stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
+            stack.contains(RagiumComponentTypes.ITEM_FILTER) -> {
                 stack.ifPresent(RagiumComponentTypes.ITEM_FILTER) { itemFilterMap[side] = it }
                 true
             }

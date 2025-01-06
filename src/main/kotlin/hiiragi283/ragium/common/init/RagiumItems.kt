@@ -24,6 +24,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
@@ -246,16 +247,10 @@ object RagiumItems {
     val FILLED_FLUID_CUBE: HTItemContent = HTContent.ofItem("filled_fluid_cube")
 
     @JvmField
-    val FLUID_FILTER: HTItemContent = HTContent.ofItem("fluid_filter")
-
-    @JvmField
     val FORGE_HAMMER: HTItemContent = HTContent.ofItem("forge_hammer")
 
     @JvmField
     val GIGANT_HAMMER: HTItemContent = HTContent.ofItem("gigant_hammer")
-
-    @JvmField
-    val ITEM_FILTER: HTItemContent = HTContent.ofItem("item_filter")
 
     @JvmField
     val RAGI_WRENCH: HTItemContent = HTContent.ofItem("ragi_wrench")
@@ -265,6 +260,12 @@ object RagiumItems {
 
     @JvmField
     val RAGIUM_SABER: HTItemContent = HTContent.ofItem("ragium_saber")
+
+    @JvmField
+    val FLUID_FILTER: HTItemContent = HTContent.ofItem("fluid_filter")
+
+    @JvmField
+    val ITEM_FILTER: HTItemContent = HTContent.ofItem("item_filter")
 
     @JvmField
     val TRADER_CATALOG: HTItemContent = HTContent.ofItem("trader_catalog")
@@ -712,7 +713,6 @@ object RagiumItems {
         registerItem(BACKPACK, item = ::HTBackpackItem)
         registerItem(EMPTY_FLUID_CUBE)
         registerItem(FILLED_FLUID_CUBE, item = ::HTFilledFluidCubeItem)
-        registerItem(FLUID_FILTER, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.FILTER))
         registerItem(FORGE_HAMMER, itemSettings().maxDamage(63), ::HTForgeHammerItem)
         registerItem(
             GIGANT_HAMMER,
@@ -742,8 +742,12 @@ object RagiumItems {
                 ),
             ::HTGigantHammerItem,
         )
-        registerItem(ITEM_FILTER, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.FILTER))
-        registerItem(RAGI_WRENCH, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.RAGI_WRENCH))
+        registerItem(
+            RAGI_WRENCH,
+            itemSettings()
+                .maxCount(1)
+                .descriptions(RagiumTranslationKeys.RAGI_WRENCH)
+        )
         registerItem(STELLA_SABER, itemSettings().rarity(Rarity.RARE)) {
             HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, it)
         }
@@ -755,6 +759,21 @@ object RagiumItems {
         ) {
             HTToolType.SWORD.createToolItem(RagiumToolMaterials.STELLA, it)
         }
+
+        registerItem(
+            FLUID_FILTER,
+            itemSettings()
+                .maxCount(1)
+                .descriptions(RagiumTranslationKeys.FILTER)
+                .component(RagiumComponentTypes.FLUID_FILTER, RegistryEntryList.empty())
+        )
+        registerItem(
+            ITEM_FILTER,
+            itemSettings()
+                .maxCount(1)
+                .descriptions(RagiumTranslationKeys.FILTER)
+                .component(RagiumComponentTypes.ITEM_FILTER, RegistryEntryList.empty())
+        )
         registerItem(TRADER_CATALOG, itemSettings().maxCount(1).descriptions(RagiumTranslationKeys.TRADER_CATALOG), ::HTTraderCatalogItem)
         // food
         registerItem(SWEET_BERRIES_CAKE_PIECE, itemSettings().food(RagiumFoodComponents.SWEET_BERRIES_CAKE))
