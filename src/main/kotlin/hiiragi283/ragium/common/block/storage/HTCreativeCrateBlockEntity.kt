@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
-import hiiragi283.ragium.api.extension.getStackInActiveHand
+import hiiragi283.ragium.api.extension.getStackInMainHand
 import hiiragi283.ragium.api.storage.HTCreativeStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -41,7 +41,7 @@ class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) :
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        val stack: ItemStack = player.getStackInActiveHand()
+        val stack: ItemStack = player.getStackInMainHand()
         if (stack.isEmpty) {
             itemStorage.resource = ItemVariant.blank()
         } else {

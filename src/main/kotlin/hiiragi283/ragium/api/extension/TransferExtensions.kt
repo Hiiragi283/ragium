@@ -14,8 +14,8 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import net.minecraft.entity.player.PlayerEntity
@@ -61,9 +61,15 @@ fun PlayerEntity.interactWithFluidStorage(storage: Storage<FluidVariant>, storag
 fun Storage<FluidVariant>.findMatching(tagKey: TagKey<Fluid>): FluidVariant? = StorageUtil.findStoredResource(this) { it.isIn(tagKey) }
 
 /**
- * 指定した[SingleSlotStorage]の容量が満タンかどうか判定します。
+ * 指定した[StorageView]の容量が空かどうか判定します。
  */
-val <T : Any> SingleSlotStorage<T>.isFilledMax: Boolean
+val <T : Any> StorageView<T>.isEmpty: Boolean
+    get() = amount <= 0 || isResourceBlank
+
+/**
+ * 指定した[StorageView]の容量が満タンかどうか判定します。
+ */
+val <T : Any> StorageView<T>.isFilledMax: Boolean
     get() = amount == capacity
 
 /**

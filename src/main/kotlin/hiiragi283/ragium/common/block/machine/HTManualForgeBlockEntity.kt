@@ -44,7 +44,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val stackMain: ItemStack = player.getStackInActiveHand()
+        val stackMain: ItemStack = player.getStackInMainHand()
         if (!stackMain.isOf(RagiumItems.FORGE_HAMMER)) {
             inventory.modifyStack(0) { stack: ItemStack ->
                 dropStackAt(player, stack)

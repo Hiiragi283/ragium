@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.entryPacketCodec
+import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.isFilledMax
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -68,7 +69,7 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
      */
     fun canMerge(storage: SingleSlotStorage<FluidVariant>): Boolean = when {
         storage.isFilledMax -> false
-        storage.isResourceBlank -> storage.amount + this.amount <= storage.capacity
+        storage.isEmpty -> storage.amount + this.amount <= storage.capacity
         storage.resource == variant -> storage.amount + this.amount <= storage.capacity
         else -> false
     }

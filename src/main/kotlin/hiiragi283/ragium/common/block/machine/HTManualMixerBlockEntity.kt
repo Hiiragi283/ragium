@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.machine
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.getStackInMainHand
 import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -50,7 +51,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val stackMain: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
+        val stackMain: ItemStack = player.getStackInMainHand()
         val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(

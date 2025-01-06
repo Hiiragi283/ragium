@@ -137,9 +137,9 @@ fun PlayerEntity.throwEntity(world: World, entityBuilder: (World, PlayerEntity) 
 }
 
 /**
- * 使用中の[Hand]から[ItemStack]を返します。
+ * [Hand.MAIN_HAND]から[ItemStack]を返します。
  */
-fun LivingEntity.getStackInActiveHand(): ItemStack = getStackInHand(activeHand)
+fun LivingEntity.getStackInMainHand(): ItemStack = getStackInHand(Hand.MAIN_HAND)
 
 /**
  * 指定した値からエフェクトを追加します。
@@ -197,7 +197,7 @@ fun LivingEntity.addInfinityStatusEffect(
 }
 
 fun ThrownItemEntity.setItemFromOwner(owner: LivingEntity): ThrownItemEntity = apply {
-    setItem(owner.getStackInActiveHand())
+    setItem(owner.getStackInMainHand())
 }
 
 //    Color    //

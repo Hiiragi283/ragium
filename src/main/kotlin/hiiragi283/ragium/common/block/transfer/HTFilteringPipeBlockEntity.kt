@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.transfer
 
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.fluidFilterText
-import hiiragi283.ragium.api.extension.getStackInActiveHand
+import hiiragi283.ragium.api.extension.getStackInMainHand
 import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.itemFilterText
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -61,7 +61,7 @@ class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
         hit: BlockHitResult,
     ): ActionResult {
         val side: Direction = hit.side
-        val stack: ItemStack = player.getStackInActiveHand()
+        val stack: ItemStack = player.getStackInMainHand()
         val result: Boolean = when {
             stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
                 stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) { fluidFilterMap[side] = it }

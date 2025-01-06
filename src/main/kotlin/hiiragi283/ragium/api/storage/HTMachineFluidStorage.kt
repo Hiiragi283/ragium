@@ -75,7 +75,7 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
         val insertableStorages: List<SingleFluidStorage> =
             parts.filterIndexed { slot: Int, _: SingleFluidStorage -> getStorageIO(slot).canInsert }
         return insertableStorages.find { storageIn: SingleFluidStorage -> storageIn.resource == variant }
-            ?: insertableStorages.find(SingleFluidStorage::isResourceBlank)
+            ?: insertableStorages.find(SingleFluidStorage::isEmpty)
     }
 
     fun findExtractableStorage(variant: FluidVariant): SingleFluidStorage? {

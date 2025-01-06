@@ -47,7 +47,7 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        val stack: ItemStack = player.getStackInActiveHand()
+        val stack: ItemStack = player.getStackInMainHand()
         val result: Boolean = stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) {
             fluidFilter = it
             true

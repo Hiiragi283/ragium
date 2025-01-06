@@ -112,7 +112,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         tagKey: TagKey<Item>,
         newTier: HTMachineTier,
     ): Boolean {
-        val stack: ItemStack = player.getStackInActiveHand()
+        val stack: ItemStack = player.getStackInMainHand()
         return if (stack.isIn(tagKey) && tier < newTier) {
             world.replaceBlockState(pos) { stateIn: BlockState -> stateIn.with(HTMachineTier.PROPERTY, newTier) }
             world.playSound(null, pos, SoundEvents.ENTITY_PLAYER_LEVELUP, player.soundCategory, 1f, 0.5f)

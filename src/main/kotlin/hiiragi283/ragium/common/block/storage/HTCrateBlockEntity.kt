@@ -19,6 +19,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.item.MiningToolItem
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.ActionResult
@@ -97,28 +98,60 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HT
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        val stack: ItemStack = player.getStackInActiveHand()
-        useTransaction { transaction: Transaction ->
-            if (stack.isEmpty) {
-                if (!itemStorage.isResourceBlank) {
-                    val variant: ItemVariant = itemStorage.variant
-                    val extracted: Long = itemStorage.extractSelf(64, transaction)
-                    if (extracted > 0) {
-                        dropStackAt(player, variant.toStack(extracted.toInt()))
-                        transaction.commit()
-                        return ActionResult.success(world.isClient)
-                    }
-                }
-            } else {
-                val inserted: Long = itemStorage.insert(ItemVariant.of(stack), stack.count.toLong(), transaction)
-                if (inserted > 0) {
-                    stack.decrement(inserted.toInt())
-                    transaction.commit()
-                    return ActionResult.success(world.isClient)
+        val stack: ItemStack = player.getStackInMainHand()
+        if (!stack.isEmpty) {
+            val copied: ItemStack = stack.copy()
+            // insert holding stack
+            insertStack(stack)
+            // insert from inventory
+            for ((_: Int, stackIn: ItemStack) in player.inventory.asMap()) {
+                if (itemStorage.isFilledMax) break
+                if (ItemStack.areItemsAndComponentsEqual(stackIn, copied)) {
+                    insertStack(stackIn)
                 }
             }
+            return ActionResult.success(world.isClient)
         }
         return super.onRightClicked(state, world, pos, player, hit)
+    }
+
+    private fun insertStack(stack: ItemStack) {
+        useTransaction { transaction: Transaction ->
+            val inserted: Long = itemStorage.insert(ItemVariant.of(stack), stack.count.toLong(), transaction)
+            if (inserted > 0) {
+                stack.decrement(inserted.toInt())
+                transaction.commit()
+            }
+        }
+    }
+
+    override fun onLeftClicked(
+        state: BlockState,
+        world: World,
+        pos: BlockPos,
+        player: PlayerEntity,
+    ) {
+        if (itemStorage.isEmpty) return
+        val stack: ItemStack = player.getStackInMainHand()
+        if (stack.item is MiningToolItem) return
+        if (player.isSneaking) {
+            // drop 64 items
+            extractStack(player, 64)
+        } else {
+            // drop 1 item
+            extractStack(player, 1)
+        }
+    }
+
+    private fun extractStack(player: PlayerEntity, maxAmount: Long) {
+        useTransaction { transaction: Transaction ->
+            val variantIn: ItemVariant = itemStorage.variant
+            val extracted: Long = itemStorage.extractSelf(maxAmount, transaction)
+            if (extracted > 0) {
+                dropStackAt(player, variantIn.toStack(extracted.toInt()))
+                transaction.commit()
+            }
+        }
     }
 
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
