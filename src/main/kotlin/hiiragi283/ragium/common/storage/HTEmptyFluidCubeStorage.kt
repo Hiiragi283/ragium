@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.storage
 
+import hiiragi283.ragium.api.extension.isOf
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
@@ -25,7 +26,7 @@ class HTEmptyFluidCubeStorage(val context: ContainerItemContext) : InsertionOnly
                 RagiumItems.FILLED_FLUID_CUBE,
                 ComponentChanges
                     .builder()
-                    .add(RagiumComponentTypes.FLUID, resource.fluid)
+                    .add(RagiumComponentTypes.FLUID, resource.registryEntry)
                     .build(),
             )
             if (context.exchange(newVariant, 1, transaction) == 1L) {

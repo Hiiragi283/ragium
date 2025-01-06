@@ -1,0 +1,38 @@
+{
+  "parent": "ragium:machine/root",
+  "criteria": {
+    "interact_machine": {
+      "conditions": {
+        "machine_type": "ragium:cutting_machine"
+      },
+      "trigger": "ragium:interact_machine"
+    }
+  },
+  "display": {
+    "description": {
+      "color": "aqua",
+      "translate": "machine_type.ragium.cutting_machine.description"
+    },
+    "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
+      "count": 1,
+      "id": "ragium:cutting_machine"
+    },
+    "title": {
+      "translate": "machine_tier.ragium.primitive.prefix",
+      "with": [
+        {
+          "translate": "machine_type.ragium.cutting_machine"
+        }
+      ]
+    }
+  },
+  "requirements": [
+    [
+      "interact_machine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

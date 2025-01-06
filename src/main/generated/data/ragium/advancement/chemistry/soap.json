@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:soap_ingot"
+            "items": "ragium:soap"
           }
         ]
       },
@@ -16,10 +16,10 @@
     "description": "",
     "icon": {
       "count": 1,
-      "id": "ragium:soap_ingot"
+      "id": "ragium:soap"
     },
     "title": {
-      "translate": "item.ragium.soap_ingot"
+      "translate": "item.ragium.soap"
     }
   },
   "requirements": [

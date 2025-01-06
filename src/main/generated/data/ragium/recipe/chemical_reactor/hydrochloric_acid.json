@@ -5,16 +5,10 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:hydrogen_chloride"
-    },
-    {
-      "fluids": "minecraft:water"
-    }
+    "#c:hydrogen_chloride",
+    "minecraft:water"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:hydrochloric_acid"
-    }
+    "ragium:hydrochloric_acid"
   ]
 }

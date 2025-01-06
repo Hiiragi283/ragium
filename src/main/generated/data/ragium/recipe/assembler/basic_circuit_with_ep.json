@@ -1,0 +1,25 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "energizedpower"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    "ragium:primitive_circuit",
+    {
+      "count": 4,
+      "items": "#c:wires/copper"
+    }
+  ],
+  "item_outputs": [
+    "energizedpower:basic_circuit"
+  ]
+}

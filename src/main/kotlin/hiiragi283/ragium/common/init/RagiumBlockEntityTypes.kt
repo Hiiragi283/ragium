@@ -1,11 +1,14 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.extension.add
+import hiiragi283.ragium.api.extension.addAllContents
 import hiiragi283.ragium.api.extension.blockEntityType
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.common.RagiumContents
-import hiiragi283.ragium.common.block.entity.*
+import hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity
+import hiiragi283.ragium.common.block.entity.HTCreativeSourceBlockEntity
+import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity
@@ -16,18 +19,16 @@ import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTCreativeCrateBlockEntity
 import hiiragi283.ragium.common.block.storage.HTCreativeDrumBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.transfer.*
-import net.minecraft.block.Block
+import hiiragi283.ragium.common.block.transfer.HTCreativeExporterBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTExporterBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTFilteringPipeBlockEntity
+import hiiragi283.ragium.common.block.transfer.HTSimplePipeBlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumBlockEntityTypes {
     //    Transfer    //
-
-    @JvmField
-    val BUFFER: BlockEntityType<HTBufferBlockEntity> =
-        register("buffer", ::HTBufferBlockEntity)
 
     @JvmField
     val CRATE: BlockEntityType<HTCrateBlockEntity> =
@@ -46,10 +47,6 @@ object RagiumBlockEntityTypes {
         register("creative_exporter", ::HTCreativeExporterBlockEntity)
 
     @JvmField
-    val CROSS_PIPE: BlockEntityType<HTCrossPipeBlockEntity> =
-        register("cross_pipe", ::HTCrossPipeBlockEntity)
-
-    @JvmField
     val DRUM: BlockEntityType<HTDrumBlockEntity> =
         register("drum", ::HTDrumBlockEntity)
 
@@ -58,12 +55,8 @@ object RagiumBlockEntityTypes {
         register("exporter", ::HTExporterBlockEntity)
 
     @JvmField
-    val PIPE: BlockEntityType<HTPipeBlockEntity> =
-        register("pipe", ::HTPipeBlockEntity)
-
-    @JvmField
-    val PIPE_STATION: BlockEntityType<HTPipeStationBlockEntity> =
-        register("pipe_station", ::HTPipeStationBlockEntity)
+    val PIPE: BlockEntityType<HTSimplePipeBlockEntity> =
+        register("pipe", ::HTSimplePipeBlockEntity)
 
     //    Machine    //
 
@@ -80,16 +73,12 @@ object RagiumBlockEntityTypes {
         register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
+    val ASSEMBLER: BlockEntityType<HTAssemblerBlockEntity> =
+        register("assembler", ::HTAssemblerBlockEntity)
+
+    @JvmField
     val BIOMASS_FERMENTER: BlockEntityType<HTBiomassFermenterBlockEntity> =
         register("biomass_fermenter", ::HTBiomassFermenterBlockEntity)
-
-    @JvmField
-    val BLAST_FURNACE: BlockEntityType<HTBlastFurnaceBlockEntity> =
-        register("blast_furnace", ::HTBlastFurnaceBlockEntity)
-
-    @JvmField
-    val CANNING_MACHINE: BlockEntityType<HTCanningMachineBlockEntity> =
-        register("exporter", ::HTCanningMachineBlockEntity)
 
     @JvmField
     val BEDROCK_MINER: BlockEntityType<HTBedrockMinerBlockEntity> =
@@ -97,7 +86,7 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val CHEMICAL_PROCESSOR: BlockEntityType<HTChemicalRecipeProcessorBlockEntity> =
-        register("chemical_processor", ::HTChemicalRecipeProcessorBlockEntity)
+        register("chemical_processor", HTChemicalRecipeProcessorBlockEntity::fromState)
 
     @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
@@ -120,6 +109,18 @@ object RagiumBlockEntityTypes {
         register("fluid_drill", ::HTFluidDrillBlockEntity)
 
     @JvmField
+    val GRINDER: BlockEntityType<HTGrinderBlockEntity> =
+        register("grinder", ::HTGrinderBlockEntity)
+
+    @JvmField
+    val LARGE_CHEMICAL_REACTOR: BlockEntityType<HTLargeChemicalReactorBlockEntity> =
+        register("large_chemical_reactor", ::HTLargeChemicalReactorBlockEntity)
+
+    @JvmField
+    val LARGE_PROCESSOR: BlockEntityType<HTLargeRecipeProcessorBlockEntity> =
+        register("large_processor", HTLargeRecipeProcessorBlockEntity::fromState)
+
+    @JvmField
     val MULTI_SMELTER: BlockEntityType<HTMultiSmelterBlockEntity> =
         register("multi_smelter", ::HTMultiSmelterBlockEntity)
 
@@ -132,16 +133,12 @@ object RagiumBlockEntityTypes {
         register("rock_generator", ::HTRockGeneratorBlockEntity)
 
     @JvmField
-    val SAW_MILL: BlockEntityType<HTSawmillBlockEntity> =
-        register("saw_mill", ::HTSawmillBlockEntity)
-
-    @JvmField
     val SIMPLE_GENERATOR: BlockEntityType<HTSimpleGeneratorBlockEntity> =
-        register("simple_generator", ::HTSimpleGeneratorBlockEntity)
+        register("simple_generator", HTSimpleGeneratorBlockEntity::fromState)
 
     @JvmField
     val SIMPLE_PROCESSOR: BlockEntityType<HTSimpleRecipeProcessorBlockEntity> =
-        register("simple_processor", ::HTSimpleRecipeProcessorBlockEntity)
+        register("simple_processor", HTSimpleRecipeProcessorBlockEntity::fromState)
 
     @JvmField
     val STEAM_GENERATOR: BlockEntityType<HTSteamGeneratorBlockEntity> =
@@ -162,16 +159,12 @@ object RagiumBlockEntityTypes {
         register("creative_source", ::HTCreativeSourceBlockEntity)
 
     @JvmField
-    val ENCHANTMENT_BOOKSHELF: BlockEntityType<HTEnchantmentBookshelfBlockEntity> =
-        register("enchantment_bookshelf", ::HTEnchantmentBookshelfBlockEntity)
-
-    @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
     @JvmField
-    val LARGE_PROCESSOR: BlockEntityType<HTLargeProcessorBlockEntity> =
-        register("large_processor", ::HTLargeProcessorBlockEntity)
+    val EXTENDED_PROCESSOR: BlockEntityType<HTExtendedProcessorBlockEntity> =
+        register("extended_processor", ::HTExtendedProcessorBlockEntity)
 
     @JvmStatic
     private fun <T : HTBlockEntityBase> register(name: String, factory: BlockEntityType.BlockEntityFactory<T>): BlockEntityType<T> =
@@ -183,25 +176,22 @@ object RagiumBlockEntityTypes {
 
     @JvmStatic
     fun init() {
-        registerBlocks(CROSS_PIPE, RagiumContents.CrossPipes.entries)
-        registerBlocks(EXPORTER, RagiumContents.Exporters.entries)
-        registerBlocks(FILTERING_PIPE, RagiumContents.FilteringPipe.entries)
-        registerBlocks(PIPE, RagiumContents.Pipes.entries)
-        registerBlocks(PIPE_STATION, RagiumContents.PipeStations.entries)
+        EXPORTER.addAllContents(RagiumBlocks.Exporters.entries)
+        FILTERING_PIPE.addAllContents(RagiumBlocks.FilteringPipes.entries)
+        PIPE.addAllContents(RagiumBlocks.Pipes.entries)
 
-        registerBlocks(CRATE, RagiumContents.Crates.entries)
-        registerBlocks(DRUM, RagiumContents.Drums.entries)
+        CRATE.addAllContents(RagiumBlocks.Crates.entries)
+        DRUM.addAllContents(RagiumBlocks.Drums.entries)
 
-        CREATIVE_EXPORTER.addSupportedBlock(RagiumBlocks.CREATIVE_EXPORTER)
-        ITEM_DISPLAY.addSupportedBlock(RagiumBlocks.ITEM_DISPLAY)
-        LARGE_PROCESSOR.addSupportedBlock(RagiumBlocks.LARGE_PROCESSOR)
-        MANUAL_FORGE.addSupportedBlock(RagiumBlocks.MANUAL_FORGE)
-        MANUAL_GRINDER.addSupportedBlock(RagiumBlocks.MANUAL_GRINDER)
-        MANUAL_MIXER.addSupportedBlock(RagiumBlocks.MANUAL_MIXER)
+        CREATIVE_EXPORTER.add(RagiumBlocks.Creatives.EXPORTER)
+        EXTENDED_PROCESSOR.add(RagiumBlocks.EXTENDED_PROCESSOR)
+        ITEM_DISPLAY.add(RagiumBlocks.ITEM_DISPLAY)
+        MANUAL_FORGE.add(RagiumBlocks.MANUAL_FORGE)
+        MANUAL_GRINDER.add(RagiumBlocks.MANUAL_GRINDER)
+        MANUAL_MIXER.add(RagiumBlocks.MANUAL_MIXER)
         // consumers
         registerMachineBlocks(RagiumMachineKeys.BEDROCK_MINER, BEDROCK_MINER)
         registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)
-        registerMachineBlocks(RagiumMachineKeys.CANNING_MACHINE, CANNING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
         registerMachineBlocks(RagiumMachineKeys.ROCK_GENERATOR, ROCK_GENERATOR)
@@ -217,19 +207,18 @@ object RagiumBlockEntityTypes {
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
-        registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, BLAST_FURNACE)
+        registerMachineBlocks(RagiumMachineKeys.ASSEMBLER, ASSEMBLER)
+        registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.GRINDER, GRINDER)
+        registerMachineBlocks(RagiumMachineKeys.INFUSER, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR, LARGE_CHEMICAL_REACTOR)
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
-        registerMachineBlocks(RagiumMachineKeys.SAW_MILL, SAW_MILL)
-    }
-
-    @JvmStatic
-    private fun registerBlocks(type: BlockEntityType<*>, blocks: Collection<HTContent<Block>>) {
-        blocks.map(HTContent<Block>::value).forEach(type::addSupportedBlock)
     }
 
     @JvmStatic
@@ -237,8 +226,7 @@ object RagiumBlockEntityTypes {
         RagiumAPI
             .getInstance()
             .machineRegistry
-            .getEntry(key)
-            .blocks
-            .forEach(type::addSupportedBlock)
+            .getEntryOrNull(key)
+            ?.let(type::add)
     }
 }

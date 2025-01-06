@@ -1,21 +1,21 @@
 package hiiragi283.ragium.common.block.machine
 
+import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.dropStackAt
-import hiiragi283.ragium.api.extension.fluidStorageOf
-import hiiragi283.ragium.api.extension.resourceAmount
+import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.getStackInMainHand
+import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
-import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
+import hiiragi283.ragium.api.storage.HTStorageIO
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil
+import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
@@ -28,7 +28,6 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
-import kotlin.jvm.optionals.getOrNull
 
 class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_MIXER, pos, state),
@@ -36,14 +35,14 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
     private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        if (FluidStorageUtil.interactWithFluidStorage(fluidStorage, player, Hand.MAIN_HAND)) {
+        if (fluidStorage.interactWithFluidStorage(player)) {
             return ActionResult.success(world.isClient)
         }
         process(player)
@@ -52,7 +51,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
-        val stackMain: ItemStack = player.getStackInHand(Hand.MAIN_HAND)
+        val stackMain: ItemStack = player.getStackInMainHand()
         val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
         val recipe: HTMachineRecipe = recipeCache
             .getFirstMatch(
@@ -62,24 +61,22 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
                 ) {
                     add(stackMain)
                     add(stackOff)
-                    add(fluidStorage.resourceAmount)
+                    add(fluidStorage.variantStack)
                 },
                 world,
-            ).result()
-            ?.getOrNull()
-            ?: return
+            ).getOrNull() ?: return
         dropStackAt(player, recipe.getResult(world.registryManager))
-        stackMain.decrement(recipe.itemInputs.getOrNull(0)?.count ?: 0)
-        stackOff.decrement(recipe.itemInputs.getOrNull(1)?.count ?: 0)
-        recipe.fluidInputs.getOrNull(0)?.onConsume(fluidStorage)
-        RagiumMachineKeys.MIXER.entry.ifPresent(HTMachinePropertyKeys.SOUND) {
+        stackMain.decrement(recipe.getItemIngredient(0)?.count ?: 0)
+        stackOff.decrement(recipe.getItemIngredient(1)?.count ?: 0)
+        recipe.getFluidIngredient(0)?.onConsume(fluidStorage)
+        RagiumMachineKeys.MIXER.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
             world.playSound(null, pos, it, SoundCategory.BLOCKS)
         }
     }
 
     //    SidedStorageBlockEntity    //
 
-    private val fluidStorage: SingleFluidStorage = fluidStorageOf(FluidConstants.BUCKET * 4)
+    private val fluidStorage = HTTieredFluidStorage(HTMachineTier.PRIMITIVE, HTStorageIO.INPUT, null, this::markDirty)
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
 }

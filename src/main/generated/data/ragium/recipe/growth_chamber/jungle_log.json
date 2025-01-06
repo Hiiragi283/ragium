@@ -1,24 +1,18 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dirt"
-  },
+  "catalyst": "minecraft:dirt",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:jungle_sapling"
-    }
+    "minecraft:jungle_sapling"
   ],
   "item_outputs": [
     {
       "count": 8,
       "item": "minecraft:jungle_log"
     },
-    {
-      "item": "minecraft:jungle_sapling"
-    }
+    "minecraft:jungle_sapling"
   ]
 }

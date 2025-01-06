@@ -1,0 +1,9 @@
+{
+  "values": [
+    {
+      "id": "oritech:plastic_sheet",
+      "required": false
+    },
+    "ragium:primitive_plastic"
+  ]
+}

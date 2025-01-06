@@ -1,136 +1,144 @@
 package hiiragi283.ragium.api.extension
 
-import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
-import hiiragi283.ragium.api.world.HTBackpackManager
-import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.enchantment.Enchantment
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.screen.GenericContainerScreenHandler
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory
-import net.minecraft.server.MinecraftServer
-import net.minecraft.server.world.ServerWorld
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.DyeColor
-import net.minecraft.util.Hand
-import net.minecraft.util.Identifier
-import net.minecraft.util.TypedActionResult
+import net.minecraft.util.hit.BlockHitResult
+import net.minecraft.util.hit.EntityHitResult
+import net.minecraft.util.hit.HitResult
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
-import net.minecraft.world.*
+import net.minecraft.world.BlockView
+import net.minecraft.world.World
+import net.minecraft.world.WorldView
 
 //    Views    //
 
+/**
+ * 指定した[BlockView]と[pos]から[HTMachineBlockEntityBase]を返します。
+ */
 fun BlockView.getMachineEntity(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
 
-fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockPatternProvider? = getBlockEntity(pos) as? HTMultiblockPatternProvider
+/**
+ * 指定した[BlockView]と[pos]から[HTMultiblockProvider]を返します。
+ */
+fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockProvider? = getBlockEntity(pos) as? HTMultiblockProvider
 
+/**
+ * 指定した[WorldView]から[RegistryEntry]を返します。
+ * @param T 値のクラス
+ * @param registryKey レジストリのキー
+ * @param key 値のキー
+ */
 fun <T : Any> WorldView.getEntry(registryKey: RegistryKey<Registry<T>>, key: RegistryKey<T>): RegistryEntry<T>? =
     registryManager.get(registryKey).getEntryOrNull(key)
 
-fun WorldView.getEnchantment(key: RegistryKey<Enchantment>): RegistryEntry<Enchantment>? = getEntry(RegistryKeys.ENCHANTMENT, key)
-
 //    World    //
 
+/**
+ * 指定した[item]を[entity]の足元にドロップします。
+ * @return [ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
 fun dropStackAt(entity: Entity, item: ItemConvertible, count: Int = 1): Boolean = dropStackAt(entity, ItemStack(item, count))
 
-fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.blockPos, stack)
+/**
+ * 指定した[stack]を[entity]の足元にドロップします。
+ * @return [ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.world, entity.pos, stack)
 
-fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean {
-    val itemEntity = ItemEntity(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
+/**
+ * 指定した[item]を[pos]にドロップします。
+ * @return [ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(
+    world: World,
+    pos: BlockPos,
+    item: ItemConvertible,
+    count: Int = 1,
+): Boolean = dropStackAt(world, pos, ItemStack(item, count))
+
+/**
+ * 指定した[stack]を[pos]にドロップします。
+ * @return [ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(world: World, pos: BlockPos, stack: ItemStack): Boolean =
+    dropStackAt(world, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
+
+/**
+ * 指定した[stack]を[pos]にドロップします。
+ * @return [ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(world: World, pos: Vec3d, stack: ItemStack): Boolean = dropStackAt(world, pos.x, pos.y, pos.z, stack)
+
+/**
+ * 指定した[stack]を[x]，[y]，[z]にドロップします。
+ * @return [ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(
+    world: World,
+    x: Double,
+    y: Double,
+    z: Double,
+    stack: ItemStack,
+): Boolean {
+    val itemEntity = ItemEntity(world, x, y, z, stack)
     itemEntity.velocity = Vec3d.ZERO
     itemEntity.setPickupDelay(0)
     return world.spawnEntity(itemEntity)
 }
 
-fun World.ifServer(action: ServerWorld.() -> Unit): World = apply {
-    (this as? ServerWorld)?.let(action)
-}
+//    BlockPos    //
 
-fun World.ifSClient(action: World.() -> Unit): World = apply {
-    if (this.isClient) this.action()
-}
+/**
+ * 指定した[BlockPos]を各方角に1だけ移動した[BlockPos]の一覧を返します。
+ */
+val BlockPos.aroundPos: List<BlockPos>
+    get() = Direction.entries.map(this::offset)
 
-fun <T : Any> World?.mapIfServer(transform: (ServerWorld) -> T): DataResult<T> =
-    (this as? ServerWorld)?.let(transform).toDataResult { "Target world is not ServerWorld!" }
+//    ChunkPos    //
 
-//    PersistentState    //
-
-fun <T : PersistentState> getState(world: ServerWorld, type: PersistentState.Type<T>, id: Identifier): T = world.persistentStateManager
-    .getOrCreate(type, id.splitWith('_'))
-    .apply { markDirty() }
-
-fun <T : PersistentState> getState(world: World, type: PersistentState.Type<T>, id: Identifier): T? {
-    val key: RegistryKey<World> = world.registryKey
-    val server: MinecraftServer = world.server ?: return null
-    return getState(server, key, type, id)
-}
-
-fun <T : PersistentState> getState(
-    server: MinecraftServer,
-    key: RegistryKey<World>,
-    type: PersistentState.Type<T>,
-    id: Identifier,
-): T? = server.getWorld(key)?.let { getState(it, type, id) }
-
-fun <T : PersistentState> getStateFromServer(server: MinecraftServer, type: PersistentState.Type<T>, id: Identifier): T =
-    getState(server.overworld, type, id)
-
-fun <T : PersistentState> getStateFromServer(world: ServerWorld, type: PersistentState.Type<T>, id: Identifier): T =
-    getStateFromServer(world.server, type, id)
-
-// Backpack
-val MinecraftServer.backpackManager: HTBackpackManager
-    get() = getStateFromServer(this, HTBackpackManager.TYPE, HTBackpackManager.ID)
-
-val WorldAccess.backpackManager: DataResult<HTBackpackManager>
-    get() = server
-        ?.backpackManager
-        .toDataResult { "Failed to find backpack manager!" }
-
-fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> =
-    openBackpackScreen(world, player, player.getStackInHand(hand))
-
-fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, stack: ItemStack): TypedActionResult<ItemStack> =
-    if (stack.contains(RagiumComponentTypes.COLOR)) {
-        openBackpackScreen(world, player, stack.getOrDefault(RagiumComponentTypes.COLOR, DyeColor.WHITE))
-        TypedActionResult.success(stack, world.isClient)
-    } else {
-        TypedActionResult.pass(stack)
-    }
-
-fun openBackpackScreen(world: WorldAccess, player: PlayerEntity, color: DyeColor) {
-    world.backpackManager
-        .map { it[color] }
-        .ifSuccess { inventory: SimpleInventory ->
-            player.openHandledScreen(
-                SimpleNamedScreenHandlerFactory({ syncId: Int, playerInv: PlayerInventory, _: PlayerEntity ->
-                    GenericContainerScreenHandler.createGeneric9x6(syncId, playerInv, inventory)
-                }, RagiumItems.BACKPACK.name),
-            )
-            player.playSound(SoundEvents.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 1.0f)
+/**
+ * 指定した[yRange]の範囲で[ChunkPos]内の各[BlockPos]に対して処理を行います。
+ */
+fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
+    (startX..endX).forEach { x: Int ->
+        (startZ..endZ).forEach { z: Int ->
+            yRange.sortedDescending().forEach { y: Int ->
+                action(BlockPos(x, y, z))
+            }
         }
+    }
 }
 
-// Energy Network
-val MinecraftServer.networkMap: Map<RegistryKey<World>, HTEnergyNetwork>
-    get() = worlds.associate { it.registryKey to it.energyNetwork }
+//    HitResult    //
 
-val ServerWorld.energyNetwork: HTEnergyNetwork
-    get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID)
+/**
+ * 指定した[HitResult]が[BlockHitResult]の場合のみに処理を行います。
+ * @return 指定した[HitResult]
+ */
+fun HitResult.onBlockHit(action: (BlockHitResult) -> Unit): HitResult = apply {
+    (this as? BlockHitResult)?.let(action)
+}
 
-val World.energyNetwork: DataResult<HTEnergyNetwork>
-    get() = getState(this, HTEnergyNetwork.TYPE, HTEnergyNetwork.ID).toDataResult { "Failed to find energy network!" }
+/**
+ * 指定した[HitResult]が[EntityHitResult]の場合のみに処理を行います。
+ * @return 指定した[HitResult]
+ */
+fun HitResult.onEntityHit(action: (EntityHitResult) -> Unit): HitResult = apply {
+    (this as? EntityHitResult)?.let(action)
+}
+
+/**
+ * 指定した[BlockHitResult]の座標を[BlockHitResult.side]で1だけずらした座標を返します。
+ */
+val BlockHitResult.sidedPos: BlockPos
+    get() = blockPos.offset(side)

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:infuser",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "fluids": "#c:experience"
+    }
+  ],
+  "item_inputs": [
+    "minecraft:glass_bottle"
+  ],
+  "item_outputs": [
+    "minecraft:experience_bottle"
+  ]
+}

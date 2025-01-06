@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.registry.BuiltinRegistries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -10,44 +11,75 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
+import net.minecraft.util.Identifier
 import kotlin.jvm.optionals.getOrNull
 
 //    Registry    //
 
 fun createWrapperLookup(): RegistryWrapper.WrapperLookup = BuiltinRegistries.createWrapperLookup()
 
-fun <T : Any> idComparator(registry: Registry<T>): java.util.Comparator<T> = compareBy(registry::getId)
+/**
+ * [net.minecraft.util.Identifier]をベースとした[Comparator]を返します。
+ */
+fun <T : Any> idComparator(registry: Registry<T>): Comparator<T> = compareBy(registry::getId)
 
-fun <T : Any> entryComparator(registry: Registry<T>): Comparator<RegistryEntry<T>> = compareBy { it.key.orElseThrow().value }
-
+/**
+ * 指定した[entry]から[RegistryKey]を返します。
+ * @return [entry]が紐づいていない場合はnull
+ */
 fun <T : Any> Registry<T>.getKeyOrNull(entry: T): RegistryKey<T>? = getKey(entry).getOrNull()
 
+/**
+ * 指定した[entry]から[RegistryKey]を返します。
+ * @throws [entry]が紐づいていない場合
+ */
 fun <T : Any> Registry<T>.getKeyOrThrow(entry: T): RegistryKey<T> = getKey(entry).orElseThrow()
 
+/**
+ * 指定した[key]から[RegistryEntry.Reference]を返します。
+ * @return [key]が紐づいていない場合はnull
+ */
 fun <T : Any> Registry<T>.getEntryOrNull(key: RegistryKey<T>): RegistryEntry.Reference<T>? = getEntry(key).getOrNull()
 
+/**
+ * 指定した[key]から[RegistryEntry.Reference]を返します。
+ * @throws [key]が紐づいていない場合
+ */
 fun <T : Any> Registry<T>.getEntryOrThrow(key: RegistryKey<T>): RegistryEntry.Reference<T> = getEntry(key).orElseThrow()
-
-fun <T : Any> Registry<T>.getEntryListOrEmpty(tagKey: TagKey<T>): RegistryEntryList<T> =
-    getEntryList(tagKey).map { it as RegistryEntryList<T> }.orElse(RegistryEntryList.empty())
-
-fun <T : Any> Registry<T>.getEntryListOrNull(tagKey: TagKey<T>): RegistryEntryList.Named<T>? = getEntryList(tagKey).getOrNull()
-
-fun <T : Any> Registry<T>.getEntryListOrThrow(tagKey: TagKey<T>): RegistryEntryList.Named<T> = getEntryList(tagKey).orElseThrow()
 
 //    RegistryEntry    //
 
+val <T : Any> RegistryEntry<T>.id: Identifier?
+    get() = key.getOrNull()?.value
+
+/**
+ * 指定した[value]が一致するか判定します。
+ */
 fun <T : Any> RegistryEntry<T>.isOf(value: T): Boolean = value() == value
 
 //    RegistryEntryList    //
 
+/**
+ * この[RegistryEntryList]に要素が含まれているか判定します。
+ */
 val <T : Any> RegistryEntryList<T>.isEmpty: Boolean
     get() = size() == 0
 
-fun <T : Any> RegistryEntryList<T>.asText(mapper: (T) -> Text): MutableText = storage
+/**
+ * この[RegistryEntryList]を[Text]に変換します。
+ * @param transform 値を[Text]に変換するブロック
+ * @return [TagKey]の場合は[TagKey.getName]，それ以外の場合は[transform]を連結
+ */
+fun <T : Any> RegistryEntryList<T>.asText(transform: (T) -> Text): MutableText = storage
     .map(
-        { it.name },
-        { Texts.join(this.map(RegistryEntry<T>::value), mapper) },
+        TagKey<T>::getName,
+        { Texts.join(this.map(RegistryEntry<T>::value), transform) },
     ).copy()
 
-operator fun <T : Any> RegistryEntryList<T>.contains(value: T): Boolean = any { it.isOf(value) }
+/**
+ * この[RegistryEntryList]を[Text]に変換します。
+ * @param transform 値を[Text]に変換するブロック
+ * @return [TagKey]の場合は[TagKey.getName]，それ以外の場合は[transform]を連結
+ */
+fun <T : Any> HTRegistryEntryList<T>.asText(transform: (T) -> Text): MutableText =
+    storage.map(TagKey<T>::getName, { Texts.join(it, transform) }).copy()

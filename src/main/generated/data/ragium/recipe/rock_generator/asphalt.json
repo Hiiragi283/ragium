@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "ragium:asphalt"
-  },
+  "catalyst": "ragium:asphalt",
   "definition": {
     "type": "ragium:rock_generator",
     "tier": "basic"

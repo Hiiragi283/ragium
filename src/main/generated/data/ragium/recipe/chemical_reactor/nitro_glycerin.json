@@ -5,17 +5,13 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:glycerol"
-    },
+    "#c:glycerol",
     {
       "amount": 243000,
       "fluids": "#c:mixture_acid"
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:nitro_glycerin"
-    }
+    "ragium:nitro_glycerin"
   ]
 }

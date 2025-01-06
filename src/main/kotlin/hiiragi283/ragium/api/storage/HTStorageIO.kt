@@ -1,12 +1,15 @@
 package hiiragi283.ragium.api.storage
 
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
 import net.fabricmc.fabric.api.transfer.v1.storage.base.FilteringStorage
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
+import team.reborn.energy.api.EnergyStorage
+import team.reborn.energy.api.base.LimitingEnergyStorage
 
+/**
+ * ストレージの搬入出を管理するクラス
+ */
 enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
     INPUT(true, false),
     OUTPUT(false, true),
@@ -14,6 +17,10 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
     INTERNAL(false, false),
     ;
 
+    /**
+     * 指定した[storage]の搬入出を制限した[Storage]を返します。
+     * @see [FilteringStorage]
+     */
     fun <T : Any> wrapStorage(storage: Storage<T>): Storage<T> = when (this) {
         INPUT -> FilteringStorage.insertOnlyOf(storage)
         OUTPUT -> FilteringStorage.extractOnlyOf(storage)
@@ -21,69 +28,32 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
         INTERNAL -> FilteringStorage.readOnlyOf(storage)
     }
 
-    fun createItemStorage(capacity: Long): SingleItemStorage = when (this) {
-        INPUT -> object : SingleItemStorage() {
-            override fun getCapacity(variant: ItemVariant): Long = capacity
+    /**
+     * 指定した[view]の搬出を制限した[StorageView]を返します。
+     */
+    fun <T : Any> wrapView(view: StorageView<T>): StorageView<T> = when (canExtract) {
+        true -> view
+        false -> object : StorageView<T> {
+            override fun extract(resource: T?, maxAmount: Long, transaction: TransactionContext?): Long = 0
 
-            override fun canExtract(variant: ItemVariant): Boolean = false
+            override fun isResourceBlank(): Boolean = view.isResourceBlank
 
-            override fun supportsExtraction(): Boolean = false
-        }
-        OUTPUT -> object : SingleItemStorage() {
-            override fun getCapacity(variant: ItemVariant): Long = capacity
+            override fun getResource(): T? = view.resource
 
-            override fun canInsert(variant: ItemVariant): Boolean = false
+            override fun getAmount(): Long = view.amount
 
-            override fun supportsInsertion(): Boolean = false
-        }
-        GENERIC -> object : SingleItemStorage() {
-            override fun getCapacity(variant: ItemVariant): Long = capacity
-        }
-        INTERNAL -> object : SingleItemStorage() {
-            override fun getCapacity(variant: ItemVariant): Long = capacity
-
-            override fun canExtract(variant: ItemVariant): Boolean = false
-
-            override fun canInsert(variant: ItemVariant): Boolean = false
-
-            override fun supportsExtraction(): Boolean = false
-
-            override fun supportsInsertion(): Boolean = false
+            override fun getCapacity(): Long = view.capacity
         }
     }
 
-    fun createFluidStorage(capacity: Long): SingleFluidStorage = when (this) {
-        INPUT ->
-            object : SingleFluidStorage() {
-                override fun getCapacity(variant: FluidVariant): Long = capacity
-
-                override fun canExtract(variant: FluidVariant): Boolean = false
-
-                override fun supportsExtraction(): Boolean = false
-            }
-        OUTPUT ->
-            object : SingleFluidStorage() {
-                override fun getCapacity(variant: FluidVariant): Long = capacity
-
-                override fun canInsert(variant: FluidVariant): Boolean = false
-
-                override fun supportsInsertion(): Boolean = false
-            }
-        GENERIC ->
-            object : SingleFluidStorage() {
-                override fun getCapacity(variant: FluidVariant): Long = capacity
-            }
-        INTERNAL ->
-            object : SingleFluidStorage() {
-                override fun getCapacity(variant: FluidVariant): Long = capacity
-
-                override fun canExtract(variant: FluidVariant): Boolean = false
-
-                override fun canInsert(variant: FluidVariant): Boolean = false
-
-                override fun supportsExtraction(): Boolean = false
-
-                override fun supportsInsertion(): Boolean = false
-            }
+    /**
+     * 指定した[storage]の搬入出を制限した[EnergyStorage]を返します。
+     * @see LimitingEnergyStorage
+     */
+    fun wrapEnergyStorage(storage: EnergyStorage): EnergyStorage = when (this) {
+        INPUT -> LimitingEnergyStorage(storage, Long.MAX_VALUE, 0)
+        OUTPUT -> LimitingEnergyStorage(storage, 0, Long.MAX_VALUE)
+        GENERIC -> storage
+        INTERNAL -> LimitingEnergyStorage(storage, 0, 0)
     }
 }

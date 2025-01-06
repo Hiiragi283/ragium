@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.entryPacketCodec
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
@@ -13,24 +14,33 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
 
+/**
+ * アイテムの完成品を扱うクラス
+ * @param entry アイテムの[RegistryEntry]
+ * @param count 完成品の個数
+ * @param components 完成品のコンポーネント
+ */
 class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val components: ComponentChanges = ComponentChanges.EMPTY) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTItemResult> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    Registries.ITEM.entryCodec
-                        .fieldOf("item")
-                        .forGetter(HTItemResult::entry),
-                    Codec
-                        .intRange(1, Int.MAX_VALUE)
-                        .optionalFieldOf("count", 1)
-                        .forGetter(HTItemResult::count),
-                    ComponentChanges.CODEC
-                        .optionalFieldOf("components", ComponentChanges.EMPTY)
-                        .forGetter(HTItemResult::components),
-                ).apply(instance, ::HTItemResult)
-        }
+        val CODEC: Codec<HTItemResult> = RagiumCodecs.simpleOrComplex(
+            Registries.ITEM.entryCodec.xmap(::HTItemResult, HTItemResult::entry),
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        Registries.ITEM.entryCodec
+                            .fieldOf("item")
+                            .forGetter(HTItemResult::entry),
+                        Codec
+                            .intRange(1, Int.MAX_VALUE)
+                            .optionalFieldOf("count", 1)
+                            .forGetter(HTItemResult::count),
+                        ComponentChanges.CODEC
+                            .optionalFieldOf("components", ComponentChanges.EMPTY)
+                            .forGetter(HTItemResult::components),
+                    ).apply(instance, ::HTItemResult)
+            },
+        ) { result: HTItemResult -> result.count == 1 && result.components.isEmpty }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTItemResult> = PacketCodec.tuple(
@@ -55,6 +65,9 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         components,
     )
 
+    /**
+     * 指定した[stack]から[HTItemResult]を返します。
+     */
     constructor(stack: ItemStack) : this(stack.registryEntry, stack.count, stack.componentChanges)
 
     val item: Item
@@ -62,6 +75,9 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     val stack: ItemStack
         get() = ItemStack(entry, count, components)
 
+    /**
+     * 指定した[other]にマージできるか判定します。
+     */
     fun canMerge(other: ItemStack): Boolean = when {
         other.isEmpty -> true
         other.count + this.count > other.maxCount -> false
@@ -69,6 +85,10 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
         else -> false
     }
 
+    /**
+     * 指定した[other]にマージします。
+     * @return [other]とマージした[ItemStack]
+     */
     fun merge(other: ItemStack): ItemStack = when {
         other.isEmpty -> stack
         other.count + this.count > other.maxCount -> other
@@ -77,38 +97,4 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
     }
 
     override fun toString(): String = "HTItemResult[item=${entry.idAsString},count=$count,components=$components]"
-
-    /*private class TagRegistryEntry(val tagKey: TagKey<Item>) : RegistryEntry<Item> {
-        private val firstEntry: RegistryEntry<Item>
-            get() = Registries.ITEM
-                .getEntryList(tagKey)
-                .orElseThrow { NoSuchElementException("TagKey; ${tagKey.id} has no entry!") }
-                .sortedWith(entryComparator(Registries.ITEM))
-                .first()
-
-        override fun value(): Item = firstEntry.value()
-
-        override fun hasKeyAndValue(): Boolean = firstEntry.hasKeyAndValue()
-
-        override fun matchesId(id: Identifier): Boolean = firstEntry.matchesId(id)
-
-        override fun streamTags(): Stream<TagKey<Item>> = firstEntry.streamTags()
-
-        override fun getKeyOrValue(): Either<RegistryKey<Item>, Item> = firstEntry.keyOrValue
-
-        override fun getKey(): Optional<RegistryKey<Item>> = firstEntry.key
-
-        override fun getType(): RegistryEntry.Type = firstEntry.type
-
-        override fun ownerEquals(owner: RegistryEntryOwner<Item>): Boolean = firstEntry.ownerEquals(owner)
-
-        override fun isIn(tag: TagKey<Item>): Boolean = firstEntry.isIn(tag)
-
-        @Deprecated("Deprecated in Java")
-        override fun matches(entry: RegistryEntry<Item>): Boolean = firstEntry.matches(entry)
-
-        override fun matches(predicate: Predicate<RegistryKey<Item>>): Boolean = firstEntry.matches(predicate)
-
-        override fun matchesKey(key: RegistryKey<Item>): Boolean = firstEntry.matchesKey(key)
-    }*/
 }

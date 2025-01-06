@@ -6,18 +6,14 @@
   },
   "fluid_inputs": [
     {
-      "fluids": "#c:asphalt"
+      "amount": 9000,
+      "fluids": "#c:residual_oil"
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:gravel"
-    }
+    "ragium:slag"
   ],
   "item_outputs": [
-    {
-      "count": 4,
-      "item": "ragium:asphalt"
-    }
+    "ragium:asphalt"
   ]
 }

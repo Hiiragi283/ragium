@@ -2,8 +2,10 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.entryPacketCodec
+import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.isFilledMax
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -17,20 +19,28 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.entry.RegistryEntry
 
+/**
+ * 液体の完成品を扱うクラス
+ * @param entry 液体の[RegistryEntry]
+ * @param amount 液体の量
+ */
 class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidConstants.BUCKET) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTFluidResult> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    Registries.FLUID.entryCodec
-                        .fieldOf("fluid")
-                        .forGetter(HTFluidResult::entry),
-                    POSITIVE_LONG_CODEC
-                        .optionalFieldOf("amount", FluidConstants.BUCKET)
-                        .forGetter(HTFluidResult::amount),
-                ).apply(instance, ::HTFluidResult)
-        }
+        val CODEC: Codec<HTFluidResult> = RagiumCodecs.simpleOrComplex(
+            Registries.FLUID.entryCodec.xmap(::HTFluidResult, HTFluidResult::entry),
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        Registries.FLUID.entryCodec
+                            .fieldOf("fluid")
+                            .forGetter(HTFluidResult::entry),
+                        POSITIVE_LONG_CODEC
+                            .optionalFieldOf("amount", FluidConstants.BUCKET)
+                            .forGetter(HTFluidResult::amount),
+                    ).apply(instance, ::HTFluidResult)
+            },
+        ) { result: HTFluidResult -> result.amount == FluidConstants.BUCKET }
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFluidResult> = PacketCodec.tuple(
@@ -54,13 +64,20 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
     val variant: FluidVariant
         get() = FluidVariant.of(fluid)
 
+    /**
+     * 指定した[storage]にマージできるか判定します。
+     */
     fun canMerge(storage: SingleSlotStorage<FluidVariant>): Boolean = when {
         storage.isFilledMax -> false
-        storage.isResourceBlank -> storage.amount + this.amount <= storage.capacity
+        storage.isEmpty -> storage.amount + this.amount <= storage.capacity
         storage.resource == variant -> storage.amount + this.amount <= storage.capacity
         else -> false
     }
 
+    /**
+     * 指定した[storage]にマージします。
+     * @return [storage]に搬入できた量
+     */
     fun merge(storage: SingleSlotStorage<FluidVariant>, transaction: TransactionContext): Long = when {
         canMerge(storage) -> storage.insert(variant, amount, transaction)
         else -> 0

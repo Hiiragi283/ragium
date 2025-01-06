@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.storage.HTStorageBuilder
-import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
@@ -15,13 +15,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state) {
-    private val inventory: SidedInventory = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INTERNAL, HTStorageSide.NONE)
-        .buildInventory()
+    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).build()
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun onUse(
+    override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
@@ -35,4 +33,7 @@ class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
         player.setStackInHand(hand, stackIn)
         return ActionResult.success(world.isClient)
     }
+
+    override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
+        ScreenHandler.calculateComparatorOutput(inventory)
 }

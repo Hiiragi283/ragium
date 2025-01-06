@@ -9,13 +9,9 @@
       "count": 8,
       "items": "#c:storage_blocks/gold"
     },
-    {
-      "items": "minecraft:apple"
-    }
+    "minecraft:apple"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:enchanted_golden_apple"
-    }
+    "minecraft:enchanted_golden_apple"
   ]
 }

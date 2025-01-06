@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.material
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.property.HTPropertyKey
+import net.minecraft.item.ItemConvertible
 
 object HTMaterialPropertyKeys {
     @JvmField
@@ -19,6 +20,10 @@ object HTMaterialPropertyKeys {
     @JvmField
     val GRINDING_BASE_COUNT: HTPropertyKey.Defaulted<Int> =
         HTPropertyKey.ofDefaulted(RagiumAPI.id("grinding_count"), 1)
+
+    @JvmField
+    val ORE_SUB_PRODUCT: HTPropertyKey.Simple<ItemConvertible> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("ore_sub_product"))
 
     @JvmField
     val SMELTING_EXP: HTPropertyKey.Defaulted<Float> =

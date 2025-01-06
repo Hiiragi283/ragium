@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    "ragium:honey"
+  ],
+  "item_inputs": [
+    "minecraft:honeycomb_block"
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:bee_wax"
+    }
+  ]
+}

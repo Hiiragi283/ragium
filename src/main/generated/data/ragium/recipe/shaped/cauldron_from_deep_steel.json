@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/deep_steel"
+    }
+  },
+  "pattern": [
+    "A A",
+    "A A",
+    "AAA"
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:cauldron"
+  }
+}

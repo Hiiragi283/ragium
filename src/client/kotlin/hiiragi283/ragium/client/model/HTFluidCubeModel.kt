@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.model
 
-import hiiragi283.ragium.client.extension.FLUID_CUBE_TRANSFORM
-import hiiragi283.ragium.client.extension.getSpriteAndColor
+import hiiragi283.ragium.api.extension.FLUID_CUBE_TRANSFORM
+import hiiragi283.ragium.api.extension.getSpriteAndColor
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.fabricmc.api.EnvType
@@ -71,10 +71,14 @@ data object HTFluidCubeModel : UnbakedModel, BakedModel {
             .getInstance()
             .itemRenderer
             .models
-            .getModel(RagiumItems.EMPTY_FLUID_CUBE.asItem())
+            .getModel(RagiumItems.EMPTY_FLUID_CUBE.get())
             ?.emitItemQuads(stack, randomSupplier, context)
         // render fluid
-        val (sprite: Sprite, color: Int) = stack.get(RagiumComponentTypes.FLUID)?.getSpriteAndColor() ?: return
+        val (sprite: Sprite, color: Int) = stack
+            .get(RagiumComponentTypes.FLUID)
+            ?.value()
+            ?.getSpriteAndColor()
+            ?: return
         Direction.entries.forEach { dir: Direction ->
             val emitter: QuadEmitter = context.emitter
             emitter.square(dir, 0.3f, 0.3f, 0.7f, 0.7f, 0.7f)

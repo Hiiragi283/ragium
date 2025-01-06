@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/blast_furnace_top"
+    "all": "ragium:block/primitive_casing"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    "minecraft:water"
+  ],
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "minecraft:soul_sand"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:sand"
+    },
+    "minecraft:quartz"
+  ]
+}

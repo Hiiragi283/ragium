@@ -5,16 +5,10 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:dirt"
-    },
-    {
-      "items": "ragium:nuclear_waste"
-    }
+    "#minecraft:dirt",
+    "ragium:nuclear_waste"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:mutated_soil"
-    }
+    "ragium:mutated_soil"
   ]
 }

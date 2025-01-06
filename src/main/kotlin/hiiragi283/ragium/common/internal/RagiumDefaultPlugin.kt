@@ -2,30 +2,18 @@ package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
-import hiiragi283.ragium.api.extension.getAroundPos
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.machine.block.HTMachineEntityFactory
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.extension.aroundPos
+import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.util.TriConsumer
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
+import hiiragi283.ragium.common.init.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.FluidState
@@ -46,7 +34,7 @@ import java.util.function.BiConsumer
 object RagiumDefaultPlugin : RagiumPlugin {
     override val priority: Int = -100
 
-    override fun registerMachineType(consumer: BiConsumer<HTMachineKey, HTMachineType>) {
+    override fun registerMachine(consumer: BiConsumer<HTMachineKey, HTMachineType>) {
         // consumer
         RagiumMachineKeys.CONSUMERS.forEach { consumer.accept(it, HTMachineType.CONSUMER) }
         // generators
@@ -60,6 +48,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.DOWN }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.BEDROCK_MINER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
@@ -67,9 +56,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBiomassFermenterBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.COMPOSTER)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_COMPOSTER_FILL_SUCCESS)
-        }
-        helper.modify(RagiumMachineKeys.CANNING_MACHINE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCanningMachineBlockEntity))
         }
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
@@ -97,7 +83,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.NUCLEAR_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTNuclearReactorBlockEntity))
         }
-        helper.modify(RagiumMachineKeys.SOLAR_PANEL) {
+        helper.modify(RagiumMachineKeys.SOLAR_GENERATOR) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
             set(HTMachinePropertyKeys.GENERATOR_PREDICATE) { world: World, _: BlockPos -> world.isDay }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleGeneratorBlockEntity))
@@ -113,7 +99,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     world.getBiome(pos).isIn(BiomeTags.IS_NETHER) -> true
                     else ->
                         pos
-                            .getAroundPos {
+                            .aroundPos
+                            .filter {
                                 val fluidState: FluidState = world.getFluidState(it)
                                 fluidState.isIn(FluidTags.LAVA) && fluidState.isStill
                             }.size >= 4
@@ -127,12 +114,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
         }
-        helper.modify(RagiumMachineKeys.ALLOY_FURNACE) {
-            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
-            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE)
+        helper.modify(RagiumMachineKeys.ASSEMBLER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTAssemblerBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_CRAFTER_CRAFT)
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBlastFurnaceBlockEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.BLAST_FURNACE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
         }
@@ -140,6 +128,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             RagiumMachineKeys.CHEMICAL_REACTOR,
             RagiumMachineKeys.ELECTROLYZER,
             RagiumMachineKeys.EXTRACTOR,
+            RagiumMachineKeys.INFUSER,
             RagiumMachineKeys.MIXER,
         ) {
             set(
@@ -151,20 +140,25 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
         }
+        helper.modify(RagiumMachineKeys.CUTTING_MACHINE) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.CUTTING_MACHINE)
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
+        }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.DISTILLATION_TOWER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FALLING_DRIPSTONE_LAVA)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
         helper.modify(RagiumMachineKeys.GRINDER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTGrinderBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
         }
         helper.modify(RagiumMachineKeys.GROWTH_CHAMBER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.HAPPY_VILLAGER)
-        }
-        helper.modify(RagiumMachineKeys.METAL_FORMER) {
-            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_ANVIL_USE)
         }
         helper.modify(RagiumMachineKeys.MIXER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.BUBBLE_POP)
@@ -172,75 +166,84 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.MULTI_SMELTER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
+        }
+        helper.modify(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTLargeChemicalReactorBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.LARGE_MACHINE)
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.END_ROD)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL)
         }
-        helper.modify(RagiumMachineKeys.SAW_MILL) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSawmillBlockEntity))
-            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
-            set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
-        }
     }
 
     override fun registerMaterial(helper: RagiumPlugin.MaterialHelper) {
         // alloy
-        helper.register(RagiumMaterialKeys.DEEP_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.NETHERITE, HTMaterialKey.Type.ALLOY, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialKey.Type.ALLOY)
-        helper.register(RagiumMaterialKeys.RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialKey.Type.ALLOY, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.STEEL, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialType.ALLOY)
+        helper.register(RagiumMaterialKeys.RAGI_STEEL, HTMaterialType.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialType.ALLOY, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.STEEL, HTMaterialType.ALLOY, Rarity.UNCOMMON)
 
-        helper.register(RagiumMaterialKeys.ELECTRUM, HTMaterialKey.Type.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.BRASS, HTMaterialType.ALLOY)
+        helper.register(RagiumMaterialKeys.BRONZE, HTMaterialType.ALLOY)
+        helper.register(RagiumMaterialKeys.ELECTRUM, HTMaterialType.ALLOY, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.INVAR, HTMaterialType.ALLOY, Rarity.UNCOMMON)
         // dust
-        helper.register(RagiumMaterialKeys.ALKALI, HTMaterialKey.Type.DUST)
-        helper.register(RagiumMaterialKeys.ASH, HTMaterialKey.Type.DUST)
+        helper.register(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
+        helper.register(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
         // gem
-        helper.register(RagiumMaterialKeys.COAL, HTMaterialKey.Type.GEM)
-        helper.register(RagiumMaterialKeys.CRYOLITE, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.DIAMOND, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.EMERALD, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.FLUORITE, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.LAPIS, HTMaterialKey.Type.GEM, Rarity.COMMON)
-        helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialKey.Type.GEM, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialKey.Type.GEM, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.RUBY, HTMaterialKey.Type.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.SAPPHIRE, HTMaterialKey.Type.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.CINNABAR, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.COAL, HTMaterialType.GEM)
+        helper.register(RagiumMaterialKeys.CRYOLITE, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.DIAMOND, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.EMERALD, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.FLUORITE, HTMaterialType.GEM, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.LAPIS, HTMaterialType.GEM, Rarity.COMMON)
+        helper.register(RagiumMaterialKeys.NETHER_STAR, HTMaterialType.GEM, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialType.GEM, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.RUBY, HTMaterialType.GEM, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.SAPPHIRE, HTMaterialType.GEM, Rarity.RARE)
         // metal
-        helper.register(RagiumMaterialKeys.ALUMINUM, HTMaterialKey.Type.METAL, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.COPPER, HTMaterialKey.Type.METAL)
-        helper.register(RagiumMaterialKeys.GOLD, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.IRON, HTMaterialKey.Type.METAL)
-        // helper.register(RagiumMaterialKeys.SILICON, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.ALUMINUM, HTMaterialType.METAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.GOLD, HTMaterialType.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
 
-        helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.LEAD, HTMaterialKey.Type.METAL)
-        helper.register(RagiumMaterialKeys.NICKEL, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.PLATINUM, HTMaterialKey.Type.METAL, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.SILVER, HTMaterialKey.Type.METAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.TIN, HTMaterialKey.Type.METAL)
-        helper.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialKey.Type.METAL, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.ZINC, HTMaterialKey.Type.METAL)
+        helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.NICKEL, HTMaterialType.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.PLATINUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.PLUTONIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.SILVER, HTMaterialType.METAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.TITANIUM, HTMaterialType.METAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
         // mineral
-        helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.NITER, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialKey.Type.MINERAL, Rarity.UNCOMMON)
-        helper.register(RagiumMaterialKeys.SALT, HTMaterialKey.Type.MINERAL)
-        helper.register(RagiumMaterialKeys.SULFUR, HTMaterialKey.Type.MINERAL)
-        // helper.register(RagiumMaterialKeys.URANITE, HTMaterialKey.Type.MINERAL, Rarity.RARE)
+        helper.register(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
+        helper.register(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
+
+        helper.register(RagiumMaterialKeys.GALENA, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
+        helper.register(RagiumMaterialKeys.SPHALERITE, HTMaterialType.MINERAL, Rarity.UNCOMMON)
         // plate
-        // helper.register(RagiumMaterialKeys.ENGINEERING_PLASTIC, HTMaterialKey.Type.PLATE, Rarity.RARE)
-        // helper.register(RagiumMaterialKeys.PLASTIC, HTMaterialKey.Type.PLATE, Rarity.UNCOMMON)
-        // helper.register(RagiumMaterialKeys.STELLA, HTMaterialKey.Type.PLATE, Rarity.EPIC)
-        helper.register(RagiumMaterialKeys.WOOD, HTMaterialKey.Type.PLATE)
+        helper.register(RagiumMaterialKeys.STONE, HTMaterialType.PLATE)
+        helper.register(RagiumMaterialKeys.WOOD, HTMaterialType.PLATE)
 
         // alternative name
         helper.addAltName(RagiumMaterialKeys.WOOD, "saw")
@@ -249,17 +252,24 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
     override fun setupMaterialProperties(helper: RagiumPlugin.PropertyHelper<HTMaterialKey>) {
         // metal
-        helper.modify(RagiumMaterialKeys.COPPER, RagiumMaterialKeys.GOLD, RagiumMaterialKeys.IRON) {
+        helper.modify(RagiumMaterialKeys.IRON) {
             add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
         }
         helper.modify(RagiumMaterialKeys.COPPER, RagiumMaterialKeys.IRON) {
+            add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
             set(HTMaterialPropertyKeys.SMELTING_EXP, 0.7f)
         }
         helper.modify(RagiumMaterialKeys.GOLD) {
+            add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
             set(HTMaterialPropertyKeys.SMELTING_EXP, 1f)
         }
 
-        helper.modify(RagiumMaterialKeys.IRIDIUM, RagiumMaterialKeys.TUNGSTEN) {
+        helper.modify(
+            RagiumMaterialKeys.IRIDIUM,
+            RagiumMaterialKeys.TITANIUM,
+            RagiumMaterialKeys.TUNGSTEN,
+            RagiumMaterialKeys.URANIUM,
+        ) {
             add(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)
             add(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)
         }
@@ -279,21 +289,22 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // mineral
         helper.modify(RagiumMaterialKeys.REDSTONE) {
             set(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 2)
+            set(HTMaterialPropertyKeys.ORE_SUB_PRODUCT, RagiumItems.Gems.CINNABAR)
         }
     }
 
     override fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {
-        fun bindContents(contents: List<HTContent.Material<*>>) {
+        fun bindContents(contents: List<HTMaterialProvider>) {
             contents.forEach { consumer.accept(it.tagPrefix, it.material, it) }
         }
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COAL, Items.DEEPSLATE_COAL_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.DIAMOND, Items.DEEPSLATE_DIAMOND_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.EMERALD, Items.DEEPSLATE_EMERALD_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.LAPIS, Items.DEEPSLATE_LAPIS_ORE)
-        consumer.accept(HTTagPrefix.DEEP_ORE, RagiumMaterialKeys.REDSTONE, Items.DEEPSLATE_REDSTONE_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COAL, Items.DEEPSLATE_COAL_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.DEEPSLATE_COPPER_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.DIAMOND, Items.DEEPSLATE_DIAMOND_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.EMERALD, Items.DEEPSLATE_EMERALD_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.DEEPSLATE_GOLD_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.DEEPSLATE_IRON_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.LAPIS, Items.DEEPSLATE_LAPIS_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.REDSTONE, Items.DEEPSLATE_REDSTONE_ORE)
 
         consumer.accept(HTTagPrefix.DUST, RagiumMaterialKeys.REDSTONE, Items.REDSTONE)
 
@@ -301,6 +312,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND, Items.DIAMOND)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD, Items.EMERALD)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.LAPIS, Items.LAPIS_LAZULI)
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.NETHER_STAR, Items.NETHER_STAR)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
 
         consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
@@ -309,7 +321,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.NETHERITE, Items.NETHERITE_INGOT)
 
         consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.GOLD, Items.GOLD_NUGGET)
-        consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_ORE)
+        consumer.accept(HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON, Items.IRON_NUGGET)
 
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COAL, Items.COAL_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.COPPER, Items.COPPER_ORE)
@@ -336,13 +348,80 @@ object RagiumDefaultPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.LAPIS, Items.LAPIS_BLOCK)
         consumer.accept(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.NETHERITE, Items.NETHERITE_BLOCK)
 
-        bindContents(RagiumContents.Ores.entries)
-        bindContents(RagiumContents.StorageBlocks.entries)
-        bindContents(RagiumContents.Dusts.entries)
-        bindContents(RagiumContents.Gems.entries)
-        bindContents(RagiumContents.Ingots.entries)
-        bindContents(RagiumContents.Plates.entries)
-        bindContents(RagiumContents.RawMaterials.entries)
+        bindContents(RagiumBlocks.Ores.entries)
+        bindContents(RagiumBlocks.StorageBlocks.entries)
+        bindContents(RagiumItems.Dusts.entries)
+        bindContents(RagiumItems.Gears.entries)
+        bindContents(RagiumItems.Gems.entries)
+        bindContents(RagiumItems.Ingots.entries)
+        bindContents(RagiumItems.Plates.entries)
+        bindContents(RagiumItems.RawMaterials.entries)
+    }
+
+    override fun registerRuntimeRecipe(exporter: RecipeExporter, helper: RagiumPlugin.RecipeHelper) {
+        // brass
+        helper.useItemIfPresent(RagiumMaterialKeys.BRASS, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, 3)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.ZINC)
+                .itemOutput(output, 4)
+                .offerTo(exporter, output)
+        }
+        // bronze
+        helper.useItemIfPresent(RagiumMaterialKeys.BRONZE, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, 3)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.TIN)
+                .itemOutput(output, 4)
+                .offerTo(exporter, output)
+        }
+        // electrum
+        helper.useItemIfPresent(RagiumMaterialKeys.ELECTRUM, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.GOLD)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.SILVER)
+                .itemOutput(output, 2)
+                .offerTo(exporter, output)
+        }
+        // invar
+        helper.useItemIfPresent(RagiumMaterialKeys.INVAR, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON, 2)
+                .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.NICKEL)
+                .itemOutput(output, 3)
+                .offerTo(exporter, output)
+        }
+        // titanium
+        helper.useItemIfPresent(RagiumMaterialKeys.TITANIUM, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.BASIC)
+                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.TITANIUM)
+                .itemOutput(output)
+                .offerTo(exporter, output)
+        }
+
+        // galena -> lead
+        helper.useItemIfPresent(RagiumMaterialKeys.LEAD, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.GALENA)
+                .itemOutput(output)
+                .fluidOutput(RagiumFluids.SULFUR_DIOXIDE)
+                .offerTo(exporter, RagiumAPI.id("lead_ingot"))
+        }
+        // sphalerite -> zinc
+        helper.useItemIfPresent(RagiumMaterialKeys.ZINC, HTTagPrefix.INGOT) { output: Item ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.BLAST_FURNACE)
+                .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.SPHALERITE)
+                .itemOutput(output)
+                .fluidOutput(RagiumFluids.SULFUR_DIOXIDE)
+                .offerTo(exporter, RagiumAPI.id("zinc_ingot"))
+        }
     }
 
     override fun registerRuntimeMaterialRecipes(
@@ -353,128 +432,185 @@ object RagiumDefaultPlugin : RagiumPlugin {
     ) {
         if (HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING !in entry) {
             // ingot/gem -> block
-            helper.register(entry, HTTagPrefix.STORAGE_BLOCK) { map: Map<HTTagPrefix, Item> ->
-                val block: Item = map[HTTagPrefix.STORAGE_BLOCK] ?: return@register
-                val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@register
+            helper.useItemIfPresent(entry, HTTagPrefix.STORAGE_BLOCK) { output: Item ->
+                val prefix: HTTagPrefix = entry.type.getMainPrefix() ?: return@useItemIfPresent
                 // Shaped Crafting
                 HTShapedRecipeJsonBuilder
-                    .create(block)
+                    .create(output)
                     .pattern3x3()
                     .input('A', prefix, key)
                     .offerTo(exporter)
             }
             // block -> ingot/gem
-            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
-                    val output: Item = map[prefix] ?: return@register
-                    // Shapeless Crafting
-                    HTShapelessRecipeJsonBuilder
-                        .create(output, 9)
-                        .input(HTTagPrefix.STORAGE_BLOCK, key)
-                        .offerTo(exporter)
-                }
+            helper.useItemFromMainPrefix(entry) { output: Item ->
+                // Shapeless Crafting
+                HTShapelessRecipeJsonBuilder
+                    .create(output, 9)
+                    .input(HTTagPrefix.STORAGE_BLOCK, key)
+                    .offerTo(exporter)
             }
         }
-        // ingot -> plate
-        helper.register(entry, HTTagPrefix.PLATE) { map: Map<HTTagPrefix, Item> ->
-            val plate: Item = map[HTTagPrefix.PLATE] ?: return@register
-            // Metal Former Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.METAL_FORMER)
-                .itemInput(HTTagPrefix.INGOT, key)
-                .itemOutput(plate)
-                .offerTo(exporter, plate)
+
+        // ingot/gem -> plate
+        helper.useItemIfPresent(entry, HTTagPrefix.PLATE) { output: Item ->
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                // Compressor Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.COMPRESSOR)
+                    .itemInput(prefix, key)
+                    .catalyst(RagiumItems.PressMolds.PLATE)
+                    .itemOutput(output)
+                    .offerTo(exporter, output)
+                // Cutting Machine Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.CUTTING_MACHINE)
+                    .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
+                    .catalyst(RagiumItems.PressMolds.PLATE)
+                    .itemOutput(output, 9)
+                    .offerTo(exporter, output)
+            }
         }
-        // ingot/gem -> dust
-        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-            helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
-                val dust: Item = map[HTTagPrefix.DUST] ?: return@register
-                // Grinder Recipe
+        // xxx -> dust
+        helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
+            // ingot/gem -> dust
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 HTMachineRecipeJsonBuilder
                     .create(RagiumMachineKeys.GRINDER)
                     .itemInput(prefix, key)
-                    .itemOutput(dust)
-                    .offerTo(exporter, dust, "_from_${prefix.asString()}")
+                    .itemOutput(output)
+                    .offerTo(exporter, output, "_from_${prefix.asString()}")
             }
-        }
-        // plate -> dust
-        helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
-            val dust: Item = map[HTTagPrefix.DUST] ?: return@register
-            // Grinder Recipe
+            // plate -> dust
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.PLATE, key)
-                .itemOutput(dust)
-                .offerTo(exporter, dust, "_from_plate")
+                .itemOutput(output)
+                .offerTo(exporter, output, "_from_plate")
+            // gear -> dust
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.GRINDER)
+                .itemInput(HTTagPrefix.GEAR, key)
+                .itemOutput(output, 4)
+                .offerTo(exporter, output, "_from_gear")
         }
-        // ore -> raw/gem
-        entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
-            helper.register(entry, prefix) { map: Map<HTTagPrefix, Item> ->
-                val output: Item = map[prefix] ?: return@register
-                val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
-                // Grinder Recipe
+        // ingot/gem -> gear
+        helper.useItemIfPresent(entry, HTTagPrefix.GEAR) { output: Item ->
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                // Shaped Recipe
+                HTShapedRecipeJsonBuilder
+                    .create(output)
+                    .patterns(
+                        " A ",
+                        "ABA",
+                        " A ",
+                    ).input('A', prefix, key)
+                    .input('B', HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON)
+                    .offerTo(exporter)
+                // Compressor Recipe
                 HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.GRINDER)
-                    .itemInput(HTTagPrefix.ORE, key)
-                    .itemOutput(output, count * 2)
+                    .create(RagiumMachineKeys.COMPRESSOR)
+                    .itemInput(prefix, key, 4)
+                    .catalyst(RagiumItems.PressMolds.GEAR)
+                    .itemOutput(output)
                     .offerTo(exporter, output)
-                // 3x Chemical Recipe
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                    .itemInput(HTTagPrefix.ORE, key)
-                    .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
-                    .itemOutput(output, count * 3)
-                    .offerTo(exporter, output, "_3x")
-                // 4x Chemical Recipe
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
-                    .itemInput(HTTagPrefix.ORE, key)
-                    .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
-                    .itemOutput(output, count * 4)
-                    .offerTo(exporter, output, "_4x")
             }
         }
+        // ingot/gem -> rod
+        helper.useItemIfPresent(entry, HTTagPrefix.ROD) { output: Item ->
+            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+                // Compressor Recipe
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.COMPRESSOR)
+                    .itemInput(prefix, key)
+                    .catalyst(RagiumItems.PressMolds.ROD)
+                    .itemOutput(output, 2)
+                    .offerTo(exporter, output)
+            }
+        }
+        // ingot -> wire
+        helper.useItemIfPresent(entry, HTTagPrefix.WIRE) { output: Item ->
+            // Compressor Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.COMPRESSOR)
+                .itemInput(HTTagPrefix.INGOT, key)
+                .catalyst(RagiumItems.PressMolds.WIRE)
+                .itemOutput(output, 3)
+                .offerTo(exporter, output)
+        }
+
+        // ore -> raw/gem
+        helper.useItemFromRawPrefix(entry) { output: Item ->
+            val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
+            val subProduction: ItemConvertible? = entry[HTMaterialPropertyKeys.ORE_SUB_PRODUCT]
+            // Grinder Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.GRINDER)
+                .itemInput(HTTagPrefix.ORE, key)
+                .itemOutput(output, count * 2)
+                .itemOutput(RagiumItems.SLAG)
+                .apply { subProduction?.let(::itemOutput) }
+                .offerTo(exporter, output)
+            // 3x Chemical Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+                .itemInput(HTTagPrefix.ORE, key)
+                .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
+                .itemOutput(output, count * 3)
+                .itemOutput(RagiumItems.SLAG)
+                .apply { subProduction?.let(::itemOutput) }
+                .offerTo(exporter, output, "_3x")
+            // 4x Chemical Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+                .itemInput(HTTagPrefix.ORE, key)
+                .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
+                .itemOutput(output, count * 4)
+                .itemOutput(RagiumItems.SLAG)
+                .apply { subProduction?.let { itemOutput(it, 2) } }
+                .offerTo(exporter, output, "_4x")
+            // 5x Chemical Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+                .itemInput(HTTagPrefix.ORE, key)
+                .fluidInput(RagiumFluids.MERCURY, FluidConstants.INGOT)
+                .itemOutput(output, count * 5)
+                .itemOutput(RagiumItems.SLAG)
+                .offerTo(exporter, output, "_5x")
+        }
         // raw -> dust
-        helper.register(entry, HTTagPrefix.DUST) { map: Map<HTTagPrefix, Item> ->
-            val dust: Item = map[HTTagPrefix.DUST] ?: return@register
+        helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
             // Grinder Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
                 .itemInput(HTTagPrefix.RAW_MATERIAL, key)
-                .itemOutput(dust, 2)
-                .offerTo(exporter, dust, "_from_raw")
+                .itemOutput(output, 2)
+                .offerTo(exporter, output, "_from_raw")
         }
-        // raw -> ingot
-        helper.register(entry) {
-            // Smelting Recipe
-            val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT)
-                ?: key.entry.getFirstItem(HTTagPrefix.GEM)
-                ?: return@register
-            if (entry.contains(HTMaterialPropertyKeys.DISABLE_RAW_SMELTING)) return@register
-            val raw: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
-            if (!ResourceConditions.tagsPopulated(raw).test(null)) return@register
-            HTCookingRecipeJsonBuilder.smeltAndBlast(
-                exporter,
-                raw,
-                result,
-                entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
-                suffix = "_from_raw",
-            )
-        }
-        // dust -> ingot
-        helper.register(entry) {
-            // Smelting Recipe
-            val result: ItemConvertible = key.entry.getFirstItem(HTTagPrefix.INGOT) ?: return@register
-            if (entry.contains(HTMaterialPropertyKeys.DISABLE_DUST_SMELTING)) return@register
-            val dust: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
-            if (!ResourceConditions.tagsPopulated(dust).test(null)) return@register
-            HTCookingRecipeJsonBuilder.smeltAndBlast(
-                exporter,
-                dust,
-                result,
-                entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
-                suffix = "_from_dust",
-            )
+        if (HTMaterialPropertyKeys.DISABLE_RAW_SMELTING !in entry) {
+            // raw -> ingot
+            helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
+                val input: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
+                if (!helper.isPopulated(input)) return@useItemIfPresent
+                HTCookingRecipeJsonBuilder.smeltAndBlast(
+                    exporter,
+                    input,
+                    output,
+                    entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
+                    suffix = "_from_raw",
+                )
+            }
+            // dust -> ingot
+            helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
+                val input: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
+                if (!helper.isPopulated(input)) return@useItemIfPresent
+                HTCookingRecipeJsonBuilder.smeltAndBlast(
+                    exporter,
+                    input,
+                    output,
+                    entry.getOrDefault(HTMaterialPropertyKeys.SMELTING_EXP),
+                    suffix = "_from_dust",
+                )
+            }
         }
     }
 }

@@ -11,9 +11,7 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "#c:ores/netherite_scrap"
-    }
+    "#c:ores/netherite_scrap"
   ],
   "item_outputs": [
     {

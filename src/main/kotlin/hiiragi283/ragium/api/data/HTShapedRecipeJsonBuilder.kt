@@ -1,8 +1,11 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
+import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients
 import net.minecraft.advancement.Advancement
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.advancement.AdvancementRequirements
@@ -12,6 +15,7 @@ import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.data.server.recipe.RecipeProvider
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -19,21 +23,34 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RawShapedRecipe
 import net.minecraft.recipe.ShapedRecipe
 import net.minecraft.recipe.book.RecipeCategory
-import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
+/**
+ * [net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder]を改良したクラス
+ *
+ * レシピIDは最終的に"shaped/"で前置されます。
+ */
 class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : CraftingRecipeJsonBuilder {
     companion object {
+        /**
+         * 指定した[output]を完成品とするビルダーを返します。
+         * @throws IllegalStateException [ItemStack.isEmpty]がtrueの場合
+         */
         @JvmStatic
         fun create(output: ItemStack): HTShapedRecipeJsonBuilder = HTShapedRecipeJsonBuilder(output)
 
+        /**
+         * 指定した[output], [count], [components]を完成品とするビルダーを返します。
+         * @throws IllegalStateException [ItemStack.isEmpty]がtrueの場合
+         */
+        @Suppress("DEPRECATION")
         @JvmStatic
         fun create(
             output: ItemConvertible,
             count: Int = 1,
             components: ComponentChanges = ComponentChanges.EMPTY,
-        ): HTShapedRecipeJsonBuilder = create(ItemStack(Registries.ITEM.getEntry(output.asItem()), count, components))
+        ): HTShapedRecipeJsonBuilder = create(ItemStack(output.asItem().registryEntry, count, components))
     }
 
     private lateinit var patterns: Array<out String>
@@ -52,7 +69,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
 
     fun input(char: Char, prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = input(char, prefix.createTag(material))
 
-    fun input(char: Char, content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = input(char, content.prefixedTagKey)
+    fun input(char: Char, content: HTMaterialProvider): HTShapedRecipeJsonBuilder = input(char, content.prefixedTagKey)
 
     fun input(char: Char, item: ItemConvertible): HTShapedRecipeJsonBuilder = input(char, Ingredient.ofItems(item))
 
@@ -66,6 +83,15 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         }
     }
 
+    fun fluidInput(char: Char, content: HTFluidContent): HTShapedRecipeJsonBuilder = fluidInput(char, content.get())
+
+    fun fluidInput(char: Char, fluid: Fluid): HTShapedRecipeJsonBuilder = input(
+        char,
+        DefaultCustomIngredients.components(RagiumAPI.getInstance().createFilledCube(fluid)),
+    )
+
+    fun patterns(patterns: List<String>): HTShapedRecipeJsonBuilder = patterns(*patterns.toTypedArray())
+
     fun patterns(vararg patterns: String): HTShapedRecipeJsonBuilder = apply {
         when {
             patterns
@@ -76,6 +102,11 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
             else -> this.patterns = patterns
         }
     }
+
+    fun pattern2x2(): HTShapedRecipeJsonBuilder = patterns(
+        "AA",
+        "AA",
+    )
 
     fun pattern3x3(): HTShapedRecipeJsonBuilder = patterns(
         "AAA",
@@ -103,53 +134,29 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
         "AAA",
     )
 
-    fun helmetPattern(): HTShapedRecipeJsonBuilder = patterns(
-        "AAA",
-        "A A",
-    )
-
-    fun chestPlatePattern(): HTShapedRecipeJsonBuilder = patterns(
-        "A A",
-        "AAA",
-        "AAA",
-    )
-
-    fun leggingsPattern(): HTShapedRecipeJsonBuilder = patterns(
-        "AAA",
-        "A A",
-        "A A",
-    )
-
-    fun bootsPattern(): HTShapedRecipeJsonBuilder = patterns(
-        "A A",
-        "A A",
-    )
-
     fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = unlockedBy(prefix.createTag(material))
 
-    fun unlockedBy(content: HTContent.Material<*>): HTShapedRecipeJsonBuilder = unlockedBy(content.prefixedTagKey)
+    fun unlockedBy(content: HTMaterialProvider): HTShapedRecipeJsonBuilder = unlockedBy(content.prefixedTagKey)
 
     fun unlockedBy(item: ItemConvertible): HTShapedRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromItem(item))
 
     fun unlockedBy(tagKey: TagKey<Item>): HTShapedRecipeJsonBuilder = criterion("has_the_item", RecipeProvider.conditionsFromTag(tagKey))
 
+    /**
+     * 完成品のアイテムIDを[prefix]で前置したものをレシピIDとして使用します。
+     */
     fun offerPrefix(exporter: RecipeExporter, prefix: String) {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withPrefixedPath(prefix))
     }
 
+    /**
+     * 完成品のアイテムIDを[suffix]で後置したものをレシピIDとして使用します。
+     */
     fun offerSuffix(exporter: RecipeExporter, suffix: String) {
         offerTo(exporter, CraftingRecipeJsonBuilder.getItemId(outputItem).withSuffixedPath(suffix))
     }
 
     //    CraftingRecipeJsonBuilder    //
-
-    /*fun criterion(either: BothEither<ItemConvertible, TagKey<Item>>): HTShapedRecipeJsonBuilder = apply {
-        either.ifBoth(
-            { criterion("has_input", RecipeProvider.conditionsFromItem(it)) },
-            { criterion("has_input", RecipeProvider.conditionsFromTag(it)) },
-            BothEither.Priority.RIGHT,
-        )
-    }*/
 
     override fun criterion(name: String, criterion: AdvancementCriterion<*>): HTShapedRecipeJsonBuilder = apply {
         criteriaMap[name] = criterion

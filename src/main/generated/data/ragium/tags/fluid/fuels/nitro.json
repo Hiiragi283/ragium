@@ -1,5 +1,13 @@
 {
   "values": [
-    "ragium:nitro_fuel"
+    "ragium:nitro_fuel",
+    {
+      "id": "techreborn:nitrocoal_fuel",
+      "required": false
+    },
+    {
+      "id": "techreborn:nitrofuel",
+      "required": false
+    }
   ]
 }

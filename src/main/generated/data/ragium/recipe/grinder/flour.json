@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:crops/wheat"
-    }
+    "#c:crops/wheat"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:flour"
-    }
+    "ragium:flour"
   ]
 }

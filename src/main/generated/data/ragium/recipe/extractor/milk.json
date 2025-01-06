@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    "ragium:milk"
+  ],
+  "item_inputs": [
+    "minecraft:milk_bucket"
+  ],
+  "item_outputs": [
+    "minecraft:bucket"
+  ]
+}

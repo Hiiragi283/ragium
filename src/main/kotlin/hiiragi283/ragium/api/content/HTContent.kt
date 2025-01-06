@@ -1,86 +1,87 @@
 package hiiragi283.ragium.api.content
 
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getKeyOrThrow
 import net.minecraft.block.Block
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
-import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import java.util.function.Supplier
 
+/**
+ * [RegistryKey]と[T]クラスの値を持つインターフェース
+ * @see HTBlockContent
+ * @see HTFluidContent
+ * @see HTItemContent
+ */
 interface HTContent<T : Any> : Supplier<T> {
     companion object {
+        /**
+         * 新しく登録するブロック向け
+         */
         @JvmStatic
-        fun <T : Any> of(key: RegistryKey<T>, entryGetter: (RegistryKey<T>) -> RegistryEntry<T>): HTContent<T> = object : HTContent<T> {
-            override val key: RegistryKey<T> = key
-            override val entry: RegistryEntry<T> by lazy { entryGetter(key) }
+        fun ofBlock(id: Identifier): HTBlockContent = object : HTBlockContent {
+            override val key: RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, id)
         }
 
         @JvmStatic
-        fun ofBlock(id: Identifier): HTContent<Block> = of(RegistryKey.of(RegistryKeys.BLOCK, id), Registries.BLOCK::entryOf)
+        fun ofBlock(path: String): HTBlockContent = ofBlock(RagiumAPI.id(path))
+
+        /**
+         * バニラや他modのブロック向け
+         */
+        @JvmStatic
+        fun fromBlock(block: Block): HTBlockContent = object : HTBlockContent {
+            override val key: RegistryKey<Block> by lazy { Registries.BLOCK.getKeyOrThrow(block) }
+
+            override fun get(): Block = block
+        }
+
+        /**
+         * バニラや他modのブロック向け
+         */
+        @JvmStatic
+        fun fromFluid(fluid: Fluid): HTFluidContent = object : HTFluidContent {
+            override val key: RegistryKey<Fluid> by lazy { Registries.FLUID.getKeyOrThrow(fluid) }
+
+            override fun get(): Fluid = fluid
+        }
+
+        /**
+         * 新しく登録するアイテム向け
+         */
+        @JvmStatic
+        fun ofItem(id: Identifier): HTItemContent = object : HTItemContent {
+            override val key: RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, id)
+        }
 
         @JvmStatic
-        fun ofItem(id: Identifier): HTContent<Item> = of(RegistryKey.of(RegistryKeys.ITEM, id), Registries.ITEM::entryOf)
+        fun ofItem(path: String): HTItemContent = ofItem(RagiumAPI.id(path))
+
+        /**
+         * バニラや他modのアイテム向け
+         */
+        @JvmStatic
+        fun fromItem(item: Item): HTItemContent = object : HTItemContent {
+            override val key: RegistryKey<Item> by lazy { Registries.ITEM.getKeyOrThrow(item) }
+
+            override fun get(): Item = item
+        }
+
+        @JvmStatic
+        fun blockKey(path: String): RegistryKey<Block> = RegistryKey.of(RegistryKeys.BLOCK, RagiumAPI.id(path))
+
+        @JvmStatic
+        fun fluidKey(path: String): RegistryKey<Fluid> = RegistryKey.of(RegistryKeys.FLUID, RagiumAPI.id(path))
+
+        @JvmStatic
+        fun itemKey(path: String): RegistryKey<Item> = RegistryKey.of(RegistryKeys.ITEM, RagiumAPI.id(path))
     }
 
     val key: RegistryKey<T>
-    val entry: RegistryEntry<T>
 
     val id: Identifier get() = key.value
-    val value: T get() = entry.value()
-
-    override fun get(): T = value
-
-    //    Delegated    //
-
-    interface Delegated<T : Any> : HTContent<T> {
-        val delegated: HTContent<T>
-
-        override val key: RegistryKey<T>
-            get() = delegated.key
-        override val entry: RegistryEntry<T>
-            get() = delegated.entry
-    }
-
-    //    Material    //
-
-    interface Material<T : ItemConvertible> :
-        Delegated<T>,
-        ItemConvertible {
-        companion object {
-            @JvmStatic
-            fun ofWrapped(prefix: HTTagPrefix, key: HTMaterialKey, item: ItemConvertible): Material<Item> = object : Material<Item> {
-                override val material: HTMaterialKey = key
-                override val tagPrefix: HTTagPrefix = prefix
-                override val delegated: HTContent<Item> = object : HTContent<Item> {
-                    override val key: RegistryKey<Item> by lazy { Registries.ITEM.getKey(item.asItem()).orElseThrow() }
-                    override val entry: RegistryEntry<Item> by lazy { Registries.ITEM.entryOf(this.key) }
-                }
-            }
-        }
-
-        val material: HTMaterialKey
-        val tagPrefix: HTTagPrefix
-
-        val prefixedTagKey: TagKey<Item>
-            get() = tagPrefix.createTag(material)
-
-        override fun asItem(): Item = value.asItem()
-    }
-
-    //    Tier    //
-
-    interface Tier<T : ItemConvertible> :
-        Delegated<T>,
-        ItemConvertible {
-        val tier: HTMachineTier
-
-        override fun asItem(): Item = value.asItem()
-    }
 }

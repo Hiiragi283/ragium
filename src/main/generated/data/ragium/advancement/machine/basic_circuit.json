@@ -22,7 +22,7 @@
       "translate": "machine_tier.ragium.basic.prefix",
       "with": [
         {
-          "translate": "content.ragium.circuit_board"
+          "translate": "content.ragium.circuit"
         }
       ]
     }

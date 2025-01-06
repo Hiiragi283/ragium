@@ -12,9 +12,6 @@ object RagiumMachineKeys {
     val BIOMASS_FERMENTER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("biomass_fermenter"))
 
     @JvmField
-    val CANNING_MACHINE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("canning_machine"))
-
-    @JvmField
     val DRAIN: HTMachineKey = HTMachineKey.of(RagiumAPI.id("drain"))
 
     @JvmField
@@ -27,7 +24,6 @@ object RagiumMachineKeys {
     val CONSUMERS: List<HTMachineKey> = listOf(
         BEDROCK_MINER,
         BIOMASS_FERMENTER,
-        CANNING_MACHINE,
         DRAIN,
         FLUID_DRILL,
         ROCK_GENERATOR,
@@ -42,7 +38,7 @@ object RagiumMachineKeys {
     val NUCLEAR_REACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("nuclear_reactor"))
 
     @JvmField
-    val SOLAR_PANEL: HTMachineKey = HTMachineKey.of(RagiumAPI.id("solar_panel"))
+    val SOLAR_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("solar_generator"))
 
     @JvmField
     val STEAM_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("steam_generator"))
@@ -54,16 +50,12 @@ object RagiumMachineKeys {
     val GENERATORS: List<HTMachineKey> = listOf(
         COMBUSTION_GENERATOR,
         NUCLEAR_REACTOR,
-        SOLAR_PANEL,
+        SOLAR_GENERATOR,
         STEAM_GENERATOR,
         THERMAL_GENERATOR,
     )
 
     //    Processor    //
-
-    @JvmField
-    val ALLOY_FURNACE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("alloy_furnace"))
-
     @JvmField
     val ASSEMBLER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("assembler"))
 
@@ -75,6 +67,9 @@ object RagiumMachineKeys {
 
     @JvmField
     val COMPRESSOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("compressor"))
+
+    @JvmField
+    val CUTTING_MACHINE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("cutting_machine"))
 
     @JvmField
     val DISTILLATION_TOWER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("distillation_tower"))
@@ -92,10 +87,13 @@ object RagiumMachineKeys {
     val GROWTH_CHAMBER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("growth_chamber"))
 
     @JvmField
-    val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("laser_transformer"))
+    val INFUSER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("infuser"))
 
     @JvmField
-    val METAL_FORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("metal_former"))
+    val LARGE_CHEMICAL_REACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("large_chemical_reactor"))
+
+    @JvmField
+    val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("laser_transformer"))
 
     @JvmField
     val MIXER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("mixer"))
@@ -104,24 +102,21 @@ object RagiumMachineKeys {
     val MULTI_SMELTER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("multi_smelter"))
 
     @JvmField
-    val SAW_MILL: HTMachineKey = HTMachineKey.of(RagiumAPI.id("saw_mill"))
-
-    @JvmField
     val PROCESSORS: List<HTMachineKey> = listOf(
-        ALLOY_FURNACE,
         ASSEMBLER,
         BLAST_FURNACE,
         CHEMICAL_REACTOR,
         COMPRESSOR,
+        CUTTING_MACHINE,
         DISTILLATION_TOWER,
         ELECTROLYZER,
         EXTRACTOR,
         GRINDER,
         GROWTH_CHAMBER,
+        INFUSER,
+        LARGE_CHEMICAL_REACTOR,
         LASER_TRANSFORMER,
-        METAL_FORMER,
         MIXER,
         MULTI_SMELTER,
-        SAW_MILL,
     )
 }

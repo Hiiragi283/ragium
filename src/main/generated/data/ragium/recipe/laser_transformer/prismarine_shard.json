@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:packed_ice"
-    }
+    "minecraft:packed_ice"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:prismarine_shard"
-    }
+    "minecraft:prismarine_shard"
   ]
 }

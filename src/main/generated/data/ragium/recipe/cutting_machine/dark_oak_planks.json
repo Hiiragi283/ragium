@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:cutting_machine",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    "#minecraft:dark_oak_logs"
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "item": "minecraft:dark_oak_planks"
+    },
+    "ragium:pulp"
+  ]
+}

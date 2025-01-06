@@ -15,8 +15,6 @@
       "amount": 567000,
       "fluid": "ragium:uranium_hexafluoride"
     },
-    {
-      "fluid": "ragium:enriched_uranium_hexafluoride"
-    }
+    "ragium:enriched_uranium_hexafluoride"
   ]
 }

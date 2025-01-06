@@ -15,8 +15,11 @@
       "translate": "machine_type.ragium.distillation_tower.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "basic"
+      },
       "count": 1,
-      "id": "ragium:basic_distillation_tower"
+      "id": "ragium:distillation_tower"
     },
     "title": {
       "translate": "machine_tier.ragium.basic.prefix",

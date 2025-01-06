@@ -15,8 +15,11 @@
       "translate": "machine_type.ragium.laser_transformer.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "advanced"
+      },
       "count": 1,
-      "id": "ragium:advanced_laser_transformer"
+      "id": "ragium:laser_transformer"
     },
     "title": {
       "translate": "machine_tier.ragium.advanced.prefix",

@@ -17,7 +17,7 @@ abstract class HTThrowableItem(settings: Settings) :
     ProjectileItem {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
-        return if (throwEntity(world, user, ::createEntity)) {
+        return if (user.throwEntity(world, ::createEntity)) {
             user.incrementStat(Stats.USED.getOrCreateStat(this))
             stack.decrementUnlessCreative(1, user)
             TypedActionResult.success(stack, world.isClient())

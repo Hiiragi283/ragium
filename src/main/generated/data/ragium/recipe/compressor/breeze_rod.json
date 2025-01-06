@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:rod_press_mold",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "minecraft:wind_charge"
+    }
+  ],
+  "item_outputs": [
+    "minecraft:breeze_rod"
+  ]
+}

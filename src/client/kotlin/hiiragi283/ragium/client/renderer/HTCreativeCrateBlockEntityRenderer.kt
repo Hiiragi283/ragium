@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.renderer
 
-import hiiragi283.ragium.client.extension.renderItem
+import hiiragi283.ragium.api.extension.renderItem
 import hiiragi283.ragium.common.block.storage.HTCreativeCrateBlockEntity
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer

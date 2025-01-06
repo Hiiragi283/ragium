@@ -13,6 +13,6 @@ public abstract class RegistriesMixin {
     @Inject(method = "freezeRegistries", at = @At("HEAD"))
     private static void ragium$bindMaterialToItem(CallbackInfo ci) {
         InternalRagiumAPI.registerMaterials();
-        RagiumAPI.forEachPlugins(plugin -> plugin.afterRagiumInit(RagiumAPI.getInstance()));
+        RagiumAPI.getPlugins().forEach(plugin -> plugin.afterRagiumInit(RagiumAPI.getInstance()));
     }
 }

@@ -2,35 +2,42 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.machine.HTMachineTier.entries
-import hiiragi283.ragium.api.world.HTEnergyNetwork
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.api.content.HTHardModeContent
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
+import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumHardModeContents
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
-import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
+import net.minecraft.block.Blocks
 import net.minecraft.component.ComponentType
-import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
+import net.minecraft.state.property.EnumProperty
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
-import net.minecraft.world.World
+import net.minecraft.util.math.Direction
 
+/**
+ * 機械のティアを表す列挙型
+ * @param processCost 機械処理に必要なエネルギー量
+ * @param tickRate 機械の稼働間隔
+ */
 enum class HTMachineTier(
     private val idPattern: String,
-    val recipeCost: Long,
+    val processCost: Long,
     val tickRate: Int,
     val rarity: Rarity,
 ) : StringIdentifiable {
-    // NONE(RagiumAPI.id("block/ragi_alloy_block"), Blocks.SMOOTH_STONE, 80, 400, Rarity.COMMON),
     PRIMITIVE(
         "primitive_%s",
         160,
@@ -53,10 +60,10 @@ enum class HTMachineTier(
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineTier> = codecOf(entries)
+        val CODEC: Codec<HTMachineTier> = identifiedCodec(HTMachineTier.entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = identifiedPacketCodec(HTMachineTier.entries)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTMachineTier> = ComponentType
@@ -64,11 +71,18 @@ enum class HTMachineTier(
             .codec(CODEC)
             .packetCodec(PACKET_CODEC)
             .build()
+
+        @JvmField
+        val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.of("tier", HTMachineTier::class.java)
+
+        @JvmField
+        val SIDED_LOOKUP: BlockApiLookup<HTMachineTier, Direction?> =
+            BlockApiLookup.get(RagiumAPI.id("machine_tier"), HTMachineTier::class.java, Direction::class.java)
     }
 
-    val smelterMulti: Int = (recipeCost / 20).toInt()
-    val bucketUnit: Long = recipeCost / 20
-    val crateCapacity: Long = bucketUnit * 8
+    val smelterMulti: Int = (processCost / 20).toInt()
+    val bucketUnit: Long = processCost / 20
+    val crateCapacity: Long = bucketUnit * 8 * 64
     val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.${asString()}"
@@ -81,7 +95,7 @@ enum class HTMachineTier(
     val recipeCostText: MutableText = Text
         .translatable(
             RagiumTranslationKeys.MACHINE_RECIPE_COST,
-            longText(recipeCost).formatted(Formatting.YELLOW),
+            longText(processCost).formatted(Formatting.YELLOW),
         ).formatted(Formatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
@@ -92,85 +106,77 @@ enum class HTMachineTier(
 
     fun createId(key: HTMachineKey): Identifier = key.id.let { Identifier.of(it.namespace, idPattern.replace("%s", it.path)) }
 
-    fun getCircuitBoard(): RagiumContents.CircuitBoards = when (this) {
-        PRIMITIVE -> RagiumContents.CircuitBoards.PRIMITIVE
-        BASIC -> RagiumContents.CircuitBoards.BASIC
-        ADVANCED -> RagiumContents.CircuitBoards.ADVANCED
+    fun getPlastic(): RagiumItems.Plastics = when (this) {
+        PRIMITIVE -> RagiumItems.Plastics.PRIMITIVE
+        BASIC -> RagiumItems.Plastics.BASIC
+        ADVANCED -> RagiumItems.Plastics.ADVANCED
     }
 
-    fun getCircuit(): RagiumContents.Circuits = when (this) {
-        PRIMITIVE -> RagiumContents.Circuits.PRIMITIVE
-        BASIC -> RagiumContents.Circuits.BASIC
-        ADVANCED -> RagiumContents.Circuits.ADVANCED
+    fun getCircuitBoard(): RagiumItems.CircuitBoards = when (this) {
+        PRIMITIVE -> RagiumItems.CircuitBoards.PRIMITIVE
+        BASIC -> RagiumItems.CircuitBoards.BASIC
+        ADVANCED -> RagiumItems.CircuitBoards.ADVANCED
     }
 
-    fun getCoil(): RagiumContents.Coils = when (this) {
-        PRIMITIVE -> RagiumContents.Coils.PRIMITIVE
-        BASIC -> RagiumContents.Coils.BASIC
-        ADVANCED -> RagiumContents.Coils.ADVANCED
+    fun getCircuit(): RagiumItems.Circuits = when (this) {
+        PRIMITIVE -> RagiumItems.Circuits.PRIMITIVE
+        BASIC -> RagiumItems.Circuits.BASIC
+        ADVANCED -> RagiumItems.Circuits.ADVANCED
     }
 
-    fun getGrate(): RagiumContents.Grates = when (this) {
-        PRIMITIVE -> RagiumContents.Grates.PRIMITIVE
-        BASIC -> RagiumContents.Grates.BASIC
-        ADVANCED -> RagiumContents.Grates.ADVANCED
+    fun getCoil(): RagiumBlocks.Coils = when (this) {
+        PRIMITIVE -> RagiumBlocks.Coils.PRIMITIVE
+        BASIC -> RagiumBlocks.Coils.BASIC
+        ADVANCED -> RagiumBlocks.Coils.ADVANCED
     }
 
-    fun getCasing(): RagiumContents.Casings = when (this) {
-        PRIMITIVE -> RagiumContents.Casings.PRIMITIVE
-        BASIC -> RagiumContents.Casings.BASIC
-        ADVANCED -> RagiumContents.Casings.ADVANCED
+    fun getGrate(): RagiumBlocks.Grates = when (this) {
+        PRIMITIVE -> RagiumBlocks.Grates.PRIMITIVE
+        BASIC -> RagiumBlocks.Grates.BASIC
+        ADVANCED -> RagiumBlocks.Grates.ADVANCED
     }
 
-    fun getHull(): RagiumContents.Hulls = when (this) {
-        PRIMITIVE -> RagiumContents.Hulls.PRIMITIVE
-        BASIC -> RagiumContents.Hulls.BASIC
-        ADVANCED -> RagiumContents.Hulls.ADVANCED
+    fun getCasing(): RagiumBlocks.Casings = when (this) {
+        PRIMITIVE -> RagiumBlocks.Casings.PRIMITIVE
+        BASIC -> RagiumBlocks.Casings.BASIC
+        ADVANCED -> RagiumBlocks.Casings.ADVANCED
     }
 
-    fun getMainMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
+    fun getHull(): RagiumBlocks.Hulls = when (this) {
+        PRIMITIVE -> RagiumBlocks.Hulls.PRIMITIVE
+        BASIC -> RagiumBlocks.Hulls.BASIC
+        ADVANCED -> RagiumBlocks.Hulls.ADVANCED
+    }
+
+    fun getMainMetal(): HTHardModeContent = when (this) {
         PRIMITIVE -> RagiumHardModeContents.RAGI_ALLOY
         BASIC -> RagiumHardModeContents.RAGI_STEEL
         ADVANCED -> RagiumHardModeContents.REFINED_RAGI_STEEL
-    }.getContent(hardMode)
+    }
 
-    fun getSubMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
+    fun getSubMetal(): HTHardModeContent = when (this) {
         PRIMITIVE -> RagiumHardModeContents.COPPER
         BASIC -> RagiumHardModeContents.GOLD
         ADVANCED -> RagiumHardModeContents.ALUMINUM
-    }.getContent(hardMode)
+    }
 
-    fun getSteelMetal(hardMode: Boolean = RagiumAPI.getInstance().config.isHardMode): HTContent.Material<Item> = when (this) {
+    fun getSteelMetal(): HTHardModeContent = when (this) {
         PRIMITIVE -> RagiumHardModeContents.IRON
         BASIC -> RagiumHardModeContents.STEEL
         ADVANCED -> RagiumHardModeContents.DEEP_STEEL
-    }.getContent(hardMode)
-
-    fun getStorageBlock(): RagiumContents.StorageBlocks = when (this) {
-        PRIMITIVE -> RagiumContents.StorageBlocks.RAGI_ALLOY
-        BASIC -> RagiumContents.StorageBlocks.RAGI_STEEL
-        ADVANCED -> RagiumContents.StorageBlocks.REFINED_RAGI_STEEL
     }
 
-    fun consumerEnergy(world: World, parent: TransactionContext? = null, multiplier: Long = 1): Boolean =
-        useTransaction(parent) { transaction: Transaction ->
-            world.energyNetwork
-                .map { network: HTEnergyNetwork ->
-                    val extracted: Long = network.extract(recipeCost * multiplier, transaction)
-                    when {
-                        extracted > 0 -> {
-                            transaction.commit()
-                            true
-                        }
+    fun getStorageBlock(): RagiumBlocks.StorageBlocks = when (this) {
+        PRIMITIVE -> RagiumBlocks.StorageBlocks.RAGI_ALLOY
+        BASIC -> RagiumBlocks.StorageBlocks.RAGI_STEEL
+        ADVANCED -> RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL
+    }
 
-                        else -> {
-                            transaction.abort()
-                            false
-                        }
-                    }
-                }.result()
-                .orElse(false)
-        }
+    fun getGlassBlock(): HTBlockContent = when (this) {
+        PRIMITIVE -> HTContent.fromBlock(Blocks.GLASS)
+        BASIC -> RagiumBlocks.Glasses.STEEL
+        ADVANCED -> RagiumBlocks.Glasses.OBSIDIAN
+    }
 
     //    StringIdentifiable    //
 

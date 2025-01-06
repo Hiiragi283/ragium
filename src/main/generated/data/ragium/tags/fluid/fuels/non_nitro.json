@@ -1,6 +1,14 @@
 {
   "values": [
     "ragium:bio_fuel",
-    "ragium:fuel"
+    "ragium:fuel",
+    {
+      "id": "techreborn:biofuel",
+      "required": false
+    },
+    {
+      "id": "techreborn:diesel",
+      "required": false
+    }
   ]
 }

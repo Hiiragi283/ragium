@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.util
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.codecOf
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.extension.longText
-import hiiragi283.ragium.api.extension.packetCodecOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.tags.RagiumBlockTags
 import hiiragi283.ragium.api.util.HTPipeType.entries
@@ -31,10 +31,10 @@ enum class HTPipeType(val isItem: Boolean, val isFluid: Boolean) : StringIdentif
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTPipeType> = codecOf(entries)
+        val CODEC: Codec<HTPipeType> = identifiedCodec(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTPipeType> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTPipeType> = identifiedPacketCodec(entries)
 
         @JvmStatic
         fun canConnect(

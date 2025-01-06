@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -20,7 +21,7 @@ import net.minecraft.util.math.GlobalPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
 
-object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL))) {
+class HTWarpedCrystalItem(settings: Settings) : Item(settings) {
     override fun use(world: World, user: PlayerEntity, hand: Hand): TypedActionResult<ItemStack> {
         val stack: ItemStack = user.getStackInHand(hand)
         user.itemCooldownManager.set(this, 20)
@@ -29,7 +30,7 @@ object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(
             stack.remove(DataComponentTypes.LODESTONE_TRACKER)
             return super.use(world, user, hand)
         }
-        if (HTMachineTier.ADVANCED.consumerEnergy(world, null, 64)) {
+        if (world.processEnergy(HTEnergyNetwork.Flag.CONSUME, HTMachineTier.ADVANCED.processCost * 64)) {
             world.server?.getWorld(globalPos.dimension)?.let { worldTo: ServerWorld ->
                 val vec3d = Vec3d(
                     globalPos.pos.x.toDouble() + 0.5,
@@ -62,7 +63,7 @@ object HTWarpedCrystalItem : Item(itemSettings().descriptions(Text.translatable(
         tooltip: MutableList<Text>,
         type: TooltipType,
     ) {
-        stack.get(RagiumComponentTypes.GLOBAL_POS)?.let(::globalPosText)?.let {
+        stack.ifPresent(RagiumComponentTypes.GLOBAL_POS, ::globalPosText)?.let {
             tooltip.add(Text.translatable(RagiumTranslationKeys.WARPED_CRYSTAL_DESTINATION, it))
         }
     }

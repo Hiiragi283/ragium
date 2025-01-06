@@ -15,6 +15,11 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.WorldView
 
+/**
+ * [Fluid]のシンプルな実装
+ *
+ * ワールドには設置できず，主にレシピ加工で用いられる。
+ */
 class HTVirtualFluid : Fluid() {
     override fun getBucketItem(): Item = Items.AIR
 

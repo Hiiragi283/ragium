@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:infuser",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    "#c:air"
+  ],
+  "item_inputs": [
+    "minecraft:snowball"
+  ],
+  "item_outputs": [
+    "minecraft:wind_charge"
+  ]
+}

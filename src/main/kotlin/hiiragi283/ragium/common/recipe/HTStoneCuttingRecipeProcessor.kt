@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.ragium.api.extension.modifyStack
+import hiiragi283.ragium.api.extension.mergeStack
 import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -47,7 +47,7 @@ class HTStoneCuttingRecipeProcessor(
                 ) {
                     return@unitMap HTUnitResult.errorString { "Failed to merge result into outputs!" }
                 }
-                inventory.modifyStack(outputIndex, output::merge)
+                inventory.mergeStack(outputIndex, output)
                 inputStack.count -= 1
                 HTUnitResult.success()
             }

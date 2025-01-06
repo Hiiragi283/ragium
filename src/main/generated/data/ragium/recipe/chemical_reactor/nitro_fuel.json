@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#ragium:fuels/non_nitro"
-    },
+    "#ragium:fuels/non_nitro",
     {
       "amount": 20250,
       "fluids": "#c:mixture_acid"

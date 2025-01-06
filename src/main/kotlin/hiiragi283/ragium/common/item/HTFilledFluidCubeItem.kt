@@ -1,23 +1,26 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.ragium.api.extension.itemSettings
+import hiiragi283.ragium.api.extension.id
+import hiiragi283.ragium.api.extension.ifPresent
 import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsage
 import net.minecraft.item.tooltip.TooltipType
-import net.minecraft.registry.Registries
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.text.Text
 import net.minecraft.util.*
 import net.minecraft.world.World
 
-object HTFilledFluidCubeItem : Item(itemSettings()) {
+class HTFilledFluidCubeItem(settings: Settings) : Item(settings) {
     override fun getName(stack: ItemStack): Text = stack
         .get(RagiumComponentTypes.FLUID)
+        ?.value()
         ?.name
         ?.let { Text.translatable(translationKey, it) }
         ?: super.getName(stack)
@@ -43,7 +46,7 @@ object HTFilledFluidCubeItem : Item(itemSettings()) {
         type: TooltipType,
     ) {
         if (type.isAdvanced) {
-            val id: Identifier = stack.get(RagiumComponentTypes.FLUID)?.let(Registries.FLUID::getId) ?: return
+            val id: Identifier = stack.ifPresent(RagiumComponentTypes.FLUID, RegistryEntry<Fluid>::id) ?: return
             tooltip.add(Text.literal("Fluid Id: $id").formatted(Formatting.DARK_GRAY))
         }
     }

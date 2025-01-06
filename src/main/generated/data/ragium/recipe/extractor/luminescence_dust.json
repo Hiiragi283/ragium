@@ -5,16 +5,10 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:glow_ink_sac"
-    }
+    "minecraft:glow_ink_sac"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:luminescence_dust"
-    },
-    {
-      "item": "minecraft:ink_sac"
-    }
+    "ragium:luminescence_dust",
+    "minecraft:ink_sac"
   ]
 }

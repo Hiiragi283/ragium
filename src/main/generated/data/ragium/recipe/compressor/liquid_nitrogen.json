@@ -11,8 +11,6 @@
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:liquid_nitrogen"
-    }
+    "ragium:liquid_nitrogen"
   ]
 }

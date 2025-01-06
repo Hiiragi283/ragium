@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:copper_trapdoor"
-    }
+    "minecraft:copper_trapdoor"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:oxidized_copper_trapdoor"
-    }
+    "minecraft:oxidized_copper_trapdoor"
   ]
 }

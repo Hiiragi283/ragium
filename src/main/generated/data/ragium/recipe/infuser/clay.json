@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:infuser",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    "minecraft:mud"
+  ],
+  "item_outputs": [
+    "minecraft:clay"
+  ]
+}

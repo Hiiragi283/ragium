@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.block.machine.generator
 
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.machine.HTMachineProvider
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -15,13 +16,15 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
+class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.SIMPLE_GENERATOR, pos, state) {
-    override var key: HTMachineKey = RagiumMachineKeys.SOLAR_PANEL
-
-    constructor(pos: BlockPos, state: BlockState, key: HTMachineKey, tier: HTMachineTier) : this(pos, state) {
-        this.key = key
-        this.tier = tier
+    companion object {
+        @JvmStatic
+        fun fromState(pos: BlockPos, state: BlockState): HTSimpleGeneratorBlockEntity {
+            val machineKey: HTMachineKey =
+                (state.block as? HTMachineProvider)?.machineKey ?: RagiumMachineKeys.SOLAR_GENERATOR
+            return HTSimpleGeneratorBlockEntity(pos, state, machineKey)
+        }
     }
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = false
@@ -30,7 +33,11 @@ class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult = HTUnitResult.fromBoolString(
-        key.entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos),
-    ) { "Failed to generate energy!" }
+    override fun process(world: World, pos: BlockPos): HTUnitResult {
+        val entry: HTMachineRegistry.Entry =
+            machineKey.getEntryOrNull() ?: return HTUnitResult.errorString { "Unknown machine key: $machineKey" }
+        return HTUnitResult.fromBoolString(entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos)) {
+            "Failed to generate energy!"
+        }
+    }
 }

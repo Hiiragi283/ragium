@@ -1,118 +1,186 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.splitWith
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.RagiumContents
 import hiiragi283.ragium.common.item.HTBackpackItem
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
 
 object RagiumItemGroup {
     @JvmField
-    val ITEM_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("item"))
+    val BUILDING: RegistryKey<ItemGroup> = create("building")
 
     @JvmField
-    val FLUID_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("fluid"))
+    val FLUID: RegistryKey<ItemGroup> = create("fluid")
 
     @JvmField
-    val MACHINE_KEY: RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id("machine"))
+    val ITEM: RegistryKey<ItemGroup> = create("item")
+
+    @JvmField
+    val MACHINE: RegistryKey<ItemGroup> = create("machine")
+
+    @JvmField
+    val TRANSFER: RegistryKey<ItemGroup> = create("transfer")
 
     @JvmStatic
-    private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup =
-        Registry.register(Registries.ITEM_GROUP, key, FabricItemGroup.builder().apply(action).build())
+    private fun create(path: String): RegistryKey<ItemGroup> = RegistryKey.of(RegistryKeys.ITEM_GROUP, RagiumAPI.id(path))
+
+    @JvmStatic
+    private inline fun register(key: RegistryKey<ItemGroup>, action: ItemGroup.Builder.() -> Unit): ItemGroup = Registry.register(
+        Registries.ITEM_GROUP,
+        key,
+        FabricItemGroup
+            .builder()
+            .apply(action)
+            .displayName(key.text)
+            .build(),
+    )
+
+    private val RegistryKey<ItemGroup>.text: MutableText
+        get() = Text.translatable("itemGroup.${value.splitWith('.')}")
+
+    private fun ItemGroup.Entries.addAll(items: List<ItemConvertible>) {
+        items.forEach(this::add)
+    }
 
     @JvmStatic
     fun init() {
-        register(ITEM_KEY) {
-            displayName(Text.translatable("itemGroup.ragium.item"))
+        register(BUILDING) {
+            icon { ItemStack(RagiumBlocks.Grates.PRIMITIVE) }
+            entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                entries.addAll(RagiumBlocks.Stones.entries)
+                entries.addAll(RagiumBlocks.Slabs.entries)
+                entries.addAll(RagiumBlocks.Stairs.entries)
+
+                entries.add(RagiumBlocks.ITEM_DISPLAY)
+                entries.addAll(RagiumBlocks.Glasses.entries)
+                entries.addAll(RagiumBlocks.WhiteLines.entries)
+
+                entries.add(RagiumBlocks.PLASTIC_BLOCK)
+                entries.addAll(RagiumBlocks.Decorations.entries)
+            }
+        }
+
+        register(FLUID) {
+            icon { RagiumItems.EMPTY_FLUID_CUBE.get().defaultStack }
+            entries { context: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
+                // empty cubes
+                entries.add(RagiumItems.EMPTY_FLUID_CUBE)
+                // filled cubes
+                context.lookup
+                    .getWrapperOrThrow(RegistryKeys.FLUID)
+                    .streamEntries()
+                    .filter { entry: RegistryEntry.Reference<Fluid> ->
+                        val fluid: Fluid = entry.value()
+                        fluid.isStill(fluid.defaultState)
+                    }.map(RagiumAPI.getInstance()::createFilledCube)
+                    .forEach(entries::add)
+            }
+        }
+
+        register(ITEM) {
             icon {
-                RagiumContents.Gems.RAGIUM
+                RagiumItems.Gems.RAGIUM
                     .asItem()
                     .defaultStack
             }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                buildList {
-                    addAll(RagiumContents.Ores.entries)
-                    addAll(RagiumContents.StorageBlocks.entries)
-                    addAll(RagiumBlocks.NATURAL)
-                    addAll(RagiumBlocks.BUILDINGS)
+                entries.addAll(RagiumBlocks.NATURAL)
+                entries.addAll(RagiumBlocks.Ores.entries)
+                entries.addAll(RagiumBlocks.StorageBlocks.entries)
 
-                    addAll(RagiumContents.Dusts.entries)
-                    addAll(RagiumContents.Gems.entries)
-                    addAll(RagiumContents.Ingots.entries)
-                    if (RagiumAPI.getInstance().config.isHardMode) {
-                        addAll(RagiumContents.Plates.entries)
-                    }
-                    addAll(RagiumContents.RawMaterials.entries)
+                entries.addAll(RagiumItems.Dusts.entries)
+                entries.addAll(RagiumItems.Gears.entries)
+                entries.addAll(RagiumItems.Gems.entries)
+                entries.addAll(RagiumItems.Ingots.entries)
+                entries.addAll(RagiumItems.Plates.entries)
+                entries.addAll(RagiumItems.RawMaterials.entries)
 
-                    addAll(RagiumBlocks.FOODS)
-                    addAll(RagiumItems.FOODS)
+                entries.addAll(RagiumBlocks.FOODS)
+                entries.addAll(RagiumItems.FOODS)
 
-                    addAll(RagiumItems.ARMORS)
-                    addAll(RagiumItems.TOOLS)
+                entries.addAll(RagiumItems.SteelArmors.entries)
+                entries.addAll(RagiumItems.DeepSteelArmors.entries)
+                entries.addAll(RagiumItems.StellaSuits.entries)
 
-                    addAll(RagiumItems.INGREDIENTS)
+                entries.addAll(RagiumItems.SteelTools.entries)
+                entries.addAll(RagiumItems.DeepSteelTools.entries)
+                entries.add(RagiumItems.FORGE_HAMMER)
+                entries.add(RagiumItems.RAGI_WRENCH)
+                entries.add(RagiumItems.STELLA_SABER)
+                entries.add(RagiumItems.RAGIUM_SABER)
+                entries.add(RagiumItems.GIGANT_HAMMER)
+                entries.addAll(RagiumItems.Dynamites.entries)
 
-                    addAll(RagiumBlocks.MISC)
-                    addAll(RagiumItems.MISC)
+                entries.add(RagiumItems.FLUID_FILTER)
+                entries.add(RagiumItems.ITEM_FILTER)
+                entries.add(RagiumItems.TRADER_CATALOG)
 
-                    remove(RagiumItems.BACKPACK)
-                    remove(RagiumItems.FILLED_FLUID_CUBE)
-                }.forEach(entries::add)
+                entries.addAll(RagiumItems.Plastics.entries)
+                entries.addAll(RagiumItems.CircuitBoards.entries)
+                entries.addAll(RagiumItems.Circuits.entries)
+                entries.addAll(RagiumItems.Processors.entries)
+                entries.addAll(RagiumItems.PressMolds.entries)
+                entries.addAll(RagiumItems.Radioactives.entries)
+                entries.addAll(RagiumItems.INGREDIENTS)
+
+                entries.addAll(RagiumItems.MISC)
 
                 DyeColor.entries.map(HTBackpackItem::createStack).forEach(entries::add)
             }
         }
 
-        register(FLUID_KEY) {
-            displayName(Text.translatable("itemGroup.ragium.fluid"))
-            icon { RagiumItems.EMPTY_FLUID_CUBE.defaultStack }
+        register(MACHINE) {
+            icon { RagiumMachineKeys.ASSEMBLER.createItemStack(HTMachineTier.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                Registries.FLUID
-                    .filter { it.isStill(it.defaultState) }
-                    .map(RagiumAPI.getInstance()::createFilledCube)
-                    .forEach(entries::add)
+                entries.addAll(RagiumBlocks.Creatives.entries)
+                entries.addAll(RagiumBlocks.MECHANICS)
+
+                entries.addAll(RagiumBlocks.Grates.entries)
+                entries.addAll(RagiumBlocks.Casings.entries)
+                entries.addAll(RagiumBlocks.Hulls.entries)
+                entries.add(RagiumBlocks.SHAFT)
+                entries.addAll(RagiumBlocks.Coils.entries)
+
+                HTMachineTier.entries.forEach { tier: HTMachineTier ->
+                    RagiumAPI
+                        .getInstance()
+                        .machineRegistry
+                        .keys
+                        .map { key: HTMachineKey -> key.createItemStack(tier) }
+                        .forEach(entries::add)
+                }
             }
         }
 
-        register(MACHINE_KEY) {
-            displayName(Text.translatable("itemGroup.ragium.machine"))
-            icon { RagiumMachineKeys.ALLOY_FURNACE.createItemStack(HTMachineTier.PRIMITIVE) }
+        register(TRANSFER) {
+            icon { ItemStack(RagiumBlocks.Crates.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
-                buildList {
-                    addAll(RagiumContents.Grates.entries)
-                    addAll(RagiumContents.Casings.entries)
-                    addAll(RagiumContents.Hulls.entries)
-                    addAll(RagiumContents.Coils.entries)
+                entries.addAll(RagiumBlocks.Crates.entries)
+                entries.add(RagiumBlocks.OPEN_CRATE)
+                entries.add(RagiumBlocks.VOID_CRATE)
+                entries.add(RagiumBlocks.BACKPACK_CRATE)
 
-                    addAll(RagiumContents.Crates.entries)
-                    add(RagiumBlocks.CREATIVE_CRATE)
-                    addAll(RagiumContents.Drums.entries)
-                    add(RagiumBlocks.CREATIVE_DRUM)
-                    addAll(RagiumContents.Exporters.entries)
-                    add(RagiumBlocks.CREATIVE_EXPORTER)
-                    addAll(RagiumContents.Pipes.entries)
-                    addAll(RagiumContents.CrossPipes.entries)
-                    addAll(RagiumContents.PipeStations.entries)
-                    addAll(RagiumContents.FilteringPipe.entries)
+                entries.addAll(RagiumBlocks.Drums.entries)
 
-                    addAll(RagiumContents.CircuitBoards.entries)
-                    addAll(RagiumContents.Circuits.entries)
-
-                    addAll(RagiumBlocks.MECHANICS)
-                    add(RagiumBlocks.CREATIVE_SOURCE)
-                }.forEach(entries::add)
-                RagiumAPI
-                    .getInstance()
-                    .machineRegistry
-                    .blocks
-                    .forEach(entries::add)
+                entries.addAll(RagiumBlocks.Exporters.entries)
+                entries.addAll(RagiumBlocks.Pipes.entries)
+                entries.addAll(RagiumBlocks.CrossPipes.entries)
+                entries.addAll(RagiumBlocks.PipeStations.entries)
+                entries.addAll(RagiumBlocks.FilteringPipes.entries)
             }
         }
     }

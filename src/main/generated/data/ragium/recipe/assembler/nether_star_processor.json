@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    "#c:gems/nether_star",
+    "ragium:processor_socket"
+  ],
+  "item_outputs": [
+    "ragium:nether_star_processor"
+  ]
+}

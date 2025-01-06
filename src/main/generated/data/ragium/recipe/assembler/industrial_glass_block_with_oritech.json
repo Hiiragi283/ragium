@@ -1,0 +1,32 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "oritech"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:glass_blocks"
+    },
+    {
+      "count": 2,
+      "items": "#c:ingots/steel"
+    },
+    "#oritech:plating"
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "oritech:industrial_glass_block"
+    }
+  ]
+}

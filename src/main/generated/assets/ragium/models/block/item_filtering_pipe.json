@@ -1,6 +1,6 @@
 {
-  "parent": "ragium:block/cross_pipe",
+  "parent": "ragium:block/filtering_pipe",
   "textures": {
-    "all": "ragium:block/item_filtering_pipe"
+    "back": "ragium:block/item_filtering_pipe"
   }
 }

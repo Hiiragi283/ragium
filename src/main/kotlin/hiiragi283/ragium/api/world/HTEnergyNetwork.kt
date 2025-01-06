@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.world
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.useTransaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
@@ -11,6 +13,9 @@ import net.minecraft.world.PersistentState
 import team.reborn.energy.api.EnergyStorage
 import team.reborn.energy.api.base.SimpleEnergyStorage
 
+/**
+ * 無線電力ネットワークを管理するマネージャー
+ */
 class HTEnergyNetwork() :
     PersistentState(),
     EnergyStorage {
@@ -51,35 +56,38 @@ class HTEnergyNetwork() :
     //    Flag    //
 
     enum class Flag {
+        /**
+         * エネルギーを消費します。
+         * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.energyFlag
+         */
         CONSUME() {
-            override fun processAmount(network: HTEnergyNetwork, amount: Long, parent: TransactionContext?): Boolean {
+            override fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext?): Boolean {
+                if (network == null) return false
                 if (amount <= 0) return false
                 useTransaction(parent) { transaction: Transaction ->
                     val extracted: Long = network.extract(amount, transaction)
-                    when {
-                        extracted == amount -> {
-                            transaction.commit()
-                            return true
-                        }
-
-                        else -> transaction.abort()
+                    if (extracted == amount) {
+                        transaction.commit()
+                        return true
                     }
                 }
                 return false
             }
         },
+
+        /**
+         * エネルギーを生産します。
+         * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.energyFlag
+         */
         GENERATE() {
-            override fun processAmount(network: HTEnergyNetwork, amount: Long, parent: TransactionContext?): Boolean {
+            override fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext?): Boolean {
+                if (network == null) return false
                 if (amount <= 0) return false
                 useTransaction(parent) { transaction: Transaction ->
                     val inserted: Long = network.insert(amount, transaction)
-                    when {
-                        inserted == amount -> {
-                            transaction.commit()
-                            return true
-                        }
-
-                        else -> transaction.abort()
+                    if (inserted == amount) {
+                        transaction.commit()
+                        return true
                     }
                 }
                 return false
@@ -87,7 +95,10 @@ class HTEnergyNetwork() :
         },
         ;
 
-        abstract fun processAmount(network: HTEnergyNetwork, amount: Long, parent: TransactionContext? = null): Boolean
+        abstract fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext? = null): Boolean
+
+        fun processAmount(network: DataResult<HTEnergyNetwork>, amount: Long, parent: TransactionContext? = null): Boolean =
+            processAmount(network.getOrNull(), amount, parent)
     }
 
     //    Storage    //

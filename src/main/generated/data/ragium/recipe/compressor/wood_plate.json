@@ -1,17 +1,14 @@
 {
   "type": "ragium:machine",
+  "catalyst": "ragium:plate_press_mold",
   "definition": {
     "type": "ragium:compressor",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "ragium:pulp"
-    }
+    "ragium:pulp"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:wood_plate"
-    }
+    "ragium:wood_plate"
   ]
 }

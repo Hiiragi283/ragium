@@ -1,12 +1,9 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.extension.getStackInActiveHand
-import hiiragi283.ragium.api.extension.isEmpty
-import hiiragi283.ragium.api.extension.isOf
-import hiiragi283.ragium.api.tags.RagiumItemTags
+import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumNetworks
-import hiiragi283.ragium.common.init.RagiumTexts
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
@@ -15,10 +12,7 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.nbt.NbtOps
 import net.minecraft.particle.ParticleTypes
-import net.minecraft.registry.RegistryCodecs
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.sound.SoundEvents
@@ -36,52 +30,36 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
 
     final override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        RegistryCodecs
-            .entryList(RegistryKeys.FLUID)
-            .encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), fluidFilter)
-            .ifSuccess { nbt.put("fluid_filter", it) }
-        RegistryCodecs
-            .entryList(RegistryKeys.ITEM)
-            .encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), itemFilter)
-            .ifSuccess { nbt.put("item_filter", it) }
+        HTNbtCodecs.FLUID_FILTER.writeTo(nbt, fluidFilter)
+        HTNbtCodecs.ITEM_FILTER.writeTo(nbt, itemFilter)
     }
 
     final override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        RegistryCodecs
-            .entryList(RegistryKeys.FLUID)
-            .parse(wrapperLookup.getOps(NbtOps.INSTANCE), nbt.get("fluid_filter"))
-            .ifSuccess { fluidFilter = it }
-        RegistryCodecs
-            .entryList(RegistryKeys.ITEM)
-            .parse(wrapperLookup.getOps(NbtOps.INSTANCE), nbt.get("item_filter"))
-            .ifSuccess { itemFilter = it }
+        HTNbtCodecs.FLUID_FILTER.readAndSet(nbt, this::fluidFilter)
+        HTNbtCodecs.ITEM_FILTER.readAndSet(nbt, this::itemFilter)
     }
 
-    final override fun onUse(
+    final override fun onRightClicked(
         state: BlockState,
         world: World,
         pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
-        val stack: ItemStack = player.getStackInActiveHand()
-        val result: Boolean = when {
-            stack.isIn(RagiumItemTags.FLUID_EXPORTER_FILTERS) -> {
-                stack.get(RagiumComponentTypes.FLUID_FILTER)?.let { fluidFilter = it }
-                true
+        val stack: ItemStack = player.getStackInMainHand()
+        val result: Boolean = stack.ifPresent(RagiumComponentTypes.FLUID_FILTER) {
+            fluidFilter = it
+            true
+        } ?: stack.ifPresent(RagiumComponentTypes.ITEM_FILTER) {
+            itemFilter = it
+            true
+        } ?: let {
+            if (!world.isClient) {
+                player.sendMessage(fluidFilterText(fluidFilter), false)
+                player.sendMessage(itemFilterText(itemFilter), false)
             }
-
-            stack.isIn(RagiumItemTags.ITEM_EXPORTER_FILTERS) -> {
-                stack.get(RagiumComponentTypes.ITEM_FILTER)?.let { itemFilter = it }
-                true
-            }
-
-            else -> {
-                player.sendMessage(RagiumTexts.fluidFilter(fluidFilter), false)
-                player.sendMessage(RagiumTexts.itemFilter(itemFilter), false)
-                false
-            }
+            false
         }
         if (result) {
             if (!world.isClient) {

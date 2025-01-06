@@ -1,24 +1,18 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dirt"
-  },
+  "catalyst": "minecraft:dirt",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:mangrove_propagule"
-    }
+    "minecraft:mangrove_propagule"
   ],
   "item_outputs": [
     {
       "count": 8,
       "item": "minecraft:mangrove_log"
     },
-    {
-      "item": "minecraft:mangrove_propagule"
-    }
+    "minecraft:mangrove_propagule"
   ]
 }

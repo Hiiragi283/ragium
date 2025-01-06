@@ -1,11 +1,9 @@
 package hiiragi283.ragium.common.block.machine
 
-import hiiragi283.ragium.api.extension.blockSettings
-import hiiragi283.ragium.common.block.HTBlockWithEntity
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.block.InventoryProvider
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.inventory.SidedInventory
@@ -14,7 +12,9 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-object HTManualGrinderBlock : HTBlockWithEntity(blockSettings(Blocks.BRICKS)), InventoryProvider {
+class HTManualGrinderBlock(settings: Settings) :
+    HTBlockWithEntity(settings),
+    InventoryProvider {
     init {
         defaultState = stateManager.defaultState.with(RagiumBlockProperties.LEVEL_7, 0)
     }

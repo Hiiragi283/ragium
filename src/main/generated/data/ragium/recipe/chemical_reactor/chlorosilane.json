@@ -11,17 +11,13 @@
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:chlorosilane"
-    },
+    "ragium:chlorosilane",
     {
       "amount": 162000,
       "fluid": "ragium:hydrogen"
     }
   ],
   "item_inputs": [
-    {
-      "items": "#c:plates/silicon"
-    }
+    "#c:plates/silicon"
   ]
 }

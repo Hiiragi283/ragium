@@ -1,14 +1,18 @@
 package hiiragi283.ragium.api.util
 
 import com.mojang.serialization.Codec
-import hiiragi283.ragium.api.extension.codecOf
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.util.HTRelativeDirection.entries
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.util.StringIdentifiable
 import net.minecraft.util.math.Direction
 
+/**
+ * 相対的な方角を管理するクラス
+ * @see [Direction]
+ */
 enum class HTRelativeDirection : StringIdentifiable {
     DOWN,
     UP,
@@ -20,11 +24,17 @@ enum class HTRelativeDirection : StringIdentifiable {
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTRelativeDirection> = codecOf(entries)
+        val CODEC: Codec<HTRelativeDirection> = identifiedCodec(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRelativeDirection> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTRelativeDirection> = identifiedPacketCodec(entries)
 
+        /**
+         * 指定した値から[HTRelativeDirection]を返します。
+         * @param front 正面となる方角
+         * @param target 変換したい方角
+         * @throws IllegalArgumentException [front]が[Direction.UP]か[Direction.DOWN]の場合
+         */
         @JvmStatic
         fun fromDirection(front: Direction, target: Direction): HTRelativeDirection = when (front) {
             Direction.NORTH -> getHorizontalSide(target)
@@ -44,6 +54,10 @@ enum class HTRelativeDirection : StringIdentifiable {
         }
     }
 
+    /**
+     * この方角を[Direction]に変換します。
+     * @param front 正面となる方角
+     */
     fun toDirection(front: Direction): Direction = when (this) {
         DOWN -> Direction.DOWN
         UP -> Direction.UP

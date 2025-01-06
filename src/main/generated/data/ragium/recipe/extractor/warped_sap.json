@@ -1,21 +1,15 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "#minecraft:warped_stems"
-  },
+  "catalyst": "#minecraft:warped_stems",
   "definition": {
     "type": "ragium:extractor",
     "tier": "advanced"
   },
   "fluid_outputs": [
-    {
-      "fluid": "ragium:warped_sap"
-    }
+    "ragium:warped_sap"
   ],
   "item_inputs": [
-    {
-      "items": "#minecraft:warped_stems"
-    }
+    "#minecraft:warped_stems"
   ],
   "item_outputs": [
     {

@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:advanced_plastic",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "#c:aromatic_compounds"
+    },
+    "#c:oxygen"
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "ragium:advanced_plastic"
+    }
+  ]
+}

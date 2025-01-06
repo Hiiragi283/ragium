@@ -9,9 +9,15 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
 import kotlin.math.min
 
+/**
+ * 無限に中身を引き出せる[SingleSlotStorage]の実装
+ */
 interface HTCreativeStorage<T : TransferVariant<*>> :
     SingleSlotStorage<T>,
     ExtractionOnlyStorage<T> {
+    /**
+     * 中身を指定します。
+     */
     fun setResource(resource: T)
 
     //    SingleSlotStorage    //
@@ -31,6 +37,9 @@ interface HTCreativeStorage<T : TransferVariant<*>> :
     override fun getCapacity(): Long = Long.MAX_VALUE
 
     companion object {
+        /**
+         * [ItemVariant]に対する[HTCreativeStorage]を返します。
+         */
         @JvmStatic
         fun ofItem(): HTCreativeStorage<ItemVariant> = object : HTCreativeStorage<ItemVariant> {
             private var cache: ItemVariant = ItemVariant.blank()
@@ -42,6 +51,9 @@ interface HTCreativeStorage<T : TransferVariant<*>> :
             override fun getResource(): ItemVariant = cache
         }
 
+        /**
+         * [FluidVariant]に対する[HTCreativeStorage]を返します。
+         */
         @JvmStatic
         fun ofFluid(): HTCreativeStorage<FluidVariant> = object : HTCreativeStorage<FluidVariant> {
             private var cache: FluidVariant = FluidVariant.blank()

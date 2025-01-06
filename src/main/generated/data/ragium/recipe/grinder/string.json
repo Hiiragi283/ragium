@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:wool"
-    }
+    "#minecraft:wool"
   ],
   "item_outputs": [
     {

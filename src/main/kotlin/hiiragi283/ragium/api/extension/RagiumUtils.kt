@@ -1,30 +1,23 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.common.block.entity.HTBlockEntityBase
 import net.fabricmc.api.EnvType
 import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
 import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.effect.StatusEffect
+import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.projectile.ProjectileEntity
+import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
-import net.minecraft.inventory.Inventory
-import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.Recipe
-import net.minecraft.recipe.RecipeEntry
-import net.minecraft.recipe.RecipeManager
-import net.minecraft.recipe.RecipeType
-import net.minecraft.recipe.input.RecipeInput
-import net.minecraft.screen.ScreenHandler
-import net.minecraft.screen.ScreenHandlerContext
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
@@ -32,9 +25,6 @@ import net.minecraft.sound.SoundEvents
 import net.minecraft.text.MutableText
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.ChunkPos
-import net.minecraft.util.math.Direction
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.TeleportTarget
 import net.minecraft.world.World
@@ -44,46 +34,22 @@ import kotlin.jvm.optionals.getOrNull
 
 //    ApiLookup    //
 
+/**
+ * [player]が所持している[ItemStack]からAPIのインスタンスを取得します。
+ * @param A APIのクラス
+ * @param hand 取得したい[ItemStack]を持っている手
+ * @return [ContainerItemContext.forPlayerInteraction]からAPIインスタンスを返す
+ */
 fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromHand(player: PlayerEntity, hand: Hand = Hand.MAIN_HAND): A? =
     ContainerItemContext.forPlayerInteraction(player, hand).find(this)
 
+/**
+ * [stack]からAPIインスタンスを取得します。
+ * @param A APIのクラス
+ * @return [ContainerItemContext.withConstant]からAPIインスタンスを返す
+ */
 fun <A : Any> ItemApiLookup<A, ContainerItemContext>.findFromStack(stack: ItemStack): A? =
     ContainerItemContext.withConstant(stack).find(this)
-
-//    BlockEntity    //
-
-fun <T : Any> BlockEntity.ifPresentWorld(action: (World) -> T): T? = world?.let(action)
-
-fun BlockEntity.createContext(): ScreenHandlerContext = world?.let { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
-
-//    BlockPos    //
-
-val BlockPos.aroundPos: List<BlockPos>
-    get() = Direction.entries.map(this::offset)
-
-fun BlockPos.getAroundPos(filter: (BlockPos) -> Boolean): List<BlockPos> = Direction.entries.map(this::offset).filter(filter)
-
-//    ChunkPos    //
-
-fun ChunkPos.iterator(yRange: IntRange): Iterator<BlockPos> = buildList {
-    (startX..endX).forEach { x: Int ->
-        (startZ..endZ).forEach { z: Int ->
-            yRange.forEach { y: Int ->
-                add(BlockPos(x, y, z))
-            }
-        }
-    }
-}.iterator()
-
-fun ChunkPos.forEach(yRange: IntRange, action: (BlockPos) -> Unit) {
-    (startX..endX).forEach { x: Int ->
-        (startZ..endZ).forEach { z: Int ->
-            yRange.forEach { y: Int ->
-                action(BlockPos(x, y, z))
-            }
-        }
-    }
-}
 
 //    Entity    //
 
@@ -146,32 +112,99 @@ fun canTeleport(entity: Entity, world: World): Boolean = if (entity.world.regist
     entity.canUsePortals(true)
 }
 
-fun throwEntity(world: World, player: PlayerEntity, entityBuilder: (World, PlayerEntity) -> ProjectileEntity?): Boolean {
+/**
+ * プレイヤーからエンティティを投げます。
+ * @param entityBuilder [World]と[PlayerEntity]から[ProjectileEntity]を返すブロック
+ * @return サーバー側でエンティティがスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun PlayerEntity.throwEntity(world: World, entityBuilder: (World, PlayerEntity) -> ProjectileEntity?): Boolean {
     world.playSound(
         null,
-        player.x,
-        player.y,
-        player.z,
+        x,
+        y,
+        z,
         SoundEvents.ENTITY_SNOWBALL_THROW,
         SoundCategory.PLAYERS,
         0.5f,
         0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f),
     )
     if (!world.isClient) {
-        val entity: ProjectileEntity = entityBuilder(world, player) ?: return false
-        entity.apply {
-            setVelocity(player, player.pitch, player.yaw, 0.0f, 1.5f, 1.0f)
-            world.spawnEntity(this)
-        }
-        return true
+        val entity: ProjectileEntity = entityBuilder(world, this) ?: return false
+        entity.setVelocity(this, pitch, yaw, 0.0f, 1.5f, 1.0f)
+        return world.spawnEntity(entity)
     }
     return false
 }
 
-fun LivingEntity.getStackInActiveHand(): ItemStack = getStackInHand(activeHand)
+/**
+ * [Hand.MAIN_HAND]から[ItemStack]を返します。
+ */
+fun LivingEntity.getStackInMainHand(): ItemStack = getStackInHand(Hand.MAIN_HAND)
+
+/**
+ * 指定した値からエフェクトを追加します。
+ * @param effect 追加する効果
+ * @param duration 効果の時間 [/tick]
+ * @param amplifier 0をレベル1とする効果の強度
+ * @param ambient ビーコンやコンジットのような表示にするかどうか
+ * @param showParticles パーティクルを表示するかどうか
+ * @param showIcon エフェクトのアイコンを表示するかどうか
+ */
+fun LivingEntity.addStatusEffect(
+    effect: RegistryEntry<StatusEffect>,
+    duration: Int,
+    amplifier: Int = 0,
+    ambient: Boolean = false,
+    showParticles: Boolean = true,
+    showIcon: Boolean = false,
+) {
+    addStatusEffect(
+        StatusEffectInstance(
+            effect,
+            duration,
+            amplifier,
+            ambient,
+            showParticles,
+            showIcon,
+            null,
+        ),
+    )
+}
+
+/**
+ * 指定した値から無限の効果時間をもつエフェクトを追加します。
+ * @param effect 追加する効果
+ * @param amplifier 0をレベル1とする効果の強度
+ * @param ambient ビーコンやコンジットのような表示にするかどうか
+ * @param showParticles パーティクルを表示するかどうか
+ * @param showIcon エフェクトのアイコンを表示するかどうか
+ */
+fun LivingEntity.addInfinityStatusEffect(
+    effect: RegistryEntry<StatusEffect>,
+    amplifier: Int = 0,
+    ambient: Boolean = false,
+    showParticles: Boolean = true,
+    showIcon: Boolean = false,
+) {
+    addStatusEffect(
+        effect,
+        -1,
+        amplifier,
+        ambient,
+        showParticles,
+        showIcon,
+    )
+}
+
+fun ThrownItemEntity.setItemFromOwner(owner: LivingEntity): ThrownItemEntity = apply {
+    setItem(owner.getStackInMainHand())
+}
 
 //    Color    //
 
+/**
+ * 指定した[color]を[Float]値に変換します。
+ */
 fun toFloatColor(color: Int): Triple<Float, Float, Float> {
     val red: Float = (color shr 16 and 255) / 255.0f
     val green: Float = (color shr 8 and 255) / 255.0f
@@ -181,86 +214,88 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
 
 //    EnergyStorage    //
 
+/**
+ * 蓄電率を返します。
+ */
 val EnergyStorage.energyPercent: Float
     get() = (amount.toFloat() / capacity.toFloat()) * 100
 
 //    FabricLoader    //
 
+/**
+ * 指定した[modId]が読み込まれているか判定します。
+ */
 fun isModLoaded(modId: String): Boolean = FabricLoader.getInstance().isModLoaded(modId)
 
+/**
+ * 現在の物理サイドを取得します。
+ */
 fun getEnvType(): EnvType = FabricLoader.getInstance().environmentType
 
+/**
+ * 現在の物理サイドがクライアント側かどうか判定します。
+ */
 fun isClientEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.CLIENT
 
+/**
+ * 現在の物理サイドがサーバー側かどうか判定します。
+ */
 fun isServerEnv(): Boolean = FabricLoader.getInstance().environmentType == EnvType.SERVER
 
+/**
+ * 現在の起動構成がデータ生成であるか判定します。
+ */
 fun isDataGen(): Boolean = System.getProperty("fabric-api.datagen") != null
 
+/**
+ * 指定した[modId]から[ModMetadata]を返します。
+ * @return [FabricLoader.getModContainer]がnullの場合はnull
+ */
 fun getModMetadata(modId: String): ModMetadata? = FabricLoader
     .getInstance()
     .getModContainer(modId)
     .getOrNull()
     ?.metadata
 
+/**
+ * 指定した[modId]からModの名前を返します。
+ * @return [getModMetadata]がnullの場合はnull
+ */
 fun getModName(modId: String): String? = getModMetadata(modId)?.name
 
+/**
+ * 指定した[key]からエントリポイントの一覧を返します。
+ * @param T エントリポイントのクラス
+ */
 inline fun <reified T : Any> collectEntrypoints(key: String): List<T> = FabricLoader.getInstance().getEntrypoints(key, T::class.java)
 
 //    Fluid    //
 
+/**
+ * 液体の名前を返します。
+ */
 val Fluid.name: MutableText
     get() = FluidVariant.of(this).name
 
+/**
+ * 液体の名前を返します。
+ */
+val FluidVariant.name: MutableText
+    get() = FluidVariantAttributes.getName(this).copy()
+
+/**
+ * 液体が[Fluids.EMPTY]に一致するか判定します。。
+ */
 val Fluid.isEmpty: Boolean
     get() = this == Fluids.EMPTY
 
-val Fluid.nonEmptyOrNull: Fluid?
-    get() = takeUnless { it.isEmpty }
-
 //    Identifier    //
 
+/**
+ * [Identifier]を[splitter]で分割された文字列として返します。
+ */
 fun Identifier.splitWith(splitter: Char): String = "${namespace}${splitter}$path"
-
-//    PlayerEntity    //
-
-fun Entity.asServerPlayer(): ServerPlayerEntity? = this as? ServerPlayerEntity
-
-@Suppress("UNCHECKED_CAST")
-fun <T : ScreenHandler> PlayerEntity.getAsScreenHandler(): T? = currentScreenHandler as? T
 
 //    ServiceLoader    //
 
 inline fun <reified T : Any> collectInstances(): Iterable<T> = ServiceLoader.load(T::class.java)
-
-//    Recipe    //
-
-fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getFirstMatch(
-    type: RecipeType<U>,
-    predicate: (RecipeEntry<U>) -> Boolean,
-): RecipeEntry<U>? = listAllOfType(type).firstOrNull(predicate)
-
-fun <T : RecipeInput, U : Recipe<T>> RecipeManager.getAllMatches(
-    type: RecipeType<U>,
-    predicate: (RecipeEntry<U>) -> Boolean,
-): List<RecipeEntry<U>> = listAllOfType(type).filter(predicate)
-
-operator fun <T : Recipe<*>> RecipeEntry<T>.component1(): Identifier = this.id
-
-operator fun <T : Recipe<*>> RecipeEntry<T>.component2(): T = this.value
-
-fun RecipeInput.iterable(): Iterable<ItemStack> = buildList<ItemStack> {
-    for (index: Int in (0 until this.size)) {
-        add(this[index])
-    }
-}
-
-//    ScreenHandler    //
-
-fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T? = get(getter, null)
-
-fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
-
-fun ScreenHandlerContext.getInventory(size: Int): Inventory =
-    (getBlockEntity() as? HTBlockEntityBase)?.asInventory() ?: SimpleInventory(size)
-
-fun ScreenHandlerContext.getMachineEntity(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase

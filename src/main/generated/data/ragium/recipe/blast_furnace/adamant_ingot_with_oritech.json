@@ -1,0 +1,22 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "oritech"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "basic"
+  },
+  "item_inputs": [
+    "#c:ingots/nickel",
+    "#c:gems/diamond"
+  ],
+  "item_outputs": [
+    "oritech:adamant_ingot"
+  ]
+}

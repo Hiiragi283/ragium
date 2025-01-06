@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:mixer",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    "#ragium:organic_oils"
+  ],
+  "fluid_outputs": [
+    "ragium:glycerol"
+  ],
+  "item_inputs": [
+    "#c:alkali"
+  ],
+  "item_outputs": [
+    "ragium:soap"
+  ]
+}

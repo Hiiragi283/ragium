@@ -1,0 +1,26 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "energizedpower"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    "#c:ingots/tin",
+    "#c:silicon",
+    {
+      "count": 2,
+      "items": "#c:dusts/redstone"
+    }
+  ],
+  "item_outputs": [
+    "energizedpower:redstone_alloy_ingot"
+  ]
+}

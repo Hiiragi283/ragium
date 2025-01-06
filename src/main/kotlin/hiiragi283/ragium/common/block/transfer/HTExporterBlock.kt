@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.util.HTPipeType
-import hiiragi283.ragium.common.block.HTBlockWithEntity
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -19,7 +18,8 @@ import net.minecraft.util.BlockRotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 
-class HTExporterBlock(private val tier: HTMachineTier) : HTBlockWithEntity(blockSettings().solid().nonOpaque().strength(2f, 6f)) {
+class HTExporterBlock(private val tier: HTMachineTier, settings: Settings) :
+    HTBlockWithEntity(settings.solid().nonOpaque().strength(2f, 6f)) {
     init {
         defaultState = stateManager.defaultState.with(Properties.FACING, Direction.NORTH)
     }

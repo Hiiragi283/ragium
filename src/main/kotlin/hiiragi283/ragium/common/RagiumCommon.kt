@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockRotationHandler
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import hiiragi283.ragium.common.internal.RagiumContentRegister
@@ -9,36 +10,35 @@ import net.fabricmc.api.ModInitializer
 
 object RagiumCommon : ModInitializer {
     override fun onInitialize() {
-        RagiumAPI.log {
-            InternalRagiumAPI.config
-            HTHardModeResourceCondition
+        HTHardModeResourceCondition
 
-            RagiumAPI.LOGGER.info("Registering game objects...")
+        RagiumAPI.LOGGER.info("Registering game objects...")
 
-            RagiumComponentTypes
+        HTBlockRotationHandler
+        RagiumComponentTypes
 
-            RagiumAdvancementCriteria
-            RagiumArmorMaterials
-            RagiumBlockEntityTypes
-            RagiumBlocks
-            RagiumEntityTypes
-            RagiumItems
-            RagiumRecipeSerializers
-            RagiumRecipeTypes
+        RagiumAdvancementCriteria
+        RagiumArmorMaterials
+        RagiumBlockEntityTypes
+        RagiumBlocks
+        RagiumEntityTypes
+        RagiumRecipeSerializers
+        RagiumRecipeTypes
 
-            RagiumContentRegister.registerContents()
-            InternalRagiumAPI.registerMachines()
+        RagiumBlocks.register()
+        RagiumItems.register()
+        RagiumFluids.register()
+        InternalRagiumAPI.registerMachines()
 
-            RagiumBlockEntityTypes.init()
-            RagiumCommands.init()
-            RagiumEventHandlers.init()
-            RagiumFeatures.init()
-            RagiumItemGroup.init()
-            RagiumNetworks
+        RagiumBlockEntityTypes.init()
+        RagiumCommands.init()
+        RagiumFeatures.init()
+        RagiumItemGroup.init()
+        RagiumNetworks
 
-            RagiumContentRegister.initRegistry()
+        RagiumContentRegister.initEvents()
+        RagiumContentRegister.initRegistry()
 
-            RagiumAPI.LOGGER.info("Ragium initialized!")
-        }
+        RagiumAPI.LOGGER.info("Ragium initialized!")
     }
 }

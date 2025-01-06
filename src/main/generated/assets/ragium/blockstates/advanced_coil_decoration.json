@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "ragium:block/advanced_coil",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "ragium:block/advanced_coil"
+    },
+    "axis=z": {
+      "model": "ragium:block/advanced_coil",
+      "x": 90
+    }
+  }
+}

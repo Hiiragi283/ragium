@@ -1,24 +1,18 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:dirt"
-  },
+  "catalyst": "minecraft:dirt",
   "definition": {
     "type": "ragium:growth_chamber",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:spruce_sapling"
-    }
+    "minecraft:spruce_sapling"
   ],
   "item_outputs": [
     {
       "count": 8,
       "item": "minecraft:spruce_log"
     },
-    {
-      "item": "minecraft:spruce_sapling"
-    }
+    "minecraft:spruce_sapling"
   ]
 }

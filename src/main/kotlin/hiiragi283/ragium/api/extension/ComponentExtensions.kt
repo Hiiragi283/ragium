@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.component.Component
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
+import net.minecraft.component.ComponentType
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.AttributeModifiersComponent
 import net.minecraft.component.type.FoodComponent
@@ -17,6 +17,12 @@ import net.minecraft.util.Identifier
 import java.util.*
 import java.util.stream.Collectors
 
+/**
+ * 指定した[material]と[type]から[AttributeModifiersComponent.Builder]を返します。
+ * @param material 防具の素材
+ * @param type 防具の種類
+ */
+@Suppress("UsePropertyAccessSyntax")
 fun createArmorAttribute(material: RegistryEntry<ArmorMaterial>, type: ArmorItem.Type): AttributeModifiersComponent.Builder {
     val protection: Int = material.value().getProtection(type)
     val toughness: Float = material.value().toughness
@@ -56,6 +62,12 @@ fun createArmorAttribute(material: RegistryEntry<ArmorMaterial>, type: ArmorItem
     return builder
 }
 
+/**
+ * 指定した[material], [baseAttack], [attackSpeed]から[AttributeModifiersComponent.Builder]を返します。
+ * @param material 道具の素材
+ * @param baseAttack 基礎攻撃
+ * @param attackSpeed 攻撃速度
+ */
 fun createToolAttribute(material: ToolMaterial, baseAttack: Double, attackSpeed: Double): AttributeModifiersComponent.Builder =
     AttributeModifiersComponent
         .builder()
@@ -77,9 +89,18 @@ fun createToolAttribute(material: ToolMaterial, baseAttack: Double, attackSpeed:
             AttributeModifierSlot.MAINHAND,
         )
 
+/**
+ * 指定した値から[FoodComponent]を返します。
+ * @param nutrition 満腹度
+ * @param saturation 隠し満腹度
+ * @param alwaysEat 常に食べられるかどうか
+ * @param eatSeconds 食べ終わるまでの時間
+ * @param convertTo 食べ終わった後に手に入る[ItemStack]
+ * @param effects 食べた時の効果の一覧
+ */
 fun foodComponent(
-    nutrition: Int,
-    saturation: Float,
+    nutrition: Int = 0,
+    saturation: Float = 0f,
     alwaysEat: Boolean = false,
     eatSeconds: Float = 1.0f,
     convertTo: ItemStack? = null,
@@ -95,13 +116,48 @@ fun foodComponent(
     },
 )
 
-val ComponentHolder.machineKeyOrNull: HTMachineKey?
-    get() = get(HTMachineKey.COMPONENT_TYPE)
+//    ComponentHolder    //
 
+/**
+ * [HTMachineTier]を返します。
+ */
 val ComponentHolder.machineTier: HTMachineTier
     get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
 
-val ComponentMap.machineTier: HTMachineTier
-    get() = getOrDefault(HTMachineTier.COMPONENT_TYPE, HTMachineTier.PRIMITIVE)
+/**
+ * 指定した[type]に紐づいた値を[action]で変換します。
+ * @param T コンポーネントのクラス
+ * @param R 戻り値のクラス
+ * @return [ComponentHolder.get]がnullの場合はnull
+ */
+fun <T : Any, R : Any> ComponentHolder.ifPresent(type: ComponentType<T>, action: (T) -> R?): R? = get(type)?.let(action)
+
+/**
+ * 指定した[type]に紐づいた値を[action]で変換します。
+ * @param T コンポーネントのクラス
+ * @param R 戻り値のクラス
+ * @return [ComponentHolder.get]がnullの場合は[defaultValue]
+ **/
+fun <T : Any, R : Any> ComponentHolder.ifPresent(type: ComponentType<T>, defaultValue: R, action: (T) -> R?): R =
+    ifPresent(type, action) ?: defaultValue
+
+//    ComponentMap    //
 
 fun ComponentMap.asString(): String = "{${stream().map(Component<*>::toString).collect(Collectors.joining(", "))}}"
+
+/**
+ * 指定した[type]に紐づいた値を[action]で変換します。
+ * @param T コンポーネントのクラス
+ * @param R 戻り値のクラス
+ * @return [ComponentMap.get]がnullの場合はnull
+ */
+fun <T : Any, R : Any> ComponentMap.ifPresent(type: ComponentType<T>, action: (T) -> R?): R? = get(type)?.let(action)
+
+/**
+ * 指定した[type]に紐づいた値を[action]で変換します。
+ * @param T コンポーネントのクラス
+ * @param R 戻り値のクラス
+ * @return [ComponentMap.get]がnullの場合は[defaultValue]
+ **/
+fun <T : Any, R : Any> ComponentMap.ifPresent(type: ComponentType<T>, defaultValue: R, action: (T) -> R?): R =
+    ifPresent(type, action) ?: defaultValue

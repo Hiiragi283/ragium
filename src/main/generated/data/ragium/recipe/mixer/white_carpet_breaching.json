@@ -5,21 +5,13 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "item_inputs": [
-    {
-      "items": "#minecraft:wool_carpets"
-    },
-    {
-      "items": "ragium:soap_ingot"
-    }
+    "#minecraft:wool_carpets",
+    "ragium:soap"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:white_carpet"
-    }
+    "minecraft:white_carpet"
   ]
 }

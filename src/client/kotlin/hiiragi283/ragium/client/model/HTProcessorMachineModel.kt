@@ -1,18 +1,13 @@
 package hiiragi283.ragium.client.model
 
-import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.extension.machineKeyOrNull
-import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyKey
-import hiiragi283.ragium.client.extension.getBlockModel
-import hiiragi283.ragium.client.extension.hullModel
-import hiiragi283.ragium.common.RagiumContents
+import hiiragi283.ragium.common.init.RagiumBlocks
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
@@ -67,7 +62,7 @@ enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identi
 
     override fun isBuiltin(): Boolean = false
 
-    override fun getParticleSprite(): Sprite = getBlockModel(RagiumContents.StorageBlocks.RAGI_STEEL.value).particleSprite
+    override fun getParticleSprite(): Sprite = getBlockModel(RagiumBlocks.StorageBlocks.RAGI_STEEL.get()).particleSprite
 
     override fun getTransformation(): ModelTransformation = ModelHelper.MODEL_TRANSFORM_BLOCK
 
@@ -94,12 +89,12 @@ enum class HTProcessorMachineModel(val frontKey: HTPropertyKey.Defaulted<(Identi
 
     override fun emitItemQuads(stack: ItemStack, randomSupplier: Supplier<Random>, context: RenderContext) {
         stack.machineTier.hullModel.emitItemQuads(stack, randomSupplier, context)
-        val key: HTMachineKey = stack.machineKeyOrNull ?: return
+        val key: HTMachineKey = stack.get(HTMachineKey.COMPONENT_TYPE) ?: return
         emitMachineFront(Direction.NORTH, key, context)
     }
 
     private fun emitMachineFront(frontDir: Direction, key: HTMachineKey, context: RenderContext) {
-        val properties: HTPropertyHolder = key.entry
+        val properties: HTPropertyHolder = key.getEntryOrNull() ?: return
         val frontSprite: Sprite = MinecraftClient
             .getInstance()
             .getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE)

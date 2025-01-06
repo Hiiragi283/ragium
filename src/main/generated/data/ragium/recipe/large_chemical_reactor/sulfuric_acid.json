@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:large_chemical_reactor",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 243000,
+      "fluids": "#c:oxygen"
+    },
+    "minecraft:water"
+  ],
+  "fluid_outputs": [
+    "ragium:sulfuric_acid"
+  ],
+  "item_inputs": [
+    "#c:dusts/sulfur"
+  ]
+}

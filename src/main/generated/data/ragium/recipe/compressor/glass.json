@@ -1,20 +1,14 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:glass"
-  },
+  "catalyst": "minecraft:glass",
   "definition": {
     "type": "ragium:compressor",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "ragium:polymer_resin"
-    }
+    "ragium:polymer_resin"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:glass"
-    }
+    "minecraft:glass"
   ]
 }

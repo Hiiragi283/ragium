@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:wooden_pressure_plates"
-    }
+    "#minecraft:wooden_pressure_plates"
   ],
   "item_outputs": [
     {

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    "#c:ammonia",
+    {
+      "amount": 162000,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "fluid_outputs": [
+    "ragium:nitric_acid",
+    "minecraft:water"
+  ]
+}

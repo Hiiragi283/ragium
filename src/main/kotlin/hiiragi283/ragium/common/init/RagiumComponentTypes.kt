@@ -2,19 +2,16 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.resourceCodec
-import hiiragi283.ragium.api.extension.resourcePacketCodec
+import hiiragi283.ragium.api.component.HTExplosionComponent
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.common.item.HTDynamiteItem
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
-import net.fabricmc.fabric.impl.transfer.VariantCodecs
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTItemVariantStack
 import net.minecraft.component.ComponentType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -25,23 +22,23 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryCodecs
 import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.text.Text
 import net.minecraft.text.TextCodecs
 import net.minecraft.util.DyeColor
 import net.minecraft.util.math.GlobalPos
 
-@Suppress("UnstableApiUsage")
 object RagiumComponentTypes {
     @JvmField
     val COLOR: ComponentType<DyeColor> =
         register("color", DyeColor.CODEC, DyeColor.PACKET_CODEC)
 
     @JvmField
-    val CRATE: ComponentType<ResourceAmount<ItemVariant>> = register(
+    val CRATE: ComponentType<HTItemVariantStack> = register(
         "crate",
-        resourceCodec(VariantCodecs.ITEM_CODEC),
-        resourcePacketCodec(VariantCodecs.ITEM_PACKET_CODEC),
+        HTItemVariantStack.CODEC,
+        HTItemVariantStack.PACKET_CODEC,
     )
 
     @JvmField
@@ -53,19 +50,19 @@ object RagiumComponentTypes {
         register("description", TextCodecs.CODEC.listOf(), TextCodecs.PACKET_CODEC.toList())
 
     @JvmField
-    val DRUM: ComponentType<ResourceAmount<FluidVariant>> = register(
+    val DRUM: ComponentType<HTFluidVariantStack> = register(
         "drum",
-        resourceCodec(VariantCodecs.FLUID_CODEC),
-        resourcePacketCodec(VariantCodecs.FLUID_PACKET_CODEC),
+        HTFluidVariantStack.CODEC,
+        HTFluidVariantStack.PACKET_CODEC,
     )
 
     @JvmField
-    val DYNAMITE: ComponentType<HTDynamiteItem.Component> =
-        register("dynamite", HTDynamiteItem.Component.CODEC, HTDynamiteItem.Component.PACKET_CODEC)
+    val DYNAMITE: ComponentType<HTExplosionComponent> =
+        register("dynamite", HTExplosionComponent.COMPONENT_TYPE)
 
     @JvmField
-    val FLUID: ComponentType<Fluid> =
-        register("fluid", Registries.FLUID.codec, PacketCodecs.codec(Registries.FLUID.codec))
+    val FLUID: ComponentType<RegistryEntry<Fluid>> =
+        register("fluid", Registries.FLUID.entryCodec, PacketCodecs.registryEntry(RegistryKeys.FLUID))
 
     @JvmField
     val FLUID_FILTER: ComponentType<RegistryEntryList<Fluid>> = register(
@@ -73,6 +70,9 @@ object RagiumComponentTypes {
         RegistryCodecs.entryList(RegistryKeys.FLUID),
         PacketCodecs.registryEntryList(RegistryKeys.FLUID),
     )
+
+    @JvmField
+    val FOR_INTEGRATION: ComponentType<Unit> = registerUnit("for_integration")
 
     @JvmField
     val GLOBAL_POS: ComponentType<GlobalPos> =
@@ -96,6 +96,10 @@ object RagiumComponentTypes {
     @JvmField
     val MATERIAL_KEY: ComponentType<HTMaterialKey> =
         register("material_key", HTMaterialKey.COMPONENT_TYPE)
+
+    @JvmField
+    val RADIOACTIVE: ComponentType<HTRadioactiveComponent> =
+        register("radioactive", HTRadioactiveComponent.COMPONENT_TYPE)
 
     @JvmField
     val REPAIRMENT: ComponentType<HTItemIngredient> =

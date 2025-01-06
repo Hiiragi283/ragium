@@ -5,17 +5,13 @@
     "tier": "advanced"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:aromatic_compounds"
-    },
+    "#c:aromatic_compounds",
     {
       "amount": 243000,
       "fluids": "#c:mixture_acid"
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:trinitrotoluene"
-    }
+    "ragium:trinitrotoluene"
   ]
 }

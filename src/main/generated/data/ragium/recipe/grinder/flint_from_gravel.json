@@ -1,20 +1,14 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:flint"
-  },
+  "catalyst": "minecraft:flint",
   "definition": {
     "type": "ragium:grinder",
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "minecraft:gravel"
-    }
+    "minecraft:gravel"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:flint"
-    }
+    "minecraft:flint"
   ]
 }

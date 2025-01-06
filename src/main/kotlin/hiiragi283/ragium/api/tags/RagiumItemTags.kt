@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.tags
 
-import hiiragi283.ragium.api.RagiumAPI
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.item.Item
 import net.minecraft.registry.RegistryKeys
@@ -10,12 +9,6 @@ import net.minecraft.util.Identifier
 object RagiumItemTags {
     @JvmField
     val ALKALI: TagKey<Item> = create("alkali")
-
-    @JvmField
-    val FLUID_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/fluid")
-
-    @JvmField
-    val ITEM_EXPORTER_FILTERS: TagKey<Item> = create(RagiumAPI.MOD_ID, "exporter_filters/item")
 
     @JvmField
     val PROTEIN_FOODS: TagKey<Item> = create("foods/protein")

@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#minecraft:wooden_trapdoors"
-    }
+    "#minecraft:wooden_trapdoors"
   ],
   "item_outputs": [
     {

@@ -5,14 +5,10 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:sulfuric_acid"
-    }
+    "#c:sulfuric_acid"
   ],
   "item_inputs": [
-    {
-      "items": "ragium:pulp"
-    }
+    "ragium:pulp"
   ],
   "item_outputs": [
     {

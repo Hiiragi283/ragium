@@ -12,6 +12,11 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
 object HTStonecuttingRecipeJsonBuilder {
+    /**
+     * 石切台レシピを登録します。
+     *
+     * レシピIDは"stonecutting/"で前置されます
+     */
     @JvmStatic
     fun register(
         exporter: RecipeExporter,
@@ -50,16 +55,5 @@ object HTStonecuttingRecipeJsonBuilder {
                 count,
             ).criterion("has_input", RecipeProvider.conditionsFromTag(input))
             .offerTo(exporter, id.withPrefixedPath("stonecutting/").withSuffixedPath(suffix))
-    }
-
-    @JvmStatic
-    fun registerExchange(
-        exporter: RecipeExporter,
-        input: ItemConvertible,
-        output: ItemConvertible,
-        category: RecipeCategory = RecipeCategory.MISC,
-    ) {
-        register(exporter, input, output, category = category, suffix = "_to")
-        register(exporter, output, input, category = category, suffix = "_from")
     }
 }

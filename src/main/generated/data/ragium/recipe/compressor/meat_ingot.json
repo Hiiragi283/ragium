@@ -5,13 +5,9 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "ragium:minced_meat"
-    }
+    "ragium:minced_meat"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:meat_ingot"
-    }
+    "ragium:meat_ingot"
   ]
 }

@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "items": "minecraft:heart_of_the_sea"
-  },
+  "catalyst": "minecraft:heart_of_the_sea",
   "definition": {
     "type": "ragium:chemical_reactor",
     "tier": "primitive"
@@ -18,9 +16,7 @@
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:hydrogen"
-    },
+    "ragium:hydrogen",
     {
       "amount": 162000,
       "fluid": "ragium:alcohol"

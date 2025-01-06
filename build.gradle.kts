@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "hiiragi283.ragium"
-version = "0.10.1+121x"
+version = "0.11.0+121x"
 
 sourceSets {
     main {
@@ -45,10 +45,6 @@ repositories {
     } // RS2
 }
 
-fabricApi {
-    configureDataGeneration()
-}
-
 loom {
     accessWidenerPath = file("src/main/resources/ragium.accesswidener")
     splitEnvironmentSourceSets()
@@ -66,30 +62,6 @@ loom {
         getByName("server") {
             runDir = "run/server"
         }
-        getByName("datagen") {
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=ragium")
-        }
-        /*create("datagen") {
-            inherit(getByName("client"))
-            name = "Data Generation"
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-            vmArg("-Dfabric-api.datagen.modid=ragium")
-            runDir("build/datagen")
-            source(sourceSets.getByName("client"))
-        }
-        create("test") {
-            inherit(getByName("client"))
-            name = "Game Test Client"
-            vmArg("-Dfabric-api.gametest")
-            mods {
-                create("ht_materials") {
-                    sourceSet(sourceSets.getByName("test"))
-                }
-            }
-        }*/
     }
 }
 
@@ -158,9 +130,9 @@ tasks {
     }
 
     processResources {
-        inputs.property("version", project.version)
+        inputs.property("version", version)
         filesMatching("fabric.mod.json") {
-            expand("version" to project.version)
+            expand("version" to version)
         }
         exclude(".cache")
     }
@@ -172,8 +144,6 @@ tasks {
         exclude { element: FileTreeElement ->
             element.path.contains("/ragium/data/") && !element.path.endsWith("RagiumDataGenerator.class")
         }
-        // exclude("**/ragium/data/**")
-        // include("**/RagiumDataGenerator.kt")
         exclude("**/unused/**")
     }
 }

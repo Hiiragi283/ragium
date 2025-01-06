@@ -19,9 +19,15 @@ object RagiumArmorMaterials {
     ) { Ingredient.fromTag(HTTagPrefix.INGOT.createTag(RagiumMaterialKeys.STEEL)) }
 
     @JvmField
+    val DEEP_STEEL: RegistryEntry<ArmorMaterial> = register(
+        "deep_steel",
+        ArmorMaterials.DIAMOND,
+    ) { Ingredient.fromTag(HTTagPrefix.INGOT.createTag(RagiumMaterialKeys.DEEP_STEEL)) }
+
+    @JvmField
     val STELLA: RegistryEntry<ArmorMaterial> = register(
         "stella",
-        ArmorMaterials.DIAMOND,
+        ArmorMaterials.NETHERITE,
     ) { Ingredient.ofItems(RagiumItems.STELLA_PLATE) }
 
     @JvmStatic

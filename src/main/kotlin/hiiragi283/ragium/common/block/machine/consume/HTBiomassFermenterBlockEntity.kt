@@ -1,15 +1,15 @@
 package hiiragi283.ragium.common.block.machine.consume
 
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -28,48 +28,37 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.BIOMASS_FERMENTER, pos, state),
-    HTFluidSyncable {
-    override var key: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
+    HTScreenFluidProvider {
+    override var machineKey: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
+    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).input(0).build()
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage.update(newTier)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
-
-    private val inventory: SidedInventory = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .buildInventory()
-
-    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .fluidFilter { _: Int, variant: FluidVariant -> variant.isOf(RagiumFluids.BIOMASS.value) }
-        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        fluidStorage.writeNbt(nbt, wrapperLookup)
+        nbt.writeFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup, tier)
+        nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun asInventory(): SidedInventory? = inventory
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
     override fun process(world: World, pos: BlockPos): HTUnitResult = HTRecipeProcessor { _: World, _: HTMachineKey, _: HTMachineTier ->
         val inputStack: ItemStack = inventory.getStack(0)
@@ -79,25 +68,21 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
             return@HTRecipeProcessor HTUnitResult.errorString { "Failed to calculate biomass amount!" }
         }
         useTransaction { transaction: Transaction ->
-            fluidStorage.unitMap(0) {
-                if (it.insert(FluidVariant.of(RagiumFluids.BIOMASS.value), fixedAmount, transaction) == fixedAmount) {
-                    transaction.commit()
-                    inputStack.decrement(1)
-                    HTUnitResult.success()
-                } else {
-                    transaction.abort()
-                    HTUnitResult.errorString { "Failed to insert fluid!" }
-                }
+            val variant: FluidVariant = RagiumFluids.BIOMASS.variant
+            if (fluidStorage.insertSelf(variant, fixedAmount, transaction) == fixedAmount) {
+                transaction.commit()
+                inputStack.decrement(1)
+                HTUnitResult.success()
+            } else {
+                HTUnitResult.errorString { "Failed to insert fluid!" }
             }
         }
-    }.process(world, key, tier)
+    }.process(world, machineKey, tier)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender, 1)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 }

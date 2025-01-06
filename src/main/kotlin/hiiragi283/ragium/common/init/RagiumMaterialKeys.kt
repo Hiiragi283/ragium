@@ -25,7 +25,16 @@ object RagiumMaterialKeys {
 
     // integrations
     @JvmField
+    val BRASS: HTMaterialKey = HTMaterialKey.of("brass")
+
+    @JvmField
+    val BRONZE: HTMaterialKey = HTMaterialKey.of("bronze")
+
+    @JvmField
     val ELECTRUM: HTMaterialKey = HTMaterialKey.of("electrum")
+
+    @JvmField
+    val INVAR: HTMaterialKey = HTMaterialKey.of("invar")
 
     //    Dust    //
 
@@ -36,6 +45,9 @@ object RagiumMaterialKeys {
     val ASH: HTMaterialKey = HTMaterialKey.of("ash")
 
     //    Gem    //
+
+    @JvmField
+    val CINNABAR: HTMaterialKey = HTMaterialKey.of("cinnabar")
 
     @JvmField
     val COAL: HTMaterialKey = HTMaterialKey.of("coal")
@@ -54,6 +66,9 @@ object RagiumMaterialKeys {
 
     @JvmField
     val LAPIS: HTMaterialKey = HTMaterialKey.of("lapis")
+
+    @JvmField
+    val NETHER_STAR: HTMaterialKey = HTMaterialKey.of("nether_star")
 
     @JvmField
     val PERIDOT: HTMaterialKey = HTMaterialKey.of("peridot")
@@ -101,13 +116,22 @@ object RagiumMaterialKeys {
     val PLATINUM: HTMaterialKey = HTMaterialKey.of("platinum")
 
     @JvmField
+    val PLUTONIUM: HTMaterialKey = HTMaterialKey.of("plutonium")
+
+    @JvmField
     val SILVER: HTMaterialKey = HTMaterialKey.of("silver")
 
     @JvmField
     val TIN: HTMaterialKey = HTMaterialKey.of("tin")
 
     @JvmField
+    val TITANIUM: HTMaterialKey = HTMaterialKey.of("titanium")
+
+    @JvmField
     val TUNGSTEN: HTMaterialKey = HTMaterialKey.of("tungsten")
+
+    @JvmField
+    val URANIUM: HTMaterialKey = HTMaterialKey.of("uranium")
 
     @JvmField
     val ZINC: HTMaterialKey = HTMaterialKey.of("zinc")
@@ -135,7 +159,20 @@ object RagiumMaterialKeys {
     @JvmField
     val SULFUR: HTMaterialKey = HTMaterialKey.of("sulfur")
 
+    // integrations
+    @JvmField
+    val GALENA: HTMaterialKey = HTMaterialKey.of("galena")
+
+    @JvmField
+    val PYRITE: HTMaterialKey = HTMaterialKey.of("pyrite")
+
+    @JvmField
+    val SPHALERITE: HTMaterialKey = HTMaterialKey.of("sphalerite")
+
     //    Plate    //
+
+    @JvmField
+    val STONE: HTMaterialKey = HTMaterialKey.of("stone")
 
     @JvmField
     val WOOD: HTMaterialKey = HTMaterialKey.of("wood")

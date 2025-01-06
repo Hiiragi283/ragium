@@ -14,6 +14,11 @@ import net.minecraft.util.Identifier
 object HTCookingRecipeJsonBuilder {
     //    Blasting    //
 
+    /**
+     * かまどレシピと溶鉱炉レシピを同時に登録します。
+     *
+     * 前者は"smelting/"，後者は"blasting/"でレシピIDが前置されます
+     */
     @JvmStatic
     fun smeltAndBlast(
         exporter: RecipeExporter,
@@ -77,6 +82,11 @@ object HTCookingRecipeJsonBuilder {
 
     //    Smoking    //
 
+    /**
+     * かまどレシピと燻製機レシピ，キャンプファイヤレシピを同時に登録します。
+     *
+     * それぞれ"smelting/"，"smoking/"，"campfire/"でレシピIDが前置されます
+     */
     @JvmStatic
     fun smeltAndSmoke(
         exporter: RecipeExporter,

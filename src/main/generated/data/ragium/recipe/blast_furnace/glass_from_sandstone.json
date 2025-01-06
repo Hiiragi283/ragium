@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:blast_furnace",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 324000,
+      "fluid": "ragium:glass"
+    }
+  ],
+  "item_inputs": [
+    "#c:sandstone/blocks"
+  ]
+}

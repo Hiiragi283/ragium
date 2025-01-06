@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:extractor",
+    "tier": "primitive"
+  },
+  "fluid_outputs": [
+    "ragium:honey"
+  ],
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "minecraft:honey_bottle"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:glass_bottle"
+    }
+  ]
+}

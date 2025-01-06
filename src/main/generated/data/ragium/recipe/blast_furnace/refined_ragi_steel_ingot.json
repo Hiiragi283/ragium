@@ -5,23 +5,15 @@
     "tier": "basic"
   },
   "item_inputs": [
-    {
-      "items": "#c:ingots/steel"
-    },
+    "#c:ingots/steel",
     {
       "count": 4,
       "items": "#c:dusts/ragi_crystal"
     },
-    {
-      "items": "#c:gems/quartz"
-    }
+    "#c:gems/quartz"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:refined_ragi_steel_ingot"
-    },
-    {
-      "item": "ragium:slag"
-    }
+    "ragium:refined_ragi_steel_ingot",
+    "ragium:slag"
   ]
 }

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.screen
 
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.machine.HTMachinePacket
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.screen.ArrayPropertyDelegate
@@ -13,7 +12,6 @@ abstract class HTMachineScreenHandlerBase(
     type: ScreenHandlerType<*>,
     syncId: Int,
     playerInv: PlayerInventory,
-    packet: HTMachinePacket,
     inventory: Inventory,
     ctx: ScreenHandlerContext,
 ) : HTScreenHandlerBase(

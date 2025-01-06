@@ -5,20 +5,14 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    {
-      "items": "#c:ingots/iron"
-    },
+    "#c:ingots/iron",
     {
       "count": 2,
       "items": "#minecraft:coals"
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:steel_ingot"
-    },
-    {
-      "item": "ragium:slag"
-    }
+    "ragium:steel_ingot",
+    "ragium:slag"
   ]
 }

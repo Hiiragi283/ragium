@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:lime_concrete_powder"
-    }
+    "minecraft:lime_concrete_powder"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:lime_concrete"
-    }
+    "minecraft:lime_concrete"
   ]
 }

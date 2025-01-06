@@ -11,9 +11,7 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "#c:gems/cryolite"
-    }
+    "#c:gems/cryolite"
   ],
   "item_outputs": [
     {

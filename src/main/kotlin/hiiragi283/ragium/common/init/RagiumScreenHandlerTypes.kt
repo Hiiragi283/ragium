@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.common.screen.*
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.network.RegistryByteBuf
@@ -14,24 +13,32 @@ import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
     @JvmField
-    val CHEMICAL_MACHINE: ExtendedScreenHandlerType<HTChemicalMachineScreenHandler, HTMachinePacket> =
-        registerExtended("chemical_machine", ::HTChemicalMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val CHEMICAL_MACHINE: ScreenHandlerType<HTChemicalMachineScreenHandler> =
+        register("chemical_machine", ::HTChemicalMachineScreenHandler)
 
     @JvmField
-    val DISTILLATION_TOWER: ExtendedScreenHandlerType<HTDistillationTowerScreenHandler, HTMachinePacket> =
-        registerExtended("distillation_tower", ::HTDistillationTowerScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val DISTILLATION_TOWER: ScreenHandlerType<HTDistillationTowerScreenHandler> =
+        register("distillation_tower", ::HTDistillationTowerScreenHandler)
 
     @JvmField
-    val LARGE_MACHINE: ExtendedScreenHandlerType<HTLargeMachineScreenHandler, HTMachinePacket> =
-        registerExtended("large_machine", ::HTLargeMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val GRINDER: ScreenHandlerType<HTGrinderScreenHandler> =
+        register("grinder", ::HTGrinderScreenHandler)
 
     @JvmField
-    val SMALL_MACHINE: ExtendedScreenHandlerType<HTSmallMachineScreenHandler, HTMachinePacket> =
-        registerExtended("small_machine", ::HTSmallMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val LARGE_MACHINE: ScreenHandlerType<HTLargeMachineScreenHandler> =
+        register("large_machine", ::HTLargeMachineScreenHandler)
 
     @JvmField
-    val SIMPLE_MACHINE: ExtendedScreenHandlerType<HTSimpleMachineScreenHandler, HTMachinePacket> =
-        registerExtended("simple_machine", ::HTSimpleMachineScreenHandler, HTMachinePacket.PACKET_CODEC)
+    val ROCK_GENERATOR: ScreenHandlerType<HTRockGeneratorScreenHandler> =
+        register("rock_generator", ::HTRockGeneratorScreenHandler)
+
+    @JvmField
+    val SMALL_MACHINE: ScreenHandlerType<HTSmallMachineScreenHandler> =
+        register("small_machine", ::HTSmallMachineScreenHandler)
+
+    @JvmField
+    val SIMPLE_MACHINE: ScreenHandlerType<HTSimpleMachineScreenHandler> =
+        register("simple_machine", ::HTSimpleMachineScreenHandler)
 
     @JvmStatic
     private fun <T : ScreenHandler, D : Any> registerExtended(

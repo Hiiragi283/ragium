@@ -5,18 +5,10 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water",
+    "#c:sulfur_trioxide"
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:sulfuric_acid"
-    }
-  ],
-  "item_inputs": [
-    {
-      "items": "#c:dusts/sulfur"
-    }
+    "ragium:sulfuric_acid"
   ]
 }

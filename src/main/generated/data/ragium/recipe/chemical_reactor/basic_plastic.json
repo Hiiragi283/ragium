@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    "#c:hydrochloric_acid"
+  ],
+  "item_inputs": [
+    "ragium:polymer_resin"
+  ],
+  "item_outputs": [
+    "ragium:basic_plastic"
+  ]
+}

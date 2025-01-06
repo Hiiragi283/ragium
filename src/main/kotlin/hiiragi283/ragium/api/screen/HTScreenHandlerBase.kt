@@ -12,6 +12,9 @@ import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.screen.slot.Slot
 import net.minecraft.world.World
 
+/**
+ * Ragiumで使用する[ScreenHandler]クラスの基礎
+ */
 abstract class HTScreenHandlerBase(
     type: ScreenHandlerType<*>,
     syncId: Int,
@@ -30,10 +33,11 @@ abstract class HTScreenHandlerBase(
         inventory.onClose(player)
     }
 
-    abstract val machineSlotRange: IntRange
+    abstract val inputSlots: IntRange
+    abstract val outputSlots: IntRange
 
     private val playerStartIndex: Int
-        get() = machineSlotRange.last + 1
+        get() = outputSlots.last + 1
 
     override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY
@@ -42,14 +46,20 @@ abstract class HTScreenHandlerBase(
             val stackIn: ItemStack = slotIn.stack
             result = stackIn.copy()
             when {
-                slot in machineSlotRange -> {
+                slot in inputSlots -> {
+                    if (!insertItem(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
+                        return ItemStack.EMPTY
+                    }
+                }
+
+                slot in outputSlots -> {
                     if (!insertItem(stackIn, playerStartIndex, playerStartIndex + 36, true)) {
                         return ItemStack.EMPTY
                     }
                 }
 
                 else -> {
-                    if (insertItem(stackIn, machineSlotRange.first, playerStartIndex, false)) {
+                    if (insertItem(stackIn, inputSlots.first, inputSlots.last + 1, false)) {
                         if (!insertItem(stackIn, playerStartIndex, playerStartIndex + 36, false)) {
                             return ItemStack.EMPTY
                         }
@@ -76,16 +86,25 @@ abstract class HTScreenHandlerBase(
 
     //    Extensions    //
 
-    protected fun getSlotPosX(index: Int): Int = 8 + index * 18
+    val itemSlots: MutableList<Pair<Int, Int>> = mutableListOf()
+    val fluidSlots: MutableMap<Int, Pair<Int, Int>> = mutableMapOf()
 
-    protected fun getSlotPosY(index: Int): Int = 18 + index * 18
+    private fun getSlotPosX(index: Int): Int = 8 + index * 18
+
+    private fun getSlotPosY(index: Int): Int = 18 + index * 18
 
     protected fun addSlot(index: Int, x: Int, y: Int) {
         addSlot(HTSlot(inventory, index, getSlotPosX(x), getSlotPosY(y)))
+        itemSlots.add(x to y)
     }
 
     protected fun addOutputSlot(index: Int, x: Int, y: Int) {
         addSlot(HTOutputSlot(inventory, index, getSlotPosX(x), getSlotPosY(y)))
+        itemSlots.add(x to y)
+    }
+
+    protected fun addFluidSlot(index: Int, x: Int, y: Int) {
+        fluidSlots.put(index, x to y)
     }
 
     protected fun addPlayerInv(yOffset: Int = 0) {

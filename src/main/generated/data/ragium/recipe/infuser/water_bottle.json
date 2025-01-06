@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:infuser",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 27000,
+      "fluids": "minecraft:water"
+    }
+  ],
+  "item_inputs": [
+    "minecraft:glass_bottle"
+  ],
+  "item_outputs": [
+    {
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        }
+      },
+      "item": "minecraft:potion"
+    }
+  ]
+}

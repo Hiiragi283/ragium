@@ -1,5 +1,9 @@
 {
   "values": [
-    "minecraft:water"
+    "minecraft:water",
+    {
+      "id": "techreborn:electrolyzed_water",
+      "required": false
+    }
   ]
 }

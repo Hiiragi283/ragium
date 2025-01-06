@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.codecOf
-import hiiragi283.ragium.api.extension.packetCodecOf
+import hiiragi283.ragium.api.extension.identifiedCodec
+import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.minecraft.component.ComponentType
 import net.minecraft.item.Item
@@ -16,22 +16,16 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.StringIdentifiable
 
+/**
+ * Represent [TagKey] prefixes
+ */
 enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : StringIdentifiable {
-    DEEP_ORE("ores", false) {
-        override fun createPath(key: HTMaterialKey): String = "deepslate_${key.name}_ore"
-    },
-    END_ORE("ores", false) {
-        override fun createPath(key: HTMaterialKey): String = "end_${key.name}_ore"
-    },
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {
         override fun createPath(key: HTMaterialKey): String = key.name
     },
     INGOT("ingots"),
-    NETHER_ORE("ores", false) {
-        override fun createPath(key: HTMaterialKey): String = "nether_${key.name}_ore"
-    },
     NUGGET("nuggets"),
     ORE("ores", false),
     PLATE("plates"),
@@ -42,14 +36,15 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
     STORAGE_BLOCK("storage_blocks", false) {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },
+    WIRE("wires"),
     ;
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTTagPrefix> = codecOf(entries)
+        val CODEC: Codec<HTTagPrefix> = identifiedCodec(entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTagPrefix> = packetCodecOf(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTagPrefix> = identifiedPacketCodec(entries)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTTagPrefix> =
@@ -72,7 +67,7 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     val commonTagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId(prefix))
 
-    fun createTag(value: StringIdentifiable): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${value.asString()}"))
+    fun createTag(key: HTMaterialKey): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${key.name}"))
 
     //    Translation    //
 

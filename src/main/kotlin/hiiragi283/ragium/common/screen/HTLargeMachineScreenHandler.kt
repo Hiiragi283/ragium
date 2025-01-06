@@ -1,22 +1,16 @@
 package hiiragi283.ragium.common.screen
 
 import hiiragi283.ragium.api.extension.getInventory
-import hiiragi283.ragium.api.machine.HTMachinePacket
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.screen.ScreenHandlerContext
 
-class HTLargeMachineScreenHandler(
-    syncId: Int,
-    playerInv: PlayerInventory,
-    packet: HTMachinePacket,
-    ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY,
-) : HTMachineScreenHandlerBase(
+class HTLargeMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
+    HTMachineScreenHandlerBase(
         RagiumScreenHandlerTypes.LARGE_MACHINE,
         syncId,
         playerInv,
-        packet,
         ctx.getInventory(7),
         ctx,
     ) {
@@ -26,19 +20,24 @@ class HTLargeMachineScreenHandler(
         addSlot(0, 1, 1)
         addSlot(1, 2, 1)
         addSlot(2, 3, 1)
+        addFluidSlot(0, 2, 2)
+        addFluidSlot(1, 3, 2)
         // catalyst
         addSlot(3, 4, 2)
         // outputs
         addOutputSlot(4, 5, 1)
         addOutputSlot(5, 6, 1)
         addOutputSlot(6, 7, 1)
+        addFluidSlot(2, 5, 2)
+        addFluidSlot(3, 6, 2)
         // player inventory
         addPlayerInv()
         // register property
         addProperties(property)
     }
 
-    override val machineSlotRange: IntRange = (0..6)
+    override val inputSlots: IntRange = (0..2)
+    override val outputSlots: IntRange = (4..6)
 
     /*override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
         var result: ItemStack = ItemStack.EMPTY

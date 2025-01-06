@@ -5,17 +5,13 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "minecraft:water"
-    }
+    "minecraft:water"
   ],
   "fluid_outputs": [
     {
       "amount": 162000,
       "fluid": "ragium:hydrogen"
     },
-    {
-      "fluid": "ragium:oxygen"
-    }
+    "ragium:oxygen"
   ]
 }

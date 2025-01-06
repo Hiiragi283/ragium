@@ -1,5 +1,6 @@
 {
   "type": "ragium:machine",
+  "catalyst": "ragium:primitive_circuit",
   "definition": {
     "type": "ragium:distillation_tower",
     "tier": "primitive"
@@ -19,8 +20,6 @@
       "amount": 243000,
       "fluid": "ragium:naphtha"
     },
-    {
-      "fluid": "ragium:residual_oil"
-    }
+    "ragium:residual_oil"
   ]
 }

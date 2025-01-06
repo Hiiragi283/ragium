@@ -5,6 +5,8 @@ import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
 import hiiragi283.ragium.api.RagiumAPI;
 import hiiragi283.ragium.api.RagiumPlugin;
+import hiiragi283.ragium.api.material.HTMaterialKey;
+import hiiragi283.ragium.api.material.HTMaterialRegistry;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.data.server.recipe.RecipeExporter;
@@ -15,6 +17,7 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -41,6 +44,7 @@ public abstract class RecipeManagerMixin {
         RecipeExporter exporter = new RecipeExporter() {
             @Override
             public void accept(Identifier recipeId, Recipe<?> recipe, @Nullable AdvancementEntry advancement) {
+                // RagiumAPI.getLOGGER().info("Recipe: {} was registered!", recipeId);
                 RecipeEntry<?> entry = new RecipeEntry<>(recipeId, recipe);
                 map1.put(recipe.getType(), entry);
                 if (map2.put(recipeId, entry) != null) {
@@ -53,9 +57,10 @@ public abstract class RecipeManagerMixin {
                 return new Advancement.Builder();
             }
         };
-        RagiumAPI.forEachPlugins(plugin -> {
-            plugin.registerRuntimeRecipe(exporter);
-            RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((key, entry) -> plugin.registerRuntimeMaterialRecipes(exporter, key, entry, new RagiumPlugin.RecipeHelper()));
+        RagiumPlugin.RecipeHelper helper = RagiumPlugin.RecipeHelper.INSTANCE;
+        RagiumAPI.getPlugins().forEach((@NotNull RagiumPlugin plugin) -> {
+            plugin.registerRuntimeRecipe(exporter, helper);
+            RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((@NotNull HTMaterialKey key, HTMaterialRegistry.@NotNull Entry entry) -> plugin.registerRuntimeMaterialRecipes(exporter, key, entry, helper));
         });
         recipesByType = map1;
         recipesById = map2;

@@ -1,28 +1,40 @@
 package hiiragi283.ragium.api.property
 
+/**
+ * ミューテーブルな[HTPropertyHolder]
+ * @see [HTPropertyHolderBuilder]
+ */
 interface HTMutablePropertyHolder : HTPropertyHolder {
+    /**
+     * 指定した[key]と[value]をセットします。
+     */
     operator fun <T : Any> set(key: HTPropertyKey<T>, value: T)
 
+    /**
+     * 指定した[key]と[Unit]をセットします。
+     */
     fun add(key: HTPropertyKey<Unit>) {
         set(key, Unit)
     }
 
+    /**
+     * 指定した[key]と[value]を，[value]がnullでない場合はセットします。
+     */
     fun <T : Any> setIfNonNull(key: HTPropertyKey<T>, value: T?) {
         value?.let { set(key, it) }
     }
 
-    fun remove(id: HTPropertyKey<*>)
+    /**
+     * 指定した[key]に紐づいた値を削除します。
+     */
+    fun remove(key: HTPropertyKey<*>)
 
+    /**
+     * 指定した[key]に紐づいた値が[filter]に一致した場合に削除します。
+     */
     fun <T : Any> removeIf(key: HTPropertyKey<T>, filter: (T) -> Boolean) {
         val existValue: T = get(key) ?: return
         if (filter(existValue)) {
-            remove(key)
-        }
-    }
-
-    fun <T : Any> removeIfNull(key: HTPropertyKey<T>, mapping: (T) -> Any?) {
-        val existValue: T = get(key) ?: return
-        if (mapping(existValue) == null) {
             remove(key)
         }
     }

@@ -1,26 +1,22 @@
 package hiiragi283.ragium.common.block.machine.generator
 
-import hiiragi283.ragium.api.extension.isIn
-import hiiragi283.ragium.api.extension.toStorage
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.tags.RagiumFluidTags
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
@@ -32,47 +28,39 @@ import net.minecraft.item.Items
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.THERMAL_GENERATOR, pos, state),
-    HTFluidSyncable {
-    override var key: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
+    HTScreenFluidProvider {
+    override var machineKey: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
+    private val inventory: HTMachineInventory = object : HTMachineInventory(1, mapOf(0 to HTStorageIO.INPUT)) {
+        override fun isValid(slot: Int, stack: ItemStack): Boolean = stack.isOf(Items.BLAZE_POWDER)
     }
+
+    private var fluidStorage =
+        HTTieredFluidStorage(tier, HTStorageIO.INPUT, RagiumFluidTags.THERMAL_FUELS, this::markDirty)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage.update(tier)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
-
-    private val inventory: SidedInventory = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .stackFilter { _: Int, stack: ItemStack -> stack.isOf(Items.BLAZE_POWDER) }
-        .buildInventory()
-
-    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.INPUT, HTStorageSide.ANY)
-        .fluidFilter { _: Int, variant: FluidVariant -> variant.isIn(RagiumFluidTags.THERMAL_FUELS) }
-        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        fluidStorage.writeNbt(nbt, wrapperLookup)
+        nbt.writeFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup, tier)
+        nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun asInventory(): SidedInventory = inventory
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
@@ -85,40 +73,28 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         }
         // try to consume fluid
         return useTransaction { transaction: Transaction ->
-            fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
-                val variantIn: FluidVariant = storageIn.resource
-                if (variantIn.isBlank) return@unitMap HTUnitResult.errorString { "Fuels is empty!" }
-                val maxAmount: Long = FluidConstants.INGOT
-                if (storageIn.extract(variantIn, maxAmount, transaction) == maxAmount) {
-                    transaction.commit()
-                    HTUnitResult.success()
-                } else {
-                    transaction.abort()
-                    HTUnitResult.errorString { "Failed to consume fuels!" }
-                }
+            val maxAmount: Long = RagiumAPI
+                .getInstance()
+                .config.machine.generator.thermalFuel
+            if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
+                transaction.commit()
+                HTUnitResult.success()
+            } else {
+                HTUnitResult.errorString { "Failed to consume fuels!" }
             }
         }
     }
 
     //    SidedStorageBlockEntity    //
 
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant> = inventory.toStorage(side)
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.createWrapped()
+    //    HTScreenFluidProvider    //
 
-    //    HTFluidSyncable    //
-
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 
     //    ExtendedScreenHandlerFactory    //
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(
-            syncId,
-            playerInventory,
-            packet,
-            createContext(),
-        )
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 }

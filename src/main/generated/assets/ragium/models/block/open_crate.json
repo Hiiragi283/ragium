@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "ragium:block/layered",
   "textures": {
-    "all": "ragium:block/open_crate"
+    "layer0": "minecraft:block/emerald_block",
+    "layer1": "ragium:block/crate_overlay"
   }
 }

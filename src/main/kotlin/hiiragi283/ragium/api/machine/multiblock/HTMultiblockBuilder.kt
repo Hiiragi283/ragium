@@ -77,4 +77,11 @@ fun interface HTMultiblockBuilder {
         z: Int,
         pattern: HTMultiblockPattern,
     )
+
+    fun interface Consumer {
+        /**
+         * [builder]にマルチブロックの構造を提供します。
+         */
+        fun buildMultiblock(builder: HTMultiblockBuilder)
+    }
 }

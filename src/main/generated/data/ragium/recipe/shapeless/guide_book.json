@@ -1,4 +1,12 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "patchouli"
+      ]
+    }
+  ],
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
@@ -13,7 +21,10 @@
     }
   ],
   "result": {
+    "components": {
+      "patchouli:book": "ragium:ragi_wiki"
+    },
     "count": 1,
-    "id": "ragium:guide_book"
+    "id": "patchouli:guide_book"
   }
 }

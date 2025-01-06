@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:shaft",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    "#c:ingots/deep_steel"
+  ],
+  "item_outputs": [
+    "ragium:shaft"
+  ]
+}

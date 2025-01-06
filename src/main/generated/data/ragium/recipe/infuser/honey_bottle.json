@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:infuser",
+    "tier": "primitive"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 20250,
+      "fluids": "#c:honey"
+    }
+  ],
+  "item_inputs": [
+    "minecraft:glass_bottle"
+  ],
+  "item_outputs": [
+    "minecraft:honey_bottle"
+  ]
+}

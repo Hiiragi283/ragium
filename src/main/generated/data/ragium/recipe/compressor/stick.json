@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:rod_press_mold",
+  "definition": {
+    "type": "ragium:compressor",
+    "tier": "primitive"
+  },
+  "item_inputs": [
+    "#c:dusts/wood"
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:stick"
+    }
+  ]
+}

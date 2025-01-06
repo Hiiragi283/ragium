@@ -14,8 +14,11 @@
       "translate": "machine_type.ragium.compressor.description"
     },
     "icon": {
+      "components": {
+        "ragium:machine_tier": "primitive"
+      },
       "count": 1,
-      "id": "ragium:primitive_compressor"
+      "id": "ragium:compressor"
     },
     "title": {
       "translate": "machine_tier.ragium.primitive.prefix",

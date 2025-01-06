@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:chemical_reactor",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    "#c:sulfur_dioxide",
+    "#c:oxygen"
+  ],
+  "fluid_outputs": [
+    "ragium:sulfur_trioxide"
+  ]
+}

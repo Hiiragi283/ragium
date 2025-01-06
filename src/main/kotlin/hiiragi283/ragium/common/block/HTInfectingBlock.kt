@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.extension.replaceBlockState
 import net.minecraft.block.Block
@@ -14,7 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.random.Random
 
-object HTInfectingBlock : Block(blockSettings().ticksRandomly().dropsNothing()) {
+class HTInfectingBlock(settings: Settings) : Block(settings) {
     init {
         defaultState = stateManager.defaultState.with(Properties.ENABLED, false)
     }
@@ -33,7 +32,7 @@ object HTInfectingBlock : Block(blockSettings().ticksRandomly().dropsNothing()) 
                 Blocks.SANDSTONE,
             )
             if (posTo.y < 63) {
-                if (stateTo.isAir) {
+                if (world.isAir(posTo)) {
                     world.setBlockState(posTo, defaultState.with(Properties.ENABLED, true))
                 } else if (stateTo.block is Waterloggable) {
                     world.replaceBlockState(posTo) { it.with(Properties.WATERLOGGED, true) }

@@ -5,17 +5,11 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:hydrogen_fluoride"
-    },
-    {
-      "fluids": "#c:alkali_solution"
-    }
+    "#c:hydrogen_fluoride",
+    "#c:alkali_solution"
   ],
   "item_inputs": [
-    {
-      "items": "#c:dusts/aluminum"
-    }
+    "#c:dusts/aluminum"
   ],
   "item_outputs": [
     {

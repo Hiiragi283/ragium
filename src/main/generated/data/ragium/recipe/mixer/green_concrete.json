@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:green_concrete_powder"
-    }
+    "minecraft:green_concrete_powder"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:green_concrete"
-    }
+    "minecraft:green_concrete"
   ]
 }

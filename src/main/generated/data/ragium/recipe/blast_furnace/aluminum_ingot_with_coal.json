@@ -5,19 +5,15 @@
     "tier": "basic"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:alumina_solution"
-    }
+    "#c:alumina_solution"
   ],
   "item_inputs": [
     {
-      "count": 8,
+      "count": 4,
       "items": "#minecraft:coals"
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:aluminum_ingot"
-    }
+    "ragium:aluminum_ingot"
   ]
 }

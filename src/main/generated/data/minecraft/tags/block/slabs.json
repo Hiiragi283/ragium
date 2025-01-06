@@ -3,6 +3,8 @@
     "ragium:asphalt_slab",
     "ragium:gypsum_slab",
     "ragium:polished_asphalt_slab",
-    "ragium:polished_gypsum_slab"
+    "ragium:polished_gypsum_slab",
+    "ragium:polished_slate_slab",
+    "ragium:slate_slab"
   ]
 }

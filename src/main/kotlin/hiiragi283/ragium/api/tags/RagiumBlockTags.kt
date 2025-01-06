@@ -9,10 +9,9 @@ import net.minecraft.util.Identifier
 
 object RagiumBlockTags {
     //    Custom    //
-
-    @JvmField
-    val MACHINES: TagKey<Block> = create(RagiumAPI.MOD_ID, "machines")
-
+    /**
+     * 常にパイプと接続するブロックのタグ
+     */
     @JvmField
     val PIPE_CONNECTABLES: TagKey<Block> = create(RagiumAPI.MOD_ID, "pipe_connectables")
 

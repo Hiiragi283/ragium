@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.dropStackAt
 import hiiragi283.ragium.api.extension.ifServer
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -25,12 +27,12 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        placer?.let { nbt.putUuid("Placer", it) }
+        HTNbtCodecs.PLACER.writeTo(nbt, placer)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        placer = nbt.getUuid("Placer")
+        HTNbtCodecs.PLACER.readAndSetNullable(nbt, this::placer)
     }
 
     override fun onPlaced(
@@ -46,13 +48,14 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
     override val tickRate: Int = 1
 
     override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
-        val radius: Int = RagiumAPI.getInstance().config.autoIlluminatorRadius
+        val radius: Int = RagiumAPI
+            .getInstance()
+            .config.utility.autoIlluminatorRadius
         for (x: Int in (pos.x - radius..pos.x + radius)) {
             for (z: Int in (pos.z - radius..pos.z + radius)) {
                 for (y: Int in yRange) {
                     val posIn = BlockPos(x, y, z)
-                    val stateIn: BlockState = world.getBlockState(posIn)
-                    if (stateIn.isAir) {
+                    if (world.isAir(posIn)) {
                         if (!world.isSkyVisible(posIn) && world.getLightLevel(posIn) <= 7) {
                             world.setBlockState(posIn, Blocks.LIGHT.defaultState)
                             return

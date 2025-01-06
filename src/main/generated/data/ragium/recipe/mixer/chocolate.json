@@ -5,21 +5,13 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:milk"
-    }
+    "#c:milk"
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:cocoa_beans"
-    },
-    {
-      "items": "minecraft:sugar"
-    }
+    "minecraft:cocoa_beans",
+    "minecraft:sugar"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:chocolate"
-    }
+    "ragium:chocolate"
   ]
 }

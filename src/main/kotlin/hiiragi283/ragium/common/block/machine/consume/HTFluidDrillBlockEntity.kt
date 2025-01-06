@@ -1,29 +1,25 @@
 package hiiragi283.ragium.common.block.machine.consume
 
-import hiiragi283.ragium.api.extension.insert
-import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.block.HTFluidSyncable
-import hiiragi283.ragium.api.machine.block.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPatternProvider
-import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.storage.HTStorageBuilder
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
+import hiiragi283.ragium.api.screen.HTScreenFluidProvider
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
-import hiiragi283.ragium.api.storage.HTStorageSide
+import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTUnitResult
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -34,7 +30,6 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.screen.ScreenHandler
-import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
@@ -44,80 +39,70 @@ import net.minecraft.world.biome.Biome
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
-    HTFluidSyncable,
-    HTMultiblockPatternProvider {
+    HTScreenFluidProvider,
+    HTMultiblockProvider {
     companion object {
         @JvmField
-        val FLUID_MAP: Map<TagKey<Biome>, ResourceAmount<FluidVariant>> = mapOf(
-            BiomeTags.IS_END to ResourceAmount(FluidVariant.of(RagiumFluids.NOBLE_GAS.value), FluidConstants.INGOT),
-            BiomeTags.IS_NETHER to ResourceAmount(FluidVariant.of(RagiumFluids.CRUDE_OIL.value), FluidConstants.BUCKET),
-            BiomeTags.IS_OCEAN to ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BUCKET),
-            BiomeTags.IS_BEACH to ResourceAmount(FluidVariant.of(RagiumFluids.SALT_WATER.value), FluidConstants.BOTTLE),
+        val FLUID_MAP: Map<TagKey<Biome>, HTFluidVariantStack> = mapOf(
+            BiomeTags.IS_END to HTFluidVariantStack(RagiumFluids.NOBLE_GAS, FluidConstants.INGOT),
+            BiomeTags.IS_NETHER to HTFluidVariantStack(RagiumFluids.CRUDE_OIL, FluidConstants.BUCKET),
+            BiomeTags.IS_OCEAN to HTFluidVariantStack(RagiumFluids.SALT_WATER, FluidConstants.BUCKET),
+            BiomeTags.IS_BEACH to HTFluidVariantStack(RagiumFluids.SALT_WATER, FluidConstants.BOTTLE),
         )
     }
 
-    override var key: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
+    override var machineKey: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
 
-    constructor(pos: BlockPos, state: BlockState, tier: HTMachineTier) : this(pos, state) {
-        this.tier = tier
-    }
+    private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidStorage.update(newTier)
+        fluidStorage = fluidStorage.updateTier(newTier)
     }
-
-    private var fluidStorage: HTMachineFluidStorage = HTStorageBuilder(1)
-        .set(0, HTStorageIO.OUTPUT, HTStorageSide.ANY)
-        .buildMachineFluidStorage(tier)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        fluidStorage.writeNbt(nbt, wrapperLookup)
+        nbt.writeFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        fluidStorage.readNbt(nbt, wrapperLookup, tier)
+        nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSmallMachineScreenHandler(syncId, playerInventory, packet, createContext())
+        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     override fun process(world: World, pos: BlockPos): HTUnitResult = multiblockManager
         .updateValidation(cachedState)
         .flatMap {
             useTransaction { transaction: Transaction ->
-                fluidStorage.unitMap(0) { storageIn: SingleFluidStorage ->
-                    val resource: ResourceAmount<FluidVariant> = findResource(world.getBiome(pos))
-                    if (storageIn.insert(resource, transaction) == resource.amount) {
-                        transaction.commit()
-                        world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
-                        HTUnitResult.success()
-                    } else {
-                        HTUnitResult.errorString { "Failed to insert fluid into Fluid Drill!" }
-                    }
+                val stack: HTFluidVariantStack = findResource(world.getBiome(pos))
+                if (fluidStorage.insert(stack, transaction) == stack.amount) {
+                    transaction.commit()
+                    world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
+                    HTUnitResult.success()
+                } else {
+                    HTUnitResult.errorString { "Failed to insert fluid into Fluid Drill!" }
                 }
             }
         }
 
-    private fun findResource(biome: RegistryEntry<Biome>): ResourceAmount<FluidVariant> {
-        for ((tagKey: TagKey<Biome>, resource: ResourceAmount<FluidVariant>) in FLUID_MAP) {
+    private fun findResource(biome: RegistryEntry<Biome>): HTFluidVariantStack {
+        for ((tagKey: TagKey<Biome>, stack: HTFluidVariantStack) in FLUID_MAP) {
             if (biome.isIn(tagKey)) {
-                return resource
+                return stack
             }
         }
-        return ResourceAmount(FluidVariant.of(RagiumFluids.AIR.value), FluidConstants.BUCKET)
+        return HTFluidVariantStack.EMPTY
     }
 
-    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactByPlayer(player)
+    override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage.createWrapped()
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant>? = fluidStorage.wrapStorage()
 
-    //    HTFluidSyncable    //
+    //    HTScreenFluidProvider    //
 
-    override fun sendPacket(player: ServerPlayerEntity, sender: (ServerPlayerEntity, Int, FluidVariant, Long) -> Unit) {
-        fluidStorage.sendPacket(player, sender, 1)
-    }
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
 
     //    HTMultiblockPatternProvider    //
 
@@ -129,29 +114,29 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
                 -1..1,
                 0,
                 1..3,
-                HTMultiblockPattern.of(tier.getHull()),
+                HTTieredBlockPattern.ofContent(HTMachineTier::getHull),
             ).addCross4(
                 -1..1,
                 1,
                 1..3,
-                HTMultiblockPattern.of(tier.getGrate()),
+                HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
             ).addCross4(
                 -1..1,
                 2,
                 1..3,
-                HTMultiblockPattern.of(tier.getGrate()),
+                HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
             )
         builder.add(
             0,
             3,
             2,
-            HTMultiblockPattern.of(tier.getGrate()),
+            HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
         )
         builder.add(
             0,
             4,
             2,
-            HTMultiblockPattern.of(tier.getGrate()),
+            HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
         )
     }
 }

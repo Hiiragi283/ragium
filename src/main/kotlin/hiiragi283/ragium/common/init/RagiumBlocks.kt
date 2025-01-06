@@ -1,224 +1,352 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.extension.blockSettings
+import hiiragi283.ragium.api.block.HTBlockWithEntity
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.block.machine.HTLargeProcessorBlock
+import hiiragi283.ragium.common.block.machine.HTExtendedProcessorBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
-import hiiragi283.ragium.common.block.transfer.HTCreativeExporterBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
+import hiiragi283.ragium.common.block.transfer.*
 import net.minecraft.block.*
+import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.item.BlockItem
+import net.minecraft.item.Item
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.shape.VoxelShape
-import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
 object RagiumBlocks {
     //    Creatives    //
 
-    @JvmField
-    val CREATIVE_CRATE: Block = HTBlockWithEntity.buildHorizontal(RagiumBlockEntityTypes.CREATIVE_CRATE, blockSettings())
+    enum class Creatives : HTBlockContent {
+        CRATE,
+        DRUM,
+        EXPORTER,
+        SOURCE,
+        ;
 
-    @JvmField
-    val CREATIVE_DRUM: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_DRUM, blockSettings())
-
-    @JvmField
-    val CREATIVE_EXPORTER: Block = HTCreativeExporterBlock
-
-    @JvmField
-    val CREATIVE_SOURCE: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.CREATIVE_SOURCE, blockSettings(Blocks.COMMAND_BLOCK))
-
-    @JvmField
-    val CREATIVES: List<Block> = listOf(
-        CREATIVE_CRATE,
-        CREATIVE_DRUM,
-        CREATIVE_EXPORTER,
-        CREATIVE_SOURCE,
-    )
+        override val key: RegistryKey<Block> = HTContent.blockKey("creative_${name.lowercase()}")
+    }
 
     //    Minerals    //
     @JvmField
-    val MUTATED_SOIL: Block = Block(blockSettings(Blocks.DIRT))
+    val MUTATED_SOIL: HTBlockContent = HTContent.ofBlock("mutated_soil")
 
     @JvmField
-    val POROUS_NETHERRACK: Block = HTSpongeBlock(
-        blockSettings(Blocks.NETHERRACK),
-        Blocks.MAGMA_BLOCK::getDefaultState,
-    ) { world: World, pos: BlockPos ->
-        world.getFluidState(pos).isIn(FluidTags.LAVA)
-    }
+    val POROUS_NETHERRACK: HTBlockContent = HTContent.ofBlock("porous_netherrack")
 
     @JvmField
-    val NATURAL: List<Block> = listOf(
+    val NATURAL: List<HTBlockContent> = listOf(
         MUTATED_SOIL,
         POROUS_NETHERRACK,
     )
 
+    enum class Ores(path: String, override val material: HTMaterialKey, val baseStone: Block) : HTBlockContent.Material {
+        CRUDE_RAGINITE("raginite_ore", RagiumMaterialKeys.CRUDE_RAGINITE, Blocks.STONE),
+        DEEP_RAGINITE("deepslate_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.DEEPSLATE),
+        NETHER_RAGINITE("nether_raginite_ore", RagiumMaterialKeys.RAGINITE, Blocks.NETHERRACK),
+        END_RAGI_CRYSTAL("end_ragi_crystal_ore", RagiumMaterialKeys.RAGI_CRYSTAL, Blocks.END_STONE),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey(path)
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.ORE
+    }
+
     //    Buildings    //
 
-    @JvmField
-    val ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val ASPHALT_SLAB: Block = SlabBlock(blockSettings(ASPHALT))
-
-    @JvmField
-    val ASPHALT_STAIRS = StairsBlock(ASPHALT.defaultState, blockSettings(ASPHALT))
-
-    @JvmField
-    val POLISHED_ASPHALT: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val POLISHED_ASPHALT_SLAB: Block = SlabBlock(blockSettings(POLISHED_ASPHALT))
-
-    @JvmField
-    val POLISHED_ASPHALT_STAIRS = StairsBlock(POLISHED_ASPHALT.defaultState, blockSettings(POLISHED_ASPHALT))
-
-    @JvmField
-    val GYPSUM: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val GYPSUM_SLAB: Block = SlabBlock(blockSettings(GYPSUM))
-
-    @JvmField
-    val GYPSUM_STAIRS = StairsBlock(GYPSUM.defaultState, blockSettings(GYPSUM))
-
-    @JvmField
-    val POLISHED_GYPSUM: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val POLISHED_GYPSUM_SLAB: Block = SlabBlock(blockSettings(POLISHED_GYPSUM))
-
-    @JvmField
-    val POLISHED_GYPSUM_STAIRS = StairsBlock(POLISHED_GYPSUM.defaultState, blockSettings(POLISHED_GYPSUM))
-
-    @JvmField
-    val SLATE: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val SLATE_SLAB: Block = SlabBlock(blockSettings(SLATE))
-
-    @JvmField
-    val SLATE_STAIRS = StairsBlock(SLATE.defaultState, blockSettings(SLATE))
-
-    @JvmField
-    val POLISHED_SLATE: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val POLISHED_SLATE_SLAB: Block = SlabBlock(blockSettings(POLISHED_SLATE))
-
-    @JvmField
-    val POLISHED_SLATE_STAIRS = StairsBlock(POLISHED_SLATE.defaultState, blockSettings(POLISHED_SLATE))
-
-    @JvmField
-    val WHITE_LINE: Block = HTSurfaceLineBlock(blockSettings().breakInstantly())
-
-    @JvmField
-    val T_WHITE_LINE: Block = HTSurfaceLineBlock(blockSettings().breakInstantly())
-
-    @JvmField
-    val CROSS_WHITE_LINE: Block = HTSurfaceBlock(blockSettings().breakInstantly())
-
-    @JvmField
-    val STEEL_GLASS = TransparentBlock(blockSettings(Blocks.GLASS).strength(2f, 1200f))
-
-    @JvmField
-    val RAGIUM_GLASS = TransparentBlock(blockSettings(Blocks.GLASS).strength(2f, 3600000.0F))
-
-    @JvmField
-    val BUILDINGS: List<Block> = listOf(
-        // asphalt
+    enum class Stones : HTBlockContent {
         ASPHALT,
-        ASPHALT_SLAB,
-        ASPHALT_STAIRS,
         POLISHED_ASPHALT,
-        POLISHED_ASPHALT_SLAB,
-        POLISHED_ASPHALT_STAIRS,
-        // gypsum
         GYPSUM,
-        GYPSUM_SLAB,
-        GYPSUM_STAIRS,
         POLISHED_GYPSUM,
-        POLISHED_GYPSUM_SLAB,
-        POLISHED_GYPSUM_STAIRS,
-        // slate
         SLATE,
-        SLATE_SLAB,
-        SLATE_STAIRS,
         POLISHED_SLATE,
-        POLISHED_SLATE_SLAB,
-        POLISHED_SLATE_STAIRS,
-        // white line
-        WHITE_LINE,
-        T_WHITE_LINE,
-        CROSS_WHITE_LINE,
-        // glass
-        STEEL_GLASS,
-        RAGIUM_GLASS,
-    )
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey(name.lowercase())
+    }
+
+    enum class Slabs : HTBlockContent {
+        ASPHALT,
+        POLISHED_ASPHALT,
+        GYPSUM,
+        POLISHED_GYPSUM,
+        SLATE,
+        POLISHED_SLATE,
+        ;
+
+        val baseStone: Stones
+            get() = Stones.entries.first { it.name == this.name }
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_slab")
+    }
+
+    enum class Stairs : HTBlockContent {
+        ASPHALT,
+        POLISHED_ASPHALT,
+        GYPSUM,
+        POLISHED_GYPSUM,
+        SLATE,
+        POLISHED_SLATE,
+        ;
+
+        val baseStone: Stones
+            get() = Stones.entries.first { it.name == this.name }
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_stairs")
+    }
+
+    enum class Glasses : HTBlockContent {
+        STEEL,
+        OBSIDIAN,
+        RAGIUM,
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_glass")
+    }
+
+    enum class WhiteLines(name: String) : HTBlockContent {
+        SIMPLE(""),
+        T_SHAPED("t_"),
+        CROSS("cross_"),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name}white_line")
+    }
+
+    @JvmField
+    val PLASTIC_BLOCK: HTBlockContent = HTContent.ofBlock("plastic_block")
+
+    enum class Decorations(
+        val factory: (AbstractBlock.Settings) -> Block = ::Block,
+        val cutout: Boolean = false,
+        val isPillar: Boolean = false,
+    ) : HTBlockContent {
+        // storage
+        RAGI_ALLOY_BLOCK,
+        RAGI_STEEL_BLOCK,
+        REFINED_RAGI_STEEL_BLOCK,
+
+        // casing
+        PRIMITIVE_CASING,
+        BASIC_CASING,
+        ADVANCED_CASING,
+
+        // hull
+        PRIMITIVE_HULL(::TransparentBlock, true),
+        BASIC_HULL(::TransparentBlock, true),
+        ADVANCED_HULL(::TransparentBlock, true),
+
+        // coil
+        PRIMITIVE_COIL(::PillarBlock, isPillar = true),
+        BASIC_COIL(::PillarBlock, isPillar = true),
+        ADVANCED_COIL(::PillarBlock, isPillar = true),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_decoration")
+    }
+
+    //    Components    //
+
+    enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        FLUORITE(RagiumMaterialKeys.FLUORITE),
+        STEEL(RagiumMaterialKeys.STEEL),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        CRYOLITE(RagiumMaterialKeys.CRYOLITE),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+        RAGIUM(RagiumMaterialKeys.RAGIUM),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_block")
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
+    }
+
+    enum class Grates(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_grate")
+    }
+
+    enum class Casings(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_casing")
+    }
+
+    enum class Hulls(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_hull")
+    }
+
+    enum class Coils(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_coil")
+    }
 
     //    Foods    //
 
     @JvmField
-    val SPONGE_CAKE: Block = HayBlock(blockSettings(Blocks.HAY_BLOCK).sounds(BlockSoundGroup.WOOL))
+    val SPONGE_CAKE: HTBlockContent = HTContent.ofBlock("sponge_cake")
 
     @JvmField
-    val SWEET_BERRIES_CAKE: Block = object : Block(blockSettings(Blocks.CAKE)) {
-        override fun getOutlineShape(
-            state: BlockState,
-            world: BlockView,
-            pos: BlockPos,
-            context: ShapeContext,
-        ): VoxelShape = createCuboidShape(1.0, 0.0, 1.0, 15.0, 8.0, 15.0)
-    }
+    val SWEET_BERRIES_CAKE: HTBlockContent = HTContent.ofBlock("sweet_berries_cake")
 
     @JvmField
-    val FOODS: List<Block> = listOf(
+    val FOODS: List<HTBlockContent> = listOf(
         SPONGE_CAKE,
         SWEET_BERRIES_CAKE,
     )
 
+    //    Transport    //
+
+    enum class Crates(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_crate")
+    }
+
+    @JvmField
+    val BACKPACK_CRATE: HTBlockContent = HTContent.ofBlock("backpack_crate")
+
+    @JvmField
+    val OPEN_CRATE: HTBlockContent = HTContent.ofBlock("open_crate")
+
+    @JvmField
+    val VOID_CRATE: HTBlockContent = HTContent.ofBlock("void_crate")
+
+    enum class Drums(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_drum")
+    }
+
+    enum class Exporters(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_exporter")
+    }
+
+    enum class Pipes(override val tier: HTMachineTier, val pipeType: HTPipeType) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        STONE(HTMachineTier.PRIMITIVE, HTPipeType.ITEM),
+        WOODEN(HTMachineTier.PRIMITIVE, HTPipeType.FLUID),
+        IRON(HTMachineTier.BASIC, HTPipeType.ITEM),
+        COPPER(HTMachineTier.BASIC, HTPipeType.FLUID),
+        UNIVERSAL(HTMachineTier.ADVANCED, HTPipeType.ALL),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_pipe")
+    }
+
+    enum class CrossPipes(val pipeType: HTPipeType) : HTBlockContent {
+        STEEL(HTPipeType.ITEM),
+        GOLD(HTPipeType.FLUID),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_pipe")
+    }
+
+    enum class PipeStations(val pipeType: HTPipeType) : HTBlockContent {
+        ITEM(HTPipeType.ITEM),
+        FLUID(HTPipeType.FLUID),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_pipe_station")
+    }
+
+    enum class FilteringPipes(val pipeType: HTPipeType) : HTBlockContent {
+        ITEM(HTPipeType.ITEM),
+        FLUID(HTPipeType.FLUID),
+        ;
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_filtering_pipe")
+    }
+
     //    Mechanics    //
+    @JvmField
+    val AUTO_ILLUMINATOR: HTBlockContent = HTContent.ofBlock("auto_illuminator")
 
     @JvmField
-    val AUTO_ILLUMINATOR: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.AUTO_ILLUMINATOR, blockSettings(Blocks.SMOOTH_STONE))
+    val EXTENDED_PROCESSOR: HTBlockContent = HTContent.ofBlock("extended_processor")
 
     @JvmField
-    val LARGE_PROCESSOR: Block = HTLargeProcessorBlock
+    val MANUAL_FORGE: HTBlockContent = HTContent.ofBlock("manual_forge")
 
     @JvmField
-    val MANUAL_FORGE: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_FORGE, blockSettings(Blocks.BRICKS).nonOpaque())
+    val MANUAL_GRINDER: HTBlockContent = HTContent.ofBlock("manual_grinder")
 
     @JvmField
-    val MANUAL_GRINDER: Block = HTManualGrinderBlock
+    val MANUAL_MIXER: HTBlockContent = HTContent.ofBlock("manual_mixer")
 
     @JvmField
-    val MANUAL_MIXER: Block = HTBlockWithEntity.build(RagiumBlockEntityTypes.MANUAL_MIXER, blockSettings(Blocks.BRICKS))
+    val NETWORK_INTERFACE: HTBlockContent = HTContent.ofBlock("network_interface")
 
     @JvmField
-    val NETWORK_INTERFACE: Block = HTNetworkInterfaceBlock
+    val TELEPORT_ANCHOR: HTBlockContent = HTContent.ofBlock("teleport_anchor")
 
     @JvmField
-    val OPEN_CRATE: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val TELEPORT_ANCHOR: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val TRASH_BOX: Block = Block(blockSettings(Blocks.SMOOTH_STONE))
-
-    @JvmField
-    val MECHANICS: List<Block> = listOf(
+    val MECHANICS: List<HTBlockContent> = listOf(
         // colored
-        LARGE_PROCESSOR, // red
+        EXTENDED_PROCESSOR, // red
         AUTO_ILLUMINATOR, // yellow
-        OPEN_CRATE, // green
         TELEPORT_ANCHOR, // blue
-        TRASH_BOX, // gray
         NETWORK_INTERFACE, // white
         // manual machines
         MANUAL_FORGE,
@@ -229,35 +357,304 @@ object RagiumBlocks {
     //    Misc    //
 
     @JvmField
-    val BACKPACK_INTERFACE: Block = HTBackpackInterfaceBlock
+    val ITEM_DISPLAY: HTBlockContent = HTContent.ofBlock("item_display")
 
     @JvmField
-    val BUFFER: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.BUFFER, blockSettings(Blocks.SMOOTH_STONE))
+    val SHAFT: HTBlockContent = HTContent.ofBlock("shaft")
 
     @JvmField
-    val ENCHANTMENT_BOOKSHELF: Block =
-        HTBlockWithEntity.build(RagiumBlockEntityTypes.ENCHANTMENT_BOOKSHELF, blockSettings(Blocks.BOOKSHELF))
+    val INFESTING: HTBlockContent = HTContent.ofBlock("infesting")
 
     @JvmField
-    val ITEM_DISPLAY: Block = HTItemDisplayBlock
-
-    @JvmField
-    val ROPE: Block = HTRopeBlock
-
-    @JvmField
-    val SHAFT: Block = HTThinPillarBlock(blockSettings(Blocks.CHAIN))
-
-    @JvmField
-    val INFESTING: Block = HTInfectingBlock
-
-    @JvmField
-    val MISC: List<Block> = listOf(
-        BACKPACK_INTERFACE,
-        BUFFER,
-        ENCHANTMENT_BOOKSHELF,
+    val MISC: List<HTBlockContent> = listOf(
+        BACKPACK_CRATE,
         ITEM_DISPLAY,
-        ROPE,
         SHAFT,
     )
+
+    //    Register    //
+
+    private fun registerBlock(
+        content: HTBlockContent,
+        parent: AbstractBlock.Settings = blockSettings(),
+        block: (AbstractBlock.Settings) -> Block,
+    ): Block = Registry.register(Registries.BLOCK, content.key, block(parent))
+
+    private fun registerSimpleBlock(content: HTBlockContent, parent: AbstractBlock.Settings = blockSettings()): Block =
+        registerBlock(content, parent, ::Block)
+
+    private fun registerBlockWithBE(
+        content: HTBlockContent,
+        type: BlockEntityType<*>,
+        parent: AbstractBlock.Settings = blockSettings(),
+    ): Block = registerBlock(content, parent) { HTBlockWithEntity.build(type, it) }
+
+    private fun registerHorizontalBlockWithBE(
+        content: HTBlockContent,
+        type: BlockEntityType<*>,
+        parent: AbstractBlock.Settings = blockSettings(),
+    ): Block = registerBlock(content, parent) { HTBlockWithEntity.buildHorizontal(type, it) }
+
+    private fun registerBlockItem(block: HTBlockContent, parent: Item.Settings = itemSettings()) {
+        Registry.register(Registries.ITEM, block.id, BlockItem(block.get(), parent))
+    }
+
+    private fun registerBlockItem(block: HTBlockContent, factory: (Block, Item.Settings) -> Item) {
+        Registry.register(Registries.ITEM, block.id, factory(block.get(), itemSettings()))
+    }
+
+    @JvmStatic
+    internal fun register() {
+        // creative
+        registerHorizontalBlockWithBE(
+            Creatives.CRATE,
+            RagiumBlockEntityTypes.CREATIVE_CRATE,
+            blockSettings().mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+        )
+        registerBlockWithBE(
+            Creatives.DRUM,
+            RagiumBlockEntityTypes.CREATIVE_DRUM,
+            blockSettings().mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+        )
+        registerBlock(
+            Creatives.EXPORTER,
+            blockSettings()
+                .mapColor(MapColor.PURPLE)
+                .requiresTool()
+                .strength(2f, 6f)
+                .solid()
+                .nonOpaque(),
+            ::HTCreativeExporterBlock,
+        )
+        registerBlockWithBE(
+            Creatives.SOURCE,
+            RagiumBlockEntityTypes.CREATIVE_SOURCE,
+            blockSettings().mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+        )
+        Creatives.entries.forEach { registerBlockItem(it, itemSettings().rarity(Rarity.EPIC)) }
+        // natural
+        registerSimpleBlock(
+            MUTATED_SOIL,
+            blockSettings().mapColor(MapColor.GREEN).strength(0.5f).sounds(BlockSoundGroup.GRAVEL),
+        )
+        registerBlock(POROUS_NETHERRACK) {
+            HTSpongeBlock(
+                it
+                    .mapColor(MapColor.DARK_RED)
+                    .requiresTool()
+                    .strength(0.4f)
+                    .sounds(BlockSoundGroup.NETHERRACK),
+                Blocks.MAGMA_BLOCK::getDefaultState,
+            ) { world: World, pos: BlockPos ->
+                world.getFluidState(pos).isIn(FluidTags.LAVA)
+            }
+        }
+        registerBlockItem(MUTATED_SOIL, itemSettings().descriptions(RagiumTranslationKeys.MUTATED_SOIL))
+        registerBlockItem(POROUS_NETHERRACK, itemSettings().descriptions(RagiumTranslationKeys.POROUS_NETHERRACK))
+        // ore
+        Ores.entries.forEach { ore: Ores ->
+            registerSimpleBlock(ore, blockSettings(ore.baseStone))
+            registerBlockItem(ore, itemSettings().material(ore.material, ore.tagPrefix))
+        }
+        // stone
+        Stones.entries.forEach { stone: Stones ->
+            registerSimpleBlock(stone, blockSettings(Blocks.SMOOTH_STONE))
+            registerBlockItem(stone)
+        }
+        // slab
+        Slabs.entries.forEach { slab: Slabs ->
+            registerBlock(slab, blockSettings(Blocks.SMOOTH_STONE), ::SlabBlock)
+            registerBlockItem(slab)
+        }
+        // stair
+        Stairs.entries.forEach { stair: Stairs ->
+            registerBlock(stair, blockSettings(Blocks.SMOOTH_STONE)) {
+                StairsBlock(stair.baseStone.get().defaultState, it)
+            }
+            registerBlockItem(stair)
+        }
+        // white line
+        WhiteLines.entries.forEach {
+            registerBlock(it, block = ::HTSurfaceLineBlock)
+            registerBlockItem(it)
+        }
+        // decoration
+        registerBlock(PLASTIC_BLOCK, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItem(PLASTIC_BLOCK)
+        Decorations.entries.forEach { decoration: Decorations ->
+            registerBlock(decoration, blockSettings(Blocks.SMOOTH_STONE), decoration.factory)
+            registerBlockItem(decoration)
+        }
+        // glass
+        registerBlock(
+            Glasses.STEEL,
+            blockSettings(Blocks.GLASS).strength(2f, 100f),
+            ::TransparentBlock,
+        )
+        registerBlock(
+            Glasses.OBSIDIAN,
+            blockSettings(Blocks.GLASS).strength(2f, 1200f),
+            ::TransparentBlock,
+        )
+        registerBlock(
+            Glasses.RAGIUM,
+            blockSettings(Blocks.GLASS).strength(2f, 3600000.0F),
+            ::TransparentBlock,
+        )
+        registerBlockItem(Glasses.STEEL, itemSettings().descriptions(RagiumTranslationKeys.STEEL_GLASS))
+        registerBlockItem(Glasses.OBSIDIAN, itemSettings().descriptions(RagiumTranslationKeys.OBSIDIAN_GLASS))
+        registerBlockItem(Glasses.RAGIUM, itemSettings().descriptions(RagiumTranslationKeys.RAGIUM_GLASS))
+        // storage block
+        StorageBlocks.entries.forEach { storage: StorageBlocks ->
+            registerSimpleBlock(storage, blockSettings(Blocks.IRON_BLOCK))
+            registerBlockItem(storage, itemSettings().material(storage.material, storage.tagPrefix))
+        }
+        // grate
+        Grates.entries.forEach { grate: Grates ->
+            registerBlock(grate, blockSettings(Blocks.COPPER_GRATE), ::TransparentBlock)
+            registerBlockItem(grate, itemSettings().tieredText(RagiumTranslationKeys.GRATE, grate.tier))
+        }
+        // casing
+        Casings.entries.forEach { casings: Casings ->
+            registerSimpleBlock(casings, blockSettings(Blocks.SMOOTH_STONE))
+            registerBlockItem(casings, itemSettings().tieredText(RagiumTranslationKeys.CASING, casings.tier))
+        }
+        // hull
+        Hulls.entries.forEach { hull: Hulls ->
+            registerBlock(hull, blockSettings(Blocks.SMOOTH_STONE), ::TransparentBlock)
+            registerBlockItem(hull, itemSettings().tieredText(RagiumTranslationKeys.HULL, hull.tier))
+        }
+        // coil
+        Coils.entries.forEach { coil: Coils ->
+            registerBlock(coil, blockSettings(Blocks.COPPER_BLOCK), ::PillarBlock)
+            registerBlockItem(coil, itemSettings().tieredText(RagiumTranslationKeys.COIL, coil.tier))
+        }
+        // food
+        registerBlock(
+            SPONGE_CAKE,
+            blockSettings().mapColor(MapColor.PURPLE).requiresTool().strength(2f, 6f),
+            ::HayBlock,
+        )
+        registerBlock(
+            SWEET_BERRIES_CAKE,
+            blockSettings().solid().strength(0.5f).sounds(BlockSoundGroup.WOOL),
+            ::HTCakeBlock,
+        )
+        registerBlockItem(SPONGE_CAKE, itemSettings().descriptions(RagiumTranslationKeys.SPONGE_CAKE))
+        registerBlockItem(SWEET_BERRIES_CAKE)
+        // crate
+        Crates.entries.forEach { crate: Crates ->
+            registerBlock(crate, blockSettings(Blocks.SMOOTH_STONE)) { HTCrateBlock(crate.tier, it) }
+            registerBlockItem(crate, itemSettings().tieredText(RagiumTranslationKeys.CRATE, crate.tier))
+        }
+        registerBlock(
+            BACKPACK_CRATE,
+            blockSettings().mapColor(MapColor.BLACK).requiresTool().strength(2f, 6f),
+            ::HTBackpackInterfaceBlock,
+        )
+        registerBlock(OPEN_CRATE, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlock(VOID_CRATE, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItem(BACKPACK_CRATE)
+        registerBlockItem(OPEN_CRATE, itemSettings().descriptions(RagiumTranslationKeys.OPEN_CRATE))
+        registerBlockItem(VOID_CRATE, itemSettings().descriptions(RagiumTranslationKeys.TRASH_BOX))
+        // drum
+        Drums.entries.forEach { drum: Drums ->
+            registerBlock(drum, blockSettings(Blocks.SMOOTH_STONE)) { HTDrumBlock(drum.tier, it) }
+            registerBlockItem(drum, itemSettings().tieredText(RagiumTranslationKeys.DRUM, drum.tier))
+        }
+        // exporter
+        Exporters.entries.forEach { exporter: Exporters ->
+            registerBlock(exporter) { HTExporterBlock(exporter.tier, it) }
+            registerBlockItem(exporter, itemSettings().tieredText(RagiumTranslationKeys.EXPORTER, exporter.tier))
+        }
+        // pipe
+        Pipes.entries.forEach { pipe: Pipes ->
+            registerBlock(pipe) { HTSimplePipeBlock(pipe.tier, pipe.pipeType, it) }
+            registerBlockItem(pipe, itemSettings().tier(pipe.tier))
+        }
+        // cross pipe
+        CrossPipes.entries.forEach { crossPipe: CrossPipes ->
+            registerBlock(crossPipe, block = ::HTPipeBlock)
+            registerBlockItem(crossPipe)
+        }
+        // pipe station
+        PipeStations.entries.forEach { station: PipeStations ->
+            registerBlock(station, block = ::HTPipeStationBlock)
+            registerBlockItem(
+                station,
+                itemSettings().descriptions(RagiumTranslationKeys.PIPE_STATION),
+            )
+        }
+        // filtering pipe
+        FilteringPipes.entries.forEach { filtering: FilteringPipes ->
+            registerBlock(filtering) { HTFilteringPipeBlock(filtering.pipeType, it) }
+            registerBlockItem(
+                filtering,
+                itemSettings()
+                    .descriptions(RagiumTranslationKeys.PIPE_STATION)
+                    .maybeRework(),
+            )
+        }
+        // mechanics
+        registerBlockWithBE(
+            AUTO_ILLUMINATOR,
+            RagiumBlockEntityTypes.AUTO_ILLUMINATOR,
+            blockSettings(Blocks.SMOOTH_STONE),
+        )
+        registerBlock(
+            EXTENDED_PROCESSOR,
+            blockSettings(Blocks.SMOOTH_STONE),
+            ::HTExtendedProcessorBlock,
+        )
+        registerBlockWithBE(
+            MANUAL_FORGE,
+            RagiumBlockEntityTypes.MANUAL_FORGE,
+            blockSettings(Blocks.BRICKS).nonOpaque(),
+        )
+        registerBlock(MANUAL_GRINDER, blockSettings(Blocks.BRICKS), ::HTManualGrinderBlock)
+        registerBlockWithBE(
+            MANUAL_MIXER,
+            RagiumBlockEntityTypes.MANUAL_MIXER,
+            blockSettings(Blocks.BRICKS),
+        )
+        registerBlock(
+            NETWORK_INTERFACE,
+            blockSettings(Blocks.SMOOTH_STONE),
+            ::HTNetworkInterfaceBlock,
+        )
+        registerBlock(TELEPORT_ANCHOR, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItem(
+            AUTO_ILLUMINATOR,
+            /*itemSettings().descriptions(
+                Text.translatable(
+                    RagiumTranslationKeys.AUTO_ILLUMINATOR,
+                    RagiumAPI.getInstance().config.autoIlluminatorRadius,
+                ),
+            ),*/
+        )
+        registerBlockItem(EXTENDED_PROCESSOR, itemSettings().descriptions(RagiumTranslationKeys.LARGE_PROCESSOR))
+        registerBlockItem(MANUAL_FORGE)
+        registerBlockItem(MANUAL_GRINDER, itemSettings().descriptions(RagiumTranslationKeys.MANUAL_GRINDER))
+        registerBlockItem(MANUAL_MIXER)
+        registerBlockItem(NETWORK_INTERFACE, itemSettings().descriptions(RagiumTranslationKeys.NETWORK_INTERFACE))
+        registerBlockItem(TELEPORT_ANCHOR)
+        // misc
+        registerBlock(
+            ITEM_DISPLAY,
+            blockSettings().strength(0.5f).sounds(BlockSoundGroup.GLASS),
+            ::HTItemDisplayBlock,
+        )
+        registerBlock(
+            SHAFT,
+            blockSettings().requiresTool().strength(5f).sounds(BlockSoundGroup.METAL),
+            ::HTThinPillarBlock,
+        )
+        registerBlock(
+            INFESTING,
+            blockSettings().ticksRandomly().dropsNothing(),
+            ::HTInfectingBlock,
+        )
+        registerBlockItem(ITEM_DISPLAY)
+        registerBlockItem(SHAFT)
+    }
 }

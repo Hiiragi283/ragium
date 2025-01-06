@@ -1,26 +1,36 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.ragium.api.extension.isBlank
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
+/**
+ * [HTMachineRecipeBase]の判定に用いられるクラス
+ * @param key 機械のキー
+ * @param tier 機械のティア
+ * @param itemInputs アイテムのインプットの一覧
+ * @param fluidInputs 液体のインプットの一覧
+ * @param catalyst 触媒スロットの[ItemStack]
+ */
 class HTMachineInput private constructor(
     val key: HTMachineKey,
     val tier: HTMachineTier,
-    private val itemInputs: List<ItemStack>,
-    private val fluidInputs: List<ResourceAmount<FluidVariant>>,
+    val itemInputs: List<ItemStack>,
+    val fluidInputs: List<HTFluidVariantStack>,
     val catalyst: ItemStack,
 ) : RecipeInput {
     companion object {
+        /**
+         * [HTMachineInput]を返します。
+         */
         @JvmStatic
         fun create(key: HTMachineKey, tier: HTMachineTier, builderAction: Builder.() -> Unit): HTMachineInput {
             val itemInputs: MutableList<ItemStack> = mutableListOf()
-            val fluidInputs: MutableList<ResourceAmount<FluidVariant>> = mutableListOf()
+            val fluidInputs: MutableList<HTFluidVariantStack> = mutableListOf()
             val catalyst: ItemStack = Builder(itemInputs, fluidInputs).apply(builderAction).catalyst
             return HTMachineInput(
                 key,
@@ -32,37 +42,53 @@ class HTMachineInput private constructor(
         }
     }
 
-    fun getItem(index: Int): ItemStack = itemInputs.getOrNull(index) ?: ItemStack.EMPTY
-
-    fun getFluid(index: Int): ResourceAmount<FluidVariant> = fluidInputs.getOrNull(index) ?: ResourceAmount(FluidVariant.blank(), 0)
+    /**
+     * 指定した[index]から[HTFluidVariantStack]を返します。
+     */
+    fun getFluidInSlot(index: Int): HTFluidVariantStack = fluidInputs.getOrNull(index) ?: HTFluidVariantStack.EMPTY
 
     //    RecipeInput    //
 
-    override fun getStackInSlot(slot: Int): ItemStack = itemInputs[slot]
+    override fun getStackInSlot(slot: Int): ItemStack = itemInputs.getOrNull(slot) ?: ItemStack.EMPTY
 
     override fun getSize(): Int = itemInputs.size
 
     override fun isEmpty(): Boolean {
         val bool1: Boolean = itemInputs.isEmpty() || itemInputs.all(ItemStack::isEmpty)
-        val bool2: Boolean = fluidInputs.isEmpty() || fluidInputs.all(ResourceAmount<FluidVariant>::isBlank)
+        val bool2: Boolean = fluidInputs.isEmpty() || fluidInputs.all(HTFluidVariantStack::isEmpty)
         return bool1 && bool2 && catalyst.isEmpty
     }
 
     //    Builder    //
 
-    class Builder(private val itemInputs: MutableList<ItemStack>, private val fluidInputs: MutableList<ResourceAmount<FluidVariant>>) {
+    class Builder(private val itemInputs: MutableList<ItemStack>, private val fluidInputs: MutableList<HTFluidVariantStack>) {
+        /**
+         * 触媒スロットの[ItemStack]
+         */
         var catalyst: ItemStack = ItemStack.EMPTY
 
+        /**
+         * アイテムのインプットを追加します。
+         */
         fun add(stack: ItemStack): Builder = apply {
             itemInputs.add(stack)
         }
 
-        fun add(fluid: Fluid, amount: Long): Builder = add(FluidVariant.of(fluid), amount)
+        /**
+         * 液体のインプットを追加します。
+         */
+        fun add(fluid: Fluid, amount: Long): Builder = add(HTFluidVariantStack(fluid, amount))
 
-        fun add(variant: FluidVariant, amount: Long): Builder = add(ResourceAmount(variant, amount))
+        /**
+         * 液体のインプットを追加します。
+         */
+        fun add(variant: FluidVariant, amount: Long): Builder = add(HTFluidVariantStack(variant, amount))
 
-        fun add(resource: ResourceAmount<FluidVariant>): Builder = apply {
-            fluidInputs.add(resource)
+        /**
+         * 液体のインプットを追加します。
+         */
+        fun add(stack: HTFluidVariantStack): Builder = apply {
+            fluidInputs.add(stack)
         }
     }
 }

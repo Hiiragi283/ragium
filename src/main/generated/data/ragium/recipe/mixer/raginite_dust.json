@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "#c:dusts/crude_raginite"
-    }
+    "#c:dusts/crude_raginite"
   ],
   "item_outputs": [
-    {
-      "item": "ragium:raginite_dust"
-    }
+    "ragium:raginite_dust"
   ]
 }

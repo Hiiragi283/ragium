@@ -11,13 +11,9 @@
     }
   ],
   "item_inputs": [
-    {
-      "items": "minecraft:blue_concrete_powder"
-    }
+    "minecraft:blue_concrete_powder"
   ],
   "item_outputs": [
-    {
-      "item": "minecraft:blue_concrete"
-    }
+    "minecraft:blue_concrete"
   ]
 }

@@ -5,9 +5,7 @@
     "tier": "primitive"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:chlorosilane"
-    },
+    "#c:chlorosilane",
     {
       "amount": 162000,
       "fluids": "#c:hydrogen"
@@ -20,8 +18,6 @@
     }
   ],
   "item_outputs": [
-    {
-      "item": "ragium:refined_silicon"
-    }
+    "ragium:refined_silicon"
   ]
 }

@@ -1,0 +1,31 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:large_chemical_reactor",
+    "tier": "basic"
+  },
+  "fluid_inputs": [
+    "#c:sulfuric_acid",
+    "#c:alkali_solution"
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:gems/fluorite"
+    },
+    {
+      "count": 2,
+      "items": "#c:dusts/aluminum"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:cryolite"
+    },
+    {
+      "count": 2,
+      "item": "ragium:gypsum"
+    }
+  ]
+}

@@ -5,14 +5,10 @@
     "tier": "advanced"
   },
   "fluid_inputs": [
-    {
-      "fluids": "#c:trinitrotoluene"
-    }
+    "#c:trinitrotoluene"
   ],
   "item_inputs": [
-    {
-      "items": "#minecraft:sand"
-    }
+    "#minecraft:sand"
   ],
   "item_outputs": [
     {

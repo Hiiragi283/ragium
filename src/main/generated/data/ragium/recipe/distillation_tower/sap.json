@@ -1,5 +1,6 @@
 {
   "type": "ragium:machine",
+  "catalyst": "ragium:primitive_circuit",
   "definition": {
     "type": "ragium:distillation_tower",
     "tier": "primitive"
@@ -11,11 +12,7 @@
     }
   ],
   "fluid_outputs": [
-    {
-      "fluid": "ragium:refined_gas"
-    },
-    {
-      "fluid": "ragium:alcohol"
-    }
+    "ragium:refined_gas",
+    "ragium:alcohol"
   ]
 }
