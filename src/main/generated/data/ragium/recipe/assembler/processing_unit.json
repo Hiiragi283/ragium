@@ -1,0 +1,25 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "energizedpower"
+      ]
+    }
+  ],
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:assembler",
+    "tier": "advanced"
+  },
+  "item_inputs": [
+    "ragium:advanced_circuit",
+    {
+      "count": 4,
+      "items": "#c:wires/energized_gold"
+    }
+  ],
+  "item_outputs": [
+    "energizedpower:processing_unit"
+  ]
+}

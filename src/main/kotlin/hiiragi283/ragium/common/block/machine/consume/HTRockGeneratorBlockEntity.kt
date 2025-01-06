@@ -35,7 +35,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
 
-    val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
+    val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 
     val processor = HTMachineRecipeProcessor(
         inventory,

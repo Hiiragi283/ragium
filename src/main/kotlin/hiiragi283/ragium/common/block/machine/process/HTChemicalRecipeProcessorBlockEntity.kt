@@ -29,7 +29,7 @@ class HTChemicalRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState, ove
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofSimple()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofLarge(this)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,

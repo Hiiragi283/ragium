@@ -20,7 +20,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:assembly_line"
+          "name": "ragium:large_chemical_reactor"
         }
       ],
       "rolls": 1.0

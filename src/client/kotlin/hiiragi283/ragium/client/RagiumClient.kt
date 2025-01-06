@@ -118,9 +118,9 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
 
-        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.ASSEMBLY_LINE)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.LARGE_CHEMICAL_REACTOR)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
 
@@ -179,7 +179,6 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerScreens() {
-        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.ASSEMBLY_LINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.GRINDER)

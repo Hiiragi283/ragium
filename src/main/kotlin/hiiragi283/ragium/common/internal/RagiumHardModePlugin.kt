@@ -321,11 +321,6 @@ object RagiumHardModePlugin : RagiumPlugin {
         createProcessor(
             exporter,
             RagiumMachineKeys.ASSEMBLER,
-            RagiumItems.Circuits.PRIMITIVE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.ASSEMBLY_LINE,
             Items.CRAFTER,
         )
         createProcessor(
@@ -378,6 +373,11 @@ object RagiumHardModePlugin : RagiumPlugin {
             exporter,
             RagiumMachineKeys.INFUSER,
             Items.GLASS_BOTTLE,
+        )
+        createProcessor(
+            exporter,
+            RagiumMachineKeys.LARGE_CHEMICAL_REACTOR,
+            Items.TINTED_GLASS,
         )
         createProcessor(
             exporter,
@@ -573,20 +573,30 @@ object RagiumHardModePlugin : RagiumPlugin {
             val tier: HTMachineTier = board.tier
             val plate: TagKey<Item> = boardMap[tier] ?: return@forEach
             val dope: ItemConvertible = circuitMap[tier] ?: return@forEach
-            // board
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, tier)
-                .itemInput(plate)
-                .itemInput(tier.getSubMetal().getPrefixedTag(hardMode))
-                .itemOutput(board)
-                .offerTo(exporter, board)
-            // circuit
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, tier)
-                .itemInput(board)
-                .itemInput(dope)
-                .itemOutput(board.getCircuit())
-                .offerTo(exporter, board.getCircuit())
+            if (hardMode) {
+                // board
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.ASSEMBLER, tier)
+                    .itemInput(plate)
+                    .itemInput(tier.getSubMetal().getPrefixedTag(hardMode))
+                    .itemOutput(board)
+                    .offerTo(exporter, board)
+                // circuit
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.ASSEMBLER, tier)
+                    .itemInput(board)
+                    .itemInput(dope)
+                    .itemOutput(board.getCircuit())
+                    .offerTo(exporter, board.getCircuit())
+            } else {
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumMachineKeys.ASSEMBLER, tier)
+                    .itemInput(plate)
+                    .itemInput(tier.getSubMetal().getPrefixedTag(hardMode))
+                    .itemInput(dope)
+                    .itemOutput(board.getCircuit())
+                    .offerTo(exporter, board.getCircuit())
+            }
         }
     }
 

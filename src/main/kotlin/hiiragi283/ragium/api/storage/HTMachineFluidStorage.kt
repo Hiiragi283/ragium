@@ -27,15 +27,21 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
         const val NBT_KEY = "fluid_storages"
 
         @JvmStatic
-        fun ofSimple(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(2)
+        fun ofSmall(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(2)
             .input(0)
             .output(1)
             .build(machine)
 
         @JvmStatic
-        fun ofLarge(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(4)
+        fun ofSimple(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(4)
             .input(0, 1)
             .output(2, 3)
+            .build(machine)
+
+        @JvmStatic
+        fun ofLarge(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(10)
+            .input(0, 1, 2, 3, 4)
+            .output(5, 6, 7, 8, 9)
             .build(machine)
     }
 

@@ -34,7 +34,7 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofLarge(this)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,
@@ -61,7 +61,7 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        RagiumMultiblockShapes.MULTI_SMELTER.buildMultiblock(builder)
+        RagiumMultiblockShapes.LARGE_MACHINE.buildMultiblock(builder)
         builder.add(0, 0, 2, HTMachineBlockPattern)
     }
 }

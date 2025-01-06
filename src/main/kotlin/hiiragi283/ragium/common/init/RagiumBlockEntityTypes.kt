@@ -73,8 +73,8 @@ object RagiumBlockEntityTypes {
         register("manual_mixer", ::HTManualMixerBlockEntity)
 
     @JvmField
-    val ASSEMBLY_LINE: BlockEntityType<HTAssemblyLineBlockEntity> =
-        register("assembly_line", ::HTAssemblyLineBlockEntity)
+    val ASSEMBLER: BlockEntityType<HTAssemblerBlockEntity> =
+        register("assembler", ::HTAssemblerBlockEntity)
 
     @JvmField
     val BIOMASS_FERMENTER: BlockEntityType<HTBiomassFermenterBlockEntity> =
@@ -111,6 +111,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val GRINDER: BlockEntityType<HTGrinderBlockEntity> =
         register("grinder", ::HTGrinderBlockEntity)
+
+    @JvmField
+    val LARGE_CHEMICAL_REACTOR: BlockEntityType<HTLargeChemicalReactorBlockEntity> =
+        register("large_chemical_reactor", ::HTLargeChemicalReactorBlockEntity)
 
     @JvmField
     val LARGE_PROCESSOR: BlockEntityType<HTLargeRecipeProcessorBlockEntity> =
@@ -203,7 +207,7 @@ object RagiumBlockEntityTypes {
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)
         }
-        registerMachineBlocks(RagiumMachineKeys.ASSEMBLY_LINE, ASSEMBLY_LINE)
+        registerMachineBlocks(RagiumMachineKeys.ASSEMBLER, ASSEMBLER)
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, LARGE_PROCESSOR)
@@ -212,6 +216,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.GRINDER, GRINDER)
         registerMachineBlocks(RagiumMachineKeys.INFUSER, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR, LARGE_CHEMICAL_REACTOR)
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
     }

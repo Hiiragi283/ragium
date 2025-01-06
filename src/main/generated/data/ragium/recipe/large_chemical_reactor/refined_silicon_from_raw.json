@@ -1,0 +1,32 @@
+{
+  "type": "ragium:machine",
+  "definition": {
+    "type": "ragium:large_chemical_reactor",
+    "tier": "advanced"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 324000,
+      "fluids": "#c:hydrogen_chloride"
+    },
+    {
+      "amount": 162000,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 243000,
+      "fluid": "ragium:hydrogen_chloride"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:silicon"
+    }
+  ],
+  "item_outputs": [
+    "ragium:refined_silicon"
+  ]
+}

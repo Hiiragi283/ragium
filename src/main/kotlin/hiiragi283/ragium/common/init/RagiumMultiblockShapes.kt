@@ -11,33 +11,6 @@ object RagiumMultiblockShapes {
     private val CASING: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getCasing)
     private val HULL: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getHull)
     private val GRATE: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getGrate)
-    private val GLASS: HTTieredBlockPattern = HTTieredBlockPattern.ofContent(HTMachineTier::getGlassBlock)
-
-    @JvmField
-    val ASSEMBLY_LINE: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
-        // base
-        builder.addLayer(-7..1, 0, 1..3, CASING)
-        // glass
-        builder.addLayer(-7..-7, 1, 1..3, CASING)
-        builder.addLayer(1..1, 1, 1..3, CASING)
-        builder.addLayer(-6..0, 1, 1..1, GLASS)
-        builder.addLayer(-6..0, 1, 3..3, GLASS)
-        // hull
-        builder.addHollow(-7..1, 2, 1..3, HULL)
-        // top
-        builder.addLayer(
-            -7..1,
-            3,
-            2..2,
-            HTTieredBlockPattern.ofBlock { tier: HTMachineTier ->
-                when (tier) {
-                    HTMachineTier.PRIMITIVE -> Blocks.STONE_SLAB
-                    HTMachineTier.BASIC -> Blocks.QUARTZ_SLAB
-                    HTMachineTier.ADVANCED -> Blocks.POLISHED_DEEPSLATE_SLAB
-                }
-            },
-        )
-    }
 
     @JvmField
     val BEDROCK_MINER: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
@@ -117,6 +90,13 @@ object RagiumMultiblockShapes {
     val MULTI_SMELTER: HTMultiblockBuilder.Consumer = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
         builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
         builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCoil))
+        builder.addLayer(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
+    }
+    
+    @JvmField
+    val LARGE_MACHINE = HTMultiblockBuilder.Consumer { builder: HTMultiblockBuilder ->
+        builder.addLayer(-1..1, -1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getCasing))
+        builder.addHollow(-1..1, 0, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getHull))
         builder.addLayer(-1..1, 1, 1..3, HTTieredBlockPattern.ofContent(HTMachineTier::getStorageBlock))
     }
 }

@@ -32,7 +32,7 @@ class HTLargeRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState, overri
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofLarge(this)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override val processor = HTMachineRecipeProcessor(
         inventory,

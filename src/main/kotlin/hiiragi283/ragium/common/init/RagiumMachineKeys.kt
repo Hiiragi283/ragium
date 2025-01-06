@@ -60,9 +60,6 @@ object RagiumMachineKeys {
     val ASSEMBLER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("assembler"))
 
     @JvmField
-    val ASSEMBLY_LINE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("assembly_line"))
-
-    @JvmField
     val BLAST_FURNACE: HTMachineKey = HTMachineKey.of(RagiumAPI.id("blast_furnace"))
 
     @JvmField
@@ -93,6 +90,9 @@ object RagiumMachineKeys {
     val INFUSER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("infuser"))
 
     @JvmField
+    val LARGE_CHEMICAL_REACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("large_chemical_reactor"))
+
+    @JvmField
     val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("laser_transformer"))
 
     @JvmField
@@ -104,7 +104,6 @@ object RagiumMachineKeys {
     @JvmField
     val PROCESSORS: List<HTMachineKey> = listOf(
         ASSEMBLER,
-        ASSEMBLY_LINE,
         BLAST_FURNACE,
         CHEMICAL_REACTOR,
         COMPRESSOR,
@@ -115,6 +114,7 @@ object RagiumMachineKeys {
         GRINDER,
         GROWTH_CHAMBER,
         INFUSER,
+        LARGE_CHEMICAL_REACTOR,
         LASER_TRANSFORMER,
         MIXER,
         MULTI_SMELTER,

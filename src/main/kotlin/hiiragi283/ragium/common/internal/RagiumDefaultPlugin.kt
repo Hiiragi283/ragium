@@ -114,9 +114,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
         }
-        helper.modify(RagiumMachineKeys.ASSEMBLY_LINE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTAssemblyLineBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.ASSEMBLY_LINE)
+        helper.modify(RagiumMachineKeys.ASSEMBLER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTAssemblerBlockEntity))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_CRAFTER_CRAFT)
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
@@ -170,6 +169,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.MULTI_SMELTER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
+        }
+        helper.modify(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTLargeChemicalReactorBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.LARGE_MACHINE)
+            set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.END_ROD)
