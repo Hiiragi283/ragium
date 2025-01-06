@@ -15,18 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerAdvancementTracker.class)
 public abstract class AdvancementRewardsMixin {
-
     @Shadow
     private ServerPlayerEntity owner;
     
     @Inject(method = "rewardEmptyAdvancements", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/AdvancementRewards;apply(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
     private void ragium$rewardEmptyAdvancements(ServerAdvancementLoader advancementLoader, CallbackInfo ci, @Local AdvancementEntry entry) {
-        HTAdvancementRewardCallback.EVENT.invoker().onRewards(owner, entry);
+        HTAdvancementRewardCallback.EVENT.invoker().onRewards(new HTAdvancementRewardCallback.Helper(owner, entry));
     }
     
     @Inject(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/AdvancementRewards;apply(Lnet/minecraft/server/network/ServerPlayerEntity;)V"))
     private void ragium$grantCriterion(AdvancementEntry entry, String criterionName, CallbackInfoReturnable<Boolean> cir) {
-        HTAdvancementRewardCallback.EVENT.invoker().onRewards(owner, entry);
+        HTAdvancementRewardCallback.EVENT.invoker().onRewards(new HTAdvancementRewardCallback.Helper(owner, entry));
     }
-
 }

@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory
 import net.minecraft.advancement.AdvancementEntry
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.util.Identifier
 
 /**
  * 進捗を解除したときに呼ばれるイベント
@@ -15,15 +16,31 @@ fun interface HTAdvancementRewardCallback {
         @JvmField
         val EVENT: Event<HTAdvancementRewardCallback> =
             EventFactory.createArrayBacked(HTAdvancementRewardCallback::class.java) { listeners: Array<HTAdvancementRewardCallback> ->
-                HTAdvancementRewardCallback { player: ServerPlayerEntity, entry: AdvancementEntry ->
-                    listeners.forEach { it.onRewards(player, entry) }
+                HTAdvancementRewardCallback { helper: Helper ->
+                    listeners.forEach { it.onRewards(helper) }
                 }
             }
     }
+
+    fun onRewards(helper: Helper)
 
     /**
      * @param player 進捗を解除したプレイヤー
      * @param entry 解除された進捗
      */
-    fun onRewards(player: ServerPlayerEntity, entry: AdvancementEntry)
+    data class Helper(private val player: ServerPlayerEntity, private val entry: AdvancementEntry) {
+        /**
+         * 指定した[filter]にプレイヤーが適している場合のみ[action]を実行します。
+         */
+        fun onMatchingPlayer(filter: (ServerPlayerEntity) -> Boolean, action: (ServerPlayerEntity, AdvancementEntry) -> Unit) {
+            if (filter(player)) action(player, entry)
+        }
+
+        /**
+         * 指定した[id]に進捗が一致した場合のみ[action]を実行します。
+         */
+        fun onMatchingEntry(id: Identifier, action: (ServerPlayerEntity, AdvancementEntry) -> Unit) {
+            if (entry.id == id) action(player, entry)
+        }
+    }
 }
