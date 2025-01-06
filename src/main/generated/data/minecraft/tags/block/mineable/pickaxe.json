@@ -12,7 +12,7 @@
     "ragium:asphalt_slab",
     "ragium:asphalt_stairs",
     "ragium:auto_illuminator",
-    "ragium:backpack_interface",
+    "ragium:backpack_crate",
     "ragium:basic_casing",
     "ragium:basic_coil",
     "ragium:basic_crate",
@@ -81,8 +81,8 @@
     "ragium:steel_pipe",
     "ragium:stone_pipe",
     "ragium:teleport_anchor",
-    "ragium:trash_box",
     "ragium:universal_pipe",
+    "ragium:void_crate",
     "ragium:wooden_pipe"
   ]
 }

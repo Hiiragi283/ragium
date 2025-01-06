@@ -260,7 +260,7 @@ internal object RagiumContentRegister {
                 .map { it[color] }
                 .map { InventoryStorage.of(it, direction) }
                 .getOrNull()
-        }, RagiumBlocks.BACKPACK_INTERFACE.get())
+        }, RagiumBlocks.BACKPACK_CRATE.get())
 
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? ->
             InsertionOnlyStorage { resource: ItemVariant, maxAmount: Long, _: TransactionContext ->
@@ -270,7 +270,7 @@ internal object RagiumContentRegister {
         // trash box
         registerItemStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.ITEM },
-            RagiumBlocks.TRASH_BOX.get(),
+            RagiumBlocks.VOID_CRATE.get(),
         )
         // cross pipe
         registerItemStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->
@@ -332,7 +332,7 @@ internal object RagiumContentRegister {
         } // trash box
         registerFluidStorage(
             { _: World, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction? -> HTVoidStorage.FLUID },
-            RagiumBlocks.TRASH_BOX.get(),
+            RagiumBlocks.VOID_CRATE.get(),
         )
         // cross pipe
         registerFluidStorage({ world: World, pos: BlockPos, _: BlockState, _: BlockEntity?, direction: Direction? ->

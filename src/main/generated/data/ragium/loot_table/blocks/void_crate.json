@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:backpack_interface"
+          "name": "ragium:void_crate"
         }
       ],
       "rolls": 1.0

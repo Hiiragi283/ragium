@@ -1,6 +1,0 @@
-{
-  "parent": "ragium:block/all_tinted",
-  "textures": {
-    "all": "ragium:block/backpack_interface"
-  }
-}

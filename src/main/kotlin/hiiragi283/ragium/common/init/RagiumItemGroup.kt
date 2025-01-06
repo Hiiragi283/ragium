@@ -145,7 +145,6 @@ object RagiumItemGroup {
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumBlocks.Creatives.entries)
                 entries.addAll(RagiumBlocks.MECHANICS)
-                entries.add(RagiumBlocks.BACKPACK_INTERFACE)
 
                 entries.addAll(RagiumBlocks.Grates.entries)
                 entries.addAll(RagiumBlocks.Casings.entries)
@@ -168,6 +167,10 @@ object RagiumItemGroup {
             icon { ItemStack(RagiumBlocks.Crates.PRIMITIVE) }
             entries { _: ItemGroup.DisplayContext, entries: ItemGroup.Entries ->
                 entries.addAll(RagiumBlocks.Crates.entries)
+                entries.add(RagiumBlocks.OPEN_CRATE)
+                entries.add(RagiumBlocks.VOID_CRATE)
+                entries.add(RagiumBlocks.BACKPACK_CRATE)
+
                 entries.addAll(RagiumBlocks.Drums.entries)
 
                 entries.addAll(RagiumBlocks.Exporters.entries)

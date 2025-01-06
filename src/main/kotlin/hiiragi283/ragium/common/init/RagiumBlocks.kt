@@ -251,6 +251,15 @@ object RagiumBlocks {
         override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_crate")
     }
 
+    @JvmField
+    val BACKPACK_CRATE: HTBlockContent = HTContent.ofBlock("backpack_crate")
+
+    @JvmField
+    val OPEN_CRATE: HTBlockContent = HTContent.ofBlock("open_crate")
+
+    @JvmField
+    val VOID_CRATE: HTBlockContent = HTContent.ofBlock("void_crate")
+
     enum class Drums(override val tier: HTMachineTier) :
         HTBlockContent,
         HTMachineTierProvider {
@@ -330,22 +339,14 @@ object RagiumBlocks {
     val NETWORK_INTERFACE: HTBlockContent = HTContent.ofBlock("network_interface")
 
     @JvmField
-    val OPEN_CRATE: HTBlockContent = HTContent.ofBlock("open_crate")
-
-    @JvmField
     val TELEPORT_ANCHOR: HTBlockContent = HTContent.ofBlock("teleport_anchor")
-
-    @JvmField
-    val TRASH_BOX: HTBlockContent = HTContent.ofBlock("trash_box")
 
     @JvmField
     val MECHANICS: List<HTBlockContent> = listOf(
         // colored
         EXTENDED_PROCESSOR, // red
         AUTO_ILLUMINATOR, // yellow
-        OPEN_CRATE, // green
         TELEPORT_ANCHOR, // blue
-        TRASH_BOX, // gray
         NETWORK_INTERFACE, // white
         // manual machines
         MANUAL_FORGE,
@@ -354,9 +355,6 @@ object RagiumBlocks {
     )
 
     //    Misc    //
-
-    @JvmField
-    val BACKPACK_INTERFACE: HTBlockContent = HTContent.ofBlock("backpack_interface")
 
     @JvmField
     val ITEM_DISPLAY: HTBlockContent = HTContent.ofBlock("item_display")
@@ -369,7 +367,7 @@ object RagiumBlocks {
 
     @JvmField
     val MISC: List<HTBlockContent> = listOf(
-        BACKPACK_INTERFACE,
+        BACKPACK_CRATE,
         ITEM_DISPLAY,
         SHAFT,
     )
@@ -549,6 +547,16 @@ object RagiumBlocks {
             registerBlock(crate, blockSettings(Blocks.SMOOTH_STONE)) { HTCrateBlock(crate.tier, it) }
             registerBlockItem(crate, itemSettings().tieredText(RagiumTranslationKeys.CRATE, crate.tier))
         }
+        registerBlock(
+            BACKPACK_CRATE,
+            blockSettings().mapColor(MapColor.BLACK).requiresTool().strength(2f, 6f),
+            ::HTBackpackInterfaceBlock,
+        )
+        registerBlock(OPEN_CRATE, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlock(VOID_CRATE, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItem(BACKPACK_CRATE)
+        registerBlockItem(OPEN_CRATE, itemSettings().descriptions(RagiumTranslationKeys.OPEN_CRATE))
+        registerBlockItem(VOID_CRATE, itemSettings().descriptions(RagiumTranslationKeys.TRASH_BOX))
         // drum
         Drums.entries.forEach { drum: Drums ->
             registerBlock(drum, blockSettings(Blocks.SMOOTH_STONE)) { HTDrumBlock(drum.tier, it) }
@@ -614,9 +622,7 @@ object RagiumBlocks {
             blockSettings(Blocks.SMOOTH_STONE),
             ::HTNetworkInterfaceBlock,
         )
-        registerBlock(OPEN_CRATE, blockSettings(Blocks.SMOOTH_STONE), ::Block)
         registerBlock(TELEPORT_ANCHOR, blockSettings(Blocks.SMOOTH_STONE), ::Block)
-        registerBlock(TRASH_BOX, blockSettings(Blocks.SMOOTH_STONE), ::Block)
         registerBlockItem(
             AUTO_ILLUMINATOR,
             /*itemSettings().descriptions(
@@ -631,15 +637,8 @@ object RagiumBlocks {
         registerBlockItem(MANUAL_GRINDER, itemSettings().descriptions(RagiumTranslationKeys.MANUAL_GRINDER))
         registerBlockItem(MANUAL_MIXER)
         registerBlockItem(NETWORK_INTERFACE, itemSettings().descriptions(RagiumTranslationKeys.NETWORK_INTERFACE))
-        registerBlockItem(OPEN_CRATE, itemSettings().descriptions(RagiumTranslationKeys.OPEN_CRATE))
         registerBlockItem(TELEPORT_ANCHOR)
-        registerBlockItem(TRASH_BOX, itemSettings().descriptions(RagiumTranslationKeys.TRASH_BOX))
         // misc
-        registerBlock(
-            BACKPACK_INTERFACE,
-            blockSettings().mapColor(MapColor.BLACK).requiresTool().strength(2f, 6f),
-            ::HTBackpackInterfaceBlock,
-        )
         registerBlock(
             ITEM_DISPLAY,
             blockSettings().strength(0.5f).sounds(BlockSoundGroup.GLASS),
@@ -654,10 +653,6 @@ object RagiumBlocks {
             INFESTING,
             blockSettings().ticksRandomly().dropsNothing(),
             ::HTInfectingBlock,
-        )
-        registerBlockItem(
-            BACKPACK_INTERFACE,
-            itemSettings().maybeRework(),
         )
         registerBlockItem(ITEM_DISPLAY)
         registerBlockItem(SHAFT)

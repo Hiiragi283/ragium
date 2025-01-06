@@ -89,8 +89,11 @@ object RagiumClient : ClientModInitializer {
         buildList {
             add(RagiumBlocks.Creatives.CRATE)
             add(RagiumBlocks.Creatives.EXPORTER)
+            add(RagiumBlocks.BACKPACK_CRATE)
             add(RagiumBlocks.ITEM_DISPLAY)
+            add(RagiumBlocks.OPEN_CRATE)
             add(RagiumBlocks.POROUS_NETHERRACK)
+            add(RagiumBlocks.VOID_CRATE)
 
             addAll(RagiumBlocks.Crates.entries)
             addAll(RagiumBlocks.CrossPipes.entries)
@@ -124,9 +127,9 @@ object RagiumClient : ClientModInitializer {
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)
 
-        ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, _: Int ->
-            state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1
-        }, RagiumBlocks.BACKPACK_INTERFACE.get())
+        ColorProviderRegistry.BLOCK.register({ state: BlockState, _: BlockRenderView?, _: BlockPos?, tintIndex: Int ->
+            if (tintIndex == 0) state.getOrNull(RagiumBlockProperties.COLOR)?.fireworkColor ?: -1 else -1
+        }, RagiumBlocks.BACKPACK_CRATE.get())
     }
 
     @JvmStatic

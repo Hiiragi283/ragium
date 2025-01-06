@@ -243,18 +243,6 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumHardModeContents.ALUMINUM.getContent(hardMode),
             RagiumItems.WARPED_CRYSTAL,
         )
-        createMechanics(
-            exporter,
-            RagiumBlocks.OPEN_CRATE,
-            RagiumItems.Gems.FLUORITE,
-            Items.HOPPER,
-        )
-        createMechanics(
-            exporter,
-            RagiumBlocks.TRASH_BOX,
-            RagiumHardModeContents.IRON.getContent(hardMode),
-            Items.LAVA_BUCKET,
-        )
         // consumers
         createProcessor(
             exporter,
@@ -545,6 +533,28 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .itemOutput(crate)
                 .offerTo(exporter, crate)
         }
+        // open crate
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.OPEN_CRATE)
+            .patterns(
+                "ABA",
+                "ACA",
+                "ABA",
+            ).input('A', RagiumHardModeContents.EMERALD.getPrefixedTag(hardMode))
+            .input('B', RagiumHardModeContents.STEEL.getPrefixedTag(hardMode))
+            .input('C', Items.HOPPER)
+            .offerTo(exporter)
+        // void crate
+        HTShapedRecipeJsonBuilder
+            .create(RagiumBlocks.VOID_CRATE)
+            .patterns(
+                "ABA",
+                "ACA",
+                "ABA",
+            ).input('A', ConventionalItemTags.OBSIDIANS)
+            .input('B', RagiumHardModeContents.STEEL.getPrefixedTag(hardMode))
+            .input('C', Items.LAVA_BUCKET)
+            .offerTo(exporter)
     }
 
     private fun craftCircuits(exporter: RecipeExporter) {
