@@ -90,9 +90,6 @@ object RagiumItems {
         CINNABAR(RagiumMaterialKeys.CINNABAR),
         CRYOLITE(RagiumMaterialKeys.CRYOLITE),
         FLUORITE(RagiumMaterialKeys.FLUORITE),
-
-        // tier 4
-        RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
@@ -111,6 +108,9 @@ object RagiumItems {
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         ALUMINUM(RagiumMaterialKeys.ALUMINUM),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+
+        // tier 4
+        RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_ingot")
@@ -140,6 +140,7 @@ object RagiumItems {
         EMERALD(RagiumMaterialKeys.EMERALD),
 
         // tier4
+        RAGIUM(RagiumMaterialKeys.RAGIUM),
         NETHERITE(RagiumMaterialKeys.NETHERITE),
         ;
 

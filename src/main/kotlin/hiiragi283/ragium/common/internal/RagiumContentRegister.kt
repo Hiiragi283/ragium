@@ -95,7 +95,7 @@ internal object RagiumContentRegister {
             // enter tier 4
             helper.onMatchingEntry(RagiumAPI.id("progress/ragium")) { player: ServerPlayerEntity, entry: AdvancementEntry ->
                 player.sendTitle(Text.literal("Welcome to Tier 4!").formatted(Rarity.EPIC.formatting))
-                RagiumNetworks.sendFloatingItem(player, RagiumItems.Gems.RAGIUM)
+                RagiumNetworks.sendFloatingItem(player, RagiumItems.Ingots.RAGIUM)
             }
         }
         // invoke accessory action when swapped armor
@@ -205,10 +205,6 @@ internal object RagiumContentRegister {
             )
             context.modify(integrationItems) { item: Item ->
                 add(RagiumComponentTypes.FOR_INTEGRATION, Unit)
-            }
-            // add rework flag
-            context.modify(RagiumItems.Gems.RAGIUM) {
-                add(RagiumComponentTypes.REWORK_TARGET, Unit)
             }
         }
         // radioactive effects

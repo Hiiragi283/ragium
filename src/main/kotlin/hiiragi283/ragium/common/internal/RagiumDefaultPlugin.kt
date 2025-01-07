@@ -213,7 +213,6 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM, Rarity.RARE)
-        helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialType.GEM, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.RUBY, HTMaterialType.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.SAPPHIRE, HTMaterialType.GEM, Rarity.RARE)
         // metal
@@ -221,6 +220,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
         helper.register(RagiumMaterialKeys.GOLD, HTMaterialType.METAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
+        helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialType.METAL, Rarity.EPIC)
 
         helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)

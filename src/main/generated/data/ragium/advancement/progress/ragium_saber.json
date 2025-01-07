@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:progress/ragium",
+  "parent": "ragium:progress/ragium_ingot",
   "criteria": {
     "has_items": {
       "conditions": {

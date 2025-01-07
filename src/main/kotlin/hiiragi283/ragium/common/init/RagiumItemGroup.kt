@@ -93,7 +93,7 @@ object RagiumItemGroup {
 
         register(ITEM) {
             icon {
-                RagiumItems.Gems.RAGIUM
+                RagiumItems.Ingots.RAGIUM
                     .asItem()
                     .defaultStack
             }

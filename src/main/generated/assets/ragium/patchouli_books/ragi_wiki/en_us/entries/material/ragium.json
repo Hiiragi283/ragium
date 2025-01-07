@@ -1,12 +1,12 @@
 {
   "advancement": "ragium:progress/ragium",
   "category": "ragium:material",
-  "icon": "ragium:ragium",
+  "icon": "ragium:ragium_ingot",
   "name": "material.ragium.ragium",
   "pages": [
     {
       "type": "patchouli:spotlight",
-      "item": "ragium:ragium",
+      "item": "ragium:ragium_ingot",
       "link_recipe": true,
       "text": "Ragium is perfectly purified material"
     }

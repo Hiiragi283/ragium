@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:gems/ragium"
+            "items": "#c:ingots/ragium"
           }
         ]
       },
@@ -17,10 +17,10 @@
     "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:ragium"
+      "id": "ragium:ragium_ingot"
     },
     "title": {
-      "translate": "tag_prefix.ragium.gem",
+      "translate": "tag_prefix.ragium.ingot",
       "with": [
         {
           "translate": "material.ragium.ragium"

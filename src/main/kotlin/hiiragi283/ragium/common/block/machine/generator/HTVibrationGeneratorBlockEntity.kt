@@ -43,10 +43,15 @@ class HTVibrationGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     private var vibrating: Boolean = false
 
-    override fun tickEach(world: World, pos: BlockPos, state: BlockState, ticks: Int) {
+    override fun tickEach(
+        world: World,
+        pos: BlockPos,
+        state: BlockState,
+        ticks: Int,
+    ) {
         Vibrations.Ticker.tick(world, listenerData, callback)
     }
-    
+
     override fun process(world: World, pos: BlockPos) {
         if (!vibrating) throw HTMachineException.GenerateEnergy(false)
     }
@@ -88,7 +93,7 @@ class HTVibrationGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             pos: BlockPos,
             event: RegistryEntry<GameEvent>,
             emitter: GameEvent.Emitter,
-        ): Boolean = !isActive
+        ): Boolean = true
 
         override fun accept(
             world: ServerWorld,
