@@ -66,6 +66,12 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getOrDefault(property: Pro
 }
 
 /**
+ * 指定した[property]の値を返します。
+ * @return [property]が含まれていない場合はnull
+ */
+fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getResult(property: Property<T>): Result<T> = runCatching { get(property) }
+
+/**
  * 指定した[content]とブロックが一致するか判定します。
  */
 fun BlockState.isOf(content: HTBlockContent): Boolean = isOf(content.get())

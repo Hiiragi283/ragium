@@ -2,7 +2,9 @@ package hiiragi283.ragium.api.fluid
 
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.extension.dropStackAt
+import hiiragi283.ragium.api.extension.error
 import hiiragi283.ragium.api.extension.ifPresent
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -11,11 +13,15 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.world.World
+import org.slf4j.Logger
 
 /**
  * [HTFluidDrinkingHandler]のレジストリ
  */
 object HTFluidDrinkingHandlerRegistry {
+    @JvmStatic
+    private val logger: Logger by DelegatedLogger()
+
     @JvmStatic
     private val registry: MutableMap<Fluid, HTFluidDrinkingHandler> = mutableMapOf()
 
@@ -45,15 +51,17 @@ object HTFluidDrinkingHandlerRegistry {
     @JvmStatic
     fun drinkFluid(stack: ItemStack, world: World, user: LivingEntity): ItemStack {
         if (!world.isClient) {
-            getHandler(stack)?.let { (fluid: Fluid, handler: HTFluidDrinkingHandler) ->
-                handler.onDrink(stack, world, user)
-                HTDrankFluidCriterion.trigger(user, fluid)
-                dropStackAt(
-                    user,
-                    RagiumItems.EMPTY_FLUID_CUBE,
-                )
-                stack.decrementUnlessCreative(1, user)
-            }
+            runCatching {
+                getHandler(stack)?.let { (fluid: Fluid, handler: HTFluidDrinkingHandler) ->
+                    handler.onDrink(stack, world, user)
+                    HTDrankFluidCriterion.trigger(user, fluid)
+                    dropStackAt(
+                        user,
+                        RagiumItems.EMPTY_FLUID_CUBE,
+                    )
+                    stack.decrementUnlessCreative(1, user)
+                }
+            }.onFailure(logger::error)
         }
         return stack
     }

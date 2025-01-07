@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "ragium-gametest",
+  "version": "1",
+  "entrypoints": {
+    "fabric-gametest": [
+      "hiiragi283.ragium.test.RagiumGameTest"
+    ]
+  }
+}

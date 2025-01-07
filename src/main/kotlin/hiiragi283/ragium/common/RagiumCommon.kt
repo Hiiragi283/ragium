@@ -1,18 +1,22 @@
 package hiiragi283.ragium.common
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import hiiragi283.ragium.common.internal.RagiumContentRegister
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import net.fabricmc.api.ModInitializer
+import org.slf4j.Logger
 
 object RagiumCommon : ModInitializer {
+    @JvmStatic
+    private val logger: Logger by DelegatedLogger()
+
     override fun onInitialize() {
         HTHardModeResourceCondition
 
-        RagiumAPI.LOGGER.info("Registering game objects...")
+        logger.info("Registering game objects...")
 
         HTBlockRotationHandler
         RagiumComponentTypes
@@ -39,6 +43,6 @@ object RagiumCommon : ModInitializer {
         RagiumContentRegister.initEvents()
         RagiumContentRegister.initRegistry()
 
-        RagiumAPI.LOGGER.info("Ragium initialized!")
+        logger.info("Ragium initialized!")
     }
 }

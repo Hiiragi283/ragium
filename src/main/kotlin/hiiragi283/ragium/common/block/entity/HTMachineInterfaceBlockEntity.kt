@@ -2,8 +2,10 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.HTBlockEntityBase
 import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.extension.error
 import hiiragi283.ragium.api.extension.getMachineEntity
-import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.getResult
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
@@ -17,12 +19,18 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import org.slf4j.Logger
 
 class HTMachineInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MACHINE_INTERFACE, pos, state),
     SidedStorageBlockEntity {
+    companion object {
+        @JvmStatic
+        private val logger: Logger by DelegatedLogger()
+    }
+
     val front: Direction?
-        get() = cachedState.getOrNull(Properties.FACING)
+        get() = cachedState.getResult(Properties.FACING).onFailure(logger::error).getOrNull()
     val targetPos: BlockPos?
         get() {
             val front: Direction = front ?: return null

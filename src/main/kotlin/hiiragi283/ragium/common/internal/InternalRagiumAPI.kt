@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
@@ -43,8 +44,12 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.util.Rarity
+import org.slf4j.Logger
 
 internal data object InternalRagiumAPI : RagiumAPI {
+    @JvmStatic
+    private val logger: Logger by DelegatedLogger()
+
     //    RagiumAPI    //
 
     override lateinit var machineRegistry: HTMachineRegistry
@@ -110,7 +115,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
         // complete
         machineRegistry =
             HTMachineRegistry(sortedKeys, blockMap, propertyCache)
-        RagiumAPI.LOGGER.info("Registered machine types and properties!")
+        logger.info("Registered machine types and properties!")
     }
 
     private class MachineContent(machineKey: HTMachineKey) : HTBlockContent {
@@ -174,7 +179,7 @@ internal data object InternalRagiumAPI : RagiumAPI {
                 val (_: HTTagPrefix, key: HTMaterialKey) = pair
                 val fixedKey: HTMaterialKey = altNameCache.getOrDefault(key.name, key)
                 if (fixedKey !in keyCache.keys) {
-                    RagiumAPI.LOGGER.warn("Could not bind item with unregistered material: $fixedKey!")
+                    logger.warn("Could not bind item with unregistered material: $fixedKey!")
                     false
                 } else {
                     true
@@ -189,12 +194,12 @@ internal data object InternalRagiumAPI : RagiumAPI {
                     rarityCache[key]?.let { builder.add(DataComponentTypes.RARITY, it) }
                 }
             }
-            RagiumAPI.LOGGER.info("Added rarities for material items!")
+            logger.info("Added rarities for material items!")
         }
 
         // complete
         materialRegistry = HTMaterialRegistry(sortedKeys, itemTable, propertyCache)
-        RagiumAPI.LOGGER.info("Registered material types and properties!")
+        logger.info("Registered material types and properties!")
     }
 
     //    ConfigImpl    //

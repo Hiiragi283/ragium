@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialRegistry
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
@@ -20,7 +21,6 @@ import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * RagiumのAPI
@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory
 @Suppress("DEPRECATION")
 interface RagiumAPI {
     companion object {
+        private val logger: Logger by DelegatedLogger()
+
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
 
@@ -36,9 +38,6 @@ interface RagiumAPI {
          */
         @JvmStatic
         fun id(path: String): Identifier = Identifier.of(MOD_ID, path)
-
-        @JvmStatic
-        val LOGGER: Logger = LoggerFactory.getLogger(MOD_NAME)
 
         /**
          * [RagiumAPI]の単一のインスタンスを返します。
@@ -51,7 +50,7 @@ interface RagiumAPI {
          */
         @JvmStatic
         val plugins: List<RagiumPlugin> by lazy {
-            LOGGER.info("=== Loaded Ragium Plugins ===")
+            logger.info("=== Loaded Ragium Plugins ===")
             buildList {
                 addAll(collectEntrypoints<RagiumPlugin>(RagiumPlugin.SERVER_KEY))
                 if (isClientEnv()) {
@@ -60,8 +59,8 @@ interface RagiumAPI {
             }.sortedWith(compareBy(RagiumPlugin::priority).thenBy { it::class.java.canonicalName })
                 .filter(RagiumPlugin::shouldLoad)
                 .onEach { plugin: RagiumPlugin ->
-                    LOGGER.info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
-                }.apply { LOGGER.info("=============================") }
+                    logger.info("- Priority : ${plugin.priority} ... ${plugin.javaClass.canonicalName}")
+                }.apply { logger.info("=============================") }
         }
     }
 

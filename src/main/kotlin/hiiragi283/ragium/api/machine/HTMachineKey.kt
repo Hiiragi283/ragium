@@ -64,9 +64,6 @@ class HTMachineKey private constructor(val id: Identifier) : Comparable<HTMachin
     val descriptionText: MutableText
         get() = Text.translatable(descriptionKey).formatted(Formatting.AQUA)
 
-    // val blockTag: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id.withPrefixedPath("machines/"))
-    // val itemTag: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id.withPrefixedPath("machines/"))
-
     /**
      * [HTMachineRegistry.Entry]を返します。
      * @return このキーが登録されていない場合はnullを返す

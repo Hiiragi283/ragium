@@ -3,6 +3,7 @@ package hiiragi283.ragium.mixin;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonElement;
+import com.mojang.logging.LogUtils;
 import hiiragi283.ragium.api.RagiumAPI;
 import hiiragi283.ragium.api.RagiumPlugin;
 import hiiragi283.ragium.api.material.HTMaterialKey;
@@ -19,8 +20,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,7 +33,9 @@ import java.util.Map;
 
 @Mixin(RecipeManager.class)
 public abstract class RecipeManagerMixin {
-
+    @Unique
+    private static final Logger LOGGER = LogUtils.getLogger();
+    
     @Shadow
     private Multimap<RecipeType<?>, RecipeEntry<?>> recipesByType;
 
@@ -44,11 +49,11 @@ public abstract class RecipeManagerMixin {
         RecipeExporter exporter = new RecipeExporter() {
             @Override
             public void accept(Identifier recipeId, Recipe<?> recipe, @Nullable AdvancementEntry advancement) {
-                // RagiumAPI.getLOGGER().info("Recipe: {} was registered!", recipeId);
+                // LOGGER.info("Recipe: {} was registered!", recipeId);
                 RecipeEntry<?> entry = new RecipeEntry<>(recipeId, recipe);
                 map1.put(recipe.getType(), entry);
                 if (map2.put(recipeId, entry) != null) {
-                    RagiumAPI.getLOGGER().warn("Recipe: {} was replaced!", recipeId);
+                    LOGGER.warn("Recipe: {} was replaced!", recipeId);
                 }
             }
 
@@ -64,6 +69,6 @@ public abstract class RecipeManagerMixin {
         });
         recipesByType = map1;
         recipesById = map2;
-        RagiumAPI.getLOGGER().info("Registered runtime recipes!");
+        LOGGER.info("Registered runtime recipes!");
     }
 }

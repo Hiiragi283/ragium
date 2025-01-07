@@ -1,5 +1,6 @@
 package hiiragi283.ragium.mixin;
 
+import com.mojang.logging.LogUtils;
 import hiiragi283.ragium.api.RagiumAPI;
 import hiiragi283.ragium.api.machine.HTMachineKey;
 import hiiragi283.ragium.api.machine.HTMachineRegistry;
@@ -18,6 +19,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,7 +35,9 @@ import java.util.Set;
 
 @Mixin(TagGroupLoader.class)
 public abstract class TagGroupLoaderMixin {
-
+    @Unique
+    private static final Logger LOGGER = LogUtils.getLogger();
+    
     @Final
     @Shadow
     private String dataType;
@@ -62,12 +66,12 @@ public abstract class TagGroupLoaderMixin {
                 // machine key tag
                 // add(map, key.getBlockTag(), entry.get(), Registries.BLOCK);
             });
-            RagiumAPI.getLOGGER().info("Registered runtime block tags!");
+            LOGGER.info("Registered runtime block tags!");
         }
         if (dataType.endsWith("fluid")) {
             // fluid tags
             RagiumFluids.getEntries().forEach(fluid -> add(map, fluid.getTagKey(), fluid.get(), Registries.FLUID));
-            RagiumAPI.getLOGGER().info("Registered runtime fluid tags!");
+            LOGGER.info("Registered runtime fluid tags!");
         }
         if (dataType.endsWith("item")) {
             // machine tags
@@ -87,7 +91,7 @@ public abstract class TagGroupLoaderMixin {
                     items.forEach((Item item) -> add(map, tagKey, item, Registries.ITEM));
                 }
             }));
-            RagiumAPI.getLOGGER().info("Registered runtime item tags!");
+            LOGGER.info("Registered runtime item tags!");
         }
     }
 

@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.net.URI
@@ -11,12 +13,29 @@ plugins {
 group = "hiiragi283.ragium"
 version = "0.11.0+121x"
 
+val gameTest = "gametest"
+
 sourceSets {
     main {
         resources {
             srcDir("src/main/generated")
         }
     }
+    val main: SourceSet by main
+    create(gameTest) {
+        compileClasspath += main.compileClasspath
+        compileClasspath += main.output
+        runtimeClasspath += main.runtimeClasspath
+        runtimeClasspath += main.output
+    }
+}
+
+val gametestSource: SourceSet = sourceSets.getByName(gameTest)
+
+configurations {
+    val implementation = "Implementation"
+    val testImplementation: Configuration = testImplementation.get().exclude("org.slf4j", "slf4j-simple")
+    getByName("$gameTest$implementation").extendsFrom(testImplementation)
 }
 
 repositories {
@@ -47,7 +66,10 @@ repositories {
 
 loom {
     accessWidenerPath = file("src/main/resources/ragium.accesswidener")
+    runtimeOnlyLog4j = true
+
     splitEnvironmentSourceSets()
+
     mods {
         create("ragium") {
             sourceSet(sourceSets.main.get())
@@ -61,6 +83,17 @@ loom {
         }
         getByName("server") {
             runDir = "run/server"
+        }
+        create(gameTest) {
+            server()
+            configName = gameTest
+            vmArgs(
+                "-Dfabric-api.gametest",
+                "-Dfabric.api.gametest.report-file=${project.layout.buildDirectory}/$name/junit.xml",
+            )
+            runDir = "build/test"
+            setSource(gametestSource)
+            isIdeConfigGenerated = true
         }
     }
 }
@@ -140,9 +173,6 @@ tasks {
     jar {
         from("LICENSE") {
             rename { "${it}_${project.base.archivesName.get()}" }
-        }
-        exclude { element: FileTreeElement ->
-            element.path.contains("/ragium/data/") && !element.path.endsWith("RagiumDataGenerator.class")
         }
         exclude("**/unused/**")
     }

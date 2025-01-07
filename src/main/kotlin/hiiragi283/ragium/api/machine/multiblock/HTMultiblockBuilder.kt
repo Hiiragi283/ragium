@@ -71,6 +71,10 @@ fun interface HTMultiblockBuilder {
         }
     }
 
+    fun add(data: HTMultiblockPattern.Data) {
+        add(data.x, data.y, data.z, data.pattern)
+    }
+
     fun add(
         x: Int,
         y: Int,

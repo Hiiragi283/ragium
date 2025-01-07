@@ -34,14 +34,14 @@ interface HTHardModeContent {
      * [HTHardModeContent]のシンプルな実装を返すビルダー
      */
     class Builder(val material: HTMaterialKey) {
-        private lateinit var normal: Pair<HTTagPrefix, HTItemContent>
-        private lateinit var hard: Pair<HTTagPrefix, HTItemContent>
+        private lateinit var normalPair: Pair<HTTagPrefix, HTItemContent>
+        private lateinit var hardPair: Pair<HTTagPrefix, HTItemContent>
 
         /**
          * 指定した[prefix]と[content]をハードモードでない時に返すように指定します。
          */
         fun normal(prefix: HTTagPrefix, content: HTItemContent): Builder = apply {
-            normal = prefix to content
+            normalPair = prefix to content
         }
 
         fun normal(prefix: HTTagPrefix, item: Item): Builder = normal(prefix, HTContent.fromItem(item))
@@ -52,7 +52,7 @@ interface HTHardModeContent {
          * 指定した[prefix]と[content]をハードモードの時に返すように指定します。
          */
         fun hard(prefix: HTTagPrefix, content: HTItemContent): Builder = apply {
-            hard = prefix to content
+            hardPair = prefix to content
         }
 
         fun hard(prefix: HTTagPrefix, item: Item): Builder = hard(prefix, HTContent.fromItem(item))
@@ -62,18 +62,22 @@ interface HTHardModeContent {
         /**
          * [HTHardModeContent]を返します。
          */
-        fun build(): HTHardModeContent = object : HTHardModeContent {
-            override val material: HTMaterialKey = this@Builder.material
+        fun build(): HTHardModeContent {
+            check(::normalPair.isInitialized) { "Requires normal contents!" }
+            check(::hardPair.isInitialized) { "Requires hard contents!" }
+            return object : HTHardModeContent {
+                override val material: HTMaterialKey = this@Builder.material
 
-            override fun getContent(hardMode: Boolean): HTItemContent = when (hardMode) {
-                true -> hard
-                false -> normal
-            }.second
+                override fun getContent(hardMode: Boolean): HTItemContent = when (hardMode) {
+                    true -> hardPair
+                    false -> normalPair
+                }.second
 
-            override fun getPrefix(hardMode: Boolean): HTTagPrefix = when (hardMode) {
-                true -> hard
-                false -> normal
-            }.first
+                override fun getPrefix(hardMode: Boolean): HTTagPrefix = when (hardMode) {
+                    true -> hardPair
+                    false -> normalPair
+                }.first
+            }
         }
     }
 }

@@ -1,11 +1,17 @@
 package hiiragi283.ragium.api.accessory
 
+import hiiragi283.ragium.api.extension.error
+import hiiragi283.ragium.api.util.DelegatedLogger
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
+import org.slf4j.Logger
 
 object HTAccessoryRegistry {
+    @JvmStatic
+    private val logger: Logger by DelegatedLogger()
+
     @JvmStatic
     private val equipped: MutableMap<Item, EquippedAction> = mutableMapOf()
 
@@ -31,12 +37,14 @@ object HTAccessoryRegistry {
 
     @JvmStatic
     fun register(item: ItemConvertible, builderAction: Builder.() -> Unit) {
-        val item1: Item = item.asItem()
-        Builder().apply(builderAction).apply {
-            equipped[item1] = equippedAction
-            unequipped[item1] = unequippedAction
-            slotType?.let { slotTypes1[item1] = it }
-        }
+        runCatching {
+            val item1: Item = item.asItem()
+            Builder().apply(builderAction).apply {
+                equipped[item1] = equippedAction
+                unequipped[item1] = unequippedAction
+                slotType?.let { slotTypes1[item1] = it }
+            }
+        }.onFailure(logger::error)
     }
 
     //    EquippedAction    //

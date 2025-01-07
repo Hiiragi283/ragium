@@ -24,8 +24,5 @@ enum class HTMachineType : StringIdentifiable {
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineType> = identifiedPacketCodec(HTMachineType.entries)
     }
 
-    // val blockTag: TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, RagiumAPI.id("machines/${asString()}"))
-    // val itemTag: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, RagiumAPI.id("machines/${asString()}"))
-
     override fun asString(): String = name.lowercase()
 }

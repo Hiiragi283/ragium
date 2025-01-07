@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.client.gui.HTFluidFilterScreen
 import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
@@ -65,9 +66,13 @@ import net.minecraft.util.TypedActionResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.BlockRenderView
 import net.minecraft.world.World
+import org.slf4j.Logger
 
 @Environment(EnvType.CLIENT)
 object RagiumClient : ClientModInitializer {
+    @JvmStatic
+    private val logger: Logger by DelegatedLogger()
+
     override fun onInitializeClient() {
         registerBlocks()
         registerEntities()
@@ -78,7 +83,7 @@ object RagiumClient : ClientModInitializer {
         registerNetworks()
         registerPattern()
 
-        RagiumAPI.LOGGER.info("Ragium-Client initialized!")
+        logger.info("Ragium-Client initialized!")
     }
 
     //    Blocks    //
@@ -255,7 +260,7 @@ object RagiumClient : ClientModInitializer {
                     else -> original
                 }
             }
-            RagiumAPI.LOGGER.info("Loaded runtime models!")
+            logger.info("Loaded runtime models!")
         }
 
         ItemTooltipCallback.EVENT.register(
