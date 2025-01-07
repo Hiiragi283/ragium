@@ -22,7 +22,7 @@ class HTMachineInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MACHINE_INTERFACE, pos, state),
     SidedStorageBlockEntity {
     val front: Direction?
-        get() = cachedState.getOrNull(Properties.HORIZONTAL_FACING)
+        get() = cachedState.getOrNull(Properties.FACING)
     val targetPos: BlockPos?
         get() {
             val front: Direction = front ?: return null

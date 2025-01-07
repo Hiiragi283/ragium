@@ -86,5 +86,5 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 }

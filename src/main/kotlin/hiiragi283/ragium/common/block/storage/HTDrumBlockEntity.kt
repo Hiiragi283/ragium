@@ -73,9 +73,9 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTM
     }
 
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
-        StorageUtil.calculateComparatorOutput(fluidStorage)
+        StorageUtil.calculateComparatorOutput(getFluidStorage(null))
 
     //    SidedStorageBlockEntity    //
 
-    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
+    override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 }

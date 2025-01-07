@@ -125,6 +125,9 @@ object RagiumTranslationKeys {
 
     //    Patchouli    //
 
+    const val PATCHOULI_NAME = "ragium.ragi_wiki.name"
+    const val PATCHOULI_LANDING = "ragium.ragi_wiki.landing"
+
     const val PATCHOULI_CRUDE_RAGINITE_ORE = "ragium.page.crude_raginite_ore"
     const val PATCHOULI_CRUDE_RAGINITE_ORE0 = "ragium.page.crude_raginite_ore0"
     const val PATCHOULI_CRUDE_RAGINITE_ORE1 = "ragium.page.crude_raginite_ore1"
@@ -136,7 +139,4 @@ object RagiumTranslationKeys {
 
     const val REI_ENTRY_NO_MATCHING = "tooltip.ragium.no_matching_entry"
     const val REI_ENTRY_APPLY_DAMAGE = "tooltip.ragium.apply_damage"
-
-    const val REI_RECIPE_BIOME = "tooltip.ragium.found_in_biome"
-    const val REI_RECIPE_INFO = "tooltip.ragium.recipe_info"
 }

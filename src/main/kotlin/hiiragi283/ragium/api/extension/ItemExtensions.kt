@@ -19,6 +19,18 @@ import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.Text
 
+//    ItemConvertible    //
+
+@Suppress("DEPRECATION")
+val ItemConvertible.registryEntry: RegistryEntry<Item>
+    get() = asItem().registryEntry
+
+/**
+ * このアイテムが[Items.AIR]と一致するか判定します。
+ */
+val ItemConvertible.isAir: Boolean
+    get() = asItem() == Items.AIR
+
 //    Item    //
 
 /**
@@ -90,12 +102,6 @@ fun Item.Settings.maybeRework(): Item.Settings = component(RagiumComponentTypes.
  */
 fun Item.Settings.radioactive(level: HTRadioactiveComponent): Item.Settings = component(HTRadioactiveComponent.COMPONENT_TYPE, level)
 
-/**
- * このアイテムが[Items.AIR]と一致するか判定します。
- */
-val Item.isAir: Boolean
-    get() = this == Items.AIR
-
 //    ItemStack    //
 
 /**
@@ -107,7 +113,7 @@ val Item.isAir: Boolean
  */
 @Suppress("DEPRECATION")
 fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: ComponentChanges.Builder.() -> Unit = {}): ItemStack {
-    val entry: RegistryEntry<Item> = item?.asItem()?.takeUnless { it.isAir }?.registryEntry ?: return ItemStack.EMPTY
+    val entry: RegistryEntry<Item> = item?.takeUnless { it.isAir }?.registryEntry ?: return ItemStack.EMPTY
     val changes: ComponentChanges = ComponentChanges.builder().apply(builderAction).build()
     return ItemStack(entry, count, changes)
 }

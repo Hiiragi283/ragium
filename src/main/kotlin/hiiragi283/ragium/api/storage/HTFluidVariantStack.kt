@@ -16,7 +16,7 @@ import net.minecraft.registry.tag.TagKey
 /**
  * [FluidVariant]向けの[HTVariantStack]の実装
  */
-class HTFluidVariantStack(override val variant: FluidVariant, override val amount: Long) : HTVariantStack<Fluid, FluidVariant> {
+class HTFluidVariantStack(variant: FluidVariant, amount: Long) : HTVariantStack<Fluid, FluidVariant>(variant, amount) {
     companion object {
         /**
          * [HTVariantStack.isEmpty]が常にtrueとなるインスタンス

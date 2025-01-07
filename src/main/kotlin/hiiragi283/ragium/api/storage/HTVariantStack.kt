@@ -2,6 +2,9 @@ package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.DataResult
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
+import net.minecraft.component.ComponentChanges
+import net.minecraft.component.ComponentHolder
+import net.minecraft.component.ComponentMap
 
 /**
  * [net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount]を発展させたクラス
@@ -10,9 +13,9 @@ import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant
  * @see HTItemVariantStack
  * @see HTFluidVariantStack
  */
-interface HTVariantStack<O : Any, T : TransferVariant<O>> {
-    val variant: T
-    val amount: Long
+abstract class HTVariantStack<O : Any, T : TransferVariant<O>>(val variant: T, val amount: Long) : ComponentHolder {
+    val components: ComponentChanges
+        get() = variant.components
 
     /**
      * [TransferVariant.isBlank]または[amount]が0以下の場合はtrue，それ以外の場合はfalse
@@ -46,4 +49,8 @@ interface HTVariantStack<O : Any, T : TransferVariant<O>> {
             return DataResult.success(stack)
         }
     }
+
+    //    ComponentHolder    //
+
+    final override fun getComponents(): ComponentMap = variant.componentMap
 }

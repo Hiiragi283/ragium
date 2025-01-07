@@ -611,32 +611,16 @@ object RagiumBlocks {
             RagiumBlockEntityTypes.AUTO_ILLUMINATOR,
             blockSettings(Blocks.SMOOTH_STONE),
         )
-        registerBlock(
-            EXTENDED_PROCESSOR,
-            blockSettings(Blocks.SMOOTH_STONE),
-            ::HTExtendedProcessorBlock,
-        )
+        registerBlock(EXTENDED_PROCESSOR, blockSettings(Blocks.SMOOTH_STONE), ::HTExtendedProcessorBlock)
         registerBlockWithBE(
             MANUAL_FORGE,
             RagiumBlockEntityTypes.MANUAL_FORGE,
             blockSettings(Blocks.BRICKS).nonOpaque(),
         )
         registerBlock(MANUAL_GRINDER, blockSettings(Blocks.BRICKS), ::HTManualGrinderBlock)
-        registerBlockWithBE(
-            MANUAL_MIXER,
-            RagiumBlockEntityTypes.MANUAL_MIXER,
-            blockSettings(Blocks.BRICKS),
-        )
-        registerFacingBlockWithBE(
-            MACHINE_INTERFACE,
-            RagiumBlockEntityTypes.MACHINE_INTERFACE,
-            blockSettings(Blocks.SMOOTH_STONE),
-        )
-        registerBlock(
-            NETWORK_INTERFACE,
-            blockSettings(Blocks.SMOOTH_STONE),
-            ::HTNetworkInterfaceBlock,
-        )
+        registerBlockWithBE(MANUAL_MIXER, RagiumBlockEntityTypes.MANUAL_MIXER, blockSettings(Blocks.BRICKS))
+        registerBlock(MACHINE_INTERFACE, blockSettings(Blocks.SMOOTH_STONE), ::HTMachineInterfaceBlock)
+        registerBlock(NETWORK_INTERFACE, blockSettings(Blocks.SMOOTH_STONE), ::HTNetworkInterfaceBlock)
         registerBlock(TELEPORT_ANCHOR, blockSettings(Blocks.SMOOTH_STONE), ::Block)
         registerBlockItem(
             AUTO_ILLUMINATOR,

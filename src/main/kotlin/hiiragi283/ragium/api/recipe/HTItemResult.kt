@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.data.RagiumCodecs
 import hiiragi283.ragium.api.extension.entryPacketCodec
+import hiiragi283.ragium.api.extension.registryEntry
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -60,7 +61,7 @@ class HTItemResult(val entry: RegistryEntry<Item>, val count: Int = 1, val compo
 
     @Suppress("DEPRECATION")
     constructor(item: ItemConvertible, count: Int = 1, components: ComponentChanges = ComponentChanges.EMPTY) : this(
-        item.asItem().registryEntry,
+        item.registryEntry,
         count,
         components,
     )

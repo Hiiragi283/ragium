@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.data
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTFluidContent
+import hiiragi283.ragium.api.extension.registryEntry
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -50,7 +51,7 @@ class HTShapedRecipeJsonBuilder private constructor(val output: ItemStack) : Cra
             output: ItemConvertible,
             count: Int = 1,
             components: ComponentChanges = ComponentChanges.EMPTY,
-        ): HTShapedRecipeJsonBuilder = create(ItemStack(output.asItem().registryEntry, count, components))
+        ): HTShapedRecipeJsonBuilder = create(ItemStack(output.registryEntry, count, components))
     }
 
     private lateinit var patterns: Array<out String>

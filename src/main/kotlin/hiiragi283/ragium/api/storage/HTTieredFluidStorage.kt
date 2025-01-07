@@ -24,7 +24,7 @@ class HTTieredFluidStorage(
     val tier: HTMachineTier,
     val storageIO: HTStorageIO,
     val inputTag: TagKey<Fluid>?,
-    val callback: () -> Unit,
+    val callback: () -> Unit = {},
     val syncIndex: Int = 0,
 ) : SingleFluidStorage(),
     HTFluidInteractable,
@@ -51,6 +51,10 @@ class HTTieredFluidStorage(
         val newStorage = HTTieredFluidStorage(newTier, storageIO, inputTag, callback, syncIndex)
         newStorage.variantStack = stack
         return newStorage
+    }
+
+    fun invokeCallback() {
+        callback()
     }
 
     //    HTFluidInteractable    //

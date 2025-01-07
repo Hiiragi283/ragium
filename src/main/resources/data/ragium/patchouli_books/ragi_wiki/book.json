@@ -1,10 +1,10 @@
 {
-  "name": "Ragi Wiki",
-  "landing_text": "An official wiki for Ragium",
+  "name": "ragium.ragi_wiki.name",
+  "landing_text": "ragium.ragi_wiki.landing",
   "book_texture": "patchouli:textures/gui/book_red.png",
   "creative_tab": "ragium:item",
   "i18n": true,
   "model": "patchouli:book_red",
   "use_resource_pack": true,
-  "version": 1
+  "version": "buildNumber"
 }

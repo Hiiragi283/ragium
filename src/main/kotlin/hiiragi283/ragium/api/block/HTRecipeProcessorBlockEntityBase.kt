@@ -70,5 +70,5 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
 
     //    SidedStorageBlockEntity    //
 
-    final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage
+    final override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 }

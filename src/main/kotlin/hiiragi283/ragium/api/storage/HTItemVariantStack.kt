@@ -17,7 +17,7 @@ import net.minecraft.registry.tag.TagKey
 /**
  * [ItemVariant]向けの[HTVariantStack]の実装
  */
-class HTItemVariantStack(override val variant: ItemVariant, override val amount: Long) : HTVariantStack<Item, ItemVariant> {
+class HTItemVariantStack(variant: ItemVariant, amount: Long) : HTVariantStack<Item, ItemVariant>(variant, amount) {
     companion object {
         /**
          * [HTVariantStack.isEmpty]が常にtrueとなるインスタンス

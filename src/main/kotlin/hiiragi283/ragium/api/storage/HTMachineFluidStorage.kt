@@ -7,11 +7,8 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
-import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
@@ -19,8 +16,7 @@ import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.registry.RegistryWrapper
 
-class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO>, tier: HTMachineTier) :
-    SlottedStorage<FluidVariant>,
+class HTMachineFluidStorage(private val parts: List<HTTieredFluidStorage>) :
     HTFluidInteractable,
     HTScreenFluidProvider {
     companion object {
@@ -45,44 +41,13 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
             .build(machine)
     }
 
-    private var callback: () -> Unit = {}
+    fun getStorage(index: Int): DataResult<HTTieredFluidStorage> = parts.getOrNull(index).toDataResult { "Invalid child index: $index" }
 
-    fun setCallback(callback: () -> Unit): HTMachineFluidStorage = apply {
-        this.callback = callback
-    }
+    fun <T : Any> map(index: Int, transform: (HTTieredFluidStorage) -> T?): DataResult<T> = getStorage(index).map(transform)
 
-    private val parts: Array<SingleFluidStorage> =
-        Array(size) { slot: Int -> SingleFluidStorage.withFixedCapacity(tier.tankCapacity, callback) }
+    fun getVariantStack(index: Int): HTFluidVariantStack = map(index, HTTieredFluidStorage::variantStack).orElse(HTFluidVariantStack.EMPTY)
 
-    fun getStorage(index: Int): DataResult<SingleFluidStorage> = parts.getOrNull(index).toDataResult { "Invalid child index: $index" }
-
-    fun <T : Any> map(index: Int, transform: (SingleFluidStorage) -> T?): DataResult<T> = getStorage(index).map(transform)
-
-    fun getVariantStack(index: Int): HTFluidVariantStack = map(index, SingleFluidStorage::variantStack).orElse(HTFluidVariantStack.EMPTY)
-
-    fun update(tier: HTMachineTier): HTMachineFluidStorage = apply {
-        val copied: Array<SingleFluidStorage> = parts.copyOf()
-        copied.forEachIndexed { index: Int, storage: SingleFluidStorage ->
-            val newStorage: SingleFluidStorage = SingleFluidStorage.withFixedCapacity(tier.tankCapacity, callback)
-            newStorage.variantStack = storage.variantStack
-            parts[index] = newStorage
-        }
-    }
-
-    private fun getStorageIO(slot: Int): HTStorageIO = slotMap.getOrDefault(slot, HTStorageIO.INTERNAL)
-
-    fun findInsertableStorage(variant: FluidVariant): SingleFluidStorage? {
-        val insertableStorages: List<SingleFluidStorage> =
-            parts.filterIndexed { slot: Int, _: SingleFluidStorage -> getStorageIO(slot).canInsert }
-        return insertableStorages.find { storageIn: SingleFluidStorage -> storageIn.resource == variant }
-            ?: insertableStorages.find(SingleFluidStorage::isEmpty)
-    }
-
-    fun findExtractableStorage(variant: FluidVariant): SingleFluidStorage? {
-        val extractableStorages: List<SingleFluidStorage> =
-            parts.filterIndexed { slot: Int, _: SingleFluidStorage -> getStorageIO(slot).canExtract }
-        return extractableStorages.find { storageIn: SingleFluidStorage -> storageIn.resource == variant }
-    }
+    fun update(tier: HTMachineTier): HTMachineFluidStorage = parts.map { it.updateTier(tier) }.let(::HTMachineFluidStorage)
 
     fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup, tier: HTMachineTier = HTMachineTier.PRIMITIVE) {
         val list: NbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE.toInt())
@@ -95,7 +60,7 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
     }
 
     fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        callback()
+        parts.forEach(HTTieredFluidStorage::invokeCallback)
         nbt.put(
             NBT_KEY,
             buildNbtList {
@@ -104,19 +69,22 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
         )
     }
 
+    fun wrapStorage(): CombinedStorage<FluidVariant, Storage<FluidVariant>> =
+        parts.map(HTTieredFluidStorage::wrapStorage).let(::CombinedStorage)
+
     //    HTFluidInteractable    //
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean {
         // try to extract from outputs
-        parts.forEachIndexed { index: Int, storageIn: SingleFluidStorage ->
-            val storageIO: HTStorageIO = getStorageIO(index)
+        parts.forEachIndexed { index: Int, storageIn: HTTieredFluidStorage ->
+            val storageIO: HTStorageIO = storageIn.storageIO
             if (!storageIO.canExtract) return@forEachIndexed
             if (player.interactWithFluidStorage(storageIn, storageIO)) {
                 return true
             }
         }
         // try to extract from inputs
-        parts.forEachIndexed { index: Int, storageIn: SingleFluidStorage ->
+        parts.forEachIndexed { index: Int, storageIn: HTTieredFluidStorage ->
             if (player.interactWithFluidStorage(storageIn)) {
                 return true
             }
@@ -126,29 +94,8 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
 
     //    HTScreenFluidProvider    //
 
-    fun createFluidPackets(vararg slotRange: Int): Map<Int, HTFluidVariantStack> = slotRange.associateWith { parts[it].variantStack }
-
-    fun createFluidPackets(slotRange: IntRange): Map<Int, HTFluidVariantStack> = slotRange.associateWith { parts[it].variantStack }
-
-    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = createFluidPackets(0 until parts.size)
-
-    //    SlottedStorage    //
-
-    override fun insert(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long =
-        findInsertableStorage(resource)?.insert(resource, maxAmount, transaction) ?: 0
-
-    override fun extract(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long =
-        findExtractableStorage(resource)?.extract(resource, maxAmount, transaction) ?: 0
-
-    override fun iterator(): MutableIterator<StorageView<FluidVariant>> = object : AbstractList<StorageView<FluidVariant>>() {
-        override val size: Int = parts.size
-
-        override fun get(index: Int): StorageView<FluidVariant> = getStorageIO(index).wrapView(parts[index])
-    }.toMutableList().iterator()
-
-    override fun getSlotCount(): Int = parts.size
-
-    override fun getSlot(slot: Int): SingleSlotStorage<FluidVariant> = getStorage(slot).orThrow
+    override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> =
+        parts.associate { storageIn: HTTieredFluidStorage -> storageIn.syncIndex to storageIn.variantStack }
 
     //    Builder    //
 
@@ -184,13 +131,25 @@ class HTMachineFluidStorage(size: Int, private val slotMap: Map<Int, HTStorageIO
             slots.forEach { setIO(it, HTStorageIO.GENERIC) }
         }
 
-        fun build(tier: HTMachineTier): HTMachineFluidStorage = HTMachineFluidStorage(
-            slotArray.size,
-            slotArray.mapIndexed { slot: Int, storageIO: HTStorageIO -> slot to storageIO }.toMap(),
-            tier,
-        )
+        fun build(tier: HTMachineTier): HTMachineFluidStorage = slotArray
+            .mapIndexed { index: Int, storageIO: HTStorageIO ->
+                HTTieredFluidStorage(
+                    tier,
+                    storageIO,
+                    null,
+                    syncIndex = index,
+                )
+            }.let(::HTMachineFluidStorage)
 
-        fun <T> build(machine: T): HTMachineFluidStorage where T : BlockEntity, T : HTMachineTierProvider =
-            build(machine.tier).setCallback(machine::markDirty)
+        fun <T> build(machine: T): HTMachineFluidStorage where T : BlockEntity, T : HTMachineTierProvider = slotArray
+            .mapIndexed { index: Int, storageIO: HTStorageIO ->
+                HTTieredFluidStorage(
+                    machine.tier,
+                    storageIO,
+                    null,
+                    machine::markDirty,
+                    index,
+                )
+            }.let(::HTMachineFluidStorage)
     }
 }
