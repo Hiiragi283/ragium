@@ -102,6 +102,15 @@ object RagiumMaterialKeys {
     @JvmField
     val RAGIUM: HTMaterialKey = HTMaterialKey.of("ragium")
 
+    @JvmField
+    val ECHORIUM: HTMaterialKey = HTMaterialKey.of("echorium")
+
+    @JvmField
+    val FIERIUM: HTMaterialKey = HTMaterialKey.of("fierium")
+
+    @JvmField
+    val DRAGONIUM: HTMaterialKey = HTMaterialKey.of("dragonium")
+
     // integrations
     @JvmField
     val IRIDIUM: HTMaterialKey = HTMaterialKey.of("iridium")

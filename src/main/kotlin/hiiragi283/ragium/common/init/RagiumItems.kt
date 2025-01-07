@@ -12,10 +12,8 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTArmorType
 import hiiragi283.ragium.api.util.HTToolType
 import hiiragi283.ragium.common.item.*
-import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponents
-import net.minecraft.component.type.UnbreakableComponent
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
 import net.minecraft.item.*
@@ -111,6 +109,9 @@ object RagiumItems {
 
         // tier 4
         RAGIUM(RagiumMaterialKeys.RAGIUM),
+        ECHORIUM(RagiumMaterialKeys.ECHORIUM),
+        FIERIUM(RagiumMaterialKeys.FIERIUM),
+        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ;
 
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_ingot")
@@ -141,6 +142,9 @@ object RagiumItems {
 
         // tier4
         RAGIUM(RagiumMaterialKeys.RAGIUM),
+        ECHORIUM(RagiumMaterialKeys.ECHORIUM),
+        FIERIUM(RagiumMaterialKeys.FIERIUM),
+        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         NETHERITE(RagiumMaterialKeys.NETHERITE),
         ;
 
@@ -202,6 +206,9 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey("stella_${name.lowercase()}")
     }
 
+    @JvmField
+    val DRAGONIC_ELYTRA: HTItemContent = HTContent.ofItem("dragonic_elytra")
+
     //    Tools    //
 
     enum class SteelTools(val toolType: HTToolType) : HTItemContent {
@@ -252,6 +259,9 @@ object RagiumItems {
 
     @JvmField
     val GIGANT_HAMMER: HTItemContent = HTContent.ofItem("gigant_hammer")
+
+    @JvmField
+    val ECHO_BULLET: HTItemContent = HTContent.ofItem("echo_bullet")
 
     @JvmField
     val RAGI_WRENCH: HTItemContent = HTContent.ofItem("ragi_wrench")
@@ -691,6 +701,7 @@ object RagiumItems {
                         ).build(),
                 ),
         )
+        registerItem(DRAGONIC_ELYTRA, item = ::HTDragonicElytraItem)
         // steel tool
         SteelTools.entries.forEach { tool: SteelTools ->
             registerItem(tool) {
@@ -718,8 +729,7 @@ object RagiumItems {
         registerItem(
             GIGANT_HAMMER,
             itemSettings()
-                .component(DataComponentTypes.UNBREAKABLE, UnbreakableComponent(true))
-                .maxCount(1)
+                .unbreakable()
                 .rarity(Rarity.EPIC)
                 .attributeModifiers(
                     createToolAttribute(ToolMaterials.NETHERITE, 15.0, -3.0)
@@ -743,6 +753,7 @@ object RagiumItems {
                 ),
             ::HTGigantHammerItem,
         )
+        registerItem(ECHO_BULLET, item = ::HTEchoBulletItem)
         registerItem(
             RAGI_WRENCH,
             itemSettings()

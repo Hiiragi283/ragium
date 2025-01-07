@@ -5,7 +5,7 @@
     "tier": "advanced"
   },
   "item_inputs": [
-    "#c:gems/ragium",
+    "#c:ingots/ragium",
     "ragium:processor_socket"
   ],
   "item_outputs": [

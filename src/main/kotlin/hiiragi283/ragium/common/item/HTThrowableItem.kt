@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.ragium.api.extension.throwEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity
+import net.minecraft.entity.projectile.ProjectileEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ProjectileItem
@@ -26,5 +26,5 @@ abstract class HTThrowableItem(settings: Settings) :
         }
     }
 
-    abstract fun createEntity(world: World, user: LivingEntity): ThrownItemEntity
+    abstract fun createEntity(world: World, user: LivingEntity): ProjectileEntity
 }

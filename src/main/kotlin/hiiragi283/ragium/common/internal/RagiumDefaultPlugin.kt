@@ -220,7 +220,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
         helper.register(RagiumMaterialKeys.GOLD, HTMaterialType.METAL, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
+
         helper.register(RagiumMaterialKeys.RAGIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.ECHORIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.FIERIUM, HTMaterialType.METAL, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.DRAGONIUM, HTMaterialType.METAL, Rarity.EPIC)
 
         helper.register(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)

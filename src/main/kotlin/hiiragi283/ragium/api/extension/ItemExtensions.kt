@@ -13,6 +13,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentChanges
 import net.minecraft.component.DataComponentTypes
+import net.minecraft.component.type.UnbreakableComponent
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.*
 import net.minecraft.registry.entry.RegistryEntry
@@ -101,6 +102,9 @@ fun Item.Settings.maybeRework(): Item.Settings = component(RagiumComponentTypes.
  * 指定した[level]を放射能レベルとして設定します。
  */
 fun Item.Settings.radioactive(level: HTRadioactiveComponent): Item.Settings = component(HTRadioactiveComponent.COMPONENT_TYPE, level)
+
+fun Item.Settings.unbreakable(showInTooltip: Boolean = true): Item.Settings =
+    component(DataComponentTypes.UNBREAKABLE, UnbreakableComponent(showInTooltip)).maxCount(1)
 
 //    ItemStack    //
 

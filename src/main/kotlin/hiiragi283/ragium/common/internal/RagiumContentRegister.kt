@@ -30,6 +30,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents
+import net.fabricmc.fabric.api.loot.v3.LootTableSource
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking
 import net.fabricmc.fabric.api.`object`.builder.v1.trade.TradeOfferHelper
 import net.fabricmc.fabric.api.registry.FuelRegistry
@@ -50,6 +52,7 @@ import net.minecraft.block.DispenserBlock
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityType
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffects
@@ -57,6 +60,12 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.*
+import net.minecraft.loot.LootPool
+import net.minecraft.loot.LootTable
+import net.minecraft.loot.entry.ItemEntry
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider
+import net.minecraft.registry.RegistryKey
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.property.Properties
@@ -216,6 +225,23 @@ internal object RagiumContentRegister {
                 stack.get(HTRadioactiveComponent.COMPONENT_TYPE)?.applyEffect(entity)
             }
         }
+        // modify loot table
+        LootTableEvents.MODIFY.register {
+                key: RegistryKey<LootTable>,
+                builder: LootTable.Builder,
+                source: LootTableSource,
+                lookup: RegistryWrapper.WrapperLookup,
+            ->
+            // wandering trader drops trader catalog
+            if (key == EntityType.WANDERING_TRADER.lootTableId) {
+                builder.pool(
+                    LootPool
+                        .builder()
+                        .rolls(ConstantLootNumberProvider.create(1.0f))
+                        .with(ItemEntry.builder(RagiumItems.TRADER_CATALOG)),
+                )
+            }
+        }
     }
 
     @JvmStatic
@@ -254,6 +280,12 @@ internal object RagiumContentRegister {
         TradeOfferHelper.registerWanderingTraderOffers(1) { factories: MutableList<TradeOffers.Factory> ->
             factories.add(TradeOffers.SellItemFactory(RagiumItems.CINNAMON_STICK.get(), 5, 5, 1, 1))
         }
+
+        buildList {
+            add(RagiumItems.ECHO_BULLET)
+
+            addAll(RagiumItems.Dynamites.entries)
+        }.forEach(DispenserBlock::registerProjectileBehavior)
     }
 
     private fun registerItemStorages() {

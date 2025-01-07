@@ -154,6 +154,7 @@ object RagiumClient : ClientModInitializer {
         RagiumEntityTypes.DYNAMITES.forEach { entityType: EntityType<out ThrownItemEntity> ->
             EntityRendererRegistry.register(entityType, ::FlyingItemEntityRenderer)
         }
+        EntityRendererRegistry.register(RagiumEntityTypes.ECHO_BULLET, ::HTEchoBulletEntityRenderer)
     }
 
     //    Fluids    //

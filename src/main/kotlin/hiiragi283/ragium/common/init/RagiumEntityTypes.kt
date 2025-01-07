@@ -65,6 +65,17 @@ object RagiumEntityTypes {
     }
 
     @JvmField
+    val ECHO_BULLET: EntityType<HTEchoBulletEntity> = register(
+        "echo_bullet",
+        ::HTEchoBulletEntity,
+        SpawnGroup.MISC,
+    ) {
+        dimensions(1.0F, 1.0F)
+        maxTrackingRange(4)
+        trackingTickInterval(10)
+    }
+
+    @JvmField
     val DYNAMITES: List<EntityType<out ThrownItemEntity>> = listOf(
         DYNAMITE,
         ANVIL_DYNAMITE,

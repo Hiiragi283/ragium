@@ -115,6 +115,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItems.SteelArmors.entries)
                 entries.addAll(RagiumItems.DeepSteelArmors.entries)
                 entries.addAll(RagiumItems.StellaSuits.entries)
+                entries.add(RagiumItems.DRAGONIC_ELYTRA)
 
                 entries.addAll(RagiumItems.SteelTools.entries)
                 entries.addAll(RagiumItems.DeepSteelTools.entries)
@@ -123,6 +124,7 @@ object RagiumItemGroup {
                 entries.add(RagiumItems.STELLA_SABER)
                 entries.add(RagiumItems.RAGIUM_SABER)
                 entries.add(RagiumItems.GIGANT_HAMMER)
+                entries.add(RagiumItems.ECHO_BULLET)
                 entries.addAll(RagiumItems.Dynamites.entries)
 
                 entries.add(RagiumItems.FLUID_FILTER)

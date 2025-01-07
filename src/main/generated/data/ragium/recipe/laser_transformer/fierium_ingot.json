@@ -7,10 +7,10 @@
   "item_inputs": [
     {
       "count": 16,
-      "items": "ragium:ragi_crystal"
+      "items": "minecraft:ancient_debris"
     }
   ],
   "item_outputs": [
-    "ragium:ragium_ingot"
+    "ragium:fierium_ingot"
   ]
 }

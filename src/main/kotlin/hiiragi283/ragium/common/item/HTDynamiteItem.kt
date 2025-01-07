@@ -6,7 +6,6 @@ import hiiragi283.ragium.common.entity.HTDynamiteEntity
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.projectile.ProjectileEntity
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.tooltip.TooltipType
 import net.minecraft.text.Text
@@ -28,7 +27,7 @@ class HTDynamiteItem(settings: Settings) : HTThrowableItem(settings) {
             .appendTooltip(context, tooltip::add, type)
     }
 
-    override fun createEntity(world: World, user: LivingEntity): ThrownItemEntity = HTDynamiteEntity(world, user)
+    override fun createEntity(world: World, user: LivingEntity): ProjectileEntity = HTDynamiteEntity(world, user)
         .setItemFromOwner(user)
 
     override fun createEntity(
