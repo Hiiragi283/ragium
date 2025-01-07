@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.render
 
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.renderMultiblock
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.fabricmc.api.EnvType

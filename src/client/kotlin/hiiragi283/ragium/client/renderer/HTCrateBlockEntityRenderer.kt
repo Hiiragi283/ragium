@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.renderer
 
+import hiiragi283.ragium.api.block.entity.HTCrateBlockEntityBase
 import hiiragi283.ragium.api.extension.renderItem
-import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
@@ -14,11 +14,11 @@ import net.minecraft.util.math.Vec3d
 import java.text.NumberFormat
 import kotlin.math.PI
 
-class HTCrateBlockEntityRenderer(context: BlockEntityRendererFactory.Context) : BlockEntityRenderer<HTCrateBlockEntity> {
+class HTCrateBlockEntityRenderer(context: BlockEntityRendererFactory.Context) : BlockEntityRenderer<HTCrateBlockEntityBase> {
     val textRenderer: TextRenderer = context.textRenderer
 
     override fun render(
-        entity: HTCrateBlockEntity,
+        entity: HTCrateBlockEntityBase,
         tickDelta: Float,
         matrices: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
@@ -36,13 +36,14 @@ class HTCrateBlockEntityRenderer(context: BlockEntityRendererFactory.Context) : 
         renderItem(
             entity.world,
             Vec3d.ZERO.offset(front, 0.5).add(0.0, 0.5, 0.0),
-            entity.itemStorage.variant.toStack(),
+            entity.itemStorage.resource.toStack(),
             matrices,
             vertexConsumers,
             scale = 0.6f,
             yaw = yaw,
         )
         // render count
+        if (!entity.showCount) return
         val amount: String = NumberFormat.getNumberInstance().format(entity.itemStorage.amount)
         matrices.push()
         when (front) {

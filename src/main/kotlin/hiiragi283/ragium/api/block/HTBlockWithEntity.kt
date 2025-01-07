@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.block
 
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.machine.process
 
-import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -31,7 +31,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofSmall()
 
-    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.Builder(0).build(this)
+    override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.EMPTY
 
     override val processor: HTFurnaceRecipeProcessor<SmeltingRecipe> =
         HTFurnaceRecipeProcessor(RecipeType.SMELTING, inventory, 0, 1)

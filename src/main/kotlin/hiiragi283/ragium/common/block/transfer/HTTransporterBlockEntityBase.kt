@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.block.entity.HTCrateBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
@@ -11,9 +10,7 @@ import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.network.HTCratePreviewPayload
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.item.base.SingleItemStorage
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.component.ComponentMap
@@ -25,13 +22,13 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
-    HTBlockEntityBase(RagiumBlockEntityTypes.CRATE, pos, state),
-    SidedStorageBlockEntity,
+class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTMachineTier) :
+    HTCrateBlockEntityBase(RagiumBlockEntityTypes.CRATE, pos, state),
     HTMachineTierProvider {
+    constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.tier)
+
     private inner class ItemStorage(val tier: HTMachineTier) : SingleItemStorage() {
         override fun onFinalCommit() {
             ifPresentWorld { world: World ->
@@ -44,19 +41,17 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HT
         override fun getCapacity(variant: ItemVariant): Long = tier.crateCapacity
     }
 
-    var itemStorage: SingleItemStorage = ItemStorage(tier)
-        private set
+    override val itemStorage: SingleItemStorage = ItemStorage(tier)
+    override val showCount: Boolean
+        get() = !itemStorage.isEmpty
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, tier)
         itemStorage.writeNbt(nbt, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt, this::tier)
-        itemStorage = ItemStorage(tier)
         itemStorage.readNbt(nbt, wrapperLookup)
     }
 
@@ -156,8 +151,4 @@ class HTCrateBlockEntity(pos: BlockPos, state: BlockState, override var tier: HT
 
     override fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int =
         StorageUtil.calculateComparatorOutput(itemStorage)
-
-    //    SidedStorageBlockEntity    //
-
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = itemStorage
 }

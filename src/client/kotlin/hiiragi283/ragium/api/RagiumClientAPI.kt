@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api
 
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
 import hiiragi283.ragium.api.render.HTMultiblockPatternRenderer

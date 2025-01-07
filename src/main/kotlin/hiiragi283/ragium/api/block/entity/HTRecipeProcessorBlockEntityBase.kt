@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider

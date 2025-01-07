@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
@@ -46,6 +48,9 @@ fun World.replaceBlockState(pos: BlockPos, doBreak: Boolean = false, transform: 
 }
 
 //    BlockState    //
+
+val BlockState.tier: HTMachineTier
+    get() = getOrNull(HTMachineTier.PROPERTY) ?: (block as? HTMachineTierProvider)?.tier ?: HTMachineTier.PRIMITIVE
 
 /**
  * 指定した[property]の値を返します。

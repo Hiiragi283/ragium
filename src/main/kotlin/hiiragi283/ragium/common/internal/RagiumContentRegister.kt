@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.accessory.HTAccessoryRegistry
 import hiiragi283.ragium.api.accessory.HTAccessorySlotTypes
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.event.HTAdvancementRewardCallback
 import hiiragi283.ragium.api.event.HTInventoryTickCallback
@@ -61,11 +61,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
-import net.minecraft.util.ActionResult
-import net.minecraft.util.BlockRotation
-import net.minecraft.util.DyeColor
-import net.minecraft.util.Hand
-import net.minecraft.util.Rarity
+import net.minecraft.util.*
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -401,9 +397,7 @@ internal object RagiumContentRegister {
 
     private fun registerTierProviders() {
         HTMachineTier.SIDED_LOOKUP.registerFallback { _: World, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Direction? ->
-            (blockEntity as? HTMachineTierProvider)?.tier
-                ?: (state.block as? HTMachineTierProvider)?.tier
-                ?: state.getOrNull(HTMachineTier.PROPERTY)
+            (blockEntity as? HTMachineTierProvider)?.tier ?: state.tier
         }
     }
 

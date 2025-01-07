@@ -1,11 +1,10 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTFluidInteractable
 import hiiragi283.ragium.api.util.DelegatedLogger
-import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
 import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
@@ -52,7 +51,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     val isActive: Boolean
         get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
     override val tier: HTMachineTier
-        get() = cachedState.getOrDefault(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
+        get() = cachedState.tier
 
     //    HTBlockEntityBase    //
     final override fun addComponents(builder: ComponentMap.Builder) {
@@ -182,15 +181,17 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     open fun onFailed(world: World, pos: BlockPos) {}
 
-    val property: PropertyDelegate = HTDynamicPropertyDelegate(3, ::getProperty, ::setProperty)
+    val property: PropertyDelegate = object : PropertyDelegate {
+        override fun get(index: Int): Int = when (index) {
+            0 -> ticks
+            1 -> tickRate
+            else -> -1
+        }
 
-    protected open fun getProperty(index: Int): Int = when (index) {
-        0 -> ticks
-        1 -> tickRate
-        else -> -1
+        override fun set(index: Int, value: Int) {}
+
+        override fun size(): Int = 3
     }
-
-    protected open fun setProperty(index: Int, value: Int) {}
 
     //    NamedScreenHandlerFactory    //
 

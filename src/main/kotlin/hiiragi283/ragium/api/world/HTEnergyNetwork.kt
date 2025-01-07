@@ -58,7 +58,7 @@ class HTEnergyNetwork() :
     enum class Flag {
         /**
          * エネルギーを消費します。
-         * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.energyFlag
+         * @see hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase.energyFlag
          */
         CONSUME() {
             override fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext?): Boolean {
@@ -77,7 +77,7 @@ class HTEnergyNetwork() :
 
         /**
          * エネルギーを生産します。
-         * @see hiiragi283.ragium.api.block.HTMachineBlockEntityBase.energyFlag
+         * @see hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase.energyFlag
          */
         GENERATE() {
             override fun processAmount(network: HTEnergyNetwork?, amount: Long, parent: TransactionContext?): Boolean {

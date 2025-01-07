@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.block.HTRecipeProcessorBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.machine.HTMachineKey

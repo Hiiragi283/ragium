@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.add
 import hiiragi283.ragium.api.extension.addAllContents
 import hiiragi283.ragium.api.extension.blockEntityType
@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.entity.HTAutoIlluminatorBlockEntity
 import hiiragi283.ragium.common.block.entity.HTCreativeSourceBlockEntity
 import hiiragi283.ragium.common.block.entity.HTItemDisplayBlockEntity
-import hiiragi283.ragium.common.block.entity.HTMachineInterfaceBlockEntity
+import hiiragi283.ragium.common.block.machine.HTMachineInterfaceBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualForgeBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualMixerBlockEntity

@@ -1,13 +1,11 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTCrateBlockEntityBase
 import hiiragi283.ragium.api.data.HTNbtCodecs
 import hiiragi283.ragium.api.extension.getStackInMainHand
 import hiiragi283.ragium.api.storage.HTCreativeStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -16,13 +14,12 @@ import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.ActionResult
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) :
-    HTBlockEntityBase(RagiumBlockEntityTypes.CREATIVE_CRATE, pos, state),
-    SidedStorageBlockEntity {
-    val itemStorage: HTCreativeStorage<ItemVariant> = HTCreativeStorage.ofItem()
+    HTCrateBlockEntityBase(RagiumBlockEntityTypes.CREATIVE_CRATE, pos, state) {
+    override val itemStorage: HTCreativeStorage<ItemVariant> = HTCreativeStorage.ofItem()
+    override val showCount: Boolean = false
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
@@ -49,8 +46,4 @@ class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) :
         }
         return ActionResult.success(world.isClient)
     }
-
-    //    SidedStorageBlockEntity    //
-
-    override fun getItemStorage(side: Direction?): Storage<ItemVariant>? = itemStorage
 }

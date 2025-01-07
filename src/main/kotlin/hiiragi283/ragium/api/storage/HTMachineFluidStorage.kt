@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.DataResult
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
@@ -21,6 +21,9 @@ class HTMachineFluidStorage(private val parts: List<HTTieredFluidStorage>) :
     HTScreenFluidProvider {
     companion object {
         const val NBT_KEY = "fluid_storages"
+
+        @JvmField
+        val EMPTY = HTMachineFluidStorage(listOf())
 
         @JvmStatic
         fun ofSmall(machine: HTMachineBlockEntityBase): HTMachineFluidStorage = Builder(2)

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
+import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -24,24 +24,24 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
-class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override var tier: HTMachineTier = HTMachineTier.PRIMITIVE) :
+class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTMachineTier) :
     HTBlockEntityBase(RagiumBlockEntityTypes.DRUM, pos, state),
     SidedStorageBlockEntity,
     HTMachineTierProvider {
-    private var fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
+    constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.tier)
+
+    private val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage
         .Builder(1)
         .generic(0)
         .build(this)
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, tier)
         fluidStorage.writeNbt(nbt, wrapperLookup)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt, this::tier)
         fluidStorage.readNbt(nbt, wrapperLookup, tier)
     }
 

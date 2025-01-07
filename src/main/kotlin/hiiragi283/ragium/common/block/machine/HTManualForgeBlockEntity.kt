@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.machine
 
-import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier

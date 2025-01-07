@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.readNbt
 import hiiragi283.ragium.api.extension.sendPacket
@@ -65,7 +65,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     /**
      * ブロックが右クリックされたときに呼ばれます。
-     * @see [HTBlockWithEntity.onUse]
+     * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.onUse]
      */
     open fun onRightClicked(
         state: BlockState,
@@ -85,7 +85,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     /**
      * ブロックが左クリックされたときに呼ばれます。
-     * @see [HTBlockWithEntity.onBlockBreakStart]
+     * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.onBlockBreakStart]
      */
     open fun onLeftClicked(
         state: BlockState,
@@ -96,7 +96,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     /**
      * ブロックが設置されたときに呼ばれます。
-     * @see [HTBlockWithEntity.onPlaced]
+     * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.onPlaced]
      */
     open fun onPlaced(
         world: World,
@@ -109,7 +109,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     /**
      * ブロックが置換されたときに呼ばれます。
-     * @see [HTBlockWithEntity.onStateReplaced]
+     * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.onStateReplaced]
      */
     open fun onStateReplaced(
         state: BlockState,
@@ -123,7 +123,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     /**
      * ブロックのコンパレータ出力を返します。
-     * @see [HTBlockWithEntity.getComparatorOutput]
+     * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.getComparatorOutput]
      */
     open fun getComparatorOutput(state: BlockState, world: World, pos: BlockPos): Int = 0
 
@@ -134,7 +134,7 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
 
     /**
      * 毎tick呼び出されます。
-     * @see [HTBlockWithEntity.getTicker]
+     * @see [hiiragi283.ragium.api.block.HTBlockWithEntity.getTicker]
      */
     fun tick(world: World, pos: BlockPos, state: BlockState) {
         if (!shouldTick) return

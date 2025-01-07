@@ -2,7 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumClientAPI
-import hiiragi283.ragium.api.block.HTBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
@@ -121,7 +121,7 @@ object RagiumClient : ClientModInitializer {
         // block entity renderer
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CRATE, ::HTCrateBlockEntityRenderer)
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CREATIVE_CRATE) { HTCreativeCrateBlockEntityRenderer }
+        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CREATIVE_CRATE, ::HTCrateBlockEntityRenderer)
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.EXTENDED_PROCESSOR) { HTExtendedProcessorBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }

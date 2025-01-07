@@ -25,7 +25,7 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
                 }
         }
 
-        val resourceAmount: HTFluidVariantStack?
+        val variantStack: HTFluidVariantStack?
             get() = context.itemVariant.componentMap.get(RagiumComponentTypes.DRUM)
 
         //    SingleSlotStorage    //
@@ -33,8 +33,8 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
         override fun insert(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long {
             StoragePreconditions.notBlankNotNegative(resource, maxAmount)
             val inserted: Long = when {
-                resourceAmount != null ->
-                    if (resourceAmount!!.variant == resource) min(maxAmount, capacity - resourceAmount!!.amount) else 0
+                variantStack != null ->
+                    if (variantStack!!.variant == resource) min(maxAmount, capacity - variantStack!!.amount) else 0
 
                 else -> min(maxAmount, capacity)
             }
@@ -52,7 +52,7 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
 
         override fun extract(resource: FluidVariant, maxAmount: Long, transaction: TransactionContext): Long {
             StoragePreconditions.notBlankNotNegative(resource, maxAmount)
-            resourceAmount?.let {
+            variantStack?.let {
                 if (it.variant == resource) {
                     val extracted: Long = min(maxAmount, amount)
                     if (extracted > 0) {
@@ -75,9 +75,9 @@ class HTTieredFluidItemStorage private constructor(val context: ContainerItemCon
 
         override fun isResourceBlank(): Boolean = resource.isBlank
 
-        override fun getResource(): FluidVariant = resourceAmount?.variant ?: FluidVariant.blank()
+        override fun getResource(): FluidVariant = variantStack?.variant ?: FluidVariant.blank()
 
-        override fun getAmount(): Long = resourceAmount?.amount ?: 0
+        override fun getAmount(): Long = variantStack?.amount ?: 0
 
         override fun getCapacity(): Long = tier.tankCapacity
     }

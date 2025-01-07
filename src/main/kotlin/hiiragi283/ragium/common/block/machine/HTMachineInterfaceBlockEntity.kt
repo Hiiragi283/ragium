@@ -1,7 +1,7 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.machine
 
-import hiiragi283.ragium.api.block.HTBlockEntityBase
-import hiiragi283.ragium.api.block.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.error
 import hiiragi283.ragium.api.extension.getMachineEntity
 import hiiragi283.ragium.api.extension.getResult
