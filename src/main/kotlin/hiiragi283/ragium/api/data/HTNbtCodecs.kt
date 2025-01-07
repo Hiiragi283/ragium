@@ -13,6 +13,7 @@ import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.util.Uuids
 import net.minecraft.util.math.Direction
+import net.minecraft.world.event.Vibrations
 import java.util.*
 
 @Suppress("UnstableApiUsage")
@@ -59,4 +60,7 @@ object HTNbtCodecs {
                 RegistryCodecs.entryList(RegistryKeys.ITEM).fieldOf("items"),
             ),
         )
+
+    @JvmField
+    val VIBRATION_DATA: HTNbtCodec<Vibrations.ListenerData> = HTNbtCodec("listener_data", Vibrations.ListenerData.CODEC)
 }

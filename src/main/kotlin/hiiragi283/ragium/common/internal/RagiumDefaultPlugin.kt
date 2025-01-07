@@ -110,6 +110,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
+        helper.modify(RagiumMachineKeys.VIBRATION_GENERATOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTVibrationGeneratorBlockEntity))
+            set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_SCULK_SHRIEKER_SHRIEK)
+        }
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))

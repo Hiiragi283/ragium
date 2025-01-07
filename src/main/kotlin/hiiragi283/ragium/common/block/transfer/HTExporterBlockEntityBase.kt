@@ -30,14 +30,14 @@ abstract class HTExporterBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos
 
     final override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.FLUID_FILTER.writeTo(nbt, fluidFilter)
-        HTNbtCodecs.ITEM_FILTER.writeTo(nbt, itemFilter)
+        HTNbtCodecs.FLUID_FILTER.writeTo(nbt, wrapperLookup, fluidFilter)
+        HTNbtCodecs.ITEM_FILTER.writeTo(nbt, wrapperLookup, itemFilter)
     }
 
     final override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.FLUID_FILTER.readAndSet(nbt, this::fluidFilter)
-        HTNbtCodecs.ITEM_FILTER.readAndSet(nbt, this::itemFilter)
+        HTNbtCodecs.FLUID_FILTER.readAndSet(nbt, wrapperLookup, this::fluidFilter)
+        HTNbtCodecs.ITEM_FILTER.readAndSet(nbt, wrapperLookup, this::itemFilter)
     }
 
     final override fun onRightClicked(

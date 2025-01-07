@@ -28,12 +28,12 @@ class HTCreativeDrumBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.FLUID_VARIANT.writeTo(nbt, fluidStorage.resource)
+        HTNbtCodecs.FLUID_VARIANT.writeTo(nbt, wrapperLookup, fluidStorage.resource)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.FLUID_VARIANT.readAndSet(nbt, fluidStorage::setResource)
+        HTNbtCodecs.FLUID_VARIANT.readAndSet(nbt, wrapperLookup, fluidStorage::setResource)
     }
 
     override fun onRightClicked(

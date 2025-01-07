@@ -47,12 +47,16 @@ object RagiumMachineKeys {
     val THERMAL_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("thermal_generator"))
 
     @JvmField
+    val VIBRATION_GENERATOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("vibration_generator"))
+
+    @JvmField
     val GENERATORS: List<HTMachineKey> = listOf(
         COMBUSTION_GENERATOR,
         NUCLEAR_REACTOR,
         SOLAR_GENERATOR,
         STEAM_GENERATOR,
         THERMAL_GENERATOR,
+        VIBRATION_GENERATOR,
     )
 
     //    Processor    //

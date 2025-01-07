@@ -149,6 +149,10 @@ object RagiumBlockEntityTypes {
     val THERMAL_GENERATOR: BlockEntityType<HTThermalGeneratorBlockEntity> =
         register("thermal_generator", ::HTThermalGeneratorBlockEntity)
 
+    @JvmField
+    val VIBRATION_GENERATOR: BlockEntityType<HTVibrationGeneratorBlockEntity> =
+        register("vibration_generator", ::HTVibrationGeneratorBlockEntity)
+
     //    Misc    //
 
     @JvmField
@@ -209,6 +213,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.NUCLEAR_REACTOR, NUCLEAR_REACTOR)
         registerMachineBlocks(RagiumMachineKeys.STEAM_GENERATOR, STEAM_GENERATOR)
         registerMachineBlocks(RagiumMachineKeys.THERMAL_GENERATOR, THERMAL_GENERATOR)
+        registerMachineBlocks(RagiumMachineKeys.VIBRATION_GENERATOR, VIBRATION_GENERATOR)
         // processors
         RagiumMachineKeys.PROCESSORS.forEach {
             registerMachineBlocks(it, SIMPLE_PROCESSOR)

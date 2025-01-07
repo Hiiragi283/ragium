@@ -26,17 +26,17 @@ abstract class HTTransporterBlockEntityBase(type: BlockEntityType<*>, pos: Block
     protected var type: HTPipeType = HTPipeType.NONE
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, tier)
-        HTNbtCodecs.PIPE_TYPE.writeTo(nbt, type)
+        HTNbtCodecs.MACHINE_TIER.writeTo(nbt, wrapperLookup, tier)
+        HTNbtCodecs.PIPE_TYPE.writeTo(nbt, wrapperLookup, type)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
-        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt) { newTier: HTMachineTier ->
+        HTNbtCodecs.MACHINE_TIER.readAndSet(nbt, wrapperLookup) { newTier: HTMachineTier ->
             val oldTier: HTMachineTier = tier
             tier = newTier
             onTierUpdated(oldTier, tier)
         }
-        HTNbtCodecs.PIPE_TYPE.readAndSet(nbt, this::type)
+        HTNbtCodecs.PIPE_TYPE.readAndSet(nbt, wrapperLookup, this::type)
     }
 
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}

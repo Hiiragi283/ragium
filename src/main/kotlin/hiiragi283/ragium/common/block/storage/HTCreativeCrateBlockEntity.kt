@@ -23,12 +23,12 @@ class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.ITEM_VARIANT.writeTo(nbt, itemStorage.resource)
+        HTNbtCodecs.ITEM_VARIANT.writeTo(nbt, wrapperLookup, itemStorage.resource)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.ITEM_VARIANT.readAndSet(nbt, itemStorage::setResource)
+        HTNbtCodecs.ITEM_VARIANT.readAndSet(nbt, wrapperLookup, itemStorage::setResource)
     }
 
     override fun onRightClicked(

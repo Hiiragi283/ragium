@@ -290,6 +290,8 @@
   "machine_type.ragium.steam_generator.description": "Generate energy from water and coal like fuels",
   "machine_type.ragium.thermal_generator": "Thermal Generator",
   "machine_type.ragium.thermal_generator.description": "Generate energy from hot fluids",
+  "machine_type.ragium.vibration_generator": "Vibration Generator",
+  "machine_type.ragium.vibration_generator.description": "Augh! Pervert! Death penalty!",
   "material.ragium.alkali": "Alkali",
   "material.ragium.aluminum": "Aluminum",
   "material.ragium.ash": "Ash",

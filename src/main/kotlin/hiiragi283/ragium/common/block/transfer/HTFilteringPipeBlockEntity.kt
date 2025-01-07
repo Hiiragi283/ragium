@@ -42,14 +42,14 @@ class HTFilteringPipeBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.SIDED_FLUID_FILTER.writeTo(nbt, fluidFilterMap)
-        HTNbtCodecs.SIDED_ITEM_FILTER.writeTo(nbt, itemFilterMap)
+        HTNbtCodecs.SIDED_FLUID_FILTER.writeTo(nbt, wrapperLookup, fluidFilterMap)
+        HTNbtCodecs.SIDED_ITEM_FILTER.writeTo(nbt, wrapperLookup, itemFilterMap)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.SIDED_FLUID_FILTER.readAndSet(nbt, fluidFilterMap::putAll)
-        HTNbtCodecs.SIDED_ITEM_FILTER.readAndSet(nbt, itemFilterMap::putAll)
+        HTNbtCodecs.SIDED_FLUID_FILTER.readAndSet(nbt, wrapperLookup, fluidFilterMap::putAll)
+        HTNbtCodecs.SIDED_ITEM_FILTER.readAndSet(nbt, wrapperLookup, itemFilterMap::putAll)
     }
 
     override fun onRightClicked(

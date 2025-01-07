@@ -290,6 +290,8 @@
   "machine_type.ragium.steam_generator.description": "水と石炭類から発電する",
   "machine_type.ragium.thermal_generator": "地熱発電機",
   "machine_type.ragium.thermal_generator.description": "高温の液体から発電する",
+  "machine_type.ragium.vibration_generator": "音波発電機",
+  "machine_type.ragium.vibration_generator.description": "エッチなのはダメ!死刑!",
   "material.ragium.alkali": "アルカリ",
   "material.ragium.aluminum": "アルミニウム",
   "material.ragium.ash": "灰",

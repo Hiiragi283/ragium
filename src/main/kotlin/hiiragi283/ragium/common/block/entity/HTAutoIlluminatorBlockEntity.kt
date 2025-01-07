@@ -27,12 +27,12 @@ class HTAutoIlluminatorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.writeNbt(nbt, wrapperLookup)
-        HTNbtCodecs.PLACER.writeTo(nbt, placer)
+        HTNbtCodecs.PLACER.writeTo(nbt, wrapperLookup, placer)
     }
 
     override fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup) {
         super.readNbt(nbt, wrapperLookup)
-        HTNbtCodecs.PLACER.readAndSetNullable(nbt, this::placer)
+        HTNbtCodecs.PLACER.readAndSetNullable(nbt, wrapperLookup, this::placer)
     }
 
     override fun onPlaced(
