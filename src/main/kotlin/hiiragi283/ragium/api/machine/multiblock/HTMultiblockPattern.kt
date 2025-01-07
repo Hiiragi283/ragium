@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.machine.multiblock
 
 import net.minecraft.block.BlockState
-import net.minecraft.text.MutableText
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3i
 import net.minecraft.world.World
@@ -14,7 +14,7 @@ interface HTMultiblockPattern {
      * この要素の名前
      * @see [HTMultiblockManager.add]
      */
-    val text: MutableText
+    val text: Text
 
     /**
      * 指定された[world]の[pos]が条件に一致するか判定します。

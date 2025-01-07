@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.screen.HTRockGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
@@ -65,16 +66,18 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult = when {
-        pos.aroundPos.none { posIn: BlockPos ->
-            world.getFluidState(posIn).isIn(FluidTags.WATER)
-        } -> HTUnitResult.errorString { "Require one water source at least around Rock Generator!" }
+    override fun process(world: World, pos: BlockPos) {
+        when {
+            pos.aroundPos.none { posIn: BlockPos ->
+                world.getFluidState(posIn).isIn(FluidTags.WATER)
+            } -> throw HTMachineException.AroundBlock(false, Blocks.WATER, 1)
 
-        pos.aroundPos.none { posIn: BlockPos ->
-            world.getFluidState(posIn).isIn(FluidTags.LAVA)
-        } -> HTUnitResult.errorString { "Require one lava source at least around Rock Generator!" }
+            pos.aroundPos.none { posIn: BlockPos ->
+                world.getFluidState(posIn).isIn(FluidTags.LAVA)
+            } -> throw HTMachineException.AroundBlock(false, Blocks.LAVA, 1)
 
-        else -> processor.process(world, machineKey, tier)
+            else -> processor.process(world, machineKey, tier)
+        }
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =

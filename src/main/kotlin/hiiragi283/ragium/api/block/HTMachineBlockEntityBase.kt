@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.block
 
-import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTFluidInteractable
+import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.api.util.HTDynamicPropertyDelegate
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumBlockProperties
@@ -27,6 +27,7 @@ import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
+import org.slf4j.Logger
 
 /**
  * Ragiumで使用する機械の基礎クラス
@@ -38,6 +39,11 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     HTFluidInteractable,
     HTMachineProvider,
     HTMachineTierProvider {
+    companion object {
+        @JvmStatic
+        private val logger: Logger by DelegatedLogger()
+    }
+
     val definition: HTMachineDefinition
         get() = HTMachineDefinition(machineKey, tier)
 
@@ -47,8 +53,6 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
     override val tier: HTMachineTier
         get() = cachedState.getOrDefault(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
-
-    private var errorMessage: String? = null
 
     //    HTBlockEntityBase    //
     final override fun addComponents(builder: ComponentMap.Builder) {
@@ -135,26 +139,31 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     final override fun tickSecond(world: World, pos: BlockPos, state: BlockState) {
         if (world.isClient) return
-        world
-            .getEnergyNetwork()
-            .validate(
-                { energyFlag == HTEnergyNetwork.Flag.GENERATE || it.canConsume(tier.processCost) },
-                { "Failed to extract required energy from network!" },
-            ).flatMap { network: HTEnergyNetwork -> process(world, pos).map { network } }
-            .validate(
-                { network: HTEnergyNetwork -> energyFlag.processAmount(network, tier.processCost) },
-                { "Failed to interact energy network" },
-            ).ifSuccess { _: HTEnergyNetwork ->
+        val network: HTEnergyNetwork = world.getEnergyNetwork().ifError(logger::error).getOrNull() ?: return
+        if (energyFlag == HTEnergyNetwork.Flag.CONSUME && !network.canConsume(tier.processCost)) {
+            logger.error("Failed to extract required energy from network!")
+            return
+        }
+        runCatching { process(world, pos) }
+            .onSuccess {
+                if (!energyFlag.processAmount(network, tier.processCost)) {
+                    logger.error("Failed to interact energy network")
+                    return
+                }
+            }.onSuccess {
                 machineKey.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
                     world.playSound(null, pos, it, SoundCategory.BLOCKS, 0.2f, 1.0f)
                 }
-                errorMessage = null
                 activateState(world, pos, true)
                 onSucceeded(world, pos)
-            }.ifError { error: DataResult.Error<HTEnergyNetwork> ->
-                errorMessage = error.message()
+            }.onFailure { throwable: Throwable ->
                 activateState(world, pos, false)
                 onFailed(world, pos)
+                val throwable1: Throwable = when (throwable) {
+                    is HTMachineException -> throwable.takeIf(HTMachineException::showInLog)
+                    else -> throwable
+                } ?: return@onFailure
+                logger.error("Error on {} at {}: {}", machineKey, blockPosText(pos).string, throwable1.message)
             }
         markDirty()
     }
@@ -163,9 +172,11 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     /**
      * 機械の処理を行います。
-     * @return 機械がエネルギーを消費する場合は[HTUnitResult.success]
+     *
+     * 投げられた例外は安全に処理されます。
+     * @throws HTMachineException 機械がエネルギーを消費しない場合
      */
-    abstract fun process(world: World, pos: BlockPos): HTUnitResult
+    abstract fun process(world: World, pos: BlockPos)
 
     open fun onSucceeded(world: World, pos: BlockPos) {}
 

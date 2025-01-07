@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.util.HTUnitResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
@@ -118,12 +117,6 @@ fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -
         false -> DataResult.error(errorMessage)
     }
 }
-
-/**
- * 指定した[transform]で[HTUnitResult]に変換します。
- */
-fun <R : Any> DataResult<R>.unitMap(transform: (R) -> HTUnitResult): HTUnitResult =
-    map(transform).mapOrElse(Function.identity()) { HTUnitResult.errorString { it.message() } }
 
 /**
  * [Optional]を[DataResult]に変換します。

@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.tags.RagiumFluidTags
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -54,22 +54,23 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult = useTransaction { transaction: Transaction ->
-        val variantIn: FluidVariant = fluidStorage.variant
-        val maxAmount: Long = when {
-            variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> RagiumConfig.Generator::nitroFuel
-            variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> RagiumConfig.Generator::nonNitroFuel
-            else -> return HTUnitResult.errorString { "Failed to calculate consume amount!" }
-        }(
-            RagiumAPI
-                .getInstance()
-                .config.machine.generator,
-        )
-        if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
-            transaction.commit()
-            HTUnitResult.success()
-        } else {
-            HTUnitResult.errorString { "Failed to consume fuels!" }
+    override fun process(world: World, pos: BlockPos) {
+        useTransaction { transaction: Transaction ->
+            val variantIn: FluidVariant = fluidStorage.variant
+            val maxAmount: Long = when {
+                variantIn.isIn(RagiumFluidTags.NITRO_FUELS) -> RagiumConfig.Generator::nitroFuel
+                variantIn.isIn(RagiumFluidTags.NON_NITRO_FUELS) -> RagiumConfig.Generator::nonNitroFuel
+                else -> throw HTMachineException.CalculateAmount(true)
+            }(
+                RagiumAPI
+                    .getInstance()
+                    .config.machine.generator,
+            )
+            if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
+                transaction.commit()
+            } else {
+                throw HTMachineException.ConsumeFuel(true)
+            }
         }
     }
 

@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.tags.RagiumFluidTags
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -64,23 +64,22 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult {
+    override fun process(world: World, pos: BlockPos) {
         // try to consume item
         val fuelStack: ItemStack = inventory.getStack(0)
         if (fuelStack.isOf(Items.BLAZE_POWDER)) {
             fuelStack.decrement(1)
-            return HTUnitResult.success()
+            return
         }
         // try to consume fluid
-        return useTransaction { transaction: Transaction ->
+        useTransaction { transaction: Transaction ->
             val maxAmount: Long = RagiumAPI
                 .getInstance()
                 .config.machine.generator.thermalFuel
             if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
                 transaction.commit()
-                HTUnitResult.success()
             } else {
-                HTUnitResult.errorString { "Failed to consume fuels!" }
+                throw HTMachineException.ConsumeFuel(false)
             }
         }
     }

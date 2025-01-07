@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.tags.RagiumFluidTags
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -63,16 +63,16 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult {
+    override fun process(world: World, pos: BlockPos) {
         val fuelStack: ItemStack = inventory.getStack(0)
         val wasteStack: ItemStack = inventory.getStack(1)
         val result: HTItemResult = when (fuelStack.item) {
             RagiumItems.Radioactives.URANIUM_FUEL.get() -> RagiumItems.Radioactives.NUCLEAR_WASTE
             RagiumItems.Radioactives.PLUTONIUM_FUEL.get() -> RagiumItems.SLAG
             else -> null
-        }?.let(::HTItemResult) ?: return HTUnitResult.errorString { "Input slot has no nuclear fuels!" }
-        if (!result.canMerge(wasteStack)) return overheat(world, pos)
-        return useTransaction { transaction: Transaction ->
+        }?.let(::HTItemResult) ?: throw HTMachineException.ConsumeFuel(true)
+        if (!result.canMerge(wasteStack)) overheat(world, pos)
+        useTransaction { transaction: Transaction ->
             val maxAmount: Long = RagiumAPI
                 .getInstance()
                 .config.machine.generator.coolant
@@ -80,19 +80,19 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
                 transaction.commit()
                 inventory.mergeStack(1, result)
                 fuelStack.damage += 1
-                HTUnitResult.success()
             } else {
                 overheat(world, pos)
             }
         }
     }
 
-    private fun overheat(world: World, pos: BlockPos): HTUnitResult {
+    @Throws(HTMachineException::class)
+    private fun overheat(world: World, pos: BlockPos) {
         val fuel: ItemStack = inventory.getStack(0).copy()
         inventory.clear()
         val power: Float = fuel.restDamage / 16f
         HTExplosionComponent(power, true).createExplosion(world, pos)
-        return HTUnitResult.errorString { "Overheated!" }
+        throw HTMachineException.Custom(true, "Overheated!")
     }
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =

@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -72,20 +72,18 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult = multiblockManager
-        .updateValidation(cachedState)
-        .flatMap {
-            useTransaction { transaction: Transaction ->
-                val stack: HTFluidVariantStack = findResource(world.getBiome(pos))
-                if (fluidStorage.insert(stack, transaction) == stack.amount) {
-                    transaction.commit()
-                    world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
-                    HTUnitResult.success()
-                } else {
-                    HTUnitResult.errorString { "Failed to insert fluid into Fluid Drill!" }
-                }
+    override fun process(world: World, pos: BlockPos) {
+        multiblockManager.updateValidation(cachedState)
+        useTransaction { transaction: Transaction ->
+            val stack: HTFluidVariantStack = findResource(world.getBiome(pos))
+            if (fluidStorage.insert(stack, transaction) == stack.amount) {
+                transaction.commit()
+                world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS)
+            } else {
+                throw HTMachineException.InsertFluid(false)
             }
         }
+    }
 
     private fun findResource(biome: RegistryEntry<Biome>): HTFluidVariantStack {
         for ((tagKey: TagKey<Biome>, stack: HTFluidVariantStack) in FLUID_MAP) {

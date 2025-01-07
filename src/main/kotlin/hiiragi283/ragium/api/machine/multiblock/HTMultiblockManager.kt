@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.machine.multiblock
 
-import hiiragi283.ragium.api.extension.blockPosText
 import hiiragi283.ragium.api.extension.getOrDefault
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -17,8 +16,7 @@ import net.minecraft.world.World
  * @param world [provider]が存在するワールド
  * @param pos [provider]が存在する座標
  */
-class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, private val provider: HTMultiblockProvider) :
-    HTMultiblockBuilder {
+class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, private val provider: HTMultiblockProvider) {
     var showPreview: Boolean = false
 
     private val stateCache: MutableMap<BlockPos, Pair<BlockPos, BlockState>> = mutableMapOf()
@@ -30,8 +28,8 @@ class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, pr
         val world: World = world() ?: return false
         if (!world.isClient) {
             provider.beforeBuild(world, pos, player)
-            updateValidation(state)
-                .ifSuccess {
+            runCatching { updateValidation(state) }
+                .onSuccess {
                     val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
                     player.sendMessage(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS), true)
                     provider.buildMultiblock(
@@ -40,11 +38,12 @@ class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, pr
                             stateCache[BlockPos(x, y, z)] = pos1 to world.getBlockState(pos1)
                         }.rotate(front),
                     )
-                }.ifSuccess { provider.afterBuild(world(), pos, player, stateCache) }
-                .ifError {
+                }.onSuccess { provider.afterBuild(world(), pos, player, stateCache) }
+                .onFailure { throwable: Throwable ->
                     stateCache.clear()
-                    player.sendMessage(it, false)
-                }.toBoolean()
+                    val text: Text = (throwable as? HTMachineException.Multiblock)?.text ?: return@onFailure
+                    player.sendMessage(text, false)
+                }.isSuccess
         } else {
             false
         }
@@ -52,31 +51,27 @@ class HTMultiblockManager(private val world: () -> World?, val pos: BlockPos, pr
 
     /**
      * マルチブロックの判定を更新します。
-     * @return 更新された[patternResult]
      */
-    fun updateValidation(state: BlockState): HTUnitResult {
+    @Throws(HTMachineException::class)
+    fun updateValidation(state: BlockState) {
         val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-        provider.buildMultiblock(this.rotate(front))
-        return patternResult
+        val builder = Builder()
+        provider.buildMultiblock(builder.rotate(front))
     }
 
     //    HTMultiblockBuilder    //
 
-    val isValid: Boolean
-        get() = patternResult.isSuccess
-
-    private var patternResult: HTUnitResult = HTUnitResult.success()
-
-    override fun add(
-        x: Int,
-        y: Int,
-        z: Int,
-        pattern: HTMultiblockPattern,
-    ) {
-        val pos1: BlockPos = pos.add(x, y, z)
-        if (patternResult.isSuccess) {
-            patternResult = HTUnitResult.fromBool(world()?.let { pattern.checkState(it, pos1, provider) } == true) {
-                Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos1))
+    private inner class Builder : HTMultiblockBuilder {
+        override fun add(
+            x: Int,
+            y: Int,
+            z: Int,
+            pattern: HTMultiblockPattern,
+        ) {
+            val pos1: BlockPos = pos.add(x, y, z)
+            val world: World = world() ?: return
+            if (!pattern.checkState(world, pos1, provider)) {
+                throw HTMachineException.Multiblock(pattern, pos1)
             }
         }
     }

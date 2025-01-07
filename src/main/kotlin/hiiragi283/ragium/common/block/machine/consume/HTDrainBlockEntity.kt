@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
@@ -67,8 +67,8 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun interactWithFluidStorage(player: PlayerEntity): Boolean = fluidStorage.interactWithFluidStorage(player)
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult {
-        if (fluidStorage.isFilledMax) return HTUnitResult.errorString { "Fluid storage is already full!" }
+    override fun process(world: World, pos: BlockPos) {
+        if (fluidStorage.isFilledMax) throw HTMachineException.MaxFluid(false)
         var result = false
         // drain fluid from input slot
         result = extractFromCube()
@@ -80,9 +80,8 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
         if (!result) {
             result = extractFromFront(world)
         }
-        return when {
-            result -> HTUnitResult.success()
-            else -> HTUnitResult.errorString { "Failed to interact with fluid!" }
+        if (!result) {
+            throw HTMachineException.FluidInteract(false)
         }
     }
 

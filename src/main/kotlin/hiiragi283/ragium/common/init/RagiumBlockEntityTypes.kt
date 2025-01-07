@@ -191,6 +191,7 @@ object RagiumBlockEntityTypes {
         CREATIVE_EXPORTER.add(RagiumBlocks.Creatives.EXPORTER)
         EXTENDED_PROCESSOR.add(RagiumBlocks.EXTENDED_PROCESSOR)
         ITEM_DISPLAY.add(RagiumBlocks.ITEM_DISPLAY)
+        MACHINE_INTERFACE.add(RagiumBlocks.MACHINE_INTERFACE)
         MANUAL_FORGE.add(RagiumBlocks.MANUAL_FORGE)
         MANUAL_GRINDER.add(RagiumBlocks.MANUAL_GRINDER)
         MANUAL_MIXER.add(RagiumBlocks.MANUAL_MIXER)

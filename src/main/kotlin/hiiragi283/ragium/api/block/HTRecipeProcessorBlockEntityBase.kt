@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
-import hiiragi283.ragium.api.util.HTUnitResult
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
@@ -26,10 +25,12 @@ import net.minecraft.world.World
 abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(type, pos, state),
     HTScreenFluidProvider {
-    final override fun process(world: World, pos: BlockPos): HTUnitResult = when (this) {
-        is HTMultiblockProvider -> multiblockManager.updateValidation(cachedState)
-        else -> HTUnitResult.success()
-    }.flatMap { processor.process(world, machineKey, tier) }
+    final override fun process(world: World, pos: BlockPos) {
+        if (this is HTMultiblockProvider) {
+            multiblockManager.updateValidation(cachedState)
+        }
+        processor.process(world, machineKey, tier).getOrThrow()
+    }
 
     /**
      * 機械のインベントリ

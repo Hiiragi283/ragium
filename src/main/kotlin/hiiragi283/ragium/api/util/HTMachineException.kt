@@ -1,0 +1,50 @@
+package hiiragi283.ragium.api.util
+
+import hiiragi283.ragium.api.extension.blockPosText
+import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import net.minecraft.block.Block
+import net.minecraft.text.Text
+import net.minecraft.util.math.BlockPos
+
+sealed class HTMachineException(val showInLog: Boolean, message: String) : RuntimeException(message) {
+    class Custom(showInLog: Boolean, message: String) : HTMachineException(showInLog, message)
+
+    class Multiblock(pattern: HTMultiblockPattern, pos: BlockPos) : HTMachineException(true, "Failed to build multiblock!") {
+        val text: Text =
+            Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos))
+    }
+
+    //    Block    //
+
+    class AroundBlock(showInLog: Boolean, block: Block, count: Int = 1) :
+        HTMachineException(showInLog, "Require ${count}x ${block.name.string} around the machine!")
+
+    //    Energy    //
+
+    class FindFuel(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find fuel!")
+
+    class ConsumeFuel(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume fuel!")
+
+    class ConsumeEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to consume energy!")
+
+    class GenerateEnergy(showInLog: Boolean) : HTMachineException(showInLog, "Failed to generate energy!")
+
+    //    Fluid    //
+
+    class CalculateAmount(showInLog: Boolean) : HTMachineException(showInLog, "Failed to calculate required fluid amount!")
+
+    class FindFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find fluid!")
+
+    class FluidInteract(showInLog: Boolean) : HTMachineException(showInLog, "Failed to interact with the fluid storage!")
+
+    class InsertFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to insert fluid into the storage!")
+
+    class MaxFluid(showInLog: Boolean) : HTMachineException(showInLog, "The fluid storage is already full!")
+
+    //    Item    //
+
+    class NoMatchingRecipe(message: String) : HTMachineException(false, message)
+
+    class MergeResult(showInLog: Boolean) : HTMachineException(showInLog, "Failed to merge results into outputs!")
+}

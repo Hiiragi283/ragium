@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
@@ -32,9 +32,10 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
     HTMultiblockProvider.Machine {
     override var machineKey: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult {
-        val aboveStorage: Storage<ItemVariant> = ItemStorage.SIDED.find(world, pos.up(), Direction.DOWN)
-            ?: return HTUnitResult.errorString { "Failed to find above storage!" }
+    override fun process(world: World, pos: BlockPos) {
+        val aboveStorage: Storage<ItemVariant> =
+            ItemStorage.SIDED.find(world, pos.up(), Direction.DOWN)
+                ?: throw HTMachineException.Custom(true, "Failed to find above storage!")
         val chosenOre: Item = RagiumAPI
             .getInstance()
             .materialRegistry
@@ -42,13 +43,12 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
             .mapNotNull { (_: HTMaterialKey, entry: HTMaterialRegistry.Entry) ->
                 val prefix: HTTagPrefix = entry.type.getRawPrefix() ?: return@mapNotNull null
                 entry.getFirstItemOrNull(prefix)
-            }.randomOrNull() ?: return HTUnitResult.errorString { "Failed to find mineable raw material!" }
-        return useTransaction { transaction: Transaction ->
+            }.randomOrNull() ?: throw HTMachineException.Custom(false, "Failed to find mineable raw material!")
+        useTransaction { transaction: Transaction ->
             if (aboveStorage.insert(ItemVariant.of(chosenOre), 1, transaction) > 0) {
                 transaction.commit()
-                HTUnitResult.success()
             } else {
-                HTUnitResult.errorString { "Failed to insert ores into the above storage!" }
+                throw HTMachineException.Custom(true, "Failed to insert ores into the above storage!")
             }
         }
     }

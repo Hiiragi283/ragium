@@ -2,13 +2,12 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.mergeStack
 import hiiragi283.ragium.api.extension.orElse
-import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
@@ -29,7 +28,7 @@ class HTMachineRecipeProcessor(
 ) : HTRecipeProcessor {
     private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipeBase> = HTRecipeCache(recipeType)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): HTUnitResult {
+    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
         val input: HTMachineInput = HTMachineInput.create(key, tier) {
             itemInputs.map(inventory::getStack).forEach(::add)
             fluidInputs.map(fluidStorage::getVariantStack).forEach(::add)
@@ -37,13 +36,13 @@ class HTMachineRecipeProcessor(
         }
         return recipeCache
             .getFirstMatch(input, world)
-            .unitMap { recipe: HTMachineRecipeBase ->
+            .runCatching {
+                val recipe: HTMachineRecipeBase = getOrThrow(HTMachineException::NoMatchingRecipe)
                 when {
-                    !canAcceptOutputs(recipe) -> HTUnitResult.errorString { "Failed to merge results into outputs!" }
+                    !canAcceptOutputs(recipe) -> throw HTMachineException.MergeResult(false)
                     else -> {
                         modifyOutputs(recipe)
                         decrementInputs(recipe)
-                        HTUnitResult.success()
                     }
                 }
             }

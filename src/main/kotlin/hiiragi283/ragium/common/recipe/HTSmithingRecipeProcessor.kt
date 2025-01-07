@@ -2,13 +2,12 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.extension.getStackOrEmpty
 import hiiragi283.ragium.api.extension.mergeStack
-import hiiragi283.ragium.api.extension.unitMap
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.recipe.RecipeType
@@ -20,7 +19,7 @@ class HTSmithingRecipeProcessor(private val inventory: Inventory, private val in
     HTRecipeProcessor {
     private val recipeCache: HTRecipeCache<SmithingRecipeInput, SmithingRecipe> = HTRecipeCache(RecipeType.SMITHING)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): HTUnitResult {
+    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
         val input: SmithingRecipeInput = inputIndex
             .map(inventory::getStackOrEmpty)
             .let {
@@ -32,20 +31,17 @@ class HTSmithingRecipeProcessor(private val inventory: Inventory, private val in
             }
         return recipeCache
             .getFirstMatch(input, world)
-            .unitMap { recipe: SmithingRecipe ->
+            .runCatching {
+                val recipe: SmithingRecipe = getOrThrow(HTMachineException::NoMatchingRecipe)
                 val resultStack: ItemStack = recipe.craft(input, world.registryManager).copy()
                 val output = HTItemResult(resultStack)
-                if (!output.canMerge(
-                        inventory.getStack(outputIndex),
-                    )
-                ) {
-                    return@unitMap HTUnitResult.errorString { "Failed to merge result into output!" }
+                if (!output.canMerge(inventory.getStack(outputIndex))) {
+                    throw HTMachineException.MergeResult(false)
                 }
                 inventory.mergeStack(outputIndex, output)
                 input.template.decrement(1)
                 input.base.decrement(1)
                 input.addition.decrement(1)
-                HTUnitResult.success()
             }
     }
 }

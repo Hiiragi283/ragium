@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineProvider
 import hiiragi283.ragium.api.machine.HTMachineRegistry
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -33,11 +33,11 @@ class HTSimpleGeneratorBlockEntity(pos: BlockPos, state: BlockState, override va
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult {
+    override fun process(world: World, pos: BlockPos) {
         val entry: HTMachineRegistry.Entry =
-            machineKey.getEntryOrNull() ?: return HTUnitResult.errorString { "Unknown machine key: $machineKey" }
-        return HTUnitResult.fromBoolString(entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos)) {
-            "Failed to generate energy!"
+            machineKey.getEntryOrNull() ?: throw HTMachineException.Custom(true, "Unknown machine key: $machineKey")
+        if (entry.getOrDefault(HTMachinePropertyKeys.GENERATOR_PREDICATE)(world, pos)) {
+            throw HTMachineException.GenerateEnergy(false)
         }
     }
 }

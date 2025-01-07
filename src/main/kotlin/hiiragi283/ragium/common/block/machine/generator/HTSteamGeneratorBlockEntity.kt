@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
-import hiiragi283.ragium.api.util.HTUnitResult
+import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -72,9 +72,9 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val energyFlag: HTEnergyNetwork.Flag = HTEnergyNetwork.Flag.GENERATE
 
-    override fun process(world: World, pos: BlockPos): HTUnitResult {
+    override fun process(world: World, pos: BlockPos) {
         val fuelStack: ItemStack = inventory.getStack(0)
-        return if (fuelStack.isOf(RagiumItems.COAL_CHIP)) {
+        if (fuelStack.isOf(RagiumItems.COAL_CHIP)) {
             useTransaction { transaction: Transaction ->
                 val maxAmount: Long = RagiumAPI
                     .getInstance()
@@ -83,13 +83,13 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                     transaction.commit()
                     fuelStack.decrement(1)
                     inventory.mergeStack(1, HTItemResult(RagiumItems.Dusts.ASH))
-                    HTUnitResult.success()
+                    Result.success(Unit)
                 } else {
-                    HTUnitResult.errorString { "Failed to consume fuels!" }
+                    throw HTMachineException.ConsumeFuel(false)
                 }
             }
         } else {
-            HTUnitResult.errorString { "Required fuels with #minecraft:coals!" }
+            throw HTMachineException.FindFuel(false)
         }
     }
 
