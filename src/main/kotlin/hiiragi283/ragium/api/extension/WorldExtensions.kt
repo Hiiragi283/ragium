@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.ItemEntity
 import net.minecraft.item.ItemConvertible
@@ -26,11 +25,6 @@ import net.minecraft.world.WorldView
  * 指定した[BlockView]と[pos]から[HTMachineBlockEntityBase]を返します。
  */
 fun BlockView.getMachineEntity(pos: BlockPos): HTMachineBlockEntityBase? = (getBlockEntity(pos) as? HTMachineBlockEntityBase)
-
-/**
- * 指定した[BlockView]と[pos]から[HTMultiblockProvider]を返します。
- */
-fun BlockView.getMultiblockController(pos: BlockPos): HTMultiblockProvider? = getBlockEntity(pos) as? HTMultiblockProvider
 
 /**
  * 指定した[WorldView]から[RegistryEntry]を返します。

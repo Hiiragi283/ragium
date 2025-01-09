@@ -2,8 +2,8 @@ package hiiragi283.ragium.api.render
 
 import hiiragi283.ragium.api.extension.renderItem
 import hiiragi283.ragium.api.extension.translate
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
 import net.minecraft.block.BlockState
 import net.minecraft.client.MinecraftClient
@@ -13,41 +13,38 @@ import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.BlockRenderManager
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
-fun interface HTMultiblockPatternRenderer<T : HTMultiblockPattern> {
+fun interface HTMultiblockComponentRenderer<T : HTMultiblockComponent> {
     fun render(
-        provider: HTMultiblockProvider,
-        x: Int,
-        y: Int,
-        z: Int,
-        pattern: T,
+        controller: HTControllerDefinition,
         world: World,
+        pos: BlockPos,
+        component: T,
         matrix: MatrixStack,
         consumerProvider: VertexConsumerProvider,
         random: Random,
     )
 
-    fun interface BlockRender<T : HTMultiblockPattern> : HTMultiblockPatternRenderer<T> {
-        fun getBlockState(pattern: T, world: World, provider: HTMultiblockProvider): BlockState?
+    fun interface BlockRender<T : HTMultiblockComponent> : HTMultiblockComponentRenderer<T> {
+        fun getBlockState(controller: HTControllerDefinition, world: World, component: T): BlockState?
 
         override fun render(
-            provider: HTMultiblockProvider,
-            x: Int,
-            y: Int,
-            z: Int,
-            pattern: T,
+            controller: HTControllerDefinition,
             world: World,
+            pos: BlockPos,
+            component: T,
             matrix: MatrixStack,
             consumerProvider: VertexConsumerProvider,
             random: Random,
         ) {
-            getBlockState(pattern, world, provider)?.let { state: BlockState ->
+            getBlockState(controller, world, component)?.let { state: BlockState ->
                 val blockRenderManager: BlockRenderManager = MinecraftClient.getInstance().blockRenderManager
                 matrix.push()
-                matrix.translate(x, y, z)
+                matrix.translate(pos)
                 matrix.translate(0.125, 0.125, 0.125)
                 matrix.scale(0.75f, 0.75f, 0.75f)
                 val consumer: VertexConsumer = consumerProvider.getBuffer(RenderLayers.getBlockLayer(state))
@@ -65,24 +62,22 @@ fun interface HTMultiblockPatternRenderer<T : HTMultiblockPattern> {
         }
     }
 
-    fun interface ItemRender<T : HTMultiblockPattern> : HTMultiblockPatternRenderer<T> {
-        fun getItemStack(pattern: T, world: World, provider: HTMultiblockProvider): ItemStack?
+    fun interface ItemRender<T : HTMultiblockComponent> : HTMultiblockComponentRenderer<T> {
+        fun getItemStack(controller: HTControllerDefinition, world: World, component: T): ItemStack?
 
         override fun render(
-            provider: HTMultiblockProvider,
-            x: Int,
-            y: Int,
-            z: Int,
-            pattern: T,
+            controller: HTControllerDefinition,
             world: World,
+            pos: BlockPos,
+            component: T,
             matrix: MatrixStack,
             consumerProvider: VertexConsumerProvider,
             random: Random,
         ) {
-            getItemStack(pattern, world, provider)?.let { stack: ItemStack ->
+            getItemStack(controller, world, component)?.let { stack: ItemStack ->
                 renderItem(
                     world,
-                    Vec3d(x.toDouble(), y.toDouble(), z.toDouble()),
+                    Vec3d(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble()),
                     stack,
                     matrix,
                     consumerProvider,

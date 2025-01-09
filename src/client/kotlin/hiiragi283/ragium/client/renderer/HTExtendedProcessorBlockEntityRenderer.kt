@@ -44,6 +44,6 @@ object HTExtendedProcessorBlockEntityRenderer : BlockEntityRenderer<HTExtendedPr
                 Random.create(),
             )
         // render multiblock
-        renderMultiblock(entity, matrices, vertexConsumers)
+        entity.renderMultiblock(matrices, vertexConsumers, Random.create())
     }
 }

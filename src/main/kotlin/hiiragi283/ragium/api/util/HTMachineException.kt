@@ -1,19 +1,9 @@
 package hiiragi283.ragium.api.util
 
-import hiiragi283.ragium.api.extension.blockPosText
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.block.Block
-import net.minecraft.text.Text
-import net.minecraft.util.math.BlockPos
 
 sealed class HTMachineException(val showInLog: Boolean, message: String) : RuntimeException(message) {
     class Custom(showInLog: Boolean, message: String) : HTMachineException(showInLog, message)
-
-    class Multiblock(pattern: HTMultiblockPattern, pos: BlockPos) : HTMachineException(true, "Failed to build multiblock!") {
-        val text: Text =
-            Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, pattern.text, blockPosText(pos))
-    }
 
     //    Block    //
 

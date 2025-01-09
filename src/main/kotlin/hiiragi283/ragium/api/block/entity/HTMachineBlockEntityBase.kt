@@ -2,7 +2,10 @@ package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.*
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.api.multiblock.HTMultiblockData
+import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.storage.HTFluidInteractable
 import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.api.util.HTMachineException
@@ -10,6 +13,7 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
+import net.fabricmc.fabric.api.util.TriState
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentMap
@@ -35,6 +39,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     HTBlockEntityBase(type, pos, state),
     NamedScreenHandlerFactory,
     SidedStorageBlockEntity,
+    HTControllerHolder,
     HTFluidInteractable,
     HTMachineProvider,
     HTMachineTierProvider {
@@ -46,7 +51,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     val definition: HTMachineDefinition
         get() = HTMachineDefinition(machineKey, tier)
 
-    val facing: Direction
+    val front: Direction
         get() = cachedState.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
     val isActive: Boolean
         get() = cachedState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
@@ -54,6 +59,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         get() = cachedState.tier
 
     //    HTBlockEntityBase    //
+
     final override fun addComponents(builder: ComponentMap.Builder) {
         builder.add(HTMachineTier.COMPONENT_TYPE, tier)
     }
@@ -75,6 +81,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
      */
     open fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {}
 
+    //    Player Interaction    //
+
     final override fun onRightClicked(
         state: BlockState,
         world: World,
@@ -82,6 +90,11 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
         player: PlayerEntity,
         hit: BlockHitResult,
     ): ActionResult {
+        // Toggle multiblock preview
+        if (player.isSneaking) {
+            showPreview = !showPreview
+            return ActionResult.success(world.isClient)
+        }
         // Upgrade machine when clicked with machine hull
         if (upgrade(world, player, HTMachineTier.BASIC)) {
             return ActionResult.success(world.isClient)
@@ -94,16 +107,20 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             return ActionResult.success(world.isClient)
         }
         // Validate multiblock
-        val result: Boolean = (this as? HTMultiblockProvider)?.multiblockManager?.onUse(state, player) != false
-        // open machine screen
-        if (result) {
-            if (!world.isClient) {
-                player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
-                HTInteractMachineCriterion.trigger(player, machineKey, tier)
+        val data: HTMultiblockData = collectData { player.sendMessage(it, true) }
+        return when (data.result) {
+            TriState.FALSE -> ActionResult.PASS
+            else -> {
+                if (!world.isClient) {
+                    // init multiblock data
+                    processData(data)
+                    // open machine screen
+                    player.openHandledScreen(state.createScreenHandlerFactory(world, pos))
+                    HTInteractMachineCriterion.trigger(player, machineKey, tier)
+                }
+                ActionResult.success(world.isClient)
             }
-            return ActionResult.success(world.isClient)
         }
-        return ActionResult.PASS
     }
 
     private fun upgrade(world: World, player: PlayerEntity, newTier: HTMachineTier): Boolean {
@@ -115,6 +132,12 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             true
         } else {
             false
+        }
+    }
+
+    protected fun checkMultiblockOrThrow() {
+        if (collectData().result == TriState.FALSE) {
+            throw HTMachineException.Custom(true, "Multiblock validation failed!")
         }
     }
 
@@ -133,6 +156,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
             }
         }
     }
+
+    //    Ticking    //
 
     final override val tickRate: Int = tier.tickRate
 
@@ -181,6 +206,8 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
     open fun onFailed(world: World, pos: BlockPos) {}
 
+    //    PropertyDelegate    //
+
     val property: PropertyDelegate = object : PropertyDelegate {
         override fun get(index: Int): Int = when (index) {
             0 -> ticks
@@ -192,6 +219,14 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
 
         override fun size(): Int = 3
     }
+
+    //    HTControllerHolder    //
+
+    final override var showPreview: Boolean = false
+
+    override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getEntryOrNull()?.get(HTMachinePropertyKeys.MULTIBLOCK_MAP)
+
+    final override fun getController(): HTControllerDefinition? = ifPresentWorld { HTControllerDefinition(it, pos, front) }
 
     //    NamedScreenHandlerFactory    //
 

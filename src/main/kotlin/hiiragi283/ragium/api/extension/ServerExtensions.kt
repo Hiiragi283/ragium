@@ -26,7 +26,7 @@ fun Entity.asServerPlayer(): ServerPlayerEntity? = this as? ServerPlayerEntity
  * 指定した[World]を[ServerWorld]にキャストします。
  * @return キャストできなかった場合はnull
  */
-fun World.asServerWorld(): ServerWorld? = this as? ServerWorld
+fun World?.asServerWorld(): ServerWorld? = this as? ServerWorld
 
 //    World    //
 
@@ -44,7 +44,7 @@ fun World.ifServer(action: ServerWorld.() -> Unit): World = apply {
  * @return [World]が[ServerWorld]を継承している場合は[DataResult.success]，それ以外の場合は[DataResult.error]
  */
 fun <T : Any> World?.mapIfServer(transform: (ServerWorld) -> T): DataResult<T> =
-    this?.asServerWorld()?.let(transform).toDataResult { "Target world is not ServerWorld!" }
+    this.asServerWorld()?.let(transform).toDataResult { "Target world is not ServerWorld!" }
 
 //    PersistentState    //
 

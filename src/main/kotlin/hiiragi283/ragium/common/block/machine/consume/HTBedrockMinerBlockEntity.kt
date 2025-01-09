@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -28,8 +26,7 @@ import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state),
-    HTMultiblockProvider.Machine {
+    HTMachineBlockEntityBase(RagiumBlockEntityTypes.BEDROCK_MINER, pos, state) {
     override var machineKey: HTMachineKey = RagiumMachineKeys.BEDROCK_MINER
 
     override fun process(world: World, pos: BlockPos) {
@@ -57,8 +54,4 @@ class HTBedrockMinerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
-
-    //    HTMultiblockPatternProvider    //
-
-    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 }

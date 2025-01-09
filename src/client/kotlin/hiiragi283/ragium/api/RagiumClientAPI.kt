@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
+import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.render.HTMultiblockComponentRenderer
+import hiiragi283.ragium.api.render.HTMultiblockComponentRendererRegistry
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
-import hiiragi283.ragium.api.render.HTMultiblockPatternRenderer
-import hiiragi283.ragium.api.render.HTMultiblockPatternRendererRegistry
 import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import net.minecraft.block.entity.BlockEntityType
@@ -30,7 +30,7 @@ object RagiumClientAPI {
     //    Multiblock Renderer    //
 
     @JvmStatic
-    inline fun <reified T : HTMultiblockPattern> registerPatternRenderer(renderer: HTMultiblockPatternRenderer<T>) {
-        HTMultiblockPatternRendererRegistry.register(T::class.java, renderer)
+    inline fun <reified T : HTMultiblockComponent> registerPatternRenderer(renderer: HTMultiblockComponentRenderer<T>) {
+        HTMultiblockComponentRendererRegistry.register(T::class.java, renderer)
     }
 }

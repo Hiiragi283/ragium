@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.machine
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
+import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.sound.SoundEvent
@@ -25,10 +25,6 @@ object HTMachinePropertyKeys {
         HTPropertyKey.ofDefaulted(
             RagiumAPI.id("active_model_id"),
         ) { RagiumAPI.id("block/active_dynamic_processor") }
-
-    @JvmField
-    val MULTIBLOCK_PATTERN: HTPropertyKey.Simple<HTMultiblockBuilder.Consumer> =
-        HTPropertyKey.ofSimple(RagiumAPI.id("multiblock_pattern"))
 
     @JvmField
     val PARTICLE: HTPropertyKey.Simple<SimpleParticleType> =
@@ -65,4 +61,16 @@ object HTMachinePropertyKeys {
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =
         HTPropertyKey.ofDefaulted(RagiumAPI.id("front_mapper"), value = { it })
+
+    //    Multiblock    //
+
+    @JvmField
+    val MULTIBLOCK_MAP: HTPropertyKey.Simple<HTMultiblockMap.Relative> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("multiblock_map"))
+
+    //    Extended Processor    //
+
+    @JvmField
+    val EXTENDED_CHILD: HTPropertyKey.Simple<HTMachineKey> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("extended_child"))
 }

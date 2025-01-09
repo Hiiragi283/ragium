@@ -3,8 +3,6 @@ package hiiragi283.ragium.common.block.machine.process
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -18,8 +16,7 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 
 class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state),
-    HTMultiblockProvider.Machine {
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.DISTILLATION_TOWER, pos, state) {
     override var machineKey: HTMachineKey = RagiumMachineKeys.DISTILLATION_TOWER
 
     override val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
@@ -42,8 +39,4 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTDistillationTowerScreenHandler(syncId, playerInventory, createContext())
-
-    //    HTMultiblockPatternProvider    //
-
-    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 }

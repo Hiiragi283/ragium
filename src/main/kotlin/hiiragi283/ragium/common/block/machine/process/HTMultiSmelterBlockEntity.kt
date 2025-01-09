@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -21,8 +19,7 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state),
-    HTMultiblockProvider.Machine {
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.MULTI_SMELTER, pos, state) {
     override var machineKey: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
@@ -38,8 +35,4 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
-
-    //    HTMultiblockPatternProvider    //
-
-    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 }

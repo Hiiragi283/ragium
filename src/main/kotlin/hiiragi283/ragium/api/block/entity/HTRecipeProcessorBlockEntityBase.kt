@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -26,9 +25,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     HTMachineBlockEntityBase(type, pos, state),
     HTScreenFluidProvider {
     final override fun process(world: World, pos: BlockPos) {
-        if (this is HTMultiblockProvider) {
-            multiblockManager.updateValidation(cachedState)
-        }
+        checkMultiblockOrThrow()
         processor.process(world, machineKey, tier).getOrThrow()
     }
 

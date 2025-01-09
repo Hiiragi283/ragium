@@ -4,9 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -15,7 +12,6 @@ import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.machine.HTTieredBlockPattern
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -39,8 +35,7 @@ import net.minecraft.world.biome.Biome
 
 class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     HTMachineBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state),
-    HTScreenFluidProvider,
-    HTMultiblockProvider {
+    HTScreenFluidProvider {
     companion object {
         @JvmField
         val FLUID_MAP: Map<TagKey<Biome>, HTFluidVariantStack> = mapOf(
@@ -73,7 +68,7 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
         HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     override fun process(world: World, pos: BlockPos) {
-        multiblockManager.updateValidation(cachedState)
+        checkMultiblockOrThrow()
         useTransaction { transaction: Transaction ->
             val stack: HTFluidVariantStack = findResource(world.getBiome(pos))
             if (fluidStorage.insert(stack, transaction) == stack.amount) {
@@ -101,40 +96,4 @@ class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTScreenFluidProvider    //
 
     override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
-
-    //    HTMultiblockPatternProvider    //
-
-    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
-
-    override fun buildMultiblock(builder: HTMultiblockBuilder) {
-        builder
-            .addLayer(
-                -1..1,
-                0,
-                1..3,
-                HTTieredBlockPattern.ofContent(HTMachineTier::getHull),
-            ).addCross4(
-                -1..1,
-                1,
-                1..3,
-                HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
-            ).addCross4(
-                -1..1,
-                2,
-                1..3,
-                HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
-            )
-        builder.add(
-            0,
-            3,
-            2,
-            HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
-        )
-        builder.add(
-            0,
-            4,
-            2,
-            HTTieredBlockPattern.ofContent(HTMachineTier::getGrate),
-        )
-    }
 }

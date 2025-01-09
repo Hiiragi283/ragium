@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineProvider
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -19,8 +17,7 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 
 class HTLargeRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
-    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.LARGE_PROCESSOR, pos, state),
-    HTMultiblockProvider.Machine {
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.LARGE_PROCESSOR, pos, state) {
     companion object {
         @JvmStatic
         fun fromState(pos: BlockPos, state: BlockState): HTLargeRecipeProcessorBlockEntity {
@@ -46,8 +43,4 @@ class HTLargeRecipeProcessorBlockEntity(pos: BlockPos, state: BlockState, overri
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTLargeMachineScreenHandler(syncId, playerInventory, createContext())
-
-    //    HTMultiblockProvider    //
-
-    override val multiblockManager = HTMultiblockManager(::getWorld, pos, this)
 }

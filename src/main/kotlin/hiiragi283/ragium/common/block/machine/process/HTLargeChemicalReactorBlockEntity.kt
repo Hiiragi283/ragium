@@ -3,8 +3,6 @@ package hiiragi283.ragium.common.block.machine.process
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
 import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockManager
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
@@ -18,8 +16,7 @@ import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 
 class HTLargeChemicalReactorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.LARGE_CHEMICAL_REACTOR, pos, state),
-    HTMultiblockProvider.Machine {
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.LARGE_CHEMICAL_REACTOR, pos, state) {
     override var machineKey: HTMachineKey = RagiumMachineKeys.LARGE_CHEMICAL_REACTOR
 
     override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
@@ -38,8 +35,4 @@ class HTLargeChemicalReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTLargeChemicalReactorScreenHandler(syncId, playerInventory, createContext())
-
-    //    HTMultiblockPatternProvider    //
-
-    override val multiblockManager: HTMultiblockManager = HTMultiblockManager(::getWorld, pos, this)
 }

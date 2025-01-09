@@ -2,12 +2,14 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
-import hiiragi283.ragium.client.renderer.HTMultiblockRenderer
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.multiblock.HTMultiblockMap
+import hiiragi283.ragium.api.render.HTMultiblockComponentRendererRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.minecraft.block.Block
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.VertexConsumerProvider
@@ -24,13 +26,13 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
 import net.minecraft.registry.Registries
 import net.minecraft.resource.Resource
-import net.minecraft.state.property.Properties
 import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
-import net.minecraft.util.math.Direction
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.RotationAxis
 import net.minecraft.util.math.Vec3d
 import net.minecraft.util.math.Vec3i
+import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 import java.io.BufferedReader
 
@@ -89,30 +91,23 @@ fun renderItem(
     matrices.pop()
 }
 
-fun <T> renderMultiblock(
-    provider: T,
-    matrices: MatrixStack,
-    vertexConsumers: VertexConsumerProvider,
-) where T : HTMultiblockProvider, T : BlockEntity {
-    renderMultiblock(
-        provider,
-        provider.world,
-        provider.world?.getBlockState(provider.pos)?.getOrNull(Properties.HORIZONTAL_FACING),
-        matrices,
-        vertexConsumers,
-    )
-}
-
-fun <T : HTMultiblockProvider> renderMultiblock(
-    provider: T,
-    world: World?,
-    facing: Direction?,
-    matrices: MatrixStack,
-    vertexConsumers: VertexConsumerProvider,
-) {
-    if (!provider.multiblockManager.showPreview) return
-    world?.let {
-        provider.buildMultiblock(HTMultiblockRenderer(it, matrices, vertexConsumers, provider).rotate(facing))
+fun HTControllerHolder.renderMultiblock(matrix: MatrixStack, consumerProvider: VertexConsumerProvider, random: Random) {
+    if (!showPreview) return
+    val controller: HTControllerDefinition = getController() ?: return
+    val world: World = controller.world
+    val absoluteMap: HTMultiblockMap.Absolute =
+        getMultiblockMap()?.convertAbsolute(BlockPos.ORIGIN, controller.front) ?: return
+    if (absoluteMap.isEmpty()) return
+    for ((pos: BlockPos, component: HTMultiblockComponent) in absoluteMap.entries) {
+        HTMultiblockComponentRendererRegistry.render(
+            controller,
+            world,
+            pos,
+            component,
+            matrix,
+            consumerProvider,
+            random,
+        )
     }
 }
 

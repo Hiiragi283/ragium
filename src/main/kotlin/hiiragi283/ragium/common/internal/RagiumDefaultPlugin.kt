@@ -48,7 +48,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.BEDROCK_MINER) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.DOWN }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.BEDROCK_MINER)
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BEDROCK_MINER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
@@ -63,6 +63,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.FLUID_DRILL)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
@@ -124,7 +125,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.BLAST_FURNACE)
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
         }
@@ -146,13 +147,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.CUTTING_MACHINE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.CUTTING_MACHINE)
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.CUTTING_MACHINE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.DISTILLATION_TOWER)
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FALLING_DRIPSTONE_LAVA)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
@@ -170,13 +171,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
         helper.modify(RagiumMachineKeys.MULTI_SMELTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.MULTI_SMELTER)
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
         helper.modify(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTLargeChemicalReactorBlockEntity))
-            set(HTMachinePropertyKeys.MULTIBLOCK_PATTERN, RagiumMultiblockShapes.LARGE_MACHINE)
+            set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.LARGE_MACHINE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {

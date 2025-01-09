@@ -6,12 +6,11 @@ import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.LongArgumentType
 import com.mojang.brigadier.context.CommandContext
 import hiiragi283.ragium.api.extension.energyNetwork
-import hiiragi283.ragium.api.extension.getMultiblockController
-import hiiragi283.ragium.api.extension.getOrDefault
 import hiiragi283.ragium.api.extension.networkMap
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockBuilder
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.block.BlockState
@@ -24,10 +23,8 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.world.ServerWorld
-import net.minecraft.state.property.Properties
 import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
 import net.minecraft.world.World
 
 object RagiumCommands {
@@ -103,12 +100,10 @@ object RagiumCommands {
     private fun buildMultiblock(context: CommandContext<ServerCommandSource>, replace: Boolean): Int {
         val pos: BlockPos = BlockPosArgumentType.getBlockPos(context, "pos")
         val world: ServerWorld = context.source.world
-        val state: BlockState = world.getBlockState(pos)
-        val provider: HTMultiblockProvider? = world.getMultiblockController(pos)
-        if (provider != null) {
+        val holder: HTControllerHolder? = HTControllerHolder.LOOKUP.find(world, pos, null)
+        if (holder != null) {
             runCatching {
-                val front: Direction = state.getOrDefault(Properties.HORIZONTAL_FACING, Direction.NORTH)
-                provider.buildMultiblock(Constructor(world, pos, provider, replace).rotate(front))
+                holder.buildMultiblock()
             }.onSuccess {
                 context.source.sendFeedback({ Text.literal("Built Multiblock at $pos!") }, true)
             }.onFailure {
@@ -120,7 +115,7 @@ object RagiumCommands {
         return Command.SINGLE_SUCCESS
     }
 
-    private class Constructor(
+    /*private class Constructor(
         private val world: World,
         private val pos: BlockPos,
         private val provider: HTMultiblockProvider,
@@ -149,6 +144,19 @@ object RagiumCommands {
                 }
             } else {
                 isValid = false
+            }
+        }
+    }*/
+
+    fun HTControllerHolder.buildMultiblock(replace: Boolean = false) {
+        val controller: HTControllerDefinition = getController() ?: return
+        val world: World = controller.world
+        val absoluteMap: HTMultiblockMap.Absolute = getMultiblockMap()?.convertAbsolute(controller) ?: return
+        if (absoluteMap.isEmpty()) return
+        for ((pos: BlockPos, component: HTMultiblockComponent) in absoluteMap.entries) {
+            val state: BlockState = component.getPlacementState(controller, pos) ?: continue
+            if (replace || world.isAir(pos)) {
+                world.setBlockState(pos, state)
             }
         }
     }

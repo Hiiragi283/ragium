@@ -130,7 +130,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private fun extractFromFront(world: World): Boolean {
-        val posTo: BlockPos = pos.offset(facing)
+        val posTo: BlockPos = pos.offset(front)
         val stateTo: BlockState = world.getBlockState(posTo)
         val blockTo: Block = stateTo.block
         if (blockTo is FluidDrainable) {

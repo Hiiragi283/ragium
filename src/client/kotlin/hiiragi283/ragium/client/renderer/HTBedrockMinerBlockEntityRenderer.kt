@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 @Environment(EnvType.CLIENT)
@@ -26,6 +27,6 @@ object HTBedrockMinerBlockEntityRenderer : BlockEntityRenderer<HTBedrockMinerBlo
             renderBeam(matrices, vertexConsumers, tickDelta, world)
         }
         // render multiblock
-        renderMultiblock(entity, matrices, vertexConsumers)
+        entity.renderMultiblock(matrices, vertexConsumers, Random.create())
     }
 }

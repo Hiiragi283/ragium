@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockPattern
-import hiiragi283.ragium.api.machine.multiblock.HTMultiblockProvider
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -11,14 +11,14 @@ import net.minecraft.text.MutableText
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class HTBlockTagPattern(val tagKey: TagKey<Block>) : HTMultiblockPattern {
+class HTTagMultiblockComponent(val tagKey: TagKey<Block>) : HTMultiblockComponent {
     private val entryList: HTRegistryEntryList<Block> = HTRegistryEntryList.fromTag(tagKey, Registries.BLOCK)
 
     override val text: MutableText = tagKey.name.copy()
 
-    override fun checkState(world: World, pos: BlockPos, provider: HTMultiblockProvider): Boolean = world.getBlockState(pos).isIn(tagKey)
+    override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean = controller.world.getBlockState(pos).isIn(tagKey)
 
-    override fun getPlacementState(world: World, pos: BlockPos, provider: HTMultiblockProvider): BlockState? = getCurrentState(world)
+    override fun getPlacementState(controller: HTControllerDefinition, pos: BlockPos): BlockState? = getCurrentState(controller.world)
 
     fun getCurrentState(world: World): BlockState? = when (entryList.size) {
         0 -> null

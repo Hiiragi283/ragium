@@ -6,21 +6,22 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.multiblock.HTControllerDefinition
+import hiiragi283.ragium.api.render.HTMultiblockComponentRenderer
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.client.gui.HTFluidFilterScreen
 import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
-import hiiragi283.ragium.client.machine.HTBlockTagPatternRenderer
-import hiiragi283.ragium.client.machine.HTMachineBlockPatternRenderer
-import hiiragi283.ragium.client.machine.HTSimpleBlockPatternRenderer
-import hiiragi283.ragium.client.machine.HTTieredBlockPatternRenderer
 import hiiragi283.ragium.client.model.HTFluidCubeModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
+import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
+import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import hiiragi283.ragium.common.network.HTCratePreviewPayload
 import hiiragi283.ragium.common.network.HTFloatingItemPayload
 import hiiragi283.ragium.common.network.HTFluidSyncPayload
@@ -345,9 +346,32 @@ object RagiumClient : ClientModInitializer {
     //    Machine    //
 
     private fun registerPattern() {
-        RagiumClientAPI.registerPatternRenderer(HTBlockTagPatternRenderer)
-        RagiumClientAPI.registerPatternRenderer(HTMachineBlockPatternRenderer)
-        RagiumClientAPI.registerPatternRenderer(HTSimpleBlockPatternRenderer)
-        RagiumClientAPI.registerPatternRenderer(HTTieredBlockPatternRenderer)
+        RagiumClientAPI.registerPatternRenderer(
+            HTMultiblockComponentRenderer.BlockRender<HTTagMultiblockComponent> {
+                    _: HTControllerDefinition,
+                    world: World,
+                    component: HTTagMultiblockComponent,
+                ->
+                component.getCurrentState(world)
+            },
+        )
+        RagiumClientAPI.registerPatternRenderer(
+            HTMultiblockComponentRenderer.BlockRender<HTSimpleMultiblockComponent> {
+                    _: HTControllerDefinition,
+                    _: World,
+                    component: HTSimpleMultiblockComponent,
+                ->
+                component.block.defaultState
+            },
+        )
+        RagiumClientAPI.registerPatternRenderer(
+            HTMultiblockComponentRenderer.BlockRender<HTTieredMultiblockComponent> {
+                    controller: HTControllerDefinition,
+                    world: World,
+                    component: HTTieredMultiblockComponent,
+                ->
+                component.getBlock(controller)?.defaultState
+            },
+        )
     }
 }
