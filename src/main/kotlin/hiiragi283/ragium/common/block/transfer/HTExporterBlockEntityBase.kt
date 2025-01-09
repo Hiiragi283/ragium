@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.transfer
 
-import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.codec.HTNbtCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumNetworks

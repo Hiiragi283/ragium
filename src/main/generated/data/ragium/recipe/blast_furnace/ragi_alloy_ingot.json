@@ -12,6 +12,6 @@
     }
   ],
   "item_outputs": [
-    "ragium:ragi_alloy_ingot"
+    "#c:ingots/ragi_alloy"
   ]
 }

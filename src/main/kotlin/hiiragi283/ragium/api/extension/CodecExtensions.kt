@@ -10,8 +10,6 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.registry.Registry
-import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.util.StringIdentifiable
 import java.util.*
 import java.util.function.Function
@@ -72,6 +70,11 @@ fun <T : Inventory> createInventoryCodec(builder: (Int) -> T): Codec<T> = ItemSt
     Inventory::iterateStacks,
 )
 
+fun <A : Any> Codec<List<A>>.filterNotEmpty(filter: (A) -> Boolean): Codec<List<A>> = xmap(
+    { list: List<A> -> list.filterNot(filter) },
+    Function.identity(),
+)
+
 //    MapCodec    //
 
 fun <O : Any, A : Any> MapCodec<Optional<A>>.forOptionalGetter(getter: Function<O, A?>): RecordCodecBuilder<O, Optional<A>> =
@@ -97,12 +100,6 @@ fun <B : ByteBuf, V : Any> PacketCodec<B, V>.toSet(): PacketCodec<B, Set<V>> =
  */
 fun <T : StringIdentifiable> identifiedPacketCodec(entries: Iterable<T>): PacketCodec<RegistryByteBuf, T> =
     PacketCodecs.registryCodec(identifiedCodec(entries))
-
-/**
- * [RegistryEntry]の[PacketCodec]を返します。
- */
-val <T : Any> Registry<T>.entryPacketCodec: PacketCodec<RegistryByteBuf, RegistryEntry<T>>
-    get() = PacketCodecs.registryEntry(this.key)
 
 //    DataResult    //
 

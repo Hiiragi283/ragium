@@ -2,11 +2,11 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.RagiumCodecs
+import hiiragi283.ragium.api.codec.HTRegistryEntryListCodec
+import hiiragi283.ragium.api.codec.HTRegistryEntryPacketCodec
+import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.util.HTRegistryEntryList
-import hiiragi283.ragium.api.util.codec.HTRegistryEntryListCodec
-import hiiragi283.ragium.api.util.codec.HTRegistryEntryPacketCodec
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack

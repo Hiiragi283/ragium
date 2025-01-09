@@ -11,6 +11,6 @@
     }
   ],
   "item_outputs": [
-    "ragium:fierium_ingot"
+    "#c:ingots/fierium"
   ]
 }

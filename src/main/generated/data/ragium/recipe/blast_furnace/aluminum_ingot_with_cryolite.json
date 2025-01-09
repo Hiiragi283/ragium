@@ -16,7 +16,7 @@
   "item_outputs": [
     {
       "count": 3,
-      "item": "ragium:aluminum_ingot"
+      "tag": "#c:ingots/aluminum"
     },
     {
       "count": 2,

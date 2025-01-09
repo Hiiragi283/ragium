@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.extension.replaceBlockState
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.SidedInventory
@@ -49,13 +49,13 @@ class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
         return ActionResult.success(world.isClient)
     }
 
-    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipeBase> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     private fun process(player: PlayerEntity) {
         val world: World = world ?: return
         val stackIn: ItemStack = inventory.getStack(0)
-        val recipe: HTMachineRecipe =
+        val recipe: HTMachineRecipeBase =
             recipeCache
                 .getFirstMatch(
                     HTMachineInput.create(

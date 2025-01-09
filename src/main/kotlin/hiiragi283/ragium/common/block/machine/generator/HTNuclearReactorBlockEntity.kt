@@ -70,7 +70,7 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
             RagiumItems.Radioactives.URANIUM_FUEL.get() -> RagiumItems.Radioactives.NUCLEAR_WASTE
             RagiumItems.Radioactives.PLUTONIUM_FUEL.get() -> RagiumItems.SLAG
             else -> null
-        }?.let(::HTItemResult) ?: throw HTMachineException.ConsumeFuel(true)
+        }?.let(HTItemResult::ofItem) ?: throw HTMachineException.ConsumeFuel(true)
         if (!result.canMerge(wasteStack)) overheat(world, pos)
         useTransaction { transaction: Transaction ->
             val maxAmount: Long = RagiumAPI

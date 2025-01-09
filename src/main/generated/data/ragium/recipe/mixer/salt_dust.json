@@ -20,8 +20,8 @@
     },
     {
       "count": 4,
-      "item": "ragium:salt_dust"
+      "tag": "#c:dusts/salt"
     },
-    "ragium:bauxite_dust"
+    "#c:dusts/bauxite"
   ]
 }

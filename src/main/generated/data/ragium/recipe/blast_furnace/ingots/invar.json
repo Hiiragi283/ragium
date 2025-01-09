@@ -5,10 +5,16 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    "#c:ingots/copper",
-    "#c:dusts/raginite"
+    {
+      "count": 2,
+      "items": "#c:ingots/iron"
+    },
+    "#c:ingots/nickel"
   ],
   "item_outputs": [
-    "#c:ingots/ragi_alloy"
+    {
+      "count": 3,
+      "tag": "#c:ingots/invar"
+    }
   ]
 }

@@ -11,6 +11,6 @@
     "minecraft:water"
   ],
   "item_outputs": [
-    "ragium:salt_dust"
+    "#c:dusts/salt"
   ]
 }

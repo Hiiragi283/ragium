@@ -8,13 +8,13 @@ import hiiragi283.ragium.api.extension.variantStack
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity
@@ -32,7 +32,7 @@ import net.minecraft.world.World
 class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_MIXER, pos, state),
     SidedStorageBlockEntity {
-    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipeBase> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     override fun onRightClicked(
@@ -53,7 +53,7 @@ class HTManualMixerBlockEntity(pos: BlockPos, state: BlockState) :
         val world: World = world ?: return
         val stackMain: ItemStack = player.getStackInMainHand()
         val stackOff: ItemStack = player.getStackInHand(Hand.OFF_HAND)
-        val recipe: HTMachineRecipe = recipeCache
+        val recipe: HTMachineRecipeBase = recipeCache
             .getFirstMatch(
                 HTMachineInput.create(
                     RagiumMachineKeys.MIXER,

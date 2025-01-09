@@ -11,6 +11,6 @@
     "#c:dusts/salt"
   ],
   "item_outputs": [
-    "ragium:alkali_dust"
+    "#c:dusts/alkali"
   ]
 }

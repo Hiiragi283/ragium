@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util.codec
+package hiiragi283.ragium.api.codec
 
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.util.HTRegistryEntryList

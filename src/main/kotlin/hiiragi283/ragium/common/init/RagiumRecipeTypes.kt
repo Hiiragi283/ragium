@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.Registries
@@ -9,7 +9,7 @@ import net.minecraft.registry.Registry
 
 object RagiumRecipeTypes {
     @JvmField
-    val MACHINE: RecipeType<HTMachineRecipe> = register("machine")
+    val MACHINE: RecipeType<HTMachineRecipeBase> = register("machine")
 
     @JvmStatic
     private fun <T : Recipe<*>> register(name: String): RecipeType<T> = RagiumAPI.id(name).let {

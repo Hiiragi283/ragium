@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.util.codec
+package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Pair
@@ -12,6 +12,9 @@ import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.TagKey
 import java.util.function.Function
 
+/**
+ * @see net.minecraft.registry.entry.RegistryEntryListCodec
+ */
 class HTRegistryEntryListCodec<E : Any>(
     registryKey: RegistryKey<out Registry<E>>,
     entryCodec: Codec<E>,

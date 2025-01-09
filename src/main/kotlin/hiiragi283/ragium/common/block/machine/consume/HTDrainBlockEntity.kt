@@ -91,7 +91,7 @@ class HTDrainBlockEntity(pos: BlockPos, state: BlockState) :
         if (inputStack.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
             val storage: Storage<FluidVariant> =
                 ContainerItemContext.withConstant(inputStack).find(FluidStorage.ITEM) ?: return false
-            val emptyResult = HTItemResult(RagiumItems.EMPTY_FLUID_CUBE)
+            val emptyResult: HTItemResult = HTItemResult.ofItem(RagiumItems.EMPTY_FLUID_CUBE)
             if (!emptyResult.canMerge(inventory.getStack(1))) return false
             val cubeVariant: FluidVariant = StorageUtil.findStoredResource(storage) ?: return false
             useTransaction { transaction: Transaction ->

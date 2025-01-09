@@ -10,7 +10,7 @@
   "item_outputs": [
     {
       "count": 4,
-      "item": "ragium:fluorite"
+      "tag": "#c:gems/fluorite"
     },
     "minecraft:gold_nugget"
   ]

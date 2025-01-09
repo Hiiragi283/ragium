@@ -14,7 +14,7 @@
   "item_outputs": [
     {
       "count": 2,
-      "item": "ragium:cryolite"
+      "tag": "#c:gems/cryolite"
     }
   ]
 }

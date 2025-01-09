@@ -13,7 +13,7 @@
     "#c:gems/quartz"
   ],
   "item_outputs": [
-    "ragium:refined_ragi_steel_ingot",
+    "#c:ingots/refined_ragi_steel",
     "ragium:slag"
   ]
 }

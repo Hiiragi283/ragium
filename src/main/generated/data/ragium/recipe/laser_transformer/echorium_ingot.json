@@ -11,6 +11,6 @@
     }
   ],
   "item_outputs": [
-    "ragium:echorium_ingot"
+    "#c:ingots/echorium"
   ]
 }

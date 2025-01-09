@@ -9,6 +9,6 @@
     "ragium:pulp"
   ],
   "item_outputs": [
-    "ragium:wood_plate"
+    "#c:plates/wood"
   ]
 }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.codec
 
 import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.Codec
@@ -8,13 +8,14 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
-import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryFixedCodec
 
 object RagiumCodecs {
     @JvmField
     val FLUID_VARIANT: Codec<FluidVariant> = simpleOrComplex(
-        Registries.FLUID.entryCodec.xmap(
+        RegistryFixedCodec.of(RegistryKeys.FLUID).xmap(
             { entry: RegistryEntry<Fluid> -> FluidVariant.of(entry.value()) },
             FluidVariant::getRegistryEntry,
         ),
@@ -23,7 +24,7 @@ object RagiumCodecs {
 
     @JvmField
     val ITEM_VARIANT: Codec<ItemVariant> = simpleOrComplex(
-        Registries.ITEM.entryCodec.xmap(
+        RegistryFixedCodec.of(RegistryKeys.ITEM).xmap(
             { entry: RegistryEntry<Item> -> ItemVariant.of(entry.value()) },
             ItemVariant::getRegistryEntry,
         ),

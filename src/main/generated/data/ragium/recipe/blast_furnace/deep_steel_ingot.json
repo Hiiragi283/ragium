@@ -12,6 +12,6 @@
     }
   ],
   "item_outputs": [
-    "ragium:deep_steel_ingot"
+    "#c:ingots/deep_steel"
   ]
 }

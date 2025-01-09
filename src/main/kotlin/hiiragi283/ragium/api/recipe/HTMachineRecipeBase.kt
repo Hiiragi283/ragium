@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -60,6 +61,18 @@ abstract class HTMachineRecipeBase(val definition: HTMachineDefinition) : Recipe
      * 指定した[index]から[HTFluidResult]を返します。
      */
     fun getFluidResult(index: Int): HTFluidResult? = fluidResults.getOrNull(index)
+
+    /**
+     * このレシピが有効かどうか判定します。
+     */
+    fun isValid(): Boolean {
+        if (key !in RagiumAPI.getInstance().machineRegistry) return false
+        val bool1: Boolean = itemIngredients.isNotEmpty() && itemIngredients.none(HTItemIngredient::isEmpty)
+        val bool2: Boolean = fluidIngredients.isNotEmpty() && fluidIngredients.none(HTFluidIngredient::isEmpty)
+        val bool3: Boolean = itemResults.isNotEmpty() && itemResults.none(HTItemResult::isEmpty)
+        val bool4: Boolean = fluidResults.isNotEmpty() && fluidResults.none(HTFluidResult::isEmpty)
+        return bool1 || bool2 || bool3 || bool4
+    }
 
     //    Recipe    //
 

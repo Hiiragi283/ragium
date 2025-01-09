@@ -5,13 +5,13 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTMachineInput
+import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import net.minecraft.block.BlockState
 import net.minecraft.entity.EquipmentSlot
 import net.minecraft.entity.player.PlayerEntity
@@ -24,7 +24,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_FORGE, pos, state) {
-    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipe> =
+    private val recipeCache: HTRecipeCache<HTMachineInput, HTMachineRecipeBase> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
     private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).generic(0).build()
@@ -55,7 +55,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
             return
         }
         val invStack: ItemStack = inventory.getStack(0)
-        val recipe: HTMachineRecipe =
+        val recipe: HTMachineRecipeBase =
             recipeCache
                 .getFirstMatch(
                     HTMachineInput.create(

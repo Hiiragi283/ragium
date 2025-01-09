@@ -2,12 +2,12 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.RagiumCodecs
+import hiiragi283.ragium.api.codec.HTRegistryEntryListCodec
+import hiiragi283.ragium.api.codec.HTRegistryEntryPacketCodec
+import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.util.HTRegistryEntryList
-import hiiragi283.ragium.api.util.codec.HTRegistryEntryListCodec
-import hiiragi283.ragium.api.util.codec.HTRegistryEntryPacketCodec
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil

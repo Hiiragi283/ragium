@@ -15,12 +15,14 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -41,6 +43,10 @@ public abstract class RecipeManagerMixin {
 
     @Shadow
     private Map<Identifier, RecipeEntry<?>> recipesById;
+
+    @Shadow 
+    @Final 
+    private RegistryWrapper.WrapperLookup registryLookup;
 
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("TAIL"))
     private void ragium$injectMaterialRecipe(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
@@ -64,7 +70,7 @@ public abstract class RecipeManagerMixin {
         };
         RagiumPlugin.RecipeHelper helper = RagiumPlugin.RecipeHelper.INSTANCE;
         RagiumAPI.getPlugins().forEach((@NotNull RagiumPlugin plugin) -> {
-            plugin.registerRuntimeRecipe(exporter, helper);
+            plugin.registerRuntimeRecipe(exporter, registryLookup, helper);
             RagiumAPI.getInstance().getMaterialRegistry().getEntryMap().forEach((@NotNull HTMaterialKey key, HTMaterialRegistry.@NotNull Entry entry) -> plugin.registerRuntimeMaterialRecipes(exporter, key, entry, helper));
         });
         recipesByType = map1;

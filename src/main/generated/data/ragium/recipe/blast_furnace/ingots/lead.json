@@ -4,11 +4,13 @@
     "type": "ragium:blast_furnace",
     "tier": "primitive"
   },
+  "fluid_outputs": [
+    "ragium:sulfur_dioxide"
+  ],
   "item_inputs": [
-    "#c:ingots/copper",
-    "#c:dusts/raginite"
+    "#c:dusts/galena"
   ],
   "item_outputs": [
-    "#c:ingots/ragi_alloy"
+    "#c:ingots/lead"
   ]
 }

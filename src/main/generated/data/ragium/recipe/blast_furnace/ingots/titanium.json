@@ -2,13 +2,12 @@
   "type": "ragium:machine",
   "definition": {
     "type": "ragium:blast_furnace",
-    "tier": "primitive"
+    "tier": "basic"
   },
   "item_inputs": [
-    "#c:ingots/copper",
-    "#c:dusts/raginite"
+    "#c:dusts/titanium"
   ],
   "item_outputs": [
-    "#c:ingots/ragi_alloy"
+    "#c:ingots/titanium"
   ]
 }

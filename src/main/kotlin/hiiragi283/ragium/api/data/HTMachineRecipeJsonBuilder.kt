@@ -48,6 +48,9 @@ class HTMachineRecipeJsonBuilder private constructor(
 
         @JvmStatic
         fun createRecipeId(content: HTContent<*>): Identifier = RagiumAPI.id(content.id.path)
+
+        @JvmStatic
+        fun createRecipeId(tagKey: TagKey<*>): Identifier = RagiumAPI.id(tagKey.id.path)
     }
 
     private val itemInputs: MutableSet<HTItemIngredient> = mutableSetOf()
@@ -189,13 +192,43 @@ class HTMachineRecipeJsonBuilder private constructor(
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
     ): HTMachineRecipeJsonBuilder = apply {
-        itemOutputs.add(HTItemResult(item, count, components))
+        itemOutputs.add(HTItemResult.ofItem(item, count, components))
+    }
+
+    /**
+     * アイテムの完成品を[prefix]と[material]から追加します。
+     */
+    fun itemOutput(
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
+        count: Int = 1,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = itemOutput(prefix.createTag(material), count, components)
+
+    /**
+     * アイテムの完成品を[provider]から追加します。
+     */
+    fun itemOutput(
+        provider: HTMaterialProvider,
+        count: Int = 1,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = itemOutput(provider.prefixedTagKey, count, components)
+
+    /**
+     * アイテムの完成品をタグから追加します。
+     */
+    fun itemOutput(
+        tagKey: TagKey<Item>,
+        count: Int = 1,
+        components: ComponentChanges = ComponentChanges.EMPTY,
+    ): HTMachineRecipeJsonBuilder = apply {
+        itemOutputs.add(HTItemResult.fromTag(tagKey, count, components))
     }
 
     /**
      * アイテムの完成品を[stack]から追加します。
      */
-    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult(stack)) }
+    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult.fromStack(stack)) }
 
     /**
      * 液体の完成品を追加します。
@@ -244,34 +277,49 @@ class HTMachineRecipeJsonBuilder private constructor(
         offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
     }
 
+    fun offerTo(
+        exporter: RecipeExporter,
+        prefix: HTTagPrefix,
+        material: HTMaterialKey,
+        suffix: String = "",
+    ) {
+        offerTo(exporter, prefix.createTag(material), suffix)
+    }
+
+    fun offerTo(exporter: RecipeExporter, output: TagKey<*>, suffix: String = "") {
+        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
+    }
+
     /**
      * [HTMachineKey.id]で前置されたレシピIDを使用してレシピを登録します。
      */
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        export { recipe: HTMachineRecipe -> exporter.accept(prefixedId, recipe, null) }
+        export { recipe: HTMachineRecipeBase -> exporter.accept(prefixedId, recipe, null) }
     }
 
     /**
-     * [HTMachineRecipe]を[transform]で変換します。
+     * [HTMachineRecipeBase]を[transform]で変換します。
      * @return [transform]で変換された値
      */
-    fun <T : Any> transform(transform: (HTMachineRecipe) -> T): T = transform(
-        HTMachineRecipe(
+    fun <T : Any> transform(transform: (HTMachineRecipeBase) -> T): T {
+        val recipe = HTMachineRecipe(
             HTMachineDefinition(key, tier),
             itemInputs.toList(),
             fluidInputs.toList(),
             catalyst,
             itemOutputs,
             fluidOutputs,
-        ),
-    )
+        )
+        check(recipe.isValid()) { "Invalid machine recipe found!" }
+        return transform(recipe)
+    }
 
     /**
-     * [HTMachineRecipe]を[action]に渡します。
+     * [HTMachineRecipeBase]を[action]に渡します。
      */
-    fun export(action: (HTMachineRecipe) -> Unit) {
+    fun export(action: (HTMachineRecipeBase) -> Unit) {
         transform(action)
     }
 }

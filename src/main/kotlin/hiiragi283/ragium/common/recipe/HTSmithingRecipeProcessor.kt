@@ -34,7 +34,7 @@ class HTSmithingRecipeProcessor(private val inventory: Inventory, private val in
             .runCatching {
                 val recipe: SmithingRecipe = getOrThrow(HTMachineException::NoMatchingRecipe)
                 val resultStack: ItemStack = recipe.craft(input, world.registryManager).copy()
-                val output = HTItemResult(resultStack)
+                val output: HTItemResult = HTItemResult.fromStack(resultStack)
                 if (!output.canMerge(inventory.getStack(outputIndex))) {
                     throw HTMachineException.MergeResult(false)
                 }

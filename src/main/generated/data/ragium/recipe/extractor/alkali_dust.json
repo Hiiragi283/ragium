@@ -11,6 +11,6 @@
     "minecraft:water"
   ],
   "item_outputs": [
-    "ragium:alkali_dust"
+    "#c:dusts/alkali"
   ]
 }

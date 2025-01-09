@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
-import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.codec.HTNbtCodecs
 import hiiragi283.ragium.api.storage.HTCreativeStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext

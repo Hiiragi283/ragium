@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.data
+package hiiragi283.ragium.api.codec
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult

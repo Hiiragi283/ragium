@@ -5,10 +5,13 @@
     "tier": "primitive"
   },
   "item_inputs": [
-    "#c:ingots/copper",
-    "#c:dusts/raginite"
+    "#c:ingots/gold",
+    "#c:ingots/silver"
   ],
   "item_outputs": [
-    "#c:ingots/ragi_alloy"
+    {
+      "count": 4,
+      "tag": "#c:ingots/electrum"
+    }
   ]
 }

@@ -19,7 +19,8 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
-import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.ItemTags
 import net.minecraft.registry.tag.TagKey
@@ -30,7 +31,7 @@ object RagiumHardModePlugin : RagiumPlugin {
 
     private val hardMode: Boolean by lazy(RagiumAPI.getInstance()::isHardMode)
 
-    override fun registerRuntimeRecipe(exporter: RecipeExporter, helper: RagiumPlugin.RecipeHelper) {
+    override fun registerRuntimeRecipe(exporter: RecipeExporter, lookup: RegistryWrapper.WrapperLookup, helper: RagiumPlugin.RecipeHelper) {
         // solar panel
         HTShapedRecipeJsonBuilder
             .create(RagiumItems.SOLAR_PANEL)
@@ -118,7 +119,7 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .offerTo(exporter)
         }
 
-        Registries.FLUID.streamEntries().forEach { entry: RegistryEntry<Fluid> ->
+        lookup.getWrapperOrThrow(RegistryKeys.FLUID).streamEntries().forEach { entry: RegistryEntry<Fluid> ->
             val id: Identifier = entry.id ?: return@forEach
             val fluid: Fluid = entry.value()
             if (!fluid.isStill(fluid.defaultState)) return@forEach
@@ -243,143 +244,50 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumHardModeContents.ALUMINUM.getContent(hardMode),
             RagiumItems.WARPED_CRYSTAL,
         )
-        // consumers
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.BEDROCK_MINER,
-            RagiumItems.Gears.DIAMOND,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.BIOMASS_FERMENTER,
-            Items.COMPOSTER,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.DRAIN,
-            Items.BUCKET,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.FLUID_DRILL,
-            RagiumBlocks.SHAFT,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.ROCK_GENERATOR,
-            Items.LAVA_BUCKET,
-            Items.WATER_BUCKET,
-        )
-        // generators
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.COMBUSTION_GENERATOR,
-            RagiumItems.ENGINE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.NUCLEAR_REACTOR,
-            RagiumItems.STELLA_PLATE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.SOLAR_GENERATOR,
-            RagiumItems.SOLAR_PANEL,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.STEAM_GENERATOR,
-            Items.FURNACE,
-            Items.BUCKET,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.THERMAL_GENERATOR,
-            Items.MAGMA_BLOCK,
-        )
-        // processors
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.ASSEMBLER,
-            Items.CRAFTER,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.BLAST_FURNACE,
-            Items.BLAST_FURNACE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.CHEMICAL_REACTOR,
-            Items.GLASS,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.COMPRESSOR,
-            Items.PISTON,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.CUTTING_MACHINE,
-            Items.STONECUTTER,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.DISTILLATION_TOWER,
-            RagiumBlocks.Drums.BASIC,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.ELECTROLYZER,
-            RagiumItems.CHARGED_CARBON_ELECTRODE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.EXTRACTOR,
-            Items.HOPPER,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.GRINDER,
-            Items.FLINT,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.GROWTH_CHAMBER,
-            Items.IRON_HOE,
-            Items.IRON_AXE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.INFUSER,
-            Items.GLASS_BOTTLE,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.LARGE_CHEMICAL_REACTOR,
-            Items.TINTED_GLASS,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.LASER_TRANSFORMER,
-            RagiumItems.LASER_EMITTER,
-        )
-        /*createProcessor(
-            exporter,
-            RagiumMachineKeys.METAL_FORMER,
-            RagiumBlocks.MANUAL_FORGE,
-            RagiumItemsNew.Ingredients.FORGE_HAMMER
-        )*/
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.MIXER,
-            Items.CAULDRON,
-        )
-        createProcessor(
-            exporter,
-            RagiumMachineKeys.MULTI_SMELTER,
-            RagiumItems.BLAZING_CARBON_ELECTRODE,
-        )
+
+        mapOf(
+            // consumers
+            RagiumMachineKeys.BEDROCK_MINER to RagiumItems.Gears.DIAMOND,
+            RagiumMachineKeys.BIOMASS_FERMENTER to Items.COMPOSTER,
+            RagiumMachineKeys.DRAIN to Items.BUCKET,
+            RagiumMachineKeys.FLUID_DRILL to RagiumBlocks.SHAFT,
+            RagiumMachineKeys.ROCK_GENERATOR to Items.OBSIDIAN,
+            // generators
+            RagiumMachineKeys.COMBUSTION_GENERATOR to RagiumItems.ENGINE,
+            RagiumMachineKeys.NUCLEAR_REACTOR to RagiumItems.STELLA_PLATE,
+            RagiumMachineKeys.SOLAR_GENERATOR to RagiumItems.SOLAR_PANEL,
+            RagiumMachineKeys.STEAM_GENERATOR to Items.FURNACE,
+            RagiumMachineKeys.THERMAL_GENERATOR to Items.MAGMA_BLOCK,
+            // processors
+            RagiumMachineKeys.ASSEMBLER to Items.CRAFTER,
+            RagiumMachineKeys.BLAST_FURNACE to Items.BLAST_FURNACE,
+            RagiumMachineKeys.CHEMICAL_REACTOR to Items.GLASS,
+            RagiumMachineKeys.COMPRESSOR to Items.PISTON,
+            RagiumMachineKeys.CUTTING_MACHINE to Items.STONECUTTER,
+            RagiumMachineKeys.DISTILLATION_TOWER to RagiumBlocks.Drums.BASIC,
+            RagiumMachineKeys.ELECTROLYZER to RagiumItems.CHARGED_CARBON_ELECTRODE,
+            RagiumMachineKeys.EXTRACTOR to Items.HOPPER,
+            RagiumMachineKeys.GRINDER to Items.FLINT,
+            RagiumMachineKeys.GROWTH_CHAMBER to Items.IRON_HOE,
+            RagiumMachineKeys.INFUSER to Items.GLASS_BOTTLE,
+            RagiumMachineKeys.LARGE_CHEMICAL_REACTOR to RagiumBlocks.Glasses.STEEL,
+            RagiumMachineKeys.LASER_TRANSFORMER to RagiumItems.LASER_EMITTER,
+            RagiumMachineKeys.MIXER to Items.CAULDRON,
+            RagiumMachineKeys.MULTI_SMELTER to RagiumItems.BLAZING_CARBON_ELECTRODE,
+        ).forEach { (key: HTMachineKey, input: ItemConvertible) ->
+            HTMachineTier.entries.forEach { tier: HTMachineTier ->
+                HTShapedRecipeJsonBuilder
+                    .create(key.createItemStack(tier))
+                    .patterns(
+                        "ABA",
+                        "CDC",
+                    ).input('A', tier.getMainMetal().getPrefixedTag(hardMode))
+                    .input('B', tier.getCircuit())
+                    .input('C', input)
+                    .input('D', tier.getCasing())
+                    .offerTo(exporter, tier.createId(key))
+            }
+        }
     }
 
     private fun craftExporters(exporter: RecipeExporter) {
@@ -691,26 +599,5 @@ object RagiumHardModePlugin : RagiumPlugin {
             .input('B', side)
             .input('C', core)
             .offerTo(exporter)
-    }
-
-    private fun createProcessor(
-        exporter: RecipeExporter,
-        key: HTMachineKey,
-        left: ItemConvertible,
-        right: ItemConvertible = left,
-    ) {
-        HTMachineTier.entries.forEach { tier: HTMachineTier ->
-            HTShapedRecipeJsonBuilder
-                .create(key.createItemStack(tier))
-                .patterns(
-                    "AEA",
-                    "BCD",
-                ).input('A', tier.getMainMetal().getPrefixedTag(hardMode))
-                .input('B', left)
-                .input('C', tier.getCasing())
-                .input('D', right)
-                .input('E', tier.getCircuit())
-                .offerTo(exporter, tier.createId(key))
-        }
     }
 }

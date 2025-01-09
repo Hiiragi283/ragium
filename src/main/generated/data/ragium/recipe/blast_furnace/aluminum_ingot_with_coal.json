@@ -14,6 +14,6 @@
     }
   ],
   "item_outputs": [
-    "ragium:aluminum_ingot"
+    "#c:ingots/aluminum"
   ]
 }

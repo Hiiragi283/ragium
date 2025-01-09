@@ -2,7 +2,7 @@ package hiiragi283.ragium.api.storage
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.RagiumCodecs
+import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.NON_NEGATIVE_LONG_CODEC
 import hiiragi283.ragium.api.extension.isIn
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant

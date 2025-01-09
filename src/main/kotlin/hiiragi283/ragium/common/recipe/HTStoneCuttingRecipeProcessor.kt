@@ -40,7 +40,7 @@ class HTStoneCuttingRecipeProcessor(
             }.runCatching {
                 val recipe: StonecuttingRecipe = getOrThrow(HTMachineException::NoMatchingRecipe)
                 val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
-                val output = HTItemResult(resultStack)
+                val output: HTItemResult = HTItemResult.fromStack(resultStack)
                 if (!output.canMerge(inventory.getStack(outputIndex))) {
                     throw HTMachineException.MergeResult(false)
                 }

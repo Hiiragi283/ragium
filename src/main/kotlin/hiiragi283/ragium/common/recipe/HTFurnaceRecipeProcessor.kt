@@ -32,7 +32,7 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
                 val recipe: T = getOrThrow(HTMachineException::NoMatchingRecipe)
                 val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
                 resultStack.count *= processCount
-                val output = HTItemResult(resultStack)
+                val output: HTItemResult = HTItemResult.fromStack(resultStack)
                 if (!output.canMerge(inventory.getStack(outputIndex))) {
                     throw HTMachineException.MergeResult(false)
                 }

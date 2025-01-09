@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
+import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
@@ -91,7 +92,7 @@ interface RagiumPlugin {
      *
      * [net.minecraft.recipe.RecipeManager.apply]の最後にフックされます。
      */
-    fun registerRuntimeRecipe(exporter: RecipeExporter, helper: RecipeHelper) {}
+    fun registerRuntimeRecipe(exporter: RecipeExporter, lookup: RegistryWrapper.WrapperLookup, helper: RecipeHelper) {}
 
     /**
      * 素材データに基づいたレシピを動的に登録します。

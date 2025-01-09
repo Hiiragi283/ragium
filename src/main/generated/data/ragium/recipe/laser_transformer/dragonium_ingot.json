@@ -11,6 +11,6 @@
     }
   ],
   "item_outputs": [
-    "ragium:dragonium_ingot"
+    "#c:ingots/dragonium"
   ]
 }

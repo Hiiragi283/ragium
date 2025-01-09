@@ -82,7 +82,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 if (fluidStorage.extractSelf(maxAmount, transaction) == maxAmount) {
                     transaction.commit()
                     fuelStack.decrement(1)
-                    inventory.mergeStack(1, HTItemResult(RagiumItems.Dusts.ASH))
+                    inventory.mergeStack(1, HTItemResult.ofItem(RagiumItems.Dusts.ASH))
                     Result.success(Unit)
                 } else {
                     throw HTMachineException.ConsumeFuel(false)

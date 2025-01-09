@@ -12,7 +12,7 @@
     }
   ],
   "item_outputs": [
-    "ragium:steel_ingot",
+    "#c:ingots/steel",
     "ragium:slag"
   ]
 }

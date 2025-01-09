@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.entity.HTCrateBlockEntityBase
-import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.codec.HTNbtCodecs
 import hiiragi283.ragium.api.extension.getStackInMainHand
 import hiiragi283.ragium.api.storage.HTCreativeStorage
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes

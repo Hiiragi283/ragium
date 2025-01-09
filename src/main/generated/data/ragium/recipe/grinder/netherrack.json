@@ -13,8 +13,8 @@
   "item_outputs": [
     {
       "count": 2,
-      "item": "ragium:bauxite_dust"
+      "tag": "#c:dusts/bauxite"
     },
-    "ragium:sulfur_dust"
+    "#c:dusts/sulfur"
   ]
 }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.machine.generator
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.data.HTNbtCodecs
+import hiiragi283.ragium.api.codec.HTNbtCodecs
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes

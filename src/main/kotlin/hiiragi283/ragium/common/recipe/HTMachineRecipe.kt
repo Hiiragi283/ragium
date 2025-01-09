@@ -30,25 +30,25 @@ class HTMachineRecipe(
         val CODEC: MapCodec<HTMachineRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTMachineDefinition.Companion.CODEC
+                    HTMachineDefinition.CODEC
                         .fieldOf("definition")
                         .forGetter(HTMachineRecipe::definition),
-                    HTItemIngredient.Companion.CODEC
+                    HTItemIngredient.CODEC
                         .listOf()
                         .optionalFieldOf("item_inputs", listOf())
                         .forGetter(HTMachineRecipe::itemIngredients),
-                    HTFluidIngredient.Companion.CODEC
+                    HTFluidIngredient.CODEC
                         .listOf()
                         .optionalFieldOf("fluid_inputs", listOf())
                         .forGetter(HTMachineRecipe::fluidIngredients),
-                    HTItemIngredient.Companion.CODEC
+                    HTItemIngredient.CODEC
                         .optionalFieldOf("catalyst")
                         .forOptionalGetter(HTMachineRecipe::catalyst),
-                    HTItemResult.Companion.CODEC
+                    HTItemResult.CODEC
                         .listOf()
                         .optionalFieldOf("item_outputs", listOf())
                         .forGetter(HTMachineRecipe::itemResults),
-                    HTFluidResult.Companion.CODEC
+                    HTFluidResult.CODEC
                         .listOf()
                         .optionalFieldOf("fluid_outputs", listOf())
                         .forGetter(HTMachineRecipe::fluidResults),
@@ -92,6 +92,7 @@ class HTMachineRecipe(
     //    HTMachineRecipeBase    //
 
     override fun matches(input: HTMachineInput, world: World): Boolean {
+        if (!isValid()) return false
         if (input.key != this.key) return false
         if (input.tier < this.tier) return false
         if (!HTShapelessInputResolver.canMatch(itemIngredients, input.itemInputs)) return false

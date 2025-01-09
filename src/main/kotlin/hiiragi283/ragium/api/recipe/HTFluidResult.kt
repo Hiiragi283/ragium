@@ -2,9 +2,8 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.RagiumCodecs
+import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.POSITIVE_LONG_CODEC
-import hiiragi283.ragium.api.extension.entryPacketCodec
 import hiiragi283.ragium.api.extension.isEmpty
 import hiiragi283.ragium.api.extension.isFilledMax
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -16,8 +15,9 @@ import net.minecraft.fluid.Fluid
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
-import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryFixedCodec
 
 /**
  * 液体の完成品を扱うクラス
@@ -28,11 +28,12 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
     companion object {
         @JvmField
         val CODEC: Codec<HTFluidResult> = RagiumCodecs.simpleOrComplex(
-            Registries.FLUID.entryCodec.xmap(::HTFluidResult, HTFluidResult::entry),
+            RegistryFixedCodec.of(RegistryKeys.FLUID).xmap(::HTFluidResult, HTFluidResult::entry),
             RecordCodecBuilder.create { instance ->
                 instance
                     .group(
-                        Registries.FLUID.entryCodec
+                        RegistryFixedCodec
+                            .of(RegistryKeys.FLUID)
                             .fieldOf("fluid")
                             .forGetter(HTFluidResult::entry),
                         POSITIVE_LONG_CODEC
@@ -44,7 +45,7 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFluidResult> = PacketCodec.tuple(
-            Registries.FLUID.entryPacketCodec,
+            PacketCodecs.registryEntry(RegistryKeys.FLUID),
             HTFluidResult::entry,
             PacketCodecs.VAR_LONG,
             HTFluidResult::amount,
@@ -63,6 +64,8 @@ class HTFluidResult(val entry: RegistryEntry<Fluid>, val amount: Long = FluidCon
         get() = entry.value()
     val variant: FluidVariant
         get() = FluidVariant.of(fluid)
+    val isEmpty: Boolean
+        get() = fluid.isEmpty
 
     /**
      * 指定した[storage]にマージできるか判定します。
