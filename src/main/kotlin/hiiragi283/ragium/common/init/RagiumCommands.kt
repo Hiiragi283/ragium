@@ -103,7 +103,7 @@ object RagiumCommands {
         val holder: HTControllerHolder? = HTControllerHolder.LOOKUP.find(world, pos, null)
         if (holder != null) {
             runCatching {
-                holder.buildMultiblock()
+                holder.buildMultiblock(replace)
             }.onSuccess {
                 context.source.sendFeedback({ Text.literal("Built Multiblock at $pos!") }, true)
             }.onFailure {

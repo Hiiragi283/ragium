@@ -24,7 +24,7 @@ class HTLargeChemicalReactorScreenHandler(syncId: Int, playerInv: PlayerInventor
         addFluidSlot(1, 2, 1)
         addFluidSlot(2, 3, 1)
         addFluidSlot(3, 2, 2)
-        addFluidSlot(4, 3, 3)
+        addFluidSlot(4, 3, 2)
         // catalyst
         addSlot(3, 4, 2)
         // outputs

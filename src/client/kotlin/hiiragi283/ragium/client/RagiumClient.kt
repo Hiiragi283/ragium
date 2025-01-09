@@ -192,6 +192,7 @@ object RagiumClient : ClientModInitializer {
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.GRINDER)
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.LARGE_CHEMICAL_REACTOR)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.LARGE_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.ROCK_GENERATOR)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.SIMPLE_MACHINE)

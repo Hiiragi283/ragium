@@ -19,8 +19,8 @@ open class HTMachineScreen<T : HTMachineScreenHandlerBase>(handler: T, inventory
         val TEXTURE: Identifier = RagiumAPI.Companion.id("textures/gui/machine.png")
     }
 
-    val fluidCache: Array<FluidVariant> = Array(4) { FluidVariant.blank() }
-    val amountCache: LongArray = LongArray(4) { 0 }
+    val fluidCache: Array<FluidVariant> = Array(10) { FluidVariant.blank() }
+    val amountCache: LongArray = LongArray(10) { 0 }
 
     override fun drawMouseoverTooltip(context: DrawContext, x: Int, y: Int) {
         super.drawMouseoverTooltip(context, x, y)

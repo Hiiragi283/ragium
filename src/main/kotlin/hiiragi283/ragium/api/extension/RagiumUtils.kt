@@ -9,6 +9,7 @@ import net.fabricmc.loader.api.FabricLoader
 import net.fabricmc.loader.api.metadata.ModMetadata
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
 import net.minecraft.entity.player.PlayerEntity
@@ -17,6 +18,10 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemStack
+import net.minecraft.loot.LootTable
+import net.minecraft.loot.context.LootContextParameterSet
+import net.minecraft.loot.context.LootContextParameters
+import net.minecraft.loot.context.LootContextTypes
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.server.world.ServerWorld
@@ -194,6 +199,20 @@ fun LivingEntity.addInfinityStatusEffect(
         showParticles,
         showIcon,
     )
+}
+
+fun LivingEntity.getDropLoot(damageSource: DamageSource): List<ItemStack> {
+    val serverWorld: ServerWorld = world.asServerWorld() ?: return listOf()
+    val lootTable: LootTable = serverWorld.server.reloadableRegistries.getLootTable(lootTable)
+    val parameterSet: LootContextParameterSet = LootContextParameterSet
+        .Builder(serverWorld)
+        .add(LootContextParameters.THIS_ENTITY, this)
+        .add(LootContextParameters.ORIGIN, pos)
+        .add(LootContextParameters.DAMAGE_SOURCE, damageSource)
+        .addOptional(LootContextParameters.ATTACKING_ENTITY, damageSource.attacker)
+        .addOptional(LootContextParameters.DIRECT_ATTACKING_ENTITY, damageSource.source)
+        .build(LootContextTypes.ENTITY)
+    return lootTable.generateLoot(parameterSet, lootTableSeed)
 }
 
 fun ThrownItemEntity.setItemFromOwner(owner: LivingEntity): ThrownItemEntity = apply {

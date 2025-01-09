@@ -395,50 +395,47 @@ object RagiumDefaultPlugin : RagiumPlugin {
         }
 
         // ingot/gem -> plate
-        helper.useItemIfPresent(entry, HTTagPrefix.PLATE) { output: Item ->
-            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                // Compressor Recipe
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.COMPRESSOR)
-                    .itemInput(prefix, key)
-                    .catalyst(RagiumItems.PressMolds.PLATE)
-                    .itemOutput(output)
-                    .offerTo(exporter, output)
-                // Cutting Machine Recipe
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.CUTTING_MACHINE)
-                    .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
-                    .catalyst(RagiumItems.PressMolds.PLATE)
-                    .itemOutput(output, 9)
-                    .offerTo(exporter, output)
-            }
+        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+            // Compressor Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.COMPRESSOR)
+                .itemInput(prefix, key)
+                .catalyst(RagiumItems.PressMolds.PLATE)
+                .itemOutput(HTTagPrefix.PLATE, entry.key)
+                .offerTo(exporter, HTTagPrefix.PLATE, entry.key)
+            // Cutting Machine Recipe
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.CUTTING_MACHINE)
+                .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
+                .catalyst(RagiumItems.PressMolds.PLATE)
+                .itemOutput(HTTagPrefix.PLATE, entry.key, 9)
+                .offerTo(exporter, HTTagPrefix.PLATE, entry.key)
         }
-        // xxx -> dust
-        helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
-            // ingot/gem -> dust
-            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.GRINDER)
-                    .itemInput(prefix, key)
-                    .itemOutput(output)
-                    .offerTo(exporter, output, "_from_${prefix.asString()}")
-            }
-            // plate -> dust
+
+        // ingot/gem -> dust
+        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.PLATE, key)
-                .itemOutput(output)
-                .offerTo(exporter, output, "_from_plate")
-            // gear -> dust
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.GEAR, key)
-                .itemOutput(output, 4)
-                .offerTo(exporter, output, "_from_gear")
+                .itemInput(prefix, key)
+                .itemOutput(HTTagPrefix.DUST, entry.key)
+                .offerTo(exporter, HTTagPrefix.DUST, entry.key, "_from_${prefix.asString()}")
         }
+        // plate -> dust
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(HTTagPrefix.PLATE, key)
+            .itemOutput(HTTagPrefix.DUST, entry.key)
+            .offerTo(exporter, HTTagPrefix.DUST, entry.key, "_from_plate")
+        // gear -> dust
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(HTTagPrefix.GEAR, key)
+            .itemOutput(HTTagPrefix.DUST, entry.key, 4)
+            .offerTo(exporter, HTTagPrefix.DUST, entry.key, "_from_gear")
+
         // ingot/gem -> gear
-        helper.useItemIfPresent(entry, HTTagPrefix.GEAR) { output: Item ->
-            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+            helper.useItemIfPresent(entry, HTTagPrefix.GEAR) { output: Item ->
                 // Shaped Recipe
                 HTShapedRecipeJsonBuilder
                     .create(output)
@@ -449,37 +446,31 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     ).input('A', prefix, key)
                     .input('B', HTTagPrefix.NUGGET, RagiumMaterialKeys.IRON)
                     .offerTo(exporter)
-                // Compressor Recipe
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.COMPRESSOR)
-                    .itemInput(prefix, key, 4)
-                    .catalyst(RagiumItems.PressMolds.GEAR)
-                    .itemOutput(output)
-                    .offerTo(exporter, output)
             }
-        }
-        // ingot/gem -> rod
-        helper.useItemIfPresent(entry, HTTagPrefix.ROD) { output: Item ->
-            entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                // Compressor Recipe
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.COMPRESSOR)
-                    .itemInput(prefix, key)
-                    .catalyst(RagiumItems.PressMolds.ROD)
-                    .itemOutput(output, 2)
-                    .offerTo(exporter, output)
-            }
-        }
-        // ingot -> wire
-        helper.useItemIfPresent(entry, HTTagPrefix.WIRE) { output: Item ->
             // Compressor Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
-                .itemInput(HTTagPrefix.INGOT, key)
-                .catalyst(RagiumItems.PressMolds.WIRE)
-                .itemOutput(output, 3)
-                .offerTo(exporter, output)
+                .itemInput(prefix, key, 4)
+                .catalyst(RagiumItems.PressMolds.GEAR)
+                .itemOutput(HTTagPrefix.GEAR, entry.key)
+                .offerTo(exporter, HTTagPrefix.GEAR, entry.key)
         }
+        // ingot/gem -> rod
+        entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.COMPRESSOR)
+                .itemInput(prefix, key)
+                .catalyst(RagiumItems.PressMolds.ROD)
+                .itemOutput(HTTagPrefix.ROD, entry.key, 2)
+                .offerTo(exporter, HTTagPrefix.ROD, entry.key)
+        }
+        // ingot -> wire
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .itemInput(HTTagPrefix.INGOT, key)
+            .catalyst(RagiumItems.PressMolds.WIRE)
+            .itemOutput(HTTagPrefix.WIRE, entry.key, 3)
+            .offerTo(exporter, HTTagPrefix.WIRE, entry.key)
 
         // ore -> raw/gem
         helper.useItemFromRawPrefix(entry) { output: Item ->
@@ -521,14 +512,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .offerTo(exporter, output, "_5x")
         }
         // raw -> dust
-        helper.useItemIfPresent(entry, HTTagPrefix.DUST) { output: Item ->
-            // Grinder Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
-                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
-                .itemOutput(output, 2)
-                .offerTo(exporter, output, "_from_raw")
-        }
+        HTMachineRecipeJsonBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(HTTagPrefix.RAW_MATERIAL, key)
+            .itemOutput(HTTagPrefix.DUST, entry.key, 2)
+            .offerTo(exporter, HTTagPrefix.DUST, entry.key, "_from_raw")
         if (HTMaterialPropertyKeys.DISABLE_RAW_SMELTING !in entry) {
             // raw -> ingot
             helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
