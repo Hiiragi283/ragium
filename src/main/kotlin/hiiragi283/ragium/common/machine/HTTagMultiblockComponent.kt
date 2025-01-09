@@ -7,14 +7,14 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.registry.Registries
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.text.MutableText
+import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTTagMultiblockComponent(val tagKey: TagKey<Block>) : HTMultiblockComponent {
     private val entryList: HTRegistryEntryList<Block> = HTRegistryEntryList.fromTag(tagKey, Registries.BLOCK)
 
-    override val text: MutableText = tagKey.name.copy()
+    override fun getBlockName(controller: HTControllerDefinition): Text = tagKey.name
 
     override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean = controller.world.getBlockState(pos).isIn(tagKey)
 

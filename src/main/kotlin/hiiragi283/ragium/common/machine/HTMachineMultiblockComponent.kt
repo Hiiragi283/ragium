@@ -11,7 +11,7 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 
 object HTMachineMultiblockComponent : HTMultiblockComponent {
-    override val text: Text = Text.literal("Any Machines")
+    override fun getBlockName(controller: HTControllerDefinition): Text = Text.literal("Any Machines")
 
     override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean = controller.world.getMachineEntity(pos) != null
 

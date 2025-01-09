@@ -11,7 +11,8 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 
 class HTTieredMultiblockComponent(val blockGetter: (HTMachineTier) -> HTBlockContent) : HTMultiblockComponent {
-    override val text: Text = ItemStack(blockGetter(HTMachineTier.PRIMITIVE)).name
+    override fun getBlockName(controller: HTControllerDefinition): Text =
+        getBlock(controller)?.let(::ItemStack)?.name ?: Text.literal("Error!")
 
     fun getBlock(controller: HTControllerDefinition): Block? = controller.find(HTMachineTier.SIDED_LOOKUP)?.let(blockGetter)?.get()
 

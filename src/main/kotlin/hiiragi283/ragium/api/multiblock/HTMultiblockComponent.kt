@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos
  * マルチブロックを構成する要素を表すインターフェース
  */
 interface HTMultiblockComponent {
-    val text: Text
+    fun getBlockName(controller: HTControllerDefinition): Text
 
     fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean
 

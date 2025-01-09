@@ -46,8 +46,9 @@ interface HTControllerHolder {
             if (component.checkState(controller, pos)) {
                 component.collectData(controller, pos, builder)
             } else {
+                val blockName: Text = component.getBlockName(controller)
                 consumer(
-                    Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, component.text, blockPosText(pos)).formatted(Formatting.RED),
+                    Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_ERROR, blockName, blockPosText(pos)).formatted(Formatting.RED),
                 )
                 return HTMultiblockData.FALSE
             }
