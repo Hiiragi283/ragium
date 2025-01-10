@@ -2,16 +2,19 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
+import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
 import hiiragi283.ragium.common.machine.HTMachineMultiblockComponent
 import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.block.Blocks
 
 object RagiumMultiblockMaps {
-    private val SHAFT = HTSimpleMultiblockComponent(RagiumBlocks.SHAFT)
     private val CASING = HTTieredMultiblockComponent(HTMachineTier::getCasing)
-    private val HULL = HTTieredMultiblockComponent(HTMachineTier::getHull)
+    private val COIL_Y = HTAxisMultiblockComponent.YStatic(HTMachineTier::getCoil)
     private val GRATE = HTTieredMultiblockComponent(HTMachineTier::getGrate)
+    private val HULL = HTTieredMultiblockComponent(HTMachineTier::getHull)
+    private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
+    private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
     private val STORAGE_BLOCK = HTTieredMultiblockComponent(HTMachineTier::getStorageBlock)
 
     @JvmField
@@ -21,10 +24,10 @@ object RagiumMultiblockMaps {
         .add(0, -3, 0, HTSimpleMultiblockComponent(Blocks.BEDROCK))
         // .add(0, -2, 0, shaft)
         // .add(0, -1, 0, shaft)
-        .add(-1, 0, 0, SHAFT)
-        .add(0, 0, -1, SHAFT)
-        .add(0, 0, 1, SHAFT)
-        .add(1, 0, 0, SHAFT)
+        .add(-1, 0, 0, SHAFT_VERTICAL)
+        .add(0, 0, -1, SHAFT_HORIZONTAL)
+        .add(0, 0, 1, SHAFT_HORIZONTAL)
+        .add(1, 0, 0, SHAFT_VERTICAL)
         // frame
         .add(-2, -1, 0, CASING)
         .add(0, -1, -2, CASING)
@@ -56,8 +59,8 @@ object RagiumMultiblockMaps {
     val BLAST_FURNACE: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
         .addLayer(-1..1, 0, 1..3, HULL)
-        .addHollow(-1..1, 1, 1..3, HTTieredMultiblockComponent(HTMachineTier::getCoil))
-        .addHollow(-1..1, 2, 1..3, HTTieredMultiblockComponent(HTMachineTier::getCoil))
+        .addHollow(-1..1, 1, 1..3, COIL_Y)
+        .addHollow(-1..1, 2, 1..3, COIL_Y)
         .addLayer(-1..1, 3, 1..3, CASING)
         .build()
 
@@ -111,7 +114,7 @@ object RagiumMultiblockMaps {
     val MULTI_SMELTER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
         .addLayer(-1..1, -1, 1..3, CASING)
-        .addHollow(-1..1, 0, 1..3, HTTieredMultiblockComponent(HTMachineTier::getCoil))
+        .addHollow(-1..1, 0, 1..3, COIL_Y)
         .addLayer(-1..1, 1, 1..3, STORAGE_BLOCK)
         .build()
 

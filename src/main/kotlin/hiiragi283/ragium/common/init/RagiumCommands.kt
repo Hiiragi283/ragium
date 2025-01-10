@@ -154,7 +154,7 @@ object RagiumCommands {
         val absoluteMap: HTMultiblockMap.Absolute = getMultiblockMap()?.convertAbsolute(controller) ?: return
         if (absoluteMap.isEmpty()) return
         for ((pos: BlockPos, component: HTMultiblockComponent) in absoluteMap.entries) {
-            val state: BlockState = component.getPlacementState(controller, pos) ?: continue
+            val state: BlockState = component.getPlacementState(controller) ?: continue
             if (replace || world.isAir(pos)) {
                 world.setBlockState(pos, state)
             }

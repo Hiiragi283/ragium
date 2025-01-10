@@ -424,7 +424,7 @@ internal object RagiumContentRegister {
     }
 
     private fun registerTierProviders() {
-        HTMachineTier.SIDED_LOOKUP.registerFallback { _: World, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Direction? ->
+        HTMachineTier.SIDED_LOOKUP.registerFallback { _: World, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Void? ->
             (blockEntity as? HTMachineTierProvider)?.tier ?: state.tier
         }
     }

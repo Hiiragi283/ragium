@@ -30,7 +30,10 @@ object RagiumClientAPI {
     //    Multiblock Renderer    //
 
     @JvmStatic
-    inline fun <reified T : HTMultiblockComponent> registerPatternRenderer(renderer: HTMultiblockComponentRenderer<T>) {
-        HTMultiblockComponentRendererRegistry.register(T::class.java, renderer)
+    fun <T : HTMultiblockComponent> registerPatternRenderer(
+        type: HTMultiblockComponent.Type<T>,
+        renderer: HTMultiblockComponentRenderer<T>,
+    ) {
+        HTMultiblockComponentRendererRegistry.register(type, renderer)
     }
 }

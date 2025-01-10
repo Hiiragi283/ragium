@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.block.HTBlockRotationHandler
+import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
@@ -19,6 +20,7 @@ object RagiumCommon : ModInitializer {
         logger.info("Registering game objects...")
 
         HTBlockRotationHandler
+        HTMultiblockComponent.Type.REGISTRY
         RagiumComponentTypes
 
         RagiumAdvancementCriteria

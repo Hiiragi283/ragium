@@ -25,7 +25,6 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.StringIdentifiable
-import net.minecraft.util.math.Direction
 
 /**
  * 機械のティアを表す列挙型
@@ -76,8 +75,8 @@ enum class HTMachineTier(
         val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.of("tier", HTMachineTier::class.java)
 
         @JvmField
-        val SIDED_LOOKUP: BlockApiLookup<HTMachineTier, Direction?> =
-            BlockApiLookup.get(RagiumAPI.id("machine_tier"), HTMachineTier::class.java, Direction::class.java)
+        val SIDED_LOOKUP: BlockApiLookup<HTMachineTier, Void?> =
+            BlockApiLookup.get(RagiumAPI.id("machine_tier"), HTMachineTier::class.java, Void::class.java)
     }
 
     val smelterMulti: Int = (processCost / 20).toInt()

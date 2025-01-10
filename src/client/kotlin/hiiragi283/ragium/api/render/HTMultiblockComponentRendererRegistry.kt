@@ -9,11 +9,11 @@ import net.minecraft.util.math.random.Random
 import net.minecraft.world.World
 
 object HTMultiblockComponentRendererRegistry {
-    private val registry: MutableMap<Class<*>, HTMultiblockComponentRenderer<*>> = mutableMapOf()
+    private val registry: MutableMap<HTMultiblockComponent.Type<*>, HTMultiblockComponentRenderer<*>> = mutableMapOf()
 
     @JvmStatic
-    fun <T : HTMultiblockComponent> register(clazz: Class<T>, renderer: HTMultiblockComponentRenderer<T>) {
-        registry[clazz] = renderer
+    fun <T : HTMultiblockComponent> register(type: HTMultiblockComponent.Type<T>, renderer: HTMultiblockComponentRenderer<T>) {
+        registry[type] = renderer
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -27,7 +27,7 @@ object HTMultiblockComponentRendererRegistry {
         consumerProvider: VertexConsumerProvider,
         random: Random,
     ) {
-        (registry[component::class.java] as? HTMultiblockComponentRenderer<T>)?.render(
+        (registry[component.type] as? HTMultiblockComponentRenderer<T>)?.render(
             controller,
             world,
             pos,

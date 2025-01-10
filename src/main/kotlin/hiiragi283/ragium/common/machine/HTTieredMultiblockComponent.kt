@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
+import hiiragi283.ragium.common.init.RagiumMultiblockComponentTypes
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.item.ItemStack
@@ -11,15 +12,17 @@ import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 
 class HTTieredMultiblockComponent(val blockGetter: (HTMachineTier) -> HTBlockContent) : HTMultiblockComponent {
-    override fun getBlockName(controller: HTControllerDefinition): Text =
-        getBlock(controller)?.let(::ItemStack)?.name ?: Text.literal("Error!")
+    override val type: HTMultiblockComponent.Type<*> = RagiumMultiblockComponentTypes.TIER
 
     fun getBlock(controller: HTControllerDefinition): Block? = controller.find(HTMachineTier.SIDED_LOOKUP)?.let(blockGetter)?.get()
+
+    override fun getBlockName(controller: HTControllerDefinition): Text =
+        getBlock(controller)?.let(::ItemStack)?.name ?: Text.literal("Error!")
 
     override fun checkState(controller: HTControllerDefinition, pos: BlockPos): Boolean {
         val block: Block = getBlock(controller) ?: return false
         return controller.world.getBlockState(pos).isOf(block)
     }
 
-    override fun getPlacementState(controller: HTControllerDefinition, pos: BlockPos): BlockState? = getBlock(controller)?.defaultState
+    override fun getPlacementState(controller: HTControllerDefinition): BlockState? = getBlock(controller)?.defaultState
 }
