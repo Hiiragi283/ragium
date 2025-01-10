@@ -18,14 +18,14 @@ class HTGrinderScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: Scree
         inventory.onOpen(player)
         // inputs
         addSlot(0, 2, 1)
-        addFluidSlot(0, 2, 2)
+        // addFluidSlot(0, 2, 2)
         // catalyst
         addSlot(1, 4, 2)
         // outputs
         addOutputSlot(2, 5, 1)
         addOutputSlot(3, 6, 1)
         addOutputSlot(4, 7, 1)
-        addFluidSlot(1, 6, 2)
+        // addFluidSlot(1, 6, 2)
         // player inventory
         addPlayerInv()
         // register property

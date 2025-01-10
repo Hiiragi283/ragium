@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "minecraft:deepslate"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "minecraft:deepslate",
+  "outputs": [
     "minecraft:cobbled_deepslate"
   ]
 }

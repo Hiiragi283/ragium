@@ -1,14 +1,4 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:cobblestone",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "primitive"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:cobblestone"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:cobblestone"
 }

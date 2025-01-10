@@ -1,0 +1,8 @@
+{
+  "type": "ragium:grinder",
+  "catalyst": "minecraft:flint",
+  "input": "minecraft:gravel",
+  "outputs": [
+    "minecraft:flint"
+  ]
+}

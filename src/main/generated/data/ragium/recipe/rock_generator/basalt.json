@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:basalt",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:basalt"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:basalt",
+  "tier": "basic"
 }

@@ -1,0 +1,7 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:coarse_dirt",
+  "outputs": [
+    "minecraft:dirt"
+  ]
+}

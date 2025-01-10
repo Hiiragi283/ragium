@@ -1,14 +1,4 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:andesite",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "primitive"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:andesite"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:andesite"
 }

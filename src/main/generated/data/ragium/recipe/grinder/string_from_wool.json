@@ -1,10 +1,10 @@
 {
   "type": "ragium:grinder",
-  "input": "#minecraft:logs",
+  "input": "#minecraft:wool",
   "outputs": [
     {
       "count": 4,
-      "item": "ragium:pulp"
+      "item": "minecraft:string"
     }
   ]
 }

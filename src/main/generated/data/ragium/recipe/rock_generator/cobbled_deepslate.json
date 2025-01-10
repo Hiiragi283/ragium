@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:cobbled_deepslate",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:cobbled_deepslate"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:cobbled_deepslate",
+  "tier": "basic"
 }

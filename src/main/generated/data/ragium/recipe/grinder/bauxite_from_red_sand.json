@@ -1,0 +1,11 @@
+{
+  "type": "ragium:grinder",
+  "input": "#c:sandstone/red_blocks",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:red_sand"
+    },
+    "#c:dusts/bauxite"
+  ]
+}

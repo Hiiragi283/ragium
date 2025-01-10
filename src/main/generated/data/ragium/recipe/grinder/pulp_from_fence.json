@@ -1,16 +1,10 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
+  "type": "ragium:grinder",
+  "input": {
+    "count": 3,
+    "items": "#minecraft:wooden_fences"
   },
-  "item_inputs": [
-    {
-      "count": 3,
-      "items": "#minecraft:wooden_fences"
-    }
-  ],
-  "item_outputs": [
+  "outputs": [
     {
       "count": 5,
       "item": "ragium:pulp"

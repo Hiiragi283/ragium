@@ -296,30 +296,32 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        export { recipe: HTMachineRecipeBase -> exporter.accept(prefixedId, recipe, null) }
+        val recipe: HTMachineRecipe = build(::HTMachineRecipe)
+        exporter.accept(prefixedId, recipe, null)
     }
 
     /**
-     * [HTMachineRecipeBase]を[transform]で変換します。
-     * @return [transform]で変換された値
+     * [HTMachineKey.id]で前置されたレシピIDを使用してレシピを登録します。
      */
-    fun <T : Any> transform(transform: (HTMachineRecipeBase) -> T): T {
-        val recipe = HTMachineRecipe(
-            HTMachineDefinition(key, tier),
+    fun offerTo(exporter: RecipeExporter, recipeId: Identifier, factory: HTMachineRecipeBase.Factory<*>) {
+        val prefix = "${key.id.path}/"
+        val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
+        val recipe: HTMachineRecipeBase = build(factory)
+        exporter.accept(prefixedId, recipe, null)
+    }
+
+    fun <T : HTMachineRecipeBase> build(factory: HTMachineRecipeBase.Factory<T>): T {
+        val data = HTMachineRecipeData(
             itemInputs.toList(),
             fluidInputs.toList(),
             catalyst,
             itemOutputs,
             fluidOutputs,
         )
-        check(recipe.isValid()) { "Invalid machine recipe found!" }
-        return transform(recipe)
+        check(data.isValidOutput(false)) { "No output recipe is not allowed!" }
+        return factory.create(HTMachineDefinition(key, tier), data)
     }
 
-    /**
-     * [HTMachineRecipeBase]を[action]に渡します。
-     */
-    fun export(action: (HTMachineRecipeBase) -> Unit) {
-        transform(action)
-    }
+    fun <T : HTMachineRecipeBase, R> transform(factory: HTMachineRecipeBase.Factory<T>, transform: (T) -> R): R =
+        build(factory).let(transform)
 }

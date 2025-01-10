@@ -1,14 +1,7 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:obsidian",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "advanced"
-  },
-  "fluid_inputs": [
-    "minecraft:lava"
-  ],
-  "item_outputs": [
-    "minecraft:obsidian"
-  ]
+  "type": "ragium:rock_generator",
+  "count": 1,
+  "fluid_input": "minecraft:lava",
+  "output": "minecraft:obsidian",
+  "tier": "advanced"
 }

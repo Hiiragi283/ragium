@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
@@ -60,6 +61,9 @@ enum class HTMachineTier(
     companion object {
         @JvmField
         val CODEC: Codec<HTMachineTier> = identifiedCodec(HTMachineTier.entries)
+
+        @JvmField
+        val FIELD_CODEC: MapCodec<HTMachineTier> = HTMachineTier.CODEC.optionalFieldOf("tier", PRIMITIVE)
 
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineTier> = identifiedPacketCodec(HTMachineTier.entries)

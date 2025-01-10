@@ -1,0 +1,11 @@
+{
+  "type": "ragium:grinder",
+  "catalyst": "minecraft:sand",
+  "input": [
+    "minecraft:gravel",
+    "ragium:slag"
+  ],
+  "outputs": [
+    "minecraft:sand"
+  ]
+}

@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "minecraft:ancient_debris"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "minecraft:ancient_debris",
+  "outputs": [
     {
       "count": 2,
       "item": "minecraft:netherite_scrap"

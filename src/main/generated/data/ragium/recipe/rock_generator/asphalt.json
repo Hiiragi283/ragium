@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "ragium:asphalt",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "ragium:asphalt"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "ragium:asphalt",
+  "tier": "basic"
 }

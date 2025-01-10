@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:blackstone",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:blackstone"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:blackstone",
+  "tier": "basic"
 }

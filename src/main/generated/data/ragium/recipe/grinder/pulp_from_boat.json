@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "#minecraft:boats"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "#minecraft:boats",
+  "outputs": [
     {
       "count": 5,
       "item": "ragium:pulp"

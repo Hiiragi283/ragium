@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.machine
 
-import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.item.ItemStack
 import net.minecraft.network.RegistryByteBuf
@@ -9,11 +9,11 @@ import net.minecraft.network.codec.PacketCodec
 data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTMachineDefinition> = RecordCodecBuilder.create { instance ->
+        val CODEC: MapCodec<HTMachineDefinition> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTMachineKey.CODEC.fieldOf("type").forGetter(HTMachineDefinition::key),
-                    HTMachineTier.CODEC.fieldOf("tier").forGetter(HTMachineDefinition::tier),
+                    HTMachineKey.CODEC.fieldOf("machine_type").forGetter(HTMachineDefinition::key),
+                    HTMachineTier.FIELD_CODEC.forGetter(HTMachineDefinition::tier),
                 ).apply(instance, ::HTMachineDefinition)
         }
 

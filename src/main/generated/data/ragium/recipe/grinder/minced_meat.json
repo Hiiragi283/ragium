@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "#c:foods/protein"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "#c:foods/protein",
+  "outputs": [
     "ragium:minced_meat"
   ]
 }

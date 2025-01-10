@@ -1,9 +1,9 @@
 {
   "type": "ragium:grinder",
-  "input": "#minecraft:wooden_doors",
+  "input": "#minecraft:wooden_trapdoors",
   "outputs": [
     {
-      "count": 2,
+      "count": 3,
       "item": "ragium:pulp"
     }
   ]

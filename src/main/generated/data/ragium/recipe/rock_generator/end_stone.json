@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:end_stone",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "advanced"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:end_stone"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:end_stone",
+  "tier": "advanced"
 }

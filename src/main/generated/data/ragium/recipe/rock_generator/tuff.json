@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:tuff",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:tuff"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:tuff",
+  "tier": "basic"
 }

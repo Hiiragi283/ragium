@@ -1,14 +1,4 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:stone",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "primitive"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:stone"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:stone"
 }

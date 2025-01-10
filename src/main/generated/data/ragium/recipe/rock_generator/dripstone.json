@@ -1,5 +1,5 @@
 {
   "type": "ragium:rock_generator",
-  "output": "minecraft:netherrack",
+  "output": "minecraft:dripstone_block",
   "tier": "basic"
 }

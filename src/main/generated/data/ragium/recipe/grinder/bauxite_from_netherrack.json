@@ -1,0 +1,14 @@
+{
+  "type": "ragium:grinder",
+  "input": {
+    "count": 8,
+    "items": "minecraft:netherrack"
+  },
+  "outputs": [
+    {
+      "count": 2,
+      "tag": "#c:dusts/bauxite"
+    },
+    "#c:dusts/sulfur"
+  ]
+}

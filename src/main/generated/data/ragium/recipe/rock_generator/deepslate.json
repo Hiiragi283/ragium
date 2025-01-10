@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:deepslate",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:deepslate"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:deepslate",
+  "tier": "basic"
 }

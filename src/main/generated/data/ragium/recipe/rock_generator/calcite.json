@@ -1,14 +1,5 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:calcite",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "basic"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:calcite"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "minecraft:calcite",
+  "tier": "basic"
 }

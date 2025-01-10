@@ -1,14 +1,4 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "ragium:slate",
-  "definition": {
-    "type": "ragium:rock_generator",
-    "tier": "primitive"
-  },
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "ragium:slate"
-    }
-  ]
+  "type": "ragium:rock_generator",
+  "output": "ragium:slate"
 }

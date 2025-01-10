@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "#minecraft:wooden_buttons"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "#minecraft:wooden_buttons",
+  "outputs": [
     "ragium:pulp"
   ]
 }

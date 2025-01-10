@@ -69,6 +69,10 @@ class HTItemIngredient private constructor(
             )
 
         @JvmStatic
+        fun of(entry: RegistryEntry<Item>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
+            HTItemIngredient(RegistryEntryList.of(entry), count, consumeType)
+
+        @JvmStatic
         fun of(item: ItemConvertible, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
             HTItemIngredient(RegistryEntryList.of(item.registryEntry), count, consumeType)
 

@@ -4,7 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.codec.RagiumCodecs
-import hiiragi283.ragium.api.extension.isPopulated
+import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.extension.registryEntry
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
@@ -16,6 +16,7 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.entry.RegistryFixedCodec
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
@@ -97,9 +98,10 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
     }
 
     abstract val firstEntry: RegistryEntry<Item>
-    val stack: ItemStack get() = ItemStack(firstEntry, count, components)
 
-    abstract val isEmpty: Boolean
+    val stack: ItemStack get() = ItemStack(firstEntry, count, components)
+    val isEmpty: Boolean
+        get() = firstEntry.value().isAir
 
     /**
      * 指定した[other]にマージできるか判定します。
@@ -147,8 +149,6 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
         }
 
         private constructor(entry: RegistryEntry<Item>) : this(entry, 1, ComponentChanges.EMPTY)
-
-        override val isEmpty: Boolean = stack.isEmpty
     }
 
     //    TagEntry    //
@@ -173,14 +173,10 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
             )
         }
 
-        override val firstEntry: RegistryEntry<Item>
-            get() = Registries.ITEM
-                .getEntryList(tagKey)
-                ?.getOrNull()
-                ?.firstOrNull()
-                ?: Registries.ITEM.defaultEntry.get()
+        private val entries: RegistryEntryList.Named<Item>?
+            get() = Registries.ITEM.getEntryList(tagKey)?.getOrNull()
 
-        override val isEmpty: Boolean
-            get() = !tagKey.isPopulated()
+        override val firstEntry: RegistryEntry<Item>
+            get() = entries?.firstOrNull() ?: Registries.ITEM.defaultEntry.get()
     }
 }

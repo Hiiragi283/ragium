@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
+import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
@@ -26,6 +27,23 @@ class HTMachineRecipeProcessor(
     private val fluidOutputs: IntArray,
     recipeType: RecipeType<out HTMachineRecipeBase> = RagiumRecipeTypes.MACHINE,
 ) : HTRecipeProcessor {
+    constructor(
+        inventory: HTMachineInventory,
+        itemInputs: IntArray,
+        itemOutputs: IntArray,
+        catalystIndex: Int,
+        recipeType: RecipeType<out HTMachineRecipeBase> = RagiumRecipeTypes.MACHINE,
+    ) : this(
+        inventory,
+        itemInputs,
+        itemOutputs,
+        catalystIndex,
+        HTMachineFluidStorage.EMPTY,
+        intArrayOf(),
+        intArrayOf(),
+        recipeType,
+    )
+
     private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipeBase> = HTRecipeCache(recipeType)
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
@@ -83,7 +101,7 @@ class HTMachineRecipeProcessor(
 
     private fun decrementInputs(recipe: HTMachineRecipeBase) {
         HTShapelessInputResolver
-            .resolve(recipe.itemIngredients, itemInputs.map(inventory::getStack))
+            .resolve(recipe.data.itemIngredients, itemInputs.map(inventory::getStack))
             .forEach { (ingredient: HTItemIngredient, stack: ItemStack) ->
                 ingredient.onConsume(stack)
             }

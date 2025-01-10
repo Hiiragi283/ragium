@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "#c:cobblestones"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "#c:cobblestones",
+  "outputs": [
     "minecraft:gravel"
   ]
 }

@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:grinder",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "#c:crops/wheat"
-  ],
-  "item_outputs": [
+  "type": "ragium:grinder",
+  "input": "#c:crops/wheat",
+  "outputs": [
     "ragium:flour"
   ]
 }
