@@ -3,6 +3,8 @@ package hiiragi283.ragium.api.machine
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.recipe.HTMachineRecipeType
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.sound.SoundEvent
 import net.minecraft.util.Identifier
@@ -61,6 +63,10 @@ object HTMachinePropertyKeys {
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =
         HTPropertyKey.ofDefaulted(RagiumAPI.id("front_mapper"), value = { it })
+
+    @JvmField
+    val RECIPE_TYPE: HTPropertyKey.Defaulted<HTMachineRecipeType<*>> =
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("recipe_type"), value = RagiumRecipeTypes.MACHINE)
 
     //    Multiblock    //
 

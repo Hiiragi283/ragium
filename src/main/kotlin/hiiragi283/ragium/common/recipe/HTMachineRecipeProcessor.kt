@@ -4,12 +4,12 @@ import hiiragi283.ragium.api.extension.mergeStack
 import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTMachineException
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.inventory.Inventory
@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 class HTMachineRecipeProcessor(
+    val machineKey: HTMachineKey,
     val inventory: Inventory,
     private val itemInputs: IntArray,
     private val itemOutputs: IntArray,
@@ -24,15 +25,15 @@ class HTMachineRecipeProcessor(
     private val fluidStorage: HTMachineFluidStorage,
     private val fluidInputs: IntArray,
     private val fluidOutputs: IntArray,
-    recipeType: HTMachineRecipeType<*> = RagiumRecipeTypes.MACHINE,
 ) : HTRecipeProcessor {
     constructor(
+        machineKey: HTMachineKey,
         inventory: HTMachineInventory,
         itemInputs: IntArray,
         itemOutputs: IntArray,
         catalystIndex: Int,
-        recipeType: HTMachineRecipeType<*> = RagiumRecipeTypes.MACHINE,
     ) : this(
+        machineKey,
         inventory,
         itemInputs,
         itemOutputs,
@@ -40,10 +41,10 @@ class HTMachineRecipeProcessor(
         HTMachineFluidStorage.EMPTY,
         intArrayOf(),
         intArrayOf(),
-        recipeType,
     )
 
-    private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipe> = HTRecipeCache(recipeType)
+    private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipe> =
+        HTRecipeCache(machineKey.getEntryOrNull()!!.getOrThrow(HTMachinePropertyKeys.RECIPE_TYPE))
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
         val input: HTMachineInput = HTMachineInput.create(key, tier) {

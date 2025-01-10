@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "ragium:mutated_soil",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:warped_fungus",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:brown_mushroom"
-  ],
-  "item_outputs": [
-    "minecraft:warped_fungus",
-    "minecraft:brown_mushroom"
-  ]
+  "seed": "minecraft:brown_mushroom",
+  "soil": "ragium:mutated_soil"
 }

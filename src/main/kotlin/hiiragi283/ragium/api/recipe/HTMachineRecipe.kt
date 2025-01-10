@@ -47,6 +47,13 @@ abstract class HTMachineRecipe(val definition: HTMachineDefinition, val data: HT
      */
     fun getFluidResult(index: Int): HTFluidResult? = data.fluidResults.getOrNull(index)
 
+    fun checkDefinition(input: HTMachineInput): Boolean {
+        if (!data.isValidOutput(true)) return false
+        if (input.key != this.key) return false
+        if (input.tier < this.tier) return false
+        return true
+    }
+
     //    Recipe    //
 
     final override fun craft(input: HTMachineInput, lookup: RegistryWrapper.WrapperLookup): ItemStack = getResult(lookup)

@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:jungle_log",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:cocoa_beans",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:cocoa_beans"
-  ],
-  "item_outputs": [
-    "minecraft:cocoa_beans",
-    "minecraft:cocoa_beans"
-  ]
+  "seed": "minecraft:cocoa_beans",
+  "soil": "minecraft:jungle_log"
 }

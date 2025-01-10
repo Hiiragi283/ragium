@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:beetroot",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:beetroot_seeds"
-  ],
-  "item_outputs": [
-    "minecraft:beetroot",
-    "minecraft:beetroot_seeds"
-  ]
+  "seed": "minecraft:beetroot_seeds",
+  "soil": "minecraft:dirt"
 }

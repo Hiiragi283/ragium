@@ -1,18 +1,13 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": {
+    "count": 8,
+    "item": "minecraft:dark_oak_log"
   },
-  "item_inputs": [
-    "minecraft:dark_oak_sapling"
-  ],
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:dark_oak_log"
-    },
-    "minecraft:dark_oak_sapling"
-  ]
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
+  },
+  "seed": "minecraft:dark_oak_sapling",
+  "soil": "minecraft:dirt"
 }

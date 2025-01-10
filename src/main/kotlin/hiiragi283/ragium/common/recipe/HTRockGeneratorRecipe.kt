@@ -65,9 +65,7 @@ class HTRockGeneratorRecipe(definition: HTMachineDefinition, data: HTMachineReci
     )
 
     override fun matches(input: HTMachineInput, world: World): Boolean {
-        if (!data.isValidOutput(true)) return false
-        if (input.key != this.key) return false
-        if (input.tier < this.tier) return false
+        if (!checkDefinition(input)) return false
         return data.catalyst?.test(input.catalyst) == true
     }
 

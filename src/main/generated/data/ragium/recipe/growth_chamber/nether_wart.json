@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:soul_sand",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:nether_wart",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:nether_wart"
-  ],
-  "item_outputs": [
-    "minecraft:nether_wart",
-    "minecraft:nether_wart"
-  ]
+  "seed": "minecraft:nether_wart",
+  "soil": "minecraft:soul_sand"
 }

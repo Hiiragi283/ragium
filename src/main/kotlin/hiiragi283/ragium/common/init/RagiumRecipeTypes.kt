@@ -3,10 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipeType
-import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
-import hiiragi283.ragium.common.recipe.HTDistillationRecipe
-import hiiragi283.ragium.common.recipe.HTGrinderRecipe
-import hiiragi283.ragium.common.recipe.HTRockGeneratorRecipe
+import hiiragi283.ragium.common.recipe.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
@@ -18,6 +15,10 @@ object RagiumRecipeTypes {
     @JvmField
     val GRINDER: HTMachineRecipeType<HTGrinderRecipe> =
         register("grinder", ::HTGrinderRecipe)
+
+    @JvmField
+    val GROWTH_CHAMBER: HTMachineRecipeType<HTGrowthChamberRecipe> =
+        register("growth_chamber", ::HTGrowthChamberRecipe)
 
     @JvmField
     val MACHINE: HTMachineRecipeType<HTDefaultMachineRecipe> =

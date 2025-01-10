@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:sand",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:sugar_cane",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:sugar_cane"
-  ],
-  "item_outputs": [
-    "minecraft:sugar_cane",
-    "minecraft:sugar_cane"
-  ]
+  "seed": "minecraft:sugar_cane",
+  "soil": "minecraft:sand"
 }

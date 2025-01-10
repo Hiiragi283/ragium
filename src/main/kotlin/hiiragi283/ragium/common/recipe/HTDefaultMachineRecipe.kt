@@ -30,9 +30,7 @@ class HTDefaultMachineRecipe(definition: HTMachineDefinition, data: HTMachineRec
     //    HTMachineRecipeBase    //
 
     override fun matches(input: HTMachineInput, world: World): Boolean {
-        if (!data.isValidOutput(true)) return false
-        if (input.key != this.key) return false
-        if (input.tier < this.tier) return false
+        if (!checkDefinition(input)) return false
         if (!HTShapelessInputResolver.canMatch(data.itemIngredients, input.itemInputs)) return false
         data.fluidIngredients.forEachIndexed { index: Int, fluid: HTFluidIngredient ->
             if (!fluid.test(input.getFluidInSlot(index))) {

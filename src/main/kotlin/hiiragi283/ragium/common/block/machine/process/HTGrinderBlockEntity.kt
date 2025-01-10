@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTGrinderScreenHandler
 import net.minecraft.block.BlockState
@@ -29,11 +28,11 @@ class HTGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.EMPTY
 
     override val processor = HTMachineRecipeProcessor(
+        machineKey,
         inventory,
         intArrayOf(0),
         intArrayOf(2, 3, 4),
         1,
-        RagiumRecipeTypes.GRINDER,
     )
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =

@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:wheat",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:wheat_seeds"
-  ],
-  "item_outputs": [
-    "minecraft:wheat",
-    "minecraft:wheat_seeds"
-  ]
+  "seed": "minecraft:wheat_seeds",
+  "soil": "minecraft:dirt"
 }

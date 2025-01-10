@@ -1,20 +1,10 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "basic"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:amethyst_shard",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "fluid_inputs": [
-    "minecraft:water"
-  ],
-  "item_inputs": [
-    "#c:gems/amethyst",
-    "#c:dusts/quartz"
-  ],
-  "item_outputs": [
-    {
-      "count": 3,
-      "item": "minecraft:amethyst_shard"
-    }
-  ]
+  "seed": "ragium:quartz_dust",
+  "soil": "minecraft:amethyst_block"
 }

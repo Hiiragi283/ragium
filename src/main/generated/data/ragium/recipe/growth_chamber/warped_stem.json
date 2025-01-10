@@ -1,18 +1,13 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:netherrack",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": {
+    "count": 8,
+    "item": "minecraft:warped_stem"
   },
-  "item_inputs": [
-    "minecraft:warped_fungus"
-  ],
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "minecraft:warped_stem"
-    },
-    "minecraft:warped_fungus"
-  ]
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:lava"
+  },
+  "seed": "minecraft:warped_fungus",
+  "soil": "minecraft:netherrack"
 }

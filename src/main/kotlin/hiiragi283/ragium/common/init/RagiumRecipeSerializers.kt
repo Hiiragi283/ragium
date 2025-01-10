@@ -2,11 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
-import hiiragi283.ragium.common.recipe.HTDistillationRecipe
-import hiiragi283.ragium.common.recipe.HTDynamiteUpgradingRecipe
-import hiiragi283.ragium.common.recipe.HTGrinderRecipe
-import hiiragi283.ragium.common.recipe.HTRockGeneratorRecipe
+import hiiragi283.ragium.common.recipe.*
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.recipe.Recipe
@@ -34,6 +30,13 @@ object RagiumRecipeSerializers {
         "grinder",
         HTGrinderRecipe.CODEC,
         HTGrinderRecipe.PACKET_CODEC,
+    )
+
+    @JvmField
+    val GROWTH_CHAMBER: RecipeSerializer<HTGrowthChamberRecipe> = register(
+        "growth_chamber",
+        HTGrowthChamberRecipe.CODEC,
+        HTGrowthChamberRecipe.PACKET_CODEC,
     )
 
     @JvmField

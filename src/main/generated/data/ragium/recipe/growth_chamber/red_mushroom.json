@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:red_mushroom",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:red_mushroom"
-  ],
-  "item_outputs": [
-    "minecraft:red_mushroom",
-    "minecraft:red_mushroom"
-  ]
+  "seed": "minecraft:red_mushroom",
+  "soil": "minecraft:dirt"
 }

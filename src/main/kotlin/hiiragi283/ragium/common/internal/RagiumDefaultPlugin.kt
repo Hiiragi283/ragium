@@ -77,6 +77,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.ROCK_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTRockGeneratorBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ASH)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.ROCK_GENERATOR)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
         // generators
@@ -162,15 +163,18 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FALLING_DRIPSTONE_LAVA)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.DISTILLATION)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
         helper.modify(RagiumMachineKeys.GRINDER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTGrinderBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.GRINDER)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
         }
         helper.modify(RagiumMachineKeys.GROWTH_CHAMBER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.HAPPY_VILLAGER)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.GROWTH_CHAMBER)
         }
         helper.modify(RagiumMachineKeys.MIXER) {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.BUBBLE_POP)

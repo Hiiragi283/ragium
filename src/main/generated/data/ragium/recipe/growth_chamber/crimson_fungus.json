@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "ragium:mutated_soil",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:crimson_fungus",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:red_mushroom"
-  ],
-  "item_outputs": [
-    "minecraft:crimson_fungus",
-    "minecraft:red_mushroom"
-  ]
+  "seed": "minecraft:red_mushroom",
+  "soil": "ragium:mutated_soil"
 }

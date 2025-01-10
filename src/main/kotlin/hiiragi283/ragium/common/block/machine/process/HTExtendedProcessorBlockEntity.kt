@@ -30,6 +30,7 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
     override val processor = HTMachineRecipeProcessor(
+        machineKey,
         inventory,
         intArrayOf(0, 1, 2),
         intArrayOf(4, 5, 6),

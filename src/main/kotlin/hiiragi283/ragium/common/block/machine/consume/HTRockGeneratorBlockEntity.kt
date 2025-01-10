@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTRockGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -40,6 +39,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 
     val processor = HTMachineRecipeProcessor(
+        machineKey,
         inventory,
         intArrayOf(),
         intArrayOf(1),
@@ -47,7 +47,6 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage,
         intArrayOf(0),
         intArrayOf(1),
-        RagiumRecipeTypes.ROCK_GENERATOR,
     )
 
     override fun asInventory(): SidedInventory = inventory

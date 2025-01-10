@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:sweet_berries",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:sweet_berries"
-  ],
-  "item_outputs": [
-    "minecraft:sweet_berries",
-    "minecraft:sweet_berries"
-  ]
+  "seed": "minecraft:sweet_berries",
+  "soil": "minecraft:dirt"
 }

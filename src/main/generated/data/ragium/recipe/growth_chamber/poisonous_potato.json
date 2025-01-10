@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "ragium:mutated_soil",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:poisonous_potato",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:potato"
-  ],
-  "item_outputs": [
-    "minecraft:poisonous_potato",
-    "minecraft:potato"
-  ]
+  "seed": "minecraft:potato",
+  "soil": "ragium:mutated_soil"
 }

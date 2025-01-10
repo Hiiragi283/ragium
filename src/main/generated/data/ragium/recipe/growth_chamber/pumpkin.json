@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:pumpkin",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:pumpkin_seeds"
-  ],
-  "item_outputs": [
-    "minecraft:pumpkin",
-    "minecraft:pumpkin_seeds"
-  ]
+  "seed": "minecraft:pumpkin_seeds",
+  "soil": "minecraft:dirt"
 }

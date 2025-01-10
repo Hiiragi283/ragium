@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:end_stone",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:chorus_fruit",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:chorus_flower"
-  ],
-  "item_outputs": [
-    "minecraft:chorus_fruit",
-    "minecraft:chorus_flower"
-  ]
+  "seed": "minecraft:chorus_flower",
+  "soil": "minecraft:end_stone"
 }

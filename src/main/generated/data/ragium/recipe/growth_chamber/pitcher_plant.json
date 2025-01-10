@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:pitcher_plant",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:pitcher_pod"
-  ],
-  "item_outputs": [
-    "minecraft:pitcher_plant",
-    "minecraft:pitcher_pod"
-  ]
+  "seed": "minecraft:pitcher_pod",
+  "soil": "minecraft:dirt"
 }

@@ -1,15 +1,10 @@
 {
-  "type": "ragium:machine",
-  "catalyst": "minecraft:dirt",
-  "definition": {
-    "type": "ragium:growth_chamber",
-    "tier": "primitive"
+  "type": "ragium:growth_chamber",
+  "crops": "minecraft:potato",
+  "fluid": {
+    "amount": 1000,
+    "fluids": "minecraft:water"
   },
-  "item_inputs": [
-    "minecraft:potato"
-  ],
-  "item_outputs": [
-    "minecraft:potato",
-    "minecraft:potato"
-  ]
+  "seed": "minecraft:potato",
+  "soil": "minecraft:dirt"
 }
