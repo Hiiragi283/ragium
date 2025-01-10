@@ -1,36 +1,38 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeType
+import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import hiiragi283.ragium.common.recipe.HTDistillationRecipe
 import hiiragi283.ragium.common.recipe.HTGrinderRecipe
 import hiiragi283.ragium.common.recipe.HTRockGeneratorRecipe
-import net.minecraft.recipe.Recipe
-import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumRecipeTypes {
     @JvmField
-    val DISTILLATION: RecipeType<HTDistillationRecipe> = register("distillation")
+    val DISTILLATION: HTMachineRecipeType<HTDistillationRecipe> =
+        register(RagiumMachineKeys.DISTILLATION_TOWER, ::HTDistillationRecipe)
 
     @JvmField
-    val GRINDER: RecipeType<HTGrinderRecipe> = register("grinder")
+    val GRINDER: HTMachineRecipeType<HTGrinderRecipe> =
+        register(RagiumMachineKeys.GRINDER, ::HTGrinderRecipe)
 
     @JvmField
-    val MACHINE: RecipeType<HTMachineRecipeBase> = register("machine")
+    val MACHINE: HTMachineRecipeType<HTDefaultMachineRecipe> =
+        register(HTMachineKey.of(RagiumAPI.id("machine")), ::HTDefaultMachineRecipe)
 
     @JvmField
-    val ROCK_GENERATOR: RecipeType<HTRockGeneratorRecipe> = register("rock_generator")
+    val ROCK_GENERATOR: HTMachineRecipeType<HTRockGeneratorRecipe> =
+        register(RagiumMachineKeys.ROCK_GENERATOR, ::HTRockGeneratorRecipe)
 
     @JvmStatic
-    private fun <T : Recipe<*>> register(name: String): RecipeType<T> = RagiumAPI.id(name).let {
+    private fun <T : HTMachineRecipe> register(machineKey: HTMachineKey, factory: HTMachineRecipe.Factory<T>): HTMachineRecipeType<T> =
         Registry.register(
             Registries.RECIPE_TYPE,
-            it,
-            object : RecipeType<T> {
-                override fun toString(): String = it.toString()
-            },
+            machineKey.id,
+            HTMachineRecipeType(machineKey, factory),
         )
-    }
 }

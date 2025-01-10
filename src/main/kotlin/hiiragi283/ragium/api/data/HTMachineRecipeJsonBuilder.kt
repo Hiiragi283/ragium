@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
+import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
 import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
@@ -25,7 +25,7 @@ import net.minecraft.util.Identifier
 
 /**
  * 機械レシピを構築するビルダー
- * @see HTMachineRecipeBase
+ * @see HTMachineRecipe
  */
 class HTMachineRecipeJsonBuilder private constructor(
     private val key: HTMachineKey,
@@ -283,11 +283,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         material: HTMaterialKey,
         suffix: String = "",
     ) {
-        offerTo(exporter, prefix.createTag(material), suffix)
-    }
-
-    fun offerTo(exporter: RecipeExporter, output: TagKey<*>, suffix: String = "") {
-        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
+        offerTo(exporter, createRecipeId(prefix.createTag(material)).withSuffixedPath(suffix))
     }
 
     /**
@@ -296,25 +292,25 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe: HTMachineRecipe = build(::HTMachineRecipe)
+        val recipe: HTDefaultMachineRecipe = build(::HTDefaultMachineRecipe)
         exporter.accept(prefixedId, recipe, null)
     }
 
-    fun offerTo(exporter: RecipeExporter, path: String, factory: HTMachineRecipeBase.Factory<*>) {
-        offerTo(exporter, RagiumAPI.id(path), factory)
+    fun offerTo(exporter: RecipeExporter, path: String, recipeType: HTMachineRecipeType<*>) {
+        offerTo(exporter, RagiumAPI.id(path), recipeType.factory)
     }
 
     /**
      * [HTMachineKey.id]で前置されたレシピIDを使用してレシピを登録します。
      */
-    fun offerTo(exporter: RecipeExporter, recipeId: Identifier, factory: HTMachineRecipeBase.Factory<*>) {
+    fun offerTo(exporter: RecipeExporter, recipeId: Identifier, factory: HTMachineRecipe.Factory<*>) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe: HTMachineRecipeBase = build(factory)
+        val recipe: HTMachineRecipe = build(factory)
         exporter.accept(prefixedId, recipe, null)
     }
 
-    fun <T : HTMachineRecipeBase> build(factory: HTMachineRecipeBase.Factory<T>): T {
+    fun <T : HTMachineRecipe> build(factory: HTMachineRecipe.Factory<T>): T {
         val data = HTMachineRecipeData(
             itemInputs.toList(),
             fluidInputs.toList(),
@@ -326,6 +322,6 @@ class HTMachineRecipeJsonBuilder private constructor(
         return factory.create(HTMachineDefinition(key, tier), data)
     }
 
-    fun <T : HTMachineRecipeBase, R> transform(factory: HTMachineRecipeBase.Factory<T>, transform: (T) -> R): R =
-        build(factory).let(transform)
+    fun <T : HTMachineRecipe, R> transform(recipeType: HTMachineRecipeType<T>, transform: (T) -> R): R =
+        build(recipeType.factory).let(transform)
 }

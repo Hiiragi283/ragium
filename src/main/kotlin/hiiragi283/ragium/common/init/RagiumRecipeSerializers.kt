@@ -2,10 +2,10 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import hiiragi283.ragium.common.recipe.HTDistillationRecipe
 import hiiragi283.ragium.common.recipe.HTDynamiteUpgradingRecipe
 import hiiragi283.ragium.common.recipe.HTGrinderRecipe
-import hiiragi283.ragium.common.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.recipe.HTRockGeneratorRecipe
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
@@ -37,10 +37,10 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val MACHINE: RecipeSerializer<HTMachineRecipe> = register(
+    val MACHINE: RecipeSerializer<HTDefaultMachineRecipe> = register(
         "machine",
-        HTMachineRecipe.CODEC,
-        HTMachineRecipe.PACKET_CODEC,
+        HTDefaultMachineRecipe.CODEC,
+        HTDefaultMachineRecipe.PACKET_CODEC,
     )
 
     @JvmField

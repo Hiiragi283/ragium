@@ -12,19 +12,19 @@ import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
 import net.minecraft.world.World
 
-class HTMachineRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipeBase(definition, data) {
+class HTDefaultMachineRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipe(definition, data) {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTMachineRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTDefaultMachineRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTMachineDefinition.CODEC.forGetter(HTMachineRecipe::definition),
-                    HTMachineRecipeData.CODEC.forGetter(HTMachineRecipe::data),
-                ).apply(instance, ::HTMachineRecipe)
+                    HTMachineDefinition.CODEC.forGetter(HTDefaultMachineRecipe::definition),
+                    HTMachineRecipeData.CODEC.forGetter(HTDefaultMachineRecipe::data),
+                ).apply(instance, ::HTDefaultMachineRecipe)
         }
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTMachineRecipe> = createPacketCodec(::HTMachineRecipe)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTDefaultMachineRecipe> = createPacketCodec(::HTDefaultMachineRecipe)
     }
 
     //    HTMachineRecipeBase    //

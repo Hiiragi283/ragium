@@ -21,7 +21,7 @@ import net.minecraft.registry.entry.RegistryFixedCodec
 import net.minecraft.world.World
 import java.util.Optional
 
-class HTRockGeneratorRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipeBase(definition, data) {
+class HTRockGeneratorRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipe(definition, data) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTRockGeneratorRecipe> = RecordCodecBuilder

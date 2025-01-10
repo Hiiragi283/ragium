@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
-import net.minecraft.recipe.RecipeType
 import net.minecraft.world.World
 
 class HTMachineRecipeProcessor(
@@ -25,14 +24,14 @@ class HTMachineRecipeProcessor(
     private val fluidStorage: HTMachineFluidStorage,
     private val fluidInputs: IntArray,
     private val fluidOutputs: IntArray,
-    recipeType: RecipeType<out HTMachineRecipeBase> = RagiumRecipeTypes.MACHINE,
+    recipeType: HTMachineRecipeType<*> = RagiumRecipeTypes.MACHINE,
 ) : HTRecipeProcessor {
     constructor(
         inventory: HTMachineInventory,
         itemInputs: IntArray,
         itemOutputs: IntArray,
         catalystIndex: Int,
-        recipeType: RecipeType<out HTMachineRecipeBase> = RagiumRecipeTypes.MACHINE,
+        recipeType: HTMachineRecipeType<*> = RagiumRecipeTypes.MACHINE,
     ) : this(
         inventory,
         itemInputs,
@@ -44,7 +43,7 @@ class HTMachineRecipeProcessor(
         recipeType,
     )
 
-    private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipeBase> = HTRecipeCache(recipeType)
+    private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipe> = HTRecipeCache(recipeType)
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
         val input: HTMachineInput = HTMachineInput.create(key, tier) {
@@ -55,7 +54,7 @@ class HTMachineRecipeProcessor(
         return recipeCache
             .getFirstMatch(input, world)
             .runCatching {
-                val recipe: HTMachineRecipeBase = getOrThrow(HTMachineException::NoMatchingRecipe)
+                val recipe: HTMachineRecipe = getOrThrow(HTMachineException::NoMatchingRecipe)
                 when {
                     !canAcceptOutputs(recipe) -> throw HTMachineException.MergeResult(false)
                     else -> {
@@ -66,7 +65,7 @@ class HTMachineRecipeProcessor(
             }
     }
 
-    private fun canAcceptOutputs(recipe: HTMachineRecipeBase): Boolean {
+    private fun canAcceptOutputs(recipe: HTMachineRecipe): Boolean {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTItemResult = recipe.getItemResult(index) ?: return@forEachIndexed
             if (!result.canMerge(inventory.getStack(slot))) {
@@ -82,7 +81,7 @@ class HTMachineRecipeProcessor(
         return true
     }
 
-    private fun modifyOutputs(recipe: HTMachineRecipeBase) {
+    private fun modifyOutputs(recipe: HTMachineRecipe) {
         itemOutputs.forEachIndexed { index: Int, slot: Int ->
             val result: HTItemResult = recipe.getItemResult(index) ?: return@forEachIndexed
             inventory.mergeStack(slot, result)
@@ -99,7 +98,7 @@ class HTMachineRecipeProcessor(
         }
     }
 
-    private fun decrementInputs(recipe: HTMachineRecipeBase) {
+    private fun decrementInputs(recipe: HTMachineRecipe) {
         HTShapelessInputResolver
             .resolve(recipe.data.itemIngredients, itemInputs.map(inventory::getStack))
             .forEach { (ingredient: HTItemIngredient, stack: ItemStack) ->

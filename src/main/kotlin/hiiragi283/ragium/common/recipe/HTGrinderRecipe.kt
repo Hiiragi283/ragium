@@ -18,7 +18,7 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.world.World
 import java.util.*
 
-class HTGrinderRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipeBase(definition, data) {
+class HTGrinderRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipe(definition, data) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTGrinderRecipe> = RecordCodecBuilder

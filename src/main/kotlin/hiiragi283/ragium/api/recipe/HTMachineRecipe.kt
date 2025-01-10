@@ -11,17 +11,17 @@ import net.minecraft.registry.RegistryWrapper
 
 /**
  * 機械レシピのベースとなるクラス
- * @see hiiragi283.ragium.common.recipe.HTMachineRecipe
+ * @see hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
  * @see hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
  */
-abstract class HTMachineRecipeBase(val definition: HTMachineDefinition, val data: HTMachineRecipeData) : Recipe<HTMachineInput> {
+abstract class HTMachineRecipe(val definition: HTMachineDefinition, val data: HTMachineRecipeData) : Recipe<HTMachineInput> {
     companion object {
         @JvmStatic
-        fun <T : HTMachineRecipeBase> createPacketCodec(factory: Factory<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
+        fun <T : HTMachineRecipe> createPacketCodec(factory: Factory<T>): PacketCodec<RegistryByteBuf, T> = PacketCodec.tuple(
             HTMachineDefinition.PACKET_CODEC,
-            HTMachineRecipeBase::definition,
+            HTMachineRecipe::definition,
             HTMachineRecipeData.PACKET_CODEC,
-            HTMachineRecipeBase::data,
+            HTMachineRecipe::data,
             factory::create,
         )
     }
@@ -67,7 +67,7 @@ abstract class HTMachineRecipeBase(val definition: HTMachineDefinition, val data
 
     //    Factory    //
 
-    fun interface Factory<T : HTMachineRecipeBase> {
+    fun interface Factory<T : HTMachineRecipe> {
         fun create(definition: HTMachineDefinition, data: HTMachineRecipeData): T
     }
 }

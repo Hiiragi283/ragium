@@ -36,7 +36,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage,
         intArrayOf(0),
         intArrayOf(1, 2, 3),
-        RagiumRecipeTypes.DISTILLATION
+        RagiumRecipeTypes.DISTILLATION,
     )
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =

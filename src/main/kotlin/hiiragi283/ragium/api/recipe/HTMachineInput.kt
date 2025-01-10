@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.recipe.input.RecipeInput
 
 /**
- * [HTMachineRecipeBase]の判定に用いられるクラス
+ * [HTMachineRecipe]の判定に用いられるクラス
  * @param key 機械のキー
  * @param tier 機械のティア
  * @param itemInputs アイテムのインプットの一覧

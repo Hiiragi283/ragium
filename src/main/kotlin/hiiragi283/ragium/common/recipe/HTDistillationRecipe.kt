@@ -16,8 +16,7 @@ import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
 import net.minecraft.world.World
 
-class HTDistillationRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) :
-    HTMachineRecipeBase(definition, data) {
+class HTDistillationRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipe(definition, data) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTDistillationRecipe> = RecordCodecBuilder
