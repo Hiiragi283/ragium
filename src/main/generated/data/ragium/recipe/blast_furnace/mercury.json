@@ -1,14 +1,11 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     "ragium:mercury",
     "ragium:sulfur_dioxide"
   ],
   "item_inputs": [
     "#c:gems/cinnabar"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

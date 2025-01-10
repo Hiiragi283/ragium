@@ -12,14 +12,13 @@ import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.biome.Biome
 
-class HTFluidDrillBlockEntity(pos: BlockPos, state: BlockState) :
-    HTResourceDrillBlockEntityBase(RagiumBlockEntityTypes.FLUID_DRILL, pos, state) {
-    override val machineKey: HTMachineKey = RagiumMachineKeys.FLUID_DRILL
+class HTGasPlantBlockEntity(pos: BlockPos, state: BlockState) :
+    HTResourceDrillBlockEntityBase(RagiumBlockEntityTypes.GAS_PLANT, pos, state) {
+    override val machineKey: HTMachineKey = RagiumMachineKeys.GAS_PLANT
 
     override val fluidMap: Map<TagKey<Biome>, HTFluidVariantStack> = mapOf(
-        BiomeTags.IS_END to HTFluidVariantStack(RagiumFluids.MERCURY, FluidConstants.INGOT),
-        BiomeTags.IS_NETHER to HTFluidVariantStack(RagiumFluids.CRUDE_OIL, FluidConstants.BUCKET),
-        BiomeTags.IS_OCEAN to HTFluidVariantStack(RagiumFluids.SALT_WATER, FluidConstants.BUCKET),
-        BiomeTags.IS_BEACH to HTFluidVariantStack(RagiumFluids.SALT_WATER, FluidConstants.BOTTLE),
+        BiomeTags.IS_END to HTFluidVariantStack(RagiumFluids.NOBLE_GAS, FluidConstants.INGOT),
+        BiomeTags.IS_NETHER to HTFluidVariantStack(RagiumFluids.SULFUR_DIOXIDE, FluidConstants.BUCKET),
+        BiomeTags.IS_OVERWORLD to HTFluidVariantStack(RagiumFluids.AIR, FluidConstants.BUCKET),
     )
 }

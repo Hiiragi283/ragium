@@ -11,6 +11,7 @@ import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 /**
+ * 機械レシピのインプット/アウトプットをまとめたクラス
  * @param itemIngredients アイテムの材料の一覧
  * @param fluidIngredients 液体の材料の一覧
  * @param catalyst 触媒となる[HTItemIngredient]
@@ -81,6 +82,11 @@ data class HTMachineRecipeData(
         fluidOutputs,
     )
 
+    /**
+     * このデータのアウトプットが有効かどうか判定します。
+     * @param checkTag trueの場合，タグをベースとしたアウトプットが有効な値と紐づいているか判定
+     * @return 有効な場合はtrue
+     */
     fun isValidOutput(checkTag: Boolean): Boolean {
         val bool1: Boolean = itemResults.isNotEmpty()
         val bool2: Boolean = fluidResults.isNotEmpty() && fluidResults.none(HTFluidResult::isEmpty)

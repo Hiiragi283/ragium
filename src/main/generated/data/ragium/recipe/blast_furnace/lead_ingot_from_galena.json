@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     "ragium:sulfur_dioxide"
   ],
@@ -12,5 +8,6 @@
   ],
   "item_outputs": [
     "#c:ingots/lead"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

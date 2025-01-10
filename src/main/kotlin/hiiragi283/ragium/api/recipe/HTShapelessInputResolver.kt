@@ -3,6 +3,10 @@ package hiiragi283.ragium.api.recipe
 import net.minecraft.item.ItemStack
 
 object HTShapelessInputResolver {
+    //    Fluid    //
+
+    //    Item    //
+
     @JvmStatic
     fun canMatch(ingredients: Collection<HTItemIngredient>, stacks: Collection<ItemStack>): Boolean {
         val ingredients1: List<HTItemIngredient> = ingredients.filterNot(HTItemIngredient::isEmpty)

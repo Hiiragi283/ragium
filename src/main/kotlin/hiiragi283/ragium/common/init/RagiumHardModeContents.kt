@@ -1,15 +1,8 @@
 package hiiragi283.ragium.common.init
 
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTHardModeContent
-import hiiragi283.ragium.api.content.HTItemContent
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
-import net.minecraft.item.Item
 import net.minecraft.item.Items
-import net.minecraft.registry.tag.ItemTags
-import net.minecraft.registry.tag.TagKey
 
 object RagiumHardModeContents {
     //    Gems    //
@@ -113,46 +106,4 @@ object RagiumHardModeContents {
         .normal(RagiumItems.Ingots.STEEL)
         .hard(RagiumItems.Plates.STEEL)
         .build()
-
-    //    Custom    //
-
-    @JvmField
-    val STONE: HTHardModeContent = object : HTHardModeContent {
-        override val material: HTMaterialKey = RagiumMaterialKeys.STONE
-
-        override fun getContent(hardMode: Boolean): HTItemContent = when (hardMode) {
-            true -> RagiumItems.Plates.STONE
-            false -> HTContent.fromItem(Items.STONE)
-        }
-
-        override fun getPrefix(hardMode: Boolean): HTTagPrefix = when (hardMode) {
-            true -> HTTagPrefix.PLATE
-            false -> throw UnsupportedOperationException()
-        }
-
-        override fun getPrefixedTag(hardMode: Boolean): TagKey<Item> = when (hardMode) {
-            true -> HTTagPrefix.PLATE.createTag(material)
-            false -> ConventionalItemTags.STONES
-        }
-    }
-
-    @JvmField
-    val WOOD: HTHardModeContent = object : HTHardModeContent {
-        override val material: HTMaterialKey = RagiumMaterialKeys.WOOD
-
-        override fun getContent(hardMode: Boolean): HTItemContent = when (hardMode) {
-            true -> RagiumItems.Plates.WOOD
-            false -> HTContent.fromItem(Items.OAK_PLANKS)
-        }
-
-        override fun getPrefix(hardMode: Boolean): HTTagPrefix = when (hardMode) {
-            true -> HTTagPrefix.PLATE
-            false -> throw UnsupportedOperationException()
-        }
-
-        override fun getPrefixedTag(hardMode: Boolean): TagKey<Item> = when (hardMode) {
-            true -> HTTagPrefix.PLATE.createTag(material)
-            false -> ItemTags.PLANKS
-        }
-    }
 }

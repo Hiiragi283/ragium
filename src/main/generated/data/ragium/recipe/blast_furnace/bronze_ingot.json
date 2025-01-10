@@ -1,20 +1,17 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "item_inputs": [
     {
       "count": 3,
       "items": "#c:ingots/copper"
     },
-    "#c:ingots/zinc"
+    "#c:ingots/tin"
   ],
   "item_outputs": [
     {
       "count": 4,
-      "tag": "#c:ingots/brass"
+      "tag": "#c:ingots/bronze"
     }
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

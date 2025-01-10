@@ -11,8 +11,6 @@ import net.minecraft.registry.RegistryWrapper
 
 /**
  * 機械レシピのベースとなるクラス
- * @see hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
- * @see hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
  */
 abstract class HTMachineRecipe(val definition: HTMachineDefinition, val data: HTMachineRecipeData) : Recipe<HTMachineInput> {
     companion object {
@@ -67,7 +65,14 @@ abstract class HTMachineRecipe(val definition: HTMachineDefinition, val data: HT
 
     //    Factory    //
 
+    /**
+     * 指定した値から[HTMachineRecipe]を返す関数型インターフェースです。
+     */
     fun interface Factory<T : HTMachineRecipe> {
+        /**
+         * @param definition 機械の情報
+         * @param data レシピのインプット/アウトプット
+         */
         fun create(definition: HTMachineDefinition, data: HTMachineRecipeData): T
     }
 }

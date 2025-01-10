@@ -1,6 +1,7 @@
-package hiiragi283.ragium.api.block
+package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.blockSettings
 import hiiragi283.ragium.api.extension.getMachineEntity
@@ -40,7 +41,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey) :
             .defaultState
             .with(Properties.HORIZONTAL_FACING, Direction.NORTH)
             .with(RagiumBlockProperties.ACTIVE, false)
-            .with(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
+            .with(HTMachineTier.Companion.PROPERTY, HTMachineTier.PRIMITIVE)
     }
 
     override fun getOutlineShape(
@@ -64,7 +65,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey) :
         random: Random,
     ) {
         if (state.get(RagiumBlockProperties.ACTIVE) &&
-            RagiumAPI
+            RagiumAPI.Companion
                 .getInstance()
                 .config.machine.showParticle
         ) {
@@ -86,15 +87,15 @@ class HTMachineBlock(override val machineKey: HTMachineKey) :
         tooltip: MutableList<Text>,
         options: TooltipType,
     ) {
-        stack.get(HTMachineKey.COMPONENT_TYPE)?.appendTooltip(tooltip::add, stack.machineTier)
+        stack.get(HTMachineKey.Companion.COMPONENT_TYPE)?.appendTooltip(tooltip::add, stack.machineTier)
     }
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState = defaultState
         .with(Properties.HORIZONTAL_FACING, ctx.horizontalPlayerFacing.opposite)
-        .with(HTMachineTier.PROPERTY, ctx.stack.machineTier)
+        .with(HTMachineTier.Companion.PROPERTY, ctx.stack.machineTier)
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE, HTMachineTier.PROPERTY)
+        builder.add(Properties.HORIZONTAL_FACING, RagiumBlockProperties.ACTIVE, HTMachineTier.Companion.PROPERTY)
     }
 
     override fun rotate(state: BlockState, rotation: BlockRotation): BlockState =

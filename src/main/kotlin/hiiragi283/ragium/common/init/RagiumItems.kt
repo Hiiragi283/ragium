@@ -124,8 +124,6 @@ object RagiumItems {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         LAPIS(RagiumMaterialKeys.LAPIS),
-        STONE(RagiumMaterialKeys.STONE),
-        WOOD(RagiumMaterialKeys.WOOD),
 
         // tier2
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),

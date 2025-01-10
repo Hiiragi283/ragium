@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "basic"
-  },
   "item_inputs": [
     {
       "count": 4,
@@ -16,5 +12,7 @@
   ],
   "item_outputs": [
     "#c:gems/ragi_crystal"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "basic"
 }

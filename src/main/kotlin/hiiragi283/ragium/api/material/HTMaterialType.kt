@@ -4,7 +4,14 @@ package hiiragi283.ragium.api.material
  * 素材のタイプを管理するクラス
  */
 enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
-    ALLOY(HTTagPrefix.DUST, HTTagPrefix.GEAR, HTTagPrefix.INGOT, HTTagPrefix.PLATE, HTTagPrefix.STORAGE_BLOCK),
+    ALLOY(
+        HTTagPrefix.DUST,
+        HTTagPrefix.GEAR,
+        HTTagPrefix.INGOT,
+        HTTagPrefix.PLATE,
+        HTTagPrefix.STORAGE_BLOCK,
+        HTTagPrefix.WIRE,
+    ),
     DUST(HTTagPrefix.DUST),
     GEM(
         HTTagPrefix.DUST,
@@ -12,7 +19,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.GEM,
         HTTagPrefix.ORE,
         HTTagPrefix.STORAGE_BLOCK,
-        HTTagPrefix.WIRE,
     ),
     METAL(
         HTTagPrefix.DUST,
@@ -30,7 +36,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         HTTagPrefix.ORE,
         HTTagPrefix.RAW_MATERIAL,
     ),
-    PLATE(HTTagPrefix.DUST, HTTagPrefix.PLATE),
     ;
 
     constructor(vararg prefixed: HTTagPrefix) : this(prefixed.toList())
@@ -48,7 +53,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         GEM -> HTTagPrefix.GEM
         METAL -> HTTagPrefix.INGOT
         MINERAL -> null
-        PLATE -> null
     }
 
     /**
@@ -62,6 +66,5 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
         GEM -> HTTagPrefix.GEM
         METAL -> HTTagPrefix.RAW_MATERIAL
         MINERAL -> HTTagPrefix.RAW_MATERIAL
-        PLATE -> null
     }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    "#c:ingots/platinum",
+    "#c:ingots/netherite"
+  ],
+  "item_outputs": [
+    "oritech:duratium_ingot"
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "advanced"
+}

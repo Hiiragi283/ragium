@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "basic"
-  },
   "fluid_inputs": [
     "#c:alumina_solution"
   ],
@@ -15,5 +11,7 @@
   ],
   "item_outputs": [
     "#c:ingots/aluminum"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "basic"
 }

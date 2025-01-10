@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "basic"
-  },
   "item_inputs": [
     "#c:ingots/steel",
     {
@@ -13,5 +9,7 @@
   ],
   "item_outputs": [
     "#c:ingots/deep_steel"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "basic"
 }

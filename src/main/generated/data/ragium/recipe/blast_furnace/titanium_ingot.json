@@ -1,13 +1,11 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "basic"
-  },
   "item_inputs": [
     "#c:dusts/titanium"
   ],
   "item_outputs": [
     "#c:ingots/titanium"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "basic"
 }

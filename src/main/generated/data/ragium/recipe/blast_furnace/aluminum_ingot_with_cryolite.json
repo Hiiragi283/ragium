@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "basic"
-  },
   "fluid_inputs": [
     {
       "amount": 108000,
@@ -22,5 +18,7 @@
       "count": 2,
       "item": "ragium:slag"
     }
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "basic"
 }

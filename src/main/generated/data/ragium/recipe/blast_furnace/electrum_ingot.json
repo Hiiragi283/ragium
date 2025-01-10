@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "#c:ingots/gold",
     "#c:ingots/silver"
@@ -13,5 +9,6 @@
       "count": 4,
       "tag": "#c:ingots/electrum"
     }
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

@@ -1,13 +1,10 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     "ragium:glass"
   ],
   "item_inputs": [
     "#minecraft:sand"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

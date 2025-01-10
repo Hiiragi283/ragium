@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:batter"
   ],
@@ -12,5 +8,6 @@
   ],
   "item_outputs": [
     "ragium:sponge_cake"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

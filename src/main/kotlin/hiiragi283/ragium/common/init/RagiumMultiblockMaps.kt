@@ -111,6 +111,18 @@ object RagiumMultiblockMaps {
         .build()
 
     @JvmField
+    val GAS_PLANT: HTMultiblockMap.Relative = HTMultiblockMap
+        .builder()
+        .addLayer(-1..1, 0, 1..3, HULL)
+        .addPillar(-1, 1..2, 1, GRATE)
+        .addPillar(-1, 1..2, 3, GRATE)
+        .addPillar(1, 1..2, 1, GRATE)
+        .addPillar(1, 1..2, 3, GRATE)
+        .add(0, 3, 2, GRATE)
+        .add(0, 4, 2, GRATE)
+        .build()
+
+    @JvmField
     val MULTI_SMELTER: HTMultiblockMap.Relative = HTMultiblockMap
         .builder()
         .addLayer(-1..1, -1, 1..3, CASING)

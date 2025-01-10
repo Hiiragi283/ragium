@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "item_inputs": [
     {
       "count": 2,
@@ -16,5 +12,6 @@
       "count": 3,
       "tag": "#c:ingots/invar"
     }
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

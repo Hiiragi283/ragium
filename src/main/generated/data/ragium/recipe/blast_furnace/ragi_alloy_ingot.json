@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "#c:ingots/copper",
     {
@@ -13,5 +9,6 @@
   ],
   "item_outputs": [
     "#c:ingots/ragi_alloy"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

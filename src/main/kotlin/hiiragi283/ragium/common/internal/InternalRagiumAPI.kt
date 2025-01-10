@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.block.HTMachineBlock
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -20,6 +19,7 @@ import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.resource.HTHardModeResourceCondition

@@ -110,6 +110,10 @@ object RagiumBlockEntityTypes {
         register("fluid_drill", ::HTFluidDrillBlockEntity)
 
     @JvmField
+    val GAS_PLANT: BlockEntityType<HTGasPlantBlockEntity> =
+        register("gas_plant", ::HTGasPlantBlockEntity)
+
+    @JvmField
     val GRINDER: BlockEntityType<HTGrinderBlockEntity> =
         register("grinder", ::HTGrinderBlockEntity)
 
@@ -204,6 +208,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.BIOMASS_FERMENTER, BIOMASS_FERMENTER)
         registerMachineBlocks(RagiumMachineKeys.DRAIN, DRAIN)
         registerMachineBlocks(RagiumMachineKeys.FLUID_DRILL, FLUID_DRILL)
+        registerMachineBlocks(RagiumMachineKeys.GAS_PLANT, GAS_PLANT)
         registerMachineBlocks(RagiumMachineKeys.ROCK_GENERATOR, ROCK_GENERATOR)
         // generators
         RagiumMachineKeys.GENERATORS.forEach {

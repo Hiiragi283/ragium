@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 3,
+      "items": "#c:ingots/steel"
+    },
+    {
+      "count": 3,
+      "items": "#c:ingots/copper"
+    },
+    {
+      "count": 3,
+      "items": "#c:ingots/tin"
+    }
+  ],
+  "item_outputs": [
+    "#c:ingots/advanced_alloy"
+  ],
+  "machine_type": "ragium:blast_furnace"
+}

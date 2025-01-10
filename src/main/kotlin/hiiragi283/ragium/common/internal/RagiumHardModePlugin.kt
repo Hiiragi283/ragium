@@ -251,6 +251,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumMachineKeys.BIOMASS_FERMENTER to Items.COMPOSTER,
             RagiumMachineKeys.DRAIN to Items.BUCKET,
             RagiumMachineKeys.FLUID_DRILL to RagiumBlocks.SHAFT,
+            RagiumMachineKeys.GAS_PLANT to Items.GLASS_BOTTLE,
             RagiumMachineKeys.ROCK_GENERATOR to Items.OBSIDIAN,
             // generators
             RagiumMachineKeys.COMBUSTION_GENERATOR to RagiumItems.ENGINE,
@@ -262,14 +263,15 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumMachineKeys.ASSEMBLER to Items.CRAFTER,
             RagiumMachineKeys.BLAST_FURNACE to Items.BLAST_FURNACE,
             RagiumMachineKeys.CHEMICAL_REACTOR to Items.GLASS,
+            RagiumMachineKeys.CONDENSER to Items.SNOWBALL,
             RagiumMachineKeys.COMPRESSOR to Items.PISTON,
             RagiumMachineKeys.CUTTING_MACHINE to Items.STONECUTTER,
             RagiumMachineKeys.DISTILLATION_TOWER to RagiumBlocks.Drums.BASIC,
             RagiumMachineKeys.ELECTROLYZER to RagiumItems.CHARGED_CARBON_ELECTRODE,
-            RagiumMachineKeys.EXTRACTOR to Items.HOPPER,
+            RagiumMachineKeys.EXTRACTOR to Items.DROPPER,
             RagiumMachineKeys.GRINDER to Items.FLINT,
             RagiumMachineKeys.GROWTH_CHAMBER to Items.IRON_HOE,
-            RagiumMachineKeys.INFUSER to Items.GLASS_BOTTLE,
+            RagiumMachineKeys.INFUSER to Items.HOPPER,
             RagiumMachineKeys.LARGE_CHEMICAL_REACTOR to RagiumBlocks.Glasses.STEEL,
             RagiumMachineKeys.LASER_TRANSFORMER to RagiumItems.LASER_EMITTER,
             RagiumMachineKeys.MIXER to Items.CAULDRON,
@@ -317,12 +319,12 @@ object RagiumHardModePlugin : RagiumPlugin {
     private fun craftPipes(exporter: RecipeExporter) {
         RagiumBlocks.Pipes.entries.forEach { pipe: RagiumBlocks.Pipes ->
             val input: TagKey<Item> = when (pipe) {
-                RagiumBlocks.Pipes.STONE -> RagiumHardModeContents.STONE
-                RagiumBlocks.Pipes.WOODEN -> RagiumHardModeContents.WOOD
-                RagiumBlocks.Pipes.IRON -> RagiumHardModeContents.IRON
-                RagiumBlocks.Pipes.COPPER -> RagiumHardModeContents.COPPER
-                RagiumBlocks.Pipes.UNIVERSAL -> RagiumHardModeContents.REFINED_RAGI_STEEL
-            }.getPrefixedTag(hardMode)
+                RagiumBlocks.Pipes.STONE -> ConventionalItemTags.STONES
+                RagiumBlocks.Pipes.WOODEN -> ItemTags.PLANKS
+                RagiumBlocks.Pipes.IRON -> RagiumHardModeContents.IRON.getPrefixedTag(hardMode)
+                RagiumBlocks.Pipes.COPPER -> RagiumHardModeContents.COPPER.getPrefixedTag(hardMode)
+                RagiumBlocks.Pipes.UNIVERSAL -> RagiumHardModeContents.REFINED_RAGI_STEEL.getPrefixedTag(hardMode)
+            }
             // shaped crafting
             HTShapedRecipeJsonBuilder
                 .create(pipe)

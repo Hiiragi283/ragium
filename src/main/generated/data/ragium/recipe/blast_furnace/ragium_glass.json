@@ -1,14 +1,11 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:blast_furnace",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "#c:ingots/ragium",
     "ragium:obsidian_glass"
   ],
   "item_outputs": [
     "ragium:ragium_glass"
-  ]
+  ],
+  "machine_type": "ragium:blast_furnace"
 }

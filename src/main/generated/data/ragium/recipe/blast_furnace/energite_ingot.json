@@ -1,0 +1,12 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    "#c:ingots/nickel",
+    "oritech:fluxite"
+  ],
+  "item_outputs": [
+    "oritech:energite_ingot"
+  ],
+  "machine_type": "ragium:blast_furnace",
+  "tier": "advanced"
+}

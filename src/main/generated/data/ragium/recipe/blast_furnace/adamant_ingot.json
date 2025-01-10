@@ -1,15 +1,11 @@
 {
   "type": "ragium:machine",
   "item_inputs": [
-    {
-      "count": 2,
-      "items": "#c:silicon"
-    },
-    "#minecraft:coals"
+    "#c:ingots/nickel",
+    "#c:gems/diamond"
   ],
   "item_outputs": [
-    "ragium:silicon",
-    "ragium:slag"
+    "oritech:adamant_ingot"
   ],
   "machine_type": "ragium:blast_furnace",
   "tier": "basic"

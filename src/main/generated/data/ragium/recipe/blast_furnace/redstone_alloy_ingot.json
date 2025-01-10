@@ -1,15 +1,15 @@
 {
   "type": "ragium:machine",
   "item_inputs": [
-    "#c:ingots/iron",
+    "#c:ingots/tin",
+    "#c:silicon",
     {
-      "count": 4,
-      "items": "#c:dusts/raginite"
+      "count": 2,
+      "items": "#c:dusts/redstone"
     }
   ],
   "item_outputs": [
-    "#c:ingots/ragi_steel",
-    "ragium:slag"
+    "#c:ingots/redstone_alloy"
   ],
   "machine_type": "ragium:blast_furnace"
 }

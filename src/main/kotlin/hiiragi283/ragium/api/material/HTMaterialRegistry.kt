@@ -41,7 +41,6 @@ class HTMaterialRegistry(
     fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): Set<Item> = items.get(prefix, key) ?: setOf()
 
     private fun createEntry(key: HTMaterialKey): Entry = Entry(
-        key,
         types[key] ?: error("Unknown material key: $key"),
         items.column(key),
         properties.getOrDefault(key, HTPropertyHolder.Empty),
@@ -71,12 +70,8 @@ class HTMaterialRegistry(
     /**
      * 素材の情報をまとめたクラス
      */
-    data class Entry(
-        val key: HTMaterialKey,
-        val type: HTMaterialType,
-        val itemMap: Map<HTTagPrefix, Set<Item>>,
-        private val property: HTPropertyHolder,
-    ) : HTPropertyHolder by property {
+    data class Entry(val type: HTMaterialType, val itemMap: Map<HTTagPrefix, Set<Item>>, private val property: HTPropertyHolder) :
+        HTPropertyHolder by property {
         fun getItems(prefix: HTTagPrefix): Set<Item> = itemMap.getOrDefault(prefix, setOf())
 
         fun getFirstItemOrNull(prefix: HTTagPrefix): Item? = getItems(prefix).firstOrNull()
