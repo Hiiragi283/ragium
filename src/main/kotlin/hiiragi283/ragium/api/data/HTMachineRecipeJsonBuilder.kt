@@ -300,6 +300,10 @@ class HTMachineRecipeJsonBuilder private constructor(
         exporter.accept(prefixedId, recipe, null)
     }
 
+    fun offerTo(exporter: RecipeExporter, path: String, factory: HTMachineRecipeBase.Factory<*>) {
+        offerTo(exporter, RagiumAPI.id(path), factory)
+    }
+
     /**
      * [HTMachineKey.id]で前置されたレシピIDを使用してレシピを登録します。
      */

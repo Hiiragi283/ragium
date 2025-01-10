@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTDistillationTowerScreenHandler
 import net.minecraft.block.BlockState
@@ -35,6 +36,7 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
         fluidStorage,
         intArrayOf(0),
         intArrayOf(1, 2, 3),
+        RagiumRecipeTypes.DISTILLATION
     )
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =

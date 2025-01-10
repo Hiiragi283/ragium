@@ -1,12 +1,8 @@
 {
   "type": "ragium:distillation",
   "catalyst": "ragium:primitive_circuit",
-  "input": {
-    "amount": 162000,
-    "fluids": "#c:sap"
-  },
+  "input": "#c:biomass",
   "outputs": [
-    "ragium:refined_gas",
     "ragium:alcohol"
   ]
 }

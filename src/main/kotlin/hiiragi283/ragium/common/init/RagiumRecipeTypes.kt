@@ -2,7 +2,9 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.HTMachineRecipeBase
+import hiiragi283.ragium.common.recipe.HTDistillationRecipe
 import hiiragi283.ragium.common.recipe.HTGrinderRecipe
+import hiiragi283.ragium.common.recipe.HTRockGeneratorRecipe
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeType
 import net.minecraft.registry.Registries
@@ -10,13 +12,16 @@ import net.minecraft.registry.Registry
 
 object RagiumRecipeTypes {
     @JvmField
+    val DISTILLATION: RecipeType<HTDistillationRecipe> = register("distillation")
+
+    @JvmField
     val GRINDER: RecipeType<HTGrinderRecipe> = register("grinder")
 
     @JvmField
     val MACHINE: RecipeType<HTMachineRecipeBase> = register("machine")
 
     @JvmField
-    val ROCK_GENERATOR: RecipeType<HTGrinderRecipe> = register("rock_generator")
+    val ROCK_GENERATOR: RecipeType<HTRockGeneratorRecipe> = register("rock_generator")
 
     @JvmStatic
     private fun <T : Recipe<*>> register(name: String): RecipeType<T> = RagiumAPI.id(name).let {

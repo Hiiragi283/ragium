@@ -1,17 +1,11 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:distillation",
   "catalyst": "ragium:primitive_circuit",
-  "definition": {
-    "type": "ragium:distillation_tower",
-    "tier": "primitive"
+  "input": {
+    "amount": 648000,
+    "fluids": "#c:refined_gas"
   },
-  "fluid_inputs": [
-    {
-      "amount": 648000,
-      "fluids": "#c:refined_gas"
-    }
-  ],
-  "fluid_outputs": [
+  "outputs": [
     {
       "amount": 486000,
       "fluid": "ragium:alcohol"

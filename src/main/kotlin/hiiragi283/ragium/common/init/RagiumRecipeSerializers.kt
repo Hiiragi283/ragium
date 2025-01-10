@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.recipe.HTDistillationRecipe
 import hiiragi283.ragium.common.recipe.HTDynamiteUpgradingRecipe
 import hiiragi283.ragium.common.recipe.HTGrinderRecipe
 import hiiragi283.ragium.common.recipe.HTMachineRecipe
@@ -14,6 +15,13 @@ import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 
 object RagiumRecipeSerializers {
+    @JvmField
+    val DISTILLATION: RecipeSerializer<HTDistillationRecipe> = register(
+        "distillation",
+        HTDistillationRecipe.CODEC,
+        HTDistillationRecipe.PACKET_CODEC,
+    )
+
     @JvmField
     val DYNAMITE_UPGRADE: RecipeSerializer<HTDynamiteUpgradingRecipe> = register(
         "dynamite_upgrade",
