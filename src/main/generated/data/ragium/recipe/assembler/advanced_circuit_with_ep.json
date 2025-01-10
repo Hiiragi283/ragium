@@ -8,10 +8,6 @@
     }
   ],
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "basic"
-  },
   "item_inputs": [
     "ragium:basic_circuit",
     {
@@ -21,5 +17,7 @@
   ],
   "item_outputs": [
     "energizedpower:advanced_circuit"
-  ]
+  ],
+  "machine_type": "ragium:assembler",
+  "tier": "basic"
 }

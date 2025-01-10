@@ -12,6 +12,13 @@ import net.minecraft.registry.Registry
 
 object RagiumRecipeSerializers {
     @JvmField
+    val ASSEMBLER: RecipeSerializer<HTAssemblerRecipe> = register(
+        "assembler",
+        HTAssemblerRecipe.CODEC,
+        HTAssemblerRecipe.PACKET_CODEC,
+    )
+
+    @JvmField
     val DISTILLATION: RecipeSerializer<HTDistillationRecipe> = register(
         "distillation",
         HTDistillationRecipe.CODEC,

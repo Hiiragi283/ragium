@@ -1,14 +1,9 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "advanced"
-  },
-  "item_inputs": [
+  "type": "ragium:assembler",
+  "inputs": [
     "#c:gems/emerald",
     "ragium:processor_socket"
   ],
-  "item_outputs": [
-    "ragium:emerald_processor"
-  ]
+  "output": "ragium:emerald_processor",
+  "tier": "advanced"
 }

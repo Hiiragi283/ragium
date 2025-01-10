@@ -1,17 +1,11 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "catalyst": "minecraft:chest",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "primitive"
-  },
-  "item_inputs": [
+  "inputs": [
     {
       "count": 2,
       "items": "#minecraft:logs"
     }
   ],
-  "item_outputs": [
-    "minecraft:chest"
-  ]
+  "output": "minecraft:chest"
 }

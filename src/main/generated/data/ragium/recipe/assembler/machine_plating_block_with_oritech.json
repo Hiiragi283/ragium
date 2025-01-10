@@ -8,10 +8,6 @@
     }
   ],
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "primitive"
-  },
   "item_inputs": [
     {
       "count": 2,
@@ -25,5 +21,6 @@
       "count": 8,
       "item": "oritech:machine_plating_block"
     }
-  ]
+  ],
+  "machine_type": "ragium:assembler"
 }

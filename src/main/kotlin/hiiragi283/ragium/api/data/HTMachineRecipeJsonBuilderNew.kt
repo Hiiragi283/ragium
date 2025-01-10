@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -11,10 +10,8 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -27,31 +24,15 @@ import net.minecraft.util.Identifier
  * 機械レシピを構築するビルダー
  * @see HTMachineRecipe
  */
-class HTMachineRecipeJsonBuilder private constructor(
-    private val key: HTMachineKey,
-    private val tier: HTMachineTier = HTMachineTier.PRIMITIVE,
-) {
+class HTMachineRecipeJsonBuilderNew private constructor(recipeType: HTMachineRecipeType<*>, private val tier: HTMachineTier) {
     companion object {
         @JvmStatic
-        fun create(key: HTMachineKey, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
-            HTMachineRecipeJsonBuilder(key, minTier)
-
-        /**
-         * 指定された[item]のIDの名前空間を"ragium"で置換したものを返します。
-         * @see [hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder.offerTo]
-         */
-        @JvmStatic
-        fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
-            .getItemId(item)
-            .path
-            .let { RagiumAPI.id(it) }
-
-        @JvmStatic
-        fun createRecipeId(content: HTContent<*>): Identifier = RagiumAPI.id(content.id.path)
-
-        @JvmStatic
-        fun createRecipeId(tagKey: TagKey<*>): Identifier = RagiumAPI.id(tagKey.id.path)
+        fun create(recipeType: HTMachineRecipeType<*>, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilderNew =
+            HTMachineRecipeJsonBuilderNew(recipeType, minTier)
     }
+
+    private val key: HTMachineKey = recipeType.machineKey
+    private val factory: HTMachineRecipe.Factory<*> = recipeType.factory
 
     private val itemInputs: MutableSet<HTItemIngredient> = mutableSetOf()
     private val fluidInputs: MutableSet<HTFluidIngredient> = mutableSetOf()
@@ -65,7 +46,7 @@ class HTMachineRecipeJsonBuilder private constructor(
      * アイテムの材料を追加します。
      * @throws IllegalStateException 重複した材料が登録された場合
      */
-    fun itemInput(ingredient: HTItemIngredient): HTMachineRecipeJsonBuilder = apply {
+    fun itemInput(ingredient: HTItemIngredient): HTMachineRecipeJsonBuilderNew = apply {
         check(itemInputs.add(ingredient)) { "Duplicated item input: $ingredient found!" }
     }
 
@@ -79,7 +60,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         item: ItemConvertible,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(item, count, consumeType))
+    ): HTMachineRecipeJsonBuilderNew = itemInput(HTItemIngredient.of(item, count, consumeType))
 
     /**
      * アイテムの材料を[items]から追加します。
@@ -91,7 +72,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         vararg items: ItemConvertible,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(items.toList(), count, consumeType)
+    ): HTMachineRecipeJsonBuilderNew = itemInput(items.toList(), count, consumeType)
 
     /**
      * アイテムの材料を[items]から追加します。
@@ -103,7 +84,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         items: List<ItemConvertible>,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(items, count, consumeType))
+    ): HTMachineRecipeJsonBuilderNew = itemInput(HTItemIngredient.of(items, count, consumeType))
 
     /**
      * アイテムの材料を[prefix]と[material]から追加します。
@@ -116,7 +97,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         material: HTMaterialKey,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(prefix.createTag(material), count, consumeType)
+    ): HTMachineRecipeJsonBuilderNew = itemInput(prefix.createTag(material), count, consumeType)
 
     /**
      * アイテムの材料を[provider]から追加します。
@@ -128,7 +109,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         provider: HTMaterialProvider,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(provider.prefixedTagKey, count, consumeType)
+    ): HTMachineRecipeJsonBuilderNew = itemInput(provider.prefixedTagKey, count, consumeType)
 
     /**
      * アイテムの材料を[tagKey]から追加します。
@@ -140,13 +121,13 @@ class HTMachineRecipeJsonBuilder private constructor(
         tagKey: TagKey<Item>,
         count: Int = 1,
         consumeType: HTItemIngredient.ConsumeType = HTItemIngredient.ConsumeType.DECREMENT,
-    ): HTMachineRecipeJsonBuilder = itemInput(HTItemIngredient.of(tagKey, count, consumeType))
+    ): HTMachineRecipeJsonBuilderNew = itemInput(HTItemIngredient.of(tagKey, count, consumeType))
 
     /**
      * 液体の材料を追加します。
      * @throws IllegalStateException 重複した材料が登録された場合
      */
-    fun fluidInput(ingredient: HTFluidIngredient): HTMachineRecipeJsonBuilder = apply {
+    fun fluidInput(ingredient: HTFluidIngredient): HTMachineRecipeJsonBuilderNew = apply {
         check(fluidInputs.add(ingredient)) { "Duplicated fluid input $ingredient found!" }
     }
 
@@ -155,7 +136,7 @@ class HTMachineRecipeJsonBuilder private constructor(
      * @param amount 必要な液体の量
      * @throws IllegalStateException 重複した材料が登録された場合
      */
-    fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+    fun fluidInput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilderNew =
         fluidInput(HTFluidIngredient.of(fluid, amount))
 
     /**
@@ -163,7 +144,7 @@ class HTMachineRecipeJsonBuilder private constructor(
      * @param amount 必要な液体の量
      * @throws IllegalStateException 重複した材料が登録された場合
      */
-    fun fluidInput(fluids: List<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+    fun fluidInput(fluids: List<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilderNew =
         fluidInput(HTFluidIngredient.of(fluids, amount))
 
     /**
@@ -171,7 +152,7 @@ class HTMachineRecipeJsonBuilder private constructor(
      * @param amount 必要な液体の量
      * @throws IllegalStateException 重複した材料が登録された場合
      */
-    fun fluidInput(content: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+    fun fluidInput(content: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilderNew =
         fluidInput(content.tagKey, amount)
 
     /**
@@ -179,7 +160,7 @@ class HTMachineRecipeJsonBuilder private constructor(
      * @param amount 必要な液体の量
      * @throws IllegalStateException 重複した材料が登録された場合
      */
-    fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder =
+    fun fluidInput(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilderNew =
         fluidInput(HTFluidIngredient.of(tagKey, amount))
 
     //    Output    //
@@ -191,7 +172,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         item: ItemConvertible,
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = apply {
+    ): HTMachineRecipeJsonBuilderNew = apply {
         itemOutputs.add(HTItemResult.ofItem(item, count, components))
     }
 
@@ -203,7 +184,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         material: HTMaterialKey,
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = itemOutput(prefix.createTag(material), count, components)
+    ): HTMachineRecipeJsonBuilderNew = itemOutput(prefix.createTag(material), count, components)
 
     /**
      * アイテムの完成品を[provider]から追加します。
@@ -212,7 +193,7 @@ class HTMachineRecipeJsonBuilder private constructor(
         provider: HTMaterialProvider,
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = itemOutput(provider.prefixedTagKey, count, components)
+    ): HTMachineRecipeJsonBuilderNew = itemOutput(provider.prefixedTagKey, count, components)
 
     /**
      * アイテムの完成品をタグから追加します。
@@ -221,26 +202,26 @@ class HTMachineRecipeJsonBuilder private constructor(
         tagKey: TagKey<Item>,
         count: Int = 1,
         components: ComponentChanges = ComponentChanges.EMPTY,
-    ): HTMachineRecipeJsonBuilder = apply {
+    ): HTMachineRecipeJsonBuilderNew = apply {
         itemOutputs.add(HTItemResult.fromTag(tagKey, count, components))
     }
 
     /**
      * アイテムの完成品を[stack]から追加します。
      */
-    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilder = apply { itemOutputs.add(HTItemResult.fromStack(stack)) }
+    fun itemOutput(stack: ItemStack): HTMachineRecipeJsonBuilderNew = apply { itemOutputs.add(HTItemResult.fromStack(stack)) }
 
     /**
      * 液体の完成品を追加します。
      */
-    fun fluidOutput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+    fun fluidOutput(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilderNew = apply {
         fluidOutputs.add(HTFluidResult(fluid, amount))
     }
 
     /**
      * 液体の完成品を[content]から追加します。
      */
-    fun fluidOutput(content: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilder = apply {
+    fun fluidOutput(content: HTFluidContent, amount: Long = FluidConstants.BUCKET): HTMachineRecipeJsonBuilderNew = apply {
         fluidOutputs.add(HTFluidResult(content.get(), amount))
     }
 
@@ -249,41 +230,38 @@ class HTMachineRecipeJsonBuilder private constructor(
     /**
      * 触媒アイテムを[item]から指定します。
      */
-    fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilder = apply {
+    fun catalyst(item: ItemConvertible): HTMachineRecipeJsonBuilderNew = apply {
         catalyst = HTItemIngredient.of(item)
     }
 
     /**
      * 触媒アイテムを[prefix]と[material]から指定します。
      */
-    fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeJsonBuilder = catalyst(prefix.createTag(material))
+    fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeJsonBuilderNew = catalyst(prefix.createTag(material))
 
     /**
      * 触媒アイテムを[tagKey]から指定します。
      */
-    fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilder = apply {
+    fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilderNew = apply {
         catalyst = HTItemIngredient.of(tagKey)
     }
+    
+    //    Complete    //
 
-    fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {
-        val id: Identifier = when (output) {
-            is HTItemContent -> RagiumAPI.id(output.id.path)
-            else -> createRecipeId(output)
-        }.withSuffixedPath(suffix)
-        offerTo(exporter, id)
+    fun offerTo(exporter: RecipeExporter, prefix: HTTagPrefix, materialKey: HTMaterialKey, suffix: String = "") {
+        offerTo(exporter, prefix.createTag(materialKey).id.withSuffixedPath(suffix))
     }
 
-    fun offerTo(exporter: RecipeExporter, output: HTFluidContent, suffix: String = "") {
-        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
+    fun offerTo(exporter: RecipeExporter, tagKey: TagKey<Item>) {
+        offerTo(exporter, tagKey.id)
     }
 
-    fun offerTo(
-        exporter: RecipeExporter,
-        prefix: HTTagPrefix,
-        material: HTMaterialKey,
-        suffix: String = "",
-    ) {
-        offerTo(exporter, createRecipeId(prefix.createTag(material)).withSuffixedPath(suffix))
+    fun offerTo(exporter: RecipeExporter, content: HTContent<*>) {
+        offerTo(exporter, content.id)
+    }
+
+    fun offerTo(exporter: RecipeExporter, path: String) {
+        offerTo(exporter, RagiumAPI.id(path))
     }
 
     /**
@@ -292,29 +270,11 @@ class HTMachineRecipeJsonBuilder private constructor(
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
         val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe: HTDefaultMachineRecipe = build(::HTDefaultMachineRecipe)
+        val recipe: HTMachineRecipe = build()
         exporter.accept(prefixedId, recipe, null)
     }
 
-    fun offerTo(exporter: RecipeExporter, path: String, recipeType: HTMachineRecipeType<*>) {
-        offerTo(exporter, RagiumAPI.id(path), recipeType)
-    }
-
-    fun offerTo(exporter: RecipeExporter, id: Identifier, recipeType: HTMachineRecipeType<*>) {
-        offerTo(exporter, id, recipeType.factory)
-    }
-
-    /**
-     * [HTMachineKey.id]で前置されたレシピIDを使用してレシピを登録します。
-     */
-    fun offerTo(exporter: RecipeExporter, recipeId: Identifier, factory: HTMachineRecipe.Factory<*>) {
-        val prefix = "${key.id.path}/"
-        val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe: HTMachineRecipe = build(factory)
-        exporter.accept(prefixedId, recipe, null)
-    }
-
-    fun <T : HTMachineRecipe> build(factory: HTMachineRecipe.Factory<T>): T {
+    fun build(): HTMachineRecipe {
         val data = HTMachineRecipeData(
             itemInputs.toList(),
             fluidInputs.toList(),
@@ -326,6 +286,5 @@ class HTMachineRecipeJsonBuilder private constructor(
         return factory.create(HTMachineDefinition(key, tier), data)
     }
 
-    fun <T : HTMachineRecipe, R> transform(recipeType: HTMachineRecipeType<T>, transform: (T) -> R): R =
-        build(recipeType.factory).let(transform)
+    fun <T> transform(transform: (HTMachineRecipe) -> T): T = build().let(transform)
 }

@@ -1,11 +1,7 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "catalyst": "minecraft:hopper",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "primitive"
-  },
-  "item_inputs": [
+  "inputs": [
     {
       "count": 5,
       "items": "#c:ingots/iron"
@@ -15,7 +11,5 @@
       "items": "#minecraft:logs"
     }
   ],
-  "item_outputs": [
-    "minecraft:hopper"
-  ]
+  "output": "minecraft:hopper"
 }

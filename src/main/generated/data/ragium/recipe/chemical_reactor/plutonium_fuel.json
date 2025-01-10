@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "advanced"
-  },
   "fluid_inputs": [
     "#c:aqua_regia"
   ],
@@ -16,5 +12,7 @@
   ],
   "item_outputs": [
     "ragium:plutonium_fuel"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "tier": "advanced"
 }

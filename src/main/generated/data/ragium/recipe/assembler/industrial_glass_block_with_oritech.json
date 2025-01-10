@@ -8,10 +8,6 @@
     }
   ],
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "primitive"
-  },
   "item_inputs": [
     {
       "count": 2,
@@ -28,5 +24,6 @@
       "count": 4,
       "item": "oritech:industrial_glass_block"
     }
-  ]
+  ],
+  "machine_type": "ragium:assembler"
 }

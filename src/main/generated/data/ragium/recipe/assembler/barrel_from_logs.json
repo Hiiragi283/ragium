@@ -1,20 +1,14 @@
 {
-  "type": "ragium:machine",
+  "type": "ragium:assembler",
   "catalyst": "minecraft:barrel",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "primitive"
-  },
-  "item_inputs": [
+  "inputs": [
     {
       "count": 7,
       "items": "#minecraft:logs"
     }
   ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "item": "minecraft:barrel"
-    }
-  ]
+  "output": {
+    "count": 4,
+    "item": "minecraft:barrel"
+  }
 }

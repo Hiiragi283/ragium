@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
+import hiiragi283.ragium.api.data.*
 import hiiragi283.ragium.api.extension.aroundPos
 import hiiragi283.ragium.api.extension.isPopulated
 import hiiragi283.ragium.api.machine.*
@@ -432,27 +429,27 @@ object RagiumDefaultPlugin : RagiumPlugin {
         if (entry.type.isValidPrefix(HTTagPrefix.DUST)) {
             // ingot/gem -> dust
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                HTMachineRecipeJsonBuilder
-                    .create(RagiumMachineKeys.GRINDER)
+                HTMachineRecipeJsonBuilderNew
+                    .create(RagiumRecipeTypes.GRINDER)
                     .itemInput(prefix, key)
                     .itemOutput(HTTagPrefix.DUST, key)
                     .offerTo(exporter, HTTagPrefix.DUST, key, "_from_${prefix.asString()}")
             }
             // plate -> dust
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.PLATE, key)
                 .itemOutput(HTTagPrefix.DUST, key)
                 .offerTo(exporter, HTTagPrefix.DUST, key, "_from_plate")
             // gear -> dust
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.GEAR, key)
                 .itemOutput(HTTagPrefix.DUST, key, 4)
                 .offerTo(exporter, HTTagPrefix.DUST, key, "_from_gear")
             // raw -> dust
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.RAW_MATERIAL, key)
                 .itemOutput(HTTagPrefix.DUST, key, 2)
                 .offerTo(exporter, HTTagPrefix.DUST, key, "_from_raw")
@@ -510,13 +507,13 @@ object RagiumDefaultPlugin : RagiumPlugin {
             val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
             val subProduction: ItemConvertible? = entry[HTMaterialPropertyKeys.ORE_SUB_PRODUCT]
             // Grinder Recipe
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.GRINDER)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.ORE, key)
                 .itemOutput(output, count * 2)
                 .itemOutput(RagiumItems.SLAG)
                 .apply { subProduction?.let(::itemOutput) }
-                .offerTo(exporter, output)
+                .offerTo(exporter, HTTagPrefix.ORE, key, "_2x")
             // 3x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
@@ -525,7 +522,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemOutput(output, count * 3)
                 .itemOutput(RagiumItems.SLAG)
                 .apply { subProduction?.let(::itemOutput) }
-                .offerTo(exporter, output, "_3x")
+                .offerTo(exporter, HTTagPrefix.ORE, key, "_3x")
             // 4x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
@@ -534,7 +531,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .itemOutput(output, count * 4)
                 .itemOutput(RagiumItems.SLAG)
                 .apply { subProduction?.let { itemOutput(it, 2) } }
-                .offerTo(exporter, output, "_4x")
+                .offerTo(exporter, HTTagPrefix.ORE, key, "_4x")
             // 5x Chemical Recipe
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
@@ -542,7 +539,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .fluidInput(RagiumFluids.MERCURY, FluidConstants.INGOT)
                 .itemOutput(output, count * 5)
                 .itemOutput(RagiumItems.SLAG)
-                .offerTo(exporter, output, "_5x")
+                .offerTo(exporter, HTTagPrefix.ORE, key, "_5x")
         }
 
         if (HTMaterialPropertyKeys.DISABLE_RAW_SMELTING !in entry) {

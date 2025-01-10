@@ -44,7 +44,7 @@ class HTMachineRecipeProcessor(
     )
 
     private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipe> =
-        HTRecipeCache(machineKey.getEntryOrNull()!!.getOrThrow(HTMachinePropertyKeys.RECIPE_TYPE))
+        HTRecipeCache(machineKey.getEntryOrNull()!!.getOrDefault(HTMachinePropertyKeys.RECIPE_TYPE))
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
         val input: HTMachineInput = HTMachineInput.create(key, tier) {

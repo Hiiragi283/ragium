@@ -8,10 +8,6 @@
     }
   ],
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:assembler",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "#minecraft:wool",
     {
@@ -24,5 +20,6 @@
       "count": 18,
       "item": "energizedpower:cable_insulator"
     }
-  ]
+  ],
+  "machine_type": "ragium:assembler"
 }
