@@ -2,11 +2,8 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.codec.HTRegistryEntryListCodec
-import hiiragi283.ragium.api.codec.HTRegistryEntryPacketCodec
 import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.*
-import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.ItemStack
@@ -14,6 +11,10 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.util.StringIdentifiable
@@ -27,13 +28,13 @@ import java.util.function.Predicate
  * @param consumeType アイテムを減らす処理のタイプ
  */
 class HTItemIngredient private constructor(
-    private val entryList: HTRegistryEntryList<Item>,
+    private val entryList: RegistryEntryList<Item>,
     val count: Int = 1,
     val consumeType: ConsumeType = ConsumeType.DECREMENT,
 ) : Predicate<ItemStack> {
     companion object {
         @JvmStatic
-        private val ITEM_CODEC: HTRegistryEntryListCodec<Item> = HTRegistryEntryListCodec(Registries.ITEM)
+        private val ITEM_CODEC: Codec<RegistryEntryList<Item>> = RegistryCodecs.entryList(RegistryKeys.ITEM)
 
         @JvmField
         val CODEC: Codec<HTItemIngredient> = RagiumCodecs.simpleOrComplex(
@@ -58,7 +59,7 @@ class HTItemIngredient private constructor(
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTItemIngredient> = PacketCodec
             .tuple(
-                HTRegistryEntryPacketCodec(Registries.ITEM),
+                PacketCodecs.registryEntryList(RegistryKeys.ITEM),
                 HTItemIngredient::entryList,
                 PacketCodecs.VAR_INT,
                 HTItemIngredient::count,
@@ -69,26 +70,32 @@ class HTItemIngredient private constructor(
 
         @JvmStatic
         fun of(item: ItemConvertible, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
-            HTItemIngredient(HTRegistryEntryList.direct(item.asItem()), count, consumeType)
+            HTItemIngredient(RegistryEntryList.of(item.registryEntry), count, consumeType)
 
         @JvmStatic
         fun of(items: List<ItemConvertible>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
-            HTItemIngredient(HTRegistryEntryList.direct(items.map(ItemConvertible::asItem)), count, consumeType)
+            HTItemIngredient(RegistryEntryList.of(ItemConvertible::registryEntry, items), count, consumeType)
 
         @JvmStatic
         fun of(tagKey: TagKey<Item>, count: Int = 1, consumeType: ConsumeType = ConsumeType.DECREMENT): HTItemIngredient =
-            HTItemIngredient(HTRegistryEntryList.fromTag(tagKey, Registries.ITEM), count, consumeType)
+            HTItemIngredient(Registries.ITEM.getOrCreateEntryList(tagKey), count, consumeType)
     }
 
     val isEmpty: Boolean
-        get() = entryList.storage.map({ false }, { it.isEmpty() || it.all(Item::isAir) }) || count <= 0
+        get() = entryList.storage.map(
+            { false },
+            { it.isEmpty() || it.all { entry: RegistryEntry<Item> -> entry.value().isAir } },
+        ) ||
+            count <= 0
 
-    fun <T : Any> map(transform: (Item, Int) -> T): List<T> = entryList.map { transform(it, count) }
+    fun <T : Any> map(transform: (Item, Int) -> T): List<T> = mapEntry { entry: RegistryEntry<Item>, count: Int ->
+        transform(entry.value(), count)
+    }
+
+    fun <T : Any> mapEntry(transform: (RegistryEntry<Item>, Int) -> T): List<T> = entryList.map { transform(it, count) }
 
     val text: MutableText
         get() = entryList.asText(Item::getName)
-
-    val entryMap: Map<Item, Int> = entryList.associateWith { count }
 
     override fun test(stack: ItemStack): Boolean = when (stack.isEmpty) {
         true -> this.isEmpty

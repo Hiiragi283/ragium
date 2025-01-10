@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.util.HTRegistryEntryList
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.minecraft.registry.BuiltinRegistries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
@@ -76,10 +76,9 @@ fun <T : Any> RegistryEntryList<T>.asText(transform: (T) -> Text): MutableText =
         { Texts.join(this.map(RegistryEntry<T>::value), transform) },
     ).copy()
 
+//    TagKey    //
+
 /**
- * この[RegistryEntryList]を[Text]に変換します。
- * @param transform 値を[Text]に変換するブロック
- * @return [TagKey]の場合は[TagKey.getName]，それ以外の場合は[transform]を連結
+ * 指定した[TagKey]が読み込まれているかどうか判定します。
  */
-fun <T : Any> HTRegistryEntryList<T>.asText(transform: (T) -> Text): MutableText =
-    storage.map(TagKey<T>::getName, { Texts.join(it, transform) }).copy()
+fun TagKey<*>.isPopulated(): Boolean = ResourceConditions.tagsPopulated(this).test(null)

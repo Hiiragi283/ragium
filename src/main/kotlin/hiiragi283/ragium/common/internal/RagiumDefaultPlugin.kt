@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.aroundPos
+import hiiragi283.ragium.api.extension.isPopulated
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.util.TriConsumer
@@ -521,7 +522,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             // raw -> ingot
             helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
                 val input: TagKey<Item> = HTTagPrefix.RAW_MATERIAL.createTag(key)
-                if (!helper.isPopulated(input)) return@useItemIfPresent
+                if (!input.isPopulated()) return@useItemIfPresent
                 HTCookingRecipeJsonBuilder.smeltAndBlast(
                     exporter,
                     input,
@@ -533,7 +534,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             // dust -> ingot
             helper.useItemIfPresent(entry, HTTagPrefix.INGOT) { output: Item ->
                 val input: TagKey<Item> = HTTagPrefix.DUST.createTag(key)
-                if (!helper.isPopulated(input)) return@useItemIfPresent
+                if (!input.isPopulated()) return@useItemIfPresent
                 HTCookingRecipeJsonBuilder.smeltAndBlast(
                     exporter,
                     input,

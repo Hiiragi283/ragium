@@ -8,12 +8,10 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTMutablePropertyHolder
 import hiiragi283.ragium.api.util.TriConsumer
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
 import java.util.function.Predicate
@@ -166,11 +164,6 @@ interface RagiumPlugin {
     //    RecipeHelper    //
 
     data object RecipeHelper {
-        /**
-         * 指定した[tagKey]が読み込まれているかどうか判定します。
-         */
-        fun isPopulated(tagKey: TagKey<Item>): Boolean = ResourceConditions.tagsPopulated(tagKey).test(null)
-
         fun useItemIfPresent(key: HTMaterialKey, prefix: HTTagPrefix, action: (Item) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemIfPresent(entry, prefix, action)

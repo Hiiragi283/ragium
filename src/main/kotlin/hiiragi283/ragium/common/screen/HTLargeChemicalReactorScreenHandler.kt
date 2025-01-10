@@ -34,8 +34,8 @@ class HTLargeChemicalReactorScreenHandler(syncId: Int, playerInv: PlayerInventor
         addFluidSlot(5, 5, 1)
         addFluidSlot(6, 6, 1)
         addFluidSlot(7, 7, 1)
-        addFluidSlot(8, 5, 1)
-        addFluidSlot(9, 6, 1)
+        addFluidSlot(8, 5, 2)
+        addFluidSlot(9, 6, 2)
         // player inventory
         addPlayerInv()
         // register property

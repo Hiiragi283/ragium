@@ -2,12 +2,9 @@ package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.codec.HTRegistryEntryListCodec
-import hiiragi283.ragium.api.codec.HTRegistryEntryPacketCodec
 import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
-import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
@@ -18,6 +15,10 @@ import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
 import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
+import net.minecraft.registry.RegistryCodecs
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.entry.RegistryEntry
+import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import java.util.*
@@ -28,11 +29,12 @@ import java.util.function.Predicate
  * @param entryList 条件に一致する液体の一覧
  * @param amount 条件に一致する液体の量
  */
-class HTFluidIngredient private constructor(private val entryList: HTRegistryEntryList<Fluid>, val amount: Long = FluidConstants.BUCKET) :
+@Suppress("DEPRECATION")
+class HTFluidIngredient private constructor(private val entryList: RegistryEntryList<Fluid>, val amount: Long = FluidConstants.BUCKET) :
     Predicate<HTFluidVariantStack> {
         companion object {
             @JvmStatic
-            private val FLUID_CODEC: HTRegistryEntryListCodec<Fluid> = HTRegistryEntryListCodec(Registries.FLUID)
+            private val FLUID_CODEC: Codec<RegistryEntryList<Fluid>> = RegistryCodecs.entryList(RegistryKeys.FLUID)
 
             @JvmField
             val CODEC: Codec<HTFluidIngredient> = RagiumCodecs.simpleOrComplex(
@@ -53,7 +55,7 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
             @JvmField
             val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTFluidIngredient> = PacketCodec
                 .tuple(
-                    HTRegistryEntryPacketCodec(Registries.FLUID),
+                    PacketCodecs.registryEntryList(RegistryKeys.FLUID),
                     HTFluidIngredient::entryList,
                     PacketCodecs.VAR_LONG,
                     HTFluidIngredient::amount,
@@ -65,27 +67,35 @@ class HTFluidIngredient private constructor(private val entryList: HTRegistryEnt
              */
             @JvmStatic
             fun of(fluid: Fluid, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
-                HTFluidIngredient(HTRegistryEntryList.direct(fluid), amount)
+                HTFluidIngredient(RegistryEntryList.of(fluid.registryEntry), amount)
 
             /**
              * 指定した[fluids]と[amount]から[HTFluidIngredient]を返します。
              */
             @JvmStatic
             fun of(fluids: List<Fluid>, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
-                HTFluidIngredient(HTRegistryEntryList.direct(fluids), amount)
+                HTFluidIngredient(RegistryEntryList.of(Fluid::getRegistryEntry, fluids), amount)
 
             /**
              * 指定した[tagKey]と[amount]から[HTFluidIngredient]を返します。
              */
             @JvmStatic
             fun of(tagKey: TagKey<Fluid>, amount: Long = FluidConstants.BUCKET): HTFluidIngredient =
-                HTFluidIngredient(HTRegistryEntryList.fromTag(tagKey, Registries.FLUID), amount)
+                HTFluidIngredient(Registries.FLUID.getOrCreateEntryList(tagKey), amount)
         }
 
         val isEmpty: Boolean
-            get() = entryList.storage.map({ false }, { it.isEmpty() || it.all(Fluid::isEmpty) }) || amount <= 0
+            get() = entryList.storage.map(
+                { false },
+                { it.isEmpty() || it.all { entry: RegistryEntry<Fluid> -> entry.value().isEmpty } },
+            ) ||
+                amount <= 0
 
-        fun <T : Any> map(transform: (Fluid, Long) -> T): List<T> = entryList.map { transform(it, amount) }
+        fun <T : Any> map(transform: (Fluid, Long) -> T): List<T> = mapEntry { entry: RegistryEntry<Fluid>, amount: Long ->
+            transform(entry.value(), amount)
+        }
+
+        fun <T : Any> mapEntry(transform: (RegistryEntry<Fluid>, Long) -> T): List<T> = entryList.map { transform(it, amount) }
 
         val text: MutableText
             get() = entryList.asText(Fluid::name)

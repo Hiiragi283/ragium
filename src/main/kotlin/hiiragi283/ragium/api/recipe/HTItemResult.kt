@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.codec.RagiumCodecs
+import hiiragi283.ragium.api.extension.isPopulated
 import hiiragi283.ragium.api.extension.registryEntry
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
@@ -15,7 +16,6 @@ import net.minecraft.network.codec.PacketCodecs
 import net.minecraft.registry.Registries
 import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
-import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.entry.RegistryFixedCodec
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
@@ -97,7 +97,6 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
     }
 
     abstract val firstEntry: RegistryEntry<Item>
-    val firstItem: Item get() = firstEntry.value()
     val stack: ItemStack get() = ItemStack(firstEntry, count, components)
 
     abstract val isEmpty: Boolean
@@ -174,13 +173,14 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
             )
         }
 
-        private val entries: RegistryEntryList<Item>
-            get() = Registries.ITEM.getEntryList(tagKey)?.getOrNull() ?: RegistryEntryList.empty()
-
         override val firstEntry: RegistryEntry<Item>
-            get() = entries.firstOrNull() ?: Registries.ITEM.defaultEntry.get()
+            get() = Registries.ITEM
+                .getEntryList(tagKey)
+                ?.getOrNull()
+                ?.firstOrNull()
+                ?: Registries.ITEM.defaultEntry.get()
 
         override val isEmpty: Boolean
-            get() = entries.size() <= 0
+            get() = !tagKey.isPopulated()
     }
 }

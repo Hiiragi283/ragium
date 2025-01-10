@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.recipe.HTItemResult
-import hiiragi283.ragium.api.util.HTRegistryEntryList
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
@@ -126,12 +125,6 @@ fun buildItemStack(item: ItemConvertible?, count: Int = 1, builderAction: Compon
  * 指定した[item]とアイテムが一致するか判定します。
  */
 fun ItemStack.isOf(item: ItemConvertible): Boolean = isOf(item.asItem())
-
-/**
- * 指定した[entryList]にアイテムが含まれているか判定します。
- */
-fun ItemStack.isIn(entryList: HTRegistryEntryList<Item>): Boolean =
-    entryList.storage.map(this::isIn) { items: List<Item> -> items.any(this::isOf) }
 
 /**
  * 残りの耐久値を返します。

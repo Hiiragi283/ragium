@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.extension
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
-import hiiragi283.ragium.api.util.HTRegistryEntryList
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -80,12 +79,6 @@ fun <O : Any, S : Any, T : Comparable<T>> State<O, S>.getResult(property: Proper
  * 指定した[content]とブロックが一致するか判定します。
  */
 fun BlockState.isOf(content: HTBlockContent): Boolean = isOf(content.get())
-
-/**
- * 指定した[entryList]の中にブロックが含まれているか判定します。
- */
-fun BlockState.isIn(entryList: HTRegistryEntryList<Block>): Boolean =
-    entryList.storage.map(this::isIn) { blocks: List<Block> -> blocks.any(this::isOf) }
 
 //    BlockEntity    //
 
