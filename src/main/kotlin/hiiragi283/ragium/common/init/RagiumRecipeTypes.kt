@@ -13,6 +13,10 @@ object RagiumRecipeTypes {
         register(RagiumMachineKeys.ASSEMBLER, ::HTAssemblerRecipe)
 
     @JvmField
+    val CUTTING_MACHINE: HTMachineRecipeType<HTCuttingMachineRecipe> =
+        register(RagiumMachineKeys.CUTTING_MACHINE, ::HTCuttingMachineRecipe)
+
+    @JvmField
     val DISTILLATION: HTMachineRecipeType<HTDistillationRecipe> =
         register(RagiumMachineKeys.DISTILLATION_TOWER, ::HTDistillationRecipe)
 
@@ -23,6 +27,10 @@ object RagiumRecipeTypes {
     @JvmField
     val GROWTH_CHAMBER: HTMachineRecipeType<HTGrowthChamberRecipe> =
         register(RagiumMachineKeys.GROWTH_CHAMBER, ::HTGrowthChamberRecipe)
+
+    @JvmField
+    val LASER_TRANSFORMER: HTMachineRecipeType<HTLaserTransformerRecipe> =
+        register(RagiumMachineKeys.LASER_TRANSFORMER, ::HTLaserTransformerRecipe)
 
     @JvmField
     val MACHINE: HTMachineRecipeType<HTDefaultMachineRecipe> =

@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.recipe.HTItemIngredient
-import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
+import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
@@ -124,7 +124,7 @@ internal object RagiumContentRegister {
         ServerTickEvents.END_SERVER_TICK.register { server: MinecraftServer ->
             server.playerManager.playerList.forEach { player: ServerPlayerEntity ->
                 // send fluid sync packet
-                (player.currentScreenHandler as? HTMachineScreenHandlerBase)?.let { screen: HTMachineScreenHandlerBase ->
+                (player.currentScreenHandler as? HTMachineScreenHandler)?.let { screen: HTMachineScreenHandler ->
                     (screen.blockEntity as? HTScreenFluidProvider)
                         ?.getFluidsToSync()
                         ?.forEach { (index: Int, stack: HTFluidVariantStack) ->

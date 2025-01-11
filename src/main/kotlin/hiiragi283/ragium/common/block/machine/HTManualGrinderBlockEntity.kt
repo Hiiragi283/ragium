@@ -26,7 +26,7 @@ import net.minecraft.world.World
 
 class HTManualGrinderBlockEntity(pos: BlockPos, state: BlockState) :
     HTBlockEntityBase(RagiumBlockEntityTypes.MANUAL_GRINDER, pos, state) {
-    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).input(0).build()
+    private val inventory = HTMachineInventory(1, intArrayOf(0), intArrayOf())
 
     override fun asInventory(): SidedInventory = inventory
 

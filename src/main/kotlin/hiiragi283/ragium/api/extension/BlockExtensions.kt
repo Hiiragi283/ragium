@@ -93,8 +93,8 @@ fun <T : Any> BlockEntity.ifPresentWorld(action: (World) -> T): T? = world?.let(
  * [ScreenHandlerContext]を返します。
  * @return [BlockEntity.hasWorld]がfalseの場合は[ScreenHandlerContext.EMPTY]
  */
-fun BlockEntity.createContext(): ScreenHandlerContext =
-    ifPresentWorld { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
+fun BlockEntity?.createContext(): ScreenHandlerContext =
+    this?.ifPresentWorld { ScreenHandlerContext.create(it, pos) } ?: ScreenHandlerContext.EMPTY
 
 //    BlockEntityType    //
 

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.gui
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
+import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 
 @Environment(EnvType.CLIENT)
-open class HTMachineScreen<T : HTMachineScreenHandlerBase>(handler: T, inventory: PlayerInventory, title: Text) :
+open class HTMachineScreen<T : HTMachineScreenHandler>(handler: T, inventory: PlayerInventory, title: Text) :
     HTHandledScreenBase<T>(handler, inventory, title) {
     companion object {
         @JvmField

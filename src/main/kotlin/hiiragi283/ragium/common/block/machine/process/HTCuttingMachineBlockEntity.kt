@@ -10,13 +10,13 @@ import hiiragi283.ragium.common.recipe.processor.HTMachineRecipeProcessor
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 
-class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.ASSEMBLER, pos, state) {
-    override var machineKey: HTMachineKey = RagiumMachineKeys.ASSEMBLER
+class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
+    HTRecipeProcessorBlockEntityBase(RagiumBlockEntityTypes.CUTTING_MACHINE, pos, state) {
+    override val machineKey: HTMachineKey = RagiumMachineKeys.CUTTING_MACHINE
 
-    override val inventory: HTMachineInventory = HTMachineInventory(6, intArrayOf(0, 1, 2, 3), 4, intArrayOf(5))
+    override val inventory: HTMachineInventory = HTMachineInventory(5, intArrayOf(0), 1, intArrayOf(2, 3, 4))
 
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.EMPTY
 
-    override val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor(machineKey, inventory, fluidStorage)
+    override val processor = HTMachineRecipeProcessor(machineKey, inventory, fluidStorage)
 }

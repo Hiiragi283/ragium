@@ -1,18 +1,17 @@
 package hiiragi283.ragium.common.screen
 
-import hiiragi283.ragium.api.extension.getInventory
-import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
+import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import hiiragi283.ragium.common.init.RagiumScreenHandlerTypes
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.screen.ScreenHandlerContext
 
-class HTChemicalMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx: ScreenHandlerContext = ScreenHandlerContext.EMPTY) :
-    HTMachineScreenHandlerBase(
+class HTChemicalMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, machine: HTMachineBlockEntityBase? = null) :
+    HTMachineScreenHandler(
         RagiumScreenHandlerTypes.CHEMICAL_MACHINE,
         syncId,
         playerInv,
-        ctx.getInventory(5),
-        ctx,
+        machine,
+        5,
     ) {
     init {
         inventory.onOpen(player)

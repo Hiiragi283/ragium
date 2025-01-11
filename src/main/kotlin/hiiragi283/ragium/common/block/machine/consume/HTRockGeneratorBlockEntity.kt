@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.aroundPos
-import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
@@ -13,18 +12,15 @@ import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.processor.HTMachineRecipeProcessor
-import hiiragi283.ragium.common.screen.HTRockGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.tag.FluidTags
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -34,20 +30,11 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTScreenFluidProvider {
     override var machineKey: HTMachineKey = RagiumMachineKeys.ROCK_GENERATOR
 
-    val inventory: HTMachineInventory = HTMachineInventory.Builder(2).output(1).build()
+    val inventory: HTMachineInventory = HTMachineInventory(2, intArrayOf(), 0, intArrayOf(1))
 
     val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSmall(this)
 
-    val processor = HTMachineRecipeProcessor(
-        machineKey,
-        inventory,
-        intArrayOf(),
-        intArrayOf(1),
-        0,
-        fluidStorage,
-        intArrayOf(0),
-        intArrayOf(1),
-    )
+    val processor: HTMachineRecipeProcessor = HTMachineRecipeProcessor(machineKey, inventory, fluidStorage)
 
     override fun asInventory(): SidedInventory = inventory
 
@@ -80,9 +67,6 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             else -> processor.process(world, machineKey, tier)
         }
     }
-
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTRockGeneratorScreenHandler(syncId, playerInventory, createContext())
 
     //    HTScreenFluidProvider    //
 

@@ -2,7 +2,10 @@ package hiiragi283.ragium.common.block.machine.generator
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.extractSelf
+import hiiragi283.ragium.api.extension.readFluidStorage
+import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
@@ -15,19 +18,16 @@ import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -37,7 +37,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTScreenFluidProvider {
     override var machineKey: HTMachineKey = RagiumMachineKeys.THERMAL_GENERATOR
 
-    private val inventory: HTMachineInventory = object : HTMachineInventory(1, mapOf(0 to HTStorageIO.INPUT)) {
+    private val inventory: HTMachineInventory = object : HTMachineInventory(1, intArrayOf(1), intArrayOf()) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean = stack.isOf(Items.BLAZE_POWDER)
     }
 
@@ -91,9 +91,4 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTScreenFluidProvider    //
 
     override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
-
-    //    ExtendedScreenHandlerFactory    //
-
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 }

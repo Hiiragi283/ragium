@@ -1,13 +1,10 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.api.block.entity.HTBlockEntityBase
-import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.GenericContainerScreenHandler
@@ -121,15 +118,3 @@ fun <T : Any> ScreenHandlerContext.getOrNull(getter: (World, BlockPos) -> T?): T
  * この[ScreenHandlerContext]から[BlockEntity]を取得します。
  */
 fun ScreenHandlerContext.getBlockEntity(): BlockEntity? = getOrNull(World::getBlockEntity)
-
-/**
- * この[ScreenHandlerContext]から[Inventory]を取得します。
- * @param size デフォルト値のインベントリのサイズ
- */
-fun ScreenHandlerContext.getInventory(size: Int): Inventory =
-    (getBlockEntity() as? HTBlockEntityBase)?.asInventory() ?: SimpleInventory(size)
-
-/**
- * この[ScreenHandlerContext]から[HTMachineBlockEntityBase]を取得します。
- */
-fun ScreenHandlerContext.getMachineEntity(): HTMachineBlockEntityBase? = getBlockEntity() as? HTMachineBlockEntityBase

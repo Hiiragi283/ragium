@@ -128,8 +128,10 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
 
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.CUTTING_MACHINE)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.FLUID_DRILL)
+        RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.GAS_PLANT)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.LARGE_CHEMICAL_REACTOR)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         RagiumClientAPI.registerMultiblockRenderer(RagiumBlockEntityTypes.MULTI_SMELTER)

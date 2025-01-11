@@ -23,7 +23,7 @@ import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
-class HTMachineRecipeProcessor(
+class HTMachineRecipeProcessor private constructor(
     val machineKey: HTMachineKey,
     val inventory: Inventory,
     private val itemInputs: IntArray,
@@ -36,18 +36,16 @@ class HTMachineRecipeProcessor(
     constructor(
         machineKey: HTMachineKey,
         inventory: HTMachineInventory,
-        itemInputs: IntArray,
-        itemOutputs: IntArray,
-        catalystIndex: Int,
+        fluidStorage: HTMachineFluidStorage,
     ) : this(
         machineKey,
         inventory,
-        itemInputs,
-        itemOutputs,
-        catalystIndex,
-        HTMachineFluidStorage.EMPTY,
-        intArrayOf(),
-        intArrayOf(),
+        inventory.inputs,
+        inventory.outputs,
+        inventory.catalyst.asInt,
+        fluidStorage,
+        fluidStorage.inputs.map(HTTieredFluidStorage::syncIndex).toIntArray(),
+        fluidStorage.outputs.map(HTTieredFluidStorage::syncIndex).toIntArray(),
     )
 
     private val recipeCache: HTRecipeCache<HTMachineInput, out HTMachineRecipe> =

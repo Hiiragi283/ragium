@@ -27,7 +27,7 @@ class HTManualForgeBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntity
     private val recipeCache: HTRecipeCache<HTMachineInput, HTDefaultMachineRecipe> =
         HTRecipeCache(RagiumRecipeTypes.MACHINE)
 
-    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).generic(0).build()
+    private val inventory = HTMachineInventory(1, intArrayOf(0), intArrayOf())
 
     override fun asInventory(): SidedInventory = inventory
 

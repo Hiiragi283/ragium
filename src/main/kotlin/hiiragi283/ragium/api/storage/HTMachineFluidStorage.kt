@@ -16,7 +16,7 @@ import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtList
 import net.minecraft.registry.RegistryWrapper
 
-class HTMachineFluidStorage(private val parts: List<HTTieredFluidStorage>) :
+class HTMachineFluidStorage(private var parts: List<HTTieredFluidStorage>) :
     HTFluidInteractable,
     HTScreenFluidProvider {
     companion object {
@@ -44,13 +44,20 @@ class HTMachineFluidStorage(private val parts: List<HTTieredFluidStorage>) :
             .build(machine)
     }
 
+    val inputs: List<HTTieredFluidStorage>
+        get() = parts.filter { storageIn: HTTieredFluidStorage -> storageIn.storageIO == HTStorageIO.INPUT }
+    val outputs: List<HTTieredFluidStorage>
+        get() = parts.filter { storageIn: HTTieredFluidStorage -> storageIn.storageIO == HTStorageIO.OUTPUT }
+
     fun getStorage(index: Int): DataResult<HTTieredFluidStorage> = parts.getOrNull(index).toDataResult { "Invalid child index: $index" }
 
     fun <T : Any> map(index: Int, transform: (HTTieredFluidStorage) -> T?): DataResult<T> = getStorage(index).map(transform)
 
     fun getVariantStack(index: Int): HTFluidVariantStack = map(index, HTTieredFluidStorage::variantStack).orElse(HTFluidVariantStack.EMPTY)
 
-    fun update(tier: HTMachineTier): HTMachineFluidStorage = parts.map { it.updateTier(tier) }.let(::HTMachineFluidStorage)
+    fun update(tier: HTMachineTier) {
+        this.parts = parts.map { it.updateTier(tier) }
+    }
 
     fun readNbt(nbt: NbtCompound, wrapperLookup: RegistryWrapper.WrapperLookup, tier: HTMachineTier = HTMachineTier.PRIMITIVE) {
         val list: NbtList = nbt.getList(NBT_KEY, NbtElement.COMPOUND_TYPE.toInt())

@@ -16,19 +16,16 @@ import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalFluidTags
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -38,10 +35,7 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     HTScreenFluidProvider {
     override val machineKey: HTMachineKey = RagiumMachineKeys.STEAM_GENERATOR
 
-    private val inventory: HTMachineInventory = object : HTMachineInventory(
-        2,
-        mapOf(0 to HTStorageIO.INPUT, 1 to HTStorageIO.OUTPUT),
-    ) {
+    private val inventory: HTMachineInventory = object : HTMachineInventory(2, intArrayOf(0), intArrayOf(1)) {
         override fun isValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
             0 -> stack.isOf(RagiumItems.COAL_CHIP)
             1 -> stack.isOf(RagiumItems.Dusts.ASH)
@@ -100,9 +94,4 @@ class HTSteamGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTScreenFluidProvider    //
 
     override fun getFluidsToSync(): Map<Int, HTFluidVariantStack> = fluidStorage.getFluidsToSync()
-
-    //    ExtendedScreenHandlerFactory    //
-
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 }

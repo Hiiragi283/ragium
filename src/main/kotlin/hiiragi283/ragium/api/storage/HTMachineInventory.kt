@@ -6,55 +6,72 @@ import net.minecraft.inventory.SidedInventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.Direction
+import java.util.*
 
-open class HTMachineInventory(size: Int, private val slotMap: Map<Int, HTStorageIO>) : SidedInventory {
+open class HTMachineInventory private constructor(
+    size: Int,
+    val inputs: IntArray,
+    val catalyst: OptionalInt,
+    val outputs: IntArray,
+) : SidedInventory {
     companion object {
         @JvmStatic
-        fun ofSmall(): HTMachineInventory = Builder(2).input(0).output(1).build()
+        fun ofSmall(): HTMachineInventory = HTMachineInventory(2, intArrayOf(0), intArrayOf(1))
 
         @JvmStatic
-        fun ofSimple(): HTMachineInventory = Builder(5).input(0, 1).output(3, 4).build()
+        fun ofSimple(): HTMachineInventory = HTMachineInventory(5, intArrayOf(0, 1), 2, intArrayOf(3, 4))
 
         @JvmStatic
-        fun ofLarge(): HTMachineInventory = Builder(7).input(0, 1, 2).output(4, 5, 6).build()
+        fun ofLarge(): HTMachineInventory = HTMachineInventory(7, intArrayOf(0, 1, 2), 3, intArrayOf(4, 5, 6))
     }
 
-    protected val inventory = SimpleInventory(size)
-    protected val inputSlots: Set<Int> = slotMap.filter { (_: Int, storageIO: HTStorageIO) -> storageIO.canInsert }.keys
+    constructor(size: Int, inputs: IntArray, catalyst: Int, outputs: IntArray) : this(
+        size,
+        inputs,
+        OptionalInt.of(catalyst),
+        outputs,
+    )
 
-    fun getStorageIO(slot: Int): HTStorageIO = slotMap.getOrDefault(slot, HTStorageIO.INTERNAL)
+    constructor(size: Int, inputs: IntArray, outputs: IntArray) : this(
+        size,
+        inputs,
+        OptionalInt.empty(),
+        outputs,
+    )
+
+    protected val delegated = SimpleInventory(size)
 
     //    SidedInventory    //
 
-    override fun getAvailableSlots(side: Direction): IntArray = IntArray(inventory.size()) { it }
+    override fun getAvailableSlots(side: Direction): IntArray = IntArray(delegated.size()) { it }
 
-    override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean = getStorageIO(slot).canInsert
+    override fun canInsert(slot: Int, stack: ItemStack, dir: Direction?): Boolean = slot in inputs
 
-    override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean = getStorageIO(slot).canExtract
+    override fun canExtract(slot: Int, stack: ItemStack, dir: Direction): Boolean = slot in outputs
 
-    override fun size(): Int = inventory.size()
+    override fun size(): Int = delegated.size()
 
-    override fun isEmpty(): Boolean = inventory.isEmpty()
+    override fun isEmpty(): Boolean = delegated.isEmpty()
 
-    override fun getStack(slot: Int): ItemStack = inventory.getStack(slot)
+    override fun getStack(slot: Int): ItemStack = delegated.getStack(slot)
 
-    override fun removeStack(slot: Int, amount: Int): ItemStack = inventory.removeStack(slot, amount)
+    override fun removeStack(slot: Int, amount: Int): ItemStack = delegated.removeStack(slot, amount)
 
-    override fun removeStack(slot: Int): ItemStack = inventory.removeStack(slot)
+    override fun removeStack(slot: Int): ItemStack = delegated.removeStack(slot)
 
     override fun setStack(slot: Int, stack: ItemStack) {
-        inventory.setStack(slot, stack)
+        delegated.setStack(slot, stack)
     }
 
     override fun markDirty() {
-        inventory.markDirty()
+        delegated.markDirty()
     }
 
-    override fun canPlayerUse(player: PlayerEntity): Boolean = inventory.canPlayerUse(player)
+    override fun canPlayerUse(player: PlayerEntity): Boolean = delegated.canPlayerUse(player)
 
     override fun isValid(slot: Int, stack: ItemStack): Boolean {
-        if (getStorageIO(slot).canInsert) {
-            inputSlots.map(::getStack).forEach { stackIn: ItemStack ->
+        if (slot in inputs) {
+            inputs.map(::getStack).forEach { stackIn: ItemStack ->
                 if (ItemStack.areItemsEqual(stack, stackIn) && stackIn.isMaxCount) {
                     return false
                 }
@@ -64,46 +81,6 @@ open class HTMachineInventory(size: Int, private val slotMap: Map<Int, HTStorage
     }
 
     override fun clear() {
-        inventory.clear()
-    }
-
-    //     Builder    //
-
-    class Builder(maxSize: Int) {
-        private val slotArray: Array<HTStorageIO> = Array(maxSize) { HTStorageIO.INTERNAL }
-
-        private fun setIO(slot: Int, storageIO: HTStorageIO) {
-            check(slotArray[slot] == HTStorageIO.INTERNAL) { "Slot: $slot is already modified!" }
-            slotArray[slot] = storageIO
-        }
-
-        fun input(slots: IntRange): Builder = apply {
-            slots.forEach { setIO(it, HTStorageIO.INPUT) }
-        }
-
-        fun input(vararg slots: Int): Builder = apply {
-            slots.forEach { setIO(it, HTStorageIO.INPUT) }
-        }
-
-        fun output(slots: IntRange): Builder = apply {
-            slots.forEach { setIO(it, HTStorageIO.OUTPUT) }
-        }
-
-        fun output(vararg slots: Int): Builder = apply {
-            slots.forEach { setIO(it, HTStorageIO.OUTPUT) }
-        }
-
-        fun generic(slots: IntRange): Builder = apply {
-            slots.forEach { setIO(it, HTStorageIO.GENERIC) }
-        }
-
-        fun generic(vararg slots: Int): Builder = apply {
-            slots.forEach { setIO(it, HTStorageIO.GENERIC) }
-        }
-
-        fun build(): HTMachineInventory = HTMachineInventory(
-            slotArray.size,
-            slotArray.mapIndexed { slot: Int, storageIO: HTStorageIO -> slot to storageIO }.toMap(),
-        )
+        delegated.clear()
     }
 }

@@ -94,6 +94,10 @@ object RagiumBlockEntityTypes {
         register("combustion_generator", ::HTCombustionGeneratorBlockEntity)
 
     @JvmField
+    val CUTTING_MACHINE: BlockEntityType<HTCuttingMachineBlockEntity> =
+        register("cutting_machine", ::HTCuttingMachineBlockEntity)
+
+    @JvmField
     val DISTILLATION_TOWER: BlockEntityType<HTDistillationTowerBlockEntity> =
         register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
@@ -226,7 +230,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.ASSEMBLER, ASSEMBLER)
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
-        registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, LARGE_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, CUTTING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
         registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)

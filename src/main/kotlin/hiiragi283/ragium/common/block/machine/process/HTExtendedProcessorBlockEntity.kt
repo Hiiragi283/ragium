@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.machine.process
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntityBase
-import hiiragi283.ragium.api.extension.createContext
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
@@ -29,19 +28,10 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
 
-    override val processor = HTMachineRecipeProcessor(
-        machineKey,
-        inventory,
-        intArrayOf(0, 1, 2),
-        intArrayOf(4, 5, 6),
-        3,
-        fluidStorage,
-        intArrayOf(0, 1),
-        intArrayOf(2, 3),
-    )
+    override val processor = HTMachineRecipeProcessor(machineKey, inventory, fluidStorage)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTLargeMachineScreenHandler(syncId, playerInventory, createContext())
+        HTLargeMachineScreenHandler(syncId, playerInventory, this)
 
     override fun processData(data: HTMultiblockData) {
         data.ifPresent(HTMachinePropertyKeys.EXTENDED_CHILD) { machineKey = it }

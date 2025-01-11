@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
 import hiiragi283.ragium.api.render.HTMultiblockComponentRenderer
 import hiiragi283.ragium.api.render.HTMultiblockComponentRendererRegistry
 import hiiragi283.ragium.api.render.HTMultiblockMachineBlockEntityRenderer
-import hiiragi283.ragium.api.screen.HTMachineScreenHandlerBase
+import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.gui.screen.ingame.HandledScreens
@@ -23,7 +23,7 @@ object RagiumClientAPI {
     //    Screen    //
 
     @JvmStatic
-    fun <T : HTMachineScreenHandlerBase> registerMachineScreen(type: ScreenHandlerType<T>) {
+    fun <T : HTMachineScreenHandler> registerMachineScreen(type: ScreenHandlerType<T>) {
         HandledScreens.register(type, ::HTMachineScreen)
     }
 

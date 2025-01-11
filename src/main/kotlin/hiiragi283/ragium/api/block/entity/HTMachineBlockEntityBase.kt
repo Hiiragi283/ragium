@@ -18,9 +18,11 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.component.ComponentMap
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.NamedScreenHandlerFactory
 import net.minecraft.screen.PropertyDelegate
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.state.property.Properties
@@ -229,6 +231,11 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     final override fun getController(): HTControllerDefinition? = ifPresentWorld { HTControllerDefinition(it, pos, front) }
 
     //    NamedScreenHandlerFactory    //
+
+    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? = machineKey
+        .getEntryOrNull()
+        ?.get(HTMachinePropertyKeys.SCREEN_FACTORY)
+        ?.createMenu(syncId, playerInventory, this)
 
     final override fun getDisplayName(): Text = tier.createPrefixedText(machineKey)
 }

@@ -1,7 +1,10 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.insertSelf
+import hiiragi283.ragium.api.extension.readFluidStorage
+import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
@@ -14,7 +17,6 @@ import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
@@ -22,12 +24,10 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.SidedInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.World
@@ -37,7 +37,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     HTScreenFluidProvider {
     override var machineKey: HTMachineKey = RagiumMachineKeys.BIOMASS_FERMENTER
 
-    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).input(0).build()
+    private val inventory = HTMachineInventory(1, intArrayOf(0), intArrayOf())
     private var fluidStorage = HTTieredFluidStorage(tier, HTStorageIO.OUTPUT, null, this::markDirty, 1)
 
     override fun onTierUpdated(oldTier: HTMachineTier, newTier: HTMachineTier) {
@@ -83,9 +83,6 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun process(world: World, pos: BlockPos) {
         processor.process(world, machineKey, tier).getOrThrow()
     }
-
-    override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler? =
-        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     //    HTScreenFluidProvider    //
 

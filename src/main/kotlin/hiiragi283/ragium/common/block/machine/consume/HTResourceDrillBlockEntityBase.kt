@@ -1,26 +1,26 @@
 package hiiragi283.ragium.common.block.machine.consume
 
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
-import hiiragi283.ragium.api.extension.*
+import hiiragi283.ragium.api.extension.insert
+import hiiragi283.ragium.api.extension.readFluidStorage
+import hiiragi283.ragium.api.extension.useTransaction
+import hiiragi283.ragium.api.extension.writeFluidStorage
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTStorageIO
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
 import hiiragi283.ragium.api.util.HTMachineException
-import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.TagKey
-import net.minecraft.screen.ScreenHandler
 import net.minecraft.sound.SoundCategory
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.math.BlockPos
@@ -48,9 +48,6 @@ abstract class HTResourceDrillBlockEntityBase(type: BlockEntityType<*>, pos: Blo
         super.readNbt(nbt, wrapperLookup)
         nbt.readFluidStorage(FLUID_KEY, fluidStorage, wrapperLookup)
     }
-
-    final override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
-        HTSmallMachineScreenHandler(syncId, playerInventory, createContext())
 
     final override fun process(world: World, pos: BlockPos) {
         checkMultiblockOrThrow()

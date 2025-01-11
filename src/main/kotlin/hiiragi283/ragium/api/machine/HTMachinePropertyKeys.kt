@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipeType
+import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import hiiragi283.ragium.common.init.RagiumRecipeTypes
 import net.minecraft.particle.SimpleParticleType
 import net.minecraft.sound.SoundEvent
@@ -31,6 +32,10 @@ object HTMachinePropertyKeys {
     @JvmField
     val PARTICLE: HTPropertyKey.Simple<SimpleParticleType> =
         HTPropertyKey.ofSimple(RagiumAPI.id("particle"))
+
+    @JvmField
+    val SCREEN_FACTORY: HTPropertyKey.Simple<HTMachineScreenHandler.Factory> =
+        HTPropertyKey.ofSimple(RagiumAPI.id("screen_factory"))
 
     @JvmField
     val SOUND: HTPropertyKey.Simple<SoundEvent> =

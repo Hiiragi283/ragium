@@ -162,4 +162,6 @@ abstract class HTBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state:
      * [ticks]が[tickRate]以上の値となったときに呼び出されます。
      */
     open fun tickSecond(world: World, pos: BlockPos, state: BlockState) {}
+
+    override fun toString(): String = "${this::class.simpleName}[$pos]"
 }

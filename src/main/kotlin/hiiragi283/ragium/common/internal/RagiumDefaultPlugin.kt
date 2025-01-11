@@ -10,12 +10,14 @@ import hiiragi283.ragium.api.extension.aroundPos
 import hiiragi283.ragium.api.extension.isPopulated
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.material.*
+import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import hiiragi283.ragium.api.util.TriConsumer
 import hiiragi283.ragium.common.block.machine.consume.*
 import hiiragi283.ragium.common.block.machine.generator.*
 import hiiragi283.ragium.common.block.machine.process.*
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
+import hiiragi283.ragium.common.screen.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.FluidState
@@ -52,33 +54,39 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBedrockMinerBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BEDROCK_MINER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
         helper.modify(RagiumMachineKeys.BIOMASS_FERMENTER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTBiomassFermenterBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.COMPOSTER)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_COMPOSTER_FILL_SUCCESS)
         }
         helper.modify(RagiumMachineKeys.DRAIN) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDrainBlockEntity))
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
         helper.modify(RagiumMachineKeys.FLUID_DRILL) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTFluidDrillBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.FLUID_DRILL)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL_FISH)
         }
         helper.modify(RagiumMachineKeys.GAS_PLANT) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTGasPlantBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.GAS_PLANT)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FIREWORK)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_FILL)
         }
         helper.modify(RagiumMachineKeys.ROCK_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTRockGeneratorBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ASH)
             set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.ROCK_GENERATOR)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTRockGeneratorScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_STONE_BREAK)
         }
         // generators
@@ -89,9 +97,11 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCombustionGeneratorBlockEntity))
             set(HTMachinePropertyKeys.MODEL_ID, RagiumAPI.id("block/generator"))
             set(HTMachinePropertyKeys.ACTIVE_MODEL_ID, RagiumAPI.id("block/generator"))
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
         }
         helper.modify(RagiumMachineKeys.NUCLEAR_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTNuclearReactorBlockEntity))
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
         }
         helper.modify(RagiumMachineKeys.SOLAR_GENERATOR) {
             set(HTMachinePropertyKeys.FRONT_MAPPER) { Direction.UP }
@@ -101,6 +111,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
         helper.modify(RagiumMachineKeys.STEAM_GENERATOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTSteamGeneratorBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.POOF)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
         helper.modify(RagiumMachineKeys.THERMAL_GENERATOR) {
@@ -118,6 +129,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             }
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTThermalGeneratorBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_BUCKET_EMPTY_LAVA)
         }
         helper.modify(RagiumMachineKeys.VIBRATION_GENERATOR) {
@@ -127,15 +139,18 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // processors
         helper.modify(RagiumMachineKeys.PROCESSORS::contains) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTSimpleRecipeProcessorBlockEntity))
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSimpleMachineScreenHandler))
         }
         helper.modify(RagiumMachineKeys.ASSEMBLER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTAssemblerBlockEntity))
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTAssemblerScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_CRAFTER_CRAFT)
         }
         helper.modify(RagiumMachineKeys.BLAST_FURNACE) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FLAME)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTLargeMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE)
         }
         helper.modify(
@@ -149,6 +164,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 HTMachinePropertyKeys.MACHINE_FACTORY,
                 HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
             )
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTChemicalMachineScreenHandler))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.CHEMICAL_REACTOR) {
@@ -158,9 +174,10 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
         }
         helper.modify(RagiumMachineKeys.CUTTING_MACHINE) {
-            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity))
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCuttingMachineBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.CUTTING_MACHINE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.CUTTING_MACHINE)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
@@ -168,12 +185,17 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.FALLING_DRIPSTONE_LAVA)
             set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.DISTILLATION)
+            set(
+                HTMachinePropertyKeys.SCREEN_FACTORY,
+                HTMachineScreenHandler.Factory(::HTDistillationTowerScreenHandler),
+            )
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
         }
         helper.modify(RagiumMachineKeys.GRINDER) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTGrinderBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.GRINDER)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTGrinderScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_GRINDSTONE_USE)
         }
         helper.modify(RagiumMachineKeys.GROWTH_CHAMBER) {
@@ -188,11 +210,16 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
         }
         helper.modify(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR) {
             set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTLargeChemicalReactorBlockEntity))
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.LARGE_MACHINE)
+            set(
+                HTMachinePropertyKeys.SCREEN_FACTORY,
+                HTMachineScreenHandler.Factory(::HTLargeChemicalReactorScreenHandler),
+            )
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
@@ -425,7 +452,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                     .offerTo(exporter, HTTagPrefix.PLATE, key)
                 // Cutting Machine Recipe
                 HTMachineRecipeJsonBuilderNew
-                    .create(RagiumMachineKeys.CUTTING_MACHINE, ::HTDefaultMachineRecipe)
+                    .create(RagiumRecipeTypes.CUTTING_MACHINE)
                     .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
                     .catalyst(RagiumItems.PressMolds.PLATE)
                     .itemOutput(HTTagPrefix.PLATE, key, 9)

@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class HTItemDisplayBlockEntity(pos: BlockPos, state: BlockState) : HTBlockEntityBase(RagiumBlockEntityTypes.ITEM_DISPLAY, pos, state) {
-    private val inventory: HTMachineInventory = HTMachineInventory.Builder(1).build()
+    private val inventory = HTMachineInventory(1, intArrayOf(0), intArrayOf())
 
     override fun asInventory(): SidedInventory = inventory
 

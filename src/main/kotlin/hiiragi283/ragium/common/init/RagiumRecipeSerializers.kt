@@ -19,6 +19,13 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val CUTTING_MACHINE: RecipeSerializer<HTCuttingMachineRecipe> = register(
+        "cutting_machine",
+        HTCuttingMachineRecipe.CODEC,
+        HTCuttingMachineRecipe.PACKET_CODEC,
+    )
+
+    @JvmField
     val DISTILLATION: RecipeSerializer<HTDistillationRecipe> = register(
         "distillation",
         HTDistillationRecipe.CODEC,
@@ -44,6 +51,13 @@ object RagiumRecipeSerializers {
         "growth_chamber",
         HTGrowthChamberRecipe.CODEC,
         HTGrowthChamberRecipe.PACKET_CODEC,
+    )
+
+    @JvmField
+    val LASER_TRANSFORMER: RecipeSerializer<HTLaserTransformerRecipe> = register(
+        "laser_transformer",
+        HTLaserTransformerRecipe.CODEC,
+        HTLaserTransformerRecipe.PACKET_CODEC,
     )
 
     @JvmField
