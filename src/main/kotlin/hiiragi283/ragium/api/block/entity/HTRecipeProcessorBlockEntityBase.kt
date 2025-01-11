@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -26,7 +27,7 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     HTScreenFluidProvider {
     final override fun process(world: World, pos: BlockPos) {
         checkMultiblockOrThrow()
-        processor.process(world, machineKey, tier).getOrThrow()
+        processor.process(world, tier).getOrThrow()
     }
 
     /**
@@ -42,7 +43,9 @@ abstract class HTRecipeProcessorBlockEntityBase(type: BlockEntityType<*>, pos: B
     /**
      * レシピの処理部分
      */
-    protected abstract val processor: HTRecipeProcessor
+    protected open val processor: HTRecipeProcessor by lazy {
+        HTMachineRecipeProcessor(machineKey, inventory, fluidStorage)
+    }
 
     final override fun asInventory(): SidedInventory = inventory
 

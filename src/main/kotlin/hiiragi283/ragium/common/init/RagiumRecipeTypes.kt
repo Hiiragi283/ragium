@@ -13,6 +13,10 @@ object RagiumRecipeTypes {
         register(RagiumMachineKeys.ASSEMBLER, ::HTAssemblerRecipe)
 
     @JvmField
+    val COMPRESSOR: HTMachineRecipeType<HTCompressorMachineRecipe> =
+        register(RagiumMachineKeys.COMPRESSOR, ::HTCompressorMachineRecipe)
+
+    @JvmField
     val CUTTING_MACHINE: HTMachineRecipeType<HTCuttingMachineRecipe> =
         register(RagiumMachineKeys.CUTTING_MACHINE, ::HTCuttingMachineRecipe)
 

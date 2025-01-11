@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe.processor
+package hiiragi283.ragium.api.recipe
 
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.getOrNull
@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.extension.useTransaction
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.recipe.*
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.storage.HTTieredFluidStorage
@@ -66,8 +65,8 @@ class HTMachineRecipeProcessor private constructor(
         .mapNotNull(DataResult<HTTieredFluidStorage>::getOrNull)
         .let(::CombinedStorage)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
-        val input: HTMachineInput = HTMachineInput.create(key, tier) {
+    override fun process(world: World, tier: HTMachineTier): Result<Unit> {
+        val input: HTMachineInput = HTMachineInput.create(machineKey, tier) {
             inputStacks.forEach(::add)
             fluidInputSlots.map(fluidStorage::getVariantStack).forEach(::add)
             catalyst = inventory.getStack(catalystIndex)

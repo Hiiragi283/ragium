@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe.processor
 
 import hiiragi283.ragium.api.extension.mergeStack
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTItemResult
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -23,7 +22,7 @@ class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
 ) : HTRecipeProcessor {
     private val recipeCache: HTRecipeCache<SingleStackRecipeInput, T> = HTRecipeCache(recipeType)
 
-    override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
+    override fun process(world: World, tier: HTMachineTier): Result<Unit> {
         val inputStack: ItemStack = inventory.getStack(inputIndex)
         val processCount: Int = min(inputStack.count, tier.smelterMulti)
         return recipeCache

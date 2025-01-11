@@ -1,10 +1,6 @@
 {
   "type": "ragium:machine",
   "catalyst": "ragium:rod_press_mold",
-  "definition": {
-    "type": "ragium:compressor",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "ragium:carbon_electrode",
     {
@@ -14,5 +10,6 @@
   ],
   "item_outputs": [
     "ragium:charged_carbon_electrode"
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

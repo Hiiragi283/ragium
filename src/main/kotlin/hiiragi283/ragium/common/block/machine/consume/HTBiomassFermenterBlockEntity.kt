@@ -60,7 +60,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFluidStorage(side: Direction?): Storage<FluidVariant> = fluidStorage.wrapStorage()
 
-    private val processor = HTRecipeProcessor { _: World, _: HTMachineKey, _: HTMachineTier ->
+    private val processor = HTRecipeProcessor { _: World, _: HTMachineTier ->
         runCatching {
             val inputStack: ItemStack = inventory.getStack(0)
             val chance: Float = CompostingChanceRegistry.INSTANCE.get(inputStack.item)
@@ -81,7 +81,7 @@ class HTBiomassFermenterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun process(world: World, pos: BlockPos) {
-        processor.process(world, machineKey, tier).getOrThrow()
+        processor.process(world, tier).getOrThrow()
     }
 
     //    HTScreenFluidProvider    //

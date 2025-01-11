@@ -1,9 +1,6 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:compressor",
-    "tier": "primitive"
-  },
+  "catalyst": "minecraft:blue_ice",
   "fluid_inputs": [
     {
       "amount": 648000,
@@ -12,5 +9,6 @@
   ],
   "fluid_outputs": [
     "ragium:liquid_nitrogen"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

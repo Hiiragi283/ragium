@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import hiiragi283.ragium.api.extension.aroundPos
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.recipe.HTMachineRecipeProcessor
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.recipe.processor.HTMachineRecipeProcessor
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage
 import net.minecraft.block.BlockState
@@ -64,7 +64,7 @@ class HTRockGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
                 world.getFluidState(posIn).isIn(FluidTags.LAVA)
             } -> throw HTMachineException.AroundBlock(false, Blocks.LAVA, 1)
 
-            else -> processor.process(world, machineKey, tier)
+            else -> processor.process(world, tier)
         }
     }
 

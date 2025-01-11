@@ -1,16 +1,11 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:laser_transformer",
-    "tier": "advanced"
-  },
-  "item_inputs": [
+  "type": "ragium:laser_transformer",
+  "inputs": [
     {
       "count": 16,
       "items": "minecraft:dragon_breath"
     }
   ],
-  "item_outputs": [
-    "#c:ingots/dragonium"
-  ]
+  "output": "#c:ingots/dragonium",
+  "tier": "advanced"
 }

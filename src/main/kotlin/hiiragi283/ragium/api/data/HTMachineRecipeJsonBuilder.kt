@@ -3,7 +3,6 @@ package hiiragi283.ragium.api.data
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -11,10 +10,8 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.*
-import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.component.ComponentChanges
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
@@ -29,28 +26,23 @@ import net.minecraft.util.Identifier
  */
 class HTMachineRecipeJsonBuilder private constructor(
     private val key: HTMachineKey,
-    private val tier: HTMachineTier = HTMachineTier.PRIMITIVE,
+    private val factory: HTMachineRecipe.Factory<*>,
+    private val tier: HTMachineTier,
 ) {
     companion object {
         @JvmStatic
-        fun create(key: HTMachineKey, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
-            HTMachineRecipeJsonBuilder(key, minTier)
-
-        /**
-         * 指定された[item]のIDの名前空間を"ragium"で置換したものを返します。
-         * @see [hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder.offerTo]
-         */
-        @JvmStatic
-        fun createRecipeId(item: ItemConvertible): Identifier = CraftingRecipeJsonBuilder
-            .getItemId(item)
-            .path
-            .let { RagiumAPI.id(it) }
+        private val idCache: MutableMap<Identifier, Int> = mutableMapOf()
 
         @JvmStatic
-        fun createRecipeId(content: HTContent<*>): Identifier = RagiumAPI.id(content.id.path)
+        fun create(
+            key: HTMachineKey,
+            factory: HTMachineRecipe.Factory<*>,
+            minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
+        ): HTMachineRecipeJsonBuilder = HTMachineRecipeJsonBuilder(key, factory, minTier)
 
         @JvmStatic
-        fun createRecipeId(tagKey: TagKey<*>): Identifier = RagiumAPI.id(tagKey.id.path)
+        fun create(recipeType: HTMachineRecipeType<*>, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilder =
+            create(recipeType.machineKey, recipeType.factory, minTier)
     }
 
     private val itemInputs: MutableSet<HTItemIngredient> = mutableSetOf()
@@ -265,25 +257,27 @@ class HTMachineRecipeJsonBuilder private constructor(
         catalyst = HTItemIngredient.of(tagKey)
     }
 
-    fun offerTo(exporter: RecipeExporter, output: ItemConvertible, suffix: String = "") {
-        val id: Identifier = when (output) {
-            is HTItemContent -> RagiumAPI.id(output.id.path)
-            else -> createRecipeId(output)
-        }.withSuffixedPath(suffix)
-        offerTo(exporter, id)
-    }
-
-    fun offerTo(exporter: RecipeExporter, output: HTFluidContent, suffix: String = "") {
-        offerTo(exporter, createRecipeId(output).withSuffixedPath(suffix))
-    }
+    //    Complete    //
 
     fun offerTo(
         exporter: RecipeExporter,
         prefix: HTTagPrefix,
-        material: HTMaterialKey,
+        materialKey: HTMaterialKey,
         suffix: String = "",
     ) {
-        offerTo(exporter, createRecipeId(prefix.createTag(material)).withSuffixedPath(suffix))
+        offerTo(exporter, prefix.createTag(materialKey).id.withSuffixedPath(suffix))
+    }
+
+    fun offerTo(exporter: RecipeExporter, tagKey: TagKey<Item>) {
+        offerTo(exporter, tagKey.id)
+    }
+
+    fun offerTo(exporter: RecipeExporter, content: HTContent<*>) {
+        offerTo(exporter, content.id)
+    }
+
+    fun offerTo(exporter: RecipeExporter, path: String) {
+        offerTo(exporter, RagiumAPI.id(path))
     }
 
     /**
@@ -291,30 +285,17 @@ class HTMachineRecipeJsonBuilder private constructor(
      */
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
-        val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe: HTDefaultMachineRecipe = build(::HTDefaultMachineRecipe)
+        var prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
+        // avoid id duplication
+        val count: Int = idCache.compute(prefixedId) { _: Identifier, value: Int? -> value?.let { it + 1 } ?: 0 }!!
+        if (count > 0) {
+            prefixedId = prefixedId.withSuffixedPath("_alt$count")
+        }
+        val recipe: HTMachineRecipe = build()
         exporter.accept(prefixedId, recipe, null)
     }
 
-    fun offerTo(exporter: RecipeExporter, path: String, recipeType: HTMachineRecipeType<*>) {
-        offerTo(exporter, RagiumAPI.id(path), recipeType)
-    }
-
-    fun offerTo(exporter: RecipeExporter, id: Identifier, recipeType: HTMachineRecipeType<*>) {
-        offerTo(exporter, id, recipeType.factory)
-    }
-
-    /**
-     * [HTMachineKey.id]で前置されたレシピIDを使用してレシピを登録します。
-     */
-    fun offerTo(exporter: RecipeExporter, recipeId: Identifier, factory: HTMachineRecipe.Factory<*>) {
-        val prefix = "${key.id.path}/"
-        val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
-        val recipe: HTMachineRecipe = build(factory)
-        exporter.accept(prefixedId, recipe, null)
-    }
-
-    fun <T : HTMachineRecipe> build(factory: HTMachineRecipe.Factory<T>): T {
+    fun build(): HTMachineRecipe {
         val data = HTMachineRecipeData(
             itemInputs.toList(),
             fluidInputs.toList(),
@@ -326,6 +307,5 @@ class HTMachineRecipeJsonBuilder private constructor(
         return factory.create(HTMachineDefinition(key, tier), data)
     }
 
-    fun <T : HTMachineRecipe, R> transform(recipeType: HTMachineRecipeType<T>, transform: (T) -> R): R =
-        build(recipeType.factory).let(transform)
+    fun <T> transform(transform: (HTMachineRecipe) -> T): T = build().let(transform)
 }

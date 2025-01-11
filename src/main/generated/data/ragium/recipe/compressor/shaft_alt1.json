@@ -1,0 +1,6 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": "ragium:shaft",
+  "input": "#c:ingots/deep_steel",
+  "output": "ragium:shaft"
+}

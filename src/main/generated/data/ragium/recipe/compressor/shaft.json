@@ -1,0 +1,9 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": "ragium:shaft",
+  "input": {
+    "count": 2,
+    "items": "#c:ingots/steel"
+  },
+  "output": "ragium:shaft"
+}

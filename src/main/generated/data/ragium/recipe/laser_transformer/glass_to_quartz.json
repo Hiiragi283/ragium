@@ -1,0 +1,10 @@
+{
+  "type": "ragium:laser_transformer",
+  "inputs": [
+    {
+      "count": 8,
+      "items": "#c:glass_blocks/colorless"
+    }
+  ],
+  "output": "minecraft:quartz"
+}

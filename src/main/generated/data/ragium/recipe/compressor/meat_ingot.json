@@ -1,13 +1,5 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:compressor",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "ragium:minced_meat"
-  ],
-  "item_outputs": [
-    "ragium:meat_ingot"
-  ]
+  "type": "ragium:compressor",
+  "input": "ragium:minced_meat",
+  "output": "ragium:meat_ingot"
 }

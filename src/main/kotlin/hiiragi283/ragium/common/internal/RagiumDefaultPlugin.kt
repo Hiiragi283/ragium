@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.data.HTCookingRecipeJsonBuilder
-import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilderNew
+import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.aroundPos
@@ -171,6 +171,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
+            set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.COMPRESSOR)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
         }
         helper.modify(RagiumMachineKeys.CUTTING_MACHINE) {
@@ -178,6 +179,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.CUTTING_MACHINE)
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.CRIT)
             set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.CUTTING_MACHINE)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTGrinderScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.ITEM_AXE_STRIP)
         }
         helper.modify(RagiumMachineKeys.DISTILLATION_TOWER) {
@@ -444,14 +446,14 @@ object RagiumDefaultPlugin : RagiumPlugin {
         entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
             if (entry.type.isValidPrefix(HTTagPrefix.PLATE)) {
                 // Compressor Recipe
-                HTMachineRecipeJsonBuilderNew
-                    .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumRecipeTypes.COMPRESSOR)
                     .itemInput(prefix, key)
                     .catalyst(RagiumItems.PressMolds.PLATE)
                     .itemOutput(HTTagPrefix.PLATE, key)
                     .offerTo(exporter, HTTagPrefix.PLATE, key)
                 // Cutting Machine Recipe
-                HTMachineRecipeJsonBuilderNew
+                HTMachineRecipeJsonBuilder
                     .create(RagiumRecipeTypes.CUTTING_MACHINE)
                     .itemInput(HTTagPrefix.STORAGE_BLOCK, key)
                     .catalyst(RagiumItems.PressMolds.PLATE)
@@ -463,26 +465,26 @@ object RagiumDefaultPlugin : RagiumPlugin {
         if (entry.type.isValidPrefix(HTTagPrefix.DUST)) {
             // ingot/gem -> dust
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
-                HTMachineRecipeJsonBuilderNew
+                HTMachineRecipeJsonBuilder
                     .create(RagiumRecipeTypes.GRINDER)
                     .itemInput(prefix, key)
                     .itemOutput(HTTagPrefix.DUST, key)
                     .offerTo(exporter, HTTagPrefix.DUST, key, "_from_${prefix.asString()}")
             }
             // plate -> dust
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.PLATE, key)
                 .itemOutput(HTTagPrefix.DUST, key)
                 .offerTo(exporter, HTTagPrefix.DUST, key, "_from_plate")
             // gear -> dust
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.GEAR, key)
                 .itemOutput(HTTagPrefix.DUST, key, 4)
                 .offerTo(exporter, HTTagPrefix.DUST, key, "_from_gear")
             // raw -> dust
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.RAW_MATERIAL, key)
                 .itemOutput(HTTagPrefix.DUST, key, 2)
@@ -505,8 +507,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
             }
             if (entry.type.isValidPrefix(HTTagPrefix.GEAR)) {
                 // Compressor Recipe
-                HTMachineRecipeJsonBuilderNew
-                    .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumRecipeTypes.COMPRESSOR)
                     .itemInput(prefix, key, 4)
                     .catalyst(RagiumItems.PressMolds.GEAR)
                     .itemOutput(HTTagPrefix.GEAR, key)
@@ -517,8 +519,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
         // ingot/gem -> rod
         entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
             if (entry.type.isValidPrefix(HTTagPrefix.ROD)) {
-                HTMachineRecipeJsonBuilderNew
-                    .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
+                HTMachineRecipeJsonBuilder
+                    .create(RagiumRecipeTypes.COMPRESSOR)
                     .itemInput(prefix, key)
                     .catalyst(RagiumItems.PressMolds.ROD)
                     .itemOutput(HTTagPrefix.ROD, key, 2)
@@ -528,8 +530,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
         // ingot -> wire
         if (entry.type.isValidPrefix(HTTagPrefix.WIRE)) {
-            HTMachineRecipeJsonBuilderNew
-                .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
+            HTMachineRecipeJsonBuilder
+                .create(RagiumRecipeTypes.COMPRESSOR)
                 .itemInput(HTTagPrefix.INGOT, key)
                 .catalyst(RagiumItems.PressMolds.WIRE)
                 .itemOutput(HTTagPrefix.WIRE, key, 3)
@@ -541,7 +543,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             val count: Int = entry.getOrDefault(HTMaterialPropertyKeys.GRINDING_BASE_COUNT)
             val subProduction: ItemConvertible? = entry[HTMaterialPropertyKeys.ORE_SUB_PRODUCT]
             // Grinder Recipe
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumRecipeTypes.GRINDER)
                 .itemInput(HTTagPrefix.ORE, key)
                 .itemOutput(output, count * 2)
@@ -549,7 +551,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .apply { subProduction?.let(::itemOutput) }
                 .offerTo(exporter, HTTagPrefix.ORE, key, "_2x")
             // 3x Chemical Recipe
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, ::HTDefaultMachineRecipe)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidConstants.INGOT)
@@ -558,7 +560,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .apply { subProduction?.let(::itemOutput) }
                 .offerTo(exporter, HTTagPrefix.ORE, key, "_3x")
             // 4x Chemical Recipe
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, ::HTDefaultMachineRecipe, HTMachineTier.BASIC)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.SULFURIC_ACID, FluidConstants.INGOT)
@@ -567,7 +569,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
                 .apply { subProduction?.let { itemOutput(it, 2) } }
                 .offerTo(exporter, HTTagPrefix.ORE, key, "_4x")
             // 5x Chemical Recipe
-            HTMachineRecipeJsonBuilderNew
+            HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR, ::HTDefaultMachineRecipe, HTMachineTier.ADVANCED)
                 .itemInput(HTTagPrefix.ORE, key)
                 .fluidInput(RagiumFluids.MERCURY, FluidConstants.INGOT)
@@ -605,8 +607,8 @@ object RagiumDefaultPlugin : RagiumPlugin {
 
         // dust -> gem
         if (entry.type.isValidPrefix(HTTagPrefix.GEM)) {
-            HTMachineRecipeJsonBuilderNew
-                .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
+            HTMachineRecipeJsonBuilder
+                .create(RagiumRecipeTypes.COMPRESSOR)
                 .itemInput(HTTagPrefix.DUST, key)
                 .itemOutput(HTTagPrefix.GEM, key)
                 .offerTo(exporter, HTTagPrefix.GEM, key)

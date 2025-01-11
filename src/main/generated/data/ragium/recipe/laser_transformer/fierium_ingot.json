@@ -1,16 +1,11 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:laser_transformer",
-    "tier": "advanced"
-  },
-  "item_inputs": [
+  "type": "ragium:laser_transformer",
+  "inputs": [
     {
       "count": 16,
       "items": "minecraft:ancient_debris"
     }
   ],
-  "item_outputs": [
-    "#c:ingots/fierium"
-  ]
+  "output": "#c:ingots/fierium",
+  "tier": "advanced"
 }

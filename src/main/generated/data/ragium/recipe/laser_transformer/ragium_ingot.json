@@ -1,16 +1,11 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:laser_transformer",
-    "tier": "advanced"
-  },
-  "item_inputs": [
+  "type": "ragium:laser_transformer",
+  "inputs": [
     {
       "count": 16,
       "items": "ragium:ragi_crystal"
     }
   ],
-  "item_outputs": [
-    "#c:ingots/ragium"
-  ]
+  "output": "#c:ingots/ragium",
+  "tier": "advanced"
 }

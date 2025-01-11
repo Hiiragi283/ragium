@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.recipe.processor.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTLargeMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity
@@ -27,8 +26,6 @@ class HTExtendedProcessorBlockEntity(pos: BlockPos, state: BlockState) :
     override val inventory: HTMachineInventory = HTMachineInventory.ofLarge()
 
     override val fluidStorage: HTMachineFluidStorage = HTMachineFluidStorage.ofSimple(this)
-
-    override val processor = HTMachineRecipeProcessor(machineKey, inventory, fluidStorage)
 
     override fun createMenu(syncId: Int, playerInventory: PlayerInventory, player: PlayerEntity): ScreenHandler =
         HTLargeMachineScreenHandler(syncId, playerInventory, this)

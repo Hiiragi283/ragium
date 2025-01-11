@@ -1,16 +1,11 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:laser_transformer",
-    "tier": "advanced"
-  },
-  "item_inputs": [
+  "type": "ragium:laser_transformer",
+  "inputs": [
     {
       "count": 16,
       "items": "minecraft:echo_shard"
     }
   ],
-  "item_outputs": [
-    "#c:ingots/echorium"
-  ]
+  "output": "#c:ingots/echorium",
+  "tier": "advanced"
 }

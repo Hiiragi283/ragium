@@ -1,0 +1,7 @@
+{
+  "type": "ragium:laser_transformer",
+  "inputs": [
+    "minecraft:ice"
+  ],
+  "output": "minecraft:prismarine_crystals"
+}

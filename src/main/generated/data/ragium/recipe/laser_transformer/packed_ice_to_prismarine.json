@@ -1,0 +1,7 @@
+{
+  "type": "ragium:laser_transformer",
+  "inputs": [
+    "minecraft:packed_ice"
+  ],
+  "output": "minecraft:prismarine_shard"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": "ragium:plate_press_mold",
+  "input": "ragium:pulp",
+  "output": "minecraft:oak_planks"
+}
