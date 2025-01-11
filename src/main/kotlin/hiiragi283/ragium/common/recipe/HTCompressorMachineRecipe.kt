@@ -16,8 +16,7 @@ import net.minecraft.recipe.RecipeType
 import net.minecraft.world.World
 import java.util.*
 
-class HTCompressorMachineRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) :
-    HTMachineRecipe(definition, data) {
+class HTCompressorMachineRecipe(definition: HTMachineDefinition, data: HTMachineRecipeData) : HTMachineRecipe(definition, data) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTCompressorMachineRecipe> = RecordCodecBuilder
@@ -30,7 +29,7 @@ class HTCompressorMachineRecipe(definition: HTMachineDefinition, data: HTMachine
                         HTItemResult.CODEC.fieldOf("output").forGetter { it.data.itemResults[0] },
                     ).apply(instance, ::HTCompressorMachineRecipe)
             }
-        
+
         @JvmField
         val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTCompressorMachineRecipe> =
             createPacketCodec(::HTCompressorMachineRecipe)

@@ -171,6 +171,7 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.COMPRESSOR) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTCompressorBlockEntity))
             set(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.COMPRESSOR)
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_PISTON_EXTEND)
         }
