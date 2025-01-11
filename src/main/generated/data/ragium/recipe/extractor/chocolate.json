@@ -1,13 +1,10 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     "ragium:chocolate"
   ],
   "item_inputs": [
     "ragium:chocolate"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

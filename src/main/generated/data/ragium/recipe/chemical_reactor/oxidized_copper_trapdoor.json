@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     {
       "amount": 9000,
@@ -15,5 +11,6 @@
   ],
   "item_outputs": [
     "minecraft:oxidized_copper_trapdoor"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

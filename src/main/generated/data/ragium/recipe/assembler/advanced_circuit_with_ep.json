@@ -7,17 +7,14 @@
       ]
     }
   ],
-  "type": "ragium:machine",
-  "item_inputs": [
+  "type": "ragium:assembler",
+  "inputs": [
     "ragium:basic_circuit",
     {
       "count": 4,
       "items": "#c:wires/energized_copper"
     }
   ],
-  "item_outputs": [
-    "energizedpower:advanced_circuit"
-  ],
-  "machine_type": "ragium:assembler",
+  "output": "energizedpower:advanced_circuit",
   "tier": "basic"
 }

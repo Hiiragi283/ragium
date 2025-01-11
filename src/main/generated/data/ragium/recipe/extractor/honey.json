@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     {
       "amount": 20250,
@@ -15,5 +11,6 @@
   ],
   "item_outputs": [
     "ragium:bee_wax"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

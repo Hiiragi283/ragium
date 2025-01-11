@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "minecraft:water"
+  ],
+  "item_inputs": [
+    {
+      "count": 4,
+      "items": "minecraft:soul_sand"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:sand"
+    },
+    "minecraft:quartz"
+  ],
+  "machine_type": "ragium:mixer"
+}

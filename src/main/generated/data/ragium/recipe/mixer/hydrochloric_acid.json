@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 162000,
+      "fluids": "minecraft:water"
+    },
+    "#c:chlorine"
+  ],
+  "fluid_outputs": [
+    "ragium:hydrochloric_acid"
+  ],
+  "machine_type": "ragium:mixer"
+}

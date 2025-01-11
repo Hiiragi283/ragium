@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "#c:dusts/iron",
+  "fluid_inputs": [
+    "#c:nitrogen",
+    {
+      "amount": 243000,
+      "fluids": "#c:hydrogen"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 162000,
+      "fluid": "ragium:ammonia"
+    }
+  ],
+  "machine_type": "ragium:large_chemical_reactor"
+}

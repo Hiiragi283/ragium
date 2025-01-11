@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:sulfuric_acid"
   ],
@@ -15,5 +11,6 @@
       "count": 4,
       "item": "minecraft:paper"
     }
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

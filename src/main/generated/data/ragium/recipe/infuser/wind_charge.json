@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:infuser",
-    "tier": "basic"
-  },
   "fluid_inputs": [
     "#c:air"
   ],
@@ -12,5 +8,7 @@
   ],
   "item_outputs": [
     "minecraft:wind_charge"
-  ]
+  ],
+  "machine_type": "ragium:infuser",
+  "tier": "basic"
 }

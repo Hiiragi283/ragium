@@ -1,14 +1,11 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "basic"
-  },
+  "catalyst": "minecraft:magma_block",
   "fluid_inputs": [
-    "#c:sulfur_dioxide",
-    "#c:oxygen"
+    "#c:sulfur_dioxide"
   ],
   "fluid_outputs": [
     "ragium:sulfur_trioxide"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     {
       "amount": 405000,
@@ -16,5 +12,6 @@
       "fluid": "ragium:nitrogen"
     },
     "ragium:oxygen"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

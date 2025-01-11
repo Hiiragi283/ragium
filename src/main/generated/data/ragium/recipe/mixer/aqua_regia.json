@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     {
       "amount": 243000,
@@ -16,5 +12,6 @@
       "amount": 324000,
       "fluid": "ragium:aqua_regia"
     }
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    "ragium:crude_oil"
+  ],
+  "item_inputs": [
+    {
+      "count": 3,
+      "items": "minecraft:coal"
+    }
+  ],
+  "machine_type": "ragium:extractor",
+  "tier": "basic"
+}

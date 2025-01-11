@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:infuser",
-    "tier": "primitive"
-  },
   "item_inputs": [
     {
       "count": 8,
@@ -16,5 +12,6 @@
       "count": 8,
       "item": "ragium:canned_cooked_meat"
     }
-  ]
+  ],
+  "machine_type": "ragium:infuser"
 }

@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "advanced"
-  },
   "fluid_inputs": [
     {
       "amount": 10368000,
@@ -22,5 +18,7 @@
   ],
   "item_outputs": [
     "ragium:ambrosia"
-  ]
+  ],
+  "machine_type": "ragium:mixer",
+  "tier": "advanced"
 }

@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:electrolyzer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:salt_water"
   ],
@@ -13,5 +9,6 @@
   ],
   "item_outputs": [
     "#c:dusts/alkali"
-  ]
+  ],
+  "machine_type": "ragium:electrolyzer"
 }

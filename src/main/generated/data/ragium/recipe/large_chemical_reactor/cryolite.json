@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:large_chemical_reactor",
-    "tier": "basic"
-  },
   "fluid_inputs": [
     "#c:sulfuric_acid",
     "#c:alkali_solution"
@@ -27,5 +23,7 @@
       "count": 2,
       "item": "ragium:gypsum"
     }
-  ]
+  ],
+  "machine_type": "ragium:large_chemical_reactor",
+  "tier": "basic"
 }

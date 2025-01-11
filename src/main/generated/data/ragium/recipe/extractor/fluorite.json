@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "minecraft:glowstone"
   ],
@@ -13,5 +9,6 @@
       "tag": "#c:gems/fluorite"
     },
     "minecraft:gold_nugget"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

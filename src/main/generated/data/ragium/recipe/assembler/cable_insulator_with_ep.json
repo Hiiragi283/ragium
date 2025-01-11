@@ -7,19 +7,16 @@
       ]
     }
   ],
-  "type": "ragium:machine",
-  "item_inputs": [
+  "type": "ragium:assembler",
+  "inputs": [
     "#minecraft:wool",
     {
       "consume_type": "damage",
       "items": "minecraft:shears"
     }
   ],
-  "item_outputs": [
-    {
-      "count": 18,
-      "item": "energizedpower:cable_insulator"
-    }
-  ],
-  "machine_type": "ragium:assembler"
+  "output": {
+    "count": 18,
+    "item": "energizedpower:cable_insulator"
+  }
 }

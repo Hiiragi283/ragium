@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "minecraft:lava"
   ],
@@ -12,5 +8,6 @@
   ],
   "item_outputs": [
     "ragium:porous_netherrack"
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

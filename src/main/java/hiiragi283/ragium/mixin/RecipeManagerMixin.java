@@ -56,6 +56,7 @@ public abstract class RecipeManagerMixin {
             @Override
             public void accept(Identifier recipeId, Recipe<?> recipe, @Nullable AdvancementEntry advancement) {
                 // LOGGER.info("Recipe: {} was registered!", recipeId);
+                recipeId = recipeId.withPrefixedPath("runtime/");
                 RecipeEntry<?> entry = new RecipeEntry<>(recipeId, recipe);
                 map1.put(recipe.getType(), entry);
                 if (map2.put(recipeId, entry) != null) {

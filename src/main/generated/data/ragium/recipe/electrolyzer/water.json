@@ -1,11 +1,10 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:electrolyzer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
-    "minecraft:water"
+    {
+      "amount": 162000,
+      "fluids": "minecraft:water"
+    }
   ],
   "fluid_outputs": [
     {
@@ -13,5 +12,6 @@
       "fluid": "ragium:hydrogen"
     },
     "ragium:oxygen"
-  ]
+  ],
+  "machine_type": "ragium:electrolyzer"
 }

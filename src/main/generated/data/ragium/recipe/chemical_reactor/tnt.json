@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "advanced"
-  },
   "fluid_inputs": [
     "#c:trinitrotoluene"
   ],
@@ -15,5 +11,7 @@
       "count": 12,
       "item": "minecraft:tnt"
     }
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "tier": "advanced"
 }

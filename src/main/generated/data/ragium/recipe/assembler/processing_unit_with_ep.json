@@ -7,17 +7,14 @@
       ]
     }
   ],
-  "type": "ragium:machine",
-  "item_inputs": [
+  "type": "ragium:assembler",
+  "inputs": [
     "ragium:advanced_circuit",
     {
       "count": 4,
       "items": "#c:wires/energized_gold"
     }
   ],
-  "item_outputs": [
-    "energizedpower:processing_unit"
-  ],
-  "machine_type": "ragium:assembler",
+  "output": "energizedpower:processing_unit",
   "tier": "advanced"
 }

@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#ragium:organic_oils"
   ],
@@ -15,5 +11,6 @@
   ],
   "item_outputs": [
     "ragium:soap"
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

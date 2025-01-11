@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "minecraft:heart_of_the_sea",
+  "fluid_inputs": [
+    {
+      "amount": 162000,
+      "fluids": "#c:refined_gas"
+    },
+    {
+      "amount": 162000,
+      "fluids": "minecraft:water"
+    }
+  ],
+  "fluid_outputs": [
+    "ragium:hydrogen",
+    {
+      "amount": 162000,
+      "fluid": "ragium:alcohol"
+    }
+  ],
+  "machine_type": "ragium:large_chemical_reactor"
+}

@@ -77,12 +77,13 @@ enum class RagiumFluids(
 
     ALUMINA_SOLUTION(Color(0xcccccc), "Alumina Solution", "アルミナ溶液"),
 
+    CHEMICAL_SLUDGE(Color(0x333366), "Chemical Sludge", "化学汚泥", TextureType.STICKY),
     CHLOROSILANE(Color(0xcccccc), "Chlorosilane", "塩化ケイ素", TextureType.GASEOUS),
 
     // Oil products
     REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス", TextureType.GASEOUS),
     NAPHTHA(Color(0xff9900), "Naphtha", "ナフサ"),
-    RESIDUAL_OIL(Color(0x000033), "Residual Oil", "残渣油", TextureType.STICKY),
+    RESIDUAL_OIL(Color(0x663300), "Residual Oil", "残渣油", TextureType.STICKY),
 
     ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),

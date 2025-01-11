@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "#c:sulfuric_acid"
+  ],
+  "fluid_outputs": [
+    "ragium:nitric_acid"
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:dusts/niter"
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

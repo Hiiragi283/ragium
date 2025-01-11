@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:alkali_solution"
   ],
@@ -12,5 +8,6 @@
   ],
   "item_outputs": [
     "#c:dusts/alkali"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

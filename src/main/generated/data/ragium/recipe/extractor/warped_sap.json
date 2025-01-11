@@ -1,10 +1,6 @@
 {
   "type": "ragium:machine",
   "catalyst": "#minecraft:warped_stems",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "advanced"
-  },
   "fluid_outputs": [
     "ragium:warped_sap"
   ],
@@ -16,5 +12,7 @@
       "count": 6,
       "item": "ragium:pulp"
     }
-  ]
+  ],
+  "machine_type": "ragium:extractor",
+  "tier": "advanced"
 }

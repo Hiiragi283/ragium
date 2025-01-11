@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     "ragium:tallow"
   ],
@@ -12,5 +8,6 @@
       "count": 4,
       "items": "#c:foods/protein"
     }
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

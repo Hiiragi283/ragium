@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     {
       "amount": 9000,
@@ -18,5 +14,6 @@
   ],
   "item_outputs": [
     "ragium:advanced_plastic"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "#c:aromatic_compounds",
+    {
+      "amount": 243000,
+      "fluids": "#c:mixture_acid"
+    }
+  ],
+  "fluid_outputs": [
+    "ragium:trinitrotoluene"
+  ],
+  "machine_type": "ragium:mixer",
+  "tier": "advanced"
+}

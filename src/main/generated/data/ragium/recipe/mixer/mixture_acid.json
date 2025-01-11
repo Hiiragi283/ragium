@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:nitric_acid",
     "#c:sulfuric_acid"
@@ -13,5 +9,6 @@
       "amount": 162000,
       "fluid": "ragium:mixture_acid"
     }
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

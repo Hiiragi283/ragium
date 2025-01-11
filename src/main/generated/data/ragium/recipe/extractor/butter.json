@@ -1,13 +1,10 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:milk"
   ],
   "item_outputs": [
     "ragium:butter"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

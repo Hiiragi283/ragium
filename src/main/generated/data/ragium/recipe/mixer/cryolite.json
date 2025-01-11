@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "#c:hydrogen_fluoride",
+    "#c:alkali_solution"
+  ],
+  "item_inputs": [
+    "#c:dusts/aluminum"
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "tag": "#c:gems/cryolite"
+    }
+  ],
+  "machine_type": "ragium:mixer"
+}

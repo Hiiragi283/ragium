@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "minecraft:water"
   ],
@@ -13,5 +9,6 @@
   ],
   "item_outputs": [
     "minecraft:white_terracotta"
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

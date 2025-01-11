@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTItemContent
-import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilderNew
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
@@ -14,6 +13,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.tags.RagiumItemTags
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.fluid.Fluid
@@ -79,18 +79,18 @@ object RagiumHardModePlugin : RagiumPlugin {
             .itemOutput(RagiumItems.LED, 4)
             .offerTo(exporter, "led")
         // glasses
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE)
+        HTMachineRecipeJsonBuilderNew
+            .create(RagiumMachineKeys.BLAST_FURNACE, ::HTDefaultMachineRecipe)
             .itemInput(RagiumHardModeContents.STEEL.getPrefixedTag(hardMode))
             .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 4)
             .itemOutput(RagiumBlocks.Glasses.STEEL, 4)
-            .offerTo(exporter, RagiumBlocks.Glasses.STEEL, "_from_steel")
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .offerTo(exporter, RagiumBlocks.Glasses.STEEL)
+        HTMachineRecipeJsonBuilderNew
+            .create(RagiumMachineKeys.BLAST_FURNACE, ::HTDefaultMachineRecipe)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getPrefixedTag(hardMode))
             .itemInput(ConventionalItemTags.GLASS_BLOCKS_COLORLESS, 8)
             .itemOutput(RagiumBlocks.Glasses.STEEL, 8)
-            .offerTo(exporter, RagiumBlocks.Glasses.STEEL, "_from_deep_steel")
+            .offerTo(exporter, RagiumBlocks.Glasses.STEEL)
         // trader catalog
         HTShapelessRecipeJsonBuilder
             .create(RagiumItems.TRADER_CATALOG)
@@ -127,22 +127,22 @@ object RagiumHardModePlugin : RagiumPlugin {
             val bucket: Item = fluid.bucketItem
             if (bucket.isAir) return@forEach
             // insert to cube
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.INFUSER)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumMachineKeys.INFUSER, ::HTDefaultMachineRecipe)
                 .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
                 .fluidInput(fluid)
                 .itemOutput(RagiumAPI.getInstance().createFilledCube(fluid))
                 .offerTo(exporter, id.withPrefixedPath("filling_cube/"))
             // insert to bucket
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.INFUSER)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumMachineKeys.INFUSER, ::HTDefaultMachineRecipe)
                 .itemInput(Items.BUCKET)
                 .fluidInput(fluid)
                 .itemOutput(bucket)
                 .offerTo(exporter, id.withPrefixedPath("filling_bucket/"))
             // extract from bucket
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.EXTRACTOR)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumMachineKeys.EXTRACTOR, ::HTDefaultMachineRecipe)
                 .itemInput(bucket)
                 .itemOutput(Items.BUCKET)
                 .fluidOutput(fluid)
@@ -180,8 +180,8 @@ object RagiumHardModePlugin : RagiumPlugin {
             .itemOutput(RagiumItems.LASER_EMITTER)
             .offerTo(exporter, "laser_emitter")
 
-        HTMachineRecipeJsonBuilder
-            .create(RagiumMachineKeys.COMPRESSOR, HTMachineTier.ADVANCED)
+        HTMachineRecipeJsonBuilderNew
+            .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe, HTMachineTier.ADVANCED)
             .itemInput(RagiumHardModeContents.ALUMINUM.getPrefixedTag(hardMode))
             .itemInput(RagiumItems.Plastics.ADVANCED.tagKey)
             .itemInput(RagiumHardModeContents.DEEP_STEEL.getPrefixedTag(hardMode), 2)
@@ -334,8 +334,8 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .offerTo(exporter)
             // compressor
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.COMPRESSOR)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
                 .itemInput(input, 2)
                 .catalyst(RagiumItems.PressMolds.PIPE)
                 .itemOutput(pipe, 2)
@@ -357,8 +357,8 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .input('B', ConventionalItemTags.GLASS_BLOCKS)
                 .offerTo(exporter)
             // compressor
-            HTMachineRecipeJsonBuilder
-                .create(RagiumMachineKeys.COMPRESSOR)
+            HTMachineRecipeJsonBuilderNew
+                .create(RagiumMachineKeys.COMPRESSOR, ::HTDefaultMachineRecipe)
                 .itemInput(input, 4)
                 .catalyst(RagiumItems.PressMolds.PIPE)
                 .itemOutput(crossPipe, 2)

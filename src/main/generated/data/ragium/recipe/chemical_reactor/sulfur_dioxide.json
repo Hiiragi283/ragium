@@ -1,19 +1,13 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "basic"
-  },
   "fluid_inputs": [
-    {
-      "amount": 162000,
-      "fluids": "#c:oxygen"
-    }
+    "#c:oxygen"
   ],
   "fluid_outputs": [
     "ragium:sulfur_dioxide"
   ],
   "item_inputs": [
     "#c:dusts/sulfur"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 324000,
+      "fluids": "#c:hydrogen_chloride"
+    }
+  ],
+  "fluid_outputs": [
+    "ragium:chlorosilane",
+    {
+      "amount": 162000,
+      "fluid": "ragium:hydrogen"
+    }
+  ],
+  "item_inputs": [
+    "#c:plates/silicon"
+  ],
+  "machine_type": "ragium:large_chemical_reactor"
+}

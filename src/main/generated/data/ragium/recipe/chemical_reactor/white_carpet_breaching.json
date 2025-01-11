@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:chlorine"
   ],
@@ -12,5 +8,6 @@
   ],
   "item_outputs": [
     "minecraft:white_carpet"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

@@ -24,15 +24,26 @@ import net.minecraft.util.Identifier
  * 機械レシピを構築するビルダー
  * @see HTMachineRecipe
  */
-class HTMachineRecipeJsonBuilderNew private constructor(recipeType: HTMachineRecipeType<*>, private val tier: HTMachineTier) {
+class HTMachineRecipeJsonBuilderNew private constructor(
+    private val key: HTMachineKey,
+    private val factory: HTMachineRecipe.Factory<*>,
+    private val tier: HTMachineTier,
+) {
     companion object {
         @JvmStatic
-        fun create(recipeType: HTMachineRecipeType<*>, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilderNew =
-            HTMachineRecipeJsonBuilderNew(recipeType, minTier)
-    }
+        private val idCache: MutableMap<Identifier, Int> = mutableMapOf()
 
-    private val key: HTMachineKey = recipeType.machineKey
-    private val factory: HTMachineRecipe.Factory<*> = recipeType.factory
+        @JvmStatic
+        fun create(
+            key: HTMachineKey,
+            factory: HTMachineRecipe.Factory<*>,
+            minTier: HTMachineTier = HTMachineTier.PRIMITIVE,
+        ): HTMachineRecipeJsonBuilderNew = HTMachineRecipeJsonBuilderNew(key, factory, minTier)
+
+        @JvmStatic
+        fun create(recipeType: HTMachineRecipeType<*>, minTier: HTMachineTier = HTMachineTier.PRIMITIVE): HTMachineRecipeJsonBuilderNew =
+            create(recipeType.machineKey, recipeType.factory, minTier)
+    }
 
     private val itemInputs: MutableSet<HTItemIngredient> = mutableSetOf()
     private val fluidInputs: MutableSet<HTFluidIngredient> = mutableSetOf()
@@ -274,7 +285,12 @@ class HTMachineRecipeJsonBuilderNew private constructor(recipeType: HTMachineRec
      */
     fun offerTo(exporter: RecipeExporter, recipeId: Identifier) {
         val prefix = "${key.id.path}/"
-        val prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
+        var prefixedId: Identifier = recipeId.withPrefixedPath(prefix)
+        // avoid id duplication
+        val count: Int = idCache.compute(prefixedId) { _: Identifier, value: Int? -> value?.let { it + 1 } ?: 0 }!!
+        if (count > 0) {
+            prefixedId = prefixedId.withSuffixedPath("_alt$count")
+        }
         val recipe: HTMachineRecipe = build()
         exporter.accept(prefixedId, recipe, null)
     }

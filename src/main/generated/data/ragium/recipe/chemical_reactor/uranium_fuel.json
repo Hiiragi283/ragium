@@ -1,11 +1,7 @@
 {
   "type": "ragium:machine",
   "fluid_inputs": [
-    "#c:enriched_uranium_hexafluoride",
-    "minecraft:water"
-  ],
-  "fluid_outputs": [
-    "ragium:hydrogen_fluoride"
+    "#c:enriched_uranium_hexafluoride"
   ],
   "item_inputs": [
     "ragium:empty_fluid_cube"

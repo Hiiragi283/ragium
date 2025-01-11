@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:milk"
   ],
@@ -12,5 +8,6 @@
   ],
   "item_inputs": [
     "ragium:flour"
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

@@ -1,13 +1,10 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "minecraft:mud"
   ],
   "item_outputs": [
     "minecraft:clay"
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

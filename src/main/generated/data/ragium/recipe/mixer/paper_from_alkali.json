@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "minecraft:water"
   ],
@@ -16,5 +12,6 @@
       "count": 2,
       "item": "minecraft:paper"
     }
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    "ragium:crude_oil"
+  ],
+  "item_inputs": [
+    "minecraft:soul_soil"
+  ],
+  "item_outputs": [
+    "minecraft:sand"
+  ],
+  "machine_type": "ragium:extractor"
+}

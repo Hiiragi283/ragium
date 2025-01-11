@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "advanced"
-  },
   "fluid_inputs": [
     {
       "amount": 648000,
@@ -16,5 +12,7 @@
       "fluid": "ragium:uranium_hexafluoride"
     },
     "ragium:enriched_uranium_hexafluoride"
-  ]
+  ],
+  "machine_type": "ragium:extractor",
+  "tier": "advanced"
 }

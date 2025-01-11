@@ -8,7 +8,7 @@
     "#minecraft:coals"
   ],
   "item_outputs": [
-    "ragium:silicon",
+    "#c:plates/silicon",
     "ragium:slag"
   ],
   "machine_type": "ragium:blast_furnace",

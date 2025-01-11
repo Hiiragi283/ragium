@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:infuser",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     {
       "amount": 27000,
@@ -22,5 +18,6 @@
       },
       "item": "minecraft:potion"
     }
-  ]
+  ],
+  "machine_type": "ragium:infuser"
 }

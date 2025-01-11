@@ -1,0 +1,18 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 243000,
+      "fluids": "#c:alcohol"
+    },
+    "#ragium:organic_oils"
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 243000,
+      "fluid": "ragium:bio_fuel"
+    },
+    "ragium:glycerol"
+  ],
+  "machine_type": "ragium:mixer"
+}

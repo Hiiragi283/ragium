@@ -7,8 +7,8 @@
       ]
     }
   ],
-  "type": "ragium:machine",
-  "item_inputs": [
+  "type": "ragium:assembler",
+  "inputs": [
     {
       "count": 2,
       "items": "#c:ingots/steel"
@@ -16,11 +16,8 @@
     "#c:ingots/iron",
     "#c:plastics/primitive"
   ],
-  "item_outputs": [
-    {
-      "count": 8,
-      "item": "oritech:iron_plating_block"
-    }
-  ],
-  "machine_type": "ragium:assembler"
+  "output": {
+    "count": 8,
+    "item": "oritech:iron_plating_block"
+  }
 }

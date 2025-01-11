@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:extractor",
-    "tier": "primitive"
-  },
   "fluid_outputs": [
     "ragium:sap"
   ],
@@ -15,5 +11,6 @@
       "count": 6,
       "item": "ragium:pulp"
     }
-  ]
+  ],
+  "machine_type": "ragium:extractor"
 }

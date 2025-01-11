@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     "#c:milk"
   ],
@@ -16,5 +12,6 @@
       "count": 4,
       "item": "ragium:caramel"
     }
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

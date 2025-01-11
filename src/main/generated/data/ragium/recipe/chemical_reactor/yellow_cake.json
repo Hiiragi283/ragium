@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "advanced"
-  },
   "fluid_inputs": [
     {
       "amount": 324000,
@@ -18,5 +14,7 @@
   ],
   "item_outputs": [
     "ragium:yellow_cake"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "tier": "advanced"
 }

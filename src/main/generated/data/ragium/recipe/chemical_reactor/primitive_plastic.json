@@ -1,13 +1,10 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:chemical_reactor",
-    "tier": "primitive"
-  },
   "item_inputs": [
     "ragium:polymer_resin"
   ],
   "item_outputs": [
     "ragium:primitive_plastic"
-  ]
+  ],
+  "machine_type": "ragium:chemical_reactor"
 }

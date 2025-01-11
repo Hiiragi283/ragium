@@ -1,9 +1,5 @@
 {
   "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:mixer",
-    "tier": "primitive"
-  },
   "fluid_inputs": [
     {
       "amount": 27000,
@@ -15,5 +11,6 @@
   ],
   "item_outputs": [
     "ragium:dough"
-  ]
+  ],
+  "machine_type": "ragium:mixer"
 }

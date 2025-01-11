@@ -190,6 +190,7 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerScreens() {
+        RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.ASSEMBLER)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.CHEMICAL_MACHINE)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.DISTILLATION_TOWER)
         RagiumClientAPI.registerMachineScreen(RagiumScreenHandlerTypes.GRINDER)
