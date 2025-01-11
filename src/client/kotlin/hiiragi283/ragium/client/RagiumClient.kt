@@ -124,7 +124,7 @@ object RagiumClient : ClientModInitializer {
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.BEDROCK_MINER) { HTBedrockMinerBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CRATE, ::HTCrateBlockEntityRenderer)
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.CREATIVE_CRATE, ::HTCrateBlockEntityRenderer)
-        BlockEntityRendererFactories.register(RagiumBlockEntityTypes.EXTENDED_PROCESSOR) { HTExtendedProcessorBlockEntityRenderer }
+        // BlockEntityRendererFactories.register(RagiumBlockEntityTypes.EXTENDED_PROCESSOR) { HTExtendedProcessorBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.ITEM_DISPLAY) { HTItemDisplayBlockEntityRenderer }
         BlockEntityRendererFactories.register(RagiumBlockEntityTypes.MANUAL_FORGE) { HTManualForgeBlockEntityRenderer }
 

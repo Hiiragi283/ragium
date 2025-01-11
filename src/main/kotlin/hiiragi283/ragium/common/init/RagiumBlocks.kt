@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTPipeType
 import hiiragi283.ragium.common.block.*
-import hiiragi283.ragium.common.block.machine.HTExtendedProcessorBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.machine.HTNetworkInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTBackpackInterfaceBlock
@@ -324,9 +323,6 @@ object RagiumBlocks {
     val AUTO_ILLUMINATOR: HTBlockContent = HTContent.ofBlock("auto_illuminator")
 
     @JvmField
-    val EXTENDED_PROCESSOR: HTBlockContent = HTContent.ofBlock("extended_processor")
-
-    @JvmField
     val MANUAL_FORGE: HTBlockContent = HTContent.ofBlock("manual_forge")
 
     @JvmField
@@ -347,7 +343,7 @@ object RagiumBlocks {
     @JvmField
     val MECHANICS: List<HTBlockContent> = listOf(
         // colored
-        EXTENDED_PROCESSOR, // red
+        // EXTENDED_PROCESSOR, // red
         AUTO_ILLUMINATOR, // yellow
         TELEPORT_ANCHOR, // blue
         MACHINE_INTERFACE, // white
@@ -611,7 +607,7 @@ object RagiumBlocks {
             RagiumBlockEntityTypes.AUTO_ILLUMINATOR,
             blockSettings(Blocks.SMOOTH_STONE),
         )
-        registerBlock(EXTENDED_PROCESSOR, blockSettings(Blocks.SMOOTH_STONE), ::HTExtendedProcessorBlock)
+        // registerBlock(EXTENDED_PROCESSOR, blockSettings(Blocks.SMOOTH_STONE), ::HTExtendedProcessorBlock)
         registerBlockWithBE(
             MANUAL_FORGE,
             RagiumBlockEntityTypes.MANUAL_FORGE,
@@ -631,7 +627,7 @@ object RagiumBlocks {
                 ),
             ),*/
         )
-        registerBlockItem(EXTENDED_PROCESSOR, itemSettings().descriptions(RagiumTranslationKeys.LARGE_PROCESSOR))
+        // registerBlockItem(EXTENDED_PROCESSOR, itemSettings().descriptions(RagiumTranslationKeys.LARGE_PROCESSOR))
         registerBlockItem(MANUAL_FORGE)
         registerBlockItem(MANUAL_GRINDER, itemSettings().descriptions(RagiumTranslationKeys.MANUAL_GRINDER))
         registerBlockItem(MANUAL_MIXER)

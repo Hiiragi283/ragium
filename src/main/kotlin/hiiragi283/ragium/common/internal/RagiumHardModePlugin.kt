@@ -184,7 +184,6 @@ object RagiumHardModePlugin : RagiumPlugin {
             .create(RagiumRecipeTypes.COMPRESSOR, HTMachineTier.ADVANCED)
             .itemInput(RagiumHardModeContents.ALUMINUM.getPrefixedTag(hardMode))
             .itemInput(RagiumItems.Plastics.ADVANCED.tagKey)
-            .itemInput(RagiumHardModeContents.DEEP_STEEL.getPrefixedTag(hardMode), 2)
             .itemOutput(RagiumItems.STELLA_PLATE)
             .offerTo(exporter, RagiumItems.STELLA_PLATE)
 
@@ -229,12 +228,6 @@ object RagiumHardModePlugin : RagiumPlugin {
         )
         createMechanics(
             exporter,
-            RagiumBlocks.EXTENDED_PROCESSOR,
-            RagiumHardModeContents.RAGI_ALLOY.getContent(hardMode),
-            RagiumItems.Processors.RAGIUM,
-        )
-        createMechanics(
-            exporter,
             RagiumBlocks.AUTO_ILLUMINATOR,
             RagiumHardModeContents.GOLD.getContent(hardMode),
             RagiumItems.CRIMSON_CRYSTAL,
@@ -264,7 +257,7 @@ object RagiumHardModePlugin : RagiumPlugin {
             RagiumMachineKeys.ASSEMBLER to Items.CRAFTER,
             RagiumMachineKeys.BLAST_FURNACE to Items.BLAST_FURNACE,
             RagiumMachineKeys.CHEMICAL_REACTOR to Items.GLASS,
-            RagiumMachineKeys.CONDENSER to Items.SNOWBALL,
+            // RagiumMachineKeys.CONDENSER to Items.SNOWBALL,
             RagiumMachineKeys.COMPRESSOR to Items.PISTON,
             RagiumMachineKeys.CUTTING_MACHINE to Items.STONECUTTER,
             RagiumMachineKeys.DISTILLATION_TOWER to RagiumBlocks.Drums.BASIC,

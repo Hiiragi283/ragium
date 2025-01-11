@@ -225,7 +225,9 @@ object RagiumDefaultPlugin : RagiumPlugin {
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
         }
         helper.modify(RagiumMachineKeys.LASER_TRANSFORMER) {
+            set(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTLaserTransformerBlockEntity))
             set(HTMachinePropertyKeys.PARTICLE, ParticleTypes.END_ROD)
+            set(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTAssemblerScreenHandler))
             set(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_END_PORTAL_FRAME_FILL)
         }
     }

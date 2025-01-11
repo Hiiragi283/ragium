@@ -2,16 +2,16 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.multiblock.HTMultiblockComponent
-import hiiragi283.ragium.common.machine.*
+import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
+import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
+import hiiragi283.ragium.common.machine.HTTagMultiblockComponent
+import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 
 object RagiumMultiblockComponentTypes {
     @JvmField
     val AXIS: HTMultiblockComponent.Type<HTAxisMultiblockComponent> = register("axis")
-
-    @JvmField
-    val MACHINE: HTMultiblockComponent.Type<HTMachineMultiblockComponent> = register("machine")
 
     @JvmField
     val SIMPLE: HTMultiblockComponent.Type<HTSimpleMultiblockComponent> = register("simple")

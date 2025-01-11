@@ -78,10 +78,4 @@ object HTMachinePropertyKeys {
     @JvmField
     val MULTIBLOCK_MAP: HTPropertyKey.Simple<HTMultiblockMap.Relative> =
         HTPropertyKey.ofSimple(RagiumAPI.id("multiblock_map"))
-
-    //    Extended Processor    //
-
-    @JvmField
-    val EXTENDED_CHILD: HTPropertyKey.Simple<HTMachineKey> =
-        HTPropertyKey.ofSimple(RagiumAPI.id("extended_child"))
 }

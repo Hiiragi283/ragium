@@ -130,6 +130,10 @@ object RagiumBlockEntityTypes {
         register("large_processor", HTLargeRecipeProcessorBlockEntity::fromState)
 
     @JvmField
+    val LASER_TRANSFORMER: BlockEntityType<HTLaserTransformerBlockEntity> =
+        register("laser_transformer", ::HTLaserTransformerBlockEntity)
+
+    @JvmField
     val MULTI_SMELTER: BlockEntityType<HTMultiSmelterBlockEntity> =
         register("multi_smelter", ::HTMultiSmelterBlockEntity)
 
@@ -172,10 +176,6 @@ object RagiumBlockEntityTypes {
         register("creative_source", ::HTCreativeSourceBlockEntity)
 
     @JvmField
-    val EXTENDED_PROCESSOR: BlockEntityType<HTExtendedProcessorBlockEntity> =
-        register("extended_processor", ::HTExtendedProcessorBlockEntity)
-
-    @JvmField
     val ITEM_DISPLAY: BlockEntityType<HTItemDisplayBlockEntity> =
         register("item_display", ::HTItemDisplayBlockEntity)
 
@@ -201,7 +201,7 @@ object RagiumBlockEntityTypes {
         DRUM.addAllContents(RagiumBlocks.Drums.entries)
 
         CREATIVE_EXPORTER.add(RagiumBlocks.Creatives.EXPORTER)
-        EXTENDED_PROCESSOR.add(RagiumBlocks.EXTENDED_PROCESSOR)
+        // EXTENDED_PROCESSOR.add(RagiumBlocks.EXTENDED_PROCESSOR)
         ITEM_DISPLAY.add(RagiumBlocks.ITEM_DISPLAY)
         MACHINE_INTERFACE.add(RagiumBlocks.MACHINE_INTERFACE)
         MANUAL_FORGE.add(RagiumBlocks.MANUAL_FORGE)
@@ -237,6 +237,7 @@ object RagiumBlockEntityTypes {
         registerMachineBlocks(RagiumMachineKeys.GRINDER, GRINDER)
         registerMachineBlocks(RagiumMachineKeys.INFUSER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR, LARGE_CHEMICAL_REACTOR)
+        registerMachineBlocks(RagiumMachineKeys.LASER_TRANSFORMER, LASER_TRANSFORMER)
         registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
     }

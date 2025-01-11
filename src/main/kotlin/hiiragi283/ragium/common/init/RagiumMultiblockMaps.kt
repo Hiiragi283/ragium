@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.common.machine.HTAxisMultiblockComponent
-import hiiragi283.ragium.common.machine.HTMachineMultiblockComponent
 import hiiragi283.ragium.common.machine.HTSimpleMultiblockComponent
 import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.block.Blocks
@@ -89,15 +88,6 @@ object RagiumMultiblockMaps {
         .addCross4(-1..1, 2, 1..3, HTSimpleMultiblockComponent(Blocks.WHITE_CONCRETE))
         .addCross4(-1..1, 3, 1..3, HTSimpleMultiblockComponent(Blocks.RED_CONCRETE))
         .add(0, 4, 2, HTSimpleMultiblockComponent(Blocks.WHITE_CONCRETE))
-        .build()
-
-    @JvmField
-    val EXTENDED_PROCESSOR: HTMultiblockMap.Relative = HTMultiblockMap
-        .builder()
-        .addLayer(-1..1, -1, 1..3, CASING)
-        .addHollow(-1..1, 0, 1..3, HULL)
-        .addLayer(-1..1, 1, 1..3, STORAGE_BLOCK)
-        .add(0, 0, 2, HTMachineMultiblockComponent)
         .build()
 
     @JvmField

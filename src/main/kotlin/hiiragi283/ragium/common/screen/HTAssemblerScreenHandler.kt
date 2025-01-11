@@ -16,14 +16,14 @@ class HTAssemblerScreenHandler(syncId: Int, playerInv: PlayerInventory, machine:
     init {
         inventory.onOpen(player)
         // inputs
-        addSlot(0, 2, 1)
-        addSlot(1, 3, 1)
-        addSlot(2, 2, 2)
-        addSlot(3, 3, 2)
+        addSlot(0, 1, 1)
+        addSlot(1, 2, 1)
+        addSlot(2, 1, 2)
+        addSlot(3, 2, 2)
         // catalyst
         addSlot(4, 4, 2)
         // outputs
-        addOutputSlot(4, 5, 1)
+        addOutputSlot(4, 6, 1)
 
         // player inventory
         addPlayerInv()
