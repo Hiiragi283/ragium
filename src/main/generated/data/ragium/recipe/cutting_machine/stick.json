@@ -1,13 +1,7 @@
 {
-  "type": "ragium:machine",
-  "definition": {
-    "type": "ragium:cutting_machine",
-    "tier": "primitive"
-  },
-  "item_inputs": [
-    "#minecraft:planks"
-  ],
-  "item_outputs": [
+  "type": "ragium:cutting_machine",
+  "input": "#minecraft:planks",
+  "outputs": [
     {
       "count": 4,
       "item": "minecraft:stick"
