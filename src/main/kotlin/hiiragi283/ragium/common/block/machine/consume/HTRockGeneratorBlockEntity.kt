@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
+import hiiragi283.ragium.common.recipe.processor.HTMachineRecipeProcessor
 import hiiragi283.ragium.common.screen.HTRockGeneratorScreenHandler
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage

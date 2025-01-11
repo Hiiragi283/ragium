@@ -34,43 +34,4 @@ class HTSimpleMachineScreenHandler(syncId: Int, playerInv: PlayerInventory, ctx:
 
     override val inputSlots: IntRange = (0..1)
     override val outputSlots: IntRange = (3..4)
-
-    /*override fun quickMove(player: PlayerEntity, slot: Int): ItemStack {
-        var result: ItemStack = ItemStack.EMPTY
-        val slotIn: Slot = slots[slot]
-        if (slotIn.hasStack()) {
-            val stackIn: ItemStack = slotIn.stack
-            result = stackIn.copy()
-            when {
-                slot in (0..4) -> {
-                    if (!insertItem(stackIn, 5, 5 + 36, true)) {
-                        return ItemStack.EMPTY
-                    }
-                }
-
-                else -> {
-                    if (insertItem(stackIn, 0, 5, false)) {
-                        if (!insertItem(stackIn, 5, 5 + 36, false)) {
-                            return ItemStack.EMPTY
-                        }
-                    }
-                }
-            }
-
-            if (stackIn.isEmpty) {
-                slotIn.stack = ItemStack.EMPTY
-            } else {
-                slotIn.markDirty()
-            }
-
-            if (stackIn.count == result.count) {
-                return ItemStack.EMPTY
-            }
-            slotIn.onTakeItem(player, stackIn)
-            if (slot == 0) {
-                player.dropItem(stackIn, false)
-            }
-        }
-        return result
-    }*/
 }

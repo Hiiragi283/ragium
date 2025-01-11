@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.HTMachineFluidStorage
 import hiiragi283.ragium.api.storage.HTMachineInventory
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.recipe.HTFurnaceRecipeProcessor
+import hiiragi283.ragium.common.recipe.processor.HTFurnaceRecipeProcessor
 import hiiragi283.ragium.common.screen.HTSmallMachineScreenHandler
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity

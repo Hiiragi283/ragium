@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.extension.registryEntry
+import hiiragi283.ragium.api.storage.HTItemVariantStack
 import net.minecraft.component.ComponentChanges
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
@@ -102,6 +103,9 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
     val stack: ItemStack get() = ItemStack(firstEntry, count, components)
     val isEmpty: Boolean
         get() = firstEntry.value().isAir
+
+    val variantStack: HTItemVariantStack
+        get() = HTItemVariantStack(stack)
 
     /**
      * 指定した[other]にマージできるか判定します。

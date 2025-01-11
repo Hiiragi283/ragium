@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.processor
 
 import hiiragi283.ragium.api.extension.getStackOrEmpty
 import hiiragi283.ragium.api.extension.mergeStack

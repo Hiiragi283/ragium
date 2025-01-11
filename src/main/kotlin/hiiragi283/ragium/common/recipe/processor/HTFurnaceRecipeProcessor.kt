@@ -1,7 +1,6 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.processor
 
 import hiiragi283.ragium.api.extension.mergeStack
-import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTItemResult
@@ -10,42 +9,35 @@ import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.api.util.HTMachineException
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
+import net.minecraft.recipe.AbstractCookingRecipe
 import net.minecraft.recipe.RecipeType
-import net.minecraft.recipe.StonecuttingRecipe
 import net.minecraft.recipe.input.SingleStackRecipeInput
 import net.minecraft.world.World
+import kotlin.math.min
 
-class HTStoneCuttingRecipeProcessor(
+class HTFurnaceRecipeProcessor<T : AbstractCookingRecipe>(
+    recipeType: RecipeType<T>,
     private val inventory: Inventory,
     private val inputIndex: Int,
     private val outputIndex: Int,
-    private val targetIndex: Int,
 ) : HTRecipeProcessor {
-    private val recipeCache: HTRecipeCache<SingleStackRecipeInput, StonecuttingRecipe> =
-        HTRecipeCache(RecipeType.STONECUTTING)
+    private val recipeCache: HTRecipeCache<SingleStackRecipeInput, T> = HTRecipeCache(recipeType)
 
     override fun process(world: World, key: HTMachineKey, tier: HTMachineTier): Result<Unit> {
         val inputStack: ItemStack = inventory.getStack(inputIndex)
-        val targetStack: ItemStack = inventory.getStack(targetIndex)
+        val processCount: Int = min(inputStack.count, tier.smelterMulti)
         return recipeCache
-            .getAllMatches(SingleStackRecipeInput(inputStack), world)
-            .flatMap { recipes: List<StonecuttingRecipe> ->
-                recipes
-                    .firstOrNull { recipe: StonecuttingRecipe ->
-                        ItemStack.areItemsAndComponentsEqual(
-                            recipe.getResult(world.registryManager),
-                            targetStack,
-                        )
-                    }.toDataResult { "Failed to find matching recipe" }
-            }.runCatching {
-                val recipe: StonecuttingRecipe = getOrThrow(HTMachineException::NoMatchingRecipe)
+            .getFirstMatch(SingleStackRecipeInput(inputStack), world)
+            .runCatching {
+                val recipe: T = getOrThrow(HTMachineException::NoMatchingRecipe)
                 val resultStack: ItemStack = recipe.getResult(world.registryManager).copy()
+                resultStack.count *= processCount
                 val output: HTItemResult = HTItemResult.fromStack(resultStack)
                 if (!output.canMerge(inventory.getStack(outputIndex))) {
                     throw HTMachineException.MergeResult(false)
                 }
                 inventory.mergeStack(outputIndex, output)
-                inputStack.count -= 1
+                inputStack.decrement(processCount)
             }
     }
 }

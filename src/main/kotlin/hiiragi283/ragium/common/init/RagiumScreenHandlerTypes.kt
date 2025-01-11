@@ -13,6 +13,10 @@ import net.minecraft.screen.ScreenHandlerType
 
 object RagiumScreenHandlerTypes {
     @JvmField
+    val ASSEMBLER: ScreenHandlerType<HTAssemblerScreenHandler> =
+        register("assembler", ::HTAssemblerScreenHandler)
+
+    @JvmField
     val CHEMICAL_MACHINE: ScreenHandlerType<HTChemicalMachineScreenHandler> =
         register("chemical_machine", ::HTChemicalMachineScreenHandler)
 

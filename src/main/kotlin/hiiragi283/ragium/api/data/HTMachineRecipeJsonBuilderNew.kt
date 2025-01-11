@@ -245,10 +245,15 @@ class HTMachineRecipeJsonBuilderNew private constructor(recipeType: HTMachineRec
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeJsonBuilderNew = apply {
         catalyst = HTItemIngredient.of(tagKey)
     }
-    
+
     //    Complete    //
 
-    fun offerTo(exporter: RecipeExporter, prefix: HTTagPrefix, materialKey: HTMaterialKey, suffix: String = "") {
+    fun offerTo(
+        exporter: RecipeExporter,
+        prefix: HTTagPrefix,
+        materialKey: HTMaterialKey,
+        suffix: String = "",
+    ) {
         offerTo(exporter, prefix.createTag(materialKey).id.withSuffixedPath(suffix))
     }
 

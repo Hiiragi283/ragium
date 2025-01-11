@@ -134,25 +134,33 @@ class HTMachineFluidStorage(private val parts: List<HTTieredFluidStorage>) :
             slots.forEach { setIO(it, HTStorageIO.GENERIC) }
         }
 
-        fun build(tier: HTMachineTier): HTMachineFluidStorage = slotArray
-            .mapIndexed { index: Int, storageIO: HTStorageIO ->
-                HTTieredFluidStorage(
-                    tier,
-                    storageIO,
-                    null,
-                    syncIndex = index,
-                )
-            }.let(::HTMachineFluidStorage)
+        fun build(tier: HTMachineTier): HTMachineFluidStorage = when {
+            slotArray.isEmpty() || slotArray.all { it == HTStorageIO.INTERNAL } -> EMPTY
+            else ->
+                slotArray
+                    .mapIndexed { index: Int, storageIO: HTStorageIO ->
+                        HTTieredFluidStorage(
+                            tier,
+                            storageIO,
+                            null,
+                            syncIndex = index,
+                        )
+                    }.let(::HTMachineFluidStorage)
+        }
 
-        fun <T> build(machine: T): HTMachineFluidStorage where T : BlockEntity, T : HTMachineTierProvider = slotArray
-            .mapIndexed { index: Int, storageIO: HTStorageIO ->
-                HTTieredFluidStorage(
-                    machine.tier,
-                    storageIO,
-                    null,
-                    machine::markDirty,
-                    index,
-                )
-            }.let(::HTMachineFluidStorage)
+        fun <T> build(machine: T): HTMachineFluidStorage where T : BlockEntity, T : HTMachineTierProvider = when {
+            slotArray.isEmpty() || slotArray.all { it == HTStorageIO.INTERNAL } -> EMPTY
+            else ->
+                slotArray
+                    .mapIndexed { index: Int, storageIO: HTStorageIO ->
+                        HTTieredFluidStorage(
+                            machine.tier,
+                            storageIO,
+                            null,
+                            machine::markDirty,
+                            index,
+                        )
+                    }.let(::HTMachineFluidStorage)
+        }
     }
 }

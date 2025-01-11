@@ -1,9 +1,29 @@
 package hiiragi283.ragium.api.recipe
 
+import hiiragi283.ragium.api.storage.HTFluidVariantStack
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.minecraft.item.ItemStack
 
 object HTShapelessInputResolver {
     //    Fluid    //
+
+    @JvmStatic
+    fun canMatch(storage: Storage<FluidVariant>, stacks: Collection<HTFluidVariantStack>): Boolean {
+        if (!storage.supportsExtraction()) return false
+        val stacks1: MutableList<HTFluidVariantStack> = stacks.filterNot(HTFluidVariantStack::isEmpty).toMutableList()
+        if (stacks1.isEmpty()) return false
+        var successCount = 0
+        for (stack: HTFluidVariantStack in stacks1) {
+            val (variant: FluidVariant, amount: Long) = stack
+            if (StorageUtil.tryInsertStacking(storage, variant, amount, null) == amount) {
+                stacks1.remove(stack)
+                successCount++
+            }
+        }
+        return stacks1.isEmpty() && stacks.size == successCount
+    }
 
     //    Item    //
 
