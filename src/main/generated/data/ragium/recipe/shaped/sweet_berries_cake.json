@@ -3,13 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "fabric:type": "fabric:components",
-      "base": {
-        "item": "ragium:filled_fluid_cube"
-      },
-      "components": {
-        "ragium:fluid": "ragium:milk"
-      }
+      "item": "ragium:milk_cube"
     },
     "B": {
       "item": "minecraft:sweet_berries"

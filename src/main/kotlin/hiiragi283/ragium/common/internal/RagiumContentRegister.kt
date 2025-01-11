@@ -344,10 +344,23 @@ internal object RagiumContentRegister {
         FluidStorage
             .combinedItemApiProvider(RagiumItems.EMPTY_FLUID_CUBE.get())
             .register(::HTEmptyFluidCubeStorage)
+
         RagiumBlocks.Drums.entries
             .map(RagiumBlocks.Drums::asItem)
             .map(FluidStorage::combinedItemApiProvider)
             .forEach { event: Event<FluidStorage.CombinedItemApiProvider> -> event.register(HTTieredFluidItemStorage::find) }
+
+        RagiumItems.FluidCubes.entries.forEach { fluidCube: RagiumItems.FluidCubes ->
+            FluidStorage.combinedItemApiProvider(fluidCube.get()).register { context: ContainerItemContext ->
+                FullItemFluidStorage(
+                    context,
+                    RagiumItems.EMPTY_FLUID_CUBE.get(),
+                    fluidCube.fluid.variant,
+                    FluidConstants.BUCKET,
+                )
+            }
+        }
+
         FluidStorage.GENERAL_COMBINED_PROVIDER.register { context: ContainerItemContext ->
             if (context.itemVariant.isOf(RagiumItems.FILLED_FLUID_CUBE)) {
                 context

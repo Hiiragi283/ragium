@@ -22,13 +22,16 @@ class HTEmptyFluidCubeStorage(val context: ContainerItemContext) : InsertionOnly
         StoragePreconditions.notBlankNotNegative(resource, maxAmount)
         if (!context.itemVariant.isOf(RagiumItems.EMPTY_FLUID_CUBE)) return 0
         if (maxAmount >= FluidConstants.BUCKET) {
-            val newVariant: ItemVariant = ItemVariant.of(
-                RagiumItems.FILLED_FLUID_CUBE,
-                ComponentChanges
-                    .builder()
-                    .add(RagiumComponentTypes.FLUID, resource.registryEntry)
-                    .build(),
-            )
+            val newVariant: ItemVariant = resource.fluid
+                .let(RagiumItems.FluidCubes::fromFluid)
+                ?.let(ItemVariant::of)
+                ?: ItemVariant.of(
+                    RagiumItems.FILLED_FLUID_CUBE,
+                    ComponentChanges
+                        .builder()
+                        .add(RagiumComponentTypes.FLUID, resource.registryEntry)
+                        .build(),
+                )
             if (context.exchange(newVariant, 1, transaction) == 1L) {
                 return FluidConstants.BUCKET
             }

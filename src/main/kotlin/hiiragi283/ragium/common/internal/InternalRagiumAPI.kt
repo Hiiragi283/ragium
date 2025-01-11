@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -65,11 +66,13 @@ internal data object InternalRagiumAPI : RagiumAPI {
     override fun createFluidDrinkCriterion(entryList: RegistryEntryList<Fluid>): AdvancementCriterion<HTDrankFluidCriterion.Condition> =
         HTDrankFluidCriterion.create(entryList)
 
-    override fun createFilledCube(entry: RegistryEntry<Fluid>, count: Int): ItemStack = buildItemStack(
-        RagiumItems.FILLED_FLUID_CUBE,
-        count,
-    ) {
-        add(RagiumComponentTypes.FLUID, entry)
+    override fun createFilledCube(entry: RegistryEntry<Fluid>, count: Int): ItemStack {
+        val item: HTItemContent = entry.value().let(RagiumItems.FluidCubes::fromFluid) ?: RagiumItems.FILLED_FLUID_CUBE
+        return buildItemStack(item, count) {
+            if (item == RagiumItems.FILLED_FLUID_CUBE) {
+                add(RagiumComponentTypes.FLUID, entry)
+            }
+        }
     }
 
     override fun createHardModeCondition(value: Boolean): ResourceCondition = HTHardModeResourceCondition(value)

@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:item/static_fluid_cube",
+  "textures": {
+    "inside": "minecraft:block/orange_concrete"
+  }
+}

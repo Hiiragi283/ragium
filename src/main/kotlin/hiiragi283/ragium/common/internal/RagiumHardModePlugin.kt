@@ -124,8 +124,6 @@ object RagiumHardModePlugin : RagiumPlugin {
             val id: Identifier = entry.id ?: return@forEach
             val fluid: Fluid = entry.value()
             if (!fluid.isStill(fluid.defaultState)) return@forEach
-            val bucket: Item = fluid.bucketItem
-            if (bucket.isAir) return@forEach
             // insert to cube
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.INFUSER, ::HTDefaultMachineRecipe)
@@ -133,6 +131,8 @@ object RagiumHardModePlugin : RagiumPlugin {
                 .fluidInput(fluid)
                 .itemOutput(RagiumAPI.getInstance().createFilledCube(fluid))
                 .offerTo(exporter, id.withPrefixedPath("filling_cube/"))
+            val bucket: Item = fluid.bucketItem
+            if (bucket.isAir) return@forEach
             // insert to bucket
             HTMachineRecipeJsonBuilder
                 .create(RagiumMachineKeys.INFUSER, ::HTDefaultMachineRecipe)

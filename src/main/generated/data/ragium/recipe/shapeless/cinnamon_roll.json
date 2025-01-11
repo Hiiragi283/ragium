@@ -9,13 +9,7 @@
       "item": "ragium:cinnamon_powder"
     },
     {
-      "fabric:type": "fabric:components",
-      "base": {
-        "item": "ragium:filled_fluid_cube"
-      },
-      "components": {
-        "ragium:fluid": "ragium:milk"
-      }
+      "item": "ragium:milk_cube"
     }
   ],
   "result": {

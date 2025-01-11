@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -16,6 +17,8 @@ import net.minecraft.component.type.AttributeModifierSlot
 import net.minecraft.component.type.FoodComponents
 import net.minecraft.entity.attribute.EntityAttributeModifier
 import net.minecraft.entity.attribute.EntityAttributes
+import net.minecraft.fluid.Fluid
+import net.minecraft.fluid.Fluids
 import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
@@ -438,6 +441,27 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey(name.lowercase())
     }
 
+    enum class FluidCubes(val fluid: HTFluidContent) : HTItemContent {
+        WATER(HTContent.fromFluid(Fluids.WATER)),
+        LAVA(HTContent.fromFluid(Fluids.LAVA)),
+        MILK(RagiumFluids.MILK),
+        HONEY(RagiumFluids.HONEY),
+        ;
+
+        companion object {
+            @JvmStatic
+            fun fromFluid(fluid: Fluid): FluidCubes? = when (fluid) {
+                Fluids.WATER -> WATER
+                Fluids.LAVA -> LAVA
+                RagiumFluids.MILK.get() -> MILK
+                RagiumFluids.HONEY.get() -> HONEY
+                else -> null
+            }
+        }
+
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_cube")
+    }
+
     @JvmField
     val BEE_WAX: HTItemContent = HTContent.ofItem("bee_wax")
 
@@ -817,6 +841,7 @@ object RagiumItems {
                 }.radioactive(radioactive.level),
             )
         }
+        FluidCubes.entries.forEach(::registerItem)
 
         INGREDIENTS.forEach { ingredient: HTItemContent ->
             when (ingredient) {

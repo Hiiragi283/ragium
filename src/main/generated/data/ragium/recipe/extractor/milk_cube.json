@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    "ragium:milk"
+  ],
+  "item_inputs": [
+    "ragium:milk_cube"
+  ],
+  "item_outputs": [
+    "ragium:empty_fluid_cube"
+  ],
+  "machine_type": "ragium:extractor"
+}
