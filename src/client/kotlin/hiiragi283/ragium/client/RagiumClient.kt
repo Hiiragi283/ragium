@@ -14,7 +14,9 @@ import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.client.gui.HTFluidFilterScreen
 import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
+import hiiragi283.ragium.client.model.HTBackpackModel
 import hiiragi283.ragium.client.model.HTFluidCubeModel
+import hiiragi283.ragium.client.model.HTMaterialItemModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
@@ -61,7 +63,6 @@ import net.minecraft.particle.SimpleParticleType
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.sound.SoundEvent
 import net.minecraft.text.Text
-import net.minecraft.util.DyeColor
 import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.TypedActionResult
@@ -183,9 +184,6 @@ object RagiumClient : ClientModInitializer {
 
     @JvmStatic
     private fun registerItems() {
-        ColorProviderRegistry.ITEM.register({ stack: ItemStack, _: Int ->
-            stack.ifPresent(RagiumComponentTypes.COLOR, -1, DyeColor::getEntityColor)
-        }, RagiumItems.BACKPACK.get())
     }
 
     //    Screens    //
@@ -259,14 +257,19 @@ object RagiumClient : ClientModInitializer {
                 }
             }*/
             // register item model resolver
-            context.modifyModelOnLoad().register onLoad@{ original: UnbakedModel, _: ModelModifier.OnLoad.Context ->
-                when {
-                    RagiumAPI.id("block/dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.INACTIVE
-                    RagiumAPI.id("block/active_dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.ACTIVE
-                    RagiumAPI.id("item/fluid_cube") in original.modelDependencies -> HTFluidCubeModel
-                    else -> original
+            context
+                .modifyModelOnLoad()
+                .register onLoad@{ original: UnbakedModel, context1: ModelModifier.OnLoad.Context ->
+                    // logger.info(context1.resourceId()?.toString())
+                    when {
+                        RagiumAPI.id("block/dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.INACTIVE
+                        RagiumAPI.id("block/active_dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.ACTIVE
+                        RagiumAPI.id("item/fluid_cube") in original.modelDependencies -> HTFluidCubeModel
+                        RagiumAPI.id("item/dynamic_backpack") in original.modelDependencies -> HTBackpackModel
+                        RagiumAPI.id("item/colored_material") in original.modelDependencies -> HTMaterialItemModel
+                        else -> null
+                    } ?: original
                 }
-            }
             logger.info("Loaded runtime models!")
         }
 
