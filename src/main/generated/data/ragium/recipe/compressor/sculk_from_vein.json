@@ -1,0 +1,8 @@
+{
+  "type": "ragium:compressor",
+  "input": {
+    "count": 16,
+    "items": "minecraft:sculk_vein"
+  },
+  "output": "minecraft:sculk"
+}

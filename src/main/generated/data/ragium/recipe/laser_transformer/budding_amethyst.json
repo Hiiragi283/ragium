@@ -1,0 +1,11 @@
+{
+  "type": "ragium:laser_transformer",
+  "inputs": [
+    {
+      "count": 4,
+      "items": "minecraft:amethyst_block"
+    }
+  ],
+  "output": "minecraft:budding_amethyst",
+  "tier": "basic"
+}

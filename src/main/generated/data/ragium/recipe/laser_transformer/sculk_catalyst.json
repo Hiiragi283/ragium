@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_transformer",
+  "inputs": [
+    {
+      "count": 8,
+      "items": "minecraft:sculk"
+    },
+    "minecraft:end_stone"
+  ],
+  "output": "minecraft:sculk_catalyst",
+  "tier": "basic"
+}

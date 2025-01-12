@@ -1,0 +1,12 @@
+{
+  "type": "ragium:laser_transformer",
+  "inputs": [
+    {
+      "count": 8,
+      "items": "minecraft:sculk"
+    },
+    "minecraft:amethyst_shard"
+  ],
+  "output": "minecraft:echo_shard",
+  "tier": "basic"
+}

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:glass"
+      "item": "minecraft:cyan_stained_glass"
     },
     "B": {
       "item": "ragium:led"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 4,
-    "id": "ragium:white_led_block"
+    "id": "ragium:cyan_led_block"
   }
 }
