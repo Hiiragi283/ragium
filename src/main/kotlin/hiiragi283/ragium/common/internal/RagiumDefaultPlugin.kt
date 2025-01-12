@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.data.HTMachineRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapedRecipeJsonBuilder
 import hiiragi283.ragium.api.data.HTShapelessRecipeJsonBuilder
 import hiiragi283.ragium.api.extension.aroundPos
+import hiiragi283.ragium.api.extension.id
+import hiiragi283.ragium.api.extension.isAir
 import hiiragi283.ragium.api.extension.isPopulated
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.material.*
@@ -20,15 +22,20 @@ import hiiragi283.ragium.common.recipe.HTDefaultMachineRecipe
 import hiiragi283.ragium.common.screen.*
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
 import net.minecraft.data.server.recipe.RecipeExporter
+import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.FluidState
 import net.minecraft.item.Item
 import net.minecraft.item.ItemConvertible
 import net.minecraft.item.Items
 import net.minecraft.particle.ParticleTypes
+import net.minecraft.registry.RegistryKeys
+import net.minecraft.registry.RegistryWrapper
+import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.tag.BiomeTags
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.sound.SoundEvents
+import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -416,6 +423,41 @@ object RagiumDefaultPlugin : RagiumPlugin {
         bindContents(RagiumItems.Ingots.entries)
         bindContents(RagiumItems.Plates.entries)
         bindContents(RagiumItems.RawMaterials.entries)
+    }
+
+    override fun registerRuntimeRecipe(
+        exporter: RecipeExporter,
+        lookup: RegistryWrapper.WrapperLookup,
+        helper: RagiumPlugin.RecipeHelper,
+    ) {
+        lookup.getWrapperOrThrow(RegistryKeys.FLUID).streamEntries().forEach { entry: RegistryEntry<Fluid> ->
+            val id: Identifier = entry.id ?: return@forEach
+            val fluid: Fluid = entry.value()
+            if (!fluid.isStill(fluid.defaultState)) return@forEach
+            // insert to cube
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.INFUSER, ::HTDefaultMachineRecipe)
+                .itemInput(RagiumItems.EMPTY_FLUID_CUBE)
+                .fluidInput(fluid)
+                .itemOutput(RagiumAPI.getInstance().createFilledCube(fluid))
+                .offerTo(exporter, id.withPrefixedPath("filling_cube/"))
+            val bucket: Item = fluid.bucketItem
+            if (bucket.isAir) return@forEach
+            // insert to bucket
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.INFUSER, ::HTDefaultMachineRecipe)
+                .itemInput(Items.BUCKET)
+                .fluidInput(fluid)
+                .itemOutput(bucket)
+                .offerTo(exporter, id.withPrefixedPath("filling_bucket/"))
+            // extract from bucket
+            HTMachineRecipeJsonBuilder
+                .create(RagiumMachineKeys.EXTRACTOR, ::HTDefaultMachineRecipe)
+                .itemInput(bucket)
+                .itemOutput(Items.BUCKET)
+                .fluidOutput(fluid)
+                .offerTo(exporter, id.withPrefixedPath("extract_bucket/"))
+        }
     }
 
     override fun registerRuntimeMaterialRecipes(

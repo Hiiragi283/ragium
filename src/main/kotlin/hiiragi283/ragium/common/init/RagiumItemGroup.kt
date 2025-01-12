@@ -71,6 +71,8 @@ object RagiumItemGroup {
 
                 entries.add(RagiumBlocks.PLASTIC_BLOCK)
                 entries.addAll(RagiumBlocks.Decorations.entries)
+
+                entries.addAll(RagiumBlocks.LEDBlocks.entries)
             }
         }
 

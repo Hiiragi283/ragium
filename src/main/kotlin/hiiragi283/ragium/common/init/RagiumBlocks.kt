@@ -25,6 +25,7 @@ import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
 import net.minecraft.registry.tag.FluidTags
 import net.minecraft.sound.BlockSoundGroup
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Rarity
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -158,6 +159,21 @@ object RagiumBlocks {
         ;
 
         override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_decoration")
+    }
+
+    enum class LEDBlocks(val colors: List<DyeColor>) : HTBlockContent {
+        RED(DyeColor.RED),
+        GREEN(DyeColor.GREEN),
+        BLUE(DyeColor.BLUE),
+        CYAN(DyeColor.GREEN, DyeColor.BLUE),
+        MAGENTA(DyeColor.RED, DyeColor.BLUE),
+        YELLOW(DyeColor.RED, DyeColor.GREEN),
+        WHITE(),
+        ;
+
+        constructor(vararg colors: DyeColor) : this(colors.toList())
+
+        override val key: RegistryKey<Block> = HTContent.blockKey("${name.lowercase()}_led_block")
     }
 
     //    Components    //
@@ -484,13 +500,6 @@ object RagiumBlocks {
             registerBlock(it, block = ::HTSurfaceLineBlock)
             registerBlockItem(it)
         }
-        // decoration
-        registerBlock(PLASTIC_BLOCK, blockSettings(Blocks.SMOOTH_STONE), ::Block)
-        registerBlockItem(PLASTIC_BLOCK)
-        Decorations.entries.forEach { decoration: Decorations ->
-            registerBlock(decoration, blockSettings(Blocks.SMOOTH_STONE), decoration.factory)
-            registerBlockItem(decoration)
-        }
         // glass
         registerBlock(
             Glasses.STEEL,
@@ -510,6 +519,19 @@ object RagiumBlocks {
         registerBlockItem(Glasses.STEEL, itemSettings().descriptions(RagiumTranslationKeys.STEEL_GLASS))
         registerBlockItem(Glasses.OBSIDIAN, itemSettings().descriptions(RagiumTranslationKeys.OBSIDIAN_GLASS))
         registerBlockItem(Glasses.RAGIUM, itemSettings().descriptions(RagiumTranslationKeys.RAGIUM_GLASS))
+        // decoration
+        registerBlock(PLASTIC_BLOCK, blockSettings(Blocks.SMOOTH_STONE), ::Block)
+        registerBlockItem(PLASTIC_BLOCK)
+        Decorations.entries.forEach { decoration: Decorations ->
+            registerBlock(decoration, blockSettings(Blocks.SMOOTH_STONE), decoration.factory)
+            registerBlockItem(decoration)
+        }
+        // led block
+        LEDBlocks.entries.forEach { ledBlock: LEDBlocks ->
+            registerBlock(ledBlock, blockSettings(Blocks.SMOOTH_STONE).luminance { 15 }, ::Block)
+            registerBlockItem(ledBlock)
+        }
+
         // storage block
         StorageBlocks.entries.forEach { storage: StorageBlocks ->
             registerSimpleBlock(storage, blockSettings(Blocks.IRON_BLOCK))

@@ -1,0 +1,14 @@
+{
+  "type": "ragium:assembler",
+  "inputs": [
+    {
+      "count": 8,
+      "items": "#c:ingots/steel"
+    },
+    {
+      "count": 8,
+      "items": "#c:ingots/ragi_steel"
+    }
+  ],
+  "output": "ragium:engine"
+}

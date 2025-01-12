@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import net.fabricmc.api.EnvType
 import net.fabricmc.fabric.api.lookup.v1.item.ItemApiLookup
+import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariantAttributes
@@ -309,6 +310,8 @@ val Fluid.isEmpty: Boolean
     get() = this == Fluids.EMPTY
 
 //    Identifier    //
+
+fun commonId(path: String): Identifier = Identifier.of(TagUtil.C_TAG_NAMESPACE, path)
 
 /**
  * [Identifier]を[splitter]で分割された文字列として返します。

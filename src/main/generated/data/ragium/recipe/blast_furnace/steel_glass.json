@@ -1,0 +1,17 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    "#c:ingots/steel",
+    {
+      "count": 4,
+      "items": "#c:glass_blocks/colorless"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "item": "ragium:steel_glass"
+    }
+  ],
+  "machine_type": "ragium:blast_furnace"
+}

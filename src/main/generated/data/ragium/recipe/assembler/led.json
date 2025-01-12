@@ -1,0 +1,12 @@
+{
+  "type": "ragium:assembler",
+  "inputs": [
+    "ragium:luminescence_dust",
+    "#c:glass_blocks/colorless",
+    "#c:ingots/copper"
+  ],
+  "output": {
+    "count": 4,
+    "item": "ragium:led"
+  }
+}

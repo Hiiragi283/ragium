@@ -2,14 +2,14 @@ package hiiragi283.ragium.api.material
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.commonId
 import hiiragi283.ragium.api.extension.identifiedCodec
 import hiiragi283.ragium.api.extension.identifiedPacketCodec
-import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
+import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.component.ComponentType
 import net.minecraft.item.Item
 import net.minecraft.network.RegistryByteBuf
 import net.minecraft.network.codec.PacketCodec
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
@@ -41,10 +41,10 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     companion object {
         @JvmField
-        val CODEC: Codec<HTTagPrefix> = identifiedCodec(entries)
+        val CODEC: Codec<HTTagPrefix> = identifiedCodec(HTTagPrefix.entries)
 
         @JvmField
-        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTagPrefix> = identifiedPacketCodec(entries)
+        val PACKET_CODEC: PacketCodec<RegistryByteBuf, HTTagPrefix> = identifiedPacketCodec(HTTagPrefix.entries)
 
         @JvmField
         val COMPONENT_TYPE: ComponentType<HTTagPrefix> =
@@ -63,11 +63,9 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     //    TagKey    //
 
-    private fun commonId(path: String): Identifier = Identifier.of(TagUtil.C_TAG_NAMESPACE, path)
+    val commonTagKey: TagKey<Item> = itemTagKey(commonId(prefix))
 
-    val commonTagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId(prefix))
-
-    fun createTag(key: HTMaterialKey): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, commonId("$prefix/${key.name}"))
+    fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$prefix/${key.name}"))
 
     //    Translation    //
 

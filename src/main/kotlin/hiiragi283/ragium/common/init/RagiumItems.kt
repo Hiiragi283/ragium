@@ -23,7 +23,6 @@ import net.minecraft.item.*
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
@@ -378,7 +377,7 @@ object RagiumItems {
 
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_plastic")
 
-        val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "plastics/${name.lowercase()}"))
+        val tagKey: TagKey<Item> = itemTagKey(commonId("plastics/${name.lowercase()}"))
     }
 
     enum class CircuitBoards(override val tier: HTMachineTier) :

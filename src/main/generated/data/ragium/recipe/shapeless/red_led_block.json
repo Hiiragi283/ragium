@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:white_led_block"
+    },
+    {
+      "item": "ragium:white_led_block"
+    },
+    {
+      "item": "ragium:white_led_block"
+    },
+    {
+      "item": "ragium:white_led_block"
+    },
+    {
+      "tag": "c:dyes/red"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "ragium:red_led_block"
+  }
+}

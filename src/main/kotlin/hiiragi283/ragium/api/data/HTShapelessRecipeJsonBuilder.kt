@@ -62,16 +62,17 @@ class HTShapelessRecipeJsonBuilder private constructor(val output: ItemStack) : 
         this.category = category
     }
 
-    fun input(prefix: HTTagPrefix, material: HTMaterialKey): HTShapelessRecipeJsonBuilder = input(prefix.createTag(material))
+    fun input(prefix: HTTagPrefix, material: HTMaterialKey, count: Int = 1): HTShapelessRecipeJsonBuilder =
+        input(prefix.createTag(material), count)
 
-    fun input(content: HTMaterialProvider): HTShapelessRecipeJsonBuilder = input(content.prefixedTagKey)
+    fun input(content: HTMaterialProvider, count: Int = 1): HTShapelessRecipeJsonBuilder = input(content.prefixedTagKey, count)
 
-    fun input(item: ItemConvertible): HTShapelessRecipeJsonBuilder = input(Ingredient.ofItems(item))
+    fun input(item: ItemConvertible, count: Int = 1): HTShapelessRecipeJsonBuilder = input(Ingredient.ofItems(item), count)
 
-    fun input(tagKey: TagKey<Item>): HTShapelessRecipeJsonBuilder = input(Ingredient.fromTag(tagKey))
+    fun input(tagKey: TagKey<Item>, count: Int = 1): HTShapelessRecipeJsonBuilder = input(Ingredient.fromTag(tagKey), count)
 
-    fun input(ingredient: Ingredient): HTShapelessRecipeJsonBuilder = apply {
-        inputs.add(ingredient)
+    fun input(ingredient: Ingredient, count: Int = 1): HTShapelessRecipeJsonBuilder = apply {
+        repeat(count) { inputs.add(ingredient) }
     }
 
     fun unlockedBy(prefix: HTTagPrefix, material: HTMaterialKey): HTShapelessRecipeJsonBuilder = unlockedBy(prefix.createTag(material))

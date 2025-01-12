@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:dusts/raginite"
+    },
+    "B": {
+      "tag": "c:ingots/steel"
+    },
+    "C": {
+      "tag": "c:ingots/gold"
+    },
+    "D": {
+      "item": "ragium:primitive_circuit"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:basic_circuit"
+  }
+}

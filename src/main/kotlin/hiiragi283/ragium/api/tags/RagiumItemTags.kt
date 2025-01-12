@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.tags
 
-import net.fabricmc.fabric.api.tag.convention.v2.TagUtil
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.itemTagKey
 import net.minecraft.item.Item
-import net.minecraft.registry.RegistryKeys
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.util.Identifier
 
@@ -23,8 +23,8 @@ object RagiumItemTags {
     val REFINED_SILICON_PLATES: TagKey<Item> = create("plates/refined_silicon")
 
     @JvmStatic
-    fun create(namespace: String, path: String): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.of(namespace, path))
+    fun create(namespace: String, path: String): TagKey<Item> = itemTagKey(Identifier.of(namespace, path))
 
     @JvmStatic
-    fun create(path: String): TagKey<Item> = create(TagUtil.C_TAG_NAMESPACE, path)
+    fun create(path: String): TagKey<Item> = itemTagKey(commonId(path))
 }

@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.codec.RagiumCodecs
 import hiiragi283.ragium.api.extension.isAir
+import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.extension.registryEntry
 import hiiragi283.ragium.api.storage.HTItemVariantStack
 import net.minecraft.component.ComponentChanges
@@ -47,7 +48,7 @@ sealed class HTItemResult(val count: Int, val components: ComponentChanges) {
 
                 override fun decode(buf: RegistryByteBuf): HTItemResult = when (buf.readBoolean()) {
                     true -> {
-                        val tagKey: TagKey<Item> = TagKey.of(RegistryKeys.ITEM, Identifier.PACKET_CODEC.decode(buf))
+                        val tagKey: TagKey<Item> = itemTagKey(Identifier.PACKET_CODEC.decode(buf))
                         val count: Int = buf.readVarInt()
                         val components: ComponentChanges = ComponentChanges.PACKET_CODEC.decode(buf)
                         TagEntry(tagKey, count, components)

@@ -1,16 +1,17 @@
 package hiiragi283.ragium.api.extension
 
 import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions
-import net.minecraft.registry.BuiltinRegistries
-import net.minecraft.registry.Registry
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryWrapper
+import net.minecraft.block.Block
+import net.minecraft.fluid.Fluid
+import net.minecraft.item.Item
+import net.minecraft.registry.*
 import net.minecraft.registry.entry.RegistryEntry
 import net.minecraft.registry.entry.RegistryEntryList
 import net.minecraft.registry.tag.TagKey
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.text.Texts
+import net.minecraft.util.DyeColor
 import net.minecraft.util.Identifier
 import kotlin.jvm.optionals.getOrNull
 
@@ -78,7 +79,16 @@ fun <T : Any> RegistryEntryList<T>.asText(transform: (T) -> Text): MutableText =
 
 //    TagKey    //
 
+fun blockTagKey(id: Identifier): TagKey<Block> = TagKey.of(RegistryKeys.BLOCK, id)
+
+fun fluidTagKey(id: Identifier): TagKey<Fluid> = TagKey.of(RegistryKeys.FLUID, id)
+
+fun itemTagKey(id: Identifier): TagKey<Item> = TagKey.of(RegistryKeys.ITEM, id)
+
 /**
  * 指定した[TagKey]が読み込まれているかどうか判定します。
  */
 fun TagKey<*>.isPopulated(): Boolean = ResourceConditions.tagsPopulated(this).test(null)
+
+val DyeColor.tagKey: TagKey<Item>
+    get() = itemTagKey(commonId("dyes/${this.asString()}"))
