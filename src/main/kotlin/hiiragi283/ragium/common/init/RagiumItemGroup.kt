@@ -138,6 +138,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItems.Circuits.entries)
                 entries.addAll(RagiumItems.Processors.entries)
                 entries.addAll(RagiumItems.PressMolds.entries)
+                entries.addAll(RagiumItems.Catalysts.entries)
                 entries.addAll(RagiumItems.Radioactives.entries)
                 entries.addAll(RagiumItems.INGREDIENTS)
 

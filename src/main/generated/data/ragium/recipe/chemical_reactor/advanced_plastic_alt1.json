@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:oxidization_catalyst",
+  "fluid_inputs": [
+    {
+      "amount": 9000,
+      "fluids": "#c:aromatic_compounds"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "item": "ragium:advanced_plastic"
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

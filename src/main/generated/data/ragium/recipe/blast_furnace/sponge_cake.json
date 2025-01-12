@@ -1,9 +1,10 @@
 {
   "type": "ragium:machine",
   "fluid_inputs": [
-    "#c:batter"
+    "#c:milk"
   ],
   "item_inputs": [
+    "ragium:flour",
     "ragium:butter"
   ],
   "item_outputs": [

@@ -457,8 +457,5 @@ internal object RagiumContentRegister {
         consumer(RagiumFluids.HONEY.get()) { _: ItemStack, world: World, user: LivingEntity ->
             user.removeStatusEffect(StatusEffects.POISON)
         }
-        consumer(RagiumFluids.CHOCOLATE.get()) { _: ItemStack, world: World, user: LivingEntity ->
-            user.addStatusEffect(StatusEffects.STRENGTH, 20 * 5, 1)
-        }
     }
 }

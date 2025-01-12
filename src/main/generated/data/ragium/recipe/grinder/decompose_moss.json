@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:moss_block",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:moss_carpet"
+    }
+  ]
+}

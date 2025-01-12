@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:storage_blocks/gold"
+    },
+    "B": {
+      "item": "ragium:fluorite"
+    },
+    "C": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:reduction_catalyst"
+  }
+}

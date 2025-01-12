@@ -1,0 +1,11 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:reduction_catalyst",
+  "item_inputs": [
+    "minecraft:oxidized_cut_copper"
+  ],
+  "item_outputs": [
+    "minecraft:cut_copper"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

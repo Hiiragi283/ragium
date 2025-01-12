@@ -1,6 +1,0 @@
-{
-  "type": "ragium:compressor",
-  "catalyst": "minecraft:glass",
-  "input": "ragium:polymer_resin",
-  "output": "minecraft:glass"
-}

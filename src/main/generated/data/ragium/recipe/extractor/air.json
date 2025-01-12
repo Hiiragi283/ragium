@@ -10,8 +10,7 @@
     {
       "amount": 324000,
       "fluid": "ragium:nitrogen"
-    },
-    "ragium:oxygen"
+    }
   ],
   "machine_type": "ragium:extractor"
 }

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:reduction_catalyst",
+  "fluid_inputs": [
+    "#c:carbon_dioxide"
+  ],
+  "item_outputs": [
+    "minecraft:coal"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

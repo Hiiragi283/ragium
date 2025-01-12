@@ -1,0 +1,11 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:cooling_catalyst",
+  "fluid_inputs": [
+    "minecraft:water"
+  ],
+  "item_outputs": [
+    "minecraft:snow_block"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

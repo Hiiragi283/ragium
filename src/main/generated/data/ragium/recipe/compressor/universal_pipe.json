@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": "ragium:pipe_press_mold",
+  "input": {
+    "count": 2,
+    "items": "#c:ingots/refined_ragi_steel"
+  },
+  "output": {
+    "count": 2,
+    "item": "ragium:universal_pipe"
+  }
+}

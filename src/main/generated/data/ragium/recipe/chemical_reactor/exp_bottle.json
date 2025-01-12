@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "fluids": "#c:experience"
+    }
+  ],
+  "item_inputs": [
+    "minecraft:glass_bottle"
+  ],
+  "item_outputs": [
+    "minecraft:experience_bottle"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

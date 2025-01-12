@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:gems/diamond"
+    },
+    "B": {
+      "item": "ragium:advanced_circuit"
+    },
+    "C": {
+      "item": "ragium:steel_glass"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:item_filtering_pipe"
+  }
+}

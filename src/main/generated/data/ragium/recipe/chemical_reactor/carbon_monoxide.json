@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:heating_catalyst",
+  "fluid_inputs": [
+    "#c:refined_gas",
+    "minecraft:water"
+  ],
+  "fluid_outputs": [
+    "ragium:hydrogen",
+    "ragium:carbon_monoxide"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

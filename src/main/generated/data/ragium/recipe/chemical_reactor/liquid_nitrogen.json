@@ -1,6 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": "minecraft:blue_ice",
+  "catalyst": "ragium:cooling_catalyst",
   "fluid_inputs": [
     {
       "amount": 648000,

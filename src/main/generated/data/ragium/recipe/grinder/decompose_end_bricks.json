@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:end_stone_bricks",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:end_stone"
+    }
+  ]
+}

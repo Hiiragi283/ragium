@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/refined_ragi_steel"
+    },
+    "B": {
+      "tag": "c:glass_blocks"
+    }
+  },
+  "pattern": [
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:universal_pipe"
+  }
+}

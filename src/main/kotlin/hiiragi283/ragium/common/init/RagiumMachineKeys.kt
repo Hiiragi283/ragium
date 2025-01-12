@@ -83,9 +83,6 @@ object RagiumMachineKeys {
     val DISTILLATION_TOWER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("distillation_tower"))
 
     @JvmField
-    val ELECTROLYZER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("electrolyzer"))
-
-    @JvmField
     val EXTRACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("extractor"))
 
     @JvmField
@@ -93,12 +90,6 @@ object RagiumMachineKeys {
 
     @JvmField
     val GROWTH_CHAMBER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("growth_chamber"))
-
-    @JvmField
-    val INFUSER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("infuser"))
-
-    @JvmField
-    val LARGE_CHEMICAL_REACTOR: HTMachineKey = HTMachineKey.of(RagiumAPI.id("large_chemical_reactor"))
 
     @JvmField
     val LASER_TRANSFORMER: HTMachineKey = HTMachineKey.of(RagiumAPI.id("laser_transformer"))
@@ -117,12 +108,9 @@ object RagiumMachineKeys {
         COMPRESSOR,
         CUTTING_MACHINE,
         DISTILLATION_TOWER,
-        ELECTROLYZER,
         EXTRACTOR,
         GRINDER,
         GROWTH_CHAMBER,
-        INFUSER,
-        LARGE_CHEMICAL_REACTOR,
         LASER_TRANSFORMER,
         MIXER,
         MULTI_SMELTER,

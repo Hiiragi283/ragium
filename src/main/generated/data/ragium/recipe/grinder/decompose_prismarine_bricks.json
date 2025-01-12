@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:prismarine_bricks",
+  "outputs": [
+    {
+      "count": 9,
+      "item": "minecraft:prismarine_shard"
+    }
+  ]
+}

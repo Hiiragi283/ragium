@@ -1,0 +1,11 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:reduction_catalyst",
+  "fluid_inputs": [
+    "#c:sulfur_dioxide"
+  ],
+  "item_outputs": [
+    "#c:dusts/sulfur"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

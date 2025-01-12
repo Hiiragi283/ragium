@@ -1,11 +1,6 @@
 {
   "type": "ragium:machine",
-  "fluid_inputs": [
-    {
-      "amount": 9000,
-      "fluids": "#c:oxygen"
-    }
-  ],
+  "catalyst": "ragium:oxidization_catalyst",
   "item_inputs": [
     "minecraft:copper_trapdoor"
   ],

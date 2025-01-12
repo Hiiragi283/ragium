@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:chemistry/sulfur_trioxide",
+  "parent": "ragium:chemistry/sulfur",
   "criteria": {
     "has_fluids": {
       "conditions": {

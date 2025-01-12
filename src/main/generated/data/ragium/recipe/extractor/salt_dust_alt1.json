@@ -1,0 +1,13 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "#c:salt_water"
+  ],
+  "fluid_outputs": [
+    "minecraft:water"
+  ],
+  "item_outputs": [
+    "#c:dusts/salt"
+  ],
+  "machine_type": "ragium:extractor"
+}

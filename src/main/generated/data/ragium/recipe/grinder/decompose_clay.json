@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:clay",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:clay_ball"
+    }
+  ]
+}

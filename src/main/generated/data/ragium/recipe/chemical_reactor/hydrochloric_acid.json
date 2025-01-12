@@ -1,0 +1,11 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "#c:hydrogen_chloride",
+    "minecraft:water"
+  ],
+  "fluid_outputs": [
+    "ragium:hydrochloric_acid"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

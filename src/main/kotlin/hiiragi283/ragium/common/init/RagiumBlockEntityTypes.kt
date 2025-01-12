@@ -86,10 +86,6 @@ object RagiumBlockEntityTypes {
         register("bedrock_miner", ::HTBedrockMinerBlockEntity)
 
     @JvmField
-    val CHEMICAL_PROCESSOR: BlockEntityType<HTChemicalRecipeProcessorBlockEntity> =
-        register("chemical_processor", HTChemicalRecipeProcessorBlockEntity::fromState)
-
-    @JvmField
     val COMBUSTION_GENERATOR: BlockEntityType<HTCombustionGeneratorBlockEntity> =
         register("combustion_generator", ::HTCombustionGeneratorBlockEntity)
 
@@ -124,10 +120,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val GRINDER: BlockEntityType<HTGrinderBlockEntity> =
         register("grinder", ::HTGrinderBlockEntity)
-
-    @JvmField
-    val LARGE_CHEMICAL_REACTOR: BlockEntityType<HTLargeChemicalReactorBlockEntity> =
-        register("large_chemical_reactor", ::HTLargeChemicalReactorBlockEntity)
 
     @JvmField
     val LARGE_PROCESSOR: BlockEntityType<HTLargeRecipeProcessorBlockEntity> =
@@ -233,17 +225,14 @@ object RagiumBlockEntityTypes {
         }
         registerMachineBlocks(RagiumMachineKeys.ASSEMBLER, ASSEMBLER)
         registerMachineBlocks(RagiumMachineKeys.BLAST_FURNACE, LARGE_PROCESSOR)
-        registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.CHEMICAL_REACTOR, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.COMPRESSOR, COMPRESSOR)
         registerMachineBlocks(RagiumMachineKeys.CUTTING_MACHINE, CUTTING_MACHINE)
         registerMachineBlocks(RagiumMachineKeys.DISTILLATION_TOWER, DISTILLATION_TOWER)
-        registerMachineBlocks(RagiumMachineKeys.ELECTROLYZER, CHEMICAL_PROCESSOR)
-        registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.EXTRACTOR, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.GRINDER, GRINDER)
-        registerMachineBlocks(RagiumMachineKeys.INFUSER, CHEMICAL_PROCESSOR)
-        registerMachineBlocks(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR, LARGE_CHEMICAL_REACTOR)
         registerMachineBlocks(RagiumMachineKeys.LASER_TRANSFORMER, LASER_TRANSFORMER)
-        registerMachineBlocks(RagiumMachineKeys.MIXER, CHEMICAL_PROCESSOR)
+        registerMachineBlocks(RagiumMachineKeys.MIXER, LARGE_PROCESSOR)
         registerMachineBlocks(RagiumMachineKeys.MULTI_SMELTER, MULTI_SMELTER)
     }
 

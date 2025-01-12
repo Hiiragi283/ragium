@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:purpur_block",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:popped_chorus_fruit"
+    }
+  ]
+}

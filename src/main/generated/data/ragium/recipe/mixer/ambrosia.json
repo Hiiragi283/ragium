@@ -3,10 +3,6 @@
   "fluid_inputs": [
     {
       "amount": 10368000,
-      "fluids": "#c:chocolate"
-    },
-    {
-      "amount": 10368000,
       "fluids": "#c:honey"
     }
   ],
@@ -14,6 +10,10 @@
     {
       "count": 64,
       "items": "ragium:cinnamon_powder"
+    },
+    {
+      "count": 64,
+      "items": "ragium:chocolate"
     }
   ],
   "item_outputs": [

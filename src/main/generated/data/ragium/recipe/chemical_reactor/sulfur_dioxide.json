@@ -1,8 +1,6 @@
 {
   "type": "ragium:machine",
-  "fluid_inputs": [
-    "#c:oxygen"
-  ],
+  "catalyst": "ragium:heating_catalyst",
   "fluid_outputs": [
     "ragium:sulfur_dioxide"
   ],

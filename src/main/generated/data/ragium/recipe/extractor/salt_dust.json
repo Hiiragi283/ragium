@@ -1,13 +1,20 @@
 {
   "type": "ragium:machine",
-  "fluid_inputs": [
-    "#c:salt_water"
-  ],
   "fluid_outputs": [
-    "minecraft:water"
+    "ragium:chlorine"
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "items": "#c:dusts/salt"
+    }
   ],
   "item_outputs": [
-    "#c:dusts/salt"
+    {
+      "count": 2,
+      "tag": "#c:dusts/alkali"
+    }
   ],
-  "machine_type": "ragium:extractor"
+  "machine_type": "ragium:extractor",
+  "tier": "basic"
 }

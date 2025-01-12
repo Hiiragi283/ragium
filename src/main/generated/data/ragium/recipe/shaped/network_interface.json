@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/deep_steel"
+    },
+    "B": {
+      "item": "ragium:steel_ingot"
+    },
+    "C": {
+      "item": "ragium:diamond_processor"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:network_interface"
+  }
+}

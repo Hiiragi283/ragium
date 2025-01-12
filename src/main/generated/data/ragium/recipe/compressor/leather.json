@@ -2,5 +2,8 @@
   "type": "ragium:compressor",
   "catalyst": "minecraft:leather",
   "input": "ragium:polymer_resin",
-  "output": "minecraft:leather"
+  "output": {
+    "count": 2,
+    "item": "minecraft:leather"
+  }
 }

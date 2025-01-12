@@ -1,0 +1,9 @@
+{
+  "type": "ragium:compressor",
+  "catalyst": "ragium:porous_netherrack",
+  "input": {
+    "count": 4,
+    "items": "ragium:polymer_resin"
+  },
+  "output": "minecraft:sponge"
+}

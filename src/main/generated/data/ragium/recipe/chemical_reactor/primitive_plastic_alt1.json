@@ -1,9 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": "ragium:primitive_plastic",
-  "fluid_inputs": [
-    "#c:oxygen"
-  ],
+  "catalyst": "ragium:oxidization_catalyst",
   "item_inputs": [
     "ragium:polymer_resin"
   ],

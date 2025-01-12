@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:nether_bricks",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:nether_brick"
+    }
+  ]
+}

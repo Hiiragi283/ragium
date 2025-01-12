@@ -24,7 +24,7 @@ enum class RagiumFluids(
 
     // Molten Materials
     // BASALT("Molten Basalt", "溶融バサルト", TextureType.BASALT),
-    GLASS("Molten Glass", "溶融ガラス", TextureType.GLASS),
+    // GLASS("Molten Glass", "溶融ガラス", TextureType.GLASS),
 
     // Organics
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
@@ -38,9 +38,9 @@ enum class RagiumFluids(
     WARPED_SAP(Color(0x006666), "Warped Sap", "歪んだ樹液", TextureType.STICKY),
 
     // Foods
-    BATTER(Color(0xffcc66), "Batter", "バッター液"),
-    CHOCOLATE(Color(0x663300), "Chocolate", "チョコレート", TextureType.STICKY),
-    SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー", TextureType.STICKY),
+    // BATTER(Color(0xffcc66), "Batter", "バッター液"),
+    // CHOCOLATE(Color(0x663300), "Chocolate", "チョコレート", TextureType.STICKY),
+    // SWEET_BERRIES(Color(0x990000), "Sweet Berries", "スイートベリー", TextureType.STICKY),
 
     // Natural Resources
     AIR(Color(0xccffff), "Air", "空気", TextureType.GASEOUS),
@@ -50,7 +50,8 @@ enum class RagiumFluids(
     // Elements
     HYDROGEN(Color(0x0000cc), "Hydrogen", "水素", TextureType.GASEOUS),
     NITROGEN(Color(0x66cccc), "Nitrogen", "窒素", TextureType.GASEOUS),
-    OXYGEN(Color(0x99ccff), "Oxygen", "酸素", TextureType.GASEOUS),
+
+    // OXYGEN(Color(0x99ccff), "Oxygen", "酸素", TextureType.GASEOUS),
     CHLORINE(Color(0xccff33), "Chlorine", "塩素", TextureType.GASEOUS),
     MERCURY(Color(0xcccccc), "Mercury", "水銀"),
 
@@ -68,7 +69,8 @@ enum class RagiumFluids(
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
 
     SULFUR_DIOXIDE(Color(0xff6600), "Sulfur Dioxide", "二酸化硫黄", TextureType.STICKY),
-    SULFUR_TRIOXIDE(Color(0xff6600), "Sulfur Trioxide", "三酸化硫黄", TextureType.STICKY),
+
+    // SULFUR_TRIOXIDE(Color(0xff6600), "Sulfur Trioxide", "三酸化硫黄", TextureType.STICKY),
     SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸", TextureType.STICKY),
     MIXTURE_ACID(Color(0xff9900), "Mixture Acid", "混酸"),
 

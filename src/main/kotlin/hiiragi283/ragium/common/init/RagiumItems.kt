@@ -429,6 +429,17 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_press_mold")
     }
 
+    enum class Catalysts : HTItemContent {
+        HEATING,
+        COOLING,
+        OXIDIZATION,
+        REDUCTION,
+        DEHYDRATION,
+        ;
+
+        override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_catalyst")
+    }
+
     enum class Radioactives(val level: HTRadioactiveComponent) : HTItemContent {
         URANIUM_FUEL(HTRadioactiveComponent.MEDIUM),
         PLUTONIUM_FUEL(HTRadioactiveComponent.HIGH),
@@ -624,6 +635,7 @@ object RagiumItems {
         }
         Processors.entries.forEach(::registerItem)
         PressMolds.entries.forEach(::registerItem)
+        Catalysts.entries.forEach(::registerItem)
         // armor
         SteelArmors.entries.forEach {
             registerArmor(it, it.armorType, RagiumArmorMaterials.STEEL, 25)

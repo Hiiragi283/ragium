@@ -1,0 +1,12 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:oxidization_catalyst",
+  "fluid_inputs": [
+    "#c:ammonia"
+  ],
+  "fluid_outputs": [
+    "ragium:nitric_acid",
+    "minecraft:water"
+  ],
+  "machine_type": "ragium:chemical_reactor"
+}

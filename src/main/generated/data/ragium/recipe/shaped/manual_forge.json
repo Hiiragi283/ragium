@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:storage_blocks/ragi_alloy"
+    },
+    "B": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "pattern": [
+    "AAA",
+    " B ",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:manual_forge"
+  }
+}

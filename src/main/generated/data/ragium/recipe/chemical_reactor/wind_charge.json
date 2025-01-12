@@ -1,0 +1,15 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:cooling_catalyst",
+  "fluid_inputs": [
+    "#c:air"
+  ],
+  "item_inputs": [
+    "minecraft:snowball"
+  ],
+  "item_outputs": [
+    "minecraft:wind_charge"
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "tier": "basic"
+}

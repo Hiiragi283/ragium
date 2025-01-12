@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "catalyst": "ragium:oxidization_catalyst",
+  "fluid_inputs": [
+    "#c:hydrogen",
+    "#c:nitrogen"
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 162000,
+      "fluid": "ragium:nitric_acid"
+    }
+  ],
+  "machine_type": "ragium:chemical_reactor",
+  "tier": "basic"
+}

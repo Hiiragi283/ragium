@@ -3,7 +3,7 @@
   "catalyst": "minecraft:string",
   "input": "ragium:polymer_resin",
   "output": {
-    "count": 4,
+    "count": 8,
     "item": "minecraft:string"
   }
 }

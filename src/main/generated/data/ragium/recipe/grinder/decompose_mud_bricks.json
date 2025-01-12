@@ -1,0 +1,10 @@
+{
+  "type": "ragium:grinder",
+  "input": "minecraft:mud_bricks",
+  "outputs": [
+    {
+      "count": 4,
+      "item": "minecraft:packed_mud"
+    }
+  ]
+}

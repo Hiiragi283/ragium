@@ -27,7 +27,7 @@ import net.minecraft.world.World
 import java.util.function.BiConsumer
 import java.util.function.Function
 
-class DefaultMachinePlugin : RagiumPlugin {
+object DefaultMachinePlugin : RagiumPlugin {
     override val priority: Int = -100
 
     override fun registerMachine(consumer: BiConsumer<HTMachineKey, HTMachineType>) {
@@ -169,7 +169,10 @@ class DefaultMachinePlugin : RagiumPlugin {
 
         helper
             .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
+            .put(
+                HTMachinePropertyKeys.MACHINE_FACTORY,
+                HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity),
+            ).put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
 
         helper
             .apply(RagiumMachineKeys.COMPRESSOR)
@@ -198,18 +201,10 @@ class DefaultMachinePlugin : RagiumPlugin {
             ).put(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_LAVA_POP)
 
         helper
-            .apply(RagiumMachineKeys.ELECTROLYZER)
-            .put(
-                HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
-            ).put(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTChemicalMachineScreenHandler))
-            .put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
-
-        helper
             .apply(RagiumMachineKeys.EXTRACTOR)
             .put(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
+                HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity),
             ).put(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTChemicalMachineScreenHandler))
             .put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
 
@@ -227,16 +222,11 @@ class DefaultMachinePlugin : RagiumPlugin {
             .put(HTMachinePropertyKeys.RECIPE_TYPE, RagiumRecipeTypes.GROWTH_CHAMBER)
 
         helper
-            .apply(RagiumMachineKeys.INFUSER)
+            .apply(RagiumMachineKeys.MIXER)
             .put(
                 HTMachinePropertyKeys.MACHINE_FACTORY,
-                HTMachineEntityFactory(::HTChemicalRecipeProcessorBlockEntity),
-            ).put(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTChemicalMachineScreenHandler))
-            .put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
-
-        helper
-            .apply(RagiumMachineKeys.MIXER)
-            .put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.BUBBLE_POP)
+                HTMachineEntityFactory(::HTLargeRecipeProcessorBlockEntity),
+            ).put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.BUBBLE_POP)
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_INSIDE)
 
         helper
@@ -246,15 +236,6 @@ class DefaultMachinePlugin : RagiumPlugin {
             .put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.SOUL_FIRE_FLAME)
             .put(HTMachinePropertyKeys.SCREEN_FACTORY, HTMachineScreenHandler.Factory(::HTSmallMachineScreenHandler))
             .put(HTMachinePropertyKeys.SOUND, SoundEvents.BLOCK_FIRE_EXTINGUISH)
-
-        helper
-            .apply(RagiumMachineKeys.LARGE_CHEMICAL_REACTOR)
-            .put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTLargeChemicalReactorBlockEntity))
-            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.LARGE_MACHINE)
-            .put(
-                HTMachinePropertyKeys.SCREEN_FACTORY,
-                HTMachineScreenHandler.Factory(::HTLargeChemicalReactorScreenHandler),
-            ).put(HTMachinePropertyKeys.PARTICLE, ParticleTypes.ELECTRIC_SPARK)
 
         helper
             .apply(RagiumMachineKeys.LASER_TRANSFORMER)

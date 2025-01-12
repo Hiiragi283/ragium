@@ -1,0 +1,14 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    "#c:salt_water"
+  ],
+  "fluid_outputs": [
+    "ragium:hydrogen",
+    "ragium:chlorine"
+  ],
+  "item_outputs": [
+    "#c:dusts/alkali"
+  ],
+  "machine_type": "ragium:extractor"
+}
