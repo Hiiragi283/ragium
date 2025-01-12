@@ -50,6 +50,7 @@ object DefaultMaterialPlugin : RagiumPlugin {
         helper.register(RagiumMaterialKeys.FLUORITE, HTMaterialType.GEM, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.LAPIS, HTMaterialType.GEM, Rarity.COMMON)
         helper.register(RagiumMaterialKeys.NETHER_STAR, HTMaterialType.GEM, Rarity.EPIC)
+        helper.register(RagiumMaterialKeys.NETHERITE_SCRAP, HTMaterialType.GEM, Rarity.EPIC)
         helper.register(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM, Rarity.RARE)
         helper.register(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM, Rarity.UNCOMMON)
         helper.register(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM, Rarity.RARE)
@@ -177,6 +178,7 @@ object DefaultMaterialPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.EMERALD, Items.EMERALD)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.LAPIS, Items.LAPIS_LAZULI)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.NETHER_STAR, Items.NETHER_STAR)
+        consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
         consumer.accept(HTTagPrefix.GEM, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
 
         consumer.accept(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER, Items.COPPER_INGOT)
@@ -194,6 +196,7 @@ object DefaultMaterialPlugin : RagiumPlugin {
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.GOLD, Items.GOLD_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.IRON, Items.IRON_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.LAPIS, Items.LAPIS_ORE)
+        consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.NETHERITE_SCRAP, Items.ANCIENT_DEBRIS)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.QUARTZ, Items.NETHER_QUARTZ_ORE)
         consumer.accept(HTTagPrefix.ORE, RagiumMaterialKeys.REDSTONE, Items.REDSTONE_ORE)
 
@@ -218,7 +221,7 @@ object DefaultMaterialPlugin : RagiumPlugin {
         bindContents(RagiumItems.Gears.entries)
         bindContents(RagiumItems.Gems.entries)
         bindContents(RagiumItems.Ingots.entries)
-        bindContents(RagiumItems.Plates.entries)
+        // bindContents(RagiumItems.Plates.entries)
         bindContents(RagiumItems.RawMaterials.entries)
     }
 

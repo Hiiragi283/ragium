@@ -74,6 +74,9 @@ object RagiumMaterialKeys {
     val NETHER_STAR: HTMaterialKey = HTMaterialKey.of("nether_star")
 
     @JvmField
+    val NETHERITE_SCRAP: HTMaterialKey = HTMaterialKey.of("netherite_scrap")
+
+    @JvmField
     val PERIDOT: HTMaterialKey = HTMaterialKey.of("peridot")
 
     @JvmField

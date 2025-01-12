@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:ingots/steel"
     },
     "B": {
-      "tag": "c:ingots/aluminum"
+      "item": "ragium:forge_hammer"
     },
     "C": {
-      "item": "ragium:warped_crystal"
+      "tag": "minecraft:planks"
     }
   },
   "pattern": [
-    "ABA",
-    "BCB",
-    "ABA"
+    "AA",
+    "AA",
+    "BC"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_anchor"
+    "id": "ragium:plate_press_mold"
   }
 }

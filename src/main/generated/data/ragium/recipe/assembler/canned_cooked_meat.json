@@ -1,0 +1,14 @@
+{
+  "type": "ragium:assembler",
+  "inputs": [
+    {
+      "count": 8,
+      "items": "ragium:cooked_meat_ingot"
+    },
+    "#c:ingots/iron"
+  ],
+  "output": {
+    "count": 8,
+    "item": "ragium:canned_cooked_meat"
+  }
+}

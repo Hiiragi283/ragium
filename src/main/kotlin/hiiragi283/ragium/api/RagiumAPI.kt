@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.util.DelegatedLogger
 import hiiragi283.ragium.common.advancement.HTDrankFluidCriterion
 import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.ItemStack
@@ -69,9 +68,6 @@ interface RagiumAPI {
      */
     val config: RagiumConfig
 
-    val isHardMode: Boolean
-        get() = config.common.isHardMode
-
     /**
      * 機械レジストリのインスタンスです。
      */
@@ -126,9 +122,4 @@ interface RagiumAPI {
      * 指定した[entry]で満たされた液体キューブの[ItemStack]を返します。
      */
     fun createFilledCube(entry: RegistryEntry<Fluid>, count: Int = 1): ItemStack
-
-    /**
-     * [RagiumConfig.Common.isHardMode]に基づいだ[ResourceCondition]を返します。
-     */
-    fun createHardModeCondition(value: Boolean): ResourceCondition
 }

@@ -5,13 +5,13 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTContent
-import hiiragi283.ragium.api.content.HTHardModeContent
 import hiiragi283.ragium.api.extension.identifiedCodec
 import hiiragi283.ragium.api.extension.identifiedPacketCodec
 import hiiragi283.ragium.api.extension.longText
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumHardModeContents
 import hiiragi283.ragium.common.init.RagiumItems
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants
@@ -115,12 +115,6 @@ enum class HTMachineTier(
         ADVANCED -> RagiumItems.Plastics.ADVANCED
     }
 
-    fun getCircuitBoard(): RagiumItems.CircuitBoards = when (this) {
-        PRIMITIVE -> RagiumItems.CircuitBoards.PRIMITIVE
-        BASIC -> RagiumItems.CircuitBoards.BASIC
-        ADVANCED -> RagiumItems.CircuitBoards.ADVANCED
-    }
-
     fun getCircuit(): RagiumItems.Circuits = when (this) {
         PRIMITIVE -> RagiumItems.Circuits.PRIMITIVE
         BASIC -> RagiumItems.Circuits.BASIC
@@ -151,22 +145,22 @@ enum class HTMachineTier(
         ADVANCED -> RagiumBlocks.Hulls.ADVANCED
     }
 
-    fun getMainMetal(): HTHardModeContent = when (this) {
-        PRIMITIVE -> RagiumHardModeContents.RAGI_ALLOY
-        BASIC -> RagiumHardModeContents.RAGI_STEEL
-        ADVANCED -> RagiumHardModeContents.REFINED_RAGI_STEEL
+    fun getMainMetal(): HTMaterialKey = when (this) {
+        PRIMITIVE -> RagiumMaterialKeys.RAGI_ALLOY
+        BASIC -> RagiumMaterialKeys.RAGI_STEEL
+        ADVANCED -> RagiumMaterialKeys.REFINED_RAGI_STEEL
     }
 
-    fun getSubMetal(): HTHardModeContent = when (this) {
-        PRIMITIVE -> RagiumHardModeContents.COPPER
-        BASIC -> RagiumHardModeContents.GOLD
-        ADVANCED -> RagiumHardModeContents.ALUMINUM
+    fun getSubMetal(): HTMaterialKey = when (this) {
+        PRIMITIVE -> RagiumMaterialKeys.COPPER
+        BASIC -> RagiumMaterialKeys.GOLD
+        ADVANCED -> RagiumMaterialKeys.ALUMINUM
     }
 
-    fun getSteelMetal(): HTHardModeContent = when (this) {
-        PRIMITIVE -> RagiumHardModeContents.IRON
-        BASIC -> RagiumHardModeContents.STEEL
-        ADVANCED -> RagiumHardModeContents.DEEP_STEEL
+    fun getSteelMetal(): HTMaterialKey = when (this) {
+        PRIMITIVE -> RagiumMaterialKeys.IRON
+        BASIC -> RagiumMaterialKeys.STEEL
+        ADVANCED -> RagiumMaterialKeys.DEEP_STEEL
     }
 
     fun getStorageBlock(): RagiumBlocks.StorageBlocks = when (this) {

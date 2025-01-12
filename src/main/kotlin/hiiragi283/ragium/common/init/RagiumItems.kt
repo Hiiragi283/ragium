@@ -120,7 +120,7 @@ object RagiumItems {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
-    enum class Plates(override val material: HTMaterialKey) : HTItemContent.Material {
+    /*enum class Plates(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
         COPPER(RagiumMaterialKeys.COPPER),
@@ -150,7 +150,7 @@ object RagiumItems {
 
         override val key: RegistryKey<Item> = HTContent.itemKey("${name.lowercase()}_plate")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.PLATE
-    }
+    }*/
 
     enum class RawMaterials(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 1
@@ -176,7 +176,9 @@ object RagiumItems {
 
     //    Armors    //
 
-    enum class SteelArmors(val armorType: HTArmorType) : HTItemContent {
+    enum class SteelArmors(override val armorType: HTArmorType) :
+        HTItemContent,
+        HTArmorType.Holder {
         HELMET(HTArmorType.HELMET),
         CHESTPLATE(HTArmorType.CHESTPLATE),
         LEGGINGS(HTArmorType.LEGGINGS),
@@ -186,7 +188,9 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey("steel_${name.lowercase()}")
     }
 
-    enum class DeepSteelArmors(val armorType: HTArmorType) : HTItemContent {
+    enum class DeepSteelArmors(override val armorType: HTArmorType) :
+        HTItemContent,
+        HTArmorType.Holder {
         HELMET(HTArmorType.HELMET),
         CHESTPLATE(HTArmorType.CHESTPLATE),
         LEGGINGS(HTArmorType.LEGGINGS),
@@ -196,7 +200,9 @@ object RagiumItems {
         override val key: RegistryKey<Item> = HTContent.itemKey("deep_steel_${name.lowercase()}")
     }
 
-    enum class StellaSuits(val armorType: HTArmorType) : HTItemContent {
+    enum class StellaSuits(override val armorType: HTArmorType) :
+        HTItemContent,
+        HTArmorType.Holder {
         GOGGLE(HTArmorType.HELMET),
         JACKET(HTArmorType.CHESTPLATE),
         LEGGINGS(HTArmorType.LEGGINGS),
@@ -205,9 +211,6 @@ object RagiumItems {
 
         override val key: RegistryKey<Item> = HTContent.itemKey("stella_${name.lowercase()}")
     }
-
-    @JvmField
-    val DRAGONIC_ELYTRA: HTItemContent = HTContent.ofItem("dragonic_elytra")
 
     //    Tools    //
 
@@ -380,7 +383,7 @@ object RagiumItems {
         val tagKey: TagKey<Item> = itemTagKey(commonId("plastics/${name.lowercase()}"))
     }
 
-    enum class CircuitBoards(override val tier: HTMachineTier) :
+    /*enum class CircuitBoards(override val tier: HTMachineTier) :
         HTItemContent,
         HTMachineTierProvider {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
@@ -395,7 +398,7 @@ object RagiumItems {
             BASIC -> Circuits.BASIC
             ADVANCED -> Circuits.ADVANCED
         }
-    }
+    }*/
 
     enum class Circuits(override val tier: HTMachineTier) :
         HTItemContent,
@@ -619,7 +622,7 @@ object RagiumItems {
             addAll(Gears.entries)
             addAll(Gems.entries)
             addAll(Ingots.entries)
-            addAll(Plates.entries)
+            // addAll(Plates.entries)
             addAll(RawMaterials.entries)
         }.forEach { content ->
             registerItem(content) { Item(it.material(content.material, content.tagPrefix)) }
@@ -627,9 +630,9 @@ object RagiumItems {
         Plastics.entries.forEach { plastic: Plastics ->
             registerItem(plastic, itemSettings().tieredText(RagiumTranslationKeys.PLASTIC, plastic.tier))
         }
-        CircuitBoards.entries.forEach { board: CircuitBoards ->
+        /*CircuitBoards.entries.forEach { board: CircuitBoards ->
             registerItem(board, itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT_BOARD, board.tier))
-        }
+        }*/
         Circuits.entries.forEach { circuit: Circuits ->
             registerItem(circuit, itemSettings().tieredText(RagiumTranslationKeys.CIRCUIT, circuit.tier))
         }
@@ -734,7 +737,6 @@ object RagiumItems {
                         ).build(),
                 ),
         )
-        registerItem(DRAGONIC_ELYTRA, item = ::HTDragonicElytraItem)
         // steel tool
         SteelTools.entries.forEach { tool: SteelTools ->
             registerItem(tool) {

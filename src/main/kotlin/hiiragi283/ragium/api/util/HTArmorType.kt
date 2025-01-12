@@ -36,4 +36,8 @@ enum class HTArmorType(val armorTag: TagKey<Item>, val itemType: ArmorItem.Type)
         LEGGINGS -> listOf("AAA", "A A", "A A")
         BOOTS -> listOf("A A", "A A")
     }
+
+    interface Holder {
+        val armorType: HTArmorType
+    }
 }

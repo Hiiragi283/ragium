@@ -22,12 +22,10 @@ import hiiragi283.ragium.common.advancement.HTInteractMachineCriterion
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.resource.HTHardModeResourceCondition
 import me.shedaniel.autoconfig.AutoConfig
 import me.shedaniel.autoconfig.ConfigHolder
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
-import net.fabricmc.fabric.api.resource.conditions.v1.ResourceCondition
 import net.minecraft.advancement.AdvancementCriterion
 import net.minecraft.block.Block
 import net.minecraft.component.ComponentMap
@@ -70,8 +68,6 @@ internal data object InternalRagiumAPI : RagiumAPI {
         val item: HTItemContent = entry.value().let(RagiumItems.FluidCubes::fromFluid) ?: RagiumItems.FILLED_FLUID_CUBE
         return buildItemStack(item, count) { add(RagiumComponentTypes.FLUID, entry) }
     }
-
-    override fun createHardModeCondition(value: Boolean): ResourceCondition = HTHardModeResourceCondition(value)
 
     //    Init    //
 

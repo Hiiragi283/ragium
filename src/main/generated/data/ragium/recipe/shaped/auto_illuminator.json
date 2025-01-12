@@ -6,10 +6,10 @@
       "tag": "c:ingots/deep_steel"
     },
     "B": {
-      "tag": "c:ingots/aluminum"
+      "tag": "c:ingots/gold"
     },
     "C": {
-      "item": "ragium:warped_crystal"
+      "item": "ragium:crimson_crystal"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_anchor"
+    "id": "ragium:auto_illuminator"
   }
 }

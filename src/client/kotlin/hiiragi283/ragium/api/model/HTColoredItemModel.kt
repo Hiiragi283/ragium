@@ -50,5 +50,6 @@ abstract class HTColoredItemModel : HTBakedModel {
         }
         emitter.spriteBake(sprite, MutableQuadView.BAKE_LOCK_UV)
         emitter.color(color, color, color, color)
+        emitter.emit()
     }
 }

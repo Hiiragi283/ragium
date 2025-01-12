@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:plastics/advanced"
     },
     "B": {
       "tag": "c:ingots/aluminum"
     },
     "C": {
-      "item": "ragium:warped_crystal"
+      "tag": "c:ingots/netherite"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:teleport_anchor"
+    "id": "ragium:stella_plate"
   }
 }

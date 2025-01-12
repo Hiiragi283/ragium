@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:ingots/dragonium"
     },
     "B": {
-      "tag": "c:ingots/aluminum"
-    },
-    "C": {
-      "item": "ragium:warped_crystal"
+      "item": "minecraft:elytra"
     }
   },
   "pattern": [
+    "AAA",
     "ABA",
-    "BCB",
-    "ABA"
+    "AAA"
   ],
   "result": {
+    "components": {
+      "minecraft:unbreakable": {}
+    },
     "count": 1,
-    "id": "ragium:teleport_anchor"
+    "id": "minecraft:elytra"
   }
 }

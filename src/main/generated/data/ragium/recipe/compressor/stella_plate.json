@@ -1,6 +1,0 @@
-{
-  "type": "ragium:compressor",
-  "input": "#c:ingots/aluminum",
-  "output": "ragium:stella_plate",
-  "tier": "advanced"
-}

@@ -3,14 +3,11 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:stella_plate"
-    },
-    "B": {
-      "tag": "c:plates/ragium"
+      "tag": "c:ingots/ragium"
     }
   },
   "pattern": [
-    "ABA",
+    "AAA",
     "A A",
     "A A"
   ],

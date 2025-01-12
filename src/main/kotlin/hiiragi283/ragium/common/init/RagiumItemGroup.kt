@@ -108,7 +108,7 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItems.Gears.entries)
                 entries.addAll(RagiumItems.Gems.entries)
                 entries.addAll(RagiumItems.Ingots.entries)
-                entries.addAll(RagiumItems.Plates.entries)
+                // entries.addAll(RagiumItems.Plates.entries)
                 entries.addAll(RagiumItems.RawMaterials.entries)
 
                 entries.addAll(RagiumBlocks.FOODS)
@@ -117,7 +117,6 @@ object RagiumItemGroup {
                 entries.addAll(RagiumItems.SteelArmors.entries)
                 entries.addAll(RagiumItems.DeepSteelArmors.entries)
                 entries.addAll(RagiumItems.StellaSuits.entries)
-                entries.add(RagiumItems.DRAGONIC_ELYTRA)
 
                 entries.addAll(RagiumItems.SteelTools.entries)
                 entries.addAll(RagiumItems.DeepSteelTools.entries)
@@ -134,7 +133,7 @@ object RagiumItemGroup {
                 entries.add(RagiumItems.TRADER_CATALOG)
 
                 entries.addAll(RagiumItems.Plastics.entries)
-                entries.addAll(RagiumItems.CircuitBoards.entries)
+                // entries.addAll(RagiumItems.CircuitBoards.entries)
                 entries.addAll(RagiumItems.Circuits.entries)
                 entries.addAll(RagiumItems.Processors.entries)
                 entries.addAll(RagiumItems.PressMolds.entries)

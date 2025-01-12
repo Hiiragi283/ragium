@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/ragium"
+            "items": "#c:ingots/dragonium"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/gigant_hammer"
+        "recipe": "minecraft:shaped/elytra"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/gigant_hammer"
+      "minecraft:shaped/elytra"
     ]
   }
 }

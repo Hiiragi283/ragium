@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandler
 import hiiragi283.ragium.api.fluid.HTFluidDrinkingHandlerRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
-import hiiragi283.ragium.api.recipe.HTItemIngredient
 import hiiragi283.ragium.api.screen.HTMachineScreenHandler
 import hiiragi283.ragium.api.screen.HTScreenFluidProvider
 import hiiragi283.ragium.api.storage.HTFluidVariantStack
@@ -50,7 +49,6 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.DispenserBlock
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.component.ComponentMap
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.EquipmentSlot
@@ -59,7 +57,10 @@ import net.minecraft.entity.effect.StatusEffects
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
-import net.minecraft.item.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemConvertible
+import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.loot.LootPool
 import net.minecraft.loot.LootTable
 import net.minecraft.loot.entry.ItemEntry
@@ -173,10 +174,9 @@ internal object RagiumContentRegister {
             ActionResult.PASS
         }
         // modify item components
-        val hardMode: Boolean = RagiumAPI.getInstance().isHardMode
         DefaultItemComponentEvents.MODIFY.register { context: DefaultItemComponentEvents.ModifyContext ->
             // hard mode repair
-            context.modify({
+            /*context.modify({
                 (it as? ToolItem)?.material == ToolMaterials.IRON || (it as? ArmorItem)?.material == ArmorMaterials.IRON
             }) { builder: ComponentMap.Builder, item: Item ->
                 builder.add(
@@ -199,7 +199,7 @@ internal object RagiumContentRegister {
                     RagiumComponentTypes.REPAIRMENT,
                     HTItemIngredient.of(RagiumHardModeContents.NETHERITE.getPrefixedTag(hardMode)),
                 )
-            }
+            }*/
             // add integration flag
             val integrationItems: List<ItemConvertible> = listOf<ItemConvertible>(
                 RagiumItems.Dusts.LEAD,

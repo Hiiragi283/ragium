@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/ragium"
+      "tag": "c:ingots/ragium"
     },
     "B": {
-      "item": "ragium:stella_saber"
+      "item": "ragium:shaft"
     }
   },
   "pattern": [

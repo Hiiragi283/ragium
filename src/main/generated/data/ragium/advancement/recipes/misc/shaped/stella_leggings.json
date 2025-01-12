@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "ragium:stella_plate"
+            "items": "#c:ingots/ragium"
           }
         ]
       },

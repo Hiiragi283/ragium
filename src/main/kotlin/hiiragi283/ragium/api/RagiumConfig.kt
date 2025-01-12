@@ -36,13 +36,10 @@ class RagiumConfig(
         @ConfigEntry.Gui.Excluded
         val version: String,
         @JvmField
-        val isHardMode: Boolean,
-        @JvmField
         val enableRadioactiveEffect: Boolean,
     ) : ConfigData {
         constructor() : this(
             version = getActualVersion(),
-            isHardMode = false,
             enableRadioactiveEffect = true,
         )
 
