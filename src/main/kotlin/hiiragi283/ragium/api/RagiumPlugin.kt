@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.api.property.HTMutablePropertyHolder
+import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.TriConsumer
 import net.minecraft.data.server.recipe.RecipeExporter
 import net.minecraft.item.Item
@@ -14,7 +14,7 @@ import net.minecraft.item.ItemConvertible
 import net.minecraft.registry.RegistryWrapper
 import net.minecraft.util.Rarity
 import java.util.function.BiConsumer
-import java.util.function.Predicate
+import java.util.function.Function
 
 /**
  * Ragiumのプラグイン向けのインターフェース
@@ -55,7 +55,7 @@ interface RagiumPlugin {
     /**
      * [HTMaterialKey]を登録します。
      *
-     *　@sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.registerMaterial]
+     *　@sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.registerMaterial]
      */
     fun registerMaterial(helper: MaterialHelper) {}
 
@@ -64,19 +64,19 @@ interface RagiumPlugin {
      *
      * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.setupMachineProperties]
      */
-    fun setupMachineProperties(helper: PropertyHelper<HTMachineKey>) {}
+    fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {}
 
     /**
      * 素材のプロパティを設定します。
      *
-     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.setupMaterialProperties]
+     * @sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.setupMaterialProperties]
      */
-    fun setupMaterialProperties(helper: PropertyHelper<HTMaterialKey>) {}
+    fun setupMaterialProperties(helper: Function<HTMaterialKey, HTPropertyHolderBuilder>) {}
 
     /**
      * アイテムを素材とプレフィックスに紐づけます。
      *
-     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.bindMaterialToItem]
+     * @sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.bindMaterialToItem]
      */
     fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemConvertible>) {}
 
@@ -127,37 +127,6 @@ interface RagiumPlugin {
          */
         fun addAltName(parent: HTMaterialKey, child: String) {
             altConsumer(parent, child)
-        }
-    }
-
-    //    PropertyHelper    //
-
-    /**
-     * @param key 現在のキー
-     * @param properties 現在のプロパティ
-     */
-    class PropertyHelper<T : Any>(private val key: T, private val properties: HTMutablePropertyHolder) {
-        /**
-         * 現在のキーが指定した[keys]に含まれている場合のみ[builderAction]を実行します。
-         */
-        fun modify(vararg keys: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
-            modify(keys::contains, builderAction)
-        }
-
-        /**
-         * 現在のキーが指定した[key]と一致する場合のみ[builderAction]を実行します。
-         */
-        fun modify(key: T, builderAction: HTMutablePropertyHolder.() -> Unit) {
-            modify({ it == key }, builderAction)
-        }
-
-        /**
-         * 現在のキーが[filter]と一致する場合のみ[builderAction]を実行します。
-         */
-        fun modify(filter: Predicate<T>, builderAction: HTMutablePropertyHolder.() -> Unit) {
-            if (filter.test(this.key)) {
-                properties.builderAction()
-            }
         }
     }
 

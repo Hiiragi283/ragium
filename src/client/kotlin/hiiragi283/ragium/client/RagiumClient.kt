@@ -16,7 +16,6 @@ import hiiragi283.ragium.client.gui.HTItemFilterScreen
 import hiiragi283.ragium.client.gui.HTMachineScreen
 import hiiragi283.ragium.client.model.HTBackpackModel
 import hiiragi283.ragium.client.model.HTFluidCubeModel
-import hiiragi283.ragium.client.model.HTMaterialItemModel
 import hiiragi283.ragium.client.model.HTProcessorMachineModel
 import hiiragi283.ragium.client.renderer.*
 import hiiragi283.ragium.common.block.storage.HTCrateBlockEntity
@@ -266,7 +265,6 @@ object RagiumClient : ClientModInitializer {
                         RagiumAPI.id("block/active_dynamic_processor") in original.modelDependencies -> HTProcessorMachineModel.ACTIVE
                         RagiumAPI.id("item/fluid_cube") in original.modelDependencies -> HTFluidCubeModel
                         RagiumAPI.id("item/dynamic_backpack") in original.modelDependencies -> HTBackpackModel
-                        RagiumAPI.id("item/colored_material") in original.modelDependencies -> HTMaterialItemModel
                         else -> null
                     } ?: original
                 }

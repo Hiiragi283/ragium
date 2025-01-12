@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.multiblock
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.property.HTMutablePropertyHolder
+import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder
 import net.fabricmc.fabric.api.event.registry.RegistryAttribute
 import net.minecraft.block.BlockState
@@ -22,7 +22,7 @@ interface HTMultiblockComponent {
 
     fun getPlacementState(controller: HTControllerDefinition): BlockState?
 
-    fun collectData(controller: HTControllerDefinition, pos: BlockPos, holder: HTMutablePropertyHolder) {}
+    fun collectData(controller: HTControllerDefinition, pos: BlockPos, holder: HTPropertyHolderBuilder) {}
 
     //    Type    //
 

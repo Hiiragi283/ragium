@@ -35,7 +35,11 @@
     ],
     "ragium.plugin.server": [
       {
-        "value": "hiiragi283.ragium.common.internal.RagiumDefaultPlugin",
+        "value": "hiiragi283.ragium.common.internal.DefaultMaterialPlugin",
+        "adapter": "kotlin"
+      },
+      {
+        "value": "hiiragi283.ragium.common.internal.DefaultMachinePlugin",
         "adapter": "kotlin"
       },
       {

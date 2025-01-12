@@ -54,7 +54,7 @@ interface HTControllerHolder {
             }
         }
         consumer(Text.translatable(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS))
-        return HTMultiblockData.of(builder)
+        return HTMultiblockData.of(builder.build())
     }
 
     fun processData(data: HTMultiblockData) {}

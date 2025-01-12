@@ -11,10 +11,10 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
     operator fun <T : Any> set(key: HTPropertyKey<T>, value: T)
 
     /**
-     * 指定した[key]と[Unit]をセットします。
+     * 指定した[keys]を[Unit]に対してセットします。
      */
-    fun add(key: HTPropertyKey<Unit>) {
-        set(key, Unit)
+    fun add(vararg keys: HTPropertyKey<Unit>) {
+        keys.forEach { set(it, Unit) }
     }
 
     /**

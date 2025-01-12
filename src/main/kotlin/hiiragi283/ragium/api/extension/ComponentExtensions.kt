@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import net.minecraft.component.Component
 import net.minecraft.component.ComponentHolder
 import net.minecraft.component.ComponentMap
@@ -140,6 +142,9 @@ fun <T : Any, R : Any> ComponentHolder.ifPresent(type: ComponentType<T>, action:
  **/
 fun <T : Any, R : Any> ComponentHolder.ifPresent(type: ComponentType<T>, defaultValue: R, action: (T) -> R?): R =
     ifPresent(type, action) ?: defaultValue
+
+val ComponentHolder.materialEntry: HTMaterialRegistry.Entry?
+    get() = ifPresent(HTMaterialKey.COMPONENT_TYPE, HTMaterialKey::getEntryOrNull)
 
 //    ComponentMap    //
 

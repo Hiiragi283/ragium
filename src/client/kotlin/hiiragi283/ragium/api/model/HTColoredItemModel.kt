@@ -28,19 +28,27 @@ abstract class HTColoredItemModel : HTBakedModel {
         this.sprite = getSprite(getSpriteId(stack))
         val emitter: QuadEmitter = context.emitter
         Direction.entries.forEach { direction: Direction ->
-            emitForDirection(emitter, direction, stack)
-            emitter.emit()
+            forEachDirection(emitter, direction, stack)
         }
     }
 
-    protected open fun emitForDirection(emitter: QuadEmitter, direction: Direction, stack: ItemStack) {
+    protected open fun forEachDirection(emitter: QuadEmitter, direction: Direction, stack: ItemStack) {
+        emitTexture(emitter, direction, sprite, getColor(stack), 0.5f)
+    }
+
+    protected fun emitTexture(
+        emitter: QuadEmitter,
+        direction: Direction,
+        sprite: Sprite,
+        color: Int,
+        depth: Float,
+    ) {
         if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            emitter.square(direction, 0f, 0f, 1f, 1f, 0.5f)
+            emitter.square(direction, 0f, 0f, 1f, 1f, depth)
         } else {
             emitter.square(direction, 0f, 0f, 0f, 0f, 0f)
         }
         emitter.spriteBake(sprite, MutableQuadView.BAKE_LOCK_UV)
-        val color: Int = getColor(stack)
         emitter.color(color, color, color, color)
     }
 }
