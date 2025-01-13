@@ -45,6 +45,11 @@ interface HTContent<T : Any> : Supplier<T> {
             override fun get(): Block = block.get()
         }
 
+        @JvmStatic
+        fun fromBlock(holder: DeferredHolder<Block, out Block>): HTBlockContent = object : HTBlockContent {
+            override val holder: DeferredHolder<Block, out Block> = holder
+        }
+
         /**
          * バニラや他modのブロック向け
          */
@@ -83,6 +88,11 @@ interface HTContent<T : Any> : Supplier<T> {
         }
 
         @JvmStatic
+        fun fromItem(holder: DeferredHolder<Item, Item>): HTItemContent = object : HTItemContent {
+            override val holder: DeferredHolder<Item, out Item> = holder
+        }
+
+        @JvmStatic
         fun blockHolder(path: String): DeferredHolder<Block, Block> = DeferredHolder.create(Registries.BLOCK, RagiumAPI.id(path))
 
         @JvmStatic
@@ -92,7 +102,7 @@ interface HTContent<T : Any> : Supplier<T> {
         fun itemHolder(path: String): DeferredHolder<Item, Item> = DeferredHolder.create(Registries.ITEM, RagiumAPI.id(path))
     }
 
-    val holder: DeferredHolder<T, T>
+    val holder: DeferredHolder<T, out T>
 
     val key: ResourceKey<T> get() = holder.key!!
     val id: ResourceLocation get() = holder.id

@@ -4,7 +4,10 @@ import com.google.common.collect.HashBasedTable
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.asPairMap
+import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.idComparator
 import hiiragi283.ragium.api.extension.toTable
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -17,15 +20,14 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.api.util.collection.HTWrappedTable
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -39,10 +41,6 @@ internal object InternalRagiumAPI : RagiumAPI {
     override lateinit var plugins: List<RagiumPlugin>
     override lateinit var machineRegistry: HTMachineRegistry
     override lateinit var materialRegistry: HTMaterialRegistry
-
-    override fun createFilledCube(entry: Holder<Fluid>, count: Int): ItemStack {
-        TODO("Not yet implemented")
-    }
 
     //    Init    //
 
@@ -94,12 +92,17 @@ internal object InternalRagiumAPI : RagiumAPI {
         plugins.forEach { plugin: RagiumPlugin -> plugin.setupMachineProperties(helper) }
 
         // register blocks
-        val blockMap: Map<HTMachineKey, DeferredBlock<Block>> =
+        val blockMap: Map<HTMachineKey, HTBlockContent> =
             sortedKeys.keys
                 .associateWith { key: HTMachineKey ->
-                    RagiumBlocks.REGISTER.registerSimpleBlock(key.name)
-                }.onEach { (_: HTMachineKey, holder: DeferredBlock<Block>) ->
+                    RagiumBlocks.REGISTER.registerBlock(
+                        key.name,
+                        { properties: BlockBehaviour.Properties -> HTMachineBlock(key, properties) },
+                        blockProperty(Blocks.SMOOTH_STONE).noOcclusion(),
+                    )
+                }.mapValues { (_: HTMachineKey, holder: DeferredBlock<HTMachineBlock>) ->
                     RagiumItems.REGISTER.registerSimpleBlockItem(holder)
+                    HTContent.fromBlock(holder)
                 }
 
         // complete

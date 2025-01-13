@@ -2,6 +2,8 @@
 
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -33,3 +35,6 @@ val ItemStack.restDamage: Int
  */
 val ItemStack.isMaxCount: Boolean
     get() = count == maxStackSize
+
+val ItemStack.machineTier: HTMachineTier
+    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)

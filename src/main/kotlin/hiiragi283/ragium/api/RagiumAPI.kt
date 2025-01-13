@@ -1,14 +1,10 @@
 package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.material.Fluid
 import org.slf4j.Logger
 
 /**
@@ -49,19 +45,4 @@ interface RagiumAPI {
      * 素材レジストリのインスタンスです。
      */
     val materialRegistry: HTMaterialRegistry
-
-    /**
-     * 指定した[content]で満たされた液体キューブの[ItemStack]を返します。
-     */
-    fun createFilledCube(content: HTFluidContent, count: Int = 1): ItemStack = createFilledCube(content.get(), count)
-
-    /**
-     * 指定した[fluid]で満たされた液体キューブの[ItemStack]を返します。
-     */
-    fun createFilledCube(fluid: Fluid, count: Int = 1): ItemStack = createFilledCube(fluid.builtInRegistryHolder(), count)
-
-    /**
-     * 指定した[entry]で満たされた液体キューブの[ItemStack]を返します。
-     */
-    fun createFilledCube(entry: Holder<Fluid>, count: Int = 1): ItemStack
 }

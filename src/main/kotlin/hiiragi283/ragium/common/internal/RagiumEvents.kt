@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumCapabilities
+import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
-import hiiragi283.ragium.api.extension.tier
 import hiiragi283.ragium.api.extension.tieredText
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
@@ -75,7 +75,7 @@ internal object RagiumEvents {
         registerForBlocks(
             RagiumCapabilities.MACHINE_TIER,
         ) { _: Level, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Void? ->
-            (blockEntity as? HTMachineTierProvider)?.tier ?: state.tier
+            (blockEntity as? HTMachineTierProvider)?.tier ?: state.machineTier
         }
 
         LOGGER.info("Registered capabilities!")

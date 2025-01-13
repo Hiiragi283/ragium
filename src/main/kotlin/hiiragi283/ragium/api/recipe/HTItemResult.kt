@@ -193,6 +193,6 @@ sealed class HTItemResult(val count: Int, val components: DataComponentPatch) {
         }
 
         override val firstEntry: Holder<Item>
-            get() = holderSet.firstOrNull() ?: Items.AIR.builtInRegistryHolder()
+            get() = holderSet.firstOrNull() ?: Items.AIR.asHolder()
     }
 }

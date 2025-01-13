@@ -44,7 +44,7 @@ abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos,
     val isActive: Boolean
         get() = blockState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
     override val tier: HTMachineTier
-        get() = blockState.tier
+        get() = blockState.machineTier
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         components.set(RagiumComponentTypes.MACHINE_TIER, tier)

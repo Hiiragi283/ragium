@@ -4,9 +4,6 @@ import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import net.minecraft.world.level.block.Block
-import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.stream.Stream
 
 /**
@@ -15,7 +12,7 @@ import java.util.stream.Stream
  */
 class HTMachineRegistry(
     private val types: Map<HTMachineKey, HTMachineType>,
-    private val blockMap: Map<HTMachineKey, DeferredBlock<Block>>,
+    private val blockMap: Map<HTMachineKey, HTBlockContent>,
     private val properties: Map<HTMachineKey, HTPropertyHolder>,
 ) : Keyable {
     /**
@@ -32,7 +29,7 @@ class HTMachineRegistry(
     /**
      * 登録された[HTMachineKey]に紐づいたブロックの一覧
      */
-    val blocks: Collection<DeferredBlock<Block>>
+    val blocks: Collection<HTBlockContent>
         get() = blockMap.values
 
     /**
@@ -45,7 +42,7 @@ class HTMachineRegistry(
      *
      * @return 値がない場合はnull
      */
-    fun getBlock(key: HTMachineKey): DeferredBlock<Block>? = blockMap[key]
+    fun getBlock(key: HTMachineKey): HTBlockContent? = blockMap[key]
 
     private fun createEntry(key: HTMachineKey): Entry = Entry(
         types[key] ?: error("Unknown machine key: $key"),
@@ -77,7 +74,7 @@ class HTMachineRegistry(
     /**
      * 機械の情報をまとめたクラス
      */
-    data class Entry(val type: HTMachineType, override val holder: DeferredHolder<Block, Block>, val property: HTPropertyHolder) :
+    data class Entry(val type: HTMachineType, val content: HTBlockContent, val property: HTPropertyHolder) :
         HTPropertyHolder by property,
-        HTBlockContent
+        HTBlockContent by content
 }
