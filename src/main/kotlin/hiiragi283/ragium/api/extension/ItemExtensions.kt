@@ -8,6 +8,7 @@ import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 //    ItemLike    //
 
@@ -38,3 +39,7 @@ val ItemStack.isMaxCount: Boolean
 
 val ItemStack.machineTier: HTMachineTier
     get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+
+//    SizedIngredient    //
+
+fun SizedIngredient.matches(stack: ItemStack): Boolean = ingredient().test(stack) && stack.count >= count()

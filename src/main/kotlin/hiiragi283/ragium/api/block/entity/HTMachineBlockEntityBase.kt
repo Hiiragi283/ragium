@@ -24,8 +24,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import org.slf4j.Logger
+import java.util.function.Supplier
 
-abstract class HTMachineBlockEntityBase(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTMachineBlockEntityBase(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     HTBlockEntity(type, pos, state),
     MenuProvider,
     HTControllerHolder,

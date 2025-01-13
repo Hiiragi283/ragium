@@ -39,7 +39,11 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 
+        RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
+        RagiumRecipes.CATEGORY.register(eventBus)
+        RagiumRecipes.SERIALIZER.register(eventBus)
+        RagiumRecipes.TYPE.register(eventBus)
 
         InternalRagiumAPI.registerMaterials()
 

@@ -71,7 +71,7 @@ class HTShapedRecipeJsonBuilder private constructor(val getter: HolderGetter<Ite
 
     fun input(char: Char, prefix: HTTagPrefix, material: HTMaterialKey): HTShapedRecipeJsonBuilder = input(char, prefix.createTag(material))
 
-    fun input(char: Char, content: HTMaterialProvider): HTShapedRecipeJsonBuilder = input(char, content.prefixedTagKey)
+    fun input(char: Char, provider: HTMaterialProvider): HTShapedRecipeJsonBuilder = input(char, provider.prefixedTagKey)
 
     fun input(char: Char, item: ItemLike): HTShapedRecipeJsonBuilder = input(char, Ingredient.of(item))
 

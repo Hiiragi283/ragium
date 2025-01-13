@@ -6,10 +6,8 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
-import net.minecraft.world.ContainerHelper
 import net.minecraft.world.Containers
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.WorldlyContainer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -18,20 +16,10 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import java.util.function.Supplier
 
-abstract class HTBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
-    open fun getContainer(): WorldlyContainer? = null
-
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        getContainer()?.let { ContainerHelper.saveAllItems(tag, TODO(), registries) }
-    }
-
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        getContainer()?.let { ContainerHelper.loadAllItems(tag, TODO(), registries) }
-    }
-
+abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
+    BlockEntity(type.get(), pos, state) {
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag =
         CompoundTag().apply { saveAdditional(this, registries) }
 

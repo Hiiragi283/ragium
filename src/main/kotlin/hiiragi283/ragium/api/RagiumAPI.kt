@@ -1,11 +1,9 @@
 package hiiragi283.ragium.api
 
-import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import net.minecraft.resources.ResourceLocation
-import org.slf4j.Logger
 
 /**
  * RagiumのAPI
@@ -13,8 +11,6 @@ import org.slf4j.Logger
 @Suppress("DEPRECATION")
 interface RagiumAPI {
     companion object {
-        private val logger: Logger = LogUtils.getLogger()
-
         const val MOD_ID = "ragium"
         const val MOD_NAME = "Ragium"
 

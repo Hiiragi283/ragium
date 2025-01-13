@@ -4,8 +4,6 @@ import com.google.common.collect.HashBasedTable
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.asPairMap
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.idComparator
@@ -92,18 +90,16 @@ internal object InternalRagiumAPI : RagiumAPI {
         plugins.forEach { plugin: RagiumPlugin -> plugin.setupMachineProperties(helper) }
 
         // register blocks
-        val blockMap: Map<HTMachineKey, HTBlockContent> =
-            sortedKeys.keys
-                .associateWith { key: HTMachineKey ->
-                    RagiumBlocks.REGISTER.registerBlock(
-                        key.name,
-                        { properties: BlockBehaviour.Properties -> HTMachineBlock(key, properties) },
-                        blockProperty(Blocks.SMOOTH_STONE).noOcclusion(),
-                    )
-                }.mapValues { (_: HTMachineKey, holder: DeferredBlock<HTMachineBlock>) ->
-                    RagiumItems.REGISTER.registerSimpleBlockItem(holder)
-                    HTContent.fromBlock(holder)
-                }
+        val blockMap: Map<HTMachineKey, DeferredBlock<HTMachineBlock>> = sortedKeys.keys
+            .associateWith { key: HTMachineKey ->
+                RagiumBlocks.REGISTER.registerBlock(
+                    key.name,
+                    { properties: BlockBehaviour.Properties -> HTMachineBlock(key, properties) },
+                    blockProperty(Blocks.SMOOTH_STONE).noOcclusion(),
+                )
+            }.onEach { (_: HTMachineKey, holder: DeferredBlock<HTMachineBlock>) ->
+                RagiumItems.REGISTER.registerSimpleBlockItem(holder)
+            }
 
         // complete
         machineRegistry =

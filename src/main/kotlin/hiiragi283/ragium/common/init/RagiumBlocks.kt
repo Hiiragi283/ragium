@@ -8,10 +8,12 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.TransparentBlock
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -80,37 +82,63 @@ object RagiumBlocks {
         override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_coil")
     }
 
+    //    Storage    //
+
+    enum class Drums(override val tier: HTMachineTier) :
+        HTBlockContent,
+        HTMachineTierProvider {
+        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ;
+
+        override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_drum")
+    }
+
     //    Register    //
 
     @JvmField
     val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
 
     @JvmStatic
+    private val ITEM_REGISTER: DeferredRegister.Items
+        get() = RagiumItems.REGISTER
+
+    @JvmStatic
     internal fun register(bus: IEventBus) {
         // storage block
         StorageBlocks.entries.forEach { storage: StorageBlocks ->
             storage.registerBlock(REGISTER, blockProperty(Blocks.IRON_BLOCK))
-            storage.registerBlockItem(RagiumItems.REGISTER)
+            storage.registerBlockItem(ITEM_REGISTER)
         }
         // grate
         Grates.entries.forEach { grate: Grates ->
             grate.registerBlock(REGISTER, blockProperty(Blocks.COPPER_GRATE), ::TransparentBlock)
-            grate.registerBlockItem(RagiumItems.REGISTER)
+            grate.registerBlockItem(ITEM_REGISTER)
         }
         // casing
         Casings.entries.forEach { casings: Casings ->
             casings.registerBlock(REGISTER, blockProperty(Blocks.SMOOTH_STONE))
-            casings.registerBlockItem(RagiumItems.REGISTER)
+            casings.registerBlockItem(ITEM_REGISTER)
         }
         // hull
         Hulls.entries.forEach { hull: Hulls ->
             hull.registerBlock(REGISTER, blockProperty(Blocks.SMOOTH_STONE), ::TransparentBlock)
-            hull.registerBlockItem(RagiumItems.REGISTER)
+            hull.registerBlockItem(ITEM_REGISTER)
         }
         // coil
         Coils.entries.forEach { coil: Coils ->
             coil.registerBlock(REGISTER, blockProperty(Blocks.COPPER_BLOCK), ::RotatedPillarBlock)
-            coil.registerBlockItem(RagiumItems.REGISTER)
+            coil.registerBlockItem(ITEM_REGISTER)
+        }
+
+        // drum
+        Drums.entries.forEach { drum: Drums ->
+            drum.registerBlock(
+                REGISTER,
+                blockProperty(Blocks.SMOOTH_STONE),
+            ) { prop: BlockBehaviour.Properties -> HTDrumBlock(drum.tier, prop) }
+            drum.registerBlockItem(ITEM_REGISTER)
         }
 
         REGISTER.register(bus)

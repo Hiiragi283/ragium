@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.internal
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumCapabilities
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
 import hiiragi283.ragium.api.extension.tieredText
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
-import hiiragi283.ragium.common.RagiumCommon.Companion.LOGGER
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.core.BlockPos
@@ -25,8 +25,12 @@ import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import org.slf4j.Logger
 
 internal object RagiumEvents {
+    @JvmField
+    val LOGGER: Logger = LogUtils.getLogger()
+
     fun register(eventBus: IEventBus) {
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::modifyComponents)
@@ -53,6 +57,8 @@ internal object RagiumEvents {
         modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
         modifyAll(RagiumBlocks.Hulls.entries, tieredText(RagiumTranslationKeys.HULL))
         modifyAll(RagiumBlocks.Coils.entries, tieredText(RagiumTranslationKeys.COIL))
+
+        modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
 
         LOGGER.info("Modified item components!")
     }

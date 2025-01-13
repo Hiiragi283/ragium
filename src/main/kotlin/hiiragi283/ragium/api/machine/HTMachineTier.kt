@@ -3,25 +3,26 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
+import hiiragi283.ragium.api.fluid.HTFluidConstants
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Rarity
-import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.neoforged.neoforge.registries.DeferredHolder
 
 /**
  * 機械のティアを表す列挙型
@@ -71,7 +72,7 @@ enum class HTMachineTier(
     val smelterMulti: Int = (processCost / 20).toInt()
     val bucketUnit: Int = processCost / 20
     val crateCapacity: Int = bucketUnit * 8 * 64
-    // val tankCapacity: Int = FluidConstants.BUCKET * bucketUnit
+    val tankCapacity: Int = HTFluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.$serializedName"
     val text: MutableComponent = Component.translatable(translationKey)
@@ -156,8 +157,8 @@ enum class HTMachineTier(
         ADVANCED -> RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL
     }
 
-    fun getGlassBlock(): HTBlockContent = when (this) {
-        PRIMITIVE -> HTContent.fromBlock(Blocks::GLASS)
+    fun getGlassBlock(): DeferredHolder<Block, Block> = when (this) {
+        PRIMITIVE -> DeferredHolder.create(Registries.BLOCK, ResourceLocation.withDefaultNamespace("glass"))
         BASIC -> TODO()
         ADVANCED -> TODO()
     }

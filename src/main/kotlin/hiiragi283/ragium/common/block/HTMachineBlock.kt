@@ -1,19 +1,15 @@
 package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.HTEntityBlock
-import hiiragi283.ragium.api.extension.getHTBlockEntity
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineProvider
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.storage.EmptyWorldlyContainer
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.world.WorldlyContainer
-import net.minecraft.world.WorldlyContainerHolder
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -29,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 
 class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properties) :
     HTEntityBlock(properties),
-    WorldlyContainerHolder,
     HTMachineProvider {
     init {
         registerDefaultState(
@@ -77,7 +72,4 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
         .getEntryOrNull()
         ?.get(HTMachinePropertyKeys.MACHINE_FACTORY)
         ?.create(pos, state, machineKey)
-
-    override fun getContainer(state: BlockState, level: LevelAccessor, pos: BlockPos): WorldlyContainer =
-        level.getHTBlockEntity(pos)?.getContainer() ?: EmptyWorldlyContainer
 }
