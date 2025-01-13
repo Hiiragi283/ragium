@@ -35,19 +35,13 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
      * 指定された[key]に紐づいた値を[transform]で変換します。
      * @return [key]に紐づいた値がない場合はnull
      */
-    fun <T : Any, R : Any> map(
-        key: HTPropertyKey<T>,
-        transform: (T) -> R,
-    ): R? = get(key)?.let(transform)
+    fun <T : Any, R : Any> map(key: HTPropertyKey<T>, transform: (T) -> R): R? = get(key)?.let(transform)
 
     /**
      * 指定された[key]に紐づいた値を[action]に渡します。
      * @return [key]に紐づいた値がない場合は実行されない
      */
-    fun <T : Any> ifPresent(
-        key: HTPropertyKey<T>,
-        action: (T) -> Unit,
-    ) {
+    fun <T : Any> ifPresent(key: HTPropertyKey<T>, action: (T) -> Unit) {
         map(key, action)
     }
 

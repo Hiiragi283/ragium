@@ -25,21 +25,13 @@ class HTVirtualFluid : Fluid() {
         direction: Direction,
     ): Boolean = true
 
-    override fun getFlow(
-        blockReader: BlockGetter,
-        pos: BlockPos,
-        fluidState: FluidState,
-    ): Vec3 = Vec3.ZERO
+    override fun getFlow(blockReader: BlockGetter, pos: BlockPos, fluidState: FluidState): Vec3 = Vec3.ZERO
 
     override fun getTickDelay(level: LevelReader): Int = 0
 
     override fun getExplosionResistance(): Float = 0f
 
-    override fun getHeight(
-        state: FluidState,
-        level: BlockGetter,
-        pos: BlockPos,
-    ): Float = 0f
+    override fun getHeight(state: FluidState, level: BlockGetter, pos: BlockPos): Float = 0f
 
     override fun getOwnHeight(state: FluidState): Float = 0f
 
@@ -49,9 +41,5 @@ class HTVirtualFluid : Fluid() {
 
     override fun getAmount(state: FluidState): Int = 0
 
-    override fun getShape(
-        state: FluidState,
-        level: BlockGetter,
-        pos: BlockPos,
-    ): VoxelShape = Shapes.empty()
+    override fun getShape(state: FluidState, level: BlockGetter, pos: BlockPos): VoxelShape = Shapes.empty()
 }

@@ -10,10 +10,7 @@ import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
-class RagiumCraftingRecipeProvider(
-    registries: HolderLookup.Provider,
-    output: RecipeOutput,
-) : RecipeProvider(registries, output) {
+class RagiumCraftingRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput) : RecipeProvider(registries, output) {
     override fun buildRecipes() {
         return
 
@@ -32,14 +29,10 @@ class RagiumCraftingRecipeProvider(
 
     //    Runner    //
 
-    class Runner(
-        packOutput: PackOutput,
-        registries: CompletableFuture<HolderLookup.Provider>,
-    ) : RecipeProvider.Runner(packOutput, registries) {
-        override fun createRecipeProvider(
-            registries: HolderLookup.Provider,
-            output: RecipeOutput,
-        ): RecipeProvider = RagiumCraftingRecipeProvider(registries, output)
+    class Runner(packOutput: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
+        RecipeProvider.Runner(packOutput, registries) {
+        override fun createRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput): RecipeProvider =
+            RagiumCraftingRecipeProvider(registries, output)
 
         override fun getName(): String = "Ragium/Crafting"
     }

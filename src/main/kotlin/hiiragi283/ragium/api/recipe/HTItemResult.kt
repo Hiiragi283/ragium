@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.simpleOrComplex
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -20,10 +21,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 
-sealed class HTItemResult(
-    val count: Int,
-    val components: DataComponentPatch,
-) {
+sealed class HTItemResult(val count: Int, val components: DataComponentPatch) {
     companion object {
         @JvmStatic
         private val simpleFilter: (HTItemResult) -> Boolean =
@@ -41,34 +39,30 @@ sealed class HTItemResult(
                 }
 
         @JvmField
-        val PACKET_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemResult> =
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemResult> =
             object : StreamCodec<RegistryFriendlyByteBuf, HTItemResult> {
                 private val entryCodec: StreamCodec<RegistryFriendlyByteBuf, Holder<Item>> =
                     ByteBufCodecs.holderRegistry(Registries.ITEM)
                 private val holderSetCodec: StreamCodec<RegistryFriendlyByteBuf, HolderSet<Item>> =
                     ByteBufCodecs.holderSet(Registries.ITEM)
 
-                override fun decode(buf: RegistryFriendlyByteBuf): HTItemResult =
-                    when (buf.readBoolean()) {
-                        true -> {
-                            val holderSet: HolderSet<Item> = holderSetCodec.decode(buf)
-                            val count: Int = buf.readVarInt()
-                            val components: DataComponentPatch = DataComponentPatch.STREAM_CODEC.decode(buf)
-                            TagEntry(holderSet, count, components)
-                        }
-
-                        false -> {
-                            val entry: Holder<Item> = entryCodec.decode(buf)
-                            val count: Int = buf.readVarInt()
-                            val components: DataComponentPatch = DataComponentPatch.STREAM_CODEC.decode(buf)
-                            ItemEntry(entry, count, components)
-                        }
+                override fun decode(buf: RegistryFriendlyByteBuf): HTItemResult = when (buf.readBoolean()) {
+                    true -> {
+                        val holderSet: HolderSet<Item> = holderSetCodec.decode(buf)
+                        val count: Int = buf.readVarInt()
+                        val components: DataComponentPatch = DataComponentPatch.STREAM_CODEC.decode(buf)
+                        TagEntry(holderSet, count, components)
                     }
 
-                override fun encode(
-                    buf: RegistryFriendlyByteBuf,
-                    value: HTItemResult,
-                ) {
+                    false -> {
+                        val entry: Holder<Item> = entryCodec.decode(buf)
+                        val count: Int = buf.readVarInt()
+                        val components: DataComponentPatch = DataComponentPatch.STREAM_CODEC.decode(buf)
+                        ItemEntry(entry, count, components)
+                    }
+                }
+
+                override fun encode(buf: RegistryFriendlyByteBuf, value: HTItemResult) {
                     when (value) {
                         is ItemEntry -> {
                             buf.writeBoolean(false)
@@ -88,18 +82,12 @@ sealed class HTItemResult(
         //    Item    //
 
         @JvmStatic
-        fun ofItem(
-            entry: Holder<Item>,
-            count: Int = 1,
-            components: DataComponentPatch = DataComponentPatch.EMPTY,
-        ): HTItemResult = ItemEntry(entry, count, components)
+        fun ofItem(entry: Holder<Item>, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
+            ItemEntry(entry, count, components)
 
         @JvmStatic
-        fun ofItem(
-            item: ItemLike,
-            count: Int = 1,
-            components: DataComponentPatch = DataComponentPatch.EMPTY,
-        ): HTItemResult = ofItem(item.asItem().builtInRegistryHolder(), count, components)
+        fun ofItem(item: ItemLike, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): HTItemResult =
+            ofItem(item.asHolder(), count, components)
 
         @JvmStatic
         fun fromStack(stack: ItemStack): HTItemResult = ofItem(stack.itemHolder, stack.count, stack.componentsPatch)
@@ -132,35 +120,30 @@ sealed class HTItemResult(
     /**
      * 指定した[other]にマージできるか判定します。
      */
-    fun canMerge(other: ItemStack): Boolean =
-        when {
-            this.isEmpty -> false
-            other.isEmpty -> true
-            other.count + this.count > other.maxStackSize -> false
-            ItemStack.isSameItemSameComponents(stack, other) -> true
-            else -> false
-        }
+    fun canMerge(other: ItemStack): Boolean = when {
+        this.isEmpty -> false
+        other.isEmpty -> true
+        other.count + this.count > other.maxStackSize -> false
+        ItemStack.isSameItemSameComponents(stack, other) -> true
+        else -> false
+    }
 
     /**
      * 指定した[other]にマージします。
      * @return [other]とマージした[ItemStack]
      */
-    fun merge(other: ItemStack): ItemStack =
-        when {
-            this.isEmpty -> other
-            other.isEmpty -> stack
-            other.count + this.count > other.maxStackSize -> other
-            ItemStack.isSameItemSameComponents(stack, other) -> other.apply { count += stack.count }
-            else -> other
-        }
+    fun merge(other: ItemStack): ItemStack = when {
+        this.isEmpty -> other
+        other.isEmpty -> stack
+        other.count + this.count > other.maxStackSize -> other
+        ItemStack.isSameItemSameComponents(stack, other) -> other.apply { count += stack.count }
+        else -> other
+    }
 
     //    ItemEntry    //
 
-    internal class ItemEntry(
-        override val firstEntry: Holder<Item>,
-        count: Int,
-        components: DataComponentPatch,
-    ) : HTItemResult(count, components) {
+    internal class ItemEntry(override val firstEntry: Holder<Item>, count: Int, components: DataComponentPatch) :
+        HTItemResult(count, components) {
         companion object {
             @JvmField
             val CODEC: Codec<ItemEntry> =
@@ -185,11 +168,8 @@ sealed class HTItemResult(
 
     //    TagEntry    //
 
-    internal class TagEntry(
-        val holderSet: HolderSet<Item>,
-        count: Int = 1,
-        components: DataComponentPatch = DataComponentPatch.EMPTY,
-    ) : HTItemResult(count, components) {
+    internal class TagEntry(val holderSet: HolderSet<Item>, count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY) :
+        HTItemResult(count, components) {
         companion object {
             @JvmField
             val CODEC: Codec<TagEntry> =

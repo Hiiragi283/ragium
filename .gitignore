@@ -24,3 +24,6 @@ runs
 run-data
 
 repo
+.kotlin
+
+*.cache

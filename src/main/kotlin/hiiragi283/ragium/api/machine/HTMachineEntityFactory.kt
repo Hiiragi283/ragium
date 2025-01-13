@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.machine
 
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntityBase
 import net.minecraft.core.BlockPos
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
 /**
@@ -13,15 +13,11 @@ fun interface HTMachineEntityFactory {
          * 固定の[HTMachineKey]を持った[HTMachineBlockEntityBase]向けの[HTMachineEntityFactory]
          */
         @JvmStatic
-        fun of(factory: (BlockPos, BlockState) -> BlockEntity?): HTMachineEntityFactory =
+        fun of(factory: (BlockPos, BlockState) -> HTMachineBlockEntityBase?): HTMachineEntityFactory =
             HTMachineEntityFactory { pos: BlockPos, state: BlockState, _: HTMachineKey ->
                 factory(pos, state)
             }
     }
 
-    fun create(
-        pos: BlockPos,
-        state: BlockState,
-        key: HTMachineKey,
-    ): BlockEntity?
+    fun create(pos: BlockPos, state: BlockState, key: HTMachineKey): HTMachineBlockEntityBase?
 }

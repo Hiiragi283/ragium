@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api
 
-import com.mojang.datafixers.util.Function3
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -8,10 +7,12 @@ import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
+import hiiragi283.ragium.api.util.TriConsumer
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
+import net.neoforged.fml.IExtensionPoint
 import java.util.function.BiConsumer
 import java.util.function.Function
 
@@ -19,18 +20,6 @@ import java.util.function.Function
  * Ragiumのプラグイン向けのインターフェース
  */
 interface RagiumPlugin {
-    companion object {
-        /**
-         * サーバー側で読み込まれるエントリポイントのキー
-         */
-        const val SERVER_KEY = "ragium.plugin.server"
-
-        /**
-         * クライアント側で読み込まれるエントリポイントのキー
-         */
-        const val CLIENT_KEY = "ragium.plugin.client"
-    }
-
     /**
      * プラグインを読み込む優先度
      *
@@ -76,7 +65,7 @@ interface RagiumPlugin {
      *
      * @sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.bindMaterialToItem]
      */
-    fun bindMaterialToItem(consumer: Function3<HTTagPrefix, HTMaterialKey, ItemLike, Void>) {}
+    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemLike>) {}
 
     /**
      * Ragiumが読み込まれた後に呼び出されます。
@@ -86,18 +75,14 @@ interface RagiumPlugin {
     /**
      * レシピを動的に登録します。
      *
-     * [net.minecraft.recipe.RecipeManager.apply]の最後にフックされます。
+     * [net.minecraft.world.item.crafting.RecipeManager.apply]の最後にフックされます。
      */
-    fun registerRuntimeRecipe(
-        output: RecipeOutput,
-        provider: HolderLookup.Provider,
-        helper: RecipeHelper,
-    ) {}
+    fun registerRuntimeRecipe(output: RecipeOutput, provider: HolderLookup.Provider, helper: RecipeHelper) {}
 
     /**
      * 素材データに基づいたレシピを動的に登録します。
      *
-     * [net.minecraft.recipe.RecipeManager.apply]の最後にフックされます。
+     * [net.minecraft.world.item.crafting.RecipeManager.apply]の最後にフックされます。
      */
     fun registerRuntimeMaterialRecipes(
         output: RecipeOutput,
@@ -105,6 +90,12 @@ interface RagiumPlugin {
         entry: HTMaterialRegistry.Entry,
         helper: RecipeHelper,
     ) {}
+
+    //    Provider    //
+
+    fun interface Provider : IExtensionPoint {
+        fun getPlugins(): List<RagiumPlugin>
+    }
 
     //    MaterialHelper    //
 
@@ -117,10 +108,7 @@ interface RagiumPlugin {
          * @param key 素材のキー
          * @param type 素材の種類
          */
-        fun register(
-            key: HTMaterialKey,
-            type: HTMaterialType,
-        ) {
+        fun register(key: HTMaterialKey, type: HTMaterialType) {
             consumer(key, type)
         }
 
@@ -129,10 +117,7 @@ interface RagiumPlugin {
          * @param parent 統一する素材のキー
          * @param child 統一される素材のキー
          */
-        fun addAltName(
-            parent: HTMaterialKey,
-            child: String,
-        ) {
+        fun addAltName(parent: HTMaterialKey, child: String) {
             altConsumer(parent, child)
         }
     }
@@ -140,11 +125,7 @@ interface RagiumPlugin {
     //    RecipeHelper    //
 
     data object RecipeHelper {
-        fun useItemIfPresent(
-            key: HTMaterialKey,
-            prefix: HTTagPrefix,
-            action: (Item) -> Unit,
-        ) {
+        fun useItemIfPresent(key: HTMaterialKey, prefix: HTTagPrefix, action: (Item) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemIfPresent(entry, prefix, action)
         }
@@ -155,18 +136,11 @@ interface RagiumPlugin {
          * @param prefix 完成品に紐づいたプレフィックス
          * @param action 完成品を扱うブロック
          */
-        fun useItemIfPresent(
-            entry: HTMaterialRegistry.Entry,
-            prefix: HTTagPrefix,
-            action: (Item) -> Unit,
-        ) {
+        fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
             entry.getFirstItemOrNull(prefix)?.let(action)
         }
 
-        fun useItemFromMainPrefix(
-            key: HTMaterialKey,
-            action: (Item) -> Unit,
-        ) {
+        fun useItemFromMainPrefix(key: HTMaterialKey, action: (Item) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemFromMainPrefix(entry, action)
         }
@@ -176,19 +150,13 @@ interface RagiumPlugin {
          * @param entry 素材のエントリ
          * @param action 完成品を扱うブロック
          */
-        fun useItemFromMainPrefix(
-            entry: HTMaterialRegistry.Entry,
-            action: (Item) -> Unit,
-        ) {
+        fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
             }
         }
 
-        fun useItemFromRawPrefix(
-            key: HTMaterialKey,
-            action: (Item) -> Unit,
-        ) {
+        fun useItemFromRawPrefix(key: HTMaterialKey, action: (Item) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemFromRawPrefix(entry, action)
         }
@@ -198,10 +166,7 @@ interface RagiumPlugin {
          * @param entry 素材のエントリ
          * @param action 完成品を扱うブロック
          */
-        fun useItemFromRawPrefix(
-            entry: HTMaterialRegistry.Entry,
-            action: (Item) -> Unit,
-        ) {
+        fun useItemFromRawPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
             entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
             }

@@ -21,7 +21,7 @@ enum class HTMachineType : StringRepresentable {
         val CODEC: Codec<HTMachineType> = stringCodec(HTMachineType.entries)
 
         @JvmField
-        val PACKET_CODEC: StreamCodec<ByteBuf, HTMachineType> = stringStreamCodec(HTMachineType.entries)
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineType> = stringStreamCodec(HTMachineType.entries)
     }
 
     override fun getSerializedName(): String = name.lowercase()

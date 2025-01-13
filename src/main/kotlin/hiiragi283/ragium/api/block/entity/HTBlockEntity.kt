@@ -19,25 +19,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
-abstract class HTBlockEntity(
-    type: BlockEntityType<*>,
-    pos: BlockPos,
-    state: BlockState,
-) : BlockEntity(type, pos, state) {
+abstract class HTBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
     open fun getContainer(): WorldlyContainer? = null
 
-    override fun saveAdditional(
-        tag: CompoundTag,
-        registries: HolderLookup.Provider,
-    ) {
+    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
         getContainer()?.let { ContainerHelper.saveAllItems(tag, TODO(), registries) }
     }
 
-    override fun loadAdditional(
-        tag: CompoundTag,
-        registries: HolderLookup.Provider,
-    ) {
+    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
         getContainer()?.let { ContainerHelper.loadAllItems(tag, TODO(), registries) }
     }
@@ -47,10 +37,7 @@ abstract class HTBlockEntity(
 
     final override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 
-    override fun handleUpdateTag(
-        tag: CompoundTag,
-        lookupProvider: HolderLookup.Provider,
-    ) {
+    override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
         super.handleUpdateTag(tag, lookupProvider)
     }
 
@@ -66,16 +53,15 @@ abstract class HTBlockEntity(
         pos: BlockPos,
         player: Player,
         hitResult: BlockHitResult,
-    ): InteractionResult =
-        state.getMenuProvider(level, pos)?.let {
-            when (level.isClientSide) {
-                true -> InteractionResult.SUCCESS
-                else -> {
-                    player.openMenu(it)
-                    InteractionResult.CONSUME
-                }
+    ): InteractionResult = state.getMenuProvider(level, pos)?.let {
+        when (level.isClientSide) {
+            true -> InteractionResult.SUCCESS
+            else -> {
+                player.openMenu(it)
+                InteractionResult.CONSUME
             }
-        } ?: InteractionResult.PASS
+        }
+    } ?: InteractionResult.PASS
 
     /**
      * ブロックが左クリックされたときに呼ばれます。
@@ -118,11 +104,7 @@ abstract class HTBlockEntity(
      * ブロックのコンパレータ出力を返します。
      * @see [hiiragi283.ragium.api.block.HTEntityBlock.getAnalogOutputSignal]
      */
-    open fun getComparatorOutput(
-        state: BlockState,
-        level: Level,
-        pos: BlockPos,
-    ): Int = 0
+    open fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = 0
 
     open val shouldTick: Boolean = true
     open var ticks: Int = 0
@@ -133,11 +115,7 @@ abstract class HTBlockEntity(
      * 毎tick呼び出されます。
      * @see [hiiragi283.ragium.api.block.HTEntityBlock.getTicker]
      */
-    fun tick(
-        level: Level,
-        pos: BlockPos,
-        state: BlockState,
-    ) {
+    fun tick(level: Level, pos: BlockPos, state: BlockState) {
         if (!shouldTick) return
         tickEach(level, pos, state, ticks)
         if (ticks >= tickRate) {
@@ -162,9 +140,5 @@ abstract class HTBlockEntity(
     /**
      * [ticks]が[tickRate]以上の値となったときに呼び出されます。
      */
-    open fun tickSecond(
-        level: Level,
-        pos: BlockPos,
-        state: BlockState,
-    ) {}
+    open fun tickSecond(level: Level, pos: BlockPos, state: BlockState) {}
 }

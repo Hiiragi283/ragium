@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.material
 
-import com.google.common.collect.Table
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.property.HTPropertyHolder
+import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.world.item.Item
 import java.util.stream.Stream
 
@@ -13,7 +13,7 @@ import java.util.stream.Stream
  */
 class HTMaterialRegistry(
     private val types: Map<HTMaterialKey, HTMaterialType>,
-    private val items: Table<HTTagPrefix, HTMaterialKey, out Set<Item>>,
+    private val items: HTTable<HTTagPrefix, HTMaterialKey, out Set<Item>>,
     private val properties: Map<HTMaterialKey, HTPropertyHolder>,
 ) : Keyable {
     /**
@@ -38,17 +38,13 @@ class HTMaterialRegistry(
      *
      * @return 値がない場合は[emptySet]
      */
-    fun getItems(
-        prefix: HTTagPrefix,
-        key: HTMaterialKey,
-    ): Set<Item> = items.get(prefix, key) ?: setOf()
+    fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): Set<Item> = items.get(prefix, key) ?: setOf()
 
-    private fun createEntry(key: HTMaterialKey): Entry =
-        Entry(
-            types[key] ?: error("Unknown material key: $key"),
-            items.column(key),
-            properties.getOrDefault(key, HTPropertyHolder.Empty),
-        )
+    private fun createEntry(key: HTMaterialKey): Entry = Entry(
+        types[key] ?: error("Unknown material key: $key"),
+        items.column(key),
+        properties.getOrDefault(key, HTPropertyHolder.Empty),
+    )
 
     /**
      * 指定された[key]に紐づいた[Entry]を返します。
@@ -64,22 +60,18 @@ class HTMaterialRegistry(
 
     //    Keyable    //
 
-    override fun <T : Any> keys(ops: DynamicOps<T>): Stream<T> =
-        keys
-            .stream()
-            .map(HTMaterialKey::name)
-            .map(ops::createString)
+    override fun <T : Any> keys(ops: DynamicOps<T>): Stream<T> = keys
+        .stream()
+        .map(HTMaterialKey::name)
+        .map(ops::createString)
 
     //    Entry    //
 
     /**
      * 素材の情報をまとめたクラス
      */
-    data class Entry(
-        val type: HTMaterialType,
-        val itemMap: Map<HTTagPrefix, Set<Item>>,
-        private val property: HTPropertyHolder,
-    ) : HTPropertyHolder by property {
+    data class Entry(val type: HTMaterialType, val itemMap: Map<HTTagPrefix, Set<Item>>, private val property: HTPropertyHolder) :
+        HTPropertyHolder by property {
         fun getItems(prefix: HTTagPrefix): Set<Item> = itemMap.getOrDefault(prefix, setOf())
 
         fun getFirstItemOrNull(prefix: HTTagPrefix): Item? = getItems(prefix).firstOrNull()

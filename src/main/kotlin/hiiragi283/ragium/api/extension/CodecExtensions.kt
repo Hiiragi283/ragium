@@ -25,21 +25,17 @@ import kotlin.jvm.optionals.getOrNull
  * @param T [StringRepresentable]を継承したクラス
  * @return [Codec.STRING]をベースに変換された[Codec]
  */
-fun <T : StringRepresentable> stringCodec(entries: Iterable<T>): Codec<T> =
-    Codec.STRING.comapFlatMap(
-        { name: String ->
-            entries.firstOrNull { it.serializedName == name }.toDataResult { "Unknown entry: $name!" }
-        },
-        StringRepresentable::getSerializedName,
-    )
+fun <T : StringRepresentable> stringCodec(entries: Iterable<T>): Codec<T> = Codec.STRING.comapFlatMap(
+    { name: String ->
+        entries.firstOrNull { it.serializedName == name }.toDataResult { "Unknown entry: $name!" }
+    },
+    StringRepresentable::getSerializedName,
+)
 
 /**
  * 指定した[first]と [second]から[Map]の[Codec]を返します。
  */
-fun <A : Any, B : Any> mappedCodecOf(
-    first: MapCodec<A>,
-    second: MapCodec<B>,
-): Codec<Map<A, B>> =
+fun <A : Any, B : Any> mappedCodecOf(first: MapCodec<A>, second: MapCodec<B>): Codec<Map<A, B>> =
     Codec.pair(first.codec(), second.codec()).listOf().xmap(
         { pairs: List<MPair<A, B>> -> pairs.associate(MPair<A, B>::toKotlin) },
         { map: Map<A, B> -> map.toList().map(Pair<A, B>::toMojang) },
@@ -48,10 +44,7 @@ fun <A : Any, B : Any> mappedCodecOf(
 /**
  * 指定した[min]と[max]を含む範囲の[Codec]を返します。
  */
-fun longRangeCodec(
-    min: Long,
-    max: Long,
-): Codec<Long> {
+fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     val func: Function<Long, DataResult<Long>> = Codec.checkRange(min, max)
     return Codec.LONG.flatXmap(func, func)
 }
@@ -71,46 +64,31 @@ val POSITIVE_LONG_CODEC: Codec<Long> = longRangeCodec(1, Long.MAX_VALUE)
  * @param T [Container]を継承したクラス
  * @return [ItemStack.OPTIONAL_CODEC]をベースに変換された[Codec]
  */
-fun <T : Container> createInventoryCodec(builder: (Int) -> T): Codec<T> =
-    ItemStack.OPTIONAL_CODEC.listOf().xmap(
-        { list: List<ItemStack> ->
-            builder(list.size).apply {
-                list.forEachIndexed(this::setItem)
-            }
-        },
-        TODO(),
-    )
-
-fun <A : Any> Codec<List<A>>.filterNotEmpty(filter: (A) -> Boolean): Codec<List<A>> =
-    xmap(
-        { list: List<A> -> list.filterNot(filter) },
-        Function.identity(),
-    )
-
-fun <A : Any> simpleOrComplex(
-    simple: Codec<A>,
-    complex: Codec<A>,
-    simplePredicate: (A) -> Boolean,
-): Codec<A> =
-    object : Codec<A> {
-        override fun <T : Any> encode(
-            input: A,
-            ops: DynamicOps<T>,
-            prefix: T,
-        ): DataResult<T> =
-            when {
-                simplePredicate(input) -> simple.encode(input, ops, prefix)
-                else -> complex.encode(input, ops, prefix)
-            }
-
-        override fun <T : Any> decode(
-            ops: DynamicOps<T>,
-            input: T,
-        ): DataResult<MPair<A, T>> {
-            val result: DataResult<MPair<A, T>> = simple.decode(ops, input)
-            return if (result.isSuccess) result else complex.decode(ops, input)
+fun <T : Container> createInventoryCodec(builder: (Int) -> T): Codec<T> = ItemStack.OPTIONAL_CODEC.listOf().xmap(
+    { list: List<ItemStack> ->
+        builder(list.size).apply {
+            list.forEachIndexed(this::setItem)
         }
+    },
+    TODO(),
+)
+
+fun <A : Any> Codec<List<A>>.filterNotEmpty(filter: (A) -> Boolean): Codec<List<A>> = xmap(
+    { list: List<A> -> list.filterNot(filter) },
+    Function.identity(),
+)
+
+fun <A : Any> simpleOrComplex(simple: Codec<A>, complex: Codec<A>, simplePredicate: (A) -> Boolean): Codec<A> = object : Codec<A> {
+    override fun <T : Any> encode(input: A, ops: DynamicOps<T>, prefix: T): DataResult<T> = when {
+        simplePredicate(input) -> simple.encode(input, ops, prefix)
+        else -> complex.encode(input, ops, prefix)
     }
+
+    override fun <T : Any> decode(ops: DynamicOps<T>, input: T): DataResult<MPair<A, T>> {
+        val result: DataResult<MPair<A, T>> = simple.decode(ops, input)
+        return if (result.isSuccess) result else complex.decode(ops, input)
+    }
+}
 
 //    MapCodec    //
 
@@ -145,16 +123,12 @@ fun <T : StringRepresentable> stringStreamCodec(entries: Iterable<T>): StreamCod
  * @param errorMessage [DataResult.error]を返す場合のメッセージ
  * @return [checker]がtrueの場合は[DataResult.success]，それ以外の場合は[DataResult.error]
  */
-fun <R : Any> DataResult<R>.validate(
-    checker: (R) -> Boolean,
-    errorMessage: () -> String,
-): DataResult<R> =
-    flatMap { result: R ->
-        when (checker(result)) {
-            true -> DataResult.success(result)
-            false -> DataResult.error(errorMessage)
-        }
+fun <R : Any> DataResult<R>.validate(checker: (R) -> Boolean, errorMessage: () -> String): DataResult<R> = flatMap { result: R ->
+    when (checker(result)) {
+        true -> DataResult.success(result)
+        false -> DataResult.error(errorMessage)
     }
+}
 
 /**
  * [Optional]を[DataResult]に変換します。
@@ -164,23 +138,20 @@ fun <R : Any> DataResult<R>.validate(
 fun <T : Any> Optional<T>.toDataResult(errorMessage: () -> String): DataResult<T> =
     map(DataResult<T>::success).orElse(DataResult.error(errorMessage))
 
-fun OptionalDouble.toDataResult(errorMessage: () -> String): DataResult<Double> =
-    when (this.isPresent) {
-        true -> DataResult.success(this.asDouble)
-        false -> DataResult.error(errorMessage)
-    }
+fun OptionalDouble.toDataResult(errorMessage: () -> String): DataResult<Double> = when (this.isPresent) {
+    true -> DataResult.success(this.asDouble)
+    false -> DataResult.error(errorMessage)
+}
 
-fun OptionalInt.toDataResult(errorMessage: () -> String): DataResult<Int> =
-    when (this.isPresent) {
-        true -> DataResult.success(this.asInt)
-        false -> DataResult.error(errorMessage)
-    }
+fun OptionalInt.toDataResult(errorMessage: () -> String): DataResult<Int> = when (this.isPresent) {
+    true -> DataResult.success(this.asInt)
+    false -> DataResult.error(errorMessage)
+}
 
-fun OptionalLong.toDataResult(errorMessage: () -> String): DataResult<Long> =
-    when (this.isPresent) {
-        true -> DataResult.success(this.asLong)
-        false -> DataResult.error(errorMessage)
-    }
+fun OptionalLong.toDataResult(errorMessage: () -> String): DataResult<Long> = when (this.isPresent) {
+    true -> DataResult.success(this.asLong)
+    false -> DataResult.error(errorMessage)
+}
 
 /**
  * [T]を[DataResult]に変換します。

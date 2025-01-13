@@ -3,15 +3,24 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTContent
+import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.EnumProperty
 
 /**
@@ -21,7 +30,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty
  */
 enum class HTMachineTier(
     private val idPattern: String,
-    val processCost: Long,
+    val processCost: Int,
     val tickRate: Int,
     val rarity: Rarity,
 ) : StringRepresentable {
@@ -53,29 +62,31 @@ enum class HTMachineTier(
         val FIELD_CODEC: MapCodec<HTMachineTier> = HTMachineTier.CODEC.optionalFieldOf("tier", PRIMITIVE)
 
         @JvmField
-        val PACKET_CODEC: StreamCodec<ByteBuf, HTMachineTier> = stringStreamCodec(HTMachineTier.entries)
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineTier> = stringStreamCodec(HTMachineTier.entries)
 
         @JvmField
         val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.create("tier", HTMachineTier::class.java)
     }
 
     val smelterMulti: Int = (processCost / 20).toInt()
-    val bucketUnit: Long = processCost / 20
-    val crateCapacity: Long = bucketUnit * 8 * 64
-    // val tankCapacity: Long = FluidConstants.BUCKET * bucketUnit
+    val bucketUnit: Int = processCost / 20
+    val crateCapacity: Int = bucketUnit * 8 * 64
+    // val tankCapacity: Int = FluidConstants.BUCKET * bucketUnit
 
     val translationKey: String = "machine_tier.ragium.$serializedName"
     val text: MutableComponent = Component.translatable(translationKey)
-    /*val tierText: MutableComponent = Component
-        .translatable(
-            RagiumTranslationKeys.MACHINE_TIER,
-            text.formatted(rarity.formatting),
-        ).formatted(Formatting.GRAY)
-    val recipeCostText: MutableComponent = Component
-        .translatable(
-            RagiumTranslationKeys.MACHINE_RECIPE_COST,
-            longText(processCost).formatted(Formatting.YELLOW),
-        ).formatted(Formatting.GRAY)*/
+    val tierText: MutableComponent =
+        Component
+            .translatable(
+                RagiumTranslationKeys.MACHINE_TIER,
+                text.withStyle(rarity.styleModifier),
+            ).withStyle(ChatFormatting.GRAY)
+    val recipeCostText: MutableComponent =
+        Component
+            .translatable(
+                RagiumTranslationKeys.MACHINE_RECIPE_COST,
+                intText(processCost).withStyle(ChatFormatting.YELLOW),
+            ).withStyle(ChatFormatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
 
@@ -95,7 +106,7 @@ enum class HTMachineTier(
         PRIMITIVE -> RagiumItems.Circuits.PRIMITIVE
         BASIC -> RagiumItems.Circuits.BASIC
         ADVANCED -> RagiumItems.Circuits.ADVANCED
-    }
+    }*/
 
     fun getCoil(): RagiumBlocks.Coils = when (this) {
         PRIMITIVE -> RagiumBlocks.Coils.PRIMITIVE
@@ -146,10 +157,10 @@ enum class HTMachineTier(
     }
 
     fun getGlassBlock(): HTBlockContent = when (this) {
-        PRIMITIVE -> HTContent.fromBlock(Blocks.GLASS)
-        BASIC -> RagiumBlocks.Glasses.STEEL
-        ADVANCED -> RagiumBlocks.Glasses.OBSIDIAN
-    }*/
+        PRIMITIVE -> HTContent.fromBlock(Blocks::GLASS)
+        BASIC -> TODO()
+        ADVANCED -> TODO()
+    }
 
     //    StringRepresentable    //
 

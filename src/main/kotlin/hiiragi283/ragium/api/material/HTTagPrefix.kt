@@ -18,10 +18,7 @@ import net.minecraft.world.item.Item
 /**
  * Represent [TagKey] prefixes
  */
-enum class HTTagPrefix(
-    val prefix: String,
-    val enableAutoGen: Boolean = true,
-) : StringRepresentable {
+enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : StringRepresentable {
     DUST("dusts"),
     GEAR("gears"),
     GEM("gems") {
@@ -46,17 +43,15 @@ enum class HTTagPrefix(
         val CODEC: Codec<HTTagPrefix> = stringCodec(HTTagPrefix.entries)
 
         @JvmField
-        val PACKET_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = stringStreamCodec(HTTagPrefix.entries)
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = stringStreamCodec(HTTagPrefix.entries)
     }
 
     //    Id    //
 
     open fun createPath(key: HTMaterialKey): String = "${key.name}_$serializedName"
 
-    fun createId(
-        key: HTMaterialKey,
-        namespace: String = RagiumAPI.MOD_ID,
-    ): ResourceLocation = ResourceLocation.fromNamespaceAndPath(namespace, createPath(key))
+    fun createId(key: HTMaterialKey, namespace: String = RagiumAPI.MOD_ID): ResourceLocation =
+        ResourceLocation.fromNamespaceAndPath(namespace, createPath(key))
 
     //    TagKey    //
 

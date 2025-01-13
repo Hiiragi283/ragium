@@ -13,9 +13,7 @@ import net.neoforged.neoforge.registries.DeferredRegister
 object RagiumItems {
     //    Materials    //
 
-    enum class Dusts(
-        override val material: HTMaterialKey,
-    ) : HTItemContent.Material {
+    enum class Dusts(override val material: HTMaterialKey) : HTItemContent.Material {
         IRON(RagiumMaterialKeys.IRON),
         ;
 

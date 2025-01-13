@@ -1,17 +1,30 @@
 package hiiragi283.ragium.api.content
 
+import hiiragi283.ragium.api.extension.blockProperty
+import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialProvider
-import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredItem
+import net.neoforged.neoforge.registries.DeferredRegister
 
 interface HTBlockContent :
     HTContent<Block>,
     ItemLike {
-    override fun get(): Block = BuiltInRegistries.BLOCK.getValueOrThrow(key)
-
     override fun asItem(): Item = get().asItem()
+
+    fun registerBlock(
+        register: DeferredRegister.Blocks,
+        properties: BlockBehaviour.Properties = blockProperty(),
+        factory: (BlockBehaviour.Properties) -> Block = ::Block,
+    ): DeferredBlock<Block> = register.registerBlock(id.path, factory, properties)
+
+    fun registerBlockItem(register: DeferredRegister.Items, properties: Item.Properties = itemProperty()): DeferredItem<BlockItem> =
+        register.registerSimpleBlockItem(holder, properties)
 
     interface Material :
         HTBlockContent,

@@ -7,24 +7,16 @@ import net.minecraft.resources.ResourceLocation
  * @param T 値のクラス
  * @param id ユニークな値
  */
-sealed class HTPropertyKey<T : Any>(
-    val id: ResourceLocation,
-) {
+sealed class HTPropertyKey<T : Any>(val id: ResourceLocation) {
     companion object {
         @JvmStatic
         fun <T : Any> ofSimple(id: ResourceLocation): Simple<T> = Simple(id)
 
         @JvmStatic
-        fun <T : Any> ofDefaulted(
-            id: ResourceLocation,
-            value: T,
-        ): Defaulted<T> = Defaulted(id, value)
+        fun <T : Any> ofDefaulted(id: ResourceLocation, value: T): Defaulted<T> = Defaulted(id, value)
 
         @JvmStatic
-        fun <T : Any> ofDefaulted(
-            id: ResourceLocation,
-            initializer: () -> T,
-        ): Defaulted<T> = Defaulted(id, initializer)
+        fun <T : Any> ofDefaulted(id: ResourceLocation, initializer: () -> T): Defaulted<T> = Defaulted(id, initializer)
 
         @JvmStatic
         fun ofFlag(id: ResourceLocation): Defaulted<Unit> = ofDefaulted(id, Unit)
@@ -44,9 +36,7 @@ sealed class HTPropertyKey<T : Any>(
     /**
      * デフォルト値を持たない[hiiragi283.ragium.api.property.HTPropertyKey]
      */
-    class Simple<T : Any>(
-        id: ResourceLocation,
-    ) : HTPropertyKey<T>(id)
+    class Simple<T : Any>(id: ResourceLocation) : HTPropertyKey<T>(id)
 
     //    Defaulted    //
 
@@ -54,10 +44,7 @@ sealed class HTPropertyKey<T : Any>(
      * デフォルト値を持つ[hiiragi283.ragium.api.property.HTPropertyKey]
      * @param initializer デフォルト値を渡すブロック
      */
-    class Defaulted<T : Any>(
-        id: ResourceLocation,
-        private val initializer: () -> T,
-    ) : HTPropertyKey<T>(id) {
+    class Defaulted<T : Any>(id: ResourceLocation, private val initializer: () -> T) : HTPropertyKey<T>(id) {
         constructor(id: ResourceLocation, defaultValue: T) : this(id, { defaultValue })
 
         fun getDefaultValue(): T = initializer()

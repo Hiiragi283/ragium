@@ -5,12 +5,16 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.toDataResult
+import hiiragi283.ragium.common.init.RagiumComponentTypes
+import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import java.util.function.Consumer
 
 /**
  * 機械の種類を管理するキー
@@ -19,9 +23,7 @@ import net.minecraft.world.item.ItemStack
  *
  * @see [hiiragi283.ragium.api.RagiumPlugin.registerMachine]
  */
-class HTMachineKey private constructor(
-    val name: String,
-) : Comparable<HTMachineKey> {
+class HTMachineKey private constructor(val name: String) : Comparable<HTMachineKey> {
     companion object {
         private val instances: MutableMap<String, HTMachineKey> = mutableMapOf()
 
@@ -34,7 +36,7 @@ class HTMachineKey private constructor(
             }
 
         @JvmField
-        val PACKET_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
             ByteBufCodecs.STRING_UTF8.map(Companion::of, HTMachineKey::name)
 
         /**
@@ -65,22 +67,22 @@ class HTMachineKey private constructor(
     fun <T : Any> useEntry(action: (HTMachineRegistry.Entry) -> T): DataResult<T> =
         getEntryOrNull()?.let(action).toDataResult { "Unknown machine key: $this" }
 
-    /*fun appendTooltip(consumer: (Component) -> Unit, tier: HTMachineTier, allowDescription: Boolean = true) {
-        consumer(
+    fun appendTooltip(consumer: Consumer<Component>, tier: HTMachineTier, allowDescription: Boolean = true) {
+        consumer.accept(
             Component
                 .translatable(
                     RagiumTranslationKeys.MACHINE_NAME,
-                    text.formatted(Formatting.WHITE),
-                ).formatted(Formatting.GRAY),
+                    text.withStyle(ChatFormatting.WHITE),
+                ).withStyle(ChatFormatting.GRAY),
         )
-        consumer(tier.tierText)
-        consumer(tier.recipeCostText)
-        consumer(tier.recipeCostText)
-        // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer, this, tier)
+        consumer.accept(tier.tierText)
+        consumer.accept(tier.recipeCostText)
+        consumer.accept(tier.recipeCostText)
+        // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer.accept, this, tier)
         if (allowDescription) {
-            consumer(descriptionText)
+            consumer.accept(descriptionText)
         }
-    }*/
+    }
 
     fun isConsumer(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.CONSUMER }.orElse(false)
 
@@ -92,7 +94,11 @@ class HTMachineKey private constructor(
      * 指定された[tier]から[ItemStack]を返します。
      * @return [getEntryOrNull]がnullの場合は[ItemStack.EMPTY]を返す
      */
-    fun createItemStack(tier: HTMachineTier): ItemStack = ItemStack.EMPTY
+    fun createItemStack(tier: HTMachineTier): ItemStack {
+        val stack: ItemStack = getEntryOrNull()?.let(::ItemStack) ?: return ItemStack.EMPTY
+        stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
+        return stack
+    }
 
     override fun toString(): String = "HTMachineKey[$name]"
 

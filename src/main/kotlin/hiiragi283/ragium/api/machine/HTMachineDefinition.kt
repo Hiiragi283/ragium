@@ -6,10 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 
-data class HTMachineDefinition(
-    val key: HTMachineKey,
-    val tier: HTMachineTier,
-) {
+data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
     companion object {
         @JvmField
         val CODEC: MapCodec<HTMachineDefinition> =
@@ -22,11 +19,11 @@ data class HTMachineDefinition(
             }
 
         @JvmField
-        val PACKET_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineDefinition> =
+        val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineDefinition> =
             StreamCodec.composite(
-                HTMachineKey.PACKET_CODEC,
+                HTMachineKey.STREAM_CODEC,
                 HTMachineDefinition::key,
-                HTMachineTier.PACKET_CODEC,
+                HTMachineTier.STREAM_CODEC,
                 HTMachineDefinition::tier,
                 ::HTMachineDefinition,
             )

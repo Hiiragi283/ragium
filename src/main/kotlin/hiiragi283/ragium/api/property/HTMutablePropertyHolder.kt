@@ -8,10 +8,7 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
     /**
      * 指定した[key]と[value]をセットします。
      */
-    operator fun <T : Any> set(
-        key: HTPropertyKey<T>,
-        value: T,
-    )
+    operator fun <T : Any> set(key: HTPropertyKey<T>, value: T)
 
     /**
      * 指定した[keys]を[Unit]に対してセットします。
@@ -23,10 +20,7 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
     /**
      * 指定した[key]と[value]を，[value]がnullでない場合はセットします。
      */
-    fun <T : Any> setIfNonNull(
-        key: HTPropertyKey<T>,
-        value: T?,
-    ) {
+    fun <T : Any> setIfNonNull(key: HTPropertyKey<T>, value: T?) {
         value?.let { set(key, it) }
     }
 
@@ -38,18 +32,12 @@ interface HTMutablePropertyHolder : HTPropertyHolder {
     /**
      * 指定した[key]に紐づいた値が[filter]に一致した場合に削除します。
      */
-    fun <T : Any> removeIf(
-        key: HTPropertyKey<T>,
-        filter: (T) -> Boolean,
-    ) {
+    fun <T : Any> removeIf(key: HTPropertyKey<T>, filter: (T) -> Boolean) {
         val existValue: T = get(key) ?: return
         if (filter(existValue)) {
             remove(key)
         }
     }
 
-    fun <T : Any> computeIfAbsent(
-        key: HTPropertyKey<T>,
-        mapping: () -> T,
-    ): T = get(key) ?: mapping().apply { set(key, this) }
+    fun <T : Any> computeIfAbsent(key: HTPropertyKey<T>, mapping: () -> T): T = get(key) ?: mapping().apply { set(key, this) }
 }

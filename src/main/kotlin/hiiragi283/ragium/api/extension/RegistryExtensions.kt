@@ -79,12 +79,11 @@ val <T : Any> HolderSet<T>.isEmpty: Boolean
  * @param transform 値を[Component]に変換するブロック
  * @return [TagKey]の場合は[TODO]，それ以外の場合は[transform]を連結
  */
-fun <T : Any> HolderSet<T>.asComponent(transform: (T) -> Component): MutableComponent =
-    unwrap()
-        .map(
-            TODO(),
-            { ComponentUtils.formatList(this.map(Holder<T>::value), transform) },
-        ).copy()
+fun <T : Any> HolderSet<T>.asText(transform: (T) -> Component): MutableComponent = unwrap()
+    .map(
+        TODO(),
+        { ComponentUtils.formatList(this.map(Holder<T>::value), transform) },
+    ).copy()
 
 //    TagKey    //
 

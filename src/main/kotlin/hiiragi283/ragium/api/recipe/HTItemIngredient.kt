@@ -16,10 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import java.util.function.Predicate
 
-class HTItemIngredient(
-    val ingredient: Ingredient,
-    val count: Int = 1,
-) : Predicate<ItemStack> {
+class HTItemIngredient(val ingredient: Ingredient, val count: Int = 1) : Predicate<ItemStack> {
     companion object {
         @JvmField
         val CODEC: Codec<HTItemIngredient> =
@@ -32,7 +29,7 @@ class HTItemIngredient(
                             Codec.intRange(0, 99).optionalFieldOf("count", 1).forGetter(HTItemIngredient::count),
                         ).apply(instance, ::HTItemIngredient)
                 },
-            ) { ingredient -> ingredient.count == 1 }
+            ) { ingredient: HTItemIngredient -> ingredient.count == 1 }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTItemIngredient> =
@@ -45,36 +42,21 @@ class HTItemIngredient(
             )
 
         @JvmStatic
-        fun of(
-            item: ItemLike,
-            count: Int = 1,
-        ): HTItemIngredient = HTItemIngredient(Ingredient.of(item), count)
+        fun of(item: ItemLike, count: Int = 1): HTItemIngredient = HTItemIngredient(Ingredient.of(item), count)
 
         @JvmStatic
-        fun of(
-            items: Collection<ItemLike>,
-            count: Int = 1,
-        ): HTItemIngredient = HTItemIngredient(Ingredient.of(items.stream()), count)
+        fun of(items: Collection<ItemLike>, count: Int = 1): HTItemIngredient = HTItemIngredient(Ingredient.of(items.stream()), count)
 
         @JvmStatic
-        fun of(
-            tagKey: TagKey<Item>,
-            provider: HolderLookup.Provider,
-            count: Int = 1,
-        ): HTItemIngredient = of(tagKey, provider.lookupOrThrow(Registries.ITEM), count)
+        fun of(tagKey: TagKey<Item>, provider: HolderLookup.Provider, count: Int = 1): HTItemIngredient =
+            of(tagKey, provider.lookupOrThrow(Registries.ITEM), count)
 
         @JvmStatic
-        fun of(
-            tagKey: TagKey<Item>,
-            lookup: HolderLookup.RegistryLookup<Item>,
-            count: Int = 1,
-        ): HTItemIngredient = of(lookup.getOrThrow(tagKey), count)
+        fun of(tagKey: TagKey<Item>, lookup: HolderLookup.RegistryLookup<Item>, count: Int = 1): HTItemIngredient =
+            of(lookup.getOrThrow(tagKey), count)
 
         @JvmStatic
-        fun of(
-            items: HolderSet<Item>,
-            count: Int = 1,
-        ): HTItemIngredient = HTItemIngredient(Ingredient.of(items), count)
+        fun of(items: HolderSet<Item>, count: Int = 1): HTItemIngredient = HTItemIngredient(Ingredient.of(items), count)
     }
 
     val isEmpty: Boolean

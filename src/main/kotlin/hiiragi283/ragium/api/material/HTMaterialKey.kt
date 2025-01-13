@@ -17,9 +17,7 @@ import net.minecraft.network.codec.StreamCodec
  *
  * @see [hiiragi283.ragium.api.RagiumPlugin.registerMaterial]
  */
-class HTMaterialKey private constructor(
-    val name: String,
-) : Comparable<HTMaterialKey> {
+class HTMaterialKey private constructor(val name: String) : Comparable<HTMaterialKey> {
     companion object {
         private val instances: MutableMap<String, HTMaterialKey> = mutableMapOf()
 
@@ -62,6 +60,10 @@ class HTMaterialKey private constructor(
     //    Comparable    //
 
     override fun compareTo(other: HTMaterialKey): Int = name.compareTo(other.name)
+
+    override fun equals(other: Any?): Boolean = (other as? HTMaterialKey)?.name == name
+
+    override fun hashCode(): Int = name.hashCode()
 
     override fun toString(): String = "HTMaterialKey[$name]"
 }
