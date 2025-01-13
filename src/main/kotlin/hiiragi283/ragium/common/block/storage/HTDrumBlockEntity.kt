@@ -1,12 +1,14 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.nbt.CompoundTag
@@ -18,14 +20,16 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.SimpleFluidContent
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTMachineTier) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
+    HTBlockEntityHandlerProvider,
     HTMachineTierProvider {
     constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.machineTier)
 
-    private var fluidTank = FluidTank(tier.tankCapacity)
+    private val fluidTank = FluidTank(tier.tankCapacity)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -59,4 +63,8 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTM
         FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, fluidTank) -> InteractionResult.SUCCESS
         else -> super.onRightClicked(state, level, pos, player, hitResult)
     }
+
+    //    HTBlockEntityHandlerProvider    //
+
+    override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidTank
 }

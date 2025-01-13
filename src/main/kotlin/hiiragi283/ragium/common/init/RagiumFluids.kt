@@ -9,8 +9,11 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
+import net.neoforged.neoforge.registries.NeoForgeRegistries
 import java.awt.Color
 
 enum class RagiumFluids(
@@ -18,9 +21,10 @@ enum class RagiumFluids(
     val enName: String,
     val jaName: String,
     val type: TextureType = TextureType.LIQUID,
-) : HTFluidContent {
+) : HTFluidContent,
+    IClientFluidTypeExtensions {
     // Vanilla
-    MILK(Color(0xffffff), "Milk", "牛乳"),
+    // MILK(Color(0xffffff), "Milk", "牛乳"),
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
     EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
 
@@ -118,16 +122,27 @@ enum class RagiumFluids(
         @JvmField
         val REGISTER: DeferredRegister<Fluid> = DeferredRegister.create(Registries.FLUID, RagiumAPI.MOD_ID)
 
+        @JvmField
+        val TYPE_REGISTER: DeferredRegister<FluidType> =
+            DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, RagiumAPI.MOD_ID)
+
         @JvmStatic
         internal fun register(eventBus: IEventBus) {
             RagiumFluids.entries.forEach { content: RagiumFluids ->
-                content.register(REGISTER) { HTVirtualFluid() }
+                content.register(REGISTER) { HTVirtualFluid(content.typeHolder::get) }
             }
+            TYPE_REGISTER.register(eventBus)
             REGISTER.register(eventBus)
         }
     }
 
     override val holder: DeferredHolder<Fluid, Fluid> = HTContent.fluidHolder(name.lowercase())
+
+    override val typeHolder: DeferredHolder<FluidType, out FluidType> by lazy {
+        TYPE_REGISTER.register(name.lowercase()) { _: ResourceLocation ->
+            FluidType(FluidType.Properties.create())
+        }
+    }
 
     val translationKey: String = Util.makeDescriptionId("fluid", id)
 
@@ -147,4 +162,14 @@ enum class RagiumFluids(
         RADIOACTIVE,
         STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
     }
+
+    //    ClientExtensions    //
+
+    override fun getStillTexture(): ResourceLocation = type.stillTex
+
+    override fun getFlowingTexture(): ResourceLocation = type.floatingTex
+
+    override fun getOverlayTexture(): ResourceLocation? = type.overTex
+
+    override fun getTintColor(): Int = color.rgb
 }

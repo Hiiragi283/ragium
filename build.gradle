@@ -4,11 +4,13 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.74'
     id 'idea'
     id "org.jetbrains.kotlin.jvm" version "2.1.0"
-    id 'org.jlleitschuh.gradle.ktlint' version "12.1.2"
+    alias(libs.plugins.neo.moddev)
+    alias(libs.plugins.ktlint)
 }
+
+String mod_id = "ragium"
 
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
@@ -19,14 +21,19 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
-group = mod_group_id
+libs.versions.ragium.map(project::setVersion)
+group = "hiiragi283.ragium"
 
 repositories {
     mavenLocal()
     maven {
         name = "Kotlin for Forge"
         setUrl("https://thedarkcolour.github.io/KotlinForForge/")
+    }
+    maven { url "https://maven.architectury.dev/" }
+    maven {
+        url "https://api.modrinth.com/maven"
+        content { includeGroup("maven.modrinth") }
     }
 }
 
@@ -39,11 +46,11 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 neoForge {
     // Specify the version of NeoForge to use.
-    version = project.neo_version
+    version = libs.versions.neo.version.get()
 
     parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
+        mappingsVersion = libs.versions.parchment.map.get()
+        minecraftVersion = libs.versions.parchment.mc.get()
     }
 
     // This line is optional. Access Transformers are automatically detected
@@ -56,13 +63,13 @@ neoForge {
             client()
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         server {
             server()
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -70,7 +77,7 @@ neoForge {
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
         }
 
         data {
@@ -80,7 +87,7 @@ neoForge {
             // gameDirectory = project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
         // applies to all the run configs above
@@ -143,26 +150,30 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    implementation("thedarkcolour:kotlinforforge-neoforge:$kff_version")
+    implementation(libs.kff)
+
+    implementation(libs.bundles.mod.impl)
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var String mcVersion = libs.versions.minecraft.get()
+    var String neoVersion = libs.versions.neo.version.get()
     var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            kff_version            : kff_version,
-            kff_version_range      : kff_version_range,
-            loader_version_range   : loader_version_range,
+            minecraft_version      : mcVersion,
+            minecraft_version_range: "[${mcVersion}]",
+            neo_version            : neoVersion,
+            neo_version_range      : "[${neoVersion},)",
+            kff_version            : libs.versions.kff.version.asProvider().get(),
+            kff_version_range      : libs.versions.kff.version.range.get(),
+            loader_version_range   : "[1,)",
             mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_name               : "Ragium",
+            mod_license            : "MPL-2.0",
+            mod_version            : libs.versions.ragium.get(),
+            mod_authors            : "Hiiragi283",
+            mod_description        : "Official port of Ragium for Fabric"
     ]
     inputs.properties replaceProperties
     expand replaceProperties

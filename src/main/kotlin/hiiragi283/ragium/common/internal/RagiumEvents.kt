@@ -2,12 +2,15 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumCapabilities
+import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
 import hiiragi283.ragium.api.extension.tieredText
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -17,15 +20,19 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.capabilities.BlockCapability
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import org.slf4j.Logger
+import java.util.function.Supplier
 
 internal object RagiumEvents {
     @JvmField
@@ -36,6 +43,8 @@ internal object RagiumEvents {
         eventBus.addListener(::modifyComponents)
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::buildCreativeTabs)
+
+        eventBus.addListener(::registerClientExtensions)
     }
 
     private fun commonSetup(event: FMLCommonSetupEvent) {}
@@ -84,9 +93,38 @@ internal object RagiumEvents {
             (blockEntity as? HTMachineTierProvider)?.tier ?: state.machineTier
         }
 
+        fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
+            val type: BlockEntityType<T> = supplier.get()
+            event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                type,
+                HTBlockEntityHandlerProvider::getItemHandler,
+            )
+            event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                type,
+                HTBlockEntityHandlerProvider::getFluidHandler,
+            )
+            event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                type,
+                HTBlockEntityHandlerProvider::getEnergyStorage,
+            )
+        }
+
+        registerHandlers(RagiumBlockEntityTypes.DRUM)
+
         LOGGER.info("Registered capabilities!")
     }
 
     private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
+    }
+
+    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            event.registerFluidType(fluid, fluid.typeHolder)
+        }
+
+        LOGGER.info("Registered client extensions!")
     }
 }

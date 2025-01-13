@@ -1,0 +1,36 @@
+[versions]
+minecraft = "1.21.4"
+ragium = "0.0.1"
+
+parchment-mc = "1.21.4"
+parchment-map = "2025.01.05"
+
+neo-moddev = "2.0.74"
+neo-version = "21.4.52-beta"
+
+kff-version = "5.7.0"
+kff-version-range = "[5.7,)"
+ktlint = "12.1.2"
+
+jade = "17.1.2+neoforge"
+rei = "18.0.796"
+
+[libraries]
+
+kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
+
+jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-neoforge", version.ref = "rei" }
+
+[bundles]
+
+mod-impl = [
+    "jade",
+    "rei"
+]
+
+[plugins]
+
+neo-moddev = { id = "net.neoforged.moddev", version.ref = "neo-moddev" }
+
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }

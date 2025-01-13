@@ -13,8 +13,10 @@ import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.phys.Vec3
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import net.neoforged.neoforge.fluids.FluidType
+import java.util.function.Supplier
 
-class HTVirtualFluid : Fluid() {
+class HTVirtualFluid(private val fluidType: Supplier<FluidType>) : Fluid() {
     override fun getBucket(): Item = Items.AIR
 
     override fun canBeReplacedWith(
@@ -42,4 +44,6 @@ class HTVirtualFluid : Fluid() {
     override fun getAmount(state: FluidState): Int = 0
 
     override fun getShape(state: FluidState, level: BlockGetter, pos: BlockPos): VoxelShape = Shapes.empty()
+
+    override fun getFluidType(): FluidType = fluidType.get()
 }
