@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.extension
 
 import net.minecraft.core.HolderSet
-import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -17,7 +17,7 @@ operator fun <T : Any> HolderSet<T>.contains(value: T): Boolean = any { it.isOf(
 
 //    component    //
 
-operator fun <T : Recipe<*>> RecipeHolder<T>.component1(): ResourceKey<Recipe<*>> = this.id
+operator fun <T : Recipe<*>> RecipeHolder<T>.component1(): ResourceLocation = this.id
 
 operator fun <T : Recipe<*>> RecipeHolder<T>.component2(): T = this.value
 

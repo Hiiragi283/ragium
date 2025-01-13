@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.extension.toDataResult
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -17,14 +18,14 @@ import net.minecraft.world.item.crafting.RecipeType
  * @see [net.minecraft.world.item.crafting.RecipeManager.CachedCheck]
  */
 class HTRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeType: RecipeType<R>) {
-    private var id: ResourceKey<Recipe<*>>? = null
+    private var id: ResourceLocation? = null
 
     /**
      * 指定した[input]に一致する最初のレシピを返します。
      * @return [DataResult]で包まれた値
      */
     fun getFirstMatch(input: I, level: ServerLevel): DataResult<R> = level
-        .recipeAccess()
+        .recipeManager
         .getRecipeFor(recipeType, input, level, id)
         .toDataResult { "Failed to find matching recipe!" }
         .ifSuccess { this.id = it.id }

@@ -13,6 +13,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import kotlin.jvm.optionals.getOrNull
 
 fun commonId(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath("c", path)
@@ -40,13 +41,13 @@ fun <T : Any> Registry<T>.getKeyOrThrow(entry: T): ResourceKey<T> = getResourceK
  * 指定した[key]から[Holder.Reference]を返します。
  * @return [key]が紐づいていない場合はnull
  */
-fun <T : Any> Registry<T>.getEntryOrNull(key: ResourceKey<T>): Holder.Reference<T>? = get(key).getOrNull()
+fun <T : Any> Registry<T>.getEntryOrNull(key: ResourceKey<T>): Holder.Reference<T>? = getHolder(key).getOrNull()
 
 /**
  * 指定した[key]から[Holder.Reference]を返します。
  * @throws [key]が紐づいていない場合
  */
-fun <T : Any> Registry<T>.getEntryOrThrow(key: ResourceKey<T>): Holder.Reference<T> = get(key).orElseThrow()
+fun <T : Any> Registry<T>.getEntryOrThrow(key: ResourceKey<T>): Holder.Reference<T> = getHolder(key).orElseThrow()
 
 //    ResourceKey    //
 
@@ -92,3 +93,5 @@ fun blockTagKey(id: ResourceLocation): TagKey<Block> = TagKey.create(Registries.
 fun fluidTagKey(id: ResourceLocation): TagKey<Fluid> = TagKey.create(Registries.FLUID, id)
 
 fun itemTagKey(id: ResourceLocation): TagKey<Item> = TagKey.create(Registries.ITEM, id)
+
+fun TagKey<*>.getName(): MutableComponent = Component.translatableWithFallback(Tags.getTagTranslationKey(this), "#${this.location}")

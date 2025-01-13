@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.CommonLevelAccessor
 import net.minecraft.world.level.Level
@@ -28,6 +29,10 @@ fun CommonLevelAccessor.replaceBlockState(pos: BlockPos, doBreak: Boolean = fals
             } == true
     }
 }
+
+//    Level    //
+
+fun Level.asServerLevel(): ServerLevel? = this as? ServerLevel
 
 //    BlockEntity    //
 

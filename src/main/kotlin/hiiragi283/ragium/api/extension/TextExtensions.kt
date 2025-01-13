@@ -69,5 +69,5 @@ fun fluidFilterText(entryList: HolderSet<Fluid>): MutableComponent = Component
 fun itemFilterText(entryList: HolderSet<Item>): MutableComponent = Component
     .translatable(
         RagiumTranslationKeys.EXPORTER_ITEM_FILTER,
-        entryList.asText(Item::getName).withStyle(ChatFormatting.GOLD),
+        entryList.asText(Item::getDescription).withStyle(ChatFormatting.GOLD),
     ).withStyle(ChatFormatting.GRAY)

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
+import hiiragi283.ragium.common.fluid.HTTieredSingleFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
@@ -20,8 +21,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 
 class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTMachineTier) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
@@ -29,7 +28,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTM
     HTMachineTierProvider {
     constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.machineTier)
 
-    private val fluidTank = FluidTank(tier.tankCapacity)
+    private val fluidTank = HTTieredSingleFluidHandler(tier)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -66,5 +65,5 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTM
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidTank
+    override fun getFluidHandler(direction: Direction?): HTTieredSingleFluidHandler = fluidTank
 }

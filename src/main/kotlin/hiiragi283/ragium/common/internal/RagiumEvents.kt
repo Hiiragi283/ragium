@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumCapabilities
+import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
@@ -31,6 +32,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.registries.NewRegistryEvent
 import org.slf4j.Logger
 import java.util.function.Supplier
 
@@ -39,12 +41,18 @@ internal object RagiumEvents {
     val LOGGER: Logger = LogUtils.getLogger()
 
     fun register(eventBus: IEventBus) {
+        eventBus.addListener(::createRegistry)
+
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::modifyComponents)
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::buildCreativeTabs)
 
         eventBus.addListener(::registerClientExtensions)
+    }
+
+    private fun createRegistry(event: NewRegistryEvent) {
+        event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
     }
 
     private fun commonSetup(event: FMLCommonSetupEvent) {}

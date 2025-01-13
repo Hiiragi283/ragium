@@ -8,23 +8,12 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeBookCategory
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object RagiumRecipes {
-    //    Category    //
-
-    @JvmField
-    val CATEGORY: DeferredRegister<RecipeBookCategory> =
-        DeferredRegister.create(Registries.RECIPE_BOOK_CATEGORY, RagiumAPI.MOD_ID)
-
-    @JvmField
-    val MACHINE_CATEGORY: DeferredHolder<RecipeBookCategory, RecipeBookCategory> =
-        CATEGORY.register("machine") { _: ResourceLocation -> RecipeBookCategory() }
-
     //    Serializer    //
 
     @JvmField

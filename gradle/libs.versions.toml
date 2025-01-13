@@ -1,18 +1,20 @@
 [versions]
-minecraft = "1.21.4"
+minecraft = "1.21.1"
 ragium = "0.0.1"
 
-parchment-mc = "1.21.4"
-parchment-map = "2025.01.05"
+parchment-mc = "1.21.1"
+parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.74"
-neo-version = "21.4.52-beta"
+neo-version = "21.1.93"
 
 kff-version = "5.7.0"
 kff-version-range = "[5.7,)"
 ktlint = "12.1.2"
 
-jade = "17.1.2+neoforge"
+jade = "15.9.2+neoforge"
+jei = "19.21.0.247"
+mek = "1.21.1-10.7.0.55"
 rei = "18.0.796"
 
 [libraries]
@@ -20,13 +22,24 @@ rei = "18.0.796"
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
+mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
+jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
+jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-neoforge", version.ref = "rei" }
 
 [bundles]
 
-mod-impl = [
+mods-impl = [
+    "mek",
     "jade",
-    "rei"
+]
+
+mods-compile = [
+    "jei-api"
+]
+
+mods-runtime = [
+    "jei"
 ]
 
 [plugins]

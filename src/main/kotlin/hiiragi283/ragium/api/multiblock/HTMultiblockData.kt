@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.multiblock
 
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import net.minecraft.util.TriState
+import net.neoforged.neoforge.common.util.TriState
 
 /**
  * マルチブロックの判定結果と取得データをまとめたクラス

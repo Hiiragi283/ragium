@@ -13,14 +13,7 @@ object RagiumData {
     val LOGGER: Logger = LogUtils.getLogger()
 
     @SubscribeEvent
-    fun gatherServerData(event: GatherDataEvent.Server) {
-        LOGGER.info("Gathered server resources!")
-    }
-
-    @SubscribeEvent
-    fun gatherClientData(event: GatherDataEvent.Client) {
-        event.createProvider(RagiumCraftingRecipeProvider::Runner)
-
+    fun gatherData(event: GatherDataEvent) {
         LOGGER.info("Gathered client resources!")
     }
 }

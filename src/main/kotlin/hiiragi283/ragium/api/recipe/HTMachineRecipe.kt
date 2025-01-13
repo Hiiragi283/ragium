@@ -7,9 +7,13 @@ import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.*
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
@@ -30,11 +34,11 @@ class HTMachineRecipe(
             instance
                 .group(
                     HTMachineDefinition.CODEC.forGetter(HTMachineRecipe::definition),
-                    SizedIngredient.NESTED_CODEC
+                    SizedIngredient.FLAT_CODEC
                         .listOf()
                         .optionalFieldOf("item_inputs", listOf())
                         .forGetter(HTMachineRecipe::itemInputs),
-                    SizedFluidIngredient.CODEC
+                    SizedFluidIngredient.FLAT_CODEC
                         .listOf()
                         .optionalFieldOf("fluid_inputs", listOf())
                         .forGetter(HTMachineRecipe::fluidInputs),
@@ -58,7 +62,7 @@ class HTMachineRecipe(
             HTMachineRecipe::itemInputs,
             SizedFluidIngredient.STREAM_CODEC.toList(),
             HTMachineRecipe::fluidInputs,
-            Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC,
+            ByteBufCodecs.optional(Ingredient.CONTENTS_STREAM_CODEC),
             HTMachineRecipe::catalyst,
             ItemStack.STREAM_CODEC.toList(),
             HTMachineRecipe::itemOutputs,
@@ -70,13 +74,13 @@ class HTMachineRecipe(
 
     override fun matches(input: HTMachineInput, level: Level): Boolean = false
 
-    override fun assemble(input: HTMachineInput, registries: HolderLookup.Provider): ItemStack = itemOutputs.getOrNull(0) ?: ItemStack.EMPTY
+    override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+
+    override fun assemble(input: HTMachineInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
+
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = itemOutputs.getOrNull(0) ?: ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_SERIALIZER.get()
 
     override fun getType(): RecipeType<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_TYPE.get()
-
-    override fun placementInfo(): PlacementInfo = PlacementInfo.NOT_PLACEABLE
-
-    override fun recipeBookCategory(): RecipeBookCategory = RagiumRecipes.MACHINE_CATEGORY.get()
 }

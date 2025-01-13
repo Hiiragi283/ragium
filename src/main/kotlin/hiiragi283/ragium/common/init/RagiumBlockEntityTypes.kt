@@ -15,13 +15,14 @@ object RagiumBlockEntityTypes {
     val REGISTER: DeferredRegister<BlockEntityType<*>> =
         DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, RagiumAPI.MOD_ID)
 
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     @JvmStatic
     private fun <T : BlockEntity> register(
         path: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
         blocks: Collection<HTBlockContent>,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType(factory, blocks.map(HTBlockContent::get).toSet())
+        BlockEntityType.Builder.of(factory, *blocks.map(HTBlockContent::get).toTypedArray()).build(null)
     }
 
     @JvmField
