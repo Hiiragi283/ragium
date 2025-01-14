@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -18,6 +19,20 @@ object RagiumCreativeTabs {
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
 
     @JvmField
+    val INGREDIENT: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+        REGISTER.register("ingredient") { _: ResourceLocation ->
+            CreativeModeTab
+                .builder()
+                .title(Component.literal("Ragium - Ingredient"))
+                .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
+                .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
+
+                    RagiumItems.MATERIALS.forEach(output::accept)
+                }.build()
+        }
+
+    @JvmField
     val MACHINE: DeferredHolder<CreativeModeTab, CreativeModeTab> =
         REGISTER.register("machine") { _: ResourceLocation ->
             CreativeModeTab
@@ -25,6 +40,13 @@ object RagiumCreativeTabs {
                 .title(Component.literal("Ragium - Machine"))
                 .icon { ItemStack(Blocks.IRON_BLOCK) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    buildList {
+                        addAll(RagiumBlocks.Grates.entries)
+                        addAll(RagiumBlocks.Casings.entries)
+                        addAll(RagiumBlocks.Hulls.entries)
+                        addAll(RagiumBlocks.Coils.entries)
+                    }.forEach(output::accept)
+                    // Machine
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
                             .getInstance()
@@ -32,6 +54,19 @@ object RagiumCreativeTabs {
                             .keys
                             .forEach { key: HTMachineKey -> output.accept(key.createItemStack(tier)) }
                     }
+                }.build()
+        }
+
+    @JvmField
+    val STORAGE: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+        REGISTER.register("storage") { _: ResourceLocation ->
+            CreativeModeTab
+                .builder()
+                .title(Component.literal("Ragium - Storage"))
+                .icon { ItemStack(Items.BUCKET) }
+                .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+
+                    RagiumBlocks.Drums.entries.forEach(output::accept)
                 }.build()
         }
 }

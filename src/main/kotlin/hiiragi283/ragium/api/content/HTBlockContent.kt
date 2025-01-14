@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.content
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.material.HTMaterialProvider
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -15,6 +16,9 @@ import net.neoforged.neoforge.registries.DeferredRegister
 interface HTBlockContent :
     HTContent<Block>,
     ItemLike {
+    val blockId: ResourceLocation
+        get() = id.withPrefix("block/")
+
     override fun asItem(): Item = get().asItem()
 
     fun registerBlock(

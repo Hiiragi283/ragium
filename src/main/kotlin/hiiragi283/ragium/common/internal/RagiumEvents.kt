@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumCapabilities
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
@@ -9,14 +10,20 @@ import hiiragi283.ragium.api.extension.material
 import hiiragi283.ragium.api.extension.tieredText
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
-import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.api.resource.HTRuntimeDatapack
+import hiiragi283.ragium.common.init.*
+import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.advancements.critereon.ImpossibleTrigger
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.server.packs.PackType
+import net.minecraft.server.packs.repository.Pack
+import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -30,10 +37,11 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.event.AddPackFindersEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import org.slf4j.Logger
+import java.util.function.Consumer
 import java.util.function.Supplier
 
 internal object RagiumEvents {
@@ -44,40 +52,47 @@ internal object RagiumEvents {
         eventBus.addListener(::createRegistry)
 
         eventBus.addListener(::commonSetup)
-        eventBus.addListener(::modifyComponents)
-        eventBus.addListener(::registerCapabilities)
-        eventBus.addListener(::buildCreativeTabs)
 
+        eventBus.addListener(::addRuntimePack)
         eventBus.addListener(::registerClientExtensions)
+        eventBus.addListener(::registerCapabilities)
+        eventBus.addListener(::modifyComponents)
     }
 
     private fun createRegistry(event: NewRegistryEvent) {
         event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
+
+        LOGGER.info("Registered new registries!")
     }
 
-    private fun commonSetup(event: FMLCommonSetupEvent) {}
+    private fun addRuntimePack(event: AddPackFindersEvent) {
+        if (event.packType != PackType.SERVER_DATA) return
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, Items.DIAMOND)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', Items.DIRT)
+            .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
+            .unlockedBy("has_item", CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance()))
+            .save(HTRuntimeDatapack.RUNTIME_OUTPUT, RagiumAPI.id("runtime_test"))
 
-    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
-        fun <T : ItemLike> modifyAll(items: Collection<T>, patch: (DataComponentPatch.Builder, T) -> Unit) {
-            items.forEach { itemLike: T ->
-                event.modify(itemLike.asItem()) { builder: DataComponentPatch.Builder -> patch(builder, itemLike) }
-            }
+        event.addRepositorySource { consumer: Consumer<Pack> ->
+            consumer.accept(HTRuntimeDatapack.PACK)
+            LOGGER.info("Registered runtime datapack!")
+        }
+    }
+
+    private fun commonSetup(event: FMLCommonSetupEvent) {
+        LOGGER.info("Loaded common setup!")
+    }
+
+    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            event.registerFluidType(fluid, fluid.typeHolder)
         }
 
-        fun tieredText(translationKey: String): (DataComponentPatch.Builder, HTMachineTierProvider) -> Unit =
-            { builder: DataComponentPatch.Builder, provider: HTMachineTierProvider ->
-                builder.tieredText(translationKey, provider.tier)
-            }
-
-        modifyAll(RagiumBlocks.StorageBlocks.entries, DataComponentPatch.Builder::material)
-        modifyAll(RagiumBlocks.Grates.entries, tieredText(RagiumTranslationKeys.GRATE))
-        modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
-        modifyAll(RagiumBlocks.Hulls.entries, tieredText(RagiumTranslationKeys.HULL))
-        modifyAll(RagiumBlocks.Coils.entries, tieredText(RagiumTranslationKeys.COIL))
-
-        modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
-
-        LOGGER.info("Modified item components!")
+        LOGGER.info("Registered client extensions!")
     }
 
     private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
@@ -125,14 +140,28 @@ internal object RagiumEvents {
         LOGGER.info("Registered capabilities!")
     }
 
-    private fun buildCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-    }
-
-    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            event.registerFluidType(fluid, fluid.typeHolder)
+    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        fun <T : ItemLike> modifyAll(items: Collection<T>, patch: (DataComponentPatch.Builder, T) -> Unit) {
+            items.forEach { itemLike: T ->
+                event.modify(itemLike.asItem()) { builder: DataComponentPatch.Builder -> patch(builder, itemLike) }
+            }
         }
 
-        LOGGER.info("Registered client extensions!")
+        fun tieredText(translationKey: String): (DataComponentPatch.Builder, HTMachineTierProvider) -> Unit =
+            { builder: DataComponentPatch.Builder, provider: HTMachineTierProvider ->
+                builder.tieredText(translationKey, provider.tier)
+            }
+
+        modifyAll(RagiumBlocks.StorageBlocks.entries, DataComponentPatch.Builder::material)
+        modifyAll(RagiumBlocks.Grates.entries, tieredText(RagiumTranslationKeys.GRATE))
+        modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
+        modifyAll(RagiumBlocks.Hulls.entries, tieredText(RagiumTranslationKeys.HULL))
+        modifyAll(RagiumBlocks.Coils.entries, tieredText(RagiumTranslationKeys.COIL))
+
+        modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
+
+        modifyAll(RagiumItems.MATERIALS, DataComponentPatch.Builder::material)
+
+        LOGGER.info("Modified item components!")
     }
 }

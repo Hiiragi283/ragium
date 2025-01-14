@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.util
 
+import com.google.common.base.Suppliers
 import hiiragi283.ragium.api.fluid.LimitedFluidTank
 import hiiragi283.ragium.api.item.LimitedItemHandler
 import net.neoforged.neoforge.fluids.IFluidTank
@@ -15,7 +16,10 @@ enum class HTStorageIO(val canInsert: Boolean, val canExtract: Boolean) {
     INTERNAL(false, false),
     ;
 
-    fun wrapItemHandler(handler: IItemHandler): IItemHandler = LimitedItemHandler(this) { handler }
+    fun wrapItemHandler(handler: IItemHandler): IItemHandler = LimitedItemHandler(
+        { this },
+        Suppliers.ofInstance(handler),
+    )
 
     fun wrapFluidTank(tank: IFluidTank): IFluidTank = LimitedFluidTank(this) { tank }
 }
