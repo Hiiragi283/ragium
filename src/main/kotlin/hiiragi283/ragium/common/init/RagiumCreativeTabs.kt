@@ -24,10 +24,19 @@ object RagiumCreativeTabs {
                 .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
+                    RagiumBlocks.LEDBlocks.entries.forEach(output::accept)
 
                     RagiumItems.MATERIALS.forEach(output::accept)
 
+                    RagiumItems.FOODS.forEach(output::accept)
+
                     RagiumItems.Circuits.entries.forEach(output::accept)
+                    RagiumItems.PressMolds.entries.forEach(output::accept)
+                    RagiumItems.Catalysts.entries.forEach(output::accept)
+                    RagiumItems.FluidCubes.entries.forEach(output::accept)
+
+                    RagiumItems.INGREDIENTS.forEach(output::accept)
+                    RagiumItems.Radioactives.entries.forEach(output::accept)
                 }.build()
         }
 
@@ -45,6 +54,7 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Hulls.entries)
                         addAll(RagiumBlocks.Coils.entries)
                     }.forEach(output::accept)
+
                     // Machine
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
@@ -54,6 +64,8 @@ object RagiumCreativeTabs {
                             .mapNotNull { it.createItemStackOrNull(tier) }
                             .forEach(output::accept)
                     }
+
+                    RagiumBlocks.Decorations.entries.forEach(output::accept)
                 }.build()
         }
 

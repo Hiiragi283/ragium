@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
@@ -93,6 +94,56 @@ object RagiumBlocks {
         override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_drum")
     }
 
+    //    Buildings    //
+
+    enum class Decorations(
+        val parent: HTBlockContent,
+        val factory: (BlockBehaviour.Properties) -> Block = ::Block,
+        val cutout: Boolean = false,
+        val isPillar: Boolean = false,
+    ) : HTBlockContent {
+        // storage
+        RAGI_ALLOY_BLOCK(StorageBlocks.RAGI_ALLOY),
+        RAGI_STEEL_BLOCK(StorageBlocks.RAGI_STEEL),
+        REFINED_RAGI_STEEL_BLOCK(StorageBlocks.REFINED_RAGI_STEEL),
+
+        // casing
+        SIMPLE_CASING(Casings.SIMPLE),
+        BASIC_CASING(Casings.BASIC),
+        ADVANCED_CASING(Casings.ADVANCED),
+        ELITE_CASING(Casings.ELITE),
+
+        // hull
+        PRIMITIVE_HULL(Hulls.PRIMITIVE, ::TransparentBlock, true),
+        SIMPLE_HULL(Hulls.SIMPLE, ::TransparentBlock, true),
+        BASIC_HULL(Hulls.BASIC, ::TransparentBlock, true),
+        ADVANCED_HULL(Hulls.ADVANCED, ::TransparentBlock, true),
+
+        // coil
+        SIMPLE_COIL(Coils.SIMPLE, ::RotatedPillarBlock, isPillar = true),
+        BASIC_COIL(Coils.BASIC, ::RotatedPillarBlock, isPillar = true),
+        ADVANCED_COIL(Coils.ADVANCED, ::RotatedPillarBlock, isPillar = true),
+        ELITE_COIL(Coils.ELITE, ::RotatedPillarBlock, isPillar = true),
+        ;
+
+        override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_decoration")
+    }
+
+    enum class LEDBlocks(val colors: List<DyeColor>) : HTBlockContent {
+        RED(DyeColor.RED),
+        GREEN(DyeColor.GREEN),
+        BLUE(DyeColor.BLUE),
+        CYAN(DyeColor.GREEN, DyeColor.BLUE),
+        MAGENTA(DyeColor.RED, DyeColor.BLUE),
+        YELLOW(DyeColor.RED, DyeColor.GREEN),
+        WHITE(),
+        ;
+
+        constructor(vararg colors: DyeColor) : this(colors.toList())
+
+        override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_led_block")
+    }
+
     //    Register    //
 
     @JvmField
@@ -137,6 +188,24 @@ object RagiumBlocks {
                 blockProperty(Blocks.SMOOTH_STONE),
             ) { prop: BlockBehaviour.Properties -> HTDrumBlock(drum.machineTier, prop) }
             drum.registerBlockItem(ITEM_REGISTER)
+        }
+
+        // decoration
+        Decorations.entries.forEach { decoration: Decorations ->
+            decoration.registerBlock(
+                REGISTER,
+                blockProperty(Blocks.SMOOTH_STONE),
+                decoration.factory,
+            )
+            decoration.registerBlockItem(ITEM_REGISTER)
+        }
+        // led
+        LEDBlocks.entries.forEach { ledBlock: LEDBlocks ->
+            ledBlock.registerBlock(
+                REGISTER,
+                blockProperty().lightLevel { 15 },
+            )
+            ledBlock.registerBlockItem(ITEM_REGISTER)
         }
 
         REGISTER.register(bus)

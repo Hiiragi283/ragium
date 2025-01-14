@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
+import hiiragi283.ragium.api.extension.set
 import hiiragi283.ragium.api.extension.tieredText
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
@@ -163,6 +164,10 @@ internal object RagiumEvents {
         modifyAll(RagiumItems.MATERIALS, DataComponentPatch.Builder::material)
 
         modifyAll(RagiumItems.Circuits.entries, tieredText(RagiumTranslationKeys.CIRCUIT))
+
+        modifyAll(RagiumItems.Radioactives.entries) { builder: DataComponentPatch.Builder, radioactive: RagiumItems.Radioactives ->
+            builder.set(RagiumComponentTypes.RADIOACTIVE, radioactive.level)
+        }
 
         LOGGER.info("Modified item components!")
     }

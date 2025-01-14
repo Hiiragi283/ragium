@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ragium:simple_coil_decoration"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ragium:blocks/simple_coil_decoration"
+}

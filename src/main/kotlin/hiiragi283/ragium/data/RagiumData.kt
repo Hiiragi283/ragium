@@ -6,13 +6,12 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.client.RagiumModelProvider
-import hiiragi283.ragium.data.server.RagiumBlockTagProvider
-import hiiragi283.ragium.data.server.RagiumFluidTagProvider
-import hiiragi283.ragium.data.server.RagiumItemTagProvider
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
+import net.minecraft.data.loot.LootTableProvider
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -32,6 +31,16 @@ object RagiumData {
         val helper: ExistingFileHelper = event.existingFileHelper
         val provider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
         // server
+        generator.addProvider(
+            event.includeServer(),
+            LootTableProvider(
+                output,
+                setOf(),
+                listOf(LootTableProvider.SubProviderEntry(::RagiumBlockLootProvider, LootContextParamSets.BLOCK)),
+                provider,
+            ),
+        )
+
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
         generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))

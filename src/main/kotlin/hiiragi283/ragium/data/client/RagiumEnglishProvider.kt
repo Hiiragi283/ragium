@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -21,6 +22,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.GRATE, "Grate")
         add(RagiumTranslationKeys.HULL, "hull")
         add(RagiumTranslationKeys.PLASTIC, "Plastic")
+        // Fluids
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            add(fluid.get().fluidType.descriptionId, fluid.enName)
+        }
         // Machine
         add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
         add(HTMachineTier.SIMPLE, "Simple", "Simple %s")

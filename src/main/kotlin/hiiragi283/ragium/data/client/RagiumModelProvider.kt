@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.data.PackOutput
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
@@ -35,7 +35,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumItems.MATERIALS)
 
             addAll(RagiumItems.Circuits.entries)
-        }.map(HTItemContent::get)
+
+            addAll(RagiumItems.FOODS)
+
+            addAll(RagiumItems.INGREDIENTS)
+        }.map(ItemLike::asItem)
             .forEach(::basicItem)
     }
 }

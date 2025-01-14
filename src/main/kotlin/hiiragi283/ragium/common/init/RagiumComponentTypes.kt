@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.component.HTRadioactiveComponent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -31,6 +32,12 @@ object RagiumComponentTypes {
     val MATERIAL: DeferredHolder<DataComponentType<*>, DataComponentType<HTMaterialKey>> =
         REGISTER.registerComponentType("material") { builder: DataComponentType.Builder<HTMaterialKey> ->
             builder.persistent(HTMaterialKey.CODEC).networkSynchronized(HTMaterialKey.STREAM_CODEC)
+        }
+
+    @JvmField
+    val RADIOACTIVE: DeferredHolder<DataComponentType<*>, DataComponentType<HTRadioactiveComponent>> =
+        REGISTER.registerComponentType("radioactive") { builder: DataComponentType.Builder<HTRadioactiveComponent> ->
+            builder.persistent(HTRadioactiveComponent.CODEC).networkSynchronized(HTRadioactiveComponent.STREAM_CODEC)
         }
 
     @JvmField

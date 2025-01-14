@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -21,6 +22,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.GRATE, "格子")
         add(RagiumTranslationKeys.HULL, "筐体")
         add(RagiumTranslationKeys.PLASTIC, "プラスチック")
+        // Fluids
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            add(fluid.get().fluidType.descriptionId, fluid.jaName)
+        }
         // Machine
         add(HTMachineTier.PRIMITIVE, "原始", "原始%s")
         add(HTMachineTier.SIMPLE, "簡易", "簡易%s")

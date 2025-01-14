@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 8000,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "minecraft:lava"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:ingots/iron"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 16,
+      "id": "minecraft:iron_bars"
+    }
+  ],
+  "machine_type": "assembler"
+}
