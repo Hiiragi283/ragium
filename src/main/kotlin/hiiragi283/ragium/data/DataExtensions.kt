@@ -30,6 +30,15 @@ fun LanguageProvider.add(prefix: HTTagPrefix, value: String) {
 
 //    RecipeBuilder    //
 
+private fun RecipeBuilder.savePrefixed(output: RecipeOutput, prefix: String) {
+    /*val id: ResourceLocation = RecipeBuilder.getDefaultRecipeId(result)
+    val namespace: String = id.namespace
+    val fixedOutput: RecipeOutput = if (namespace == "minecraft" || namespace == RagiumAPI.MOD_ID) {
+        output
+    } else output.withConditions(ModLoadedCondition(namespace))*/
+    save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix(prefix))
+}
+
 fun ShapedRecipeBuilder.defineMaterial(symbol: Char, provider: HTMaterialProvider): ShapedRecipeBuilder =
     define(symbol, provider.prefixedTagKey)
 
@@ -37,7 +46,7 @@ fun ShapedRecipeBuilder.define(symbol: Char, prefix: HTTagPrefix, material: HTMa
     define(symbol, prefix.createTag(material))
 
 fun ShapedRecipeBuilder.savePrefixed(output: RecipeOutput) {
-    save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix("shaped/"))
+    savePrefixed(output, "shaped/")
 }
 
 fun ShapelessRecipeBuilder.requiresMaterial(provider: HTMaterialProvider): ShapelessRecipeBuilder = requires(provider.prefixedTagKey)
@@ -46,13 +55,13 @@ fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, material: HTMaterialKey
     requires(prefix.createTag(material))
 
 fun ShapelessRecipeBuilder.savePrefixed(output: RecipeOutput) {
-    save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix("shapeless/"))
+    savePrefixed(output, "shapeless/")
 }
 
 fun SimpleCookingRecipeBuilder.savePrefixed(output: RecipeOutput) {
-    save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix("cooking/"))
+    savePrefixed(output, "cooking/")
 }
 
 fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
-    save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix("stonecutting/"))
+    savePrefixed(output, "stonecutting/")
 }

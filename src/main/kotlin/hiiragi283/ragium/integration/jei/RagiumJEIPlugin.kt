@@ -5,11 +5,13 @@ import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.jei.category.HTMachineRecipeCategory
+import hiiragi283.ragium.integration.jei.category.HTMaterialInfoCategory
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
@@ -25,6 +27,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.neoforged.neoforge.registries.DeferredBlock
 
@@ -33,6 +36,10 @@ class RagiumJEIPlugin : IModPlugin {
     companion object {
         @JvmField
         val PLUGIN_ID: ResourceLocation = RagiumAPI.Companion.id("default")
+
+        @JvmField
+        val MATERIAL_INFO: RecipeType<HTMaterialKey> =
+            RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTMaterialKey::class.java)
 
         @JvmStatic
         val RECIPE_TYPE_MAP: Map<HTMachineKey, RecipeType<RecipeHolder<HTMachineRecipe>>> by lazy {
@@ -66,9 +73,12 @@ class RagiumJEIPlugin : IModPlugin {
         RagiumAPI.getInstance().machineRegistry.keys.forEach { key: HTMachineKey ->
             registration.addRecipeCategories(HTMachineRecipeCategory(key, guiHelper))
         }
+
+        registration.addRecipeCategories(HTMaterialInfoCategory(guiHelper))
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
+        // Machine
         val level: ClientLevel = Minecraft.getInstance().level ?: return
         val recipes: List<RecipeHolder<HTMachineRecipe>> =
             level.recipeManager.getAllRecipesFor(RagiumRecipes.MACHINE_TYPE.get())
@@ -80,6 +90,14 @@ class RagiumJEIPlugin : IModPlugin {
         multiMap.map.forEach { machine: HTMachineKey, holders: Collection<RecipeHolder<HTMachineRecipe>> ->
             registration.addRecipes(getRecipeType(machine), holders.toList())
         }
+        // Material Info
+        registration.addRecipes(
+            MATERIAL_INFO,
+            RagiumAPI
+                .getInstance()
+                .materialRegistry.keys
+                .toList(),
+        )
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
@@ -88,5 +106,7 @@ class RagiumJEIPlugin : IModPlugin {
                 registration.addRecipeCatalysts(getRecipeType(key), stack)
             }
         }
+
+        registration.addRecipeCatalysts(MATERIAL_INFO, Items.IRON_INGOT)
     }
 }

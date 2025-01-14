@@ -58,8 +58,8 @@ abstract class HTEntityBlock(properties: Properties) :
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        super.onRemove(state, level, pos, newState, movedByPiston)
         level.getHTBlockEntity(pos)?.onRemove(state, level, pos, newState, movedByPiston)
+        super.onRemove(state, level, pos, newState, movedByPiston)
     }
 
     final override fun hasAnalogOutputSignal(state: BlockState): Boolean = true

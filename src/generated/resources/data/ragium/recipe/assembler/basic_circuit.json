@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:silicon"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/gold"
+    },
+    {
+      "count": 1,
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:basic_circuit"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "basic"
+}

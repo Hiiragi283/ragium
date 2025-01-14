@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumCapabilities
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
+import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
 import hiiragi283.ragium.api.extension.set
@@ -26,8 +27,8 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.bus.api.IEventBus
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
@@ -41,30 +42,20 @@ import org.slf4j.Logger
 import java.util.function.Consumer
 import java.util.function.Supplier
 
+@EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 internal object RagiumEvents {
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
 
-    fun register(eventBus: IEventBus) {
-        eventBus.addListener(::createRegistry)
-        eventBus.addListener(::addBlockToBlockEntity)
-
-        eventBus.addListener(::commonSetup)
-
-        eventBus.addListener(::registerClientExtensions)
-        eventBus.addListener(::registerCapabilities)
-        eventBus.addListener(::modifyComponents)
-
-        eventBus.addListener(::addRuntimePack)
-    }
-
-    private fun createRegistry(event: NewRegistryEvent) {
+    @SubscribeEvent
+    fun createRegistry(event: NewRegistryEvent) {
         event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
 
         LOGGER.info("Registered new registries!")
     }
 
-    private fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
+    @SubscribeEvent
+    fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
         fun bindMachine(type: Supplier<out BlockEntityType<*>>, machine: HTMachineKey) {
             val entry: HTMachineRegistry.Entry = machine.getEntryOrNull() ?: return
             event.modify(type.get(), entry.get())
@@ -75,11 +66,8 @@ internal object RagiumEvents {
         LOGGER.info("Added external blocks to BlockEntityType!")
     }
 
-    private fun commonSetup(event: FMLCommonSetupEvent) {
-        LOGGER.info("Loaded common setup!")
-    }
-
-    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+    @SubscribeEvent
+    fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             event.registerFluidType(fluid, fluid.typeHolder)
         }
@@ -87,7 +75,8 @@ internal object RagiumEvents {
         LOGGER.info("Registered client extensions!")
     }
 
-    private fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+    @SubscribeEvent
+    fun registerCapabilities(event: RegisterCapabilitiesEvent) {
         fun <T : Any, C> registerForBlocks(capability: BlockCapability<T, C>, provider: IBlockCapabilityProvider<T, C>) {
             for (block: Block in BuiltInRegistries.BLOCK) {
                 event.registerBlock(
@@ -134,7 +123,8 @@ internal object RagiumEvents {
         LOGGER.info("Registered capabilities!")
     }
 
-    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+    @SubscribeEvent
+    fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : ItemLike> modifyAll(items: Collection<T>, patch: (DataComponentPatch.Builder, T) -> Unit) {
             items.forEach { itemLike: T ->
                 event.modify(itemLike.asItem()) { builder: DataComponentPatch.Builder -> patch(builder, itemLike) }
@@ -165,7 +155,8 @@ internal object RagiumEvents {
         LOGGER.info("Modified item components!")
     }
 
-    private fun addRuntimePack(event: AddPackFindersEvent) {
+    @SubscribeEvent
+    fun addRuntimePack(event: AddPackFindersEvent) {
         if (event.packType != PackType.SERVER_DATA) return
         /*ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, Items.DIAMOND)

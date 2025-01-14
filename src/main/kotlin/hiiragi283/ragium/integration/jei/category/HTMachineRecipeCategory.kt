@@ -15,7 +15,6 @@ import mezz.jei.api.ingredients.IIngredientTypeWithSubtypes
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
-import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -27,7 +26,7 @@ import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import kotlin.jvm.optionals.getOrNull
 
 class HTMachineRecipeCategory(machine: HTMachineKey, guiHelper: IGuiHelper) :
-    AbstractRecipeCategory<RecipeHolder<HTMachineRecipe>>(
+    HTRecipeCategory<RecipeHolder<HTMachineRecipe>>(
         RagiumJEIPlugin.getRecipeType(machine),
         machine.text,
         guiHelper.createDrawableItemStack(machine.createItemStackOrNull(HTMachineTier.SIMPLE) ?: ItemStack.EMPTY),
@@ -61,8 +60,6 @@ class HTMachineRecipeCategory(machine: HTMachineKey, guiHelper: IGuiHelper) :
         addFluidOutput(builder, recipe, 6, 1, 1)
         addFluidOutput(builder, recipe, 7, 1, 2)
     }
-
-    private fun getPosition(index: Int): Int = 5 + index * 18
 
     private fun addItemInput(
         builder: IRecipeLayoutBuilder,

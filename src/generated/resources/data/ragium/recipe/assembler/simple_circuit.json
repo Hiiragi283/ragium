@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:crude_silicon"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/copper"
+    },
+    {
+      "count": 1,
+      "item": "minecraft:redstone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:simple_circuit"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "simple"
+}

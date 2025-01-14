@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:stella_plate"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/ragi_alloy"
+    },
+    {
+      "count": 1,
+      "item": "ragium:ragi_crystal_dust"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:elite_circuit"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "elite"
+}

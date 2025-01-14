@@ -18,21 +18,27 @@ import net.minecraft.world.item.Item
 /**
  * Represent [TagKey] prefixes
  */
-enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : StringRepresentable {
+enum class HTTagPrefix(private val commonName: String, private val tagPrefix: String = "$commonName/") : StringRepresentable {
+    CLUMP("clumps"),
+    CRYSTAL("crystals"),
+    DIRTY_DUST("dirty_dusts"),
     DUST("dusts"),
+    ENRICHED("enriched"),
     GEAR("gears"),
     GEM("gems") {
         override fun createPath(key: HTMaterialKey): String = key.name
     },
     INGOT("ingots"),
     NUGGET("nuggets"),
-    ORE("ores", false),
+    ORE("ores"),
     PLATE("plates"),
     RAW_MATERIAL("raw_materials") {
         override fun createPath(key: HTMaterialKey): String = "raw_${key.name}"
     },
+    RAW_STORAGE("storage_blocks", "storage_blocks/raw_"),
     ROD("rods"),
-    STORAGE_BLOCK("storage_blocks", false) {
+    SHARD("shards"),
+    STORAGE_BLOCK("storage_blocks") {
         override fun createPath(key: HTMaterialKey): String = "${key.name}_block"
     },
     WIRE("wires"),
@@ -44,6 +50,9 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = stringStreamCodec(HTTagPrefix.entries)
+
+        @JvmStatic
+        fun fromName(name: String): HTTagPrefix? = HTTagPrefix.entries.firstOrNull { it.serializedName == name }
     }
 
     //    Id    //
@@ -55,9 +64,9 @@ enum class HTTagPrefix(val prefix: String, val enableAutoGen: Boolean = true) : 
 
     //    TagKey    //
 
-    val commonTagKey: TagKey<Item> = itemTagKey(commonId(prefix))
+    val commonTagKey: TagKey<Item> = itemTagKey(commonId(commonName))
 
-    fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$prefix/${key.name}"))
+    fun createTag(key: HTMaterialKey): TagKey<Item> = itemTagKey(commonId("$tagPrefix${key.name}"))
 
     //    Translation    //
 

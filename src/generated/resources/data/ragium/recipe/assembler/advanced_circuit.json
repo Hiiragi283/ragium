@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:refined_silicon"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/aluminum"
+    },
+    {
+      "count": 1,
+      "item": "ragium:luminescence_dust"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:advanced_circuit"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "advanced"
+}

@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.api.util.TriConsumer
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Item
@@ -36,42 +37,19 @@ interface RagiumPlugin {
     /**
      * [HTMachineKey]を登録します。
      * @param consumer [HTMachineKey]をそのタイプを渡すブロック
-     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.registerMachine]
      */
     fun registerMachine(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
-    /**
-     * [HTMaterialKey]を登録します。
-     *
-     *　@sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.registerMaterial]
-     */
     fun registerMaterial(helper: MaterialHelper) {}
 
     /**
      * 機械のプロパティを設定します。
-     *
-     * @sample [hiiragi283.ragium.common.internal.RagiumDefaultPlugin.setupMachineProperties]
      */
     fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {}
 
-    /**
-     * 素材のプロパティを設定します。
-     *
-     * @sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.setupMaterialProperties]
-     */
     fun setupMaterialProperties(helper: Function<HTMaterialKey, HTPropertyHolderBuilder>) {}
 
-    /**
-     * アイテムを素材とプレフィックスに紐づけます。
-     *
-     * @sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.bindMaterialToItem]
-     */
     fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Supplier<out ItemLike>>) {}
-
-    /**
-     * Ragiumが読み込まれた後に呼び出されます。
-     */
-    fun afterRagiumInit(instance: RagiumAPI) {}
 
     /**
      * レシピを動的に登録します。
@@ -126,7 +104,7 @@ interface RagiumPlugin {
     //    RecipeHelper    //
 
     data object RecipeHelper {
-        fun useItemIfPresent(key: HTMaterialKey, prefix: HTTagPrefix, action: (Item) -> Unit) {
+        fun useItemIfPresent(key: HTMaterialKey, prefix: HTTagPrefix, action: (Holder<Item>) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemIfPresent(entry, prefix, action)
         }
@@ -137,11 +115,11 @@ interface RagiumPlugin {
          * @param prefix 完成品に紐づいたプレフィックス
          * @param action 完成品を扱うブロック
          */
-        fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Item) -> Unit) {
+        fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Holder<Item>) -> Unit) {
             entry.getFirstItemOrNull(prefix)?.let(action)
         }
 
-        fun useItemFromMainPrefix(key: HTMaterialKey, action: (Item) -> Unit) {
+        fun useItemFromMainPrefix(key: HTMaterialKey, action: (Holder<Item>) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemFromMainPrefix(entry, action)
         }
@@ -151,13 +129,13 @@ interface RagiumPlugin {
          * @param entry 素材のエントリ
          * @param action 完成品を扱うブロック
          */
-        fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
+        fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Holder<Item>) -> Unit) {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
             }
         }
 
-        fun useItemFromRawPrefix(key: HTMaterialKey, action: (Item) -> Unit) {
+        fun useItemFromRawPrefix(key: HTMaterialKey, action: (Holder<Item>) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemFromRawPrefix(entry, action)
         }
@@ -167,7 +145,7 @@ interface RagiumPlugin {
          * @param entry 素材のエントリ
          * @param action 完成品を扱うブロック
          */
-        fun useItemFromRawPrefix(entry: HTMaterialRegistry.Entry, action: (Item) -> Unit) {
+        fun useItemFromRawPrefix(entry: HTMaterialRegistry.Entry, action: (Holder<Item>) -> Unit) {
             entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
             }

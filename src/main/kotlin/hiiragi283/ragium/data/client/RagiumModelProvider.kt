@@ -38,7 +38,11 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             addAll(RagiumItems.FOODS)
 
+            addAll(RagiumItems.Circuits.entries)
+            addAll(RagiumItems.PressMolds.entries)
+            addAll(RagiumItems.Catalysts.entries)
             addAll(RagiumItems.INGREDIENTS)
+            addAll(RagiumItems.Radioactives.entries)
         }.map(ItemLike::asItem)
             .forEach(::basicItem)
     }

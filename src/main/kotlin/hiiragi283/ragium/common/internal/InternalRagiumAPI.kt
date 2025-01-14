@@ -1,26 +1,17 @@
 package hiiragi283.ragium.common.internal
 
-import com.google.common.collect.HashBasedTable
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.extension.asPairMap
 import hiiragi283.ragium.api.extension.blockProperty
-import hiiragi283.ragium.api.extension.toTable
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineType
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.util.collection.HTTable
-import hiiragi283.ragium.api.util.collection.HTWrappedTable
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.fml.ModContainer
@@ -28,7 +19,6 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 import java.util.function.Function
-import java.util.function.Supplier
 
 internal object InternalRagiumAPI : RagiumAPI {
     @JvmField
@@ -36,7 +26,7 @@ internal object InternalRagiumAPI : RagiumAPI {
 
     override lateinit var plugins: List<RagiumPlugin>
     override lateinit var machineRegistry: HTMachineRegistry
-    override lateinit var materialRegistry: HTMaterialRegistry
+    override val materialRegistry: HTMaterialRegistry = HTMaterialRegistryImpl
 
     //    Init    //
 
@@ -109,8 +99,7 @@ internal object InternalRagiumAPI : RagiumAPI {
         LOGGER.info("Registered machine types and properties!")
     }
 
-    @JvmStatic
-    fun registerMaterials() {
+    /*fun registerMaterials() {
         val keyCache: MutableMap<HTMaterialKey, HTMaterialType> = mutableMapOf()
         val altNameCache: MutableMap<String, HTMaterialKey> = mutableMapOf()
 
@@ -144,11 +133,19 @@ internal object InternalRagiumAPI : RagiumAPI {
         // bind items
         val itemCache =
             HTWrappedTable.Mutable<HTTagPrefix, HTMaterialKey, MutableSet<Supplier<out ItemLike>>>(HashBasedTable.create())
+
+        fun put(prefix: HTTagPrefix, key: HTMaterialKey, supplier: Supplier<out ItemLike>) {
+            itemCache
+                .computeIfAbsent(prefix, key) { _: HTTagPrefix, _: HTMaterialKey -> mutableSetOf() }
+                .add(supplier)
+        }
+
         plugins.forEach {
             it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, supplier: Supplier<out ItemLike> ->
-                itemCache
-                    .computeIfAbsent(prefix, key) { _: HTTagPrefix, _: HTMaterialKey -> mutableSetOf() }
-                    .add(supplier)
+                if (key.name.startsWith("raw_") && prefix == HTTagPrefix.STORAGE_BLOCK) {
+                    val fixedName: String = key.name.removePrefix("raw_")
+                    put(HTTagPrefix.RAW_STORAGE, HTMaterialKey.of(fixedName), supplier)
+                } else put(prefix, key, supplier)
             }
         }
         val itemTable: HTTable<HTTagPrefix, HTMaterialKey, MutableSet<Supplier<out ItemLike>>> =
@@ -176,5 +173,5 @@ internal object InternalRagiumAPI : RagiumAPI {
                 propertyCache.mapValues { (_, builder: HTPropertyHolderBuilder) -> builder.build() },
             )
         LOGGER.info("Registered material types and properties!")
-    }
+    }*/
 }

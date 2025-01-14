@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -8,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import net.minecraft.advancements.Criterion
+import net.minecraft.core.Holder
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -43,7 +45,7 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     //    Input    //
 
-    fun itemInput(item: Supplier<out ItemLike>, count: Int = 1): HTMachineRecipeBuilder = itemInput(item.get(), count)
+    // fun itemInput(item: Supplier<out ItemLike>, count: Int = 1): HTMachineRecipeBuilder = itemInput(item.get(), count)
 
     fun itemInput(item: ItemLike, count: Int = 1): HTMachineRecipeBuilder = itemInput(Ingredient.of(item), count)
 
@@ -58,8 +60,10 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
         check(itemInputs.put(ingredient, count) == null) { "Same ingredient is not supported!" }
     }
 
-    fun fluidInput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
-        fluidInput(fluid.get(), count)
+    // fun fluidInput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(fluid.get(), count)
+
+    fun fluidInput(content: HTFluidContent, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
+        fluidInput(content.commonTag, count)
 
     fun fluidInput(fluid: Fluid, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
         fluidInput(FluidIngredient.of(fluid), count)
@@ -83,7 +87,9 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     //    Output    //
 
-    fun itemOutput(item: Supplier<out ItemLike>, count: Int = 1): HTMachineRecipeBuilder = itemOutput(item.get(), count)
+    // fun itemOutput(item: Supplier<out ItemLike>, count: Int = 1): HTMachineRecipeBuilder = itemOutput(item.get(), count)
+
+    fun itemOutput(item: Holder<Item>, count: Int = 1): HTMachineRecipeBuilder = itemOutput(ItemStack(item, count))
 
     fun itemOutput(item: ItemLike, count: Int = 1): HTMachineRecipeBuilder = itemOutput(ItemStack(item, count))
 
@@ -114,6 +120,14 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
     override fun group(groupName: String?): RecipeBuilder = this
 
     override fun getResult(): Item = itemOutputs.getOrNull(0)?.item ?: error("Empty item outputs")
+
+    fun savePrefixed(recipeOutput: RecipeOutput, prefix: String) {
+        save(recipeOutput, RecipeBuilder.getDefaultRecipeId(result).withPrefix(prefix))
+    }
+
+    fun saveSuffixed(recipeOutput: RecipeOutput, suffix: String) {
+        save(recipeOutput, RecipeBuilder.getDefaultRecipeId(result).withSuffix(suffix))
+    }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
         val fixedId: ResourceLocation = id.withPrefix(definition.key.name + '/')
