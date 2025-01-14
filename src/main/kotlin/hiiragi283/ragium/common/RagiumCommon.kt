@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.DefaultMachinePlugin
+import hiiragi283.ragium.common.internal.DefaultMaterialPlugin
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import hiiragi283.ragium.common.internal.RagiumEvents
 import net.neoforged.bus.api.IEventBus
@@ -24,7 +25,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     init {
         container.registerExtensionPoint(RagiumPlugin.Provider::class.java) {
             RagiumPlugin.Provider {
-                listOf(DefaultMachinePlugin)
+                listOf(DefaultMachinePlugin, DefaultMaterialPlugin)
             }
         }
 

@@ -15,6 +15,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.fml.IExtensionPoint
 import java.util.function.BiConsumer
 import java.util.function.Function
+import java.util.function.Supplier
 
 /**
  * Ragiumのプラグイン向けのインターフェース
@@ -65,7 +66,7 @@ interface RagiumPlugin {
      *
      * @sample [hiiragi283.ragium.common.internal.DefaultMaterialPlugin.bindMaterialToItem]
      */
-    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, ItemLike>) {}
+    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Supplier<out ItemLike>>) {}
 
     /**
      * Ragiumが読み込まれた後に呼び出されます。

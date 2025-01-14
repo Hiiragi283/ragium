@@ -5,6 +5,8 @@ import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
+import java.util.function.Supplier
 import java.util.stream.Stream
 
 /**
@@ -13,7 +15,7 @@ import java.util.stream.Stream
  */
 class HTMaterialRegistry(
     private val types: Map<HTMaterialKey, HTMaterialType>,
-    private val items: HTTable<HTTagPrefix, HTMaterialKey, out Set<Item>>,
+    private val items: HTTable<HTTagPrefix, HTMaterialKey, out Set<Supplier<out ItemLike>>>,
     private val properties: Map<HTMaterialKey, HTPropertyHolder>,
 ) : Keyable {
     /**
@@ -38,7 +40,7 @@ class HTMaterialRegistry(
      *
      * @return 値がない場合は[emptySet]
      */
-    fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): Set<Item> = items.get(prefix, key) ?: setOf()
+    fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): Set<Item> = items.get(prefix, key)?.map { it.get().asItem() }?.toSet() ?: setOf()
 
     private fun createEntry(key: HTMaterialKey): Entry = Entry(
         types[key] ?: error("Unknown material key: $key"),
@@ -70,9 +72,12 @@ class HTMaterialRegistry(
     /**
      * 素材の情報をまとめたクラス
      */
-    data class Entry(val type: HTMaterialType, val itemMap: Map<HTTagPrefix, Set<Item>>, private val property: HTPropertyHolder) :
-        HTPropertyHolder by property {
-        fun getItems(prefix: HTTagPrefix): Set<Item> = itemMap.getOrDefault(prefix, setOf())
+    data class Entry(
+        val type: HTMaterialType,
+        val itemMap: Map<HTTagPrefix, Set<Supplier<out ItemLike>>>,
+        private val property: HTPropertyHolder,
+    ) : HTPropertyHolder by property {
+        fun getItems(prefix: HTTagPrefix): List<Item> = itemMap.getOrDefault(prefix, setOf()).map { it.get().asItem() }
 
         fun getFirstItemOrNull(prefix: HTTagPrefix): Item? = getItems(prefix).firstOrNull()
 

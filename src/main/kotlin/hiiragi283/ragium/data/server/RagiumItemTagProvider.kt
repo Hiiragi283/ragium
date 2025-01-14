@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -18,7 +19,18 @@ class RagiumItemTagProvider(
 ) : TagsProvider<Item>(output, Registries.ITEM, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         // Materials
+        RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
+            getOrCreateRawBuilder(storage.tagPrefix.commonTagKey)
+                .addTag(storage.prefixedTagKey.location)
+
+            getOrCreateRawBuilder(storage.prefixedTagKey)
+                .addElement(storage.id)
+        }
+
         RagiumItems.MATERIALS.forEach { content: HTItemContent.Material ->
+            getOrCreateRawBuilder(content.tagPrefix.commonTagKey)
+                .addTag(content.prefixedTagKey.location)
+
             getOrCreateRawBuilder(content.prefixedTagKey)
                 .addElement(content.id)
         }

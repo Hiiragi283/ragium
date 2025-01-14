@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:raw_materials/echorium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:smelting/echorium_ingot_from_raw"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:smelting/echorium_ingot_from_raw"
+    ]
+  }
+}

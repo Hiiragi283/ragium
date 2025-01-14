@@ -8,7 +8,7 @@ import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.client.RagiumModelProvider
 import hiiragi283.ragium.data.server.RagiumFluidTagProvider
 import hiiragi283.ragium.data.server.RagiumItemTagProvider
-import hiiragi283.ragium.data.server.RagiumStorageRecipeProvider
+import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
@@ -31,7 +31,7 @@ object RagiumData {
         val helper: ExistingFileHelper = event.existingFileHelper
         val provider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
         // server
-        generator.addProvider(event.includeServer(), RagiumStorageRecipeProvider(output, provider))
+        generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))

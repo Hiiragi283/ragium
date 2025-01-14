@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.asPairMap
 import hiiragi283.ragium.api.extension.blockProperty
-import hiiragi283.ragium.api.extension.idComparator
 import hiiragi283.ragium.api.extension.toTable
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -21,8 +20,6 @@ import hiiragi283.ragium.api.util.collection.HTWrappedTable
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -31,6 +28,7 @@ import net.neoforged.fml.ModList
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
 import java.util.function.Function
+import java.util.function.Supplier
 
 internal object InternalRagiumAPI : RagiumAPI {
     @JvmField
@@ -144,15 +142,16 @@ internal object InternalRagiumAPI : RagiumAPI {
             Function { key: HTMaterialKey -> propertyCache.computeIfAbsent(key) { HTPropertyHolderBuilder() } }
         plugins.forEach { plugin: RagiumPlugin -> plugin.setupMaterialProperties(helper) }
         // bind items
-        val itemCache = HTWrappedTable.Mutable<HTTagPrefix, HTMaterialKey, MutableSet<Item>>(HashBasedTable.create())
+        val itemCache =
+            HTWrappedTable.Mutable<HTTagPrefix, HTMaterialKey, MutableSet<Supplier<out ItemLike>>>(HashBasedTable.create())
         plugins.forEach {
-            it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, item: ItemLike ->
+            it.bindMaterialToItem { prefix: HTTagPrefix, key: HTMaterialKey, supplier: Supplier<out ItemLike> ->
                 itemCache
                     .computeIfAbsent(prefix, key) { _: HTTagPrefix, _: HTMaterialKey -> mutableSetOf() }
-                    .add(item.asItem())
+                    .add(supplier)
             }
         }
-        val itemTable: HTTable<HTTagPrefix, HTMaterialKey, MutableSet<Item>> =
+        val itemTable: HTTable<HTTagPrefix, HTMaterialKey, MutableSet<Supplier<out ItemLike>>> =
             itemCache
                 .asPairMap()
                 .toSortedMap(
@@ -167,8 +166,6 @@ internal object InternalRagiumAPI : RagiumAPI {
                     } else {
                         true
                     }
-                }.onEach { (_: Pair<HTTagPrefix, HTMaterialKey>, items: MutableSet<Item>) ->
-                    items.sortedWith(idComparator(BuiltInRegistries.ITEM))
                 }.toTable()
 
         // complete
