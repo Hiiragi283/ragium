@@ -86,7 +86,19 @@ class HTMachineRecipe(
     val machineKey: HTMachineKey = definition.key
     val machineTier: HTMachineTier = definition.tier
 
-    override fun matches(input: HTMachineInput, level: Level): Boolean = false
+    override fun matches(input: HTMachineInput, level: Level): Boolean {
+        input.itemInputs.forEachIndexed { slot: Int, stack: ItemStack ->
+            if (itemInputs.getOrNull(slot)?.test(stack) == false) {
+                return false
+            }
+        }
+        input.fluidInputs.forEachIndexed { slot: Int, stack: FluidStack ->
+            if (fluidInputs.getOrNull(slot)?.test(stack) == false) {
+                return false
+            }
+        }
+        return catalyst.map { it.test(input.catalyst) }.orElse(input.catalyst.isEmpty)
+    }
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
 

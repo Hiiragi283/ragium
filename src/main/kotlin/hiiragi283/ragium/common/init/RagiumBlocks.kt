@@ -23,6 +23,17 @@ object RagiumBlocks {
     @JvmField
     val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
 
+    init {
+        StorageBlocks.entries
+        Grates.entries
+        Casings.entries
+        Hulls.entries
+        Coils.entries
+        Drums.entries
+        Decorations.entries
+        LEDBlocks.entries
+    }
+
     //    Components    //
 
     enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {

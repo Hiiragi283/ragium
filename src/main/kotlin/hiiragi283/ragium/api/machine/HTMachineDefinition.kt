@@ -29,5 +29,5 @@ data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
             )
     }
 
-    fun getIconStack(): ItemStack? = key.createItemStackOrNull(tier)
+    fun getIconStack(): ItemStack? = key.createItemStack(tier)
 }

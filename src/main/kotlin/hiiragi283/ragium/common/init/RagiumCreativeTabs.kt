@@ -61,7 +61,7 @@ object RagiumCreativeTabs {
                             .getInstance()
                             .machineRegistry
                             .keys
-                            .mapNotNull { it.createItemStackOrNull(tier) }
+                            .mapNotNull { it.createItemStack(tier) }
                             .forEach(output::accept)
                     }
 

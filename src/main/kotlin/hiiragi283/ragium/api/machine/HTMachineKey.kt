@@ -105,10 +105,13 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
 
     /**
      * 指定された[tier]から[ItemStack]を返します。
-     * @return [getEntryOrNull]がnullの場合はnullを返す
+     * @return [getEntryOrNull]がnull，または[HTMachinePropertyKeys.VALID_TIERS]に含まれない場合はnullを返す
      */
-    fun createItemStackOrNull(tier: HTMachineTier): ItemStack? {
-        val stack: ItemStack = getEntryOrNull()?.let(::ItemStack) ?: return null
+    fun createItemStack(tier: HTMachineTier): ItemStack? {
+        val entry: HTMachineRegistry.Entry = getEntryOrNull() ?: return null
+        val validTiers: List<HTMachineTier> = entry.getOrDefault(HTMachinePropertyKeys.VALID_TIERS)
+        if (tier !in validTiers) return null
+        val stack = ItemStack(entry)
         stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
         return stack
     }

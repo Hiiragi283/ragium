@@ -1,0 +1,154 @@
+{
+  "variants": {
+    "active=false,facing=east,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber",
+      "y": 90
+    },
+    "active=false,facing=east,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber",
+      "y": 90
+    },
+    "active=false,facing=east,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber",
+      "y": 90
+    },
+    "active=false,facing=east,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber",
+      "y": 90
+    },
+    "active=false,facing=east,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber",
+      "y": 90
+    },
+    "active=false,facing=north,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber"
+    },
+    "active=false,facing=north,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber"
+    },
+    "active=false,facing=north,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber"
+    },
+    "active=false,facing=north,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber"
+    },
+    "active=false,facing=north,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber"
+    },
+    "active=false,facing=south,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber",
+      "y": 180
+    },
+    "active=false,facing=south,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber",
+      "y": 180
+    },
+    "active=false,facing=south,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber",
+      "y": 180
+    },
+    "active=false,facing=south,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber",
+      "y": 180
+    },
+    "active=false,facing=south,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber",
+      "y": 180
+    },
+    "active=false,facing=west,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber",
+      "y": 270
+    },
+    "active=false,facing=west,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber",
+      "y": 270
+    },
+    "active=false,facing=west,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber",
+      "y": 270
+    },
+    "active=false,facing=west,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber",
+      "y": 270
+    },
+    "active=false,facing=west,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber",
+      "y": 270
+    },
+    "active=true,facing=east,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber_active",
+      "y": 90
+    },
+    "active=true,facing=east,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber_active",
+      "y": 90
+    },
+    "active=true,facing=east,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber_active",
+      "y": 90
+    },
+    "active=true,facing=east,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber_active",
+      "y": 90
+    },
+    "active=true,facing=east,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber_active",
+      "y": 90
+    },
+    "active=true,facing=north,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber_active"
+    },
+    "active=true,facing=north,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber_active"
+    },
+    "active=true,facing=north,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber_active"
+    },
+    "active=true,facing=north,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber_active"
+    },
+    "active=true,facing=north,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber_active"
+    },
+    "active=true,facing=south,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber_active",
+      "y": 180
+    },
+    "active=true,facing=south,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber_active",
+      "y": 180
+    },
+    "active=true,facing=south,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber_active",
+      "y": 180
+    },
+    "active=true,facing=south,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber_active",
+      "y": 180
+    },
+    "active=true,facing=south,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber_active",
+      "y": 180
+    },
+    "active=true,facing=west,tier=advanced": {
+      "model": "ragium:block/advanced/growth_chamber_active",
+      "y": 270
+    },
+    "active=true,facing=west,tier=basic": {
+      "model": "ragium:block/basic/growth_chamber_active",
+      "y": 270
+    },
+    "active=true,facing=west,tier=elite": {
+      "model": "ragium:block/elite/growth_chamber_active",
+      "y": 270
+    },
+    "active=true,facing=west,tier=primitive": {
+      "model": "ragium:block/primitive/growth_chamber_active",
+      "y": 270
+    },
+    "active=true,facing=west,tier=simple": {
+      "model": "ragium:block/simple/growth_chamber_active",
+      "y": 270
+    }
+  }
+}

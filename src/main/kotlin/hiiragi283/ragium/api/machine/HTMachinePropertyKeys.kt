@@ -12,12 +12,17 @@ import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.shapes.VoxelShape
 
 object HTMachinePropertyKeys {
     @JvmField
     val MACHINE_FACTORY: HTPropertyKey.Simple<HTMachineEntityFactory> =
         HTPropertyKey.ofSimple(RagiumAPI.id("machine_factory"))
+
+    @JvmField
+    val VALID_TIERS: HTPropertyKey.Defaulted<List<HTMachineTier>> =
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("valid_tiers")) {
+            listOf(HTMachineTier.SIMPLE, HTMachineTier.BASIC, HTMachineTier.ADVANCED, HTMachineTier.ELITE)
+        }
 
     @JvmField
     val MODEL_ID: HTPropertyKey.Defaulted<ResourceLocation> =
@@ -39,10 +44,6 @@ object HTMachinePropertyKeys {
     @JvmField
     val SOUND: HTPropertyKey.Simple<SoundEvent> =
         HTPropertyKey.ofSimple(RagiumAPI.id("sound"))
-
-    @JvmField
-    val VOXEL_SHAPE: HTPropertyKey.Simple<VoxelShape> =
-        HTPropertyKey.ofSimple(RagiumAPI.id("voxel_shape"))
 
     //    Generator    //
 

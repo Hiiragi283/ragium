@@ -102,7 +102,7 @@ class RagiumJEIPlugin : IModPlugin {
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         RagiumAPI.getInstance().machineRegistry.keys.forEach { key: HTMachineKey ->
-            HTMachineTier.entries.mapNotNull(key::createItemStackOrNull).forEach { stack: ItemStack ->
+            HTMachineTier.entries.mapNotNull(key::createItemStack).forEach { stack: ItemStack ->
                 registration.addRecipeCatalysts(getRecipeType(key), stack)
             }
         }

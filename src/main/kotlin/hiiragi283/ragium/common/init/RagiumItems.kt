@@ -26,6 +26,20 @@ object RagiumItems {
     val REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
 
     init {
+        Dusts.entries
+        Gears.entries
+        Gems.entries
+        Ingots.entries
+        RawMaterials.entries
+
+        Circuits.entries
+        PressMolds.entries
+        Catalysts.entries
+        FluidCubes.entries
+        Radioactives.entries
+    }
+
+    /*init {
         Radioactives.entries.forEach { radioactive: Radioactives ->
             REGISTER.registerSimpleItem(
                 radioactive.id.path,
@@ -38,7 +52,7 @@ object RagiumItems {
                 },
             )
         }
-    }
+    }*/
 
     //    Materials    //
 

@@ -26,8 +26,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumBlocks.Coils.entries)
 
             addAll(RagiumBlocks.Drums.entries)
-        }.map(HTBlockContent::id)
-            .forEach(::simpleBlockItem)
+        }.map(HTBlockContent::id).forEach(::simpleBlockItem)
     }
 
     private fun registerItems() {

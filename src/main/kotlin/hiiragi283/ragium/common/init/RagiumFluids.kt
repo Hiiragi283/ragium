@@ -122,6 +122,13 @@ enum class RagiumFluids(
         @JvmField
         val TYPE_REGISTER: DeferredRegister<FluidType> =
             DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, RagiumAPI.MOD_ID)
+
+        init {
+            RagiumFluids.entries.forEach {
+                it.holder
+                it.typeHolder
+            }
+        }
     }
 
     override val holder: DeferredHolder<Fluid, HTVirtualFluid> by lazy {

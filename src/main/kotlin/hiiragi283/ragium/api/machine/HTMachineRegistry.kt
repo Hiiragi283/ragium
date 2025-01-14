@@ -5,9 +5,10 @@ import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.block.HTMachineBlock
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredItem
 import java.util.stream.Stream
 
 /**
@@ -78,7 +79,9 @@ class HTMachineRegistry(
     /**
      * 機械の情報をまとめたクラス
      */
-    data class Entry(val type: HTMachineType, override val holder: DeferredHolder<Block, out Block>, val property: HTPropertyHolder) :
+    data class Entry(val type: HTMachineType, override val holder: DeferredBlock<out Block>, val property: HTPropertyHolder) :
         HTPropertyHolder by property,
-        HTBlockContent
+        HTBlockContent {
+        override val itemHolder: DeferredItem<out Item> = DeferredItem.createItem(holder.id)
+    }
 }

@@ -29,7 +29,7 @@ class HTMachineRecipeCategory(machine: HTMachineKey, guiHelper: IGuiHelper) :
     HTRecipeCategory<RecipeHolder<HTMachineRecipe>>(
         RagiumJEIPlugin.getRecipeType(machine),
         machine.text,
-        guiHelper.createDrawableItemStack(machine.createItemStackOrNull(HTMachineTier.SIMPLE) ?: ItemStack.EMPTY),
+        guiHelper.createDrawableItemStack(machine.createItemStack(HTMachineTier.SIMPLE) ?: ItemStack.EMPTY),
         18 * 8 + 8,
         18 * 3 + 8,
     ) {
