@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumCapabilities
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
@@ -9,22 +8,18 @@ import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.material
 import hiiragi283.ragium.api.extension.set
 import hiiragi283.ragium.api.extension.tieredText
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.resource.HTRuntimeDatapack
 import hiiragi283.ragium.common.init.*
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.advancements.critereon.ImpossibleTrigger
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.data.recipes.RecipeCategory
-import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.server.packs.PackType
 import net.minecraft.server.packs.repository.Pack
-import net.minecraft.tags.ItemTags
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -39,6 +34,7 @@ import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.event.AddPackFindersEvent
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import org.slf4j.Logger
@@ -51,13 +47,15 @@ internal object RagiumEvents {
 
     fun register(eventBus: IEventBus) {
         eventBus.addListener(::createRegistry)
+        eventBus.addListener(::addBlockToBlockEntity)
 
         eventBus.addListener(::commonSetup)
 
-        eventBus.addListener(::addRuntimePack)
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerCapabilities)
         eventBus.addListener(::modifyComponents)
+
+        eventBus.addListener(::addRuntimePack)
     }
 
     private fun createRegistry(event: NewRegistryEvent) {
@@ -66,22 +64,15 @@ internal object RagiumEvents {
         LOGGER.info("Registered new registries!")
     }
 
-    private fun addRuntimePack(event: AddPackFindersEvent) {
-        if (event.packType != PackType.SERVER_DATA) return
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, Items.DIAMOND)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', Items.DIRT)
-            .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
-            .unlockedBy("has_item", CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance()))
-            .save(HTRuntimeDatapack.RUNTIME_OUTPUT, RagiumAPI.id("runtime_test"))
-
-        event.addRepositorySource { consumer: Consumer<Pack> ->
-            consumer.accept(HTRuntimeDatapack.PACK)
-            LOGGER.info("Registered runtime datapack!")
+    private fun addBlockToBlockEntity(event: BlockEntityTypeAddBlocksEvent) {
+        fun bindMachine(type: Supplier<out BlockEntityType<*>>, machine: HTMachineKey) {
+            val entry: HTMachineRegistry.Entry = machine.getEntryOrNull() ?: return
+            event.modify(type.get(), entry.get())
         }
+
+        bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
+
+        LOGGER.info("Added external blocks to BlockEntityType!")
     }
 
     private fun commonSetup(event: FMLCommonSetupEvent) {
@@ -136,6 +127,8 @@ internal object RagiumEvents {
             )
         }
 
+        registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
+
         registerHandlers(RagiumBlockEntityTypes.DRUM)
 
         LOGGER.info("Registered capabilities!")
@@ -170,5 +163,23 @@ internal object RagiumEvents {
         }
 
         LOGGER.info("Modified item components!")
+    }
+
+    private fun addRuntimePack(event: AddPackFindersEvent) {
+        if (event.packType != PackType.SERVER_DATA) return
+        /*ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, Items.DIAMOND)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', Items.DIRT)
+            .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
+            .unlockedBy("has_item", CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance()))
+            .save(HTRuntimeDatapack.RUNTIME_OUTPUT, RagiumAPI.id("runtime_test"))*/
+
+        event.addRepositorySource { consumer: Consumer<Pack> ->
+            consumer.accept(HTRuntimeDatapack.PACK)
+            LOGGER.info("Registered runtime datapack!")
+        }
     }
 }

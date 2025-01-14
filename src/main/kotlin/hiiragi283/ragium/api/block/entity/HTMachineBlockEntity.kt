@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
+import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.*
@@ -30,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.common.util.TriState
+import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
 import java.util.function.Supplier
 
@@ -217,4 +219,9 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     //    MenuProvider    //
 
     final override fun getDisplayName(): Component = machineTier.createPrefixedText(machineKey)
+
+    //    HTBlockEntityHandlerProvider    //
+
+    final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? =
+        level?.getEnergyNetwork()?.getOrNull()?.let(HTStorageIO.INPUT::wrapEnergyStorage)
 }

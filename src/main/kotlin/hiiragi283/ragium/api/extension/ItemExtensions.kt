@@ -4,11 +4,15 @@ package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumComponentTypes
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
+import net.minecraft.world.Containers
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
+import net.neoforged.neoforge.items.IItemHandler
 
 //    ItemLike    //
 
@@ -43,3 +47,11 @@ val ItemStack.machineTier: HTMachineTier
 //    SizedIngredient    //
 
 fun SizedIngredient.matches(stack: ItemStack): Boolean = ingredient().test(stack) && stack.count >= count()
+
+//    IItemHandler    //
+
+fun IItemHandler.dropStacks(level: Level, pos: BlockPos) {
+    (0 until this.slots)
+        .map(this::getStackInSlot)
+        .forEach { Containers.dropItemStack(level, pos.x.toDouble(), pos.z.toDouble(), pos.y.toDouble(), it) }
+}

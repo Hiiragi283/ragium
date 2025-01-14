@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -24,6 +25,14 @@ object RagiumBlockEntityTypes {
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
         BlockEntityType.Builder.of(factory, *blocks.map(HTBlockContent::get).toTypedArray()).build(null)
     }
+
+    //    Machine    //
+
+    @JvmField
+    val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =
+        register("multi_smelter", ::HTMultiSmelterBlockEntity, listOf())
+
+    //    Storage    //
 
     @JvmField
     val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDrumBlockEntity>> =
