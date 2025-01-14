@@ -22,8 +22,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             addAll(RagiumBlocks.Grates.entries)
             addAll(RagiumBlocks.Casings.entries)
-            // addAll(RagiumBlocks.Hulls.entries)
-            // addAll(RagiumBlocks.Coils.entries)
+            addAll(RagiumBlocks.Hulls.entries)
+            addAll(RagiumBlocks.Coils.entries)
 
             addAll(RagiumBlocks.Drums.entries)
         }.map(HTBlockContent::id)

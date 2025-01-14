@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.common.init.RagiumComponentTypes
@@ -75,9 +76,20 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
                     text.withStyle(ChatFormatting.WHITE),
                 ).withStyle(ChatFormatting.GRAY),
         )
-        consumer.accept(tier.tierText)
-        consumer.accept(tier.recipeCostText)
-        consumer.accept(tier.recipeCostText)
+        consumer.accept(
+            Component
+                .translatable(
+                    RagiumTranslationKeys.MACHINE_TIER,
+                    text.withStyle(tier.color),
+                ).withStyle(ChatFormatting.GRAY),
+        )
+        consumer.accept(
+            Component
+                .translatable(
+                    RagiumTranslationKeys.MACHINE_RECIPE_COST,
+                    intText(200).withStyle(ChatFormatting.YELLOW),
+                ).withStyle(ChatFormatting.GRAY),
+        )
         // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer.accept, this, tier)
         if (allowDescription) {
             consumer.accept(descriptionText)
@@ -92,10 +104,10 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
 
     /**
      * 指定された[tier]から[ItemStack]を返します。
-     * @return [getEntryOrNull]がnullの場合は[ItemStack.EMPTY]を返す
+     * @return [getEntryOrNull]がnullの場合はnullを返す
      */
-    fun createItemStack(tier: HTMachineTier): ItemStack {
-        val stack: ItemStack = getEntryOrNull()?.let(::ItemStack) ?: return ItemStack.EMPTY
+    fun createItemStackOrNull(tier: HTMachineTier): ItemStack? {
+        val stack: ItemStack = getEntryOrNull()?.let(::ItemStack) ?: return null
         stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
         return stack
     }

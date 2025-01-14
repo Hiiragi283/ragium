@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-class HTDrumBlock(override val tier: HTMachineTier, properties: Properties) :
+class HTDrumBlock(override val machineTier: HTMachineTier, properties: Properties) :
     HTEntityBlock(properties),
     HTMachineTierProvider {
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): HTDrumBlockEntity = HTDrumBlockEntity(pos, state, tier)
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): HTDrumBlockEntity = HTDrumBlockEntity(pos, state, machineTier)
 }

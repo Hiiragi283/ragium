@@ -38,45 +38,42 @@ object RagiumBlocks {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
-    enum class Grates(override val tier: HTMachineTier) :
-        HTBlockContent,
-        HTMachineTierProvider {
-        PRIMITIVE(HTMachineTier.PRIMITIVE),
+    enum class Grates(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
+        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
         ;
 
         override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_grate")
     }
 
-    enum class Casings(override val tier: HTMachineTier) :
-        HTBlockContent,
-        HTMachineTierProvider {
-        PRIMITIVE(HTMachineTier.PRIMITIVE),
+    enum class Casings(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
+        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
         ;
 
         override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_casing")
     }
 
-    enum class Hulls(override val tier: HTMachineTier) :
-        HTBlockContent,
-        HTMachineTierProvider {
+    enum class Hulls(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
         PRIMITIVE(HTMachineTier.PRIMITIVE),
+        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
         ;
 
         override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_hull")
     }
 
-    enum class Coils(override val tier: HTMachineTier) :
-        HTBlockContent,
-        HTMachineTierProvider {
-        PRIMITIVE(HTMachineTier.PRIMITIVE),
+    enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
+        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
         ;
 
         override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_coil")
@@ -84,12 +81,13 @@ object RagiumBlocks {
 
     //    Storage    //
 
-    enum class Drums(override val tier: HTMachineTier) :
+    enum class Drums(override val machineTier: HTMachineTier) :
         HTBlockContent,
         HTMachineTierProvider {
-        PRIMITIVE(HTMachineTier.PRIMITIVE),
+        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
         ;
 
         override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_drum")
@@ -137,7 +135,7 @@ object RagiumBlocks {
             drum.registerBlock(
                 REGISTER,
                 blockProperty(Blocks.SMOOTH_STONE),
-            ) { prop: BlockBehaviour.Properties -> HTDrumBlock(drum.tier, prop) }
+            ) { prop: BlockBehaviour.Properties -> HTDrumBlock(drum.machineTier, prop) }
             drum.registerBlockItem(ITEM_REGISTER)
         }
 

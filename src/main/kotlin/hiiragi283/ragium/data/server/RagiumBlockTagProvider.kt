@@ -1,0 +1,36 @@
+package hiiragi283.ragium.data.server
+
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.common.init.RagiumBlocks
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
+import net.minecraft.data.PackOutput
+import net.minecraft.data.tags.TagsProvider
+import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagBuilder
+import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.common.data.ExistingFileHelper
+import java.util.concurrent.CompletableFuture
+
+class RagiumBlockTagProvider(
+    output: PackOutput,
+    provider: CompletableFuture<HolderLookup.Provider>,
+    existingFileHelper: ExistingFileHelper,
+) : TagsProvider<Block>(output, Registries.BLOCK, provider, RagiumAPI.MOD_ID, existingFileHelper) {
+    override fun addTags(provider: HolderLookup.Provider) {
+        // Mineable
+        val pickaxe: TagBuilder = getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
+        buildList {
+            addAll(RagiumBlocks.StorageBlocks.entries)
+
+            addAll(RagiumBlocks.Grates.entries)
+            addAll(RagiumBlocks.Casings.entries)
+            addAll(RagiumBlocks.Hulls.entries)
+            addAll(RagiumBlocks.Coils.entries)
+
+            addAll(RagiumBlocks.Drums.entries)
+        }.map(HTBlockContent::id)
+            .forEach(pickaxe::addElement)
+    }
+}

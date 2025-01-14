@@ -1,8 +1,11 @@
 package hiiragi283.ragium.api.machine
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
 import hiiragi283.ragium.api.property.HTPropertyKey
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.SimpleParticleType
@@ -65,8 +68,12 @@ object HTMachinePropertyKeys {
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =
         HTPropertyKey.ofDefaulted(RagiumAPI.id("front_mapper"), value = { it })
 
-    /*val RECIPE_TYPE: HTPropertyKey.Defaulted<HTMachineRecipeType<*>> =
-        HTPropertyKey.ofDefaulted(RagiumAPI.id("recipe_type"), value = TODO())*/
+    @JvmField
+    val RECIPE_VALIDATOR: HTPropertyKey.Defaulted<HTMachineRecipeValidator> =
+        HTPropertyKey.ofDefaulted(
+            RagiumAPI.id("recipe_validator"),
+            HTMachineRecipeValidator(DataResult<HTMachineRecipe>::success),
+        )
 
     //    Multiblock    //
 

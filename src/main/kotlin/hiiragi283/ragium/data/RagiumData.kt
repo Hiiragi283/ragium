@@ -6,6 +6,7 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseProvider
 import hiiragi283.ragium.data.client.RagiumModelProvider
+import hiiragi283.ragium.data.server.RagiumBlockTagProvider
 import hiiragi283.ragium.data.server.RagiumFluidTagProvider
 import hiiragi283.ragium.data.server.RagiumItemTagProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
@@ -33,6 +34,7 @@ object RagiumData {
         // server
         generator.addProvider(event.includeServer(), RagiumRecipeProvider(output, provider))
 
+        generator.addProvider(event.includeServer(), RagiumBlockTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumFluidTagProvider(output, provider, helper))
         generator.addProvider(event.includeServer(), RagiumItemTagProvider(output, provider, helper))
         // client

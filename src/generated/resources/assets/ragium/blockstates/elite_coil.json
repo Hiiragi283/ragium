@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "ragium:block/elite_coil_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "ragium:block/elite_coil"
+    },
+    "axis=z": {
+      "model": "ragium:block/elite_coil_horizontal",
+      "x": 90
+    }
+  }
+}

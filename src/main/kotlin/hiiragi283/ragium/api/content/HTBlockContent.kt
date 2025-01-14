@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.content
 
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
@@ -33,4 +34,8 @@ interface HTBlockContent :
     interface Material :
         HTBlockContent,
         HTMaterialProvider
+
+    interface Tier :
+        HTBlockContent,
+        HTMachineTierProvider
 }

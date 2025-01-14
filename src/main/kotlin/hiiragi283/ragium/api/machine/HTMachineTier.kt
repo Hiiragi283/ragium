@@ -2,15 +2,13 @@ package hiiragi283.ragium.api.machine
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.intText
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
 import hiiragi283.ragium.api.fluid.HTFluidConstants
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.Registries
@@ -19,40 +17,22 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.neoforged.neoforge.registries.DeferredHolder
 
-/**
- * 機械のティアを表す列挙型
- * @param processCost 機械処理に必要なエネルギー量
- * @param tickRate 機械の稼働間隔
- */
 enum class HTMachineTier(
     private val idPattern: String,
-    val processCost: Int,
+    val color: ChatFormatting,
     val tickRate: Int,
-    val rarity: Rarity,
+    val processCost: Int,
+    val tankCapacity: Int,
 ) : StringRepresentable {
-    PRIMITIVE(
-        "primitive_%s",
-        160,
-        200,
-        Rarity.COMMON,
-    ),
-    BASIC(
-        "basic_%s",
-        640,
-        150,
-        Rarity.UNCOMMON,
-    ),
-    ADVANCED(
-        "advanced_%s",
-        2560,
-        100,
-        Rarity.RARE,
-    ),
+    PRIMITIVE("primitive_%S", ChatFormatting.DARK_GRAY, 400, 200, HTFluidConstants.BUCKET * 4),
+    SIMPLE("simple_%S", ChatFormatting.YELLOW, 200, 100, HTFluidConstants.BUCKET * 8),
+    BASIC("basic_%S", ChatFormatting.GREEN, 150, 200, HTFluidConstants.BUCKET * 16),
+    ADVANCED("advanced_%S", ChatFormatting.RED, 100, 400, HTFluidConstants.BUCKET * 64),
+    ELITE("elite_%S", ChatFormatting.AQUA, 50, 800, HTFluidConstants.BUCKET * 256),
     ;
 
     companion object {
@@ -60,7 +40,8 @@ enum class HTMachineTier(
         val CODEC: Codec<HTMachineTier> = stringCodec(HTMachineTier.entries)
 
         @JvmField
-        val FIELD_CODEC: MapCodec<HTMachineTier> = HTMachineTier.CODEC.optionalFieldOf("tier", PRIMITIVE)
+        val FIELD_CODEC: MapCodec<HTMachineTier> =
+            HTMachineTier.CODEC.optionalFieldOf("tier", PRIMITIVE)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineTier> = stringStreamCodec(HTMachineTier.entries)
@@ -69,98 +50,87 @@ enum class HTMachineTier(
         val PROPERTY: EnumProperty<HTMachineTier> = EnumProperty.create("tier", HTMachineTier::class.java)
     }
 
-    val smelterMulti: Int = (processCost / 20).toInt()
-    val bucketUnit: Int = processCost / 20
-    val crateCapacity: Int = bucketUnit * 8 * 64
-    val tankCapacity: Int = HTFluidConstants.BUCKET * bucketUnit
-
     val translationKey: String = "machine_tier.ragium.$serializedName"
     val text: MutableComponent = Component.translatable(translationKey)
-    val tierText: MutableComponent =
-        Component
-            .translatable(
-                RagiumTranslationKeys.MACHINE_TIER,
-                text.withStyle(rarity.styleModifier),
-            ).withStyle(ChatFormatting.GRAY)
-    val recipeCostText: MutableComponent =
-        Component
-            .translatable(
-                RagiumTranslationKeys.MACHINE_RECIPE_COST,
-                intText(processCost).withStyle(ChatFormatting.YELLOW),
-            ).withStyle(ChatFormatting.GRAY)
 
     val prefixKey = "$translationKey.prefix"
 
-    fun createPrefixedText(key: String): MutableComponent = Component.translatable(prefixKey, Component.translatable(key))
+    fun createPrefixedText(key: String): MutableComponent = Component.translatable(prefixKey, Component.translatable(key)).withStyle(color)
 
-    fun createPrefixedText(key: HTMachineKey): MutableComponent = Component.translatable(prefixKey, key.text)
+    fun createPrefixedText(key: HTMachineKey): MutableComponent = Component.translatable(prefixKey, key.text).withStyle(color)
 
-    fun createId(key: HTMachineKey): ResourceLocation = RagiumAPI.id(idPattern.replace("%s", key.name))
+    //    Block    //
 
-    /*fun getPlastic(): RagiumItems.Plastics = when (this) {
-        PRIMITIVE -> RagiumItems.Plastics.PRIMITIVE
-        BASIC -> RagiumItems.Plastics.BASIC
-        ADVANCED -> RagiumItems.Plastics.ADVANCED
+    fun getStorageBlock(): HTBlockContent.Material = when (this) {
+        PRIMITIVE -> RagiumBlocks.StorageBlocks.RAGI_ALLOY
+        SIMPLE -> RagiumBlocks.StorageBlocks.RAGI_ALLOY
+        BASIC -> RagiumBlocks.StorageBlocks.RAGI_STEEL
+        ADVANCED -> RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL
+        ELITE -> RagiumBlocks.StorageBlocks.RAGIUM
     }
 
-    fun getCircuit(): RagiumItems.Circuits = when (this) {
-        PRIMITIVE -> RagiumItems.Circuits.PRIMITIVE
-        BASIC -> RagiumItems.Circuits.BASIC
-        ADVANCED -> RagiumItems.Circuits.ADVANCED
-    }*/
+    fun getGrate(): HTBlockContent.Tier = when (this) {
+        PRIMITIVE -> object : HTBlockContent.Tier {
+            override val holder: DeferredHolder<Block, out Block> = DeferredHolder.create(
+                Registries.BLOCK,
+                ResourceLocation.withDefaultNamespace("iron_bars"),
+            )
+            override val machineTier: HTMachineTier = PRIMITIVE
+        }
 
-    fun getCoil(): RagiumBlocks.Coils = when (this) {
-        PRIMITIVE -> RagiumBlocks.Coils.PRIMITIVE
-        BASIC -> RagiumBlocks.Coils.BASIC
-        ADVANCED -> RagiumBlocks.Coils.ADVANCED
-    }
-
-    fun getGrate(): RagiumBlocks.Grates = when (this) {
-        PRIMITIVE -> RagiumBlocks.Grates.PRIMITIVE
+        SIMPLE -> RagiumBlocks.Grates.SIMPLE
         BASIC -> RagiumBlocks.Grates.BASIC
         ADVANCED -> RagiumBlocks.Grates.ADVANCED
+        ELITE -> RagiumBlocks.Grates.ELITE
     }
 
-    fun getCasing(): RagiumBlocks.Casings = when (this) {
-        PRIMITIVE -> RagiumBlocks.Casings.PRIMITIVE
+    fun getCasing(): HTBlockContent.Tier = when (this) {
+        PRIMITIVE -> object : HTBlockContent.Tier {
+            override val holder: DeferredHolder<Block, out Block> = DeferredHolder.create(
+                Registries.BLOCK,
+                ResourceLocation.withDefaultNamespace("bricks"),
+            )
+            override val machineTier: HTMachineTier = PRIMITIVE
+        }
+
+        SIMPLE -> RagiumBlocks.Casings.SIMPLE
         BASIC -> RagiumBlocks.Casings.BASIC
         ADVANCED -> RagiumBlocks.Casings.ADVANCED
+        ELITE -> RagiumBlocks.Casings.ELITE
     }
 
-    fun getHull(): RagiumBlocks.Hulls = when (this) {
+    fun getHull(): HTBlockContent.Tier = when (this) {
         PRIMITIVE -> RagiumBlocks.Hulls.PRIMITIVE
+        SIMPLE -> RagiumBlocks.Hulls.SIMPLE
         BASIC -> RagiumBlocks.Hulls.BASIC
         ADVANCED -> RagiumBlocks.Hulls.ADVANCED
+        ELITE -> RagiumBlocks.Hulls.ELITE
     }
+
+    //    Item    //
 
     fun getMainMetal(): HTMaterialKey = when (this) {
         PRIMITIVE -> RagiumMaterialKeys.RAGI_ALLOY
+        SIMPLE -> RagiumMaterialKeys.RAGI_ALLOY
         BASIC -> RagiumMaterialKeys.RAGI_STEEL
         ADVANCED -> RagiumMaterialKeys.REFINED_RAGI_STEEL
+        ELITE -> RagiumMaterialKeys.RAGIUM
     }
 
     fun getSubMetal(): HTMaterialKey = when (this) {
         PRIMITIVE -> RagiumMaterialKeys.COPPER
+        SIMPLE -> RagiumMaterialKeys.COPPER
         BASIC -> RagiumMaterialKeys.GOLD
         ADVANCED -> RagiumMaterialKeys.ALUMINUM
+        ELITE -> RagiumMaterialKeys.NETHERITE
     }
 
     fun getSteelMetal(): HTMaterialKey = when (this) {
         PRIMITIVE -> RagiumMaterialKeys.IRON
+        SIMPLE -> RagiumMaterialKeys.IRON
         BASIC -> RagiumMaterialKeys.STEEL
         ADVANCED -> RagiumMaterialKeys.DEEP_STEEL
-    }
-
-    fun getStorageBlock(): RagiumBlocks.StorageBlocks = when (this) {
-        PRIMITIVE -> RagiumBlocks.StorageBlocks.RAGI_ALLOY
-        BASIC -> RagiumBlocks.StorageBlocks.RAGI_STEEL
-        ADVANCED -> RagiumBlocks.StorageBlocks.REFINED_RAGI_STEEL
-    }
-
-    fun getGlassBlock(): DeferredHolder<Block, Block> = when (this) {
-        PRIMITIVE -> DeferredHolder.create(Registries.BLOCK, ResourceLocation.withDefaultNamespace("glass"))
-        BASIC -> TODO()
-        ADVANCED -> TODO()
+        ELITE -> RagiumMaterialKeys.NETHERITE
     }
 
     //    StringRepresentable    //

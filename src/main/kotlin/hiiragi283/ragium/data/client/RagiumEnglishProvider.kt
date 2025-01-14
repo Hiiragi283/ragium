@@ -16,8 +16,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.DRUM, "Drum")
         // Machine
         add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
+        add(HTMachineTier.SIMPLE, "Simple", "Simple %s")
         add(HTMachineTier.BASIC, "Basic", "Basic %s")
         add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
+        add(HTMachineTier.ELITE, "Elite", "Elite %s")
         // Machine Type
         add(
             RagiumMachineKeys.BEDROCK_MINER,

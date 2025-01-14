@@ -19,7 +19,10 @@ fun blockProperty(parent: Supplier<Block>): BlockBehaviour.Properties = blockPro
 //    BlockState    //
 
 val BlockState.machineTier: HTMachineTier
-    get() = (block as? HTMachineTierProvider)?.tier ?: getOrDefault(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE)
+    get() = (block as? HTMachineTierProvider)?.machineTier ?: getOrDefault(
+        HTMachineTier.PROPERTY,
+        HTMachineTier.PRIMITIVE,
+    )
 
 fun <T : Comparable<T>> BlockState.getOrNull(property: Property<T>): T? = when (this.hasProperty(property)) {
     true -> getValue(property)

@@ -113,7 +113,7 @@ internal object RagiumEvents {
         registerForBlocks(
             RagiumCapabilities.MACHINE_TIER,
         ) { _: Level, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Void? ->
-            (blockEntity as? HTMachineTierProvider)?.tier ?: state.machineTier
+            (blockEntity as? HTMachineTierProvider)?.machineTier ?: state.machineTier
         }
 
         fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
@@ -149,7 +149,7 @@ internal object RagiumEvents {
 
         fun tieredText(translationKey: String): (DataComponentPatch.Builder, HTMachineTierProvider) -> Unit =
             { builder: DataComponentPatch.Builder, provider: HTMachineTierProvider ->
-                builder.tieredText(translationKey, provider.tier)
+                builder.tieredText(translationKey, provider.machineTier)
             }
 
         modifyAll(RagiumBlocks.StorageBlocks.entries, DataComponentPatch.Builder::material)

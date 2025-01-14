@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/ragi_alloy"
+            "items": "#c:ingots/steel"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/primitive_drum"
+        "recipe": "ragium:shaped/basic_grate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/primitive_drum"
+      "ragium:shaped/basic_grate"
     ]
   }
 }

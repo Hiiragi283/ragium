@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.material.HTMaterialRegistry
@@ -18,6 +19,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
@@ -26,7 +28,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     override fun buildRecipes(recipeOutput: RecipeOutput) {
         materialRecipes(recipeOutput)
 
-        storageRecipes(recipeOutput)
+        partsRecipes(recipeOutput)
     }
 
     private fun RecipeProvider.has(prefix: HTTagPrefix, material: HTMaterialKey): Criterion<InventoryChangeTrigger.TriggerInstance> =
@@ -133,17 +135,52 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         }
     }
 
-    private fun storageRecipes(output: RecipeOutput) {
+    private fun partsRecipes(output: RecipeOutput) {
+        // Grate
+        RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.BUILDING_BLOCKS, grate)
+                .pattern(" A ")
+                .pattern("A A")
+                .pattern(" A ")
+                .define('A', HTTagPrefix.INGOT, grate.machineTier.getSteelMetal())
+                .unlockedBy("has_ingot", has(HTTagPrefix.INGOT, grate.machineTier.getSteelMetal()))
+                .savePrefixed(output)
+        }
+        // Casing
+        RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
+            val corner = when (casings) {
+                RagiumBlocks.Casings.SIMPLE -> Blocks.STONE
+                RagiumBlocks.Casings.BASIC -> Blocks.QUARTZ_BLOCK
+                RagiumBlocks.Casings.ADVANCED -> Blocks.POLISHED_DEEPSLATE
+                RagiumBlocks.Casings.ELITE -> Blocks.OBSIDIAN
+            }
+            // Shaped Crafting
+            val grate: HTBlockContent.Tier = casings.machineTier.getGrate()
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.BUILDING_BLOCKS, casings)
+                .pattern("ABA")
+                .pattern("BCB")
+                .pattern("ABA")
+                .define('A', corner)
+                .define('B', grate)
+                .define('C', HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
+                .unlockedBy("has_ingot", has(grate))
+                .savePrefixed(output)
+        }
+        // Hull
+
         // Drum
         RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
             // Shaped Crafting
-            val mainIngot: TagKey<Item> = HTTagPrefix.INGOT.createTag(drum.tier.getMainMetal())
+            val mainIngot: TagKey<Item> = HTTagPrefix.INGOT.createTag(drum.machineTier.getMainMetal())
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.TRANSPORTATION, drum)
                 .pattern("ABA")
                 .pattern("ACA")
                 .pattern("ABA")
-                .define('A', HTTagPrefix.INGOT, drum.tier.getSubMetal())
+                .define('A', HTTagPrefix.INGOT, drum.machineTier.getSubMetal())
                 .define('B', mainIngot)
                 .define('C', Items.BUCKET)
                 .unlockedBy("has_ingot", has(mainIngot))

@@ -1,0 +1,9 @@
+{
+  "parent": "ragium:block/hull",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "inside": "minecraft:block/bricks",
+    "side": "ragium:block/primitive_hull",
+    "top": "ragium:block/ragi_alloy_block"
+  }
+}

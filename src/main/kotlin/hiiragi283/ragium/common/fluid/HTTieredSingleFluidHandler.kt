@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.fluid.HTTieredFluidHandler
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 
-class HTTieredSingleFluidHandler(override var tier: HTMachineTier) :
-    FluidTank(tier.tankCapacity),
+class HTTieredSingleFluidHandler(override var machineTier: HTMachineTier) :
+    FluidTank(machineTier.tankCapacity),
     HTTieredFluidHandler {
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        this.tier = newTier
+        this.machineTier = newTier
         this.capacity = newTier.tankCapacity
     }
 }

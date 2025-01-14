@@ -1,9 +1,10 @@
 package hiiragi283.ragium.api.recipe
 
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
-import hiiragi283.ragium.api.machine.HTMachineDefinition
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -30,28 +31,37 @@ class HTMachineRecipe(
 ) : Recipe<HTMachineInput> {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTMachineRecipe> = RecordCodecBuilder.mapCodec { instance ->
-            instance
-                .group(
-                    HTMachineDefinition.CODEC.forGetter(HTMachineRecipe::definition),
-                    SizedIngredient.FLAT_CODEC
-                        .listOf()
-                        .optionalFieldOf("item_inputs", listOf())
-                        .forGetter(HTMachineRecipe::itemInputs),
-                    SizedFluidIngredient.FLAT_CODEC
-                        .listOf()
-                        .optionalFieldOf("fluid_inputs", listOf())
-                        .forGetter(HTMachineRecipe::fluidInputs),
-                    Ingredient.CODEC.optionalFieldOf("catalyst").forGetter(HTMachineRecipe::catalyst),
-                    ItemStack.CODEC
-                        .listOf()
-                        .optionalFieldOf("item_outputs", listOf())
-                        .forGetter(HTMachineRecipe::itemOutputs),
-                    FluidStack.CODEC
-                        .listOf()
-                        .optionalFieldOf("fluid_outputs", listOf())
-                        .forGetter(HTMachineRecipe::fluidOutputs),
-                ).apply(instance, ::HTMachineRecipe)
+        val CODEC: MapCodec<HTMachineRecipe> = RecordCodecBuilder
+            .mapCodec { instance ->
+                instance
+                    .group(
+                        HTMachineDefinition.CODEC.forGetter(HTMachineRecipe::definition),
+                        SizedIngredient.FLAT_CODEC
+                            .listOf()
+                            .optionalFieldOf("item_inputs", listOf())
+                            .forGetter(HTMachineRecipe::itemInputs),
+                        SizedFluidIngredient.FLAT_CODEC
+                            .listOf()
+                            .optionalFieldOf("fluid_inputs", listOf())
+                            .forGetter(HTMachineRecipe::fluidInputs),
+                        Ingredient.CODEC.optionalFieldOf("catalyst").forGetter(HTMachineRecipe::catalyst),
+                        ItemStack.CODEC
+                            .listOf()
+                            .optionalFieldOf("item_outputs", listOf())
+                            .forGetter(HTMachineRecipe::itemOutputs),
+                        FluidStack.CODEC
+                            .listOf()
+                            .optionalFieldOf("fluid_outputs", listOf())
+                            .forGetter(HTMachineRecipe::fluidOutputs),
+                    ).apply(instance, ::HTMachineRecipe)
+            }.validate(::validate)
+
+        @JvmStatic
+        private fun validate(recipe: HTMachineRecipe): DataResult<HTMachineRecipe> {
+            val entry: HTMachineRegistry.Entry = recipe.machineKey.getEntryOrNull()
+                ?: return DataResult.error { "Unregistered machine key: ${recipe.machineKey}" }
+            val validator: HTMachineRecipeValidator = entry.getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR)
+            return validator.validate(recipe)
         }
 
         @JvmField
@@ -71,6 +81,9 @@ class HTMachineRecipe(
             ::HTMachineRecipe,
         )
     }
+
+    val machineKey: HTMachineKey = definition.key
+    val machineTier: HTMachineTier = definition.tier
 
     override fun matches(input: HTMachineInput, level: Level): Boolean = false
 

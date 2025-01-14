@@ -47,26 +47,26 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     }
 
     val definition: HTMachineDefinition
-        get() = HTMachineDefinition(machineKey, tier)
+        get() = HTMachineDefinition(machineKey, machineTier)
 
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
     val isActive: Boolean
         get() = blockState.getOrDefault(RagiumBlockProperties.ACTIVE, false)
-    override val tier: HTMachineTier
+    override val machineTier: HTMachineTier
         get() = blockState.machineTier
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        components.set(RagiumComponentTypes.MACHINE_TIER, tier)
+        components.set(RagiumComponentTypes.MACHINE_TIER, machineTier)
     }
 
     @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
     override fun setBlockState(blockState: BlockState) {
-        val oldTier: HTMachineTier = tier
+        val oldTier: HTMachineTier = machineTier
         super.setBlockState(blockState)
         ifPresentWorld { level: Level ->
-            if (!level.isClientSide && oldTier != tier) {
-                onUpdateTier(oldTier, tier)
+            if (!level.isClientSide && oldTier != machineTier) {
+                onUpdateTier(oldTier, machineTier)
                 // RagiumAPI.LOGGER.info("Machine tier updated: $oldTier -> $tier")
             }
         }
@@ -89,6 +89,9 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
             return InteractionResult.SUCCESS
         }
         if (upgrade(level, player, HTMachineTier.ADVANCED)) {
+            return InteractionResult.SUCCESS
+        }
+        if (upgrade(level, player, HTMachineTier.ELITE)) {
             return InteractionResult.SUCCESS
         }
         // Insert fluid from holding stack
@@ -114,7 +117,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     private fun upgrade(level: Level, player: Player, newTier: HTMachineTier): Boolean {
         val stack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
-        return if (stack.isOf(newTier.getHull()) && tier < newTier) {
+        return if (stack.isOf(newTier.getHull()) && machineTier < newTier) {
             level.replaceBlockState(blockPos) { stateIn: BlockState ->
                 stateIn.setValue(
                     HTMachineTier.PROPERTY,
@@ -153,18 +156,18 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     //    Ticking    //
 
-    final override val tickRate: Int = tier.tickRate
+    final override val tickRate: Int = machineTier.tickRate
 
     final override fun tickSecond(level: Level, pos: BlockPos, state: BlockState) {
         val serverLevel: ServerLevel = level.asServerLevel() ?: return
         val network: HTEnergyNetwork = serverLevel.getEnergyNetwork().getOrNull() ?: return
-        if (energyFlag == HTEnergyNetwork.Flag.CONSUME && !network.canConsume(tier.processCost)) {
+        if (energyFlag == HTEnergyNetwork.Flag.CONSUME && !network.canConsume(machineTier.processCost)) {
             LOGGER.error("Failed to extract required energy from network!")
             return
         }
         runCatching { process(serverLevel, pos) }
             .onSuccess {
-                if (!energyFlag.processAmount(network, tier.processCost, true)) {
+                if (!energyFlag.processAmount(network, machineTier.processCost, true)) {
                     LOGGER.error("Failed to interact energy network")
                     return
                 }
@@ -213,5 +216,5 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     //    MenuProvider    //
 
-    final override fun getDisplayName(): Component = tier.createPrefixedText(machineKey)
+    final override fun getDisplayName(): Component = machineTier.createPrefixedText(machineKey)
 }

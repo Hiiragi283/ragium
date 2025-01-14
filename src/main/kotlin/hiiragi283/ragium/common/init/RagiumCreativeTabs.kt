@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -52,7 +51,8 @@ object RagiumCreativeTabs {
                             .getInstance()
                             .machineRegistry
                             .keys
-                            .forEach { key: HTMachineKey -> output.accept(key.createItemStack(tier)) }
+                            .mapNotNull { it.createItemStackOrNull(tier) }
+                            .forEach(output::accept)
                     }
                 }.build()
         }

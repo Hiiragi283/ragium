@@ -23,7 +23,6 @@ fun <T : Any> DataComponentPatch.Builder.set(
  */
 fun DataComponentPatch.Builder.tier(tier: HTMachineTier): DataComponentPatch.Builder = this
     .set(RagiumComponentTypes.MACHINE_TIER, tier)
-    .set(DataComponents.RARITY, tier.rarity)
 
 /**
  * 指定した[text]をアイテムの名前に設定します。

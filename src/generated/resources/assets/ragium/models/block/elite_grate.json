@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/primitive_grate"
+    "all": "ragium:block/elite_grate"
   }
 }

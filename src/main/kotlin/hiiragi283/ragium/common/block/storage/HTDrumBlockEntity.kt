@@ -22,13 +22,13 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
-class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val tier: HTMachineTier) :
+class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTier: HTMachineTier) :
     HTBlockEntity(RagiumBlockEntityTypes.DRUM, pos, state),
     HTBlockEntityHandlerProvider,
     HTMachineTierProvider {
     constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.machineTier)
 
-    private val fluidTank = HTTieredSingleFluidHandler(tier)
+    private val fluidTank = HTTieredSingleFluidHandler(machineTier)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)

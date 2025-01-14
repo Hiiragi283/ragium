@@ -15,9 +15,11 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         // Content
         add(RagiumTranslationKeys.DRUM, "ドラム")
         // Machine
-        add(HTMachineTier.PRIMITIVE, "簡易", "簡易%s")
+        add(HTMachineTier.PRIMITIVE, "原始", "原始%s")
+        add(HTMachineTier.SIMPLE, "簡易", "簡易%s")
         add(HTMachineTier.BASIC, "基本", "基本%s")
         add(HTMachineTier.ADVANCED, "発展", "発展%s")
+        add(HTMachineTier.ELITE, "精鋭", "精鋭%s")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")
