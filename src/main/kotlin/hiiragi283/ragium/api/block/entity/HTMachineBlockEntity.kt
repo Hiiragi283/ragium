@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineException
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.api.multiblock.HTMultiblockData
 import hiiragi283.ragium.api.multiblock.HTMultiblockMap
-import hiiragi283.ragium.api.util.HTMachineException
 import hiiragi283.ragium.api.world.HTEnergyNetwork
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumComponentTypes

@@ -3,20 +3,10 @@ package hiiragi283.ragium.api
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.api.util.TriConsumer
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
-import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.neoforged.fml.IExtensionPoint
 import java.util.function.BiConsumer
 import java.util.function.Function
-import java.util.function.Supplier
 
 /**
  * Ragiumのプラグイン向けのインターフェース
@@ -40,17 +30,13 @@ interface RagiumPlugin {
      */
     fun registerMachine(consumer: BiConsumer<HTMachineKey, HTMachineType>) {}
 
-    fun registerMaterial(helper: MaterialHelper) {}
-
     /**
      * 機械のプロパティを設定します。
      */
     fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {}
 
     fun setupMaterialProperties(helper: Function<HTMaterialKey, HTPropertyHolderBuilder>) {}
-
-    fun bindMaterialToItem(consumer: TriConsumer<HTTagPrefix, HTMaterialKey, Supplier<out ItemLike>>) {}
-
+    /*
     /**
      * レシピを動的に登録します。
      *
@@ -68,7 +54,7 @@ interface RagiumPlugin {
         key: HTMaterialKey,
         entry: HTMaterialRegistry.Entry,
         helper: RecipeHelper,
-    ) {}
+    ) {}*/
 
     //    Provider    //
 
@@ -76,45 +62,20 @@ interface RagiumPlugin {
         fun getPlugins(): List<RagiumPlugin>
     }
 
-    //    MaterialHelper    //
-
-    class MaterialHelper(
-        private val consumer: (HTMaterialKey, HTMaterialType) -> Unit,
-        private val altConsumer: (HTMaterialKey, String) -> Unit,
-    ) {
-        /**
-         * 指定した値から素材を登録します。
-         * @param key 素材のキー
-         * @param type 素材の種類
-         */
-        fun register(key: HTMaterialKey, type: HTMaterialType) {
-            consumer(key, type)
-        }
-
-        /**
-         * 素材の別名を登録します。
-         * @param parent 統一する素材のキー
-         * @param child 統一される素材のキー
-         */
-        fun addAltName(parent: HTMaterialKey, child: String) {
-            altConsumer(parent, child)
-        }
-    }
-
     //    RecipeHelper    //
 
-    data object RecipeHelper {
+    /*data object RecipeHelper {
         fun useItemIfPresent(key: HTMaterialKey, prefix: HTTagPrefix, action: (Holder<Item>) -> Unit) {
             val entry: HTMaterialRegistry.Entry = key.getEntryOrNull() ?: return
             useItemIfPresent(entry, prefix, action)
         }
 
         /**
-         * 動的に完成品を取得します。
-         * @param entry 素材のエントリ
-         * @param prefix 完成品に紐づいたプレフィックス
-         * @param action 完成品を扱うブロック
-         */
+     * 動的に完成品を取得します。
+     * @param entry 素材のエントリ
+     * @param prefix 完成品に紐づいたプレフィックス
+     * @param action 完成品を扱うブロック
+     */
         fun useItemIfPresent(entry: HTMaterialRegistry.Entry, prefix: HTTagPrefix, action: (Holder<Item>) -> Unit) {
             entry.getFirstItemOrNull(prefix)?.let(action)
         }
@@ -125,10 +86,10 @@ interface RagiumPlugin {
         }
 
         /**
-         * [HTMaterialType.getMainPrefix]を元に動的に完成品を取得します。
-         * @param entry 素材のエントリ
-         * @param action 完成品を扱うブロック
-         */
+     * [HTMaterialType.getMainPrefix]を元に動的に完成品を取得します。
+     * @param entry 素材のエントリ
+     * @param action 完成品を扱うブロック
+     */
         fun useItemFromMainPrefix(entry: HTMaterialRegistry.Entry, action: (Holder<Item>) -> Unit) {
             entry.type.getMainPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
@@ -141,14 +102,14 @@ interface RagiumPlugin {
         }
 
         /**
-         * [HTMaterialType.getRawPrefix]を元に動的に完成品を取得します。
-         * @param entry 素材のエントリ
-         * @param action 完成品を扱うブロック
-         */
+     * [HTMaterialType.getRawPrefix]を元に動的に完成品を取得します。
+     * @param entry 素材のエントリ
+     * @param action 完成品を扱うブロック
+     */
         fun useItemFromRawPrefix(entry: HTMaterialRegistry.Entry, action: (Holder<Item>) -> Unit) {
             entry.type.getRawPrefix()?.let { prefix: HTTagPrefix ->
                 useItemIfPresent(entry, prefix, action)
             }
         }
-    }
+    }*/
 }

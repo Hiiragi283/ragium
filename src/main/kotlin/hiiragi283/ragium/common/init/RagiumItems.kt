@@ -2,15 +2,13 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.extension.fluidHolder
 import hiiragi283.ragium.api.extension.itemProperty
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -18,7 +16,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
-import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredItem
@@ -27,6 +24,21 @@ import net.neoforged.neoforge.registries.DeferredRegister
 object RagiumItems {
     @JvmField
     val REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
+
+    init {
+        Radioactives.entries.forEach { radioactive: Radioactives ->
+            REGISTER.registerSimpleItem(
+                radioactive.id.path,
+                when (radioactive) {
+                    Radioactives.URANIUM_FUEL -> itemProperty().durability(1024)
+                    Radioactives.PLUTONIUM_FUEL -> itemProperty().durability(1024)
+                    Radioactives.YELLOW_CAKE -> itemProperty()
+                    Radioactives.YELLOW_CAKE_PIECE -> itemProperty().food(RagiumFoods.YELLOW_CAKE_PIECE)
+                    Radioactives.NUCLEAR_WASTE -> itemProperty()
+                },
+            )
+        }
+    }
 
     //    Materials    //
 
@@ -57,7 +69,7 @@ object RagiumItems {
         EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_dust")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_dust")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
@@ -78,7 +90,7 @@ object RagiumItems {
         EMERALD(RagiumMaterialKeys.EMERALD),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_gear")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_gear")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEAR
     }
 
@@ -90,7 +102,7 @@ object RagiumItems {
         FLUORITE(RagiumMaterialKeys.FLUORITE),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder(name.lowercase())
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEM
     }
 
@@ -114,7 +126,7 @@ object RagiumItems {
         DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_ingot")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_ingot")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
@@ -136,7 +148,7 @@ object RagiumItems {
         BAUXITE(RagiumMaterialKeys.BAUXITE),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("raw_${name.lowercase()}")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("raw_${name.lowercase()}")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
@@ -252,7 +264,7 @@ object RagiumItems {
         ELITE(HTMachineTier.ELITE),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_circuit")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_circuit")
     }
 
     enum class PressMolds : HTItemContent {
@@ -263,7 +275,7 @@ object RagiumItems {
         WIRE,
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_press_mold")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_press_mold")
     }
 
     enum class Catalysts : HTItemContent {
@@ -274,12 +286,12 @@ object RagiumItems {
         DEHYDRATION,
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_catalyst")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_catalyst")
     }
 
     enum class FluidCubes(val containment: DeferredHolder<Fluid, out Fluid>) : HTItemContent {
-        WATER(DeferredHolder.create(Registries.FLUID, ResourceLocation.withDefaultNamespace("fluid"))),
-        LAVA(DeferredHolder.create(Registries.FLUID, ResourceLocation.withDefaultNamespace("lava"))),
+        WATER(fluidHolder("fluid")),
+        LAVA(fluidHolder("lava")),
         MILK(NeoForgeMod.MILK),
         HONEY(RagiumFluids.HONEY.holder),
         ;
@@ -295,7 +307,7 @@ object RagiumItems {
             }
         }
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_cube")
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_cube")
     }
 
     @JvmField
@@ -422,39 +434,6 @@ object RagiumItems {
         NUCLEAR_WASTE(HTRadioactiveComponent.LOW),
         ;
 
-        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder(name.lowercase())
-    }
-
-    //    Register    //
-
-    @JvmStatic
-    internal fun register(bus: IEventBus) {
-        fun DeferredRegister.Items.registerSimple(content: HTItemContent) {
-            content.registerSimpleItem(this)
-        }
-
-        buildList {
-            addAll(MATERIALS)
-
-            addAll(Circuits.entries)
-            addAll(PressMolds.entries)
-            addAll(Catalysts.entries)
-            addAll(FluidCubes.entries)
-        }.forEach(REGISTER::registerSimple)
-
-        Radioactives.entries.forEach { radioactive: Radioactives ->
-            REGISTER.registerSimpleItem(
-                radioactive.id.path,
-                when (radioactive) {
-                    Radioactives.URANIUM_FUEL -> itemProperty().durability(1024)
-                    Radioactives.PLUTONIUM_FUEL -> itemProperty().durability(1024)
-                    Radioactives.YELLOW_CAKE -> itemProperty()
-                    Radioactives.YELLOW_CAKE_PIECE -> itemProperty().food(RagiumFoods.YELLOW_CAKE_PIECE)
-                    Radioactives.NUCLEAR_WASTE -> itemProperty()
-                },
-            )
-        }
-
-        REGISTER.register(bus)
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
     }
 }

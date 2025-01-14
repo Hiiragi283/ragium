@@ -44,7 +44,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
 
     /**
      * 指定した[HTTagPrefix]をインゴットや宝石といったメインの[HTTagPrefix]に変換します。
-     * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useItemFromMainPrefix]
      * @return 対応する値がなければnull
      */
     fun getMainPrefix(): HTTagPrefix? = when (this) {
@@ -57,7 +56,6 @@ enum class HTMaterialType(val validPrefixes: List<HTTagPrefix>) {
 
     /**
      * 指定した[HTTagPrefix]を原石や宝石といった鉱石ドロップの[HTTagPrefix]に変換します。
-     * @see [hiiragi283.ragium.api.RagiumPlugin.RecipeHelper.useItemFromRawPrefix]
      * @return 対応する値がなければnull
      */
     fun getRawPrefix(): HTTagPrefix? = when (this) {

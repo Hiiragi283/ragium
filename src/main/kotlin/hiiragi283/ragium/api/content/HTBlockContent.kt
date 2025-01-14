@@ -20,6 +20,10 @@ interface HTBlockContent :
     val blockId: ResourceLocation
         get() = id.withPrefix("block/")
 
+    override val holder: DeferredBlock<out Block>
+
+    val itemHolder: DeferredItem<out Item>
+
     override fun asItem(): Item = get().asItem()
 
     fun registerBlock(

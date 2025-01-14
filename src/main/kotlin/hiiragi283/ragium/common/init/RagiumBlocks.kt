@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
@@ -10,16 +9,20 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
-import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object RagiumBlocks {
+    @JvmField
+    val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
+
     //    Components    //
 
     enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {
@@ -35,7 +38,9 @@ object RagiumBlocks {
         RAGIUM(RagiumMaterialKeys.RAGIUM),
         ;
 
-        override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_block")
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerSimpleBlock("${name.lowercase()}_block", blockProperty(Blocks.IRON_BLOCK))
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
@@ -46,7 +51,9 @@ object RagiumBlocks {
         ELITE(HTMachineTier.ELITE),
         ;
 
-        override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_grate")
+        override val holder: DeferredBlock<TransparentBlock> =
+            REGISTER.registerBlock("${name.lowercase()}_grate", ::TransparentBlock, blockProperty(Blocks.COPPER_GRATE))
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class Casings(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -56,7 +63,9 @@ object RagiumBlocks {
         ELITE(HTMachineTier.ELITE),
         ;
 
-        override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_casing")
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerSimpleBlock("${name.lowercase()}_casing", blockProperty(Blocks.SMOOTH_STONE))
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class Hulls(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -67,7 +76,9 @@ object RagiumBlocks {
         ELITE(HTMachineTier.ELITE),
         ;
 
-        override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_hull")
+        override val holder: DeferredBlock<TransparentBlock> =
+            REGISTER.registerBlock("${name.lowercase()}_hull", ::TransparentBlock, blockProperty(Blocks.SMOOTH_STONE))
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -77,7 +88,9 @@ object RagiumBlocks {
         ELITE(HTMachineTier.ELITE),
         ;
 
-        override val holder: DeferredHolder<Block, Block> = HTContent.blockHolder("${name.lowercase()}_coil")
+        override val holder: DeferredBlock<RotatedPillarBlock> =
+            REGISTER.registerBlock("${name.lowercase()}_coil", ::RotatedPillarBlock, blockProperty(Blocks.COPPER_BLOCK))
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     //    Storage    //
@@ -91,14 +104,19 @@ object RagiumBlocks {
         ELITE(HTMachineTier.ELITE),
         ;
 
-        override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_drum")
+        override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
+            "${name.lowercase()}_drum",
+            { prop: BlockBehaviour.Properties -> HTDrumBlock(machineTier, prop) },
+            blockProperty(Blocks.SMOOTH_STONE),
+        )
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     //    Buildings    //
 
     enum class Decorations(
         val parent: HTBlockContent,
-        val factory: (BlockBehaviour.Properties) -> Block = ::Block,
+        factory: (BlockBehaviour.Properties) -> Block = ::Block,
         val cutout: Boolean = false,
         val isPillar: Boolean = false,
     ) : HTBlockContent {
@@ -126,7 +144,12 @@ object RagiumBlocks {
         ELITE_COIL(Coils.ELITE, ::RotatedPillarBlock, isPillar = true),
         ;
 
-        override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_decoration")
+        override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
+            "${name.lowercase()}_decoration",
+            factory,
+            blockProperty(Blocks.SMOOTH_STONE),
+        )
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class LEDBlocks(val colors: List<DyeColor>) : HTBlockContent {
@@ -141,73 +164,8 @@ object RagiumBlocks {
 
         constructor(vararg colors: DyeColor) : this(colors.toList())
 
-        override val holder: DeferredHolder<Block, out Block> = HTContent.blockHolder("${name.lowercase()}_led_block")
-    }
-
-    //    Register    //
-
-    @JvmField
-    val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
-
-    @JvmStatic
-    private val ITEM_REGISTER: DeferredRegister.Items
-        get() = RagiumItems.REGISTER
-
-    @JvmStatic
-    internal fun register(bus: IEventBus) {
-        // storage block
-        StorageBlocks.entries.forEach { storage: StorageBlocks ->
-            storage.registerBlock(REGISTER, blockProperty(Blocks.IRON_BLOCK))
-            storage.registerBlockItem(ITEM_REGISTER)
-        }
-        // grate
-        Grates.entries.forEach { grate: Grates ->
-            grate.registerBlock(REGISTER, blockProperty(Blocks.COPPER_GRATE), ::TransparentBlock)
-            grate.registerBlockItem(ITEM_REGISTER)
-        }
-        // casing
-        Casings.entries.forEach { casings: Casings ->
-            casings.registerBlock(REGISTER, blockProperty(Blocks.SMOOTH_STONE))
-            casings.registerBlockItem(ITEM_REGISTER)
-        }
-        // hull
-        Hulls.entries.forEach { hull: Hulls ->
-            hull.registerBlock(REGISTER, blockProperty(Blocks.SMOOTH_STONE), ::TransparentBlock)
-            hull.registerBlockItem(ITEM_REGISTER)
-        }
-        // coil
-        Coils.entries.forEach { coil: Coils ->
-            coil.registerBlock(REGISTER, blockProperty(Blocks.COPPER_BLOCK), ::RotatedPillarBlock)
-            coil.registerBlockItem(ITEM_REGISTER)
-        }
-
-        // drum
-        Drums.entries.forEach { drum: Drums ->
-            drum.registerBlock(
-                REGISTER,
-                blockProperty(Blocks.SMOOTH_STONE),
-            ) { prop: BlockBehaviour.Properties -> HTDrumBlock(drum.machineTier, prop) }
-            drum.registerBlockItem(ITEM_REGISTER)
-        }
-
-        // decoration
-        Decorations.entries.forEach { decoration: Decorations ->
-            decoration.registerBlock(
-                REGISTER,
-                blockProperty(Blocks.SMOOTH_STONE),
-                decoration.factory,
-            )
-            decoration.registerBlockItem(ITEM_REGISTER)
-        }
-        // led
-        LEDBlocks.entries.forEach { ledBlock: LEDBlocks ->
-            ledBlock.registerBlock(
-                REGISTER,
-                blockProperty().lightLevel { 15 },
-            )
-            ledBlock.registerBlockItem(ITEM_REGISTER)
-        }
-
-        REGISTER.register(bus)
+        override val holder: DeferredBlock<Block> =
+            REGISTER.registerSimpleBlock("${name.lowercase()}_led_block", blockProperty().lightLevel { 15 })
+        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 }

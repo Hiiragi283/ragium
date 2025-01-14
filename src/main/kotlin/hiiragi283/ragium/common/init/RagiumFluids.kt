@@ -1,14 +1,11 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.fluid.HTVirtualFluid
-import net.minecraft.Util
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -125,26 +122,15 @@ enum class RagiumFluids(
         @JvmField
         val TYPE_REGISTER: DeferredRegister<FluidType> =
             DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, RagiumAPI.MOD_ID)
-
-        @JvmStatic
-        internal fun register(eventBus: IEventBus) {
-            RagiumFluids.entries.forEach { content: RagiumFluids ->
-                content.register(REGISTER) { HTVirtualFluid(content.typeHolder::get) }
-            }
-            TYPE_REGISTER.register(eventBus)
-            REGISTER.register(eventBus)
-        }
     }
 
-    override val holder: DeferredHolder<Fluid, Fluid> = HTContent.fluidHolder(name.lowercase())
+    override val holder: DeferredHolder<Fluid, HTVirtualFluid> by lazy {
+        REGISTER.register(name.lowercase()) { _: ResourceLocation? -> HTVirtualFluid(typeHolder::get) }
+    }
 
     override val typeHolder: DeferredHolder<FluidType, out FluidType> by lazy {
-        TYPE_REGISTER.register(name.lowercase()) { _: ResourceLocation ->
-            FluidType(FluidType.Properties.create())
-        }
+        TYPE_REGISTER.register(name.lowercase()) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
     }
-
-    val translationKey: String = Util.makeDescriptionId("fluid", id)
 
     //    TextureType    //
 
@@ -153,10 +139,8 @@ enum class RagiumFluids(
         val floatingTex: ResourceLocation = stillTex,
         val overTex: ResourceLocation? = null,
     ) {
-        BASALT(ResourceLocation.withDefaultNamespace("block/smooth_basalt")),
         EXPLOSIVE,
         GASEOUS(ResourceLocation.withDefaultNamespace("block/white_concrete")),
-        GLASS(ResourceLocation.withDefaultNamespace("block/glass")),
         HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
         LIQUID,
         RADIOACTIVE,

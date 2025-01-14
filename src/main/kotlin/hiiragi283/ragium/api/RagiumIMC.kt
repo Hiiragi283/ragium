@@ -14,7 +14,7 @@ object RagiumIMC {
     const val BIND_ITEM = "bind_item"
 
     @JvmStatic
-    fun sendMaterialIMC(key: HTMaterialKey, type: HTMaterialType) {
+    fun sendNewMaterialIMC(key: HTMaterialKey, type: HTMaterialType) {
         InterModComms.sendTo(RagiumAPI.MOD_ID, REGISTER_MATERIAL) { NewMaterial(key, type) }
     }
 
@@ -30,6 +30,11 @@ object RagiumIMC {
 
     @JvmStatic
     fun sendMaterialItemIMC(prefix: HTTagPrefix, key: HTMaterialKey, items: Iterable<ItemLike>) {
+        items.forEach { sendMaterialItemIMC(prefix, key, it) }
+    }
+
+    @JvmStatic
+    fun sendMaterialItemIMC(prefix: HTTagPrefix, key: HTMaterialKey, vararg items: ItemLike) {
         items.forEach { sendMaterialItemIMC(prefix, key, it) }
     }
 

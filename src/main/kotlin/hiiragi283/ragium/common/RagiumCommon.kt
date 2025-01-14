@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.internal.DefaultMachinePlugin
 import hiiragi283.ragium.common.internal.DefaultMaterialPlugin
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import hiiragi283.ragium.integration.mek.RagiumMekPlugin
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
@@ -37,7 +36,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
                 listOf(
                     DefaultMachinePlugin,
                     DefaultMaterialPlugin,
-                    RagiumMekPlugin,
                 )
             }
         }
@@ -51,9 +49,10 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         InternalRagiumAPI.collectPlugins()
         InternalRagiumAPI.registerMachines()
 
-        RagiumFluids.register(eventBus)
-        RagiumBlocks.register(eventBus)
-        RagiumItems.register(eventBus)
+        RagiumFluids.TYPE_REGISTER.register(eventBus)
+        RagiumFluids.REGISTER.register(eventBus)
+        RagiumBlocks.REGISTER.register(eventBus)
+        RagiumItems.REGISTER.register(eventBus)
 
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
@@ -71,70 +70,70 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
     private fun sendMessage(event: InterModEnqueueEvent) {
         // Alloy
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.RAGI_STEEL, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.STEEL, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.RAGI_ALLOY, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.RAGI_STEEL, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.REFINED_RAGI_STEEL, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.STEEL, HTMaterialType.ALLOY)
 
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.BRASS, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.BRONZE, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.ELECTRUM, HTMaterialType.ALLOY)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.INVAR, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.BRASS, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.BRONZE, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ELECTRUM, HTMaterialType.ALLOY)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.INVAR, HTMaterialType.ALLOY)
         // Dust
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
         // Gem
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.AMETHYST, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.CINNABAR, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.COAL, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.CRYOLITE, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.DIAMOND, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.EMERALD, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.FLUORITE, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.LAPIS, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.AMETHYST, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.CINNABAR, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.COAL, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.CRYOLITE, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.DIAMOND, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.EMERALD, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.FLUORITE, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.LAPIS, HTMaterialType.GEM)
 
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.NETHERITE_SCRAP, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.RUBY, HTMaterialType.GEM)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.SAPPHIRE, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.NETHERITE_SCRAP, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.PERIDOT, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.QUARTZ, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.RAGI_CRYSTAL, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.RUBY, HTMaterialType.GEM)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.SAPPHIRE, HTMaterialType.GEM)
         // Metal
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.ALUMINUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.GOLD, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ALUMINUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.COPPER, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.GOLD, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.IRON, HTMaterialType.METAL)
 
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.RAGIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.ECHORIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.FIERIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.DRAGONIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.RAGIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ECHORIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.FIERIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.DRAGONIUM, HTMaterialType.METAL)
 
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.NICKEL, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.PLATINUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.PLUTONIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.SILVER, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.TITANIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.IRIDIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.LEAD, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.NICKEL, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.PLATINUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.PLUTONIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.SILVER, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.TIN, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.TITANIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.TUNGSTEN, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.URANIUM, HTMaterialType.METAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ZINC, HTMaterialType.METAL)
         // Mineral
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.BAUXITE, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.CRUDE_RAGINITE, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.NITER, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.RAGINITE, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.REDSTONE, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.SALT, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.SULFUR, HTMaterialType.MINERAL)
 
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.GALENA, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL)
-        RagiumIMC.sendMaterialIMC(RagiumMaterialKeys.SPHALERITE, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.GALENA, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.SPHALERITE, HTMaterialType.MINERAL)
 
         fun <T> bindContents(contents: List<T>) where T : ItemLike, T : HTMaterialProvider {
             contents.forEach { RagiumIMC.sendMaterialItemIMC(it.tagPrefix, it.material, it) }

@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.extension.blockHolder
+import hiiragi283.ragium.api.extension.itemHolder
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -12,17 +14,16 @@ import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredItem
 
 enum class HTMachineTier(
     private val idPattern: String,
@@ -74,10 +75,8 @@ enum class HTMachineTier(
 
     fun getGrate(): HTBlockContent.Tier = when (this) {
         PRIMITIVE -> object : HTBlockContent.Tier {
-            override val holder: DeferredHolder<Block, out Block> = DeferredHolder.create(
-                Registries.BLOCK,
-                ResourceLocation.withDefaultNamespace("iron_bars"),
-            )
+            override val holder: DeferredBlock<out Block> = blockHolder("iron_bars")
+            override val itemHolder: DeferredItem<out Item> = itemHolder("iron_bars")
             override val machineTier: HTMachineTier = PRIMITIVE
         }
 
@@ -89,10 +88,8 @@ enum class HTMachineTier(
 
     fun getCasing(): HTBlockContent.Tier = when (this) {
         PRIMITIVE -> object : HTBlockContent.Tier {
-            override val holder: DeferredHolder<Block, out Block> = DeferredHolder.create(
-                Registries.BLOCK,
-                ResourceLocation.withDefaultNamespace("bricks"),
-            )
+            override val holder: DeferredBlock<out Block> = blockHolder("bricks")
+            override val itemHolder: DeferredItem<out Item> = itemHolder("bricks")
             override val machineTier: HTMachineTier = PRIMITIVE
         }
 
@@ -114,8 +111,7 @@ enum class HTMachineTier(
 
     fun getCircuit(): HTItemContent.Tier = when (this) {
         PRIMITIVE -> object : HTItemContent.Tier {
-            override val holder: DeferredHolder<Item, out Item> =
-                DeferredHolder.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("redstone"))
+            override val holder: DeferredItem<out Item> = itemHolder("redstone")
             override val machineTier: HTMachineTier = PRIMITIVE
         }
 
