@@ -7,8 +7,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -28,6 +26,8 @@ object RagiumCreativeTabs {
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
 
                     RagiumItems.MATERIALS.forEach(output::accept)
+
+                    RagiumItems.Circuits.entries.forEach(output::accept)
                 }.build()
         }
 
@@ -37,7 +37,7 @@ object RagiumCreativeTabs {
             CreativeModeTab
                 .builder()
                 .title(Component.literal("Ragium - Machine"))
-                .icon { ItemStack(Blocks.IRON_BLOCK) }
+                .icon { ItemStack(RagiumBlocks.Hulls.ELITE) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
                         addAll(RagiumBlocks.Grates.entries)
@@ -63,7 +63,7 @@ object RagiumCreativeTabs {
             CreativeModeTab
                 .builder()
                 .title(Component.literal("Ragium - Storage"))
-                .icon { ItemStack(Items.BUCKET) }
+                .icon { ItemStack(RagiumBlocks.Drums.ELITE) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
 
                     RagiumBlocks.Drums.entries.forEach(output::accept)

@@ -1,18 +1,13 @@
 package hiiragi283.ragium.api.extension
 
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
-import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
-import net.minecraft.core.HolderSet
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.material.Fluid
 import java.text.NumberFormat
 
 //    Text    //
@@ -59,15 +54,3 @@ fun globalPosText(value: GlobalPos): MutableComponent = Component
     ).append("]")
 
 fun worldText(value: ResourceKey<Level>): MutableComponent = Component.translatable(Util.makeDescriptionId("world", value.location()))
-
-fun fluidFilterText(entryList: HolderSet<Fluid>): MutableComponent = Component
-    .translatable(
-        RagiumTranslationKeys.EXPORTER_FLUID_FILTER,
-        entryList.asText(Fluid::name).withStyle(ChatFormatting.DARK_AQUA),
-    ).withStyle(ChatFormatting.GRAY)
-
-fun itemFilterText(entryList: HolderSet<Item>): MutableComponent = Component
-    .translatable(
-        RagiumTranslationKeys.EXPORTER_ITEM_FILTER,
-        entryList.asText(Item::getDescription).withStyle(ChatFormatting.GOLD),
-    ).withStyle(ChatFormatting.GRAY)

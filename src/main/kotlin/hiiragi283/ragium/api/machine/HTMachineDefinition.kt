@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.ItemStack
 
 data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
     companion object {
@@ -27,4 +28,6 @@ data class HTMachineDefinition(val key: HTMachineKey, val tier: HTMachineTier) {
                 ::HTMachineDefinition,
             )
     }
+
+    fun getIconStack(): ItemStack? = key.createItemStackOrNull(tier)
 }

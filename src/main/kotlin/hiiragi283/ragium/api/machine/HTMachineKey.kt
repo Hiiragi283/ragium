@@ -30,11 +30,7 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
 
         @JvmField
         val CODEC: Codec<HTMachineKey> =
-            Codec.STRING.xmap(Companion::of, HTMachineKey::name).validate { key: HTMachineKey ->
-                key
-                    .takeIf { it in RagiumAPI.getInstance().machineRegistry }
-                    .toDataResult { "Unknown machine key: $key" }
-            }
+            Codec.STRING.xmap(Companion::of, HTMachineKey::name).validate(::validate)
 
         @JvmField
         val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
@@ -45,6 +41,11 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
          */
         @JvmStatic
         fun of(name: String): HTMachineKey = instances.computeIfAbsent(name, ::HTMachineKey)
+
+        @JvmStatic
+        fun validate(key: HTMachineKey): DataResult<HTMachineKey> = key
+            .takeIf { it in RagiumAPI.getInstance().machineRegistry }
+            .toDataResult { "Unknown machine key: $key" }
     }
 
     val translationKey: String = "machine_type.$name"

@@ -3,22 +3,22 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:stone"
+      "tag": "c:ingots/refined_ragi_steel"
     },
     "B": {
-      "item": "ragium:simple_grate"
+      "item": "ragium:advanced_circuit"
     },
     "C": {
-      "tag": "c:gears/iron"
+      "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
+    "AAA",
     "ABA",
-    "BCB",
-    "ABA"
+    "CCC"
   ],
   "result": {
     "count": 3,
-    "id": "ragium:simple_casing"
+    "id": "ragium:advanced_hull"
   }
 }

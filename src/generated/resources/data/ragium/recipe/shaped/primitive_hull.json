@@ -1,24 +1,24 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "building",
   "key": {
     "A": {
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "c:ingots/ragium"
+      "item": "minecraft:redstone"
     },
     "C": {
-      "item": "minecraft:bucket"
+      "item": "minecraft:bricks"
     }
   },
   "pattern": [
+    "AAA",
     "ABA",
-    "ACA",
-    "ABA"
+    "CCC"
   ],
   "result": {
-    "count": 1,
-    "id": "ragium:elite_drum"
+    "count": 3,
+    "id": "ragium:primitive_hull"
   }
 }

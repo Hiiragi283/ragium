@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingot": {
+    "has_casing": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/dragonium"
+            "items": "ragium:simple_casing"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/elite_grate"
+        "recipe": "ragium:shaped/simple_hull"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_ingot"
+      "has_casing"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/elite_grate"
+      "ragium:shaped/simple_hull"
     ]
   }
 }

@@ -1,5 +1,12 @@
 {
+  "content.ragium.casing": "外装",
+  "content.ragium.circuit": "回路",
+  "content.ragium.coil": "コイル",
+  "content.ragium.crate": "クレート",
   "content.ragium.drum": "ドラム",
+  "content.ragium.grate": "格子",
+  "content.ragium.hull": "筐体",
+  "content.ragium.plastic": "プラスチック",
   "machine_tier.ragium.advanced": "発展",
   "machine_tier.ragium.advanced.prefix": "発展%s",
   "machine_tier.ragium.basic": "基本",

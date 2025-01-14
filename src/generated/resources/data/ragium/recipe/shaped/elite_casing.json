@@ -9,7 +9,7 @@
       "item": "ragium:elite_grate"
     },
     "C": {
-      "tag": "c:gears/tungsten"
+      "tag": "c:gears/dragonium"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "ABA"
   ],
   "result": {
-    "count": 1,
+    "count": 3,
     "id": "ragium:elite_casing"
   }
 }

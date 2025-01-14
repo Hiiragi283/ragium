@@ -1,15 +1,12 @@
 package hiiragi283.ragium.api.extension
 
 import com.google.common.collect.HashBasedTable
+import com.google.common.collect.HashMultimap
 import com.google.common.collect.ImmutableMultimap
 import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.api.util.collection.HTTable
 import hiiragi283.ragium.api.util.collection.HTWrappedMultiMap
 import hiiragi283.ragium.api.util.collection.HTWrappedTable
-import kotlin.apply
-import kotlin.collections.associate
-import kotlin.collections.forEach
-import kotlin.to
 
 //    MultiMap    //
 
@@ -18,7 +15,9 @@ fun <K : Any, V : Any> multiMapOf(vararg pairs: Pair<K, V>): HTMultiMap<K, V> = 
 )
 
 fun <K : Any, V : Any> mutableMultiMapOf(vararg pairs: Pair<K, V>): HTMultiMap.Mutable<K, V> = HTWrappedMultiMap.Mutable(
-    ImmutableMultimap.builder<K, V>().apply { pairs.forEach { (key: K, value: V) -> put(key, value) } }.build(),
+    HashMultimap.create<K, V>().apply {
+        pairs.forEach { (key: K, value: V) -> put(key, value) }
+    },
 )
 
 fun <K : Any, V : Any> buildMultiMap(builderAction: HTMultiMap.Mutable<K, V>.() -> Unit): HTMultiMap<K, V> =

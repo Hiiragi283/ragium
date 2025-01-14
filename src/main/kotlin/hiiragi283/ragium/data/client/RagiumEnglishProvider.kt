@@ -13,7 +13,14 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
     override fun addTranslations() {
         // Content
+        add(RagiumTranslationKeys.CASING, "Casing")
+        add(RagiumTranslationKeys.CIRCUIT, "Circuit")
+        add(RagiumTranslationKeys.COIL, "Coil")
+        add(RagiumTranslationKeys.CRATE, "Crate")
         add(RagiumTranslationKeys.DRUM, "Drum")
+        add(RagiumTranslationKeys.GRATE, "Grate")
+        add(RagiumTranslationKeys.HULL, "hull")
+        add(RagiumTranslationKeys.PLASTIC, "Plastic")
         // Machine
         add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
         add(HTMachineTier.SIMPLE, "Simple", "Simple %s")

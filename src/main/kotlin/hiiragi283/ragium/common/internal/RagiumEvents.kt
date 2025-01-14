@@ -151,7 +151,7 @@ internal object RagiumEvents {
             { builder: DataComponentPatch.Builder, provider: HTMachineTierProvider ->
                 builder.tieredText(translationKey, provider.machineTier)
             }
-
+        // Block
         modifyAll(RagiumBlocks.StorageBlocks.entries, DataComponentPatch.Builder::material)
         modifyAll(RagiumBlocks.Grates.entries, tieredText(RagiumTranslationKeys.GRATE))
         modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
@@ -159,8 +159,10 @@ internal object RagiumEvents {
         modifyAll(RagiumBlocks.Coils.entries, tieredText(RagiumTranslationKeys.COIL))
 
         modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
-
+        // Item
         modifyAll(RagiumItems.MATERIALS, DataComponentPatch.Builder::material)
+
+        modifyAll(RagiumItems.Circuits.entries, tieredText(RagiumTranslationKeys.CIRCUIT))
 
         LOGGER.info("Modified item components!")
     }

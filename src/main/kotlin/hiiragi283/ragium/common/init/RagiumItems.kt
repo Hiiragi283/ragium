@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.world.item.Item
@@ -132,6 +133,18 @@ object RagiumItems {
         addAll(RawMaterials.entries)
     }
 
+    //    Parts    //
+
+    enum class Circuits(override val machineTier: HTMachineTier) : HTItemContent.Tier {
+        SIMPLE(HTMachineTier.SIMPLE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
+        ;
+
+        override val holder: DeferredHolder<Item, out Item> = HTContent.itemHolder("${name.lowercase()}_circuit")
+    }
+
     //    Register    //
 
     @JvmField
@@ -145,6 +158,8 @@ object RagiumItems {
 
         // materials
         MATERIALS.forEach(REGISTER::registerSimple)
+        // parts
+        Circuits.entries.forEach(REGISTER::registerSimple)
 
         REGISTER.register(bus)
     }

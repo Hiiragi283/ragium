@@ -3,11 +3,12 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.stringCodec
 import hiiragi283.ragium.api.extension.stringStreamCodec
-import hiiragi283.ragium.api.fluid.HTFluidConstants
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
@@ -17,8 +18,10 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.DeferredHolder
 
 enum class HTMachineTier(
@@ -28,11 +31,11 @@ enum class HTMachineTier(
     val processCost: Int,
     val tankCapacity: Int,
 ) : StringRepresentable {
-    PRIMITIVE("primitive_%S", ChatFormatting.DARK_GRAY, 400, 200, HTFluidConstants.BUCKET * 4),
-    SIMPLE("simple_%S", ChatFormatting.YELLOW, 200, 100, HTFluidConstants.BUCKET * 8),
-    BASIC("basic_%S", ChatFormatting.GREEN, 150, 200, HTFluidConstants.BUCKET * 16),
-    ADVANCED("advanced_%S", ChatFormatting.RED, 100, 400, HTFluidConstants.BUCKET * 64),
-    ELITE("elite_%S", ChatFormatting.AQUA, 50, 800, HTFluidConstants.BUCKET * 256),
+    PRIMITIVE("primitive_%S", ChatFormatting.DARK_GRAY, 400, 200, FluidType.BUCKET_VOLUME * 4),
+    SIMPLE("simple_%S", ChatFormatting.YELLOW, 200, 100, FluidType.BUCKET_VOLUME * 8),
+    BASIC("basic_%S", ChatFormatting.GREEN, 150, 200, FluidType.BUCKET_VOLUME * 16),
+    ADVANCED("advanced_%S", ChatFormatting.RED, 100, 400, FluidType.BUCKET_VOLUME * 64),
+    ELITE("elite_%S", ChatFormatting.AQUA, 50, 800, FluidType.BUCKET_VOLUME * 256),
     ;
 
     companion object {
@@ -109,6 +112,21 @@ enum class HTMachineTier(
 
     //    Item    //
 
+    fun getCircuit(): HTItemContent.Tier = when (this) {
+        PRIMITIVE -> object : HTItemContent.Tier {
+            override val holder: DeferredHolder<Item, out Item> =
+                DeferredHolder.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("redstone"))
+            override val machineTier: HTMachineTier = PRIMITIVE
+        }
+
+        SIMPLE -> RagiumItems.Circuits.SIMPLE
+        BASIC -> RagiumItems.Circuits.BASIC
+        ADVANCED -> RagiumItems.Circuits.ADVANCED
+        ELITE -> RagiumItems.Circuits.ELITE
+    }
+
+    //    Material    //
+
     fun getMainMetal(): HTMaterialKey = when (this) {
         PRIMITIVE -> RagiumMaterialKeys.RAGI_ALLOY
         SIMPLE -> RagiumMaterialKeys.RAGI_ALLOY
@@ -122,7 +140,7 @@ enum class HTMachineTier(
         SIMPLE -> RagiumMaterialKeys.COPPER
         BASIC -> RagiumMaterialKeys.GOLD
         ADVANCED -> RagiumMaterialKeys.ALUMINUM
-        ELITE -> RagiumMaterialKeys.NETHERITE
+        ELITE -> RagiumMaterialKeys.RAGI_ALLOY
     }
 
     fun getSteelMetal(): HTMaterialKey = when (this) {
@@ -130,7 +148,7 @@ enum class HTMachineTier(
         SIMPLE -> RagiumMaterialKeys.IRON
         BASIC -> RagiumMaterialKeys.STEEL
         ADVANCED -> RagiumMaterialKeys.DEEP_STEEL
-        ELITE -> RagiumMaterialKeys.NETHERITE
+        ELITE -> RagiumMaterialKeys.DRAGONIUM
     }
 
     //    StringRepresentable    //

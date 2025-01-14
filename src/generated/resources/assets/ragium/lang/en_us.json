@@ -1,5 +1,12 @@
 {
+  "content.ragium.casing": "Casing",
+  "content.ragium.circuit": "Circuit",
+  "content.ragium.coil": "Coil",
+  "content.ragium.crate": "Crate",
   "content.ragium.drum": "Drum",
+  "content.ragium.grate": "Grate",
+  "content.ragium.hull": "hull",
+  "content.ragium.plastic": "Plastic",
   "machine_tier.ragium.advanced": "Advanced",
   "machine_tier.ragium.advanced.prefix": "Advanced %s",
   "machine_tier.ragium.basic": "Basic",

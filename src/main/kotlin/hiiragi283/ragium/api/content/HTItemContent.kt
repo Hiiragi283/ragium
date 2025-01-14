@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.content
 
+import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -16,4 +17,8 @@ interface HTItemContent :
     interface Material :
         HTItemContent,
         HTMaterialProvider
+
+    interface Tier :
+        HTItemContent,
+        HTMachineTierProvider
 }

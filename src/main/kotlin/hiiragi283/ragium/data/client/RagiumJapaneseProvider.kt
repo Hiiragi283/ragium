@@ -13,7 +13,14 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
     override fun addTranslations() {
         // Content
+        add(RagiumTranslationKeys.CASING, "外装")
+        add(RagiumTranslationKeys.CIRCUIT, "回路")
+        add(RagiumTranslationKeys.COIL, "コイル")
+        add(RagiumTranslationKeys.CRATE, "クレート")
         add(RagiumTranslationKeys.DRUM, "ドラム")
+        add(RagiumTranslationKeys.GRATE, "格子")
+        add(RagiumTranslationKeys.HULL, "筐体")
+        add(RagiumTranslationKeys.PLASTIC, "プラスチック")
         // Machine
         add(HTMachineTier.PRIMITIVE, "原始", "原始%s")
         add(HTMachineTier.SIMPLE, "簡易", "簡易%s")

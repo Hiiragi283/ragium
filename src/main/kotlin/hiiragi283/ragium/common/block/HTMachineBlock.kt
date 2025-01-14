@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -35,6 +36,8 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
                 .setValue(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE),
         )
     }
+
+    override fun getName(): MutableComponent = machineKey.text
 
     override fun appendHoverText(
         stack: ItemStack,

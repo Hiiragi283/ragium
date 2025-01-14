@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -92,6 +93,14 @@ class HTMachineRecipe(
     override fun assemble(input: HTMachineInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = itemOutputs.getOrNull(0) ?: ItemStack.EMPTY
+
+    override fun getIngredients(): NonNullList<Ingredient> {
+        val list: NonNullList<Ingredient> = NonNullList.create()
+        itemInputs.map(SizedIngredient::ingredient).forEach(list::add)
+        return list
+    }
+
+    override fun getToastSymbol(): ItemStack = definition.getIconStack() ?: super.getToastSymbol()
 
     override fun getSerializer(): RecipeSerializer<out Recipe<HTMachineInput>> = RagiumRecipes.MACHINE_SERIALIZER.get()
 

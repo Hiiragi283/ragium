@@ -33,6 +33,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     private fun registerItems() {
         buildList {
             addAll(RagiumItems.MATERIALS)
+
+            addAll(RagiumItems.Circuits.entries)
         }.map(HTItemContent::get)
             .forEach(::basicItem)
     }

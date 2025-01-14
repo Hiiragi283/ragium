@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:ingots/tungsten"
+      "tag": "c:ingots/dragonium"
     }
   },
   "pattern": [
@@ -12,7 +12,7 @@
     " A "
   ],
   "result": {
-    "count": 1,
+    "count": 4,
     "id": "ragium:elite_grate"
   }
 }
