@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data
 
-import hiiragi283.ragium.api.content.HTFluidContent
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -8,6 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.common.init.RagiumFluids
 import net.minecraft.advancements.Criterion
 import net.minecraft.core.Holder
 import net.minecraft.data.recipes.RecipeBuilder
@@ -62,7 +62,7 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     // fun fluidInput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(fluid.get(), count)
 
-    fun fluidInput(content: HTFluidContent, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
+    fun fluidInput(content: RagiumFluids, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
         fluidInput(content.commonTag, count)
 
     fun fluidInput(fluid: Fluid, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =

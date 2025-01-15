@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumFluids
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -132,6 +133,22 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .condition(BlockStateProperties.HORIZONTAL_FACING, front)
                     .condition(RagiumBlockProperties.ACTIVE, true)
             }
+        }
+
+        // Fluid Block
+        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+            getVariantBuilder(fluid.blockHolder.get())
+                .partialState()
+                .setModels(
+                    ConfiguredModel(
+                        models()
+                            .getBuilder(
+                                fluid.blockHolder.id
+                                    .withPrefix("block/")
+                                    .toString(),
+                            ).texture("particle", fluid.stillTexture),
+                    ),
+                )
         }
     }
 

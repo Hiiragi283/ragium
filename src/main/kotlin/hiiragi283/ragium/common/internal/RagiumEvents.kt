@@ -10,14 +10,11 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
-import hiiragi283.ragium.api.resource.HTRuntimeDatapack
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.server.packs.PackType
-import net.minecraft.server.packs.repository.Pack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -30,12 +27,10 @@ import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.event.AddPackFindersEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import org.slf4j.Logger
-import java.util.function.Consumer
 import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -159,22 +154,11 @@ internal object RagiumEvents {
         LOGGER.info("Modified item components!")
     }
 
-    @SubscribeEvent
-    fun addRuntimePack(event: AddPackFindersEvent) {
+    /*fun addRuntimePack(event: AddPackFindersEvent) {
         if (event.packType != PackType.SERVER_DATA) return
-        /*ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, Items.DIAMOND)
-            .pattern("AAA")
-            .pattern("ABA")
-            .pattern("AAA")
-            .define('A', Items.DIRT)
-            .define('B', ItemTags.STONE_CRAFTING_MATERIALS)
-            .unlockedBy("has_item", CriteriaTriggers.IMPOSSIBLE.createCriterion(ImpossibleTrigger.TriggerInstance()))
-            .save(HTRuntimeDatapack.RUNTIME_OUTPUT, RagiumAPI.id("runtime_test"))*/
-
         event.addRepositorySource { consumer: Consumer<Pack> ->
             consumer.accept(HTRuntimeDatapack.PACK)
             LOGGER.info("Registered runtime datapack!")
         }
-    }
+    }*/
 }

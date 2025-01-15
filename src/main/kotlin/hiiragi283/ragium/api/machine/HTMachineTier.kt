@@ -55,7 +55,7 @@ enum class HTMachineTier(
     }
 
     val translationKey: String = "machine_tier.ragium.$serializedName"
-    val text: MutableComponent = Component.translatable(translationKey)
+    val text: MutableComponent = Component.translatable(translationKey).withStyle(color)
 
     val prefixKey = "$translationKey.prefix"
 

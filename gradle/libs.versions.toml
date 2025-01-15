@@ -15,6 +15,7 @@ ktlint = "12.1.2"
 jade = "15.9.2+neoforge"
 jei = "19.21.0.247"
 mek = "1.21.1-10.7.0.55"
+powah = "6.1.5-neoforge"
 rei = "18.0.796"
 
 [libraries]
@@ -25,13 +26,14 @@ jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
+powah = { group = "maven.modrinth", name = "powah", version.ref = "powah" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-neoforge", version.ref = "rei" }
 
 [bundles]
 
 mods-impl = [
     "mek",
-    "jade",
+    "jade"
 ]
 
 mods-compile = [

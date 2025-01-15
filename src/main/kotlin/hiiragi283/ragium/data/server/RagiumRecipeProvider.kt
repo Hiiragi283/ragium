@@ -31,7 +31,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMachineRecipeProvider.buildRecipes(recipeOutput)
 
         partsRecipes(recipeOutput)
-        
+
         buildingRecipes(recipeOutput)
     }
 
@@ -103,12 +103,13 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
                 .savePrefixed(output)
         }
     }
-    
+
     private fun buildingRecipes(output: RecipeOutput) {
         // LED
-        RagiumBlocks.LEDBlocks.entries.forEach { ledBlock: RagiumBlocks.LEDBlocks -> 
+        RagiumBlocks.LEDBlocks.entries.forEach { ledBlock: RagiumBlocks.LEDBlocks ->
             // Shaped Crafting
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ledBlock, 4)
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.BUILDING_BLOCKS, ledBlock, 4)
                 .pattern(" A ")
                 .pattern("ABA")
                 .pattern(" A ")

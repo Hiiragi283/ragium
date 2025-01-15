@@ -322,7 +322,7 @@ object RagiumItems {
         WATER(fluidHolder("fluid")),
         LAVA(fluidHolder("lava")),
         MILK(NeoForgeMod.MILK),
-        HONEY(RagiumFluids.HONEY.holder),
+        HONEY(RagiumFluids.HONEY.stillHolder),
         ;
 
         companion object {
@@ -331,7 +331,7 @@ object RagiumItems {
                 Fluids.WATER -> WATER
                 Fluids.LAVA -> LAVA
                 NeoForgeMod.MILK.get() -> MILK
-                RagiumFluids.HONEY.get() -> HONEY
+                RagiumFluids.HONEY.stillHolder.get() -> HONEY
                 else -> null
             }
         }

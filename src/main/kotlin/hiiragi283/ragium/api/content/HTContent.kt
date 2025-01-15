@@ -8,7 +8,6 @@ import java.util.function.Supplier
 /**
  * [ResourceKey]と[T]クラスの値を持つインターフェース
  * @see HTBlockContent
- * @see HTFluidContent
  * @see HTItemContent
  */
 interface HTContent<T : Any> : Supplier<T> {

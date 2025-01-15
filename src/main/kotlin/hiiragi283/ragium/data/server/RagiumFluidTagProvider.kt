@@ -1,8 +1,6 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidTagKey
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -19,7 +17,7 @@ class RagiumFluidTagProvider(
 ) : TagsProvider<Fluid>(output, Registries.FLUID, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            getOrCreateRawBuilder(fluidTagKey(commonId(fluid.id.path)))
+            getOrCreateRawBuilder(fluid.commonTag)
                 .addElement(fluid.id)
         }
     }

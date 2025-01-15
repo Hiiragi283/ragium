@@ -49,8 +49,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         InternalRagiumAPI.collectPlugins()
         InternalRagiumAPI.registerMachines()
 
-        RagiumFluids.TYPE_REGISTER.register(eventBus)
-        RagiumFluids.REGISTER.register(eventBus)
+        RagiumFluids.register(eventBus)
         RagiumBlocks.REGISTER.register(eventBus)
         RagiumItems.REGISTER.register(eventBus)
 

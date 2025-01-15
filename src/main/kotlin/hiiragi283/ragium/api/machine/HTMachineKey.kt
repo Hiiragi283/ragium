@@ -54,7 +54,7 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
 
     val descriptionKey = "$translationKey.description"
     val descriptionText: MutableComponent
-        get() = Component.translatable(descriptionKey)
+        get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
     /**
      * [HTMachineRegistry.Entry]を返します。
@@ -81,14 +81,14 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
             Component
                 .translatable(
                     RagiumTranslationKeys.MACHINE_TIER,
-                    text.withStyle(tier.color),
+                    tier.text,
                 ).withStyle(ChatFormatting.GRAY),
         )
         consumer.accept(
             Component
                 .translatable(
-                    RagiumTranslationKeys.MACHINE_RECIPE_COST,
-                    intText(200).withStyle(ChatFormatting.YELLOW),
+                    RagiumTranslationKeys.MACHINE_COST,
+                    intText(tier.processCost).withStyle(ChatFormatting.YELLOW),
                 ).withStyle(ChatFormatting.GRAY),
         )
         // entry[HTMachinePropertyKeys.TOOLTIP_BUILDER]?.appendTooltip(consumer.accept, this, tier)

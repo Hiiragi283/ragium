@@ -1,25 +1,38 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTFluidContent
-import hiiragi283.ragium.api.fluid.HTVirtualFluid
+import hiiragi283.ragium.api.extension.commonId
+import hiiragi283.ragium.api.extension.fluidHolder
+import hiiragi283.ragium.api.extension.fluidTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.LiquidBlock
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.PushReaction
+import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
+import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import java.awt.Color
+import java.util.function.Supplier
 
 enum class RagiumFluids(
     val color: Color,
     val enName: String,
     val jaName: String,
     val type: TextureType = TextureType.LIQUID,
-) : HTFluidContent,
-    IClientFluidTypeExtensions {
+) : Supplier<FlowingFluid>,
+    IClientFluidTypeExtensions,
+    StringRepresentable {
     // Vanilla
     // MILK(Color(0xffffff), "Milk", "牛乳"),
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
@@ -123,21 +136,54 @@ enum class RagiumFluids(
         val TYPE_REGISTER: DeferredRegister<FluidType> =
             DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, RagiumAPI.MOD_ID)
 
-        init {
-            RagiumFluids.entries.forEach {
-                it.holder
-                it.typeHolder
+        @JvmStatic
+        fun register(eventBus: IEventBus) {
+            RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+                // Fluid Type
+                TYPE_REGISTER.register(fluid.serializedName) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
+                // Fluid
+                REGISTER.register(fluid.serializedName) { _: ResourceLocation ->
+                    BaseFlowingFluid.Source(fluid.property)
+                }
+                REGISTER.register("flowing_" + fluid.serializedName) { _: ResourceLocation ->
+                    BaseFlowingFluid.Flowing(fluid.property)
+                }
+                // Block
+                RagiumBlocks.REGISTER.registerBlock(fluid.serializedName) { prop: BlockBehaviour.Properties ->
+                    LiquidBlock(
+                        fluid.stillHolder.get(),
+                        prop
+                            .noCollission()
+                            .strength(100f)
+                            .noLootTable()
+                            .replaceable()
+                            .pushReaction(PushReaction.DESTROY)
+                            .liquid(),
+                    )
+                }
             }
+
+            TYPE_REGISTER.register(eventBus)
+            REGISTER.register(eventBus)
         }
     }
 
-    override val holder: DeferredHolder<Fluid, HTVirtualFluid> by lazy {
-        REGISTER.register(name.lowercase()) { _: ResourceLocation? -> HTVirtualFluid(typeHolder::get) }
-    }
+    val id: ResourceLocation = RagiumAPI.id(serializedName)
 
-    override val typeHolder: DeferredHolder<FluidType, out FluidType> by lazy {
-        TYPE_REGISTER.register(name.lowercase()) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
-    }
+    val typeHolder: DeferredHolder<FluidType, FluidType> =
+        DeferredHolder.create(NeoForgeRegistries.Keys.FLUID_TYPES, id)
+
+    val stillHolder: DeferredHolder<Fluid, FlowingFluid> = fluidHolder<FlowingFluid>(id)
+    val flowingHolder: DeferredHolder<Fluid, FlowingFluid> = fluidHolder(id.withPrefix("flowing_"))
+
+    val blockHolder: DeferredBlock<out LiquidBlock> = DeferredBlock.createBlock(id)
+
+    val property: BaseFlowingFluid.Properties = BaseFlowingFluid
+        .Properties(typeHolder, stillHolder, flowingHolder)
+        .bucket(Items::AIR)
+        .block(blockHolder)
+
+    val commonTag: TagKey<Fluid> = fluidTagKey(commonId(serializedName))
 
     //    TextureType    //
 
@@ -154,6 +200,8 @@ enum class RagiumFluids(
         STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
     }
 
+    override fun get(): FlowingFluid = stillHolder.get()
+
     //    ClientExtensions    //
 
     override fun getStillTexture(): ResourceLocation = type.stillTex
@@ -163,4 +211,8 @@ enum class RagiumFluids(
     override fun getOverlayTexture(): ResourceLocation? = type.overTex
 
     override fun getTintColor(): Int = color.rgb
+
+    //    StringRepresentable    //
+
+    override fun getSerializedName(): String = name.lowercase()
 }

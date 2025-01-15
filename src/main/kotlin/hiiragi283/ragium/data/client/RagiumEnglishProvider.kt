@@ -3,11 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import hiiragi283.ragium.common.init.RagiumTranslationKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
@@ -16,7 +12,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
     override fun addTranslations() {
         // Block
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
-        
+
         add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
         add(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
         add(RagiumBlocks.LEDBlocks.BLUE, "Blue LED Block")
@@ -24,7 +20,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.LEDBlocks.MAGENTA, "Magenta LED Block")
         add(RagiumBlocks.LEDBlocks.YELLOW, "Yellow LED Block")
         add(RagiumBlocks.LEDBlocks.WHITE, "LED Block")
-        
+
         // Content
         add(RagiumTranslationKeys.CASING, "Casing")
         add(RagiumTranslationKeys.CIRCUIT, "Circuit")
@@ -36,7 +32,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.PLASTIC, "Plastic")
         // Fluids
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            add(fluid.get().fluidType.descriptionId, fluid.enName)
+            add(fluid.typeHolder.get().descriptionId, fluid.enName)
         }
         // Machine
         add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
@@ -44,6 +40,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTMachineTier.BASIC, "Basic", "Basic %s")
         add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
         add(HTMachineTier.ELITE, "Elite", "Elite %s")
+
+        add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
+        add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")
+        add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")
         // Machine Type
         add(
             RagiumMachineKeys.BEDROCK_MINER,

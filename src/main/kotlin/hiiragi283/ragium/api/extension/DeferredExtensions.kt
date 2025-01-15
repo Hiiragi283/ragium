@@ -24,6 +24,6 @@ fun itemHolder(value: String): DeferredItem<out Item> = DeferredItem.createItem(
 fun fluidHolder(fluid: Fluid): DeferredHolder<Fluid, Fluid> =
     fluid.builtInRegistryHolder().key?.let(DeferredHolder<Fluid, Fluid>::create) ?: error("Unknown fluid: $fluid")
 
-fun fluidHolder(id: ResourceLocation): DeferredHolder<Fluid, Fluid> = DeferredHolder.create(Registries.FLUID, id)
+fun <T : Fluid> fluidHolder(id: ResourceLocation): DeferredHolder<Fluid, T> = DeferredHolder.create(Registries.FLUID, id)
 
-fun fluidHolder(value: String): DeferredHolder<Fluid, Fluid> = fluidHolder(ResourceLocation.parse(value))
+fun <T : Fluid> fluidHolder(value: String): DeferredHolder<Fluid, T> = fluidHolder(ResourceLocation.parse(value))

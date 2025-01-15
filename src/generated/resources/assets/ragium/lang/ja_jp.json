@@ -182,5 +182,8 @@
   "tag_prefix.ragium.raw_material": "%sの原石",
   "tag_prefix.ragium.rod": "%s棒",
   "tag_prefix.ragium.storage_block": "%sブロック",
-  "tag_prefix.ragium.wire": "%sワイヤ"
+  "tag_prefix.ragium.wire": "%sワイヤ",
+  "tooltip.ragium.machine.cost": "- 処理コスト: %s FE/回",
+  "tooltip.ragium.machine.name": "- 機械: %s",
+  "tooltip.ragium.machine.tier": "- ティア: %s"
 }

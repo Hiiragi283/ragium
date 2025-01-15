@@ -182,5 +182,8 @@
   "tag_prefix.ragium.raw_material": "Raw %s",
   "tag_prefix.ragium.rod": "%s Rod",
   "tag_prefix.ragium.storage_block": "Block of %s",
-  "tag_prefix.ragium.wire": "%s Wire"
+  "tag_prefix.ragium.wire": "%s Wire",
+  "tooltip.ragium.machine.cost": "- Process Cost: %s FE/times",
+  "tooltip.ragium.machine.name": "- Machine Name: %s",
+  "tooltip.ragium.machine.tier": "- Tier: %s"
 }
