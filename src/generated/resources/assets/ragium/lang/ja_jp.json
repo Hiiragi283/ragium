@@ -1,4 +1,12 @@
 {
+  "block.ragium.blue_led_block": "LEDブロック（青）",
+  "block.ragium.cyan_led_block": "LEDブロック（シアン）",
+  "block.ragium.energy_network_interface": "E.N.I.",
+  "block.ragium.green_led_block": "LEDブロック（緑）",
+  "block.ragium.magenta_led_block": "LEDブロック（マゼンタ）",
+  "block.ragium.red_led_block": "LEDブロック（赤）",
+  "block.ragium.white_led_block": "LEDブロック",
+  "block.ragium.yellow_led_block": "LEDブロック（黄色）",
   "content.ragium.casing": "外装",
   "content.ragium.circuit": "回路",
   "content.ragium.coil": "コイル",

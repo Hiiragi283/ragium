@@ -2,10 +2,9 @@ package hiiragi283.ragium.common.block.machine
 
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntity
 import hiiragi283.ragium.api.capability.LimitedItemHandler
-import hiiragi283.ragium.api.fluid.HTTieredFluidHandler
+import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
-import hiiragi283.ragium.common.fluid.HTTieredSingleFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.recipe.HTCookingRecipeProcessor
@@ -25,7 +24,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override val machineKey: HTMachineKey = RagiumMachineKeys.MULTI_SMELTER
 
     override val itemHandler: ItemStackHandler = ItemStackHandler(2)
-    override val fluidHandler: HTTieredFluidHandler = HTTieredSingleFluidHandler(machineTier)
+    override val tanks: Array<out HTTieredFluidTank> = arrayOf()
     override val processor: HTRecipeProcessor =
         HTCookingRecipeProcessor(itemHandler, 0, 1, RecipeType<SmeltingRecipe>::SMELTING)
 

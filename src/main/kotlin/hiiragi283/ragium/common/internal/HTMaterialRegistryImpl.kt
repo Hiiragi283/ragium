@@ -4,13 +4,12 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumIMC
 import hiiragi283.ragium.api.extension.asHolder
+import hiiragi283.ragium.api.extension.mutableMultiMapOf
 import hiiragi283.ragium.api.extension.mutableTableOf
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialRegistry
-import hiiragi283.ragium.api.material.HTMaterialType
-import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.material.*
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
+import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.api.util.collection.HTTable
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -40,6 +39,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     override val entryMap: MutableMap<HTMaterialKey, HTMaterialRegistry.Entry> = mutableMapOf()
 
     private lateinit var messageItemCache: HTTable<HTTagPrefix, HTMaterialKey, out List<Holder<Item>>>
+    private lateinit var definitionCache: HTMultiMap<Item, HTMaterialDefinition>
 
     fun processMessage(event: InterModProcessEvent) {
         LOGGER.info("Loading IMCMessages...")
@@ -69,6 +69,7 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
         LOGGER.info("Completed material property setup!")
 
         val itemCache: HTTable.Mutable<HTTagPrefix, HTMaterialKey, MutableList<Holder<Item>>> = mutableTableOf()
+        val inverseCache: HTMultiMap.Mutable<Item, HTMaterialDefinition> = mutableMultiMapOf()
 
         event.getIMCStream(RagiumIMC.BIND_ITEM::equals).forEach { message: InterModComms.IMCMessage ->
             val value: Any = message.messageSupplier().get()
@@ -77,9 +78,11 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
                 itemCache
                     .computeIfAbsent(prefix, key) { _: HTTagPrefix, _: HTMaterialKey -> mutableListOf() }
                     .add(item.asHolder())
+                inverseCache.put(item.asItem(), HTMaterialDefinition(prefix, key))
             }
         }
         this.messageItemCache = itemCache
+        this.definitionCache = inverseCache
         LOGGER.info("Bind items with material data!")
     }
 
@@ -100,6 +103,8 @@ internal object HTMaterialRegistryImpl : HTMaterialRegistry {
     }
 
     override fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>> = messageItemCache.get(prefix, key) ?: listOf()
+
+    override fun getDefinitions(item: ItemLike): List<HTMaterialDefinition> = definitionCache[item.asItem()].toList()
 
     override fun getEntryOrNull(key: HTMaterialKey): HTMaterialRegistry.Entry? =
         entryMap.compute(key) { _: HTMaterialKey, oldEntry: HTMaterialRegistry.Entry? ->

@@ -23,7 +23,6 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
     CRYSTAL("crystals"),
     DIRTY_DUST("dirty_dusts"),
     DUST("dusts"),
-    ENRICHED("enriched"),
     GEAR("gears"),
     GEM("gems") {
         override fun createPath(key: HTMaterialKey): String = key.name

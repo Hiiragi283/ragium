@@ -5,10 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.capability.RagiumCapabilities
-import hiiragi283.ragium.api.extension.machineTier
-import hiiragi283.ragium.api.extension.material
-import hiiragi283.ragium.api.extension.set
-import hiiragi283.ragium.api.extension.tieredText
+import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
@@ -60,6 +57,12 @@ internal object RagiumEvents {
             event.modify(type.get(), entry.get())
         }
 
+        fun bindMachines(type: Supplier<out BlockEntityType<*>>, machines: Collection<HTMachineKey>) {
+            machines.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
+        }
+
+        bindMachines(RagiumBlockEntityTypes.BASIC_MACHINE, RagiumAPI.getInstance().machineRegistry.keys)
+
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
         LOGGER.info("Added external blocks to BlockEntityType!")
@@ -67,6 +70,7 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+        // All Blocks
         fun <T : Any, C> registerForBlocks(capability: BlockCapability<T, C>, provider: IBlockCapabilityProvider<T, C>) {
             for (block: Block in BuiltInRegistries.BLOCK) {
                 event.registerBlock(
@@ -87,6 +91,7 @@ internal object RagiumEvents {
             (blockEntity as? HTMachineTierProvider)?.machineTier ?: state.machineTier
         }
 
+        // from HTBlockEntityHandlerProvider
         fun <T> registerHandlers(supplier: Supplier<BlockEntityType<T>>) where T : BlockEntity, T : HTBlockEntityHandlerProvider {
             val type: BlockEntityType<T> = supplier.get()
             event.registerBlockEntity(
@@ -109,6 +114,15 @@ internal object RagiumEvents {
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         registerHandlers(RagiumBlockEntityTypes.DRUM)
+
+        // Other
+        event.registerBlock(
+            Capabilities.EnergyStorage.BLOCK,
+            { level: Level, _: BlockPos, _: BlockState, _: BlockEntity?, _: Direction ->
+                level.getEnergyNetwork().getOrNull()
+            },
+            RagiumBlocks.ENERGY_NETWORK_INTERFACE.get(),
+        )
 
         LOGGER.info("Registered capabilities!")
     }

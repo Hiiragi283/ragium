@@ -32,7 +32,13 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumBlocks.Coils.entries)
 
             addAll(RagiumBlocks.Drums.entries)
+
+            addAll(RagiumBlocks.LEDBlocks.entries)
         }.map(HTBlockContent::id).forEach(::simpleBlockItem)
+
+        buildList {
+            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+        }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
         RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
             val id: ResourceLocation = holder.id

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_led": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:led"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ragium:shaped/magenta_led_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_led"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ragium:shaped/magenta_led_block"
+    ]
+  }
+}

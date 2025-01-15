@@ -76,7 +76,6 @@ enum class HTMachineTier(
     fun getGrate(): HTBlockContent.Tier = when (this) {
         PRIMITIVE -> object : HTBlockContent.Tier {
             override val holder: DeferredBlock<out Block> = blockHolder("iron_bars")
-            override val itemHolder: DeferredItem<out Item> = itemHolder("iron_bars")
             override val machineTier: HTMachineTier = PRIMITIVE
         }
 
@@ -89,7 +88,6 @@ enum class HTMachineTier(
     fun getCasing(): HTBlockContent.Tier = when (this) {
         PRIMITIVE -> object : HTBlockContent.Tier {
             override val holder: DeferredBlock<out Block> = blockHolder("bricks")
-            override val itemHolder: DeferredItem<out Item> = itemHolder("bricks")
             override val machineTier: HTMachineTier = PRIMITIVE
         }
 

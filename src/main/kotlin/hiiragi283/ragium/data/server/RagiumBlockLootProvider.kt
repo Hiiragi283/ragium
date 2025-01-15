@@ -32,6 +32,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.Decorations.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
 
+            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+
             addAll(RagiumAPI.getInstance().machineRegistry.blocks) // TODO
         }.map(Supplier<out Block>::get)
             .forEach(::dropSelf)

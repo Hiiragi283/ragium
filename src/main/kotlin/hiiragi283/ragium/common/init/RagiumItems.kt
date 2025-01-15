@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.component.HTRadioactiveComponent
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.fluidHolder
 import hiiragi283.ragium.api.extension.itemProperty
@@ -26,6 +27,8 @@ object RagiumItems {
     val REGISTER: DeferredRegister.Items = DeferredRegister.createItems(RagiumAPI.MOD_ID)
 
     init {
+        registerBlockItems()
+
         Dusts.entries
         Gears.entries
         Gems.entries
@@ -39,20 +42,27 @@ object RagiumItems {
         Radioactives.entries
     }
 
-    /*init {
-        Radioactives.entries.forEach { radioactive: Radioactives ->
-            REGISTER.registerSimpleItem(
-                radioactive.id.path,
-                when (radioactive) {
-                    Radioactives.URANIUM_FUEL -> itemProperty().durability(1024)
-                    Radioactives.PLUTONIUM_FUEL -> itemProperty().durability(1024)
-                    Radioactives.YELLOW_CAKE -> itemProperty()
-                    Radioactives.YELLOW_CAKE_PIECE -> itemProperty().food(RagiumFoods.YELLOW_CAKE_PIECE)
-                    Radioactives.NUCLEAR_WASTE -> itemProperty()
-                },
-            )
-        }
-    }*/
+    @JvmStatic
+    private fun registerBlockItems() {
+        buildList {
+            addAll(RagiumBlocks.StorageBlocks.entries)
+
+            addAll(RagiumBlocks.Grates.entries)
+            addAll(RagiumBlocks.Casings.entries)
+            addAll(RagiumBlocks.Hulls.entries)
+            addAll(RagiumBlocks.Coils.entries)
+
+            addAll(RagiumBlocks.Drums.entries)
+
+            addAll(RagiumBlocks.Decorations.entries)
+            addAll(RagiumBlocks.LEDBlocks.entries)
+        }.map(HTBlockContent::holder)
+            .forEach(REGISTER::registerSimpleBlockItem)
+
+        buildList {
+            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+        }.forEach(REGISTER::registerSimpleBlockItem)
+    }
 
     //    Materials    //
 
@@ -64,7 +74,8 @@ object RagiumItems {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         LAPIS(RagiumMaterialKeys.LAPIS),
-        LEAD(RagiumMaterialKeys.LEAD),
+
+        // LEAD(RagiumMaterialKeys.LEAD),
         NITER(RagiumMaterialKeys.NITER),
         QUARTZ(RagiumMaterialKeys.QUARTZ),
         SALT(RagiumMaterialKeys.SALT),
@@ -73,7 +84,7 @@ object RagiumItems {
         // tier 2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
         GOLD(RagiumMaterialKeys.GOLD),
-        SILVER(RagiumMaterialKeys.SILVER),
+        // SILVER(RagiumMaterialKeys.SILVER),
 
         // tier 3
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
@@ -102,6 +113,9 @@ object RagiumItems {
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         DIAMOND(RagiumMaterialKeys.DIAMOND),
         EMERALD(RagiumMaterialKeys.EMERALD),
+
+        // tier 4
+        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_gear")
@@ -154,9 +168,9 @@ object RagiumItems {
 
         // tier2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
-        GALENA(RagiumMaterialKeys.GALENA),
-        PYRITE(RagiumMaterialKeys.PYRITE),
-        SPHALERITE(RagiumMaterialKeys.SPHALERITE),
+        // GALENA(RagiumMaterialKeys.GALENA),
+        // PYRITE(RagiumMaterialKeys.PYRITE),
+        // SPHALERITE(RagiumMaterialKeys.SPHALERITE),
 
         // tier 3
         BAUXITE(RagiumMaterialKeys.BAUXITE),
@@ -283,10 +297,11 @@ object RagiumItems {
 
     enum class PressMolds : HTItemContent {
         GEAR,
-        PIPE,
+
+        // PIPE,
         PLATE,
         ROD,
-        WIRE,
+        // WIRE,
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_press_mold")
@@ -441,13 +456,21 @@ object RagiumItems {
     }
 
     enum class Radioactives(val level: HTRadioactiveComponent) : HTItemContent {
-        URANIUM_FUEL(HTRadioactiveComponent.MEDIUM),
-        PLUTONIUM_FUEL(HTRadioactiveComponent.HIGH),
+        URANIUM_FUEL(HTRadioactiveComponent.MEDIUM) {
+            override fun getProperty(): Item.Properties = itemProperty().durability(1024)
+        },
+        PLUTONIUM_FUEL(HTRadioactiveComponent.HIGH) {
+            override fun getProperty(): Item.Properties = itemProperty().durability(1024)
+        },
         YELLOW_CAKE(HTRadioactiveComponent.MEDIUM),
-        YELLOW_CAKE_PIECE(HTRadioactiveComponent.LOW),
+        YELLOW_CAKE_PIECE(HTRadioactiveComponent.LOW) {
+            override fun getProperty(): Item.Properties = itemProperty().food(RagiumFoods.YELLOW_CAKE_PIECE)
+        },
         NUCLEAR_WASTE(HTRadioactiveComponent.LOW),
         ;
 
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
+        protected open fun getProperty(): Item.Properties = itemProperty()
+
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase(), getProperty())
     }
 }

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ragium:block/red_led_block"
+    }
+  }
+}

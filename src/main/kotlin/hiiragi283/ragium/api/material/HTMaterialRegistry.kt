@@ -5,6 +5,7 @@ import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.ItemLike
 import java.util.stream.Stream
 
 /**
@@ -29,10 +30,15 @@ interface HTMaterialRegistry : Keyable {
 
     /**
      * 指定された[prefix]と[key]に紐づいたアイテムの一覧を返します。
-     *
-     * @return 値がない場合は[emptySet]
+     * @return 値がない場合は[emptyList]
      */
     fun getItems(prefix: HTTagPrefix, key: HTMaterialKey): List<Holder<Item>>
+
+    /**
+     * 指定された[item]に紐づいた素材のデータを返します。
+     * @return 値がない場合は[emptyList]
+     */
+    fun getDefinitions(item: ItemLike): List<HTMaterialDefinition>
 
     /**
      * 指定された[key]に紐づいた[Entry]を返します。

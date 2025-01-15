@@ -34,7 +34,7 @@ sealed class HTMachineException(val showInLog: Boolean, message: String) : Runti
 
     //    Item    //
 
-    class NoMatchingRecipe(message: String) : HTMachineException(false, message)
+    class NoMatchingRecipe(showInLog: Boolean) : HTMachineException(showInLog, "Failed to find matching recipe!")
 
     class MergeResult(showInLog: Boolean) : HTMachineException(showInLog, "Failed to merge results into outputs!")
 }

@@ -8,15 +8,12 @@ import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
-import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object RagiumBlocks {
@@ -51,7 +48,6 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_block", blockProperty(Blocks.IRON_BLOCK))
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
     }
 
@@ -64,7 +60,6 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<TransparentBlock> =
             REGISTER.registerBlock("${name.lowercase()}_grate", ::TransparentBlock, blockProperty(Blocks.COPPER_GRATE))
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class Casings(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -76,7 +71,6 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_casing", blockProperty(Blocks.SMOOTH_STONE))
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class Hulls(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -89,7 +83,6 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<TransparentBlock> =
             REGISTER.registerBlock("${name.lowercase()}_hull", ::TransparentBlock, blockProperty(Blocks.SMOOTH_STONE))
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
@@ -101,7 +94,6 @@ object RagiumBlocks {
 
         override val holder: DeferredBlock<RotatedPillarBlock> =
             REGISTER.registerBlock("${name.lowercase()}_coil", ::RotatedPillarBlock, blockProperty(Blocks.COPPER_BLOCK))
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     //    Storage    //
@@ -120,7 +112,6 @@ object RagiumBlocks {
             { prop: BlockBehaviour.Properties -> HTDrumBlock(machineTier, prop) },
             blockProperty(Blocks.SMOOTH_STONE),
         )
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
     //    Buildings    //
@@ -160,23 +151,24 @@ object RagiumBlocks {
             factory,
             blockProperty(Blocks.SMOOTH_STONE),
         )
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
     }
 
-    enum class LEDBlocks(val colors: List<DyeColor>) : HTBlockContent {
-        RED(DyeColor.RED),
-        GREEN(DyeColor.GREEN),
-        BLUE(DyeColor.BLUE),
-        CYAN(DyeColor.GREEN, DyeColor.BLUE),
-        MAGENTA(DyeColor.RED, DyeColor.BLUE),
-        YELLOW(DyeColor.RED, DyeColor.GREEN),
-        WHITE(),
+    enum class LEDBlocks(val baseBlock: Block) : HTBlockContent {
+        RED(Blocks.RED_STAINED_GLASS),
+        GREEN(Blocks.GREEN_STAINED_GLASS),
+        BLUE(Blocks.BLUE_STAINED_GLASS),
+        CYAN(Blocks.CYAN_STAINED_GLASS),
+        MAGENTA(Blocks.MAGENTA_STAINED_GLASS),
+        YELLOW(Blocks.YELLOW_STAINED_GLASS),
+        WHITE(Blocks.GLASS),
         ;
 
-        constructor(vararg colors: DyeColor) : this(colors.toList())
-
         override val holder: DeferredBlock<Block> =
-            REGISTER.registerSimpleBlock("${name.lowercase()}_led_block", blockProperty().lightLevel { 15 })
-        override val itemHolder: DeferredItem<out Item> = RagiumItems.REGISTER.registerSimpleBlockItem(holder)
+            REGISTER.registerSimpleBlock("${name.lowercase()}_led_block", blockProperty(baseBlock).lightLevel { 15 })
     }
+
+    //    Utility    //
+
+    @JvmField
+    val ENERGY_NETWORK_INTERFACE: DeferredBlock<Block> = REGISTER.registerSimpleBlock("energy_network_interface")
 }

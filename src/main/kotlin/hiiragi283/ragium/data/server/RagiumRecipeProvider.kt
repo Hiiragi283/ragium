@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.recipe.HTMachineRecipeProvider
@@ -30,6 +31,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMachineRecipeProvider.buildRecipes(recipeOutput)
 
         partsRecipes(recipeOutput)
+        
+        buildingRecipes(recipeOutput)
     }
 
     private fun RecipeProvider.has(prefix: HTTagPrefix, material: HTMaterialKey): Criterion<InventoryChangeTrigger.TriggerInstance> =
@@ -97,6 +100,21 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
                 .define('B', mainIngot)
                 .define('C', Items.BUCKET)
                 .unlockedBy("has_ingot", has(mainIngot))
+                .savePrefixed(output)
+        }
+    }
+    
+    private fun buildingRecipes(output: RecipeOutput) {
+        // LED
+        RagiumBlocks.LEDBlocks.entries.forEach { ledBlock: RagiumBlocks.LEDBlocks -> 
+            // Shaped Crafting
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ledBlock, 4)
+                .pattern(" A ")
+                .pattern("ABA")
+                .pattern(" A ")
+                .define('A', ledBlock.baseBlock)
+                .define('B', RagiumItems.LED)
+                .unlockedBy("has_led", has(RagiumItems.LED))
                 .savePrefixed(output)
         }
     }

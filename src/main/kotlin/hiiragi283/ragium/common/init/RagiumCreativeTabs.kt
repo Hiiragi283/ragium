@@ -55,6 +55,8 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Coils.entries)
                     }.forEach(output::accept)
 
+                    output.accept(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+
                     // Machine
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI

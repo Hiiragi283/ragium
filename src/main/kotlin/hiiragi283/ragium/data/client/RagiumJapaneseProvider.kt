@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -13,6 +14,17 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
     override fun addTranslations() {
+        // Block
+        add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+
+        add(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
+        add(RagiumBlocks.LEDBlocks.GREEN, "LEDブロック（緑）")
+        add(RagiumBlocks.LEDBlocks.BLUE, "LEDブロック（青）")
+        add(RagiumBlocks.LEDBlocks.CYAN, "LEDブロック（シアン）")
+        add(RagiumBlocks.LEDBlocks.MAGENTA, "LEDブロック（マゼンタ）")
+        add(RagiumBlocks.LEDBlocks.YELLOW, "LEDブロック（黄色）")
+        add(RagiumBlocks.LEDBlocks.WHITE, "LEDブロック")
+
         // Content
         add(RagiumTranslationKeys.CASING, "外装")
         add(RagiumTranslationKeys.CIRCUIT, "回路")

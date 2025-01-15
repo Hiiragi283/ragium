@@ -6,9 +6,15 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.data.recipes.*
+import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
+import java.util.function.Supplier
 
 //    LanguageProvider    //
+
+fun LanguageProvider.add(block: Supplier<out Block>, value: String) {
+    add(block.get().descriptionId, value)
+}
 
 fun LanguageProvider.add(tier: HTMachineTier, value: String, prefix: String) {
     add(tier.translationKey, value)

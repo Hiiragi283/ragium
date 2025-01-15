@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -13,6 +14,17 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
     override fun addTranslations() {
+        // Block
+        add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
+        
+        add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
+        add(RagiumBlocks.LEDBlocks.GREEN, "Green LED Block")
+        add(RagiumBlocks.LEDBlocks.BLUE, "Blue LED Block")
+        add(RagiumBlocks.LEDBlocks.CYAN, "Cyan LED Block")
+        add(RagiumBlocks.LEDBlocks.MAGENTA, "Magenta LED Block")
+        add(RagiumBlocks.LEDBlocks.YELLOW, "Yellow LED Block")
+        add(RagiumBlocks.LEDBlocks.WHITE, "LED Block")
+        
         // Content
         add(RagiumTranslationKeys.CASING, "Casing")
         add(RagiumTranslationKeys.CIRCUIT, "Circuit")

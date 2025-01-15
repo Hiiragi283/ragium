@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
+import hiiragi283.ragium.common.block.machine.HTBasicMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import java.util.function.BiConsumer
@@ -27,6 +28,11 @@ object DefaultMachinePlugin : RagiumPlugin {
         // Consumer
         // Generator
         // Processor
+        RagiumMachineKeys.PROCESSORS
+            .map(helper::apply)
+            .forEach { builder: HTPropertyHolderBuilder ->
+                builder.put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTBasicMachineBlockEntity))
+            }
 
         helper
             .apply(RagiumMachineKeys.MULTI_SMELTER)

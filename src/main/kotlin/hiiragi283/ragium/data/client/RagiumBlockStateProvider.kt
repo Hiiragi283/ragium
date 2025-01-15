@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -19,6 +20,7 @@ import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
+import java.util.function.Supplier
 
 class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHelper) :
     BlockStateProvider(output, RagiumAPI.MOD_ID, exFileHelper) {
@@ -32,6 +34,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         buildList {
             addAll(RagiumBlocks.StorageBlocks.entries)
             addAll(RagiumBlocks.Casings.entries)
+
+            addAll(RagiumBlocks.LEDBlocks.entries)
         }.map(HTBlockContent::get)
             .forEach(::simpleBlock)
 
@@ -83,6 +87,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             val id: ResourceLocation = drum.blockId
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }
+
+        // Utility
+        buildList {
+            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+        }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         // Machine
         RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->

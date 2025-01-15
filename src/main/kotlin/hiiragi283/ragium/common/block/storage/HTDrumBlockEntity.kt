@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.block.storage
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
 import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
-import hiiragi283.ragium.common.fluid.HTTieredSingleFluidHandler
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
@@ -28,7 +28,7 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTi
     HTMachineTierProvider {
     constructor(pos: BlockPos, state: BlockState) : this(pos, state, state.machineTier)
 
-    private val fluidTank = HTTieredSingleFluidHandler(machineTier)
+    private val fluidTank = HTTieredFluidTank(machineTier)
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -65,5 +65,5 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTi
 
     //    HTBlockEntityHandlerProvider    //
 
-    override fun getFluidHandler(direction: Direction?): HTTieredSingleFluidHandler = fluidTank
+    override fun getFluidHandler(direction: Direction?): HTTieredFluidTank = fluidTank
 }

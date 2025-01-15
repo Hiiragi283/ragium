@@ -1,4 +1,12 @@
 {
+  "block.ragium.blue_led_block": "Blue LED Block",
+  "block.ragium.cyan_led_block": "Cyan LED Block",
+  "block.ragium.energy_network_interface": "E.N.I.",
+  "block.ragium.green_led_block": "Green LED Block",
+  "block.ragium.magenta_led_block": "Magenta LED Block",
+  "block.ragium.red_led_block": "Red LED Block",
+  "block.ragium.white_led_block": "LED Block",
+  "block.ragium.yellow_led_block": "Yellow LED Block",
   "content.ragium.casing": "Casing",
   "content.ragium.circuit": "Circuit",
   "content.ragium.coil": "Coil",

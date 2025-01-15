@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import hiiragi283.ragium.api.extension.dropStacks
-import hiiragi283.ragium.api.fluid.HTTieredFluidHandler
+import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import net.minecraft.core.BlockPos
@@ -21,7 +21,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     HTMachineBlockEntity(type, pos, state) {
     protected abstract val itemHandler: ItemStackHandler
 
-    protected abstract val fluidHandler: HTTieredFluidHandler
+    protected abstract val tanks: Array<out HTTieredFluidTank>
 
     protected abstract val processor: HTRecipeProcessor
 
@@ -36,7 +36,9 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     }
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {
-        fluidHandler.onUpdateTier(oldTier, newTier)
+        for (tank: HTTieredFluidTank in tanks) {
+            tank.onUpdateTier(oldTier, newTier)
+        }
     }
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
@@ -44,8 +46,12 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
         processor.process(level, machineTier)
     }
 
-    final override fun interactWithFluidStorage(player: Player): Boolean =
-        FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, fluidHandler)
+    final override fun interactWithFluidStorage(player: Player): Boolean {
+        for (tank: HTTieredFluidTank in tanks) {
+            if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, tank)) return true
+        }
+        return false
+    }
 
     override fun onRemove(
         state: BlockState,

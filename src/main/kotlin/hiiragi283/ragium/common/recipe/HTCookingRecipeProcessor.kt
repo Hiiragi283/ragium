@@ -23,15 +23,13 @@ class HTCookingRecipeProcessor(
     override fun process(level: ServerLevel, tier: HTMachineTier): Result<Unit> = runCatching {
         val inputStack: ItemStack = handler.getStackInSlot(inputIndex)
         val input = SingleRecipeInput(inputStack)
-        cache.getFirstMatch(input, level).runCatching {
-            val recipe: AbstractCookingRecipe = this.orThrow
-            val output: ItemStack = recipe.getResultItem(level.registryAccess()).copy()
-            if (handler.insertItem(outputIndex, output, true).isEmpty) {
-                handler.insertItem(outputIndex, output, false)
-                inputStack.shrink(1)
-            } else {
-                throw HTMachineException.MergeResult(true)
-            }
+        val recipe: AbstractCookingRecipe = cache.getFirstMatch(input, level).getOrThrow()
+        val output: ItemStack = recipe.getResultItem(level.registryAccess()).copy()
+        if (handler.insertItem(outputIndex, output, true).isEmpty) {
+            handler.insertItem(outputIndex, output, false)
+            inputStack.shrink(1)
+        } else {
+            throw HTMachineException.MergeResult(true)
         }
     }
 }
