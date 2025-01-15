@@ -1,154 +1,122 @@
 {
-  "variants": {
-    "active=false,facing=east,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill",
-      "y": 90
+  "multipart": [
+    {
+      "apply": {
+        "model": "ragium:block/primitive_hull"
+      },
+      "when": {
+        "tier": "primitive"
+      }
     },
-    "active=false,facing=east,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill",
-      "y": 90
+    {
+      "apply": {
+        "model": "ragium:block/simple_hull"
+      },
+      "when": {
+        "tier": "simple"
+      }
     },
-    "active=false,facing=east,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill",
-      "y": 90
+    {
+      "apply": {
+        "model": "ragium:block/basic_hull"
+      },
+      "when": {
+        "tier": "basic"
+      }
     },
-    "active=false,facing=east,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill",
-      "y": 90
+    {
+      "apply": {
+        "model": "ragium:block/advanced_hull"
+      },
+      "when": {
+        "tier": "advanced"
+      }
     },
-    "active=false,facing=east,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill",
-      "y": 90
+    {
+      "apply": {
+        "model": "ragium:block/elite_hull"
+      },
+      "when": {
+        "tier": "elite"
+      }
     },
-    "active=false,facing=north,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill"
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill"
+      },
+      "when": {
+        "active": "false",
+        "facing": "north"
+      }
     },
-    "active=false,facing=north,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill"
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill_active"
+      },
+      "when": {
+        "active": "true",
+        "facing": "north"
+      }
     },
-    "active=false,facing=north,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill"
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill",
+        "y": 180
+      },
+      "when": {
+        "active": "false",
+        "facing": "south"
+      }
     },
-    "active=false,facing=north,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill"
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill_active",
+        "y": 180
+      },
+      "when": {
+        "active": "true",
+        "facing": "south"
+      }
     },
-    "active=false,facing=north,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill"
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill",
+        "y": 270
+      },
+      "when": {
+        "active": "false",
+        "facing": "west"
+      }
     },
-    "active=false,facing=south,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill",
-      "y": 180
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill_active",
+        "y": 270
+      },
+      "when": {
+        "active": "true",
+        "facing": "west"
+      }
     },
-    "active=false,facing=south,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill",
-      "y": 180
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill",
+        "y": 90
+      },
+      "when": {
+        "active": "false",
+        "facing": "east"
+      }
     },
-    "active=false,facing=south,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill",
-      "y": 180
-    },
-    "active=false,facing=south,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill",
-      "y": 180
-    },
-    "active=false,facing=south,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill",
-      "y": 180
-    },
-    "active=false,facing=west,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill",
-      "y": 270
-    },
-    "active=false,facing=west,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill",
-      "y": 270
-    },
-    "active=false,facing=west,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill",
-      "y": 270
-    },
-    "active=false,facing=west,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill",
-      "y": 270
-    },
-    "active=false,facing=west,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill",
-      "y": 270
-    },
-    "active=true,facing=east,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill_active",
-      "y": 90
-    },
-    "active=true,facing=east,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill_active",
-      "y": 90
-    },
-    "active=true,facing=east,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill_active",
-      "y": 90
-    },
-    "active=true,facing=east,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill_active",
-      "y": 90
-    },
-    "active=true,facing=east,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill_active",
-      "y": 90
-    },
-    "active=true,facing=north,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill_active"
-    },
-    "active=true,facing=north,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill_active"
-    },
-    "active=true,facing=north,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill_active"
-    },
-    "active=true,facing=north,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill_active"
-    },
-    "active=true,facing=north,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill_active"
-    },
-    "active=true,facing=south,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill_active",
-      "y": 180
-    },
-    "active=true,facing=south,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill_active",
-      "y": 180
-    },
-    "active=true,facing=south,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill_active",
-      "y": 180
-    },
-    "active=true,facing=south,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill_active",
-      "y": 180
-    },
-    "active=true,facing=south,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill_active",
-      "y": 180
-    },
-    "active=true,facing=west,tier=advanced": {
-      "model": "ragium:block/advanced/fluid_drill_active",
-      "y": 270
-    },
-    "active=true,facing=west,tier=basic": {
-      "model": "ragium:block/basic/fluid_drill_active",
-      "y": 270
-    },
-    "active=true,facing=west,tier=elite": {
-      "model": "ragium:block/elite/fluid_drill_active",
-      "y": 270
-    },
-    "active=true,facing=west,tier=primitive": {
-      "model": "ragium:block/primitive/fluid_drill_active",
-      "y": 270
-    },
-    "active=true,facing=west,tier=simple": {
-      "model": "ragium:block/simple/fluid_drill_active",
-      "y": 270
+    {
+      "apply": {
+        "model": "ragium:block/machine/fluid_drill_active",
+        "y": 90
+      },
+      "when": {
+        "active": "true",
+        "facing": "east"
+      }
     }
-  }
+  ]
 }

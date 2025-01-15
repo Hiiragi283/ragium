@@ -10,11 +10,13 @@ import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Mirror
 import net.minecraft.world.level.block.Rotation
@@ -22,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.phys.HitResult
 
 class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properties) :
     HTEntityBlock(properties),
@@ -45,6 +48,17 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
         tooltipFlag: TooltipFlag,
     ) {
         machineKey.appendTooltip(tooltipComponents::add, stack.machineTier)
+    }
+
+    override fun getCloneItemStack(
+        state: BlockState,
+        target: HitResult,
+        level: LevelReader,
+        pos: BlockPos,
+        player: Player,
+    ): ItemStack {
+        val tier: HTMachineTier = state.machineTier
+        return machineKey.createItemStack(tier) ?: super.getCloneItemStack(state, target, level, pos, player)
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {

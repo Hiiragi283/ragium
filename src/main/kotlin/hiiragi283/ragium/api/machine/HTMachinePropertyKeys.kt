@@ -54,16 +54,16 @@ object HTMachinePropertyKeys {
     //    Processor    //
 
     @JvmField
-    val FRONT_TEX: HTPropertyKey.Defaulted<(ResourceLocation) -> ResourceLocation> =
+    val FRONT_TEX: HTPropertyKey.Defaulted<(HTMachineKey) -> ResourceLocation> =
         HTPropertyKey.ofDefaulted(
             RagiumAPI.id("front_tex"),
-        ) { id: ResourceLocation -> id.withPath { "block/machine/$it" } }
+        ) { key: HTMachineKey -> RagiumAPI.id("block/machine/${key.name}") }
 
     @JvmField
-    val ACTIVE_FRONT_TEX: HTPropertyKey.Defaulted<(ResourceLocation) -> ResourceLocation> =
+    val ACTIVE_FRONT_TEX: HTPropertyKey.Defaulted<(HTMachineKey) -> ResourceLocation> =
         HTPropertyKey.ofDefaulted(
             RagiumAPI.id("active_front_tex"),
-        ) { id: ResourceLocation -> id.withPath { "block/machine/${it}_active" } }
+        ) { key: HTMachineKey -> RagiumAPI.id("block/machine/${key.name}_active") }
 
     @JvmField
     val FRONT_MAPPER: HTPropertyKey.Defaulted<(Direction) -> Direction> =

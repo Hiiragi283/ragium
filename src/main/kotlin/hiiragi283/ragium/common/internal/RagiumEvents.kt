@@ -33,7 +33,6 @@ import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.event.AddPackFindersEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
@@ -44,8 +43,8 @@ import java.util.function.Supplier
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 internal object RagiumEvents {
-    @JvmField
-    val LOGGER: Logger = LogUtils.getLogger()
+    @JvmStatic
+    private val LOGGER: Logger = LogUtils.getLogger()
 
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
@@ -64,15 +63,6 @@ internal object RagiumEvents {
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
         LOGGER.info("Added external blocks to BlockEntityType!")
-    }
-
-    @SubscribeEvent
-    fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
-            event.registerFluidType(fluid, fluid.typeHolder)
-        }
-
-        LOGGER.info("Registered client extensions!")
     }
 
     @SubscribeEvent

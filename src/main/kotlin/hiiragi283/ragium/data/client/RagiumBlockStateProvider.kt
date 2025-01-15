@@ -7,14 +7,15 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
+import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.RotatedPillarBlock
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.registries.DeferredBlock
 import org.slf4j.Logger
@@ -85,36 +86,45 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
 
         // Machine
         RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
-            getVariantBuilder(holder.get())
-                .forAllStates { state: BlockState ->
-                    val tier: HTMachineTier = state.getValue(HTMachineTier.PROPERTY)
+            val builder: ConfiguredModel.Builder<MultiPartBlockStateBuilder.PartBuilder> =
+                getMultipartBuilder(holder.get()).part()
 
-                    val inactiveId: ResourceLocation = holder.id.withPrefix("block/${tier.serializedName}/")
-                    val activeId: ResourceLocation = holder.id.withPath { "block/${tier.serializedName}/${it}_active" }
+            HTMachineTier.entries.forEach { tier: HTMachineTier ->
+                builder
+                    .modelFile(ModelFile.UncheckedModelFile(tier.getHull().blockId))
+                    .addModel()
+                    .condition(HTMachineTier.PROPERTY, tier)
+            }
 
-                    val inactiveModel: BlockModelBuilder = models()
-                        .withExistingParent(inactiveId.toString(), "ragium:block/machine")
-                        .texture("top", tier.getStorageBlock().blockId)
-                        .texture("inside", tier.getCasing().blockId)
-                        .texture("side", tier.getHull().blockId)
-                        // .texture("front", holder.id.withPrefix("block/machine/"))
-                        .renderType("cutout")
+            val inactiveId: ResourceLocation = holder.id.withPrefix("block/machine/")
+            val activeId: ResourceLocation = holder.id.withPath { "block/machine/${it}_active" }
 
-                    val activeModel: BlockModelBuilder = models()
-                        .withExistingParent(activeId.toString(), "ragium:block/machine")
-                        .texture("top", tier.getStorageBlock().blockId)
-                        .texture("inside", tier.getCasing().blockId)
-                        .texture("side", tier.getHull().blockId)
-                        // .texture("front", holder.id.withPath { "block/machine/${it}_active" })
-                        .renderType("cutout")
-
-                    ConfiguredModel
-                        .builder()
-                        .modelFile(if (state.getValue(RagiumBlockProperties.ACTIVE)) activeModel else inactiveModel)
-                        .rotationY(
-                            ((state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360).toInt(),
-                        ).build()
-                }
+            BlockStateProperties.HORIZONTAL_FACING.possibleValues.forEach { front: Direction ->
+                // inactive front
+                builder
+                    .rotationY(front.getRotationY())
+                    .modelFile(
+                        models()
+                            .withExistingParent(inactiveId.toString(), RagiumAPI.id("block/machine_front"))
+                            .texture("front", inactiveId)
+                            .renderType("cutout"),
+                    ).addModel()
+                    .condition(BlockStateProperties.HORIZONTAL_FACING, front)
+                    .condition(RagiumBlockProperties.ACTIVE, false)
+                // active front
+                builder
+                    .rotationY(front.getRotationY())
+                    .modelFile(
+                        models()
+                            .withExistingParent(activeId.toString(), RagiumAPI.id("block/machine_front"))
+                            .texture("front", activeId)
+                            .renderType("cutout"),
+                    ).addModel()
+                    .condition(BlockStateProperties.HORIZONTAL_FACING, front)
+                    .condition(RagiumBlockProperties.ACTIVE, true)
+            }
         }
     }
+
+    private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
 }

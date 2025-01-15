@@ -27,10 +27,10 @@ object RagiumMachineKeys {
         listOf(
             BEDROCK_MINER,
             BIOMASS_FERMENTER,
-            DRAIN,
+            // DRAIN,
             FLUID_DRILL,
-            GAS_PLANT,
-            ROCK_GENERATOR,
+            // GAS_PLANT,
+            // ROCK_GENERATOR,
         )
 
     //    Generator    //
@@ -57,11 +57,11 @@ object RagiumMachineKeys {
     val GENERATORS: List<HTMachineKey> =
         listOf(
             COMBUSTION_GENERATOR,
-            NUCLEAR_REACTOR,
+            // NUCLEAR_REACTOR,
             SOLAR_GENERATOR,
             STEAM_GENERATOR,
             THERMAL_GENERATOR,
-            VIBRATION_GENERATOR,
+            // VIBRATION_GENERATOR,
         )
 
     //    Processor    //

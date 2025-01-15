@@ -1,0 +1,35 @@
+{
+  "parent": "ragium:block/machine_front",
+  "overrides": [
+    {
+      "model": "ragium:block/primitive_hull",
+      "predicate": {
+        "ragium:machine_tier": 0.2
+      }
+    },
+    {
+      "model": "ragium:block/simple_hull",
+      "predicate": {
+        "ragium:machine_tier": 0.4
+      }
+    },
+    {
+      "model": "ragium:block/basic_hull",
+      "predicate": {
+        "ragium:machine_tier": 0.6
+      }
+    },
+    {
+      "model": "ragium:block/advanced_hull",
+      "predicate": {
+        "ragium:machine_tier": 0.8
+      }
+    },
+    {
+      "model": "ragium:block/elite_hull",
+      "predicate": {
+        "ragium:machine_tier": 1.0
+      }
+    }
+  ]
+}

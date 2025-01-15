@@ -1,9 +1,0 @@
-{
-  "parent": "ragium:block/machine",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "inside": "ragium:block/basic_casing",
-    "side": "ragium:block/basic_hull",
-    "top": "ragium:block/ragi_steel_block"
-  }
-}
