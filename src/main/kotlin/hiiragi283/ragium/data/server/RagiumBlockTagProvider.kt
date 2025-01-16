@@ -22,6 +22,7 @@ class RagiumBlockTagProvider(
         // Mineable
         val pickaxe: TagBuilder = getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
         buildList {
+            addAll(RagiumBlocks.Ores.entries)
             addAll(RagiumBlocks.StorageBlocks.entries)
 
             addAll(RagiumBlocks.Grates.entries)

@@ -23,6 +23,8 @@ object RagiumCreativeTabs {
                 .title(Component.literal("Ragium - Ingredient"))
                 .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    RagiumBlocks.Ores.entries.forEach(output::accept)
+
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
                     RagiumBlocks.LEDBlocks.entries.forEach(output::accept)
 
@@ -32,12 +34,17 @@ object RagiumCreativeTabs {
 
                     output.accept(RagiumItems.FORGE_HAMMER)
 
+                    output.accept(RagiumItems.CIRCUIT_BOARD)
                     RagiumItems.Circuits.entries.forEach(output::accept)
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)
                     RagiumItems.FluidCubes.entries.forEach(output::accept)
+                    RagiumItems.Plastics.entries.forEach(output::accept)
 
-                    RagiumItems.INGREDIENTS.forEach(output::accept)
+                    buildList {
+                        addAll(RagiumItems.INGREDIENTS)
+                        remove(RagiumItems.CIRCUIT_BOARD)
+                    }.forEach(output::accept)
                     RagiumItems.Radioactives.entries.forEach(output::accept)
                 }.build()
         }
@@ -55,9 +62,11 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Casings.entries)
                         addAll(RagiumBlocks.Hulls.entries)
                         addAll(RagiumBlocks.Coils.entries)
-                    }.forEach(output::accept)
 
-                    output.accept(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+                        add(RagiumBlocks.SHAFT)
+
+                        add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+                    }.forEach(output::accept)
 
                     // Machine
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
@@ -81,7 +90,6 @@ object RagiumCreativeTabs {
                 .title(Component.literal("Ragium - Storage"))
                 .icon { ItemStack(RagiumBlocks.Drums.ELITE) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-
                     RagiumBlocks.Drums.entries.forEach(output::accept)
                 }.build()
         }

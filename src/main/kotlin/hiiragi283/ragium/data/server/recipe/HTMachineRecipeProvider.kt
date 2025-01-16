@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.firstTier
 import hiiragi283.ragium.api.extension.validTiers
 import hiiragi283.ragium.api.machine.HTMachineKey
@@ -88,6 +89,17 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 .unlockedBy("has_casing", has(hull.machineTier.getCasing()))
                 .savePrefixed(output)
         }
+        // Coil
+        RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->
+            val previousTier: HTMachineTier = coil.machineTier.getPreviousTier() ?: HTMachineTier.BASIC
+            // Assembler
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.ASSEMBLER, previousTier)
+                .itemInput(HTTagPrefix.INGOT, coil.machineTier.getSubMetal(), 8)
+                .itemInput(RagiumBlocks.SHAFT)
+                .itemOutput(coil, 2)
+                .save(output)
+        }
 
         // Drum
         RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
@@ -129,13 +141,12 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 val firstTier: HTMachineTier = entry.firstTier
                 ShapedRecipeBuilder
                     .shaped(RecipeCategory.MISC, entry.createItemStack(firstTier)!!)
-                    .pattern("ABA")
-                    .pattern("CDC")
-                    .pattern("ABA")
+                    .pattern("A A")
+                    .pattern("BCB")
+                    .pattern("A A")
                     .define('A', HTTagPrefix.INGOT, firstTier.getMainMetal())
                     .define('B', input)
-                    .define('C', HTTagPrefix.INGOT, firstTier.getSteelMetal())
-                    .define('D', firstTier.getCasing())
+                    .define('C', firstTier.getCasing())
                     .unlockedBy("has_casing", has(firstTier.getCasing()))
                     .save(output, RagiumAPI.id("shaped/${key.name}"))
             }.onFailure { throwable: Throwable -> LOGGER.error(throwable.localizedMessage) }

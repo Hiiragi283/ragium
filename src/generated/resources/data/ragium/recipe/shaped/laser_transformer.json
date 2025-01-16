@@ -9,16 +9,13 @@
       "item": "ragium:laser_emitter"
     },
     "C": {
-      "tag": "c:ingots/deep_steel"
-    },
-    "D": {
       "item": "ragium:elite_casing"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "A A",
+    "BCB",
+    "A A"
   ],
   "result": {
     "components": {

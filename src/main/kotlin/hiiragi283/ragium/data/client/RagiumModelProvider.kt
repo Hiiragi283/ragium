@@ -24,6 +24,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
     private fun registerBlocks() {
         buildList {
+            addAll(RagiumBlocks.Ores.entries)
             addAll(RagiumBlocks.StorageBlocks.entries)
 
             addAll(RagiumBlocks.Grates.entries)
@@ -37,6 +38,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         }.map(HTBlockContent::id).forEach(::simpleBlockItem)
 
         buildList {
+            add(RagiumBlocks.SHAFT)
+
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
@@ -70,6 +73,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumItems.PRESS_MOLDS)
             addAll(RagiumItems.CATALYSTS)
             addAll(RagiumItems.INGREDIENTS)
+            // addAll(RagiumItems.Plastics.entries)
             addAll(RagiumItems.Radioactives.entries)
         }.map(ItemLike::asItem)
             .forEach(::basicItem)

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -21,17 +22,47 @@ object RagiumBlocks {
     val REGISTER: DeferredRegister.Blocks = DeferredRegister.createBlocks(RagiumAPI.MOD_ID)
 
     init {
+        Ores.entries
+
         StorageBlocks.entries
         Grates.entries
         Casings.entries
         Hulls.entries
         Coils.entries
+
         Drums.entries
+
         Decorations.entries
         LEDBlocks.entries
     }
 
     //    Components    //
+
+    enum class Ores(override val oreVariant: HTOreVariant, override val material: HTMaterialKey) : HTOreVariant.Content {
+        // overworld
+        CRUDE_RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterialKeys.CRUDE_RAGINITE),
+        RAGINITE(HTOreVariant.OVERWORLD, RagiumMaterialKeys.RAGINITE),
+        RAGI_CRYSTAL(HTOreVariant.OVERWORLD, RagiumMaterialKeys.RAGI_CRYSTAL),
+
+        // deepslate
+        DEEPSLATE_CRUDE_RAGINITE(HTOreVariant.DEEP, RagiumMaterialKeys.CRUDE_RAGINITE),
+        DEEPSLATE_RAGINITE(HTOreVariant.DEEP, RagiumMaterialKeys.RAGINITE),
+        DEEPSLATE_RAGI_CRYSTAL(HTOreVariant.DEEP, RagiumMaterialKeys.RAGI_CRYSTAL),
+
+        // nether
+        NETHER_CRUDE_RAGINITE(HTOreVariant.NETHER, RagiumMaterialKeys.CRUDE_RAGINITE),
+        NETHER_RAGINITE(HTOreVariant.NETHER, RagiumMaterialKeys.RAGINITE),
+        NETHER_RAGI_CRYSTAL(HTOreVariant.NETHER, RagiumMaterialKeys.RAGI_CRYSTAL),
+
+        // end
+        END_CRUDE_RAGINITE(HTOreVariant.END, RagiumMaterialKeys.CRUDE_RAGINITE),
+        END_RAGINITE(HTOreVariant.END, RagiumMaterialKeys.RAGINITE),
+        END_RAGI_CRYSTAL(HTOreVariant.END, RagiumMaterialKeys.RAGI_CRYSTAL),
+        ;
+
+        override val holder: DeferredBlock<out Block> =
+            REGISTER.registerSimpleBlock("${name.lowercase()}_ore", blockProperty(oreVariant.baseStone))
+    }
 
     enum class StorageBlocks(override val material: HTMaterialKey) : HTBlockContent.Material {
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
@@ -94,6 +125,10 @@ object RagiumBlocks {
         override val holder: DeferredBlock<RotatedPillarBlock> =
             REGISTER.registerBlock("${name.lowercase()}_coil", ::RotatedPillarBlock, blockProperty(Blocks.COPPER_BLOCK))
     }
+
+    @JvmField
+    val SHAFT: DeferredBlock<RotatedPillarBlock> =
+        REGISTER.registerBlock("shaft", ::RotatedPillarBlock, blockProperty(Blocks.CHAIN))
 
     //    Storage    //
 

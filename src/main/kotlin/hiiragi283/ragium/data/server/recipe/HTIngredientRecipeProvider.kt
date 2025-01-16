@@ -18,6 +18,7 @@ import net.neoforged.neoforge.common.Tags
 
 object HTIngredientRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
+        registerCircuitBoards(output)
         registerCircuits(output)
         registerCatalysts(output)
         registerPressMolds(output)
@@ -33,15 +34,21 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .savePrefixed(output)
     }
 
+    private fun registerCircuitBoards(output: RecipeOutput) {
+        RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
+            // Compressor
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.COMPRESSOR, plastic.machineTier)
+                .itemInput(plastic)
+                .itemInput(RagiumItems.Dusts.QUARTZ)
+                .itemOutput(RagiumItems.CIRCUIT_BOARD, plastic.ordinal + 1)
+                .savePrefixed(output, "${plastic.machineTier.serializedName}_")
+        }
+    }
+
     private fun registerCircuits(output: RecipeOutput) {
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
             // Assembler
-            val silicon: ItemLike = when (circuit) {
-                RagiumItems.Circuits.SIMPLE -> RagiumItems.CRUDE_SILICON
-                RagiumItems.Circuits.BASIC -> RagiumItems.SILICON
-                RagiumItems.Circuits.ADVANCED -> RagiumItems.REFINED_SILICON
-                RagiumItems.Circuits.ELITE -> RagiumItems.STELLA_PLATE
-            }
             val dust: ItemLike = when (circuit) {
                 RagiumItems.Circuits.SIMPLE -> Items.REDSTONE
                 RagiumItems.Circuits.BASIC -> Items.GLOWSTONE_DUST
@@ -51,7 +58,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
 
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.ASSEMBLER, circuit.machineTier)
-                .itemInput(silicon)
+                .itemInput(RagiumItems.CIRCUIT_BOARD)
                 .itemInput(HTTagPrefix.INGOT, circuit.machineTier.getSubMetal())
                 .itemInput(dust)
                 .itemOutput(circuit)

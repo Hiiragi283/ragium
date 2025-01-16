@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import java.util.function.Function
 
@@ -61,10 +60,5 @@ object DefaultMaterialPlugin : RagiumPlugin {
             .add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
             .put(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 4)
         helper.apply(RagiumMaterialKeys.QUARTZ).add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
-        // mineral
-        helper
-            .apply(RagiumMaterialKeys.REDSTONE)
-            .put(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 2)
-            .put(HTMaterialPropertyKeys.ORE_SUB_PRODUCT, RagiumItems.Gems.CINNABAR)
     }
 }

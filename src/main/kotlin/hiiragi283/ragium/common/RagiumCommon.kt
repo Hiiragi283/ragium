@@ -206,14 +206,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumIMC.sendMaterialItemIMC(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.LAPIS, Items.LAPIS_BLOCK)
         RagiumIMC.sendMaterialItemIMC(HTTagPrefix.STORAGE_BLOCK, RagiumMaterialKeys.NETHERITE, Items.NETHERITE_BLOCK)
 
-        // bindContents(RagiumBlocks.Ores.entries)
+        bindContents(RagiumBlocks.Ores.entries)
         bindContents(RagiumBlocks.StorageBlocks.entries)
         bindContents(RagiumItems.Dusts.entries)
         bindContents(RagiumItems.Gears.entries)
-        bindContents(RagiumItems.Gems.entries)
+        bindContents(RagiumItems.RawResources.entries)
         bindContents(RagiumItems.Ingots.entries)
         // bindContents(RagiumItems.Plates.entries)
-        bindContents(RagiumItems.RawMaterials.entries)
         bindContents(RagiumItems.Rods.entries)
     }
 }

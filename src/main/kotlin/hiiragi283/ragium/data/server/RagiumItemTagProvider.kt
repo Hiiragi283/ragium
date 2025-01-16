@@ -20,6 +20,14 @@ class RagiumItemTagProvider(
 ) : TagsProvider<Item>(output, Registries.ITEM, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         // Materials
+        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+            getOrCreateRawBuilder(ore.tagPrefix.commonTagKey)
+                .addTag(ore.prefixedTagKey.location)
+
+            getOrCreateRawBuilder(ore.prefixedTagKey)
+                .addElement(ore.id)
+        }
+
         RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
             getOrCreateRawBuilder(storage.tagPrefix.commonTagKey)
                 .addTag(storage.prefixedTagKey.location)

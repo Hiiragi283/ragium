@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:advanced_plastic"
+    },
+    {
+      "count": 1,
+      "tag": "c:dusts/quartz"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:circuit_board"
+    }
+  ],
+  "machine_type": "compressor",
+  "tier": "advanced"
+}

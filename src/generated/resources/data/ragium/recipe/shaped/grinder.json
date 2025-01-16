@@ -9,16 +9,13 @@
       "item": "minecraft:grindstone"
     },
     "C": {
-      "tag": "c:ingots/iron"
-    },
-    "D": {
       "item": "ragium:basic_casing"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "A A",
+    "BCB",
+    "A A"
   ],
   "result": {
     "components": {

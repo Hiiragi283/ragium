@@ -1,0 +1,29 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 500,
+      "tag": "c:mercury"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 500,
+      "id": "ragium:chemical_sludge"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ores/redstone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 10,
+      "id": "minecraft:redstone"
+    }
+  ],
+  "machine_type": "chemical_reactor",
+  "tier": "ultimate"
+}

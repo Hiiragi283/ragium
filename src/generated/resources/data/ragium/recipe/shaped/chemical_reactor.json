@@ -9,16 +9,13 @@
       "item": "minecraft:glass"
     },
     "C": {
-      "tag": "c:ingots/steel"
-    },
-    "D": {
       "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "A A",
+    "BCB",
+    "A A"
   ],
   "result": {
     "components": {

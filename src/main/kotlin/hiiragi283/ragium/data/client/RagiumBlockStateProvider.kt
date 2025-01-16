@@ -40,6 +40,20 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }.map(HTBlockContent::get)
             .forEach(::simpleBlock)
 
+        // Ore
+        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+            simpleBlock(
+                ore.get(),
+                ConfiguredModel(
+                    models()
+                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
+                        .texture("layer0", ore.oreVariant.baseStoneName.withPrefix("block/"))
+                        .texture("layer1", "block/" + ore.material.name)
+                        .renderType("cutout"),
+                ),
+            )
+        }
+
         // Grate
         RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
             simpleBlock(
@@ -90,6 +104,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Utility
+        RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->
+            val model = ModelFile.UncheckedModelFile(holder.id.withPrefix("block/"))
+            axisBlock(holder.get(), model, model)
+        }
+
         buildList {
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)

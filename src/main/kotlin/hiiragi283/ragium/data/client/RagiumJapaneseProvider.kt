@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
 import net.minecraft.data.PackOutput
@@ -11,6 +12,8 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "ja_jp") {
     override fun addTranslations() {
         // Block
+        add(RagiumBlocks.SHAFT, "シャフト")
+
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
         add(RagiumBlocks.LEDBlocks.RED, "LEDブロック（赤）")
@@ -30,11 +33,39 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.GRATE, "格子")
         add(RagiumTranslationKeys.HULL, "筐体")
         add(RagiumTranslationKeys.PLASTIC, "プラスチック")
+
+        add(HTOreVariant.OVERWORLD, "%s鉱石")
+        add(HTOreVariant.DEEP, "深層%s鉱石")
+        add(HTOreVariant.NETHER, "ネザー%s鉱石")
+        add(HTOreVariant.END, "エンド%s鉱石")
         // Fluids
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             add(fluid.typeHolder.get().descriptionId, fluid.jaName)
         }
         // Items
+        add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "一切れのスイートベリーケーキ")
+        add(RagiumItems.MELON_PIE, "メロンパイ")
+
+        add(RagiumItems.BUTTER, "バター")
+        add(RagiumItems.CARAMEL, "キャラメル")
+        add(RagiumItems.DOUGH, "生地")
+        add(RagiumItems.FLOUR, "小麦粉")
+
+        add(RagiumItems.CHOCOLATE, "チョコレート")
+        add(RagiumItems.CHOCOLATE_APPLE, "チョコリンゴ")
+        add(RagiumItems.CHOCOLATE_BREAD, "チョコパン")
+        add(RagiumItems.CHOCOLATE_COOKIE, "チョコレートクッキー")
+
+        add(RagiumItems.CINNAMON_STICK, "シナモンスティック")
+        add(RagiumItems.CINNAMON_POWDER, "シナモンパウダー")
+        add(RagiumItems.CINNAMON_ROLL, "シナモンロール")
+
+        add(RagiumItems.MINCED_MEAT, "ひき肉")
+        add(RagiumItems.MEAT_INGOT, "生肉インゴット")
+        add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
+        add(RagiumItems.CANNED_COOKED_MEAT, "焼肉缶詰")
+
+        add(RagiumItems.AMBROSIA, "アンブロシア")
 
         add(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
         add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")

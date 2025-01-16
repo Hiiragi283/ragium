@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.data.recipes.*
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -39,6 +40,10 @@ fun LanguageProvider.add(material: HTMaterialKey, value: String) {
 
 fun LanguageProvider.add(prefix: HTTagPrefix, value: String) {
     add(prefix.translationKey, value)
+}
+
+fun LanguageProvider.add(variant: HTOreVariant, value: String) {
+    add(variant.translationKey, value)
 }
 
 //    RecipeBuilder    //

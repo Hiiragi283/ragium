@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ores/redstone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "minecraft:redstone"
+    },
+    {
+      "count": 1,
+      "id": "ragium:cinnabar"
+    },
+    {
+      "count": 1,
+      "id": "ragium:slag"
+    }
+  ],
+  "machine_type": "grinder"
+}

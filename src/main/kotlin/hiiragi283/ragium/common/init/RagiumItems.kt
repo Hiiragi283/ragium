@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -32,11 +33,23 @@ object RagiumItems {
 
         Circuits.entries
         FluidCubes.entries
+        Plastics.entries
         Radioactives.entries
     }
 
     @JvmStatic
     private fun registerBlockItems() {
+        RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
+            REGISTER.registerSimpleBlockItem(
+                ore.id.path,
+                ore,
+                itemProperty().component(
+                    DataComponents.ITEM_NAME,
+                    ore.oreVariant.createText(ore.material),
+                ),
+            )
+        }
+
         buildList {
             addAll(RagiumBlocks.StorageBlocks.entries)
 
@@ -53,6 +66,8 @@ object RagiumItems {
             .forEach(REGISTER::registerSimpleBlockItem)
 
         buildList {
+            add(RagiumBlocks.SHAFT)
+
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.forEach(REGISTER::registerSimpleBlockItem)
     }
@@ -67,8 +82,6 @@ object RagiumItems {
         COPPER(RagiumMaterialKeys.COPPER, HTTagPrefix.INGOT),
         IRON(RagiumMaterialKeys.IRON, HTTagPrefix.INGOT),
         LAPIS(RagiumMaterialKeys.LAPIS, HTTagPrefix.GEM),
-
-        // LEAD(RagiumMaterialKeys.LEAD),
         NITER(RagiumMaterialKeys.NITER),
         QUARTZ(RagiumMaterialKeys.QUARTZ, HTTagPrefix.GEM),
         SALT(RagiumMaterialKeys.SALT),
@@ -77,7 +90,6 @@ object RagiumItems {
         // tier 2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
         GOLD(RagiumMaterialKeys.GOLD, HTTagPrefix.INGOT),
-        // SILVER(RagiumMaterialKeys.SILVER),
 
         // tier 3
         RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, HTTagPrefix.GEM),
@@ -116,16 +128,21 @@ object RagiumItems {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.GEAR
     }
 
-    enum class Gems(override val material: HTMaterialKey) : HTItemContent.Material {
+    enum class RawResources(override val tagPrefix: HTTagPrefix, override val material: HTMaterialKey) : HTItemContent.Material {
+        // tier 1
+        RAW_CRUDE_RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE),
+
+        // tier2
+        RAW_RAGINITE(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.RAGINITE),
+
         // tier 3
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
-        CINNABAR(RagiumMaterialKeys.CINNABAR),
-        CRYOLITE(RagiumMaterialKeys.CRYOLITE),
-        FLUORITE(RagiumMaterialKeys.FLUORITE),
+        RAGI_CRYSTAL(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
+        CINNABAR(HTTagPrefix.GEM, RagiumMaterialKeys.CINNABAR),
+        CRYOLITE(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE),
+        FLUORITE(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem(name.lowercase())
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.GEM
     }
 
     enum class Ingots(override val material: HTMaterialKey) : HTItemContent.Material {
@@ -150,25 +167,6 @@ object RagiumItems {
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_ingot")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.INGOT
-    }
-
-    enum class RawMaterials(override val material: HTMaterialKey) : HTItemContent.Material {
-        // tier 1
-        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
-        NITER(RagiumMaterialKeys.NITER),
-        REDSTONE(RagiumMaterialKeys.REDSTONE),
-        SALT(RagiumMaterialKeys.SALT),
-        SULFUR(RagiumMaterialKeys.SULFUR),
-
-        // tier2
-        RAGINITE(RagiumMaterialKeys.RAGINITE),
-
-        // tier 3
-        BAUXITE(RagiumMaterialKeys.BAUXITE),
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("raw_${name.lowercase()}")
-        override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
     enum class Rods(override val material: HTMaterialKey) : HTItemContent.Material {
@@ -200,9 +198,8 @@ object RagiumItems {
     val MATERIALS: List<HTItemContent.Material> = buildList {
         addAll(Dusts.entries)
         addAll(Gears.entries)
-        addAll(Gems.entries)
+        addAll(RawResources.entries)
         addAll(Ingots.entries)
-        addAll(RawMaterials.entries)
         addAll(Rods.entries)
     }
 
@@ -318,27 +315,6 @@ object RagiumItems {
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_circuit")
     }
 
-    enum class FluidCubes(val containment: DeferredHolder<Fluid, out Fluid>) : HTItemContent {
-        WATER(fluidHolder("fluid")),
-        LAVA(fluidHolder("lava")),
-        MILK(NeoForgeMod.MILK),
-        HONEY(RagiumFluids.HONEY.stillHolder),
-        ;
-
-        companion object {
-            @JvmStatic
-            fun fromFluid(fluid: Fluid): FluidCubes? = when (fluid) {
-                Fluids.WATER -> WATER
-                Fluids.LAVA -> LAVA
-                NeoForgeMod.MILK.get() -> MILK
-                RagiumFluids.HONEY.stillHolder.get() -> HONEY
-                else -> null
-            }
-        }
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_cube")
-    }
-
     //    Press Molds    //
 
     @JvmField
@@ -379,6 +355,41 @@ object RagiumItems {
         DEHYDRATION_CATALYST,
     )
 
+    //    Fluid Cubes    //
+
+    enum class FluidCubes(val containment: DeferredHolder<Fluid, out Fluid>) : HTItemContent {
+        WATER(fluidHolder("fluid")),
+        LAVA(fluidHolder("lava")),
+        MILK(NeoForgeMod.MILK),
+        HONEY(RagiumFluids.HONEY.stillHolder),
+        ;
+
+        companion object {
+            @JvmStatic
+            fun fromFluid(fluid: Fluid): FluidCubes? = when (fluid) {
+                Fluids.WATER -> WATER
+                Fluids.LAVA -> LAVA
+                NeoForgeMod.MILK.get() -> MILK
+                RagiumFluids.HONEY.stillHolder.get() -> HONEY
+                else -> null
+            }
+        }
+
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_cube")
+    }
+
+    //    Plastics    //
+
+    enum class Plastics(override val machineTier: HTMachineTier) : HTItemContent.Tier {
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
+        ;
+
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_plastic")
+    }
+
     //    Ingredients    //
 
     @JvmField
@@ -392,6 +403,9 @@ object RagiumItems {
 
     @JvmField
     val RESIDUAL_COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("residual_coke")
+
+    @JvmField
+    val TALLOW: DeferredItem<Item> = REGISTER.registerSimpleItem("tallow")
 
     @JvmField
     val DEEPANT: DeferredItem<Item> = REGISTER.registerSimpleItem("deepant")
@@ -415,16 +429,10 @@ object RagiumItems {
     val POLYMER_RESIN: DeferredItem<Item> = REGISTER.registerSimpleItem("polymer_resin")
 
     @JvmField
+    val CIRCUIT_BOARD: DeferredItem<Item> = REGISTER.registerSimpleItem("circuit_board")
+
+    @JvmField
     val STELLA_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("stella_plate")
-
-    @JvmField
-    val CRUDE_SILICON: DeferredItem<Item> = REGISTER.registerSimpleItem("crude_silicon")
-
-    @JvmField
-    val SILICON: DeferredItem<Item> = REGISTER.registerSimpleItem("silicon")
-
-    @JvmField
-    val REFINED_SILICON: DeferredItem<Item> = REGISTER.registerSimpleItem("refined_silicon")
 
     @JvmField
     val CRIMSON_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("crimson_crystal")
@@ -466,6 +474,7 @@ object RagiumItems {
         add(COAL_CHIP)
         add(PULP)
         add(RESIDUAL_COKE)
+        add(TALLOW)
         // inorganic
         add(DEEPANT)
         add(GLASS_SHARD)
@@ -475,11 +484,8 @@ object RagiumItems {
         add(SOAP)
         // plastic
         add(POLYMER_RESIN)
+        add(CIRCUIT_BOARD)
         add(STELLA_PLATE)
-        // silicon
-        add(CRUDE_SILICON)
-        add(SILICON)
-        add(REFINED_SILICON)
         // magical
         add(CRIMSON_CRYSTAL)
         add(WARPED_CRYSTAL)
@@ -496,6 +502,8 @@ object RagiumItems {
 
         add(RAGI_TICKET)
     }
+
+    //    Radioactives    //
 
     enum class Radioactives(val level: HTRadioactiveComponent) : HTItemContent {
         URANIUM_FUEL(HTRadioactiveComponent.MEDIUM) {

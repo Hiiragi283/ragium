@@ -149,6 +149,7 @@ internal object RagiumEvents {
         modifyAll(RagiumItems.MATERIALS, DataComponentPatch.Builder::material)
 
         modifyAll(RagiumItems.Circuits.entries, tieredText(RagiumTranslationKeys.CIRCUIT))
+        modifyAll(RagiumItems.Plastics.entries, tieredText(RagiumTranslationKeys.PLASTIC))
 
         modifyAll(RagiumItems.Radioactives.entries) { builder: DataComponentPatch.Builder, radioactive: RagiumItems.Radioactives ->
             builder.set(RagiumComponentTypes.RADIOACTIVE, radioactive.level)

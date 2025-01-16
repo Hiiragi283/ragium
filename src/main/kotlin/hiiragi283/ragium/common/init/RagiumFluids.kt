@@ -44,7 +44,6 @@ enum class RagiumFluids(
 
     // Organics
     SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
-    TALLOW(Color(0xcc9933), "Tallow", "獣脂", TextureType.STICKY),
 
     BIOMASS(Color(0x006600), "Biomass", "バイオマス", TextureType.STICKY),
     GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),

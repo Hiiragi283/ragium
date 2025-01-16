@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
 import net.minecraft.data.PackOutput
@@ -11,6 +12,8 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, RagiumAPI.MOD_ID, "en_us") {
     override fun addTranslations() {
         // Block
+        add(RagiumBlocks.SHAFT, "Shaft")
+
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
         add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")
@@ -30,11 +33,39 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.GRATE, "Grate")
         add(RagiumTranslationKeys.HULL, "hull")
         add(RagiumTranslationKeys.PLASTIC, "Plastic")
+
+        add(HTOreVariant.OVERWORLD, "%s Ore")
+        add(HTOreVariant.DEEP, "Deepslate %s Ore")
+        add(HTOreVariant.NETHER, "Nether %s Ore")
+        add(HTOreVariant.END, "End %s Ore")
         // Fluids
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             add(fluid.typeHolder.get().descriptionId, fluid.enName)
         }
         // Items
+        add(RagiumItems.SWEET_BERRIES_CAKE_PIECE, "A piece of Sweet Berries Cake")
+        add(RagiumItems.MELON_PIE, "Melon Pie")
+
+        add(RagiumItems.BUTTER, "Butter")
+        add(RagiumItems.CARAMEL, "Caramel")
+        add(RagiumItems.DOUGH, "Dough")
+        add(RagiumItems.FLOUR, "Flour")
+
+        add(RagiumItems.CHOCOLATE, "Chocolate")
+        add(RagiumItems.CHOCOLATE_APPLE, "Chocolate Apple")
+        add(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
+        add(RagiumItems.CHOCOLATE_COOKIE, "Chocolate Cookie")
+
+        add(RagiumItems.CINNAMON_STICK, "Cinnamon Stick")
+        add(RagiumItems.CINNAMON_POWDER, "Cinnamon Powder")
+        add(RagiumItems.CINNAMON_ROLL, "Cinnamon Roll")
+
+        add(RagiumItems.MINCED_MEAT, "Minced Meat")
+        add(RagiumItems.MEAT_INGOT, "Meat Ingot")
+        add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
+        add(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
+
+        add(RagiumItems.AMBROSIA, "Ambrosia")
 
         add(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
         add(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
