@@ -63,9 +63,9 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         buildList {
             addAll(RagiumItems.MATERIALS)
 
-            addAll(RagiumItems.Circuits.entries)
-
             addAll(RagiumItems.FOODS)
+
+            add(RagiumItems.FORGE_HAMMER)
 
             addAll(RagiumItems.Circuits.entries)
             addAll(RagiumItems.PRESS_MOLDS)

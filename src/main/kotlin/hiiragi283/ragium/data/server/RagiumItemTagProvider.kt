@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
@@ -41,5 +42,7 @@ class RagiumItemTagProvider(
             getOrCreateRawBuilder(itemTagKey(commonId("circuits/${circuit.machineTier.serializedName}")))
                 .addElement(circuit.id)
         }
+        // Tool
+        getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER.id)
     }
 }

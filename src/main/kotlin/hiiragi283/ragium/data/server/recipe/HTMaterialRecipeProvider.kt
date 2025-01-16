@@ -12,7 +12,6 @@ import net.minecraft.data.recipes.*
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTMaterialRecipeProvider : RecipeProviderChild {
@@ -68,7 +67,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 .pattern("ABA")
                 .pattern(" A ")
                 .define('A', mainPrefix, material)
-                .define('B', Tags.Items.NUGGETS_IRON)
+                .define('B', RagiumItems.FORGE_HAMMER)
                 .unlockedBy("has_input", has(mainPrefix, material))
                 .savePrefixed(output)
             // Compressor
@@ -77,6 +76,32 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 .itemInput(mainPrefix, material, 4)
                 .catalyst(RagiumItems.GEAR_PRESS_MOLD)
                 .itemOutput(gear)
+                .save(output)
+        }
+
+        // Ingot/Gem -> Rod
+        RagiumItems.Rods.entries.forEach { rod: RagiumItems.Rods ->
+            val material: HTMaterialKey = rod.material
+            val mainPrefix: HTTagPrefix = when (rod) {
+                RagiumItems.Rods.DIAMOND -> HTTagPrefix.GEM
+                RagiumItems.Rods.EMERALD -> HTTagPrefix.GEM
+                else -> HTTagPrefix.INGOT
+            }
+            // Shaped Recipe
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, rod, 2)
+                .pattern("AB")
+                .pattern("A ")
+                .define('A', mainPrefix, material)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .unlockedBy("has_input", has(mainPrefix, material))
+                .savePrefixed(output)
+            // Compressor
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.COMPRESSOR)
+                .itemInput(mainPrefix, material)
+                .catalyst(RagiumItems.ROD_PRESS_MOLD)
+                .itemOutput(rod, 2)
                 .save(output)
         }
 

@@ -3,13 +3,16 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:ingots/iron"
+      "tag": "c:rods/iron"
+    },
+    "B": {
+      "item": "ragium:forge_hammer"
     }
   },
   "pattern": [
-    " A ",
-    "A A",
-    " A "
+    "AAA",
+    "ABA",
+    "AAA"
   ],
   "result": {
     "count": 4,

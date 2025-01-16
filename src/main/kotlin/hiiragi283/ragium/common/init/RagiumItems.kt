@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
+import hiiragi283.ragium.common.item.HTCraftingToolItem
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -28,12 +29,6 @@ object RagiumItems {
 
     init {
         registerBlockItems()
-
-        Dusts.entries
-        Gears.entries
-        Gems.entries
-        Ingots.entries
-        RawMaterials.entries
 
         Circuits.entries
         FluidCubes.entries
@@ -99,6 +94,7 @@ object RagiumItems {
     enum class Gears(override val material: HTMaterialKey) : HTItemContent.Material {
         // tier 1
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
 
         // tier 2
@@ -166,9 +162,6 @@ object RagiumItems {
 
         // tier2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
-        // GALENA(RagiumMaterialKeys.GALENA),
-        // PYRITE(RagiumMaterialKeys.PYRITE),
-        // SPHALERITE(RagiumMaterialKeys.SPHALERITE),
 
         // tier 3
         BAUXITE(RagiumMaterialKeys.BAUXITE),
@@ -178,6 +171,31 @@ object RagiumItems {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.RAW_MATERIAL
     }
 
+    enum class Rods(override val material: HTMaterialKey) : HTItemContent.Material {
+        // tier 1
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        COPPER(RagiumMaterialKeys.COPPER),
+        IRON(RagiumMaterialKeys.IRON),
+
+        // tier 2
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        GOLD(RagiumMaterialKeys.GOLD),
+        STEEL(RagiumMaterialKeys.STEEL),
+
+        // tier 3
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
+        DIAMOND(RagiumMaterialKeys.DIAMOND),
+        EMERALD(RagiumMaterialKeys.EMERALD),
+
+        // tier 4
+        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
+        ;
+
+        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_rod")
+        override val tagPrefix: HTTagPrefix = HTTagPrefix.ROD
+    }
+
     @JvmField
     val MATERIALS: List<HTItemContent.Material> = buildList {
         addAll(Dusts.entries)
@@ -185,6 +203,7 @@ object RagiumItems {
         addAll(Gems.entries)
         addAll(Ingots.entries)
         addAll(RawMaterials.entries)
+        addAll(Rods.entries)
     }
 
     //    Foods    //
@@ -280,6 +299,12 @@ object RagiumItems {
         // end-contents
         AMBROSIA,
     )
+
+    //    Tools    //
+
+    @JvmField
+    val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
+        REGISTER.registerItem("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
 
     //    Circuits    //
 

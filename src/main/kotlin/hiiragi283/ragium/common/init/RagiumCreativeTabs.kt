@@ -30,6 +30,8 @@ object RagiumCreativeTabs {
 
                     RagiumItems.FOODS.forEach(output::accept)
 
+                    output.accept(RagiumItems.FORGE_HAMMER)
+
                     RagiumItems.Circuits.entries.forEach(output::accept)
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)

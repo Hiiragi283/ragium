@@ -6,13 +6,16 @@
       "tag": "c:ingots/steel"
     },
     "B": {
+      "item": "ragium:forge_hammer"
+    },
+    "C": {
       "tag": "c:rods"
     }
   },
   "pattern": [
     "AA",
     "AA",
-    " B"
+    "BC"
   ],
   "result": {
     "count": 1,

@@ -21,6 +21,16 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         registerCircuits(output)
         registerCatalysts(output)
         registerPressMolds(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.TOOLS, RagiumItems.FORGE_HAMMER)
+            .pattern(" AA")
+            .pattern("BBA")
+            .pattern(" AA")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', Tags.Items.RODS_WOODEN)
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .savePrefixed(output)
     }
 
     private fun registerCircuits(output: RecipeOutput) {
@@ -99,9 +109,10 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 .shaped(RecipeCategory.MISC, pressMold)
                 .pattern("AA")
                 .pattern("AA")
-                .pattern(" B")
+                .pattern("BC")
                 .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
-                .define('B', prefix.commonTagKey)
+                .define('B', RagiumItems.FORGE_HAMMER)
+                .define('C', prefix.commonTagKey)
                 .unlockedBy("has_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL))
                 .savePrefixed(output)
         }

@@ -214,5 +214,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         bindContents(RagiumItems.Ingots.entries)
         // bindContents(RagiumItems.Plates.entries)
         bindContents(RagiumItems.RawMaterials.entries)
+        bindContents(RagiumItems.Rods.entries)
     }
 }

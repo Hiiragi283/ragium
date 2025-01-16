@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:rod_press_mold"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/dragonium"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:dragonium_rod"
+    }
+  ],
+  "machine_type": "compressor"
+}

@@ -31,9 +31,9 @@ class HTLargeMachineContainerMenu(
         // outputs
         addOutputSlot(4, 6, 1)
         addOutputSlot(5, 7, 1)
-        addOutputSlot(6, 7, 1)
-        addFluidSlot(2, 6, 2)
-        addFluidSlot(3, 7, 2)
+        addOutputSlot(6, 8, 1)
+        addFluidSlot(2, 5, 2)
+        addFluidSlot(3, 6, 2)
         // player inventory
         addPlayerInv()
         // register property

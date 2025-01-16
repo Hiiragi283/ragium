@@ -6,7 +6,7 @@
       "tag": "c:ingots/iron"
     },
     "B": {
-      "tag": "c:nuggets/iron"
+      "item": "ragium:forge_hammer"
     }
   },
   "pattern": [
