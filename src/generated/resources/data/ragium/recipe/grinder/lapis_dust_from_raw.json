@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:raw_materials/lapis"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:lapis_dust"
+    }
+  ],
+  "machine_type": "grinder"
+}

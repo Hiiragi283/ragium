@@ -1,66 +1,83 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.Tags
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 
 object HTMachineRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
-        // Circuits
-        RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
-            // Assembler
-            val silicon: ItemLike = when (circuit) {
-                RagiumItems.Circuits.SIMPLE -> RagiumItems.CRUDE_SILICON
-                RagiumItems.Circuits.BASIC -> RagiumItems.SILICON
-                RagiumItems.Circuits.ADVANCED -> RagiumItems.REFINED_SILICON
-                RagiumItems.Circuits.ELITE -> RagiumItems.STELLA_PLATE
+        // Grate
+        RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.BUILDING_BLOCKS, grate, 4)
+                .pattern(" A ")
+                .pattern("A A")
+                .pattern(" A ")
+                .define('A', HTTagPrefix.INGOT, grate.machineTier.getSteelMetal())
+                .unlockedBy("has_ingot", has(HTTagPrefix.INGOT, grate.machineTier.getSteelMetal()))
+                .savePrefixed(output)
+        }
+        // Casing
+        RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
+            val corner: Block = when (casings) {
+                RagiumBlocks.Casings.SIMPLE -> Blocks.STONE
+                RagiumBlocks.Casings.BASIC -> Blocks.QUARTZ_BLOCK
+                RagiumBlocks.Casings.ADVANCED -> Blocks.POLISHED_DEEPSLATE
+                RagiumBlocks.Casings.ELITE -> Blocks.OBSIDIAN
             }
-            val dust: ItemLike = when (circuit) {
-                RagiumItems.Circuits.SIMPLE -> Items.REDSTONE
-                RagiumItems.Circuits.BASIC -> Items.GLOWSTONE_DUST
-                RagiumItems.Circuits.ADVANCED -> RagiumItems.LUMINESCENCE_DUST
-                RagiumItems.Circuits.ELITE -> RagiumItems.Dusts.RAGI_CRYSTAL
-            }
-
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.ASSEMBLER, circuit.machineTier)
-                .itemInput(silicon)
-                .itemInput(HTTagPrefix.INGOT, circuit.machineTier.getSubMetal())
-                .itemInput(dust)
-                .itemOutput(circuit)
-                .save(output)
+            // Shaped Crafting
+            val grate: HTBlockContent.Tier = casings.machineTier.getGrate()
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.BUILDING_BLOCKS, casings, 3)
+                .pattern("ABA")
+                .pattern("BCB")
+                .pattern("ABA")
+                .define('A', corner)
+                .define('B', grate)
+                .define('C', HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
+                .unlockedBy("has_grate", has(grate))
+                .savePrefixed(output)
+        }
+        // Hull
+        RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
+            // Shaped Crafting
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.BUILDING_BLOCKS, hull, 3)
+                .pattern("AAA")
+                .pattern("ABA")
+                .pattern("CCC")
+                .define('A', HTTagPrefix.INGOT, hull.machineTier.getMainMetal())
+                .define('B', hull.machineTier.getCircuit())
+                .define('C', hull.machineTier.getCasing())
+                .unlockedBy("has_casing", has(hull.machineTier.getCasing()))
+                .savePrefixed(output)
         }
 
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.SIMPLE)
-            .pattern(" A ")
-            .pattern("BCB")
-            .pattern(" A ")
-            .define('A', Tags.Items.INGOTS_COPPER)
-            .define('B', Tags.Items.DUSTS_REDSTONE)
-            .define('C', ItemTags.PLANKS)
-            .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
-            .savePrefixed(output)
-
-        ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.BASIC)
-            .pattern("ABA")
-            .pattern("CDC")
-            .pattern("ABA")
-            .define('A', Tags.Items.GEMS_LAPIS)
-            .define('B', Tags.Items.DUSTS_REDSTONE)
-            .define('C', Tags.Items.DUSTS_GLOWSTONE)
-            .define('D', RagiumItems.Circuits.SIMPLE)
-            .unlockedBy("has_circuit", has(RagiumItems.Circuits.SIMPLE))
-            .savePrefixed(output)
+        // Drum
+        RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
+            // Shaped Crafting
+            val mainIngot: TagKey<Item> = HTTagPrefix.INGOT.createTag(drum.machineTier.getMainMetal())
+            ShapedRecipeBuilder
+                .shaped(RecipeCategory.TRANSPORTATION, drum)
+                .pattern("ABA")
+                .pattern("ACA")
+                .pattern("ABA")
+                .define('A', HTTagPrefix.INGOT, drum.machineTier.getSubMetal())
+                .define('B', mainIngot)
+                .define('C', Items.BUCKET)
+                .unlockedBy("has_ingot", has(mainIngot))
+                .savePrefixed(output)
+        }
     }
 }

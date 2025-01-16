@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/aluminum"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:aluminum_dust"
+    }
+  ],
+  "machine_type": "grinder"
+}

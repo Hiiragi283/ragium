@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/lapis"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:lapis_lazuli"
+    }
+  ],
+  "machine_type": "grinder"
+}

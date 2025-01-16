@@ -3,27 +3,19 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.requires
 import hiiragi283.ragium.data.savePrefixed
-import net.minecraft.core.Holder
 import net.minecraft.data.recipes.*
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTMaterialRecipeProvider : RecipeProviderChild {
-    private lateinit var output: RecipeOutput
-
     override fun buildRecipes(output: RecipeOutput) {
         // Ingot/Gem -> Block
         RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
@@ -69,7 +61,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 RagiumItems.Gears.EMERALD -> HTTagPrefix.GEM
                 else -> HTTagPrefix.INGOT
             }
-
+            // Shaped Recipe
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, gear)
                 .pattern(" A ")
@@ -79,12 +71,34 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 .define('B', Tags.Items.NUGGETS_IRON)
                 .unlockedBy("has_input", has(mainPrefix, material))
                 .savePrefixed(output)
+            // Compressor
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.COMPRESSOR)
+                .itemInput(mainPrefix, material, 4)
+                .catalyst(RagiumItems.GEAR_PRESS_MOLD)
+                .itemOutput(gear)
+                .save(output)
+        }
+
+        // Ore -> Raw
+        registerOreToRaw(output, RagiumMaterialKeys.COPPER, Items.RAW_COPPER)
+        registerOreToRaw(output, RagiumMaterialKeys.GOLD, Items.RAW_GOLD)
+        registerOreToRaw(output, RagiumMaterialKeys.IRON, Items.RAW_IRON)
+
+        RagiumItems.RawMaterials.entries.forEach { raw: RagiumItems.RawMaterials ->
+            registerOreToRaw(output, raw.material, raw)
+        }
+        // Raw/Ingot/Gem -> Dust
+        registerRawToDust(output, RagiumMaterialKeys.REDSTONE, Items.REDSTONE)
+
+        RagiumItems.Dusts.entries.forEach { dust: RagiumItems.Dusts ->
+            registerRawToDust(output, dust.material, dust)
+            registerInputToDust(output, dust, dust)
         }
 
         // Raw/Dust -> Ingot
         RagiumItems.Ingots.entries.forEach { ingot: RagiumItems.Ingots ->
             val material: HTMaterialKey = ingot.material
-
             // Smelting
             SimpleCookingRecipeBuilder
                 .smelting(
@@ -127,22 +141,36 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 ).unlockedBy("has_raw", has(HTTagPrefix.RAW_MATERIAL, material))
                 .save(output, ingot.id.withPath { "blasting/${it}_from_raw" })
         }
+
+        // Dust -> Gem
+        registerDustToGem(output, RagiumMaterialKeys.DIAMOND, Items.DIAMOND)
+        registerDustToGem(output, RagiumMaterialKeys.EMERALD, Items.EMERALD)
+        registerDustToGem(output, RagiumMaterialKeys.LAPIS, Items.LAPIS_LAZULI)
+        registerDustToGem(output, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
+
+        RagiumItems.Gems.entries.forEach { gem: RagiumItems.Gems ->
+            registerDustToGem(output, gem.material, gem)
+        }
     }
 
-    private fun oreToDustRecipe(key: HTMaterialKey, entry: HTMaterialRegistry.Entry) {
-        if (!entry.type.isValidPrefix(HTTagPrefix.ORE)) return
-        val raw: Holder<Item> = entry.getFirstItemOrNull(HTTagPrefix.RAW_MATERIAL) ?: return
-        val subProduct: ItemLike? = entry[HTMaterialPropertyKeys.ORE_SUB_PRODUCT]
-        // Grinder
+    private fun registerOreToRaw(
+        output: RecipeOutput,
+        material: HTMaterialKey,
+        raw: ItemLike,
+        subProduct: ItemLike? = null,
+    ) {
+        // 2x Grinder
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.GRINDER)
-            .itemInput(HTTagPrefix.ORE, key)
+            .itemInput(HTTagPrefix.ORE, material)
             .itemOutput(raw, 2)
-            .save(output)
+            .apply { subProduct?.let(this::itemOutput) }
+            .itemOutput(RagiumItems.SLAG)
+            .saveSuffixed(output, "_2x")
         // 3x Chemical
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.SIMPLE)
-            .itemInput(HTTagPrefix.ORE, key)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .itemInput(HTTagPrefix.ORE, material)
             .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidType.BUCKET_VOLUME / 10)
             .itemOutput(raw, 3)
             .apply { subProduct?.let(this::itemOutput) }
@@ -150,8 +178,8 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
             .saveSuffixed(output, "_3x")
         // 4x Chemical
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.SIMPLE)
-            .itemInput(HTTagPrefix.ORE, key)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .itemInput(HTTagPrefix.ORE, material)
             .fluidInput(RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME / 5)
             .itemOutput(raw, 4)
             .apply { subProduct?.let { itemOutput(it, 2) } }
@@ -159,19 +187,40 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
             .saveSuffixed(output, "_4x")
         // 5x Chemical
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.SIMPLE)
-            .itemInput(HTTagPrefix.ORE, key)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .itemInput(HTTagPrefix.ORE, material)
             .fluidInput(RagiumFluids.MERCURY, FluidType.BUCKET_VOLUME / 2)
             .itemOutput(raw, 5)
             .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME / 2)
             .saveSuffixed(output, "_5x")
+    }
 
+    private fun registerRawToDust(output: RecipeOutput, material: HTMaterialKey, dust: ItemLike) {
         // Grinder
-        val dust: Holder<Item> = entry.getFirstItemOrNull(HTTagPrefix.DUST) ?: return
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.GRINDER)
-            .itemInput(HTTagPrefix.RAW_MATERIAL, key)
+            .itemInput(HTTagPrefix.RAW_MATERIAL, material)
             .itemOutput(dust, 2)
             .saveSuffixed(output, "_from_raw")
+    }
+
+    private fun registerDustToGem(output: RecipeOutput, material: HTMaterialKey, gem: ItemLike) {
+        // Grinder
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(HTTagPrefix.DUST, material)
+            .itemOutput(gem)
+            .saveSuffixed(output, "_from_dust")
+    }
+
+    private fun registerInputToDust(output: RecipeOutput, input: RagiumItems.Dusts, dust: ItemLike) {
+        val origin: HTTagPrefix? = input.originPrefix
+        if (origin == null) return
+        // Grinder
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(origin, input.material)
+            .itemOutput(dust)
+            .saveSuffixed(output, "_from_${origin.serializedName}")
     }
 }

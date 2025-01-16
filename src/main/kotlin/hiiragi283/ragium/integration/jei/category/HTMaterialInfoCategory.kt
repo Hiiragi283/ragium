@@ -11,19 +11,21 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeIngredientRole
+import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 
 class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
-    HTRecipeCategory<HTMaterialKey>(
+    AbstractRecipeCategory<HTMaterialKey>(
         RagiumJEIPlugin.MATERIAL_INFO,
         Component.literal("Material Info"),
         guiHelper.createDrawableItemLike(Items.BOOK),
         18 * 9 + 8,
         18 * 3 + 8,
-    ) {
+    ),
+    HTRecipeCategory<HTMaterialKey> {
     override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialKey, focuses: IFocusGroup) {
         for (prefix: HTTagPrefix in HTTagPrefix.entries) {
             val x: Int = prefix.ordinal % 9

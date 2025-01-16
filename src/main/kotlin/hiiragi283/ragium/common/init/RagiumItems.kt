@@ -64,32 +64,32 @@ object RagiumItems {
 
     //    Materials    //
 
-    enum class Dusts(override val material: HTMaterialKey) : HTItemContent.Material {
+    enum class Dusts(override val material: HTMaterialKey, val originPrefix: HTTagPrefix? = null) : HTItemContent.Material {
         // tier 1
         CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
         ALKALI(RagiumMaterialKeys.ALKALI),
         ASH(RagiumMaterialKeys.ASH),
-        COPPER(RagiumMaterialKeys.COPPER),
-        IRON(RagiumMaterialKeys.IRON),
-        LAPIS(RagiumMaterialKeys.LAPIS),
+        COPPER(RagiumMaterialKeys.COPPER, HTTagPrefix.INGOT),
+        IRON(RagiumMaterialKeys.IRON, HTTagPrefix.INGOT),
+        LAPIS(RagiumMaterialKeys.LAPIS, HTTagPrefix.GEM),
 
         // LEAD(RagiumMaterialKeys.LEAD),
         NITER(RagiumMaterialKeys.NITER),
-        QUARTZ(RagiumMaterialKeys.QUARTZ),
+        QUARTZ(RagiumMaterialKeys.QUARTZ, HTTagPrefix.GEM),
         SALT(RagiumMaterialKeys.SALT),
         SULFUR(RagiumMaterialKeys.SULFUR),
 
         // tier 2
         RAGINITE(RagiumMaterialKeys.RAGINITE),
-        GOLD(RagiumMaterialKeys.GOLD),
+        GOLD(RagiumMaterialKeys.GOLD, HTTagPrefix.INGOT),
         // SILVER(RagiumMaterialKeys.SILVER),
 
         // tier 3
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL),
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, HTTagPrefix.GEM),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM, HTTagPrefix.INGOT),
         BAUXITE(RagiumMaterialKeys.BAUXITE),
-        DIAMOND(RagiumMaterialKeys.DIAMOND),
-        EMERALD(RagiumMaterialKeys.EMERALD),
+        DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
+        EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_dust")

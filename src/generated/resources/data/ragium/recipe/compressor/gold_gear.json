@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:gear_press_mold"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:gold_gear"
+    }
+  ],
+  "machine_type": "compressor"
+}

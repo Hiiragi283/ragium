@@ -9,12 +9,15 @@ import hiiragi283.ragium.integration.jei.stacks
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
+import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredientTypeWithSubtypes
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
+import mezz.jei.api.recipe.RecipeType
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -25,14 +28,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import kotlin.jvm.optionals.getOrNull
 
-class HTMachineRecipeCategory(machine: HTMachineKey, guiHelper: IGuiHelper) :
-    HTRecipeCategory<RecipeHolder<HTMachineRecipe>>(
-        RagiumJEIPlugin.getRecipeType(machine),
-        machine.text,
-        guiHelper.createDrawableItemStack(machine.createItemStack(HTMachineTier.SIMPLE) ?: ItemStack.EMPTY),
-        18 * 8 + 8,
-        18 * 3 + 8,
-    ) {
+class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelper) : HTRecipeCategory<RecipeHolder<HTMachineRecipe>> {
     companion object {
         @JvmField
         val ITEM_TYPE: IIngredientTypeWithSubtypes<Item, ItemStack> = VanillaTypes.ITEM_STACK
@@ -124,6 +120,31 @@ class HTMachineRecipeCategory(machine: HTMachineKey, guiHelper: IGuiHelper) :
         val amount: Long = stack.amount.toLong()
         builder1.addFluidStack(stack.fluid, amount.toLong())
         builder1.setFluidRenderer(amount, false, 16, 16)
+    }
+
+    //    IRecipeCategory    //
+
+    override fun getRecipeType(): RecipeType<RecipeHolder<HTMachineRecipe>> = RagiumJEIPlugin.getRecipeType(machine)
+
+    override fun getTitle(): Component = machine.text
+
+    override fun getWidth(): Int = 18 * 8 + 8
+
+    override fun getHeight(): Int = 18 * 3 + 8
+
+    private var iconCache: ItemStack? = null
+
+    override fun getIcon(): IDrawable? {
+        val stack: ItemStack = if (iconCache != null) {
+            iconCache!!
+        } else {
+            for (tier: HTMachineTier in HTMachineTier.entries) {
+                iconCache = machine.createItemStack(tier)
+                if (iconCache != null) break
+            }
+            iconCache ?: return null
+        }
+        return guiHelper.createDrawableItemStack(stack)
     }
 
     override fun isHandled(recipe: RecipeHolder<HTMachineRecipe>): Boolean = !recipe.value.isSpecial

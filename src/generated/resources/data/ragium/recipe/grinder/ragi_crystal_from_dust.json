@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/ragi_crystal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:ragi_crystal"
+    }
+  ],
+  "machine_type": "grinder"
+}

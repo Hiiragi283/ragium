@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:raw_materials/copper"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:copper_dust"
+    }
+  ],
+  "machine_type": "grinder"
+}

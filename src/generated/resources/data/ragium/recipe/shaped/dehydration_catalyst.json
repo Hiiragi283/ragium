@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:storage_blocks/steel"
+    },
+    "B": {
+      "item": "minecraft:soul_sand"
+    },
+    "C": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:dehydration_catalyst"
+  }
+}

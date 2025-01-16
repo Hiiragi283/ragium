@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/steel"
+    },
+    "B": {
+      "tag": "c:rods"
+    }
+  },
+  "pattern": [
+    "AA",
+    "AA",
+    " B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:rod_press_mold"
+  }
+}

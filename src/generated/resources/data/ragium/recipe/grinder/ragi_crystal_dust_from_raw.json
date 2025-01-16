@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:raw_materials/ragi_crystal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:ragi_crystal_dust"
+    }
+  ],
+  "machine_type": "grinder"
+}

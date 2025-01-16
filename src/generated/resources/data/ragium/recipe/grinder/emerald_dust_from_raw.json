@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:raw_materials/emerald"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:emerald_dust"
+    }
+  ],
+  "machine_type": "grinder"
+}

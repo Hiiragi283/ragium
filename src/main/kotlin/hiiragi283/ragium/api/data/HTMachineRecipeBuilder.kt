@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.machine.HTMachineDefinition
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
@@ -9,7 +10,6 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.minecraft.advancements.Criterion
-import net.minecraft.core.Holder
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -87,10 +87,6 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     //    Output    //
 
-    // fun itemOutput(item: Supplier<out ItemLike>, count: Int = 1): HTMachineRecipeBuilder = itemOutput(item.get(), count)
-
-    fun itemOutput(item: Holder<Item>, count: Int = 1): HTMachineRecipeBuilder = itemOutput(ItemStack(item, count))
-
     fun itemOutput(item: ItemLike, count: Int = 1): HTMachineRecipeBuilder = itemOutput(ItemStack(item, count))
 
     fun itemOutput(stack: ItemStack): HTMachineRecipeBuilder = apply {
@@ -130,7 +126,7 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
     }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        val fixedId: ResourceLocation = id.withPrefix(definition.key.name + '/')
+        val fixedId: ResourceLocation = RagiumAPI.id(id.withPrefix(definition.key.name + '/').path)
         recipeOutput.accept(
             fixedId,
             HTMachineRecipe(

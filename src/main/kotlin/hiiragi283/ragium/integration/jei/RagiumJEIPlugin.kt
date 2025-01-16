@@ -1,9 +1,11 @@
 package hiiragi283.ragium.integration.jei
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.buildMultiMap
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
@@ -30,10 +32,14 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.neoforged.neoforge.registries.DeferredBlock
+import org.slf4j.Logger
 
 @JeiPlugin
 class RagiumJEIPlugin : IModPlugin {
     companion object {
+        @JvmStatic
+        private val LOGGER: Logger = LogUtils.getLogger()
+
         @JvmField
         val PLUGIN_ID: ResourceLocation = RagiumAPI.Companion.id("default")
 
@@ -42,15 +48,14 @@ class RagiumJEIPlugin : IModPlugin {
             RecipeType.create(RagiumAPI.MOD_ID, "material_info", HTMaterialKey::class.java)
 
         @JvmStatic
-        val RECIPE_TYPE_MAP: Map<HTMachineKey, RecipeType<RecipeHolder<HTMachineRecipe>>> by lazy {
-            RagiumAPI.getInstance().machineRegistry.keys.associateWith { key: HTMachineKey ->
-                RecipeType.createRecipeHolderType(RagiumAPI.id(key.name))
-            }
-        }
+        private val RECIPE_TYPE_MAP: MutableMap<HTMachineKey, RecipeType<RecipeHolder<HTMachineRecipe>>> =
+            mutableMapOf()
 
         @JvmStatic
         fun getRecipeType(machine: HTMachineKey): RecipeType<RecipeHolder<HTMachineRecipe>> =
-            RECIPE_TYPE_MAP[machine] ?: error("Unknown machine key: $machine")
+            RECIPE_TYPE_MAP.computeIfAbsent(machine) { key: HTMachineKey ->
+                RecipeType.createRecipeHolderType(RagiumAPI.id(key.name))
+            }
     }
 
     override fun getPluginUid(): ResourceLocation = PLUGIN_ID
@@ -62,7 +67,7 @@ class RagiumJEIPlugin : IModPlugin {
             override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String = ingredient.machineTier.text.string
         }
 
-        RagiumAPI.Companion.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
+        RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
             registration.registerSubtypeInterpreter(holder.asItem(), handler)
         }
     }
@@ -101,7 +106,7 @@ class RagiumJEIPlugin : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        RagiumAPI.getInstance().machineRegistry.keys.forEach { key: HTMachineKey ->
+        RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             HTMachineTier.entries.mapNotNull(key::createItemStack).forEach { stack: ItemStack ->
                 registration.addRecipeCatalysts(getRecipeType(key), stack)
             }

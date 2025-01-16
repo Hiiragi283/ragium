@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.extension.getHTBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -66,6 +67,9 @@ abstract class HTEntityBlock(properties: Properties) :
 
     final override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos): Int =
         super.getAnalogOutputSignal(state, level, pos)
+
+    override fun getMenuProvider(state: BlockState, level: Level, pos: BlockPos): MenuProvider? =
+        level.getHTBlockEntity(pos) as? MenuProvider
 
     final override fun <T : BlockEntity> getTicker(
         level: Level,

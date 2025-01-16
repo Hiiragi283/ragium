@@ -55,6 +55,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         RagiumBlockEntityTypes.REGISTER.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
+        RagiumMenuTypes.REGISTER.register(eventBus)
         RagiumRecipes.SERIALIZER.register(eventBus)
         RagiumRecipes.TYPE.register(eventBus)
 

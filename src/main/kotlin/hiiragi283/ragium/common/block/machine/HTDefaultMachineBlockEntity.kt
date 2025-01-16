@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
+import hiiragi283.ragium.common.inventory.HTDefaultMachineContainerMenu
 import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -28,7 +29,8 @@ class HTDefaultMachineBlockEntity(pos: BlockPos, state: BlockState, override val
         intArrayOf(),
     )
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTDefaultMachineContainerMenu(containerId, playerInventory, itemHandler, this)
 
     override fun getItemHandler(direction: Direction?): LimitedItemHandler = LimitedItemHandler.basic(itemHandler)
 

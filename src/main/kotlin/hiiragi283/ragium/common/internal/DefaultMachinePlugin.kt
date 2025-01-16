@@ -1,11 +1,7 @@
 package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.machine.HTMachineEntityFactory
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineType
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.common.block.machine.HTDefaultMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.HTLargeMachineBlockEntity
@@ -29,7 +25,9 @@ object DefaultMachinePlugin : RagiumPlugin {
 
     override fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {
         // Consumer
+
         // Generator
+
         // Processor
         RagiumMachineKeys.PROCESSORS
             .map(helper::apply)
@@ -45,6 +43,20 @@ object DefaultMachinePlugin : RagiumPlugin {
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeMachineBlockEntity))
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.VALID_TIERS, HTMachineTier.entries.toList())
+
+        helper
+            .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .put(
+                HTMachinePropertyKeys.VALID_TIERS,
+                listOf(HTMachineTier.BASIC, HTMachineTier.ADVANCED, HTMachineTier.ELITE),
+            )
+
+        helper
+            .apply(RagiumMachineKeys.LASER_TRANSFORMER)
+            .put(
+                HTMachinePropertyKeys.VALID_TIERS,
+                listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE),
+            )
 
         helper
             .apply(RagiumMachineKeys.MULTI_SMELTER)

@@ -4,7 +4,9 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.client.screen.HTMachineContainerScreen
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.common.init.RagiumMenuTypes
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.world.entity.LivingEntity
@@ -13,6 +15,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import org.slf4j.Logger
 
@@ -28,6 +31,14 @@ object RagiumClient {
         }
 
         LOGGER.info("Registered client extensions!")
+    }
+
+    @SubscribeEvent
+    private fun registerMenu(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.DEFAULT_MACHINE.get(), ::HTMachineContainerScreen)
+        event.register(RagiumMenuTypes.LARGE_MACHINE.get(), ::HTMachineContainerScreen)
+
+        LOGGER.info("Registered machine screens!")
     }
 
     @SubscribeEvent
