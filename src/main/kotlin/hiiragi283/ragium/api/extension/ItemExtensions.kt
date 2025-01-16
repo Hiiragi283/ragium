@@ -41,7 +41,7 @@ val ItemStack.isMaxCount: Boolean
     get() = count == maxStackSize
 
 val ItemStack.machineTier: HTMachineTier
-    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.PRIMITIVE)
+    get() = getOrDefault(RagiumComponentTypes.MACHINE_TIER, HTMachineTier.BASIC)
 
 //    IItemHandler    //
 

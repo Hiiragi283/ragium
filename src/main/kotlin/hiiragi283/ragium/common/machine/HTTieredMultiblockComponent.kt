@@ -16,7 +16,7 @@ class HTTieredMultiblockComponent(val getter: Function<HTMachineTier, out Suppli
     override fun getType(): HTMultiblockComponent.Type<*> = RagiumMultiblockComponentTypes.TIER.get()
 
     fun getBlock(controller: HTControllerDefinition): Block =
-        (controller.getCapability(RagiumCapabilities.MACHINE_TIER) ?: HTMachineTier.PRIMITIVE)
+        (controller.getCapability(RagiumCapabilities.MACHINE_TIER) ?: HTMachineTier.BASIC)
             .let(getter::apply)
             .get()
 

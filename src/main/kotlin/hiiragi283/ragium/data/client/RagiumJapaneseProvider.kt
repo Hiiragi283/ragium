@@ -47,11 +47,10 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.DEHYDRATION_CATALYST, "脱水触媒")
 
         // Machine
-        add(HTMachineTier.PRIMITIVE, "原始", "原始%s")
-        add(HTMachineTier.SIMPLE, "簡易", "簡易%s")
         add(HTMachineTier.BASIC, "基本", "基本%s")
         add(HTMachineTier.ADVANCED, "発展", "発展%s")
         add(HTMachineTier.ELITE, "精鋭", "精鋭%s")
+        add(HTMachineTier.ULTIMATE, "究極", "究極%s")
 
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")

@@ -3,8 +3,11 @@ package hiiragi283.ragium.api.machine
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.content.HTBlockContent
+import hiiragi283.ragium.api.extension.validTiers
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.common.init.RagiumComponentTypes
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.stream.Stream
@@ -79,5 +82,12 @@ class HTMachineRegistry(
      */
     data class Entry(val type: HTMachineType, override val holder: DeferredBlock<out Block>, val property: HTPropertyHolder) :
         HTPropertyHolder by property,
-        HTBlockContent
+        HTBlockContent {
+        fun createItemStack(tier: HTMachineTier): ItemStack? {
+            if (tier !in validTiers) return null
+            val stack = ItemStack(this)
+            stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
+            return stack
+        }
+    }
 }

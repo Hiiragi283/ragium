@@ -5,7 +5,6 @@ import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.intText
 import hiiragi283.ragium.api.extension.toDataResult
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
@@ -105,11 +104,7 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
      */
     fun createItemStack(tier: HTMachineTier): ItemStack? {
         val entry: HTMachineRegistry.Entry = getEntryOrNull() ?: return null
-        val validTiers: List<HTMachineTier> = entry.getOrDefault(HTMachinePropertyKeys.VALID_TIERS)
-        if (tier !in validTiers) return null
-        val stack = ItemStack(entry)
-        stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
-        return stack
+        return entry.createItemStack(tier)
     }
 
     override fun toString(): String = "HTMachineKey[$name]"

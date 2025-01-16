@@ -47,11 +47,10 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.DEHYDRATION_CATALYST, "Dehydration Catalyst")
 
         // Machine
-        add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
-        add(HTMachineTier.SIMPLE, "Simple", "Simple %s")
         add(HTMachineTier.BASIC, "Basic", "Basic %s")
         add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")
         add(HTMachineTier.ELITE, "Elite", "Elite %s")
+        add(HTMachineTier.ULTIMATE, "Ultimate", "Ultimate %s")
 
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")

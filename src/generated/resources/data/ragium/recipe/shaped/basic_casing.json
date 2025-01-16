@@ -3,13 +3,13 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:quartz_block"
+      "item": "minecraft:stone"
     },
     "B": {
       "item": "ragium:basic_grate"
     },
     "C": {
-      "tag": "c:gears/steel"
+      "tag": "c:gears/iron"
     }
   },
   "pattern": [

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/refined_ragi_steel"
+    },
+    "B": {
+      "item": "ragium:laser_emitter"
+    },
+    "C": {
+      "tag": "c:ingots/deep_steel"
+    },
+    "D": {
+      "item": "ragium:elite_casing"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "components": {
+      "ragium:tier": "elite"
+    },
+    "count": 1,
+    "id": "ragium:laser_transformer"
+  }
+}

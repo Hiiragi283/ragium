@@ -19,7 +19,7 @@ import java.util.function.Supplier
 
 sealed class HTAxisMultiblockComponent(val getter: Function<HTMachineTier, out Supplier<out Block>>) : HTMultiblockComponent {
     fun getBlock(controller: HTControllerDefinition): Block =
-        (controller.getCapability(RagiumCapabilities.MACHINE_TIER) ?: HTMachineTier.PRIMITIVE)
+        (controller.getCapability(RagiumCapabilities.MACHINE_TIER) ?: HTMachineTier.BASIC)
             .let(getter::apply)
             .get()
 

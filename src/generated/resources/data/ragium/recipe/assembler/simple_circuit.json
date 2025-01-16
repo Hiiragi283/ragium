@@ -20,6 +20,5 @@
       "id": "ragium:simple_circuit"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "simple"
+  "machine_type": "assembler"
 }

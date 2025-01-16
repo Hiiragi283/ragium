@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:ingots/aluminum"
     },
     "B": {
-      "tag": "c:ingots/ragium"
+      "tag": "c:ingots/refined_ragi_steel"
     },
     "C": {
       "item": "minecraft:bucket"

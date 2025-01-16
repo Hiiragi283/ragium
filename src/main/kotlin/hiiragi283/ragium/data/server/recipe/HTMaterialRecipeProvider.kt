@@ -194,7 +194,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
             .saveSuffixed(output, "_2x")
         // 3x Chemical
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
             .itemInput(HTTagPrefix.ORE, material)
             .fluidInput(RagiumFluids.HYDROCHLORIC_ACID, FluidType.BUCKET_VOLUME / 10)
             .itemOutput(raw, 3)
@@ -203,7 +203,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
             .saveSuffixed(output, "_3x")
         // 4x Chemical
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
             .itemInput(HTTagPrefix.ORE, material)
             .fluidInput(RagiumFluids.SULFURIC_ACID, FluidType.BUCKET_VOLUME / 5)
             .itemOutput(raw, 4)
@@ -212,7 +212,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
             .saveSuffixed(output, "_4x")
         // 5x Chemical
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ULTIMATE)
             .itemInput(HTTagPrefix.ORE, material)
             .fluidInput(RagiumFluids.MERCURY, FluidType.BUCKET_VOLUME / 2)
             .itemOutput(raw, 5)

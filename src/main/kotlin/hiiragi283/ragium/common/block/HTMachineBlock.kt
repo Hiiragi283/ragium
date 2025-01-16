@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.extension.validTiers
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
@@ -32,7 +33,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
                 .any()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
                 .setValue(RagiumBlockProperties.ACTIVE, false)
-                .setValue(HTMachineTier.PROPERTY, HTMachineTier.PRIMITIVE),
+                .setValue(HTMachineTier.PROPERTY, HTMachineTier.BASIC),
         )
     }
 
@@ -83,9 +84,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
         val entry: HTMachineRegistry.Entry = machineKey.getEntryOrNull() ?: return null
-        val validTiers: List<HTMachineTier> = entry.getOrDefault(HTMachinePropertyKeys.VALID_TIERS)
-        val tier: HTMachineTier = state.machineTier
-        if (tier !in validTiers) return null
+        if (state.machineTier !in entry.validTiers) return null
         return entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
     }
 }

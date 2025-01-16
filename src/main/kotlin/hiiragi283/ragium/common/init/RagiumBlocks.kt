@@ -52,10 +52,10 @@ object RagiumBlocks {
     }
 
     enum class Grates(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredBlock<TransparentBlock> =
@@ -63,10 +63,10 @@ object RagiumBlocks {
     }
 
     enum class Casings(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredBlock<Block> =
@@ -74,11 +74,10 @@ object RagiumBlocks {
     }
 
     enum class Hulls(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        PRIMITIVE(HTMachineTier.PRIMITIVE),
-        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredBlock<TransparentBlock> =
@@ -86,10 +85,10 @@ object RagiumBlocks {
     }
 
     enum class Coils(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
-        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredBlock<RotatedPillarBlock> =
@@ -101,10 +100,10 @@ object RagiumBlocks {
     enum class Drums(override val machineTier: HTMachineTier) :
         HTBlockContent,
         HTMachineTierProvider {
-        SIMPLE(HTMachineTier.SIMPLE),
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredBlock<Block> = REGISTER.registerBlock(
@@ -128,22 +127,22 @@ object RagiumBlocks {
         REFINED_RAGI_STEEL_BLOCK(StorageBlocks.REFINED_RAGI_STEEL),
 
         // casing
-        SIMPLE_CASING(Casings.SIMPLE),
         BASIC_CASING(Casings.BASIC),
         ADVANCED_CASING(Casings.ADVANCED),
         ELITE_CASING(Casings.ELITE),
+        ULTIMATE_CASING(Casings.ULTIMATE),
 
         // hull
-        PRIMITIVE_HULL(Hulls.PRIMITIVE, ::TransparentBlock, true),
-        SIMPLE_HULL(Hulls.SIMPLE, ::TransparentBlock, true),
         BASIC_HULL(Hulls.BASIC, ::TransparentBlock, true),
         ADVANCED_HULL(Hulls.ADVANCED, ::TransparentBlock, true),
+        ELITE_HULL(Hulls.ELITE, ::TransparentBlock, true),
+        ULTIMATE_HULL(Hulls.ULTIMATE, ::TransparentBlock, true),
 
         // coil
-        SIMPLE_COIL(Coils.SIMPLE, ::RotatedPillarBlock, isPillar = true),
         BASIC_COIL(Coils.BASIC, ::RotatedPillarBlock, isPillar = true),
         ADVANCED_COIL(Coils.ADVANCED, ::RotatedPillarBlock, isPillar = true),
         ELITE_COIL(Coils.ELITE, ::RotatedPillarBlock, isPillar = true),
+        ULTIMATE_COIL(Coils.ULTIMATE, ::RotatedPillarBlock, isPillar = true),
         ;
 
         override val holder: DeferredBlock<Block> = REGISTER.registerBlock(

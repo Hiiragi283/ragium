@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/refined_ragi_steel"
+      "tag": "c:ingots/ragi_steel"
     },
     "B": {
-      "item": "ragium:advanced_circuit"
+      "tag": "c:circuits/advanced"
     },
     "C": {
-      "tag": "c:ingots/deep_steel"
+      "tag": "c:ingots/steel"
     },
     "D": {
       "type": "neoforge:components",

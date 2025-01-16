@@ -309,10 +309,10 @@ object RagiumItems {
     //    Circuits    //
 
     enum class Circuits(override val machineTier: HTMachineTier) : HTItemContent.Tier {
-        SIMPLE(HTMachineTier.SIMPLE),
-        BASIC(HTMachineTier.BASIC),
-        ADVANCED(HTMachineTier.ADVANCED),
-        ELITE(HTMachineTier.ELITE),
+        SIMPLE(HTMachineTier.BASIC),
+        BASIC(HTMachineTier.ADVANCED),
+        ADVANCED(HTMachineTier.ELITE),
+        ELITE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_circuit")

@@ -25,5 +25,5 @@
     }
   ],
   "machine_type": "chemical_reactor",
-  "tier": "basic"
+  "tier": "advanced"
 }

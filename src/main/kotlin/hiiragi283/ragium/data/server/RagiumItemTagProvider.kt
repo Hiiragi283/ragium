@@ -2,8 +2,6 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
-import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -39,7 +37,7 @@ class RagiumItemTagProvider(
         }
         // Parts
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
-            getOrCreateRawBuilder(itemTagKey(commonId("circuits/${circuit.machineTier.serializedName}")))
+            getOrCreateRawBuilder(circuit.machineTier.getCircuitTag())
                 .addElement(circuit.id)
         }
         // Tool

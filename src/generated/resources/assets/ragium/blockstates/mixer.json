@@ -2,22 +2,6 @@
   "multipart": [
     {
       "apply": {
-        "model": "ragium:block/primitive_hull"
-      },
-      "when": {
-        "tier": "primitive"
-      }
-    },
-    {
-      "apply": {
-        "model": "ragium:block/simple_hull"
-      },
-      "when": {
-        "tier": "simple"
-      }
-    },
-    {
-      "apply": {
         "model": "ragium:block/basic_hull"
       },
       "when": {
@@ -38,6 +22,14 @@
       },
       "when": {
         "tier": "elite"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/ultimate_hull"
+      },
+      "when": {
+        "tier": "ultimate"
       }
     },
     {

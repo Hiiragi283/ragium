@@ -3,13 +3,13 @@
   "category": "building",
   "key": {
     "A": {
-      "item": "minecraft:obsidian"
+      "item": "minecraft:polished_deepslate"
     },
     "B": {
       "item": "ragium:elite_grate"
     },
     "C": {
-      "tag": "c:gears/dragonium"
+      "tag": "c:gears/deep_steel"
     }
   },
   "pattern": [

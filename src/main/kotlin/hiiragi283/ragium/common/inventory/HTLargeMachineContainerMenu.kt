@@ -24,14 +24,14 @@ class HTLargeMachineContainerMenu(
         addSlot(0, 1, 1)
         addSlot(1, 2, 1)
         addSlot(2, 3, 1)
-        addFluidSlot(0, 1, 2)
-        addFluidSlot(1, 2, 2)
+        addFluidSlot(0, 2, 2)
+        addFluidSlot(1, 3, 2)
         // catalyst
         addSlot(3, 4, 2)
         // outputs
-        addOutputSlot(4, 6, 1)
-        addOutputSlot(5, 7, 1)
-        addOutputSlot(6, 8, 1)
+        addOutputSlot(4, 5, 1)
+        addOutputSlot(5, 6, 1)
+        addOutputSlot(6, 7, 1)
         addFluidSlot(2, 5, 2)
         addFluidSlot(3, 6, 2)
         // player inventory

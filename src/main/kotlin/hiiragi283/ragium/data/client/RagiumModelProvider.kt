@@ -45,11 +45,10 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             val modelBuilder: ItemModelBuilder = withExistingParent(id.toString(), RagiumAPI.id("block/machine_front"))
             HTMachineTier.entries.forEach { tier: HTMachineTier ->
                 val value: Float = when (tier) {
-                    HTMachineTier.PRIMITIVE -> 0.2f
-                    HTMachineTier.SIMPLE -> 0.4f
-                    HTMachineTier.BASIC -> 0.6f
-                    HTMachineTier.ADVANCED -> 0.8f
-                    HTMachineTier.ELITE -> 1f
+                    HTMachineTier.BASIC -> 0.4f
+                    HTMachineTier.ADVANCED -> 0.6f
+                    HTMachineTier.ELITE -> 0.8f
+                    HTMachineTier.ULTIMATE -> 1f
                 }
                 modelBuilder
                     .override()

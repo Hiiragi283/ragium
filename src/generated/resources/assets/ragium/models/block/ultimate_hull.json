@@ -1,0 +1,9 @@
+{
+  "parent": "ragium:block/hull",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "inside": "ragium:block/ultimate_casing",
+    "side": "ragium:block/ultimate_hull",
+    "top": "ragium:block/ragium_block"
+  }
+}

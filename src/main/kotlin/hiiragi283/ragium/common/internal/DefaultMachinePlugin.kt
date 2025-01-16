@@ -42,20 +42,19 @@ object DefaultMachinePlugin : RagiumPlugin {
             .apply(RagiumMachineKeys.BLAST_FURNACE)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeMachineBlockEntity))
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
-            .put(HTMachinePropertyKeys.VALID_TIERS, HTMachineTier.entries.toList())
 
         helper
             .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
             .put(
                 HTMachinePropertyKeys.VALID_TIERS,
-                listOf(HTMachineTier.BASIC, HTMachineTier.ADVANCED, HTMachineTier.ELITE),
+                listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE, HTMachineTier.ULTIMATE),
             )
 
         helper
             .apply(RagiumMachineKeys.LASER_TRANSFORMER)
             .put(
                 HTMachinePropertyKeys.VALID_TIERS,
-                listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE),
+                listOf(HTMachineTier.ELITE, HTMachineTier.ULTIMATE),
             )
 
         helper

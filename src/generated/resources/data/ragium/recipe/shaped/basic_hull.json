@@ -3,10 +3,10 @@
   "category": "building",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "ragium:basic_circuit"
+      "tag": "c:circuits/basic"
     },
     "C": {
       "item": "ragium:basic_casing"

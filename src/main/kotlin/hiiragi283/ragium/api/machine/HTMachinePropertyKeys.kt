@@ -20,9 +20,7 @@ object HTMachinePropertyKeys {
 
     @JvmField
     val VALID_TIERS: HTPropertyKey.Defaulted<List<HTMachineTier>> =
-        HTPropertyKey.ofDefaulted(RagiumAPI.id("valid_tiers")) {
-            listOf(HTMachineTier.SIMPLE, HTMachineTier.BASIC, HTMachineTier.ADVANCED, HTMachineTier.ELITE)
-        }
+        HTPropertyKey.ofDefaulted(RagiumAPI.id("valid_tiers")) { HTMachineTier.entries.toList() }
 
     @JvmField
     val MODEL_ID: HTPropertyKey.Defaulted<ResourceLocation> =

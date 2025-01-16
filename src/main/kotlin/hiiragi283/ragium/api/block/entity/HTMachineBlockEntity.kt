@@ -87,13 +87,13 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
             return InteractionResult.SUCCESS
         }
         // Upgrade machine when clicked with machine hull
-        if (upgrade(level, player, HTMachineTier.BASIC)) {
-            return InteractionResult.SUCCESS
-        }
         if (upgrade(level, player, HTMachineTier.ADVANCED)) {
             return InteractionResult.SUCCESS
         }
         if (upgrade(level, player, HTMachineTier.ELITE)) {
+            return InteractionResult.SUCCESS
+        }
+        if (upgrade(level, player, HTMachineTier.ULTIMATE)) {
             return InteractionResult.SUCCESS
         }
         // Insert fluid from holding stack

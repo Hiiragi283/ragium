@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragium"
+    },
+    "B": {
+      "tag": "c:circuits/ultimate"
+    },
+    "C": {
+      "item": "ragium:ultimate_casing"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "count": 3,
+    "id": "ragium:ultimate_hull"
+  }
+}
