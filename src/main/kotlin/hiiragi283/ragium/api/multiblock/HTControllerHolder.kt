@@ -15,7 +15,7 @@ interface HTControllerHolder {
     fun getController(): HTControllerDefinition?
 
     /**
-     * からマルチブロックの判定結果を返します。
+     * マルチブロックの判定結果を返します。
      * @param consumer エラーメッセージを受け取る対象
      */
     fun collectData(consumer: Consumer<Component> = Consumer {}): HTMultiblockData {

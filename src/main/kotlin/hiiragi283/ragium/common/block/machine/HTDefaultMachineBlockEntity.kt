@@ -16,8 +16,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTBasicMachineBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
-    HTRecipeProcessorBlockEntity(RagiumBlockEntityTypes.BASIC_MACHINE, pos, state) {
+class HTDefaultMachineBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
+    HTRecipeProcessorBlockEntity(RagiumBlockEntityTypes.DEFAULT_MACHINE, pos, state) {
     override val itemHandler: ItemStackHandler = ItemStackHandler(5)
     override val tanks: Array<out HTTieredFluidTank> = Array(2) { HTTieredFluidTank(machineTier) }
     override val processor: HTRecipeProcessor = HTMachineRecipeProcessor.fromMachine(

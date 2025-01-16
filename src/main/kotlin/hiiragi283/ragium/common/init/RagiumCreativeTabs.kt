@@ -31,8 +31,8 @@ object RagiumCreativeTabs {
                     RagiumItems.FOODS.forEach(output::accept)
 
                     RagiumItems.Circuits.entries.forEach(output::accept)
-                    RagiumItems.PressMolds.entries.forEach(output::accept)
-                    RagiumItems.Catalysts.entries.forEach(output::accept)
+                    RagiumItems.PRESS_MOLDS.forEach(output::accept)
+                    RagiumItems.CATALYSTS.forEach(output::accept)
                     RagiumItems.FluidCubes.entries.forEach(output::accept)
 
                     RagiumItems.INGREDIENTS.forEach(output::accept)

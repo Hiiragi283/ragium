@@ -1,10 +1,12 @@
 package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.HTMachineBlock
-import hiiragi283.ragium.common.block.machine.HTBasicMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.HTDefaultMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.HTLargeMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
@@ -31,20 +33,30 @@ object RagiumBlockEntityTypes {
         BlockEntityType.Builder.of(factory, *blocks.map(HTBlockContent::get).toTypedArray()).build(null)
     }
 
+    @JvmStatic
+    private fun <T : HTMachineBlockEntity> registerMachine(
+        path: String,
+        factory: (BlockPos, BlockState, HTMachineKey) -> T,
+    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
+        BlockEntityType.Builder
+            .of(
+                { pos: BlockPos, state: BlockState ->
+                    val machine: HTMachineKey =
+                        (state.block as? HTMachineBlock)?.machineKey ?: RagiumMachineKeys.ASSEMBLER
+                    factory(pos, state, machine)
+                },
+            ).build(null)
+    }
+
     //    Machine    //
 
     @JvmField
-    val BASIC_MACHINE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTBasicMachineBlockEntity>> =
-        REGISTER.register("basic_machine") { _: ResourceLocation? ->
-            BlockEntityType.Builder
-                .of(
-                    { pos: BlockPos, state: BlockState ->
-                        val machine: HTMachineKey =
-                            (state.block as? HTMachineBlock)?.machineKey ?: RagiumMachineKeys.ASSEMBLER
-                        HTBasicMachineBlockEntity(pos, state, machine)
-                    },
-                ).build(null)
-        }
+    val DEFAULT_MACHINE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultMachineBlockEntity>> =
+        registerMachine("default_machine", ::HTDefaultMachineBlockEntity)
+
+    @JvmField
+    val LARGE_MACHINE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLargeMachineBlockEntity>> =
+        registerMachine("large_machine", ::HTLargeMachineBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =

@@ -36,8 +36,6 @@ object RagiumItems {
         RawMaterials.entries
 
         Circuits.entries
-        PressMolds.entries
-        Catalysts.entries
         FluidCubes.entries
         Radioactives.entries
     }
@@ -283,7 +281,7 @@ object RagiumItems {
         AMBROSIA,
     )
 
-    //    Parts    //
+    //    Circuits    //
 
     enum class Circuits(override val machineTier: HTMachineTier) : HTItemContent.Tier {
         SIMPLE(HTMachineTier.SIMPLE),
@@ -293,29 +291,6 @@ object RagiumItems {
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_circuit")
-    }
-
-    enum class PressMolds : HTItemContent {
-        GEAR,
-
-        // PIPE,
-        PLATE,
-        ROD,
-        // WIRE,
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_press_mold")
-    }
-
-    enum class Catalysts : HTItemContent {
-        HEATING,
-        COOLING,
-        OXIDIZATION,
-        REDUCTION,
-        DEHYDRATION,
-        ;
-
-        override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_catalyst")
     }
 
     enum class FluidCubes(val containment: DeferredHolder<Fluid, out Fluid>) : HTItemContent {
@@ -338,6 +313,48 @@ object RagiumItems {
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_cube")
     }
+
+    //    Press Molds    //
+
+    @JvmField
+    val GEAR_PRESS_MOLD: DeferredItem<Item> = REGISTER.registerSimpleItem("gear_press_mold")
+
+    @JvmField
+    val PLATE_PRESS_MOLD: DeferredItem<Item> = REGISTER.registerSimpleItem("plate_press_mold")
+
+    @JvmField
+    val ROD_PRESS_MOLD: DeferredItem<Item> = REGISTER.registerSimpleItem("rod_press_mold")
+
+    @JvmField
+    val PRESS_MOLDS: List<DeferredItem<Item>> = listOf(GEAR_PRESS_MOLD, PLATE_PRESS_MOLD, ROD_PRESS_MOLD)
+
+    //    Catalysts    //
+
+    @JvmField
+    val HEATING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("heating_catalyst")
+
+    @JvmField
+    val COOLING_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("cooling_catalyst")
+
+    @JvmField
+    val OXIDIZATION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("oxidization_catalyst")
+
+    @JvmField
+    val REDUCTION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("reduction_catalyst")
+
+    @JvmField
+    val DEHYDRATION_CATALYST: DeferredItem<Item> = REGISTER.registerSimpleItem("dehydration_catalyst")
+
+    @JvmField
+    val CATALYSTS: List<DeferredItem<Item>> = listOf(
+        HEATING_CATALYST,
+        COOLING_CATALYST,
+        OXIDIZATION_CATALYST,
+        REDUCTION_CATALYST,
+        DEHYDRATION_CATALYST,
+    )
+
+    //    Ingredients    //
 
     @JvmField
     val BEE_WAX: DeferredItem<Item> = REGISTER.registerItem("bee_wax", ::HoneycombItem, itemProperty())

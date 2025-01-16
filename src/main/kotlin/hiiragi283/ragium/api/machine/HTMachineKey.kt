@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.intText
-import hiiragi283.ragium.api.extension.orElse
 import hiiragi283.ragium.api.extension.toDataResult
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumTranslationKeys
@@ -56,18 +55,15 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
     val descriptionText: MutableComponent
         get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
+    fun getEntry(): HTMachineRegistry.Entry = RagiumAPI.getInstance().machineRegistry.getEntry(this)
+
     /**
      * [HTMachineRegistry.Entry]を返します。
      * @return このキーが登録されていない場合はnullを返す
      */
     fun getEntryOrNull(): HTMachineRegistry.Entry? = RagiumAPI.getInstance().machineRegistry.getEntryOrNull(this)
 
-    /**
-     * [getEntryOrNull]がnullでない場合に[action]を実行します。
-     * @return [action]の戻り値を[DataResult]で包みます
-     */
-    fun <T : Any> useEntry(action: (HTMachineRegistry.Entry) -> T): DataResult<T> =
-        getEntryOrNull()?.let(action).toDataResult { "Unknown machine key: $this" }
+    fun getEntryData(): DataResult<HTMachineRegistry.Entry> = getEntryOrNull().toDataResult { "Unknown machine key: $name" }
 
     fun appendTooltip(consumer: Consumer<Component>, tier: HTMachineTier, allowDescription: Boolean = true) {
         consumer.accept(
@@ -97,11 +93,11 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
         }
     }
 
-    fun isConsumer(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.CONSUMER }.orElse(false)
+    fun isConsumer(): Boolean = getEntryOrNull()?.type == HTMachineType.CONSUMER
 
-    fun isGenerator(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.GENERATOR }.orElse(false)
+    fun isGenerator(): Boolean = getEntryOrNull()?.type == HTMachineType.GENERATOR
 
-    fun isProcessor(): Boolean = useEntry { entry: HTMachineRegistry.Entry -> entry.type == HTMachineType.PROCESSOR }.orElse(false)
+    fun isProcessor(): Boolean = getEntryOrNull()?.type == HTMachineType.PROCESSOR
 
     /**
      * 指定された[tier]から[ItemStack]を返します。

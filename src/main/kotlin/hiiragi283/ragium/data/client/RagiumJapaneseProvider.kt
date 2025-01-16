@@ -34,6 +34,18 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             add(fluid.typeHolder.get().descriptionId, fluid.jaName)
         }
+        // Items
+
+        add(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
+        add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")
+        add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
+
+        add(RagiumItems.HEATING_CATALYST, "加熱触媒")
+        add(RagiumItems.COOLING_CATALYST, "冷却触媒")
+        add(RagiumItems.OXIDIZATION_CATALYST, "酸化触媒")
+        add(RagiumItems.REDUCTION_CATALYST, "還元触媒")
+        add(RagiumItems.DEHYDRATION_CATALYST, "脱水触媒")
+
         // Machine
         add(HTMachineTier.PRIMITIVE, "原始", "原始%s")
         add(HTMachineTier.SIMPLE, "簡易", "簡易%s")
@@ -44,6 +56,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumTranslationKeys.MACHINE_COST, "- 処理コスト: %s FE/回")
         add(RagiumTranslationKeys.MACHINE_NAME, "- 機械: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- ティア: %s")
+
+        add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "次の条件を満たしていません: %s (座標: %s)")
+        add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "機械の構造は有効です！")
         // Machine Type
         add(RagiumMachineKeys.BEDROCK_MINER, "岩盤採掘機", "岩盤から鉱物を採掘する")
         add(RagiumMachineKeys.BIOMASS_FERMENTER, "バイオマス発酵槽", "植物からバイオマスを生産する")

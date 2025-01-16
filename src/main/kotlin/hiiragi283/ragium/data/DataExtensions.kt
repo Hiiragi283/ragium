@@ -6,13 +6,20 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import net.minecraft.data.recipes.*
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.LanguageProvider
 import java.util.function.Supplier
 
 //    LanguageProvider    //
 
+@JvmName("addBlock")
 fun LanguageProvider.add(block: Supplier<out Block>, value: String) {
+    add(block.get().descriptionId, value)
+}
+
+@JvmName("addItem")
+fun LanguageProvider.add(block: Supplier<out Item>, value: String) {
     add(block.get().descriptionId, value)
 }
 

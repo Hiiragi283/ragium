@@ -12,7 +12,7 @@ class LimitedItemHandler(private val ioProvider: Function<Int, HTStorageIO>, del
     ForwardingItemHandler(delegate) {
     companion object {
         @JvmStatic
-        fun small(delegate: IItemHandler): IItemHandler = LimitedItemHandler(
+        fun small(delegate: IItemHandler): LimitedItemHandler = LimitedItemHandler(
             mapOf(
                 0 to HTStorageIO.INPUT,
                 1 to HTStorageIO.OUTPUT,
@@ -33,7 +33,7 @@ class LimitedItemHandler(private val ioProvider: Function<Int, HTStorageIO>, del
         )
 
         @JvmStatic
-        fun large(delegate: IItemHandler): IItemHandler = LimitedItemHandler(
+        fun large(delegate: IItemHandler): LimitedItemHandler = LimitedItemHandler(
             mapOf(
                 0 to HTStorageIO.INPUT,
                 1 to HTStorageIO.INPUT,

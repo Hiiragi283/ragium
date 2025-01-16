@@ -4,11 +4,14 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.machine.HTMachineEntityFactory
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.common.block.machine.HTBasicMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.HTDefaultMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.HTLargeMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import java.util.function.BiConsumer
 import java.util.function.Function
 
@@ -31,8 +34,17 @@ object DefaultMachinePlugin : RagiumPlugin {
         RagiumMachineKeys.PROCESSORS
             .map(helper::apply)
             .forEach { builder: HTPropertyHolderBuilder ->
-                builder.put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTBasicMachineBlockEntity))
+                builder.put(
+                    HTMachinePropertyKeys.MACHINE_FACTORY,
+                    HTMachineEntityFactory(::HTDefaultMachineBlockEntity),
+                )
             }
+
+        helper
+            .apply(RagiumMachineKeys.BLAST_FURNACE)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory(::HTLargeMachineBlockEntity))
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.BLAST_FURNACE)
+            .put(HTMachinePropertyKeys.VALID_TIERS, HTMachineTier.entries.toList())
 
         helper
             .apply(RagiumMachineKeys.MULTI_SMELTER)

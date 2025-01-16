@@ -34,6 +34,18 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             add(fluid.typeHolder.get().descriptionId, fluid.enName)
         }
+        // Items
+
+        add(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
+        add(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
+        add(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
+
+        add(RagiumItems.HEATING_CATALYST, "Heating Catalyst")
+        add(RagiumItems.COOLING_CATALYST, "Cooling Catalyst")
+        add(RagiumItems.OXIDIZATION_CATALYST, "Oxidization Catalyst")
+        add(RagiumItems.REDUCTION_CATALYST, "Reduction Catalyst")
+        add(RagiumItems.DEHYDRATION_CATALYST, "Dehydration Catalyst")
+
         // Machine
         add(HTMachineTier.PRIMITIVE, "Primitive", "Primitive %s")
         add(HTMachineTier.SIMPLE, "Simple", "Simple %s")
@@ -44,6 +56,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumTranslationKeys.MACHINE_COST, "- Process Cost: %s FE/times")
         add(RagiumTranslationKeys.MACHINE_NAME, "- Machine Name: %s")
         add(RagiumTranslationKeys.MACHINE_TIER, "- Tier: %s")
+
+        add(RagiumTranslationKeys.MULTI_SHAPE_ERROR, "Not matching condition; %s at %ss")
+        add(RagiumTranslationKeys.MULTI_SHAPE_SUCCESS, "The machine structure is valid!")
         // Machine Type
         add(
             RagiumMachineKeys.BEDROCK_MINER,

@@ -56,8 +56,9 @@ internal object RagiumEvents {
             machines.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
         }
 
-        bindMachines(RagiumBlockEntityTypes.BASIC_MACHINE, RagiumAPI.getInstance().machineRegistry.keys)
+        bindMachines(RagiumBlockEntityTypes.DEFAULT_MACHINE, RagiumAPI.getInstance().machineRegistry.keys)
 
+        bindMachine(RagiumBlockEntityTypes.LARGE_MACHINE, RagiumMachineKeys.BLAST_FURNACE)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
         LOGGER.info("Added external blocks to BlockEntityType!")
@@ -106,6 +107,8 @@ internal object RagiumEvents {
             )
         }
 
+        registerHandlers(RagiumBlockEntityTypes.DEFAULT_MACHINE)
+        registerHandlers(RagiumBlockEntityTypes.LARGE_MACHINE)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         registerHandlers(RagiumBlockEntityTypes.DRUM)

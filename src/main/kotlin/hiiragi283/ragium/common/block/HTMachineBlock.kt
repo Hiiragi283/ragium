@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.machineTier
-import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
-import hiiragi283.ragium.api.machine.HTMachineProvider
-import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -84,8 +81,11 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
         mirror.mirror(state.getValue(BlockStateProperties.HORIZONTAL_FACING)),
     )
 
-    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? = machineKey
-        .getEntryOrNull()
-        ?.get(HTMachinePropertyKeys.MACHINE_FACTORY)
-        ?.create(pos, state, machineKey)
+    override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+        val entry: HTMachineRegistry.Entry = machineKey.getEntryOrNull() ?: return null
+        val validTiers: List<HTMachineTier> = entry.getOrDefault(HTMachinePropertyKeys.VALID_TIERS)
+        val tier: HTMachineTier = state.machineTier
+        if (tier !in validTiers) return null
+        return entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
+    }
 }

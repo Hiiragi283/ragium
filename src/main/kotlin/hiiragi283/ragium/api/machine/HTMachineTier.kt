@@ -105,6 +105,17 @@ enum class HTMachineTier(
         ELITE -> RagiumBlocks.Hulls.ELITE
     }
 
+    fun getCoil(): HTBlockContent.Tier = when (this) {
+        PRIMITIVE -> object : HTBlockContent.Tier {
+            override val holder: DeferredBlock<out Block> = blockHolder("bricks")
+            override val machineTier: HTMachineTier = PRIMITIVE
+        }
+        SIMPLE -> RagiumBlocks.Coils.SIMPLE
+        BASIC -> RagiumBlocks.Coils.BASIC
+        ADVANCED -> RagiumBlocks.Coils.ADVANCED
+        ELITE -> RagiumBlocks.Coils.ELITE
+    }
+
     //    Item    //
 
     fun getCircuit(): HTItemContent.Tier = when (this) {

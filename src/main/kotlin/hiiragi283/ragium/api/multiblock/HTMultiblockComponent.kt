@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState
  * マルチブロックを構成する要素を表すインターフェース
  */
 interface HTMultiblockComponent {
-    val type: Type<*>
+    fun getType(): Type<*>
 
     fun getBlockName(controller: HTControllerDefinition): Component
 

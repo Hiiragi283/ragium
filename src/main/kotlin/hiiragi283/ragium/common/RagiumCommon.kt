@@ -68,6 +68,14 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun sendMessage(event: InterModEnqueueEvent) {
+        registerMaterials()
+        setupProperties()
+        bindItems()
+
+        LOGGER.info("Sent IMC Messages!")
+    }
+
+    private fun registerMaterials() {
         // Alloy
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.DEEP_STEEL, HTMaterialType.ALLOY)
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.NETHERITE, HTMaterialType.ALLOY)
@@ -133,7 +141,12 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.GALENA, HTMaterialType.MINERAL)
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.PYRITE, HTMaterialType.MINERAL)
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.SPHALERITE, HTMaterialType.MINERAL)
+    }
 
+    private fun setupProperties() {
+    }
+
+    private fun bindItems() {
         fun <T> bindContents(contents: List<T>) where T : ItemLike, T : HTMaterialProvider {
             contents.forEach { RagiumIMC.sendMaterialItemIMC(it.tagPrefix, it.material, it) }
         }
@@ -200,7 +213,5 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         bindContents(RagiumItems.Ingots.entries)
         // bindContents(RagiumItems.Plates.entries)
         bindContents(RagiumItems.RawMaterials.entries)
-
-        LOGGER.info("Sent IMC Messages!")
     }
 }

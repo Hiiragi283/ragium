@@ -58,12 +58,10 @@ class HTMachineRecipe(
             }.validate(::validate)
 
         @JvmStatic
-        private fun validate(recipe: HTMachineRecipe): DataResult<HTMachineRecipe> {
-            val entry: HTMachineRegistry.Entry = recipe.machineKey.getEntryOrNull()
-                ?: return DataResult.error { "Unregistered machine key: ${recipe.machineKey}" }
-            val validator: HTMachineRecipeValidator = entry.getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR)
-            return validator.validate(recipe)
-        }
+        private fun validate(recipe: HTMachineRecipe): DataResult<HTMachineRecipe> =
+            recipe.machineKey.getEntryData().flatMap { entry: HTMachineRegistry.Entry ->
+                entry.getOrDefault(HTMachinePropertyKeys.RECIPE_VALIDATOR).validate(recipe)
+            }
 
         @JvmField
         val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTMachineRecipe> = StreamCodec.composite(
