@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:aromatic_compounds"
+    "ragium:aromatic_compounds",
+    "ragium:flowing_aromatic_compounds"
   ]
 }

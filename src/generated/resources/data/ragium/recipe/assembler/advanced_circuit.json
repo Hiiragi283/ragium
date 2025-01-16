@@ -7,11 +7,11 @@
     },
     {
       "count": 1,
-      "tag": "c:ingots/aluminum"
+      "tag": "c:ingots/gold"
     },
     {
       "count": 1,
-      "item": "ragium:luminescence_dust"
+      "item": "minecraft:glowstone_dust"
     }
   ],
   "item_outputs": [
@@ -21,5 +21,5 @@
     }
   ],
   "machine_type": "assembler",
-  "tier": "elite"
+  "tier": "advanced"
 }

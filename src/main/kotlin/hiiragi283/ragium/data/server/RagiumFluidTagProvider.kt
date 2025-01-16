@@ -18,7 +18,8 @@ class RagiumFluidTagProvider(
     override fun addTags(provider: HolderLookup.Provider) {
         RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             getOrCreateRawBuilder(fluid.commonTag)
-                .addElement(fluid.id)
+                .addElement(fluid.stillHolder.id)
+                .addElement(fluid.flowingHolder.id)
         }
     }
 }

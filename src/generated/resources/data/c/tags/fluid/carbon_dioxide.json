@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:carbon_dioxide"
+    "ragium:carbon_dioxide",
+    "ragium:flowing_carbon_dioxide"
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:oxidization_catalyst"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:basic_plastic"
+    }
+  ],
+  "machine_type": "chemical_reactor"
+}

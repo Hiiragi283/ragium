@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:fuel"
+    "ragium:fuel",
+    "ragium:flowing_fuel"
   ]
 }

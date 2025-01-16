@@ -73,7 +73,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             addAll(RagiumItems.PRESS_MOLDS)
             addAll(RagiumItems.CATALYSTS)
             addAll(RagiumItems.INGREDIENTS)
-            // addAll(RagiumItems.Plastics.entries)
+            addAll(RagiumItems.Plastics.entries)
             addAll(RagiumItems.Radioactives.entries)
         }.map(ItemLike::asItem)
             .forEach(::basicItem)

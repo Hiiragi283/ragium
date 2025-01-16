@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:oxidization_catalyst"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 100,
+      "tag": "c:chlorine"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:advanced_plastic"
+    }
+  ],
+  "machine_type": "chemical_reactor"
+}

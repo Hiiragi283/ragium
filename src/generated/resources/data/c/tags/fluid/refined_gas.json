@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:refined_gas"
+    "ragium:refined_gas",
+    "ragium:flowing_refined_gas"
   ]
 }

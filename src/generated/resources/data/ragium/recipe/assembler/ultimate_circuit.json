@@ -7,18 +7,19 @@
     },
     {
       "count": 1,
-      "tag": "c:ingots/copper"
+      "tag": "c:ingots/ragi_alloy"
     },
     {
       "count": 1,
-      "item": "minecraft:redstone"
+      "item": "ragium:ragi_crystal_dust"
     }
   ],
   "item_outputs": [
     {
       "count": 1,
-      "id": "ragium:simple_circuit"
+      "id": "ragium:ultimate_circuit"
     }
   ],
-  "machine_type": "assembler"
+  "machine_type": "assembler",
+  "tier": "ultimate"
 }

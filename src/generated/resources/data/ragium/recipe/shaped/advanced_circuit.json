@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/copper"
+      "tag": "c:gems/lapis"
     },
     "B": {
       "tag": "c:dusts/redstone"
     },
     "C": {
-      "tag": "minecraft:planks"
+      "tag": "c:dusts/glowstone"
+    },
+    "D": {
+      "item": "ragium:basic_circuit"
     }
   },
   "pattern": [
-    " A ",
-    "BCB",
-    " A "
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:simple_circuit"
+    "id": "ragium:advanced_circuit"
   }
 }

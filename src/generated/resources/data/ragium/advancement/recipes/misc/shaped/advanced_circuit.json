@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_redstone": {
+    "has_circuit": {
       "conditions": {
         "items": [
           {
-            "items": "#c:dusts/redstone"
+            "items": "ragium:basic_circuit"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/simple_circuit"
+        "recipe": "ragium:shaped/advanced_circuit"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_redstone"
+      "has_circuit"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/simple_circuit"
+      "ragium:shaped/advanced_circuit"
     ]
   }
 }

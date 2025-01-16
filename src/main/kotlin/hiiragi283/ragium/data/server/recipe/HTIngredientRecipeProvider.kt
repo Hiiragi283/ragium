@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -15,10 +16,12 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.FluidType
+import java.util.function.Supplier
 
 object HTIngredientRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
-        registerCircuitBoards(output)
+        registerPlastics(output)
         registerCircuits(output)
         registerCatalysts(output)
         registerPressMolds(output)
@@ -34,13 +37,47 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .savePrefixed(output)
     }
 
-    private fun registerCircuitBoards(output: RecipeOutput) {
+    private fun registerPlastics(output: RecipeOutput) {
+        fun register(result: ItemLike, builder: Supplier<HTMachineRecipeBuilder>) {
+            builder
+                .get()
+                .itemInput(RagiumItems.POLYMER_RESIN)
+                .itemOutput(result)
+                .save(output)
+            builder
+                .get()
+                .itemInput(RagiumItems.POLYMER_RESIN)
+                .catalyst(RagiumItems.OXIDIZATION_CATALYST)
+                .itemOutput(result, 2)
+                .saveSuffixed(output, "_alt")
+        }
+
+        register(RagiumItems.Plastics.BASIC) {
+            HTMachineRecipeBuilder.create(RagiumMachineKeys.CHEMICAL_REACTOR)
+        }
+        register(RagiumItems.Plastics.ADVANCED) {
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+                .fluidInput(RagiumFluids.CHLORINE, FluidType.BUCKET_VOLUME / 10)
+        }
+        register(RagiumItems.Plastics.ELITE) {
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+                .fluidInput(RagiumFluids.HYDROGEN_FLUORIDE, FluidType.BUCKET_VOLUME / 5)
+        }
+        register(RagiumItems.Plastics.ULTIMATE) {
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+                .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME / 2)
+        }
+
         RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
-            // Compressor
+            // Circuit Board
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.COMPRESSOR, plastic.machineTier)
                 .itemInput(plastic)
                 .itemInput(RagiumItems.Dusts.QUARTZ)
+                .catalyst(RagiumItems.PLATE_PRESS_MOLD)
                 .itemOutput(RagiumItems.CIRCUIT_BOARD, plastic.ordinal + 1)
                 .savePrefixed(output, "${plastic.machineTier.serializedName}_")
         }
@@ -50,10 +87,10 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
             // Assembler
             val dust: ItemLike = when (circuit) {
-                RagiumItems.Circuits.SIMPLE -> Items.REDSTONE
-                RagiumItems.Circuits.BASIC -> Items.GLOWSTONE_DUST
-                RagiumItems.Circuits.ADVANCED -> RagiumItems.LUMINESCENCE_DUST
-                RagiumItems.Circuits.ELITE -> RagiumItems.Dusts.RAGI_CRYSTAL
+                RagiumItems.Circuits.BASIC -> Items.REDSTONE
+                RagiumItems.Circuits.ADVANCED -> Items.GLOWSTONE_DUST
+                RagiumItems.Circuits.ELITE -> RagiumItems.LUMINESCENCE_DUST
+                RagiumItems.Circuits.ULTIMATE -> RagiumItems.Dusts.RAGI_CRYSTAL
             }
 
             HTMachineRecipeBuilder
@@ -66,7 +103,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         }
 
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.SIMPLE)
+            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.BASIC)
             .pattern(" A ")
             .pattern("BCB")
             .pattern(" A ")
@@ -77,15 +114,15 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .savePrefixed(output)
 
         ShapedRecipeBuilder
-            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.BASIC)
+            .shaped(RecipeCategory.MISC, RagiumItems.Circuits.ADVANCED)
             .pattern("ABA")
             .pattern("CDC")
             .pattern("ABA")
             .define('A', Tags.Items.GEMS_LAPIS)
             .define('B', Tags.Items.DUSTS_REDSTONE)
             .define('C', Tags.Items.DUSTS_GLOWSTONE)
-            .define('D', RagiumItems.Circuits.SIMPLE)
-            .unlockedBy("has_circuit", has(RagiumItems.Circuits.SIMPLE))
+            .define('D', RagiumItems.Circuits.BASIC)
+            .unlockedBy("has_circuit", has(RagiumItems.Circuits.BASIC))
             .savePrefixed(output)
     }
 

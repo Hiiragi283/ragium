@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:air"
+    "ragium:air",
+    "ragium:flowing_air"
   ]
 }

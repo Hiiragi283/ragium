@@ -114,10 +114,10 @@ enum class HTMachineTier(
     //    Item    //
 
     fun getCircuit(): HTItemContent.Tier = when (this) {
-        BASIC -> RagiumItems.Circuits.SIMPLE
-        ADVANCED -> RagiumItems.Circuits.BASIC
-        ELITE -> RagiumItems.Circuits.ADVANCED
-        ULTIMATE -> RagiumItems.Circuits.ELITE
+        BASIC -> RagiumItems.Circuits.BASIC
+        ADVANCED -> RagiumItems.Circuits.ADVANCED
+        ELITE -> RagiumItems.Circuits.ELITE
+        ULTIMATE -> RagiumItems.Circuits.ULTIMATE
     }
 
     fun getCircuitTag(): TagKey<Item> = itemTagKey(commonId("circuits/$serializedName"))

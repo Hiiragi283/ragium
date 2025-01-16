@@ -10,11 +10,13 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
+import hiiragi283.ragium.common.capability.HTCubeFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -29,6 +31,7 @@ import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import org.slf4j.Logger
 import java.util.function.Supplier
@@ -65,7 +68,7 @@ internal object RagiumEvents {
     }
 
     @SubscribeEvent
-    fun registerCapabilities(event: RegisterCapabilitiesEvent) {
+    fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // All Blocks
         fun <T : Any, C> registerForBlocks(capability: BlockCapability<T, C>, provider: IBlockCapabilityProvider<T, C>) {
             for (block: Block in BuiltInRegistries.BLOCK) {
@@ -122,7 +125,33 @@ internal object RagiumEvents {
             RagiumBlocks.ENERGY_NETWORK_INTERFACE.get(),
         )
 
-        LOGGER.info("Registered capabilities!")
+        LOGGER.info("Registered Block Capabilities!")
+    }
+
+    @SubscribeEvent
+    fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+        RagiumItems.FluidCubes.entries.forEach { fluidCube: RagiumItems.FluidCubes ->
+            event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                { stack: ItemStack, _: Void? -> HTCubeFluidHandler(fluidCube, stack) },
+                fluidCube,
+            )
+        }
+
+        event.registerItem(
+            Capabilities.FluidHandler.ITEM,
+            { stack: ItemStack, _: Void? ->
+                FluidHandlerItemStack.SwapEmpty(
+                    RagiumComponentTypes.FLUID_CONTENT,
+                    stack,
+                    ItemStack(stack.item),
+                    stack.machineTier.tankCapacity,
+                )
+            },
+            *RagiumBlocks.Drums.entries.toTypedArray(),
+        )
+
+        LOGGER.info("Registered Item Capabilities!")
     }
 
     @SubscribeEvent

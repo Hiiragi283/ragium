@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:plate_press_mold"
+  },
   "item_inputs": [
     {
       "count": 1,

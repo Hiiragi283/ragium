@@ -15,7 +15,7 @@
             {
               "function": "minecraft:copy_components",
               "include": [
-                "ragium:drum_content"
+                "ragium:fluid_content"
               ],
               "source": "block_entity"
             }

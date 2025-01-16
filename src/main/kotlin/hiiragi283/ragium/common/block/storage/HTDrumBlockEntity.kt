@@ -43,13 +43,13 @@ class HTDrumBlockEntity(pos: BlockPos, state: BlockState, override val machineTi
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
         val content: SimpleFluidContent =
-            componentInput.getOrDefault(RagiumComponentTypes.DRUM_CONTENT, SimpleFluidContent.EMPTY)
+            componentInput.getOrDefault(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.EMPTY)
         fluidTank.fluid = content.copy()
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
-        components.set(RagiumComponentTypes.DRUM_CONTENT, SimpleFluidContent.copyOf(fluidTank.fluid))
+        components.set(RagiumComponentTypes.FLUID_CONTENT, SimpleFluidContent.copyOf(fluidTank.fluid))
     }
 
     override fun onRightClicked(

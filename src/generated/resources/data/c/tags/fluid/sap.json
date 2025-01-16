@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:sap"
+    "ragium:sap",
+    "ragium:flowing_sap"
   ]
 }

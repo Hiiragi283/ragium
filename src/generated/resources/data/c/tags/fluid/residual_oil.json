@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:residual_oil"
+    "ragium:residual_oil",
+    "ragium:flowing_residual_oil"
   ]
 }

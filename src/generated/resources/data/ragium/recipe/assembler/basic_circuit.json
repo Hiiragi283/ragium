@@ -7,11 +7,11 @@
     },
     {
       "count": 1,
-      "tag": "c:ingots/gold"
+      "tag": "c:ingots/copper"
     },
     {
       "count": 1,
-      "item": "minecraft:glowstone_dust"
+      "item": "minecraft:redstone"
     }
   ],
   "item_outputs": [
@@ -20,6 +20,5 @@
       "id": "ragium:basic_circuit"
     }
   ],
-  "machine_type": "assembler",
-  "tier": "advanced"
+  "machine_type": "assembler"
 }

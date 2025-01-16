@@ -23,27 +23,58 @@ object RagiumCreativeTabs {
                 .title(Component.literal("Ragium - Ingredient"))
                 .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    // Material Blocks
                     RagiumBlocks.Ores.entries.forEach(output::accept)
-
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
-                    RagiumBlocks.LEDBlocks.entries.forEach(output::accept)
+                    // Material Items
+                    RagiumItems.Dusts.entries.forEach(output::accept)
+                    output.accept(RagiumItems.BEE_WAX)
+                    output.accept(RagiumItems.PULP)
+                    output.accept(RagiumItems.DEEPANT)
 
-                    RagiumItems.MATERIALS.forEach(output::accept)
+                    RagiumItems.Gears.entries.forEach(output::accept)
 
+                    output.accept(RagiumItems.RESIDUAL_COKE)
+                    RagiumItems.RawResources.entries.forEach(output::accept)
+                    output.accept(RagiumItems.SLAG)
+                    output.accept(RagiumItems.CRIMSON_CRYSTAL)
+                    output.accept(RagiumItems.WARPED_CRYSTAL)
+
+                    RagiumItems.Ingots.entries.forEach(output::accept)
+
+                    RagiumItems.Rods.entries.forEach(output::accept)
+                    output.accept(RagiumItems.CARBON_ELECTRODE)
+                    output.accept(RagiumItems.BLAZING_CARBON_ELECTRODE)
+                    output.accept(RagiumItems.CHARGED_CARBON_ELECTRODE)
+                    // Foods
                     RagiumItems.FOODS.forEach(output::accept)
-
+                    // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
-
-                    output.accept(RagiumItems.CIRCUIT_BOARD)
-                    RagiumItems.Circuits.entries.forEach(output::accept)
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)
-                    RagiumItems.FluidCubes.entries.forEach(output::accept)
+                    // Circuits
+                    output.accept(RagiumItems.POLYMER_RESIN)
                     RagiumItems.Plastics.entries.forEach(output::accept)
+                    output.accept(RagiumItems.CIRCUIT_BOARD)
+                    RagiumItems.Circuits.entries.forEach(output::accept)
+                    // Ingredients
+                    RagiumItems.FluidCubes.entries.forEach(output::accept)
 
                     buildList {
                         addAll(RagiumItems.INGREDIENTS)
+
+                        remove(RagiumItems.BEE_WAX)
+                        remove(RagiumItems.BLAZING_CARBON_ELECTRODE)
+                        remove(RagiumItems.CARBON_ELECTRODE)
+                        remove(RagiumItems.CHARGED_CARBON_ELECTRODE)
                         remove(RagiumItems.CIRCUIT_BOARD)
+                        remove(RagiumItems.CRIMSON_CRYSTAL)
+                        remove(RagiumItems.DEEPANT)
+                        remove(RagiumItems.POLYMER_RESIN)
+                        remove(RagiumItems.PULP)
+                        remove(RagiumItems.RESIDUAL_COKE)
+                        remove(RagiumItems.SLAG)
+                        remove(RagiumItems.WARPED_CRYSTAL)
                     }.forEach(output::accept)
                     RagiumItems.Radioactives.entries.forEach(output::accept)
                 }.build()
@@ -58,17 +89,18 @@ object RagiumCreativeTabs {
                 .icon { ItemStack(RagiumBlocks.Hulls.ELITE) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     buildList {
+                        // Components
                         addAll(RagiumBlocks.Grates.entries)
                         addAll(RagiumBlocks.Casings.entries)
                         addAll(RagiumBlocks.Hulls.entries)
                         addAll(RagiumBlocks.Coils.entries)
 
                         add(RagiumBlocks.SHAFT)
-
+                        // Utilities
                         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
                     }.forEach(output::accept)
 
-                    // Machine
+                    // Machines
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
                             .getInstance()
@@ -78,6 +110,7 @@ object RagiumCreativeTabs {
                             .forEach(output::accept)
                     }
 
+                    RagiumBlocks.LEDBlocks.entries.forEach(output::accept)
                     RagiumBlocks.Decorations.entries.forEach(output::accept)
                 }.build()
         }
@@ -90,6 +123,8 @@ object RagiumCreativeTabs {
                 .title(Component.literal("Ragium - Storage"))
                 .icon { ItemStack(RagiumBlocks.Drums.ELITE) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                    // Crate
+                    // Drum
                     RagiumBlocks.Drums.entries.forEach(output::accept)
                 }.build()
         }

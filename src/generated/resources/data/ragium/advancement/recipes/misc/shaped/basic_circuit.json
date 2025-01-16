@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_circuit": {
+    "has_redstone": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:simple_circuit"
+            "items": "#c:dusts/redstone"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_circuit"
+      "has_redstone"
     ]
   ],
   "rewards": {

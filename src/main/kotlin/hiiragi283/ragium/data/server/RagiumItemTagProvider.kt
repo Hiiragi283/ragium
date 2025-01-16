@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTItemContent
+import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -9,6 +10,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagBuilder
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
@@ -47,6 +49,11 @@ class RagiumItemTagProvider(
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
             getOrCreateRawBuilder(circuit.machineTier.getCircuitTag())
                 .addElement(circuit.id)
+        }
+
+        val plates: TagBuilder = getOrCreateRawBuilder(HTTagPrefix.PLATE.commonTagKey)
+        RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
+            plates.addElement(plastic.id)
         }
         // Tool
         getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER.id)

@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:naphtha"
+    "ragium:naphtha",
+    "ragium:flowing_naphtha"
   ]
 }

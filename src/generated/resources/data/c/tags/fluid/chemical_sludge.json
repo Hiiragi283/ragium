@@ -1,5 +1,6 @@
 {
   "values": [
-    "ragium:chemical_sludge"
+    "ragium:chemical_sludge",
+    "ragium:flowing_chemical_sludge"
   ]
 }

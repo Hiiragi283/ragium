@@ -69,7 +69,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                                         .apply(
                                             CopyComponentsFunction
                                                 .copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                                                .include(RagiumComponentTypes.DRUM_CONTENT.get()),
+                                                .include(RagiumComponentTypes.FLUID_CONTENT.get()),
                                         ),
                                 ),
                         ),

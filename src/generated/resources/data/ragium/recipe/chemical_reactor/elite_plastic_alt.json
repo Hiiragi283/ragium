@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:oxidization_catalyst"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 200,
+      "tag": "c:hydrogen_fluoride"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:polymer_resin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:elite_plastic"
+    }
+  ],
+  "machine_type": "chemical_reactor"
+}

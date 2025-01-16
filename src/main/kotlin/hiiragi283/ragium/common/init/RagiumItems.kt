@@ -306,10 +306,10 @@ object RagiumItems {
     //    Circuits    //
 
     enum class Circuits(override val machineTier: HTMachineTier) : HTItemContent.Tier {
-        SIMPLE(HTMachineTier.BASIC),
-        BASIC(HTMachineTier.ADVANCED),
-        ADVANCED(HTMachineTier.ELITE),
-        ELITE(HTMachineTier.ULTIMATE),
+        BASIC(HTMachineTier.BASIC),
+        ADVANCED(HTMachineTier.ADVANCED),
+        ELITE(HTMachineTier.ELITE),
+        ULTIMATE(HTMachineTier.ULTIMATE),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_circuit")
@@ -358,7 +358,7 @@ object RagiumItems {
     //    Fluid Cubes    //
 
     enum class FluidCubes(val containment: DeferredHolder<Fluid, out Fluid>) : HTItemContent {
-        WATER(fluidHolder("fluid")),
+        WATER(fluidHolder("water")),
         LAVA(fluidHolder("lava")),
         MILK(NeoForgeMod.MILK),
         HONEY(RagiumFluids.HONEY.stillHolder),
