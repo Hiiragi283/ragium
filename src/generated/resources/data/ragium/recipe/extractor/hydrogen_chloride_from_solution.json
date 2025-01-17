@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:hydrochloric_acid"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:hydrogen_chloride"
+    },
+    {
+      "amount": 1000,
+      "id": "minecraft:water"
+    }
+  ],
+  "machine_type": "extractor",
+  "tier": "elite"
+}

@@ -9,6 +9,8 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.data.recipes.*
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagBuilder
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
@@ -109,3 +111,11 @@ fun SimpleCookingRecipeBuilder.savePrefixed(output: RecipeOutput) {
 fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "stonecutting/")
 }
+
+//    TagBuilder    //
+
+fun TagBuilder.addElement(holder: DeferredHolder<*, *>): TagBuilder = addElement(holder.id)
+
+fun TagBuilder.addElement(content: HTContent<*>): TagBuilder = addElement(content.id)
+
+fun TagBuilder.addTag(tagKey: TagKey<*>): TagBuilder = addTag(tagKey.location)

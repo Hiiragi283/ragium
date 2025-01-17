@@ -3,26 +3,25 @@
   "fluid_inputs": [
     {
       "amount": 1000,
-      "tag": "c:plant_oil"
-    }
-  ],
-  "fluid_outputs": [
+      "tag": "c:aromatic_compounds"
+    },
     {
       "amount": 1000,
-      "id": "ragium:glycerol"
+      "tag": "c:mixture_acid"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/alkali"
+      "tag": "c:sands"
     }
   ],
   "item_outputs": [
     {
-      "count": 4,
-      "id": "ragium:soap"
+      "count": 16,
+      "id": "minecraft:tnt"
     }
   ],
-  "machine_type": "mixer"
+  "machine_type": "mixer",
+  "tier": "advanced"
 }

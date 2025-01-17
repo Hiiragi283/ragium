@@ -3,25 +3,73 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTChemicalRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
         registerNitrogen(output)
+        registerFluorine(output)
 
         registerAlkali(output)
         registerAluminum(output)
         registerSulfur(output)
         registerChlorine(output)
+    }
+
+    private fun solidSolution(
+        output: RecipeOutput,
+        solid: HTMaterialProvider,
+        solution: RagiumFluids,
+        tier: HTMachineTier = HTMachineTier.BASIC,
+    ) {
+        // Gas -> Solution
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER, tier)
+            .itemInput(solid)
+            .fluidInput(Tags.Fluids.WATER)
+            .fluidOutput(solution)
+            .save(output)
+        // Solution -> Gas
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, tier)
+            .fluidInput(solution)
+            .itemOutput(solid)
+            .fluidOutput(Fluids.WATER)
+            .save(output, RecipeBuilder.getDefaultRecipeId(solid).withSuffix("_from_solution"))
+    }
+
+    private fun gasSolution(
+        output: RecipeOutput,
+        gas: RagiumFluids,
+        solution: RagiumFluids,
+        tier: HTMachineTier = HTMachineTier.BASIC,
+    ) {
+        // Gas -> Solution
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER, tier)
+            .fluidInput(gas)
+            .fluidInput(Tags.Fluids.WATER)
+            .fluidOutput(solution)
+            .save(output)
+        // Solution -> Gas
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, tier)
+            .fluidInput(solution)
+            .fluidOutput(gas)
+            .fluidOutput(Fluids.WATER)
+            .save(output, gas.id.withSuffix("_from_solution"))
     }
 
     private fun registerNitrogen(output: RecipeOutput) {
@@ -58,6 +106,48 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .fluidInput(RagiumFluids.SULFURIC_ACID)
             .fluidOutput(RagiumFluids.MIXTURE_ACID, FluidType.BUCKET_VOLUME * 2)
             .save(output)
+        // Nitration
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)
+            .itemInput(Tags.Items.STRINGS)
+            .itemInput(Items.PAPER)
+            .fluidInput(RagiumFluids.GLYCEROL)
+            .fluidInput(RagiumFluids.MIXTURE_ACID)
+        // .itemOutput()
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)
+            .itemInput(Tags.Items.SANDS)
+            .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS)
+            .fluidInput(RagiumFluids.MIXTURE_ACID)
+            .itemOutput(Items.TNT, 16)
+            .save(output)
+    }
+
+    private fun registerFluorine(output: RecipeOutput) {
+        // Glowstone -> 4x CaF2
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.GLOWSTONE)
+            .itemOutput(RagiumItems.RawResources.FLUORITE, 4)
+            .itemOutput(Items.GOLD_NUGGET)
+            .saveSuffixed(output, "_from_glowstone")
+        // Sea Lantern -> 4x CaF2
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.SEA_LANTERN)
+            .itemOutput(RagiumItems.RawResources.FLUORITE, 6)
+            .saveSuffixed(output, "_from_sea_lantern")
+
+        // CaF2 + H2SO4 -> CaSO4 + 2x HF
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .itemInput(RagiumItems.RawResources.FLUORITE)
+            .fluidInput(RagiumFluids.SULFURIC_ACID)
+            .fluidOutput(RagiumFluids.HYDROGEN_FLUORIDE)
+            .save(output)
+        // HF + H2O <-> HF(aq)
+        gasSolution(output, RagiumFluids.HYDROGEN_FLUORIDE, RagiumFluids.HYDROFLUORIC_ACID, HTMachineTier.ELITE)
     }
 
     private fun registerAlkali(output: RecipeOutput) {
@@ -73,6 +163,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .itemInput(RagiumItems.Dusts.ALKALI)
             .fluidInput(RagiumFluids.PLANT_OIL)
             .itemOutput(RagiumItems.SOAP, 4)
+            .fluidOutput(RagiumFluids.GLYCEROL)
             .saveSuffixed(output, "_from_seed_oil")
         // Alkali + Tallow -> Soap
         HTMachineRecipeBuilder
@@ -80,14 +171,24 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .itemInput(RagiumItems.Dusts.ALKALI)
             .itemInput(RagiumItems.TALLOW)
             .itemOutput(RagiumItems.SOAP, 8)
+            .fluidOutput(RagiumFluids.GLYCEROL)
             .saveSuffixed(output, "_from_tallow")
 
-        // Alkali + H2O -> Alkali Solution
+        // Alkali + H2O <-> Alkali Solution
+        solidSolution(output, RagiumItems.Dusts.ALKALI, RagiumFluids.ALKALI_SOLUTION)
+        // Alkali Solution + SiO2 -> Sodium Silicate
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .itemInput(RagiumItems.Dusts.ALKALI)
-            .fluidInput(Tags.Fluids.WATER)
-            .fluidOutput(RagiumFluids.ALKALI_SOLUTION)
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .itemInput(RagiumItems.Dusts.QUARTZ)
+            .fluidInput(RagiumFluids.ALKALI_SOLUTION, FluidType.BUCKET_VOLUME * 2)
+            .catalyst(RagiumItems.HEATING_CATALYST)
+            .fluidOutput(RagiumFluids.SODIUM_SILICATE)
+            .save(output)
+        // Sodium Silicate -> Sponge
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .fluidInput(RagiumFluids.SODIUM_SILICATE)
+            .itemOutput(Items.SPONGE)
             .save(output)
     }
 
@@ -120,7 +221,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
             .itemInput(RagiumItems.Dusts.ALKALI, 3)
             .itemInput(RagiumItems.Dusts.ALUMINUM)
-            .fluidInput(RagiumFluids.HYDROGEN_FLUORIDE, FluidType.BUCKET_VOLUME * 6)
+            .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME * 6)
             .itemOutput(RagiumItems.RawResources.CRYOLITE)
             .fluidOutput(RagiumFluids.HYDROGEN, FluidType.BUCKET_VOLUME * 3)
             .save(output)
@@ -160,13 +261,8 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
     }
 
     private fun registerChlorine(output: RecipeOutput) {
-        // NaCl + H2O -> NaCl(aq)
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .itemInput(RagiumItems.Dusts.SALT)
-            .fluidInput(Tags.Fluids.WATER)
-            .fluidOutput(RagiumFluids.BRINE)
-            .save(output)
+        // NaCl + H2O <-> NaCl(aq)
+        solidSolution(output, RagiumItems.Dusts.SALT, RagiumFluids.BRINE)
         // 2x NaCl(aq) -> H2 + Cl2 + 2x NaOH
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
@@ -190,13 +286,8 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .fluidInput(RagiumFluids.CHLORINE)
             .fluidOutput(RagiumFluids.HYDROGEN_CHLORIDE, FluidType.BUCKET_VOLUME * 2)
             .save(output)
-        // HCl + H2O -> HCl(aq)
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.MIXER)
-            .fluidInput(RagiumFluids.HYDROGEN_CHLORIDE)
-            .fluidInput(Tags.Fluids.WATER)
-            .fluidOutput(RagiumFluids.HYDROCHLORIC_ACID)
-            .save(output)
+        // HCl + H2O <-> HCl(aq)
+        gasSolution(output, RagiumFluids.HYDROGEN_CHLORIDE, RagiumFluids.HYDROCHLORIC_ACID, HTMachineTier.ELITE)
 
         // HNO3 + 3x HCl -> 4x Aqua Regia
         HTMachineRecipeBuilder

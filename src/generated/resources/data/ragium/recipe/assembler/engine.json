@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:ingots/steel"
+    },
+    {
+      "count": 4,
+      "tag": "c:ingots/ragi_steel"
+    },
+    {
+      "count": 2,
+      "item": "minecraft:piston"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:engine"
+    }
+  ],
+  "machine_type": "assembler"
+}

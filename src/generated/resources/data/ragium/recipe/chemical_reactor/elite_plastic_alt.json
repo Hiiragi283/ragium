@@ -6,7 +6,7 @@
   "fluid_inputs": [
     {
       "amount": 200,
-      "tag": "c:hydrogen_fluoride"
+      "tag": "c:hydrofluoric_acid"
     }
   ],
   "item_inputs": [

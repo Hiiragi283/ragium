@@ -71,6 +71,9 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumItems.AMBROSIA, "アンブロシア")
 
+        add(RagiumItems.FORGE_HAMMER, "鍛造ハンマー")
+        add(RagiumItems.SLOT_LOCK, "スロットロック")
+
         add(RagiumItems.GEAR_PRESS_MOLD, "プレス型（歯車）")
         add(RagiumItems.PLATE_PRESS_MOLD, "プレス型（板）")
         add(RagiumItems.ROD_PRESS_MOLD, "プレス型（棒）")
@@ -80,6 +83,36 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.OXIDIZATION_CATALYST, "酸化触媒")
         add(RagiumItems.REDUCTION_CATALYST, "還元触媒")
         add(RagiumItems.DEHYDRATION_CATALYST, "脱水触媒")
+
+        add(RagiumItems.BEE_WAX, "蜜蠟")
+        add(RagiumItems.CIRCUIT_BOARD, "回路基板")
+        add(RagiumItems.COAL_CHIP, "石炭チップ")
+        add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
+        add(RagiumItems.DEEPANT, "ディーパント")
+        add(RagiumItems.ENGINE, "V8エンジン")
+        add(RagiumItems.GLASS_SHARD, "ガラスの破片")
+        add(RagiumItems.LASER_EMITTER, "レーザーエミッタ")
+        add(RagiumItems.LED, "L.E.D.")
+        add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
+        add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
+        add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
+        add(RagiumItems.PULP, "パルプ")
+        add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        add(RagiumItems.RESIDUAL_COKE, "残渣油コークス")
+        add(RagiumItems.SLAG, "スラグ")
+        add(RagiumItems.SOAP, "石鹸")
+        add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
+        add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A.板")
+        add(RagiumItems.TALLOW, "獣脂")
+        add(RagiumItems.WARPED_CRYSTAL, "歪んだ結晶")
+
+        add(RagiumItems.Radioactives.URANIUM_FUEL, "ウラン燃料")
+        add(RagiumItems.Radioactives.PLUTONIUM_FUEL, "プルトニウム燃料")
+        add(RagiumItems.Radioactives.YELLOW_CAKE, "イエローケーキ")
+        add(RagiumItems.Radioactives.YELLOW_CAKE_PIECE, "一切れのイエローケーキ")
+        add(RagiumItems.Radioactives.NUCLEAR_WASTE, "核廃棄物")
+
+        add(RagiumItems.RAGI_TICKET, "らぎチケット")
 
         // Machine
         add(HTMachineTier.BASIC, "基本", "基本%s")

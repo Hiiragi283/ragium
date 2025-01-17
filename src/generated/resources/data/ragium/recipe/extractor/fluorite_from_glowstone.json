@@ -3,18 +3,18 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:foods/raw_fish"
+      "item": "minecraft:glowstone"
     }
   ],
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:minced_meat"
+      "count": 4,
+      "id": "ragium:fluorite"
     },
     {
       "count": 1,
-      "id": "ragium:tallow"
+      "id": "minecraft:gold_nugget"
     }
   ],
-  "machine_type": "grinder"
+  "machine_type": "extractor"
 }

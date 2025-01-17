@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/deep_steel"
+    },
+    "B": {
+      "tag": "c:circuits/advanced"
+    },
+    "C": {
+      "tag": "c:ingots/aluminum"
+    },
+    "D": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "pattern": [
+    "AAB",
+    "CDA",
+    "BCA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:laser_emitter"
+  }
+}

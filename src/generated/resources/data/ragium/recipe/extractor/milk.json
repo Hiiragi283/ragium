@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "minecraft:milk"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:milk_bucket"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:bucket"
+    }
+  ],
+  "machine_type": "extractor"
+}

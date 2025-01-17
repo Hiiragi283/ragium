@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.data.addElement
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
@@ -11,7 +11,6 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagBuilder
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
 
 class RagiumBlockTagProvider(
@@ -32,8 +31,7 @@ class RagiumBlockTagProvider(
             addAll(RagiumBlocks.Coils.entries)
 
             addAll(RagiumBlocks.Drums.entries)
-        }.map(HTBlockContent::id)
-            .forEach(pickaxe::addElement)
+        }.forEach(pickaxe::addElement)
 
         buildList {
             add(RagiumBlocks.SHAFT)
@@ -43,7 +41,6 @@ class RagiumBlockTagProvider(
             add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
-        }.map(DeferredBlock<out Block>::getId)
-            .forEach(pickaxe::addElement)
+        }.forEach(pickaxe::addElement)
     }
 }

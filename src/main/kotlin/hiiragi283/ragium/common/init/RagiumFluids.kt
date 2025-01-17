@@ -29,7 +29,7 @@ enum class RagiumFluids(
     val color: Color,
     val enName: String,
     val jaName: String,
-    val type: TextureType = TextureType.LIQUID,
+    val textureType: TextureType = TextureType.LIQUID,
 ) : Supplier<FlowingFluid>,
     IClientFluidTypeExtensions,
     StringRepresentable {
@@ -55,7 +55,6 @@ enum class RagiumFluids(
     // Elements
     HYDROGEN(Color(0x0000cc), "Hydrogen", "水素", TextureType.GASEOUS),
     NITROGEN(Color(0x66cccc), "Nitrogen", "窒素", TextureType.GASEOUS),
-
     CHLORINE(Color(0xccff33), "Chlorine", "塩素", TextureType.GASEOUS),
 
     // Non-organic Chemical Compounds
@@ -68,20 +67,21 @@ enum class RagiumFluids(
     MIXTURE_ACID(Color(0xff9900), "Mixture Acid", "混酸"),
 
     HYDROGEN_FLUORIDE(Color(0x33cccc), "Hydrogen Fluoride", "フッ化水素", TextureType.GASEOUS),
+    HYDROFLUORIC_ACID(Color(0x33ccff), "Hydrofluoric Acid", "フッ化水素酸"),
 
     ALKALI_SOLUTION(Color(0x000099), "Alkali Solution", "アルカリ溶液"),
+    SODIUM_SILICATE(Color(0x00cc99), "Sodium Silicate", "ケイ酸ナトリウム"),
 
     SULFUR_DIOXIDE(Color(0xff6600), "Sulfur Dioxide", "二酸化硫黄", TextureType.STICKY),
     SULFURIC_ACID(Color(0xff3300), "Sulfuric Acid", "硫酸", TextureType.STICKY),
 
+    HYDROGEN_CHLORIDE(Color(0xccff66), "Hydrogen Chloride", "塩化水素", TextureType.GASEOUS),
     HYDROCHLORIC_ACID(Color(0xccff99), "Hydrochloric Acid", "塩酸"),
-    HYDROGEN_CHLORIDE(Color(0xccff66), "Hydrogen Chloride", "塩化水素"),
     AQUA_REGIA(Color(0xffff00), "Aqua Regia", "王水"),
 
     ALUMINA_SOLUTION(Color(0xcccccc), "Alumina Solution", "アルミナ溶液"),
 
     CHEMICAL_SLUDGE(Color(0x333366), "Chemical Sludge", "化学汚泥", TextureType.STICKY),
-    CHLOROSILANE(Color(0xcccccc), "Chlorosilane", "塩化ケイ素", TextureType.GASEOUS),
 
     // Oil products
     REFINED_GAS(Color(0xcccccc), "Refined Gas", "精製ガス", TextureType.GASEOUS),
@@ -90,16 +90,11 @@ enum class RagiumFluids(
 
     ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
-    NOBLE_GAS(Color(0xff00ff), "Noble Gas", "希ガス", TextureType.GASEOUS),
 
     // Fuels
     BIO_FUEL(Color(0x99ff00), "Bio Fuel", "バイオ燃料"),
     FUEL(Color(0xcc6633), "Fuel", "燃料"),
     NITRO_FUEL(Color(0xff33333), "Nitro Fuel", "ニトロ燃料"),
-
-    // Explosives
-    NITRO_GLYCERIN(Color(0x99cc66), "Nitroglycerin", "ニトログリセリン", TextureType.EXPLOSIVE),
-    TRINITROTOLUENE(Color(0x666699), "Trinitrotoluene", "トリニトロトルエン", TextureType.EXPLOSIVE),
 
     // Radioactive
     URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Uranium Hexafluoride", "六フッ化ウラン", TextureType.RADIOACTIVE),
@@ -195,11 +190,11 @@ enum class RagiumFluids(
 
     //    ClientExtensions    //
 
-    override fun getStillTexture(): ResourceLocation = type.stillTex
+    override fun getStillTexture(): ResourceLocation = textureType.stillTex
 
-    override fun getFlowingTexture(): ResourceLocation = type.floatingTex
+    override fun getFlowingTexture(): ResourceLocation = textureType.floatingTex
 
-    override fun getOverlayTexture(): ResourceLocation? = type.overTex
+    override fun getOverlayTexture(): ResourceLocation? = textureType.overTex
 
     override fun getTintColor(): Int = color.rgb
 

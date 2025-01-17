@@ -3,7 +3,7 @@
   "fluid_inputs": [
     {
       "amount": 1000,
-      "tag": "c:hydrogen_chloride"
+      "tag": "c:hydrogen_fluoride"
     },
     {
       "amount": 1000,
@@ -13,7 +13,7 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:hydrochloric_acid"
+      "id": "ragium:hydrofluoric_acid"
     }
   ],
   "machine_type": "mixer",

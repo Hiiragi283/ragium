@@ -46,7 +46,7 @@ object DefaultMachinePlugin : RagiumPlugin {
         // Generator
         helper
             .apply(RagiumMachineKeys.COMBUSTION_GENERATOR)
-            .put(HTMachinePropertyKeys.VALID_TIERS, listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE))
+            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper
             .apply(RagiumMachineKeys.NUCLEAR_REACTOR)

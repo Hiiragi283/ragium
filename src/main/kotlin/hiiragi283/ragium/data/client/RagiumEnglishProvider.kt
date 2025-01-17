@@ -27,7 +27,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.LEDBlocks.MAGENTA, "Magenta LED Block")
         add(RagiumBlocks.LEDBlocks.YELLOW, "Yellow LED Block")
         add(RagiumBlocks.LEDBlocks.WHITE, "LED Block")
-
         // Content
         add(RagiumTranslationKeys.CASING, "Casing")
         add(RagiumTranslationKeys.CIRCUIT, "Circuit")
@@ -71,6 +70,9 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumItems.AMBROSIA, "Ambrosia")
 
+        add(RagiumItems.FORGE_HAMMER, "Forge Hammer")
+        add(RagiumItems.SLOT_LOCK, "Slot Lock")
+
         add(RagiumItems.GEAR_PRESS_MOLD, "Press Mold (Gear)")
         add(RagiumItems.PLATE_PRESS_MOLD, "Press Mold (Plate)")
         add(RagiumItems.ROD_PRESS_MOLD, "Press Mold (Rod)")
@@ -81,6 +83,35 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.REDUCTION_CATALYST, "Reduction Catalyst")
         add(RagiumItems.DEHYDRATION_CATALYST, "Dehydration Catalyst")
 
+        add(RagiumItems.BEE_WAX, "Bee Wax")
+        add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
+        add(RagiumItems.COAL_CHIP, "Coal Chip")
+        add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")
+        add(RagiumItems.DEEPANT, "Deepant")
+        add(RagiumItems.ENGINE, "V8 Engine")
+        add(RagiumItems.GLASS_SHARD, "Glass Shard")
+        add(RagiumItems.LASER_EMITTER, "Laser Emitter")
+        add(RagiumItems.LED, "L.E.D.")
+        add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
+        add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
+        add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
+        add(RagiumItems.PULP, "Pulp")
+        add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        add(RagiumItems.RESIDUAL_COKE, "Residual Coke")
+        add(RagiumItems.SLAG, "Slag")
+        add(RagiumItems.SOAP, "Soap")
+        add(RagiumItems.SOLAR_PANEL, "Solar Panel")
+        add(RagiumItems.STELLA_PLATE, "S.T.E.L.L.A. Plate")
+        add(RagiumItems.TALLOW, "Tallow")
+        add(RagiumItems.WARPED_CRYSTAL, "Warped Crystal")
+
+        add(RagiumItems.Radioactives.URANIUM_FUEL, "Uranium Fuel")
+        add(RagiumItems.Radioactives.PLUTONIUM_FUEL, "Plutonium Fuel")
+        add(RagiumItems.Radioactives.YELLOW_CAKE, "Yellow Cake")
+        add(RagiumItems.Radioactives.YELLOW_CAKE_PIECE, "A piece of Yellow Cake")
+        add(RagiumItems.Radioactives.NUCLEAR_WASTE, "Nuclear Waste")
+
+        add(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Machine
         add(HTMachineTier.BASIC, "Basic", "Basic %s")
         add(HTMachineTier.ADVANCED, "Advanced", "Advanced %s")

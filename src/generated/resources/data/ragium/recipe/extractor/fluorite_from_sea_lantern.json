@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:sea_lantern"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "id": "ragium:fluorite"
+    }
+  ],
+  "machine_type": "extractor"
+}

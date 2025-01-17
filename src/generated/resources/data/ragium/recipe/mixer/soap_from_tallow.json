@@ -1,5 +1,11 @@
 {
   "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:glycerol"
+    }
+  ],
   "item_inputs": [
     {
       "count": 1,

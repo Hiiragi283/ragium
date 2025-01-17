@@ -10,6 +10,10 @@
     {
       "count": 1,
       "id": "ragium:minced_meat"
+    },
+    {
+      "count": 1,
+      "id": "ragium:tallow"
     }
   ],
   "machine_type": "grinder"

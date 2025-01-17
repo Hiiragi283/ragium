@@ -1,28 +1,22 @@
 {
   "type": "ragium:machine",
-  "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:plant_oil"
-    }
-  ],
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:glycerol"
+      "id": "ragium:honey"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/alkali"
+      "item": "minecraft:honeycomb_block"
     }
   ],
   "item_outputs": [
     {
       "count": 4,
-      "id": "ragium:soap"
+      "id": "ragium:bee_wax"
     }
   ],
-  "machine_type": "mixer"
+  "machine_type": "extractor"
 }

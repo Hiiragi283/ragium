@@ -15,6 +15,7 @@ import hiiragi283.ragium.data.savePrefixed
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.SingleItemRecipeBuilder
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -201,7 +202,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         register(RagiumItems.Plastics.ELITE) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.HYDROGEN_FLUORIDE, FluidType.BUCKET_VOLUME / 5)
+                .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME / 5)
         }
         register(RagiumItems.Plastics.ULTIMATE) {
             HTMachineRecipeBuilder
@@ -343,5 +344,34 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .itemInput(Tags.Items.GLASS_BLOCKS_COLORLESS)
             .itemOutput(RagiumItems.LED, 4)
             .save(output)
+
+        SingleItemRecipeBuilder
+            .stonecutting(
+                Ingredient.of(ItemTags.COALS),
+                RecipeCategory.MISC,
+                RagiumItems.COAL_CHIP,
+                8,
+            ).unlockedBy("has_coal", has(ItemTags.COALS))
+            .savePrefixed(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.BASIC)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL, 4)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL, 4)
+            .itemInput(Items.PISTON, 2)
+            .itemOutput(RagiumItems.ENGINE)
+            .save(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumItems.LASER_EMITTER)
+            .pattern("AAB")
+            .pattern("CDA")
+            .pattern("BCA")
+            .define('A', HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .define('B', HTMachineTier.ADVANCED.getCircuitTag())
+            .define('C', HTTagPrefix.INGOT, RagiumMaterialKeys.ALUMINUM)
+            .define('D', HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND)
+            .unlockedBy("has_deep_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL))
+            .savePrefixed(output)
     }
 }

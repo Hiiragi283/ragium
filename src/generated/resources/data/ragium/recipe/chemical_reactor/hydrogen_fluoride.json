@@ -3,26 +3,21 @@
   "fluid_inputs": [
     {
       "amount": 1000,
-      "tag": "c:plant_oil"
+      "tag": "c:sulfuric_acid"
     }
   ],
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:glycerol"
+      "id": "ragium:hydrogen_fluoride"
     }
   ],
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/alkali"
+      "tag": "c:gems/fluorite"
     }
   ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "ragium:soap"
-    }
-  ],
-  "machine_type": "mixer"
+  "machine_type": "chemical_reactor",
+  "tier": "elite"
 }
