@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:basic_circuit"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 6000,
+      "tag": "c:crude_oil"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 2000,
+      "id": "ragium:refined_gas"
+    },
+    {
+      "amount": 3000,
+      "id": "ragium:naphtha"
+    },
+    {
+      "amount": 1000,
+      "id": "ragium:residual_oil"
+    }
+  ],
+  "machine_type": "distillation_tower"
+}

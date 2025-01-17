@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:basic_circuit"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 8000,
+      "tag": "c:refined_gas"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 6000,
+      "id": "ragium:alcohol"
+    }
+  ],
+  "machine_type": "distillation_tower"
+}

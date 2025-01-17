@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:ultimate_grate"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:rods/dragonium"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:ultimate_grate"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "ultimate"
+}

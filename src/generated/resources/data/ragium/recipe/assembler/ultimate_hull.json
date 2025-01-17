@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:ultimate_hull"
+  },
+  "item_inputs": [
+    {
+      "count": 3,
+      "tag": "c:ingots/ragium"
+    },
+    {
+      "count": 2,
+      "item": "ragium:ultimate_casing"
+    },
+    {
+      "count": 1,
+      "tag": "c:circuits/ultimate"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:ultimate_hull"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "ultimate"
+}

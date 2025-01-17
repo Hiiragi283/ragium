@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data
 
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -69,7 +70,7 @@ class HTCookingRecipeBuilder private constructor(
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
         types.forEach { type: Type ->
-            saveInternal(recipeOutput, id, type)
+            saveInternal(recipeOutput, RagiumAPI.wrapId(id), type)
         }
     }
 

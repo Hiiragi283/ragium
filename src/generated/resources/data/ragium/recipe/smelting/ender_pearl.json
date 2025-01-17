@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 500,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "ragium:warped_crystal"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ender_pearl"
+  }
+}

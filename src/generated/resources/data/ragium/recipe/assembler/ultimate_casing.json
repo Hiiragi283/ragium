@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:ultimate_casing"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:ultimate_grate"
+    },
+    {
+      "count": 1,
+      "tag": "c:gears/dragonium"
+    },
+    {
+      "count": 4,
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:ultimate_casing"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "ultimate"
+}

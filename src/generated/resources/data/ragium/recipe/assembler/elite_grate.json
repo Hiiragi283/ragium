@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:elite_grate"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:rods/deep_steel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:elite_grate"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "elite"
+}

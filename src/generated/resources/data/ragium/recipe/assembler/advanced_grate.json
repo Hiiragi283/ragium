@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:advanced_grate"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:rods/steel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:advanced_grate"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "advanced"
+}

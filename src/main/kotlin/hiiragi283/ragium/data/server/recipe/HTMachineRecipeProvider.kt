@@ -50,6 +50,13 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 .define('B', RagiumItems.FORGE_HAMMER)
                 .unlockedBy("has_ingot", has(HTTagPrefix.INGOT, grate.machineTier.getSteelMetal()))
                 .savePrefixed(output)
+            // Assembler
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.ASSEMBLER, grate.machineTier)
+                .itemInput(HTTagPrefix.ROD, grate.machineTier.getSteelMetal(), 4)
+                .catalyst(grate)
+                .itemOutput(grate, 4)
+                .save(output)
         }
         // Casing
         RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
@@ -71,6 +78,15 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 .define('C', HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
                 .unlockedBy("has_grate", has(grate))
                 .savePrefixed(output)
+            // Assembler
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.ASSEMBLER, casings.machineTier)
+                .itemInput(grate)
+                .itemInput(HTTagPrefix.GEAR, casings.machineTier.getSteelMetal())
+                .itemInput(corner, 4)
+                .catalyst(casings)
+                .itemOutput(casings, 2)
+                .save(output)
         }
         // Hull
         RagiumBlocks.Hulls.entries.forEach { hull: RagiumBlocks.Hulls ->
@@ -85,6 +101,15 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 .define('C', hull.machineTier.getCasing())
                 .unlockedBy("has_casing", has(hull.machineTier.getCasing()))
                 .savePrefixed(output)
+            // Assembler
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.ASSEMBLER, hull.machineTier)
+                .itemInput(HTTagPrefix.INGOT, hull.machineTier.getMainMetal(), 3)
+                .itemInput(hull.machineTier.getCasing(), 2)
+                .itemInput(hull.machineTier.getCircuitTag())
+                .catalyst(hull)
+                .itemOutput(hull, 2)
+                .save(output)
         }
         // Coil
         RagiumBlocks.Coils.entries.forEach { coil: RagiumBlocks.Coils ->

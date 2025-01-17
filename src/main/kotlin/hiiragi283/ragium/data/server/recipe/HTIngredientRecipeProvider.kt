@@ -118,6 +118,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ELITE)
             .fluidInput(RagiumFluids.RAGIUM_SOLUTION)
+            .catalyst(RagiumItems.Circuits.ELITE)
             .fluidOutput(RagiumFluids.DISTILLED_RAGIUM_SOLUTION, 750)
             .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, 250)
             .save(output)
@@ -373,5 +374,23 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .define('D', HTTagPrefix.GEM, RagiumMaterialKeys.DIAMOND)
             .unlockedBy("has_deep_steel", has(HTTagPrefix.INGOT, RagiumMaterialKeys.DEEP_STEEL))
             .savePrefixed(output)
+
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(RagiumItems.CRIMSON_CRYSTAL),
+                Items.BLAZE_POWDER,
+                time = 500,
+                types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+            ).unlockedBy("has_crystal", has(RagiumItems.CRIMSON_CRYSTAL))
+            .save(output)
+
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(RagiumItems.WARPED_CRYSTAL),
+                Items.ENDER_PEARL,
+                time = 500,
+                types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+            ).unlockedBy("has_crystal", has(RagiumItems.WARPED_CRYSTAL))
+            .save(output)
     }
 }

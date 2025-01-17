@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:basic_circuit"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 8000,
+      "tag": "c:naphtha"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 4000,
+      "id": "ragium:fuel"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:polymer_resin"
+    }
+  ],
+  "machine_type": "distillation_tower"
+}

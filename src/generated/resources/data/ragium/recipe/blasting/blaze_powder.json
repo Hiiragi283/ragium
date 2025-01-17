@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 250,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "ragium:crimson_crystal"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:blaze_powder"
+  }
+}

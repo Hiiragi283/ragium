@@ -149,7 +149,7 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
     }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        val fixedId: ResourceLocation = RagiumAPI.id(id.withPrefix(definition.key.name + '/').path)
+        val fixedId: ResourceLocation = RagiumAPI.wrapId(id.withPrefix(definition.key.name + '/'))
         recipeOutput.accept(
             fixedId,
             HTMachineRecipe(

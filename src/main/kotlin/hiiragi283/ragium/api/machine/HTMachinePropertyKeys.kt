@@ -53,8 +53,17 @@ object HTMachinePropertyKeys {
     val RECIPE_VALIDATOR: HTPropertyKey<HTMachineRecipeValidator> =
         HTPropertyKey
             .builder<HTMachineRecipeValidator>(RagiumAPI.id("recipe_validator"))
-            .setDefaultValue { HTMachineRecipeValidator(DataResult<HTMachineRecipe>::success) }
-            .build()
+            .setDefaultValue {
+                HTMachineRecipeValidator { recipe: HTMachineRecipe ->
+                    when {
+                        recipe.itemInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less item input!" }
+                        recipe.fluidInputs.size > 3 -> DataResult.error { "Machine recipe accepts 3 or less fluid input!" }
+                        recipe.getItemOutput(3) != null -> DataResult.error { "Machine recipe accepts 3 or less item output!" }
+                        recipe.getFluidOutput(3) != null -> DataResult.error { "Machine recipe accepts 3 or less fluid output!" }
+                        else -> DataResult.success(recipe)
+                    }
+                }
+            }.build()
 
     //    Multiblock    //
 

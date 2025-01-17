@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:advanced_casing"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:advanced_grate"
+    },
+    {
+      "count": 1,
+      "tag": "c:gears/steel"
+    },
+    {
+      "count": 4,
+      "item": "minecraft:quartz_block"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:advanced_casing"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "advanced"
+}

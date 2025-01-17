@@ -17,6 +17,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     override fun buildRecipes(recipeOutput: RecipeOutput) {
         HTBuildingRecipeProvider.buildRecipes(recipeOutput)
         HTChemicalRecipeProvider.buildRecipes(recipeOutput)
+        HTDistillationRecipeProvider.buildRecipes(recipeOutput)
         HTFoodRecipeProvider.buildRecipes(recipeOutput)
         HTIngredientRecipeProvider.buildRecipes(recipeOutput)
         HTMachineRecipeProvider.buildRecipes(recipeOutput)

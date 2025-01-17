@@ -1,0 +1,28 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:elite_casing"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:elite_grate"
+    },
+    {
+      "count": 1,
+      "tag": "c:gears/deep_steel"
+    },
+    {
+      "count": 4,
+      "item": "minecraft:polished_deepslate"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:elite_casing"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "elite"
+}

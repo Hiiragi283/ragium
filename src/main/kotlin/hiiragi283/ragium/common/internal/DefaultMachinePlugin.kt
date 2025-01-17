@@ -1,9 +1,12 @@
 package hiiragi283.ragium.common.internal
 
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
+import hiiragi283.ragium.api.recipe.HTMachineRecipe
+import hiiragi283.ragium.api.recipe.HTMachineRecipeValidator
 import hiiragi283.ragium.common.block.machine.processor.HTDefaultMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTDistillationTowerBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTLargeMachineBlockEntity
@@ -39,6 +42,9 @@ object DefaultMachinePlugin : RagiumPlugin {
 
     private fun HTPropertyHolderBuilder.putFactory(factory: HTMachineEntityFactory): HTPropertyHolderBuilder =
         put(HTMachinePropertyKeys.MACHINE_FACTORY, factory)
+
+    private fun HTPropertyHolderBuilder.putValidator(validator: HTMachineRecipeValidator): HTPropertyHolderBuilder =
+        put(HTMachinePropertyKeys.RECIPE_VALIDATOR, validator)
 
     override fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {
         // Consumer
@@ -86,7 +92,15 @@ object DefaultMachinePlugin : RagiumPlugin {
             .apply(RagiumMachineKeys.DISTILLATION_TOWER)
             .putFactory(::HTDistillationTowerBlockEntity)
             .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
+            .putValidator { recipe: HTMachineRecipe ->
+                when {
+                    recipe.itemInputs.isNotEmpty() -> DataResult.error { "Distillation tower recipe not accepts item inputs!" }
+                    recipe.fluidInputs.size != 1 -> DataResult.error { "Distillation tower recipe should have only one fluid input!" }
+                    recipe.catalyst.isEmpty -> DataResult.error { "Distillation tower recipe requires catalyst!" }
+                    recipe.getItemOutput(1) != null -> DataResult.error { "Distillation tower recipe should have one item output!" }
+                    else -> DataResult.success(recipe)
+                }
+            }.put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper
             .apply(RagiumMachineKeys.GROWTH_CHAMBER)

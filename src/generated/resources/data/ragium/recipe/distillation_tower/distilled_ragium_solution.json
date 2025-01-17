@@ -1,5 +1,8 @@
 {
   "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:elite_circuit"
+  },
   "fluid_inputs": [
     {
       "amount": 1000,

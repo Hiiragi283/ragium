@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:basic_casing"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:basic_grate"
+    },
+    {
+      "count": 1,
+      "tag": "c:gears/iron"
+    },
+    {
+      "count": 4,
+      "item": "minecraft:stone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:basic_casing"
+    }
+  ],
+  "machine_type": "assembler"
+}

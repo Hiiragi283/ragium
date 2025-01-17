@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:basic_hull"
+  },
+  "item_inputs": [
+    {
+      "count": 3,
+      "tag": "c:ingots/ragi_alloy"
+    },
+    {
+      "count": 2,
+      "item": "ragium:basic_casing"
+    },
+    {
+      "count": 1,
+      "tag": "c:circuits/basic"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:basic_hull"
+    }
+  ],
+  "machine_type": "assembler"
+}

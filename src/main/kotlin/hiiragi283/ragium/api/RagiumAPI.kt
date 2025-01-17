@@ -21,6 +21,12 @@ interface RagiumAPI {
         fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
 
         /**
+         * 指定した[id]の名前空間を`ragium`に変えます。
+         */
+        @JvmStatic
+        fun wrapId(id: ResourceLocation): ResourceLocation = id(id.path)
+
+        /**
          * [RagiumAPI]の単一のインスタンスを返します。
          */
         @JvmStatic

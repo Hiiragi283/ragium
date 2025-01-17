@@ -109,6 +109,13 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         // Nitration
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)
+            .fluidInput(RagiumFluids.FUEL)
+            .fluidInput(RagiumFluids.MIXTURE_ACID, FluidType.BUCKET_VOLUME / 10)
+            .fluidOutput(RagiumFluids.NITRO_FUEL)
+            .save(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER, HTMachineTier.ADVANCED)
             .itemInput(Tags.Items.STRINGS)
             .itemInput(Items.PAPER)
             .fluidInput(RagiumFluids.GLYCEROL)

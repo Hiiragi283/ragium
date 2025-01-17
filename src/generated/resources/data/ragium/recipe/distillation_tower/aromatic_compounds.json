@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:elite_circuit"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 8000,
+      "tag": "c:residual_oil"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 3000,
+      "id": "ragium:fuel"
+    },
+    {
+      "amount": 5000,
+      "id": "ragium:aromatic_compounds"
+    }
+  ],
+  "machine_type": "distillation_tower"
+}

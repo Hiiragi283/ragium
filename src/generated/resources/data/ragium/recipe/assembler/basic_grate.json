@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:basic_grate"
+  },
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:rods/iron"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:basic_grate"
+    }
+  ],
+  "machine_type": "assembler"
+}
