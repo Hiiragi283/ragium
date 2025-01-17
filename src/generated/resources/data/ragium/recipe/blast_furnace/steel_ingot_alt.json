@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:reduction_catalyst"
+  },
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/iron"
+    },
+    {
+      "count": 2,
+      "tag": "minecraft:coals"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:steel_ingot"
+    }
+  ],
+  "machine_type": "blast_furnace",
+  "tier": "advanced"
+}

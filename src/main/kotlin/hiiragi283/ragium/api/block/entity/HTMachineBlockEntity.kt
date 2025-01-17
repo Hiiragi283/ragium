@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.BlockHitResult
+import net.neoforged.fml.loading.FMLLoader
 import net.neoforged.neoforge.common.util.TriState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import org.slf4j.Logger
@@ -75,7 +76,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
         }
     }
 
-    override fun onRightClicked(
+    final override fun onRightClicked(
         state: BlockState,
         level: Level,
         pos: BlockPos,
@@ -185,7 +186,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
                 onFailed(serverLevel, pos)
                 val throwable1: Throwable =
                     when (throwable) {
-                        is HTMachineException -> throwable.takeIf(HTMachineException::showInLog)
+                        is HTMachineException -> throwable.takeIf { it.showInLog || !FMLLoader.isProduction() }
                         else -> throwable
                     } ?: return@onFailure
                 LOGGER.error("Error on {} at {}: {}", machineKey, blockPosText(pos).string, throwable1.message)

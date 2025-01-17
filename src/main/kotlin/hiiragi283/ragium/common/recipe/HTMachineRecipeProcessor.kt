@@ -43,6 +43,7 @@ class HTMachineRecipeProcessor(
         val recipe: HTMachineRecipe = cache.getFirstMatch(input, level).getOrThrow()
         if (!canAccentOutputs(recipe)) throw HTMachineException.MergeResult(false)
 
+        growOutputs(recipe)
         shrinkInputs(recipe)
     }
 

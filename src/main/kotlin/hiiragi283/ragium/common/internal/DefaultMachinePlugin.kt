@@ -23,6 +23,13 @@ object DefaultMachinePlugin : RagiumPlugin {
         RagiumMachineKeys.PROCESSORS.forEach { consumer.accept(it, HTMachineType.PROCESSOR) }
     }
 
+    @JvmField
+    val ADVANCED_TIERS: List<HTMachineTier> =
+        listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE, HTMachineTier.ULTIMATE)
+
+    @JvmField
+    val ELITE_TIERS: List<HTMachineTier> = listOf(HTMachineTier.ELITE, HTMachineTier.ULTIMATE)
+
     override fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {
         // Consumer
 
@@ -45,20 +52,15 @@ object DefaultMachinePlugin : RagiumPlugin {
 
         helper
             .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .put(
-                HTMachinePropertyKeys.VALID_TIERS,
-                listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE, HTMachineTier.ULTIMATE),
-            )
+            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper
             .apply(RagiumMachineKeys.LASER_TRANSFORMER)
-            .put(
-                HTMachinePropertyKeys.VALID_TIERS,
-                listOf(HTMachineTier.ELITE, HTMachineTier.ULTIMATE),
-            )
+            .put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
 
         helper
             .apply(RagiumMachineKeys.MULTI_SMELTER)
             .put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTMultiSmelterBlockEntity))
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.MULTI_SMELTER)
     }
 }

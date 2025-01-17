@@ -92,16 +92,24 @@ class HTMachineRecipe(
     //    Recipe    //
 
     override fun matches(input: HTMachineInput, level: Level): Boolean {
+        // Machine Definition
+        if (input.key != this.machineKey) return false
+        if (input.tier < this.machineTier) return false
+        // Item
         input.itemInputs.forEachIndexed { slot: Int, stack: ItemStack ->
-            if (itemInputs.getOrNull(slot)?.test(stack) == false) {
+            val ingredient: SizedIngredient = itemInputs.getOrNull(slot) ?: return@forEachIndexed
+            if (!ingredient.test(stack)) {
                 return false
             }
         }
+        // Fluid
         input.fluidInputs.forEachIndexed { slot: Int, stack: FluidStack ->
-            if (fluidInputs.getOrNull(slot)?.test(stack) == false) {
+            val ingredient: SizedFluidIngredient = fluidInputs.getOrNull(slot) ?: return@forEachIndexed
+            if (!ingredient.test(stack)) {
                 return false
             }
         }
+        // Catalyst
         return catalyst.map { it.test(input.catalyst) }.orElse(input.catalyst.isEmpty)
     }
 

@@ -61,7 +61,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
 
     final override fun process(level: ServerLevel, pos: BlockPos) {
         checkMultiblockOrThrow()
-        processor.process(level, machineTier)
+        processor.process(level, machineTier).getOrThrow()
     }
 
     final override fun interactWithFluidStorage(player: Player): Boolean {

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumFluids
@@ -24,8 +25,12 @@ import java.util.function.Supplier
 
 object HTIngredientRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
+        registerRaginite(output)
+        registerSteels(output)
+
         registerPlastics(output)
         registerCircuits(output)
+
         registerCatalysts(output)
         registerPressMolds(output)
 
@@ -38,7 +43,10 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .define('B', Tags.Items.RODS_WOODEN)
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
             .savePrefixed(output)
+    }
 
+    private fun registerRaginite(output: RecipeOutput) {
+        // Ragi-Alloy
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, RagiumItems.RAGI_ALLOY_COMPOUND)
             .pattern("AAA")
@@ -67,6 +75,47 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
             ).unlockedBy("has_compound", has(RagiumItems.RAGI_ALLOY_COMPOUND))
             .save(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGINITE)
+            .itemOutput(RagiumItems.Ingots.RAGI_ALLOY)
+            .save(output)
+        // Ragi-Steel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGINITE, 4)
+            .itemOutput(RagiumItems.Ingots.RAGI_STEEL)
+            .save(output)
+        // Refined Ragi-Steel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
+            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 4)
+            .itemOutput(RagiumItems.Ingots.REFINED_RAGI_STEEL)
+            .save(output)
+        // Ragium
+    }
+
+    private fun registerSteels(output: RecipeOutput) {
+        // Steel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(ItemTags.COALS, 4)
+            .itemOutput(RagiumItems.Ingots.STEEL)
+            .save(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(ItemTags.COALS, 2)
+            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .itemOutput(RagiumItems.Ingots.STEEL)
+            .saveSuffixed(output, "_alt")
+        // Deep Steel
     }
 
     private fun registerPlastics(output: RecipeOutput) {
