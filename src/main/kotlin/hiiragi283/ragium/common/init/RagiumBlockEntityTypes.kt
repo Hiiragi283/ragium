@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTDefaultMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTDistillationTowerBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTLargeMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
@@ -74,6 +75,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val LARGE_MACHINE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLargeMachineBlockEntity>> =
         registerMachine("large_machine", ::HTLargeMachineBlockEntity)
+
+    @JvmField
+    val DISTILLATION_TOWER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDistillationTowerBlockEntity>> =
+        register("distillation_tower", ::HTDistillationTowerBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTMultiSmelterBlockEntity>> =

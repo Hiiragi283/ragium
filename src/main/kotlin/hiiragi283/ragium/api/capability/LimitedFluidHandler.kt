@@ -34,6 +34,11 @@ class LimitedFluidHandler(private val ioProvider: Function<Int, HTStorageIO>, pr
         )
     }
 
+    constructor(map: Map<Int, HTStorageIO>, array: Array<out IFluidTank>) : this(
+        Functions.forMap(map, HTStorageIO.INTERNAL),
+        arrayToMap(array),
+    )
+
     constructor(map: Map<Int, HTStorageIO>, delegate: Map<Int, IFluidTank>) : this(
         Functions.forMap(map, HTStorageIO.INTERNAL),
         delegate,

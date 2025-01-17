@@ -61,6 +61,7 @@ internal object RagiumEvents {
 
         bindMachines(RagiumBlockEntityTypes.DEFAULT_MACHINE, RagiumAPI.getInstance().machineRegistry.keys)
 
+        bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
         bindMachine(RagiumBlockEntityTypes.LARGE_MACHINE, RagiumMachineKeys.BLAST_FURNACE)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
@@ -114,6 +115,8 @@ internal object RagiumEvents {
 
         registerHandlers(RagiumBlockEntityTypes.DEFAULT_MACHINE)
         registerHandlers(RagiumBlockEntityTypes.LARGE_MACHINE)
+
+        registerHandlers(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         registerHandlers(RagiumBlockEntityTypes.DRUM)

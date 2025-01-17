@@ -6,6 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.getOrDefault
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
@@ -97,6 +98,7 @@ class HTMachineRecipe(
         if (input.tier < this.machineTier) return false
         // Item
         input.itemInputs.forEachIndexed { slot: Int, stack: ItemStack ->
+            if (stack.`is`(RagiumItems.SLOT_LOCK)) return@forEachIndexed
             val ingredient: SizedIngredient = itemInputs.getOrNull(slot) ?: return@forEachIndexed
             if (!ingredient.test(stack)) {
                 return false

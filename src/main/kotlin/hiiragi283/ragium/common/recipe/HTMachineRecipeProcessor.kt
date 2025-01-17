@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.HTMachineInput
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
@@ -80,6 +81,7 @@ class HTMachineRecipeProcessor(
         // item
         recipe.itemInputs.forEachIndexed { index: Int, ingredient: SizedIngredient ->
             val stackIn: ItemStack = itemHandler.getStackInSlot(index)
+            if (stackIn.`is`(RagiumItems.SLOT_LOCK)) return@forEachIndexed
             stackIn.shrink(ingredient.count())
         }
         // fluid

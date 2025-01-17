@@ -70,8 +70,10 @@ object RagiumClient {
             event.registerBlockEntityRenderer(type.get(), HTMachineBlockEntityRenderer.PROVIDER)
         }
 
-        register(RagiumBlockEntityTypes.LARGE_MACHINE)
         register(RagiumBlockEntityTypes.DEFAULT_MACHINE)
+        register(RagiumBlockEntityTypes.LARGE_MACHINE)
+
+        register(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         register(RagiumBlockEntityTypes.MULTI_SMELTER)
 
         LOGGER.info("Registered BlockEntityRenderers!")

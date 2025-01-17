@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
 import hiiragi283.ragium.common.block.machine.processor.HTDefaultMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTDistillationTowerBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTLargeMachineBlockEntity
 import hiiragi283.ragium.common.block.machine.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -52,6 +53,12 @@ object DefaultMachinePlugin : RagiumPlugin {
 
         helper
             .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
+
+        helper
+            .apply(RagiumMachineKeys.DISTILLATION_TOWER)
+            .put(HTMachinePropertyKeys.MACHINE_FACTORY, HTMachineEntityFactory.of(::HTDistillationTowerBlockEntity))
+            .put(HTMachinePropertyKeys.MULTIBLOCK_MAP, RagiumMultiblockMaps.DISTILLATION_TOWER)
             .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper

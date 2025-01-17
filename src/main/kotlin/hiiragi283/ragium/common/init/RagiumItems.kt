@@ -304,6 +304,10 @@ object RagiumItems {
     val FORGE_HAMMER: DeferredItem<HTCraftingToolItem> =
         REGISTER.registerItem("forge_hammer", ::HTCraftingToolItem, itemProperty().durability(63))
 
+    @JvmField
+    val SLOT_LOCK: DeferredItem<Item> =
+        REGISTER.registerSimpleItem("slot_lock")
+
     //    Circuits    //
 
     enum class Circuits(override val machineTier: HTMachineTier) : HTItemContent.Tier {

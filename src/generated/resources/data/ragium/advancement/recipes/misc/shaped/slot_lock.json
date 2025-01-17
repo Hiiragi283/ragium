@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_machine": {
+    "has_ragi_alloy": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:distillation_tower"
+            "items": "#c:ingots/ragi_alloy"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/advanced/distillation_tower"
+        "recipe": "ragium:shaped/slot_lock"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_machine"
+      "has_ragi_alloy"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/advanced/distillation_tower"
+      "ragium:shaped/slot_lock"
     ]
   }
 }

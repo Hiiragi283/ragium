@@ -76,6 +76,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             remove(RagiumItems.CHOCOLATE_APPLE)
 
             add(RagiumItems.FORGE_HAMMER)
+            add(RagiumItems.SLOT_LOCK)
 
             addAll(RagiumItems.Circuits.entries)
             addAll(RagiumItems.PRESS_MOLDS)
