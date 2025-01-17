@@ -37,9 +37,9 @@ class HTLargeMachineContainerMenu(
         // player inventory
         addPlayerInv()
         // register property
-        // addProperties(property)
+        addDataSlots(containerData)
     }
 
-    override val inputSlots: IntRange = (0..1)
-    override val outputSlots: IntRange = (3..4)
+    override val inputSlots: IntRange = (0..2)
+    override val outputSlots: IntRange = (4..6)
 }

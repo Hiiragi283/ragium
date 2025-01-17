@@ -3,7 +3,9 @@ package hiiragi283.ragium.api.inventory
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.createMenuAccess
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.inventory.SimpleContainerData
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.function.Supplier
 
@@ -19,4 +21,8 @@ abstract class HTMachineContainerMenu(
         playerInv,
         itemHandler,
         machineEntity.createMenuAccess(),
-    )
+    ) {
+    protected val containerData: ContainerData = machineEntity?.containerData ?: SimpleContainerData(2)
+
+    fun getProgress(): Float = containerData.get(0).toFloat() / containerData.get(1).toFloat()
+}

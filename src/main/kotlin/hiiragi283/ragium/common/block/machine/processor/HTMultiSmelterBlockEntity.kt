@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.inventory.HTMultiSmelterContainerMenu
 import hiiragi283.ragium.common.recipe.HTCookingRecipeProcessor
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -28,7 +29,8 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override val processor: HTRecipeProcessor =
         HTCookingRecipeProcessor(itemHandler, 0, 1, RecipeType<SmeltingRecipe>::SMELTING)
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTMultiSmelterContainerMenu(containerId, playerInventory, itemHandler, this)
 
     override fun getItemHandler(direction: Direction?): IItemHandler = LimitedItemHandler.small(itemHandler)
 }

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.player.Inventory
 
 open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerInventory: Inventory, title: Component) :
@@ -23,6 +24,17 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
         // background
         guiGraphics.blit(TEXTURE, startX, startY, 0, 0, imageWidth, imageHeight)
         // progress bar
+        guiGraphics.blitSprite(
+            RagiumAPI.Companion.id("progress_bar"),
+            16,
+            16,
+            0,
+            0,
+            startX + getSlotPosX(4),
+            startY + getSlotPosY(1),
+            Mth.ceil(menu.getProgress() * 16f),
+            16,
+        )
         // item slots
         menu.itemSlots.forEach { (slotX: Int, slotY: Int) ->
             guiGraphics.blitSprite(

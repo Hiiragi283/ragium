@@ -7,13 +7,13 @@ import net.minecraft.world.entity.player.Inventory
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTDefaultMachineContainerMenu(
+class HTMultiSmelterContainerMenu(
     syncId: Int,
     playerInv: Inventory,
-    itemHandler: IItemHandler = ItemStackHandler(5),
+    itemHandler: IItemHandler = ItemStackHandler(2),
     machineEntity: HTMachineBlockEntity? = null,
 ) : HTMachineContainerMenu(
-        RagiumMenuTypes.DEFAULT_MACHINE,
+        RagiumMenuTypes.MULTI_SMELTER,
         syncId,
         playerInv,
         itemHandler,
@@ -22,20 +22,14 @@ class HTDefaultMachineContainerMenu(
     init {
         // inputs
         addSlot(0, 1, 1)
-        addSlot(1, 2, 1)
-        addFluidSlot(0, 2, 2)
-        // catalyst
-        addSlot(2, 4, 2)
         // outputs
-        addOutputSlot(3, 6, 1)
-        addOutputSlot(4, 7, 1)
-        addFluidSlot(1, 6, 2)
+        addOutputSlot(1, 7, 1)
         // player inventory
         addPlayerInv()
         // register property
         addDataSlots(containerData)
     }
 
-    override val inputSlots: IntRange = (0..1)
-    override val outputSlots: IntRange = (3..4)
+    override val inputSlots: IntRange = (0..0)
+    override val outputSlots: IntRange = (1..1)
 }

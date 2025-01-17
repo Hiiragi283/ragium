@@ -25,6 +25,7 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -208,6 +209,18 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     }
 
     open fun onFailed(level: ServerLevel, pos: BlockPos) {
+    }
+
+    val containerData: ContainerData = object : ContainerData {
+        override fun get(index: Int): Int = when (index) {
+            0 -> ticks
+            1 -> tickRate
+            else -> -1
+        }
+
+        override fun set(index: Int, value: Int) {}
+
+        override fun getCount(): Int = 2
     }
 
     //    HTControllerHolder    //

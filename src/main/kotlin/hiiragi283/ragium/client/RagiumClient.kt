@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.extension.machineTier
+import hiiragi283.ragium.api.inventory.HTMachineContainerMenu
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
 import hiiragi283.ragium.api.multiblock.renderer.HTMachineBlockEntityRenderer
@@ -21,6 +22,7 @@ import hiiragi283.ragium.common.machine.HTTieredMultiblockComponent
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -50,8 +52,14 @@ object RagiumClient {
 
     @SubscribeEvent
     private fun registerMenu(event: RegisterMenuScreensEvent) {
-        event.register(RagiumMenuTypes.DEFAULT_MACHINE.get(), ::HTMachineContainerScreen)
-        event.register(RagiumMenuTypes.LARGE_MACHINE.get(), ::HTMachineContainerScreen)
+        fun register(type: Supplier<out MenuType<out HTMachineContainerMenu>>) {
+            event.register(type.get(), ::HTMachineContainerScreen)
+        }
+
+        register(RagiumMenuTypes.DEFAULT_MACHINE)
+        register(RagiumMenuTypes.LARGE_MACHINE)
+
+        register(RagiumMenuTypes.MULTI_SMELTER)
 
         LOGGER.info("Registered machine screens!")
     }
