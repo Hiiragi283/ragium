@@ -1,11 +1,7 @@
 package hiiragi283.ragium.api.extension
 
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
-import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 
 //    Color    //
 
@@ -23,12 +19,3 @@ fun toFloatColor(color: Int): Triple<Float, Float, Float> {
 
 val Fluid.name: Component
     get() = fluidType.description
-
-fun Fluid.getSpriteAndColor(): Pair<TextureAtlasSprite, Int> {
-    val extension: IClientFluidTypeExtensions = IClientFluidTypeExtensions.of(this)
-    val sprite: TextureAtlasSprite = Minecraft
-        .getInstance()
-        .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-        .apply(extension.stillTexture)
-    return sprite to extension.tintColor
-}

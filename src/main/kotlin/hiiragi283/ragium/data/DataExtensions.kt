@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.ragium.api.content.HTContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -7,9 +8,13 @@ import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import net.minecraft.data.recipes.*
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.client.model.generators.ModelBuilder
+import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.LanguageProvider
+import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 //    LanguageProvider    //
@@ -45,6 +50,27 @@ fun LanguageProvider.add(prefix: HTTagPrefix, value: String) {
 fun LanguageProvider.add(variant: HTOreVariant, value: String) {
     add(variant.translationKey, value)
 }
+
+//    ModelBuilder    //
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(content: HTContent<*>): T = getBuilder(content.id)
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(holder: DeferredHolder<*, *>): T = getBuilder(holder.id)
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.getBuilder(id: ResourceLocation): T = getBuilder(id.toString())
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(content: HTContent<*>, parent: ResourceLocation): T =
+    withExistingParent(content.id, parent)
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(holder: DeferredHolder<*, *>, parent: ResourceLocation): T =
+    withExistingParent(holder.id, parent)
+
+fun <T : ModelBuilder<T>> ModelProvider<T>.withExistingParent(id: ResourceLocation, parent: ResourceLocation): T =
+    withExistingParent(id.toString(), parent)
+
+fun <T : ModelBuilder<T>> T.blockTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("block/"))
+
+fun <T : ModelBuilder<T>> T.itemTexture(key: String, id: ResourceLocation): T = texture(key, id.withPrefix("item/"))
 
 //    RecipeBuilder    //
 

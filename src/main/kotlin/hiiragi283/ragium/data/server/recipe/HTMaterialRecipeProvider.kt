@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -8,7 +9,10 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.requires
 import hiiragi283.ragium.data.savePrefixed
-import net.minecraft.data.recipes.*
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
@@ -144,47 +148,24 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         // Raw/Dust -> Ingot
         RagiumItems.Ingots.entries.forEach { ingot: RagiumItems.Ingots ->
             val material: HTMaterialKey = ingot.material
-            // Smelting
-            SimpleCookingRecipeBuilder
-                .smelting(
+            // Dust -> Ingot
+            HTCookingRecipeBuilder
+                .create(
                     Ingredient.of(HTTagPrefix.DUST.createTag(material)),
-                    RecipeCategory.MISC,
                     ingot,
-                    0.5f,
-                    200,
-                ).unlockedBy("has_raw", has(HTTagPrefix.DUST, material))
-                .save(output, ingot.id.withPath { "smelting/${it}_from_dust" })
-            // Blasting
-            SimpleCookingRecipeBuilder
-                .blasting(
-                    Ingredient.of(HTTagPrefix.DUST.createTag(material)),
-                    RecipeCategory.MISC,
-                    ingot,
-                    0.5f,
-                    100,
-                ).unlockedBy("has_raw", has(HTTagPrefix.DUST, material))
-                .save(output, ingot.id.withPath { "blasting/${it}_from_dust" })
-
-            // Smelting
-            SimpleCookingRecipeBuilder
-                .smelting(
+                    exp = 0.5f,
+                    types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+                ).unlockedBy("has_dust", has(HTTagPrefix.DUST, material))
+                .saveSuffix(output, "_from_dust")
+            // Raw -> Ingot
+            HTCookingRecipeBuilder
+                .create(
                     Ingredient.of(HTTagPrefix.RAW_MATERIAL.createTag(material)),
-                    RecipeCategory.MISC,
                     ingot,
-                    0.5f,
-                    200,
+                    exp = 0.5f,
+                    types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
                 ).unlockedBy("has_raw", has(HTTagPrefix.RAW_MATERIAL, material))
-                .save(output, ingot.id.withPath { "smelting/${it}_from_raw" })
-            // Blasting
-            SimpleCookingRecipeBuilder
-                .blasting(
-                    Ingredient.of(HTTagPrefix.RAW_MATERIAL.createTag(material)),
-                    RecipeCategory.MISC,
-                    ingot,
-                    0.5f,
-                    100,
-                ).unlockedBy("has_raw", has(HTTagPrefix.RAW_MATERIAL, material))
-                .save(output, ingot.id.withPath { "blasting/${it}_from_raw" })
+                .saveSuffix(output, "_from_raw")
         }
     }
 

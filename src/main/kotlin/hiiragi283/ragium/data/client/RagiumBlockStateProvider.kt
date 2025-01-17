@@ -8,6 +8,9 @@ import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumFluids
+import hiiragi283.ragium.data.blockTexture
+import hiiragi283.ragium.data.getBuilder
+import hiiragi283.ragium.data.withExistingParent
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -46,9 +49,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 ore.get(),
                 ConfiguredModel(
                     models()
-                        .withExistingParent(ore.id.path, RagiumAPI.id("block/layered"))
-                        .texture("layer0", ore.oreVariant.baseStoneName.withPrefix("block/"))
-                        .texture("layer1", "block/" + ore.material.name)
+                        .withExistingParent(ore.id, RagiumAPI.id("block/layered"))
+                        .blockTexture("layer0", ore.oreVariant.baseStoneName)
+                        .blockTexture("layer1", RagiumAPI.id(ore.material.name))
                         .renderType("cutout"),
                 ),
             )
@@ -78,9 +81,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 .setModels(
                     ConfiguredModel(
                         models()
-                            .withExistingParent(id.path, "ragium:block/hull")
-                            .texture("top", hull.machineTier.getStorageBlock().blockId)
-                            .texture("inside", hull.machineTier.getCasing().blockId)
+                            .withExistingParent(id, RagiumAPI.id("block/hull"))
+                            .blockTexture("top", hull.machineTier.getStorageBlock().id)
+                            .blockTexture("inside", hull.machineTier.getCasing().id)
                             .texture("side", id)
                             .renderType("cutout"),
                     ),
@@ -159,7 +162,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .rotationY(front.getRotationY())
                     .modelFile(
                         models()
-                            .withExistingParent(inactiveId.toString(), RagiumAPI.id("block/machine_front"))
+                            .withExistingParent(inactiveId, RagiumAPI.id("block/machine_front"))
                             .texture("front", inactiveId)
                             .renderType("cutout"),
                     ).addModel()
@@ -170,7 +173,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .rotationY(front.getRotationY())
                     .modelFile(
                         models()
-                            .withExistingParent(activeId.toString(), RagiumAPI.id("block/machine_front"))
+                            .withExistingParent(activeId, RagiumAPI.id("block/machine_front"))
                             .texture("front", activeId)
                             .renderType("cutout"),
                     ).addModel()
@@ -186,11 +189,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                 .setModels(
                     ConfiguredModel(
                         models()
-                            .getBuilder(
-                                fluid.blockHolder.id
-                                    .withPrefix("block/")
-                                    .toString(),
-                            ).texture("particle", fluid.stillTexture),
+                            .getBuilder(fluid.blockHolder.id.withPrefix("block/"))
+                            .texture("particle", fluid.stillTexture),
                     ),
                 )
         }

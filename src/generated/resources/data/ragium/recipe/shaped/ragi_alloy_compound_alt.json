@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:dusts/crude_raginite"
+    },
+    "B": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    " A "
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_compound"
+  }
+}

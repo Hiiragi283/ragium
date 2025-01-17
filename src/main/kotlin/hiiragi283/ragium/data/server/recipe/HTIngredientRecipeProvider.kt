@@ -1,5 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
@@ -14,6 +16,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -35,6 +38,35 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .define('B', Tags.Items.RODS_WOODEN)
             .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
             .savePrefixed(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumItems.RAGI_ALLOY_COMPOUND)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
+            .unlockedBy("has_crude_raginite", has(HTTagPrefix.RAW_MATERIAL, RagiumMaterialKeys.CRUDE_RAGINITE))
+            .savePrefixed(output)
+
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumItems.RAGI_ALLOY_COMPOUND)
+            .pattern(" A ")
+            .pattern("ABA")
+            .pattern(" A ")
+            .define('A', HTTagPrefix.DUST, RagiumMaterialKeys.CRUDE_RAGINITE)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterialKeys.COPPER)
+            .unlockedBy("has_crude_raginite", has(HTTagPrefix.DUST, RagiumMaterialKeys.CRUDE_RAGINITE))
+            .save(output, RagiumAPI.id("shaped/ragi_alloy_compound_alt"))
+
+        HTCookingRecipeBuilder
+            .create(
+                Ingredient.of(RagiumItems.RAGI_ALLOY_COMPOUND),
+                RagiumItems.Ingots.RAGI_ALLOY,
+                exp = 0.5f,
+                types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+            ).unlockedBy("has_compound", has(RagiumItems.RAGI_ALLOY_COMPOUND))
+            .save(output)
     }
 
     private fun registerPlastics(output: RecipeOutput) {
