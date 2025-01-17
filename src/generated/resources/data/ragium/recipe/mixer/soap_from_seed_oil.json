@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 100,
+      "tag": "c:seed_oil"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/alkali"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:soap"
+    }
+  ],
+  "machine_type": "mixer"
+}

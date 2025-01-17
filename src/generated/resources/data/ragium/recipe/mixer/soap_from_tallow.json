@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/alkali"
+    },
+    {
+      "count": 1,
+      "item": "ragium:tallow"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "id": "ragium:soap"
+    }
+  ],
+  "machine_type": "mixer"
+}
