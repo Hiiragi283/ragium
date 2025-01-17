@@ -14,6 +14,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         // Block
         add(RagiumBlocks.SHAFT, "Shaft")
 
+        add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
+
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
 
         add(RagiumBlocks.LEDBlocks.RED, "Red LED Block")

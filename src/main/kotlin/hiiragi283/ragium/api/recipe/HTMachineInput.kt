@@ -23,6 +23,15 @@ class HTMachineInput private constructor(
     val catalyst: ItemStack,
 ) : RecipeInput {
     companion object {
+        @JvmStatic
+        fun createSimple(key: HTMachineKey, input: ItemStack, tier: HTMachineTier = HTMachineTier.BASIC): HTMachineInput = HTMachineInput(
+            key,
+            tier,
+            listOf(input),
+            listOf(),
+            ItemStack.EMPTY,
+        )
+
         /**
          * [HTMachineInput]を返します。
          */

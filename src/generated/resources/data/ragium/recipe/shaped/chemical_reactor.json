@@ -6,16 +6,19 @@
       "tag": "c:ingots/ragi_steel"
     },
     "B": {
-      "item": "minecraft:glass"
+      "tag": "c:circuits/advanced"
     },
     "C": {
+      "item": "minecraft:glass"
+    },
+    "D": {
       "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
-    "A A",
-    "BCB",
-    "A A"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "components": {

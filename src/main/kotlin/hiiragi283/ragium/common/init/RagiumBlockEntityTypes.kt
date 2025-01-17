@@ -2,21 +2,23 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.HTMachineBlock
-import hiiragi283.ragium.common.block.machine.HTDefaultMachineBlockEntity
-import hiiragi283.ragium.common.block.machine.HTLargeMachineBlockEntity
-import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTDefaultMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTLargeMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
+import java.util.function.Supplier
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 object RagiumBlockEntityTypes {
@@ -28,9 +30,18 @@ object RagiumBlockEntityTypes {
     private fun <T : BlockEntity> register(
         path: String,
         factory: BlockEntityType.BlockEntitySupplier<T>,
-        blocks: Collection<HTBlockContent> = listOf(),
+        block: Supplier<out Block>,
     ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
-        BlockEntityType.Builder.of(factory, *blocks.map(HTBlockContent::get).toTypedArray()).build(null)
+        BlockEntityType.Builder.of(factory, block.get()).build(null)
+    }
+
+    @JvmStatic
+    private fun <T : BlockEntity> register(
+        path: String,
+        factory: BlockEntityType.BlockEntitySupplier<T>,
+        blocks: Collection<Supplier<out Block>> = listOf(),
+    ): DeferredHolder<BlockEntityType<*>, BlockEntityType<T>> = REGISTER.register(path) { _: ResourceLocation ->
+        BlockEntityType.Builder.of(factory, *blocks.map(Supplier<out Block>::get).toTypedArray()).build(null)
     }
 
     @JvmStatic
@@ -47,6 +58,12 @@ object RagiumBlockEntityTypes {
                 },
             ).build(null)
     }
+
+    //    Manual Machine    //
+
+    @JvmField
+    val MANUAL_GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTManualGrinderBlockEntity>> =
+        register("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
 
     //    Machine    //
 

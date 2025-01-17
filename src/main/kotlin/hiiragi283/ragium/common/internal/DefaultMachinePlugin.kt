@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.internal
 import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.machine.*
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.common.block.machine.HTDefaultMachineBlockEntity
-import hiiragi283.ragium.common.block.machine.HTLargeMachineBlockEntity
-import hiiragi283.ragium.common.block.machine.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTDefaultMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTLargeMachineBlockEntity
+import hiiragi283.ragium.common.block.machine.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import java.util.function.BiConsumer

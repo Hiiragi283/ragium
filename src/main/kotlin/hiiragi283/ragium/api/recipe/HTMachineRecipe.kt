@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.extension.toList
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.property.getOrDefault
 import hiiragi283.ragium.common.init.RagiumRecipes
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
@@ -27,8 +28,8 @@ class HTMachineRecipe(
     val itemInputs: List<SizedIngredient>,
     val fluidInputs: List<SizedFluidIngredient>,
     val catalyst: Optional<Ingredient>,
-    val itemOutputs: List<ItemStack>,
-    val fluidOutputs: List<FluidStack>,
+    private val itemOutputs: List<ItemStack>,
+    private val fluidOutputs: List<FluidStack>,
 ) : Recipe<HTMachineInput> {
     companion object {
         @JvmField
@@ -84,6 +85,12 @@ class HTMachineRecipe(
     val machineKey: HTMachineKey = definition.key
     val machineTier: HTMachineTier = definition.tier
 
+    fun getItemOutput(index: Int): ItemStack? = itemOutputs.getOrNull(index)?.copy()
+
+    fun getFluidOutput(index: Int): FluidStack? = fluidOutputs.getOrNull(index)?.copy()
+
+    //    Recipe    //
+
     override fun matches(input: HTMachineInput, level: Level): Boolean {
         input.itemInputs.forEachIndexed { slot: Int, stack: ItemStack ->
             if (itemInputs.getOrNull(slot)?.test(stack) == false) {
@@ -102,7 +109,7 @@ class HTMachineRecipe(
 
     override fun assemble(input: HTMachineInput, registries: HolderLookup.Provider): ItemStack = getResultItem(registries)
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = itemOutputs.getOrNull(0) ?: ItemStack.EMPTY
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = getItemOutput(0) ?: ItemStack.EMPTY
 
     override fun getIngredients(): NonNullList<Ingredient> {
         val list: NonNullList<Ingredient> = NonNullList.create()

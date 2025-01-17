@@ -1,0 +1,74 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder"
+      },
+      "when": {
+        "level": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder_diagonal"
+      },
+      "when": {
+        "level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder",
+        "y": 90
+      },
+      "when": {
+        "level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder_diagonal",
+        "y": 90
+      },
+      "when": {
+        "level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder",
+        "y": 180
+      },
+      "when": {
+        "level": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder_diagonal",
+        "y": 180
+      },
+      "when": {
+        "level": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder",
+        "y": 270
+      },
+      "when": {
+        "level": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/manual_grinder_diagonal",
+        "y": 270
+      },
+      "when": {
+        "level": "7"
+      }
+    }
+  ]
+}

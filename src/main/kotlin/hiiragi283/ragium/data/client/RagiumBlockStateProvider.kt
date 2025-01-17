@@ -103,6 +103,31 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }
 
+        // Manual Machine
+        getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
+            RagiumBlockProperties.LEVEL_7.possibleValues.forEach { step: Int ->
+                val modelId: ResourceLocation = RagiumAPI.id(
+                    when (step % 2 == 0) {
+                        true -> "block/manual_grinder"
+                        false -> "block/manual_grinder_diagonal"
+                    },
+                )
+                val direction: Direction = when (step / 2) {
+                    0 -> Direction.NORTH
+                    1 -> Direction.EAST
+                    2 -> Direction.SOUTH
+                    3 -> Direction.WEST
+                    else -> error("")
+                }
+
+                this
+                    .modelFile(ModelFile.UncheckedModelFile(modelId))
+                    .rotationY(direction.getRotationY())
+                    .addModel()
+                    .condition(RagiumBlockProperties.LEVEL_7, step)
+            }
+        }
+
         // Utility
         RagiumBlocks.SHAFT.let { holder: DeferredBlock<RotatedPillarBlock> ->
             val model = ModelFile.UncheckedModelFile(holder.id.withPrefix("block/"))

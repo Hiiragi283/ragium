@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -200,6 +201,12 @@ object RagiumBlocks {
         override val holder: DeferredBlock<Block> =
             REGISTER.registerSimpleBlock("${name.lowercase()}_led_block", blockProperty(baseBlock).lightLevel { 15 })
     }
+
+    //    Manual Machines    //
+
+    @JvmField
+    val MANUAL_GRINDER: DeferredBlock<HTManualGrinderBlock> =
+        REGISTER.registerBlock("manual_grinder", ::HTManualGrinderBlock, blockProperty(Blocks.BRICKS))
 
     //    Utility    //
 

@@ -6,16 +6,19 @@
       "tag": "c:ingots/refined_ragi_steel"
     },
     "B": {
-      "item": "ragium:laser_emitter"
+      "tag": "c:circuits/elite"
     },
     "C": {
+      "item": "ragium:laser_emitter"
+    },
+    "D": {
       "item": "ragium:elite_casing"
     }
   },
   "pattern": [
-    "A A",
-    "BCB",
-    "A A"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "components": {

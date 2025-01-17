@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.DefaultMachinePlugin
-import hiiragi283.ragium.common.internal.DefaultMaterialPlugin
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import net.minecraft.world.item.Items
@@ -35,7 +34,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
             RagiumPlugin.Provider {
                 listOf(
                     DefaultMachinePlugin,
-                    DefaultMaterialPlugin,
                 )
             }
         }

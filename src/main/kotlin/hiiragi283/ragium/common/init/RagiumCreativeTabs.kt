@@ -96,6 +96,8 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Coils.entries)
 
                         add(RagiumBlocks.SHAFT)
+                        // Manual Machines
+                        add(RagiumBlocks.MANUAL_GRINDER)
                         // Utilities
                         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
                     }.forEach(output::accept)

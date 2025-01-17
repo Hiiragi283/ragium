@@ -41,13 +41,13 @@ fun <T : Any> Registry<T>.getKeyOrThrow(entry: T): ResourceKey<T> = getResourceK
  * 指定した[key]から[Holder.Reference]を返します。
  * @return [key]が紐づいていない場合はnull
  */
-fun <T : Any> Registry<T>.getEntryOrNull(key: ResourceKey<T>): Holder.Reference<T>? = getHolder(key).getOrNull()
+fun <T : Any> Registry<T>.getHolderOrNull(key: ResourceKey<T>): Holder.Reference<T>? = getHolder(key).getOrNull()
 
 /**
  * 指定した[key]から[Holder.Reference]を返します。
  * @throws [key]が紐づいていない場合
  */
-fun <T : Any> Registry<T>.getEntryOrThrow(key: ResourceKey<T>): Holder.Reference<T> = getHolder(key).orElseThrow()
+fun <T : Any> Registry<T>.getHolderOrThrow(key: ResourceKey<T>): Holder.Reference<T> = getHolder(key).orElseThrow()
 
 //    ResourceKey    //
 
@@ -78,13 +78,11 @@ val <T : Any> HolderSet<T>.isEmpty: Boolean
 /**
  * この[HolderSet]を[Component]に変換します。
  * @param transform 値を[Component]に変換するブロック
- * @return [TagKey]の場合は[TODO]，それ以外の場合は[transform]を連結
+ * @return [TagKey]の場合は[getName]，それ以外の場合は[transform]を連結
  */
 fun <T : Any> HolderSet<T>.asText(transform: (T) -> Component): MutableComponent = unwrap()
-    .map(
-        TODO(),
-        { ComponentUtils.formatList(this.map(Holder<T>::value), transform) },
-    ).copy()
+    .map(TagKey<T>::getName) { ComponentUtils.formatList(this.map(Holder<T>::value), transform) }
+    .copy()
 
 //    TagKey    //
 

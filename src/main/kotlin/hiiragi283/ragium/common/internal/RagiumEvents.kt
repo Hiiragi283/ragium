@@ -110,6 +110,8 @@ internal object RagiumEvents {
             )
         }
 
+        registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
+
         registerHandlers(RagiumBlockEntityTypes.DEFAULT_MACHINE)
         registerHandlers(RagiumBlockEntityTypes.LARGE_MACHINE)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)

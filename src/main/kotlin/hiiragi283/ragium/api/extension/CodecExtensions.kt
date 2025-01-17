@@ -9,12 +9,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.Container
-import net.minecraft.world.item.ItemStack
-import java.util.Optional
-import java.util.OptionalDouble
-import java.util.OptionalInt
-import java.util.OptionalLong
+import java.util.*
 import java.util.function.Function
 import kotlin.jvm.optionals.getOrNull
 
@@ -48,30 +43,6 @@ fun longRangeCodec(min: Long, max: Long): Codec<Long> {
     val func: Function<Long, DataResult<Long>> = Codec.checkRange(min, max)
     return Codec.LONG.flatXmap(func, func)
 }
-
-/**
- * 0から[Long.MAX_VALUE]までの範囲を含む[Codec]です。
- */
-val NON_NEGATIVE_LONG_CODEC: Codec<Long> = longRangeCodec(0, Long.MAX_VALUE)
-
-/**
- * 1から[Long.MAX_VALUE]までの範囲を含む[Codec]です。
- */
-val POSITIVE_LONG_CODEC: Codec<Long> = longRangeCodec(1, Long.MAX_VALUE)
-
-/**
- * 指定した[builder]から[Container]の[Codec]を返します。
- * @param T [Container]を継承したクラス
- * @return [ItemStack.OPTIONAL_CODEC]をベースに変換された[Codec]
- */
-fun <T : Container> createInventoryCodec(builder: (Int) -> T): Codec<T> = ItemStack.OPTIONAL_CODEC.listOf().xmap(
-    { list: List<ItemStack> ->
-        builder(list.size).apply {
-            list.forEachIndexed(this::setItem)
-        }
-    },
-    TODO(),
-)
 
 fun <A : Any> Codec<List<A>>.filterNotEmpty(filter: (A) -> Boolean): Codec<List<A>> = xmap(
     { list: List<A> -> list.filterNot(filter) },

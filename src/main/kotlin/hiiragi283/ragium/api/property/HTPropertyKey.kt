@@ -1,26 +1,30 @@
 package hiiragi283.ragium.api.property
 
+import com.mojang.serialization.DataResult
 import net.minecraft.resources.ResourceLocation
+import java.util.function.Function
+import java.util.function.Supplier
 
-/**
- * [HTPropertyHolder]のキー
- * @param T 値のクラス
- * @param id ユニークな値
- */
-sealed class HTPropertyKey<T : Any>(val id: ResourceLocation) {
+class HTPropertyKey<T : Any> internal constructor(
+    val id: ResourceLocation,
+    val hasDefaultValue: Boolean,
+    val defaultValue: Supplier<T>,
+    private val validator: Function<T, DataResult<T>>,
+) {
     companion object {
         @JvmStatic
-        fun <T : Any> ofSimple(id: ResourceLocation): Simple<T> = Simple(id)
+        fun <T : Any> builder(id: ResourceLocation): Builder<T> = Builder<T>(id)
 
         @JvmStatic
-        fun <T : Any> ofDefaulted(id: ResourceLocation, value: T): Defaulted<T> = Defaulted(id, value)
-
-        @JvmStatic
-        fun <T : Any> ofDefaulted(id: ResourceLocation, initializer: () -> T): Defaulted<T> = Defaulted(id, initializer)
-
-        @JvmStatic
-        fun ofFlag(id: ResourceLocation): Defaulted<Unit> = ofDefaulted(id, Unit)
+        fun <T : Any> simple(id: ResourceLocation): HTPropertyKey<T> = builder<T>(id).build()
     }
+
+    @Throws
+    fun getDefaultValue(): T = defaultValue.get()
+
+    fun getDefaultResult(): Result<T> = runCatching(::getDefaultValue)
+
+    fun validate(value: T): DataResult<T> = validator.apply(value)
 
     /**
      * 指定された[obj]を[T]にキャストします。
@@ -31,22 +35,20 @@ sealed class HTPropertyKey<T : Any>(val id: ResourceLocation) {
 
     override fun toString(): String = "HTPropertyKey[$id]"
 
-    //    Simple    //
+    class Builder<T : Any>(val id: ResourceLocation) {
+        private var hasDefaultValue: Boolean = false
+        private var defaultValue: Supplier<T> = Supplier { error("HTPropertyKey: $id have no default value!") }
+        private var validator: Function<T, DataResult<T>> = Function(DataResult<T>::success)
 
-    /**
-     * デフォルト値を持たない[hiiragi283.ragium.api.property.HTPropertyKey]
-     */
-    class Simple<T : Any>(id: ResourceLocation) : HTPropertyKey<T>(id)
+        fun setDefaultValue(defaultValue: Supplier<T>): Builder<T> = apply {
+            this.defaultValue = defaultValue
+            this.hasDefaultValue = true
+        }
 
-    //    Defaulted    //
+        fun setValidation(validator: Function<T, DataResult<T>>): Builder<T> = apply {
+            this.validator = validator
+        }
 
-    /**
-     * デフォルト値を持つ[hiiragi283.ragium.api.property.HTPropertyKey]
-     * @param initializer デフォルト値を渡すブロック
-     */
-    class Defaulted<T : Any>(id: ResourceLocation, private val initializer: () -> T) : HTPropertyKey<T>(id) {
-        constructor(id: ResourceLocation, defaultValue: T) : this(id, { defaultValue })
-
-        fun getDefaultValue(): T = initializer()
+        fun build(): HTPropertyKey<T> = HTPropertyKey(id, hasDefaultValue, defaultValue, validator)
     }
 }

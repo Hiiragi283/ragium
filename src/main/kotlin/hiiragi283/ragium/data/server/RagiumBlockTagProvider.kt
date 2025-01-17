@@ -11,6 +11,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagBuilder
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
 
 class RagiumBlockTagProvider(
@@ -32,6 +33,15 @@ class RagiumBlockTagProvider(
 
             addAll(RagiumBlocks.Drums.entries)
         }.map(HTBlockContent::id)
+            .forEach(pickaxe::addElement)
+
+        buildList {
+            add(RagiumBlocks.SHAFT)
+
+            add(RagiumBlocks.MANUAL_GRINDER)
+
+            add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
+        }.map(DeferredBlock<out Block>::getId)
             .forEach(pickaxe::addElement)
     }
 }

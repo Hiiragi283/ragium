@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.machine
+package hiiragi283.ragium.common.block.machine.processor
 
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntity
 import hiiragi283.ragium.api.capability.LimitedItemHandler

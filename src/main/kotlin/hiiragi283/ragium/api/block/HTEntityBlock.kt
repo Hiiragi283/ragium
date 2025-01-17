@@ -59,7 +59,9 @@ abstract class HTEntityBlock(properties: Properties) :
         newState: BlockState,
         movedByPiston: Boolean,
     ) {
-        level.getHTBlockEntity(pos)?.onRemove(state, level, pos, newState, movedByPiston)
+        if (!state.`is`(newState.block)) {
+            level.getHTBlockEntity(pos)?.onRemove(state, level, pos, newState, movedByPiston)
+        }
         super.onRemove(state, level, pos, newState, movedByPiston)
     }
 

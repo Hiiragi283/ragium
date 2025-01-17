@@ -1,49 +1,18 @@
 package hiiragi283.ragium.api.property
 
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.extension.getOrNull
+import hiiragi283.ragium.api.extension.orElse
+
 /**
  * さまざまな型の値を保持するインターフェース
  *
- * シリアライズ不可能な[net.minecraft.component.ComponentHolder]
+ * シリアライズ不可能な[net.minecraft.core.component.DataComponentHolder]
  *
  * @see [HTMutablePropertyHolder]
  */
-interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
-    /**
-     * 指定された[key]から[T]を返します。
-     * @return [key]に紐づいた値がない場合はnull
-     */
-    operator fun <T : Any> get(key: HTPropertyKey<T>): T?
-
-    /**
-     * 指定された[key]から[T]を返します。
-     * @return [key]に紐づいた値がない場合は[HTPropertyKey.Defaulted.getDefaultValue]
-     */
-    fun <T : Any> getOrDefault(key: HTPropertyKey.Defaulted<T>): T = get(key) ?: key.getDefaultValue()
-
-    /**
-     * 指定された[key]から[T]を返します。
-     * @throws IllegalStateException [key]に紐づいた値がない場合
-     */
-    fun <T : Any> getOrThrow(key: HTPropertyKey<T>): T = get(key) ?: error("Unknown property key: $key")
-
-    /**
-     * 指定された[key]が含まれているか判定します。
-     */
-    operator fun contains(key: HTPropertyKey<*>): Boolean
-
-    /**
-     * 指定された[key]に紐づいた値を[transform]で変換します。
-     * @return [key]に紐づいた値がない場合はnull
-     */
-    fun <T : Any, R : Any> map(key: HTPropertyKey<T>, transform: (T) -> R): R? = get(key)?.let(transform)
-
-    /**
-     * 指定された[key]に紐づいた値を[action]に渡します。
-     * @return [key]に紐づいた値がない場合は実行されない
-     */
-    fun <T : Any> ifPresent(key: HTPropertyKey<T>, action: (T) -> Unit) {
-        map(key, action)
-    }
+interface HTPropertyHolder {
+    fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T>
 
     //    Empty    //
 
@@ -51,10 +20,43 @@ interface HTPropertyHolder : Iterable<Pair<HTPropertyKey<*>, Any>> {
      * 空で不変な[HTPropertyHolder]の実装
      */
     object Empty : HTPropertyHolder {
-        override fun <T : Any> get(key: HTPropertyKey<T>): T? = null
-
-        override fun contains(key: HTPropertyKey<*>): Boolean = false
-
-        override fun iterator(): Iterator<Pair<HTPropertyKey<*>, Any>> = listOf<Pair<HTPropertyKey<*>, Any>>().iterator()
+        override fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T> = DataResult.error { "Empty Property Holder" }
     }
+}
+
+/**
+ * 指定された[key]から[T]を返します。
+ * @return [key]に紐づいた値がない場合はnull
+ */
+operator fun <T : Any> HTPropertyHolder.get(key: HTPropertyKey<T>): T? = getResult(key).getOrNull()
+
+/**
+ * 指定された[key]から[T]を返します。
+ * @return [key]に紐づいた値がない場合は[HTPropertyKey.getDefaultValue]
+ */
+fun <T : Any> HTPropertyHolder.getOrDefault(key: HTPropertyKey<T>): T = getResult(key).orElse(key.getDefaultValue())
+
+/**
+ * 指定された[key]から[T]を返します。
+ * @throws IllegalStateException [key]に紐づいた値がない場合
+ */
+fun <T : Any> HTPropertyHolder.getOrThrow(key: HTPropertyKey<T>): T = getResult(key).orThrow
+
+/**
+ * 指定された[key]が含まれているか判定します。
+ */
+operator fun <T : Any> HTPropertyHolder.contains(key: HTPropertyKey<T>): Boolean = getResult(key).isSuccess
+
+/**
+ * 指定された[key]に紐づいた値を[transform]で変換します。
+ * @return [key]に紐づいた値がない場合はnull
+ */
+fun <T : Any, R : Any> HTPropertyHolder.map(key: HTPropertyKey<T>, transform: (T) -> R): R? = get(key)?.let(transform)
+
+/**
+ * 指定された[key]に紐づいた値を[action]に渡します。
+ * @return [key]に紐づいた値がない場合は実行されない
+ */
+fun <T : Any> HTPropertyHolder.ifPresent(key: HTPropertyKey<T>, action: (T) -> Unit) {
+    map(key, action)
 }

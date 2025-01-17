@@ -40,6 +40,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
         buildList {
             add(RagiumBlocks.SHAFT)
 
+            add(RagiumBlocks.MANUAL_GRINDER)
+
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 

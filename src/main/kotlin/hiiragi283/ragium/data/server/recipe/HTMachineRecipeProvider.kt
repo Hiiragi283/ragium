@@ -141,12 +141,13 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 val firstTier: HTMachineTier = entry.firstTier
                 ShapedRecipeBuilder
                     .shaped(RecipeCategory.MISC, entry.createItemStack(firstTier)!!)
-                    .pattern("A A")
-                    .pattern("BCB")
-                    .pattern("A A")
+                    .pattern("ABA")
+                    .pattern("CDC")
+                    .pattern("ABA")
                     .define('A', HTTagPrefix.INGOT, firstTier.getMainMetal())
-                    .define('B', input)
-                    .define('C', firstTier.getCasing())
+                    .define('B', firstTier.getCircuitTag())
+                    .define('C', input)
+                    .define('D', firstTier.getCasing())
                     .unlockedBy("has_casing", has(firstTier.getCasing()))
                     .save(output, RagiumAPI.id("shaped/${key.name}"))
             }.onFailure { throwable: Throwable -> LOGGER.error(throwable.localizedMessage) }

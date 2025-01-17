@@ -6,12 +6,12 @@ import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.fluidHolder
 import hiiragi283.ragium.api.extension.itemProperty
+import hiiragi283.ragium.api.extension.name
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.item.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.HTCraftingToolItem
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.HoneycombItem
@@ -43,10 +43,7 @@ object RagiumItems {
             REGISTER.registerSimpleBlockItem(
                 ore.id.path,
                 ore,
-                itemProperty().component(
-                    DataComponents.ITEM_NAME,
-                    ore.oreVariant.createText(ore.material),
-                ),
+                itemProperty().name(ore.oreVariant.createText(ore.material)),
             )
         }
 
@@ -67,6 +64,8 @@ object RagiumItems {
 
         buildList {
             add(RagiumBlocks.SHAFT)
+
+            add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.forEach(REGISTER::registerSimpleBlockItem)

@@ -6,16 +6,19 @@
       "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "item": "minecraft:iron_hoe"
+      "tag": "c:circuits/basic"
     },
     "C": {
+      "item": "minecraft:iron_hoe"
+    },
+    "D": {
       "item": "ragium:basic_casing"
     }
   },
   "pattern": [
-    "A A",
-    "BCB",
-    "A A"
+    "ABA",
+    "CDC",
+    "ABA"
   ],
   "result": {
     "components": {

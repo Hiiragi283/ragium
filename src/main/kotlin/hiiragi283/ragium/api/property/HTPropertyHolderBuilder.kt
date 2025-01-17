@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.property
 
+import com.mojang.serialization.DataResult
+
 /**
  * [HTMutablePropertyHolder]向けのビルダー
  */
@@ -17,10 +19,9 @@ class HTPropertyHolderBuilder(private val map: MutableMap<HTPropertyKey<*>, Any>
     }
 
     fun build(): HTPropertyHolder = object : HTPropertyHolder {
-        override fun <T : Any> get(key: HTPropertyKey<T>): T? = key.cast(map[key])
-
-        override fun contains(key: HTPropertyKey<*>): Boolean = key in map
-
-        override fun iterator(): Iterator<Pair<HTPropertyKey<*>, Any>> = map.toList().iterator()
+        override fun <T : Any> getResult(key: HTPropertyKey<T>): DataResult<T> = map[key]
+            .let(key::cast)
+            ?.let(key::validate)
+            ?: DataResult.error { "Unknown key: $key" }
     }
 }

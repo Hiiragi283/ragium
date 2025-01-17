@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.extension.toResult
 import hiiragi283.ragium.api.machine.HTMachineException
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
 import java.util.function.Supplier
 
 /**
@@ -27,7 +27,7 @@ class HTRecipeCache<I : RecipeInput, R : Recipe<I>>(private val recipeType: Reci
      * 指定した[input]に一致する最初のレシピを返します。
      * @return [Result]で包まれた値
      */
-    fun getFirstMatch(input: I, level: ServerLevel): Result<R> = level
+    fun getFirstMatch(input: I, level: Level): Result<R> = level
         .recipeManager
         .getRecipeFor(recipeType, input, level, id)
         .toResult { HTMachineException.NoMatchingRecipe(false) }

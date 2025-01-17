@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.HTEntityBlock
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.validTiers
 import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

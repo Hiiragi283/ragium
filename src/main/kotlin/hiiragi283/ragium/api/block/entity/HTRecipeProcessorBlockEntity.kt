@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.extension.dropStacks
 import hiiragi283.ragium.api.fluid.HTTieredFluidTank
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
+import hiiragi283.ragium.common.recipe.HTMachineRecipeProcessor
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -25,14 +26,31 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
 
     protected abstract val processor: HTRecipeProcessor
 
+    protected fun createMachineProcessor(
+        itemInputs: IntArray,
+        itemOutputs: IntArray,
+        catalystIndex: Int,
+        fluidInputs: IntArray,
+        fluidOutputs: IntArray,
+    ): HTMachineRecipeProcessor = HTMachineRecipeProcessor(
+        machineKey,
+        itemHandler,
+        itemInputs,
+        itemOutputs,
+        catalystIndex,
+        tanks::getOrNull,
+        fluidInputs,
+        fluidOutputs,
+    )
+
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
-        tag.put("Items", itemHandler.serializeNBT(registries))
+        tag.put(ITEM_KEY, itemHandler.serializeNBT(registries))
     }
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        itemHandler.deserializeNBT(registries, tag.getCompound("Items"))
+        itemHandler.deserializeNBT(registries, tag.getCompound(ITEM_KEY))
     }
 
     override fun onUpdateTier(oldTier: HTMachineTier, newTier: HTMachineTier) {

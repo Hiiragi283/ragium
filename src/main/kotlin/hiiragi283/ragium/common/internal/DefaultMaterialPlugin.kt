@@ -1,16 +1,11 @@
 package hiiragi283.ragium.common.internal
 
 import hiiragi283.ragium.api.RagiumPlugin
-import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPropertyKeys
-import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import java.util.function.Function
 
 object DefaultMaterialPlugin : RagiumPlugin {
     override val priority: Int = -100
 
-    override fun setupMaterialProperties(helper: Function<HTMaterialKey, HTPropertyHolderBuilder>) {
+    /*override fun setupMaterialProperties(helper: Function<HTMaterialKey, HTPropertyHolderBuilder>) {
         // metal
         helper
             .apply(RagiumMaterialKeys.COPPER)
@@ -60,5 +55,5 @@ object DefaultMaterialPlugin : RagiumPlugin {
             .add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
             .put(HTMaterialPropertyKeys.GRINDING_BASE_COUNT, 4)
         helper.apply(RagiumMaterialKeys.QUARTZ).add(HTMaterialPropertyKeys.DISABLE_BLOCK_CRAFTING)
-    }
+    }*/
 }

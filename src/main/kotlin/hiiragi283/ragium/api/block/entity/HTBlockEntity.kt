@@ -19,6 +19,10 @@ import java.util.function.Supplier
 
 abstract class HTBlockEntity(type: Supplier<out BlockEntityType<*>>, pos: BlockPos, state: BlockState) :
     BlockEntity(type.get(), pos, state) {
+    companion object {
+        const val ITEM_KEY = "Items"
+    }
+
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag =
         CompoundTag().apply { saveAdditional(this, registries) }
 

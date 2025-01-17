@@ -41,6 +41,9 @@
     "ragium:basic_drum",
     "ragium:advanced_drum",
     "ragium:elite_drum",
-    "ragium:ultimate_drum"
+    "ragium:ultimate_drum",
+    "ragium:shaft",
+    "ragium:manual_grinder",
+    "ragium:energy_network_interface"
   ]
 }

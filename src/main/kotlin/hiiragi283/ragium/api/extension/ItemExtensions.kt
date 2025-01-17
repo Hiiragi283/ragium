@@ -6,7 +6,8 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.world.Containers
+import net.minecraft.core.component.DataComponents
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -20,6 +21,11 @@ fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder
 //    Item    //
 
 fun itemProperty(): Item.Properties = Item.Properties()
+
+/**
+ * 指定した[text]をアイテムの名前に設定します。
+ */
+fun Item.Properties.name(text: Component): Item.Properties = component(DataComponents.ITEM_NAME, text)
 
 //    ItemStack    //
 
@@ -48,5 +54,5 @@ val ItemStack.machineTier: HTMachineTier
 fun IItemHandler.dropStacks(level: Level, pos: BlockPos) {
     (0 until this.slots)
         .map(this::getStackInSlot)
-        .forEach { Containers.dropItemStack(level, pos.x.toDouble(), pos.z.toDouble(), pos.y.toDouble(), it) }
+        .forEach { dropStackAt(level, pos, it) }
 }

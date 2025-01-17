@@ -1,17 +1,25 @@
 package hiiragi283.ragium.api.extension
 
 import hiiragi283.ragium.api.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.CommonLevelAccessor
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.Vec3
 
 //    BlockGetter    //
 
 fun BlockGetter.getHTBlockEntity(pos: BlockPos): HTBlockEntity? = getBlockEntity(pos) as? HTBlockEntity
+
+fun BlockGetter.getMachineEntity(pos: BlockPos): HTMachineBlockEntity? = getBlockEntity(pos) as? HTMachineBlockEntity
 
 /**
  * 指定した[pos]に存在する[BlockState]を置き換えようとします。
@@ -33,6 +41,58 @@ fun CommonLevelAccessor.replaceBlockState(pos: BlockPos, doBreak: Boolean = fals
 //    Level    //
 
 fun Level.asServerLevel(): ServerLevel? = this as? ServerLevel
+
+/**
+ * 指定した[item]を[entity]の足元にドロップします。
+ * @return [net.minecraft.world.entity.item.ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(entity: Entity, item: ItemLike, count: Int = 1): Boolean = dropStackAt(entity, ItemStack(item, count))
+
+/**
+ * 指定した[stack]を[entity]の足元にドロップします。
+ * @return [net.minecraft.world.entity.item.ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(entity: Entity, stack: ItemStack): Boolean = dropStackAt(entity.level(), entity.position(), stack)
+
+/**
+ * 指定した[item]を[pos]にドロップします。
+ * @return [net.minecraft.world.entity.item.ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(
+    level: Level,
+    pos: BlockPos,
+    item: ItemLike,
+    count: Int = 1,
+): Boolean = dropStackAt(level, pos, ItemStack(item, count))
+
+/**
+ * 指定した[stack]を[pos]にドロップします。
+ * @return [net.minecraft.world.entity.item.ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(level: Level, pos: BlockPos, stack: ItemStack): Boolean =
+    dropStackAt(level, pos.x.toDouble() + 0.5, pos.y.toDouble(), pos.z.toDouble() + 0.5, stack)
+
+/**
+ * 指定した[stack]を[pos]にドロップします。
+ * @return [net.minecraft.world.entity.item.ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(level: Level, pos: Vec3, stack: ItemStack): Boolean = dropStackAt(level, pos.x, pos.y, pos.z, stack)
+
+/**
+ * 指定した[stack]を[x]，[y]，[z]にドロップします。
+ * @return [net.minecraft.world.entity.item.ItemEntity]がスポーンした場合はtrue，それ以外の場合はfalse
+ */
+fun dropStackAt(
+    level: Level,
+    x: Double,
+    y: Double,
+    z: Double,
+    stack: ItemStack,
+): Boolean {
+    val itemEntity = ItemEntity(level, x, y, z, stack.copy())
+    itemEntity.setPickUpDelay(0)
+    return level.addFreshEntity(itemEntity)
+}
 
 //    BlockEntity    //
 
