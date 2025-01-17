@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 1,
+      "id": "ragium:chlorine"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "tag": "c:dusts/salt"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "ragium:alkali_dust"
+    }
+  ],
+  "machine_type": "extractor",
+  "tier": "elite"
+}

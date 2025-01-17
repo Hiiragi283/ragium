@@ -59,6 +59,7 @@ object RagiumClient {
         register(RagiumMenuTypes.DEFAULT_MACHINE)
         register(RagiumMenuTypes.LARGE_MACHINE)
 
+        register(RagiumMenuTypes.DISTILLATION_TOWER)
         register(RagiumMenuTypes.MULTI_SMELTER)
 
         LOGGER.info("Registered machine screens!")

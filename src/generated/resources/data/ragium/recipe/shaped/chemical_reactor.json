@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_steel"
+      "tag": "c:ingots/ragi_alloy"
     },
     "B": {
-      "tag": "c:circuits/advanced"
+      "tag": "c:circuits/basic"
     },
     "C": {
       "item": "minecraft:glass"
     },
     "D": {
-      "item": "ragium:advanced_casing"
+      "item": "ragium:basic_casing"
     }
   },
   "pattern": [
@@ -22,7 +22,7 @@
   ],
   "result": {
     "components": {
-      "ragium:tier": "advanced"
+      "ragium:tier": "basic"
     },
     "count": 1,
     "id": "ragium:chemical_reactor"

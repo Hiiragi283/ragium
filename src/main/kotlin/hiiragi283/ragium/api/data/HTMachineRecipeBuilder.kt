@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.common.init.RagiumFluids
 import net.minecraft.advancements.Criterion
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -77,6 +78,8 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     //    Catalyst    //
 
+    fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder = catalyst(prefix.createTag(material))
+
     fun catalyst(tagKey: TagKey<Item>): HTMachineRecipeBuilder = catalyst(Ingredient.of(tagKey))
 
     fun catalyst(item: ItemLike): HTMachineRecipeBuilder = catalyst(Ingredient.of(item))
@@ -117,12 +120,28 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     override fun getResult(): Item = itemOutputs.getOrNull(0)?.item ?: error("Empty item outputs")
 
+    private fun getPrimalId(): ResourceLocation {
+        val firstItem: Item? = itemOutputs.getOrNull(0)?.item
+        if (firstItem != null) {
+            return RecipeBuilder.getDefaultRecipeId(result)
+        }
+        val firstFluid: Fluid? = fluidOutputs.getOrNull(0)?.fluid
+        if (firstFluid != null) {
+            return BuiltInRegistries.FLUID.getKey(firstFluid)
+        }
+        return error("There is no output!")
+    }
+
     fun savePrefixed(recipeOutput: RecipeOutput, prefix: String) {
-        save(recipeOutput, RecipeBuilder.getDefaultRecipeId(result).withPrefix(prefix))
+        save(recipeOutput, getPrimalId().withPrefix(prefix))
     }
 
     fun saveSuffixed(recipeOutput: RecipeOutput, suffix: String) {
-        save(recipeOutput, RecipeBuilder.getDefaultRecipeId(result).withSuffix(suffix))
+        save(recipeOutput, getPrimalId().withSuffix(suffix))
+    }
+
+    override fun save(recipeOutput: RecipeOutput) {
+        save(recipeOutput, getPrimalId())
     }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {

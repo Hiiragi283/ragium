@@ -11,6 +11,8 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import hiiragi283.ragium.api.util.collection.HTMultiMap
 import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumRecipes
 import hiiragi283.ragium.integration.jei.category.HTMachineRecipeCategory
 import hiiragi283.ragium.integration.jei.category.HTMaterialInfoCategory
@@ -111,6 +113,8 @@ class RagiumJEIPlugin : IModPlugin {
                 registration.addRecipeCatalysts(getRecipeType(key), stack)
             }
         }
+
+        registration.addRecipeCatalysts(getRecipeType(RagiumMachineKeys.GRINDER), RagiumBlocks.MANUAL_GRINDER)
 
         registration.addRecipeCatalysts(MATERIAL_INFO, Items.IRON_INGOT)
     }

@@ -138,7 +138,8 @@ object RagiumItems {
 
         // tier 3
         RAGI_CRYSTAL(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
-        CINNABAR(HTTagPrefix.GEM, RagiumMaterialKeys.CINNABAR),
+
+        // CINNABAR(HTTagPrefix.GEM, RagiumMaterialKeys.CINNABAR),
         CRYOLITE(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE),
         FLUORITE(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE),
         ;

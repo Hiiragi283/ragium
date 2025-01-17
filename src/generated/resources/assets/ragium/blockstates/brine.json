@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ragium:block/mercury"
+      "model": "ragium:block/brine"
     }
   }
 }

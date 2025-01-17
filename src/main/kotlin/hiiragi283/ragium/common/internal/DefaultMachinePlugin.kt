@@ -59,7 +59,6 @@ object DefaultMachinePlugin : RagiumPlugin {
 
         helper
             .apply(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 
         helper
             .apply(RagiumMachineKeys.CUTTING_MACHINE)

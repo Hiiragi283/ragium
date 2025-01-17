@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:hydrogen"
+    },
+    {
+      "amount": 1000,
+      "tag": "c:chlorine"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 2000,
+      "id": "ragium:hydrogen_chloride"
+    }
+  ],
+  "machine_type": "chemical_reactor"
+}

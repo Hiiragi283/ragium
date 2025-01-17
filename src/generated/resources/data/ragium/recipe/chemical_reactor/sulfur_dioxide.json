@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:oxidization_catalyst"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 1,
+      "id": "ragium:sulfur_dioxide"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/sulfur"
+    }
+  ],
+  "machine_type": "chemical_reactor"
+}

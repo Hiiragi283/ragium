@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
+import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -180,8 +181,15 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                     .define('A', HTTagPrefix.INGOT, nextTier.getMainMetal())
                     .define('B', nextTier.getCircuitTag())
                     .define('C', HTTagPrefix.INGOT, nextTier.getSteelMetal())
-                    .define('D', DataComponentIngredient.of(false, currentMachine))
-                    .unlockedBy("has_machine", has(currentMachine.item))
+                    .define(
+                        'D',
+                        DataComponentIngredient.of(
+                            false,
+                            RagiumComponentTypes.MACHINE_TIER.get(),
+                            tier,
+                            currentMachine.item,
+                        ),
+                    ).unlockedBy("has_machine", has(currentMachine.item))
                     .save(output, RagiumAPI.id("shaped/${nextTier.serializedName}/${key.name}"))
             }
         }

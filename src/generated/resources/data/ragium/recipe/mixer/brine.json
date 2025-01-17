@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:water"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 1,
+      "id": "ragium:brine"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/salt"
+    }
+  ],
+  "machine_type": "mixer"
+}

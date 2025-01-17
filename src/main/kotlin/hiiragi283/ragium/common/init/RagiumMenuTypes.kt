@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.init
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTContainerMenu
 import hiiragi283.ragium.common.inventory.HTDefaultMachineContainerMenu
+import hiiragi283.ragium.common.inventory.HTDistillationTowerContainerMenu
 import hiiragi283.ragium.common.inventory.HTLargeMachineContainerMenu
 import hiiragi283.ragium.common.inventory.HTMultiSmelterContainerMenu
 import net.minecraft.core.registries.Registries
@@ -29,6 +30,10 @@ object RagiumMenuTypes {
     @JvmField
     val LARGE_MACHINE: DeferredHolder<MenuType<*>, MenuType<HTLargeMachineContainerMenu>> =
         register("large_machine", ::HTLargeMachineContainerMenu)
+
+    @JvmField
+    val DISTILLATION_TOWER: DeferredHolder<MenuType<*>, MenuType<HTDistillationTowerContainerMenu>> =
+        register("distillation_tower", ::HTDistillationTowerContainerMenu)
 
     @JvmField
     val MULTI_SMELTER: DeferredHolder<MenuType<*>, MenuType<HTMultiSmelterContainerMenu>> =

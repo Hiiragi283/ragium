@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.recipe.HTRecipeProcessor
 import hiiragi283.ragium.common.init.RagiumBlockEntityTypes
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.inventory.HTDistillationTowerContainerMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Inventory
@@ -32,7 +33,8 @@ class HTDistillationTowerBlockEntity(pos: BlockPos, state: BlockState) :
         intArrayOf(1, 2, 3),
     )
 
-    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? = null
+    override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? =
+        HTDistillationTowerContainerMenu(containerId, playerInventory, itemHandler, this)
 
     //    HTBlockEntityHandlerProvider    //
 

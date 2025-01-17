@@ -22,10 +22,6 @@
     {
       "count": 6,
       "id": "minecraft:redstone"
-    },
-    {
-      "count": 1,
-      "id": "ragium:cinnabar"
     }
   ],
   "machine_type": "chemical_reactor",

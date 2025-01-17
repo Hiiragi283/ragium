@@ -112,7 +112,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         registerOreToRaw(output, RagiumMaterialKeys.LAPIS, Items.LAPIS_LAZULI, 4)
         registerOreToRaw(output, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
 
-        registerOreToRaw(output, RagiumMaterialKeys.REDSTONE, Items.REDSTONE, 2, RagiumItems.RawResources.CINNABAR)
+        registerOreToRaw(output, RagiumMaterialKeys.REDSTONE, Items.REDSTONE, 2)
         registerOreToRaw(output, RagiumMaterialKeys.NETHERITE_SCRAP, Items.NETHERITE_SCRAP)
 
         RagiumItems.RawResources.entries.forEach { raw: RagiumItems.RawResources ->
@@ -198,7 +198,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ULTIMATE)
             .itemInput(HTTagPrefix.ORE, material)
-            .fluidInput(RagiumFluids.MERCURY, FluidType.BUCKET_VOLUME / 2)
+            .fluidInput(RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME / 2)
             .itemOutput(raw, baseCount * 5)
             .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME / 2)
             .saveSuffixed(output, "_5x")
