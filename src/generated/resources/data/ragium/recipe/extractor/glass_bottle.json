@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 4,
+      "id": "ragium:dragon_breath"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:dragon_breath"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:glass_bottle"
+    }
+  ],
+  "machine_type": "extractor",
+  "tier": "elite"
+}

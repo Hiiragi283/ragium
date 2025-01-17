@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:skeleton_skull"
+    },
+    {
+      "count": 16,
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:zombie_head"
+    }
+  ],
+  "machine_type": "laser_transformer",
+  "tier": "advanced"
+}

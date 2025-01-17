@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:storage_blocks/bone_meal"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:skeleton_skull"
+    }
+  ],
+  "machine_type": "laser_transformer"
+}

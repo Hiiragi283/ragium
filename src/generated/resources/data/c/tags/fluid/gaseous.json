@@ -19,6 +19,8 @@
     "ragium:hydrogen_chloride",
     "ragium:flowing_hydrogen_chloride",
     "ragium:refined_gas",
-    "ragium:flowing_refined_gas"
+    "ragium:flowing_refined_gas",
+    "ragium:dragon_breath",
+    "ragium:flowing_dragon_breath"
   ]
 }

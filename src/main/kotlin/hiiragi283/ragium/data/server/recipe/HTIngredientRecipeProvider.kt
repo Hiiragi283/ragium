@@ -12,14 +12,24 @@ import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
+import net.minecraft.advancements.AdvancementRequirements
+import net.minecraft.advancements.AdvancementRewards
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger
+import net.minecraft.core.component.DataComponents
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.SingleItemRecipeBuilder
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.SmithingTransformRecipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.BlockTagIngredient
@@ -30,6 +40,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
         registerRaginite(output)
         registerSteels(output)
+        registerEndContents(output)
 
         registerPlastics(output)
         registerCircuits(output)
@@ -107,6 +118,42 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 4)
             .itemOutput(RagiumItems.Ingots.REFINED_RAGI_STEEL)
             .save(output)
+    }
+
+    private fun registerSteels(output: RecipeOutput) {
+        // Steel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(ItemTags.COALS, 4)
+            .itemOutput(RagiumItems.Ingots.STEEL)
+            .save(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
+            .itemInput(ItemTags.COALS, 2)
+            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .itemOutput(RagiumItems.Ingots.STEEL)
+            .saveSuffixed(output, "_alt")
+        // Deep Steel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .itemInput(BlockTagIngredient(BlockTags.DEEPSLATE_ORE_REPLACEABLES), 8)
+            .fluidInput(RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME / 5)
+            .itemOutput(RagiumItems.DEEPANT)
+            .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME / 5)
+            .save(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.BLAST_FURNACE)
+            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
+            .itemInput(RagiumItems.DEEPANT, 4)
+            .itemOutput(RagiumItems.Ingots.DEEP_STEEL)
+            .save(output)
+    }
+
+    private fun registerEndContents(output: RecipeOutput) {
         // Ragium
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, HTMachineTier.ELITE)
@@ -142,39 +189,46 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .fluidInput(RagiumFluids.DESTABILIZED_RAGIUM_SOLUTION)
             .itemOutput(RagiumItems.Ingots.RAGIUM)
             .save(output)
-    }
-
-    private fun registerSteels(output: RecipeOutput) {
-        // Steel
+        // Dragonium
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .itemInput(ItemTags.COALS, 4)
-            .itemOutput(RagiumItems.Ingots.STEEL)
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ELITE)
+            .itemInput(Items.DRAGON_BREATH)
+            .itemOutput(Items.GLASS_BOTTLE)
+            .fluidOutput(RagiumFluids.DRAGON_BREATH, FluidType.BUCKET_VOLUME / 250)
             .save(output)
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ADVANCED)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.IRON)
-            .itemInput(ItemTags.COALS, 2)
-            .catalyst(RagiumItems.REDUCTION_CATALYST)
-            .itemOutput(RagiumItems.Ingots.STEEL)
-            .saveSuffixed(output, "_alt")
-        // Deep Steel
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
-            .itemInput(BlockTagIngredient(BlockTags.DEEPSLATE_ORE_REPLACEABLES), 8)
-            .fluidInput(RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME / 5)
-            .itemOutput(RagiumItems.DEEPANT)
-            .fluidOutput(RagiumFluids.CHEMICAL_SLUDGE, FluidType.BUCKET_VOLUME / 5)
+            .create(RagiumMachineKeys.BLAST_FURNACE, HTMachineTier.ELITE)
+            .itemInput(RagiumItems.Ingots.DEEP_STEEL)
+            .fluidInput(RagiumFluids.DRAGON_BREATH)
+            .catalyst(Items.DRAGON_EGG)
+            .itemOutput(RagiumItems.Ingots.DRAGONIUM)
             .save(output)
 
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.BLAST_FURNACE)
-            .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL)
-            .itemInput(RagiumItems.DEEPANT, 4)
-            .itemOutput(RagiumItems.Ingots.DEEP_STEEL)
-            .save(output)
+        // Unbreakable Elytra
+        val elytraId: ResourceLocation = RagiumAPI.id("smithing/dragonium_elytra")
+        val ingotDragonium: TagKey<Item> = RagiumItems.Ingots.DRAGONIUM.prefixedTagKey
+        output.accept(
+            elytraId,
+            SmithingTransformRecipe(
+                Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                Ingredient.of(Items.ELYTRA),
+                Ingredient.of(ingotDragonium),
+                ItemStack(Items.ELYTRA).apply {
+                    set(DataComponents.UNBREAKABLE, Unbreakable(true))
+                },
+            ),
+            output
+                .advancement()
+                .addCriterion("has_dragonium", HTMaterialRecipeProvider.has(ingotDragonium))
+                .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(elytraId))
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .rewards(AdvancementRewards.Builder.recipe(elytraId))
+                .build(elytraId.withPrefix("recipes/combat/")),
+        )
+        // Echorium
+
+        // Fierium
     }
 
     private fun registerPlastics(output: RecipeOutput) {

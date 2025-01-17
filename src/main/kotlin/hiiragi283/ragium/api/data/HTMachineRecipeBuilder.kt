@@ -60,6 +60,8 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     fun itemInput(ingredient: ICustomIngredient, count: Int = 1): HTMachineRecipeBuilder = itemInput(ingredient.toVanilla(), count)
 
+    fun itemInput(ingredient: SizedIngredient): HTMachineRecipeBuilder = itemInput(ingredient.ingredient(), ingredient.count())
+
     fun itemInput(ingredient: Ingredient, count: Int = 1): HTMachineRecipeBuilder = apply {
         check(itemInputs.put(ingredient, count) == null) { "Same ingredient is not supported!" }
     }

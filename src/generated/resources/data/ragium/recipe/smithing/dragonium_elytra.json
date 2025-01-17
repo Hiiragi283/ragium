@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "c:ingots/dragonium"
+  },
+  "base": {
+    "item": "minecraft:elytra"
+  },
+  "result": {
+    "components": {
+      "minecraft:unbreakable": {}
+    },
+    "count": 1,
+    "id": "minecraft:elytra"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}
