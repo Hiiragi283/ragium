@@ -10,6 +10,8 @@ import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.drawable.IDrawable
+import mezz.jei.api.gui.placement.HorizontalAlignment
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.ingredients.IIngredientTypeWithSubtypes
@@ -55,6 +57,25 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         addFluidOutput(builder, recipe, 5, 1, 0)
         addFluidOutput(builder, recipe, 6, 1, 1)
         addFluidOutput(builder, recipe, 7, 1, 2)
+    }
+
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<HTMachineRecipe>, focuses: IFocusGroup) {
+        // Recipe Arrow
+        builder.addRecipeArrow().setPosition(getPosition(3.5), getPosition(0))
+        // Recipe Cost
+        val tier: HTMachineTier = recipe.value.machineTier
+        builder
+            .addText(Component.literal("Recipe Cost: ${tier.processCost} FE"), width - 4, 10)
+            .setPosition(getPosition(0), getPosition(2.25))
+            .setColor(0xFFFFFF)
+            .setShadow(true)
+            .setTextAlignment(HorizontalAlignment.LEFT)
+        // Recipe tier
+        builder
+            .addText(tier.text, width - 4, 10)
+            .setPosition(getPosition(0), getPosition(2.75))
+            .setShadow(true)
+            .setTextAlignment(HorizontalAlignment.LEFT)
     }
 
     private fun addItemInput(
