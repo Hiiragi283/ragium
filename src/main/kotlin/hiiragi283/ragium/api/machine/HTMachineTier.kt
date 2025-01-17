@@ -21,6 +21,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.material.MapColor
 import net.neoforged.neoforge.fluids.FluidType
 
 enum class HTMachineTier(
@@ -75,6 +76,13 @@ enum class HTMachineTier(
     }
 
     //    Block    //
+
+    fun getMapColor(): MapColor = when (this) {
+        BASIC -> MapColor.COLOR_ORANGE
+        ADVANCED -> MapColor.GOLD
+        ELITE -> MapColor.SNOW
+        ULTIMATE -> MapColor.COLOR_RED
+    }
 
     fun getStorageBlock(): HTBlockContent.Material = when (this) {
         BASIC -> RagiumBlocks.StorageBlocks.RAGI_ALLOY

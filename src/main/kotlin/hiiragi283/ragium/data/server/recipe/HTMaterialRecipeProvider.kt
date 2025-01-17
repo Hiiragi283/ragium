@@ -22,21 +22,13 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
         // Ingot/Gem -> Block
         RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
-            val material: HTMaterialKey = storage.material
-            val mainPrefix: HTTagPrefix = when (storage) {
-                RagiumBlocks.StorageBlocks.FLUORITE -> HTTagPrefix.GEM
-                RagiumBlocks.StorageBlocks.RAGI_CRYSTAL -> HTTagPrefix.GEM
-                RagiumBlocks.StorageBlocks.CRYOLITE -> HTTagPrefix.GEM
-                else -> HTTagPrefix.INGOT
-            }
-
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, storage)
                 .pattern("AAA")
                 .pattern("AAA")
                 .pattern("AAA")
-                .define('A', mainPrefix, material)
-                .unlockedBy("has_input", has(mainPrefix, material))
+                .define('A', storage.basePrefix, storage.material)
+                .unlockedBy("has_input", has(storage.basePrefix, storage.material))
                 .savePrefixed(output)
         }
         // Block -> Ingot

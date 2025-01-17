@@ -112,8 +112,11 @@ object RagiumCreativeTabs {
                             .forEach(output::accept)
                     }
 
-                    RagiumBlocks.LEDBlocks.entries.forEach(output::accept)
-                    RagiumBlocks.Decorations.entries.forEach(output::accept)
+                    buildList {
+                        addAll(RagiumBlocks.LEDBlocks.entries)
+                        add(RagiumBlocks.PLASTIC_BLOCK)
+                        addAll(RagiumBlocks.Decorations.entries)
+                    }.forEach(output::accept)
                 }.build()
         }
 

@@ -38,6 +38,8 @@ class RagiumBlockTagProvider(
         buildList {
             add(RagiumBlocks.SHAFT)
 
+            add(RagiumBlocks.PLASTIC_BLOCK)
+
             add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)

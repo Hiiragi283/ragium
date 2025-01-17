@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.client
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
@@ -39,8 +38,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             addAll(RagiumBlocks.StorageBlocks.entries)
             addAll(RagiumBlocks.Casings.entries)
 
+            add(RagiumBlocks.PLASTIC_BLOCK)
             addAll(RagiumBlocks.LEDBlocks.entries)
-        }.map(HTBlockContent::get)
+        }.map(Supplier<out Block>::get)
             .forEach(::simpleBlock)
 
         // Ore

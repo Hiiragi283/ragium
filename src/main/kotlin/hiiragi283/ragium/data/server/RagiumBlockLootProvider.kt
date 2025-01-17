@@ -33,6 +33,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.Coils.entries)
             add(RagiumBlocks.SHAFT)
 
+            add(RagiumBlocks.PLASTIC_BLOCK)
             addAll(RagiumBlocks.Decorations.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
 

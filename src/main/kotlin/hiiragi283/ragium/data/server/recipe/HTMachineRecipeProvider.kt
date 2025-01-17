@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
+import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import net.minecraft.data.recipes.RecipeCategory
@@ -23,8 +24,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 import org.slf4j.Logger
 
@@ -56,11 +56,11 @@ object HTMachineRecipeProvider : RecipeProviderChild {
         }
         // Casing
         RagiumBlocks.Casings.entries.forEach { casings: RagiumBlocks.Casings ->
-            val corner: Block = when (casings) {
-                RagiumBlocks.Casings.BASIC -> Blocks.STONE
-                RagiumBlocks.Casings.ADVANCED -> Blocks.QUARTZ_BLOCK
-                RagiumBlocks.Casings.ELITE -> Blocks.POLISHED_DEEPSLATE
-                RagiumBlocks.Casings.ULTIMATE -> Blocks.OBSIDIAN
+            val corner: Item = when (casings) {
+                RagiumBlocks.Casings.BASIC -> Items.STONE
+                RagiumBlocks.Casings.ADVANCED -> Items.QUARTZ_BLOCK
+                RagiumBlocks.Casings.ELITE -> Items.POLISHED_DEEPSLATE
+                RagiumBlocks.Casings.ULTIMATE -> Items.OBSIDIAN
             }
             // Shaped Crafting
             val grate: HTBlockContent.Tier = casings.machineTier.getGrate()
@@ -119,6 +119,18 @@ object HTMachineRecipeProvider : RecipeProviderChild {
     }
 
     private fun registerMachines(output: RecipeOutput) {
+        // Manual Machine
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, RagiumBlocks.MANUAL_GRINDER)
+            .pattern("A  ")
+            .pattern("BBB")
+            .pattern("CCC")
+            .define('A', Tags.Items.RODS_WOODEN)
+            .define('B', HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('C', Items.BRICKS)
+            .unlockedBy("has_ragi_alloy", has(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_ALLOY))
+            .savePrefixed(output)
+
         mapOf(
             // consumer
             // generator
