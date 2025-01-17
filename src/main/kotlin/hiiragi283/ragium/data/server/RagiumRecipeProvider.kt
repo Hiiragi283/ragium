@@ -1,10 +1,6 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.data.server.recipe.HTBuildingRecipeProvider
-import hiiragi283.ragium.data.server.recipe.HTChemicalRecipeProvider
-import hiiragi283.ragium.data.server.recipe.HTIngredientRecipeProvider
-import hiiragi283.ragium.data.server.recipe.HTMachineRecipeProvider
-import hiiragi283.ragium.data.server.recipe.HTMaterialRecipeProvider
+import hiiragi283.ragium.data.server.recipe.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
@@ -16,6 +12,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     override fun buildRecipes(recipeOutput: RecipeOutput) {
         HTBuildingRecipeProvider.buildRecipes(recipeOutput)
         HTChemicalRecipeProvider.buildRecipes(recipeOutput)
+        HTFoodRecipeProvider.buildRecipes(recipeOutput)
         HTIngredientRecipeProvider.buildRecipes(recipeOutput)
         HTMachineRecipeProvider.buildRecipes(recipeOutput)
         HTMaterialRecipeProvider.buildRecipes(recipeOutput)

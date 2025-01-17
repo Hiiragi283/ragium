@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_machine": {
+    "has_casing": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:combustion_generator"
+            "items": "ragium:basic_casing"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/advanced/combustion_generator"
+        "recipe": "ragium:shaped/steam_generator"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_machine"
+      "has_casing"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/advanced/combustion_generator"
+      "ragium:shaped/steam_generator"
     ]
   }
 }

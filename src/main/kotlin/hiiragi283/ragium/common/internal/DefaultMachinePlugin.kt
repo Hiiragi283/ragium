@@ -44,7 +44,25 @@ object DefaultMachinePlugin : RagiumPlugin {
         // Consumer
 
         // Generator
+        helper
+            .apply(RagiumMachineKeys.COMBUSTION_GENERATOR)
+            .put(HTMachinePropertyKeys.VALID_TIERS, listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE))
 
+        helper
+            .apply(RagiumMachineKeys.NUCLEAR_REACTOR)
+            .put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
+
+        helper
+            .apply(RagiumMachineKeys.STEAM_GENERATOR)
+            .put(HTMachinePropertyKeys.VALID_TIERS, listOf(HTMachineTier.BASIC, HTMachineTier.ADVANCED))
+
+        helper
+            .apply(RagiumMachineKeys.THERMAL_GENERATOR)
+            .put(HTMachinePropertyKeys.VALID_TIERS, listOf(HTMachineTier.ADVANCED, HTMachineTier.ELITE))
+
+        helper
+            .apply(RagiumMachineKeys.VIBRATION_GENERATOR)
+            .put(HTMachinePropertyKeys.VALID_TIERS, ELITE_TIERS)
         // Processor
         RagiumMachineKeys.PROCESSORS
             .map(helper::apply)

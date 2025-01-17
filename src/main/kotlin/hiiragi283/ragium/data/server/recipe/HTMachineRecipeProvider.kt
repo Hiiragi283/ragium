@@ -10,11 +10,7 @@ import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
-import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumComponentTypes
-import hiiragi283.ragium.common.init.RagiumItems
-import hiiragi283.ragium.common.init.RagiumMachineKeys
-import hiiragi283.ragium.common.init.RagiumMaterialKeys
+import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.savePrefixed
 import net.minecraft.data.recipes.RecipeCategory
@@ -135,6 +131,12 @@ object HTMachineRecipeProvider : RecipeProviderChild {
         mapOf(
             // consumer
             // generator
+            RagiumMachineKeys.COMBUSTION_GENERATOR to RagiumItems.ENGINE,
+            RagiumMachineKeys.NUCLEAR_REACTOR to Items.END_CRYSTAL,
+            RagiumMachineKeys.SOLAR_GENERATOR to RagiumItems.SOLAR_PANEL,
+            RagiumMachineKeys.STEAM_GENERATOR to Items.BUCKET,
+            RagiumMachineKeys.THERMAL_GENERATOR to Items.LAVA_BUCKET,
+            RagiumMachineKeys.VIBRATION_GENERATOR to Items.SCULK_SENSOR,
             // processor
             RagiumMachineKeys.ASSEMBLER to Items.CRAFTER,
             RagiumMachineKeys.BLAST_FURNACE to Items.BLAST_FURNACE,
@@ -171,7 +173,6 @@ object HTMachineRecipeProvider : RecipeProviderChild {
         RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             for (tier: HTMachineTier in entry.validTiers) {
                 val nextTier: HTMachineTier = tier.getNextTier() ?: continue
-                val currentMachine: ItemStack = key.createItemStack(tier) ?: continue
                 val nextMachine: ItemStack = key.createItemStack(nextTier) ?: continue
                 ShapedRecipeBuilder
                     .shaped(RecipeCategory.MISC, nextMachine)
@@ -187,9 +188,9 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                             false,
                             RagiumComponentTypes.MACHINE_TIER.get(),
                             tier,
-                            currentMachine.item,
+                            entry,
                         ),
-                    ).unlockedBy("has_machine", has(currentMachine.item))
+                    ).unlockedBy("has_machine", has(entry))
                     .save(output, RagiumAPI.id("shaped/${nextTier.serializedName}/${key.name}"))
             }
         }

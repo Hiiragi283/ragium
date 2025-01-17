@@ -1,0 +1,30 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:water"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 8,
+      "tag": "c:dusts/crude_raginite"
+    },
+    {
+      "count": 1,
+      "item": "ragium:soap"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 6,
+      "id": "ragium:raginite_dust"
+    },
+    {
+      "count": 2,
+      "id": "ragium:slag"
+    }
+  ],
+  "machine_type": "mixer"
+}

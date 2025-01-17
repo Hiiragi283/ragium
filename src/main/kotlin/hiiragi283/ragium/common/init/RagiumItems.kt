@@ -450,15 +450,6 @@ object RagiumItems {
     val OBSIDIAN_TEAR: DeferredItem<Item> = REGISTER.registerSimpleItem("obsidian_tear")
 
     @JvmField
-    val CARBON_ELECTRODE: DeferredItem<Item> = REGISTER.registerSimpleItem("carbon_electrode")
-
-    @JvmField
-    val BLAZING_CARBON_ELECTRODE: DeferredItem<Item> = REGISTER.registerSimpleItem("blazing_carbon_electrode")
-
-    @JvmField
-    val CHARGED_CARBON_ELECTRODE: DeferredItem<Item> = REGISTER.registerSimpleItem("charged_carbon_electrode")
-
-    @JvmField
     val ENGINE: DeferredItem<Item> = REGISTER.registerSimpleItem("engine")
 
     @JvmField
@@ -497,13 +488,9 @@ object RagiumItems {
         add(WARPED_CRYSTAL)
         add(OBSIDIAN_TEAR)
         // parts
-        add(CARBON_ELECTRODE)
-        add(BLAZING_CARBON_ELECTRODE)
-        add(CHARGED_CARBON_ELECTRODE)
         add(ENGINE)
         add(LASER_EMITTER)
         add(LED)
-        // add(PROCESSOR_SOCKET)
         add(SOLAR_PANEL)
 
         add(RAGI_TICKET)

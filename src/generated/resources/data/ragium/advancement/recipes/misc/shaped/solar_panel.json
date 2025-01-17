@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_machine": {
+    "has_aluminum": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:steam_generator"
+            "items": "#c:ingots/aluminum"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "ragium:shaped/elite/steam_generator"
+        "recipe": "ragium:shaped/solar_panel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_machine"
+      "has_aluminum"
     ]
   ],
   "rewards": {
     "recipes": [
-      "ragium:shaped/elite/steam_generator"
+      "ragium:shaped/solar_panel"
     ]
   }
 }

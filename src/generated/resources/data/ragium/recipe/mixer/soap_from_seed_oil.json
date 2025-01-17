@@ -2,8 +2,8 @@
   "type": "ragium:machine",
   "fluid_inputs": [
     {
-      "amount": 100,
-      "tag": "c:seed_oil"
+      "amount": 1000,
+      "tag": "c:plant_oil"
     }
   ],
   "item_inputs": [
@@ -14,7 +14,7 @@
   ],
   "item_outputs": [
     {
-      "count": 1,
+      "count": 4,
       "id": "ragium:soap"
     }
   ],

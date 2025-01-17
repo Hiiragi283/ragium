@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/steel"
+    },
+    {
+      "count": 4,
+      "item": "ragium:deepant"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:deep_steel_ingot"
+    }
+  ],
+  "machine_type": "blast_furnace"
+}

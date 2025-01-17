@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.HTCookingRecipeBuilder
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -14,7 +13,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -138,7 +136,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         registerDustToGem(output, RagiumMaterialKeys.QUARTZ, Items.QUARTZ)
 
         // Raw/Dust -> Ingot
-        RagiumItems.Ingots.entries.forEach { ingot: RagiumItems.Ingots ->
+        /*RagiumItems.Ingots.entries.forEach { ingot: RagiumItems.Ingots ->
             val material: HTMaterialKey = ingot.material
             // Dust -> Ingot
             HTCookingRecipeBuilder
@@ -158,7 +156,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                     types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
                 ).unlockedBy("has_raw", has(HTTagPrefix.RAW_MATERIAL, material))
                 .saveSuffix(output, "_from_raw")
-        }
+        }*/
     }
 
     private fun registerOreToRaw(

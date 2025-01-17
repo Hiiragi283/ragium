@@ -1,0 +1,25 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:luminescence_dust"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/copper"
+    },
+    {
+      "count": 1,
+      "tag": "c:glass_blocks/colorless"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:led"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "advanced"
+}

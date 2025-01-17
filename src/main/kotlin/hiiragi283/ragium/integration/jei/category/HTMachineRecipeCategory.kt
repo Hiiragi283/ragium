@@ -136,7 +136,7 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
         index: Int,
     ) {
         val builder1: IRecipeSlotBuilder =
-            builder.addInputSlot(getPosition(x), getPosition(y)).setStandardSlotBackground()
+            builder.addOutputSlot(getPosition(x), getPosition(y)).setStandardSlotBackground()
         val stack: FluidStack = recipe.getFluidOutput(index) ?: return
         val amount: Long = stack.amount.toLong()
         builder1.addFluidStack(stack.fluid, amount.toLong())

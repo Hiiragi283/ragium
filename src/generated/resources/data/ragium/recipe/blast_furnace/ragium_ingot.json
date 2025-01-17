@@ -1,0 +1,23 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:destabilized_ragium_solution"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:ingots/iron"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:ragium_ingot"
+    }
+  ],
+  "machine_type": "blast_furnace",
+  "tier": "elite"
+}

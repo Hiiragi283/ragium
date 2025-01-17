@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:glass_panes"
+    },
+    "B": {
+      "tag": "c:dusts/lapis"
+    },
+    "C": {
+      "tag": "c:ingots/aluminum"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BBB",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:solar_panel"
+  }
+}

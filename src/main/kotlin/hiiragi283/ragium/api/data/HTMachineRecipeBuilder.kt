@@ -21,6 +21,7 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
@@ -57,23 +58,25 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     fun itemInput(tagKey: TagKey<Item>, count: Int = 1): HTMachineRecipeBuilder = itemInput(Ingredient.of(tagKey), count)
 
+    fun itemInput(ingredient: ICustomIngredient, count: Int = 1): HTMachineRecipeBuilder = itemInput(ingredient.toVanilla(), count)
+
     fun itemInput(ingredient: Ingredient, count: Int = 1): HTMachineRecipeBuilder = apply {
         check(itemInputs.put(ingredient, count) == null) { "Same ingredient is not supported!" }
     }
 
     // fun fluidInput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(fluid.get(), count)
 
-    fun fluidInput(content: RagiumFluids, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
-        fluidInput(content.commonTag, count)
+    fun fluidInput(content: RagiumFluids, amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
+        fluidInput(content.commonTag, amount)
 
-    fun fluidInput(fluid: Fluid, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
-        fluidInput(FluidIngredient.of(fluid), count)
+    fun fluidInput(fluid: Fluid, amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
+        fluidInput(FluidIngredient.of(fluid), amount)
 
-    fun fluidInput(tagKey: TagKey<Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
-        fluidInput(FluidIngredient.tag(tagKey), count)
+    fun fluidInput(tagKey: TagKey<Fluid>, amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
+        fluidInput(FluidIngredient.tag(tagKey), amount)
 
-    fun fluidInput(ingredient: FluidIngredient, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = apply {
-        check(fluidInputs.put(ingredient, count) == null) { "Same ingredient is not supported!" }
+    fun fluidInput(ingredient: FluidIngredient, amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = apply {
+        check(fluidInputs.put(ingredient, amount) == null) { "Same ingredient is not supported!" }
     }
 
     //    Catalyst    //
@@ -97,9 +100,10 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
         itemOutputs.add(stack)
     }
 
-    fun fluidOutput(fluid: Supplier<out Fluid>, count: Int = 1): HTMachineRecipeBuilder = fluidOutput(fluid.get(), count)
+    fun fluidOutput(fluid: Supplier<out Fluid>, count: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder =
+        fluidOutput(fluid.get(), count)
 
-    fun fluidOutput(fluid: Fluid, count: Int = 1): HTMachineRecipeBuilder = fluidOutput(FluidStack(fluid, count))
+    fun fluidOutput(fluid: Fluid, amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidOutput(FluidStack(fluid, amount))
 
     fun fluidOutput(stack: FluidStack): HTMachineRecipeBuilder = apply {
         check(!stack.isEmpty) { "Empty FluidStack is not allowed!" }

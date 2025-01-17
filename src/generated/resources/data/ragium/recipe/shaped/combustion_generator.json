@@ -9,14 +9,10 @@
       "tag": "c:circuits/advanced"
     },
     "C": {
-      "tag": "c:ingots/steel"
+      "item": "ragium:engine"
     },
     "D": {
-      "type": "neoforge:components",
-      "components": {
-        "ragium:tier": "basic"
-      },
-      "items": "ragium:thermal_generator"
+      "item": "ragium:advanced_casing"
     }
   },
   "pattern": [
@@ -29,6 +25,6 @@
       "ragium:tier": "advanced"
     },
     "count": 1,
-    "id": "ragium:thermal_generator"
+    "id": "ragium:combustion_generator"
   }
 }

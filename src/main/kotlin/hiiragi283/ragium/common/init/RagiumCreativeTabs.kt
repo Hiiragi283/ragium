@@ -43,9 +43,6 @@ object RagiumCreativeTabs {
                     RagiumItems.Ingots.entries.forEach(output::accept)
 
                     RagiumItems.Rods.entries.forEach(output::accept)
-                    output.accept(RagiumItems.CARBON_ELECTRODE)
-                    output.accept(RagiumItems.BLAZING_CARBON_ELECTRODE)
-                    output.accept(RagiumItems.CHARGED_CARBON_ELECTRODE)
                     // Foods
                     RagiumItems.FOODS.forEach(output::accept)
                     // Tools
@@ -65,9 +62,6 @@ object RagiumCreativeTabs {
                         addAll(RagiumItems.INGREDIENTS)
 
                         remove(RagiumItems.BEE_WAX)
-                        remove(RagiumItems.BLAZING_CARBON_ELECTRODE)
-                        remove(RagiumItems.CARBON_ELECTRODE)
-                        remove(RagiumItems.CHARGED_CARBON_ELECTRODE)
                         remove(RagiumItems.CIRCUIT_BOARD)
                         remove(RagiumItems.CRIMSON_CRYSTAL)
                         remove(RagiumItems.DEEPANT)

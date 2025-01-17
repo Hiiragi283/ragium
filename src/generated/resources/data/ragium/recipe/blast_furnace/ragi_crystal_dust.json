@@ -1,0 +1,21 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 4,
+      "tag": "c:dusts/raginite"
+    },
+    {
+      "count": 5,
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:ragi_crystal_dust"
+    }
+  ],
+  "machine_type": "blast_furnace",
+  "tier": "advanced"
+}

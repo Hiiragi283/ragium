@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smoking",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "ragium:meat_ingot"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:cooked_meat_ingot"
+  }
+}

@@ -38,7 +38,7 @@ enum class RagiumFluids(
     EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
 
     // Organics
-    SEED_OIL(Color(0x99cc33), "Seed Oil", "種油"),
+    PLANT_OIL(Color(0x99cc33), "Plant Oil", "植物油"),
 
     BIOMASS(Color(0x006600), "Biomass", "バイオマス", TextureType.STICKY),
     GLYCEROL(Color(0x99cc66), "Glycerol", "グリセロール"),
@@ -104,6 +104,12 @@ enum class RagiumFluids(
     // Radioactive
     URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Uranium Hexafluoride", "六フッ化ウラン", TextureType.RADIOACTIVE),
     ENRICHED_URANIUM_HEXAFLUORIDE(Color(0x33ff00), "Enriched Uranium Hexafluoride", "濃縮六フッ化ウラン"),
+
+    // Ragium
+    RAGIUM_SOLUTION(Color(0x330000), "Ragium Solution", "ラギウム溶液"),
+    DISTILLED_RAGIUM_SOLUTION(Color(0x990033), "Distilled Ragium Solution", "蒸留ラギウム溶液"),
+    REFINED_RAGIUM_SOLUTION(Color(0xff0033), "RefinedRagium Solution", "精製ラギウム溶液"),
+    DESTABILIZED_RAGIUM_SOLUTION(Color(0xff6666), "Destabilized Ragium Solution", "励起ラギウム溶液"),
     ;
 
     constructor(enName: String, jaName: String, type: TextureType = TextureType.LIQUID) : this(

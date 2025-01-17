@@ -1,0 +1,33 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 6000,
+      "tag": "c:hydrogen_fluoride"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 3000,
+      "id": "ragium:hydrogen"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 3,
+      "tag": "c:dusts/alkali"
+    },
+    {
+      "count": 1,
+      "tag": "c:dusts/aluminum"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:cryolite"
+    }
+  ],
+  "machine_type": "chemical_reactor",
+  "tier": "elite"
+}

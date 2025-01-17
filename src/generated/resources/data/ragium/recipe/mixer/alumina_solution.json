@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:alkali_solution"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:alumina_solution"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:dusts/bauxite"
+    }
+  ],
+  "machine_type": "mixer"
+}

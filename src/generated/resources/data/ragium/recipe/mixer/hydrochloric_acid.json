@@ -12,7 +12,7 @@
   ],
   "fluid_outputs": [
     {
-      "amount": 1,
+      "amount": 1000,
       "id": "ragium:hydrochloric_acid"
     }
   ],
