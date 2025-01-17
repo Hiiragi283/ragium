@@ -63,16 +63,26 @@ object RagiumBlocks {
     }
 
     enum class StorageBlocks(isGem: Boolean, override val material: HTMaterialKey) : HTBlockContent.Material {
+        // tier 1
         RAGI_ALLOY(false, RagiumMaterialKeys.RAGI_ALLOY),
+
+        // tier 2
         RAGI_STEEL(false, RagiumMaterialKeys.RAGI_STEEL),
-        ALUMINUM(false, RagiumMaterialKeys.ALUMINUM),
-        FLUORITE(true, RagiumMaterialKeys.FLUORITE),
         STEEL(false, RagiumMaterialKeys.STEEL),
+
+        // tier 3
         RAGI_CRYSTAL(true, RagiumMaterialKeys.RAGI_CRYSTAL),
         REFINED_RAGI_STEEL(false, RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        ALUMINUM(false, RagiumMaterialKeys.ALUMINUM),
+        FLUORITE(true, RagiumMaterialKeys.FLUORITE),
         CRYOLITE(true, RagiumMaterialKeys.CRYOLITE),
         DEEP_STEEL(false, RagiumMaterialKeys.DEEP_STEEL),
+
+        // tier 3
         RAGIUM(false, RagiumMaterialKeys.RAGIUM),
+        DRAGONIUM(false, RagiumMaterialKeys.DRAGONIUM),
+        ECHORIUM(false, RagiumMaterialKeys.ECHORIUM),
+        FIERIUM(false, RagiumMaterialKeys.FIERIUM),
         ;
 
         override val holder: DeferredBlock<Block> = REGISTER.registerSimpleBlock(

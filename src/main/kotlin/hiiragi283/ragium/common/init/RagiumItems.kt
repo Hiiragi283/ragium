@@ -138,8 +138,6 @@ object RagiumItems {
 
         // tier 3
         RAGI_CRYSTAL(HTTagPrefix.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
-
-        // CINNABAR(HTTagPrefix.GEM, RagiumMaterialKeys.CINNABAR),
         CRYOLITE(HTTagPrefix.GEM, RagiumMaterialKeys.CRYOLITE),
         FLUORITE(HTTagPrefix.GEM, RagiumMaterialKeys.FLUORITE),
         ;
@@ -162,9 +160,9 @@ object RagiumItems {
 
         // tier 4
         RAGIUM(RagiumMaterialKeys.RAGIUM),
+        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ECHORIUM(RagiumMaterialKeys.ECHORIUM),
         FIERIUM(RagiumMaterialKeys.FIERIUM),
-        DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_ingot")
