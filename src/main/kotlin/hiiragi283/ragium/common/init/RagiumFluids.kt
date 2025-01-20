@@ -8,17 +8,12 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.LiquidBlock
-import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -135,9 +130,15 @@ enum class RagiumFluids(
                 TYPE_REGISTER.register(fluid.serializedName) { _: ResourceLocation -> FluidType(FluidType.Properties.create()) }
                 // Fluid
                 REGISTER.register(fluid.serializedName) { _: ResourceLocation ->
-                    BaseFlowingFluid.Source(fluid.property)
+                    BaseFlowingFluid.Source(
+                        BaseFlowingFluid.Properties(
+                            fluid.typeHolder,
+                            fluid.stillHolder,
+                            fluid.stillHolder,
+                        ),
+                    )
                 }
-                REGISTER.register("flowing_" + fluid.serializedName) { _: ResourceLocation ->
+                /*REGISTER.register("flowing_" + fluid.serializedName) { _: ResourceLocation ->
                     BaseFlowingFluid.Flowing(fluid.property)
                 }
                 // Block
@@ -152,7 +153,7 @@ enum class RagiumFluids(
                             .pushReaction(PushReaction.DESTROY)
                             .liquid(),
                     )
-                }
+                }*/
             }
 
             TYPE_REGISTER.register(eventBus)
@@ -166,14 +167,6 @@ enum class RagiumFluids(
         DeferredHolder.create(NeoForgeRegistries.Keys.FLUID_TYPES, id)
 
     val stillHolder: DeferredHolder<Fluid, FlowingFluid> = fluidHolder<FlowingFluid>(id)
-    val flowingHolder: DeferredHolder<Fluid, FlowingFluid> = fluidHolder(id.withPrefix("flowing_"))
-
-    val blockHolder: DeferredBlock<out LiquidBlock> = DeferredBlock.createBlock(id)
-
-    val property: BaseFlowingFluid.Properties = BaseFlowingFluid
-        .Properties(typeHolder, stillHolder, flowingHolder)
-        .bucket(Items::AIR)
-        .block(blockHolder)
 
     val commonTag: TagKey<Fluid> = fluidTagKey(commonId(serializedName))
 

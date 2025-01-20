@@ -22,9 +22,7 @@ class RagiumFluidTagProvider(
 ) : TagsProvider<Fluid>(output, Registries.FLUID, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
         fun add(tagKey: TagKey<Fluid>, fluid: RagiumFluids) {
-            getOrCreateRawBuilder(tagKey)
-                .addElement(fluid.stillHolder)
-                .addElement(fluid.flowingHolder)
+            getOrCreateRawBuilder(tagKey).addElement(fluid.stillHolder)
         }
 
         fun add(tagKey: TagKey<Fluid>, fluid: TagKey<Fluid>) {

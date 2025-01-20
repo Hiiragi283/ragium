@@ -1,32 +1,18 @@
 {
   "values": [
     "ragium:air",
-    "ragium:flowing_air",
     "ragium:hydrogen",
-    "ragium:flowing_hydrogen",
     "ragium:nitrogen",
-    "ragium:flowing_nitrogen",
     "ragium:chlorine",
-    "ragium:flowing_chlorine",
     "ragium:carbon_monoxide",
-    "ragium:flowing_carbon_monoxide",
     "ragium:carbon_dioxide",
-    "ragium:flowing_carbon_dioxide",
     "ragium:ammonia",
-    "ragium:flowing_ammonia",
     "ragium:hydrogen_fluoride",
-    "ragium:flowing_hydrogen_fluoride",
     "ragium:hydrogen_chloride",
-    "ragium:flowing_hydrogen_chloride",
     "ragium:refined_gas",
-    "ragium:flowing_refined_gas",
     "ragium:methane",
-    "ragium:flowing_methane",
     "ragium:ethene",
-    "ragium:flowing_ethene",
     "ragium:acetylene",
-    "ragium:flowing_acetylene",
-    "ragium:dragon_breath",
-    "ragium:flowing_dragon_breath"
+    "ragium:dragon_breath"
   ]
 }

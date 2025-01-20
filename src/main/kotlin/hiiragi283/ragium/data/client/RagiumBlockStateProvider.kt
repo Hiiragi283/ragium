@@ -6,9 +6,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
-import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.data.blockTexture
-import hiiragi283.ragium.data.getBuilder
 import hiiragi283.ragium.data.withExistingParent
 import net.minecraft.core.Direction
 import net.minecraft.data.PackOutput
@@ -183,7 +181,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }
 
         // Fluid Block
-        RagiumFluids.entries.forEach { fluid: RagiumFluids ->
+        /*RagiumFluids.entries.forEach { fluid: RagiumFluids ->
             getVariantBuilder(fluid.blockHolder.get())
                 .partialState()
                 .setModels(
@@ -193,7 +191,7 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                             .texture("particle", fluid.stillTexture),
                     ),
                 )
-        }
+        }*/
     }
 
     private fun Direction.getRotationY(): Int = ((this.toYRot() + 180) % 360).toInt()
