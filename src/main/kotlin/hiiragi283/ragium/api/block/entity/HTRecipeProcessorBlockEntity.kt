@@ -65,7 +65,7 @@ abstract class HTRecipeProcessorBlockEntity(type: Supplier<out BlockEntityType<*
     }
 
     final override fun interactWithFluidStorage(player: Player): Boolean {
-        for (tank: HTTieredFluidTank in tanks) {
+        for (tank: HTTieredFluidTank in tanks.reversed()) {
             if (FluidUtil.interactWithFluidHandler(player, InteractionHand.MAIN_HAND, tank)) return true
         }
         return false

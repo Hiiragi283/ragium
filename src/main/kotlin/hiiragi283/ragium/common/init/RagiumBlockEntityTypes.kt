@@ -4,11 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
+import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
-import hiiragi283.ragium.common.block.machine.processor.HTDefaultMachineBlockEntity
-import hiiragi283.ragium.common.block.machine.processor.HTDistillationTowerBlockEntity
-import hiiragi283.ragium.common.block.machine.processor.HTLargeMachineBlockEntity
-import hiiragi283.ragium.common.block.machine.processor.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
+import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
+import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
+import hiiragi283.ragium.common.block.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.storage.HTDrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
@@ -66,15 +68,25 @@ object RagiumBlockEntityTypes {
     val MANUAL_GRINDER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTManualGrinderBlockEntity>> =
         register("manual_grinder", ::HTManualGrinderBlockEntity, RagiumBlocks.MANUAL_GRINDER)
 
-    //    Machine    //
+    //    Generator    //
 
     @JvmField
-    val DEFAULT_MACHINE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultMachineBlockEntity>> =
-        registerMachine("default_machine", ::HTDefaultMachineBlockEntity)
+    val DEFAULT_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultGeneratorBlockEntity>> =
+        registerMachine("default_generator", ::HTDefaultGeneratorBlockEntity)
 
     @JvmField
-    val LARGE_MACHINE: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLargeMachineBlockEntity>> =
-        registerMachine("large_machine", ::HTLargeMachineBlockEntity)
+    val FLUID_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTFluidGeneratorBlockEntity>> =
+        registerMachine("fluid_generator", ::HTFluidGeneratorBlockEntity)
+
+    //    Processor    //
+
+    @JvmField
+    val DEFAULT_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDefaultProcessorBlockEntity>> =
+        registerMachine("default_processor", ::HTDefaultProcessorBlockEntity)
+
+    @JvmField
+    val LARGE_PROCESSOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTLargeProcessorBlockEntity>> =
+        registerMachine("large_processor", ::HTLargeProcessorBlockEntity)
 
     @JvmField
     val DISTILLATION_TOWER: DeferredHolder<BlockEntityType<*>, BlockEntityType<HTDistillationTowerBlockEntity>> =

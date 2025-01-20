@@ -177,7 +177,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
                     return
                 }
             }.onSuccess {
-                machineKey.getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
+                getEntryOrNull()?.ifPresent(HTMachinePropertyKeys.SOUND) {
                     serverLevel.playSound(null, pos, it, SoundSource.BLOCKS, 0.2f, 1.0f)
                 }
                 activateState(serverLevel, pos, true)
@@ -227,7 +227,7 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
 
     final override var showPreview: Boolean = false
 
-    override fun getMultiblockMap(): HTMultiblockMap.Relative? = machineKey.getEntryOrNull()?.get(HTMachinePropertyKeys.MULTIBLOCK_MAP)
+    override fun getMultiblockMap(): HTMultiblockMap.Relative? = getEntryOrNull()?.get(HTMachinePropertyKeys.MULTIBLOCK_MAP)
 
     final override fun getController(): HTControllerDefinition? = ifPresentWorld { HTControllerDefinition(it, blockPos, front) }
 

@@ -84,7 +84,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
     )
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
-        val entry: HTMachineRegistry.Entry = machineKey.getEntryOrNull() ?: return null
+        val entry: HTMachineRegistry.Entry = getEntryOrNull() ?: return null
         if (state.machineTier !in entry.validTiers) return null
         return entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
     }

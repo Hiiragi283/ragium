@@ -30,6 +30,8 @@ sealed class HTMachineException(val showInLog: Boolean, message: String) : Runti
 
     class InsertFluid(showInLog: Boolean) : HTMachineException(showInLog, "Failed to insert fluid into the storage!")
 
+    class EmptyFluid(showInLog: Boolean) : HTMachineException(showInLog, "The fluid storage is empty!")
+
     class MaxFluid(showInLog: Boolean) : HTMachineException(showInLog, "The fluid storage is already full!")
 
     //    Item    //

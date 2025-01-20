@@ -304,4 +304,8 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .fluidOutput(RagiumFluids.AQUA_REGIA, FluidType.BUCKET_VOLUME * 4)
             .save(output)
     }
+
+    private fun registerUranium(output: RecipeOutput) {
+        // Poisonous Potato + H2SO4 -> Yellow Cake
+    }
 }

@@ -59,10 +59,13 @@ internal object RagiumEvents {
             machines.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
         }
 
-        bindMachines(RagiumBlockEntityTypes.DEFAULT_MACHINE, RagiumAPI.getInstance().machineRegistry.keys)
+        bindMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR, RagiumAPI.getInstance().machineRegistry.keys)
+        bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
+        bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
 
+        bindMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, RagiumAPI.getInstance().machineRegistry.keys)
         bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
-        bindMachine(RagiumBlockEntityTypes.LARGE_MACHINE, RagiumMachineKeys.BLAST_FURNACE)
+        bindMachine(RagiumBlockEntityTypes.LARGE_PROCESSOR, RagiumMachineKeys.BLAST_FURNACE)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
 
         LOGGER.info("Added external blocks to BlockEntityType!")
@@ -113,9 +116,11 @@ internal object RagiumEvents {
 
         registerHandlers(RagiumBlockEntityTypes.MANUAL_GRINDER)
 
-        registerHandlers(RagiumBlockEntityTypes.DEFAULT_MACHINE)
-        registerHandlers(RagiumBlockEntityTypes.LARGE_MACHINE)
+        registerHandlers(RagiumBlockEntityTypes.DEFAULT_GENERATOR)
+        registerHandlers(RagiumBlockEntityTypes.FLUID_GENERATOR)
 
+        registerHandlers(RagiumBlockEntityTypes.DEFAULT_PROCESSOR)
+        registerHandlers(RagiumBlockEntityTypes.LARGE_PROCESSOR)
         registerHandlers(RagiumBlockEntityTypes.DISTILLATION_TOWER)
         registerHandlers(RagiumBlockEntityTypes.MULTI_SMELTER)
 

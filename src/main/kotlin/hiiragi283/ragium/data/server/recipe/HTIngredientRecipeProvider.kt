@@ -410,7 +410,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .savePrefixed(output)
 
         HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.BASIC)
+            .create(RagiumMachineKeys.ASSEMBLER, HTMachineTier.ADVANCED)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.STEEL, 4)
             .itemInput(HTTagPrefix.INGOT, RagiumMaterialKeys.RAGI_STEEL, 4)
             .itemInput(Items.PISTON, 2)
@@ -445,6 +445,13 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 time = 500,
                 types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
             ).unlockedBy("has_crystal", has(RagiumItems.WARPED_CRYSTAL))
+            .save(output)
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Items.GLOW_INK_SAC)
+            .itemOutput(RagiumItems.LUMINESCENCE_DUST)
+            .itemOutput(Items.INK_SAC)
             .save(output)
     }
 }

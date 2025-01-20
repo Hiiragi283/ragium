@@ -47,6 +47,19 @@ object HTMachinePropertyKeys {
             .setDefaultValue { BiPredicate { _: Level, _: BlockPos -> false } }
             .build()
 
+    @JvmField
+    val GENERATOR_FUEL: HTPropertyKey<Set<HTGeneratorFuel>> =
+        HTPropertyKey
+            .builder<Set<HTGeneratorFuel>>(RagiumAPI.id("fuel_tag"))
+            .setValidation { fuels: Set<HTGeneratorFuel> ->
+                val nonEmpty: Set<HTGeneratorFuel> = fuels.filterNot(HTGeneratorFuel::isEmpty).toSet()
+                if (nonEmpty.isEmpty()) {
+                    DataResult.error { "There is no valid fuel data!" }
+                } else {
+                    DataResult.success(nonEmpty)
+                }
+            }.build()
+
     //    Processor    //
 
     @JvmField

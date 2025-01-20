@@ -11,6 +11,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "ragium:tier"
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "ragium:bedrock_miner"
         }
       ],

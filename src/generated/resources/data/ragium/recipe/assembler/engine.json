@@ -20,5 +20,6 @@
       "id": "ragium:engine"
     }
   ],
-  "machine_type": "assembler"
+  "machine_type": "assembler",
+  "tier": "advanced"
 }

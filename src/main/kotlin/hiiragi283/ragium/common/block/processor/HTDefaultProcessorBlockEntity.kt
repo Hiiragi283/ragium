@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.machine.processor
+package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.entity.HTRecipeProcessorBlockEntity
 import hiiragi283.ragium.api.capability.LimitedFluidHandler
@@ -16,8 +16,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTDefaultMachineBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
-    HTRecipeProcessorBlockEntity(RagiumBlockEntityTypes.DEFAULT_MACHINE, pos, state) {
+class HTDefaultProcessorBlockEntity(pos: BlockPos, state: BlockState, override val machineKey: HTMachineKey) :
+    HTRecipeProcessorBlockEntity(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, pos, state) {
     override val itemHandler: ItemStackHandler = ItemStackHandler(5)
     override val tanks: Array<out HTTieredFluidTank> = Array(2) { HTTieredFluidTank(machineTier) }
     override val processor: HTRecipeProcessor = createMachineProcessor(

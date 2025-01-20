@@ -1,14 +1,13 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.id
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
@@ -19,6 +18,8 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
+import net.neoforged.neoforge.registries.DeferredBlock
+import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
 class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
@@ -40,8 +41,6 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
-
-            addAll(RagiumAPI.getInstance().machineRegistry.blocks) // TODO
         }.map(Supplier<out Block>::get)
             .forEach(::dropSelf)
 
@@ -57,33 +56,33 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
         }
 
         RagiumBlocks.Drums.entries.forEach { drum: RagiumBlocks.Drums ->
-            add(drum.get()) { block: Block ->
-                LootTable
-                    .lootTable()
-                    .withPool(
-                        applyExplosionCondition(
-                            block,
-                            LootPool
-                                .lootPool()
-                                .setRolls(ConstantValue.exactly(1f))
-                                .add(
-                                    LootItem
-                                        .lootTableItem(block)
-                                        .apply(
-                                            CopyComponentsFunction
-                                                .copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
-                                                .include(RagiumComponentTypes.FLUID_CONTENT.get()),
-                                        ),
-                                ),
-                        ),
-                    )
-            }
+            add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT) }
+        }
+
+        RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
+            add(holder.get()) { copyComponent(it, RagiumComponentTypes.MACHINE_TIER) }
         }
     }
 
-    override fun getKnownBlocks(): Iterable<Block> = BuiltInRegistries.BLOCK
-        .holders()
-        .filter { holder: Holder.Reference<Block> -> holder.id?.namespace == RagiumAPI.MOD_ID }
-        .map(Holder.Reference<Block>::value)
-        .toList()
+    private fun copyComponent(block: Block, type: Supplier<out DataComponentType<*>>): LootTable.Builder = LootTable
+        .lootTable()
+        .withPool(
+            applyExplosionCondition(
+                block,
+                LootPool
+                    .lootPool()
+                    .setRolls(ConstantValue.exactly(1f))
+                    .add(
+                        LootItem
+                            .lootTableItem(block)
+                            .apply(
+                                CopyComponentsFunction
+                                    .copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                                    .include(type.get()),
+                            ),
+                    ),
+            ),
+        )
+
+    override fun getKnownBlocks(): Iterable<Block> = RagiumBlocks.REGISTER.entries.map(DeferredHolder<Block, out Block>::get)
 }
