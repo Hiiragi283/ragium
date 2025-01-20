@@ -161,6 +161,11 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
             "Generate energy from liquid fuels",
         )
         add(
+            RagiumMachineKeys.GAS_TURBINE,
+            "Gas Turbine",
+            "Generate energy from gaseous fuels",
+        )
+        add(
             RagiumMachineKeys.NUCLEAR_REACTOR,
             "Nuclear Reactor",
             "Generate energy from radioactive fuels",

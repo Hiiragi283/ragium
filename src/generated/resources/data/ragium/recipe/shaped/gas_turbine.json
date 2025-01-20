@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_steel"
+    },
+    "B": {
+      "tag": "c:circuits/advanced"
+    },
+    "C": {
+      "item": "ragium:iron_gear"
+    },
+    "D": {
+      "item": "ragium:advanced_casing"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "components": {
+      "ragium:tier": "advanced"
+    },
+    "count": 1,
+    "id": "ragium:gas_turbine"
+  }
+}

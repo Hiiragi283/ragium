@@ -134,6 +134,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMachineKeys.ROCK_GENERATOR, "岩石生成機", "水と溶岩を少なくとも一つずつ隣接させる")
 
         add(RagiumMachineKeys.COMBUSTION_GENERATOR, "燃焼発電機", "液体燃料から発電する")
+        add(RagiumMachineKeys.GAS_TURBINE, "ガスタービン", "気体燃料から発電する")
         add(RagiumMachineKeys.NUCLEAR_REACTOR, "原子炉", "放射性燃料から発電する")
         add(RagiumMachineKeys.SOLAR_GENERATOR, "太陽光発電機", "日中に発電する")
         add(RagiumMachineKeys.STEAM_GENERATOR, "蒸気発電機", "水と石炭類から発電する")

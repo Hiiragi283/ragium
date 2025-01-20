@@ -99,6 +99,41 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .saveSuffixed(output, "_from_coals")
         // C <-> CO2
         solidRedox(output, RagiumItems.Dusts.CARBON, RagiumFluids.CARBON_DIOXIDE)
+
+        // Steam Reforming
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .fluidInput(RagiumFluids.METHANE)
+            .fluidInput(Fluids.WATER)
+            .catalyst(RagiumItems.HEATING_CATALYST)
+            .fluidOutput(RagiumFluids.HYDROGEN)
+            .fluidOutput(RagiumFluids.CARBON_MONOXIDE)
+            .save(output, RagiumAPI.id("steam_reforming"))
+        // Water Gas Shift
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .fluidInput(RagiumFluids.CARBON_MONOXIDE)
+            .fluidInput(Fluids.WATER)
+            .catalyst(RagiumItems.HEATING_CATALYST)
+            .fluidOutput(RagiumFluids.HYDROGEN)
+            .fluidOutput(RagiumFluids.CARBON_DIOXIDE)
+            .save(output, RagiumAPI.id("water_gas_shift"))
+
+        // C2H5OH + H2SO4 -> C2H4 + H2O
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .fluidInput(RagiumFluids.ALCOHOL)
+            .catalyst(HTTagPrefix.DUST, RagiumMaterialKeys.SULFUR)
+            .fluidOutput(RagiumFluids.ETHENE)
+            .fluidOutput(Fluids.WATER)
+            .save(output)
+        // C2H4 -> C2H2
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .fluidInput(RagiumFluids.ETHENE)
+            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .fluidOutput(RagiumFluids.ACETYLENE)
+            .saveSuffixed(output, "_from_ethylene")
     }
 
     private fun registerNitrogen(output: RecipeOutput) {

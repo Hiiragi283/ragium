@@ -11,8 +11,12 @@
   ],
   "fluid_outputs": [
     {
-      "amount": 6000,
-      "id": "ragium:alcohol"
+      "amount": 4000,
+      "id": "ragium:methane"
+    },
+    {
+      "amount": 4000,
+      "id": "ragium:ethene"
     }
   ],
   "machine_type": "distillation_tower"

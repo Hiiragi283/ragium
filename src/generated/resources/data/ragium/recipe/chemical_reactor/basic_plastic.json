@@ -1,9 +1,9 @@
 {
   "type": "ragium:machine",
-  "item_inputs": [
+  "fluid_inputs": [
     {
-      "count": 1,
-      "item": "ragium:polymer_resin"
+      "amount": 1000,
+      "tag": "c:ethene"
     }
   ],
   "item_outputs": [

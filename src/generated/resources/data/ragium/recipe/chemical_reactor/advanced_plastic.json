@@ -2,14 +2,12 @@
   "type": "ragium:machine",
   "fluid_inputs": [
     {
-      "amount": 100,
-      "tag": "c:chlorine"
-    }
-  ],
-  "item_inputs": [
+      "amount": 1000,
+      "tag": "c:acetylene"
+    },
     {
-      "count": 1,
-      "item": "ragium:polymer_resin"
+      "amount": 1000,
+      "tag": "c:chlorine"
     }
   ],
   "item_outputs": [

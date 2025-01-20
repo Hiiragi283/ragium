@@ -1,0 +1,114 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ragium:block/basic_hull"
+      },
+      "when": {
+        "tier": "basic"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/advanced_hull"
+      },
+      "when": {
+        "tier": "advanced"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/elite_hull"
+      },
+      "when": {
+        "tier": "elite"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/ultimate_hull"
+      },
+      "when": {
+        "tier": "ultimate"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine"
+      },
+      "when": {
+        "active": "false",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine_active"
+      },
+      "when": {
+        "active": "true",
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine",
+        "y": 180
+      },
+      "when": {
+        "active": "false",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine_active",
+        "y": 180
+      },
+      "when": {
+        "active": "true",
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine",
+        "y": 270
+      },
+      "when": {
+        "active": "false",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine_active",
+        "y": 270
+      },
+      "when": {
+        "active": "true",
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine",
+        "y": 90
+      },
+      "when": {
+        "active": "false",
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "ragium:block/machine/gas_turbine_active",
+        "y": 90
+      },
+      "when": {
+        "active": "true",
+        "facing": "east"
+      }
+    }
+  ]
+}

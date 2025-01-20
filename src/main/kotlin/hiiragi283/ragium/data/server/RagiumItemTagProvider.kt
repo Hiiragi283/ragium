@@ -59,6 +59,8 @@ class RagiumItemTagProvider(
         RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->
             plates.addElement(plastic)
         }
+
+        getOrCreateRawBuilder(ItemTags.COALS).addElement(RagiumItems.RESIDUAL_COKE)
         // Tool
         getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER)
 

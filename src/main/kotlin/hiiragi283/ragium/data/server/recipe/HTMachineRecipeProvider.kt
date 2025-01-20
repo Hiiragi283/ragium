@@ -167,6 +167,7 @@ object HTMachineRecipeProvider : RecipeProviderChild {
             // consumer
             // generator
             RagiumMachineKeys.COMBUSTION_GENERATOR to RagiumItems.ENGINE,
+            RagiumMachineKeys.GAS_TURBINE to RagiumItems.Gears.IRON,
             RagiumMachineKeys.NUCLEAR_REACTOR to Items.END_CRYSTAL,
             RagiumMachineKeys.SOLAR_GENERATOR to RagiumItems.SOLAR_PANEL,
             RagiumMachineKeys.STEAM_GENERATOR to Items.BUCKET,

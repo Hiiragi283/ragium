@@ -37,12 +37,13 @@ object HTDistillationRecipeProvider : RecipeProviderChild {
             .fluidOutput(RagiumFluids.RESIDUAL_OIL, FluidType.BUCKET_VOLUME * 1)
             .save(output, RagiumAPI.id("crude_oil"))
 
-        // Refined Gas -> Alcohol
+        // Refined Gas -> Methane + Ethene + Alcohol
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
             .fluidInput(RagiumFluids.REFINED_GAS, FluidType.BUCKET_VOLUME * 8)
             .catalyst(RagiumItems.Circuits.BASIC)
-            .fluidOutput(RagiumFluids.ALCOHOL, FluidType.BUCKET_VOLUME * 6)
+            .fluidOutput(RagiumFluids.METHANE, FluidType.BUCKET_VOLUME * 4)
+            .fluidOutput(RagiumFluids.ETHENE, FluidType.BUCKET_VOLUME * 4)
             .save(output, RagiumAPI.id("refined_gas"))
 
         // Naphtha -> polymer resin + fuel

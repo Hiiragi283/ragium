@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.block.processor.HTDefaultProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTDistillationTowerBlockEntity
 import hiiragi283.ragium.common.block.processor.HTLargeProcessorBlockEntity
 import hiiragi283.ragium.common.block.processor.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.common.init.RagiumMultiblockMaps
 import net.minecraft.core.BlockPos
@@ -65,6 +66,18 @@ object DefaultMachinePlugin : RagiumPlugin {
                 setOf(
                     HTGeneratorFuel(RagiumFluidTags.NON_NITRO_FUEL, FluidType.BUCKET_VOLUME / 10),
                     HTGeneratorFuel(RagiumFluidTags.NITRO_FUEL, FluidType.BUCKET_VOLUME / 100),
+                ),
+            ).put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
+
+        helper
+            .apply(RagiumMachineKeys.GAS_TURBINE)
+            .putFactory(::HTFluidGeneratorBlockEntity)
+            .put(
+                HTMachinePropertyKeys.GENERATOR_FUEL,
+                setOf(
+                    HTGeneratorFuel(RagiumFluids.METHANE, FluidType.BUCKET_VOLUME / 10),
+                    HTGeneratorFuel(RagiumFluids.ETHENE, FluidType.BUCKET_VOLUME / 20),
+                    HTGeneratorFuel(RagiumFluids.ACETYLENE, FluidType.BUCKET_VOLUME / 50),
                 ),
             ).put(HTMachinePropertyKeys.VALID_TIERS, ADVANCED_TIERS)
 

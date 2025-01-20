@@ -61,6 +61,7 @@ internal object RagiumEvents {
 
         bindMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR, RagiumAPI.getInstance().machineRegistry.keys)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
+        bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.GAS_TURBINE)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
 
         bindMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, RagiumAPI.getInstance().machineRegistry.keys)

@@ -246,14 +246,30 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 .saveSuffixed(output, "_alt")
         }
 
-        register(RagiumItems.Plastics.BASIC) {
-            HTMachineRecipeBuilder.create(RagiumMachineKeys.CHEMICAL_REACTOR)
+        fun registerNew(result: ItemLike, builder: Supplier<HTMachineRecipeBuilder>) {
+            builder
+                .get()
+                .itemOutput(result)
+                .save(output)
+            builder
+                .get()
+                .catalyst(RagiumItems.OXIDIZATION_CATALYST)
+                .itemOutput(result, 2)
+                .saveSuffixed(output, "_alt")
         }
-        register(RagiumItems.Plastics.ADVANCED) {
+
+        registerNew(RagiumItems.Plastics.BASIC) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.CHLORINE, FluidType.BUCKET_VOLUME / 10)
+                .fluidInput(RagiumFluids.ETHENE)
         }
+        registerNew(RagiumItems.Plastics.ADVANCED) {
+            HTMachineRecipeBuilder
+                .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+                .fluidInput(RagiumFluids.ACETYLENE)
+                .fluidInput(RagiumFluids.CHLORINE)
+        }
+
         register(RagiumItems.Plastics.ELITE) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
