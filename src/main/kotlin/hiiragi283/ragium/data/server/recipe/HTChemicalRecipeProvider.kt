@@ -19,6 +19,7 @@ import net.neoforged.neoforge.fluids.FluidType
 
 object HTChemicalRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
+        registerCarbon(output)
         registerNitrogen(output)
         registerFluorine(output)
 
@@ -70,6 +71,34 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .fluidOutput(gas)
             .fluidOutput(Fluids.WATER)
             .save(output, gas.id.withSuffix("_from_solution"))
+    }
+
+    private fun solidRedox(output: RecipeOutput, solid: HTMaterialProvider, oxide: RagiumFluids) {
+        // Oxidize
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(solid)
+            .catalyst(RagiumItems.OXIDIZATION_CATALYST)
+            .fluidOutput(oxide)
+            .saveSuffixed(output, "_by_oxidization")
+        // Reduction
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
+            .fluidInput(oxide)
+            .catalyst(RagiumItems.REDUCTION_CATALYST)
+            .itemOutput(solid)
+            .saveSuffixed(output, "_by_reduction")
+    }
+
+    private fun registerCarbon(output: RecipeOutput) {
+        // Coal -> Carbon Dust
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.COALS)
+            .itemOutput(RagiumItems.Dusts.CARBON)
+            .saveSuffixed(output, "_from_coals")
+        // C <-> CO2
+        solidRedox(output, RagiumItems.Dusts.CARBON, RagiumFluids.CARBON_DIOXIDE)
     }
 
     private fun registerNitrogen(output: RecipeOutput) {
@@ -162,6 +191,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)
             .itemInput(RagiumItems.Dusts.ASH)
+            .itemOutput(RagiumItems.Dusts.CARBON)
             .itemOutput(RagiumItems.Dusts.ALKALI)
             .saveSuffixed(output, "_from_ash")
         // Alkali + Seed Oil -> Soap
@@ -250,13 +280,8 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .itemOutput(RagiumItems.Dusts.SULFUR)
             .save(output)
 
-        // S -> SO2
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-            .itemInput(HTTagPrefix.DUST, RagiumMaterialKeys.SULFUR)
-            .catalyst(RagiumItems.OXIDIZATION_CATALYST)
-            .fluidOutput(RagiumFluids.SULFUR_DIOXIDE)
-            .save(output)
+        // S <-> SO2
+        solidRedox(output, RagiumItems.Dusts.SULFUR, RagiumFluids.SULFUR_DIOXIDE)
         // SO2 -> H2SO4
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)

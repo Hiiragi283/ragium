@@ -9,6 +9,10 @@
   "item_outputs": [
     {
       "count": 1,
+      "id": "ragium:carbon_dust"
+    },
+    {
+      "count": 1,
       "id": "ragium:alkali_dust"
     }
   ],

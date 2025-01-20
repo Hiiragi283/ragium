@@ -76,28 +76,32 @@ object RagiumItems {
     //    Materials    //
 
     enum class Dusts(override val material: HTMaterialKey, val originPrefix: HTTagPrefix? = null) : HTItemContent.Material {
-        // tier 1
-        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
-        ALKALI(RagiumMaterialKeys.ALKALI),
-        ASH(RagiumMaterialKeys.ASH),
+        // Vanilla
         COPPER(RagiumMaterialKeys.COPPER, HTTagPrefix.INGOT),
         IRON(RagiumMaterialKeys.IRON, HTTagPrefix.INGOT),
         LAPIS(RagiumMaterialKeys.LAPIS, HTTagPrefix.GEM),
-        NITER(RagiumMaterialKeys.NITER),
         QUARTZ(RagiumMaterialKeys.QUARTZ, HTTagPrefix.GEM),
+        GOLD(RagiumMaterialKeys.GOLD, HTTagPrefix.INGOT),
+        DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
+        EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
+
+        // Ragium
+        CRUDE_RAGINITE(RagiumMaterialKeys.CRUDE_RAGINITE),
+        RAGINITE(RagiumMaterialKeys.RAGINITE),
+        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, HTTagPrefix.GEM),
+
+        // Other
+        WOOD(RagiumMaterialKeys.WOOD),
+        ASH(RagiumMaterialKeys.ASH),
+        CARBON(RagiumMaterialKeys.CARBON),
+        ALKALI(RagiumMaterialKeys.ALKALI),
+
+        NITER(RagiumMaterialKeys.NITER),
         SALT(RagiumMaterialKeys.SALT),
         SULFUR(RagiumMaterialKeys.SULFUR),
 
-        // tier 2
-        RAGINITE(RagiumMaterialKeys.RAGINITE),
-        GOLD(RagiumMaterialKeys.GOLD, HTTagPrefix.INGOT),
-
-        // tier 3
-        RAGI_CRYSTAL(RagiumMaterialKeys.RAGI_CRYSTAL, HTTagPrefix.GEM),
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM, HTTagPrefix.INGOT),
         BAUXITE(RagiumMaterialKeys.BAUXITE),
-        DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
-        EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM, HTTagPrefix.INGOT),
         ;
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_dust")
@@ -105,23 +109,21 @@ object RagiumItems {
     }
 
     enum class Gears(override val material: HTMaterialKey) : HTItemContent.Material {
-        // tier 1
-        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        // Vanilla
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
-
-        // tier 2
-        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         GOLD(RagiumMaterialKeys.GOLD),
-        STEEL(RagiumMaterialKeys.STEEL),
-
-        // tier 3
-        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
-        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         DIAMOND(RagiumMaterialKeys.DIAMOND),
         EMERALD(RagiumMaterialKeys.EMERALD),
 
-        // tier 4
+        // Ragium
+        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+
+        // Steel
+        STEEL(RagiumMaterialKeys.STEEL),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ;
 
@@ -146,21 +148,21 @@ object RagiumItems {
     }
 
     enum class Ingots(override val material: HTMaterialKey) : HTItemContent.Material {
-        // tier 1
+        // Vanilla
+        // Ragium
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
-
-        // tier 2
         RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
-        STEEL(RagiumMaterialKeys.STEEL),
-
-        // tier 3
         REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
-        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
-        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-
-        // tier 4
         RAGIUM(RagiumMaterialKeys.RAGIUM),
+
+        // Steel
+        STEEL(RagiumMaterialKeys.STEEL),
+        DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
         DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
+
+        // Other
+        ALUMINUM(RagiumMaterialKeys.ALUMINUM),
+
         ECHORIUM(RagiumMaterialKeys.ECHORIUM),
         FIERIUM(RagiumMaterialKeys.FIERIUM),
         ;
@@ -170,23 +172,21 @@ object RagiumItems {
     }
 
     enum class Rods(override val material: HTMaterialKey) : HTItemContent.Material {
-        // tier 1
-        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        // Vanilla
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
-
-        // tier 2
-        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
         GOLD(RagiumMaterialKeys.GOLD),
+        // DIAMOND(RagiumMaterialKeys.DIAMOND),
+        // EMERALD(RagiumMaterialKeys.EMERALD),
+
+        // Ragium
+        // RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        // RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        // REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+
+        // Steel
         STEEL(RagiumMaterialKeys.STEEL),
-
-        // tier 3
-        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
         DEEP_STEEL(RagiumMaterialKeys.DEEP_STEEL),
-        DIAMOND(RagiumMaterialKeys.DIAMOND),
-        EMERALD(RagiumMaterialKeys.EMERALD),
-
-        // tier 4
         DRAGONIUM(RagiumMaterialKeys.DRAGONIUM),
         ;
 
@@ -403,9 +403,6 @@ object RagiumItems {
     val COAL_CHIP: DeferredItem<Item> = REGISTER.registerSimpleItem("coal_chip")
 
     @JvmField
-    val PULP: DeferredItem<Item> = REGISTER.registerSimpleItem("pulp")
-
-    @JvmField
     val RESIDUAL_COKE: DeferredItem<Item> = REGISTER.registerSimpleItem("residual_coke")
 
     @JvmField
@@ -467,7 +464,6 @@ object RagiumItems {
         // organic
         add(BEE_WAX)
         add(COAL_CHIP)
-        add(PULP)
         add(RESIDUAL_COKE)
         add(TALLOW)
         // inorganic

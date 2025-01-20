@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "tag": "minecraft:crimson_stems"
+  },
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:crimson_sap"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "minecraft:crimson_stems"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:wood_dust"
+    }
+  ],
+  "machine_type": "extractor",
+  "tier": "advanced"
+}

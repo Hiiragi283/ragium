@@ -16,11 +16,11 @@ object RagiumCreativeTabs {
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
 
     @JvmField
-    val INGREDIENT: DeferredHolder<CreativeModeTab, CreativeModeTab> =
-        REGISTER.register("ingredient") { _: ResourceLocation ->
+    val COMMON: DeferredHolder<CreativeModeTab, CreativeModeTab> =
+        REGISTER.register("common") { _: ResourceLocation ->
             CreativeModeTab
                 .builder()
-                .title(Component.literal("Ragium - Ingredient"))
+                .title(Component.literal("Ragium"))
                 .icon { ItemStack(RagiumItems.Ingots.RAGIUM) }
                 .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Material Blocks
@@ -29,7 +29,6 @@ object RagiumCreativeTabs {
                     // Material Items
                     RagiumItems.Dusts.entries.forEach(output::accept)
                     output.accept(RagiumItems.BEE_WAX)
-                    output.accept(RagiumItems.PULP)
                     output.accept(RagiumItems.DEEPANT)
 
                     RagiumItems.Gears.entries.forEach(output::accept)
@@ -66,7 +65,6 @@ object RagiumCreativeTabs {
                         remove(RagiumItems.CRIMSON_CRYSTAL)
                         remove(RagiumItems.DEEPANT)
                         remove(RagiumItems.POLYMER_RESIN)
-                        remove(RagiumItems.PULP)
                         remove(RagiumItems.RESIDUAL_COKE)
                         remove(RagiumItems.SLAG)
                         remove(RagiumItems.WARPED_CRYSTAL)
@@ -91,6 +89,9 @@ object RagiumCreativeTabs {
                         addAll(RagiumBlocks.Coils.entries)
 
                         add(RagiumBlocks.SHAFT)
+                        // Crate
+                        // Drum
+                        addAll(RagiumBlocks.Drums.entries)
                         // Manual Machines
                         add(RagiumBlocks.MANUAL_GRINDER)
                         // Utilities
@@ -112,20 +113,6 @@ object RagiumCreativeTabs {
                         add(RagiumBlocks.PLASTIC_BLOCK)
                         addAll(RagiumBlocks.Decorations.entries)
                     }.forEach(output::accept)
-                }.build()
-        }
-
-    @JvmField
-    val STORAGE: DeferredHolder<CreativeModeTab, CreativeModeTab> =
-        REGISTER.register("storage") { _: ResourceLocation ->
-            CreativeModeTab
-                .builder()
-                .title(Component.literal("Ragium - Storage"))
-                .icon { ItemStack(RagiumBlocks.Drums.ELITE) }
-                .displayItems { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-                    // Crate
-                    // Drum
-                    RagiumBlocks.Drums.entries.forEach(output::accept)
                 }.build()
         }
 }

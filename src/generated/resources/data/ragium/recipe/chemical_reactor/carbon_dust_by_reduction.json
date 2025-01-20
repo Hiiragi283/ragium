@@ -1,0 +1,20 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:reduction_catalyst"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:carbon_dioxide"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:carbon_dust"
+    }
+  ],
+  "machine_type": "chemical_reactor",
+  "tier": "elite"
+}

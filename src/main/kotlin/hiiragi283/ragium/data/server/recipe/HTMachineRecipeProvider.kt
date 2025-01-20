@@ -39,6 +39,16 @@ object HTMachineRecipeProvider : RecipeProviderChild {
 
     private fun registerParts(output: RecipeOutput) {
         // Grate
+        ShapedRecipeBuilder
+            .shaped(RecipeCategory.MISC, Items.COPPER_GRATE, 4)
+            .pattern("AAA")
+            .pattern("ABA")
+            .pattern("AAA")
+            .define('A', HTTagPrefix.ROD, RagiumMaterialKeys.COPPER)
+            .define('B', RagiumItems.FORGE_HAMMER)
+            .unlockedBy("has_rod", has(HTTagPrefix.ROD, RagiumMaterialKeys.COPPER))
+            .savePrefixed(output)
+
         RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
             // Shaped Crafting
             ShapedRecipeBuilder
@@ -48,7 +58,7 @@ object HTMachineRecipeProvider : RecipeProviderChild {
                 .pattern("AAA")
                 .define('A', HTTagPrefix.ROD, grate.machineTier.getSteelMetal())
                 .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_ingot", has(HTTagPrefix.INGOT, grate.machineTier.getSteelMetal()))
+                .unlockedBy("has_rod", has(HTTagPrefix.ROD, grate.machineTier.getSteelMetal()))
                 .savePrefixed(output)
             // Assembler
             HTMachineRecipeBuilder

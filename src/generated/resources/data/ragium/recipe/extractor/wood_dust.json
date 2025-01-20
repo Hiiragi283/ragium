@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:sap"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "minecraft:logs"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:wood_dust"
+    }
+  ],
+  "machine_type": "extractor"
+}

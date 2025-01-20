@@ -44,6 +44,12 @@ object RagiumMaterialKeys {
     @JvmField
     val ASH: HTMaterialKey = HTMaterialKey.of("ash")
 
+    @JvmField
+    val CARBON: HTMaterialKey = HTMaterialKey.of("carbon")
+
+    @JvmField
+    val WOOD: HTMaterialKey = HTMaterialKey.of("wood")
+
     //    Gem    //
 
     @JvmField
@@ -69,9 +75,6 @@ object RagiumMaterialKeys {
 
     @JvmField
     val LAPIS: HTMaterialKey = HTMaterialKey.of("lapis")
-
-    @JvmField
-    val NETHER_STAR: HTMaterialKey = HTMaterialKey.of("nether_star")
 
     @JvmField
     val NETHERITE_SCRAP: HTMaterialKey = HTMaterialKey.of("netherite_scrap")

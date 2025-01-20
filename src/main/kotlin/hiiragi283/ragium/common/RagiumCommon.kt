@@ -91,6 +91,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         // Dust
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ALKALI, HTMaterialType.DUST)
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.ASH, HTMaterialType.DUST)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.CARBON, HTMaterialType.DUST)
+        RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.WOOD, HTMaterialType.DUST)
         // Gem
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.AMETHYST, HTMaterialType.GEM)
         RagiumIMC.sendNewMaterialIMC(RagiumMaterialKeys.CINNABAR, HTMaterialType.GEM)

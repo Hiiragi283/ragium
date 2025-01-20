@@ -63,24 +63,24 @@ object RagiumBlocks {
     }
 
     enum class StorageBlocks(isGem: Boolean, override val material: HTMaterialKey) : HTBlockContent.Material {
-        // tier 1
+        // Ragium
         RAGI_ALLOY(false, RagiumMaterialKeys.RAGI_ALLOY),
-
-        // tier 2
         RAGI_STEEL(false, RagiumMaterialKeys.RAGI_STEEL),
-        STEEL(false, RagiumMaterialKeys.STEEL),
-
-        // tier 3
-        RAGI_CRYSTAL(true, RagiumMaterialKeys.RAGI_CRYSTAL),
         REFINED_RAGI_STEEL(false, RagiumMaterialKeys.REFINED_RAGI_STEEL),
-        ALUMINUM(false, RagiumMaterialKeys.ALUMINUM),
+        RAGIUM(false, RagiumMaterialKeys.RAGIUM),
+
+        // Steel
+        STEEL(false, RagiumMaterialKeys.STEEL),
+        DEEP_STEEL(false, RagiumMaterialKeys.DEEP_STEEL),
+        DRAGONIUM(false, RagiumMaterialKeys.DRAGONIUM),
+
+        // Crystal
+        RAGI_CRYSTAL(true, RagiumMaterialKeys.RAGI_CRYSTAL),
         FLUORITE(true, RagiumMaterialKeys.FLUORITE),
         CRYOLITE(true, RagiumMaterialKeys.CRYOLITE),
-        DEEP_STEEL(false, RagiumMaterialKeys.DEEP_STEEL),
 
-        // tier 3
-        RAGIUM(false, RagiumMaterialKeys.RAGIUM),
-        DRAGONIUM(false, RagiumMaterialKeys.DRAGONIUM),
+        // Other
+        ALUMINUM(false, RagiumMaterialKeys.ALUMINUM),
         ECHORIUM(false, RagiumMaterialKeys.ECHORIUM),
         FIERIUM(false, RagiumMaterialKeys.FIERIUM),
         ;

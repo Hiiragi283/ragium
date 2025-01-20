@@ -12,9 +12,12 @@ kff-version = "5.7.0"
 kff-version-range = "[5.7,)"
 ktlint = "12.1.2"
 
+aa = "1.3.13+mc1.21.1"
+curious = "9.2.2+1.21.1"
 jade = "15.9.2+neoforge"
 jei = "19.21.0.247"
 mek = "1.21.1-10.7.0.55"
+patchouli-gen = "1.21.1-1.0.11-Snapshot.3"
 powah = "6.1.5-neoforge"
 rei = "18.0.796"
 
@@ -22,18 +25,24 @@ rei = "18.0.796"
 
 kff = { group = "thedarkcolour", name = "kotlinforforge-neoforge", version.ref = "kff-version" }
 
+aa = { group = "de.ellpeck", name = "actuallyadditions", version.ref = "aa" }
+curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", version.ref = "curious" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = "jei" }
 jei = { group = "mezz.jei", name = "jei-1.21.1-neoforge", version.ref = "jei" }
+patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 powah = { group = "maven.modrinth", name = "powah", version.ref = "powah" }
 rei = { group = "me.shedaniel", name = "RoughlyEnoughItems-neoforge", version.ref = "rei" }
 
 [bundles]
 
 mods-impl = [
+    "aa",
+    "curious",
     "mek",
-    "jade"
+    "jade",
+    "patchouli-gen"
 ]
 
 mods-compile = [

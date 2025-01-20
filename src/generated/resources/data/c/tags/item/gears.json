@@ -1,15 +1,15 @@
 {
   "values": [
-    "#c:gears/ragi_alloy",
     "#c:gears/copper",
     "#c:gears/iron",
-    "#c:gears/ragi_steel",
     "#c:gears/gold",
-    "#c:gears/steel",
-    "#c:gears/refined_ragi_steel",
-    "#c:gears/deep_steel",
     "#c:gears/diamond",
     "#c:gears/emerald",
+    "#c:gears/ragi_alloy",
+    "#c:gears/ragi_steel",
+    "#c:gears/refined_ragi_steel",
+    "#c:gears/steel",
+    "#c:gears/deep_steel",
     "#c:gears/dragonium"
   ]
 }

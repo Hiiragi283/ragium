@@ -7,6 +7,7 @@ import hiiragi283.ragium.common.init.RagiumFluids
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.fluids.FluidType
 
 object HTDistillationRecipeProvider : RecipeProviderChild {
@@ -77,6 +78,17 @@ object HTDistillationRecipeProvider : RecipeProviderChild {
             .fluidOutput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME * 5)
             .save(output, RagiumAPI.id("aromatic_compounds"))
 
+        registerSaps(output)
+    }
+
+    private fun registerSaps(output: RecipeOutput) {
+        // XX Log -> Sap + Pulp
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(ItemTags.LOGS)
+            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .fluidOutput(RagiumFluids.SAP)
+            .save(output)
         // Sap -> Refined Gas + Alcohol
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -85,6 +97,15 @@ object HTDistillationRecipeProvider : RecipeProviderChild {
             .fluidOutput(RagiumFluids.REFINED_GAS)
             .fluidOutput(RagiumFluids.ALCOHOL)
             .save(output, RagiumAPI.id("sap"))
+
+        // Crimson Stem -> Crimson Sap
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .itemInput(ItemTags.CRIMSON_STEMS)
+            .catalyst(ItemTags.CRIMSON_STEMS)
+            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .fluidOutput(RagiumFluids.CRIMSON_SAP)
+            .savePrefixed(output, "crimson_")
         // Crimson Sap -> Crimson Crystal
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)
@@ -93,6 +114,15 @@ object HTDistillationRecipeProvider : RecipeProviderChild {
             .itemOutput(RagiumItems.CRIMSON_CRYSTAL)
             .fluidOutput(RagiumFluids.SAP, FluidType.BUCKET_VOLUME * 3)
             .save(output, RagiumAPI.id("crimson_sap"))
+
+        // Warped Stem -> Warped Sap
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR, HTMachineTier.ADVANCED)
+            .itemInput(ItemTags.WARPED_STEMS)
+            .catalyst(ItemTags.WARPED_STEMS)
+            .itemOutput(RagiumItems.Dusts.WOOD, 4)
+            .fluidOutput(RagiumFluids.WARPED_SAP)
+            .savePrefixed(output, "warped_")
         // Warped Sap -> Warped Crystal
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER, HTMachineTier.ADVANCED)

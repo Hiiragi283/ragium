@@ -2,12 +2,12 @@
   "values": [
     "#c:ingots/ragi_alloy",
     "#c:ingots/ragi_steel",
-    "#c:ingots/steel",
     "#c:ingots/refined_ragi_steel",
-    "#c:ingots/aluminum",
-    "#c:ingots/deep_steel",
     "#c:ingots/ragium",
+    "#c:ingots/steel",
+    "#c:ingots/deep_steel",
     "#c:ingots/dragonium",
+    "#c:ingots/aluminum",
     "#c:ingots/echorium",
     "#c:ingots/fierium"
   ]

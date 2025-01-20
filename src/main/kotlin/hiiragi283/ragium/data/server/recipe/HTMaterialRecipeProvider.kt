@@ -77,24 +77,19 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         // Ingot/Gem -> Rod
         RagiumItems.Rods.entries.forEach { rod: RagiumItems.Rods ->
             val material: HTMaterialKey = rod.material
-            val mainPrefix: HTTagPrefix = when (rod) {
-                RagiumItems.Rods.DIAMOND -> HTTagPrefix.GEM
-                RagiumItems.Rods.EMERALD -> HTTagPrefix.GEM
-                else -> HTTagPrefix.INGOT
-            }
             // Shaped Recipe
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, rod, 2)
                 .pattern("AB")
                 .pattern("A ")
-                .define('A', mainPrefix, material)
+                .define('A', HTTagPrefix.INGOT, material)
                 .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_input", has(mainPrefix, material))
+                .unlockedBy("has_input", has(HTTagPrefix.INGOT, material))
                 .savePrefixed(output)
             // Compressor
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
-                .itemInput(mainPrefix, material)
+                .itemInput(HTTagPrefix.INGOT, material)
                 .catalyst(RagiumItems.ROD_PRESS_MOLD)
                 .itemOutput(rod, 2)
                 .save(output)

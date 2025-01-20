@@ -3,18 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/ragi_alloy"
+      "tag": "c:rods/copper"
     },
     "B": {
       "item": "ragium:forge_hammer"
     }
   },
   "pattern": [
-    "AB",
-    "A "
+    "AAA",
+    "ABA",
+    "AAA"
   ],
   "result": {
-    "count": 2,
-    "id": "ragium:ragi_alloy_rod"
+    "count": 4,
+    "id": "minecraft:copper_grate"
   }
 }
