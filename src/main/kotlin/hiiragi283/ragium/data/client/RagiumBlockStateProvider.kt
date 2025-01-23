@@ -104,6 +104,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
             simpleBlock(drum.get(), models().cubeTop(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
         }
 
+        // Food
+        simpleBlock(RagiumBlocks.SPONGE_CAKE.get())
+
         // Manual Machine
         getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
             RagiumBlockProperties.LEVEL_7.possibleValues.forEach { step: Int ->

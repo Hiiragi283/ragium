@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:milk"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:butter"
+    }
+  ],
+  "machine_type": "extractor"
+}

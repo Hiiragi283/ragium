@@ -43,6 +43,12 @@ class HTCookingRecipeBuilder private constructor(
             time,
             exp,
         )
+
+        @JvmField
+        val BLASTING_TYPES: Set<Type> = setOf(Type.SMELTING, Type.BLASTING)
+
+        @JvmField
+        val SMOKING_TYPES: Set<Type> = setOf(Type.SMELTING, Type.SMOKING)
     }
 
     private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()

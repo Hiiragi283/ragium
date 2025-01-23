@@ -1,0 +1,27 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 64000,
+      "tag": "c:honey"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 64,
+      "item": "ragium:chocolate"
+    },
+    {
+      "count": 64,
+      "item": "ragium:cinnamon_powder"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:ambrosia"
+    }
+  ],
+  "machine_type": "assembler",
+  "tier": "ultimate"
+}

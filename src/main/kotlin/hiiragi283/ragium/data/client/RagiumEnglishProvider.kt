@@ -16,6 +16,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
 
         add(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
 
+        add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
+
         add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
 
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
@@ -275,6 +277,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTTagPrefix.ORE, "%s Ore")
         add(HTTagPrefix.PLATE, "%s Plate")
         add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
+        add(HTTagPrefix.RAW_STORAGE, "Block of Raw %s")
         add(HTTagPrefix.ROD, "%s Rod")
         add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         add(HTTagPrefix.WIRE, "%s Wire")

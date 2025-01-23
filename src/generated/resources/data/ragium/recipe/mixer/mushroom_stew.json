@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:milk"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 2,
+      "tag": "c:mushrooms"
+    },
+    {
+      "count": 2,
+      "item": "minecraft:bowl"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "minecraft:mushroom_stew"
+    }
+  ],
+  "machine_type": "mixer"
+}

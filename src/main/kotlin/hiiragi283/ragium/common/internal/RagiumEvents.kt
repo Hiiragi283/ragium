@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
-import hiiragi283.ragium.common.capability.HTCubeFluidHandler
 import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -144,14 +143,6 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        RagiumItems.FluidCubes.entries.forEach { fluidCube: RagiumItems.FluidCubes ->
-            event.registerItem(
-                Capabilities.FluidHandler.ITEM,
-                { stack: ItemStack, _: Void? -> HTCubeFluidHandler(fluidCube, stack) },
-                fluidCube,
-            )
-        }
-
         event.registerItem(
             Capabilities.FluidHandler.ITEM,
             { stack: ItemStack, _: Void? ->

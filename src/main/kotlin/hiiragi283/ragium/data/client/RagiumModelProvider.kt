@@ -45,6 +45,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
 
             add(RagiumBlocks.PLASTIC_BLOCK)
 
+            add(RagiumBlocks.SPONGE_CAKE)
+
             add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
@@ -71,6 +73,9 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
     private fun registerItems() {
         buildList {
             addAll(RagiumItems.MATERIALS)
+            addAll(RagiumItems.OTHER_DUSTS)
+            addAll(RagiumItems.OTHER_RESOURCES)
+            addAll(RagiumItems.OTHER_INGOTS)
 
             addAll(RagiumItems.FOODS)
             remove(RagiumItems.CHOCOLATE_APPLE)

@@ -30,6 +30,7 @@ enum class RagiumFluids(
     StringRepresentable {
     // Vanilla
     HONEY("Honey", "蜂蜜", TextureType.HONEY),
+    SNOW("Powder Snow", "粉雪", TextureType.SNOW),
     EXPERIENCE(Color(0x99cc00), "Liquid Experience", "液体経験値"),
 
     // Organics
@@ -184,6 +185,7 @@ enum class RagiumFluids(
         HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
         LIQUID,
         RADIOACTIVE,
+        SNOW(ResourceLocation.withDefaultNamespace("block/snow_block")),
         STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
     }
 

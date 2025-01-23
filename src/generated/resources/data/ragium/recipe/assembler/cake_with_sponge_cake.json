@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 3000,
+      "tag": "c:milk"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:sponge_cake"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:cake"
+    }
+  ],
+  "machine_type": "assembler"
+}

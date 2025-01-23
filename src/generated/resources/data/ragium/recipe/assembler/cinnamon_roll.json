@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:milk"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "minecraft:bread"
+    },
+    {
+      "count": 1,
+      "item": "ragium:cinnamon_powder"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:cinnamon_roll"
+    }
+  ],
+  "machine_type": "assembler"
+}

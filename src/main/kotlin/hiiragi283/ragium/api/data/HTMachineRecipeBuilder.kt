@@ -86,6 +86,8 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     fun waterInput(amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(Tags.Fluids.WATER, amount)
 
+    fun milkInput(amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(Tags.Fluids.MILK, amount)
+
     //    Catalyst    //
 
     fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder = catalyst(prefix.createTag(material))

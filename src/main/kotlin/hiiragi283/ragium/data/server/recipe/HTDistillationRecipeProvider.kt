@@ -12,21 +12,6 @@ import net.neoforged.neoforge.fluids.FluidType
 
 object HTDistillationRecipeProvider : RecipeProviderChild {
     override fun buildRecipes(output: RecipeOutput) {
-        // Biomass -> Alcohol
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.DISTILLATION_TOWER)
-            .fluidInput(RagiumFluids.BIOMASS)
-            .catalyst(RagiumItems.Circuits.BASIC)
-            .fluidOutput(RagiumFluids.ALCOHOL)
-            .saveSuffixed(output, "_from_biomass")
-        // Biomass -> Bio Fuel
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.DISTILLATION_TOWER)
-            .fluidInput(RagiumFluids.BIOMASS)
-            .catalyst(RagiumItems.Circuits.ADVANCED)
-            .fluidOutput(RagiumFluids.BIO_FUEL)
-            .saveSuffixed(output, "_from_biomass")
-
         // Crude Oil -> Refined Gas + Naphtha + Residual Oil
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.DISTILLATION_TOWER)
@@ -79,7 +64,42 @@ object HTDistillationRecipeProvider : RecipeProviderChild {
             .fluidOutput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME * 5)
             .save(output, RagiumAPI.id("aromatic_compounds"))
 
+        registerBio(output)
         registerSaps(output)
+    }
+
+    private fun registerBio(output: RecipeOutput) {
+        // Biomass -> Alcohol
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
+            .fluidInput(RagiumFluids.BIOMASS)
+            .catalyst(RagiumItems.Circuits.BASIC)
+            .fluidOutput(RagiumFluids.ALCOHOL)
+            .saveSuffixed(output, "_from_biomass")
+
+        // Biomass -> Bio Fuel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.DISTILLATION_TOWER)
+            .fluidInput(RagiumFluids.BIOMASS)
+            .catalyst(RagiumItems.Circuits.ADVANCED)
+            .fluidOutput(RagiumFluids.BIO_FUEL)
+            .saveSuffixed(output, "_from_biomass")
+        // Alcohol + Plant Oil -> Bio Fuel + Glycerol
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER)
+            .fluidInput(RagiumFluids.ALCOHOL, FluidType.BUCKET_VOLUME * 4)
+            .fluidInput(RagiumFluids.PLANT_OIL)
+            .fluidOutput(RagiumFluids.BIO_FUEL, FluidType.BUCKET_VOLUME * 4)
+            .fluidOutput(RagiumFluids.GLYCEROL)
+            .saveSuffixed(output, "_from_plant_oil")
+        // Alcohol + Tallow -> Bio Fuel + Glycerol
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER)
+            .fluidInput(RagiumFluids.ALCOHOL, FluidType.BUCKET_VOLUME * 4)
+            .itemInput(RagiumItems.TALLOW)
+            .fluidOutput(RagiumFluids.BIO_FUEL, FluidType.BUCKET_VOLUME * 4)
+            .fluidOutput(RagiumFluids.GLYCEROL)
+            .saveSuffixed(output, "_from_tallow")
     }
 
     private fun registerSaps(output: RecipeOutput) {

@@ -224,6 +224,15 @@ object RagiumBlocks {
         )
     }
 
+    //    Foods    //
+
+    @JvmField
+    val SPONGE_CAKE: DeferredBlock<HayBlock> = REGISTER.registerBlock(
+        "sponge_cake",
+        ::HayBlock,
+        blockProperty(Blocks.HAY_BLOCK).sound(SoundType.WOOL),
+    )
+
     //    Manual Machines    //
 
     @JvmField

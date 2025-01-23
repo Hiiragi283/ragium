@@ -28,21 +28,19 @@ object RagiumCreativeTabs {
                     RagiumBlocks.StorageBlocks.entries.forEach(output::accept)
                     // Material Items
                     RagiumItems.Dusts.entries.forEach(output::accept)
-                    output.accept(RagiumItems.BEE_WAX)
-                    output.accept(RagiumItems.DEEPANT)
+                    RagiumItems.OTHER_DUSTS.forEach(output::accept)
 
                     RagiumItems.Gears.entries.forEach(output::accept)
 
-                    output.accept(RagiumItems.RESIDUAL_COKE)
                     RagiumItems.RawResources.entries.forEach(output::accept)
-                    output.accept(RagiumItems.SLAG)
-                    output.accept(RagiumItems.CRIMSON_CRYSTAL)
-                    output.accept(RagiumItems.WARPED_CRYSTAL)
+                    RagiumItems.OTHER_RESOURCES.forEach(output::accept)
 
                     RagiumItems.Ingots.entries.forEach(output::accept)
+                    RagiumItems.OTHER_INGOTS.forEach(output::accept)
 
                     RagiumItems.Rods.entries.forEach(output::accept)
                     // Foods
+                    output.accept(RagiumBlocks.SPONGE_CAKE)
                     RagiumItems.FOODS.forEach(output::accept)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)
@@ -54,19 +52,7 @@ object RagiumCreativeTabs {
                     output.accept(RagiumItems.CIRCUIT_BOARD)
                     RagiumItems.Circuits.entries.forEach(output::accept)
                     // Ingredients
-                    RagiumItems.FluidCubes.entries.forEach(output::accept)
-
-                    buildList {
-                        addAll(RagiumItems.INGREDIENTS)
-
-                        remove(RagiumItems.BEE_WAX)
-                        remove(RagiumItems.CIRCUIT_BOARD)
-                        remove(RagiumItems.CRIMSON_CRYSTAL)
-                        remove(RagiumItems.DEEPANT)
-                        remove(RagiumItems.RESIDUAL_COKE)
-                        remove(RagiumItems.SLAG)
-                        remove(RagiumItems.WARPED_CRYSTAL)
-                    }.forEach(output::accept)
+                    RagiumItems.INGREDIENTS.forEach(output::accept)
                     RagiumItems.Radioactives.entries.forEach(output::accept)
                 }.build()
         }

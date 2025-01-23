@@ -1,0 +1,26 @@
+{
+  "type": "ragium:machine",
+  "fluid_inputs": [
+    {
+      "amount": 4000,
+      "tag": "c:alcohol"
+    }
+  ],
+  "fluid_outputs": [
+    {
+      "amount": 4000,
+      "id": "ragium:bio_fuel"
+    },
+    {
+      "amount": 1000,
+      "id": "ragium:glycerol"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:tallow"
+    }
+  ],
+  "machine_type": "mixer"
+}

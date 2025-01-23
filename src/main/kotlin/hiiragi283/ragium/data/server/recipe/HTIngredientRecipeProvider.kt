@@ -78,7 +78,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 Ingredient.of(RagiumItems.RAGI_ALLOY_COMPOUND),
                 RagiumItems.Ingots.RAGI_ALLOY,
                 exp = 0.5f,
-                types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+                types = HTCookingRecipeBuilder.BLASTING_TYPES,
             ).unlockedBy("has_compound", has(RagiumItems.RAGI_ALLOY_COMPOUND))
             .save(output)
 
@@ -436,7 +436,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 Ingredient.of(RagiumItems.CRIMSON_CRYSTAL),
                 Items.BLAZE_POWDER,
                 time = 500,
-                types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+                types = HTCookingRecipeBuilder.BLASTING_TYPES,
             ).unlockedBy("has_crystal", has(RagiumItems.CRIMSON_CRYSTAL))
             .save(output)
 
@@ -445,7 +445,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 Ingredient.of(RagiumItems.WARPED_CRYSTAL),
                 Items.ENDER_PEARL,
                 time = 500,
-                types = setOf(HTCookingRecipeBuilder.Type.SMELTING, HTCookingRecipeBuilder.Type.BLASTING),
+                types = HTCookingRecipeBuilder.BLASTING_TYPES,
             ).unlockedBy("has_crystal", has(RagiumItems.WARPED_CRYSTAL))
             .save(output)
 

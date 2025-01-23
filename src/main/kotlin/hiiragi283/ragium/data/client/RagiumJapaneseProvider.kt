@@ -16,6 +16,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
 
+        add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
+
         add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
 
         add(RagiumBlocks.ENERGY_NETWORK_INTERFACE, "E.N.I.")
@@ -225,6 +227,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.ORE, "%s鉱石")
         add(HTTagPrefix.PLATE, "%s板")
         add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
+        add(HTTagPrefix.RAW_STORAGE, "%sの原石ブロック")
         add(HTTagPrefix.ROD, "%s棒")
         add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         add(HTTagPrefix.WIRE, "%sワイヤ")

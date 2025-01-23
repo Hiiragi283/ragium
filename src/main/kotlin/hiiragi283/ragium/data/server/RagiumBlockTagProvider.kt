@@ -42,5 +42,8 @@ class RagiumBlockTagProvider(
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.forEach(pickaxe::addElement)
+
+        getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_HOE)
+            .addElement(RagiumBlocks.SPONGE_CAKE)
     }
 }

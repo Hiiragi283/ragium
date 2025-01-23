@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumMachineKeys
@@ -11,7 +10,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.concurrent.CompletableFuture
@@ -31,13 +29,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
     }
 
     private fun registerVanilla(output: RecipeOutput) {
-        // Milk
-        HTMachineRecipeBuilder
-            .create(RagiumMachineKeys.EXTRACTOR)
-            .itemInput(Items.MILK_BUCKET)
-            .itemOutput(Items.BUCKET)
-            .fluidOutput(NeoForgeMod.MILK)
-            .save(output, RagiumAPI.id("milk"))
         // Skulls
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.LASER_TRANSFORMER)

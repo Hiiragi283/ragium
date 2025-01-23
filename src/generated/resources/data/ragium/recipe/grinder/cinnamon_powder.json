@@ -1,0 +1,16 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:cinnamon_stick"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "ragium:cinnamon_powder"
+    }
+  ],
+  "machine_type": "grinder"
+}

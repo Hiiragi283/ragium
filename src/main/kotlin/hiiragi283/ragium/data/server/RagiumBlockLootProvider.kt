@@ -38,6 +38,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             addAll(RagiumBlocks.Decorations.entries)
             addAll(RagiumBlocks.LEDBlocks.entries)
 
+            add(RagiumBlocks.SPONGE_CAKE)
+
             add(RagiumBlocks.MANUAL_GRINDER)
 
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
