@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.mek
+package hiiragi283.ragium.integration
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -12,13 +12,13 @@ object RagiumMekIntegration {
     private val LOGGER: Logger = LogUtils.getLogger()
 
     @JvmField
-    val OSMIUM: HTMaterialKey = HTMaterialKey.of("osmium")
+    val OSMIUM: HTMaterialKey = HTMaterialKey.Companion.of("osmium")
 
     @JvmField
-    val REFINED_GLOWSTONE: HTMaterialKey = HTMaterialKey.of("refined_glowstone")
+    val REFINED_GLOWSTONE: HTMaterialKey = HTMaterialKey.Companion.of("refined_glowstone")
 
     @JvmField
-    val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.of("refined_obsidian")
+    val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.Companion.of("refined_obsidian")
 
     fun init(eventBus: IEventBus) {
         eventBus.addListener(::registerMaterial)

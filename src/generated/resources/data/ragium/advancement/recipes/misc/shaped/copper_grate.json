@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:shaped/copper_grate"
+        "recipe": "ragium:shaped/copper_grate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:shaped/copper_grate"
+      "ragium:shaped/copper_grate"
     ]
   }
 }

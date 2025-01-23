@@ -10,7 +10,7 @@ import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.addElement
 import hiiragi283.ragium.data.addTag
-import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
+import hiiragi283.ragium.integration.RagiumEvilIntegration
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries

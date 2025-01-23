@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.extension.fluidHolder
 import hiiragi283.ragium.api.extension.fluidTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -169,7 +168,7 @@ enum class RagiumFluids(
     val typeHolder: DeferredHolder<FluidType, FluidType> =
         DeferredHolder.create(NeoForgeRegistries.Keys.FLUID_TYPES, id)
 
-    val stillHolder: DeferredHolder<Fluid, FlowingFluid> = fluidHolder<FlowingFluid>(id)
+    val stillHolder: DeferredHolder<Fluid, FlowingFluid> = DeferredHolder.create(Registries.FLUID, id)
 
     val commonTag: TagKey<Fluid> = fluidTagKey(commonId(serializedName))
 

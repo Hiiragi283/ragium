@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
-import hiiragi283.ragium.integration.mek.RagiumMekIntegration
+import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
 

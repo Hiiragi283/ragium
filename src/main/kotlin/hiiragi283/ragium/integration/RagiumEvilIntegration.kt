@@ -1,4 +1,4 @@
-package hiiragi283.ragium.integration.mek
+package hiiragi283.ragium.integration
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -12,7 +12,7 @@ object RagiumEvilIntegration {
     private val LOGGER: Logger = LogUtils.getLogger()
 
     @JvmField
-    val DARK_GEM: HTMaterialKey = HTMaterialKey.of("dark")
+    val DARK_GEM: HTMaterialKey = HTMaterialKey.Companion.of("dark")
 
     fun init(eventBus: IEventBus) {
         eventBus.addListener(::registerMaterial)

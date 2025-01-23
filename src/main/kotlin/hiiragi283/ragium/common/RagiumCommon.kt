@@ -11,8 +11,8 @@ import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.DefaultMachinePlugin
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
-import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
-import hiiragi283.ragium.integration.mek.RagiumMekIntegration
+import hiiragi283.ragium.integration.RagiumEvilIntegration
+import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer

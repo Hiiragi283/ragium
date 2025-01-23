@@ -78,11 +78,6 @@ fun <T : ModelBuilder<T>> T.itemTexture(key: String, id: ResourceLocation): T = 
 //    RecipeBuilder    //
 
 private fun RecipeBuilder.savePrefixed(output: RecipeOutput, prefix: String) {
-    /*val id: ResourceLocation = RecipeBuilder.getDefaultRecipeId(result)
-    val namespace: String = id.namespace
-    val fixedOutput: RecipeOutput = if (namespace == "minecraft" || namespace == RagiumAPI.MOD_ID) {
-        output
-    } else output.withConditions(ModLoadedCondition(namespace))*/
     save(output, RecipeBuilder.getDefaultRecipeId(result).withPrefix(prefix))
 }
 
@@ -119,8 +114,17 @@ fun SingleItemRecipeBuilder.savePrefixed(output: RecipeOutput) {
 
 //    TagBuilder    //
 
-fun TagBuilder.addElement(holder: DeferredHolder<*, *>): TagBuilder = addElement(holder.id)
+fun TagBuilder.addElement(holder: DeferredHolder<*, *>, optional: Boolean = false): TagBuilder = when (optional) {
+    true -> addOptionalElement(holder.id)
+    false -> addElement(holder.id)
+}
 
-fun TagBuilder.addElement(content: HTContent<*>): TagBuilder = addElement(content.id)
+fun TagBuilder.addElement(content: HTContent<*>, optional: Boolean = false): TagBuilder = when (optional) {
+    true -> addOptionalElement(content.id)
+    false -> addElement(content.id)
+}
 
-fun TagBuilder.addTag(tagKey: TagKey<*>): TagBuilder = addTag(tagKey.location)
+fun TagBuilder.addTag(tagKey: TagKey<*>, optional: Boolean = false): TagBuilder = when (optional) {
+    true -> addOptionalTag(tagKey.location)
+    false -> addTag(tagKey.location)
+}

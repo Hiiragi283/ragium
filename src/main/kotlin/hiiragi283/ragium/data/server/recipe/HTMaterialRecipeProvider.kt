@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.extension.asHolder
 import hiiragi283.ragium.api.extension.forEach
-import hiiragi283.ragium.api.extension.itemHolder
 import hiiragi283.ragium.api.extension.mutableTableOf
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -19,8 +18,8 @@ import hiiragi283.ragium.data.define
 import hiiragi283.ragium.data.requires
 import hiiragi283.ragium.data.savePrefixed
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
-import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
-import hiiragi283.ragium.integration.mek.RagiumMekIntegration
+import hiiragi283.ragium.integration.RagiumEvilIntegration
+import hiiragi283.ragium.integration.RagiumMekIntegration
 import mekanism.common.registration.impl.BlockRegistryObject
 import mekanism.common.registration.impl.ItemRegistryObject
 import mekanism.common.registries.MekanismBlocks
@@ -31,11 +30,13 @@ import mekanism.common.resource.ResourceType
 import mekanism.common.resource.ore.OreBlockType
 import mekanism.common.resource.ore.OreType
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
@@ -82,7 +83,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     @JvmStatic
-    private fun initTable() {
+    private fun initTable(holderLookup: HolderLookup.RegistryLookup<Item>) {
         // Ragium
         RagiumItems.MATERIALS.forEach { content: HTItemContent.Material ->
             putHolder(content.tagPrefix, content.material, content)
@@ -137,19 +138,27 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
             putHolder(HTTagPrefix.ORE, HTMaterialKey.of(type.serializedName), ore.stone)
             putHolder(HTTagPrefix.ORE, HTMaterialKey.of(type.serializedName), ore.deepslate)
         }
+
         // Evil Craft
-        putHolder(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_gem_crushed"))
+        fun getEvilItem(path: String): () -> Item = holderLookup.getOrThrow(
+            ResourceKey.create(
+                Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("evilcraft", path),
+            ),
+        )::value
 
-        putHolder(HTTagPrefix.GEM, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_gem"))
+        putHolder(HTTagPrefix.DUST, RagiumEvilIntegration.DARK_GEM, getEvilItem("dark_gem_crushed"))
 
-        putHolder(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_ore"))
-        putHolder(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_ore_deepslate"))
+        putHolder(HTTagPrefix.GEM, RagiumEvilIntegration.DARK_GEM, getEvilItem("dark_gem"))
 
-        putHolder(HTTagPrefix.STORAGE_BLOCK, RagiumEvilIntegration.DARK_GEM, itemHolder("evilcraft:dark_block"))
+        putHolder(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, getEvilItem("dark_ore"))
+        putHolder(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, getEvilItem("dark_ore_deepslate"))
+
+        putHolder(HTTagPrefix.STORAGE_BLOCK, RagiumEvilIntegration.DARK_GEM, getEvilItem("dark_block"))
     }
 
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        initTable()
+        initTable(holderLookup.lookupOrThrow(Registries.ITEM))
         // Ingot/Gem -> Block
         RagiumBlocks.StorageBlocks.entries.forEach { storage: RagiumBlocks.StorageBlocks ->
             ShapedRecipeBuilder

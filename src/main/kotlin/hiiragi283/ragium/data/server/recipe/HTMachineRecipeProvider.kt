@@ -49,7 +49,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
             .define('A', HTTagPrefix.ROD, RagiumMaterialKeys.COPPER)
             .define('B', RagiumItems.FORGE_HAMMER)
             .unlockedBy("has_rod", has(HTTagPrefix.ROD, RagiumMaterialKeys.COPPER))
-            .savePrefixed(output)
+            .save(output, RagiumAPI.id("shaped/copper_grate"))
 
         RagiumBlocks.Grates.entries.forEach { grate: RagiumBlocks.Grates ->
             // Shaped Crafting

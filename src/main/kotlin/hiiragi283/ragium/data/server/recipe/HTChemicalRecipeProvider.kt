@@ -26,6 +26,7 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
 
         registerAlkali(output)
         registerAluminum(output)
+        registerSludge(output)
         registerSulfur(output)
         registerChlorine(output)
     }
@@ -324,6 +325,25 @@ object HTChemicalRecipeProvider : RagiumRecipeProvider.Child {
             .itemOutput(RagiumItems.Ingots.ALUMINUM, 3)
             .itemOutput(RagiumItems.SLAG)
             .saveSuffixed(output, "_with_cryolite")
+    }
+
+    private fun registerSludge(output: RecipeOutput) {
+        // Slag -> Gravel
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(RagiumItems.SLAG)
+            .itemOutput(Items.GRAVEL)
+            .saveSuffixed(output, "_from_slag")
+
+        // Chemical Sludge -> Sand + Clay + Gold
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER)
+            .fluidInput(RagiumFluids.CHEMICAL_SLUDGE)
+            .waterInput(FluidType.BUCKET_VOLUME * 4)
+            .itemOutput(Items.SAND)
+            .itemOutput(Items.CLAY)
+            .itemOutput(Items.GOLD_NUGGET)
+            .saveSuffixed(output, "_from_sludge")
     }
 
     private fun registerSulfur(output: RecipeOutput) {
