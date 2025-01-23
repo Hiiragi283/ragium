@@ -1,0 +1,19 @@
+{
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:cooling_catalyst"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "tag": "c:water"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:snow_block"
+    }
+  ],
+  "machine_type": "compressor"
+}

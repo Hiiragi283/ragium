@@ -185,7 +185,7 @@ enum class RagiumFluids(
         HONEY(ResourceLocation.withDefaultNamespace("block/honey_block_top")),
         LIQUID,
         RADIOACTIVE,
-        SNOW(ResourceLocation.withDefaultNamespace("block/snow_block")),
+        SNOW(ResourceLocation.withDefaultNamespace("block/snow")),
         STICKY(ResourceLocation.withDefaultNamespace("block/quartz_block_bottom")),
     }
 

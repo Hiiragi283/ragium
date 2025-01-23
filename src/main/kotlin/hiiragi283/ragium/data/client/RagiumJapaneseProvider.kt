@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
+import hiiragi283.ragium.integration.mek.RagiumMekPlugin
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -188,8 +189,8 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterialKeys.IRON, "鉄")
         add(RagiumMaterialKeys.LAPIS, "ラピス")
         add(RagiumMaterialKeys.LEAD, "鉛")
-        // add(RagiumMaterialKeys.NETHER_STAR, "ネザースター")
         add(RagiumMaterialKeys.NETHERITE, "ネザライト")
+        add(RagiumMaterialKeys.NETHERITE_SCRAP, "ネザライトの欠片")
         add(RagiumMaterialKeys.NICKEL, "ニッケル")
         add(RagiumMaterialKeys.NITER, "硝石")
         add(RagiumMaterialKeys.PERIDOT, "ペリドット")
@@ -210,7 +211,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterialKeys.SILVER, "銀")
         add(RagiumMaterialKeys.SPHALERITE, "閃亜鉛鉱")
         add(RagiumMaterialKeys.STEEL, "スチール")
-        // add(RagiumMaterialKeys.STONE, "石材")
         add(RagiumMaterialKeys.SULFUR, "硫黄")
         add(RagiumMaterialKeys.TIN, "スズ")
         add(RagiumMaterialKeys.TITANIUM, "チタン")
@@ -218,7 +218,14 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumMaterialKeys.URANIUM, "ウラニウム")
         add(RagiumMaterialKeys.WOOD, "木材")
         add(RagiumMaterialKeys.ZINC, "亜鉛")
+
+        add(RagiumMekPlugin.OSMIUM, "オスミウム")
+        add(RagiumMekPlugin.REFINED_GLOWSTONE, "精製グロウストーン")
+        add(RagiumMekPlugin.REFINED_OBSIDIAN, "精製黒曜石")
         // Tag Prefix
+        add(HTTagPrefix.CLUMP, "%sの凝塊")
+        add(HTTagPrefix.CRYSTAL, "%sの結晶")
+        add(HTTagPrefix.DIRTY_DUST, "汚れた%sの粉")
         add(HTTagPrefix.DUST, "%sの粉")
         add(HTTagPrefix.GEAR, "%sの歯車")
         add(HTTagPrefix.GEM, "%s")
@@ -229,6 +236,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(HTTagPrefix.RAW_MATERIAL, "%sの原石")
         add(HTTagPrefix.RAW_STORAGE, "%sの原石ブロック")
         add(HTTagPrefix.ROD, "%s棒")
+        add(HTTagPrefix.SHARD, "%sの欠片")
         add(HTTagPrefix.STORAGE_BLOCK, "%sブロック")
         add(HTTagPrefix.WIRE, "%sワイヤ")
     }

@@ -49,6 +49,8 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         registerPressMolds(output)
 
         registerParts(output)
+
+        registerSnow(output)
     }
 
     private fun registerRaginite(output: RecipeOutput) {
@@ -454,6 +456,51 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .itemInput(Items.GLOW_INK_SAC)
             .itemOutput(RagiumItems.LUMINESCENCE_DUST)
             .itemOutput(Items.INK_SAC)
+            .save(output)
+    }
+
+    private fun registerSnow(output: RecipeOutput) {
+        // Water -> Ice
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.COMPRESSOR)
+            .waterInput()
+            .catalyst(RagiumItems.COOLING_CATALYST)
+            .itemOutput(Items.SNOW_BLOCK)
+            .save(output)
+
+        // Snow Block -> 4x Snow Ball
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(Items.SNOW_BLOCK)
+            .itemOutput(Items.SNOWBALL, 4)
+            .saveSuffixed(output, "_from_block")
+        // Ice -> 4x Snow Ball
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.GRINDER)
+            .itemInput(Items.ICE)
+            .itemOutput(Items.SNOWBALL, 4)
+            .saveSuffixed(output, "_from_ice")
+
+        // Powder Snow
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.MIXER)
+            .waterInput()
+            .catalyst(RagiumItems.COOLING_CATALYST)
+            .fluidOutput(RagiumFluids.SNOW)
+            .saveSuffixed(output, "_from_water")
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.EXTRACTOR)
+            .itemInput(Tags.Items.BUCKETS_POWDER_SNOW)
+            .itemOutput(Items.BUCKET)
+            .fluidOutput(RagiumFluids.SNOW)
+            .save(output, RagiumAPI.id("powder_snow_from_bucket"))
+
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(Items.BUCKET)
+            .fluidInput(RagiumFluids.SNOW)
+            .itemOutput(Items.POWDER_SNOW_BUCKET)
             .save(output)
     }
 }

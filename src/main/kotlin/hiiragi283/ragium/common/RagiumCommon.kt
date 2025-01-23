@@ -4,12 +4,14 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
 import hiiragi283.ragium.api.RagiumPlugin
+import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.common.internal.DefaultMachinePlugin
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
 import hiiragi283.ragium.common.internal.InternalRagiumAPI
+import hiiragi283.ragium.integration.mek.RagiumMekPlugin
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -40,6 +42,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
         eventBus.addListener(::sendMessage)
+        if (isModLoaded("mekanism")) {
+            RagiumMekPlugin.init(eventBus)
+        }
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 

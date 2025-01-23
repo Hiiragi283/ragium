@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
 import hiiragi283.ragium.common.init.*
 import hiiragi283.ragium.data.add
+import hiiragi283.ragium.integration.mek.RagiumMekPlugin
 import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.LanguageProvider
 
@@ -238,8 +239,8 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterialKeys.IRON, "Iron")
         add(RagiumMaterialKeys.LAPIS, "Lapis")
         add(RagiumMaterialKeys.LEAD, "Lead")
-        // add(RagiumMaterialKeys.NETHER_STAR, "Nether Star")
         add(RagiumMaterialKeys.NETHERITE, "Netherite")
+        add(RagiumMaterialKeys.NETHERITE_SCRAP, "Netherite Scrap")
         add(RagiumMaterialKeys.NICKEL, "Nickel")
         add(RagiumMaterialKeys.NITER, "Niter")
         add(RagiumMaterialKeys.PERIDOT, "Peridot")
@@ -260,7 +261,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterialKeys.SILVER, "Silver")
         add(RagiumMaterialKeys.SPHALERITE, "Sphalerite")
         add(RagiumMaterialKeys.STEEL, "Steel")
-        // add(RagiumMaterialKeys.STONE, "Stone")
         add(RagiumMaterialKeys.SULFUR, "Sulfur")
         add(RagiumMaterialKeys.TIN, "Tin")
         add(RagiumMaterialKeys.TITANIUM, "Titanium")
@@ -268,7 +268,14 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumMaterialKeys.URANIUM, "Uranium")
         add(RagiumMaterialKeys.WOOD, "Wood")
         add(RagiumMaterialKeys.ZINC, "Zinc")
+
+        add(RagiumMekPlugin.OSMIUM, "Osmium")
+        add(RagiumMekPlugin.REFINED_GLOWSTONE, "Refined Glowstone")
+        add(RagiumMekPlugin.REFINED_OBSIDIAN, "Refined Obsidian")
         // Tag Prefix
+        add(HTTagPrefix.CLUMP, "%s Clump")
+        add(HTTagPrefix.CRYSTAL, "%s Crystal")
+        add(HTTagPrefix.DIRTY_DUST, "Dirty %s Dust")
         add(HTTagPrefix.DUST, "%s Dust")
         add(HTTagPrefix.GEAR, "%s Gear")
         add(HTTagPrefix.GEM, "%s")
@@ -279,6 +286,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(HTTagPrefix.RAW_MATERIAL, "Raw %s")
         add(HTTagPrefix.RAW_STORAGE, "Block of Raw %s")
         add(HTTagPrefix.ROD, "%s Rod")
+        add(HTTagPrefix.SHARD, "%s Shard")
         add(HTTagPrefix.STORAGE_BLOCK, "Block of %s")
         add(HTTagPrefix.WIRE, "%s Wire")
     }

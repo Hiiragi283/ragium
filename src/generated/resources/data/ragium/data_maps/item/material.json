@@ -128,6 +128,10 @@
       "material": "niter",
       "prefix": "clump"
     },
+    "#c:clumps/osmium": {
+      "material": "osmium",
+      "prefix": "clump"
+    },
     "#c:clumps/peridot": {
       "material": "peridot",
       "prefix": "clump"
@@ -170,6 +174,14 @@
     },
     "#c:clumps/redstone": {
       "material": "redstone",
+      "prefix": "clump"
+    },
+    "#c:clumps/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "clump"
+    },
+    "#c:clumps/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "clump"
     },
     "#c:clumps/refined_ragi_steel": {
@@ -356,6 +368,10 @@
       "material": "niter",
       "prefix": "crystal"
     },
+    "#c:crystals/osmium": {
+      "material": "osmium",
+      "prefix": "crystal"
+    },
     "#c:crystals/peridot": {
       "material": "peridot",
       "prefix": "crystal"
@@ -398,6 +414,14 @@
     },
     "#c:crystals/redstone": {
       "material": "redstone",
+      "prefix": "crystal"
+    },
+    "#c:crystals/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "crystal"
+    },
+    "#c:crystals/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "crystal"
     },
     "#c:crystals/refined_ragi_steel": {
@@ -584,6 +608,10 @@
       "material": "niter",
       "prefix": "dirty_dust"
     },
+    "#c:dirty_dusts/osmium": {
+      "material": "osmium",
+      "prefix": "dirty_dust"
+    },
     "#c:dirty_dusts/peridot": {
       "material": "peridot",
       "prefix": "dirty_dust"
@@ -626,6 +654,14 @@
     },
     "#c:dirty_dusts/redstone": {
       "material": "redstone",
+      "prefix": "dirty_dust"
+    },
+    "#c:dirty_dusts/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "dirty_dust"
+    },
+    "#c:dirty_dusts/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "dirty_dust"
     },
     "#c:dirty_dusts/refined_ragi_steel": {
@@ -812,6 +848,10 @@
       "material": "niter",
       "prefix": "dust"
     },
+    "#c:dusts/osmium": {
+      "material": "osmium",
+      "prefix": "dust"
+    },
     "#c:dusts/peridot": {
       "material": "peridot",
       "prefix": "dust"
@@ -854,6 +894,14 @@
     },
     "#c:dusts/redstone": {
       "material": "redstone",
+      "prefix": "dust"
+    },
+    "#c:dusts/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "dust"
+    },
+    "#c:dusts/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "dust"
     },
     "#c:dusts/refined_ragi_steel": {
@@ -1040,6 +1088,10 @@
       "material": "niter",
       "prefix": "gear"
     },
+    "#c:gears/osmium": {
+      "material": "osmium",
+      "prefix": "gear"
+    },
     "#c:gears/peridot": {
       "material": "peridot",
       "prefix": "gear"
@@ -1082,6 +1134,14 @@
     },
     "#c:gears/redstone": {
       "material": "redstone",
+      "prefix": "gear"
+    },
+    "#c:gears/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "gear"
+    },
+    "#c:gears/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "gear"
     },
     "#c:gears/refined_ragi_steel": {
@@ -1268,6 +1328,10 @@
       "material": "niter",
       "prefix": "gem"
     },
+    "#c:gems/osmium": {
+      "material": "osmium",
+      "prefix": "gem"
+    },
     "#c:gems/peridot": {
       "material": "peridot",
       "prefix": "gem"
@@ -1310,6 +1374,14 @@
     },
     "#c:gems/redstone": {
       "material": "redstone",
+      "prefix": "gem"
+    },
+    "#c:gems/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "gem"
+    },
+    "#c:gems/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "gem"
     },
     "#c:gems/refined_ragi_steel": {
@@ -1496,6 +1568,10 @@
       "material": "niter",
       "prefix": "ingot"
     },
+    "#c:ingots/osmium": {
+      "material": "osmium",
+      "prefix": "ingot"
+    },
     "#c:ingots/peridot": {
       "material": "peridot",
       "prefix": "ingot"
@@ -1538,6 +1614,14 @@
     },
     "#c:ingots/redstone": {
       "material": "redstone",
+      "prefix": "ingot"
+    },
+    "#c:ingots/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "ingot"
+    },
+    "#c:ingots/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "ingot"
     },
     "#c:ingots/refined_ragi_steel": {
@@ -1724,6 +1808,10 @@
       "material": "niter",
       "prefix": "nugget"
     },
+    "#c:nuggets/osmium": {
+      "material": "osmium",
+      "prefix": "nugget"
+    },
     "#c:nuggets/peridot": {
       "material": "peridot",
       "prefix": "nugget"
@@ -1766,6 +1854,14 @@
     },
     "#c:nuggets/redstone": {
       "material": "redstone",
+      "prefix": "nugget"
+    },
+    "#c:nuggets/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "nugget"
+    },
+    "#c:nuggets/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "nugget"
     },
     "#c:nuggets/refined_ragi_steel": {
@@ -1952,6 +2048,10 @@
       "material": "niter",
       "prefix": "ore"
     },
+    "#c:ores/osmium": {
+      "material": "osmium",
+      "prefix": "ore"
+    },
     "#c:ores/peridot": {
       "material": "peridot",
       "prefix": "ore"
@@ -1994,6 +2094,14 @@
     },
     "#c:ores/redstone": {
       "material": "redstone",
+      "prefix": "ore"
+    },
+    "#c:ores/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "ore"
+    },
+    "#c:ores/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "ore"
     },
     "#c:ores/refined_ragi_steel": {
@@ -2180,6 +2288,10 @@
       "material": "niter",
       "prefix": "plate"
     },
+    "#c:plates/osmium": {
+      "material": "osmium",
+      "prefix": "plate"
+    },
     "#c:plates/peridot": {
       "material": "peridot",
       "prefix": "plate"
@@ -2222,6 +2334,14 @@
     },
     "#c:plates/redstone": {
       "material": "redstone",
+      "prefix": "plate"
+    },
+    "#c:plates/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "plate"
+    },
+    "#c:plates/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "plate"
     },
     "#c:plates/refined_ragi_steel": {
@@ -2408,6 +2528,10 @@
       "material": "niter",
       "prefix": "raw_material"
     },
+    "#c:raw_materials/osmium": {
+      "material": "osmium",
+      "prefix": "raw_material"
+    },
     "#c:raw_materials/peridot": {
       "material": "peridot",
       "prefix": "raw_material"
@@ -2450,6 +2574,14 @@
     },
     "#c:raw_materials/redstone": {
       "material": "redstone",
+      "prefix": "raw_material"
+    },
+    "#c:raw_materials/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "raw_material"
+    },
+    "#c:raw_materials/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "raw_material"
     },
     "#c:raw_materials/refined_ragi_steel": {
@@ -2636,6 +2768,10 @@
       "material": "niter",
       "prefix": "rod"
     },
+    "#c:rods/osmium": {
+      "material": "osmium",
+      "prefix": "rod"
+    },
     "#c:rods/peridot": {
       "material": "peridot",
       "prefix": "rod"
@@ -2678,6 +2814,14 @@
     },
     "#c:rods/redstone": {
       "material": "redstone",
+      "prefix": "rod"
+    },
+    "#c:rods/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "rod"
+    },
+    "#c:rods/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "rod"
     },
     "#c:rods/refined_ragi_steel": {
@@ -2864,6 +3008,10 @@
       "material": "niter",
       "prefix": "shard"
     },
+    "#c:shards/osmium": {
+      "material": "osmium",
+      "prefix": "shard"
+    },
     "#c:shards/peridot": {
       "material": "peridot",
       "prefix": "shard"
@@ -2906,6 +3054,14 @@
     },
     "#c:shards/redstone": {
       "material": "redstone",
+      "prefix": "shard"
+    },
+    "#c:shards/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "shard"
+    },
+    "#c:shards/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "shard"
     },
     "#c:shards/refined_ragi_steel": {
@@ -3092,6 +3248,10 @@
       "material": "niter",
       "prefix": "storage_block"
     },
+    "#c:storage_blocks/osmium": {
+      "material": "osmium",
+      "prefix": "storage_block"
+    },
     "#c:storage_blocks/peridot": {
       "material": "peridot",
       "prefix": "storage_block"
@@ -3260,6 +3420,10 @@
       "material": "niter",
       "prefix": "raw_storage"
     },
+    "#c:storage_blocks/raw_osmium": {
+      "material": "osmium",
+      "prefix": "raw_storage"
+    },
     "#c:storage_blocks/raw_peridot": {
       "material": "peridot",
       "prefix": "raw_storage"
@@ -3302,6 +3466,14 @@
     },
     "#c:storage_blocks/raw_redstone": {
       "material": "redstone",
+      "prefix": "raw_storage"
+    },
+    "#c:storage_blocks/raw_refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "raw_storage"
+    },
+    "#c:storage_blocks/raw_refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "raw_storage"
     },
     "#c:storage_blocks/raw_refined_ragi_steel": {
@@ -3362,6 +3534,14 @@
     },
     "#c:storage_blocks/redstone": {
       "material": "redstone",
+      "prefix": "storage_block"
+    },
+    "#c:storage_blocks/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "storage_block"
+    },
+    "#c:storage_blocks/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "storage_block"
     },
     "#c:storage_blocks/refined_ragi_steel": {
@@ -3548,6 +3728,10 @@
       "material": "niter",
       "prefix": "wire"
     },
+    "#c:wires/osmium": {
+      "material": "osmium",
+      "prefix": "wire"
+    },
     "#c:wires/peridot": {
       "material": "peridot",
       "prefix": "wire"
@@ -3590,6 +3774,14 @@
     },
     "#c:wires/redstone": {
       "material": "redstone",
+      "prefix": "wire"
+    },
+    "#c:wires/refined_glowstone": {
+      "material": "refined_glowstone",
+      "prefix": "wire"
+    },
+    "#c:wires/refined_obsidian": {
+      "material": "refined_obsidian",
       "prefix": "wire"
     },
     "#c:wires/refined_ragi_steel": {

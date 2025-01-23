@@ -1,0 +1,22 @@
+{
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 1000,
+      "id": "ragium:snow"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:buckets/powder_snow"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "minecraft:bucket"
+    }
+  ],
+  "machine_type": "extractor"
+}

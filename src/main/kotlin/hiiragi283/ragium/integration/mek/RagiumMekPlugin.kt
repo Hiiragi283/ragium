@@ -1,5 +1,6 @@
 package hiiragi283.ragium.integration.mek
 
+import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumIMC
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -8,7 +9,6 @@ import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.collection.HTWrappedTable
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
-import mekanism.api.MekanismAPI
 import mekanism.common.registration.impl.BlockRegistryObject
 import mekanism.common.registration.impl.ItemRegistryObject
 import mekanism.common.registries.MekanismBlocks
@@ -19,11 +19,13 @@ import mekanism.common.resource.ResourceType
 import mekanism.common.resource.ore.OreBlockType
 import mekanism.common.resource.ore.OreType
 import net.minecraft.world.item.Item
-import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.bus.api.IEventBus
+import org.slf4j.Logger
 
-@EventBusSubscriber(modid = MekanismAPI.MEKANISM_MODID, bus = EventBusSubscriber.Bus.MOD)
 object RagiumMekPlugin {
+    @JvmStatic
+    private val LOGGER: Logger = LogUtils.getLogger()
+
     @JvmField
     val OSMIUM: HTMaterialKey = HTMaterialKey.of("osmium")
 
@@ -33,8 +35,13 @@ object RagiumMekPlugin {
     @JvmField
     val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.of("refined_obsidian")
 
-    @SubscribeEvent
-    fun registerMaterial(event: HTRegisterMaterialEvent) {
+    fun init(eventBus: IEventBus) {
+        eventBus.addListener(::registerMaterial)
+
+        LOGGER.info("Enabled Mekanism Integration!")
+    }
+
+    private fun registerMaterial(event: HTRegisterMaterialEvent) {
         // Register Material
         event.register(REFINED_GLOWSTONE, HTMaterialType.ALLOY)
         event.register(REFINED_OBSIDIAN, HTMaterialType.ALLOY)
