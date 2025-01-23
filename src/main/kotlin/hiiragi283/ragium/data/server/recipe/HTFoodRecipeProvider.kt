@@ -6,8 +6,11 @@ import hiiragi283.ragium.api.data.HTMachineRecipeBuilder
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.*
+import hiiragi283.ragium.data.requiresFor
+import hiiragi283.ragium.data.savePrefixed
 import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapelessRecipeBuilder
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.NeoForgeMod
@@ -183,6 +186,25 @@ object HTFoodRecipeProvider : RecipeProviderChild {
             .save(output)
 
         // Sweet Berries Cake
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.ASSEMBLER)
+            .itemInput(RagiumBlocks.SPONGE_CAKE)
+            .itemInput(RagiumItems.CHOCOLATE, 3)
+            .itemInput(Tags.Items.FOODS_BERRY, 2)
+            .itemOutput(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .save(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.FOOD, RagiumItems.SWEET_BERRIES_CAKE_PIECE, 8)
+            .requires(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .unlockedBy("has_cake", has(RagiumBlocks.SWEET_BERRIES_CAKE))
+            .savePrefixed(output)
+
+        ShapelessRecipeBuilder
+            .shapeless(RecipeCategory.FOOD, RagiumBlocks.SWEET_BERRIES_CAKE)
+            .requiresFor(8, Ingredient.of(RagiumItems.SWEET_BERRIES_CAKE_PIECE))
+            .unlockedBy("has_cake", has(RagiumItems.SWEET_BERRIES_CAKE_PIECE))
+            .savePrefixed(output)
     }
 
     private fun registerCinnamon(output: RecipeOutput) {

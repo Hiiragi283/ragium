@@ -45,5 +45,6 @@ class RagiumBlockTagProvider(
 
         getOrCreateRawBuilder(BlockTags.MINEABLE_WITH_HOE)
             .addElement(RagiumBlocks.SPONGE_CAKE)
+            .addElement(RagiumBlocks.SWEET_BERRIES_CAKE)
     }
 }

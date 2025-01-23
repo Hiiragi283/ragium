@@ -46,6 +46,7 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.PLASTIC_BLOCK)
 
             add(RagiumBlocks.SPONGE_CAKE)
+            add(RagiumBlocks.SWEET_BERRIES_CAKE)
 
             add(RagiumBlocks.MANUAL_GRINDER)
 

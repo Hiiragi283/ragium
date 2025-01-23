@@ -11,6 +11,13 @@ import java.util.function.Supplier
  * @see HTItemContent
  */
 interface HTContent<T : Any> : Supplier<T> {
+    companion object {
+        @JvmStatic
+        fun <T : Any> wrapHolder(holder: DeferredHolder<T, out T>): HTContent<T> = object : HTContent<T> {
+            override val holder: DeferredHolder<T, out T> = holder
+        }
+    }
+
     val holder: DeferredHolder<T, out T>
 
     val key: ResourceKey<T> get() = holder.key!!

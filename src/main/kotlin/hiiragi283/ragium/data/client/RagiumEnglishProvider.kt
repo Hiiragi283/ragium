@@ -18,6 +18,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumBlocks.PLASTIC_BLOCK, "Plastic Block")
 
         add(RagiumBlocks.SPONGE_CAKE, "Sponge Cake")
+        add(RagiumBlocks.SWEET_BERRIES_CAKE, "Sweet Berries Cake")
 
         add(RagiumBlocks.MANUAL_GRINDER, "Manual Grinder")
 

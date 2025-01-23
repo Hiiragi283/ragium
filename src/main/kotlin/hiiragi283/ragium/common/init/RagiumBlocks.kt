@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
+import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import net.minecraft.world.level.block.*
@@ -231,6 +232,13 @@ object RagiumBlocks {
         "sponge_cake",
         ::HayBlock,
         blockProperty(Blocks.HAY_BLOCK).sound(SoundType.WOOL),
+    )
+
+    @JvmField
+    val SWEET_BERRIES_CAKE: DeferredBlock<HTSweetBerriesCakeBlock> = REGISTER.registerBlock(
+        "sweet_berries_cake",
+        ::HTSweetBerriesCakeBlock,
+        blockProperty(Blocks.CAKE),
     )
 
     //    Manual Machines    //

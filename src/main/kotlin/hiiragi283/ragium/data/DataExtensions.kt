@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagBuilder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelProvider
@@ -99,6 +100,10 @@ fun ShapelessRecipeBuilder.requiresMaterial(provider: HTMaterialProvider): Shape
 
 fun ShapelessRecipeBuilder.requires(prefix: HTTagPrefix, material: HTMaterialKey): ShapelessRecipeBuilder =
     requires(prefix.createTag(material))
+
+fun ShapelessRecipeBuilder.requiresFor(times: Int, ingredient: Ingredient): ShapelessRecipeBuilder = apply {
+    repeat(times) { requires(ingredient) }
+}
 
 fun ShapelessRecipeBuilder.savePrefixed(output: RecipeOutput) {
     savePrefixed(output, "shapeless/")

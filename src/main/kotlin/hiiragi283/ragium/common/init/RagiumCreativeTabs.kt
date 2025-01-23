@@ -41,6 +41,7 @@ object RagiumCreativeTabs {
                     RagiumItems.Rods.entries.forEach(output::accept)
                     // Foods
                     output.accept(RagiumBlocks.SPONGE_CAKE)
+                    output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
                     RagiumItems.FOODS.forEach(output::accept)
                     // Tools
                     output.accept(RagiumItems.FORGE_HAMMER)

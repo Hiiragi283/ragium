@@ -1,0 +1,24 @@
+{
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "ragium:sponge_cake"
+    },
+    {
+      "count": 3,
+      "item": "ragium:chocolate"
+    },
+    {
+      "count": 2,
+      "tag": "c:foods/berry"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:sweet_berries_cake"
+    }
+  ],
+  "machine_type": "assembler"
+}

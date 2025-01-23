@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actually_additions"
+    }
+  ],
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 4,
+      "item": "actuallyadditions:restonia_crystal"
+    },
+    {
+      "count": 1,
+      "tag": "c:gems/black_quartz"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "actuallyadditions:basic_coil"
+    }
+  ],
+  "machine_type": "assembler"
+}

@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actually_additions"
+    }
+  ],
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "actuallyadditions:basic_coil"
+    },
+    {
+      "count": 1,
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 2,
+      "id": "actuallyadditions:advanced_coil"
+    }
+  ],
+  "machine_type": "assembler"
+}

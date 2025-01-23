@@ -30,14 +30,14 @@ object HTMachineRecipeProvider : RecipeProviderChild {
     private val LOGGER: Logger = LogUtils.getLogger()
 
     override fun buildRecipes(output: RecipeOutput) {
-        registerParts(output)
+        registerComponents(output)
 
         registerMachines(output)
 
         registerMachineUpdates(output)
     }
 
-    private fun registerParts(output: RecipeOutput) {
+    private fun registerComponents(output: RecipeOutput) {
         // Grate
         ShapedRecipeBuilder
             .shaped(RecipeCategory.MISC, Items.COPPER_GRATE, 4)

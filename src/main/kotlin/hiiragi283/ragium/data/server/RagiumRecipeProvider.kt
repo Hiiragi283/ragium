@@ -25,6 +25,8 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMachineRecipeProvider.buildRecipes(recipeOutput)
         HTMaterialRecipeProvider.buildRecipes(recipeOutput)
 
+        HTAARecipeProvider.buildRecipes(recipeOutput)
+
         registerVanilla(recipeOutput)
     }
 

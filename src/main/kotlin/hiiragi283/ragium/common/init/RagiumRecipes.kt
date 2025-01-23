@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.init
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.HTEnchantmentRecipe
 import hiiragi283.ragium.api.recipe.HTMachineRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -32,12 +31,6 @@ object RagiumRecipes {
     }
 
     @JvmField
-    val ENCHANTMENT_SERIALIZER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTEnchantmentRecipe>> =
-        SERIALIZER.register("enchantment") { _: ResourceLocation ->
-            serializer(HTEnchantmentRecipe.CODEC, HTEnchantmentRecipe.STREAM_CODEC)
-        }
-
-    @JvmField
     val MACHINE_SERIALIZER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<HTMachineRecipe>> =
         SERIALIZER.register("machine") { _: ResourceLocation ->
             serializer(HTMachineRecipe.CODEC, HTMachineRecipe.STREAM_CODEC)
@@ -48,10 +41,6 @@ object RagiumRecipes {
     @JvmField
     val TYPE: DeferredRegister<RecipeType<*>> =
         DeferredRegister.create(Registries.RECIPE_TYPE, RagiumAPI.MOD_ID)
-
-    @JvmStatic
-    val ENCHANTMENT_TYPE: DeferredHolder<RecipeType<*>?, RecipeType<HTEnchantmentRecipe>> =
-        TYPE.register("enchantment", RecipeType<HTEnchantmentRecipe>::simple)
 
     @JvmStatic
     val MACHINE_TYPE: DeferredHolder<RecipeType<*>?, RecipeType<HTMachineRecipe>> =

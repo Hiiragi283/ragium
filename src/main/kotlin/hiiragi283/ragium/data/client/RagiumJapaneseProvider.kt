@@ -18,6 +18,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumBlocks.PLASTIC_BLOCK, "プラスチックブロック")
 
         add(RagiumBlocks.SPONGE_CAKE, "スポンジケーキ")
+        add(RagiumBlocks.SWEET_BERRIES_CAKE, "スイートベリーケーキ")
 
         add(RagiumBlocks.MANUAL_GRINDER, "らぎ臼")
 

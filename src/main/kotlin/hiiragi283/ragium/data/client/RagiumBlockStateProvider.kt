@@ -107,6 +107,11 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         // Food
         simpleBlock(RagiumBlocks.SPONGE_CAKE.get())
 
+        simpleBlock(
+            RagiumBlocks.SWEET_BERRIES_CAKE.get(),
+            ConfiguredModel(ModelFile.UncheckedModelFile(RagiumAPI.id("block/sweet_berries_cake"))),
+        )
+
         // Manual Machine
         getMultipartBuilder(RagiumBlocks.MANUAL_GRINDER.get()).part().apply {
             RagiumBlockProperties.LEVEL_7.possibleValues.forEach { step: Int ->
