@@ -13,7 +13,6 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
 
@@ -39,7 +38,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, tier)
             .itemInput(solid)
-            .fluidInput(Tags.Fluids.WATER)
+            .waterInput()
             .fluidOutput(solution)
             .save(output)
         // Solution -> Gas
@@ -47,7 +46,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .create(RagiumMachineKeys.EXTRACTOR, tier)
             .fluidInput(solution)
             .itemOutput(solid)
-            .fluidOutput(Fluids.WATER)
+            .waterOutput()
             .save(output, RecipeBuilder.getDefaultRecipeId(solid).withSuffix("_from_solution"))
     }
 
@@ -61,7 +60,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.MIXER, tier)
             .fluidInput(gas)
-            .fluidInput(Tags.Fluids.WATER)
+            .waterInput()
             .fluidOutput(solution)
             .save(output)
         // Solution -> Gas
@@ -69,7 +68,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .create(RagiumMachineKeys.EXTRACTOR, tier)
             .fluidInput(solution)
             .fluidOutput(gas)
-            .fluidOutput(Fluids.WATER)
+            .waterOutput()
             .save(output, gas.id.withSuffix("_from_solution"))
     }
 
@@ -104,7 +103,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.METHANE)
-            .fluidInput(Fluids.WATER)
+            .waterInput()
             .catalyst(RagiumItems.HEATING_CATALYST)
             .fluidOutput(RagiumFluids.HYDROGEN)
             .fluidOutput(RagiumFluids.CARBON_MONOXIDE)
@@ -113,7 +112,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.CARBON_MONOXIDE)
-            .fluidInput(Fluids.WATER)
+            .waterInput()
             .catalyst(RagiumItems.HEATING_CATALYST)
             .fluidOutput(RagiumFluids.HYDROGEN)
             .fluidOutput(RagiumFluids.CARBON_DIOXIDE)
@@ -125,7 +124,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .fluidInput(RagiumFluids.ALCOHOL)
             .catalyst(HTTagPrefix.DUST, RagiumMaterialKeys.SULFUR)
             .fluidOutput(RagiumFluids.ETHENE)
-            .fluidOutput(Fluids.WATER)
+            .waterOutput()
             .save(output)
         // C2H4 -> C2H2
         HTMachineRecipeBuilder
@@ -134,6 +133,24 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
             .catalyst(RagiumItems.REDUCTION_CATALYST)
             .fluidOutput(RagiumFluids.ACETYLENE)
             .saveSuffixed(output, "_from_ethylene")
+
+        // CaO + 3C -> CaC2 + CO
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
+            .itemInput(RagiumItems.Dusts.ALKALI)
+            .itemInput(RagiumItems.Dusts.CARBON, 3)
+            .catalyst(RagiumItems.HEATING_CATALYST)
+            .itemOutput(RagiumItems.CALCIUM_CARBIDE)
+            .fluidOutput(RagiumFluids.CARBON_MONOXIDE)
+            .save(output)
+        // CaC2 + H2O -> C2H2 + CaO
+        HTMachineRecipeBuilder
+            .create(RagiumMachineKeys.CHEMICAL_REACTOR)
+            .itemInput(RagiumItems.CALCIUM_CARBIDE)
+            .waterInput()
+            .itemOutput(RagiumItems.Dusts.ALKALI)
+            .fluidOutput(RagiumFluids.ACETYLENE)
+            .save(output, RagiumAPI.id("acetylene_from_carbide"))
     }
 
     private fun registerNitrogen(output: RecipeOutput) {
@@ -321,7 +338,7 @@ object HTChemicalRecipeProvider : RecipeProviderChild {
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.CHEMICAL_REACTOR)
             .fluidInput(RagiumFluids.SULFUR_DIOXIDE)
-            .fluidInput(Tags.Fluids.WATER)
+            .waterInput()
             .catalyst(RagiumItems.OXIDIZATION_CATALYST)
             .fluidOutput(RagiumFluids.SULFURIC_ACID)
             .save(output)

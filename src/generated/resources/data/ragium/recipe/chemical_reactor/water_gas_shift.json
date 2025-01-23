@@ -10,7 +10,7 @@
     },
     {
       "amount": 1000,
-      "fluid": "minecraft:water"
+      "tag": "c:water"
     }
   ],
   "fluid_outputs": [

@@ -75,7 +75,8 @@ object RagiumItems {
 
     //    Materials    //
 
-    enum class Dusts(override val material: HTMaterialKey, val originPrefix: HTTagPrefix? = null) : HTItemContent.Material {
+    enum class Dusts(override val material: HTMaterialKey, override val parentPrefix: HTTagPrefix? = null) :
+        HTItemContent.Material {
         // Vanilla
         COPPER(RagiumMaterialKeys.COPPER, HTTagPrefix.INGOT),
         IRON(RagiumMaterialKeys.IRON, HTTagPrefix.INGOT),
@@ -108,13 +109,14 @@ object RagiumItems {
         override val tagPrefix: HTTagPrefix = HTTagPrefix.DUST
     }
 
-    enum class Gears(override val material: HTMaterialKey) : HTItemContent.Material {
+    enum class Gears(override val material: HTMaterialKey, override val parentPrefix: HTTagPrefix = HTTagPrefix.INGOT) :
+        HTItemContent.Material {
         // Vanilla
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         GOLD(RagiumMaterialKeys.GOLD),
-        DIAMOND(RagiumMaterialKeys.DIAMOND),
-        EMERALD(RagiumMaterialKeys.EMERALD),
+        DIAMOND(RagiumMaterialKeys.DIAMOND, HTTagPrefix.GEM),
+        EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
 
         // Ragium
         RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
@@ -176,13 +178,6 @@ object RagiumItems {
         COPPER(RagiumMaterialKeys.COPPER),
         IRON(RagiumMaterialKeys.IRON),
         GOLD(RagiumMaterialKeys.GOLD),
-        // DIAMOND(RagiumMaterialKeys.DIAMOND),
-        // EMERALD(RagiumMaterialKeys.EMERALD),
-
-        // Ragium
-        // RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
-        // RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
-        // REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
 
         // Steel
         STEEL(RagiumMaterialKeys.STEEL),
@@ -192,6 +187,7 @@ object RagiumItems {
 
         override val holder: DeferredItem<out Item> = REGISTER.registerSimpleItem("${name.lowercase()}_rod")
         override val tagPrefix: HTTagPrefix = HTTagPrefix.ROD
+        override val parentPrefix: HTTagPrefix = HTTagPrefix.INGOT
     }
 
     @JvmField
@@ -400,6 +396,9 @@ object RagiumItems {
     val BEE_WAX: DeferredItem<Item> = REGISTER.registerItem("bee_wax", ::HoneycombItem, itemProperty())
 
     @JvmField
+    val CALCIUM_CARBIDE: DeferredItem<Item> = REGISTER.registerSimpleItem("calcium_carbide")
+
+    @JvmField
     val COAL_CHIP: DeferredItem<Item> = REGISTER.registerSimpleItem("coal_chip")
 
     @JvmField
@@ -463,6 +462,7 @@ object RagiumItems {
     val INGREDIENTS: List<DeferredItem<Item>> = buildList {
         // organic
         add(BEE_WAX)
+        add(CALCIUM_CARBIDE)
         add(COAL_CHIP)
         add(RESIDUAL_COKE)
         add(TALLOW)

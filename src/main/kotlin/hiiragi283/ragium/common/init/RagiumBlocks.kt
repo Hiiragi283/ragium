@@ -93,8 +93,7 @@ object RagiumBlocks {
             }.let(::blockProperty),
         )
         override val tagPrefix: HTTagPrefix = HTTagPrefix.STORAGE_BLOCK
-
-        val basePrefix: HTTagPrefix = when (isGem) {
+        override val parentPrefix: HTTagPrefix = when (isGem) {
             true -> HTTagPrefix.GEM
             false -> HTTagPrefix.INGOT
         }

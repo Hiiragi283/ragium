@@ -93,7 +93,7 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
             .create(RagiumMachineKeys.MIXER)
             .itemInput(RagiumItems.Dusts.CRUDE_RAGINITE, 8)
             .itemInput(RagiumItems.SOAP)
-            .fluidInput(Tags.Fluids.WATER)
+            .waterInput()
             .itemOutput(RagiumItems.Dusts.RAGINITE, 6)
             .itemOutput(RagiumItems.SLAG, 2)
             .save(output)

@@ -13,4 +13,7 @@ interface HTMaterialProvider : ItemLike {
 
     val prefixedTagKey: TagKey<Item>
         get() = tagPrefix.createTag(material)
+
+    val parentPrefix: HTTagPrefix?
+        get() = null
 }

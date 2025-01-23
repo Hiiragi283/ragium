@@ -84,6 +84,7 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.DEHYDRATION_CATALYST, "Dehydration Catalyst")
 
         add(RagiumItems.BEE_WAX, "Bee Wax")
+        add(RagiumItems.CALCIUM_CARBIDE, "Calcium Carbide")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.COAL_CHIP, "Coal Chip")
         add(RagiumItems.CRIMSON_CRYSTAL, "Crimson Crystal")

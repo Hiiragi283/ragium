@@ -25,8 +25,8 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 .pattern("AAA")
                 .pattern("AAA")
                 .pattern("AAA")
-                .define('A', storage.basePrefix, storage.material)
-                .unlockedBy("has_input", has(storage.basePrefix, storage.material))
+                .define('A', storage.parentPrefix, storage.material)
+                .unlockedBy("has_input", has(storage.parentPrefix, storage.material))
                 .savePrefixed(output)
         }
         // Block -> Ingot
@@ -50,25 +50,21 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         // Ingot/Gem -> Gear
         RagiumItems.Gears.entries.forEach { gear: RagiumItems.Gears ->
             val material: HTMaterialKey = gear.material
-            val mainPrefix: HTTagPrefix = when (gear) {
-                RagiumItems.Gears.DIAMOND -> HTTagPrefix.GEM
-                RagiumItems.Gears.EMERALD -> HTTagPrefix.GEM
-                else -> HTTagPrefix.INGOT
-            }
+            val parentPrefix: HTTagPrefix = gear.parentPrefix
             // Shaped Recipe
             ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, gear)
                 .pattern(" A ")
                 .pattern("ABA")
                 .pattern(" A ")
-                .define('A', mainPrefix, material)
+                .define('A', parentPrefix, material)
                 .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_input", has(mainPrefix, material))
+                .unlockedBy("has_input", has(parentPrefix, material))
                 .savePrefixed(output)
             // Compressor
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
-                .itemInput(mainPrefix, material, 4)
+                .itemInput(parentPrefix, material, 4)
                 .catalyst(RagiumItems.GEAR_PRESS_MOLD)
                 .itemOutput(gear)
                 .save(output)
@@ -82,14 +78,14 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
                 .shaped(RecipeCategory.MISC, rod, 2)
                 .pattern("AB")
                 .pattern("A ")
-                .define('A', HTTagPrefix.INGOT, material)
+                .define('A', rod.parentPrefix, material)
                 .define('B', RagiumItems.FORGE_HAMMER)
-                .unlockedBy("has_input", has(HTTagPrefix.INGOT, material))
+                .unlockedBy("has_input", has(rod.parentPrefix, material))
                 .savePrefixed(output)
             // Compressor
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.COMPRESSOR)
-                .itemInput(HTTagPrefix.INGOT, material)
+                .itemInput(rod.parentPrefix, material)
                 .catalyst(RagiumItems.ROD_PRESS_MOLD)
                 .itemOutput(rod, 2)
                 .save(output)
@@ -119,7 +115,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
         registerRawToDust(output, RagiumMaterialKeys.REDSTONE, Items.REDSTONE)
 
         RagiumItems.Dusts.entries.forEach { dust: RagiumItems.Dusts ->
-            if (dust.originPrefix == null) return@forEach
+            if (dust.parentPrefix == null) return@forEach
             registerRawToDust(output, dust.material, dust)
             registerInputToDust(output, dust, dust)
         }
@@ -216,8 +212,7 @@ object HTMaterialRecipeProvider : RecipeProviderChild {
     }
 
     private fun registerInputToDust(output: RecipeOutput, input: RagiumItems.Dusts, dust: ItemLike) {
-        val origin: HTTagPrefix? = input.originPrefix
-        if (origin == null) return
+        val origin: HTTagPrefix = input.parentPrefix ?: return
         // Grinder
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.GRINDER)

@@ -1,13 +1,6 @@
 {
   "type": "ragium:machine",
-  "catalyst": {
-    "item": "ragium:heating_catalyst"
-  },
   "fluid_inputs": [
-    {
-      "amount": 1000,
-      "tag": "c:methane"
-    },
     {
       "amount": 1000,
       "tag": "c:water"
@@ -16,11 +9,19 @@
   "fluid_outputs": [
     {
       "amount": 1000,
-      "id": "ragium:hydrogen"
-    },
+      "id": "ragium:acetylene"
+    }
+  ],
+  "item_inputs": [
     {
-      "amount": 1000,
-      "id": "ragium:carbon_monoxide"
+      "count": 1,
+      "item": "ragium:calcium_carbide"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "ragium:alkali_dust"
     }
   ],
   "machine_type": "chemical_reactor"

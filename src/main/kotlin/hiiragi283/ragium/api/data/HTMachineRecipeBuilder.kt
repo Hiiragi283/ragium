@@ -20,6 +20,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -81,6 +83,8 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
         check(fluidInputs.put(ingredient, amount) == null) { "Same ingredient is not supported!" }
     }
 
+    fun waterInput(amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidInput(Tags.Fluids.WATER, amount)
+
     //    Catalyst    //
 
     fun catalyst(prefix: HTTagPrefix, material: HTMaterialKey): HTMachineRecipeBuilder = catalyst(prefix.createTag(material))
@@ -111,6 +115,8 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
         check(!stack.isEmpty) { "Empty FluidStack is not allowed!" }
         fluidOutputs.add(stack)
     }
+
+    fun waterOutput(amount: Int = FluidType.BUCKET_VOLUME): HTMachineRecipeBuilder = fluidOutput(Fluids.WATER, amount)
 
     //    Condition    //
 

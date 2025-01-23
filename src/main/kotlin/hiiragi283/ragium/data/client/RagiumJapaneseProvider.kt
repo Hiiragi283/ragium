@@ -86,6 +86,7 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
 
         add(RagiumItems.BEE_WAX, "蜜蠟")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
+        add(RagiumItems.CALCIUM_CARBIDE, "炭化カルシウム")
         add(RagiumItems.COAL_CHIP, "石炭チップ")
         add(RagiumItems.CRIMSON_CRYSTAL, "深紅の結晶")
         add(RagiumItems.DEEPANT, "ディーパント")
