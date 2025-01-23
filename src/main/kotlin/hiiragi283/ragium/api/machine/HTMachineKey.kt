@@ -17,7 +17,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
-import net.neoforged.neoforge.registries.datamaps.DataMapValueRemover
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 import java.util.function.Consumer
 
 /**
@@ -35,16 +35,16 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
         val CODEC: Codec<HTMachineKey> =
             Codec.STRING.xmap(Companion::of, HTMachineKey::name).validate(::validate)
 
-        @JvmField
-        val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
-            ByteBufCodecs.STRING_UTF8.map(Companion::of, HTMachineKey::name)
-
-        val DATA_MAP_TYPE: AdvancedDataMapType<Item, HTMachineKey, DataMapValueRemover.Default<HTMachineKey, Item>> =
+        val DATA_MAP_TYPE: DataMapType<Item, HTMachineKey> =
             AdvancedDataMapType
                 .builder(RagiumAPI.id("machine"), Registries.ITEM, CODEC)
                 .synced(CODEC, false)
                 .merger(DisableOverwriteMerger())
                 .build()
+
+        @JvmField
+        val STREAM_CODEC: StreamCodec<ByteBuf, HTMachineKey> =
+            ByteBufCodecs.STRING_UTF8.map(Companion::of, HTMachineKey::name)
 
         /**
          * 指定された[name]から単一のインスタンスを返します。

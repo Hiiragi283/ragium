@@ -2,9 +2,10 @@ package hiiragi283.ragium.integration.jei.category
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.extension.commonId
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialRegistry
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.integration.jei.RagiumJEIPlugin
+import hiiragi283.ragium.integration.jei.createEmptyMaterialStack
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.ICodecHelper
 import mezz.jei.api.helpers.IGuiHelper
@@ -14,30 +15,36 @@ import mezz.jei.api.recipe.RecipeIngredientRole
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 
 class HTMaterialInfoCategory(guiHelper: IGuiHelper) :
-    AbstractRecipeCategory<HTMaterialKey>(
+    AbstractRecipeCategory<HTMaterialRegistry.Entry>(
         RagiumJEIPlugin.MATERIAL_INFO,
         Component.literal("Material Info"),
         guiHelper.createDrawableItemLike(Items.BOOK),
         18 * 9 + 8,
         18 * 3 + 8,
     ),
-    HTRecipeCategory<HTMaterialKey> {
-    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialKey, focuses: IFocusGroup) {
+    HTRecipeCategory<HTMaterialRegistry.Entry> {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, recipe: HTMaterialRegistry.Entry, focuses: IFocusGroup) {
         for (prefix: HTTagPrefix in HTTagPrefix.entries) {
+            val stacks: List<ItemStack> = recipe
+                .getItems(prefix)
+                .map(::ItemStack)
+                .takeIf(List<ItemStack>::isNotEmpty)
+                ?: listOf(createEmptyMaterialStack(prefix, recipe.key))
             val x: Int = prefix.ordinal % 9
             val y: Int = prefix.ordinal / 9
             builder
                 .addSlot(RecipeIngredientRole.CATALYST, getPosition(x), getPosition(y))
                 .setStandardSlotBackground()
-                .addIngredients(Ingredient.of(prefix.createTag(recipe)))
+                .addItemStacks(stacks)
         }
     }
 
-    override fun getRegistryName(recipe: HTMaterialKey): ResourceLocation = commonId(recipe.name)
+    override fun getRegistryName(recipe: HTMaterialRegistry.Entry): ResourceLocation = commonId(recipe.key.name)
 
-    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTMaterialKey> = HTMaterialKey.CODEC
+    override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<HTMaterialRegistry.Entry> =
+        HTMaterialRegistry.ENTRY_CODEC
 }

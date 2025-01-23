@@ -20,7 +20,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.IRecipeManager
 import mezz.jei.api.recipe.RecipeType
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
@@ -169,8 +168,6 @@ class HTMachineRecipeCategory(val machine: HTMachineKey, val guiHelper: IGuiHelp
     }
 
     override fun isHandled(recipe: RecipeHolder<HTMachineRecipe>): Boolean = !recipe.value.isSpecial
-
-    override fun getRegistryName(recipe: RecipeHolder<HTMachineRecipe>): ResourceLocation = recipe.id
 
     override fun getCodec(codecHelper: ICodecHelper, recipeManager: IRecipeManager): Codec<RecipeHolder<HTMachineRecipe>> =
         codecHelper.getRecipeHolderCodec()

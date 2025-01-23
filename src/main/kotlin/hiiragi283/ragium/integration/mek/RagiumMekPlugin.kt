@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumIMC
 import hiiragi283.ragium.api.extension.forEach
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialType
+import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.collection.HTWrappedTable
 import hiiragi283.ragium.common.init.RagiumMaterialKeys
@@ -20,7 +21,6 @@ import mekanism.common.resource.ore.OreType
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent
 
 @EventBusSubscriber(modid = MekanismAPI.MEKANISM_MODID, bus = EventBusSubscriber.Bus.MOD)
 object RagiumMekPlugin {
@@ -34,12 +34,12 @@ object RagiumMekPlugin {
     val REFINED_OBSIDIAN: HTMaterialKey = HTMaterialKey.of("refined_obsidian")
 
     @SubscribeEvent
-    fun sendMessage(event: InterModEnqueueEvent) {
+    fun registerMaterial(event: HTRegisterMaterialEvent) {
         // Register Material
-        RagiumIMC.sendNewMaterialIMC(REFINED_GLOWSTONE, HTMaterialType.ALLOY)
-        RagiumIMC.sendNewMaterialIMC(REFINED_OBSIDIAN, HTMaterialType.ALLOY)
+        event.register(REFINED_GLOWSTONE, HTMaterialType.ALLOY)
+        event.register(REFINED_OBSIDIAN, HTMaterialType.ALLOY)
 
-        RagiumIMC.sendNewMaterialIMC(OSMIUM, HTMaterialType.METAL)
+        event.register(OSMIUM, HTMaterialType.METAL)
         // Bind Item
         RagiumIMC.sendMaterialItemIMC(
             HTTagPrefix.STORAGE_BLOCK,

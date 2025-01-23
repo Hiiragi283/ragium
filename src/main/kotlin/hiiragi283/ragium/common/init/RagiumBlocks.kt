@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.blockProperty
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.api.machine.HTMachineTierProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.api.util.HTOreVariant
@@ -149,9 +148,7 @@ object RagiumBlocks {
 
     //    Storage    //
 
-    enum class Drums(override val machineTier: HTMachineTier) :
-        HTBlockContent,
-        HTMachineTierProvider {
+    enum class Drums(override val machineTier: HTMachineTier) : HTBlockContent.Tier {
         BASIC(HTMachineTier.BASIC),
         ADVANCED(HTMachineTier.ADVANCED),
         ELITE(HTMachineTier.ELITE),

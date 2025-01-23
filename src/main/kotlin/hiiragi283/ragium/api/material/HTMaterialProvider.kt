@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.material
 
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
@@ -16,4 +17,7 @@ interface HTMaterialProvider : ItemLike {
 
     val parentPrefix: HTTagPrefix?
         get() = null
+
+    val prefixedText: MutableComponent
+        get() = tagPrefix.createText(material)
 }

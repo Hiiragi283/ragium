@@ -9,6 +9,8 @@ import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
 import hiiragi283.ragium.api.machine.HTMachineTierProvider
+import hiiragi283.ragium.api.material.HTMaterialDefinition
+import hiiragi283.ragium.api.material.HTMaterialProvider
 import hiiragi283.ragium.api.multiblock.HTControllerHolder
 import hiiragi283.ragium.common.capability.HTCubeFluidHandler
 import hiiragi283.ragium.common.init.*
@@ -169,6 +171,7 @@ internal object RagiumEvents {
     @SubscribeEvent
     fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(HTMachineKey.DATA_MAP_TYPE)
+        event.register(HTMaterialDefinition.DATA_MAP_TYPE)
 
         LOGGER.info("Registered Data Map Types!")
     }
@@ -183,10 +186,15 @@ internal object RagiumEvents {
 
         fun tieredText(translationKey: String): (DataComponentPatch.Builder, HTMachineTierProvider) -> Unit =
             { builder: DataComponentPatch.Builder, provider: HTMachineTierProvider ->
-                builder.tieredText(translationKey, provider.machineTier)
+                builder.name(provider.machineTier.createPrefixedText(translationKey))
+            }
+
+        val materialText: (DataComponentPatch.Builder, HTMaterialProvider) -> Unit =
+            { builder: DataComponentPatch.Builder, provider: HTMaterialProvider ->
+                builder.name(provider.prefixedText)
             }
         // Block
-        modifyAll(RagiumBlocks.StorageBlocks.entries, DataComponentPatch.Builder::material)
+        modifyAll(RagiumBlocks.StorageBlocks.entries, materialText)
         modifyAll(RagiumBlocks.Grates.entries, tieredText(RagiumTranslationKeys.GRATE))
         modifyAll(RagiumBlocks.Casings.entries, tieredText(RagiumTranslationKeys.CASING))
         modifyAll(RagiumBlocks.Hulls.entries, tieredText(RagiumTranslationKeys.HULL))
@@ -194,7 +202,7 @@ internal object RagiumEvents {
 
         modifyAll(RagiumBlocks.Drums.entries, tieredText(RagiumTranslationKeys.DRUM))
         // Item
-        modifyAll(RagiumItems.MATERIALS, DataComponentPatch.Builder::material)
+        modifyAll(RagiumItems.MATERIALS, materialText)
 
         modifyAll(RagiumItems.Circuits.entries, tieredText(RagiumTranslationKeys.CIRCUIT))
         modifyAll(RagiumItems.Plastics.entries, tieredText(RagiumTranslationKeys.PLASTIC))
@@ -205,12 +213,4 @@ internal object RagiumEvents {
 
         LOGGER.info("Modified item components!")
     }
-
-    /*fun addRuntimePack(event: AddPackFindersEvent) {
-        if (event.packType != PackType.SERVER_DATA) return
-        event.addRepositorySource { consumer: Consumer<Pack> ->
-            consumer.accept(HTRuntimeDatapack.PACK)
-            LOGGER.info("Registered runtime datapack!")
-        }
-    }*/
 }

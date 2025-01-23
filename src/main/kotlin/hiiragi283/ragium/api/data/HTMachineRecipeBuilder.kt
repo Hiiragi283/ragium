@@ -18,6 +18,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
@@ -157,23 +158,25 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
     }
 
     override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
-        val fixedId: ResourceLocation = RagiumAPI.wrapId(id.withPrefix(definition.key.name + '/'))
-        recipeOutput.accept(
-            fixedId,
-            HTMachineRecipe(
-                definition,
-                itemInputs.map { (ingredient: Ingredient, count: Int) ->
-                    SizedIngredient(ingredient, count)
-                },
-                fluidInputs.map { (ingredient: FluidIngredient, count: Int) ->
-                    SizedFluidIngredient(ingredient, count)
-                },
-                Optional.ofNullable(catalyst),
-                itemOutputs,
-                fluidOutputs,
-            ),
-            null,
-            *conditions.toTypedArray(),
-        )
+        recipeOutput.accept(fixId(id), createRecipe(), null, *conditions.toTypedArray())
     }
+
+    fun export(): RecipeHolder<HTMachineRecipe> = export(getPrimalId())
+
+    fun export(id: ResourceLocation): RecipeHolder<HTMachineRecipe> = RecipeHolder(fixId(id), createRecipe())
+
+    private fun fixId(id: ResourceLocation): ResourceLocation = RagiumAPI.wrapId(id.withPrefix(definition.key.name + '/'))
+
+    private fun createRecipe(): HTMachineRecipe = HTMachineRecipe(
+        definition,
+        itemInputs.map { (ingredient: Ingredient, count: Int) ->
+            SizedIngredient(ingredient, count)
+        },
+        fluidInputs.map { (ingredient: FluidIngredient, count: Int) ->
+            SizedFluidIngredient(ingredient, count)
+        },
+        Optional.ofNullable(catalyst),
+        itemOutputs,
+        fluidOutputs,
+    )
 }

@@ -1,7 +1,11 @@
 package hiiragi283.ragium.api.material
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.property.HTPropertyHolder
 import net.minecraft.core.Holder
 import net.minecraft.world.item.Item
@@ -13,6 +17,14 @@ import java.util.stream.Stream
  * @see hiiragi283.ragium.api.RagiumAPI.materialRegistry
  */
 interface HTMaterialRegistry : Keyable {
+    companion object {
+        @JvmField
+        val ENTRY_CODEC: Codec<Entry> = HTMaterialKey.CODEC.comapFlatMap(
+            RagiumAPI.getInstance().materialRegistry::getEntryData,
+            Entry::key,
+        )
+    }
+
     /**
      * 登録された[HTMaterialKey]の一覧
      */
@@ -42,15 +54,21 @@ interface HTMaterialRegistry : Keyable {
 
     /**
      * 指定された[key]に紐づいた[Entry]を返します。
+     * @return [key]が登録されていない場合はnull
+     */
+    fun getEntryData(key: HTMaterialKey): DataResult<Entry>
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
      * @throws IllegalStateException [key]が登録されていない場合
      */
-    fun getEntry(key: HTMaterialKey): Entry = getEntryOrNull(key) ?: error("Unknown material key: $key")
+    fun getEntry(key: HTMaterialKey): Entry = getEntryData(key).orThrow
 
     /**
      * 指定された[key]に紐づいた[Entry]を返します。
      * @return [key]が登録されていない場合はnull
      */
-    fun getEntryOrNull(key: HTMaterialKey): Entry?
+    fun getEntryOrNull(key: HTMaterialKey): Entry? = getEntryData(key).getOrNull()
 
     //    Keyable    //
 
@@ -62,6 +80,7 @@ interface HTMaterialRegistry : Keyable {
     //    Entry    //
 
     interface Entry : HTPropertyHolder {
+        val key: HTMaterialKey
         val type: HTMaterialType
 
         fun getItems(prefix: HTTagPrefix): List<Holder<Item>>
