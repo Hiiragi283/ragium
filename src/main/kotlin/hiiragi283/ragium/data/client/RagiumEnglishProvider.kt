@@ -95,7 +95,6 @@ class RagiumEnglishProvider(output: PackOutput) : LanguageProvider(output, Ragiu
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.LUMINESCENCE_DUST, "Luminescence Dust")
         add(RagiumItems.OBSIDIAN_TEAR, "Obsidian Tear")
-        add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RESIDUAL_COKE, "Residual Coke")
         add(RagiumItems.SLAG, "Slag")

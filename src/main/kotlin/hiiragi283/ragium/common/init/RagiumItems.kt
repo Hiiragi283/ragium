@@ -392,6 +392,7 @@ object RagiumItems {
 
     //    Ingredients    //
 
+    // organic
     @JvmField
     val BEE_WAX: DeferredItem<Item> = REGISTER.registerItem("bee_wax", ::HoneycombItem, itemProperty())
 
@@ -407,6 +408,7 @@ object RagiumItems {
     @JvmField
     val TALLOW: DeferredItem<Item> = REGISTER.registerSimpleItem("tallow")
 
+    // inorganic
     @JvmField
     val DEEPANT: DeferredItem<Item> = REGISTER.registerSimpleItem("deepant")
 
@@ -425,15 +427,7 @@ object RagiumItems {
     @JvmField
     val SOAP: DeferredItem<Item> = REGISTER.registerSimpleItem("soap")
 
-    @JvmField
-    val POLYMER_RESIN: DeferredItem<Item> = REGISTER.registerSimpleItem("polymer_resin")
-
-    @JvmField
-    val CIRCUIT_BOARD: DeferredItem<Item> = REGISTER.registerSimpleItem("circuit_board")
-
-    @JvmField
-    val STELLA_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("stella_plate")
-
+    // magic
     @JvmField
     val CRIMSON_CRYSTAL: DeferredItem<Item> = REGISTER.registerSimpleItem("crimson_crystal")
 
@@ -442,6 +436,10 @@ object RagiumItems {
 
     @JvmField
     val OBSIDIAN_TEAR: DeferredItem<Item> = REGISTER.registerSimpleItem("obsidian_tear")
+
+    // parts
+    @JvmField
+    val CIRCUIT_BOARD: DeferredItem<Item> = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
     val ENGINE: DeferredItem<Item> = REGISTER.registerSimpleItem("engine")
@@ -454,6 +452,9 @@ object RagiumItems {
 
     @JvmField
     val SOLAR_PANEL: DeferredItem<Item> = REGISTER.registerSimpleItem("solar_panel")
+
+    @JvmField
+    val STELLA_PLATE: DeferredItem<Item> = REGISTER.registerSimpleItem("stella_plate")
 
     @JvmField
     val RAGI_TICKET: DeferredItem<Item> = REGISTER.registerSimpleItem("ragi_ticket", itemProperty().rarity(Rarity.EPIC))
@@ -473,20 +474,18 @@ object RagiumItems {
         add(RAGI_ALLOY_COMPOUND)
         add(SLAG)
         add(SOAP)
-        // plastic
-        add(POLYMER_RESIN)
-        add(CIRCUIT_BOARD)
-        add(STELLA_PLATE)
         // magical
         add(CRIMSON_CRYSTAL)
         add(WARPED_CRYSTAL)
         add(OBSIDIAN_TEAR)
         // parts
+        add(CIRCUIT_BOARD)
         add(ENGINE)
         add(LASER_EMITTER)
         add(LED)
         add(SOLAR_PANEL)
-
+        add(STELLA_PLATE)
+        // misc
         add(RAGI_TICKET)
     }
 

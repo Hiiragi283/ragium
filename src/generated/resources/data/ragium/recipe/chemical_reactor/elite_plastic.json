@@ -2,14 +2,8 @@
   "type": "ragium:machine",
   "fluid_inputs": [
     {
-      "amount": 200,
-      "tag": "c:hydrofluoric_acid"
-    }
-  ],
-  "item_inputs": [
-    {
-      "count": 1,
-      "item": "ragium:polymer_resin"
+      "amount": 1000,
+      "tag": "c:propene"
     }
   ],
   "item_outputs": [

@@ -5,14 +5,12 @@
   },
   "fluid_inputs": [
     {
-      "amount": 500,
+      "amount": 1000,
       "tag": "c:aromatic_compounds"
-    }
-  ],
-  "item_inputs": [
+    },
     {
-      "count": 1,
-      "item": "ragium:polymer_resin"
+      "amount": 1000,
+      "tag": "c:nitric_acid"
     }
   ],
   "item_outputs": [

@@ -50,7 +50,6 @@ object RagiumCreativeTabs {
                     RagiumItems.PRESS_MOLDS.forEach(output::accept)
                     RagiumItems.CATALYSTS.forEach(output::accept)
                     // Circuits
-                    output.accept(RagiumItems.POLYMER_RESIN)
                     RagiumItems.Plastics.entries.forEach(output::accept)
                     output.accept(RagiumItems.CIRCUIT_BOARD)
                     RagiumItems.Circuits.entries.forEach(output::accept)
@@ -64,7 +63,6 @@ object RagiumCreativeTabs {
                         remove(RagiumItems.CIRCUIT_BOARD)
                         remove(RagiumItems.CRIMSON_CRYSTAL)
                         remove(RagiumItems.DEEPANT)
-                        remove(RagiumItems.POLYMER_RESIN)
                         remove(RagiumItems.RESIDUAL_COKE)
                         remove(RagiumItems.SLAG)
                         remove(RagiumItems.WARPED_CRYSTAL)

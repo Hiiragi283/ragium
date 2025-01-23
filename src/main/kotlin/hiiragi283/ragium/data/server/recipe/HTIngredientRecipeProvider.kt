@@ -235,20 +235,6 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
         fun register(result: ItemLike, builder: Supplier<HTMachineRecipeBuilder>) {
             builder
                 .get()
-                .itemInput(RagiumItems.POLYMER_RESIN)
-                .itemOutput(result)
-                .save(output)
-            builder
-                .get()
-                .itemInput(RagiumItems.POLYMER_RESIN)
-                .catalyst(RagiumItems.OXIDIZATION_CATALYST)
-                .itemOutput(result, 2)
-                .saveSuffixed(output, "_alt")
-        }
-
-        fun registerNew(result: ItemLike, builder: Supplier<HTMachineRecipeBuilder>) {
-            builder
-                .get()
                 .itemOutput(result)
                 .save(output)
             builder
@@ -258,27 +244,27 @@ object HTIngredientRecipeProvider : RecipeProviderChild {
                 .saveSuffixed(output, "_alt")
         }
 
-        registerNew(RagiumItems.Plastics.BASIC) {
+        register(RagiumItems.Plastics.BASIC) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
                 .fluidInput(RagiumFluids.ETHENE)
         }
-        registerNew(RagiumItems.Plastics.ADVANCED) {
+        register(RagiumItems.Plastics.ADVANCED) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
                 .fluidInput(RagiumFluids.ACETYLENE)
                 .fluidInput(RagiumFluids.CHLORINE)
         }
-
         register(RagiumItems.Plastics.ELITE) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.HYDROFLUORIC_ACID, FluidType.BUCKET_VOLUME / 5)
+                .fluidInput(RagiumFluids.PROPENE)
         }
         register(RagiumItems.Plastics.ULTIMATE) {
             HTMachineRecipeBuilder
                 .create(RagiumMachineKeys.CHEMICAL_REACTOR)
-                .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS, FluidType.BUCKET_VOLUME / 2)
+                .fluidInput(RagiumFluids.AROMATIC_COMPOUNDS)
+                .fluidInput(RagiumFluids.NITRIC_ACID)
         }
 
         RagiumItems.Plastics.entries.forEach { plastic: RagiumItems.Plastics ->

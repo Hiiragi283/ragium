@@ -11,14 +11,8 @@
   ],
   "fluid_outputs": [
     {
-      "amount": 4000,
+      "amount": 6000,
       "id": "ragium:fuel"
-    }
-  ],
-  "item_outputs": [
-    {
-      "count": 4,
-      "id": "ragium:polymer_resin"
     }
   ],
   "machine_type": "distillation_tower"

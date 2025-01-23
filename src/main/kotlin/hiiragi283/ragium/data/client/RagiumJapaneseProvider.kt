@@ -96,7 +96,6 @@ class RagiumJapaneseProvider(output: PackOutput) : LanguageProvider(output, Ragi
         add(RagiumItems.LED, "L.E.D.")
         add(RagiumItems.LUMINESCENCE_DUST, "ルミネッセンスダスト")
         add(RagiumItems.OBSIDIAN_TEAR, "黒曜石の涙")
-        add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RESIDUAL_COKE, "残渣油コークス")
         add(RagiumItems.SLAG, "スラグ")

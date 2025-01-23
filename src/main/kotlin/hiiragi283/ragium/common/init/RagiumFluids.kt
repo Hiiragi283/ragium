@@ -86,6 +86,8 @@ enum class RagiumFluids(
     ETHENE(Color(0xffccff), "Ethene", "エテン", TextureType.GASEOUS),
     ACETYLENE(Color(0xffffcc), "Acetylene", "アセチレン", TextureType.GASEOUS),
 
+    PROPENE(Color(0xffcc00), "Propene", "プロペン", TextureType.GASEOUS),
+
     ALCOHOL(Color(0x99ffff), "Alcohol", "アルコール"),
     AROMATIC_COMPOUNDS(Color(0x666699), "Aromatic Compounds", "芳香族化合物"),
 
