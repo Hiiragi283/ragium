@@ -3,14 +3,14 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:raw_materials/quartz"
+      "tag": "c:dusts/diamond"
     }
   ],
   "item_outputs": [
     {
-      "count": 2,
-      "id": "ragium:quartz_dust"
+      "count": 1,
+      "id": "minecraft:diamond"
     }
   ],
-  "machine_type": "grinder"
+  "machine_type": "compressor"
 }

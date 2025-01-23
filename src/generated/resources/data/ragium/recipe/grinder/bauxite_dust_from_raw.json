@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/ragi_crystal"
+      "tag": "c:raw_materials/bauxite"
     }
   ],
   "item_outputs": [
     {
-      "count": 1,
-      "id": "ragium:ragi_crystal"
+      "count": 2,
+      "id": "ragium:bauxite_dust"
     }
   ],
   "machine_type": "grinder"

@@ -1,15 +1,21 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
   "type": "ragium:machine",
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/fluorite"
+      "tag": "c:gems/coal"
     }
   ],
   "item_outputs": [
     {
       "count": 1,
-      "id": "ragium:fluorite"
+      "id": "mekanism:dust_coal"
     }
   ],
   "machine_type": "grinder"

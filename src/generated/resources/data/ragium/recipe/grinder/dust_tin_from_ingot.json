@@ -1,15 +1,21 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
   "type": "ragium:machine",
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/emerald"
+      "tag": "c:ingots/tin"
     }
   ],
   "item_outputs": [
     {
       "count": 1,
-      "id": "minecraft:emerald"
+      "id": "mekanism:dust_tin"
     }
   ],
   "machine_type": "grinder"

@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:raw_materials/ragi_crystal"
+      "tag": "c:raw_materials/crude_raginite"
     }
   ],
   "item_outputs": [
     {
       "count": 2,
-      "id": "ragium:ragi_crystal_dust"
+      "id": "ragium:crude_raginite_dust"
     }
   ],
   "machine_type": "grinder"

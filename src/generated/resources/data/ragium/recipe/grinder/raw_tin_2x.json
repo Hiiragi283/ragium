@@ -1,15 +1,21 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
   "type": "ragium:machine",
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:ores/redstone"
+      "tag": "c:ores/tin"
     }
   ],
   "item_outputs": [
     {
-      "count": 4,
-      "id": "minecraft:redstone"
+      "count": 2,
+      "id": "mekanism:raw_tin"
     },
     {
       "count": 1,

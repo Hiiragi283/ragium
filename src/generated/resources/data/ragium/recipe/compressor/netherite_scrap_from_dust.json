@@ -3,14 +3,14 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/lapis"
+      "tag": "c:dusts/netherite_scrap"
     }
   ],
   "item_outputs": [
     {
       "count": 1,
-      "id": "minecraft:lapis_lazuli"
+      "id": "minecraft:netherite_scrap"
     }
   ],
-  "machine_type": "grinder"
+  "machine_type": "compressor"
 }

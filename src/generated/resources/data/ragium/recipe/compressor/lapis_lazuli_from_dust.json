@@ -3,14 +3,14 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:raw_materials/emerald"
+      "tag": "c:dusts/lapis"
     }
   ],
   "item_outputs": [
     {
-      "count": 2,
-      "id": "ragium:emerald_dust"
+      "count": 1,
+      "id": "minecraft:lapis_lazuli"
     }
   ],
-  "machine_type": "grinder"
+  "machine_type": "compressor"
 }

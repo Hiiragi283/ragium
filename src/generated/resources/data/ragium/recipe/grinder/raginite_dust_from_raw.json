@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:dusts/quartz"
+      "tag": "c:raw_materials/raginite"
     }
   ],
   "item_outputs": [
     {
-      "count": 1,
-      "id": "minecraft:quartz"
+      "count": 2,
+      "id": "ragium:raginite_dust"
     }
   ],
   "machine_type": "grinder"

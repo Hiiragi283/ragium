@@ -123,6 +123,10 @@ class HTMachineRecipeBuilder private constructor(private val definition: HTMachi
 
     //    Condition    //
 
+    fun conditions(conditions: Iterable<ICondition>): HTMachineRecipeBuilder = apply {
+        this.conditions.addAll(conditions)
+    }
+
     fun conditions(vararg conditions: ICondition): HTMachineRecipeBuilder = apply {
         this.conditions.addAll(conditions)
     }

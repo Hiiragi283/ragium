@@ -3,13 +3,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:raw_materials/diamond"
+      "tag": "c:raw_materials/sulfur"
     }
   ],
   "item_outputs": [
     {
       "count": 2,
-      "id": "ragium:diamond_dust"
+      "id": "ragium:sulfur_dust"
     }
   ],
   "machine_type": "grinder"

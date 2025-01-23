@@ -3,14 +3,14 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:raw_materials/lapis"
+      "tag": "c:dusts/cryolite"
     }
   ],
   "item_outputs": [
     {
-      "count": 2,
-      "id": "ragium:lapis_dust"
+      "count": 1,
+      "id": "ragium:cryolite"
     }
   ],
-  "machine_type": "grinder"
+  "machine_type": "compressor"
 }

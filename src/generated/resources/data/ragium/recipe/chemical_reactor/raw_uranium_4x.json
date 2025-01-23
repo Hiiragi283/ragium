@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
   "type": "ragium:machine",
   "fluid_inputs": [
     {
@@ -15,13 +21,13 @@
   "item_inputs": [
     {
       "count": 1,
-      "tag": "c:ores/quartz"
+      "tag": "c:ores/uranium"
     }
   ],
   "item_outputs": [
     {
-      "count": 8,
-      "id": "minecraft:quartz"
+      "count": 4,
+      "id": "mekanism:raw_uranium"
     }
   ],
   "machine_type": "chemical_reactor",

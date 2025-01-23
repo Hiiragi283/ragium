@@ -51,7 +51,10 @@ enum class HTTagPrefix(private val commonName: String, private val tagPrefix: St
         val STREAM_CODEC: StreamCodec<ByteBuf, HTTagPrefix> = stringStreamCodec(HTTagPrefix.entries)
 
         @JvmStatic
-        fun fromName(name: String): HTTagPrefix? = HTTagPrefix.entries.firstOrNull { it.serializedName == name }
+        fun fromSerializedName(name: String): HTTagPrefix? = HTTagPrefix.entries.firstOrNull { it.serializedName == name }
+
+        @JvmStatic
+        fun fromCommonName(name: String): HTTagPrefix? = HTTagPrefix.entries.firstOrNull { it.commonName == name }
     }
 
     //    Id    //
