@@ -11,7 +11,7 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 
-object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actually_additions") {
+object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actuallyadditions") {
     override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola Oil
         HTMachineRecipeBuilder
