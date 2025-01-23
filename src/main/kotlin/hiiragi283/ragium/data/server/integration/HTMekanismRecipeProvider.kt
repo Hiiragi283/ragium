@@ -4,7 +4,7 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 
-object HTMekanismRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+object HTMekanismRecipeProvider : RagiumRecipeProvider.ModChild("mekanism") {
+    override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
     }
 }

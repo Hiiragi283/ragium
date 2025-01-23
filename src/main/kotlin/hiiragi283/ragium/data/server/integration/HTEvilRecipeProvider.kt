@@ -8,18 +8,13 @@ import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import org.cyclops.evilcraft.RegistryEntries
 
-object HTEvilRecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        buildRecipesInternal(output.withConditions(ModLoadedCondition("evil_craft")), holderLookup)
-    }
-
+object HTEvilRecipeProvider : RagiumRecipeProvider.ModChild("evilcraft") {
     @JvmField
-    val BLOOD: Fluid = fluidHolder<Fluid>("evilcraft:blood").get()
+    val BLOOD: Fluid = fluidHolder<Fluid>(id("blood")).get()
 
-    private fun buildRecipesInternal(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+    override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Hardened Blood
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)

@@ -6,6 +6,9 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
 import hiiragi283.ragium.common.init.RagiumMachineKeys
 import hiiragi283.ragium.data.server.integration.HTAARecipeProvider
+import hiiragi283.ragium.data.server.integration.HTDelightRecipeProvider
+import hiiragi283.ragium.data.server.integration.HTEvilRecipeProvider
+import hiiragi283.ragium.data.server.integration.HTMekanismRecipeProvider
 import hiiragi283.ragium.data.server.recipe.*
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.advancements.Criterion
@@ -15,11 +18,13 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -47,6 +52,16 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
             )
     }
 
+    abstract class ModChild(val modId: String) : Child {
+        fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(modId, path)
+
+        final override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
+            buildModRecipes(output.withConditions(ModLoadedCondition(modId)), holderLookup)
+        }
+
+        abstract fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider)
+    }
+
     override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         HTBuildingRecipeProvider.buildRecipes(output, holderLookup)
         HTChemicalRecipeProvider.buildRecipes(output, holderLookup)
@@ -57,6 +72,9 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         HTMaterialRecipeProvider.buildRecipes(output, holderLookup)
 
         HTAARecipeProvider.buildRecipes(output, holderLookup)
+        HTDelightRecipeProvider.buildRecipes(output, holderLookup)
+        HTEvilRecipeProvider.buildRecipes(output, holderLookup)
+        HTMekanismRecipeProvider.buildRecipes(output, holderLookup)
 
         registerVanilla(output)
     }

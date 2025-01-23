@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "ragium:machine",
+  "item_inputs": [
+    {
+      "count": 1,
+      "tag": "c:crops/pumpkin"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 4,
+      "id": "farmersdelight:pumpkin_slice"
+    }
+  ],
+  "machine_type": "cutting_machine"
+}

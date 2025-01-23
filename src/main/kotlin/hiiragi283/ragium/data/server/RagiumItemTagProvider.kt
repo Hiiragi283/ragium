@@ -5,12 +5,14 @@ import hiiragi283.ragium.api.content.HTItemContent
 import hiiragi283.ragium.api.extension.itemTagKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTTagPrefix
+import hiiragi283.ragium.api.tag.RagiumItemTags
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.addElement
 import hiiragi283.ragium.data.addTag
 import hiiragi283.ragium.integration.mek.RagiumEvilIntegration
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
@@ -18,7 +20,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagBuilder
 import net.minecraft.world.item.Item
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredItem
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagProvider(
@@ -27,15 +31,15 @@ class RagiumItemTagProvider(
     existingFileHelper: ExistingFileHelper,
 ) : TagsProvider<Item>(output, Registries.ITEM, provider, RagiumAPI.MOD_ID, existingFileHelper) {
     override fun addTags(provider: HolderLookup.Provider) {
-        // Materials
-        fun addMaterialTag(prefix: HTTagPrefix, material: HTMaterialKey, value: String) {
-            getOrCreateRawBuilder(prefix.commonTagKey)
-                .addTag(prefix.createTag(material))
+        materialTags()
+        foodTags()
+        toolTags()
+        partTags()
+    }
 
-            getOrCreateRawBuilder(prefix.createTag(material))
-                .addOptionalElement(ResourceLocation.parse(value))
-        }
+    //    Material    //
 
+    private fun materialTags() {
         RagiumBlocks.Ores.entries.forEach { ore: RagiumBlocks.Ores ->
             getOrCreateRawBuilder(ore.tagPrefix.commonTagKey)
                 .addTag(ore.prefixedTagKey)
@@ -68,7 +72,42 @@ class RagiumItemTagProvider(
         addMaterialTag(HTTagPrefix.ORE, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_ore_deepslate")
 
         addMaterialTag(HTTagPrefix.STORAGE_BLOCK, RagiumEvilIntegration.DARK_GEM, "evilcraft:dark_block")
-        // Parts
+    }
+
+    private fun addMaterialTag(prefix: HTTagPrefix, material: HTMaterialKey, value: String) {
+        getOrCreateRawBuilder(prefix.commonTagKey)
+            .addTag(prefix.createTag(material))
+
+        getOrCreateRawBuilder(prefix.createTag(material))
+            .addOptionalElement(ResourceLocation.parse(value))
+    }
+
+    //    Food    //
+
+    private fun foodTags() {
+        val foods: TagBuilder = getOrCreateRawBuilder(Tags.Items.FOODS)
+        RagiumItems.FOODS.forEach { foodItem: DeferredItem<Item> ->
+            if (foodItem.get().components().has(DataComponents.FOOD)) {
+                foods.addElement(foodItem)
+            }
+        }
+
+        getOrCreateRawBuilder(RagiumItemTags.DOUGH).addElement(RagiumItems.DOUGH)
+    }
+
+    //    Tool    //
+
+    private fun toolTags() {
+        getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER)
+
+        getOrCreateRawBuilder(
+            itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),
+        ).addElement(RagiumItems.FORGE_HAMMER)
+    }
+
+    //    Part    //
+
+    private fun partTags() {
         RagiumItems.Circuits.entries.forEach { circuit: RagiumItems.Circuits ->
             getOrCreateRawBuilder(circuit.machineTier.getCircuitTag())
                 .addElement(circuit)
@@ -80,11 +119,5 @@ class RagiumItemTagProvider(
         }
 
         getOrCreateRawBuilder(ItemTags.COALS).addElement(RagiumItems.RESIDUAL_COKE)
-        // Tool
-        getOrCreateRawBuilder(ItemTags.DURABILITY_ENCHANTABLE).addElement(RagiumItems.FORGE_HAMMER)
-
-        getOrCreateRawBuilder(
-            itemTagKey(ResourceLocation.fromNamespaceAndPath("modern_industrialization", "forge_hammer_tools")),
-        ).addElement(RagiumItems.FORGE_HAMMER)
     }
 }

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "evilcraft"
+    }
+  ],
+  "type": "ragium:machine",
+  "catalyst": {
+    "item": "ragium:dehydration_catalyst"
+  },
+  "fluid_inputs": [
+    {
+      "amount": 1000,
+      "fluid": "evilcraft:blood"
+    }
+  ],
+  "item_outputs": [
+    {
+      "count": 1,
+      "id": "evilcraft:hardened_blood"
+    }
+  ],
+  "machine_type": "extractor"
+}

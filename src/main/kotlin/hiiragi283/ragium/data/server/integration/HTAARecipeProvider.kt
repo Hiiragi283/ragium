@@ -10,14 +10,9 @@ import hiiragi283.ragium.common.init.RagiumMaterialKeys
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.recipes.RecipeOutput
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 
-object HTAARecipeProvider : RagiumRecipeProvider.Child {
-    override fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
-        buildRecipesInternal(output.withConditions(ModLoadedCondition("actually_additions")))
-    }
-
-    private fun buildRecipesInternal(output: RecipeOutput) {
+object HTAARecipeProvider : RagiumRecipeProvider.ModChild("actually_additions") {
+    override fun buildModRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         // Canola Oil
         HTMachineRecipeBuilder
             .create(RagiumMachineKeys.EXTRACTOR)

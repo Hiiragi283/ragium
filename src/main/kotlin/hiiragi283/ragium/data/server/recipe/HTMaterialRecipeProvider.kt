@@ -54,7 +54,7 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     @JvmStatic
-    private val MATERIAL_ITEM_TABLE: HTTable.Mutable<HTTagPrefix, HTMaterialKey, SizedHolder> = mutableTableOf()
+    internal val MATERIAL_ITEM_TABLE: HTTable.Mutable<HTTagPrefix, HTMaterialKey, SizedHolder> = mutableTableOf()
 
     @JvmStatic
     private fun putHolder(
@@ -242,53 +242,6 @@ object HTMaterialRecipeProvider : RagiumRecipeProvider.Child {
         MATERIAL_ITEM_TABLE.row(HTTagPrefix.RAW_MATERIAL).forEach { (key: HTMaterialKey, raw: SizedHolder) ->
             registerOreToRaw(output, key, raw)
         }
-
-        /*MATERIAL_ITEM_TABLE.row(HTTagPrefix.CLUMP).forEach { (key: HTMaterialKey, clump: SizedHolder) ->
-            // Chemical Reactor
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
-                .itemInput(HTTagPrefix.RAW_MATERIAL, key)
-                .catalyst(RagiumItems.OXIDIZATION_CATALYST)
-                .itemOutput(clump, 2)
-                .conditions(listOfNotNull(clump.condition))
-                .saveSuffixed(output, "_from_raw")
-
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ADVANCED)
-                .itemInput(HTTagPrefix.SHARD, key)
-                .catalyst(RagiumItems.OXIDIZATION_CATALYST)
-                .itemOutput(clump)
-                .conditions(listOfNotNull(clump.condition))
-                .saveSuffixed(output, "_from_shard")
-        }
-        MATERIAL_ITEM_TABLE.row(HTTagPrefix.SHARD).forEach { (key: HTMaterialKey, shard: SizedHolder) ->
-            // Chemical Reactor
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
-                .itemInput(HTTagPrefix.RAW_MATERIAL, key, 3)
-                .fluidInput(RagiumFluids.HYDROGEN_CHLORIDE, 200)
-                .itemOutput(shard, 8)
-                .conditions(listOfNotNull(shard.condition))
-                .saveSuffixed(output, "_from_raw")
-
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ELITE)
-                .itemInput(HTTagPrefix.CRYSTAL, key)
-                .fluidInput(RagiumFluids.HYDROGEN_CHLORIDE, 200)
-                .itemOutput(shard)
-                .conditions(listOfNotNull(shard.condition))
-                .saveSuffixed(output, "_from_crystal")
-        }
-        MATERIAL_ITEM_TABLE.row(HTTagPrefix.CRYSTAL).forEach { (key: HTMaterialKey, crystal: SizedHolder) ->
-            // Chemical Reactor
-            HTMachineRecipeBuilder
-                .create(RagiumMachineKeys.CHEMICAL_REACTOR, HTMachineTier.ULTIMATE)
-                .itemInput(HTTagPrefix.RAW_MATERIAL, key, 3)
-                .fluidInput(RagiumFluids.SULFURIC_ACID, 100)
-                .itemOutput(crystal, 10)
-                .conditions(listOfNotNull(crystal.condition))
-                .save(output)
-        }*/
     }
 
     private fun registerOreToRaw(

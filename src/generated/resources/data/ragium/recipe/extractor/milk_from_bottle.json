@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "type": "ragium:machine",
+  "fluid_outputs": [
+    {
+      "amount": 250,
+      "id": "minecraft:milk"
+    }
+  ],
+  "item_inputs": [
+    {
+      "count": 1,
+      "item": "farmersdelight:milk_bottle"
+    }
+  ],
+  "machine_type": "extractor"
+}
