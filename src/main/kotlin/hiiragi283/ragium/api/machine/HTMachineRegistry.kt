@@ -1,72 +1,60 @@
 package hiiragi283.ragium.api.machine
 
+import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
 import com.mojang.serialization.Keyable
 import hiiragi283.ragium.api.content.HTBlockContent
-import hiiragi283.ragium.api.extension.validTiers
+import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.property.HTPropertyHolder
-import hiiragi283.ragium.common.block.HTMachineBlock
-import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.block.Block
-import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.stream.Stream
 
-/**
- * [HTMachineKey]のレジストリ
- * @see hiiragi283.ragium.api.RagiumAPI.machineRegistry
- */
-class HTMachineRegistry(
-    private val types: Map<HTMachineKey, HTMachineType>,
-    private val blockMap: Map<HTMachineKey, DeferredBlock<HTMachineBlock>>,
-    private val properties: Map<HTMachineKey, HTPropertyHolder>,
-) : Keyable {
+interface HTMachineRegistry : Keyable {
     /**
      * 登録された[HTMachineKey]の一覧
      */
     val keys: Set<HTMachineKey>
-        get() = types.keys
 
     /**
      * 登録された[HTMachineKey]とその[Entry]のマップ
      */
-    val entryMap: Map<HTMachineKey, Entry> by lazy { types.keys.associateWith(::createEntry) }
+    val entryMap: Map<HTMachineKey, Entry>
 
     /**
      * 登録された[HTMachineKey]に紐づいたブロックの一覧
      */
-    val blocks: Collection<DeferredBlock<HTMachineBlock>>
-        get() = blockMap.values
+    val blocks: Collection<HTBlockContent>
+        get() = entryMap.values
 
     /**
      * 指定された[key]が登録されているか判定します。
      */
-    operator fun contains(key: HTMachineKey): Boolean = key in types
+    operator fun contains(key: HTMachineKey): Boolean = key in keys
 
     /**
      * 指定された[key]に紐づいたブロックを返します。
      *
      * @return 値がない場合はnull
      */
-    fun getBlock(key: HTMachineKey): DeferredBlock<HTMachineBlock>? = blockMap[key]
-
-    private fun createEntry(key: HTMachineKey): Entry = Entry(
-        types[key] ?: error("Unknown machine key: $key"),
-        blockMap[key] ?: error("Unknown machine key: $key"),
-        properties.getOrDefault(key, HTPropertyHolder.Empty),
-    )
-
-    /**
-     * 指定された[key]に紐づいた[Entry]を返します。
-     * @throws IllegalStateException [key]が登録されていない場合
-     */
-    fun getEntry(key: HTMachineKey): Entry = getEntryOrNull(key) ?: error("Unknown machine key: $key")
+    fun getBlock(key: HTMachineKey): HTBlockContent?
 
     /**
      * 指定された[key]に紐づいた[Entry]を返します。
      * @return [key]が登録されていない場合はnull
      */
-    fun getEntryOrNull(key: HTMachineKey): Entry? = entryMap[key]
+    fun getEntryData(key: HTMachineKey): DataResult<Entry>
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
+     * @throws IllegalStateException [key]が登録されていない場合
+     */
+    fun getEntry(key: HTMachineKey): Entry = getEntryData(key).orThrow
+
+    /**
+     * 指定された[key]に紐づいた[Entry]を返します。
+     * @return [key]が登録されていない場合はnull
+     */
+    fun getEntryOrNull(key: HTMachineKey): Entry? = getEntryData(key).getOrNull()
 
     //    Keyable    //
 
@@ -80,14 +68,11 @@ class HTMachineRegistry(
     /**
      * 機械の情報をまとめたクラス
      */
-    data class Entry(val type: HTMachineType, override val holder: DeferredBlock<out Block>, val property: HTPropertyHolder) :
-        HTPropertyHolder by property,
+    interface Entry :
+        HTPropertyHolder,
         HTBlockContent {
-        fun createItemStack(tier: HTMachineTier): ItemStack? {
-            if (tier !in validTiers) return null
-            val stack = ItemStack(this)
-            stack.set(RagiumComponentTypes.MACHINE_TIER, tier)
-            return stack
-        }
+        val type: HTMachineType
+
+        fun createItemStack(tier: HTMachineTier): ItemStack?
     }
 }

@@ -38,14 +38,14 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
         // Machine
         val machineBuilder: Builder<HTMachineKey, Item> = builder(HTMachineKey.DATA_MAP_TYPE)
 
-        RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             machineBuilder.addContent(entry, key)
         }
         // Material
         val materialBuilder: Builder<HTMaterialDefinition, Item> = builder(HTMaterialDefinition.DATA_MAP_TYPE)
 
         HTTagPrefix.entries.forEach { prefix: HTTagPrefix ->
-            RagiumAPI.getInstance().materialRegistry.keys.forEach { key: HTMaterialKey ->
+            RagiumAPI.materialRegistry.keys.forEach { key: HTMaterialKey ->
                 materialBuilder.add(prefix.createTag(key), HTMaterialDefinition(prefix, key), false)
             }
         }

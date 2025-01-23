@@ -54,7 +54,7 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
 
         @JvmStatic
         fun validate(key: HTMachineKey): DataResult<HTMachineKey> = key
-            .takeIf { it in RagiumAPI.getInstance().machineRegistry }
+            .takeIf(RagiumAPI.machineRegistry::contains)
             .toDataResult { "Unknown machine key: $key" }
     }
 
@@ -66,13 +66,13 @@ class HTMachineKey private constructor(val name: String) : Comparable<HTMachineK
     val descriptionText: MutableComponent
         get() = Component.translatable(descriptionKey).withStyle(ChatFormatting.AQUA)
 
-    fun getEntry(): HTMachineRegistry.Entry = RagiumAPI.getInstance().machineRegistry.getEntry(this)
+    fun getEntry(): HTMachineRegistry.Entry = RagiumAPI.machineRegistry.getEntry(this)
 
     /**
      * [HTMachineRegistry.Entry]を返します。
      * @return このキーが登録されていない場合はnullを返す
      */
-    fun getEntryOrNull(): HTMachineRegistry.Entry? = RagiumAPI.getInstance().machineRegistry.getEntryOrNull(this)
+    fun getEntryOrNull(): HTMachineRegistry.Entry? = RagiumAPI.machineRegistry.getEntryOrNull(this)
 
     fun getEntryData(): DataResult<HTMachineRegistry.Entry> = getEntryOrNull().toDataResult { "Unknown machine key: $name" }
 

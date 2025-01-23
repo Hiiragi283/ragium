@@ -20,7 +20,7 @@ interface HTMaterialRegistry : Keyable {
     companion object {
         @JvmField
         val ENTRY_CODEC: Codec<Entry> = HTMaterialKey.CODEC.comapFlatMap(
-            RagiumAPI.getInstance().materialRegistry::getEntryData,
+            RagiumAPI.materialRegistry::getEntryData,
             Entry::key,
         )
     }

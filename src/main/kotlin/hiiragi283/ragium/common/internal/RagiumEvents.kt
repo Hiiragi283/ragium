@@ -2,9 +2,7 @@ package hiiragi283.ragium.common.internal
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.block.entity.HTBlockEntityHandlerProvider
-import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineRegistry
@@ -16,6 +14,7 @@ import hiiragi283.ragium.common.init.*
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -45,7 +44,7 @@ internal object RagiumEvents {
 
     @SubscribeEvent
     fun createRegistry(event: NewRegistryEvent) {
-        event.register(RagiumRegistries.MULTIBLOCK_COMPONENT_TYPE)
+        event.register(RagiumAPI.Registries.MULTIBLOCK_COMPONENT_TYPE)
 
         LOGGER.info("Registered new registries!")
     }
@@ -61,12 +60,12 @@ internal object RagiumEvents {
             machines.forEach { machine: HTMachineKey -> bindMachine(type, machine) }
         }
 
-        bindMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR, RagiumAPI.getInstance().machineRegistry.keys)
+        bindMachines(RagiumBlockEntityTypes.DEFAULT_GENERATOR, RagiumAPI.machineRegistry.keys)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.COMBUSTION_GENERATOR)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.GAS_TURBINE)
         bindMachine(RagiumBlockEntityTypes.FLUID_GENERATOR, RagiumMachineKeys.THERMAL_GENERATOR)
 
-        bindMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, RagiumAPI.getInstance().machineRegistry.keys)
+        bindMachines(RagiumBlockEntityTypes.DEFAULT_PROCESSOR, RagiumAPI.machineRegistry.keys)
         bindMachine(RagiumBlockEntityTypes.DISTILLATION_TOWER, RagiumMachineKeys.DISTILLATION_TOWER)
         bindMachine(RagiumBlockEntityTypes.LARGE_PROCESSOR, RagiumMachineKeys.BLAST_FURNACE)
         bindMachine(RagiumBlockEntityTypes.MULTI_SMELTER, RagiumMachineKeys.MULTI_SMELTER)
@@ -88,11 +87,11 @@ internal object RagiumEvents {
         }
 
         registerForBlocks(
-            RagiumCapabilities.CONTROLLER_HOLDER,
+            RagiumAPI.BlockCapabilities.CONTROLLER_HOLDER,
         ) { _: Level, _: BlockPos, _: BlockState, blockEntity: BlockEntity?, _: Direction -> blockEntity as? HTControllerHolder }
 
         registerForBlocks(
-            RagiumCapabilities.MACHINE_TIER,
+            RagiumAPI.BlockCapabilities.MACHINE_TIER,
         ) { _: Level, _: BlockPos, state: BlockState, blockEntity: BlockEntity?, _: Void? ->
             (blockEntity as? HTMachineTierProvider)?.machineTier ?: state.machineTier
         }
@@ -183,6 +182,9 @@ internal object RagiumEvents {
         val materialText: (DataComponentPatch.Builder, HTMaterialProvider) -> Unit =
             { builder: DataComponentPatch.Builder, provider: HTMaterialProvider ->
                 builder.name(provider.prefixedText)
+                if (provider.material in RagiumMaterialKeys.END_CONTENTS) {
+                    builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                }
             }
         // Block
         modifyAll(RagiumBlocks.StorageBlocks.entries, materialText)

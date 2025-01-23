@@ -3,14 +3,12 @@ package hiiragi283.ragium.common
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConfig
-import hiiragi283.ragium.api.RagiumPlugin
 import hiiragi283.ragium.api.extension.isModLoaded
 import hiiragi283.ragium.api.material.HTMaterialType
 import hiiragi283.ragium.api.material.HTRegisterMaterialEvent
 import hiiragi283.ragium.common.init.*
-import hiiragi283.ragium.common.internal.DefaultMachinePlugin
+import hiiragi283.ragium.common.internal.HTMachineRegistryImpl
 import hiiragi283.ragium.common.internal.HTMaterialRegistryImpl
-import hiiragi283.ragium.common.internal.InternalRagiumAPI
 import hiiragi283.ragium.integration.RagiumEvilIntegration
 import hiiragi283.ragium.integration.RagiumMekIntegration
 import net.neoforged.bus.api.EventPriority
@@ -31,14 +29,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
     }
 
     init {
-        container.registerExtensionPoint(RagiumPlugin.Provider::class.java) {
-            RagiumPlugin.Provider {
-                listOf(
-                    DefaultMachinePlugin,
-                )
-            }
-        }
-
         eventBus.addListener(EventPriority.HIGHEST, ::registerMaterial)
         eventBus.addListener(::construct)
         eventBus.addListener(::commonSetup)
@@ -52,8 +42,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer) {
 
         RagiumComponentTypes.REGISTER.register(eventBus)
 
-        InternalRagiumAPI.collectPlugins()
-        InternalRagiumAPI.registerMachines()
+        HTMachineRegistryImpl.initRegistry()
 
         RagiumFluids.register(eventBus)
         RagiumBlocks.REGISTER.register(eventBus)

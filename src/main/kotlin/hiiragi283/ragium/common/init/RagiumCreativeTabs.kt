@@ -86,7 +86,6 @@ object RagiumCreativeTabs {
                     // Machines
                     HTMachineTier.entries.forEach { tier: HTMachineTier ->
                         RagiumAPI
-                            .getInstance()
                             .machineRegistry
                             .keys
                             .mapNotNull { it.createItemStack(tier) }

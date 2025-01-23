@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import hiiragi283.ragium.data.getBuilder
@@ -53,8 +52,8 @@ class RagiumModelProvider(output: PackOutput, existingFileHelper: ExistingFileHe
             add(RagiumBlocks.ENERGY_NETWORK_INTERFACE)
         }.map(DeferredBlock<*>::getId).forEach(::simpleBlockItem)
 
-        RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
-            val id: ResourceLocation = holder.id
+        RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
+            val id: ResourceLocation = content.id
             val modelBuilder: ItemModelBuilder = withExistingParent(id, RagiumAPI.id("block/machine_front"))
             HTMachineTier.entries.forEach { tier: HTMachineTier ->
                 val value: Float = when (tier) {

@@ -208,7 +208,7 @@ object HTMachineRecipeProvider : RagiumRecipeProvider.Child {
     }
 
     private fun registerMachineUpdates(output: RecipeOutput) {
-        RagiumAPI.getInstance().machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
+        RagiumAPI.machineRegistry.entryMap.forEach { (key: HTMachineKey, entry: HTMachineRegistry.Entry) ->
             for (tier: HTMachineTier in entry.validTiers) {
                 val nextTier: HTMachineTier = tier.getNextTier() ?: continue
                 val nextMachine: ItemStack = key.createItemStack(nextTier) ?: continue

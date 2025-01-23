@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.client
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.machine.HTMachineTier
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.data.blockTexture
@@ -148,9 +148,9 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
         }.map(Supplier<out Block>::get).forEach(::simpleBlock)
 
         // Machine
-        RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
+        RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
             val builder: ConfiguredModel.Builder<MultiPartBlockStateBuilder.PartBuilder> =
-                getMultipartBuilder(holder.get()).part()
+                getMultipartBuilder(content.get()).part()
 
             HTMachineTier.entries.forEach { tier: HTMachineTier ->
                 builder
@@ -159,8 +159,8 @@ class RagiumBlockStateProvider(output: PackOutput, exFileHelper: ExistingFileHel
                     .condition(HTMachineTier.PROPERTY, tier)
             }
 
-            val inactiveId: ResourceLocation = holder.id.withPrefix("block/machine/")
-            val activeId: ResourceLocation = holder.id.withPath { "block/machine/${it}_active" }
+            val inactiveId: ResourceLocation = content.id.withPrefix("block/machine/")
+            val activeId: ResourceLocation = content.id.withPath { "block/machine/${it}_active" }
 
             BlockStateProperties.HORIZONTAL_FACING.possibleValues.forEach { front: Direction ->
                 // inactive front

@@ -186,4 +186,12 @@ object RagiumMaterialKeys {
 
     @JvmField
     val SPHALERITE: HTMaterialKey = HTMaterialKey.of("sphalerite")
+
+    @JvmField
+    val END_CONTENTS: List<HTMaterialKey> = listOf(
+        RAGIUM,
+        DRAGONIUM,
+        ECHORIUM,
+        FIERIUM,
+    )
 }

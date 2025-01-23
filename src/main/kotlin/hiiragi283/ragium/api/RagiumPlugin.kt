@@ -3,7 +3,6 @@ package hiiragi283.ragium.api
 import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineType
 import hiiragi283.ragium.api.property.HTPropertyHolderBuilder
-import net.neoforged.fml.IExtensionPoint
 import java.util.function.BiConsumer
 import java.util.function.Function
 
@@ -33,10 +32,4 @@ interface RagiumPlugin {
      * 機械のプロパティを設定します。
      */
     fun setupMachineProperties(helper: Function<HTMachineKey, HTPropertyHolderBuilder>) {}
-
-    //    Provider    //
-
-    fun interface Provider : IExtensionPoint {
-        fun getPlugins(): List<RagiumPlugin>
-    }
 }

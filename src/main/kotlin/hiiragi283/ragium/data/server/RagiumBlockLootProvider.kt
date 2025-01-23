@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import hiiragi283.ragium.common.init.RagiumItems
@@ -18,7 +18,6 @@ import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.LootItem
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
-import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredHolder
 import java.util.function.Supplier
 
@@ -62,8 +61,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(drum.get()) { copyComponent(it, RagiumComponentTypes.FLUID_CONTENT) }
         }
 
-        RagiumAPI.getInstance().machineRegistry.blocks.forEach { holder: DeferredBlock<HTMachineBlock> ->
-            add(holder.get()) { copyComponent(it, RagiumComponentTypes.MACHINE_TIER) }
+        RagiumAPI.machineRegistry.blocks.forEach { content: HTBlockContent ->
+            add(content.get()) { copyComponent(it, RagiumComponentTypes.MACHINE_TIER) }
         }
     }
 

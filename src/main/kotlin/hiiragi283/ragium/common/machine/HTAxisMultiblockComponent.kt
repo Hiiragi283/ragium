@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.machine
 
-import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
@@ -18,7 +18,7 @@ import java.util.function.Supplier
 
 sealed class HTAxisMultiblockComponent(val getter: Function<HTMachineTier, out Supplier<out Block>>) : HTMultiblockComponent {
     fun getBlock(controller: HTControllerDefinition): Block =
-        (controller.getCapability(RagiumCapabilities.MACHINE_TIER) ?: HTMachineTier.BASIC)
+        (controller.getCapability(RagiumAPI.BlockCapabilities.MACHINE_TIER) ?: HTMachineTier.BASIC)
             .let(getter::apply)
             .get()
 

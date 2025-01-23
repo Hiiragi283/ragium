@@ -25,7 +25,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
         guiGraphics.blit(TEXTURE, startX, startY, 0, 0, imageWidth, imageHeight)
         // progress bar
         guiGraphics.blitSprite(
-            RagiumAPI.Companion.id("progress_bar"),
+            RagiumAPI.id("progress_bar"),
             16,
             16,
             0,
@@ -38,7 +38,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
         // item slots
         menu.itemSlots.forEach { (slotX: Int, slotY: Int) ->
             guiGraphics.blitSprite(
-                RagiumAPI.Companion.id("item_slot"),
+                RagiumAPI.id("item_slot"),
                 startX + getSlotPosX(slotX) - 1,
                 startY + getSlotPosY(slotY) - 1,
                 18,
@@ -48,7 +48,7 @@ open class HTMachineContainerScreen<T : HTMachineContainerMenu>(menu: T, playerI
         // fluid slots
         menu.fluidSlots.forEach { index: Int, (slotX: Int, slotY: Int) ->
             guiGraphics.blitSprite(
-                RagiumAPI.Companion.id("fluid_slot"),
+                RagiumAPI.id("fluid_slot"),
                 startX + getSlotPosX(slotX) - 1,
                 startY + getSlotPosY(slotY) - 1,
                 18,

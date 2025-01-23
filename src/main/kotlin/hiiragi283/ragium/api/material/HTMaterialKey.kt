@@ -25,7 +25,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
         val CODEC: Codec<HTMaterialKey> =
             Codec.STRING.xmap(Companion::of, HTMaterialKey::name).validate { key: HTMaterialKey ->
                 key
-                    .takeIf { it in RagiumAPI.getInstance().materialRegistry }
+                    .takeIf(RagiumAPI.materialRegistry::contains)
                     .toDataResult { "Unknown material key: $key" }
             }
 
@@ -48,7 +48,7 @@ class HTMaterialKey private constructor(val name: String) : Comparable<HTMateria
      * [HTMaterialRegistry.Entry]を返します。
      * @return このキーが登録されていない場合はnullを返す
      */
-    fun getEntryOrNull(): HTMaterialRegistry.Entry? = RagiumAPI.getInstance().materialRegistry.getEntryOrNull(this)
+    fun getEntryOrNull(): HTMaterialRegistry.Entry? = RagiumAPI.materialRegistry.getEntryOrNull(this)
 
     /**
      * [getEntryOrNull]がnullでない場合に[action]を実行します。

@@ -132,9 +132,9 @@ object RagiumItems {
         EMERALD(RagiumMaterialKeys.EMERALD, HTTagPrefix.GEM),
 
         // Ragium
-        RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
-        RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
-        REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
+        // RAGI_ALLOY(RagiumMaterialKeys.RAGI_ALLOY),
+        // RAGI_STEEL(RagiumMaterialKeys.RAGI_STEEL),
+        // REFINED_RAGI_STEEL(RagiumMaterialKeys.REFINED_RAGI_STEEL),
 
         // Steel
         STEEL(RagiumMaterialKeys.STEEL),
