@@ -2,6 +2,7 @@
 
 package hiiragi283.ragium.api.extension
 
+import hiiragi283.ragium.api.machine.HTMachineKey
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.common.init.RagiumComponentTypes
 import net.minecraft.core.BlockPos
@@ -17,6 +18,9 @@ import net.neoforged.neoforge.items.IItemHandler
 //    ItemLike    //
 
 fun ItemLike.asHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
+
+val ItemLike.machineKey: HTMachineKey?
+    get() = asHolder().getData(HTMachineKey.DATA_MAP_TYPE)
 
 //    Item    //
 

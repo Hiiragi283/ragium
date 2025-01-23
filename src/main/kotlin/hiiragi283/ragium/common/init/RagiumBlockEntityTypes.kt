@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.init
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.machine.HTMachineKey
-import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.generator.HTDefaultGeneratorBlockEntity
 import hiiragi283.ragium.common.block.generator.HTFluidGeneratorBlockEntity
 import hiiragi283.ragium.common.block.machine.HTManualGrinderBlockEntity
@@ -56,7 +56,7 @@ object RagiumBlockEntityTypes {
             .of(
                 { pos: BlockPos, state: BlockState ->
                     val machine: HTMachineKey =
-                        (state.block as? HTMachineBlock)?.machineKey ?: RagiumMachineKeys.ASSEMBLER
+                        state.block.machineKey ?: RagiumMachineKeys.ASSEMBLER
                     factory(pos, state, machine)
                 },
             ).build(null)

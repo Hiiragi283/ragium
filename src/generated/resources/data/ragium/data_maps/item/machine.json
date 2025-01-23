@@ -1,0 +1,24 @@
+{
+  "values": {
+    "ragium:assembler": "assembler",
+    "ragium:bedrock_miner": "bedrock_miner",
+    "ragium:biomass_fermenter": "biomass_fermenter",
+    "ragium:blast_furnace": "blast_furnace",
+    "ragium:chemical_reactor": "chemical_reactor",
+    "ragium:combustion_generator": "combustion_generator",
+    "ragium:compressor": "compressor",
+    "ragium:cutting_machine": "cutting_machine",
+    "ragium:distillation_tower": "distillation_tower",
+    "ragium:extractor": "extractor",
+    "ragium:fluid_drill": "fluid_drill",
+    "ragium:gas_turbine": "gas_turbine",
+    "ragium:grinder": "grinder",
+    "ragium:growth_chamber": "growth_chamber",
+    "ragium:laser_transformer": "laser_transformer",
+    "ragium:mixer": "mixer",
+    "ragium:multi_smelter": "multi_smelter",
+    "ragium:solar_generator": "solar_generator",
+    "ragium:steam_generator": "steam_generator",
+    "ragium:thermal_generator": "thermal_generator"
+  }
+}

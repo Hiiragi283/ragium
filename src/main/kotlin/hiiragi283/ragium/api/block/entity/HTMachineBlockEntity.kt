@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.block.entity
 
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.capability.HTStorageIO
 import hiiragi283.ragium.api.extension.*
 import hiiragi283.ragium.api.fluid.HTFluidInteractable
@@ -44,15 +45,22 @@ abstract class HTMachineBlockEntity(type: Supplier<out BlockEntityType<*>>, pos:
     HTBlockEntityHandlerProvider,
     HTControllerHolder,
     HTFluidInteractable,
-    HTMachineProvider,
     HTMachineTierUpgradable {
     companion object {
         @JvmStatic
         private val LOGGER: Logger = LogUtils.getLogger()
     }
 
+    abstract val machineKey: HTMachineKey
+
     val definition: HTMachineDefinition
         get() = HTMachineDefinition(machineKey, machineTier)
+
+    fun getEntry(): HTMachineRegistry.Entry = machineKey.getEntry()
+
+    fun getEntryOrNull(): HTMachineRegistry.Entry? = machineKey.getEntryOrNull()
+
+    fun getEntryData(): DataResult<HTMachineRegistry.Entry> = machineKey.getEntryData()
 
     val front: Direction
         get() = blockState.getOrDefault(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)

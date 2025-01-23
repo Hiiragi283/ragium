@@ -33,6 +33,7 @@ import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack
 import net.neoforged.neoforge.registries.NewRegistryEvent
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
 import java.util.function.Supplier
 
@@ -163,6 +164,13 @@ internal object RagiumEvents {
         )
 
         LOGGER.info("Registered Item Capabilities!")
+    }
+
+    @SubscribeEvent
+    fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(HTMachineKey.DATA_MAP_TYPE)
+
+        LOGGER.info("Registered Data Map Types!")
     }
 
     @SubscribeEvent

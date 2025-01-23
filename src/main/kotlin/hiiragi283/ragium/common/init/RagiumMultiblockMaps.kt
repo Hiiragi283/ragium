@@ -12,9 +12,9 @@ object RagiumMultiblockMaps {
     private val COIL_Y = HTAxisMultiblockComponent.YStatic(HTMachineTier::getCoil)
     private val GRATE = HTTieredMultiblockComponent(HTMachineTier::getGrate)
     private val HULL = HTTieredMultiblockComponent(HTMachineTier::getHull)
-
-    // private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
-    // private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
+    private val SHAFT = HTAxisMultiblockComponent.YStatic { RagiumBlocks.SHAFT }
+    private val SHAFT_HORIZONTAL = HTAxisMultiblockComponent.FrontHorizontal { RagiumBlocks.SHAFT }
+    private val SHAFT_VERTICAL = HTAxisMultiblockComponent.FrontVertical { RagiumBlocks.SHAFT }
     private val STORAGE_BLOCK = HTTieredMultiblockComponent(HTMachineTier::getStorageBlock)
 
     @JvmField
@@ -22,12 +22,12 @@ object RagiumMultiblockMaps {
         .builder()
         // drill
         .add(0, -3, 0, HTSimpleMultiblockComponent(Blocks::BEDROCK))
-        // .add(0, -2, 0, shaft)
-        // .add(0, -1, 0, shaft)
-        // .add(-1, 0, 0, SHAFT_VERTICAL)
-        // .add(0, 0, -1, SHAFT_HORIZONTAL)
-        // .add(0, 0, 1, SHAFT_HORIZONTAL)
-        // .add(1, 0, 0, SHAFT_VERTICAL)
+        .add(0, -2, 0, SHAFT)
+        .add(0, -1, 0, SHAFT)
+        .add(-1, 0, 0, SHAFT_VERTICAL)
+        .add(0, 0, -1, SHAFT_HORIZONTAL)
+        .add(0, 0, 1, SHAFT_HORIZONTAL)
+        .add(1, 0, 0, SHAFT_VERTICAL)
         // frame
         .add(-2, -1, 0, CASING)
         .add(0, -1, -2, CASING)

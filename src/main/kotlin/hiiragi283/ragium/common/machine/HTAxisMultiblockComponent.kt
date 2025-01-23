@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.machine
 
 import hiiragi283.ragium.api.capability.RagiumCapabilities
-import hiiragi283.ragium.api.content.HTBlockContent
 import hiiragi283.ragium.api.extension.getOrNull
 import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.multiblock.HTControllerDefinition
@@ -42,19 +41,19 @@ sealed class HTAxisMultiblockComponent(val getter: Function<HTMachineTier, out S
 
     //    YStatic    //
 
-    class YStatic(blockGetter: (HTMachineTier) -> HTBlockContent) : HTAxisMultiblockComponent(blockGetter) {
+    class YStatic(blockGetter: Function<HTMachineTier, out Supplier<out Block>>) : HTAxisMultiblockComponent(blockGetter) {
         override fun getAxis(controller: HTControllerDefinition): Direction.Axis = Direction.Axis.Y
     }
 
     //    FrontHorizontal    //
 
-    class FrontHorizontal(blockGetter: (HTMachineTier) -> HTBlockContent) : HTAxisMultiblockComponent(blockGetter) {
+    class FrontHorizontal(blockGetter: Function<HTMachineTier, out Supplier<out Block>>) : HTAxisMultiblockComponent(blockGetter) {
         override fun getAxis(controller: HTControllerDefinition): Direction.Axis = controller.front.axis
     }
 
     //    FrontVertical    //
 
-    class FrontVertical(blockGetter: (HTMachineTier) -> HTBlockContent) : HTAxisMultiblockComponent(blockGetter) {
+    class FrontVertical(blockGetter: Function<HTMachineTier, out Supplier<out Block>>) : HTAxisMultiblockComponent(blockGetter) {
         override fun getAxis(controller: HTControllerDefinition): Direction.Axis = when (controller.front) {
             Direction.DOWN -> Direction.Axis.Y
             Direction.UP -> Direction.Axis.Y

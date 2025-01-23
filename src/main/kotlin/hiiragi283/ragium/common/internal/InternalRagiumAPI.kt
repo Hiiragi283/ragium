@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.init.RagiumBlocks
 import hiiragi283.ragium.common.init.RagiumItems
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -82,7 +81,7 @@ internal object InternalRagiumAPI : RagiumAPI {
             .associateWith { key: HTMachineKey ->
                 RagiumBlocks.REGISTER.registerBlock(
                     key.name,
-                    { properties: BlockBehaviour.Properties -> HTMachineBlock(key, properties) },
+                    ::HTMachineBlock,
                     blockProperty(Blocks.SMOOTH_STONE).noOcclusion(),
                 )
             }.onEach { (_: HTMachineKey, holder: DeferredBlock<HTMachineBlock>) ->

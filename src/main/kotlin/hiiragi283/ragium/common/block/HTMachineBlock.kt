@@ -1,9 +1,13 @@
 package hiiragi283.ragium.common.block
 
 import hiiragi283.ragium.api.block.HTEntityBlock
+import hiiragi283.ragium.api.extension.machineKey
 import hiiragi283.ragium.api.extension.machineTier
 import hiiragi283.ragium.api.extension.validTiers
-import hiiragi283.ragium.api.machine.*
+import hiiragi283.ragium.api.machine.HTMachineKey
+import hiiragi283.ragium.api.machine.HTMachinePropertyKeys
+import hiiragi283.ragium.api.machine.HTMachineRegistry
+import hiiragi283.ragium.api.machine.HTMachineTier
 import hiiragi283.ragium.api.property.get
 import hiiragi283.ragium.common.init.RagiumBlockProperties
 import net.minecraft.core.BlockPos
@@ -25,9 +29,7 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.phys.HitResult
 
-class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properties) :
-    HTEntityBlock(properties),
-    HTMachineProvider {
+class HTMachineBlock(properties: Properties) : HTEntityBlock(properties) {
     init {
         registerDefaultState(
             stateDefinition
@@ -38,7 +40,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
         )
     }
 
-    override fun getDescriptionId(): String = machineKey.translationKey
+    override fun getDescriptionId(): String = machineKey?.translationKey ?: super.descriptionId
 
     override fun appendHoverText(
         stack: ItemStack,
@@ -46,7 +48,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
         tooltipComponents: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        machineKey.appendTooltip(tooltipComponents::add, stack.machineTier)
+        machineKey?.appendTooltip(tooltipComponents::add, stack.machineTier)
     }
 
     override fun getCloneItemStack(
@@ -57,7 +59,7 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
         player: Player,
     ): ItemStack {
         val tier: HTMachineTier = state.machineTier
-        return machineKey.createItemStack(tier) ?: super.getCloneItemStack(state, target, level, pos, player)
+        return machineKey?.createItemStack(tier) ?: super.getCloneItemStack(state, target, level, pos, player)
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
@@ -84,7 +86,8 @@ class HTMachineBlock(override val machineKey: HTMachineKey, properties: Properti
     )
 
     override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
-        val entry: HTMachineRegistry.Entry = getEntryOrNull() ?: return null
+        val machineKey: HTMachineKey = machineKey ?: return null
+        val entry: HTMachineRegistry.Entry = machineKey.getEntryOrNull() ?: return null
         if (state.machineTier !in entry.validTiers) return null
         return entry[HTMachinePropertyKeys.MACHINE_FACTORY]?.create(pos, state, machineKey)
     }
